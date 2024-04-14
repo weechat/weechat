@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-04-12 22:18+0200\n"
+"POT-Creation-Date: 2024-04-14 18:54+0200\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -12015,6 +12015,57 @@ msgstr ""
 
 #, c-format
 msgid "%sremote[%s]: unable to create socket"
+msgstr ""
+
+#, c-format
+msgid "%sremote[%s]: gnutls: failed to initialize certificate structure"
+msgstr ""
+
+#, c-format
+msgid "remote[%s]: gnutls: receiving %d certificate"
+msgid_plural "remote[%s]: gnutls: receiving %d certificates"
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "%sremote[%s]: gnutls: failed to import certificate[%d]"
+msgstr ""
+
+#, c-format
+msgid "remote[%s] - certificate[%d] info:"
+msgstr ""
+
+#, c-format
+msgid "%sremote[%s]: gnutls: certificate has expired"
+msgstr ""
+
+#, c-format
+msgid "%sremote[%s]: gnutls: certificate is not yet activated"
+msgstr ""
+
+#, c-format
+msgid ""
+"%sremote[%s]: gnutls: the hostname in the certificate does NOT match \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%sremote[%s]: gnutls: error while checking peer's certificate"
+msgstr ""
+
+#, c-format
+msgid "%sremote[%s]: gnutls: peer's certificate is NOT trusted"
+msgstr ""
+
+#, c-format
+msgid "remote[%s]: gnutls: peer's certificate is trusted"
+msgstr ""
+
+#, c-format
+msgid "%sremote[%s]: gnutls: peer's certificate issuer is unknown"
+msgstr ""
+
+#, c-format
+msgid "%sremote[%s]: gnutls: the certificate has been revoked"
 msgstr ""
 
 #, c-format

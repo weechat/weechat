@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-04-12 22:18+0200\n"
+"POT-Creation-Date: 2024-04-14 18:54+0200\n"
 "PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -14475,6 +14475,71 @@ msgstr "%s%s: timeout"
 #| msgid "%s%s: unable to create socket"
 msgid "%sremote[%s]: unable to create socket"
 msgstr "%s%s: nie można utworzyć gniazda"
+
+#, fuzzy, c-format
+#| msgid "%sgnutls: failed to initialize certificate structure"
+msgid "%sremote[%s]: gnutls: failed to initialize certificate structure"
+msgstr "%sgnutls: nie udało się zainicjować struktury certyfikatu"
+
+#, fuzzy, c-format
+#| msgid "%sgnutls: receiving %d certificate"
+#| msgid_plural "%sgnutls: receiving %d certificates"
+msgid "remote[%s]: gnutls: receiving %d certificate"
+msgid_plural "remote[%s]: gnutls: receiving %d certificates"
+msgstr[0] "%sgnutls: odbieram %d certyfikat"
+msgstr[1] "%sgnutls: odbieram %d certyfikaty"
+msgstr[2] "%sgnutls: odbieram %d certyfikatów"
+
+#, fuzzy, c-format
+#| msgid "%sgnutls: failed to import certificate[%d]"
+msgid "%sremote[%s]: gnutls: failed to import certificate[%d]"
+msgstr "%sgnutls: nie udało się zaimportować certyfikatu[%d]"
+
+#, fuzzy, c-format
+#| msgid "%s - certificate[%d] info:"
+msgid "remote[%s] - certificate[%d] info:"
+msgstr "%s - certyfikat[%d] - informacje:"
+
+#, fuzzy, c-format
+#| msgid "%sgnutls: certificate has expired"
+msgid "%sremote[%s]: gnutls: certificate has expired"
+msgstr "%sgnutls: certyfikat wygasł"
+
+#, fuzzy, c-format
+#| msgid "%sgnutls: certificate is not yet activated"
+msgid "%sremote[%s]: gnutls: certificate is not yet activated"
+msgstr "%sgnutls: certyfikat nie jest jeszcze aktywny"
+
+#, fuzzy, c-format
+#| msgid "%sgnutls: the hostname in the certificate does NOT match \"%s\""
+msgid ""
+"%sremote[%s]: gnutls: the hostname in the certificate does NOT match \"%s\""
+msgstr "%sgnutls: nazwa hosta w certyfikacie NIE pasuje do \"%s\""
+
+#, fuzzy, c-format
+#| msgid "%sgnutls: error while checking peer's certificate"
+msgid "%sremote[%s]: gnutls: error while checking peer's certificate"
+msgstr "%sgnutls: błąd podczas sprawdzania certyfikatu partnera"
+
+#, fuzzy, c-format
+#| msgid "%sgnutls: peer's certificate is NOT trusted"
+msgid "%sremote[%s]: gnutls: peer's certificate is NOT trusted"
+msgstr "%sgnutls: certyfikat partnera NIE jest zaufany"
+
+#, fuzzy, c-format
+#| msgid "%sgnutls: peer's certificate is trusted"
+msgid "remote[%s]: gnutls: peer's certificate is trusted"
+msgstr "%sgnutls: certyfikat partnera jest zaufany"
+
+#, fuzzy, c-format
+#| msgid "%sgnutls: peer's certificate issuer is unknown"
+msgid "%sremote[%s]: gnutls: peer's certificate issuer is unknown"
+msgstr "%sgnutls: nieznany wystawca certyfikatu partnera"
+
+#, fuzzy, c-format
+#| msgid "%sgnutls: the certificate has been revoked"
+msgid "%sremote[%s]: gnutls: the certificate has been revoked"
+msgstr "%sgnutls: certyfikat został unieważniony"
 
 #, fuzzy, c-format
 #| msgid "%s%s: TLS handshake failed for client %s%s%s: error %d %s"

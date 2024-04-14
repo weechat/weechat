@@ -26,7 +26,9 @@
 #include <string.h>
 #include <time.h>
 #include <gcrypt.h>
+
 #include <gnutls/gnutls.h>
+#include <gnutls/x509.h>
 #include <cjson/cJSON.h>
 
 #include "../../../weechat-plugin.h"
@@ -53,23 +55,18 @@ char *
 relay_remote_network_get_url_resource (struct t_relay_remote *remote,
                                        const char *resource)
 {
-    const char *ptr_url;
-    char url[4096];
+    char *url;
 
-    if (!remote || !resource || !resource[0])
+    if (!remote || !remote->address || !resource || !resource[0])
         return NULL;
 
-    ptr_url = weechat_config_string (remote->options[RELAY_REMOTE_OPTION_URL]);
-    if (!ptr_url || !ptr_url[0])
-        return NULL;
+    weechat_asprintf (&url, "%s://%s:%d/api/%s",
+                      (remote->tls) ? "https" : "http",
+                      remote->address,
+                      remote->port,
+                      resource);
 
-    snprintf (url, sizeof (url),
-              "%s%sapi/%s",
-              ptr_url,
-              (ptr_url[strlen (ptr_url) - 1] == '/') ? "" : "/",
-              resource);
-
-    return strdup (url);
+    return url;
 }
 
 /*
@@ -932,6 +929,233 @@ relay_remote_network_connect_cb (const void *pointer, void *data, int status,
 }
 
 /*
+ * GnuTLS callback called during handshake.
+ *
+ * Returns:
+ *    0: certificate OK
+ *   -1: error in certificate
+ */
+
+int
+relay_remote_network_gnutls_callback (const void *pointer, void *data,
+                                      gnutls_session_t tls_session,
+                                      const gnutls_datum_t *req_ca, int nreq,
+                                      const gnutls_pk_algorithm_t *pk_algos,
+                                      int pk_algos_len,
+#if LIBGNUTLS_VERSION_NUMBER >= 0x020b00 /* 2.11.0 */
+                                      gnutls_retr2_st *answer,
+#else
+                                      gnutls_retr_st *answer,
+#endif /* LIBGNUTLS_VERSION_NUMBER >= 0x020b00 */
+                                      int action)
+{
+    struct t_relay_remote *remote;
+    gnutls_x509_crt_t cert_temp;
+    const gnutls_datum_t *cert_list;
+    unsigned int i, cert_list_len, status;
+    time_t cert_time;
+    int rc, hostname_match, cert_temp_init;
+#if LIBGNUTLS_VERSION_NUMBER >= 0x010706 /* 1.7.6 */
+    gnutls_datum_t cinfo;
+    int rinfo;
+#endif /* LIBGNUTLS_VERSION_NUMBER >= 0x010706 */
+
+    /* make C compiler happy */
+    (void) data;
+    (void) req_ca;
+    (void) nreq;
+    (void) pk_algos;
+    (void) pk_algos_len;
+    (void) answer;
+
+    rc = 0;
+
+    if (!pointer)
+        return -1;
+
+    remote = (struct t_relay_remote *) pointer;
+    cert_temp_init = 0;
+    cert_list = NULL;
+    cert_list_len = 0;
+
+    if (action == WEECHAT_HOOK_CONNECT_GNUTLS_CB_VERIFY_CERT)
+    {
+        /* initialize the certificate structure */
+        if (gnutls_x509_crt_init (&cert_temp) != GNUTLS_E_SUCCESS)
+        {
+            weechat_printf (
+                NULL,
+                _("%sremote[%s]: gnutls: failed to initialize certificate structure"),
+                weechat_prefix ("error"), remote->name);
+            rc = -1;
+            goto end;
+        }
+
+        /* flag to do the "deinit" (at the end of function) */
+        cert_temp_init = 1;
+
+        /* set match options */
+        hostname_match = 0;
+
+        /* get the peer's raw certificate (chain) as sent by the peer */
+        cert_list = gnutls_certificate_get_peers (tls_session, &cert_list_len);
+        if (cert_list)
+        {
+            weechat_printf (
+                NULL,
+                NG_("remote[%s]: gnutls: receiving %d certificate",
+                    "remote[%s]: gnutls: receiving %d certificates",
+                    cert_list_len),
+                remote->name,
+                cert_list_len);
+
+            for (i = 0; i < cert_list_len; i++)
+            {
+                if (gnutls_x509_crt_import (cert_temp,
+                                            &cert_list[i],
+                                            GNUTLS_X509_FMT_DER) != GNUTLS_E_SUCCESS)
+                {
+                    weechat_printf (
+                        NULL,
+                        _("%sremote[%s]: gnutls: failed to import certificate[%d]"),
+                        weechat_prefix ("error"), remote->name, i + 1);
+                    rc = -1;
+                    goto end;
+                }
+
+                /* checks on first certificate received */
+                if (i == 0)
+                {
+                    /* check if hostname matches in the first certificate */
+                    if (gnutls_x509_crt_check_hostname (cert_temp,
+                                                        remote->address) != 0)
+                    {
+                        hostname_match = 1;
+                    }
+                }
+#if LIBGNUTLS_VERSION_NUMBER >= 0x010706 /* 1.7.6 */
+                /* display infos about certificate */
+#if LIBGNUTLS_VERSION_NUMBER < 0x020400 /* 2.4.0 */
+                rinfo = gnutls_x509_crt_print (cert_temp,
+                                               GNUTLS_X509_CRT_ONELINE, &cinfo);
+#else
+                rinfo = gnutls_x509_crt_print (cert_temp,
+                                               GNUTLS_CRT_PRINT_ONELINE, &cinfo);
+#endif /*  LIBGNUTLS_VERSION_NUMBER < 0x020400 */
+                if (rinfo == 0)
+                {
+                    weechat_printf (
+                        NULL,
+                        _("remote[%s] - certificate[%d] info:"),
+                        remote->name, i + 1);
+                    weechat_printf (
+                        NULL,
+                        "remote[%s]   - %s",
+                        remote->name, cinfo.data);
+                    gnutls_free (cinfo.data);
+                }
+#endif /* LIBGNUTLS_VERSION_NUMBER >= 0x010706 */
+                /* check expiration date */
+                cert_time = gnutls_x509_crt_get_expiration_time (cert_temp);
+                if (cert_time < time (NULL))
+                {
+                    weechat_printf (
+                        NULL,
+                        _("%sremote[%s]: gnutls: certificate has expired"),
+                        weechat_prefix ("error"), remote->name);
+                    rc = -1;
+                }
+                /* check activation date */
+                cert_time = gnutls_x509_crt_get_activation_time (cert_temp);
+                if (cert_time > time (NULL))
+                {
+                    weechat_printf (
+                        NULL,
+                        _("%sremote[%s]: gnutls: certificate is not yet activated"),
+                        weechat_prefix ("error"), remote->name);
+                    rc = -1;
+                }
+            }
+
+            if (!hostname_match)
+            {
+                weechat_printf (
+                    NULL,
+                    _("%sremote[%s]: gnutls: the hostname in the certificate "
+                      "does NOT match \"%s\""),
+                    weechat_prefix ("error"), remote->name, remote->address);
+                rc = -1;
+            }
+        }
+
+        /* verify the peer’s certificate */
+        if (gnutls_certificate_verify_peers2 (tls_session, &status) < 0)
+        {
+            weechat_printf (
+                NULL,
+                _("%sremote[%s]: gnutls: error while checking peer's certificate"),
+                weechat_prefix ("error"), remote->name);
+            rc = -1;
+            goto end;
+        }
+
+        /* check if certificate is trusted */
+        if (status & GNUTLS_CERT_INVALID)
+        {
+            weechat_printf (
+                NULL,
+                _("%sremote[%s]: gnutls: peer's certificate is NOT trusted"),
+                weechat_prefix ("error"), remote->name);
+            rc = -1;
+        }
+        else
+        {
+            weechat_printf (
+                NULL,
+                _("remote[%s]: gnutls: peer's certificate is trusted"),
+                remote->name);
+        }
+
+        /* check if certificate issuer is known */
+        if (status & GNUTLS_CERT_SIGNER_NOT_FOUND)
+        {
+            weechat_printf (
+                NULL,
+                _("%sremote[%s]: gnutls: peer's certificate issuer is unknown"),
+                weechat_prefix ("error"), remote->name);
+            rc = -1;
+        }
+
+        /* check that certificate is not revoked */
+        if (status & GNUTLS_CERT_REVOKED)
+        {
+            weechat_printf (
+                NULL,
+                _("%sremote[%s]: gnutls: the certificate has been revoked"),
+                weechat_prefix ("error"), remote->name);
+            rc = -1;
+        }
+    }
+    else if (action == WEECHAT_HOOK_CONNECT_GNUTLS_CB_SET_CERT)
+    {
+        /* nothing here */
+    }
+
+end:
+    /* an error should stop the handshake unless the user doesn't care */
+    if ((rc == -1)
+        && !weechat_config_boolean (remote->options[RELAY_REMOTE_OPTION_TLS_VERIFY]))
+    {
+        rc = 0;
+    }
+
+    if (cert_temp_init)
+        gnutls_x509_crt_deinit (cert_temp);
+
+    return rc;
+}
+
+/*
  * Callback for handshake URL.
  */
 
@@ -953,6 +1177,8 @@ relay_remote_network_url_handshake_cb (const void *pointer,
 
     remote = (struct t_relay_remote *)pointer;
 
+    remote->hook_url_handshake = NULL;
+
     ptr_resp_code = weechat_hashtable_get (output, "response_code");
     if (ptr_resp_code && ptr_resp_code[0] && (strcmp (ptr_resp_code, "200") != 0))
     {
@@ -962,6 +1188,7 @@ relay_remote_network_url_handshake_cb (const void *pointer,
                         remote->name,
                         weechat_config_string (remote->options[RELAY_REMOTE_OPTION_URL]),
                         ptr_resp_code);
+        relay_remote_set_status (remote, RELAY_STATUS_DISCONNECTED);
         return WEECHAT_RC_OK;
     }
 
@@ -974,6 +1201,7 @@ relay_remote_network_url_handshake_cb (const void *pointer,
                         remote->name,
                         weechat_config_string (remote->options[RELAY_REMOTE_OPTION_URL]),
                         ptr_error);
+        relay_remote_set_status (remote, RELAY_STATUS_DISCONNECTED);
         return WEECHAT_RC_OK;
     }
 
@@ -1009,6 +1237,7 @@ relay_remote_network_url_handshake_cb (const void *pointer,
                         remote->name,
                         weechat_config_string (remote->options[RELAY_REMOTE_OPTION_URL]),
                         _("hash algorithm not found"));
+        relay_remote_set_status (remote, RELAY_STATUS_DISCONNECTED);
         return WEECHAT_RC_OK;
     }
 
@@ -1020,6 +1249,7 @@ relay_remote_network_url_handshake_cb (const void *pointer,
                         remote->name,
                         weechat_config_string (remote->options[RELAY_REMOTE_OPTION_URL]),
                         _("unknown number of hash iterations"));
+        relay_remote_set_status (remote, RELAY_STATUS_DISCONNECTED);
         return WEECHAT_RC_OK;
     }
 
@@ -1031,6 +1261,7 @@ relay_remote_network_url_handshake_cb (const void *pointer,
                         remote->name,
                         weechat_config_string (remote->options[RELAY_REMOTE_OPTION_URL]),
                         _("unknown TOTP status"));
+        relay_remote_set_status (remote, RELAY_STATUS_DISCONNECTED);
         return WEECHAT_RC_OK;
     }
 
@@ -1053,10 +1284,10 @@ relay_remote_network_url_handshake_cb (const void *pointer,
         remote->port,
         1,  /* ipv6 */
         0,  /* retry */
-        NULL,  /* gnutls_sess */
-        NULL,  /* gnutls_cb */
-        0,  /* gnutls_dhkey_size */
-        NULL,  /* gnutls_priorities */
+        (remote->tls) ? &remote->gnutls_sess : NULL,
+        (remote->tls) ? &relay_remote_network_gnutls_callback : NULL,
+        2048,  /* gnutls_dhkey_size */
+        "NORMAL",  /* gnutls_priorities */
         NULL,  /* local_hostname */
         &relay_remote_network_connect_cb,
         remote,
@@ -1151,6 +1382,11 @@ relay_remote_network_connect (struct t_relay_remote *remote)
                            "httpheader",
                            "Accept: application/json\n"
                            "Content-Type: application/json; charset=utf-8");
+    if (!weechat_config_boolean (remote->options[RELAY_REMOTE_OPTION_TLS_VERIFY]))
+    {
+        weechat_hashtable_set (options, "ssl_verifypeer", "0");
+        weechat_hashtable_set (options, "ssl_verifyhost", "0");
+    }
     body = relay_remote_network_get_handshake_request ();
     if (!body)
         goto error;

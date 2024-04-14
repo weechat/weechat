@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-04-12 22:18+0200\n"
+"POT-Creation-Date: 2024-04-14 18:54+0200\n"
 "PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: Santiago Forero <santiago@forero.xyz>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -14025,6 +14025,68 @@ msgstr "%s%s: agotado tiempo de espera"
 #| msgid "%s%s: unable to create socket"
 msgid "%sremote[%s]: unable to create socket"
 msgstr "%s%s: no es posible crear el socket"
+
+#, fuzzy, c-format
+msgid "%sremote[%s]: gnutls: failed to initialize certificate structure"
+msgstr "%sgnutls: el certificado del par es confiable"
+
+#, fuzzy, c-format
+#| msgid "%sgnutls: receiving %d certificate"
+#| msgid_plural "%sgnutls: receiving %d certificates"
+msgid "remote[%s]: gnutls: receiving %d certificate"
+msgid_plural "remote[%s]: gnutls: receiving %d certificates"
+msgstr[0] "%sgnutls: recibiendo %d certificado"
+msgstr[1] "%sgnutls: recibiendo %d certificados"
+
+#, fuzzy, c-format
+msgid "%sremote[%s]: gnutls: failed to import certificate[%d]"
+msgstr "%sgnutls: no es posible leer el certificado \"%s\""
+
+#, fuzzy, c-format
+#| msgid "%s - certificate[%d] info:"
+msgid "remote[%s] - certificate[%d] info:"
+msgstr "%s - información del certificado[%d]:"
+
+#, fuzzy, c-format
+#| msgid "%sgnutls: certificate has expired"
+msgid "%sremote[%s]: gnutls: certificate has expired"
+msgstr "%sgnutls: el certificado ha expirado"
+
+#, fuzzy, c-format
+#| msgid "%sgnutls: certificate is not yet activated"
+msgid "%sremote[%s]: gnutls: certificate is not yet activated"
+msgstr "%sgnutls: el certificado es ha sido activado aún"
+
+#, fuzzy, c-format
+#| msgid "%sgnutls: the hostname in the certificate does NOT match \"%s\""
+msgid ""
+"%sremote[%s]: gnutls: the hostname in the certificate does NOT match \"%s\""
+msgstr "%sgnutls: el hostname en el certificado NO concuerda con \"%s\""
+
+#, fuzzy, c-format
+#| msgid "%sgnutls: error while checking peer's certificate"
+msgid "%sremote[%s]: gnutls: error while checking peer's certificate"
+msgstr "%sgnutls: error mientras se verificaba el certificado del par"
+
+#, fuzzy, c-format
+#| msgid "%sgnutls: peer's certificate is NOT trusted"
+msgid "%sremote[%s]: gnutls: peer's certificate is NOT trusted"
+msgstr "%sgnutls: el certificado del par NO es confiable"
+
+#, fuzzy, c-format
+#| msgid "%sgnutls: peer's certificate is trusted"
+msgid "remote[%s]: gnutls: peer's certificate is trusted"
+msgstr "%sgnutls: el certificado del par es confiable"
+
+#, fuzzy, c-format
+#| msgid "%sgnutls: peer's certificate issuer is unknown"
+msgid "%sremote[%s]: gnutls: peer's certificate issuer is unknown"
+msgstr "%sgnutls: el emisor del certificado del par es desconocido"
+
+#, fuzzy, c-format
+#| msgid "%sgnutls: the certificate has been revoked"
+msgid "%sremote[%s]: gnutls: the certificate has been revoked"
+msgstr "%sgnutls: el certificado ha sido revocado"
 
 #, fuzzy, c-format
 #| msgid "%s%s: TLS handshake failed for client %s%s%s: error %d %s"

@@ -42,9 +42,9 @@
 
 
 char *relay_remote_option_string[RELAY_REMOTE_NUM_OPTIONS] =
-{ "url", "proxy", "password", "totp_secret" };
+{ "url", "proxy", "tls_verify", "password", "totp_secret" };
 char *relay_remote_option_default[RELAY_REMOTE_NUM_OPTIONS] =
-{ "", "", "", "" };
+{ "", "", "on", "", "" };
 
 struct t_relay_remote *relay_remotes = NULL;
 struct t_relay_remote *last_relay_remote = NULL;
@@ -266,20 +266,34 @@ relay_remote_get_address (const char *url)
 int
 relay_remote_get_port (const char *url)
 {
-    char *pos, *error;
+    char *pos, *pos2, *str_port, *error;
     long port;
 
     if (!url)
         goto error;
 
-    pos = strrchr (url, ':');
+    pos = strchr (url + 7, ':');
     if (!pos)
         goto error;
 
+    pos++;
+
+    pos2 = strchr (pos, '/');
+    if (pos2)
+        str_port = weechat_strndup (pos, pos2 - pos);
+    else
+        str_port = strdup (pos);
+    if (!str_port)
+        goto error;
+
     error = NULL;
-    port = strtol (pos + 1, &error, 10);
+    port = strtol (str_port, &error, 10);
     if (error && !error[0])
+    {
+        free (str_port);
         return (int)port;
+    }
+    free (str_port);
 
 error:
     return RELAY_REMOTE_DEFAULT_PORT;
@@ -403,6 +417,7 @@ relay_remote_set_url (struct t_relay_remote *remote, const char *url)
         free (remote->address);
     remote->address = relay_remote_get_address (url);
     remote->port = relay_remote_get_port (url);
+    remote->tls = (weechat_strncmp (url, "https:", 6) == 0) ? 1 : 0;
 }
 
 /*
@@ -451,7 +466,8 @@ relay_remote_new_with_options (const char *name, struct t_config_option **option
 
 struct t_relay_remote *
 relay_remote_new (const char *name, const char *url, const char *proxy,
-                  const char *password, const char *totp_secret)
+                  const char *tls_verify, const char *password,
+                  const char *totp_secret)
 {
     struct t_config_option *option[RELAY_REMOTE_NUM_OPTIONS];
     const char *value[RELAY_REMOTE_NUM_OPTIONS];
@@ -463,6 +479,7 @@ relay_remote_new (const char *name, const char *url, const char *proxy,
 
     value[RELAY_REMOTE_OPTION_URL] = url;
     value[RELAY_REMOTE_OPTION_PROXY] = proxy;
+    value[RELAY_REMOTE_OPTION_TLS_VERIFY] = tls_verify;
     value[RELAY_REMOTE_OPTION_PASSWORD] = password;
     value[RELAY_REMOTE_OPTION_TOTP_SECRET] = totp_secret;
 
@@ -471,7 +488,7 @@ relay_remote_new (const char *name, const char *url, const char *proxy,
         option[i] = relay_config_create_remote_option (
             name,
             i,
-            (value[i]) ? value[i] : "");
+            (value[i]) ? value[i] : relay_remote_option_string[i]);
     }
 
     new_remote = relay_remote_new_with_options (name, option);
@@ -922,6 +939,9 @@ relay_remote_print_log ()
                             weechat_config_string (ptr_remote->options[RELAY_REMOTE_OPTION_URL]));
         weechat_log_printf ("  proxy . . . . . . . . . : '%s'",
                             weechat_config_string (ptr_remote->options[RELAY_REMOTE_OPTION_PROXY]));
+        weechat_log_printf ("  tls_verify. . . . . . . : %s",
+                            (weechat_config_boolean (ptr_remote->options[RELAY_REMOTE_OPTION_TLS_VERIFY])) ?
+                            "on" : "off");
         weechat_log_printf ("  password. . . . . . . . : '%s'",
                             weechat_config_string (ptr_remote->options[RELAY_REMOTE_OPTION_PASSWORD]));
         weechat_log_printf ("  totp_secret . . . . . . : '%s'",

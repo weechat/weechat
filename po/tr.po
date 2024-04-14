@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-04-12 22:18+0200\n"
+"POT-Creation-Date: 2024-04-14 18:54+0200\n"
 "PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -14622,6 +14622,70 @@ msgstr "%s%s: Zaman aşımı"
 #| msgid "%s%s: unable to create socket"
 msgid "%sremote[%s]: unable to create socket"
 msgstr "%s%s: Soket oluşturulamıyor"
+
+#, fuzzy, c-format
+#| msgid "%sgnutls: failed to initialize certificate structure"
+msgid "%sremote[%s]: gnutls: failed to initialize certificate structure"
+msgstr "%sgnutls: Sertifika yapısı başlatılamadı"
+
+#, fuzzy, c-format
+#| msgid "%sgnutls: receiving %d certificate"
+#| msgid_plural "%sgnutls: receiving %d certificates"
+msgid "remote[%s]: gnutls: receiving %d certificate"
+msgid_plural "remote[%s]: gnutls: receiving %d certificates"
+msgstr[0] "%sgnutls: %d sertifika alınıyor"
+msgstr[1] "%sgnutls: %d sertifika alınıyor"
+
+#, fuzzy, c-format
+#| msgid "%sgnutls: failed to import certificate[%d]"
+msgid "%sremote[%s]: gnutls: failed to import certificate[%d]"
+msgstr "%sgnutls: Sertifika[%d] içe aktarılamadı"
+
+#, fuzzy, c-format
+#| msgid "%s - certificate[%d] info:"
+msgid "remote[%s] - certificate[%d] info:"
+msgstr "%s - sertifika[%d] bilgisi:"
+
+#, fuzzy, c-format
+#| msgid "%sgnutls: certificate has expired"
+msgid "%sremote[%s]: gnutls: certificate has expired"
+msgstr "%sgnutls: Sertifika süresi dolmuş"
+
+#, fuzzy, c-format
+#| msgid "%sgnutls: certificate is not yet activated"
+msgid "%sremote[%s]: gnutls: certificate is not yet activated"
+msgstr "%sgnutls: Sertifika henüz etkinleştirilmemiş"
+
+#, fuzzy, c-format
+#| msgid "%sgnutls: the hostname in the certificate does NOT match \"%s\""
+msgid ""
+"%sremote[%s]: gnutls: the hostname in the certificate does NOT match \"%s\""
+msgstr "%sgnutls: Sertifikadaki kullanıcı adı \"%s\" ile eşleşmiyor"
+
+#, fuzzy, c-format
+#| msgid "%sgnutls: error while checking peer's certificate"
+msgid "%sremote[%s]: gnutls: error while checking peer's certificate"
+msgstr "%sgnutls: Kullanıcının sertifikaları denetlenirken hata"
+
+#, fuzzy, c-format
+#| msgid "%sgnutls: peer's certificate is NOT trusted"
+msgid "%sremote[%s]: gnutls: peer's certificate is NOT trusted"
+msgstr "%sgnutls: Kullanıcının sertifikasına güvenilmiyor"
+
+#, fuzzy, c-format
+#| msgid "%sgnutls: peer's certificate is trusted"
+msgid "remote[%s]: gnutls: peer's certificate is trusted"
+msgstr "%sgnutls: Kullanıcının sertifikasına güveniliyor"
+
+#, fuzzy, c-format
+#| msgid "%sgnutls: peer's certificate issuer is unknown"
+msgid "%sremote[%s]: gnutls: peer's certificate issuer is unknown"
+msgstr "%sgnutls: Kullanıcının sertifika vericisi bilinmiyor"
+
+#, fuzzy, c-format
+#| msgid "%sgnutls: the certificate has been revoked"
+msgid "%sremote[%s]: gnutls: the certificate has been revoked"
+msgstr "%sgnutls: Sertifika geri alınmış"
 
 #, fuzzy, c-format
 #| msgid "%s%s: TLS handshake failed for client %s%s%s: error %d %s"

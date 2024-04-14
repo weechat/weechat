@@ -26,7 +26,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-04-12 22:18+0200\n"
+"POT-Creation-Date: 2024-04-14 18:54+0200\n"
 "PO-Revision-Date: 2024-04-12 16:40+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -15134,6 +15134,70 @@ msgstr "%sremote[%s]: Zeitüberschreitung"
 #, c-format
 msgid "%sremote[%s]: unable to create socket"
 msgstr "%sremote[%s]: Socket kann nicht erstellt werden"
+
+#, fuzzy, c-format
+#| msgid "%sgnutls: failed to initialize certificate structure"
+msgid "%sremote[%s]: gnutls: failed to initialize certificate structure"
+msgstr "%sgnutls: Zertifikatsstruktur konnte nicht initialisiert werden"
+
+#, fuzzy, c-format
+#| msgid "%sgnutls: receiving %d certificate"
+#| msgid_plural "%sgnutls: receiving %d certificates"
+msgid "remote[%s]: gnutls: receiving %d certificate"
+msgid_plural "remote[%s]: gnutls: receiving %d certificates"
+msgstr[0] "%sgnutls: empfange %d Zertifikat"
+msgstr[1] "%sgnutls: empfange %d Zertifikate"
+
+#, fuzzy, c-format
+#| msgid "%sgnutls: failed to import certificate[%d]"
+msgid "%sremote[%s]: gnutls: failed to import certificate[%d]"
+msgstr "%sgnutls: Zertifikat[%d] konnte nicht importiert werden"
+
+#, fuzzy, c-format
+#| msgid "%s - certificate[%d] info:"
+msgid "remote[%s] - certificate[%d] info:"
+msgstr "%s - Zertifikat[%d]-Information:"
+
+#, fuzzy, c-format
+#| msgid "%sgnutls: certificate has expired"
+msgid "%sremote[%s]: gnutls: certificate has expired"
+msgstr "%sgnutls: die Gültigkeitsdauer des Zertifikates ist abgelaufen"
+
+#, fuzzy, c-format
+#| msgid "%sgnutls: certificate is not yet activated"
+msgid "%sremote[%s]: gnutls: certificate is not yet activated"
+msgstr "%sgnutls: Zertifikat ist noch nicht freigeschaltet"
+
+#, fuzzy, c-format
+#| msgid "%sgnutls: the hostname in the certificate does NOT match \"%s\""
+msgid ""
+"%sremote[%s]: gnutls: the hostname in the certificate does NOT match \"%s\""
+msgstr "%sgnutls: der Hostname im Zertifikat \"%s\" stimmt NICHT überein"
+
+#, fuzzy, c-format
+#| msgid "%sgnutls: error while checking peer's certificate"
+msgid "%sremote[%s]: gnutls: error while checking peer's certificate"
+msgstr "%sgnutls: Fehler bei der Überprüfung des Peer-Zertifikates"
+
+#, fuzzy, c-format
+#| msgid "%sgnutls: peer's certificate is NOT trusted"
+msgid "%sremote[%s]: gnutls: peer's certificate is NOT trusted"
+msgstr "%sgnutls: Peer-Zertifikat ist NICHT vertrauenswürdig"
+
+#, fuzzy, c-format
+#| msgid "%sgnutls: peer's certificate is trusted"
+msgid "remote[%s]: gnutls: peer's certificate is trusted"
+msgstr "%sgnutls: Peer-Zertifikat ist vertrauenswürdig"
+
+#, fuzzy, c-format
+#| msgid "%sgnutls: peer's certificate issuer is unknown"
+msgid "%sremote[%s]: gnutls: peer's certificate issuer is unknown"
+msgstr "%sgnutls: Der Aussteller für das Peer-Zertifikat ist unbekannt"
+
+#, fuzzy, c-format
+#| msgid "%sgnutls: the certificate has been revoked"
+msgid "%sremote[%s]: gnutls: the certificate has been revoked"
+msgstr "%sgnutls: Das Zertifikat wurde widerrufen"
 
 #, c-format
 msgid "%sremote[%s]: handshake failed with URL %s, response code: %s"

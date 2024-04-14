@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-04-12 22:18+0200\n"
+"POT-Creation-Date: 2024-04-14 18:54+0200\n"
 "PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -13702,6 +13702,66 @@ msgstr "%s%s:  časový limit"
 #| msgid "%s%s: unable to create socket"
 msgid "%sremote[%s]: unable to create socket"
 msgstr "%s%s: nemohu vytvořit soket"
+
+#, fuzzy, c-format
+msgid "%sremote[%s]: gnutls: failed to initialize certificate structure"
+msgstr "gnutls: certifikát protějška je důvěryhodný"
+
+#, fuzzy, c-format
+msgid "remote[%s]: gnutls: receiving %d certificate"
+msgid_plural "remote[%s]: gnutls: receiving %d certificates"
+msgstr[0] "gnutls: přijímám %d certifikát"
+msgstr[1] "gnutls: přijímám %d certifikáty"
+msgstr[2] "gnutls: přijímám %d certifikátů"
+
+#, fuzzy, c-format
+msgid "%sremote[%s]: gnutls: failed to import certificate[%d]"
+msgstr "%sgnutls: nemůžu číst certifikát \"%s\""
+
+#, fuzzy, c-format
+#| msgid "%s - certificate[%d] info:"
+msgid "remote[%s] - certificate[%d] info:"
+msgstr "%s - informace o certifikátu[%d] :"
+
+#, fuzzy, c-format
+#| msgid "%sgnutls: certificate has expired"
+msgid "%sremote[%s]: gnutls: certificate has expired"
+msgstr "%sgnutls: certifikát vypršel"
+
+#, fuzzy, c-format
+#| msgid "%sgnutls: certificate is not yet activated"
+msgid "%sremote[%s]: gnutls: certificate is not yet activated"
+msgstr "%sgnutls: certifikát ještě nebyl aktivován"
+
+#, fuzzy, c-format
+#| msgid "%sgnutls: the hostname in the certificate does NOT match \"%s\""
+msgid ""
+"%sremote[%s]: gnutls: the hostname in the certificate does NOT match \"%s\""
+msgstr "%sguntls: jméno hosta v certifikátu NODPOVÍDÁ \"%s\""
+
+#, fuzzy, c-format
+#| msgid "%sgnutls: error while checking peer's certificate"
+msgid "%sremote[%s]: gnutls: error while checking peer's certificate"
+msgstr "%sgnutls: chyba při kontrole certifikátu protěška"
+
+#, fuzzy, c-format
+#| msgid "%sgnutls: peer's certificate is NOT trusted"
+msgid "%sremote[%s]: gnutls: peer's certificate is NOT trusted"
+msgstr "%sgnutls: certifikát protějška NENÍ důvěryhodný"
+
+#, fuzzy, c-format
+msgid "remote[%s]: gnutls: peer's certificate is trusted"
+msgstr "%sgnutls: certifikát protějška NENÍ důvěryhodný"
+
+#, fuzzy, c-format
+#| msgid "%sgnutls: peer's certificate issuer is unknown"
+msgid "%sremote[%s]: gnutls: peer's certificate issuer is unknown"
+msgstr "%sgnutls: vydavatel certifikátu protějška je neznámý"
+
+#, fuzzy, c-format
+#| msgid "%sgnutls: the certificate has been revoked"
+msgid "%sremote[%s]: gnutls: the certificate has been revoked"
+msgstr "%sgnutls: certifikát byl zrušen"
 
 #, fuzzy, c-format
 msgid "%sremote[%s]: handshake failed with URL %s, response code: %s"

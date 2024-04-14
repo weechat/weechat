@@ -26,10 +26,11 @@
 
 enum t_relay_remote_option
 {
-    RELAY_REMOTE_OPTION_URL = 0,       /* remote URL                        */
-    RELAY_REMOTE_OPTION_PROXY,         /* proxy used for remote (optional)  */
-    RELAY_REMOTE_OPTION_PASSWORD,      /* password for remote relay         */
-    RELAY_REMOTE_OPTION_TOTP_SECRET,   /* TOTP secret for remote relay      */
+    RELAY_REMOTE_OPTION_URL = 0,     /* remote URL                          */
+    RELAY_REMOTE_OPTION_PROXY,       /* proxy used for remote (optional)    */
+    RELAY_REMOTE_OPTION_TLS_VERIFY,  /* check if the connection is trusted  */
+    RELAY_REMOTE_OPTION_PASSWORD,    /* password for remote relay           */
+    RELAY_REMOTE_OPTION_TOTP_SECRET, /* TOTP secret for remote relay        */
     /* number of relay remote options */
     RELAY_REMOTE_NUM_OPTIONS,
 };
@@ -86,6 +87,7 @@ extern struct t_relay_remote *relay_remote_new_with_options (const char *name,
                                                              struct t_config_option **options);
 extern struct t_relay_remote *relay_remote_new (const char *name,
                                                 const char *proxy,
+                                                const char *tls_verify,
                                                 const char *url,
                                                 const char *password,
                                                 const char *totp_secret);
