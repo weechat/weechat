@@ -504,7 +504,7 @@ relay_remote_new_with_infolist (struct t_infolist *infolist)
     if (!new_remote)
         return NULL;
 
-    new_remote->address = strdup (weechat_infolist_string (infolist, "name"));
+    new_remote->name = strdup (weechat_infolist_string (infolist, "name"));
     new_remote->address = strdup (weechat_infolist_string (infolist, "address"));
     new_remote->port = weechat_infolist_integer (infolist, "port");
     new_remote->tls = weechat_infolist_integer (infolist, "tls");
