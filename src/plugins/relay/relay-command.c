@@ -401,6 +401,8 @@ relay_command_display_remote (struct t_relay_remote *remote, int with_detail)
         weechat_printf (NULL, _("Remote: %s"), remote->name);
         weechat_printf (NULL, "  url. . . . . . . . . : '%s'",
                             weechat_config_string (remote->options[RELAY_REMOTE_OPTION_URL]));
+        weechat_printf (NULL, "  proxy. . . . . . . . : '%s'",
+                            weechat_config_string (remote->options[RELAY_REMOTE_OPTION_PROXY]));
         weechat_printf (NULL, "  password . . . . . . : '%s'",
                             weechat_config_string (remote->options[RELAY_REMOTE_OPTION_PASSWORD]));
         weechat_printf (NULL, "  totp_secret. . . . . : '%s'",
