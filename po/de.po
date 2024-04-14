@@ -26,7 +26,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-04-14 18:54+0200\n"
+"POT-Creation-Date: 2024-04-14 19:13+0200\n"
 "PO-Revision-Date: 2024-04-12 16:40+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -15223,6 +15223,19 @@ msgid ""
 msgstr ""
 "%sremote[%s]: erfolgreicher Handshake mit URL %s: hash_algo=%s, "
 "Iterationen=%d, totp=%d"
+
+#, fuzzy, c-format
+#| msgid "%s%s: proxy \"%s\" not found for server \"%s\", cannot connect"
+msgid "%sremote[%s]: proxy \"%s\" not found, cannot connect"
+msgstr ""
+"%s%s: Proxy \"%s\" für Server \"%s\" nicht gefunden, kann keine Verbindung "
+"herstellen"
+
+#, fuzzy, c-format
+#| msgid "%s%s: missing proxy settings, check options for proxy \"%s\""
+msgid "%sremote[%s]: missing proxy settings, check options for proxy \"%s\""
+msgstr ""
+"%s%s: fehlende Proxy-Einstellungen. Überprüfe Einstellungen für Proxy \"%s\""
 
 #, c-format
 msgid "%s%s: already connected to remote relay \"%s\"!"

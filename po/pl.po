@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-04-14 18:54+0200\n"
+"POT-Creation-Date: 2024-04-14 19:13+0200\n"
 "PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -14571,6 +14571,17 @@ msgid ""
 "%sremote[%s]: successful handshake with URL %s: hash_algo=%s, iterations=%d, "
 "totp=%d"
 msgstr ""
+
+#, fuzzy, c-format
+#| msgid "%s%s: proxy \"%s\" not found for server \"%s\", cannot connect"
+msgid "%sremote[%s]: proxy \"%s\" not found, cannot connect"
+msgstr ""
+"%s%s: nie znaleziono proxy \"%s\" dla serwer \"%s\", nie można połączyć"
+
+#, fuzzy, c-format
+#| msgid "%s%s: missing proxy settings, check options for proxy \"%s\""
+msgid "%sremote[%s]: missing proxy settings, check options for proxy \"%s\""
+msgstr "%s%s: brakujące ustawienie proxy, sprawdź opcje proxy \"%s\""
 
 #, fuzzy, c-format
 #| msgid "%s%s: already connected to server \"%s\"!"
