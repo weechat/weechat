@@ -792,6 +792,7 @@ relay_remote_network_connect_cb (const void *pointer, void *data, int status,
 
     /* make C compiler happy */
     (void) data;
+    (void) gnutls_rc;
 
     remote = (struct t_relay_remote *)pointer;
 
