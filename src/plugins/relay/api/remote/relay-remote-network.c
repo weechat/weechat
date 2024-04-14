@@ -879,22 +879,6 @@ relay_remote_network_connect_cb (const void *pointer, void *data, int status,
                 weechat_printf (NULL, _("%sremote[%s]: error: %s"),
                                 weechat_prefix ("error"), remote->name, error);
             }
-            if (gnutls_rc == GNUTLS_E_DH_PRIME_UNACCEPTABLE)
-            {
-                /* dhkey_size = weechat_config_integer ( */
-                /*     remote->options[RELAY_REMOTE_OPTION_TLS_DHKEY_SIZE]); */
-                /* weechat_printf ( */
-                /*     NULL, */
-                /*     _("%sremote[%s]: you should play with option " */
-                /*       "relay.remote.%s.tls_dhkey_size (current value is %d, try " */
-                /*       "a lower value like %d or %d)"), */
-                /*     weechat_prefix ("error"), */
-                /*     remote->name, */
-                /*     remote->name, */
-                /*     dhkey_size, */
-                /*     dhkey_size / 2, */
-                /*     dhkey_size / 4); */
-            }
             break;
         case WEECHAT_HOOK_CONNECT_MEMORY_ERROR:
             weechat_printf (NULL, _("%sremote[%s]: not enough memory"),
