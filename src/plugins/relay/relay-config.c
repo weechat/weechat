@@ -963,6 +963,73 @@ relay_config_create_option_port_path (const void *pointer, void *data,
 }
 
 /*
+ * Gets remote pointer with name of option.
+ */
+
+struct t_relay_remote *
+relay_config_get_remote_from_option_name (const char *name)
+{
+    struct t_relay_remote *ptr_remote;
+    char *pos_option, *remote_name;
+
+    ptr_remote = NULL;
+
+    if (name)
+    {
+        pos_option = strrchr (name, '.');
+        if (pos_option)
+        {
+            remote_name = weechat_strndup (name, pos_option - name);
+            if (remote_name)
+            {
+                ptr_remote = relay_remote_search (remote_name);
+                free (remote_name);
+            }
+        }
+    }
+
+    return ptr_remote;
+}
+
+/*
+ * Callback called to check a server option when it is modified.
+ */
+
+int
+relay_config_remote_url_check_value_cb (const void *pointer, void *data,
+                                        struct t_config_option *option,
+                                        const char *value)
+{
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) option;
+
+    return relay_remote_url_valid (value);
+}
+
+/*
+ * Callback called when a remote URL option is modified.
+ */
+
+void
+relay_config_remote_url_change_cb (const void *pointer, void *data,
+                                   struct t_config_option *option)
+{
+    struct t_relay_remote *ptr_remote;
+    char *name;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+
+    name = weechat_config_option_get_pointer (option, "name");
+    ptr_remote = relay_config_get_remote_from_option_name (name);
+    if (ptr_remote)
+        relay_remote_set_url (ptr_remote, weechat_config_string (option));
+}
+
+/*
  * Creates an option for a remote.
  *
  * Returns pointer to new option, NULL if error.
@@ -997,7 +1064,9 @@ relay_config_create_remote_option (const char *remote_name, int index_option,
                    "examples: https://example.com:9000 or http://example.com:9000 "
                    "(plain-text connection, not recommended)"),
                 NULL, 0, 0, value, NULL, 0,
-                NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+                &relay_config_remote_url_check_value_cb, NULL, NULL,
+                &relay_config_remote_url_change_cb, NULL, NULL,
+                NULL, NULL, NULL);
             break;
         case RELAY_REMOTE_OPTION_PROXY:
             ptr_option = weechat_config_new_option (

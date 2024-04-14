@@ -80,6 +80,8 @@ extern struct t_relay_remote *relay_remote_alloc (const char *name);
 extern void relay_remote_add (struct t_relay_remote *remote,
                               struct t_relay_remote **list_remotes,
                               struct t_relay_remote **last_list_remote);
+extern void relay_remote_set_url (struct t_relay_remote *remote,
+                                  const char *url);
 extern struct t_relay_remote *relay_remote_new_with_options (const char *name,
                                                              struct t_config_option **options);
 extern struct t_relay_remote *relay_remote_new (const char *name,

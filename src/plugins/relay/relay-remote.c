@@ -393,6 +393,19 @@ relay_remote_add (struct t_relay_remote *remote,
 }
 
 /*
+ * Sets URL in a remote.
+ */
+
+void
+relay_remote_set_url (struct t_relay_remote *remote, const char *url)
+{
+    if (remote->address)
+        free (remote->address);
+    remote->address = relay_remote_get_address (url);
+    remote->port = relay_remote_get_port (url);
+}
+
+/*
  * Creates a new remote with options.
  *
  * Returns pointer to new remote, NULL if error.
@@ -419,9 +432,8 @@ relay_remote_new_with_options (const char *name, struct t_config_option **option
         new_remote->options[i] = options[i];
     }
     relay_remote_add (new_remote, &relay_remotes, &last_relay_remote);
-    new_remote->address = relay_remote_get_address (
-        weechat_config_string (new_remote->options[RELAY_REMOTE_OPTION_URL]));
-    new_remote->port = relay_remote_get_port (
+    relay_remote_set_url (
+        new_remote,
         weechat_config_string (new_remote->options[RELAY_REMOTE_OPTION_URL]));
 
     relay_remotes_count++;
