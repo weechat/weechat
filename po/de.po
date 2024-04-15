@@ -27,7 +27,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2024-04-14 19:13+0200\n"
-"PO-Revision-Date: 2024-04-15 10:59+0200\n"
+"PO-Revision-Date: 2024-04-15 13:01+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de_DE\n"
@@ -98,7 +98,6 @@ msgstr ""
 msgid "Usage: %s [option...] [plugin:option...]\n"
 msgstr "Aufruf: %s [Option...] [Erweiterung:Option...]\n"
 
-#, fuzzy
 #| msgid ""
 #| "  -a, --no-connect         disable auto-connect to servers at startup\n"
 #| "  -c, --colors             display default colors in terminal and exit\n"
@@ -176,7 +175,7 @@ msgstr ""
 "                           diese Option kann mehrfach genutzt werden\n"
 "  -s, --no-script          Skripts werden beim Programmstart nicht geladen\n"
 "      --upgrade            führt ein WeeChat-Upgrade, mittels "
-"Sitzungsdateien die mit dem Befehl `/upgrade -quit` erstellt wurden, durch\n"
+"Sitzungsdateien durch (benutze in WeeChat /help upgrade)\n"
 "  -v, --version            zeigt die Version von WeeChat an\n"
 "  plugin:option            Einstellungen für Erweiterungen (siehe man "
 "weechat)\n"
@@ -1952,18 +1951,16 @@ msgstr "  - ${weechat_config_dir}: WeeChat Konfigurationsverzeichnis"
 msgid "  - ${weechat_data_dir}: WeeChat data directory"
 msgstr "  - ${weechat_data_dir}: WeeChat Datenverzeichnis"
 
-#, fuzzy
 #| msgid "  - ${weechat_data_dir}: WeeChat data directory"
 msgid "  - ${weechat_state_dir}: WeeChat state directory"
-msgstr "  - ${weechat_data_dir}: WeeChat Datenverzeichnis"
+msgstr "  - ${weechat_state_dir}: WeeChat-Statusverzeichnis"
 
 msgid "  - ${weechat_cache_dir}: WeeChat cache directory"
 msgstr "  - ${weechat_cache_dir}: WeeChat Cache Verzeichnis"
 
-#, fuzzy
 #| msgid "  - ${weechat_runtmie_dir}: WeeChat runtime directory"
 msgid "  - ${weechat_runtime_dir}: WeeChat runtime directory"
-msgstr "  - ${weechat_runtmie_dir}: WeeChat Verzeichnis beim Programmstart"
+msgstr "  - ${weechat_runtime_dir}: WeeChat-Laufzeitverzeichnis"
 
 msgid "  - ${eval:string}: the evaluated string"
 msgstr "  - ${eval:string}: die evaluierte Zeichenkette"
@@ -6377,7 +6374,7 @@ msgstr ""
 msgid "Error: not enough memory\n"
 msgstr "Fehler: nicht genügend Speicher\n"
 
-#, fuzzy, c-format
+#, c-format
 #| msgid ""
 #| "Error: wrong number of paths for home directories (expected: 1 or 4, "
 #| "received: %d)\n"
@@ -6385,8 +6382,9 @@ msgid ""
 "Error: wrong number of paths for home directories (expected: 1 or 5, "
 "received: %d)\n"
 msgstr ""
-"Fehler: Falsche Anzahl von Pfaden für Home-Verzeichnisse (erwartet: 1 oder "
-"4, gefunden: %d)\n"
+"Fehler: falsche Anzahl von Pfaden für Heimatverzeichnisse (erwartet: 1 oder"
+" 5, "
+"empfangen: %d)\n"
 
 #, c-format
 msgid ""
@@ -14381,7 +14379,6 @@ msgstr "WeeChat PID (Prozess-ID)"
 msgid "directory separator"
 msgstr "Trennzeichen für Verzeichnis"
 
-#, fuzzy
 #| msgid ""
 #| "WeeChat directory (*deprecated* since version 3.2, replaced by "
 #| "\"weechat_config_dir\", \"weechat_data_dir\", \"weechat_cache_dir\" and "
@@ -14392,8 +14389,8 @@ msgid ""
 "\"weechat_cache_dir\" and \"weechat_runtime_dir\")"
 msgstr ""
 "WeeChat-Verzeichnis (*veraltet* seit Version 3.2, ersetzt durch "
-"\"weechat_config_dir\", \"weechat_data_dir\", \"weechat_cache_dir\" und "
-"\"weechat_runtime_dir\")"
+"\"weechat_config_dir\", \"weechat_data_dir\", \"weechat_state_dir\" , "
+"\"weechat_cache_dir\" and \"weechat_runtime_dir\")"
 
 msgid "WeeChat config directory"
 msgstr "WeeChat Konfigurationsverzeichnis"
@@ -14401,10 +14398,9 @@ msgstr "WeeChat Konfigurationsverzeichnis"
 msgid "WeeChat data directory"
 msgstr "WeeChat-Datenverzeichnis"
 
-#, fuzzy
 #| msgid "WeeChat data directory"
 msgid "WeeChat state directory"
-msgstr "WeeChat-Datenverzeichnis"
+msgstr "WeeChat-Statusverzeichnis"
 
 msgid "WeeChat cache directory"
 msgstr "WeeChat Cache-Verzeichnis"
@@ -15135,69 +15131,73 @@ msgstr "%sremote[%s]: Zeitüberschreitung"
 msgid "%sremote[%s]: unable to create socket"
 msgstr "%sremote[%s]: Socket kann nicht erstellt werden"
 
-#, fuzzy, c-format
+#, c-format
 #| msgid "%sgnutls: failed to initialize certificate structure"
 msgid "%sremote[%s]: gnutls: failed to initialize certificate structure"
-msgstr "%sgnutls: Zertifikatsstruktur konnte nicht initialisiert werden"
+msgstr ""
+"%sremote[%s]: gnutls: Initialisierung der Zertifikatstruktur fehlgeschlagen"
 
-#, fuzzy, c-format
+#, c-format
 #| msgid "%sgnutls: receiving %d certificate"
 #| msgid_plural "%sgnutls: receiving %d certificates"
 msgid "remote[%s]: gnutls: receiving %d certificate"
 msgid_plural "remote[%s]: gnutls: receiving %d certificates"
-msgstr[0] "%sgnutls: empfange %d Zertifikat"
-msgstr[1] "%sgnutls: empfange %d Zertifikate"
+msgstr[0] "remote[%s]: gnutls: empfange %d Zertifikat"
+msgstr[1] "remote[%s]: gnutls: empfange %d Zertifikate"
 
-#, fuzzy, c-format
+#, c-format
 #| msgid "%sgnutls: failed to import certificate[%d]"
 msgid "%sremote[%s]: gnutls: failed to import certificate[%d]"
-msgstr "%sgnutls: Zertifikat[%d] konnte nicht importiert werden"
+msgstr "%sremote[%s]: gnutls: Zertifikat[%d] konnte nicht importiert werden"
 
-#, fuzzy, c-format
+#, c-format
 #| msgid "%s - certificate[%d] info:"
 msgid "remote[%s] - certificate[%d] info:"
-msgstr "%s - Zertifikat[%d]-Information:"
+msgstr "remote[%s] - Zertifikat[%d]-Information:"
 
-#, fuzzy, c-format
+#, c-format
 #| msgid "%sgnutls: certificate has expired"
 msgid "%sremote[%s]: gnutls: certificate has expired"
-msgstr "%sgnutls: die Gültigkeitsdauer des Zertifikates ist abgelaufen"
+msgstr ""
+"%sremote[%s]: gnutls: die Gültigkeitsdauer des Zertifikates ist abgelaufen"
 
-#, fuzzy, c-format
+#, c-format
 #| msgid "%sgnutls: certificate is not yet activated"
 msgid "%sremote[%s]: gnutls: certificate is not yet activated"
-msgstr "%sgnutls: Zertifikat ist noch nicht freigeschaltet"
+msgstr "%sremote[%s]: gnutls: Zertifikat ist noch nicht freigeschaltet"
 
-#, fuzzy, c-format
+#, c-format
 #| msgid "%sgnutls: the hostname in the certificate does NOT match \"%s\""
 msgid ""
 "%sremote[%s]: gnutls: the hostname in the certificate does NOT match \"%s\""
-msgstr "%sgnutls: der Hostname im Zertifikat \"%s\" stimmt NICHT überein"
+msgstr ""
+"%sremote[%s]: gnutls:der Hostname im Zertifikat \"%s\" stimmt NICHT überein"
 
-#, fuzzy, c-format
+#, c-format
 #| msgid "%sgnutls: error while checking peer's certificate"
 msgid "%sremote[%s]: gnutls: error while checking peer's certificate"
-msgstr "%sgnutls: Fehler bei der Überprüfung des Peer-Zertifikates"
+msgstr "%sremote[%s]: gnutls: Fehler bei der Überprüfung des Peer-Zertifikates"
 
-#, fuzzy, c-format
+#, c-format
 #| msgid "%sgnutls: peer's certificate is NOT trusted"
 msgid "%sremote[%s]: gnutls: peer's certificate is NOT trusted"
-msgstr "%sgnutls: Peer-Zertifikat ist NICHT vertrauenswürdig"
+msgstr "%sremote[%s]: gnutls: Peer-Zertifikat ist NICHT vertrauenswürdig"
 
-#, fuzzy, c-format
+#, c-format
 #| msgid "%sgnutls: peer's certificate is trusted"
 msgid "remote[%s]: gnutls: peer's certificate is trusted"
-msgstr "%sgnutls: Peer-Zertifikat ist vertrauenswürdig"
+msgstr "remote[%s]: gnutls:Peer-Zertifikat ist vertrauenswürdig"
 
-#, fuzzy, c-format
+#, c-format
 #| msgid "%sgnutls: peer's certificate issuer is unknown"
 msgid "%sremote[%s]: gnutls: peer's certificate issuer is unknown"
-msgstr "%sgnutls: Der Aussteller für das Peer-Zertifikat ist unbekannt"
+msgstr ""
+"%sremote[%s]: gnutls: Der Aussteller für das Peer-Zertifikat ist unbekannt"
 
-#, fuzzy, c-format
+#, c-format
 #| msgid "%sgnutls: the certificate has been revoked"
 msgid "%sremote[%s]: gnutls: the certificate has been revoked"
-msgstr "%sgnutls: Das Zertifikat wurde widerrufen"
+msgstr "%sremote[%s]: gnutls: Das Zertifikat wurde widerrufen"
 
 #, c-format
 msgid "%sremote[%s]: handshake failed with URL %s, response code: %s"
@@ -15224,11 +15224,11 @@ msgstr ""
 "%sremote[%s]: erfolgreicher Handshake mit URL %s: hash_algo=%s, "
 "Iterationen=%d, totp=%d"
 
-#, fuzzy, c-format
+#, c-format
 #| msgid "%s%s: proxy \"%s\" not found for server \"%s\", cannot connect"
 msgid "%sremote[%s]: proxy \"%s\" not found, cannot connect"
 msgstr ""
-"%s%s: Proxy \"%s\" für Server \"%s\" nicht gefunden, kann keine Verbindung "
+"%sremote[%s]: Proxy \"%s\" nicht gefunden, kann keine Verbindung "
 "herstellen"
 
 #, c-format
@@ -18447,4 +18447,5 @@ msgstr "%s%s: Zeitüberschreitung für \"%s\" mit %s"
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr ""
 "%s%s: Verbindung konnte nicht hergestellt werden: unerwarteter Fehler (%d)"
+
 
