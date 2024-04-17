@@ -1394,7 +1394,7 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
     int read_marker_x, read_marker_y;
     int word_start_offset, word_end_offset;
     int word_length_with_spaces, word_length;
-    int nick_offline, nick_offline_action;
+    int nick_offline, nick_offline_action, nick_offline_prefix;
     char *message_nick_offline, *message_with_tags, *message_with_search;
     const char *ptr_data, *ptr_end_offset, *ptr_style, *next_char;
     struct t_gui_line *ptr_prev_line, *ptr_next_line;
@@ -1428,6 +1428,8 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
     nick_offline = CONFIG_BOOLEAN(config_look_color_nick_offline)
         && gui_line_has_offline_nick (line);
     nick_offline_action = nick_offline && gui_line_is_action (line);
+    nick_offline_prefix = nick_offline
+        && (nick_offline_action || gui_line_search_tag_starting_with (line, "prefix_nick"));
 
     pre_lines_displayed = 0;
     lines_displayed = 0;
@@ -1475,7 +1477,7 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
     /* display time and prefix */
     gui_chat_display_time_to_prefix (window, line, num_lines, count,
                                      pre_lines_displayed, &lines_displayed,
-                                     simulate, nick_offline);
+                                     simulate, nick_offline_prefix);
     if (!simulate && !gui_chat_display_tags)
     {
         if (window->win_chat_cursor_y < window->coords_size)
