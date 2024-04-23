@@ -16691,7 +16691,7 @@ Functions for executing WeeChat commands.
 
 ==== command
 
-_Updated in 1.1._
+_Updated in 1.1, 4.0.0._
 
 Execute a command or send text to buffer.
 
@@ -16708,6 +16708,10 @@ Arguments:
   current buffer)
 * _command_: command to execute (if beginning with a "/"), or text to send to
   buffer
+
+[NOTE]
+On buffer with `input_multiline` set to `0` (default), only the first command
+is executed (before the first newline char: `\n`).
 
 Return value _(WeeChat ≥ 1.1)_:
 
@@ -16736,7 +16740,7 @@ rc = weechat.command(weechat.buffer_search("irc", "libera.#weechat"), "/whois Fl
 
 ==== command_options
 
-_WeeChat ≥ 2.5._
+_WeeChat ≥ 2.5, updated in 4.0.0._
 
 Execute a command or send text to buffer with options.
 
@@ -16760,6 +16764,7 @@ Arguments:
    this call; see function <<_string_match_list,string_match_list>> for the
    format
 ** _delay_: delay to execute command, in milliseconds
+** _split_newline_: `1` to split commands on newline char (`\n`) (_WeeChat ≥ 4.0.0_)
 
 Return value:
 
@@ -16790,7 +16795,7 @@ Script (Python):
 def command_options(buffer: str, command: str, options: Dict[str, str]) -> int: ...
 
 # example: allow any command except /exec
-rc = weechat.command("", "/some_command arguments", {"commands": "*,!exec"})
+rc = weechat.command_options("", "/some_command arguments", {"commands": "*,!exec"})
 ----
 
 [[completion]]

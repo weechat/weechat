@@ -17052,7 +17052,7 @@ Fonctions pour exécuter des commandes WeeChat.
 
 ==== command
 
-_Mis à jour dans la 1.1._
+_Mis à jour dans la 1.1, 4.0.0._
 
 Exécuter une commande ou envoyer du texte au tampon.
 
@@ -17069,6 +17069,10 @@ Paramètres :
   NULL pour le tampon courant)
 * _command_ : commande à exécuter (si elle commence par "/"), ou texte à
   envoyer au tampon
+
+[NOTE]
+Sur un tampon avec `input_multiline` défini à `0` (par défaut), seule la première
+commande est exécutée (avant le premier caractère de retour à la ligne : `\n`).
 
 Valeur de retour _(WeeChat ≥ 1.1)_ :
 
@@ -17097,7 +17101,7 @@ rc = weechat.command(weechat.buffer_search("irc", "libera.#weechat"), "/whois Fl
 
 ==== command_options
 
-_WeeChat ≥ 2.5._
+_WeeChat ≥ 2.5, mis à jour dans la 4.0.0._
 
 Exécuter une commande ou envoyer du texte au tampon avec des options.
 
@@ -17121,6 +17125,8 @@ Paramètres :
    des virgules ; voir la fonction <<_string_match_list,string_match_list>>
    pour le format
 ** _delay_ : délai pour exécuter la commande, en millisecondes
+** _split_newline_ : `1` pour découper les commandes sur le caractère de retour
+   à la ligne (`\n`) (_WeeChat ≥ 4.0.0_)
 
 Valeur de retour :
 
@@ -17151,7 +17157,7 @@ Script (Python) :
 def command_options(buffer: str, command: str, options: Dict[str, str]) -> int: ...
 
 # exemple : autoriser toute commande sauf /exec
-rc = weechat.command("", "/une_commande paramètres", {"commands": "*,!exec"})
+rc = weechat.command_options("", "/une_commande paramètres", {"commands": "*,!exec"})
 ----
 
 [[completion]]

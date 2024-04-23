@@ -16256,7 +16256,7 @@ weechat.bar_remove(my_bar)
 
 ==== command
 
-_Ажурирано у верзији 1.1._
+_Ажурирано у верзији 1.1, ажурирано у верзији 4.0.0._
 
 Извршава команду или шаље текст у бафер.
 
@@ -16271,6 +16271,11 @@ int weechat_command (struct t_gui_buffer *buffer, const char *command);
 
 * _buffer_: показивач на бафер (команда се извршава у овом баферу, употребите NULL за текући бафер)
 * _command_: команда која се извршава (ако почиње са „/”), или текст који се шаље у бафер
+
+// TRANSLATION MISSING
+[NOTE]
+On buffer with `input_multiline` set to `0` (default), only the first command
+is executed (before the first newline char: `\n`).
 
 Повратна вредност _(WeeChat ≥ 1.1)_:
 
@@ -16299,7 +16304,7 @@ rc = weechat.command(weechat.buffer_search("irc", "libera.#weechat"), "/whois Fl
 
 ==== command_options
 
-_WeeChat ≥ 2.5._
+_WeeChat ≥ 2.5, ажурирано у верзији 4.0.0._
 
 Извршава команду или шаље текст у бафер са опцијама.
 
@@ -16318,6 +16323,8 @@ int weechat_command_options (struct t_gui_buffer *buffer, const char *command,
 * _options_: хеш табела са неким опцијама (кључеви и вредности морају бити стринг) (може да буде NULL):
 ** _commands_: листа команди које смеју да се изврше током овог позива раздвојене запетама; за формат, погледајте функцију <<_string_match_list,string_match_list>>
 ** _delay_: пауза за извршавање команде, у милисекундама
+// TRANSLATION MISSING
+** _split_newline_: `1` to split commands on newline char (`\n`) (_WeeChat ≥ 4.0.0_)
 
 Повратна вредност:
 
@@ -16348,7 +16355,7 @@ rc = weechat_command_options (NULL, "/some_command arguments", options);
 def command_options(buffer: str, command: str, options: Dict[str, str]) -> int: ...
 
 # пример: дозвољава се било која команда осим /exec
-rc = weechat.command("", "/some_command arguments", {"commands": "*,!exec"})
+rc = weechat.command_options("", "/some_command arguments", {"commands": "*,!exec"})
 ----
 
 [[completion]]

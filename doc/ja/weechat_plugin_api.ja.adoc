@@ -16940,7 +16940,8 @@ WeeChat コマンドを実行する関数。
 
 ==== command
 
-_WeeChat バージョン 1.1 で更新。_
+// TRANSLATION MISSING
+_Updated in 1.1, 4.0.0._
 
 コマンドを実行するか、バッファにテキストを送信。
 
@@ -16957,6 +16958,11 @@ int weechat_command (struct t_gui_buffer *buffer, const char *command);
   (コマンドは指定したバッファで実行されます、現在のバッファで実行するには NULL を指定してください)
 * _command_: 実行するコマンド ("/"
   で始まっている場合)、またはバッファに送信するテキスト
+
+// TRANSLATION MISSING
+[NOTE]
+On buffer with `input_multiline` set to `0` (default), only the first command
+is executed (before the first newline char: `\n`).
 
 戻り値 _(WeeChat バージョン 1.1 以上で利用可)_:
 
@@ -16985,7 +16991,8 @@ rc = weechat.command(weechat.buffer_search("irc", "libera.#weechat"), "/whois Fl
 
 ==== command_options
 
-_WeeChat バージョン 2.5 以上で利用可。_
+// TRANSLATION MISSING
+_WeeChat ≥ 2.5, updated in 4.0.0._
 
 バッファにてオプション付きでコマンドを実行またはテキストを送信
 
@@ -17010,6 +17017,8 @@ int weechat_command_options (struct t_gui_buffer *buffer, const char *command,
 ** _commands_: 指定したコマンドの中で実行を許可するコマンドのカンマ区切りリスト、リストの書式は関数
    <<_string_match_list,string_match_list>> を参考にしてください
 ** _delay_: コマンド実行までの遅延時間、ミリ秒単位
+// TRANSLATION MISSING
+** _split_newline_: `1` to split commands on newline char (`\n`) (_WeeChat ≥ 4.0.0_)
 
 戻り値:
 
@@ -17040,7 +17049,7 @@ rc = weechat_command_options (NULL, "/some_command arguments", options);
 def command_options(buffer: str, command: str, options: Dict[str, str]) -> int: ...
 
 # 例: /exec 以外のコマンド実行を許可
-rc = weechat.command("", "/some_command arguments", {"commands": "*,!exec"})
+rc = weechat.command_options("", "/some_command arguments", {"commands": "*,!exec"})
 ----
 
 // TRANSLATION MISSING
