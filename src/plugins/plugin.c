@@ -382,8 +382,7 @@ plugin_call_init (struct t_weechat_plugin *plugin, int argc, char **argv)
     weechat_auto_connect = old_auto_connect;
     weechat_auto_load_scripts = old_auto_load_scripts;
 
-    if (plugin_argv)
-        free (plugin_argv);
+    free (plugin_argv);
 
     return (rc == WEECHAT_RC_OK) ? 1 : 0;
 }
@@ -1221,22 +1220,15 @@ plugin_remove (struct t_weechat_plugin *plugin)
     gui_bar_item_free_all_plugin (plugin);
 
     /* free data */
-    if (plugin->filename)
-        free (plugin->filename);
+    free (plugin->filename);
     if (!weechat_plugin_no_dlclose)
         dlclose (plugin->handle);
-    if (plugin->name)
-        free (plugin->name);
-    if (plugin->description)
-        free (plugin->description);
-    if (plugin->author)
-        free (plugin->author);
-    if (plugin->version)
-        free (plugin->version);
-    if (plugin->license)
-        free (plugin->license);
-    if (plugin->charset)
-        free (plugin->charset);
+    free (plugin->name);
+    free (plugin->description);
+    free (plugin->author);
+    free (plugin->version);
+    free (plugin->license);
+    free (plugin->charset);
     hashtable_free (plugin->variables);
 
     free (plugin);
@@ -1273,8 +1265,7 @@ plugin_unload (struct t_weechat_plugin *plugin)
     }
     (void) hook_signal_send ("plugin_unloaded",
                              WEECHAT_HOOK_SIGNAL_STRING, name);
-    if (name)
-        free (name);
+    free (name);
 }
 
 /*

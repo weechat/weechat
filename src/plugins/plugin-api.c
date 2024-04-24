@@ -67,9 +67,7 @@ plugin_api_charset_set (struct t_weechat_plugin *plugin, const char *charset)
     if (!plugin || !charset)
         return;
 
-    if (plugin->charset)
-        free (plugin->charset);
-
+    free (plugin->charset);
     plugin->charset = (charset) ? strdup (charset) : NULL;
 }
 
@@ -433,8 +431,7 @@ plugin_api_command_options (struct t_weechat_plugin *plugin,
                              split_newline,
                              delay);
 
-    if (command2)
-        free (command2);
+    free (command2);
 
     return rc;
 }

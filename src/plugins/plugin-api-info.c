@@ -1121,8 +1121,7 @@ plugin_api_info_totp_generate_cb (const void *pointer, void *data,
 error:
     if (argv)
         string_free_split (argv);
-    if (totp)
-        free (totp);
+    free (totp);
     return NULL;
 }
 

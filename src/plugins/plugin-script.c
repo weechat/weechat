@@ -270,8 +270,7 @@ plugin_script_init (struct t_weechat_plugin *weechat_plugin,
             N_("Without argument, this command lists all loaded scripts.")),
         completion,
         plugin_data->callback_command, NULL, NULL);
-    if (completion)
-        free (completion);
+    free (completion);
 
     /* add completion, hdata and infolist */
     snprintf (string, sizeof (string), "%s_script", weechat_plugin->name);
@@ -323,8 +322,7 @@ plugin_script_init (struct t_weechat_plugin *weechat_plugin,
     auto_load_scripts = (info_auto_load_scripts
                          && (strcmp (info_auto_load_scripts, "1") == 0)) ?
         1 : 0;
-    if (info_auto_load_scripts)
-        free (info_auto_load_scripts);
+    free (info_auto_load_scripts);
 
     /* autoload scripts */
     if (auto_load_scripts)
@@ -1067,22 +1065,14 @@ plugin_script_remove_configs (struct t_weechat_plugin *weechat_plugin,
 void
 plugin_script_free (struct t_plugin_script *script)
 {
-    if (script->filename)
-        free (script->filename);
-    if (script->name)
-        free (script->name);
-    if (script->author)
-        free (script->author);
-    if (script->version)
-        free (script->version);
-    if (script->license)
-        free (script->license);
-    if (script->description)
-        free (script->description);
-    if (script->shutdown_func)
-        free (script->shutdown_func);
-    if (script->charset)
-        free (script->charset);
+    free (script->filename);
+    free (script->name);
+    free (script->author);
+    free (script->version);
+    free (script->license);
+    free (script->description);
+    free (script->shutdown_func);
+    free (script->charset);
 
     free (script);
 }
@@ -1369,8 +1359,7 @@ plugin_script_action_install (struct t_weechat_plugin *weechat_plugin,
                                         free (symlink_path);
                                     }
                                     free (autoload_path);
-                                    if (dir_separator)
-                                        free (dir_separator);
+                                    free (dir_separator);
                                 }
                             }
 
@@ -1397,8 +1386,7 @@ plugin_script_action_install (struct t_weechat_plugin *weechat_plugin,
                         free (new_path);
                     }
                     free (base_name);
-                    if (weechat_data_dir)
-                        free (weechat_data_dir);
+                    free (weechat_data_dir);
 
                     /* send signal */
                     snprintf (str_signal, sizeof (str_signal),
@@ -1569,8 +1557,7 @@ plugin_script_action_autoload (struct t_weechat_plugin *weechat_plugin,
                                 (void) rc;
                                 free (symlink_path);
                             }
-                            if (dir_separator)
-                                free (dir_separator);
+                            free (dir_separator);
                         }
                         else
                         {
@@ -1579,8 +1566,7 @@ plugin_script_action_autoload (struct t_weechat_plugin *weechat_plugin,
                         free (autoload_path);
                     }
                     free (base_name);
-                    if (weechat_data_dir)
-                        free (weechat_data_dir);
+                    free (weechat_data_dir);
                 }
                 free (name);
             }
