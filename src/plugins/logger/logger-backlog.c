@@ -100,8 +100,7 @@ logger_backlog_display_line (struct t_gui_buffer *buffer, const char *line)
         charset = weechat_info_get ("charset_terminal", "");
         message2 = (charset) ?
             weechat_iconv_to_internal (charset, message) : strdup (message);
-        if (charset)
-            free (charset);
+        free (charset);
         if (message2)
         {
             pos_tab = strchr (message2, '\t');
@@ -243,8 +242,7 @@ logger_backlog_group_messages (struct t_arraylist *lines)
     return messages;
 
 error:
-    if (message)
-        free (message);
+    free (message);
     if (messages)
         weechat_arraylist_free (messages);
     return NULL;

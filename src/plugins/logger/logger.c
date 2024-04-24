@@ -95,8 +95,7 @@ logger_check_conditions (struct t_gui_buffer *buffer, const char *conditions)
     result = weechat_string_eval_expression (conditions,
                                              pointers, NULL, options);
     condition_ok = (result && (strcmp (result, "1") == 0));
-    if (result)
-        free (result);
+    free (result);
 
     if (pointers)
         weechat_hashtable_free (pointers);
@@ -162,8 +161,7 @@ logger_get_file_path ()
     }
 
 end:
-    if (path)
-        free (path);
+    free (path);
     return path2;
 }
 
@@ -434,18 +432,12 @@ logger_get_mask_expanded (struct t_gui_buffer *buffer, const char *mask)
 
 end:
     free (dir_separator);
-    if (mask2)
-        free (mask2);
-    if (mask3)
-        free (mask3);
-    if (mask4)
-        free (mask4);
-    if (mask5)
-        free (mask5);
-    if (mask6)
-        free (mask6);
-    if (mask7)
-        free (mask7);
+    free (mask2);
+    free (mask3);
+    free (mask4);
+    free (mask5);
+    free (mask6);
+    free (mask7);
 
     return mask8;
 }
@@ -507,10 +499,8 @@ logger_get_filename (struct t_gui_buffer *buffer)
 
 end:
     free (dir_separator);
-    if (mask_expanded)
-        free (mask_expanded);
-    if (file_path)
-        free (file_path);
+    free (mask_expanded);
+    free (file_path);
 
     return res;
 }
@@ -758,10 +748,8 @@ logger_print_cb (const void *pointer, void *data,
             (color_lines) ? "\x1B[0m" : "",
             ptr_message);
 
-        if (prefix_ansi)
-            free (prefix_ansi);
-        if (message_ansi)
-            free (message_ansi);
+        free (prefix_ansi);
+        free (message_ansi);
     }
 
     return WEECHAT_RC_OK;

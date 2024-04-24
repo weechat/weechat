@@ -325,10 +325,8 @@ logger_buffer_create_log_file (struct t_logger_buffer *logger_buffer)
             weechat_iconv_from_internal (charset, buf_beginning) : NULL;
         fprintf (logger_buffer->log_file,
                  "%s\n", (message) ? message : buf_beginning);
-        if (charset)
-            free (charset);
-        if (message)
-            free (message);
+        free (charset);
+        free (message);
         logger_buffer->flush_needed = 1;
     }
     logger_buffer->write_start_info_line = 0;
@@ -635,10 +633,8 @@ logger_buffer_write_line (struct t_logger_buffer *logger_buffer,
             weechat_iconv_from_internal (charset, vbuffer) : NULL;
         fprintf (logger_buffer->log_file,
                  "%s\n", (message) ? message : vbuffer);
-        if (charset)
-            free (charset);
-        if (message)
-            free (message);
+        free (charset);
+        free (message);
         logger_buffer->flush_needed = 1;
         if (!logger_hook_timer)
         {
@@ -878,8 +874,7 @@ logger_buffer_free (struct t_logger_buffer *logger_buffer)
         (logger_buffer->next_buffer)->prev_buffer = logger_buffer->prev_buffer;
 
     /* free data */
-    if (logger_buffer->log_filename)
-        free (logger_buffer->log_filename);
+    free (logger_buffer->log_filename);
     if (logger_buffer->log_file)
         fclose (logger_buffer->log_file);
 
