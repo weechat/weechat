@@ -168,11 +168,8 @@ fifo_remove ()
     }
 
     /* remove any unterminated message */
-    if (fifo_unterminated)
-    {
-        free (fifo_unterminated);
-        fifo_unterminated = NULL;
-    }
+    free (fifo_unterminated);
+    fifo_unterminated = NULL;
 
     /* remove FIFO from disk */
     if (fifo_filename)
@@ -260,8 +257,7 @@ fifo_exec (const char *text)
     weechat_command (ptr_buffer, pos_msg);
 
     free (text2);
-    if (command_unescaped)
-        free (command_unescaped);
+    free (command_unescaped);
 }
 
 /*
@@ -332,8 +328,7 @@ fifo_fd_cb (const void *pointer, void *data, int fd)
             ptr_buf = next_ptr_buf;
         }
 
-        if (buf2)
-            free (buf2);
+        free (buf2);
     }
     else if (num_read < 0)
     {
