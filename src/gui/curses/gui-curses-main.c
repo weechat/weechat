@@ -457,8 +457,7 @@ gui_main_loop ()
     }
 
     /* remove keyboard hook */
-    if (hook_fd_keyboard)
-        unhook (hook_fd_keyboard);
+    unhook (hook_fd_keyboard);
 }
 
 /*
