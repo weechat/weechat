@@ -83,8 +83,7 @@
     return return_value
 #define API_RETURN_STRING_FREE(__string)                                \
     return_value = scm_from_locale_string ((__string) ? __string : ""); \
-    if (__string)                                                       \
-        free (__string);                                                \
+    free (__string);                                                    \
     API_FREE_STRINGS;                                                   \
     return return_value
 #define API_RETURN_INT(__int)                                           \
@@ -145,8 +144,7 @@ weechat_guile_api_free_strings (char *guile_strings[], int *guile_num_strings)
 
     for (i = 0; i < *guile_num_strings; i++)
     {
-        if (guile_strings[i])
-            free (guile_strings[i]);
+        free (guile_strings[i]);
     }
 
     *guile_num_strings = 0;
@@ -1306,9 +1304,7 @@ weechat_guile_api_config_option_change_cb (const void *pointer, void *data,
                                  WEECHAT_SCRIPT_EXEC_IGNORE,
                                  ptr_function,
                                  "ss", func_argv);
-
-        if (rc)
-            free (rc);
+        free (rc);
     }
 }
 
@@ -1333,9 +1329,7 @@ weechat_guile_api_config_option_delete_cb (const void *pointer, void *data,
                                  WEECHAT_SCRIPT_EXEC_IGNORE,
                                  ptr_function,
                                  "ss", func_argv);
-
-        if (rc)
-            free (rc);
+        free (rc);
     }
 }
 
@@ -2944,8 +2938,7 @@ weechat_guile_api_hook_print_cb (const void *pointer, void *data,
             ret = *rc;
             free (rc);
         }
-        if (func_argv[3])
-            free (func_argv[3]);
+        free (func_argv[3]);
 
         return ret;
     }
