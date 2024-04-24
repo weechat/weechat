@@ -274,10 +274,8 @@ weechat_python_dict_to_hashtable (PyObject *dict, int size,
             }
         }
 
-        if (str_key)
-            free (str_key);
-        if (str_value)
-            free (str_value);
+        free (str_key);
+        free (str_value);
     }
 
     return hashtable;
@@ -925,8 +923,7 @@ weechat_python_unload (struct t_plugin_script *script)
     {
         rc = (int *) weechat_python_exec (script, WEECHAT_SCRIPT_EXEC_INT,
                                           script->shutdown_func, NULL, NULL);
-        if (rc)
-            free (rc);
+        free (rc);
     }
 
     filename = strdup (script->filename);
@@ -952,8 +949,7 @@ weechat_python_unload (struct t_plugin_script *script)
 
     (void) weechat_hook_signal_send ("python_script_unloaded",
                                      WEECHAT_HOOK_SIGNAL_STRING, filename);
-    if (filename)
-        free (filename);
+    free (filename);
 }
 
 /*
@@ -1069,8 +1065,7 @@ weechat_python_eval (struct t_gui_buffer *buffer, int send_to_buffer_as_input,
                                   "script_python_eval",
                                   "s", func_argv);
     /* result is ignored */
-    if (result)
-        free (result);
+    free (result);
 
     weechat_python_output_flush ();
 
@@ -1176,8 +1171,7 @@ weechat_python_command_cb (const void *pointer, void *data,
                                                          ptr_name, 1);
                 weechat_python_load ((path_script) ? path_script : ptr_name,
                                      NULL);
-                if (path_script)
-                    free (path_script);
+                free (path_script);
             }
             else if (weechat_strcmp (argv[1], "reload") == 0)
             {
