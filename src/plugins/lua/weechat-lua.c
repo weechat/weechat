@@ -749,8 +749,7 @@ weechat_lua_unload (struct t_plugin_script *script)
                                       WEECHAT_SCRIPT_EXEC_INT,
                                       script->shutdown_func,
                                       NULL, NULL);
-        if (rc)
-            free (rc);
+        free (rc);
     }
 
     filename = strdup (script->filename);
@@ -770,8 +769,7 @@ weechat_lua_unload (struct t_plugin_script *script)
 
     (void) weechat_hook_signal_send ("lua_script_unloaded",
                                      WEECHAT_HOOK_SIGNAL_STRING, filename);
-    if (filename)
-        free (filename);
+    free (filename);
 }
 
 /*
@@ -887,8 +885,7 @@ weechat_lua_eval (struct t_gui_buffer *buffer, int send_to_buffer_as_input,
                                "script_lua_eval",
                                "s", func_argv);
     /* result is ignored */
-    if (result)
-        free (result);
+    free (result);
 
     weechat_lua_output_flush ();
 
@@ -994,8 +991,7 @@ weechat_lua_command_cb (const void *pointer, void *data,
                                                          ptr_name, 1);
                 weechat_lua_load ((path_script) ? path_script : ptr_name,
                                   NULL);
-                if (path_script)
-                    free (path_script);
+                free (path_script);
             }
             else if (weechat_strcmp (argv[1], "reload") == 0)
             {
