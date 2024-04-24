@@ -542,8 +542,7 @@ charset_command_cb (const void *pointer, void *data,
                                 _("%s%s: wrong charset type (decode or encode "
                                   "expected)"),
                                 weechat_prefix ("error"), CHARSET_PLUGIN_NAME);
-                if (option_name)
-                    free (option_name);
+                free (option_name);
                 return WEECHAT_RC_OK;
             }
         }
@@ -556,8 +555,7 @@ charset_command_cb (const void *pointer, void *data,
                             _("%s%s: invalid charset: \"%s\""),
                             weechat_prefix ("error"), CHARSET_PLUGIN_NAME,
                             ptr_charset);
-            if (option_name)
-                free (option_name);
+            free (option_name);
             return WEECHAT_RC_OK;
         }
         if (ptr_section)
@@ -641,16 +639,11 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     weechat_config_free (charset_config_file);
     charset_config_file = NULL;
 
-    if (charset_terminal)
-    {
-        free (charset_terminal);
-        charset_terminal = NULL;
-    }
-    if (charset_internal)
-    {
-        free (charset_internal);
-        charset_internal = NULL;
-    }
+    free (charset_terminal);
+    charset_terminal = NULL;
+
+    free (charset_internal);
+    charset_internal = NULL;
 
     return WEECHAT_RC_OK;
 }
