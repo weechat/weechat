@@ -334,11 +334,8 @@ exec_command_parse_options (struct t_exec_cmd_options *cmd_options,
             if (i + 1 >= argc)
                 return 0;
             i++;
-            if (cmd_options->pipe_command)
-            {
-                free (cmd_options->pipe_command);
-                cmd_options->pipe_command = NULL;
-            }
+            free (cmd_options->pipe_command);
+            cmd_options->pipe_command = NULL;
             if (argv[i][0] == '"')
             {
                 /* search the ending double quote */
@@ -378,11 +375,8 @@ exec_command_parse_options (struct t_exec_cmd_options *cmd_options,
             if (i + 1 >= argc)
                 return 0;
             i++;
-            if (cmd_options->hsignal)
-            {
-                free (cmd_options->hsignal);
-                cmd_options->hsignal = NULL;
-            }
+            free (cmd_options->hsignal);
+            cmd_options->hsignal = NULL;
             cmd_options->hsignal = strdup (argv[i]);
         }
         else
@@ -503,8 +497,7 @@ exec_command_run (struct t_gui_buffer *buffer,
             NULL, NULL, NULL);
         if (!shell || !shell[0])
         {
-            if (shell)
-                free (shell);
+            free (shell);
             shell = strdup (default_shell);
         }
     }
@@ -642,15 +635,13 @@ exec_command_run (struct t_gui_buffer *buffer,
                         argv_eol[cmd_options.command_index]);
     }
 
-    if (shell)
-        free (shell);
+    free (shell);
     weechat_hashtable_free (process_options);
 
     return WEECHAT_RC_OK;
 
 error:
-    if (shell)
-        free (shell);
+    free (shell);
     if (new_exec_cmd)
         exec_free (new_exec_cmd);
     if (process_options)

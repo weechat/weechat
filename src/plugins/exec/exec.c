@@ -417,11 +417,8 @@ exec_concat_output (struct t_exec_cmd *exec_cmd, struct t_gui_buffer *buffer,
                 line = weechat_strndup (ptr_text, pos - ptr_text);
             if (!line)
                 break;
-            if (exec_cmd->output[out])
-            {
-                free (exec_cmd->output[out]);
-                exec_cmd->output[out] = NULL;
-            }
+            free (exec_cmd->output[out]);
+            exec_cmd->output[out] = NULL;
             exec_cmd->output_size[out] = 0;
             exec_display_line (exec_cmd, buffer, out, line);
             free (line);
@@ -471,12 +468,10 @@ exec_end_command (struct t_exec_cmd *exec_cmd, int return_code)
             weechat_hashtable_set (hashtable, "name", exec_cmd->name);
             output = exec_decode_color (exec_cmd, exec_cmd->output[EXEC_STDOUT]);
             weechat_hashtable_set (hashtable, "out", output);
-            if (output)
-                free (output);
+            free (output);
             output = exec_decode_color (exec_cmd, exec_cmd->output[EXEC_STDERR]);
             weechat_hashtable_set (hashtable, "err", output);
-            if (output)
-                free (output);
+            free (output);
             snprintf (str_number, sizeof (str_number), "%d", return_code);
             weechat_hashtable_set (hashtable, "rc", str_number);
             weechat_hook_hsignal_send (exec_cmd->hsignal, hashtable);
@@ -554,11 +549,8 @@ exec_end_command (struct t_exec_cmd *exec_cmd, int return_code)
     exec_cmd->return_code = return_code;
     for (i = 0; i < 2; i++)
     {
-        if (exec_cmd->output[i])
-        {
-            free (exec_cmd->output[i]);
-            exec_cmd->output[i] = NULL;
-        }
+        free (exec_cmd->output[i]);
+        exec_cmd->output[i] = NULL;
         exec_cmd->output_size[i] = 0;
     }
 
@@ -645,21 +637,15 @@ exec_free (struct t_exec_cmd *exec_cmd)
     /* free data */
     if (exec_cmd->hook)
         weechat_unhook (exec_cmd->hook);
-    if (exec_cmd->name)
-        free (exec_cmd->name);
-    if (exec_cmd->command)
-        free (exec_cmd->command);
-    if (exec_cmd->buffer_full_name)
-        free (exec_cmd->buffer_full_name);
+    free (exec_cmd->name);
+    free (exec_cmd->command);
+    free (exec_cmd->buffer_full_name);
     for (i = 0; i < 2; i++)
     {
-        if (exec_cmd->output[i])
-            free (exec_cmd->output[i]);
+        free (exec_cmd->output[i]);
     }
-    if (exec_cmd->pipe_command)
-        free (exec_cmd->pipe_command);
-    if (exec_cmd->hsignal)
-        free (exec_cmd->hsignal);
+    free (exec_cmd->pipe_command);
+    free (exec_cmd->hsignal);
 
     free (exec_cmd);
 
