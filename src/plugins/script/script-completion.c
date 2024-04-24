@@ -227,8 +227,7 @@ script_completion_scripts_files_cb (const void *pointer, void *data,
         free (directory);
     }
 
-    if (weechat_data_dir)
-        free (weechat_data_dir);
+    free (weechat_data_dir);
 
     return WEECHAT_RC_OK;
 }

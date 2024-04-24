@@ -488,8 +488,7 @@ script_action_run_autoload (const char *name, int quiet, int autoload)
         free (filename);
     }
 
-    if (weechat_data_dir)
-        free (weechat_data_dir);
+    free (weechat_data_dir);
 
     if (!script_found)
     {

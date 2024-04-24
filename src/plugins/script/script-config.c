@@ -143,8 +143,7 @@ script_config_get_diff_command ()
                 weechat_string_free_split (paths);
             }
         }
-        if (dir_separator)
-            free (dir_separator);
+        free (dir_separator);
         if (!result[0])
             snprintf (result, sizeof (result), "diff");
         return result;
