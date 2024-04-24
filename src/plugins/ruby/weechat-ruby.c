@@ -437,8 +437,7 @@ weechat_ruby_output (VALUE self, VALUE str)
     }
     weechat_string_dyn_concat (ruby_buffer_output, ptr_msg, -1);
 
-    if (msg)
-        free (msg);
+    free (msg);
 
     return Qnil;
 }
@@ -762,8 +761,7 @@ weechat_ruby_unload (struct t_plugin_script *script)
                                        WEECHAT_SCRIPT_EXEC_INT,
                                        script->shutdown_func,
                                        0, NULL);
-        if (rc)
-            free (rc);
+        free (rc);
     }
 
     filename = strdup (script->filename);
@@ -781,8 +779,7 @@ weechat_ruby_unload (struct t_plugin_script *script)
 
     (void) weechat_hook_signal_send ("ruby_script_unloaded",
                                      WEECHAT_HOOK_SIGNAL_STRING, filename);
-    if (filename)
-        free (filename);
+    free (filename);
 }
 
 /*
@@ -899,8 +896,7 @@ weechat_ruby_eval (struct t_gui_buffer *buffer, int send_to_buffer_as_input,
                                 "script_ruby_eval",
                                 "s", func_argv);
     /* result is ignored */
-    if (result)
-        free (result);
+    free (result);
 
     weechat_ruby_output_flush ();
 
@@ -1006,8 +1002,7 @@ weechat_ruby_command_cb (const void *pointer, void *data,
                                                          ptr_name, 1);
                 weechat_ruby_load ((path_script) ? path_script : ptr_name,
                                    NULL);
-                if (path_script)
-                    free (path_script);
+                free (path_script);
             }
             else if (weechat_strcmp (argv[1], "reload") == 0)
             {
