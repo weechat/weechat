@@ -1906,14 +1906,11 @@ relay_client_free (struct t_relay_client *client)
     free (client->protocol_string);
     free (client->protocol_args);
     free (client->nonce);
-    if (client->hook_timer_handshake)
-        weechat_unhook (client->hook_timer_handshake);
+    weechat_unhook (client->hook_timer_handshake);
     relay_websocket_deflate_free (client->ws_deflate);
     relay_http_request_free (client->http_req);
-    if (client->hook_fd)
-        weechat_unhook (client->hook_fd);
-    if (client->hook_timer_send)
-        weechat_unhook (client->hook_timer_send);
+    weechat_unhook (client->hook_fd);
+    weechat_unhook (client->hook_timer_send);
     free (client->partial_ws_frame);
     free (client->partial_message);
     if (client->protocol_data)

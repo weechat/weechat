@@ -2295,14 +2295,10 @@ relay_irc_free (struct t_relay_client *client)
     {
         free (RELAY_IRC_DATA(client, address));
         free (RELAY_IRC_DATA(client, nick));
-        if (RELAY_IRC_DATA(client, hook_signal_irc_in2))
-            weechat_unhook (RELAY_IRC_DATA(client, hook_signal_irc_in2));
-        if (RELAY_IRC_DATA(client, hook_signal_irc_outtags))
-            weechat_unhook (RELAY_IRC_DATA(client, hook_signal_irc_outtags));
-        if (RELAY_IRC_DATA(client, hook_signal_irc_disc))
-            weechat_unhook (RELAY_IRC_DATA(client, hook_signal_irc_disc));
-        if (RELAY_IRC_DATA(client, hook_hsignal_irc_redir))
-            weechat_unhook (RELAY_IRC_DATA(client, hook_hsignal_irc_redir));
+        weechat_unhook (RELAY_IRC_DATA(client, hook_signal_irc_in2));
+        weechat_unhook (RELAY_IRC_DATA(client, hook_signal_irc_outtags));
+        weechat_unhook (RELAY_IRC_DATA(client, hook_signal_irc_disc));
+        weechat_unhook (RELAY_IRC_DATA(client, hook_hsignal_irc_redir));
 
         free (client->protocol_data);
 

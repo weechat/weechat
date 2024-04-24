@@ -241,12 +241,9 @@ relay_api_free (struct t_relay_client *client)
 
     if (client->protocol_data)
     {
-        if (RELAY_API_DATA(client, hook_signal_buffer))
-            weechat_unhook (RELAY_API_DATA(client, hook_signal_buffer));
-        if (RELAY_API_DATA(client, hook_hsignal_nicklist))
-            weechat_unhook (RELAY_API_DATA(client, hook_hsignal_nicklist));
-        if (RELAY_API_DATA(client, hook_signal_upgrade))
-            weechat_unhook (RELAY_API_DATA(client, hook_signal_upgrade));
+        weechat_unhook (RELAY_API_DATA(client, hook_signal_buffer));
+        weechat_unhook (RELAY_API_DATA(client, hook_hsignal_nicklist));
+        weechat_unhook (RELAY_API_DATA(client, hook_signal_upgrade));
 
         free (client->protocol_data);
 

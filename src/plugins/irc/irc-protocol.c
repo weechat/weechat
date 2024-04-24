@@ -1246,8 +1246,7 @@ IRC_PROTOCOL_CALLBACK(cap)
                     irc_server_sendf (ctxt->server, 0, NULL, str_msg_auth_upper);
                     free (str_msg_auth_upper);
                 }
-                if (ctxt->server->hook_timer_sasl)
-                    weechat_unhook (ctxt->server->hook_timer_sasl);
+                weechat_unhook (ctxt->server->hook_timer_sasl);
                 timeout = IRC_SERVER_OPTION_INTEGER(
                     ctxt->server, IRC_SERVER_OPTION_SASL_TIMEOUT);
                 ctxt->server->hook_timer_sasl = weechat_hook_timer (

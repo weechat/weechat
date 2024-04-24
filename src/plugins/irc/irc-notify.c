@@ -1252,9 +1252,7 @@ irc_notify_print_log (struct t_irc_server *server)
 void
 irc_notify_hook_timer_ison ()
 {
-    if (irc_notify_timer_ison)
-        weechat_unhook (irc_notify_timer_ison);
-
+    weechat_unhook (irc_notify_timer_ison);
     irc_notify_timer_ison = weechat_hook_timer (
         60 * 1000 * weechat_config_integer (irc_config_network_notify_check_ison),
         0, 0, &irc_notify_timer_ison_cb, NULL, NULL);
@@ -1267,9 +1265,7 @@ irc_notify_hook_timer_ison ()
 void
 irc_notify_hook_timer_whois ()
 {
-    if (irc_notify_timer_whois)
-        weechat_unhook (irc_notify_timer_whois);
-
+    weechat_unhook (irc_notify_timer_whois);
     irc_notify_timer_whois = weechat_hook_timer (
         60 * 1000 * weechat_config_integer (irc_config_network_notify_check_whois),
         0, 0, &irc_notify_timer_whois_cb, NULL, NULL);

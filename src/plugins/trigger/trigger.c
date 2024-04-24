@@ -279,8 +279,7 @@ trigger_unhook (struct t_trigger *trigger)
     {
         for (i = 0; i < trigger->hooks_count; i++)
         {
-            if (trigger->hooks[i])
-                weechat_unhook (trigger->hooks[i]);
+            weechat_unhook (trigger->hooks[i]);
         }
         free (trigger->hooks);
         trigger->hooks = NULL;

@@ -135,9 +135,7 @@ logger_config_color_lines_change (const void *pointer, void *data,
     if (logger_config_loading)
         return;
 
-    if (logger_hook_print)
-        weechat_unhook (logger_hook_print);
-
+    weechat_unhook (logger_hook_print);
     logger_hook_print = weechat_hook_print (
         NULL, NULL, NULL,
         (weechat_config_boolean (logger_config_file_color_lines)) ? 0 : 1,

@@ -635,8 +635,7 @@ exec_free (struct t_exec_cmd *exec_cmd)
         last_exec_cmd = exec_cmd->prev_cmd;
 
     /* free data */
-    if (exec_cmd->hook)
-        weechat_unhook (exec_cmd->hook);
+    weechat_unhook (exec_cmd->hook);
     free (exec_cmd->name);
     free (exec_cmd->command);
     free (exec_cmd->buffer_full_name);

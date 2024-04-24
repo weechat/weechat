@@ -2298,16 +2298,11 @@ irc_server_free_data (struct t_irc_server *server)
     free (server->retry_array);
     free (server->current_address);
     free (server->current_ip);
-    if (server->hook_connect)
-        weechat_unhook (server->hook_connect);
-    if (server->hook_fd)
-        weechat_unhook (server->hook_fd);
-    if (server->hook_timer_connection)
-        weechat_unhook (server->hook_timer_connection);
-    if (server->hook_timer_sasl)
-        weechat_unhook (server->hook_timer_sasl);
-    if (server->hook_timer_anti_flood)
-        weechat_unhook (server->hook_timer_anti_flood);
+    weechat_unhook (server->hook_connect);
+    weechat_unhook (server->hook_fd);
+    weechat_unhook (server->hook_timer_connection);
+    weechat_unhook (server->hook_timer_sasl);
+    weechat_unhook (server->hook_timer_anti_flood);
     irc_server_free_sasl_data (server);
     free (server->unterminated_message);
     if (server->nicks_array)
@@ -4396,8 +4391,7 @@ irc_server_login (struct t_irc_server *server)
         (realname && realname[0]) ? realname : ((username2) ? username2 : "weechat"));
     free (username2);
 
-    if (server->hook_timer_connection)
-        weechat_unhook (server->hook_timer_connection);
+    weechat_unhook (server->hook_timer_connection);
     server->hook_timer_connection = weechat_hook_timer (
         IRC_SERVER_OPTION_INTEGER (server, IRC_SERVER_OPTION_CONNECTION_TIMEOUT) * 1000,
         0, 1,

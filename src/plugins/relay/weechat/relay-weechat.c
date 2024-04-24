@@ -319,16 +319,12 @@ relay_weechat_free (struct t_relay_client *client)
     {
         if (RELAY_WEECHAT_DATA(client, buffers_sync))
             weechat_hashtable_free (RELAY_WEECHAT_DATA(client, buffers_sync));
-        if (RELAY_WEECHAT_DATA(client, hook_signal_buffer))
-            weechat_unhook (RELAY_WEECHAT_DATA(client, hook_signal_buffer));
-        if (RELAY_WEECHAT_DATA(client, hook_hsignal_nicklist))
-            weechat_unhook (RELAY_WEECHAT_DATA(client, hook_hsignal_nicklist));
-        if (RELAY_WEECHAT_DATA(client, hook_signal_upgrade))
-            weechat_unhook (RELAY_WEECHAT_DATA(client, hook_signal_upgrade));
+        weechat_unhook (RELAY_WEECHAT_DATA(client, hook_signal_buffer));
+        weechat_unhook (RELAY_WEECHAT_DATA(client, hook_hsignal_nicklist));
+        weechat_unhook (RELAY_WEECHAT_DATA(client, hook_signal_upgrade));
         if (RELAY_WEECHAT_DATA(client, buffers_nicklist))
             weechat_hashtable_free (RELAY_WEECHAT_DATA(client, buffers_nicklist));
-        if (RELAY_WEECHAT_DATA(client, hook_timer_nicklist))
-            weechat_unhook (RELAY_WEECHAT_DATA(client, hook_timer_nicklist));
+        weechat_unhook (RELAY_WEECHAT_DATA(client, hook_timer_nicklist));
 
         free (client->protocol_data);
 

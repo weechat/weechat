@@ -939,12 +939,9 @@ xfer_free (struct t_xfer *xfer)
     free (xfer->remote_address);
     free (xfer->remote_address_str);
     free (xfer->remote_nick_color);
-    if (xfer->hook_fd)
-        weechat_unhook (xfer->hook_fd);
-    if (xfer->hook_timer)
-        weechat_unhook (xfer->hook_timer);
-    if (xfer->hook_connect)
-        weechat_unhook (xfer->hook_connect);
+    weechat_unhook (xfer->hook_fd);
+    weechat_unhook (xfer->hook_timer);
+    weechat_unhook (xfer->hook_connect);
     free (xfer->unterminated_message);
     free (xfer->local_filename);
     free (xfer->temp_local_filename);

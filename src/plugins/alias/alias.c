@@ -605,8 +605,7 @@ alias_free (struct t_alias *alias)
     alias_remove_from_list (alias);
 
     /* free data */
-    if (alias->hook)
-        weechat_unhook (alias->hook);
+    weechat_unhook (alias->hook);
     free (alias->name);
     free (alias->command);
     free (alias->completion);

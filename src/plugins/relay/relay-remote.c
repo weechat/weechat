@@ -792,12 +792,9 @@ relay_remote_free (struct t_relay_remote *remote)
     }
     free (remote->address);
     free (remote->websocket_key);
-    if (remote->hook_url_handshake)
-        weechat_unhook (remote->hook_url_handshake);
-    if (remote->hook_connect)
-        weechat_unhook (remote->hook_connect);
-    if (remote->hook_fd)
-        weechat_unhook (remote->hook_fd);
+    weechat_unhook (remote->hook_url_handshake);
+    weechat_unhook (remote->hook_connect);
+    weechat_unhook (remote->hook_fd);
     relay_websocket_deflate_free (remote->ws_deflate);
     free (remote->partial_ws_frame);
 
