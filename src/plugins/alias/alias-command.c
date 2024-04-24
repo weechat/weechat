@@ -221,8 +221,7 @@ alias_command_cb (const void *pointer, void *data,
                     if (ptr_option)
                         weechat_config_option_free (ptr_option);
                     weechat_printf (NULL, _("Alias \"%s\" removed"), name);
-                    if (name)
-                        free (name);
+                    free (name);
                 }
                 ptr_alias = ptr_next_alias;
             }

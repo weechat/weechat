@@ -306,8 +306,7 @@ alias_run_command (struct t_gui_buffer **buffer, const char *command)
     string = weechat_buffer_string_replace_local_var (*buffer, command);
     weechat_command (*buffer,
                      (string) ? string : command);
-    if (string)
-        free (string);
+    free (string);
 
     /* get new current buffer */
     new_current_buffer = weechat_current_buffer ();
@@ -409,8 +408,7 @@ alias_cb (const void *pointer, void *data,
                     }
                 }
 
-                if (args_replaced)
-                    free (args_replaced);
+                free (args_replaced);
             }
             ptr_alias->running = 0;
             weechat_string_free_split_command (commands);
@@ -469,10 +467,8 @@ alias_hook_command (struct t_alias *alias)
                                         (str_completion) ? str_completion : alias->completion,
                                         &alias_cb, alias, NULL);
 
-    if (str_priority_name)
-        free (str_priority_name);
-    if (str_completion)
-        free (str_completion);
+    free (str_priority_name);
+    free (str_completion);
 }
 
 /*
@@ -611,12 +607,10 @@ alias_free (struct t_alias *alias)
     /* free data */
     if (alias->hook)
         weechat_unhook (alias->hook);
-    if (alias->name)
-        free (alias->name);
-    if (alias->command)
-        free (alias->command);
-    if (alias->completion)
-        free (alias->completion);
+    free (alias->name);
+    free (alias->command);
+    free (alias->completion);
+
     free (alias);
 }
 
@@ -641,8 +635,7 @@ void
 alias_update_completion (struct t_alias *alias, const char *completion)
 {
     /* update completion in alias */
-    if (alias->completion)
-        free (alias->completion);
+    free (alias->completion);
     alias->completion = (completion) ? strdup (completion) : NULL;
 
     /* hook command again, with new completion */
