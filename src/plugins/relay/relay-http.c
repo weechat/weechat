@@ -1584,9 +1584,12 @@ relay_http_parse_response (const char *data)
         else if (http_resp->status == RELAY_HTTP_BODY)
         {
             http_resp->body_size = strlen (ptr_data);
-            http_resp->body = malloc (http_resp->body_size);
+            http_resp->body = malloc (http_resp->body_size + 1);
             if (http_resp->body)
+            {
                 memcpy (http_resp->body, ptr_data, http_resp->body_size);
+                http_resp->body[http_resp->body_size] = '\0';
+            }
             http_resp->status = RELAY_HTTP_END;
         }
         else
