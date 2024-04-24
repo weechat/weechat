@@ -1071,8 +1071,7 @@ fset_buffer_display_option_predefined_format (struct t_fset_option *fset_option)
         str_type,
         (str_value) ? str_value : "");
 
-    if (str_value)
-        free (str_value);
+    free (str_value);
 
     return fset_option->index;
 }

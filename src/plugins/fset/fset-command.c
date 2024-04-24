@@ -557,8 +557,7 @@ fset_command_run_set_cb (const void *pointer, void *data,
                                                  eval_extra_vars,
                                                  eval_options);
         condition_ok = (result && (strcmp (result, "1") == 0));
-        if (result)
-            free (result);
+        free (result);
     }
     if (eval_extra_vars)
         weechat_hashtable_free (eval_extra_vars);
@@ -570,10 +569,8 @@ fset_command_run_set_cb (const void *pointer, void *data,
     {
         if (old_options)
             weechat_arraylist_free (old_options);
-        if (old_max_length)
-            free (old_max_length);
-        if (old_filter)
-            free (old_filter);
+        free (old_max_length);
+        free (old_filter);
 
         if (!fset_buffer)
             fset_buffer_open ();
@@ -592,8 +589,7 @@ fset_command_run_set_cb (const void *pointer, void *data,
         free (fset_option_max_length);
         fset_option_max_length = old_max_length;
         fset_option_set_filter (old_filter);
-        if (old_filter)
-            free (old_filter);
+        free (old_filter);
         fset_buffer_selected_line = old_buffer_selected_line;
     }
 

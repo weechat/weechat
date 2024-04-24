@@ -333,8 +333,7 @@ fset_option_match_filter (struct t_fset_option *fset_option, const char *filter)
             fset_option_filter_hashtable_extra_vars,
             fset_option_filter_hashtable_options);
         match = (result && (strcmp (result, "1") == 0)) ? 1 : 0;
-        if (result)
-            free (result);
+        free (result);
         return match;
     }
     else if (strncmp (filter, "f:", 2) == 0)
@@ -440,38 +439,26 @@ fset_option_set_values (struct t_fset_option *fset_option,
     char str_value[64], str_allowed_values[4096];
 
     /* file */
-    if (fset_option->file)
-    {
-        free (fset_option->file);
-        fset_option->file = NULL;
-    }
+    free (fset_option->file);
+    fset_option->file = NULL;
     ptr_config_name = weechat_config_option_get_string (option, "config_name");
     fset_option->file = strdup (ptr_config_name);
 
     /* section */
-    if (fset_option->section)
-    {
-        free (fset_option->section);
-        fset_option->section = NULL;
-    }
+    free (fset_option->section);
+    fset_option->section = NULL;
     ptr_section_name = weechat_config_option_get_string (option, "section_name");
     fset_option->section = strdup (ptr_section_name);
 
     /* option */
-    if (fset_option->option)
-    {
-        free (fset_option->option);
-        fset_option->option = NULL;
-    }
+    free (fset_option->option);
+    fset_option->option = NULL;
     ptr_option_name = weechat_config_option_get_string (option, "name");
     fset_option->option = strdup (ptr_option_name);
 
     /* name */
-    if (fset_option->name)
-    {
-        free (fset_option->name);
-        fset_option->name = NULL;
-    }
+    free (fset_option->name);
+    fset_option->name = NULL;
     length = strlen (ptr_config_name) + 1 +
         strlen (ptr_section_name) + 1 +
         strlen (ptr_option_name) + 1;
@@ -485,11 +472,8 @@ fset_option_set_values (struct t_fset_option *fset_option,
     }
 
     /* parent name */
-    if (fset_option->parent_name)
-    {
-        free (fset_option->parent_name);
-        fset_option->parent_name = NULL;
-    }
+    free (fset_option->parent_name);
+    fset_option->parent_name = NULL;
     ptr_parent_name = weechat_config_option_get_string (option, "parent_name");
     fset_option->parent_name = (ptr_parent_name) ? strdup (ptr_parent_name) : NULL;
 
@@ -498,11 +482,8 @@ fset_option_set_values (struct t_fset_option *fset_option,
     fset_option->type = *ptr_type;
 
     /* default value */
-    if (fset_option->default_value)
-    {
-        free (fset_option->default_value);
-        fset_option->default_value = NULL;
-    }
+    free (fset_option->default_value);
+    fset_option->default_value = NULL;
     ptr_default_value = weechat_config_option_get_pointer (option,
                                                            "default_value");
     fset_option_set_value_string (option,
@@ -512,11 +493,8 @@ fset_option_set_values (struct t_fset_option *fset_option,
                                   &fset_option->default_value);
 
     /* value */
-    if (fset_option->value)
-    {
-        free (fset_option->value);
-        fset_option->value = NULL;
-    }
+    free (fset_option->value);
+    fset_option->value = NULL;
     ptr_value = weechat_config_option_get_pointer (option, "value");
     fset_option_set_value_string (option,
                                   fset_option->type,
@@ -525,11 +503,8 @@ fset_option_set_values (struct t_fset_option *fset_option,
                                   &fset_option->value);
 
     /* parent_value */
-    if (fset_option->parent_value)
-    {
-        free (fset_option->parent_value);
-        fset_option->parent_value = NULL;
-    }
+    free (fset_option->parent_value);
+    fset_option->parent_value = NULL;
     if (ptr_parent_name)
     {
         ptr_parent_option = weechat_config_get (ptr_parent_name);
@@ -546,40 +521,28 @@ fset_option_set_values (struct t_fset_option *fset_option,
     }
 
     /* min value */
-    if (fset_option->min)
-    {
-        free (fset_option->min);
-        fset_option->min = NULL;
-    }
+    free (fset_option->min);
+    fset_option->min = NULL;
     ptr_min = weechat_config_option_get_pointer (option, "min");
     snprintf (str_value, sizeof (str_value), "%d", *ptr_min);
     fset_option->min = strdup (str_value);
 
     /* max value */
-    if (fset_option->max)
-    {
-        free (fset_option->max);
-        fset_option->max = NULL;
-    }
+    free (fset_option->max);
+    fset_option->max = NULL;
     ptr_max = weechat_config_option_get_pointer (option, "max");
     snprintf (str_value, sizeof (str_value), "%d", *ptr_max);
     fset_option->max = strdup (str_value);
 
     /* description */
-    if (fset_option->description)
-    {
-        free (fset_option->description);
-        fset_option->description = NULL;
-    }
+    free (fset_option->description);
+    fset_option->description = NULL;
     ptr_description = weechat_config_option_get_string (option, "description");
     fset_option->description = strdup ((ptr_description) ? ptr_description : "");
 
     /* string_values */
-    if (fset_option->string_values)
-    {
-        free (fset_option->string_values);
-        fset_option->string_values = NULL;
-    }
+    free (fset_option->string_values);
+    fset_option->string_values = NULL;
     ptr_string_values = weechat_config_option_get_pointer (option, "string_values");
     if (ptr_string_values)
     {
@@ -592,11 +555,8 @@ fset_option_set_values (struct t_fset_option *fset_option,
     }
 
     /* allowed_values */
-    if (fset_option->allowed_values)
-    {
-        free (fset_option->allowed_values);
-        fset_option->allowed_values = NULL;
-    }
+    free (fset_option->allowed_values);
+    fset_option->allowed_values = NULL;
     str_allowed_values[0] = '\0';
     switch (fset_option->type)
     {
@@ -945,32 +905,19 @@ fset_option_free (struct t_fset_option *fset_option)
     if (!fset_option)
         return;
 
-    if (fset_option->file)
-        free (fset_option->file);
-    if (fset_option->section)
-        free (fset_option->section);
-    if (fset_option->option)
-        free (fset_option->option);
-    if (fset_option->name)
-        free (fset_option->name);
-    if (fset_option->parent_name)
-        free (fset_option->parent_name);
-    if (fset_option->default_value)
-        free (fset_option->default_value);
-    if (fset_option->value)
-        free (fset_option->value);
-    if (fset_option->parent_value)
-        free (fset_option->parent_value);
-    if (fset_option->min)
-        free (fset_option->min);
-    if (fset_option->max)
-        free (fset_option->max);
-    if (fset_option->description)
-        free (fset_option->description);
-    if (fset_option->string_values)
-        free (fset_option->string_values);
-    if (fset_option->allowed_values)
-        free (fset_option->allowed_values);
+    free (fset_option->file);
+    free (fset_option->section);
+    free (fset_option->option);
+    free (fset_option->name);
+    free (fset_option->parent_name);
+    free (fset_option->default_value);
+    free (fset_option->value);
+    free (fset_option->parent_value);
+    free (fset_option->min);
+    free (fset_option->max);
+    free (fset_option->description);
+    free (fset_option->string_values);
+    free (fset_option->allowed_values);
 
     free (fset_option);
 }
@@ -1126,8 +1073,7 @@ fset_option_get_options ()
 void
 fset_option_set_filter (const char *filter)
 {
-    if (fset_option_filter)
-        free (fset_option_filter);
+    free (fset_option_filter);
     fset_option_filter = (filter && (strcmp (filter, "*") != 0)) ?
         strdup (filter) : NULL;
 }
@@ -1442,8 +1388,7 @@ fset_option_export (const char *filename, int with_help)
                     NULL);
                 if (line && line[0])
                     fprintf (file, "%s\n", line);
-                if (line)
-                    free (line);
+                free (line);
             }
             line = weechat_string_eval_expression (
                 (ptr_fset_option->value) ?
@@ -1454,8 +1399,7 @@ fset_option_export (const char *filename, int with_help)
                 NULL);
             if (line && line[0])
                 fprintf (file, "%s\n", line);
-            if (line)
-                free (line);
+            free (line);
         }
     }
 
@@ -1628,8 +1572,7 @@ fset_option_config_changed (const char *option_name)
         fset_buffer_refresh (0);
     }
 
-    if (old_name_selected)
-        free (old_name_selected);
+    free (old_name_selected);
 }
 
 /*
@@ -1719,8 +1662,7 @@ fset_option_config_cb (const void *pointer,
         free (info);
         return WEECHAT_RC_OK;
     }
-    if (info)
-        free (info);
+    free (info);
 
     /*
      * we limit the number of options to display with the timer; for example
@@ -1976,16 +1918,10 @@ fset_option_end ()
         fset_options = NULL;
     }
     fset_option_count_marked = 0;
-    if (fset_option_max_length)
-    {
-        free (fset_option_max_length);
-        fset_option_max_length = NULL;
-    }
-    if (fset_option_filter)
-    {
-        free (fset_option_filter);
-        fset_option_filter = NULL;
-    }
+    free (fset_option_max_length);
+    fset_option_max_length = NULL;
+    free (fset_option_filter);
+    fset_option_filter = NULL;
     if (fset_option_filter_hashtable_pointers)
     {
         weechat_hashtable_free (fset_option_filter_hashtable_pointers);
