@@ -1330,9 +1330,7 @@ weechat_tcl_api_config_option_change_cb (const void *pointer, void *data,
                                WEECHAT_SCRIPT_EXEC_IGNORE,
                                ptr_function,
                                "ss", func_argv);
-
-        if (rc)
-            free (rc);
+        free (rc);
     }
 }
 
@@ -1357,9 +1355,7 @@ weechat_tcl_api_config_option_delete_cb (const void *pointer, void *data,
                                WEECHAT_SCRIPT_EXEC_IGNORE,
                                ptr_function,
                                "ss", func_argv);
-
-        if (rc)
-            free (rc);
+        free (rc);
     }
 }
 
@@ -3060,8 +3056,7 @@ weechat_tcl_api_hook_print_cb (const void *pointer, void *data,
             ret = *rc;
             free (rc);
         }
-        if (func_argv[3])
-            free (func_argv[3]);
+        free (func_argv[3]);
 
         return ret;
     }
