@@ -208,8 +208,7 @@ relay_weechat_protocol_handshake_reply (struct t_relay_client *client,
         weechat_hashtable_free (hashtable);
     }
 
-    if (totp_secret)
-        free (totp_secret);
+    free (totp_secret);
 }
 
 
@@ -420,8 +419,7 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(init)
                             info_totp = weechat_info_get ("totp_validate", info_totp_args);
                             if (info_totp && (strcmp (info_totp, "1") == 0))
                                 RELAY_WEECHAT_DATA(client, totp_ok) = 1;
-                            if (info_totp)
-                                free (info_totp);
+                            free (info_totp);
                             free (info_totp_args);
                         }
                     }
@@ -451,10 +449,8 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(init)
         relay_client_set_status (client, RELAY_STATUS_AUTH_FAILED);
     }
 
-    if (relay_password)
-        free (relay_password);
-    if (totp_secret)
-        free (totp_secret);
+    free (relay_password);
+    free (totp_secret);
 
     return WEECHAT_RC_OK;
 }
@@ -515,8 +511,7 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(info)
         relay_weechat_msg_add_string (msg, info);
         relay_weechat_msg_send (client, msg);
         relay_weechat_msg_free (msg);
-        if (info)
-            free (info);
+        free (info);
     }
 
     return WEECHAT_RC_OK;
@@ -1841,10 +1836,8 @@ relay_weechat_protocol_recv (struct t_relay_client *client, const char *data)
     }
 
 end:
-    if (data_unescaped)
-        free (data_unescaped);
-    if (id)
-        free (id);
+    free (data_unescaped);
+    free (id);
     free (command);
     if (argv)
         weechat_string_free_split (argv);

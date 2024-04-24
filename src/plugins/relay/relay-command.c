@@ -728,8 +728,7 @@ relay_command_remote (const void *pointer, void *data,
             _("%s: remote relay \"%s\" has been deleted"),
             RELAY_PLUGIN_NAME,
             (remote_name) ? remote_name : "???");
-        if (remote_name)
-            free (remote_name);
+        free (remote_name);
         return WEECHAT_RC_OK;
     }
 

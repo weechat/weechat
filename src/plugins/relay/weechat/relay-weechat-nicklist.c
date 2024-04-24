@@ -125,14 +125,10 @@ relay_weechat_nicklist_item_free (struct t_relay_weechat_nicklist_item *item)
     if (!item)
         return;
 
-    if (item->name)
-        free (item->name);
-    if (item->color)
-        free (item->color);
-    if (item->prefix)
-        free (item->prefix);
-    if (item->prefix_color)
-        free (item->prefix_color);
+    free (item->name);
+    free (item->color);
+    free (item->prefix);
+    free (item->prefix_color);
 }
 
 /*

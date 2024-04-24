@@ -206,8 +206,7 @@ relay_api_msg_send_json_internal (struct t_relay_client *client,
                 string,
                 (string) ? strlen (string) : 0,
                 NULL);  /* raw_message */
-            if (string)
-                free (string);
+            free (string);
             cJSON_DetachItemFromObject (json, "body");
             cJSON_Delete (json);
         }
@@ -217,8 +216,7 @@ relay_api_msg_send_json_internal (struct t_relay_client *client,
         string = (json_body) ? cJSON_PrintUnformatted (json_body) : NULL;
         num_bytes = relay_http_send_json (client, return_code, message, headers,
                                           string);
-        if (string)
-            free (string);
+        free (string);
     }
 
     return num_bytes;

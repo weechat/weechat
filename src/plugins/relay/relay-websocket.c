@@ -543,15 +543,12 @@ relay_websocket_inflate (const void *data, size_t size, z_stream *strm,
         goto error;
     dest = dest2;
     dest[*size_decompressed] = '\0';
-    if (data2)
-        free (data2);
+    free (data2);
     return (char *)dest;
 
 error:
-    if (data2)
-        free (data2);
-    if (dest)
-        free (dest);
+    free (data2);
+    free (dest);
     return NULL;
 }
 
@@ -884,8 +881,7 @@ relay_websocket_encode_frame (struct t_relay_websocket_deflate *ws_deflate,
     frame = malloc (data_size + 14);
     if (!frame)
     {
-        if (payload_compressed)
-            free (payload_compressed);
+        free (payload_compressed);
         return NULL;
     }
 
@@ -943,8 +939,7 @@ relay_websocket_encode_frame (struct t_relay_websocket_deflate *ws_deflate,
 
     *length_frame = index + data_size;
 
-    if (payload_compressed)
-        free (payload_compressed);
+    free (payload_compressed);
 
     return (char *)frame;
 }

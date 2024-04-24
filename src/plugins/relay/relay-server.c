@@ -478,10 +478,8 @@ error:
         close (client_fd);
 
 end:
-    if (relay_password)
-        free (relay_password);
-    if (relay_totp_secret)
-        free (relay_totp_secret);
+    free (relay_password);
+    free (relay_totp_secret);
 
     return WEECHAT_RC_OK;
 }
@@ -966,10 +964,8 @@ relay_server_free (struct t_relay_server *server)
 
     /* free data */
     relay_server_close_socket (server);
-    if (server->protocol_string)
-        free (server->protocol_string);
-    if (server->protocol_args)
-        free (server->protocol_args);
+    free (server->protocol_string);
+    free (server->protocol_args);
     free (server->path);
 
     free (server);

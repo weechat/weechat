@@ -312,8 +312,7 @@ relay_remote_network_send (struct t_relay_remote *remote,
 
     num_sent = relay_remote_network_send_data (remote, ptr_data, data_size);
 
-    if (websocket_frame)
-        free (websocket_frame);
+    free (websocket_frame);
 
     if (num_sent >= 0)
     {
@@ -515,8 +514,7 @@ relay_remote_network_recv_buffer (struct t_relay_remote *remote,
             &num_frames,
             &remote->partial_ws_frame,
             &remote->partial_ws_frame_size);
-        if (buffer2)
-            free (buffer2);
+        free (buffer2);
         if (!rc)
         {
             /* fatal error when decoding frame: close connection */
@@ -524,8 +522,7 @@ relay_remote_network_recv_buffer (struct t_relay_remote *remote,
             {
                 for (i = 0; i < num_frames; i++)
                 {
-                    if (frames[i].payload)
-                        free (frames[i].payload);
+                    free (frames[i].payload);
                 }
                 free (frames);
             }
@@ -540,8 +537,7 @@ relay_remote_network_recv_buffer (struct t_relay_remote *remote,
         relay_remote_network_read_websocket_frames (remote, frames, num_frames);
         for (i = 0; i < num_frames; i++)
         {
-            if (frames[i].payload)
-                free (frames[i].payload);
+            free (frames[i].payload);
         }
         free (frames);
     }
@@ -733,8 +729,7 @@ relay_remote_network_connect_ws_auth (struct t_relay_remote *remote)
     /* generate random websocket key (16 bytes) */
     gcry_create_nonce (ws_key, sizeof (ws_key));
     weechat_string_base_encode ("64", ws_key, sizeof (ws_key), ws_key_base64);
-    if (remote->websocket_key)
-        free (remote->websocket_key);
+    free (remote->websocket_key);
     remote->websocket_key = strdup (ws_key_base64);
 
     weechat_string_base_encode ("64", str_auth, strlen (str_auth), str_auth_base64);
@@ -773,10 +768,8 @@ relay_remote_network_connect_ws_auth (struct t_relay_remote *remote)
                                str_http, strlen (str_http));
 
 end:
-    if (password)
-        free (password);
-    if (totp_secret)
-        free (totp_secret);
+    free (password);
+    free (totp_secret);
 }
 
 /*
@@ -1450,10 +1443,8 @@ error:
     weechat_printf (NULL,
                     _("remote[%s]: failed to connect, not enough memory"),
                     remote->name);
-    if (url)
-        free (url);
-    if (body)
-        free (body);
+    free (url);
+    free (body);
     if (options)
         weechat_hashtable_free (options);
     return 0;

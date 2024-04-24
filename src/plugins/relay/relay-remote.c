@@ -413,8 +413,7 @@ relay_remote_add (struct t_relay_remote *remote,
 void
 relay_remote_set_url (struct t_relay_remote *remote, const char *url)
 {
-    if (remote->address)
-        free (remote->address);
+    free (remote->address);
     remote->address = relay_remote_get_address (url);
     remote->port = relay_remote_get_port (url);
     remote->tls = (weechat_strncmp (url, "https:", 6) == 0) ? 1 : 0;
@@ -712,8 +711,7 @@ relay_remote_rename (struct t_relay_remote *remote, const char *name)
         }
     }
 
-    if (remote->name)
-        free (remote->name);
+    free (remote->name);
     remote->name = strdup (name);
 
     free (option_name);
@@ -786,17 +784,14 @@ relay_remote_free (struct t_relay_remote *remote)
         last_relay_remote = remote->prev_remote;
 
     /* free data */
-    if (remote->name)
-        free (remote->name);
+    free (remote->name);
     for (i = 0; i < RELAY_REMOTE_NUM_OPTIONS; i++)
     {
         if (remote->options[i])
             weechat_config_option_free (remote->options[i]);
     }
-    if (remote->address)
-        free (remote->address);
-    if (remote->websocket_key)
-        free (remote->websocket_key);
+    free (remote->address);
+    free (remote->websocket_key);
     if (remote->hook_url_handshake)
         weechat_unhook (remote->hook_url_handshake);
     if (remote->hook_connect)
@@ -804,8 +799,7 @@ relay_remote_free (struct t_relay_remote *remote)
     if (remote->hook_fd)
         weechat_unhook (remote->hook_fd);
     relay_websocket_deflate_free (remote->ws_deflate);
-    if (remote->partial_ws_frame)
-        free (remote->partial_ws_frame);
+    free (remote->partial_ws_frame);
 
     free (remote);
 

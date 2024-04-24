@@ -400,10 +400,8 @@ error:
                     weechat_prefix ("error"), RELAY_PLUGIN_NAME);
 
 end:
-    if (totp_secret)
-        free (totp_secret);
-    if (secret)
-        free (secret);
+    free (totp_secret);
+    free (secret);
     return rc;
 }
 
@@ -954,10 +952,8 @@ relay_config_create_option_port_path (const void *pointer, void *data,
             rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
     }
 
-    if (protocol)
-        free (protocol);
-    if (protocol_args)
-        free (protocol_args);
+    free (protocol);
+    free (protocol_args);
 
     return rc;
 }
@@ -1182,8 +1178,7 @@ relay_config_use_temp_remotes ()
     {
         next_temp_remote = relay_remotes_temp->next_remote;
 
-        if (relay_remotes_temp->name)
-            free (relay_remotes_temp->name);
+        free (relay_remotes_temp->name);
         free (relay_remotes_temp);
 
         relay_remotes_temp = next_temp_remote;

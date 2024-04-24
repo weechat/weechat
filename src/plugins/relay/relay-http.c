@@ -313,18 +313,14 @@ relay_http_parse_path (const char *path,
                 }
                 if (params)
                     weechat_hashtable_set (params, name, value);
-                if (name)
-                    free (name);
-                if (value)
-                    free (value);
+                free (name);
+                free (value);
             }
         }
     }
 
-    if (str_path)
-        free (str_path);
-    if (str_params)
-        free (str_params);
+    free (str_path);
+    free (str_params);
     if (items_path)
         weechat_string_free_split (items_path);
 }
@@ -358,18 +354,15 @@ relay_http_parse_method_path (struct t_relay_http_request *request,
     if (!items || (num_items < 2))
         goto error;
 
-    if (request->method)
-        free (request->method);
+    free (request->method);
     request->method = strdup (items[0]);
 
-    if (request->path)
-        free (request->path);
+    free (request->path);
     request->path = strdup (items[1]);
 
     if (num_items > 2)
     {
-        if (request->http_version)
-            free (request->http_version);
+        free (request->http_version);
         request->http_version = strdup (items[2]);
     }
 
@@ -685,8 +678,7 @@ relay_http_get_auth_status (struct t_relay_client *client)
             info_totp = weechat_info_get ("totp_validate", info_totp_args);
             totp_ok = (info_totp && (strcmp (info_totp, "1") == 0)) ?
                 1 : 0;
-            if (info_totp)
-                free (info_totp);
+            free (info_totp);
             free (info_totp_args);
             if (!totp_ok)
             {
@@ -697,12 +689,9 @@ relay_http_get_auth_status (struct t_relay_client *client)
     }
 
 end:
-    if (relay_password)
-        free (relay_password);
-    if (totp_secret)
-        free (totp_secret);
-    if (user_pass)
-        free (user_pass);
+    free (relay_password);
+    free (totp_secret);
+    free (user_pass);
     return rc;
 }
 
@@ -852,8 +841,7 @@ relay_http_process_websocket (struct t_relay_client *client)
         client->http_req->headers, "x-real-ip");
     if (ptr_real_ip)
     {
-        if (client->real_ip)
-            free (client->real_ip);
+        free (client->real_ip);
         client->real_ip = strdup (ptr_real_ip);
         relay_client_set_desc (client);
         weechat_printf_date_tags (
@@ -1230,8 +1218,7 @@ relay_http_send (struct t_relay_client *client,
             num_bytes = relay_client_send (client, RELAY_MSG_STANDARD,
                                            http_message, length_msg,
                                            raw_message);
-            if (raw_message)
-                free (raw_message);
+            free (raw_message);
             free (http_message);
         }
         else
@@ -1240,8 +1227,7 @@ relay_http_send (struct t_relay_client *client,
         }
     }
 
-    if (compressed_body)
-        free (compressed_body);
+    free (compressed_body);
 
     return num_bytes;
 }
@@ -1286,8 +1272,7 @@ relay_http_send_json (struct t_relay_client *client,
                                  json_string,
                                  (json_string) ? strlen (json_string) : 0);
 
-    if (headers2)
-        free (headers2);
+    free (headers2);
 
     return num_bytes;
 }
@@ -1334,10 +1319,8 @@ relay_http_send_error_json (struct t_relay_client *client,
 
 end:
     free (vbuffer);
-    if (error_msg)
-        free (error_msg);
-    if (json)
-        free (json);
+    free (error_msg);
+    free (json);
     return num_bytes;
 }
 
@@ -1350,24 +1333,20 @@ relay_http_request_free (struct t_relay_http_request *request)
 {
     if (request->raw)
         weechat_string_dyn_free (request->raw, 1);
-    if (request->method)
-        free (request->method);
-    if (request->path)
-        free (request->path);
+    free (request->method);
+    free (request->path);
     if (request->path_items)
         weechat_string_free_split (request->path_items);
     if (request->params)
         weechat_hashtable_free (request->params);
-    if (request->http_version)
-        free (request->http_version);
+    free (request->http_version);
     if (request->headers)
         weechat_hashtable_free (request->headers);
     if (request->accept_encoding)
         weechat_hashtable_free (request->accept_encoding);
     if (request->ws_deflate)
         relay_websocket_deflate_free (request->ws_deflate);
-    if (request->body)
-        free (request->body);
+    free (request->body);
 
     free (request);
 }
@@ -1430,8 +1409,7 @@ relay_http_parse_response_code (struct t_relay_http_response *response,
     if (!pos)
         goto error;
 
-    if (response->http_version)
-        free (response->http_version);
+    free (response->http_version);
     response->http_version = weechat_strndup (response_code, pos - response_code);
 
     while (pos[0] == ' ')
@@ -1460,8 +1438,7 @@ relay_http_parse_response_code (struct t_relay_http_response *response,
         {
             pos2++;
         }
-        if (response->message)
-            free (response->message);
+        free (response->message);
         response->message = strdup (pos2);
     }
 
@@ -1609,14 +1586,11 @@ relay_http_parse_response (const char *data)
 void
 relay_http_response_free (struct t_relay_http_response *response)
 {
-    if (response->http_version)
-        free (response->http_version);
-    if (response->message)
-        free (response->message);
+    free (response->http_version);
+    free (response->message);
     if (response->headers)
         weechat_hashtable_free (response->headers);
-    if (response->body)
-        free (response->body);
+    free (response->body);
 
     free (response);
 }

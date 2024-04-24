@@ -153,10 +153,8 @@ relay_buffer_refresh (const char *hotlist)
                           str_date_start,
                           str_date_end);
 
-        if (str_recv)
-            free (str_recv);
-        if (str_sent)
-            free (str_sent);
+        free (str_recv);
+        free (str_sent);
 
         line++;
     }

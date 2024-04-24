@@ -131,8 +131,7 @@ relay_network_set_tls_cert_key (int verbose)
         }
     }
 
-    if (certkey_path)
-        free (certkey_path);
+    free (certkey_path);
 }
 
 /*

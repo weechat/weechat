@@ -770,14 +770,11 @@ relay_weechat_msg_add_hdata (struct t_relay_weechat_msg *msg,
 end:
     if (list_keys)
         weechat_string_free_split (list_keys);
-    if (keys_types)
-        free (keys_types);
+    free (keys_types);
     if (list_path)
         weechat_string_free_split (list_path);
-    if (path_returned)
-        free (path_returned);
-    if (hdata_head)
-        free (hdata_head);
+    free (path_returned);
+    free (hdata_head);
 
     return rc;
 }
@@ -1123,8 +1120,7 @@ relay_weechat_msg_compress_zlib (struct t_relay_client *client,
     rc = 1;
 
 error:
-    if (dest)
-        free (dest);
+    free (dest);
 
     return rc;
 }
@@ -1196,8 +1192,7 @@ relay_weechat_msg_compress_zstd (struct t_relay_client *client,
     rc = 1;
 
 error:
-    if (dest)
-        free (dest);
+    free (dest);
 
     return rc;
 #else
@@ -1264,10 +1259,8 @@ relay_weechat_msg_free (struct t_relay_weechat_msg *msg)
     if (!msg)
         return;
 
-    if (msg->id)
-        free (msg->id);
-    if (msg->data)
-        free (msg->data);
+    free (msg->id);
+    free (msg->data);
 
     free (msg);
 }

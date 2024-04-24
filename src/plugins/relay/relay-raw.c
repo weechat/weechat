@@ -154,10 +154,8 @@ relay_raw_message_free (struct t_relay_raw_message *raw_message)
         (raw_message->next_message)->prev_message = raw_message->prev_message;
 
     /* free data */
-    if (raw_message->prefix)
-        free (raw_message->prefix);
-    if (raw_message->message)
-        free (raw_message->message);
+    free (raw_message->prefix);
+    free (raw_message->message);
 
     free (raw_message);
 
@@ -377,8 +375,7 @@ relay_raw_message_add (enum t_relay_msg_type msg_type,
             relay_raw_message_free (new_raw_message);
     }
 
-    if (buf)
-        free (buf);
+    free (buf);
     free (raw_data);
 }
 

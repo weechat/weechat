@@ -180,8 +180,7 @@ relay_client_set_desc (struct t_relay_client *client)
 {
     char desc[512];
 
-    if (client->desc)
-        free (client->desc);
+    free (client->desc);
 
     snprintf (desc, sizeof (desc),
               "%d/%s%s%s%s/%s%s%s%s",
@@ -658,8 +657,7 @@ relay_client_recv_buffer (struct t_relay_client *client,
             &num_frames,
             &client->partial_ws_frame,
             &client->partial_ws_frame_size);
-        if (buffer2)
-            free (buffer2);
+        free (buffer2);
         if (!rc)
         {
             /* fatal error when decoding frame: close connection */
@@ -667,8 +665,7 @@ relay_client_recv_buffer (struct t_relay_client *client,
             {
                 for (i = 0; i < num_frames; i++)
                 {
-                    if (frames[i].payload)
-                        free (frames[i].payload);
+                    free (frames[i].payload);
                 }
                 free (frames);
             }
@@ -686,8 +683,7 @@ relay_client_recv_buffer (struct t_relay_client *client,
         relay_client_read_websocket_frames (client, frames, num_frames);
         for (i = 0; i < num_frames; i++)
         {
-            if (frames[i].payload)
-                free (frames[i].payload);
+            free (frames[i].payload);
         }
         free (frames);
     }
@@ -827,12 +823,9 @@ relay_client_outqueue_free (struct t_relay_client *client,
         (outqueue->next_outqueue)->prev_outqueue = outqueue->prev_outqueue;
 
     /* free data */
-    if (outqueue->data)
-        free (outqueue->data);
-    if (outqueue->raw_message[0])
-        free (outqueue->raw_message[0]);
-    if (outqueue->raw_message[1])
-        free (outqueue->raw_message[1]);
+    free (outqueue->data);
+    free (outqueue->raw_message[0]);
+    free (outqueue->raw_message[1]);
     free (outqueue);
 
     /* set new head */
@@ -1300,8 +1293,7 @@ relay_client_send (struct t_relay_client *client,
         }
     }
 
-    if (websocket_frame)
-        free (websocket_frame);
+    free (websocket_frame);
 
     return num_sent;
 }
@@ -1908,18 +1900,12 @@ relay_client_free (struct t_relay_client *client)
         (client->next_client)->prev_client = client->prev_client;
 
     /* free data */
-    if (client->desc)
-        free (client->desc);
-    if (client->address)
-        free (client->address);
-    if (client->real_ip)
-        free (client->real_ip);
-    if (client->protocol_string)
-        free (client->protocol_string);
-    if (client->protocol_args)
-        free (client->protocol_args);
-    if (client->nonce)
-        free (client->nonce);
+    free (client->desc);
+    free (client->address);
+    free (client->real_ip);
+    free (client->protocol_string);
+    free (client->protocol_args);
+    free (client->nonce);
     if (client->hook_timer_handshake)
         weechat_unhook (client->hook_timer_handshake);
     relay_websocket_deflate_free (client->ws_deflate);
@@ -1928,10 +1914,8 @@ relay_client_free (struct t_relay_client *client)
         weechat_unhook (client->hook_fd);
     if (client->hook_timer_send)
         weechat_unhook (client->hook_timer_send);
-    if (client->partial_ws_frame)
-        free (client->partial_ws_frame);
-    if (client->partial_message)
-        free (client->partial_message);
+    free (client->partial_ws_frame);
+    free (client->partial_message);
     if (client->protocol_data)
     {
         switch (client->protocol)

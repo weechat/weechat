@@ -518,12 +518,9 @@ relay_auth_password_hash (struct t_relay_client *client,
             {
                 rc = -4;;
             }
-            if (salt_hexa)
-                free (salt_hexa);
-            if (salt)
-                free (salt);
-            if (hash_sha)
-                free (hash_sha);
+            free (salt_hexa);
+            free (salt);
+            free (hash_sha);
             break;
         case RELAY_AUTH_PASSWORD_HASH_PBKDF2_SHA256:
         case RELAY_AUTH_PASSWORD_HASH_PBKDF2_SHA512:
@@ -549,14 +546,10 @@ relay_auth_password_hash (struct t_relay_client *client,
             {
                 rc = -4;
             }
-            if (hash_pbkdf2_algo)
-                free (hash_pbkdf2_algo);
-            if (salt_hexa)
-                free (salt_hexa);
-            if (salt)
-                free (salt);
-            if (hash_pbkdf2)
-                free (hash_pbkdf2);
+            free (hash_pbkdf2_algo);
+            free (salt_hexa);
+            free (salt);
+            free (hash_pbkdf2);
             break;
         case RELAY_NUM_PASSWORD_HASH_ALGOS:
             rc = -4;
@@ -564,8 +557,7 @@ relay_auth_password_hash (struct t_relay_client *client,
     }
 
 end:
-    if (str_hash_algo)
-        free (str_hash_algo);
+    free (str_hash_algo);
 
     return rc;
 }
