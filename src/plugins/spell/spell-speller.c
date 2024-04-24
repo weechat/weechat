@@ -446,12 +446,9 @@ spell_speller_buffer_free_value_cb (struct t_hashtable *hashtable,
 
     ptr_speller_buffer = (struct t_spell_speller_buffer *)value;
 
-    if (ptr_speller_buffer->spellers)
-        free (ptr_speller_buffer->spellers);
-    if (ptr_speller_buffer->modifier_string)
-        free (ptr_speller_buffer->modifier_string);
-    if (ptr_speller_buffer->modifier_result)
-        free (ptr_speller_buffer->modifier_result);
+    free (ptr_speller_buffer->spellers);
+    free (ptr_speller_buffer->modifier_string);
+    free (ptr_speller_buffer->modifier_result);
 
     free (ptr_speller_buffer);
 }

@@ -125,10 +125,8 @@ spell_enchant_dict_describe_cb (const char *lang_tag,
         weechat_printf (NULL, "  %s", str_dict);
     }
 
-    if (lang)
-        free (lang);
-    if (country)
-        free (country);
+    free (lang);
+    free (country);
 }
 #endif /* USE_ENCHANT */
 
@@ -197,10 +195,8 @@ spell_command_speller_list_dicts ()
 
         weechat_printf (NULL, "  %s", str_dict);
 
-        if (lang)
-            free (lang);
-        if (country)
-            free (country);
+        free (lang);
+        free (country);
     }
 
     delete_aspell_dict_info_enumeration (elements);
@@ -437,8 +433,7 @@ spell_command_cb (const void *pointer, void *data,
         dicts = weechat_string_replace (argv_eol[2], " ", "");
         spell_command_set_dict (buffer,
                                 (dicts) ? dicts : argv[2]);
-        if (dicts)
-            free (dicts);
+        free (dicts);
         return WEECHAT_RC_OK;
     }
 

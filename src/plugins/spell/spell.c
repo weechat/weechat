@@ -216,10 +216,8 @@ spell_warning_aspell_config ()
                         spell_filename);
     }
 
-    if (aspell_filename)
-        free (aspell_filename);
-    if (spell_filename)
-        free (spell_filename);
+    free (aspell_filename);
+    free (spell_filename);
 }
 
 /*
@@ -938,8 +936,7 @@ spell_modifier_cb (const void *pointer, void *data,
                      * the beginning of this word, save the word (we will
                      * look for suggestions after this loop)
                      */
-                    if (misspelled_word)
-                        free (misspelled_word);
+                    free (misspelled_word);
                     misspelled_word = strdup (ptr_string);
                 }
             }
@@ -1021,9 +1018,7 @@ spell_modifier_cb (const void *pointer, void *data,
             }
         }
 
-        if (old_misspelled_word)
-            free (old_misspelled_word);
-
+        free (old_misspelled_word);
         free (misspelled_word);
     }
     else
@@ -1046,8 +1041,7 @@ spell_modifier_cb (const void *pointer, void *data,
         (void) weechat_hook_signal_send ("spell_suggest",
                                          WEECHAT_HOOK_SIGNAL_POINTER, buffer);
     }
-    if (old_suggestions)
-        free (old_suggestions);
+    free (old_suggestions);
 
     ptr_speller_buffer->modifier_result = strdup (*result);
 
@@ -1165,8 +1159,7 @@ spell_config_change_nick_completer_cb (const void *pointer, void *data,
     (void) data;
     (void) option;
 
-    if (spell_nick_completer)
-        free (spell_nick_completer);
+    free (spell_nick_completer);
 
     spell_nick_completer = weechat_string_strip (value, 0, 1, " ");
     spell_len_nick_completer =
