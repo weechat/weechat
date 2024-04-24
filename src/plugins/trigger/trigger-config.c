@@ -532,8 +532,7 @@ trigger_config_use_temp_triggers ()
     {
         next_temp_trigger = triggers_temp->next_trigger;
 
-        if (triggers_temp->name)
-            free (triggers_temp->name);
+        free (triggers_temp->name);
         free (triggers_temp);
 
         triggers_temp = next_temp_trigger;

@@ -287,8 +287,7 @@ trigger_buffer_hashtable_map_cb (void *data,
             weechat_color ("reset"),
             (value_no_color) ? value_no_color : (const char *)value,
             weechat_color ("chat_delimiters"));
-        if (value_no_color)
-            free (value_no_color);
+        free (value_no_color);
     }
     else if (strcmp (value_type, "pointer") == 0)
     {

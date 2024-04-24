@@ -271,8 +271,7 @@ trigger_callback_check_conditions (struct t_trigger *trigger,
         extra_vars,
         trigger_callback_hashtable_options_conditions);
     rc = (value && (strcmp (value, "1") == 0));
-    if (value)
-        free (value);
+    free (value);
 
     return rc;
 }
@@ -347,10 +346,8 @@ trigger_callback_regex_translate_chars (struct t_trigger_context *context,
 
     value = weechat_string_translate_chars (text, chars1_eval, chars2_eval);
 
-    if (chars1_eval)
-        free (chars1_eval);
-    if (chars2_eval)
-        free (chars2_eval);
+    free (chars1_eval);
+    free (chars2_eval);
 
     return value;
 }
@@ -706,8 +703,7 @@ trigger_callback_signal_cb (const void *pointer, void *data,
             weechat_hashtable_set (ctx.pointers, "irc_channel", ptr_irc_channel);
         }
     }
-    if (irc_server_name)
-        free (irc_server_name);
+    free (irc_server_name);
 
     /* create hashtable (if not already created) */
     if (!ctx.extra_vars)
@@ -987,8 +983,7 @@ end:
 
     if (tags)
         weechat_string_free_split (tags);
-    if (string_no_color)
-        free (string_no_color);
+    free (string_no_color);
 
     TRIGGER_CALLBACK_CB_END(string_modified);
 }
@@ -1058,15 +1053,13 @@ trigger_callback_line_cb (const void *pointer, void *data,
     ptr_value = weechat_hashtable_get (line, "prefix");
     string_no_color = weechat_string_remove_color (ptr_value, NULL);
     weechat_hashtable_set (ctx.extra_vars, "tg_prefix_nocolor", string_no_color);
-    if (string_no_color)
-        free (string_no_color);
+    free (string_no_color);
 
     /* build message without colors */
     ptr_value = weechat_hashtable_get (line, "message");
     string_no_color = weechat_string_remove_color (ptr_value, NULL);
     weechat_hashtable_set (ctx.extra_vars, "tg_message_nocolor", string_no_color);
-    if (string_no_color)
-        free (string_no_color);
+    free (string_no_color);
 
     if (!trigger_callback_set_tags (ctx.buffer, (const char **)tags, num_tags,
                                     ctx.extra_vars))

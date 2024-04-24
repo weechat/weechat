@@ -460,14 +460,10 @@ trigger_hook (struct t_trigger *trigger)
                         (eval_completion) ? eval_completion : "",
                         &trigger_callback_command_cb,
                         trigger, NULL);
-                    if (eval_desc)
-                        free (eval_desc);
-                    if (eval_args)
-                        free (eval_args);
-                    if (eval_desc_args)
-                        free (eval_desc_args);
-                    if (eval_completion)
-                        free (eval_completion);
+                    free (eval_desc);
+                    free (eval_args);
+                    free (eval_desc_args);
+                    free (eval_completion);
                     if (extra_vars)
                         weechat_hashtable_free (extra_vars);
                 }
@@ -626,19 +622,15 @@ trigger_regex_free (int *regex_count, struct t_trigger_regex **regex)
     {
         for (i = 0; i < *regex_count; i++)
         {
-            if ((*regex)[i].variable)
-                free ((*regex)[i].variable);
-            if ((*regex)[i].str_regex)
-                free ((*regex)[i].str_regex);
+            free ((*regex)[i].variable);
+            free ((*regex)[i].str_regex);
             if ((*regex)[i].regex)
             {
                 regfree ((*regex)[i].regex);
                 free ((*regex)[i].regex);
             }
-            if ((*regex)[i].replace)
-                free ((*regex)[i].replace);
-            if ((*regex)[i].replace_escaped)
-                free ((*regex)[i].replace_escaped);
+            free ((*regex)[i].replace);
+            free ((*regex)[i].replace_escaped);
         }
         free (*regex);
         *regex = NULL;
@@ -758,8 +750,7 @@ trigger_regex_split (const char *str_regex,
         /* set regex (command "s" only) */
         if (command == TRIGGER_REGEX_COMMAND_REPLACE)
         {
-            if (str_regex_escaped)
-                free (str_regex_escaped);
+            free (str_regex_escaped);
             str_regex_escaped = weechat_string_convert_escaped_chars ((*regex)[index].str_regex);
             if (!str_regex_escaped)
                 goto memory_error;
@@ -837,10 +828,8 @@ memory_error:
     goto end;
 
 end:
-    if (delimiter)
-        free (delimiter);
-    if (str_regex_escaped)
-        free (str_regex_escaped);
+    free (delimiter);
+    free (str_regex_escaped);
     if (rc < 0)
         trigger_regex_free (regex_count, regex);
 
@@ -1171,8 +1160,7 @@ trigger_rename (struct t_trigger *trigger, const char *name)
         }
     }
 
-    if (trigger->name)
-        free (trigger->name);
+    free (trigger->name);
     trigger->name = strdup (name);
 
     free (option_name);
@@ -1243,8 +1231,7 @@ trigger_free (struct t_trigger *trigger)
     /* free data */
     trigger_unhook (trigger);
     trigger_regex_free (&trigger->regex_count, &trigger->regex);
-    if (trigger->name)
-        free (trigger->name);
+    free (trigger->name);
     for (i = 0; i < TRIGGER_NUM_OPTIONS; i++)
     {
         if (trigger->options[i])

@@ -568,10 +568,8 @@ trigger_command_rename (struct t_trigger *trigger, const char *new_name)
     }
 
 end:
-    if (name)
-        free (name);
-    if (name2)
-        free (name2);
+    free (name);
+    free (name2);
 }
 
 /*
@@ -892,18 +890,12 @@ trigger_command_trigger (const void *pointer, void *data,
             arg_command,
             arg_return_code,
             arg_post_action);
-        if (arg_arguments)
-            free (arg_arguments);
-        if (arg_conditions)
-            free (arg_conditions);
-        if (arg_regex)
-            free (arg_regex);
-        if (arg_command)
-            free (arg_command);
-        if (arg_return_code)
-            free (arg_return_code);
-        if (arg_post_action)
-            free (arg_post_action);
+        free (arg_arguments);
+        free (arg_conditions);
+        free (arg_regex);
+        free (arg_command);
+        free (arg_return_code);
+        free (arg_post_action);
         if (input)
         {
             if (weechat_strcmp (argv[1], "output") == 0)
@@ -1121,8 +1113,7 @@ trigger_command_trigger (const void *pointer, void *data,
                         weechat_printf_date_tags (NULL, 0, "no_trigger",
                                                   _("Trigger \"%s\" removed"),
                                                   name);
-                        if (name)
-                            free (name);
+                        free (name);
                     }
                 }
                 ptr_trigger = ptr_next_trigger;
