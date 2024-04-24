@@ -599,8 +599,7 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
         weechat_hashtable_set (buflist_hashtable_extra_vars,
                                "hotlist",
                                (str_hotlist) ? str_hotlist : "");
-        if (str_hotlist)
-            free (str_hotlist);
+        free (str_hotlist);
 
         /* lag */
         ptr_lag = weechat_buffer_get_string (ptr_buffer, "localvar_lag");
@@ -632,8 +631,7 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
             buflist_hashtable_extra_vars,
             buflist_hashtable_options_conditions);
         rc = (condition && (strcmp (condition, "1") == 0));
-        if (condition)
-            free (condition);
+        free (condition);
         if (!rc)
             continue;
 

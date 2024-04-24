@@ -328,8 +328,7 @@ buflist_config_change_sort (const void *pointer, void *data,
             0,
             &buflist_config_sort_fields_count[i]);
 
-        if (sort)
-            free (sort);
+        free (sort);
     }
 
     weechat_hashtable_free (hashtable_pointers);
@@ -446,18 +445,15 @@ buflist_config_change_format (const void *pointer, void *data,
     (void) data;
     (void) option;
 
-    if (buflist_config_format_buffer_eval)
-        free (buflist_config_format_buffer_eval);
+    free (buflist_config_format_buffer_eval);
     buflist_config_format_buffer_eval = buflist_config_add_eval_for_formats (
         weechat_config_string (buflist_config_format_buffer));
 
-    if (buflist_config_format_buffer_current_eval)
-        free (buflist_config_format_buffer_current_eval);
+    free (buflist_config_format_buffer_current_eval);
     buflist_config_format_buffer_current_eval = buflist_config_add_eval_for_formats (
         weechat_config_string (buflist_config_format_buffer_current));
 
-    if (buflist_config_format_hotlist_eval)
-        free (buflist_config_format_hotlist_eval);
+    free (buflist_config_format_hotlist_eval);
     buflist_config_format_hotlist_eval = buflist_config_add_eval_for_formats (
         weechat_config_string (buflist_config_format_hotlist));
 
@@ -859,19 +855,12 @@ buflist_config_free ()
         }
     }
 
-    if (buflist_config_format_buffer_eval)
-    {
-        free (buflist_config_format_buffer_eval);
-        buflist_config_format_buffer_eval = NULL;
-    }
-    if (buflist_config_format_buffer_current_eval)
-    {
-        free (buflist_config_format_buffer_current_eval);
-        buflist_config_format_buffer_current_eval = NULL;
-    }
-    if (buflist_config_format_hotlist_eval)
-    {
-        free (buflist_config_format_hotlist_eval);
-        buflist_config_format_hotlist_eval = NULL;
-    }
+    free (buflist_config_format_buffer_eval);
+    buflist_config_format_buffer_eval = NULL;
+
+    free (buflist_config_format_buffer_current_eval);
+    buflist_config_format_buffer_current_eval = NULL;
+
+    free (buflist_config_format_hotlist_eval);
+    buflist_config_format_hotlist_eval = NULL;
 }
