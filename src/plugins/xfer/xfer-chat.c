@@ -93,8 +93,7 @@ xfer_chat_sendf (struct t_xfer *xfer, const char *format, ...)
         xfer_close (xfer, XFER_STATUS_FAILED);
     }
 
-    if (msg_encoded)
-        free (msg_encoded);
+    free (msg_encoded);
 
     free (vbuffer);
 }
@@ -224,8 +223,7 @@ xfer_chat_recv_cb (const void *pointer, void *data, int fd)
                               (pv_tags && pv_tags[0]) ? "," : "",
                               (str_color) ? str_color : "default",
                               xfer->remote_nick);
-                    if (str_color)
-                        free (str_color);
+                    free (str_color);
                     weechat_printf_date_tags (
                         xfer->buffer,
                         0,
@@ -237,19 +235,15 @@ xfer_chat_recv_cb (const void *pointer, void *data, int fd)
                         xfer->remote_nick,
                         ptr_buf2);
                 }
-                if (ptr_buf_decoded)
-                    free (ptr_buf_decoded);
-                if (ptr_buf_without_weechat_colors)
-                    free (ptr_buf_without_weechat_colors);
-                if (ptr_buf_color)
-                    free (ptr_buf_color);
+                free (ptr_buf_decoded);
+                free (ptr_buf_without_weechat_colors);
+                free (ptr_buf_color);
             }
 
             ptr_buf = next_ptr_buf;
         }
 
-        if (buf2)
-            free (buf2);
+        free (buf2);
     }
     else
     {
@@ -290,8 +284,7 @@ xfer_chat_buffer_input_cb (const void *pointer, void *data,
                           "irc_privmsg,no_highlight,prefix_nick_%s,nick_%s,log1",
                           (str_color) ? str_color : "default",
                           ptr_xfer->local_nick);
-                if (str_color)
-                    free (str_color);
+                free (str_color);
                 input_data_color = weechat_hook_modifier_exec ("irc_color_decode",
                                                                "1",
                                                                input_data);
@@ -303,8 +296,7 @@ xfer_chat_buffer_input_cb (const void *pointer, void *data,
                     weechat_color ("chat_nick_self"),
                     ptr_xfer->local_nick,
                     (input_data_color) ? input_data_color : input_data);
-                if (input_data_color)
-                    free (input_data_color);
+                free (input_data_color);
             }
         }
     }

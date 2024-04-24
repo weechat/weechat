@@ -240,14 +240,10 @@ xfer_buffer_refresh (const char *hotlist)
                                   (str_total) ? str_total : "?",
                                   eta,
                                   str_bytes_per_sec);
-                if (progress_bar)
-                    free (progress_bar);
-                if (str_pos)
-                    free (str_pos);
-                if (str_total)
-                    free (str_total);
-                if (str_bytes_per_sec)
-                    free (str_bytes_per_sec);
+                free (progress_bar);
+                free (str_pos);
+                free (str_total);
+                free (str_bytes_per_sec);
             }
             line++;
         }

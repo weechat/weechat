@@ -670,8 +670,7 @@ xfer_new (const char *plugin_name, const char *plugin_id,
     new_xfer->remote_nick = strdup (remote_nick);
     color = weechat_info_get ("irc_nick_color_name", remote_nick);
     new_xfer->remote_nick_color = (color) ? strdup (color) : NULL;
-    if (color)
-        free (color);
+    free (color);
     new_xfer->local_nick = (local_nick) ? strdup (local_nick) : NULL;
     new_xfer->charset_modifier = (charset_modifier) ? strdup (charset_modifier) : NULL;
     if (XFER_IS_FILE(type))
@@ -875,15 +874,13 @@ void
 xfer_set_remote_address (struct t_xfer *xfer, const struct sockaddr *address,
                          socklen_t length, const char *address_str)
 {
-    if (xfer->remote_address)
-        free (xfer->remote_address);
+    free (xfer->remote_address);
     xfer->remote_address = malloc (length);
     xfer->remote_address_length = length;
     if (xfer->remote_address)
 	memcpy (xfer->remote_address, address, length);
 
-    if (xfer->remote_address_str)
-        free (xfer->remote_address_str);
+    free (xfer->remote_address_str);
     xfer->remote_address_str = strdup ((address_str) ? address_str : "");
 }
 
@@ -894,15 +891,13 @@ void
 xfer_set_local_address (struct t_xfer *xfer, const struct sockaddr *address,
                          socklen_t length, const char *address_str)
 {
-    if (xfer->local_address)
-        free (xfer->local_address);
+    free (xfer->local_address);
     xfer->local_address = malloc (length);
     xfer->local_address_length = length;
     if (xfer->local_address)
 	memcpy (xfer->local_address, address, length);
 
-    if (xfer->local_address_str)
-        free (xfer->local_address_str);
+    free (xfer->local_address_str);
     xfer->local_address_str = strdup ((address_str) ? address_str : "");
 }
 
@@ -932,49 +927,33 @@ xfer_free (struct t_xfer *xfer)
         (xfer->next_xfer)->prev_xfer = xfer->prev_xfer;
 
     /* free data */
-    if (xfer->plugin_id)
-        free (xfer->plugin_id);
-    if (xfer->plugin_name)
-        free (xfer->plugin_name);
-    if (xfer->remote_nick)
-        free (xfer->remote_nick);
-    if (xfer->local_nick)
-        free (xfer->local_nick);
-    if (xfer->charset_modifier)
-        free (xfer->charset_modifier);
-    if (xfer->filename)
-        free (xfer->filename);
-    if (xfer->proxy)
-        free (xfer->proxy);
-    if (xfer->local_address)
-        free (xfer->local_address);
-    if (xfer->local_address_str)
-        free (xfer->local_address_str);
-    if (xfer->remote_address)
-        free (xfer->remote_address);
-    if (xfer->remote_address_str)
-        free (xfer->remote_address_str);
-    if (xfer->remote_nick_color)
-        free (xfer->remote_nick_color);
+    free (xfer->plugin_id);
+    free (xfer->plugin_name);
+    free (xfer->remote_nick);
+    free (xfer->local_nick);
+    free (xfer->charset_modifier);
+    free (xfer->filename);
+    free (xfer->proxy);
+    free (xfer->local_address);
+    free (xfer->local_address_str);
+    free (xfer->remote_address);
+    free (xfer->remote_address_str);
+    free (xfer->remote_nick_color);
     if (xfer->hook_fd)
         weechat_unhook (xfer->hook_fd);
     if (xfer->hook_timer)
         weechat_unhook (xfer->hook_timer);
     if (xfer->hook_connect)
         weechat_unhook (xfer->hook_connect);
-    if (xfer->unterminated_message)
-        free (xfer->unterminated_message);
-    if (xfer->local_filename)
-        free (xfer->local_filename);
-    if (xfer->temp_local_filename)
-        free (xfer->temp_local_filename);
+    free (xfer->unterminated_message);
+    free (xfer->local_filename);
+    free (xfer->temp_local_filename);
     if (xfer->hash_handle)
     {
         gcry_md_close (*xfer->hash_handle);
         free (xfer->hash_handle);
     }
-    if (xfer->hash_target)
-        free (xfer->hash_target);
+    free (xfer->hash_target);
 
     free (xfer);
 
@@ -1396,18 +1375,14 @@ xfer_add_cb (const void *pointer, void *data,
     if (XFER_IS_SEND(ptr_xfer->type) && !XFER_HAS_ENDED(ptr_xfer->status))
         xfer_send_signal (ptr_xfer, "xfer_send_ready");
 
-    if (filename2)
-        free (filename2);
-    if (short_filename)
-        free (short_filename);
+    free (filename2);
+    free (short_filename);
     weechat_infolist_reset_item_cursor (infolist);
     return WEECHAT_RC_OK_EAT;
 
 error:
-    if (filename2)
-        free (filename2);
-    if (short_filename)
-        free (short_filename);
+    free (filename2);
+    free (short_filename);
     weechat_infolist_reset_item_cursor (infolist);
     return WEECHAT_RC_ERROR;
 }
