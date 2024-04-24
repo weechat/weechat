@@ -240,8 +240,7 @@ gui_buffer_build_full_name (struct t_gui_buffer *buffer)
     if (!buffer)
         return;
 
-    if (buffer->full_name)
-        free (buffer->full_name);
+    free (buffer->full_name);
     length = strlen (gui_buffer_get_plugin_name (buffer)) + 1 +
         strlen (buffer->name) + 1;
     buffer->full_name = malloc (length);
@@ -1277,8 +1276,7 @@ gui_buffer_string_replace_local_var (struct t_gui_buffer *buffer,
                             }
                             if (!result2)
                             {
-                                if (result)
-                                    free (result);
+                                free (result);
                                 free (local_var);
                                 return NULL;
                             }
@@ -1629,12 +1627,10 @@ gui_buffer_set_name (struct t_gui_buffer *buffer, const char *name)
      * save the old full name so that hooks on signal "buffer_renamed"
      * can read the old name
      */
-    if (buffer->old_full_name)
-        free (buffer->old_full_name);
+    free (buffer->old_full_name);
     buffer->old_full_name = strdup (buffer->full_name);
 
-    if (buffer->name)
-        free (buffer->name);
+    free (buffer->name);
     buffer->name = strdup (name);
 
     gui_buffer_build_full_name (buffer);
@@ -1743,8 +1739,7 @@ gui_buffer_set_title (struct t_gui_buffer *buffer, const char *new_title)
         return;
     }
 
-    if (buffer->title)
-        free (buffer->title);
+    free (buffer->title);
     buffer->title = (new_title && new_title[0]) ? strdup (new_title) : NULL;
 
     (void) gui_buffer_send_signal (buffer,
@@ -1825,8 +1820,7 @@ gui_buffer_set_highlight_words (struct t_gui_buffer *buffer,
     if (!buffer)
         return;
 
-    if (buffer->highlight_words)
-        free (buffer->highlight_words);
+    free (buffer->highlight_words);
     buffer->highlight_words = (new_highlight_words && new_highlight_words[0]) ?
         strdup (new_highlight_words) : NULL;
 }
@@ -3690,8 +3684,7 @@ gui_buffer_close (struct t_gui_buffer *buffer)
     }
 
     gui_hotlist_remove_buffer (buffer, 1);
-    if (buffer->hotlist_removed)
-        free (buffer->hotlist_removed);
+    free (buffer->hotlist_removed);
     if (gui_hotlist_initial_buffer == buffer)
         gui_hotlist_initial_buffer = NULL;
 
@@ -3709,10 +3702,8 @@ gui_buffer_close (struct t_gui_buffer *buffer)
 
     /* free all lines */
     gui_line_free_all (buffer);
-    if (buffer->own_lines)
-        free (buffer->own_lines);
-    if (buffer->mixed_lines)
-        free (buffer->mixed_lines);
+    free (buffer->own_lines);
+    free (buffer->mixed_lines);
 
     /* free some data */
     gui_buffer_undo_free_all (buffer);
@@ -3727,59 +3718,42 @@ gui_buffer_close (struct t_gui_buffer *buffer)
                       &buffer->keys_count, 0);
     gui_buffer_local_var_remove_all (buffer);
     hashtable_free (buffer->local_variables);
-    if (buffer->plugin_name_for_upgrade)
-        free (buffer->plugin_name_for_upgrade);
-    if (buffer->name)
-        free (buffer->name);
-    if (buffer->full_name)
-        free (buffer->full_name);
-    if (buffer->old_full_name)
-        free (buffer->old_full_name);
-    if (buffer->short_name)
-        free (buffer->short_name);
-    if (buffer->title)
-        free (buffer->title);
-    if (buffer->input_buffer)
-        free (buffer->input_buffer);
-    if (buffer->input_undo_snap)
-        free (buffer->input_undo_snap);
-    if (buffer->text_search_input)
-        free (buffer->text_search_input);
+    free (buffer->plugin_name_for_upgrade);
+    free (buffer->name);
+    free (buffer->full_name);
+    free (buffer->old_full_name);
+    free (buffer->short_name);
+    free (buffer->title);
+    free (buffer->input_buffer);
+    free (buffer->input_undo_snap);
+    free (buffer->text_search_input);
     if (buffer->text_search_regex_compiled)
     {
         regfree (buffer->text_search_regex_compiled);
         free (buffer->text_search_regex_compiled);
     }
-    if (buffer->highlight_words)
-        free (buffer->highlight_words);
-    if (buffer->highlight_disable_regex)
-        free (buffer->highlight_disable_regex);
+    free (buffer->highlight_words);
+    free (buffer->highlight_disable_regex);
     if (buffer->highlight_disable_regex_compiled)
     {
         regfree (buffer->highlight_disable_regex_compiled);
         free (buffer->highlight_disable_regex_compiled);
     }
-    if (buffer->highlight_regex)
-        free (buffer->highlight_regex);
+    free (buffer->highlight_regex);
     if (buffer->highlight_regex_compiled)
     {
         regfree (buffer->highlight_regex_compiled);
         free (buffer->highlight_regex_compiled);
     }
-    if (buffer->highlight_tags_restrict)
-        free (buffer->highlight_tags_restrict);
+    free (buffer->highlight_tags_restrict);
     if (buffer->highlight_tags_restrict_array)
         string_free_split_tags (buffer->highlight_tags_restrict_array);
-    if (buffer->highlight_tags)
-        free (buffer->highlight_tags);
+    free (buffer->highlight_tags);
     if (buffer->highlight_tags_array)
         string_free_split_tags (buffer->highlight_tags_array);
-    if (buffer->input_callback_data)
-        free (buffer->input_callback_data);
-    if (buffer->close_callback_data)
-        free (buffer->close_callback_data);
-    if (buffer->nickcmp_callback_data)
-        free (buffer->nickcmp_callback_data);
+    free (buffer->input_callback_data);
+    free (buffer->close_callback_data);
+    free (buffer->nickcmp_callback_data);
 
     /* remove buffer from buffers list */
     if (buffer->prev_buffer)
@@ -4880,8 +4854,7 @@ gui_buffer_undo_free (struct t_gui_buffer *buffer,
     }
 
     /* free data */
-    if (undo->data)
-        free (undo->data);
+    free (undo->data);
 
     /* remove undo from list */
     if (undo->prev_undo)
@@ -4956,8 +4929,7 @@ gui_buffer_input_move_to_buffer (struct t_gui_buffer *from_buffer,
         return;
 
     /* move input_buffer */
-    if (to_buffer->input_buffer)
-        free (to_buffer->input_buffer);
+    free (to_buffer->input_buffer);
     to_buffer->input_buffer = from_buffer->input_buffer;
     to_buffer->input_buffer_alloc = from_buffer->input_buffer_alloc;
     to_buffer->input_buffer_size = from_buffer->input_buffer_size;
@@ -5526,10 +5498,8 @@ gui_buffer_dump_hexa (struct t_gui_buffer *buffer)
                     num_line,
                     (prefix_without_colors) ? prefix_without_colors : "(null)",
                     (message_without_colors) ? message_without_colors : "(null)");
-        if (prefix_without_colors)
-            free (prefix_without_colors);
-        if (message_without_colors)
-            free (message_without_colors);
+        free (prefix_without_colors);
+        free (message_without_colors);
         tags = string_rebuild_split_string ((const char **)ptr_line->data->tags_array,
                                             ",",
                                             0, -1);
@@ -5537,8 +5507,7 @@ gui_buffer_dump_hexa (struct t_gui_buffer *buffer)
                     (tags) ? tags : "(none)",
                     ptr_line->data->displayed,
                     ptr_line->data->highlight);
-        if (tags)
-            free (tags);
+        free (tags);
         snprintf (buf, sizeof (buf), "%s", ctime (&ptr_line->data->date));
         buf[strlen (buf) - 1] = '\0';
         log_printf ("  date: %lld = %s",
@@ -5775,8 +5744,7 @@ gui_buffer_print_log ()
                         ptr_line->data->prefix);
             log_printf ("                     data: '%s'",
                         ptr_line->data->message);
-            if (tags)
-                free (tags);
+            free (tags);
 
             ptr_line = ptr_line->next_line;
         }

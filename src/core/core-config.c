@@ -535,18 +535,14 @@ config_set_word_chars (const char *str_word_chars,
                 item = string_strndup (ptr_item, pos - ptr_item);
                 item2 = string_convert_escaped_chars (item);
                 (*word_chars)[i].char1 = utf8_char_int (item2);
-                if (item)
-                    free (item);
-                if (item2)
-                    free (item2);
+                free (item);
+                free (item2);
                 /* char2 */
                 item = strdup (pos + 1);
                 item2 = string_convert_escaped_chars (item);
                 (*word_chars)[i].char2 = utf8_char_int (item2);
-                if (item)
-                    free (item);
-                if (item2)
-                    free (item2);
+                free (item);
+                free (item2);
             }
             else
             {
@@ -557,8 +553,7 @@ config_set_word_chars (const char *str_word_chars,
                     item = string_convert_escaped_chars (ptr_item);
                     (*word_chars)[i].char1 = utf8_char_int (item);
                     (*word_chars)[i].char2 = (*word_chars)[i].char1;
-                    if (item)
-                        free (item);
+                    free (item);
                 }
             }
         }
@@ -723,8 +718,7 @@ config_change_buffer_time_same (const void *pointer, void *data,
     (void) data;
     (void) option;
 
-    if (config_buffer_time_same_evaluated)
-        free (config_buffer_time_same_evaluated);
+    free (config_buffer_time_same_evaluated);
     config_buffer_time_same_evaluated = eval_expression (
         CONFIG_STRING(config_look_buffer_time_same), NULL, NULL, NULL);
 
@@ -1139,8 +1133,7 @@ config_change_item_time_format (const void *pointer, void *data,
     (void) data;
     (void) option;
 
-    if (config_item_time_evaluated)
-        free (config_item_time_evaluated);
+    free (config_item_time_evaluated);
     config_item_time_evaluated = eval_expression (
         CONFIG_STRING(config_look_item_time_format), NULL, NULL, NULL);
 

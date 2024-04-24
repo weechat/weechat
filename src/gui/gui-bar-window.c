@@ -516,8 +516,7 @@ error:
     {
         for (i = 0; i < bar_window->items_count; i++)
         {
-            if (bar_window->items_content[i])
-                free (bar_window->items_content[i]);
+            free (bar_window->items_content[i]);
         }
         free (bar_window->items_content);
         bar_window->items_content = NULL;
@@ -526,8 +525,7 @@ error:
     {
         for (i = 0; i < bar_window->items_count; i++)
         {
-            if (bar_window->items_num_lines[i])
-                free (bar_window->items_num_lines[i]);
+            free (bar_window->items_num_lines[i]);
         }
         free (bar_window->items_num_lines);
         bar_window->items_num_lines = NULL;
@@ -536,8 +534,7 @@ error:
     {
         for (i = 0; i < bar_window->items_count; i++)
         {
-            if (bar_window->items_refresh_needed[i])
-                free (bar_window->items_refresh_needed[i]);
+            free (bar_window->items_refresh_needed[i]);
         }
         free (bar_window->items_refresh_needed);
         bar_window->items_refresh_needed = NULL;
@@ -814,8 +811,7 @@ gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window,
                             (item_value) ? item_value : ptr_content,
                             -1);
                         first_sub_item = 0;
-                        if (item_value)
-                            free (item_value);
+                        free (item_value);
                         if (item_is_spacer)
                             (*num_spacers)++;
                         else

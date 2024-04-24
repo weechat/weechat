@@ -301,8 +301,7 @@ weelist_set (struct t_weelist_item *item, const char *value)
     if (!item || !value)
         return;
 
-    if (item->data)
-        free (item->data);
+    free (item->data);
     item->data = strdup (value);
 }
 
@@ -402,8 +401,7 @@ weelist_remove (struct t_weelist *weelist, struct t_weelist_item *item)
         (item->next_item)->prev_item = item->prev_item;
 
     /* free data */
-    if (item->data)
-        free (item->data);
+    free (item->data);
     free (item);
     weelist->items = new_items;
 

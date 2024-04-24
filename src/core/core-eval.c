@@ -280,8 +280,7 @@ eval_string_eval_cond (const char *text, struct t_eval_context *eval_context)
 
     tmp = eval_expression_condition (text, eval_context);
     rc = eval_is_true (tmp);
-    if (tmp)
-        free (tmp);
+    free (tmp);
     return strdup ((rc) ? EVAL_STR_TRUE : EVAL_STR_FALSE);
 }
 
@@ -577,8 +576,7 @@ eval_string_split (const char *text)
                 flags |= WEECHAT_STRING_SPLIT_KEEP_EOL;
             else if (strncmp (list_flags[i], "strip_items=", 12) == 0)
             {
-                if (strip_items)
-                    free (strip_items);
+                free (strip_items);
                 strip_items = strdup (list_flags[i] + 12);
             }
             else if (strncmp (list_flags[i], "max_items=", 10) == 0)
@@ -625,16 +623,12 @@ eval_string_split (const char *text)
     value = strdup (items[number]);
 
 end:
-    if (str_number)
-        free (str_number);
-    if (separators)
-        free (separators);
-    if (str_flags)
-        free (str_flags);
+    free (str_number);
+    free (separators);
+    free (str_flags);
     if (list_flags)
         string_free_split (list_flags);
-    if (strip_items)
-        free (strip_items);
+    free (strip_items);
     if (items)
         string_free_split (items);
     return (value) ? value : strdup ("");
@@ -731,8 +725,7 @@ eval_string_split_shell (const char *text)
     value = strdup (items[number]);
 
 end:
-    if (str_number)
-        free (str_number);
+    free (str_number);
     if (items)
         string_free_split (items);
     return (value) ? value : strdup ("");
@@ -838,10 +831,8 @@ eval_string_modifier (const char *text)
                                     ptr_string - 1 - ptr_arguments);
     value = hook_modifier_exec (NULL, modifier_name, modifier_data,
                                 ptr_string);
-    if (modifier_name)
-        free (modifier_name);
-    if (modifier_data)
-        free (modifier_data);
+    free (modifier_name);
+    free (modifier_data);
 
     return (value) ? value : strdup ("");
 }
@@ -918,10 +909,8 @@ eval_string_base_encode (const char *text)
 
 end:
     value = strdup ((result) ? result : "");
-    if (base)
-        free (base);
-    if (result)
-        free (result);
+    free (base);
+    free (result);
     return value;
 }
 
@@ -961,10 +950,8 @@ eval_string_base_decode (const char *text)
 
 end:
     value = strdup ((result) ? result : "");
-    if (base)
-        free (base);
-    if (result)
-        free (result);
+    free (base);
+    free (result);
     return value;
 }
 
@@ -1013,8 +1000,7 @@ eval_string_if (const char *text, struct t_eval_context *eval_context)
         return strdup ("");
     tmp = eval_expression_condition (condition, eval_context);
     rc = eval_is_true (tmp);
-    if (tmp)
-        free (tmp);
+    free (tmp);
     if (rc)
     {
         /*
@@ -1269,8 +1255,7 @@ eval_hdata_get_value (struct t_hdata *hdata, void *pointer, const char *path,
                     property = string_strndup (pos + 1,
                                                pos_open_paren - pos - 1);
                     ptr_value = hashtable_get_string (hashtable, property);
-                    if (property)
-                        free (property);
+                    free (property);
                     value = (ptr_value) ? strdup (ptr_value) : NULL;
                     break;
                 }
@@ -1323,8 +1308,7 @@ eval_hdata_get_value (struct t_hdata *hdata, void *pointer, const char *path,
             goto end;
 
         hdata = hook_hdata_get (NULL, hdata_name);
-        if (value)
-            free (value);
+        free (value);
         value = eval_hdata_get_value (hdata,
                                       pointer,
                                       pos + 1,
@@ -1332,8 +1316,7 @@ eval_hdata_get_value (struct t_hdata *hdata, void *pointer, const char *path,
     }
 
 end:
-    if (var_name)
-        free (var_name);
+    free (var_name);
 
     EVAL_DEBUG_RESULT(1, value);
 
@@ -1442,10 +1425,8 @@ eval_string_hdata (const char *text, struct t_eval_context *eval_context)
     value = eval_hdata_get_value (hdata, pointer, pos_vars, eval_context);
 
 end:
-    if (hdata_name)
-        free (hdata_name);
-    if (pointer_name)
-        free (pointer_name);
+    free (hdata_name);
+    free (pointer_name);
 
     return (value) ? value : strdup ("");
 }
@@ -1548,8 +1529,7 @@ eval_syntax_highlight (const char *text, struct t_eval_context *eval_context)
 
     value = eval_replace_vars (text, eval_context);
     value2 = eval_syntax_highlight_colorize (value);
-    if (value)
-        free (value);
+    free (value);
 
     eval_context->syntax_highlight--;
 
@@ -2273,8 +2253,7 @@ eval_expression_condition (const char *expr,
             tmp_value = eval_expression_condition (sub_expr, eval_context);
             free (sub_expr);
             rc = eval_is_true (tmp_value);
-            if (tmp_value)
-                free (tmp_value);
+            free (tmp_value);
             /*
              * if rc == 0 with "&&" or rc == 1 with "||", no need to
              * evaluate second sub-expression, just return the rc
@@ -2292,8 +2271,7 @@ eval_expression_condition (const char *expr,
             }
             tmp_value = eval_expression_condition (pos, eval_context);
             rc = eval_is_true (tmp_value);
-            if (tmp_value)
-                free (tmp_value);
+            free (tmp_value);
             value = strdup ((rc) ? EVAL_STR_TRUE : EVAL_STR_FALSE);
             goto end;
         }
@@ -2347,10 +2325,8 @@ eval_expression_condition (const char *expr,
             }
             free (sub_expr);
             value = eval_compare (tmp_value, comp, tmp_value2, eval_context);
-            if (tmp_value)
-                free (tmp_value);
-            if (tmp_value2)
-                free (tmp_value2);
+            free (tmp_value);
+            free (tmp_value2);
             goto end;
         }
     }
@@ -2397,8 +2373,7 @@ eval_expression_condition (const char *expr,
         tmp_value2 = malloc (length);
         if (!tmp_value2)
         {
-            if (tmp_value)
-                free (tmp_value);
+            free (tmp_value);
             goto end;
         }
         tmp_value2[0] = '\0';
@@ -2408,8 +2383,7 @@ eval_expression_condition (const char *expr,
         strcat (tmp_value2, pos + 1);
         free (expr2);
         expr2 = tmp_value2;
-        if (tmp_value)
-            free (tmp_value);
+        free (tmp_value);
     }
 
     /*
@@ -2419,8 +2393,7 @@ eval_expression_condition (const char *expr,
     value = eval_replace_vars (expr2, eval_context);
 
 end:
-    if (expr2)
-        free (expr2);
+    free (expr2);
 
     EVAL_DEBUG_RESULT(1, value);
 
@@ -2549,8 +2522,7 @@ eval_replace_regex (const char *string, regex_t *regex, const char *replace,
         free (result);
         result = result2;
 
-        if (str_replace)
-            free (str_replace);
+        free (str_replace);
 
         if (end)
             break;
@@ -2777,8 +2749,7 @@ eval_expression (const char *expr, struct t_hashtable *pointers,
         /* evaluate as condition (return a boolean: "0" or "1") */
         value = eval_expression_condition (expr, eval_context);
         rc = eval_is_true (value);
-        if (value)
-            free (value);
+        free (value);
         value = strdup ((rc) ? EVAL_STR_TRUE : EVAL_STR_FALSE);
     }
     else

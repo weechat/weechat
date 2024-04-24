@@ -68,8 +68,7 @@ gui_history_buffer_remove_oldest (struct t_gui_buffer *buffer)
     if (buffer->ptr_history == buffer->last_history)
         buffer->ptr_history = ptr_history;
     ((buffer->last_history)->prev_history)->next_history = NULL;
-    if (buffer->last_history->text)
-        free (buffer->last_history->text);
+    free (buffer->last_history->text);
     free (buffer->last_history);
     buffer->last_history = ptr_history;
 
@@ -140,8 +139,7 @@ gui_history_global_remove_oldest ()
     if (gui_history_ptr == last_gui_history)
         gui_history_ptr = ptr_history;
     (last_gui_history->prev_history)->next_history = NULL;
-    if (last_gui_history->text)
-        free (last_gui_history->text);
+    free (last_gui_history->text);
     free (last_gui_history);
     last_gui_history = ptr_history;
 
@@ -207,8 +205,7 @@ gui_history_add (struct t_gui_buffer *buffer, const char *string)
         gui_history_global_add ((string2) ? string2 : string);
     }
 
-    if (string2)
-        free (string2);
+    free (string2);
 }
 
 /*
@@ -310,8 +307,7 @@ gui_history_global_free ()
     while (gui_history)
     {
         ptr_history = gui_history->next_history;
-        if (gui_history->text)
-            free (gui_history->text);
+        free (gui_history->text);
         free (gui_history);
         gui_history = ptr_history;
     }
@@ -337,8 +333,7 @@ gui_history_buffer_free (struct t_gui_buffer *buffer)
     while (buffer->history)
     {
         ptr_history = buffer->history->next_history;
-        if (buffer->history->text)
-            free (buffer->history->text);
+        free (buffer->history->text);
         free (buffer->history);
         buffer->history = ptr_history;
     }
@@ -378,8 +373,7 @@ gui_history_hdata_history_update_cb (void *data,
     {
         /* update history */
         ptr_history = (struct t_gui_history *)pointer;
-        if (ptr_history->text)
-            free (ptr_history->text);
+        free (ptr_history->text);
         ptr_history->text = strdup (text);
     }
     else

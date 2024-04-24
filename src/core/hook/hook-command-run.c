@@ -159,8 +159,7 @@ hook_command_run_exec (struct t_gui_buffer *buffer, const char *command)
                 hook_callback_end (ptr_hook, &hook_exec_cb);
                 if (rc == WEECHAT_RC_OK_EAT)
                 {
-                    if (command2)
-                        free (command2);
+                    free (command2);
                     return rc;
                 }
             }
@@ -169,8 +168,7 @@ hook_command_run_exec (struct t_gui_buffer *buffer, const char *command)
         ptr_hook = next_hook;
     }
 
-    if (command2)
-        free (command2);
+    free (command2);
 
     return WEECHAT_RC_OK;
 }

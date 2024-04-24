@@ -326,10 +326,8 @@ end:
     result = strdup ((ptr_result) ? ptr_result : default_color);
     if (list_colors)
         string_free_split (list_colors);
-    if (nickname2)
-        free (nickname2);
-    if (nickname3)
-        free (nickname3);
+    free (nickname2);
+    free (nickname3);
     return result;
 }
 
@@ -362,7 +360,6 @@ gui_nick_find_color (const char *nickname, int case_range, const char *colors)
 
     color = gui_nick_find_color_name (nickname, case_range, colors);
     ptr_result = gui_color_get_custom (color);
-    if (color)
-        free (color);
+    free (color);
     return (ptr_result) ? strdup (ptr_result) : NULL;
 }

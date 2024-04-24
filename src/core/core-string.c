@@ -1179,10 +1179,8 @@ string_eval_path_home (const char *path,
     path3 = eval_expression (path2, pointers, extra_vars, options);
 
 end:
-    if (path1)
-        free (path1);
-    if (path2)
-        free (path2);
+    free (path1);
+    free (path2);
 
     return path3;
 }
@@ -2086,8 +2084,7 @@ string_replace_regex_get_replace (const char *string, regmatch_t *regex_match,
                 result2 = realloc (result, length + 1);
                 if (!result2)
                 {
-                    if (modified_replace)
-                        free (modified_replace);
+                    free (modified_replace);
                     free (result);
                     return NULL;
                 }
@@ -2097,8 +2094,7 @@ string_replace_regex_get_replace (const char *string, regmatch_t *regex_match,
             length_current += length_add;
             result[length_current] = '\0';
         }
-        if (modified_replace)
-            free (modified_replace);
+        free (modified_replace);
     }
 
     return result;
@@ -2219,8 +2215,7 @@ string_replace_regex (const char *string, void *regex, const char *replace,
         free (result);
         result = result2;
 
-        if (str_replace)
-            free (str_replace);
+        free (str_replace);
 
         if (end)
             break;
@@ -2982,8 +2977,7 @@ string_split_command (const char *command, char separator)
     array2 = realloc (array, (arr_idx + 1) * sizeof (array[0]));
     if (!array2)
     {
-        if (array)
-            free (array);
+        free (array);
         return NULL;
     }
 
@@ -3297,8 +3291,7 @@ string_fprintf (FILE *file, const char *data, ...)
         buf2 = string_iconv_from_internal (NULL, vbuffer);
         num_written = fprintf (file, "%s", (buf2) ? buf2 : vbuffer);
         rc = (num_written == (int)strlen ((buf2) ? buf2 : vbuffer)) ? 1 : 0;
-        if (buf2)
-            free (buf2);
+        free (buf2);
         free (vbuffer);
     }
 
@@ -3445,8 +3438,7 @@ string_parse_size (const char *size)
     }
 
 end:
-    if (str_number)
-        free (str_number);
+    free (str_number);
     return result;
 }
 
@@ -4036,13 +4028,9 @@ string_hex_dump (const char *data, int data_size, int bytes_per_line,
     }
 
 end:
-    if (str_hexa)
-        free (str_hexa);
-    if (str_ascii)
-        free (str_ascii);
-    if (str_line)
-        free (str_line);
-
+    free (str_hexa);
+    free (str_ascii);
+    free (str_line);
     return buf;
 }
 
@@ -4374,10 +4362,8 @@ string_replace_with_callback (const char *string,
                             result2 = realloc (result, length);
                             if (!result2)
                             {
-                                if (result)
-                                    free (result);
-                                if (key)
-                                    free (key);
+                                free (result);
+                                free (key);
                                 free (value);
                                 return NULL;
                             }
@@ -4397,8 +4383,7 @@ string_replace_with_callback (const char *string,
                         if (errors)
                             (*errors)++;
                     }
-                    if (key)
-                        free (key);
+                    free (key);
                 }
                 else
                     result[index_result++] = string[index_string++];

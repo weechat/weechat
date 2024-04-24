@@ -532,8 +532,7 @@ hook_callback_end (struct t_hook *hook, struct t_hook_exec_cb *hook_exec_cb)
                 plugin_get_name (hook->plugin),
                 (hook->subplugin) ? hook->subplugin : "-",
                 str_diff);
-            if (str_diff)
-                free (str_diff);
+            free (str_diff);
         }
     }
 }
@@ -571,8 +570,7 @@ hook_set (struct t_hook *hook, const char *property, const char *value)
 
     if (strcmp (property, "subplugin") == 0)
     {
-        if (hook->subplugin)
-            free (hook->subplugin);
+        free (hook->subplugin);
         hook->subplugin = strdup (value);
     }
     else if (strcmp (property, "stdin") == 0)
@@ -907,8 +905,7 @@ hook_add_to_infolist (struct t_infolist *infolist, struct t_hook *pointer,
             hook_add_to_infolist_type (infolist, i, pos_arguments);
     }
 
-    if (type)
-        free (type);
+    free (type);
 
     return 1;
 }

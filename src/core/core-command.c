@@ -450,8 +450,7 @@ COMMAND_CALLBACK(bar)
                     name = strdup (ptr_bar->name);
                     gui_bar_free (ptr_bar);
                     gui_chat_printf (NULL, _("Bar \"%s\" deleted"), name);
-                    if (name)
-                        free (name);
+                    free (name);
                     gui_bar_create_default_input ();
                 }
                 ptr_bar = ptr_next_bar;
@@ -1302,8 +1301,7 @@ COMMAND_CALLBACK(buffer)
             gui_buffer_local_var_add (buffer,
                                       argv[2],
                                       (value) ? value : argv_eol[3]);
-            if (value)
-                free (value);
+            free (value);
         }
         return WEECHAT_RC_OK;
     }
@@ -1332,8 +1330,7 @@ COMMAND_CALLBACK(buffer)
         {
             value = string_remove_quotes (argv_eol[3], "'\"");
             gui_buffer_set (buffer, argv[2], (value) ? value : argv_eol[3]);
-            if (value)
-                free (value);
+            free (value);
         }
         return WEECHAT_RC_OK;
     }
@@ -1359,8 +1356,7 @@ COMMAND_CALLBACK(buffer)
             rc = config_weechat_buffer_set (buffer,
                                             argv[2],
                                             (value) ? value : argv_eol[3]);
-            if (value)
-                free (value);
+            free (value);
         }
         if (!rc)
         {
@@ -2067,8 +2063,7 @@ COMMAND_CALLBACK(debug)
             gui_chat_printf (NULL,
                              _("Debug enabled for callbacks (threshold: %s)"),
                              (str_threshold) ? str_threshold : "?");
-            if (str_threshold)
-                free (str_threshold);
+            free (str_threshold);
         }
         else
         {
@@ -2301,8 +2296,7 @@ command_eval_print_debug (const char *debug)
 
     gui_chat_printf (NULL, "%s", (string) ? string : debug);
 
-    if (string)
-        free (string);
+    free (string);
 }
 
 /*
@@ -2848,8 +2842,7 @@ COMMAND_CALLBACK(filter)
                         NULL, 0, GUI_FILTER_TAG_NO_FILTER,
                         _("Filter \"%s\" deleted"),
                         name);
-                    if (name)
-                        free (name);
+                    free (name);
                 }
                 ptr_filter = ptr_next_filter;
             }
@@ -3150,8 +3143,7 @@ COMMAND_CALLBACK(help)
                                      (string) ? string : ptr_string);
                     first_line_displayed = 1;
                 }
-                if (string)
-                    free (string);
+                free (string);
 
                 if (pos_double_pipe)
                 {
@@ -3924,8 +3916,7 @@ COMMAND_CALLBACK(item)
                     gui_chat_printf (NULL,
                                      _("Custom bar item \"%s\" deleted"),
                                      name);
-                    if (name)
-                        free (name);
+                    free (name);
                 }
                 ptr_bar_item_custom = ptr_next_bar_item_custom;
             }
@@ -4249,8 +4240,7 @@ COMMAND_CALLBACK(key)
                              argv[2],
                              (value) ? value : argv_eol[3],
                              1);  /* check_key */
-        if (value)
-            free (value);
+        free (value);
         gui_key_verbose = 0;
 
         return WEECHAT_RC_OK;
@@ -4297,8 +4287,7 @@ COMMAND_CALLBACK(key)
                       argv[3],
                       (value) ? value : argv_eol[4],
                       1);  /* check_key */
-        if (value)
-            free (value);
+        free (value);
         gui_key_verbose = 0;
 
         return WEECHAT_RC_OK;
@@ -4458,8 +4447,7 @@ COMMAND_CALLBACK(key)
                              GUI_COLOR(GUI_COLOR_CHAT),
                              key_name,
                              GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
-            if (key_name)
-                free (key_name);
+            free (key_name);
         }
         return WEECHAT_RC_OK;
     }
@@ -4682,8 +4670,7 @@ COMMAND_CALLBACK(layout)
                                  _("Layout \"%s\" deleted (current layout: %s)"),
                                  name,
                                  (gui_layout_current) ? gui_layout_current->name : "-");
-                if (name)
-                    free (name);
+                free (name);
             }
             else
             {
@@ -5161,8 +5148,7 @@ COMMAND_CALLBACK(plugin)
         }
         full_name = dir_search_full_lib_name (argv[2], "plugins");
         plugin_load (full_name, 1, plugin_argc, plugin_argv);
-        if (full_name)
-            free (full_name);
+        free (full_name);
         if (plugin_argv)
             string_free_split (plugin_argv);
         return WEECHAT_RC_OK;
@@ -5587,8 +5573,7 @@ COMMAND_CALLBACK(proxy)
                     name = strdup (ptr_proxy->name);
                     proxy_free (ptr_proxy);
                     gui_chat_printf (NULL, _("Proxy \"%s\" deleted"), name);
-                    if (name)
-                        free (name);
+                    free (name);
                 }
                 ptr_proxy = ptr_next_proxy;
             }
@@ -5841,8 +5826,7 @@ command_repeat_exec (struct t_command_repeat *command_repeat)
         /* it was the last execution, free up memory */
         free (command_repeat->buffer_name);
         free (command_repeat->command);
-        if (command_repeat->commands_allowed)
-            free (command_repeat->commands_allowed);
+        free (command_repeat->commands_allowed);
         free (command_repeat);
     }
 }
@@ -6198,8 +6182,7 @@ COMMAND_CALLBACK(secure)
         {
             gui_chat_printf (NULL,
                              _("Encrypted data has been successfully decrypted"));
-            if (secure_passphrase)
-                free (secure_passphrase);
+            free (secure_passphrase);
             secure_passphrase = strdup (argv_eol[2]);
         }
         return WEECHAT_RC_OK;
@@ -6415,12 +6398,9 @@ command_set_display_option (struct t_config_option *option,
         (default_value) ? GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS) : "",
         (default_value) ? ")" : "");
 
-    if (value)
-        free (value);
-    if (inherited_value)
-        free (inherited_value);
-    if (default_value)
-        free (default_value);
+    free (value);
+    free (inherited_value);
+    free (default_value);
 }
 
 /*
@@ -6687,8 +6667,7 @@ COMMAND_CALLBACK(set)
                                  strerror (errno));
             }
         }
-        if (value)
-            free (value);
+        free (value);
         return WEECHAT_RC_OK;
     }
 
@@ -6749,8 +6728,7 @@ COMMAND_CALLBACK(set)
     value = (string_strcmp (argv_eol[2], WEECHAT_CONFIG_OPTION_NULL) == 0) ?
         NULL : string_remove_quotes (argv_eol[2], "'\"");
     rc = config_file_option_set_with_string (argv[1], value);
-    if (value)
-        free (value);
+    free (value);
     switch (rc)
     {
         case WEECHAT_CONFIG_OPTION_SET_ERROR:
@@ -6905,8 +6883,7 @@ COMMAND_CALLBACK(toggle)
             COMMAND_ERROR;
         if (string_strcmp (argv[2], WEECHAT_CONFIG_OPTION_NULL) == 0)
         {
-            if (sargv[0])
-                free (sargv[0]);
+            free (sargv[0]);
             sargv[0] = NULL;
         }
     }
@@ -7298,8 +7275,7 @@ COMMAND_CALLBACK(upgrade)
                          _("%sUnable to save WeeChat session "
                            "(files *.upgrade)"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
-        if (ptr_binary)
-            free (ptr_binary);
+        free (ptr_binary);
         return WEECHAT_RC_OK;
     }
 

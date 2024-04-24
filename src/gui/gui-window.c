@@ -1056,17 +1056,14 @@ gui_window_free (struct t_gui_window *window)
     }
 
     /* free other data */
-    if (window->layout_plugin_name)
-        free (window->layout_plugin_name);
-    if (window->layout_buffer_name)
-        free (window->layout_buffer_name);
+    free (window->layout_plugin_name);
+    free (window->layout_buffer_name);
 
     /* remove scroll list */
     gui_window_scroll_free_all (window);
 
     /* free coords */
-    if (window->coords)
-        free (window->coords);
+    free (window->coords);
 
     /* remove window from windows list */
     if (window->prev_window)

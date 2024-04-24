@@ -763,10 +763,8 @@ gui_color_init_pairs_weechat ()
                     init_pair (i, i, -1);
             }
         }
-        if (foregrounds)
-            free (foregrounds);
-        if (backgrounds)
-            free (backgrounds);
+        free (foregrounds);
+        free (backgrounds);
     }
 }
 
@@ -1533,8 +1531,7 @@ gui_color_palette_free (struct t_gui_color_palette *color_palette)
     if (!color_palette)
         return;
 
-    if (color_palette->alias)
-        free (color_palette->alias);
+    free (color_palette->alias);
 
     free (color_palette);
 }

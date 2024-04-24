@@ -889,17 +889,11 @@ completion_list_add_filename_cb (const void *pointer, void *data,
     closedir (dp);
 
 end:
-    if (real_prefix)
-        free (real_prefix);
-    if (prefix)
-        free (prefix);
-    if (path_dir)
-        free (path_dir);
-    if (path_base)
-        free (path_base);
-    if (dir_name)
-        free (dir_name);
-
+    free (real_prefix);
+    free (prefix);
+    free (path_dir);
+    free (path_base);
+    free (dir_name);
     return WEECHAT_RC_OK;
 }
 
@@ -1649,11 +1643,8 @@ completion_list_add_config_option_values_cb (const void *pointer, void *data,
         }
     }
 
-    if (file)
-        free (file);
-    if (section)
-        free (section);
-
+    free (file);
+    free (section);
     free (option_full_name);
 
     return WEECHAT_RC_OK;

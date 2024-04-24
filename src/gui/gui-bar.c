@@ -418,8 +418,7 @@ gui_bar_check_conditions (struct t_gui_bar *bar,
         result = eval_expression (conditions, pointers, extra_vars, options);
 
         rc = eval_is_true (result);
-        if (result)
-            free (result);
+        free (result);
         if (pointers)
             hashtable_free (pointers);
         if (extra_vars)
@@ -448,8 +447,7 @@ gui_bar_check_conditions (struct t_gui_bar *bar,
     else
         rc = 1;
 
-    if (str_displayed)
-        free (str_displayed);
+    free (str_displayed);
 
     return rc;
 }
@@ -693,23 +691,15 @@ gui_bar_free_items_arrays (struct t_gui_bar *bar)
             string_free_split (bar->items_array[i]);
         for (j = 0; j < bar->items_subcount[i]; j++)
         {
-            if (bar->items_buffer[i][j])
-                free (bar->items_buffer[i][j]);
-            if (bar->items_prefix[i][j])
-                free (bar->items_prefix[i][j]);
-            if (bar->items_name[i][j])
-                free (bar->items_name[i][j]);
-            if (bar->items_suffix[i][j])
-                free (bar->items_suffix[i][j]);
+            free (bar->items_buffer[i][j]);
+            free (bar->items_prefix[i][j]);
+            free (bar->items_name[i][j]);
+            free (bar->items_suffix[i][j]);
         }
-        if (bar->items_buffer[i])
-            free (bar->items_buffer[i]);
-        if (bar->items_prefix[i])
-            free (bar->items_prefix[i]);
-        if (bar->items_name[i])
-            free (bar->items_name[i]);
-        if (bar->items_suffix[i])
-            free (bar->items_suffix[i]);
+        free (bar->items_buffer[i]);
+        free (bar->items_prefix[i]);
+        free (bar->items_name[i]);
+        free (bar->items_suffix[i]);
     }
     if (bar->items_array)
     {
@@ -1220,8 +1210,7 @@ gui_bar_set_name (struct t_gui_bar *bar, const char *name)
         config_file_option_rename (bar->options[i], option_name);
     }
 
-    if (bar->name)
-        free (bar->name);
+    free (bar->name);
     bar->name = strdup (name);
 }
 
@@ -1918,8 +1907,7 @@ gui_bar_use_temp_bars ()
     {
         next_temp_bar = gui_temp_bars->next_bar;
 
-        if (gui_temp_bars->name)
-            free (gui_temp_bars->name);
+        free (gui_temp_bars->name);
         free (gui_temp_bars);
 
         gui_temp_bars = next_temp_bar;
@@ -2191,8 +2179,7 @@ gui_bar_scroll (struct t_gui_bar *bar, struct t_gui_window *window,
         }
     }
 
-    if (str)
-        free (str);
+    free (str);
 
     return 1;
 }
@@ -2229,8 +2216,7 @@ gui_bar_free (struct t_gui_bar *bar)
         last_gui_bar = bar->prev_bar;
 
     /* free data */
-    if (bar->name)
-        free (bar->name);
+    free (bar->name);
     for (i = 0; i < GUI_BAR_NUM_OPTIONS; i++)
     {
         if (bar->options[i])

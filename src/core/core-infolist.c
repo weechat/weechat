@@ -595,8 +595,7 @@ infolist_var_free (struct t_infolist_item *item,
         (var->next_var)->prev_var = var->prev_var;
 
     /* free data */
-    if (var->name)
-        free (var->name);
+    free (var->name);
     if (((var->type == INFOLIST_INTEGER)
          || (var->type == INFOLIST_STRING)
          || (var->type == INFOLIST_BUFFER)
@@ -643,8 +642,7 @@ infolist_item_free (struct t_infolist *infolist,
     {
         infolist_var_free (item, item->vars);
     }
-    if (item->fields)
-        free (item->fields);
+    free (item->fields);
 
     free (item);
 

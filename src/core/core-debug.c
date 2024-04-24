@@ -808,8 +808,7 @@ debug_display_time_elapsed (struct timeval *time1, struct timeval *time2,
                     (str_diff) ? str_diff : "?");
     }
 
-    if (str_diff)
-        free (str_diff);
+    free (str_diff);
 }
 
 /*

@@ -228,8 +228,7 @@ network_load_user_ca_files (int force_display)
                     ca_path);
             }
         }
-        if (ca_path)
-            free (ca_path);
+        free (ca_path);
     }
 
 end:
@@ -1416,10 +1415,8 @@ network_connect_child (struct t_hook *hook_connect)
     }
 
 end:
-    if (status_with_string)
-        free (status_with_string);
-    if (res_reorder)
-        free (res_reorder);
+    free (status_with_string);
+    free (res_reorder);
     if (res_local)
         freeaddrinfo (res_local);
     if (res_remote)
@@ -1734,8 +1731,7 @@ network_connect_child_read_cb (const void *pointer, void *data, int fd)
                          gnutls_strerror (rc),
                          cb_ip_address);
                     unhook (hook_connect);
-                    if (cb_ip_address)
-                        free (cb_ip_address);
+                    free (cb_ip_address);
                     return WEECHAT_RC_OK;
                 }
                 fcntl (HOOK_CONNECT(hook_connect, sock), F_SETFL,
@@ -1756,8 +1752,7 @@ network_connect_child_read_cb (const void *pointer, void *data, int fd)
                          "Error in the certificate.",
                          cb_ip_address);
                     unhook (hook_connect);
-                    if (cb_ip_address)
-                        free (cb_ip_address);
+                    free (cb_ip_address);
                     return WEECHAT_RC_OK;
                 }
 #endif /* LIBGNUTLS_VERSION_NUMBER < 0x02090a */
@@ -1808,10 +1803,8 @@ network_connect_child_read_cb (const void *pointer, void *data, int fd)
         unhook (hook_connect);
     }
 
-    if (cb_error)
-        free (cb_error);
-    if (cb_ip_address)
-        free (cb_ip_address);
+    free (cb_error);
+    free (cb_ip_address);
 
     return WEECHAT_RC_OK;
 }

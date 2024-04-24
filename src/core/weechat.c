@@ -301,8 +301,7 @@ weechat_parse_args (int argc, char *argv[])
                 break;
             case 'd': /* -d / --dir */
                 weechat_home_temp = 0;
-                if (weechat_home_force)
-                    free (weechat_home_force);
+                free (weechat_home_force);
                 weechat_home_force = strdup (optarg);
                 break;
             case 't': /* -t / --temp-dir */
@@ -324,13 +323,11 @@ weechat_parse_args (int argc, char *argv[])
                 weechat_shutdown (EXIT_SUCCESS, 0);
                 break;
             case 'p': /* -p / --no-plugin */
-                if (weechat_force_plugin_autoload)
-                    free (weechat_force_plugin_autoload);
+                free (weechat_force_plugin_autoload);
                 weechat_force_plugin_autoload = strdup ("!*");
                 break;
             case 'P': /* -P / --plugins */
-                if (weechat_force_plugin_autoload)
-                    free (weechat_force_plugin_autoload);
+                free (weechat_force_plugin_autoload);
                 weechat_force_plugin_autoload = strdup (optarg);
                 break;
             case 'r': /* -r / --run-command */
@@ -576,28 +573,18 @@ weechat_shutdown (int return_code, int crash)
         dir_remove_home_dirs ();
     }
 
-    if (weechat_argv0)
-        free (weechat_argv0);
-    if (weechat_home_force)
-        free (weechat_home_force);
-    if (weechat_config_dir)
-        free (weechat_config_dir);
-    if (weechat_data_dir)
-        free (weechat_data_dir);
-    if (weechat_state_dir)
-        free (weechat_state_dir);
-    if (weechat_cache_dir)
-        free (weechat_cache_dir);
-    if (weechat_runtime_dir)
-        free (weechat_runtime_dir);
-    if (weechat_local_charset)
-        free (weechat_local_charset);
-    if (weechat_force_plugin_autoload)
-        free (weechat_force_plugin_autoload);
+    free (weechat_argv0);
+    free (weechat_home_force);
+    free (weechat_config_dir);
+    free (weechat_data_dir);
+    free (weechat_state_dir);
+    free (weechat_cache_dir);
+    free (weechat_runtime_dir);
+    free (weechat_local_charset);
+    free (weechat_force_plugin_autoload);
     if (weechat_startup_commands)
         weelist_free (weechat_startup_commands);
-    if (weechat_doc_gen_path)
-        free (weechat_doc_gen_path);
+    free (weechat_doc_gen_path);
 
     if (crash)
         abort ();

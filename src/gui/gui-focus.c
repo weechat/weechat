@@ -100,18 +100,12 @@ gui_focus_get_info (int x, int y)
 void
 gui_focus_free_info (struct t_gui_focus_info *focus_info)
 {
-    if (focus_info->chat_word)
-        free (focus_info->chat_word);
-    if (focus_info->chat_focused_line)
-        free (focus_info->chat_focused_line);
-    if (focus_info->chat_focused_line_bol)
-        free (focus_info->chat_focused_line_bol);
-    if (focus_info->chat_focused_line_eol)
-        free (focus_info->chat_focused_line_eol);
-    if (focus_info->chat_bol)
-        free (focus_info->chat_bol);
-    if (focus_info->chat_eol)
-        free (focus_info->chat_eol);
+    free (focus_info->chat_word);
+    free (focus_info->chat_focused_line);
+    free (focus_info->chat_focused_line_bol);
+    free (focus_info->chat_focused_line_eol);
+    free (focus_info->chat_bol);
+    free (focus_info->chat_eol);
 
     free (focus_info);
 }
@@ -226,14 +220,10 @@ gui_focus_to_hashtable (struct t_gui_focus_info *focus_info, const char *key)
         HASHTABLE_SET_STR_NOT_NULL("_chat_line_nick", nick);
         HASHTABLE_SET_STR_NOT_NULL("_chat_line_prefix", str_prefix);
         HASHTABLE_SET_STR_NOT_NULL("_chat_line_message", str_message);
-        if (str_time)
-            free (str_time);
-        if (str_prefix)
-            free (str_prefix);
-        if (str_tags)
-            free (str_tags);
-        if (str_message)
-            free (str_message);
+        free (str_time);
+        free (str_prefix);
+        free (str_tags);
+        free (str_message);
     }
     else
     {

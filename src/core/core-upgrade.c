@@ -462,8 +462,7 @@ upgrade_weechat_read_buffer (struct t_infolist *infolist)
         upgrade_set_current_buffer = ptr_buffer;
 
     /* name for upgrade */
-    if (ptr_buffer->plugin_name_for_upgrade)
-        free (ptr_buffer->plugin_name_for_upgrade);
+    free (ptr_buffer->plugin_name_for_upgrade);
     ptr_buffer->plugin_name_for_upgrade =
         strdup (infolist_string (infolist, "plugin_name"));
 
@@ -471,14 +470,12 @@ upgrade_weechat_read_buffer (struct t_infolist *infolist)
     gui_buffer_build_full_name (ptr_buffer);
 
     /* old full name */
-    if (ptr_buffer->old_full_name)
-        free (ptr_buffer->old_full_name);
+    free (ptr_buffer->old_full_name);
     str = infolist_string (infolist, "old_full_name");
     ptr_buffer->old_full_name = (str) ? strdup (str) : NULL;
 
     /* short name */
-    if (ptr_buffer->short_name)
-        free (ptr_buffer->short_name);
+    free (ptr_buffer->short_name);
     str = infolist_string (infolist, "short_name");
     ptr_buffer->short_name = (str) ? strdup (str) : NULL;
 
@@ -521,8 +518,7 @@ upgrade_weechat_read_buffer (struct t_infolist *infolist)
     /* title (not for main buffer, because there's the latest version) */
     if (!main_buffer)
     {
-        if (ptr_buffer->title)
-            free (ptr_buffer->title);
+        free (ptr_buffer->title);
         str = infolist_string (infolist, "title");
         ptr_buffer->title = (str) ? strdup (str) : NULL;
     }

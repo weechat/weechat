@@ -528,12 +528,10 @@ gui_color_get_custom (const char *color_name)
                       color_bg);
         }
 
-        if (str_fg)
-            free (str_fg);
+        free (str_fg);
     }
 
-    if (color_attr)
-        free (color_attr);
+    free (color_attr);
 
     return color[index_color];
 }
@@ -1187,8 +1185,7 @@ gui_color_decode_ansi_cb (void *data, const char *text)
 end:
     if (items)
         string_free_split (items);
-    if (text2)
-        free (text2);
+    free (text2);
 
     return (output) ? output : strdup ("");
 }
@@ -1868,8 +1865,7 @@ gui_color_free (struct t_gui_color *color)
     if (!color)
         return;
 
-    if (color->string)
-        free (color->string);
+    free (color->string);
 
     free (color);
 }

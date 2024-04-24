@@ -548,8 +548,7 @@ gui_chat_change_time_format ()
         {
             if (ptr_line->data->date != 0)
             {
-                if (ptr_line->data->str_time)
-                    free (ptr_line->data->str_time);
+                free (ptr_line->data->str_time);
                 ptr_line->data->str_time = gui_chat_get_time_string (
                     ptr_line->data->date,
                     ptr_line->data->date_usec,
@@ -768,8 +767,7 @@ gui_chat_printf_datetime_tags_internal (struct t_gui_buffer *buffer,
                 }
                 new_line->data->prefix_length = gui_chat_strlen_screen (
                     new_line->data->prefix);
-                if (new_line->data->message)
-                    free (new_line->data->message);
+                free (new_line->data->message);
                 new_line->data->message = strdup (ptr_msg);
             }
         }
@@ -784,12 +782,9 @@ gui_chat_printf_datetime_tags_internal (struct t_gui_buffer *buffer,
 
     gui_buffer_ask_chat_refresh (new_line->data->buffer, 1);
 
-    if (string)
-        free (string);
-    if (modifier_data)
-        free (modifier_data);
-    if (new_string)
-        free (new_string);
+    free (string);
+    free (modifier_data);
+    free (new_string);
 
     return;
 
@@ -799,12 +794,9 @@ no_print:
         gui_line_free_data (new_line);
         free (new_line);
     }
-    if (string)
-        free (string);
-    if (modifier_data)
-        free (modifier_data);
-    if (new_string)
-        free (new_string);
+    free (string);
+    free (modifier_data);
+    free (new_string);
 }
 
 /*

@@ -1625,8 +1625,7 @@ gui_input_history_previous (struct t_gui_window *window,
         {
             /* replace text in history with current input */
             window->buffer->input_buffer[window->buffer->input_buffer_size] = '\0';
-            if ((*ptr_history)->prev_history->text)
-                free ((*ptr_history)->prev_history->text);
+            free ((*ptr_history)->prev_history->text);
             (*ptr_history)->prev_history->text =
                 strdup (window->buffer->input_buffer);
         }
@@ -1675,8 +1674,7 @@ gui_input_history_next (struct t_gui_window *window,
     {
         /* replace text in history with current input */
         window->buffer->input_buffer[window->buffer->input_buffer_size] = '\0';
-        if ((*ptr_history)->text)
-            free ((*ptr_history)->text);
+        free ((*ptr_history)->text);
         (*ptr_history)->text = strdup (window->buffer->input_buffer);
 
         *ptr_history = (*ptr_history)->prev_history;
@@ -1892,8 +1890,7 @@ gui_input_insert (struct t_gui_buffer *buffer, const char *args)
     gui_input_text_changed_modifier_and_signal (buffer,
                                                 1, /* save undo */
                                                 1); /* stop completion */
-    if (args2)
-        free (args2);
+    free (args2);
 }
 
 /*

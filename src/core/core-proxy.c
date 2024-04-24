@@ -181,8 +181,7 @@ proxy_set_name (struct t_proxy *proxy, const char *name)
         snprintf (option_name, length, "%s.password", name);
         config_file_option_rename (proxy->options[PROXY_OPTION_PASSWORD], option_name);
 
-        if (proxy->name)
-            free (proxy->name);
+        free (proxy->name);
         proxy->name = strdup (name);
 
         free (option_name);
@@ -528,8 +527,7 @@ proxy_use_temp_proxies ()
     {
         next_temp_proxy = weechat_temp_proxies->next_proxy;
 
-        if (weechat_temp_proxies->name)
-            free (weechat_temp_proxies->name);
+        free (weechat_temp_proxies->name);
         free (weechat_temp_proxies);
 
         weechat_temp_proxies = next_temp_proxy;
@@ -560,8 +558,7 @@ proxy_free (struct t_proxy *proxy)
         last_weechat_proxy = proxy->prev_proxy;
 
     /* free data */
-    if (proxy->name)
-        free (proxy->name);
+    free (proxy->name);
     for (i = 0; i < PROXY_NUM_OPTIONS; i++)
     {
         config_file_option_free (proxy->options[i], 1);

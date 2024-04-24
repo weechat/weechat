@@ -986,10 +986,8 @@ error:
     }
 
 end:
-    if (option_name)
-        free (option_name);
-    if (parent_name)
-        free (parent_name);
+    free (option_name);
+    free (parent_name);
     return new_option;
 }
 
@@ -1170,10 +1168,8 @@ config_file_search_with_string (const char *option_name,
         }
     }
 
-    if (file_name)
-        free (file_name);
-    if (section_name)
-        free (section_name);
+    free (file_name);
+    free (section_name);
 
     if (config_file)
         *config_file = ptr_config;
@@ -1839,8 +1835,7 @@ config_file_option_toggle (struct t_config_option *option,
         rc = config_file_option_set (option, ptr_new_value, run_callback);
 
 end:
-    if (current_value)
-        free (current_value);
+    free (current_value);
     return rc;
 }
 
@@ -2320,8 +2315,7 @@ config_file_option_rename (struct t_config_option *option,
         }
 
         /* rename option */
-        if (option->name)
-            free (option->name);
+        free (option->name);
         option->name = str_new_name;
 
         /* re-insert option in section */
@@ -2354,10 +2348,8 @@ config_file_option_rename (struct t_config_option *option,
         }
     }
 
-    if (full_old_name)
-        free (full_old_name);
-    if (full_new_name)
-        free (full_new_name);
+    free (full_old_name);
+    free (full_new_name);
 
     config_file_hook_config_exec (option);
 }
@@ -3576,8 +3568,7 @@ config_file_update_data_read (struct t_config_file *config_file,
             ptr_section = hashtable_get (hashtable, "section");
             if (ptr_section && ptr_section[0])
             {
-                if (*ret_section)
-                    free (*ret_section);
+                free (*ret_section);
                 *ret_section = strdup (ptr_section);
             }
         }
@@ -3591,8 +3582,7 @@ config_file_update_data_read (struct t_config_file *config_file,
                 ptr_option = hashtable_get (hashtable, "option");
                 if (ptr_option)
                 {
-                    if (*ret_option)
-                        free (*ret_option);
+                    free (*ret_option);
                     *ret_option = strdup (ptr_option);
                 }
             }
@@ -3602,8 +3592,7 @@ config_file_update_data_read (struct t_config_file *config_file,
                 ptr_value = hashtable_get (hashtable, "value");
                 if (!value_null && hashtable_has_key (hashtable, "value_null"))
                     ptr_value = NULL;
-                if (*ret_value)
-                    free (*ret_value);
+                free (*ret_value);
                 *ret_value = (ptr_value) ? strdup (ptr_value) : NULL;
             }
         }
@@ -3823,10 +3812,8 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
                     filename, line_number,
                     line);
                 config_file_backup (filename);
-                if (option)
-                    free (option);
-                if (value)
-                    free (value);
+                free (option);
+                free (value);
                 goto end_file;
             }
             else
@@ -3844,10 +3831,8 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
                         config_file->version_read,
                         config_file->version);
                     config_file_backup (filename);
-                    if (option)
-                        free (option);
-                    if (value)
-                        free (value);
+                    free (option);
+                    free (value);
                     goto end_file;
                 }
             }
@@ -3936,10 +3921,8 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
         }
 
     end_line:
-        if (option)
-            free (option);
-        if (value)
-            free (value);
+        free (option);
+        free (value);
     }
 
 end_file:
@@ -4028,24 +4011,16 @@ config_file_reload (struct t_config_file *config_file)
 void
 config_file_option_free_data (struct t_config_option *option)
 {
-    if (option->name)
-        free (option->name);
-    if (option->parent_name)
-        free (option->parent_name);
-    if (option->description)
-        free (option->description);
+    free (option->name);
+    free (option->parent_name);
+    free (option->description);
     if (option->string_values)
         string_free_split (option->string_values);
-    if (option->default_value)
-        free (option->default_value);
-    if (option->value)
-        free (option->value);
-    if (option->callback_check_value_data)
-        free (option->callback_check_value_data);
-    if (option->callback_change_data)
-        free (option->callback_change_data);
-    if (option->callback_delete_data)
-        free (option->callback_delete_data);
+    free (option->default_value);
+    free (option->value);
+    free (option->callback_check_value_data);
+    free (option->callback_change_data);
+    free (option->callback_delete_data);
 }
 
 /*
@@ -4129,18 +4104,12 @@ config_file_section_free (struct t_config_section *section)
 
     /* free data */
     config_file_section_free_options (section);
-    if (section->name)
-        free (section->name);
-    if (section->callback_read_data)
-        free (section->callback_read_data);
-    if (section->callback_write_data)
-        free (section->callback_write_data);
-    if (section->callback_write_default_data)
-        free (section->callback_write_default_data);
-    if (section->callback_create_option_data)
-        free (section->callback_create_option_data);
-    if (section->callback_delete_option_data)
-        free (section->callback_delete_option_data);
+    free (section->name);
+    free (section->callback_read_data);
+    free (section->callback_write_data);
+    free (section->callback_write_default_data);
+    free (section->callback_create_option_data);
+    free (section->callback_delete_option_data);
 
     /* remove section from list */
     if (ptr_config->last_section == section)
@@ -4178,10 +4147,8 @@ config_file_free (struct t_config_file *config_file)
     {
         config_file_section_free (config_file->sections);
     }
-    if (config_file->name)
-        free (config_file->name);
-    if (config_file->filename)
-        free (config_file->filename);
+    free (config_file->name);
+    free (config_file->filename);
 
     /* remove configuration file from list */
     if (last_config_file == config_file)
@@ -4198,10 +4165,8 @@ config_file_free (struct t_config_file *config_file)
         (config_file->next_config)->prev_config = config_file->prev_config;
 
     /* free data */
-    if (config_file->callback_update_data)
-        free (config_file->callback_update_data);
-    if (config_file->callback_reload_data)
-        free (config_file->callback_reload_data);
+    free (config_file->callback_update_data);
+    free (config_file->callback_reload_data);
 
     free (config_file);
 
@@ -4429,12 +4394,10 @@ config_file_add_option_to_infolist (struct t_infolist *infolist,
         (const char **)option->string_values, "|", 0, -1);
     if (!infolist_new_var_string (ptr_item, "string_values", string_values))
     {
-        if (string_values)
-            free (string_values);
+        free (string_values);
         goto error;
     }
-    if (string_values)
-        free (string_values);
+    free (string_values);
     if (!infolist_new_var_integer (ptr_item, "min", option->min))
         goto error;
     if (!infolist_new_var_integer (ptr_item, "max", option->max))

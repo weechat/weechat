@@ -251,10 +251,8 @@ encrypt_end:
             gcry_cipher_close (*hd_cipher);
         free (hd_cipher);
     }
-    if (key)
-        free (key);
-    if (hash_and_data)
-        free (hash_and_data);
+    free (key);
+    free (hash_and_data);
 
     return rc;
 }
@@ -403,10 +401,8 @@ decrypt_end:
             gcry_cipher_close (*hd_cipher);
         free (hd_cipher);
     }
-    if (key)
-        free (key);
-    if (decrypted_hash_data)
-        free (decrypted_hash_data);
+    free (key);
+    free (decrypted_hash_data);
 
     return rc;
 }
@@ -484,8 +480,7 @@ secure_decrypt_data_not_decrypted (const char *passphrase)
                                           keys[i]);
                         num_ok++;
                     }
-                    if (decrypted)
-                        free (decrypted);
+                    free (decrypted);
                     free (buffer);
                 }
             }

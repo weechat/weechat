@@ -712,13 +712,9 @@ upgrade_file_read_object (struct t_upgrade_file *upgrade_file)
 end:
     if (infolist)
         infolist_free (infolist);
-    if (name)
-        free (name);
-    if (value_str)
-        free (value_str);
-    if (buffer)
-        free (buffer);
-
+    free (name);
+    free (value_str);
+    free (buffer);
     return rc;
 }
 
@@ -749,8 +745,7 @@ upgrade_file_read (struct t_upgrade_file *upgrade_file)
     {
         UPGRADE_ERROR(_("read - bad signature (upgrade file format may have "
                         "changed since last version)"), "");
-        if (signature)
-            free (signature);
+        free (signature);
         return 0;
     }
 
@@ -775,12 +770,10 @@ upgrade_file_close (struct t_upgrade_file *upgrade_file)
     if (!upgrade_file)
         return;
 
-    if (upgrade_file->filename)
-        free (upgrade_file->filename);
+    free (upgrade_file->filename);
     if (upgrade_file->file)
         fclose (upgrade_file->file);
-    if (upgrade_file->callback_read_data)
-        free (upgrade_file->callback_read_data);
+    free (upgrade_file->callback_read_data);
 
     /* remove upgrade file list */
     if (upgrade_file->prev_upgrade)

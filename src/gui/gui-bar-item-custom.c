@@ -611,8 +611,7 @@ gui_bar_item_custom_free_data (struct t_gui_bar_item_custom *item)
 {
     int i;
 
-    if (item->name)
-        free (item->name);
+    free (item->name);
     for (i = 0; i < GUI_BAR_ITEM_CUSTOM_NUM_OPTIONS; i++)
     {
         if (item->options[i])
@@ -654,8 +653,7 @@ gui_bar_item_custom_free (struct t_gui_bar_item_custom *item)
 
     gui_bar_item_update (name);
 
-    if (name)
-        free (name);
+    free (name);
 }
 
 /*

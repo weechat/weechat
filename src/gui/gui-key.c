@@ -1161,10 +1161,8 @@ gui_key_set_areas (struct t_gui_key *key)
                                     &(key->area_name[area]));
     }
 
-    if (areas[0])
-        free (areas[0]);
-    if (areas[1])
-        free (areas[1]);
+    free (areas[0]);
+    free (areas[1]);
 }
 
 /*
@@ -1413,8 +1411,7 @@ gui_key_option_change_cb (const void *pointer, void *data,
     if (!ptr_key)
         return;
 
-    if (ptr_key->command)
-        free (ptr_key->command);
+    free (ptr_key->command);
     ptr_key->command = strdup (CONFIG_STRING(option));
 }
 
@@ -1568,8 +1565,7 @@ error:
                          key,
                          gui_key_context_string[context]);
     }
-    if (key_fixed)
-        free (key_fixed);
+    free (key_fixed);
     if (ptr_option)
         config_file_option_free (ptr_option, 0);
     return NULL;
@@ -2607,10 +2603,8 @@ end_no_input:
     rc = 0;
 
 end:
-    if (key_name)
-        free (key_name);
-    if (key_name_alias)
-        free (key_name_alias);
+    free (key_name);
+    free (key_name_alias);
     return rc;
 }
 
@@ -2642,19 +2636,15 @@ gui_key_free (int context,
     }
 
     /* free memory */
-    if (key->key)
-        free (key->key);
+    free (key->key);
     if (key->chunks)
         string_free_split (key->chunks);
     for (i = 0; i < 2; i++)
     {
-        if (key->area_name[i])
-            free (key->area_name[i]);
+        free (key->area_name[i]);
     }
-    if (key->area_key)
-        free (key->area_key);
-    if (key->command)
-        free (key->command);
+    free (key->area_key);
+    free (key->command);
 
     /* remove key from keys list */
     if (key->prev_key)
@@ -3063,8 +3053,7 @@ gui_key_end ()
     int context;
 
     /* free key buffer */
-    if (gui_key_buffer)
-        free (gui_key_buffer);
+    free (gui_key_buffer);
 
     for (context = 0; context < GUI_KEY_NUM_CONTEXTS; context++)
     {

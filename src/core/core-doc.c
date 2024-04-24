@@ -67,12 +67,8 @@ char *
 doc_gen_escape_table (const char *message)
 {
     index_string_escaped = (index_string_escaped + 1) % 32;
-
-    if (string_escaped[index_string_escaped])
-        free (string_escaped[index_string_escaped]);
-
+    free (string_escaped[index_string_escaped]);
     string_escaped[index_string_escaped] = string_replace (message, "|", "\\|");
-
     return string_escaped[index_string_escaped];
 }
 
@@ -89,15 +85,10 @@ doc_gen_escape_anchor_link (const char *message)
         return NULL;
 
     index_string_escaped = (index_string_escaped + 1) % 32;
-
-    if (string_escaped[index_string_escaped])
-        free (string_escaped[index_string_escaped]);
-
+    free (string_escaped[index_string_escaped]);
     string_escaped[index_string_escaped] = string_replace_regex (
         message, &regex, "-", '$', NULL, NULL);
-
     regfree (&regex);
-
     return string_escaped[index_string_escaped];
 }
 
@@ -567,8 +558,7 @@ doc_gen_user_options (const char *path, const char *lang)
         if (ptr_option->type == CONFIG_OPTION_TYPE_STRING)
         {
             tmp = string_replace (default_value, "\"", "\\\"");
-            if (default_value)
-                free (default_value);
+            free (default_value);
             default_value = tmp;
         }
         string_fprintf (
@@ -578,12 +568,9 @@ doc_gen_user_options (const char *path, const char *lang)
             (ptr_option->type == CONFIG_OPTION_TYPE_STRING) ? "\"" : "",
             default_value,
             (ptr_option->type == CONFIG_OPTION_TYPE_STRING) ? "\"" : "");
-        if (desc_escaped)
-            free (desc_escaped);
-        if (values)
-            free (values);
-        if (default_value)
-            free (default_value);
+        free (desc_escaped);
+        free (values);
+        free (default_value);
     }
 
     if (old_config)
@@ -1386,8 +1373,7 @@ doc_gen_api_url_options (const char *path, const char *lang)
             "| %s | %s |",
             ESCAPE_TABLE(name),
             ESCAPE_TABLE(url_type_string[url_options[i].type]));
-        if (name)
-            free (name);
+        free (name);
         if (url_options[i].constants)
         {
             for (j = 0; url_options[i].constants[j].name; j++)
@@ -1396,8 +1382,7 @@ doc_gen_api_url_options (const char *path, const char *lang)
                     string_fprintf (file, ",");
                 constant = string_tolower (url_options[i].constants[j].name);
                 string_fprintf (file, " %s", constant);
-                if (constant)
-                    free (constant);
+                free (constant);
             }
         }
         string_fprintf (file, "\n");
@@ -1787,8 +1772,7 @@ doc_generate (const char *path)
 end:
     for (i = 0; i < 32; i++)
     {
-        if (string_escaped[i])
-            free (string_escaped[i]);
+        free (string_escaped[i]);
     }
     return rc_doc_gen;
 }

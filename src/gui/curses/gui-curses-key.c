@@ -482,8 +482,7 @@ gui_key_flush (int paste)
                 }
             }
 
-            if (input_old)
-                free (input_old);
+            free (input_old);
         }
 
         /* prepare incomplete UTF-8 char for next iteration */

@@ -221,10 +221,8 @@ input_exec_command (struct t_gui_buffer *buffer,
     }
 
 end:
-    if (command)
-        free (command);
-    if (command_name)
-        free (command_name);
+    free (command);
+    free (command_name);
 
     if (new_commands_allowed)
         string_free_split (new_commands_allowed);
@@ -359,10 +357,8 @@ input_data (struct t_gui_buffer *buffer, const char *data,
     }
 
 end:
-    if (buffer_full_name)
-        free (buffer_full_name);
-    if (new_data)
-        free (new_data);
+    free (buffer_full_name);
+    free (new_data);
 
     return rc;
 }
@@ -403,8 +399,7 @@ input_data_timer_cb (const void *pointer, void *data, int remaining_calls)
 
     for (i = 0; i < 4; i++)
     {
-        if (timer_args[i])
-            free (timer_args[i]);
+        free (timer_args[i]);
     }
     free (timer_args);
 

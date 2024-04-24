@@ -445,8 +445,7 @@ gui_filter_new (int enabled, const char *name, const char *buffer_name,
                               _("invalid regular expression (%s)"),
                               buf);
                     gui_filter_new_error (name, str_error);
-                    if (regex_prefix)
-                        free (regex_prefix);
+                    free (regex_prefix);
                     if (regex1)
                     {
                         regfree (regex1);
@@ -458,8 +457,7 @@ gui_filter_new (int enabled, const char *name, const char *buffer_name,
             }
         }
 
-        if (regex_prefix)
-            free (regex_prefix);
+        free (regex_prefix);
     }
 
     /* create new filter */
@@ -540,18 +538,14 @@ gui_filter_free (struct t_gui_filter *filter)
                              WEECHAT_HOOK_SIGNAL_POINTER, filter);
 
     /* free data */
-    if (filter->name)
-        free (filter->name);
-    if (filter->buffer_name)
-        free (filter->buffer_name);
+    free (filter->name);
+    free (filter->buffer_name);
     if (filter->buffers)
         string_free_split (filter->buffers);
-    if (filter->tags)
-        free (filter->tags);
+    free (filter->tags);
     if (filter->tags_array)
         string_free_split_tags (filter->tags_array);
-    if (filter->regex)
-        free (filter->regex);
+    free (filter->regex);
     if (filter->regex_prefix)
     {
         regfree (filter->regex_prefix);

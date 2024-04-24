@@ -347,10 +347,8 @@ hook_url (struct t_weechat_plugin *plugin,
     return new_hook;
 
 error:
-    if (new_hook)
-        free (new_hook);
-    if (new_hook_url)
-        free (new_hook_url);
+    free (new_hook);
+    free (new_hook_url);
     return NULL;
 }
 

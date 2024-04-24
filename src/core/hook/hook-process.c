@@ -177,14 +177,10 @@ hook_process_hashtable (struct t_weechat_plugin *plugin,
     return new_hook;
 
 error:
-    if (stdout_buffer)
-        free (stdout_buffer);
-    if (stderr_buffer)
-        free (stderr_buffer);
-    if (new_hook)
-        free (new_hook);
-    if (new_hook_process)
-        free (new_hook_process);
+    free (stdout_buffer);
+    free (stderr_buffer);
+    free (new_hook);
+    free (new_hook_process);
     return NULL;
 }
 

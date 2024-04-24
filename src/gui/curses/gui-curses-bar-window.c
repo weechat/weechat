@@ -397,8 +397,7 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
                                      (output) ? output : utf_char2);
                             if (reverse_video)
                                 wattroff (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_bar, A_REVERSE);
-                            if (output)
-                                free (output);
+                            free (output);
 
                             if (gui_window_current_emphasis)
                             {

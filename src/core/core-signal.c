@@ -225,8 +225,7 @@ signal_exec_command (int signal_index, const char *command)
                 log_printf ("Signal %s received, executing command: \"%s\"",
                             (signal_upper) ? signal_upper : str_signal,
                             command_eval);
-                if (signal_upper)
-                    free (signal_upper);
+                free (signal_upper);
                 (void) input_data (gui_buffer_search_main (),
                                    command_eval, NULL, 0, 0);
                 free (command_eval);

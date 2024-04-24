@@ -459,8 +459,7 @@ gui_chat_display_word_raw (struct t_gui_window *window, struct t_gui_line *line,
                                 wattroff (GUI_WINDOW_OBJECTS(window)->win_chat,
                                           A_REVERSE);
                             }
-                            if (output)
-                                free (output);
+                            free (output);
 
                             if (gui_window_current_emphasis)
                             {
@@ -764,8 +763,7 @@ gui_chat_display_day_changed (struct t_gui_window *window,
                                0, simulate, 0, 0);
     window->win_chat_cursor_x = window->win_chat_width;
 
-    if (message_with_color)
-        free (message_with_color);
+    free (message_with_color);
 }
 
 /*
@@ -1240,8 +1238,7 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
         if (window->win_chat_cursor_y < window->coords_size)
             window->coords[window->win_chat_cursor_y].prefix_x2 = window->win_chat_cursor_x - 1;
 
-        if (prefix_highlighted)
-            free (prefix_highlighted);
+        free (prefix_highlighted);
 
         if (!simulate)
         {
@@ -1371,8 +1368,7 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
                                    simulate, 0, 0);
         }
     }
-    if (ptr_prefix)
-        free (ptr_prefix);
+    free (ptr_prefix);
 }
 
 /*
@@ -1652,12 +1648,9 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
                                    &lines_displayed, simulate);
     }
 
-    if (message_nick_offline)
-        free (message_nick_offline);
-    if (message_with_tags)
-        free (message_with_tags);
-    if (message_with_search)
-        free (message_with_search);
+    free (message_nick_offline);
+    free (message_with_tags);
+    free (message_with_search);
 
     /* display message if day has changed after this line */
     if ((line->data->date != 0)
@@ -1809,10 +1802,8 @@ gui_chat_display_line_y (struct t_gui_window *window, struct t_gui_line *line,
         gui_window_clrtoeol (GUI_WINDOW_OBJECTS(window)->win_chat);
     }
 
-    if (message_with_tags)
-        free (message_with_tags);
-    if (message_with_search)
-        free (message_with_search);
+    free (message_with_tags);
+    free (message_with_search);
 }
 
 /*
@@ -2163,10 +2154,8 @@ gui_chat_get_bare_line (struct t_gui_line *line)
     }
 
 end:
-    if (prefix)
-        free (prefix);
-    if (message)
-        free (message);
+    free (prefix);
+    free (message);
 
     return str_line;
 }

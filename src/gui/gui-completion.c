@@ -99,8 +99,7 @@ gui_completion_word_free_cb (void *data,
 
     completion_word = (struct t_gui_completion_word *)pointer;
 
-    if (completion_word->word)
-        free (completion_word->word);
+    free (completion_word->word);
 
     free (completion_word);
 }
@@ -211,16 +210,13 @@ gui_completion_partial_list_add (struct t_gui_completion *completion,
 void
 gui_completion_free_data (struct t_gui_completion *completion)
 {
-    if (completion->base_command)
-        free (completion->base_command);
+    free (completion->base_command);
     completion->base_command = NULL;
 
-    if (completion->base_word)
-        free (completion->base_word);
+    free (completion->base_word);
     completion->base_word = NULL;
 
-    if (completion->args)
-        free (completion->args);
+    free (completion->args);
     completion->args = NULL;
 
     if (completion->list)
@@ -229,8 +225,7 @@ gui_completion_free_data (struct t_gui_completion *completion)
         completion->list = NULL;
     }
 
-    if (completion->word_found)
-        free (completion->word_found);
+    free (completion->word_found);
     completion->word_found = NULL;
 
     if (completion->partial_list)
@@ -1265,8 +1260,7 @@ gui_completion_complete (struct t_gui_completion *completion)
         {
             if ((!completion->word_found) || word_found_seen)
             {
-                if (completion->word_found)
-                    free (completion->word_found);
+                free (completion->word_found);
                 completion->word_found = strdup (ptr_completion_word->word);
                 completion->word_found_is_nick =
                     ptr_completion_word->nick_completion;
@@ -1468,8 +1462,7 @@ gui_completion_auto (struct t_gui_completion *completion)
             completion,
             (default_completion) ? default_completion : "",
             NULL);
-        if (default_completion)
-            free (default_completion);
+        free (default_completion);
     }
     gui_completion_complete (completion);
 }
@@ -1495,8 +1488,7 @@ gui_completion_search (struct t_gui_completion *completion, const char *data,
     /* if new completion => look for base word */
     if (real_position != completion->position)
     {
-        if (completion->word_found)
-            free (completion->word_found);
+        free (completion->word_found);
         completion->word_found = NULL;
         completion->word_found_is_nick = 0;
         gui_completion_find_context (completion, data, real_position);
@@ -1509,8 +1501,7 @@ gui_completion_search (struct t_gui_completion *completion, const char *data,
     switch (completion->context)
     {
         case GUI_COMPLETION_NULL:
-            if (old_word_found)
-                free (old_word_found);
+            free (old_word_found);
             return 0;
         case GUI_COMPLETION_COMMAND:
             gui_completion_command (completion);
@@ -1545,8 +1536,7 @@ gui_completion_search (struct t_gui_completion *completion, const char *data,
                 utf8_strlen (completion->base_word);
         }
     }
-    if (old_word_found)
-        free (old_word_found);
+    free (old_word_found);
 
     return 1;
 }

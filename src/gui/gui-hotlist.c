@@ -155,8 +155,7 @@ gui_hotlist_free (struct t_gui_hotlist **hotlist,
 
     if (save_removed_hotlist)
     {
-        if (ptr_hotlist->buffer->hotlist_removed)
-            free (ptr_hotlist->buffer->hotlist_removed);
+        free (ptr_hotlist->buffer->hotlist_removed);
         ptr_hotlist->buffer->hotlist_removed = gui_hotlist_dup (ptr_hotlist);
         ptr_hotlist->buffer->hotlist_removed->prev_hotlist = NULL;
         ptr_hotlist->buffer->hotlist_removed->next_hotlist = NULL;
@@ -437,8 +436,7 @@ gui_hotlist_add (struct t_gui_buffer *buffer,
             gui_hotlist_hashtable_add_conditions_vars,
             gui_hotlist_hashtable_add_conditions_options);
         rc = (value && (strcmp (value, "1") == 0));
-        if (value)
-            free (value);
+        free (value);
         if (!rc)
             return NULL;
     }

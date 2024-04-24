@@ -136,8 +136,7 @@ hook_print_exec (struct t_gui_buffer *buffer, struct t_gui_line *line)
     message_no_color = gui_color_decode (line->data->message, NULL);
     if (!message_no_color)
     {
-        if (prefix_no_color)
-            free (prefix_no_color);
+        free (prefix_no_color);
         return;
     }
 
@@ -180,10 +179,8 @@ hook_print_exec (struct t_gui_buffer *buffer, struct t_gui_line *line)
         ptr_hook = next_hook;
     }
 
-    if (prefix_no_color)
-        free (prefix_no_color);
-    if (message_no_color)
-        free (message_no_color);
+    free (prefix_no_color);
+    free (message_no_color);
 
     hook_exec_end ();
 }

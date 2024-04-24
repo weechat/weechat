@@ -336,8 +336,7 @@ secure_config_data_read_cb (const void *pointer, void *data,
         }
         else
         {
-            if (decrypted)
-                free (decrypted);
+            free (decrypted);
             if (gui_init_ok)
             {
                 gui_chat_printf (NULL,

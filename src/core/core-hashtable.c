@@ -321,8 +321,7 @@ hashtable_free_key (struct t_hashtable *hashtable,
             case HASHTABLE_STRING:
             case HASHTABLE_BUFFER:
             case HASHTABLE_TIME:
-                if (item->key)
-                    free (item->key);
+                free (item->key);
                 break;
             case HASHTABLE_POINTER:
                 break;
@@ -354,8 +353,7 @@ hashtable_free_value (struct t_hashtable *hashtable,
             case HASHTABLE_STRING:
             case HASHTABLE_BUFFER:
             case HASHTABLE_TIME:
-                if (item->value)
-                    free (item->value);
+                free (item->value);
                 break;
             case HASHTABLE_POINTER:
                 break;
@@ -638,10 +636,8 @@ hashtable_map_string (struct t_hashtable *hashtable,
                                key,
                                value);
 
-        if (key)
-            free (key);
-        if (value)
-            free (value);
+        free (key);
+        free (value);
 
         ptr_item = ptr_next_created_item;
     }
@@ -1285,8 +1281,7 @@ hashtable_free (struct t_hashtable *hashtable)
 
     hashtable_remove_all (hashtable);
     free (hashtable->htable);
-    if (hashtable->keys_values)
-        free (hashtable->keys_values);
+    free (hashtable->keys_values);
     free (hashtable);
 }
 

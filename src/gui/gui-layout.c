@@ -144,8 +144,7 @@ gui_layout_rename (struct t_gui_layout *layout, const char *new_name)
     if (!layout || !new_name || !new_name[0])
         return;
 
-    if (layout->name)
-        free (layout->name);
+    free (layout->name);
     layout->name = strdup (new_name);
 }
 
@@ -171,10 +170,8 @@ gui_layout_buffer_remove (struct t_gui_layout *layout,
         layout->last_layout_buffer = layout_buffer->prev_layout;
 
     /* free data */
-    if (layout_buffer->plugin_name)
-        free (layout_buffer->plugin_name);
-    if (layout_buffer->buffer_name)
-        free (layout_buffer->buffer_name);
+    free (layout_buffer->plugin_name);
+    free (layout_buffer->buffer_name);
 
     free (layout_buffer);
 }
@@ -389,10 +386,8 @@ gui_layout_window_remove (struct t_gui_layout_window *layout_window)
         gui_layout_window_remove (layout_window->child2);
 
     /* free data */
-    if (layout_window->plugin_name)
-        free (layout_window->plugin_name);
-    if (layout_window->buffer_name)
-        free (layout_window->buffer_name);
+    free (layout_window->plugin_name);
+    free (layout_window->buffer_name);
 
     free (layout_window);
 }
@@ -827,8 +822,7 @@ gui_layout_free (struct t_gui_layout *layout)
     gui_layout_window_remove (layout->layout_windows);
 
     /* free data */
-    if (layout->name)
-        free (layout->name);
+    free (layout->name);
 
     free (layout);
 }

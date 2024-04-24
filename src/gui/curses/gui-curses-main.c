@@ -498,8 +498,7 @@ gui_main_end (int clean_exit)
         gui_filter_free_all ();
 
         /* free clipboard buffer */
-        if (gui_input_clipboard)
-            free (gui_input_clipboard);
+        free (gui_input_clipboard);
 
         /* delete layouts */
         gui_layout_remove_all ();

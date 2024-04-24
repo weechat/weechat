@@ -442,8 +442,7 @@ gui_bar_item_get_value (struct t_gui_bar *bar, struct t_gui_window *window,
                         ptr_item->name,
                         plugin_get_name (ptr_item->plugin),
                         str_diff);
-                    if (str_diff)
-                        free (str_diff);
+                    free (str_diff);
                 }
             }
         }
@@ -459,8 +458,7 @@ gui_bar_item_get_value (struct t_gui_bar *bar, struct t_gui_window *window,
     result = string_dyn_alloc (128);
     if (!result)
     {
-        if (item_value)
-            free (item_value);
+        free (item_value);
         return NULL;
     }
 
@@ -532,8 +530,7 @@ gui_bar_item_get_value (struct t_gui_bar *bar, struct t_gui_window *window,
         string_dyn_concat (result, bar->items_suffix[item][subitem], -1);
     }
 
-    if (item_value)
-        free (item_value);
+    free (item_value);
 
     return string_dyn_free (result, 0);
 }
@@ -730,10 +727,8 @@ gui_bar_item_free (struct t_gui_bar_item *item)
         last_gui_bar_item = item->prev_item;
 
     /* free data */
-    if (item->name)
-        free (item->name);
-    if (item->build_callback_data)
-        free (item->build_callback_data);
+    free (item->name);
+    free (item->build_callback_data);
 
     free (item);
 }
@@ -1016,8 +1011,7 @@ gui_bar_item_input_text_cb (const void *pointer, void *data,
                                          "input_text_display_with_cursor",
                                          str_buffer,
                                          (ptr_input) ? ptr_input : "");
-        if (ptr_input)
-            free (ptr_input);
+        free (ptr_input);
         ptr_input = ptr_input2;
     }
 
@@ -1734,8 +1728,7 @@ gui_bar_item_hotlist_cb (const void *pointer, void *data,
         }
     }
 
-    if (buffer_without_name_displayed)
-        free (buffer_without_name_displayed);
+    free (buffer_without_name_displayed);
 
     hotlist_suffix = CONFIG_STRING(config_look_hotlist_suffix);
     if (hotlist_suffix[0]

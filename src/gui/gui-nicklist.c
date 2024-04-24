@@ -620,8 +620,7 @@ gui_nicklist_remove_nick (struct t_gui_buffer *buffer,
 
     gui_nicklist_send_signal ("nicklist_nick_removed", buffer, nick_removed);
 
-    if (nick_removed)
-        free (nick_removed);
+    free (nick_removed);
 }
 
 /*
@@ -692,8 +691,7 @@ gui_nicklist_remove_group (struct t_gui_buffer *buffer,
 
     gui_nicklist_send_signal ("nicklist_group_removed", buffer, group_removed);
 
-    if (group_removed)
-        free (group_removed);
+    free (group_removed);
 }
 
 /*

@@ -687,10 +687,7 @@ arraylist_free (struct t_arraylist *arraylist)
                                         arraylist->data[i]);
         }
     }
-
-    if (arraylist->data)
-        free (arraylist->data);
-
+    free (arraylist->data);
     free (arraylist);
 }
 

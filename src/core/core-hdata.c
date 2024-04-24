@@ -59,10 +59,8 @@ hdata_free_var_cb (struct t_hashtable *hashtable, const void *key, void *value)
     var = (struct t_hdata_var *)value;
     if (var)
     {
-        if (var->array_size)
-            free (var->array_size);
-        if (var->hdata_name)
-            free (var->hdata_name);
+        free (var->array_size);
+        free (var->hdata_name);
         free (var);
     }
 }
@@ -642,8 +640,7 @@ hdata_search (struct t_hdata *hdata,
         /* evaluate expression */
         result = eval_expression (search, pointers2, extra_vars, options2);
         rc = eval_is_true (result);
-        if (result)
-            free (result);
+        free (result);
         if (rc)
         {
             ret_pointer = pointer;
@@ -1113,8 +1110,7 @@ hdata_compare (struct t_hdata *hdata, void *pointer1, void *pointer2,
                                                pos_open_paren - pos - 1);
                     ptr_value1 = (void *)hashtable_get_string (hashtable1, property);
                     ptr_value2 = (void *)hashtable_get_string (hashtable2, property);
-                    if (property)
-                        free (property);
+                    free (property);
                     type1 = HASHTABLE_STRING;
                     type2 = HASHTABLE_STRING;
                 }
@@ -1200,8 +1196,7 @@ hdata_compare (struct t_hdata *hdata, void *pointer1, void *pointer2,
     }
 
 end:
-    if (var_name)
-        free (var_name);
+    free (var_name);
     return rc;
 }
 
@@ -1275,8 +1270,7 @@ hdata_set (struct t_hdata *hdata, void *pointer, const char *name,
             break;
         case WEECHAT_HDATA_STRING:
             ptr_string = (char **)(pointer + var->offset);
-            if (*ptr_string)
-                free (*ptr_string);
+            free (*ptr_string);
             *ptr_string = (value) ? strdup (value) : NULL;
             return 1;
             break;
@@ -1412,14 +1406,11 @@ hdata_free (struct t_hdata *hdata)
 
     if (hdata->hash_var)
         hashtable_free (hdata->hash_var);
-    if (hdata->var_prev)
-        free (hdata->var_prev);
-    if (hdata->var_next)
-        free (hdata->var_next);
+    free (hdata->var_prev);
+    free (hdata->var_next);
     if (hdata->hash_list)
         hashtable_free (hdata->hash_list);
-    if (hdata->name)
-        free (hdata->name);
+    free (hdata->name);
 
     free (hdata);
 }

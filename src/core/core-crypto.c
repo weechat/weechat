@@ -610,10 +610,8 @@ weecrypto_totp_generate (const char *secret_base32, time_t totp_time,
     return result;
 
 error:
-    if (secret)
-        free (secret);
-    if (result)
-        free (result);
+    free (secret);
+    free (result);
     return NULL;
 }
 
@@ -676,7 +674,6 @@ weecrypto_totp_validate (const char *secret_base32, time_t totp_time,
     return otp_ok;
 
 error:
-    if (secret)
-        free (secret);
+    free (secret);
     return 0;
 }

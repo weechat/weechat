@@ -743,10 +743,8 @@ gui_line_match_regex (struct t_gui_line_data *line_data, regex_t *regex_prefix,
             match_message = 0;
     }
 
-    if (prefix)
-        free (prefix);
-    if (message)
-        free (message);
+    free (prefix);
+    free (message);
 
     return (match_prefix && match_message);
 }
@@ -1053,8 +1051,7 @@ gui_line_has_highlight (struct t_gui_line *line)
     rc = string_has_highlight (ptr_msg_no_color,
                                (highlight_words) ?
                                highlight_words : line->data->buffer->highlight_words);
-    if (highlight_words)
-        free (highlight_words);
+    free (highlight_words);
     if (rc)
         goto end;
 
@@ -1063,8 +1060,7 @@ gui_line_has_highlight (struct t_gui_line *line)
     rc = string_has_highlight (ptr_msg_no_color,
                                (highlight_words) ?
                                highlight_words : CONFIG_STRING(config_look_highlight));
-    if (highlight_words)
-        free (highlight_words);
+    free (highlight_words);
     if (rc)
         goto end;
 
@@ -1083,8 +1079,7 @@ gui_line_has_highlight (struct t_gui_line *line)
     }
 
 end:
-    if (msg_no_color)
-        free (msg_no_color);
+    free (msg_no_color);
 
     return rc;
 }
@@ -1249,13 +1244,11 @@ gui_line_add_to_list (struct t_gui_lines *lines,
 void
 gui_line_free_data (struct t_gui_line *line)
 {
-    if (line->data->str_time)
-        free (line->data->str_time);
+    free (line->data->str_time);
     gui_line_tags_free (line->data);
     if (line->data->prefix)
         string_shared_free (line->data->prefix);
-    if (line->data->message)
-        free (line->data->message);
+    free (line->data->message);
     free (line->data);
 
     line->data = NULL;
@@ -1732,8 +1725,7 @@ gui_line_hook_update (struct t_gui_line *line,
         if (error && !error[0] && (value >= 0))
         {
             line->data->date = (time_t)value;
-            if (line->data->str_time)
-                free (line->data->str_time);
+            free (line->data->str_time);
             line->data->str_time = gui_chat_get_time_string (
                 line->data->date,
                 line->data->date_usec,
@@ -1749,8 +1741,7 @@ gui_line_hook_update (struct t_gui_line *line,
         if (error && !error[0] && (value >= 0) && (value <= 999999))
         {
             line->data->date_usec = (int)value;
-            if (line->data->str_time)
-                free (line->data->str_time);
+            free (line->data->str_time);
             line->data->str_time = gui_chat_get_time_string (
                 line->data->date,
                 line->data->date_usec,
@@ -1780,8 +1771,7 @@ gui_line_hook_update (struct t_gui_line *line,
     ptr_value2 = hashtable_get (hashtable2, "str_time");
     if (ptr_value2 && (!ptr_value || (strcmp (ptr_value, ptr_value2) != 0)))
     {
-        if (line->data->str_time)
-            free (line->data->str_time);
+        free (line->data->str_time);
         line->data->str_time = (ptr_value2) ? strdup (ptr_value2) : NULL;
     }
 
@@ -1818,11 +1808,9 @@ gui_line_hook_update (struct t_gui_line *line,
             if (pos_newline)
                 pos_newline[0] = '\0';
         }
-        if (line->data->message)
-            free (line->data->message);
+        free (line->data->message);
         line->data->message = (new_message) ? strdup (new_message) : NULL;
-        if (new_message)
-            free (new_message);
+        free (new_message);
     }
 
     max_notify_level = gui_line_get_max_notify_level (line);
@@ -2090,8 +2078,7 @@ gui_line_clear (struct t_gui_line *line)
     line->data->prefix_length = 0;
     line->data->notify_level = 0;
     line->data->highlight = 0;
-    if (line->data->message)
-        free (line->data->message);
+    free (line->data->message);
     line->data->message = strdup ("");
 }
 
@@ -2274,8 +2261,7 @@ gui_line_hdata_line_data_update_cb (void *data,
         if (value)
         {
             hdata_set (hdata, pointer, "date", value);
-            if (line_data->str_time)
-                free (line_data->str_time);
+            free (line_data->str_time);
             line_data->str_time = gui_chat_get_time_string (
                 line_data->date,
                 line_data->date_usec,
@@ -2291,8 +2277,7 @@ gui_line_hdata_line_data_update_cb (void *data,
         if (value)
         {
             hdata_set (hdata, pointer, "date_usec", value);
-            if (line_data->str_time)
-                free (line_data->str_time);
+            free (line_data->str_time);
             line_data->str_time = gui_chat_get_time_string (
                 line_data->date,
                 line_data->date_usec,
@@ -2355,8 +2340,7 @@ gui_line_hdata_line_data_update_cb (void *data,
         hdata_set (hdata, pointer, "message", new_value);
         rc++;
         update_coords = 1;
-        if (new_value)
-            free (new_value);
+        free (new_value);
     }
 
     if (rc > 0)

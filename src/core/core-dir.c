@@ -166,18 +166,12 @@ dir_mkdir_home (const char *directory, int mode)
     rc = 1;
 
 end:
-    if (dir)
-        free (dir);
-    if (dir1)
-        free (dir1);
-    if (dir2)
-        free (dir2);
-    if (dir3)
-        free (dir3);
-    if (dir4)
-        free (dir4);
-    if (dir5)
-        free (dir5);
+    free (dir);
+    free (dir1);
+    free (dir2);
+    free (dir3);
+    free (dir4);
+    free (dir5);
     return rc;
 }
 
@@ -424,10 +418,8 @@ memory_error:
     string_fprintf (stderr, _("Error: not enough memory\n"));
 
 end:
-    if (temp_dir)
-        free (temp_dir);
-    if (temp_home_template)
-        free (temp_home_template);
+    free (temp_dir);
+    free (temp_home_template);
     return rc;
 }
 
@@ -1032,8 +1024,7 @@ dir_file_get_content (const char *filename)
     return buffer;
 
 error:
-    if (buffer)
-	free (buffer);
+    free (buffer);
     if (f)
 	fclose (f);
     return NULL;
@@ -1086,8 +1077,7 @@ dir_file_copy (const char *from, const char *to)
     rc = 1;
 
 end:
-    if (buffer)
-	free (buffer);
+    free (buffer);
     if (src)
         fclose (src);
     if (dst)
@@ -1192,15 +1182,12 @@ error:
     unlink (to);
 
 end:
-    if (buffer_in)
-        free (buffer_in);
-    if (buffer_out)
-        free (buffer_out);
+    free (buffer_in);
+    free (buffer_out);
     if (source)
         fclose (source);
     if (dest)
         fclose (dest);
-
     return rc;
 }
 
@@ -1370,10 +1357,8 @@ end:
         ZSTD_freeCStream (cstream);
 #endif
 
-    if (buffer_in)
-        free (buffer_in);
-    if (buffer_out)
-        free (buffer_out);
+    free (buffer_in);
+    free (buffer_out);
     if (source)
         fclose (source);
     if (dest)
