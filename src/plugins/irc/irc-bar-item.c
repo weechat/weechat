@@ -292,8 +292,7 @@ irc_bar_item_buffer_modes (const void *pointer, void *data,
                   "%s%s",
                   IRC_COLOR_ITEM_CHANNEL_MODES,
                   (modes_without_args) ? modes_without_args : channel->modes);
-        if (modes_without_args)
-            free (modes_without_args);
+        free (modes_without_args);
         return strdup (modes);
     }
 

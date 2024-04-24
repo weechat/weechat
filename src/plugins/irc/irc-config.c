@@ -245,8 +245,7 @@ irc_config_compute_nick_colors ()
                 if (irc_server_strcasecmp (ptr_server, ptr_nick->name,
                                            ptr_server->nick) != 0)
                 {
-                    if (ptr_nick->color)
-                        free (ptr_nick->color);
+                    free (ptr_nick->color);
                     ptr_nick->color = irc_nick_find_color (ptr_nick->name);
                 }
             }
@@ -1219,8 +1218,7 @@ irc_config_check_autojoin (const char *autojoin)
     rc = 1;
 
 end:
-    if (string)
-        free (string);
+    free (string);
     if (items)
         weechat_string_free_split (items);
     if (channels)
@@ -1567,8 +1565,7 @@ irc_config_msgbuffer_create_option_cb (const void *pointer, void *data,
                         weechat_prefix ("error"), IRC_PLUGIN_NAME,
                         option_name, option_name);
                 }
-                if (name_lower)
-                    free (name_lower);
+                free (name_lower);
 
                 ptr_option = weechat_config_new_option (
                     config_file, section,
@@ -1685,8 +1682,7 @@ irc_config_ctcp_create_option_cb (const void *pointer, void *data,
                         weechat_prefix ("error"), IRC_PLUGIN_NAME, pos_name,
                         option_name);
                 }
-                if (name_lower)
-                    free (name_lower);
+                free (name_lower);
 
                 ptr_option = weechat_config_new_option (
                     config_file, section,
@@ -2999,8 +2995,7 @@ irc_config_update_cb (const void *pointer, void *data,
                 weechat_hashtable_set (data_read, "value", new_value);
                 changes++;
             }
-            if (new_value)
-                free (new_value);
+            free (new_value);
         }
     }
 

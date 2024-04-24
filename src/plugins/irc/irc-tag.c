@@ -261,8 +261,7 @@ irc_tag_parse (const char *tags,
                               key);
                     unescaped = irc_tag_unescape_value (pos + 1);
                     weechat_hashtable_set (hashtable, str_key, unescaped);
-                    if (unescaped)
-                        free (unescaped);
+                    free (unescaped);
                     free (key);
                     num_tags++;
                 }
@@ -314,8 +313,7 @@ irc_tag_add_to_string_cb (void *data,
         weechat_string_dyn_concat (string,
                                    (escaped) ? escaped : (const char *)value,
                                    -1);
-        if (escaped)
-            free (escaped);
+        free (escaped);
     }
 }
 
@@ -430,12 +428,10 @@ irc_tag_add_tags_to_message (const char *message, struct t_hashtable *tags)
     weechat_string_dyn_concat (result, ptr_message, -1);
 
 end:
-    if (msg_str_tags)
-        free (msg_str_tags);
+    free (msg_str_tags);
     if (msg_hash_tags)
         weechat_hashtable_free (msg_hash_tags);
-    if (new_tags)
-        free (new_tags);
+    free (new_tags);
 
     return (result) ? weechat_string_dyn_free (result, 0) : NULL;
 }

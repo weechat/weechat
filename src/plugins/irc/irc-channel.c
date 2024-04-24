@@ -404,8 +404,7 @@ irc_channel_create_buffer (struct t_irc_server *server,
 end:
     if (buffer_props)
         weechat_hashtable_free (buffer_props);
-    if (buffer_name)
-        free (buffer_name);
+    free (buffer_name);
     return ptr_buffer;
 }
 
@@ -587,8 +586,7 @@ irc_channel_set_buffer_title (struct t_irc_channel *channel)
             channel->topic,
             (weechat_config_boolean (irc_config_look_topic_strip_colors)) ? 0 : 1);
         weechat_buffer_set (channel->buffer, "title", title_color);
-        if (title_color)
-            free (title_color);
+        free (title_color);
     }
     else
     {
@@ -616,8 +614,7 @@ irc_channel_set_topic (struct t_irc_channel *channel, const char *topic)
         && topic && topic[0]
         && (strcmp (channel->topic, topic) != 0));
 
-    if (channel->topic)
-        free (channel->topic);
+    free (channel->topic);
     channel->topic = (topic) ? strdup (topic) : NULL;
 
     irc_channel_set_buffer_title (channel);
@@ -663,9 +660,7 @@ irc_channel_set_topic_private_buffers (struct t_irc_server *server,
 void
 irc_channel_set_modes (struct t_irc_channel *channel, const char *modes)
 {
-    if (channel->modes)
-        free (channel->modes);
-
+    free (channel->modes);
     channel->modes = (modes) ? strdup (modes) : NULL;
 }
 
@@ -749,8 +744,7 @@ irc_channel_remove_account (struct t_irc_server *server,
         for (ptr_nick = channel->nicks; ptr_nick;
              ptr_nick = ptr_nick->next_nick)
         {
-            if (ptr_nick->account)
-                free (ptr_nick->account);
+            free (ptr_nick->account);
             ptr_nick->account = NULL;
         }
     }
@@ -995,8 +989,7 @@ irc_channel_nick_speaking_time_free (struct t_irc_channel *channel,
         return;
 
     /* free data */
-    if (nick_speaking->nick)
-        free (nick_speaking->nick);
+    free (nick_speaking->nick);
 
     /* remove nick from list */
     if (nick_speaking->prev_nick)
@@ -1361,8 +1354,7 @@ irc_channel_join_smart_filtered_unmask (struct t_irc_channel *channel,
         line = weechat_hdata_move (hdata_line, line, -1);
     }
 
-    if (nick_to_search)
-        free (nick_to_search);
+    free (nick_to_search);
 
     weechat_hashtable_remove (channel->join_smart_filtered, nick);
 }
@@ -1545,20 +1537,14 @@ irc_channel_free (struct t_irc_server *server, struct t_irc_channel *channel)
     irc_modelist_free_all (channel);
 
     /* free channel data */
-    if (channel->name)
-        free (channel->name);
-    if (channel->topic)
-        free (channel->topic);
-    if (channel->modes)
-        free (channel->modes);
-    if (channel->key)
-        free (channel->key);
+    free (channel->name);
+    free (channel->topic);
+    free (channel->modes);
+    free (channel->key);
     if (channel->join_msg_received)
         weechat_hashtable_free (channel->join_msg_received);
-    if (channel->away_message)
-        free (channel->away_message);
-    if (channel->pv_remote_nick_color)
-        free (channel->pv_remote_nick_color);
+    free (channel->away_message);
+    free (channel->pv_remote_nick_color);
     if (channel->hook_autorejoin)
         weechat_unhook (channel->hook_autorejoin);
     if (channel->nicks_speaking[0])
@@ -1568,8 +1554,7 @@ irc_channel_free (struct t_irc_server *server, struct t_irc_channel *channel)
     irc_channel_nick_speaking_time_free_all (channel);
     if (channel->join_smart_filtered)
         weechat_hashtable_free (channel->join_smart_filtered);
-    if (channel->buffer_as_string)
-        free (channel->buffer_as_string);
+    free (channel->buffer_as_string);
 
     free (channel);
 

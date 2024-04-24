@@ -165,8 +165,7 @@ irc_sasl_mechanism_scram (struct t_irc_server *server,
         {
             snprintf (string, length + 1, "n,,n=%s,r=%s",
                       username2, nonce_client_base64);
-            if (server->sasl_scram_client_first)
-                free (server->sasl_scram_client_first);
+            free (server->sasl_scram_client_first);
             server->sasl_scram_client_first = strdup (string + 3);
         }
     }
@@ -191,14 +190,12 @@ irc_sasl_mechanism_scram (struct t_irc_server *server,
         {
             if (strncmp (attrs[i], "r=", 2) == 0)
             {
-                if (nonce_server)
-                    free (nonce_server);
+                free (nonce_server);
                 nonce_server = strdup (attrs[i] + 2);
             }
             else if (strncmp (attrs[i], "s=", 2) == 0)
             {
-                if (salt_base64)
-                    free (salt_base64);
+                free (salt_base64);
                 salt_base64 = strdup (attrs[i] + 2);
             }
             else if (strncmp (attrs[i], "i=", 2) == 0)
@@ -210,14 +207,12 @@ irc_sasl_mechanism_scram (struct t_irc_server *server,
             }
             else if (strncmp (attrs[i], "v=", 2) == 0)
             {
-                if (verifier_base64)
-                    free (verifier_base64);
+                free (verifier_base64);
                 verifier_base64 = strdup (attrs[i] + 2);
             }
             else if (strncmp (attrs[i], "e=", 2) == 0)
             {
-                if (attr_error)
-                    free (attr_error);
+                free (attr_error);
                 attr_error = strdup (attrs[i] + 2);
             }
         }
@@ -304,8 +299,7 @@ irc_sasl_mechanism_scram (struct t_irc_server *server,
                                              salted_password,
                                              &salted_password_size))
                 goto crypto_error;
-            if (server->sasl_scram_salted_pwd)
-                free (server->sasl_scram_salted_pwd);
+            free (server->sasl_scram_salted_pwd);
             server->sasl_scram_salted_pwd = malloc (salted_password_size);
             if (!server->sasl_scram_salted_pwd)
                 goto memory_error;
@@ -350,8 +344,7 @@ irc_sasl_mechanism_scram (struct t_irc_server *server,
                            auth_no_proof);
             if ((rc < 0) || (rc >= length))
                 goto memory_error;
-            if (server->sasl_scram_auth_message)
-                free (server->sasl_scram_auth_message);
+            free (server->sasl_scram_auth_message);
             server->sasl_scram_auth_message = strdup (auth_message);
             /* RFC: ClientSignature := HMAC(StoredKey, AuthMessage) */
             if (!weechat_crypto_hmac (stored_key,
@@ -434,32 +427,20 @@ end:
         }
     }
 
-    if (string)
-        free (string);
-    if (username)
-        free (username);
-    if (username2)
-        free (username2);
-    if (data)
-        free (data);
+    free (string);
+    free (username);
+    free (username2);
+    free (data);
     if (attrs)
         weechat_string_free_split (attrs);
-    if (nonce_server)
-        free (nonce_server);
-    if (salt_base64)
-        free (salt_base64);
-    if (salt)
-        free (salt);
-    if (verifier_base64)
-        free (verifier_base64);
-    if (verifier)
-        free (verifier);
-    if (attr_error)
-        free (attr_error);
-    if (auth_no_proof)
-        free (auth_no_proof);
-    if (auth_message)
-        free (auth_message);
+    free (nonce_server);
+    free (salt_base64);
+    free (salt);
+    free (verifier_base64);
+    free (verifier);
+    free (attr_error);
+    free (auth_no_proof);
+    free (auth_message);
 
     return answer_base64;
 }
@@ -506,8 +487,7 @@ irc_sasl_get_key_content (const char *sasl_key, char **sasl_error)
         *sasl_error = strdup (str_error);
     }
 
-    if (key_path)
-        free (key_path);
+    free (key_path);
 
     return content;
 }
@@ -699,8 +679,7 @@ irc_sasl_mechanism_ecdsa_nist256p_challenge (struct t_irc_server *server,
         }
     }
 
-    if (string)
-        free (string);
+    free (string);
 
     return answer_base64;
 

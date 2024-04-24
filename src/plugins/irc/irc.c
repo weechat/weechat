@@ -263,8 +263,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     info_auto_connect = weechat_info_get ("auto_connect", NULL);
     auto_connect = (info_auto_connect && (strcmp (info_auto_connect, "1") == 0)) ?
         1 : 0;
-    if (info_auto_connect)
-        free (info_auto_connect);
+    free (info_auto_connect);
 
     /* look at arguments */
     for (i = 0; i < argc; i++)

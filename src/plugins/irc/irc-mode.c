@@ -300,26 +300,21 @@ irc_mode_channel_update (struct t_irc_server *server,
             if (str_temp)
             {
                 snprintf (str_temp, length, "%s %s", new_modes, new_args);
-                if (channel->modes)
-                    free (channel->modes);
+                free (channel->modes);
                 channel->modes = str_temp;
             }
         }
         else
         {
-            if (channel->modes)
-                free (channel->modes);
+            free (channel->modes);
             channel->modes = strdup (new_modes);
         }
     }
 
 end:
-    if (new_modes)
-        free (new_modes);
-    if (new_args)
-        free (new_args);
-    if (str_modes)
-        free (str_modes);
+    free (new_modes);
+    free (new_args);
+    free (str_modes);
     if (argv)
         weechat_string_free_split (argv);
     if (channel->modes && (strcmp (channel->modes, "+") == 0))
@@ -484,8 +479,7 @@ irc_mode_channel_set (struct t_irc_server *server,
                              && ptr_arg && (strcmp (ptr_arg, "*") != 0))
                     {
                         /* replace key for +k, but ignore "*" as new key */
-                        if (channel->key)
-                            free (channel->key);
+                        free (channel->key);
                         channel->key = strdup (ptr_arg);
                     }
                 }

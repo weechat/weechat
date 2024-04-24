@@ -594,8 +594,7 @@ irc_completion_channel_topic_cb (const void *pointer, void *data,
         weechat_completion_list_add (completion,
                                      (topic) ? topic : ptr_channel->topic,
                                      0, WEECHAT_LIST_POS_SORT);
-        if (topic)
-            free (topic);
+        free (topic);
     }
 
     return WEECHAT_RC_OK;

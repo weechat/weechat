@@ -300,12 +300,9 @@ irc_info_info_irc_buffer_cb (const void *pointer, void *data,
     if (server && ptr_server && channel)
         ptr_channel = irc_channel_search (ptr_server, channel);
 
-    if (server)
-        free (server);
-    if (channel)
-        free (channel);
-    if (host)
-        free (host);
+    free (server);
+    free (channel);
+    free (host);
 
     if (ptr_channel)
     {

@@ -94,8 +94,7 @@ irc_ctcp_convert_legacy_format (const char *format)
                   "${%s}",
                   ctcp_legacy_vars[i]);
         str2 = weechat_string_replace (str, old_format, new_format);
-        if (str)
-            free (str);
+        free (str);
         str = str2;
     }
 
@@ -408,14 +407,11 @@ irc_ctcp_display_reply_to_nick (struct t_irc_protocol_ctxt *ctxt,
             irc_color_decode (ctcp_args, 1) : NULL;
         irc_ctcp_display_reply_to_nick_internal (ctxt, target, ctcp_type,
                                                  ctcp_args_no_colors);
-        if (ctcp_args_no_colors)
-            free (ctcp_args_no_colors);
+        free (ctcp_args_no_colors);
     }
 
-    if (ctcp_type)
-        free (ctcp_type);
-    if (ctcp_args)
-        free (ctcp_args);
+    free (ctcp_type);
+    free (ctcp_args);
 }
 
 /*
@@ -496,12 +492,9 @@ irc_ctcp_reply_to_nick (struct t_irc_protocol_ctxt *ctxt,
     }
 
 end:
-    if (dup_ctcp)
-        free (dup_ctcp);
-    if (dup_ctcp_upper)
-        free (dup_ctcp_upper);
-    if (dup_args)
-        free (dup_args);
+    free (dup_ctcp);
+    free (dup_ctcp_upper);
+    free (dup_args);
     if (list_messages)
         weechat_arraylist_free (list_messages);
 }
@@ -720,8 +713,7 @@ irc_ctcp_eval_reply (struct t_irc_server *server, const char *format)
                       buf_uname->machine);
             weechat_hashtable_set (extra_vars, "osinfo", buf);
         }
-        if (buf_uname)
-            free (buf_uname);
+        free (buf_uname);
     }
 
     /*
@@ -787,10 +779,8 @@ irc_ctcp_eval_reply (struct t_irc_server *server, const char *format)
 
     value = weechat_string_eval_expression (format, NULL, extra_vars, NULL);
 
-    if (info_version)
-        free (info_version);
-    if (info_version_git)
-        free (info_version_git);
+    free (info_version);
+    free (info_version_git);
 
     weechat_hashtable_free (extra_vars);
 
@@ -1005,9 +995,7 @@ irc_ctcp_recv_dcc (struct t_irc_protocol_ctxt *ctxt, const char *arguments)
                                          WEECHAT_HOOK_SIGNAL_STRING,
                                          (void *)ctxt->irc_message);
 
-        if (filename)
-            free (filename);
-
+        free (filename);
         free (dcc_args);
     }
     else if (strncmp (arguments, "RESUME ", 7) == 0)
@@ -1151,9 +1139,7 @@ irc_ctcp_recv_dcc (struct t_irc_protocol_ctxt *ctxt, const char *arguments)
                                          WEECHAT_HOOK_SIGNAL_STRING,
                                          (void *)ctxt->irc_message);
 
-        if (filename)
-            free (filename);
-
+        free (filename);
         free (dcc_args);
     }
     else if (strncmp (arguments, "ACCEPT ", 7) == 0)
@@ -1297,9 +1283,7 @@ irc_ctcp_recv_dcc (struct t_irc_protocol_ctxt *ctxt, const char *arguments)
                                          WEECHAT_HOOK_SIGNAL_STRING,
                                          (void *)ctxt->irc_message);
 
-        if (filename)
-            free (filename);
-
+        free (filename);
         free (dcc_args);
     }
     else if (strncmp (arguments, "CHAT ", 5) == 0)
@@ -1521,8 +1505,7 @@ irc_ctcp_recv (struct t_irc_protocol_ctxt *ctxt,
                         (pos_args) ? " " : "",
                         (pos_args) ? pos_args : "");
                 }
-                if (nick_color)
-                    free (nick_color);
+                free (nick_color);
             }
             else
             {

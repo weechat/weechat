@@ -125,8 +125,7 @@ irc_raw_message_match_filter (struct t_irc_raw_message *raw_message,
         match = (result && (strcmp (result, "1") == 0)) ? 1 : 0;
         if (hashtable)
             weechat_hashtable_free (hashtable);
-        if (result)
-            free (result);
+        free (result);
         return match;
     }
     else if (strncmp (filter, "s:", 2) == 0)
@@ -177,8 +176,7 @@ irc_raw_message_match_filter (struct t_irc_raw_message *raw_message,
                            NULL);  /* pos_text */
         match = (command && (weechat_strcasecmp (command, filter + 2) == 0)) ?
             1 : 0;
-        if (command)
-            free (command);
+        free (command);
         return match;
     }
     else
@@ -309,10 +307,8 @@ irc_raw_message_print (struct t_irc_raw_message *raw_message)
         prefix,
         (buf2) ? buf2 : ((buf) ? buf : raw_message->message));
 
-    if (buf)
-        free (buf);
-    if (buf2)
-        free (buf2);
+    free (buf);
+    free (buf2);
 }
 
 /*
@@ -441,8 +437,7 @@ irc_raw_open (int switch_to_buffer)
 void
 irc_raw_set_filter (const char *filter)
 {
-    if (irc_raw_filter)
-        free (irc_raw_filter);
+    free (irc_raw_filter);
     irc_raw_filter = (filter && (strcmp (filter, "*") != 0)) ?
         strdup (filter) : NULL;
     irc_raw_set_localvar_filter ();
@@ -487,8 +482,7 @@ irc_raw_message_free (struct t_irc_raw_message *raw_message)
         (raw_message->next_message)->prev_message = raw_message->prev_message;
 
     /* free data */
-    if (raw_message->message)
-        free (raw_message->message);
+    free (raw_message->message);
 
     free (raw_message);
 

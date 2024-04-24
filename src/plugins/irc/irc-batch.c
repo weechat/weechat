@@ -181,14 +181,10 @@ irc_batch_add_message (struct t_irc_server *server, const char *reference,
 void
 irc_batch_free (struct t_irc_server *server, struct t_irc_batch *batch)
 {
-    if (batch->reference)
-        free (batch->reference);
-    if (batch->parent_ref)
-        free (batch->parent_ref);
-    if (batch->type)
-        free (batch->type);
-    if (batch->parameters)
-        free (batch->parameters);
+    free (batch->reference);
+    free (batch->parent_ref);
+    free (batch->type);
+    free (batch->parameters);
     if (batch->tags)
         weechat_hashtable_free (batch->tags);
     if (batch->messages)
@@ -295,17 +291,14 @@ irc_batch_process_messages (struct t_irc_server *server,
 
                 free (message);
                 free (message2);
-                if (command)
-                    free (command);
-                if (channel)
-                    free (channel);
+                free (command);
+                free (channel);
             }
             weechat_string_free_split (list_messages);
         }
     }
 
-    if (new_messages)
-        free (new_messages);
+    free (new_messages);
 }
 
 /*
@@ -455,16 +448,11 @@ irc_batch_process_multiline (struct t_irc_server *server,
             if (text)
                 weechat_string_dyn_concat (result, text, -1);
         }
-        if (tags)
-            free (tags);
-        if (host)
-            free (host);
-        if (command)
-            free (command);
-        if (channel)
-            free (channel);
-        if (text)
-            free (text);
+        free (tags);
+        free (host);
+        free (command);
+        free (channel);
+        free (text);
     }
 
 end:

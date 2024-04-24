@@ -149,8 +149,7 @@ irc_notify_set_server_option (struct t_irc_server *server)
                 str2 = realloc (str, total_length);
                 if (!str2)
                 {
-                    if (str)
-                        free (str);
+                    free (str);
                     return;
                 }
                 str = str2;
@@ -298,8 +297,7 @@ irc_notify_build_message_with_nicks (struct t_irc_server *server,
         message2 = realloc (message, total_length);
         if (!message2)
         {
-            if (message)
-                free (message);
+            free (message);
             message = NULL;
             break;
         }
@@ -352,8 +350,7 @@ irc_notify_send_monitor (struct t_irc_server *server)
             weechat_hashtable_free (hashtable);
         }
     }
-    if (message)
-        free (message);
+    free (message);
 }
 
 /*
@@ -464,8 +461,7 @@ irc_notify_free (struct t_irc_server *server, struct t_irc_notify *notify,
         }
         free (notify->nick);
     }
-    if (notify->away_message)
-        free (notify->away_message);
+    free (notify->away_message);
 
     /* remove notify from list */
     if (notify->prev_notify)
@@ -667,8 +663,7 @@ irc_notify_send_signal (struct t_irc_notify *notify,
 
     (void) weechat_hook_signal_send (signal, WEECHAT_HOOK_SIGNAL_STRING, data);
 
-    if (data)
-        free (data);
+    free (data);
 }
 
 /*
@@ -797,8 +792,7 @@ irc_notify_set_away_message (struct t_irc_notify *notify,
         irc_notify_send_signal (notify, "still_away", away_message);
     }
 
-    if (notify->away_message)
-        free (notify->away_message);
+    free (notify->away_message);
     notify->away_message = (away_message) ? strdup (away_message) : NULL;
 }
 
@@ -1037,10 +1031,8 @@ irc_notify_hsignal_cb (const void *pointer, void *data, const char *signal,
                             }
                         }
                     }
-                    if (irc_cmd)
-                        free (irc_cmd);
-                    if (arguments)
-                        free (arguments);
+                    free (irc_cmd);
+                    free (arguments);
                 }
             }
             if (!away_message_updated && !no_such_nick)
@@ -1106,8 +1098,7 @@ irc_notify_timer_ison_cb (const void *pointer, void *data, int remaining_calls)
                     weechat_hashtable_free (hashtable);
                 }
             }
-            if (message)
-                free (message);
+            free (message);
         }
     }
 

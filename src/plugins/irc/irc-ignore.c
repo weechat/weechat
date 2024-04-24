@@ -309,17 +309,14 @@ irc_ignore_free (struct t_irc_ignore *ignore)
     }
 
     /* free data */
-    if (ignore->mask)
-        free (ignore->mask);
+    free (ignore->mask);
     if (ignore->regex_mask)
     {
         regfree (ignore->regex_mask);
         free (ignore->regex_mask);
     }
-    if (ignore->server)
-        free (ignore->server);
-    if (ignore->channel)
-        free (ignore->channel);
+    free (ignore->server);
+    free (ignore->channel);
 
     /* remove ignore from list */
     if (ignore->prev_ignore)

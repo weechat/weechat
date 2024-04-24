@@ -103,8 +103,7 @@ irc_color_convert_rgb2term (long rgb)
     info_color = weechat_info_get ("color_rgb2term", str_color);
     if (!info_color || !info_color[0])
     {
-        if (info_color)
-            free (info_color);
+        free (info_color);
         return -1;
     }
 
@@ -144,8 +143,7 @@ irc_color_convert_rgb2irc (long rgb)
     info_color = weechat_info_get ("color_rgb2term", str_color);
     if (!info_color || !info_color[0])
     {
-        if (info_color)
-            free (info_color);
+        free (info_color);
         return -1;
     }
 
@@ -180,8 +178,7 @@ irc_color_convert_term2irc (int color)
     info_color = weechat_info_get ("color_term2rgb", str_color);
     if (!info_color || !info_color[0])
     {
-        if (info_color)
-            free (info_color);
+        free (info_color);
         return -1;
     }
 
@@ -924,8 +921,7 @@ irc_color_decode_ansi_cb (void *data, const char *text)
 end:
     if (items)
         weechat_string_free_split (items);
-    if (text2)
-        free (text2);
+    free (text2);
 
     return (output) ? output : strdup ("");
 }
@@ -956,14 +952,12 @@ irc_color_decode_ansi (const char *string, int keep_colors)
                                     ansi_regex,
                                     REG_EXTENDED) != 0)
         {
-            if (ansi_regex)
-                free (ansi_regex);
+            free (ansi_regex);
             free (irc_color_regex_ansi);
             irc_color_regex_ansi = NULL;
             return NULL;
         }
-        if (ansi_regex)
-            free (ansi_regex);
+        free (ansi_regex);
     }
 
     ansi_state.keep_colors = keep_colors;

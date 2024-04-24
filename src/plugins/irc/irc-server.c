@@ -445,8 +445,7 @@ irc_server_eval_fingerprint (struct t_irc_server *server)
             weechat_prefix ("error"),
             IRC_PLUGIN_NAME,
             server->name);
-        if (fingerprint_eval)
-            free (fingerprint_eval);
+        free (fingerprint_eval);
         return NULL;
     }
 
@@ -494,8 +493,7 @@ irc_server_eval_fingerprint (struct t_irc_server *server)
                 IRC_PLUGIN_NAME,
                 server->name,
                 (str_sizes) ? str_sizes : "?");
-            if (str_sizes)
-                free (str_sizes);
+            free (str_sizes);
             free (fingerprint_eval);
             return NULL;
         case -2:  /* invalid content */
@@ -571,12 +569,9 @@ irc_server_sasl_enabled (struct t_irc_server *server)
           || (sasl_username && sasl_username[0]
               && sasl_password && sasl_password[0])) ? 1 : 0;
 
-    if (sasl_username)
-        free (sasl_username);
-    if (sasl_password)
-        free (sasl_password);
-    if (sasl_key)
-        free (sasl_key);
+    free (sasl_username);
+    free (sasl_password);
+    free (sasl_key);
 
     return rc;
 }
@@ -858,8 +853,7 @@ irc_server_set_nicks (struct t_irc_server *server, const char *nicks)
         0,
         &server->nicks_count);
 
-    if (nicks2)
-        free (nicks2);
+    free (nicks2);
 }
 
 /*
@@ -879,8 +873,7 @@ irc_server_set_nick (struct t_irc_server *server, const char *nick)
     }
 
     /* update the nick in server */
-    if (server->nick)
-        free (server->nick);
+    free (server->nick);
     server->nick = (nick) ? strdup (nick) : NULL;
 
     /* set local variable "nick" for server and all channels/pv */
@@ -913,8 +906,7 @@ irc_server_set_host (struct t_irc_server *server, const char *host)
     }
 
     /* update the nick host in server */
-    if (server->host)
-        free (server->host);
+    free (server->host);
     server->host = (host) ? strdup (host) : NULL;
 
     /* set local variable "host" for server and all channels/pv */
@@ -1569,8 +1561,7 @@ irc_server_get_default_msg (const char *default_msg,
         version = weechat_info_get ("version", "");
         res = weechat_string_replace (default_msg, "%v",
                                       (version) ? version : "");
-        if (version)
-            free (version);
+        free (version);
         return res;
     }
 
@@ -2205,14 +2196,10 @@ irc_server_outqueue_free (struct t_irc_server *server,
         (outqueue->next_outqueue)->prev_outqueue = outqueue->prev_outqueue;
 
     /* free data */
-    if (outqueue->command)
-        free (outqueue->command);
-    if (outqueue->message_before_mod)
-        free (outqueue->message_before_mod);
-    if (outqueue->message_after_mod)
-        free (outqueue->message_after_mod);
-    if (outqueue->tags)
-        free (outqueue->tags);
+    free (outqueue->command);
+    free (outqueue->message_before_mod);
+    free (outqueue->message_after_mod);
+    free (outqueue->tags);
     free (outqueue);
 
     /* set new head */
@@ -2303,20 +2290,14 @@ irc_server_free_data (struct t_irc_server *server)
         if (server->options[i])
             weechat_config_option_free (server->options[i]);
     }
-    if (server->name)
-        free (server->name);
-    if (server->addresses_eval)
-        free (server->addresses_eval);
+    free (server->name);
+    free (server->addresses_eval);
     if (server->addresses_array)
         weechat_string_free_split (server->addresses_array);
-    if (server->ports_array)
-        free (server->ports_array);
-    if (server->retry_array)
-        free (server->retry_array);
-    if (server->current_address)
-        free (server->current_address);
-    if (server->current_ip)
-        free (server->current_ip);
+    free (server->ports_array);
+    free (server->retry_array);
+    free (server->current_address);
+    free (server->current_ip);
     if (server->hook_connect)
         weechat_unhook (server->hook_connect);
     if (server->hook_fd)
@@ -2328,36 +2309,25 @@ irc_server_free_data (struct t_irc_server *server)
     if (server->hook_timer_anti_flood)
         weechat_unhook (server->hook_timer_anti_flood);
     irc_server_free_sasl_data (server);
-    if (server->unterminated_message)
-        free (server->unterminated_message);
+    free (server->unterminated_message);
     if (server->nicks_array)
         weechat_string_free_split (server->nicks_array);
-    if (server->nick)
-        free (server->nick);
-    if (server->nick_modes)
-        free (server->nick_modes);
-    if (server->host)
-        free (server->host);
+    free (server->nick);
+    free (server->nick_modes);
+    free (server->host);
     if (server->cap_ls)
         weechat_hashtable_free (server->cap_ls);
     if (server->cap_list)
         weechat_hashtable_free (server->cap_list);
-    if (server->isupport)
-        free (server->isupport);
-    if (server->prefix_modes)
-        free (server->prefix_modes);
-    if (server->prefix_chars)
-        free (server->prefix_chars);
-    if (server->chantypes)
-        free (server->chantypes);
-    if (server->chanmodes)
-        free (server->chanmodes);
-    if (server->clienttagdeny)
-        free (server->clienttagdeny);
+    free (server->isupport);
+    free (server->prefix_modes);
+    free (server->prefix_chars);
+    free (server->chantypes);
+    free (server->chanmodes);
+    free (server->clienttagdeny);
     if (server->clienttagdeny_array)
         weechat_string_free_split (server->clienttagdeny_array);
-    if (server->away_message)
-        free (server->away_message);
+    free (server->away_message);
     if (server->cmd_list_regexp)
     {
         regfree (server->cmd_list_regexp);
@@ -2365,8 +2335,7 @@ irc_server_free_data (struct t_irc_server *server)
     }
     if (server->list)
         irc_list_free (server);
-    if (server->buffer_as_string)
-        free (server->buffer_as_string);
+    free (server->buffer_as_string);
 }
 
 /*
@@ -2548,8 +2517,7 @@ irc_server_rename (struct t_irc_server *server, const char *new_name)
     }
 
     /* rename server */
-    if (server->name)
-        free (server->name);
+    free (server->name);
     server->name = strdup (new_name);
 
     /* change name and local variables on buffers */
@@ -2563,8 +2531,7 @@ irc_server_rename (struct t_irc_server *server, const char *new_name)
             weechat_buffer_set (ptr_channel->buffer, "name", buffer_name);
             weechat_buffer_set (ptr_channel->buffer, "localvar_set_server",
                                 server->name);
-            if (buffer_name)
-                free (buffer_name);
+            free (buffer_name);
         }
     }
     if (server->buffer)
@@ -2580,8 +2547,7 @@ irc_server_rename (struct t_irc_server *server, const char *new_name)
                   "irc.%s", server->name);
         weechat_buffer_set (server->buffer, "localvar_set_charset_modifier",
                             charset_modifier);
-        if (buffer_name)
-            free (buffer_name);
+        free (buffer_name);
     }
 
     return 1;
@@ -2927,8 +2893,7 @@ irc_server_outqueue_send_one_msg (struct t_irc_server *server,
             message->command,
             message->message_after_mod,
             (tags_to_send) ? tags_to_send : "");
-        if (tags_to_send)
-            free (tags_to_send);
+        free (tags_to_send);
 
         if (pos)
             pos[0] = '\r';
@@ -3141,8 +3106,7 @@ irc_server_send_one_msg (struct t_irc_server *server, int flags,
             if (ptr_redirect)
                 ptr_redirect->assigned_to_command = 1;
 
-            if (tags_to_send)
-                free (tags_to_send);
+            free (tags_to_send);
 
             if (pos)
             {
@@ -3154,8 +3118,7 @@ irc_server_send_one_msg (struct t_irc_server *server, int flags,
 
             first_message = 0;
         }
-        if (msg_encoded)
-            free (msg_encoded);
+        free (msg_encoded);
     }
     else
     {
@@ -3163,8 +3126,7 @@ irc_server_send_one_msg (struct t_irc_server *server, int flags,
                        _("(message dropped)"));
     }
 
-    if (new_msg)
-        free (new_msg);
+    free (new_msg);
 }
 
 /*
@@ -3329,14 +3291,10 @@ irc_server_sendf (struct t_irc_server *server, int flags, const char *tags,
         }
     }
 
-    if (nick)
-        free (nick);
-    if (command)
-        free (command);
-    if (channel)
-        free (channel);
-    if (new_msg)
-        free (new_msg);
+    free (nick);
+    free (command);
+    free (channel);
+    free (new_msg);
     free (vbuffer);
 
     /* send all messages with "immediate" priority */
@@ -3550,8 +3508,7 @@ irc_server_msgq_flush ()
                         str_modifier,
                         irc_recv_msgq->server->name,
                         ptr_data);
-                    if (command)
-                        free (command);
+                    free (command);
 
                     /* no changes in new message */
                     if (new_msg && (strcmp (ptr_data, new_msg) == 0))
@@ -3714,22 +3671,14 @@ irc_server_msgq_flush ()
                                 }
                             }
 
-                            if (new_msg2)
-                                free (new_msg2);
-                            if (nick)
-                                free (nick);
-                            if (host)
-                                free (host);
-                            if (command)
-                                free (command);
-                            if (channel)
-                                free (channel);
-                            if (arguments)
-                                free (arguments);
-                            if (msg_decoded)
-                                free (msg_decoded);
-                            if (msg_decoded_without_color)
-                                free (msg_decoded_without_color);
+                            free (new_msg2);
+                            free (nick);
+                            free (host);
+                            free (command);
+                            free (channel);
+                            free (arguments);
+                            free (msg_decoded);
+                            free (msg_decoded_without_color);
 
                             if (pos)
                             {
@@ -3746,8 +3695,7 @@ irc_server_msgq_flush ()
                                        IRC_RAW_FLAG_RECV | IRC_RAW_FLAG_MODIFIED,
                                        _("(message dropped)"));
                     }
-                    if (new_msg)
-                        free (new_msg);
+                    free (new_msg);
                 }
             }
             free (irc_recv_msgq->data);
@@ -4446,8 +4394,7 @@ irc_server_login (struct t_irc_server *server)
         "USER %s 0 * :%s",
         (username2) ? username2 : "weechat",
         (realname && realname[0]) ? realname : ((username2) ? username2 : "weechat"));
-    if (username2)
-        free (username2);
+    free (username2);
 
     if (server->hook_timer_connection)
         weechat_unhook (server->hook_timer_connection);
@@ -4457,12 +4404,9 @@ irc_server_login (struct t_irc_server *server)
         &irc_server_timer_connection_cb,
         server, NULL);
 
-    if (password)
-        free (password);
-    if (username)
-        free (username);
-    if (realname)
-        free (realname);
+    free (password);
+    free (username);
+    free (realname);
 }
 
 /*
@@ -4527,8 +4471,7 @@ irc_server_connect_cb (const void *pointer, void *data,
     {
         case WEECHAT_HOOK_CONNECT_OK:
             /* set IP */
-            if (server->current_ip)
-                free (server->current_ip);
+            free (server->current_ip);
             server->current_ip = (ip_address) ? strdup (ip_address) : NULL;
             weechat_printf (
                 server->buffer,
@@ -5024,8 +4967,7 @@ irc_server_check_certificate_fingerprint (struct t_irc_server *server,
 
     for (i = 0; i < IRC_FINGERPRINT_NUM_ALGOS; i++)
     {
-        if (fingerprint_server[i])
-            free (fingerprint_server[i]);
+        free (fingerprint_server[i]);
     }
 
     return rc;
@@ -5417,8 +5359,7 @@ irc_server_gnutls_callback (const void *pointer, void *data,
                         free (cert_str);
                     }
 
-                    if (tls_password)
-                        free (tls_password);
+                    free (tls_password);
                 }
                 else
                 {
@@ -5442,8 +5383,7 @@ end:
 
     if (cert_temp_init)
         gnutls_x509_crt_deinit (cert_temp);
-    if (fingerprint_eval)
-        free (fingerprint_eval);
+    free (fingerprint_eval);
 
     return rc;
 }
@@ -6014,8 +5954,7 @@ irc_server_autojoin_create_buffers (struct t_irc_server *server)
         }
     }
 
-    if (autojoin)
-        free (autojoin);
+    free (autojoin);
 }
 
 /*
@@ -6146,8 +6085,7 @@ irc_server_autojoin_channels (struct t_irc_server *server)
             irc_command_join_server (server, autojoin, 0, 0);
             server->autojoin_done = 1;
         }
-        if (autojoin)
-            free (autojoin);
+        free (autojoin);
     }
     else if (irc_server_has_channels (server))
     {

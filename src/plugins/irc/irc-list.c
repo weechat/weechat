@@ -101,12 +101,9 @@ irc_list_free_cb (void *data, struct t_arraylist *arraylist, void *pointer)
     ptr_channel = (struct t_irc_list_channel *)pointer;
     if (ptr_channel)
     {
-        if (ptr_channel->name)
-            free (ptr_channel->name);
-        if (ptr_channel->name2)
-            free (ptr_channel->name2);
-        if (ptr_channel->topic)
-            free (ptr_channel->topic);
+        free (ptr_channel->name);
+        free (ptr_channel->name2);
+        free (ptr_channel->topic);
         free (ptr_channel);
     }
 }
@@ -255,8 +252,7 @@ irc_list_channel_match_filter (struct t_irc_server *server,
             irc_list_filter_hashtable_extra_vars,
             irc_list_filter_hashtable_options);
         match = (result && (strcmp (result, "1") == 0)) ? 1 : 0;
-        if (result)
-            free (result);
+        free (result);
         return match;
     }
 
@@ -451,8 +447,7 @@ irc_list_parse_messages (struct t_irc_server *server, const char *output)
                 weechat_arraylist_add (server->list->channels, channel);
             }
         }
-        if (command)
-            free (command);
+        free (command);
         if (params)
             weechat_string_free_split (params);
     }

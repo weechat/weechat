@@ -342,8 +342,7 @@ irc_command_mode_masks (struct t_irc_server *server,
             modes_added++;
         }
 
-        if (mask)
-            free (mask);
+        free (mask);
     }
 
     /* send a final MODE command if some masks are remaining */
@@ -604,10 +603,8 @@ irc_command_exec_buffers (struct t_weelist *list_buffers,
         weechat_command (
             (ptr_channel) ? ptr_channel->buffer : ptr_server->buffer,
             (cmd_eval) ? cmd_eval : ((cmd_vars_replaced) ? cmd_vars_replaced : command));
-        if (cmd_vars_replaced)
-            free (cmd_vars_replaced);
-        if (cmd_eval)
-            free (cmd_eval);
+        free (cmd_vars_replaced);
+        free (cmd_eval);
     }
 
     weechat_hashtable_free (pointers);
@@ -1113,8 +1110,7 @@ IRC_COMMAND_CALLBACK(autojoin)
             {
                 irc_command_join_server (ptr_server, autojoin, 0, 0);
             }
-            if (autojoin)
-                free (autojoin);
+            free (autojoin);
         }
         return WEECHAT_RC_OK;
     }
@@ -1161,8 +1157,7 @@ IRC_COMMAND_CALLBACK(autojoin)
     {
         if (argc < 3)
         {
-            if (old_autojoin)
-                free (old_autojoin);
+            free (old_autojoin);
             WEECHAT_COMMAND_MIN_ARGS(3, "addraw");
         }
         irc_join_add_channels_to_autojoin (ptr_server, argv_eol[2]);
@@ -1231,8 +1226,7 @@ end:
                             ptr_autojoin);
         }
     }
-    if (old_autojoin)
-        free (old_autojoin);
+    free (old_autojoin);
 
     return WEECHAT_RC_OK;
 }
@@ -1285,8 +1279,7 @@ irc_command_away_server (struct t_irc_server *server, const char *arguments,
 
     if (arguments)
     {
-        if (server->away_message)
-            free (server->away_message);
+        free (server->away_message);
         server->away_message = strdup (arguments);
 
         /* if server is connected, send away command now */
@@ -1311,8 +1304,7 @@ irc_command_away_server (struct t_irc_server *server, const char *arguments,
                               (string) ? string : arguments);
                     irc_command_me_all_channels (server, buffer);
                 }
-                if (string)
-                    free (string);
+                free (string);
             }
             irc_server_set_away (server, server->nick, 1);
 
@@ -1344,8 +1336,7 @@ irc_command_away_server (struct t_irc_server *server, const char *arguments,
                             _("%s: future away: %s"),
                             IRC_PLUGIN_NAME,
                             (string) ? string : arguments);
-            if (string)
-                free (string);
+            free (string);
         }
     }
     else
@@ -1517,8 +1508,7 @@ irc_command_send_ban (struct t_irc_server *server,
                       mode,
                       (mask) ? mask : nick);
 
-    if (mask)
-        free (mask);
+    free (mask);
 }
 
 /*
@@ -1829,8 +1819,7 @@ IRC_COMMAND_CALLBACK(connect)
                         /* add server with address */
                         name = irc_server_get_name_without_port (argv[i]);
                         ptr_server = irc_server_alloc ((name) ? name : argv[i]);
-                        if (name)
-                            free (name);
+                        free (name);
                         if (ptr_server)
                         {
                             ptr_server->temp_server = 1;
@@ -2110,8 +2099,7 @@ IRC_COMMAND_CALLBACK(cycle)
                           "PART %s", channel_name);
     }
 
-    if (msg)
-        free (msg);
+    free (msg);
 
     return WEECHAT_RC_OK;
 }
@@ -2392,8 +2380,7 @@ irc_command_quit_server (struct t_irc_server *server, const char *arguments)
                           "QUIT");
     }
 
-    if (msg)
-        free (msg);
+    free (msg);
 }
 
 /*
@@ -2664,10 +2651,8 @@ IRC_COMMAND_CALLBACK(ignore)
 
         if (irc_ignore_search (ptr_regex, server, channel))
         {
-            if (regex)
-                free (regex);
-            if (regex2)
-                free (regex2);
+            free (regex);
+            free (regex2);
             weechat_printf (NULL,
                             _("%s%s: ignore already exists"),
                             weechat_prefix ("error"), IRC_PLUGIN_NAME);
@@ -2676,10 +2661,8 @@ IRC_COMMAND_CALLBACK(ignore)
 
         ptr_ignore = irc_ignore_new (ptr_regex, server, channel);
 
-        if (regex)
-            free (regex);
-        if (regex2)
-            free (regex2);
+        free (regex);
+        free (regex2);
 
         if (ptr_ignore)
         {
@@ -2728,8 +2711,7 @@ IRC_COMMAND_CALLBACK(ignore)
                     irc_ignore_free (ptr_ignore);
                     weechat_printf (NULL, _("%s: ignore \"%s\" deleted"),
                                     IRC_PLUGIN_NAME, mask);
-                    if (mask)
-                        free (mask);
+                    free (mask);
                 }
                 else
                 {
@@ -2983,8 +2965,7 @@ irc_command_join_server (struct t_irc_server *server, const char *arguments,
                     ptr_channel = irc_channel_search (server, pos_channel);
                     if (ptr_channel)
                     {
-                        if (ptr_channel->key)
-                            free (ptr_channel->key);
+                        free (ptr_channel->key);
                         ptr_channel->key = strdup (keys[i]);
                     }
                     else if (channel_name_lower)
@@ -3008,8 +2989,7 @@ irc_command_join_server (struct t_irc_server *server, const char *arguments,
                             1, 1);
                     }
                 }
-                if (channel_name_lower)
-                    free (channel_name_lower);
+                free (channel_name_lower);
             }
             if (pos_space)
                 strcat (new_args, pos_space);
@@ -3146,8 +3126,7 @@ irc_command_kick_channel (struct t_irc_server *server,
                           channel_name, nick_name);
     }
 
-    if (msg)
-        free (msg);
+    free (msg);
 }
 
 /*
@@ -4376,8 +4355,7 @@ irc_command_part_channel (struct t_irc_server *server, const char *channel_name,
                           "PART %s", channel_name);
     }
 
-    if (msg)
-        free (msg);
+    free (msg);
 }
 
 /*
@@ -4964,8 +4942,7 @@ IRC_COMMAND_CALLBACK(remove)
                           ptr_channel_name,
                           argv[index_nick],
                           (msg_vars_replaced) ? msg_vars_replaced : argv_eol[index_nick + 1]);
-        if (msg_vars_replaced)
-            free (msg_vars_replaced);
+        free (msg_vars_replaced);
     }
     else
     {
@@ -5458,8 +5435,7 @@ irc_command_display_server (struct t_irc_server *server, int with_detail)
                                                          IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_COMMAND));
             weechat_printf (NULL, "  command. . . . . . . :   ('%s')",
                             (cmd_pwd_hidden) ? cmd_pwd_hidden : IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_COMMAND));
-            if (cmd_pwd_hidden)
-                free (cmd_pwd_hidden);
+            free (cmd_pwd_hidden);
         }
         else
         {
@@ -5469,8 +5445,7 @@ irc_command_display_server (struct t_irc_server *server, int with_detail)
             weechat_printf (NULL, "  command. . . . . . . : %s'%s'",
                             IRC_COLOR_CHAT_VALUE,
                             (cmd_pwd_hidden) ? cmd_pwd_hidden : weechat_config_string (server->options[IRC_SERVER_OPTION_COMMAND]));
-            if (cmd_pwd_hidden)
-                free (cmd_pwd_hidden);
+            free (cmd_pwd_hidden);
         }
         /* autojoin_delay */
         if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_AUTOJOIN_DELAY]))
@@ -5776,8 +5751,7 @@ IRC_COMMAND_CALLBACK(server)
             IRC_COLOR_RESET,
             description);
 
-        if (description)
-            free (description);
+        free (description);
 
         /* do not connect to server after adding it */
         /*
@@ -6019,8 +5993,7 @@ IRC_COMMAND_CALLBACK(server)
             IRC_COLOR_CHAT_SERVER,
             (server_name) ? server_name : "???",
             IRC_COLOR_RESET);
-        if (server_name)
-            free (server_name);
+        free (server_name);
 
         return WEECHAT_RC_OK;
     }
@@ -6352,8 +6325,7 @@ IRC_COMMAND_CALLBACK(topic)
                               "TOPIC %s :%s",
                               channel_name,
                               (new_topic_color) ? new_topic_color : new_topic);
-            if (new_topic_color)
-                free (new_topic_color);
+            free (new_topic_color);
         }
     }
     else

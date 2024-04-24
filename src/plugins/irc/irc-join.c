@@ -194,10 +194,8 @@ irc_join_compare_sort_buffer_cb (void *data, struct t_arraylist *arraylist,
 void
 irc_join_free_join_channel (struct t_irc_join_channel *join_channel)
 {
-    if (join_channel->name)
-        free (join_channel->name);
-    if (join_channel->key)
-        free (join_channel->key);
+    free (join_channel->name);
+    free (join_channel->key);
 
     free (join_channel);
 }
@@ -274,8 +272,7 @@ irc_join_arraylist_add (struct t_arraylist *arraylist,
     {
         free (ptr_join_chan_exact->name);
         ptr_join_chan_exact->name = strdup (join_channel->name);
-        if (ptr_join_chan_exact->key)
-            free (ptr_join_chan_exact->key);
+        free (ptr_join_chan_exact->key);
         ptr_join_chan_exact->key = (join_channel->key) ?
             strdup (join_channel->key) : NULL;
         return 0;
@@ -655,8 +652,7 @@ irc_join_add_channel_to_autojoin (struct t_irc_server *server,
         free (new_autojoin);
     }
 
-    if (old_autojoin)
-        free (old_autojoin);
+    free (old_autojoin);
 }
 
 /*
@@ -680,8 +676,7 @@ irc_join_add_channels_to_autojoin (struct t_irc_server *server,
         free (new_autojoin);
     }
 
-    if (old_autojoin)
-        free (old_autojoin);
+    free (old_autojoin);
 }
 
 /*
@@ -755,8 +750,7 @@ irc_join_remove_channel_from_autojoin (struct t_irc_server *server,
         free (new_autojoin);
     }
 
-    if (old_autojoin)
-        free (old_autojoin);
+    free (old_autojoin);
 }
 
 /*
@@ -875,8 +869,7 @@ irc_join_rename_channel_in_autojoin (struct t_irc_server *server,
         free (new_autojoin);
     }
 
-    if (old_autojoin)
-        free (old_autojoin);
+    free (old_autojoin);
 }
 
 /*
@@ -966,8 +959,7 @@ irc_join_sort_autojoin (struct t_irc_server *server, enum t_irc_join_sort sort)
 
     if (!old_autojoin || !old_autojoin[0])
     {
-        if (old_autojoin)
-            free (old_autojoin);
+        free (old_autojoin);
         return;
     }
 
@@ -978,6 +970,5 @@ irc_join_sort_autojoin (struct t_irc_server *server, enum t_irc_join_sort sort)
         free (new_autojoin);
     }
 
-    if (old_autojoin)
-        free (old_autojoin);
+    free (old_autojoin);
 }

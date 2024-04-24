@@ -165,8 +165,7 @@ irc_input_user_message_display (struct t_irc_server *server,
                       "%sself_msg,notify_none,no_highlight,prefix_nick_%s",
                       (ctcp_type) ? "irc_ctcp," : "",
                       (str_color) ? str_color : "default");
-            if (str_color)
-                free (str_color);
+            free (str_color);
         }
     }
 
@@ -275,10 +274,8 @@ irc_input_user_message_display (struct t_irc_server *server,
             (ptr_text) ? ptr_text : "");
     }
 
-    if (text2)
-        free (text2);
-    if (text_decoded)
-        free (text_decoded);
+    free (text2);
+    free (text_decoded);
 }
 
 /*
@@ -406,8 +403,7 @@ irc_input_data (struct t_gui_buffer *buffer, const char *input_data, int flags,
                 free (msg);
             }
 
-            if (data_with_colors)
-                free (data_with_colors);
+            free (data_with_colors);
         }
         else
         {
@@ -580,8 +576,7 @@ irc_input_send_cb (const void *pointer, void *data,
                 weechat_command (
                     ptr_buffer,
                     (data_with_colors) ? data_with_colors : ptr_message);
-                if (data_with_colors)
-                    free (data_with_colors);
+                free (data_with_colors);
             }
 
             /* reset tags to use by default */
@@ -589,14 +584,10 @@ irc_input_send_cb (const void *pointer, void *data,
         }
     }
 
-    if (server)
-        free (server);
-    if (channel)
-        free (channel);
-    if (options)
-        free (options);
-    if (tags)
-        free (tags);
+    free (server);
+    free (channel);
+    free (options);
+    free (tags);
 
     return WEECHAT_RC_OK;
 }

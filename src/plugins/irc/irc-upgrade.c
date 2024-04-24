@@ -500,16 +500,14 @@ irc_upgrade_read_cb (const void *pointer, void *data,
                     str = weechat_infolist_string (infolist, "prefix_modes");
                     if (str)
                     {
-                        if (irc_upgrade_current_server->prefix_modes)
-                            free (irc_upgrade_current_server->prefix_modes);
+                        free (irc_upgrade_current_server->prefix_modes);
                         irc_upgrade_current_server->prefix_modes = strdup (str);
                     }
                     /* "prefix_chars" is new in WeeChat 0.3.4 */
                     str = weechat_infolist_string (infolist, "prefix_chars");
                     if (str)
                     {
-                        if (irc_upgrade_current_server->prefix_chars)
-                            free (irc_upgrade_current_server->prefix_chars);
+                        free (irc_upgrade_current_server->prefix_chars);
                         irc_upgrade_current_server->prefix_chars = strdup (str);
                     }
                     /* "msg_max_length" is new in WeeChat 4.0.0 */

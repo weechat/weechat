@@ -189,8 +189,7 @@ irc_protocol_tags_add_cb (void *data,
     /* key */
     str_temp = weechat_string_replace (ptr_key, ",", ";");
     weechat_string_dyn_concat (str_tags, str_temp, -1);
-    if (str_temp)
-        free (str_temp);
+    free (str_temp);
 
     /* separator between key and value */
     if (ptr_value)
@@ -199,8 +198,7 @@ irc_protocol_tags_add_cb (void *data,
     /* value */
     str_temp = weechat_string_replace (ptr_value, ",", ";");
     weechat_string_dyn_concat (str_tags, str_temp, -1);
-    if (str_temp)
-        free (str_temp);
+    free (str_temp);
 }
 
 /*
@@ -434,8 +432,7 @@ irc_protocol_print_error_warning_msg (struct t_irc_protocol_ctxt *ctxt,
         IRC_COLOR_RESET,
         ctxt->params[ctxt->num_params - 1]);
 
-    if (str_context)
-        free (str_context);
+    free (str_context);
 }
 
 /*
@@ -529,8 +526,7 @@ IRC_PROTOCOL_CALLBACK(account)
                             IRC_COLOR_MESSAGE_ACCOUNT,
                             (pos_account) ? str_account : NULL);
                     }
-                    if (ptr_nick->account)
-                        free (ptr_nick->account);
+                    free (ptr_nick->account);
                     ptr_nick->account = (cap_account_notify && pos_account) ?
                         strdup (pos_account) : NULL;
                 }
@@ -623,14 +619,10 @@ IRC_PROTOCOL_CALLBACK(authenticate)
                         (sasl_error) ? sasl_error : _("internal error"));
         irc_server_sendf (ctxt->server, 0, NULL, "CAP END");
     }
-    if (sasl_username)
-        free (sasl_username);
-    if (sasl_password)
-        free (sasl_password);
-    if (sasl_key)
-        free (sasl_key);
-    if (sasl_error)
-        free (sasl_error);
+    free (sasl_username);
+    free (sasl_password);
+    free (sasl_key);
+    free (sasl_error);
 
     return WEECHAT_RC_OK;
 }
@@ -699,8 +691,7 @@ IRC_PROTOCOL_CALLBACK(batch)
             ctxt->params[1],  /* type */
             str_params,
             ctxt->tags);
-        if (str_params)
-            free (str_params);
+        free (str_params);
     }
     else if (ctxt->params[0][0] == '-')
     {
@@ -843,8 +834,7 @@ irc_protocol_cap_sync_req (struct t_irc_server *server,
         irc_server_sendf (server, 0, NULL, "CAP REQ :%s", ptr_caps_req);
     }
 
-    if (new_caps_req)
-        free (new_caps_req);
+    free (new_caps_req);
 }
 
 /*
@@ -946,10 +936,8 @@ irc_protocol_cap_sync (struct t_irc_server *server, int sasl)
         weechat_string_free_split (list_caps_to_enable);
     }
 
-    if (str_caps_server)
-        free (str_caps_server);
-    if (caps_to_enable)
-        free (caps_to_enable);
+    free (str_caps_server);
+    free (caps_to_enable);
     if (cap_req)
         weechat_string_dyn_free (cap_req, 1);
 }
@@ -1284,8 +1272,7 @@ IRC_PROTOCOL_CALLBACK(cap)
             "irc_cap,log3",
             _("%s%s: client capability, refused: %s"),
             weechat_prefix ("error"), IRC_PLUGIN_NAME, str_params);
-        if (str_params)
-            free (str_params);
+        free (str_params);
         if (!ctxt->server->is_connected)
             irc_server_sendf (ctxt->server, 0, NULL, "CAP END");
     }
@@ -1303,8 +1290,7 @@ IRC_PROTOCOL_CALLBACK(cap)
             "irc_cap,log3",
             _("%s%s: client capability, now available: %s"),
             weechat_prefix ("network"), IRC_PLUGIN_NAME, str_params);
-        if (str_params)
-            free (str_params);
+        free (str_params);
         for (i = 2; i < ctxt->num_params; i++)
         {
             caps_added = weechat_string_split (
@@ -1358,8 +1344,7 @@ IRC_PROTOCOL_CALLBACK(cap)
             "irc_cap,log3",
             _("%s%s: client capability, removed: %s"),
             weechat_prefix ("network"), IRC_PLUGIN_NAME, str_params);
-        if (str_params)
-            free (str_params);
+        free (str_params);
         for (i = 2; i < ctxt->num_params; i++)
         {
             caps_removed = weechat_string_split (
@@ -1529,8 +1514,7 @@ IRC_PROTOCOL_CALLBACK(error)
     if (str_error && (strncmp (str_error, "Closing Link", 12) == 0))
         irc_server_disconnect (ctxt->server, !ctxt->server->is_connected, 1);
 
-    if (str_error)
-        free (str_error);
+    free (str_error);
 
     return WEECHAT_RC_OK;
 }
@@ -1629,8 +1613,7 @@ IRC_PROTOCOL_CALLBACK(generic_error)
         str_target,
         str_error);
 
-    if (str_error)
-        free (str_error);
+    free (str_error);
 
     return WEECHAT_RC_OK;
 }
@@ -2160,8 +2143,7 @@ IRC_PROTOCOL_CALLBACK(knock_reply)
         IRC_COLOR_RESET,
         str_message);
 
-    if (str_message)
-        free (str_message);
+    free (str_message);
 
     return WEECHAT_RC_OK;
 }
@@ -2222,8 +2204,7 @@ IRC_PROTOCOL_CALLBACK(mode)
             IRC_COLOR_RESET,
             irc_nick_color_for_msg (ctxt->server, 1, ptr_nick, ctxt->nick),
             ctxt->nick);
-        if (modes_args)
-            free (modes_args);
+        free (modes_args);
     }
     else
     {
@@ -2244,8 +2225,7 @@ IRC_PROTOCOL_CALLBACK(mode)
         irc_mode_user_set (ctxt->server, ctxt->params[1], 0);
     }
 
-    if (msg_modes_args)
-        free (msg_modes_args);
+    free (msg_modes_args);
 
     return WEECHAT_RC_OK;
 }
@@ -2366,10 +2346,8 @@ IRC_PROTOCOL_CALLBACK(nick)
                             new_color,
                             ctxt->params[0],
                             IRC_COLOR_RESET);
-                        if (old_color)
-                            free (old_color);
-                        if (new_color)
-                            free (new_color);
+                        free (old_color);
+                        free (new_color);
                     }
                 }
                 break;
@@ -2452,8 +2430,7 @@ IRC_PROTOCOL_CALLBACK(nick)
                                                                 ctxt->params[0]);
                     }
 
-                    if (old_color)
-                        free (old_color);
+                    free (old_color);
                 }
                 break;
         }
@@ -2790,8 +2767,7 @@ IRC_PROTOCOL_CALLBACK(notice)
                 }
             }
         }
-        if (channel)
-            free (channel);
+        free (channel);
     }
 
     free (notice_args);
@@ -2949,8 +2925,7 @@ IRC_PROTOCOL_CALLBACK(part)
         }
     }
 
-    if (str_comment)
-        free (str_comment);
+    free (str_comment);
 
     return WEECHAT_RC_OK;
 }
@@ -2973,8 +2948,7 @@ IRC_PROTOCOL_CALLBACK(ping)
     irc_server_sendf (ctxt->server, IRC_SERVER_SEND_OUTQ_PRIO_IMMEDIATE, NULL,
                       "PONG :%s", str_params);
 
-    if (str_params)
-        free (str_params);
+    free (str_params);
 
     return WEECHAT_RC_OK;
 }
@@ -3025,8 +2999,7 @@ IRC_PROTOCOL_CALLBACK(pong)
             "PONG%s%s",
             (str_params) ? ": " : "",
             (str_params) ? str_params : "");
-        if (str_params)
-            free (str_params);
+        free (str_params);
     }
 
     return WEECHAT_RC_OK;
@@ -3069,10 +3042,8 @@ irc_protocol_privmsg_display_ctcp_send (struct t_irc_protocol_ctxt *ctxt,
             0);  /* decode_colors */
     }
 
-    if (ctcp_type)
-        free (ctcp_type);
-    if (ctcp_args)
-        free (ctcp_args);
+    free (ctcp_type);
+    free (ctcp_args);
 }
 
 /*
@@ -3205,14 +3176,12 @@ IRC_PROTOCOL_CALLBACK(privmsg)
                     color = irc_nick_find_color_name (
                         (ptr_nick) ? ptr_nick->name : ctxt->nick);
                     str_color = irc_color_for_tags (color);
-                    if (color)
-                        free (color);
+                    free (color);
                     snprintf (str_tags, sizeof (str_tags),
                               "notify_message,prefix_nick_%s",
                               (str_color) ? str_color : "default");
                 }
-                if (str_color)
-                    free (str_color);
+                free (str_color);
                 weechat_printf_datetime_tags (
                     ptr_channel->buffer,
                     ctxt->date,
@@ -3318,8 +3287,7 @@ IRC_PROTOCOL_CALLBACK(privmsg)
             {
                 color = irc_nick_find_color_name (ctxt->nick);
                 str_color = irc_color_for_tags (color);
-                if (color)
-                    free (color);
+                free (color);
             }
             else
             {
@@ -3343,8 +3311,7 @@ IRC_PROTOCOL_CALLBACK(privmsg)
                       (pv_tags && pv_tags[0]) ? "," : "",
                       (str_color) ? str_color : "default");
         }
-        if (str_color)
-            free (str_color);
+        free (str_color);
         msg_args2 = (ctxt->nick_is_me) ?
             irc_message_hide_password (ctxt->server, remote_nick, msg_args) : NULL;
         if (ctxt->nick_is_me && !ptr_channel)
@@ -3376,8 +3343,7 @@ IRC_PROTOCOL_CALLBACK(privmsg)
                                                                       ctxt->nick)),
                 (msg_args2) ? msg_args2 : msg_args);
         }
-        if (msg_args2)
-            free (msg_args2);
+        free (msg_args2);
 
         if (ptr_channel && ptr_channel->has_quit_server)
             ptr_channel->has_quit_server = 0;
@@ -3388,8 +3354,7 @@ IRC_PROTOCOL_CALLBACK(privmsg)
     }
 
 end:
-    if (msg_args)
-        free (msg_args);
+    free (msg_args);
     return WEECHAT_RC_OK;
 }
 
@@ -3519,8 +3484,7 @@ IRC_PROTOCOL_CALLBACK(quit)
         }
     }
 
-    if (str_quit_msg)
-        free (str_quit_msg);
+    free (str_quit_msg);
 
     return WEECHAT_RC_OK;
 }
@@ -3618,8 +3582,7 @@ IRC_PROTOCOL_CALLBACK(setname)
                     }
                     if (setname_enabled)
                     {
-                        if (ptr_nick->realname)
-                            free (ptr_nick->realname);
+                        free (ptr_nick->realname);
                         ptr_nick->realname = strdup (str_realname);
                     }
                 }
@@ -3644,8 +3607,7 @@ IRC_PROTOCOL_CALLBACK(setname)
             IRC_COLOR_RESET);
     }
 
-    if (realname_color)
-        free (realname_color);
+    free (realname_color);
 
     free (str_realname);
 
@@ -3744,8 +3706,7 @@ IRC_PROTOCOL_CALLBACK(server_mode_reason)
             (str_params && str_params[0]) ? ": " : "",
             (str_params && str_params[0]) ? str_params : "");
 
-    if (str_params)
-        free (str_params);
+    free (str_params);
 
     return WEECHAT_RC_OK;
 }
@@ -3854,8 +3815,7 @@ IRC_PROTOCOL_CALLBACK(topic)
                 IRC_COLOR_TOPIC_NEW,
                 (topic_color) ? topic_color : str_topic,
                 IRC_COLOR_RESET);
-            if (old_topic_color)
-                free (old_topic_color);
+            free (old_topic_color);
         }
         else
         {
@@ -3877,8 +3837,7 @@ IRC_PROTOCOL_CALLBACK(topic)
                 (topic_color) ? topic_color : str_topic,
                 IRC_COLOR_RESET);
         }
-        if (topic_color)
-            free (topic_color);
+        free (topic_color);
     }
     else
     {
@@ -3906,8 +3865,7 @@ IRC_PROTOCOL_CALLBACK(topic)
                 IRC_COLOR_TOPIC_OLD,
                 (old_topic_color) ? old_topic_color : ptr_channel->topic,
                 IRC_COLOR_RESET);
-            if (old_topic_color)
-                free (old_topic_color);
+            free (old_topic_color);
         }
         else
         {
@@ -3934,8 +3892,7 @@ IRC_PROTOCOL_CALLBACK(topic)
                                (str_topic && str_topic[0]) ? str_topic : NULL);
     }
 
-    if (str_topic)
-        free (str_topic);
+    free (str_topic);
 
     return WEECHAT_RC_OK;
 }
@@ -3978,8 +3935,7 @@ IRC_PROTOCOL_CALLBACK(wallops)
         (nick_address[0]) ? nick_address : "?",
         str_message);
 
-    if (str_message)
-        free (str_message);
+    free (str_message);
 
     return WEECHAT_RC_OK;
 }
@@ -4061,8 +4017,7 @@ IRC_PROTOCOL_CALLBACK(001)
                           "MODE %s %s",
                           ctxt->server->nick, usermode);
     }
-    if (usermode)
-        free (usermode);
+    free (usermode);
 
     /* execute command when connected */
     if (IRC_SERVER_OPTION_INTEGER(ctxt->server, IRC_SERVER_OPTION_COMMAND_DELAY) > 0)
@@ -4162,15 +4117,13 @@ IRC_PROTOCOL_CALLBACK(005)
         else if (strncmp (ctxt->params[i], "CHANTYPES=", 10) == 0)
         {
             /* save chantypes */
-            if (ctxt->server->chantypes)
-                free (ctxt->server->chantypes);
+            free (ctxt->server->chantypes);
             ctxt->server->chantypes = strdup (ctxt->params[i] + 10);
         }
         else if (strncmp (ctxt->params[i], "CHANMODES=", 10) == 0)
         {
             /* save chanmodes */
-            if (ctxt->server->chanmodes)
-                free (ctxt->server->chanmodes);
+            free (ctxt->server->chanmodes);
             ctxt->server->chanmodes = strdup (ctxt->params[i] + 10);
         }
         else if (strncmp (ctxt->params[i], "MONITOR=", 8) == 0)
@@ -4213,8 +4166,7 @@ IRC_PROTOCOL_CALLBACK(005)
             ctxt->server->isupport = strdup (str_info);
         }
     }
-    if (str_info)
-        free (str_info);
+    free (str_info);
 
     return WEECHAT_RC_OK;
 }
@@ -4246,8 +4198,7 @@ IRC_PROTOCOL_CALLBACK(008)
         IRC_COLOR_RESET,
         str_params);
 
-    if (str_params)
-        free (str_params);
+    free (str_params);
 
     return WEECHAT_RC_OK;
 }
@@ -4285,8 +4236,7 @@ IRC_PROTOCOL_CALLBACK(221)
     if (irc_server_strcasecmp (ctxt->server, ctxt->params[0], ctxt->server->nick) == 0)
         irc_mode_user_set (ctxt->server, str_modes, 1);
 
-    if (str_modes)
-        free (str_modes);
+    free (str_modes);
 
     return WEECHAT_RC_OK;
 }
@@ -4340,8 +4290,7 @@ IRC_PROTOCOL_CALLBACK(301)
             str_away_msg);
         if (ptr_channel)
         {
-            if (ptr_channel->away_message)
-                free (ptr_channel->away_message);
+            free (ptr_channel->away_message);
             ptr_channel->away_message = strdup (str_away_msg);
         }
     }
@@ -4376,8 +4325,7 @@ IRC_PROTOCOL_CALLBACK(303)
         IRC_COLOR_CHAT_NICK,
         str_nicks);
 
-    if (str_nicks)
-        free (str_nicks);
+    free (str_nicks);
 
     return WEECHAT_RC_OK;
 }
@@ -4407,8 +4355,7 @@ IRC_PROTOCOL_CALLBACK(305)
             "%s%s",
             weechat_prefix ("network"),
             str_away_msg);
-        if (str_away_msg)
-            free (str_away_msg);
+        free (str_away_msg);
     }
 
     ctxt->server->is_away = 0;
@@ -4444,8 +4391,7 @@ IRC_PROTOCOL_CALLBACK(306)
             "%s%s",
             weechat_prefix ("network"),
             str_away_msg);
-        if (str_away_msg)
-            free (str_away_msg);
+        free (str_away_msg);
     }
 
     ctxt->server->is_away = 1;
@@ -4489,8 +4435,7 @@ IRC_PROTOCOL_CALLBACK(whois_nick_msg)
             IRC_COLOR_CHAT_DELIMITERS,
             IRC_COLOR_RESET,
             str_params);
-        if (str_params)
-            free (str_params);
+        free (str_params);
     }
     else
     {
@@ -4534,8 +4479,7 @@ IRC_PROTOCOL_CALLBACK(whowas_nick_msg)
             IRC_COLOR_CHAT_DELIMITERS,
             IRC_COLOR_RESET,
             str_params);
-        if (str_params)
-            free (str_params);
+        free (str_params);
     }
     else
     {
@@ -4587,8 +4531,7 @@ IRC_PROTOCOL_CALLBACK(311)
             IRC_COLOR_CHAT_DELIMITERS,
             IRC_COLOR_RESET,
             str_realname);
-        if (str_realname)
-            free (str_realname);
+        free (str_realname);
     }
 
     return WEECHAT_RC_OK;
@@ -4632,8 +4575,7 @@ IRC_PROTOCOL_CALLBACK(312)
             IRC_COLOR_RESET,
             str_server,
             IRC_COLOR_CHAT_DELIMITERS);
-        if (str_server)
-            free (str_server);
+        free (str_server);
     }
 
     return WEECHAT_RC_OK;
@@ -4677,8 +4619,7 @@ IRC_PROTOCOL_CALLBACK(314)
             IRC_COLOR_CHAT_DELIMITERS,
             IRC_COLOR_RESET,
             str_realname);
-        if (str_realname)
-            free (str_realname);
+        free (str_realname);
     }
 
     return WEECHAT_RC_OK;
@@ -4720,8 +4661,7 @@ IRC_PROTOCOL_CALLBACK(315)
             IRC_COLOR_CHAT_DELIMITERS,
             IRC_COLOR_RESET,
             str_text);
-        if (str_text)
-            free (str_text);
+        free (str_text);
     }
 
     return WEECHAT_RC_OK;
@@ -4848,8 +4788,7 @@ IRC_PROTOCOL_CALLBACK(321)
         (str_params && str_params[0]) ? " " : "",
         (str_params && str_params[0]) ? str_params : "");
 
-    if (str_params)
-        free (str_params);
+    free (str_params);
 
     return WEECHAT_RC_OK;
 }
@@ -4888,8 +4827,7 @@ IRC_PROTOCOL_CALLBACK(322)
             IRC_COLOR_RESET,
             (str_topic && str_topic[0]) ? ": " : "",
             (str_topic && str_topic[0]) ? str_topic : "");
-        if (str_topic)
-            free (str_topic);
+        free (str_topic);
     }
 
     return WEECHAT_RC_OK;
@@ -4919,8 +4857,7 @@ IRC_PROTOCOL_CALLBACK(323)
         weechat_prefix ("network"),
         str_params);
 
-    if (str_params)
-        free (str_params);
+    free (str_params);
 
     return WEECHAT_RC_OK;
 }
@@ -4978,10 +4915,8 @@ IRC_PROTOCOL_CALLBACK(324)
     if (ptr_channel)
         weechat_hashtable_set (ptr_channel->join_msg_received, ctxt->command, "1");
 
-    if (str_modes)
-        free (str_modes);
-    if (str_modes_args)
-        free (str_modes_args);
+    free (str_modes);
+    free (str_modes_args);
 
     return WEECHAT_RC_OK;
 }
@@ -5051,8 +4986,7 @@ IRC_PROTOCOL_CALLBACK(327)
                 ctxt->params[3]);
         }
 
-        if (str_realname)
-            free (str_realname);
+        free (str_realname);
     }
 
     return WEECHAT_RC_OK;
@@ -5088,8 +5022,7 @@ IRC_PROTOCOL_CALLBACK(328)
             ctxt->params[1],
             IRC_COLOR_RESET,
             str_url);
-        if (str_url)
-            free (str_url);
+        free (str_url);
     }
 
     return WEECHAT_RC_OK;
@@ -5189,8 +5122,7 @@ IRC_PROTOCOL_CALLBACK(330_343)
             str_text,
             irc_nick_color_for_msg (ctxt->server, 1, NULL, ctxt->params[2]),
             ctxt->params[2]);
-        if (str_text)
-            free (str_text);
+        free (str_text);
     }
     else
     {
@@ -5212,8 +5144,7 @@ IRC_PROTOCOL_CALLBACK(330_343)
             IRC_COLOR_CHAT_DELIMITERS,
             IRC_COLOR_RESET,
             str_text);
-        if (str_text)
-            free (str_text);
+        free (str_text);
     }
 
     return WEECHAT_RC_OK;
@@ -5277,8 +5208,7 @@ IRC_PROTOCOL_CALLBACK(332)
                 NULL : irc_color_decode (str_topic, 0);
             irc_channel_set_topic (ptr_channel,
                                    (topic_no_color) ? topic_no_color : str_topic);
-            if (topic_no_color)
-                free (topic_no_color);
+            free (topic_no_color);
         }
         ptr_buffer = ptr_channel->buffer;
     }
@@ -5313,14 +5243,12 @@ IRC_PROTOCOL_CALLBACK(332)
             IRC_COLOR_RESET);
     }
 
-    if (topic_color)
-        free (topic_color);
+    free (topic_color);
 
     if (ptr_channel)
         weechat_hashtable_set (ptr_channel->join_msg_received, ctxt->command, "1");
 
-    if (str_topic)
-        free (str_topic);
+    free (str_topic);
 
     return WEECHAT_RC_OK;
 }
@@ -5488,8 +5416,7 @@ IRC_PROTOCOL_CALLBACK(338)
             str_text,
             IRC_COLOR_CHAT_HOST,
             ctxt->params[2]);
-        if (str_text)
-            free (str_text);
+        free (str_text);
     }
 
     return WEECHAT_RC_OK;
@@ -5563,8 +5490,7 @@ IRC_PROTOCOL_CALLBACK(344)
             IRC_COLOR_RESET,
             IRC_COLOR_CHAT_HOST,
             str_host);
-        if (str_host)
-            free (str_host);
+        free (str_host);
     }
     else
     {
@@ -5592,8 +5518,7 @@ IRC_PROTOCOL_CALLBACK(344)
                 (ctxt->num_params >= 4) ? " (" : "",
                 (ctxt->num_params >= 4) ? ctxt->params[2] : "",
                 (ctxt->num_params >= 4) ? ")" : "");
-            if (str_params)
-                free (str_params);
+            free (str_params);
         }
         else
         {
@@ -5632,8 +5557,7 @@ IRC_PROTOCOL_CALLBACK(345)
         IRC_COLOR_RESET,
         str_params);
 
-    if (str_params)
-        free (str_params);
+    free (str_params);
 
     return WEECHAT_RC_OK;
 }
@@ -5810,8 +5734,7 @@ IRC_PROTOCOL_CALLBACK(347)
         (str_params) ? " " : "",
         (str_params) ? str_params : "");
 
-    if (str_params)
-        free (str_params);
+    free (str_params);
 
     return WEECHAT_RC_OK;
 }
@@ -5989,8 +5912,7 @@ IRC_PROTOCOL_CALLBACK(349)
         (str_params) ? " " : "",
         (str_params) ? str_params : "");
 
-    if (str_params)
-        free (str_params);
+    free (str_params);
 
     return WEECHAT_RC_OK;
 }
@@ -6044,8 +5966,7 @@ IRC_PROTOCOL_CALLBACK(350)
             str_host,
             IRC_COLOR_RESET,
             str_params);
-        if (str_params)
-            free (str_params);
+        free (str_params);
 
     }
     else
@@ -6087,8 +6008,7 @@ IRC_PROTOCOL_CALLBACK(351)
             ctxt->params[1],
             ctxt->params[2],
             str_params);
-        if (str_params)
-            free (str_params);
+        free (str_params);
     }
     else
     {
@@ -6176,8 +6096,7 @@ IRC_PROTOCOL_CALLBACK(352)
     /* update realname in nick */
     if (ptr_channel && ptr_nick && str_realname)
     {
-        if (ptr_nick->realname)
-            free (ptr_nick->realname);
+        free (ptr_nick->realname);
         ptr_nick->realname = strdup (str_realname);
     }
 
@@ -6214,10 +6133,8 @@ IRC_PROTOCOL_CALLBACK(352)
             IRC_COLOR_CHAT_DELIMITERS);
     }
 
-    if (str_hopcount)
-        free (str_hopcount);
-    if (str_realname)
-        free (str_realname);
+    free (str_hopcount);
+    free (str_realname);
 
     return WEECHAT_RC_OK;
 }
@@ -6339,8 +6256,7 @@ IRC_PROTOCOL_CALLBACK(353)
                     {
                         color = irc_nick_find_color (nickname);
                         weechat_string_dyn_concat (str_nicks, color, -1);
-                        if (color)
-                            free (color);
+                        free (color);
                     }
                 }
                 else
@@ -6351,8 +6267,7 @@ IRC_PROTOCOL_CALLBACK(353)
             }
             free (nickname);
         }
-        if (prefixes)
-            free (prefixes);
+        free (prefixes);
     }
 
     if (!ptr_channel && str_nicks)
@@ -6374,8 +6289,7 @@ IRC_PROTOCOL_CALLBACK(353)
             IRC_COLOR_CHAT_DELIMITERS);
     }
 
-    if (str_params)
-        free (str_params);
+    free (str_params);
     if (str_nicks)
         weechat_string_dyn_free (str_nicks, 1);
     if (nicks)
@@ -6427,8 +6341,7 @@ IRC_PROTOCOL_CALLBACK(354)
                 IRC_COLOR_RESET,
                 (str_params && str_params[0]) ? " " : "",
                 (str_params && str_params[0]) ? str_params : "");
-            if (str_params)
-                free (str_params);
+            free (str_params);
         }
         return WEECHAT_RC_OK;
     }
@@ -6459,8 +6372,7 @@ IRC_PROTOCOL_CALLBACK(354)
     /* update account in nick */
     if (ptr_nick)
     {
-        if (ptr_nick->account)
-            free (ptr_nick->account);
+        free (ptr_nick->account);
         if (ptr_channel
             && weechat_hashtable_has_key (ctxt->server->cap_list, "account-notify"))
         {
@@ -6475,8 +6387,7 @@ IRC_PROTOCOL_CALLBACK(354)
     /* update realname in nick */
     if (ptr_nick)
     {
-        if (ptr_nick->realname)
-            free (ptr_nick->realname);
+        free (ptr_nick->realname);
         ptr_nick->realname = (ptr_channel && (ctxt->num_params >= 10)) ?
             strdup (ctxt->params[9]) : NULL;
     }
@@ -6630,8 +6541,7 @@ irc_protocol_get_string_channel_nicks (struct t_irc_server *server,
                 {
                     color = irc_nick_find_color (nickname);
                     weechat_string_dyn_concat (str_nicks, color, -1);
-                    if (color)
-                        free (color);
+                    free (color);
                 }
             }
             else
@@ -6857,8 +6767,7 @@ IRC_PROTOCOL_CALLBACK(366)
             ctxt->params[1],
             IRC_COLOR_RESET,
             str_params);
-        if (str_params)
-            free (str_params);
+        free (str_params);
     }
 
     if (ptr_channel)
@@ -7049,8 +6958,7 @@ IRC_PROTOCOL_CALLBACK(368)
         (str_params) ? " " : "",
         (str_params) ? str_params : "");
 
-    if (str_params)
-        free (str_params);
+    free (str_params);
 
     return WEECHAT_RC_OK;
 }
@@ -7264,8 +7172,7 @@ IRC_PROTOCOL_CALLBACK(438)
             str_params,
             ctxt->params[0],
             ctxt->params[1]);
-        if (str_params)
-            free (str_params);
+        free (str_params);
     }
     else
     {
@@ -7323,8 +7230,7 @@ IRC_PROTOCOL_CALLBACK(470)
             buffer_name = irc_buffer_build_name (ctxt->server->name, ctxt->params[2]);
             weechat_buffer_set (ptr_buffer, "name", buffer_name);
             weechat_buffer_set (ptr_buffer, "localvar_set_channel", ctxt->params[2]);
-            if (buffer_name)
-                free (buffer_name);
+            free (buffer_name);
 
             /*
              * check if logger backlog should be displayed for the new channel
@@ -7425,8 +7331,7 @@ IRC_PROTOCOL_CALLBACK(help)
         weechat_prefix ("network"),
         str_message);
 
-    if (str_message)
-        free (str_message);
+    free (str_message);
 
     return WEECHAT_RC_OK;
 }
@@ -7477,8 +7382,7 @@ IRC_PROTOCOL_CALLBACK(710)
         (str_message && str_message[0]) ?
         str_message : _("has asked for an invite"));
 
-    if (str_message)
-        free (str_message);
+    free (str_message);
 
     return WEECHAT_RC_OK;
 }
@@ -7660,8 +7564,7 @@ IRC_PROTOCOL_CALLBACK(729)
         (str_params) ? " " : "",
         (str_params) ? str_params : "");
 
-    if (str_params)
-        free (str_params);
+    free (str_params);
 
     return WEECHAT_RC_OK;
 }
@@ -7718,8 +7621,7 @@ IRC_PROTOCOL_CALLBACK(730)
         weechat_string_free_split (nicks);
     }
 
-    if (str_nicks)
-        free (str_nicks);
+    free (str_nicks);
 
     return WEECHAT_RC_OK;
 }
@@ -7776,8 +7678,7 @@ IRC_PROTOCOL_CALLBACK(731)
         weechat_string_free_split (nicks);
     }
 
-    if (str_nicks)
-        free (str_nicks);
+    free (str_nicks);
 
     return WEECHAT_RC_OK;
 }
@@ -7808,8 +7709,7 @@ IRC_PROTOCOL_CALLBACK(732)
         weechat_prefix ("network"),
         (str_nicks) ? str_nicks : "");
 
-    if (str_nicks)
-        free (str_nicks);
+    free (str_nicks);
 
     return WEECHAT_RC_OK;
 }
@@ -7840,8 +7740,7 @@ IRC_PROTOCOL_CALLBACK(733)
         weechat_prefix ("network"),
         (str_params) ? str_params : "");
 
-    if (str_params)
-        free (str_params);
+    free (str_params);
 
     return WEECHAT_RC_OK;
 }
@@ -7873,8 +7772,7 @@ IRC_PROTOCOL_CALLBACK(734)
         (str_params) ? str_params : "",
         ctxt->params[1]);
 
-    if (str_params)
-        free (str_params);
+    free (str_params);
 
     return WEECHAT_RC_OK;
 }
@@ -7927,8 +7825,7 @@ IRC_PROTOCOL_CALLBACK(900)
 
     irc_server_free_sasl_data (ctxt->server);
 
-    if (str_params)
-        free (str_params);
+    free (str_params);
 
     return WEECHAT_RC_OK;
 }
@@ -8469,13 +8366,9 @@ irc_protocol_recv_command (struct t_irc_server *server,
                                    irc_message, NULL);
 
 end:
-    if (address)
-        free (address);
-    if (host)
-        free (host);
-    if (host_no_color)
-        free (host_no_color);
-    if (message_colors_decoded)
-        free (message_colors_decoded);
+    free (address);
+    free (host);
+    free (host_no_color);
+    free (message_colors_decoded);
     irc_protocol_ctxt_free_data (&ctxt);
 }

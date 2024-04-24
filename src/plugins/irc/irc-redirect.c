@@ -362,14 +362,10 @@ irc_redirect_pattern_free (struct t_irc_redirect_pattern *redirect_pattern)
         (redirect_pattern->next_redirect)->prev_redirect = redirect_pattern->prev_redirect;
 
     /* free data */
-    if (redirect_pattern->name)
-        free (redirect_pattern->name);
-    if (redirect_pattern->cmd_start)
-        free (redirect_pattern->cmd_start);
-    if (redirect_pattern->cmd_stop)
-        free (redirect_pattern->cmd_stop);
-    if (redirect_pattern->cmd_extra)
-        free (redirect_pattern->cmd_extra);
+    free (redirect_pattern->name);
+    free (redirect_pattern->cmd_start);
+    free (redirect_pattern->cmd_stop);
+    free (redirect_pattern->cmd_extra);
 
     free (redirect_pattern);
 
@@ -977,14 +973,10 @@ irc_redirect_free (struct t_irc_redirect *redirect)
     }
 
     /* free data */
-    if (redirect->pattern)
-        free (redirect->pattern);
-    if (redirect->signal)
-        free (redirect->signal);
-    if (redirect->string)
-        free (redirect->string);
-    if (redirect->command)
-        free (redirect->command);
+    free (redirect->pattern);
+    free (redirect->signal);
+    free (redirect->string);
+    free (redirect->command);
     if (redirect->cmd_start)
         weechat_hashtable_free (redirect->cmd_start);
     if (redirect->cmd_stop)
@@ -993,8 +985,7 @@ irc_redirect_free (struct t_irc_redirect *redirect)
         weechat_hashtable_free (redirect->cmd_extra);
     if (redirect->cmd_filter)
         weechat_hashtable_free (redirect->cmd_filter);
-    if (redirect->output)
-        free (redirect->output);
+    free (redirect->output);
 
     free (redirect);
 

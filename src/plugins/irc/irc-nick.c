@@ -250,8 +250,7 @@ irc_nick_set_host (struct t_irc_nick *nick, const char *host)
     }
 
     /* update the host in nick */
-    if (nick->host)
-        free (nick->host);
+    free (nick->host);
     nick->host = (host) ? strdup (host) : NULL;
 }
 
@@ -422,8 +421,7 @@ irc_nick_nicklist_add (struct t_irc_server *server,
                                nick->prefix,
                                irc_nick_get_prefix_color_name (server, nick->prefix[0]),
                                1);
-    if (color)
-        free (color);
+    free (color);
 }
 
 /*
@@ -513,8 +511,7 @@ irc_nick_nicklist_set_color_all ()
             {
                 color = irc_nick_get_color_for_nicklist (ptr_server, ptr_nick);
                 irc_nick_nicklist_set (ptr_channel, ptr_nick, "color", color);
-                if (color)
-                    free (color);
+                free (color);
             }
         }
     }
@@ -554,18 +551,12 @@ irc_nick_new_in_channel (struct t_irc_server *server,
     new_nick->prefix = malloc (2);
     if (!new_nick->name || !new_nick->prefixes || !new_nick->prefix)
     {
-        if (new_nick->name)
-            free (new_nick->name);
-        if (new_nick->host)
-            free (new_nick->host);
-        if (new_nick->account)
-            free (new_nick->account);
-        if (new_nick->realname)
-            free (new_nick->realname);
-        if (new_nick->prefixes)
-            free (new_nick->prefixes);
-        if (new_nick->prefix)
-            free (new_nick->prefix);
+        free (new_nick->name);
+        free (new_nick->host);
+        free (new_nick->account);
+        free (new_nick->realname);
+        free (new_nick->prefixes);
+        free (new_nick->prefix);
         free (new_nick);
         return NULL;
     }
@@ -662,11 +653,9 @@ irc_nick_change (struct t_irc_server *server, struct t_irc_channel *channel,
         irc_channel_nick_speaking_rename (channel, nick->name, new_nick);
 
     /* change nickname */
-    if (nick->name)
-        free (nick->name);
+    free (nick->name);
     nick->name = strdup (new_nick);
-    if (nick->color)
-        free (nick->color);
+    free (nick->color);
     if (nick_is_me)
         nick->color = strdup (IRC_COLOR_CHAT_NICK_SELF);
     else
@@ -789,20 +778,13 @@ irc_nick_free (struct t_irc_server *server, struct t_irc_channel *channel,
     channel->nicks_count--;
 
     /* free data */
-    if (nick->name)
-        free (nick->name);
-    if (nick->host)
-        free (nick->host);
-    if (nick->prefixes)
-        free (nick->prefixes);
-    if (nick->prefix)
-        free (nick->prefix);
-    if (nick->account)
-        free (nick->account);
-    if (nick->realname)
-        free (nick->realname);
-    if (nick->color)
-        free (nick->color);
+    free (nick->name);
+    free (nick->host);
+    free (nick->prefixes);
+    free (nick->prefix);
+    free (nick->account);
+    free (nick->realname);
+    free (nick->color);
 
     free (nick);
 
@@ -937,8 +919,7 @@ irc_nick_set_away (struct t_irc_server *server, struct t_irc_channel *channel,
         nick->away = is_away;
         color = irc_nick_get_color_for_nicklist (server, nick);
         irc_nick_nicklist_set (channel, nick, "color", color);
-        if (color)
-            free (color);
+        free (color);
     }
 }
 
@@ -1021,8 +1002,7 @@ irc_nick_as_prefix (struct t_irc_server *server, struct t_irc_nick *nick,
               color,
               (nick) ? nick->name : nickname);
 
-    if (color)
-        free (color);
+    free (color);
 
     return result;
 }
@@ -1060,8 +1040,7 @@ irc_nick_color_for_msg (struct t_irc_server *server, int server_message,
         snprintf (color[index_color], sizeof (color[index_color]),
                   "%s",
                   color_found);
-        if (color_found)
-            free (color_found);
+        free (color_found);
         return color[index_color];
     }
 

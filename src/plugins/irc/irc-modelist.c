@@ -323,10 +323,8 @@ irc_modelist_item_free (struct t_irc_modelist *modelist,
         (item->next_item)->prev_item = item->prev_item;
 
     /* free item data */
-    if (item->mask)
-        free (item->mask);
-    if (item->setter)
-        free (item->setter);
+    free (item->mask);
+    free (item->setter);
     free (item);
 
     modelist->items = new_items;
