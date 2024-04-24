@@ -475,10 +475,8 @@ calc_expression (const char *expr)
     calc_format_result (value, str_result, sizeof (str_result));
 
 end:
-    if (list_values)
-        arraylist_free (list_values);
-    if (list_ops)
-        arraylist_free (list_ops);
+    arraylist_free (list_values);
+    arraylist_free (list_ops);
 
     return strdup (str_result);
 }

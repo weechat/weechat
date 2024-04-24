@@ -490,8 +490,7 @@ hook_command_format_args_description (const char *args_description)
     return string_dyn_free (result, 0);
 
 error:
-    if (args)
-        arraylist_free (args);
+    arraylist_free (args);
     if (result)
         string_dyn_free (result, 1);
     if (lines)
