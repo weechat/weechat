@@ -214,8 +214,7 @@ weechat_php_cb (const void *pointer, void *data, void **func_argv,
 
     if (ret_type == WEECHAT_SCRIPT_EXEC_IGNORE)
     {
-        if (ret)
-            free (ret);
+        free (ret);
     }
     else if (ret_type == WEECHAT_SCRIPT_EXEC_INT)
     {
@@ -235,8 +234,7 @@ weechat_php_cb (const void *pointer, void *data, void **func_argv,
 weechat_php_cb_err:
     if (ret_type == WEECHAT_SCRIPT_EXEC_IGNORE)
     {
-        if (ret)
-            free (ret);
+        free (ret);
     }
     else if (ret_type == WEECHAT_SCRIPT_EXEC_INT)
     {
