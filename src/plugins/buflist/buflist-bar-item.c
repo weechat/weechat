@@ -372,8 +372,7 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
     snprintf (str_format_number_empty, sizeof (str_format_number_empty),
               "%%-%ds", length_max_number);
 
-    if (buflist_list_buffers[item_index])
-        weechat_arraylist_free (buflist_list_buffers[item_index]);
+    weechat_arraylist_free (buflist_list_buffers[item_index]);
     buflist_list_buffers[item_index] = weechat_arraylist_new (
         16, 0, 1,
         NULL, NULL, NULL, NULL);

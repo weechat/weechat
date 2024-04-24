@@ -495,8 +495,7 @@ end:
     free (dup_ctcp);
     free (dup_ctcp_upper);
     free (dup_args);
-    if (list_messages)
-        weechat_arraylist_free (list_messages);
+    weechat_arraylist_free (list_messages);
 }
 
 /*

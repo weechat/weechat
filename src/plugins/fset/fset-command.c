@@ -567,8 +567,7 @@ fset_command_run_set_cb (const void *pointer, void *data,
     /* check condition to trigger the fset buffer */
     if (condition_ok)
     {
-        if (old_options)
-            weechat_arraylist_free (old_options);
+        weechat_arraylist_free (old_options);
         free (old_max_length);
         free (old_filter);
 

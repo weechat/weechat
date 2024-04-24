@@ -481,6 +481,9 @@ TEST(CoreArraylist, New)
 {
     int initial_size, sorted, allow_duplicates;
 
+    /* free arraylist with NULL pointer */
+    arraylist_free (NULL);
+
     /*
      * in order to create an arraylist, initial_size must be >= 0 and a
      * comparison callback must be given

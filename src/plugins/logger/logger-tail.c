@@ -233,8 +233,7 @@ logger_tail_file (const char *filename, int lines)
 
 error:
     free (part_of_line);
-    if (list_lines)
-        weechat_arraylist_free (list_lines);
+    weechat_arraylist_free (list_lines);
     if (fd >= 0)
         close (fd);
     return NULL;

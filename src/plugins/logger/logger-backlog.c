@@ -243,8 +243,7 @@ logger_backlog_group_messages (struct t_arraylist *lines)
 
 error:
     free (message);
-    if (messages)
-        weechat_arraylist_free (messages);
+    weechat_arraylist_free (messages);
     return NULL;
 }
 
