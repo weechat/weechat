@@ -819,10 +819,8 @@ gui_key_expand (const char *key, char **key_name, char **key_name_alias)
     return 1;
 
 error:
-    if (str_dyn_key)
-        string_dyn_free (str_dyn_key, 1);
-    if (str_dyn_key_alias)
-        string_dyn_free (str_dyn_key_alias, 1);
+    string_dyn_free (str_dyn_key, 1);
+    string_dyn_free (str_dyn_key_alias, 1);
     return 0;
 }
 

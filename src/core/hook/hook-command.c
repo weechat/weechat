@@ -491,8 +491,7 @@ hook_command_format_args_description (const char *args_description)
 
 error:
     arraylist_free (args);
-    if (result)
-        string_dyn_free (result, 1);
+    string_dyn_free (result, 1);
     string_free_split (lines);
     return NULL;
 }

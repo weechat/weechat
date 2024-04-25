@@ -2787,8 +2787,7 @@ eval_expression (const char *expr, struct t_hashtable *pointers,
     /* set debug in options hashtable */
     if (options && eval_context->debug_output)
         hashtable_set (options, "debug_output", *(eval_context->debug_output));
-    if (eval_context->debug_output)
-        string_dyn_free (eval_context->debug_output, 1);
+    string_dyn_free (eval_context->debug_output, 1);
 
     return value;
 }
