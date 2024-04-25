@@ -777,8 +777,7 @@ relay_config_delete_path_cb (const void *pointer, void *data,
     (void) data;
 
     ptr_server = relay_server_search (weechat_config_option_get_pointer (option, "name"));
-    if (ptr_server)
-        relay_server_free (ptr_server);
+    relay_server_free (ptr_server);
 }
 
 /*
@@ -818,8 +817,7 @@ relay_config_delete_port_cb (const void *pointer, void *data,
     (void) data;
 
     ptr_server = relay_server_search (weechat_config_option_get_pointer (option, "name"));
-    if (ptr_server)
-        relay_server_free (ptr_server);
+    relay_server_free (ptr_server);
 }
 
 /*
