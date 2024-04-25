@@ -1191,8 +1191,7 @@ script_repo_file_read (int quiet)
         {
             if (strstr (ptr_line, "<plugin id="))
             {
-                if (script)
-                    script_repo_free (script);
+                script_repo_free (script);
                 script = script_repo_alloc ();
                 weechat_hashtable_remove_all (descriptions);
             }
@@ -1385,8 +1384,7 @@ script_repo_file_read (int quiet)
                         SCRIPT_PLUGIN_NAME);
     }
 
-    if (script)
-        script_repo_free (script);
+    script_repo_free (script);
     free (locale);
     free (locale_language);
     weechat_hashtable_free (descriptions);
