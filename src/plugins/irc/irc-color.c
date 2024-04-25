@@ -919,8 +919,7 @@ irc_color_decode_ansi_cb (void *data, const char *text)
     }
 
 end:
-    if (items)
-        weechat_string_free_split (items);
+    weechat_string_free_split (items);
     free (text2);
 
     return (output) ? output : strdup ("");

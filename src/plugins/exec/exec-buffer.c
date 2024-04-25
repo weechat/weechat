@@ -68,10 +68,8 @@ exec_buffer_input_cb (const void *pointer, void *data,
     if (argv && argv_eol)
         exec_command_run (buffer, argc, argv, argv_eol, 0);
 
-    if (argv)
-        weechat_string_free_split (argv);
-    if (argv_eol)
-        weechat_string_free_split (argv_eol);
+    weechat_string_free_split (argv);
+    weechat_string_free_split (argv_eol);
 
     return WEECHAT_RC_OK;
 }

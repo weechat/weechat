@@ -436,8 +436,7 @@ trigger_command_list_default (int verbose)
     }
 
     trigger_regex_free (&regex_count, &regex);
-    if (commands)
-        weechat_string_free_split (commands);
+    weechat_string_free_split (commands);
 }
 
 /*
@@ -838,8 +837,7 @@ trigger_command_trigger (const void *pointer, void *data,
             weechat_buffer_set (buffer, "input_pos", "13");
             free (input);
         }
-        if (items)
-            weechat_string_free_split (items);
+        weechat_string_free_split (items);
         goto end;
     }
 
@@ -1242,8 +1240,7 @@ error:
     rc = WEECHAT_RC_ERROR;
 
 end:
-    if (sargv)
-        weechat_string_free_split (sargv);
+    weechat_string_free_split (sargv);
 
     if (rc == WEECHAT_RC_ERROR)
         WEECHAT_COMMAND_ERROR;

@@ -321,8 +321,7 @@ relay_http_parse_path (const char *path,
 
     free (str_path);
     free (str_params);
-    if (items_path)
-        weechat_string_free_split (items_path);
+    weechat_string_free_split (items_path);
 }
 
 /*
@@ -378,8 +377,7 @@ relay_http_parse_method_path (struct t_relay_http_request *request,
     return 1;
 
 error:
-    if (items)
-        weechat_string_free_split (items);
+    weechat_string_free_split (items);
     request->status = RELAY_HTTP_END;
     return 0;
 }
@@ -1335,8 +1333,7 @@ relay_http_request_free (struct t_relay_http_request *request)
         weechat_string_dyn_free (request->raw, 1);
     free (request->method);
     free (request->path);
-    if (request->path_items)
-        weechat_string_free_split (request->path_items);
+    weechat_string_free_split (request->path_items);
     weechat_hashtable_free (request->params);
     free (request->http_version);
     weechat_hashtable_free (request->headers);

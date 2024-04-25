@@ -981,8 +981,7 @@ end:
     string_modified = (ptr_string && (strcmp (ptr_string, string) != 0)) ?
         strdup (ptr_string) : NULL;
 
-    if (tags)
-        weechat_string_free_split (tags);
+    weechat_string_free_split (tags);
     free (string_no_color);
 
     TRIGGER_CALLBACK_CB_END(string_modified);
@@ -1120,8 +1119,7 @@ trigger_callback_line_cb (const void *pointer, void *data,
     }
 
 end:
-    if (tags)
-        weechat_string_free_split (tags);
+    weechat_string_free_split (tags);
 
     TRIGGER_CALLBACK_CB_END(hashtable);
 }

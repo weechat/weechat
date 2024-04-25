@@ -416,8 +416,7 @@ spell_speller_buffer_new (struct t_gui_buffer *buffer)
                 new_speller_buffer->spellers[num_dicts] = NULL;
             }
         }
-        if (dicts)
-            weechat_string_free_split (dicts);
+        weechat_string_free_split (dicts);
     }
 
     weechat_hashtable_set (spell_speller_buffer,

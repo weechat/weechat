@@ -1219,12 +1219,9 @@ irc_config_check_autojoin (const char *autojoin)
 
 end:
     free (string);
-    if (items)
-        weechat_string_free_split (items);
-    if (channels)
-        weechat_string_free_split (channels);
-    if (keys)
-        weechat_string_free_split (keys);
+    weechat_string_free_split (items);
+    weechat_string_free_split (channels);
+    weechat_string_free_split (keys);
 
     return rc;
 }
@@ -1773,10 +1770,8 @@ irc_config_ignore_read_cb (const void *pointer, void *data,
             {
                 irc_ignore_new (argv_eol[2], argv[0], argv[1]);
             }
-            if (argv)
-                weechat_string_free_split (argv);
-            if (argv_eol)
-                weechat_string_free_split (argv_eol);
+            weechat_string_free_split (argv);
+            weechat_string_free_split (argv_eol);
         }
     }
 

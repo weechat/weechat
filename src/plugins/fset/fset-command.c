@@ -591,9 +591,7 @@ fset_command_run_set_cb (const void *pointer, void *data,
     }
 
 end:
-    if (argv)
-        weechat_string_free_split (argv);
-
+    weechat_string_free_split (argv);
     return rc;
 }
 

@@ -166,8 +166,7 @@ relay_auth_parse_sha (const char *parameters,
     if (!argv || (argc < 2))
     {
         /* not enough parameters */
-        if (argv)
-            weechat_string_free_split (argv);
+        weechat_string_free_split (argv);
         return;
     }
 
@@ -240,8 +239,7 @@ relay_auth_parse_pbkdf2 (const char *parameters,
     if (!argv || (argc < 3))
     {
         /* not enough parameters */
-        if (argv)
-            weechat_string_free_split (argv);
+        weechat_string_free_split (argv);
         return;
     }
 

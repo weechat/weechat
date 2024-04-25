@@ -106,8 +106,7 @@ relay_info_info_relay_client_count_cb (const void *pointer, void *data,
     ptr_count = str_count;
 
 end:
-    if (items)
-        weechat_string_free_split (items);
+    weechat_string_free_split (items);
 
     return (ptr_count) ? strdup (ptr_count) : NULL;
 }

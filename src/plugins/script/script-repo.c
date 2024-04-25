@@ -966,10 +966,8 @@ script_repo_match_filter (struct t_script_repo *script)
         }
     }
 
-    if (words)
-        weechat_string_free_split (words);
-    if (tags)
-        weechat_string_free_split (tags);
+    weechat_string_free_split (words);
+    weechat_string_free_split (tags);
 
     return 1;
 }

@@ -431,8 +431,7 @@ end:
     free (username);
     free (username2);
     free (data);
-    if (attrs)
-        weechat_string_free_split (attrs);
+    weechat_string_free_split (attrs);
     free (nonce_server);
     free (salt_base64);
     free (salt);

@@ -283,8 +283,7 @@ alias_replace_args (const char *alias_args, const char *user_args)
     if (pos > start)
         weechat_string_dyn_concat (result, start, -1);
 
-    if (argv)
-        weechat_string_free_split (argv);
+    weechat_string_free_split (argv);
 
     return weechat_string_dyn_free (result, 0);
 }

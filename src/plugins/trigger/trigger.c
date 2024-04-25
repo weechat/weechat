@@ -598,10 +598,8 @@ trigger_hook (struct t_trigger *trigger)
                         trigger->name);
     }
 
-    if (argv)
-        weechat_string_free_split (argv);
-    if (argv_eol)
-        weechat_string_free_split (argv_eol);
+    weechat_string_free_split (argv);
+    weechat_string_free_split (argv_eol);
 }
 
 /*
@@ -1235,8 +1233,7 @@ trigger_free (struct t_trigger *trigger)
         if (trigger->options[i])
             weechat_config_option_free (trigger->options[i]);
     }
-    if (trigger->commands)
-        weechat_string_free_split (trigger->commands);
+    weechat_string_free_split (trigger->commands);
 
     free (trigger);
 

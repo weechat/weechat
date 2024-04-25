@@ -923,9 +923,7 @@ irc_redirect_message (struct t_irc_server *server, const char *message,
     }
 
 end:
-    if (arguments_argv)
-        weechat_string_free_split (arguments_argv);
-
+    weechat_string_free_split (arguments_argv);
     return rc;
 }
 

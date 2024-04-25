@@ -440,8 +440,7 @@ typing_typing_set_nick_signal_cb (const void *pointer, void *data,
         weechat_bar_item_update (TYPING_BAR_ITEM_NAME);
 
 end:
-    if (items)
-        weechat_string_free_split (items);
+    weechat_string_free_split (items);
 
     return WEECHAT_RC_OK;
 }

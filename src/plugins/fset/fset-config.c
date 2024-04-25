@@ -142,9 +142,7 @@ fset_config_change_auto_refresh_cb (const void *pointer, void *data,
     (void) data;
     (void) option;
 
-    if (fset_config_auto_refresh)
-        weechat_string_free_split (fset_config_auto_refresh);
-
+    weechat_string_free_split (fset_config_auto_refresh);
     fset_config_auto_refresh = weechat_string_split (
         weechat_config_string (fset_config_look_auto_refresh),
         ",",
@@ -206,9 +204,7 @@ fset_config_change_sort_cb (const void *pointer, void *data,
     (void) data;
     (void) option;
 
-    if (fset_config_sort_fields)
-        weechat_string_free_split (fset_config_sort_fields);
-
+    weechat_string_free_split (fset_config_sort_fields);
     fset_config_sort_fields = weechat_string_split (
         weechat_config_string (fset_config_look_sort),
         ",",

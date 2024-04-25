@@ -315,8 +315,7 @@ end:
     free (new_modes);
     free (new_args);
     free (str_modes);
-    if (argv)
-        weechat_string_free_split (argv);
+    weechat_string_free_split (argv);
     if (channel->modes && (strcmp (channel->modes, "+") == 0))
     {
         free (channel->modes);
@@ -562,8 +561,7 @@ irc_mode_channel_set (struct t_irc_server *server,
         pos++;
     }
 
-    if (argv)
-        weechat_string_free_split (argv);
+    weechat_string_free_split (argv);
 
     if (channel_modes_updated)
         weechat_bar_item_update ("buffer_modes");

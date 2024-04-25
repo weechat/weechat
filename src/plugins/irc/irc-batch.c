@@ -456,8 +456,7 @@ irc_batch_process_multiline (struct t_irc_server *server,
 
 end:
     weechat_hashtable_free (hash_tags);
-    if (list_messages)
-        weechat_string_free_split (list_messages);
+    weechat_string_free_split (list_messages);
 
     return weechat_string_dyn_free (result, 0);
 }
@@ -500,8 +499,7 @@ irc_batch_modifier_cb (const void *pointer, void *data,
             result = irc_batch_process_multiline (ptr_server, string, items[2]);
         }
     }
-    if (items)
-        weechat_string_free_split (items);
+    weechat_string_free_split (items);
 
     return (result) ? result : strdup (string);
 }

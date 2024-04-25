@@ -520,8 +520,7 @@ irc_message_parse_to_hashtable (struct t_irc_server *server,
     free (channel);
     free (arguments);
     free (text);
-    if (params)
-        weechat_string_free_split (params);
+    weechat_string_free_split (params);
 
     return hashtable;
 }
@@ -1282,10 +1281,8 @@ irc_message_split_join (struct t_irc_message_split_context *context,
                                msg_to_send + length_no_channel + 1);
     }
 
-    if (channels)
-        weechat_string_free_split (channels);
-    if (keys)
-        weechat_string_free_split (keys);
+    weechat_string_free_split (channels);
+    weechat_string_free_split (keys);
 
     return 1;
 }
@@ -1828,10 +1825,8 @@ end:
     }
 
     free (tags);
-    if (argv)
-        weechat_string_free_split (argv);
-    if (argv_eol)
-        weechat_string_free_split (argv_eol);
+    weechat_string_free_split (argv);
+    weechat_string_free_split (argv_eol);
 
     return split_context.hashtable;
 }

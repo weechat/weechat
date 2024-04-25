@@ -705,8 +705,7 @@ irc_command_exec_all_channels (struct t_irc_server *server,
     irc_command_exec_buffers (list_buffers, command);
 
     weechat_list_free (list_buffers);
-    if (channels)
-        weechat_string_free_split (channels);
+    weechat_string_free_split (channels);
 }
 
 /*
@@ -931,8 +930,7 @@ irc_command_exec_all_servers (int inclusive, const char *str_servers, const char
     irc_command_exec_buffers (list_buffers, command);
 
     weechat_list_free (list_buffers);
-    if (servers)
-        weechat_string_free_split (servers);
+    weechat_string_free_split (servers);
 }
 
 /*
@@ -1465,10 +1463,8 @@ irc_command_run_away (const void *pointer, void *data,
         irc_command_away (pointer, data, buffer, argc, argv, argv_eol);
     }
 
-    if (argv)
-        weechat_string_free_split (argv);
-    if (argv_eol)
-        weechat_string_free_split (argv_eol);
+    weechat_string_free_split (argv);
+    weechat_string_free_split (argv_eol);
 
     return WEECHAT_RC_OK;
 }
@@ -3002,8 +2998,7 @@ irc_command_join_server (struct t_irc_server *server, const char *arguments,
         weechat_string_free_split (channels);
     }
 
-    if (keys)
-        weechat_string_free_split (keys);
+    weechat_string_free_split (keys);
 }
 
 /*

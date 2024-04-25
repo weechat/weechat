@@ -1567,10 +1567,8 @@ script_action_run_all ()
                     }
                 }
             }
-            if (argv)
-                weechat_string_free_split (argv);
-            if (argv_eol)
-                weechat_string_free_split (argv_eol);
+            weechat_string_free_split (argv);
+            weechat_string_free_split (argv_eol);
         }
         weechat_string_free_split (actions);
     }

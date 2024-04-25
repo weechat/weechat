@@ -448,8 +448,7 @@ irc_list_parse_messages (struct t_irc_server *server, const char *output)
             }
         }
         free (command);
-        if (params)
-            weechat_string_free_split (params);
+        weechat_string_free_split (params);
     }
 
     weechat_string_free_split (irc_msgs);

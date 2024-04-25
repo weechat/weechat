@@ -72,8 +72,7 @@ plugin_script_api_string_match_list (struct t_weechat_plugin *weechat_plugin,
                                        (const char **)list_masks,
                                        case_sensitive);
 
-    if (list_masks)
-        weechat_string_free_split (list_masks);
+    weechat_string_free_split (list_masks);
 
     return match;
 }

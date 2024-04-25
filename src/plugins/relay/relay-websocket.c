@@ -361,12 +361,10 @@ relay_websocket_parse_extensions (const char *extensions,
                             ws_deflate->window_bits_inflate = (int)number;
                     }
                 }
-                if (items)
-                    weechat_string_free_split (items);
+                weechat_string_free_split (items);
             }
         }
-        if (params)
-            weechat_string_free_split (params);
+        weechat_string_free_split (params);
     }
 
     weechat_string_free_split (exts);

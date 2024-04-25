@@ -374,12 +374,9 @@ irc_join_split (struct t_irc_server *server, const char *join,
     }
 
 end:
-    if (items)
-        weechat_string_free_split (items);
-    if (channels)
-        weechat_string_free_split (channels);
-    if (keys)
-        weechat_string_free_split (keys);
+    weechat_string_free_split (items);
+    weechat_string_free_split (channels);
+    weechat_string_free_split (keys);
 
     return arraylist;
 }

@@ -2289,8 +2289,7 @@ irc_server_free_data (struct t_irc_server *server)
     }
     free (server->name);
     free (server->addresses_eval);
-    if (server->addresses_array)
-        weechat_string_free_split (server->addresses_array);
+    weechat_string_free_split (server->addresses_array);
     free (server->ports_array);
     free (server->retry_array);
     free (server->current_address);
@@ -2302,8 +2301,7 @@ irc_server_free_data (struct t_irc_server *server)
     weechat_unhook (server->hook_timer_anti_flood);
     irc_server_free_sasl_data (server);
     free (server->unterminated_message);
-    if (server->nicks_array)
-        weechat_string_free_split (server->nicks_array);
+    weechat_string_free_split (server->nicks_array);
     free (server->nick);
     free (server->nick_modes);
     free (server->host);
@@ -2315,8 +2313,7 @@ irc_server_free_data (struct t_irc_server *server)
     free (server->chantypes);
     free (server->chanmodes);
     free (server->clienttagdeny);
-    if (server->clienttagdeny_array)
-        weechat_string_free_split (server->clienttagdeny_array);
+    weechat_string_free_split (server->clienttagdeny_array);
     free (server->away_message);
     if (server->cmd_list_regexp)
     {

@@ -768,11 +768,9 @@ relay_weechat_msg_add_hdata (struct t_relay_weechat_msg *msg,
     rc = 1;
 
 end:
-    if (list_keys)
-        weechat_string_free_split (list_keys);
+    weechat_string_free_split (list_keys);
     free (keys_types);
-    if (list_path)
-        weechat_string_free_split (list_path);
+    weechat_string_free_split (list_path);
     free (path_returned);
     free (hdata_head);
 
