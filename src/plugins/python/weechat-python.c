@@ -1358,8 +1358,7 @@ weechat_python_infolist_constants ()
     return infolist;
 
 error:
-    if (infolist)
-        weechat_infolist_free (infolist);
+    weechat_infolist_free (infolist);
     return NULL;
 }
 

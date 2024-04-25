@@ -561,8 +561,7 @@ relay_irc_signal_irc_outtags_cb (const void *pointer, void *data,
                                  (host && host[0]) ? host : "",
                                  ptr_message);
 
-                if (infolist_nick)
-                    weechat_infolist_free (infolist_nick);
+                weechat_infolist_free (infolist_nick);
             }
         }
         free (irc_channel);

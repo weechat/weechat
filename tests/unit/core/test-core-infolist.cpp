@@ -253,6 +253,9 @@ TEST(CoreInfolist, Valid)
     infolist_free (infolist);
 
     LONGS_EQUAL(0, infolist_valid (infolist));
+
+    /* test free of NULL infolist */
+    infolist_free (NULL);
 }
 
 /*
