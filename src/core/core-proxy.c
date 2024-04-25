@@ -456,18 +456,12 @@ proxy_new (const char *name, const char *type, const char *ipv6,
                                         option_username, option_password);
     if (!new_proxy)
     {
-        if (option_type)
-            config_file_option_free (option_type, 0);
-        if (option_ipv6)
-            config_file_option_free (option_ipv6, 0);
-        if (option_address)
-            config_file_option_free (option_address, 0);
-        if (option_port)
-            config_file_option_free (option_port, 0);
-        if (option_username)
-            config_file_option_free (option_username, 0);
-        if (option_password)
-            config_file_option_free (option_password, 0);
+        config_file_option_free (option_type, 0);
+        config_file_option_free (option_ipv6, 0);
+        config_file_option_free (option_address, 0);
+        config_file_option_free (option_port, 0);
+        config_file_option_free (option_username, 0);
+        config_file_option_free (option_password, 0);
     }
 
     return new_proxy;

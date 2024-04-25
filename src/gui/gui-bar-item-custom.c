@@ -480,10 +480,8 @@ error:
     }
     else
     {
-        if (option_conditions)
-            config_file_option_free (option_conditions, 0);
-        if (option_content)
-            config_file_option_free (option_content, 0);
+        config_file_option_free (option_conditions, 0);
+        config_file_option_free (option_content, 0);
     }
     return NULL;
 }
@@ -612,8 +610,7 @@ gui_bar_item_custom_free_data (struct t_gui_bar_item_custom *item)
     free (item->name);
     for (i = 0; i < GUI_BAR_ITEM_CUSTOM_NUM_OPTIONS; i++)
     {
-        if (item->options[i])
-            config_file_option_free (item->options[i], 1);
+        config_file_option_free (item->options[i], 1);
     }
 }
 

@@ -1564,8 +1564,7 @@ error:
                          gui_key_context_string[context]);
     }
     free (key_fixed);
-    if (ptr_option)
-        config_file_option_free (ptr_option, 0);
+    config_file_option_free (ptr_option, 0);
     return NULL;
 }
 
@@ -2625,8 +2624,7 @@ gui_key_free (int context,
             weechat_config_file,
             weechat_config_section_key[context],
             key->key);
-        if (ptr_option)
-            config_file_option_free (ptr_option, 1);
+        config_file_option_free (ptr_option, 1);
     }
 
     /* free memory */
