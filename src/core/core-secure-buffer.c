@@ -244,8 +244,7 @@ secure_buffer_open ()
 
         secure_buffer_display_values = 0;
 
-        if (properties)
-            hashtable_free (properties);
+        hashtable_free (properties);
     }
 
     if (!secure_buffer)

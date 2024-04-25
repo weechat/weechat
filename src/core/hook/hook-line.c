@@ -205,8 +205,7 @@ hook_line_exec (struct t_gui_line *line)
 
     hook_exec_end ();
 
-    if (hashtable)
-        hashtable_free (hashtable);
+    hashtable_free (hashtable);
 }
 
 /*

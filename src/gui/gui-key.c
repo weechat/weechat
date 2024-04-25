@@ -2250,10 +2250,8 @@ end:
         gui_focus_free_info (focus_info1);
     if (focus_info2)
         gui_focus_free_info (focus_info2);
-    if (hashtable_focus[0])
-        hashtable_free (hashtable_focus[0]);
-    if (hashtable_focus[1])
-        hashtable_free (hashtable_focus[1]);
+    hashtable_free (hashtable_focus[0]);
+    hashtable_free (hashtable_focus[1]);
 
     return rc;
 }

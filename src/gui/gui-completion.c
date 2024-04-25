@@ -1428,8 +1428,7 @@ gui_completion_get_default_template (struct t_gui_completion *completion)
                               NULL, NULL);
     hashtable_set (pointers, "buffer", completion->buffer);
     value = eval_expression (ptr_default_template, pointers, NULL, NULL);
-    if (pointers)
-        hashtable_free (pointers);
+    hashtable_free (pointers);
 
     return (value) ? value : strdup ("");
 }

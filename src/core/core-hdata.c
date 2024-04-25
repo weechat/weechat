@@ -1404,12 +1404,10 @@ hdata_free (struct t_hdata *hdata)
     if (!hdata)
         return;
 
-    if (hdata->hash_var)
-        hashtable_free (hdata->hash_var);
+    hashtable_free (hdata->hash_var);
     free (hdata->var_prev);
     free (hdata->var_next);
-    if (hdata->hash_list)
-        hashtable_free (hdata->hash_list);
+    hashtable_free (hdata->hash_list);
     free (hdata->name);
 
     free (hdata);

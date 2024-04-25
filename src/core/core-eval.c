@@ -2778,8 +2778,7 @@ eval_expression (const char *expr, struct t_hashtable *pointers,
         if (ptr_buffer_added)
             hashtable_remove (pointers, "buffer");
     }
-    if (user_vars)
-        hashtable_free (user_vars);
+    hashtable_free (user_vars);
     if (regex && regex_allocated)
     {
         regfree (regex);

@@ -1335,8 +1335,7 @@ gui_color_buffer_open ()
         if (gui_color_buffer && !gui_color_buffer->short_name)
             gui_color_buffer->short_name = strdup (GUI_COLOR_BUFFER_NAME);
 
-        if (properties)
-            hashtable_free (properties);
+        hashtable_free (properties);
     }
 
     if (!gui_color_buffer)

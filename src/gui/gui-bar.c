@@ -419,12 +419,9 @@ gui_bar_check_conditions (struct t_gui_bar *bar,
 
         rc = eval_is_true (result);
         free (result);
-        if (pointers)
-            hashtable_free (pointers);
-        if (extra_vars)
-            hashtable_free (extra_vars);
-        if (options)
-            hashtable_free (options);
+        hashtable_free (pointers);
+        hashtable_free (extra_vars);
+        hashtable_free (options);
         if (!rc)
             return 0;
     }

@@ -421,8 +421,7 @@ gui_chat_get_time_string (time_t date, int date_usec, int highlight)
         if (extra_vars)
             hashtable_set (extra_vars, "highlight", (highlight) ? "1" : "0");
         text_with_color = eval_expression (text_time, NULL, extra_vars, NULL);
-        if (extra_vars)
-            hashtable_free (extra_vars);
+        hashtable_free (extra_vars);
         if (text_with_color)
         {
             if (strcmp (text_time, text_with_color) != 0)

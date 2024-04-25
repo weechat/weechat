@@ -2485,10 +2485,8 @@ COMMAND_CALLBACK(eval)
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
         }
 
-        if (pointers)
-            hashtable_free (pointers);
-        if (options)
-            hashtable_free (options);
+        hashtable_free (pointers);
+        hashtable_free (options);
     }
 
     return WEECHAT_RC_OK;

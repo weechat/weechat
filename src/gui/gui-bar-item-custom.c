@@ -333,10 +333,8 @@ gui_bar_item_custom_callback (const void *pointer,
         pointers, NULL, NULL);
 
 end:
-    if (pointers)
-        hashtable_free (pointers);
-    if (options)
-        hashtable_free (options);
+    hashtable_free (pointers);
+    hashtable_free (options);
 
     return result;
 }

@@ -1156,8 +1156,7 @@ gui_buffer_new_user (const char *name, enum t_gui_buffer_type buffer_type)
                                        &gui_buffer_user_input_cb, NULL, NULL,
                                        &gui_buffer_user_close_cb, NULL, NULL);
 
-    if (properties)
-        hashtable_free (properties);
+    hashtable_free (properties);
 
     return new_buffer;
 }
@@ -3712,8 +3711,7 @@ gui_buffer_close (struct t_gui_buffer *buffer)
         gui_completion_free (buffer->completion);
     gui_nicklist_remove_all (buffer);
     gui_nicklist_remove_group (buffer, buffer->nicklist_root);
-    if (buffer->hotlist_max_level_nicks)
-        hashtable_free (buffer->hotlist_max_level_nicks);
+    hashtable_free (buffer->hotlist_max_level_nicks);
     gui_key_free_all (-1, &buffer->keys, &buffer->last_key,
                       &buffer->keys_count, 0);
     gui_buffer_local_var_remove_all (buffer);

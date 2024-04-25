@@ -1317,8 +1317,7 @@ completion_list_add_plugins_installed_cb (const void *pointer, void *data,
             hashtable_set (options, "directory", "data");
         plugin_path = string_eval_path_home (CONFIG_STRING(config_plugin_path),
                                              NULL, NULL, options);
-        if (options)
-            hashtable_free (options);
+        hashtable_free (options);
         if (plugin_path)
         {
             dir_exec_on_files (plugin_path, 1, 0,
