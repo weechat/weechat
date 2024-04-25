@@ -2902,6 +2902,9 @@ TEST(CoreString, Shared)
 
     string_shared_free (str3);
     LONGS_EQUAL(count + 0, string_hashtable_shared->items_count);
+
+    /* test free of NULL */
+    string_shared_free (NULL);
 }
 
 /*

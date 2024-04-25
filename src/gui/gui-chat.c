@@ -753,8 +753,7 @@ gui_chat_printf_datetime_tags_internal (struct t_gui_buffer *buffer,
                     new_line->data->date = new_line->data->date_printed;
                     new_line->data->date_usec = new_line->data->date_usec_printed;
                 }
-                if (new_line->data->prefix)
-                    string_shared_free (new_line->data->prefix);
+                string_shared_free (new_line->data->prefix);
                 if (pos_prefix)
                 {
                     new_line->data->prefix = (char *)string_shared_get (pos_prefix);

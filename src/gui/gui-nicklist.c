@@ -593,14 +593,10 @@ gui_nicklist_remove_nick (struct t_gui_buffer *buffer,
         (nick->group)->last_nick = nick->prev_nick;
 
     /* free data */
-    if (nick->name)
-        string_shared_free (nick->name);
-    if (nick->color)
-        string_shared_free (nick->color);
-    if (nick->prefix)
-        string_shared_free (nick->prefix);
-    if (nick->prefix_color)
-        string_shared_free (nick->prefix_color);
+    string_shared_free (nick->name);
+    string_shared_free (nick->color);
+    string_shared_free (nick->prefix);
+    string_shared_free (nick->prefix_color);
 
     buffer->nicklist_count--;
     buffer->nicklist_nicks_count--;
@@ -674,10 +670,8 @@ gui_nicklist_remove_group (struct t_gui_buffer *buffer,
     }
 
     /* free data */
-    if (group->name)
-        string_shared_free (group->name);
-    if (group->color)
-        string_shared_free (group->color);
+    string_shared_free (group->name);
+    string_shared_free (group->color);
 
     if (buffer->nicklist_display_groups && group->visible)
     {
@@ -997,8 +991,7 @@ gui_nicklist_group_set (struct t_gui_buffer *buffer,
 
     if (strcmp (property, "color") == 0)
     {
-        if (group->color)
-            string_shared_free (group->color);
+        string_shared_free (group->color);
         group->color = (value[0]) ? (char *)string_shared_get (value) : NULL;
         group_changed = 1;
     }
@@ -1108,22 +1101,19 @@ gui_nicklist_nick_set (struct t_gui_buffer *buffer,
 
     if (strcmp (property, "color") == 0)
     {
-        if (nick->color)
-            string_shared_free (nick->color);
+        string_shared_free (nick->color);
         nick->color = (value[0]) ? (char *)string_shared_get (value) : NULL;
         nick_changed = 1;
     }
     else if (strcmp (property, "prefix") == 0)
     {
-        if (nick->prefix)
-            string_shared_free (nick->prefix);
+        string_shared_free (nick->prefix);
         nick->prefix = (value[0]) ? (char *)string_shared_get (value) : NULL;
         nick_changed = 1;
     }
     else if (strcmp (property, "prefix_color") == 0)
     {
-        if (nick->prefix_color)
-            string_shared_free (nick->prefix_color);
+        string_shared_free (nick->prefix_color);
         nick->prefix_color = (value[0]) ? (char *)string_shared_get (value) : NULL;
         nick_changed = 1;
     }

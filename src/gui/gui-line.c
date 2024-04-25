@@ -1246,8 +1246,7 @@ gui_line_free_data (struct t_gui_line *line)
 {
     free (line->data->str_time);
     gui_line_tags_free (line->data);
-    if (line->data->prefix)
-        string_shared_free (line->data->prefix);
+    string_shared_free (line->data->prefix);
     free (line->data->message);
     free (line->data);
 
@@ -1788,8 +1787,7 @@ gui_line_hook_update (struct t_gui_line *line,
     ptr_value2 = hashtable_get (hashtable2, "prefix");
     if (ptr_value2 && (!ptr_value || (strcmp (ptr_value, ptr_value2) != 0)))
     {
-        if (line->data->prefix)
-            string_shared_free (line->data->prefix);
+        string_shared_free (line->data->prefix);
         line->data->prefix = (char *)string_shared_get (
             (ptr_value2) ? ptr_value2 : "");
         line->data->prefix_length = (line->data->prefix) ?

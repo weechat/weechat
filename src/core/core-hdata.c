@@ -1276,8 +1276,7 @@ hdata_set (struct t_hdata *hdata, void *pointer, const char *name,
             break;
         case WEECHAT_HDATA_SHARED_STRING:
             ptr_string = (char **)(pointer + var->offset);
-            if (*ptr_string)
-                string_shared_free (*ptr_string);
+            string_shared_free (*ptr_string);
             *ptr_string = (value) ? (char *)string_shared_get (value) : NULL;
             return 1;
             break;
