@@ -709,8 +709,7 @@ upgrade_file_read_object (struct t_upgrade_file *upgrade_file)
     }
 
 end:
-    if (infolist)
-        infolist_free (infolist);
+    infolist_free (infolist);
     free (name);
     free (value_str);
     free (buffer);
