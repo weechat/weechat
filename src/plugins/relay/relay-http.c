@@ -1337,8 +1337,7 @@ relay_http_request_free (struct t_relay_http_request *request)
     free (request->http_version);
     weechat_hashtable_free (request->headers);
     weechat_hashtable_free (request->accept_encoding);
-    if (request->ws_deflate)
-        relay_websocket_deflate_free (request->ws_deflate);
+    relay_websocket_deflate_free (request->ws_deflate);
     free (request->body);
 
     free (request);

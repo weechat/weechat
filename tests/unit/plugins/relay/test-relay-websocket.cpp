@@ -84,6 +84,9 @@ TEST(RelayWebsocket, DeflateAllocFree)
     POINTERS_EQUAL(NULL, ws_deflate->strm_inflate);
 
     relay_websocket_deflate_free (ws_deflate);
+
+    /* test free of NULL websocket deflate */
+    relay_websocket_deflate_free (NULL);
 }
 
 /*
