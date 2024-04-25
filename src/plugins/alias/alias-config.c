@@ -113,8 +113,7 @@ alias_config_cmd_delete_cb (const void *pointer, void *data,
                                                           weechat_config_option_get_pointer (option, "name"));
 
     ptr_alias = alias_search (weechat_config_option_get_pointer (option, "name"));
-    if (ptr_alias)
-        alias_free (ptr_alias);
+    alias_free (ptr_alias);
 
     weechat_config_option_free (ptr_option_completion);
 }
@@ -249,8 +248,7 @@ alias_config_cmd_create_option_cb (const void *pointer, void *data,
 
     /* create alias */
     ptr_alias = alias_search (option_name);
-    if (ptr_alias)
-        alias_free (ptr_alias);
+    alias_free (ptr_alias);
     if (value && value[0])
         rc = (alias_new (option_name, value, NULL)) ?
             WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE : WEECHAT_CONFIG_OPTION_SET_ERROR;

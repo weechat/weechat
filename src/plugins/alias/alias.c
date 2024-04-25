@@ -696,8 +696,7 @@ alias_new (const char *name, const char *command, const char *completion)
     }
 
     ptr_alias = alias_search (name);
-    if (ptr_alias)
-        alias_free (ptr_alias);
+    alias_free (ptr_alias);
 
     new_alias = malloc (sizeof (*new_alias));
     if (new_alias)

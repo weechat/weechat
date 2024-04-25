@@ -228,7 +228,8 @@ TEST(Alias, Rename)
 
 TEST(Alias, Free)
 {
-    /* TODO: write tests */
+    /* test free of NULL alias */
+    alias_free (NULL);
 }
 
 /*
