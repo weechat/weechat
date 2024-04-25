@@ -1161,8 +1161,7 @@ trigger_command_trigger (const void *pointer, void *data,
                     }
                     else
                     {
-                        if (ptr_trigger)
-                            trigger_free (ptr_trigger);
+                        trigger_free (ptr_trigger);
                         ptr_trigger = trigger_new (
                             trigger_config_default_list[j][0],   /* name */
                             trigger_config_default_list[j][1],   /* enabled */

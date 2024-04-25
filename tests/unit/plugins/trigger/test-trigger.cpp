@@ -629,7 +629,7 @@ TEST(Trigger, New)
     POINTERS_EQUAL(NULL, trigger_search_with_option (NULL));
     POINTERS_EQUAL(NULL, trigger_search_with_option (config_look_day_change));
 
-    /* invalid free */
+    /* test free of NULL trigger */
     trigger_free (NULL);
 }
 
