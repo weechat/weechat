@@ -116,8 +116,7 @@ alias_config_cmd_delete_cb (const void *pointer, void *data,
     if (ptr_alias)
         alias_free (ptr_alias);
 
-    if (ptr_option_completion)
-        weechat_config_option_free (ptr_option_completion);
+    weechat_config_option_free (ptr_option_completion);
 }
 
 /*

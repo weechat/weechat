@@ -787,8 +787,7 @@ relay_remote_free (struct t_relay_remote *remote)
     free (remote->name);
     for (i = 0; i < RELAY_REMOTE_NUM_OPTIONS; i++)
     {
-        if (remote->options[i])
-            weechat_config_option_free (remote->options[i]);
+        weechat_config_option_free (remote->options[i]);
     }
     free (remote->address);
     free (remote->websocket_key);

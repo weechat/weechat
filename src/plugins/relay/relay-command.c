@@ -260,8 +260,7 @@ relay_command_relay (const void *pointer, void *data,
                     relay_config_file,
                     (unix_socket) ? relay_config_section_path : relay_config_section_port,
                     argv_eol[2]);
-                if (ptr_option)
-                    weechat_config_option_free (ptr_option);
+                weechat_config_option_free (ptr_option);
                 weechat_printf (NULL,
                                 _("%s: relay \"%s\" (%s: %s) removed"),
                                 RELAY_PLUGIN_NAME,

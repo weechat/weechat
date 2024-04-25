@@ -2284,8 +2284,7 @@ irc_server_free_data (struct t_irc_server *server)
     /* free server data */
     for (i = 0; i < IRC_SERVER_NUM_OPTIONS; i++)
     {
-        if (server->options[i])
-            weechat_config_option_free (server->options[i]);
+        weechat_config_option_free (server->options[i]);
     }
     free (server->name);
     free (server->addresses_eval);

@@ -52,16 +52,14 @@ alias_command_add (const char *alias_name, const char *command,
     ptr_option = weechat_config_search_option (alias_config_file,
                                                alias_config_section_cmd,
                                                alias_name);
-    if (ptr_option)
-        weechat_config_option_free (ptr_option);
+    weechat_config_option_free (ptr_option);
     alias_config_cmd_new_option (alias_name, command);
 
     /* create configuration option for completion */
     ptr_option = weechat_config_search_option (alias_config_file,
                                                alias_config_section_completion,
                                                alias_name);
-    if (ptr_option)
-        weechat_config_option_free (ptr_option);
+    weechat_config_option_free (ptr_option);
     if (completion)
         alias_config_completion_new_option (alias_name, completion);
 
@@ -212,14 +210,12 @@ alias_command_cb (const void *pointer, void *data,
                         alias_config_file,
                         alias_config_section_cmd,
                         ptr_alias_name);
-                    if (ptr_option)
-                        weechat_config_option_free (ptr_option);
+                    weechat_config_option_free (ptr_option);
                     ptr_option = weechat_config_search_option (
                         alias_config_file,
                         alias_config_section_completion,
                         ptr_alias_name);
-                    if (ptr_option)
-                        weechat_config_option_free (ptr_option);
+                    weechat_config_option_free (ptr_option);
                     weechat_printf (NULL, _("Alias \"%s\" removed"), name);
                     free (name);
                 }

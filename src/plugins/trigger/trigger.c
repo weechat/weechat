@@ -1230,8 +1230,7 @@ trigger_free (struct t_trigger *trigger)
     free (trigger->name);
     for (i = 0; i < TRIGGER_NUM_OPTIONS; i++)
     {
-        if (trigger->options[i])
-            weechat_config_option_free (trigger->options[i]);
+        weechat_config_option_free (trigger->options[i]);
     }
     weechat_string_free_split (trigger->commands);
 

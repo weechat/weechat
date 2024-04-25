@@ -1540,7 +1540,8 @@ TEST(CoreConfigFile, OptionFreeData)
 
 TEST(CoreConfigFile, OptionFree)
 {
-    /* TODO: write tests */
+    /* test free of NULL option */
+    config_file_option_free (NULL, 1);
 }
 
 /*
