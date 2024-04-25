@@ -542,8 +542,7 @@ gui_filter_free (struct t_gui_filter *filter)
     free (filter->buffer_name);
     string_free_split (filter->buffers);
     free (filter->tags);
-    if (filter->tags_array)
-        string_free_split_tags (filter->tags_array);
+    string_free_split_tags (filter->tags_array);
     free (filter->regex);
     if (filter->regex_prefix)
     {

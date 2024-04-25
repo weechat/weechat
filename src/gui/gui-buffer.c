@@ -3740,11 +3740,9 @@ gui_buffer_close (struct t_gui_buffer *buffer)
         free (buffer->highlight_regex_compiled);
     }
     free (buffer->highlight_tags_restrict);
-    if (buffer->highlight_tags_restrict_array)
-        string_free_split_tags (buffer->highlight_tags_restrict_array);
+    string_free_split_tags (buffer->highlight_tags_restrict_array);
     free (buffer->highlight_tags);
-    if (buffer->highlight_tags_array)
-        string_free_split_tags (buffer->highlight_tags_array);
+    string_free_split_tags (buffer->highlight_tags_array);
     free (buffer->input_callback_data);
     free (buffer->close_callback_data);
     free (buffer->nickcmp_callback_data);
