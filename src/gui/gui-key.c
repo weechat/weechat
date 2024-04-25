@@ -2243,10 +2243,8 @@ gui_key_focus (const char *key, int context)
     rc = gui_key_focus_command (key, context, hashtable_focus);
 
 end:
-    if (focus_info1)
-        gui_focus_free_info (focus_info1);
-    if (focus_info2)
-        gui_focus_free_info (focus_info2);
+    gui_focus_free_info (focus_info1);
+    gui_focus_free_info (focus_info2);
     hashtable_free (hashtable_focus[0]);
     hashtable_free (hashtable_focus[1]);
 

@@ -378,8 +378,7 @@ gui_cursor_move_area_add_xy (int add_x, int add_y)
     }
 
     gui_focus_free_info (focus_info_old);
-    if (focus_info_new)
-        gui_focus_free_info (focus_info_new);
+    gui_focus_free_info (focus_info_new);
 }
 
 /*

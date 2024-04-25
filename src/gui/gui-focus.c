@@ -100,6 +100,9 @@ gui_focus_get_info (int x, int y)
 void
 gui_focus_free_info (struct t_gui_focus_info *focus_info)
 {
+    if (!focus_info)
+        return;
+
     free (focus_info->chat_word);
     free (focus_info->chat_focused_line);
     free (focus_info->chat_focused_line_bol);
