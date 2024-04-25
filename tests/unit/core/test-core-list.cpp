@@ -142,6 +142,9 @@ TEST(CoreList, Add)
 
     /* free list */
     weelist_free (list);
+
+    /* test free of NULL list */
+    weelist_free (NULL);
 }
 
 /*

@@ -1544,10 +1544,8 @@ irc_channel_free (struct t_irc_server *server, struct t_irc_channel *channel)
     free (channel->away_message);
     free (channel->pv_remote_nick_color);
     weechat_unhook (channel->hook_autorejoin);
-    if (channel->nicks_speaking[0])
-        weechat_list_free (channel->nicks_speaking[0]);
-    if (channel->nicks_speaking[1])
-        weechat_list_free (channel->nicks_speaking[1]);
+    weechat_list_free (channel->nicks_speaking[0]);
+    weechat_list_free (channel->nicks_speaking[1]);
     irc_channel_nick_speaking_time_free_all (channel);
     weechat_hashtable_free (channel->join_smart_filtered);
     free (channel->buffer_as_string);
