@@ -374,8 +374,7 @@ gui_bar_item_custom_alloc (const char *name)
 void
 gui_bar_item_custom_create_bar_item (struct t_gui_bar_item_custom *item)
 {
-    if (item->bar_item)
-        gui_bar_item_free (item->bar_item);
+    gui_bar_item_free (item->bar_item);
     item->bar_item = gui_bar_item_new (
         NULL,
         item->name,

@@ -188,7 +188,8 @@ TEST(GuiBarItem, Update)
 
 TEST(GuiBarItem, Free)
 {
-    /* TODO: write tests */
+    /* test free of NULL bar item */
+    gui_bar_item_free (NULL);
 }
 
 /*
