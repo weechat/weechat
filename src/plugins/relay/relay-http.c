@@ -1329,8 +1329,7 @@ end:
 void
 relay_http_request_free (struct t_relay_http_request *request)
 {
-    if (request->raw)
-        weechat_string_dyn_free (request->raw, 1);
+    weechat_string_dyn_free (request->raw, 1);
     free (request->method);
     free (request->path);
     weechat_string_free_split (request->path_items);

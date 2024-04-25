@@ -312,8 +312,7 @@ irc_protocol_tags (struct t_irc_protocol_ctxt *ctxt, const char *extra_tags)
               (ptr_address && ptr_address[0]) ? ptr_address : "",
               str_log_level);
 
-    if (str_irc_tags)
-        weechat_string_dyn_free (str_irc_tags, 1);
+    weechat_string_dyn_free (str_irc_tags, 1);
 
     if (!string[0])
         return NULL;
@@ -938,8 +937,7 @@ irc_protocol_cap_sync (struct t_irc_server *server, int sasl)
 
     free (str_caps_server);
     free (caps_to_enable);
-    if (cap_req)
-        weechat_string_dyn_free (cap_req, 1);
+    weechat_string_dyn_free (cap_req, 1);
 }
 
 /*
@@ -6289,8 +6287,7 @@ IRC_PROTOCOL_CALLBACK(353)
     }
 
     free (str_params);
-    if (str_nicks)
-        weechat_string_dyn_free (str_nicks, 1);
+    weechat_string_dyn_free (str_nicks, 1);
     weechat_string_free_split (nicks);
 
     return WEECHAT_RC_OK;

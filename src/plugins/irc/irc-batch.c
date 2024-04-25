@@ -186,8 +186,7 @@ irc_batch_free (struct t_irc_server *server, struct t_irc_batch *batch)
     free (batch->type);
     free (batch->parameters);
     weechat_hashtable_free (batch->tags);
-    if (batch->messages)
-        weechat_string_dyn_free (batch->messages, 1);
+    weechat_string_dyn_free (batch->messages, 1);
 
     /* remove batch from list */
     if (batch->prev_batch)

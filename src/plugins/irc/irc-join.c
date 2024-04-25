@@ -433,8 +433,7 @@ irc_join_build_string (struct t_arraylist *arraylist)
 end:
     if (channels)
         result = weechat_string_dyn_free (channels, 0);
-    if (keys)
-        weechat_string_dyn_free (keys, 1);
+    weechat_string_dyn_free (keys, 1);
 
     return (result) ? result : strdup ("");
 }

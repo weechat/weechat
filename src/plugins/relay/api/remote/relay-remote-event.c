@@ -173,8 +173,7 @@ RELAY_REMOTE_EVENT_CALLBACK(line)
         (prefix && prefix[0]) ? "\t" : "",
         message);
 
-    if (tags)
-        weechat_string_dyn_free (tags, 1);
+    weechat_string_dyn_free (tags, 1);
 
     return WEECHAT_RC_OK;
 }

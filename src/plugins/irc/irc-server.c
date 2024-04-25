@@ -6034,12 +6034,9 @@ irc_server_build_autojoin (struct t_irc_server *server)
     return weechat_string_dyn_free (channels_with_key, 0);
 
 error:
-    if (channels_with_key)
-        weechat_string_dyn_free (channels_with_key, 1);
-    if (channels_others)
-        weechat_string_dyn_free (channels_others, 1);
-    if (keys)
-        weechat_string_dyn_free (keys, 1);
+    weechat_string_dyn_free (channels_with_key, 1);
+    weechat_string_dyn_free (channels_others, 1);
+    weechat_string_dyn_free (keys, 1);
     return NULL;
 }
 
