@@ -811,8 +811,7 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(completion)
     return WEECHAT_RC_OK;
 
 error:
-    if (completion)
-        weechat_completion_free (completion);
+    weechat_completion_free (completion);
 
     msg = relay_weechat_msg_new (id);
     if (msg)
