@@ -361,8 +361,7 @@ hook_process_child (struct t_hook *hook_process)
         }
 
         /* should not be executed if execvp was OK */
-        if (exec_args)
-            string_free_split (exec_args);
+        string_free_split (exec_args);
         fprintf (stderr, "Error with command '%s'\n",
                  HOOK_PROCESS(hook_process, command));
     }

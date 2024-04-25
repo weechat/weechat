@@ -858,8 +858,7 @@ plugin_api_info_nick_color_cb (const void *pointer, void *data,
         -1,
         (num_items >= 2) ? items[1] : NULL);
 
-    if (items)
-        string_free_split (items);
+    string_free_split (items);
 
     return result;
 }
@@ -888,8 +887,7 @@ plugin_api_info_nick_color_name_cb (const void *pointer, void *data,
         -1,
         (num_items >= 2) ? items[1] : NULL);
 
-    if (items)
-        string_free_split (items);
+    string_free_split (items);
 
     return result;
 }
@@ -928,8 +926,7 @@ plugin_api_info_nick_color_ignore_case_cb (const void *pointer, void *data,
         case_range,
         (num_items >= 3) ? items[2] : NULL);
 
-    if (items)
-        string_free_split (items);
+    string_free_split (items);
 
     return result;
 }
@@ -968,8 +965,7 @@ plugin_api_info_nick_color_name_ignore_case_cb (const void *pointer, void *data,
         case_range,
         (num_items >= 3) ? items[2] : NULL);
 
-    if (items)
-        string_free_split (items);
+    string_free_split (items);
 
     return result;
 }
@@ -1119,8 +1115,7 @@ plugin_api_info_totp_generate_cb (const void *pointer, void *data,
     return totp;
 
 error:
-    if (argv)
-        string_free_split (argv);
+    string_free_split (argv);
     free (totp);
     return NULL;
 }
@@ -1191,8 +1186,7 @@ plugin_api_info_totp_validate_cb (const void *pointer, void *data,
     return strdup (value);
 
 error:
-    if (argv)
-        string_free_split (argv);
+    string_free_split (argv);
     return NULL;
 }
 

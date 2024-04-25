@@ -877,8 +877,7 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                 }
             }
         }
-        if (items)
-            string_free_split (items);
+        string_free_split (items);
         free (content);
     }
     else

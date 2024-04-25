@@ -232,8 +232,7 @@ network_load_user_ca_files (int force_display)
     }
 
 end:
-    if (paths)
-        string_free_split (paths);
+    string_free_split (paths);
     hashtable_free (options);
 
     network_num_certs_user = num_loaded;

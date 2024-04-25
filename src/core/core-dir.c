@@ -356,8 +356,7 @@ dir_set_home_path (char *path)
     rc = 1;
 
 end:
-    if (paths)
-        string_free_split (paths);
+    string_free_split (paths);
     return rc;
 }
 

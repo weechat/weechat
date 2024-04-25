@@ -965,8 +965,7 @@ gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window,
                 {
                     for (sub = 0; sub < bar_window->items_subcount[i]; sub++)
                     {
-                        if (split_items[i][sub])
-                            string_free_split (split_items[i][sub]);
+                        string_free_split (split_items[i][sub]);
                     }
                     free (split_items[i]);
                 }

@@ -2494,10 +2494,8 @@ gui_key_pressed (const char *key_str)
             break;
     }
 
-    if (chunks1)
-        string_free_split (chunks1);
-    if (chunks2)
-        string_free_split (chunks2);
+    string_free_split (chunks1);
+    string_free_split (chunks2);
 
     if (ptr_key)
     {
@@ -2635,8 +2633,7 @@ gui_key_free (int context,
 
     /* free memory */
     free (key->key);
-    if (key->chunks)
-        string_free_split (key->chunks);
+    string_free_split (key->chunks);
     for (i = 0; i < 2; i++)
     {
         free (key->area_name[i]);

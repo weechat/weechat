@@ -655,8 +655,7 @@ util_version_number (const char *version)
             }
         }
     }
-    if (items)
-        string_free_split (items);
+    string_free_split (items);
 
     return (version_int[0] << 24) | (version_int[1] << 16)
         | (version_int[2] << 8) | version_int[3];

@@ -224,8 +224,7 @@ end:
     free (command);
     free (command_name);
 
-    if (new_commands_allowed)
-        string_free_split (new_commands_allowed);
+    string_free_split (new_commands_allowed);
     input_commands_allowed = old_commands_allowed;
 
     return rc;

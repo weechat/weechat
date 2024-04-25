@@ -403,8 +403,7 @@ upgrade_file_write_object (struct t_upgrade_file *upgrade_file, int object_id,
                     }
                 }
             }
-            if (argv)
-                string_free_split (argv);
+            string_free_split (argv);
         }
 
         /* write object end */

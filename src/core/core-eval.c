@@ -626,11 +626,9 @@ end:
     free (str_number);
     free (separators);
     free (str_flags);
-    if (list_flags)
-        string_free_split (list_flags);
+    string_free_split (list_flags);
     free (strip_items);
-    if (items)
-        string_free_split (items);
+    string_free_split (items);
     return (value) ? value : strdup ("");
 }
 
@@ -726,8 +724,7 @@ eval_string_split_shell (const char *text)
 
 end:
     free (str_number);
-    if (items)
-        string_free_split (items);
+    string_free_split (items);
     return (value) ? value : strdup ("");
 }
 

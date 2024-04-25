@@ -3044,8 +3044,7 @@ string_split_tags (const char *tags, int *num_tags)
                 tags_array[tags_count] = NULL;
             }
         }
-        if (tags_array_temp)
-            string_free_split (tags_array_temp);
+        string_free_split (tags_array_temp);
     }
 
     if (num_tags)

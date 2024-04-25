@@ -684,8 +684,7 @@ gui_bar_free_items_arrays (struct t_gui_bar *bar)
 
     for (i = 0; i < bar->items_count; i++)
     {
-        if (bar->items_array[i])
-            string_free_split (bar->items_array[i]);
+        string_free_split (bar->items_array[i]);
         for (j = 0; j < bar->items_subcount[i]; j++)
         {
             free (bar->items_buffer[i][j]);

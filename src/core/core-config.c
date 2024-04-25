@@ -2930,10 +2930,8 @@ config_weechat_filter_read_cb (const void *pointer, void *data,
             gui_filter_new ((string_strcasecmp (argv[0], "on") == 0) ? 1 : 0,
                             option_name, argv[1], argv[2], argv_eol[3]);
         }
-        if (argv)
-            string_free_split (argv);
-        if (argv_eol)
-            string_free_split (argv_eol);
+        string_free_split (argv);
+        string_free_split (argv_eol);
     }
 
     return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;

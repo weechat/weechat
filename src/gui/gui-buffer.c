@@ -1908,10 +1908,8 @@ gui_buffer_add_highlight_words (struct t_gui_buffer *buffer,
 
     weelist_free (list);
 
-    if (current_words)
-        string_free_split (current_words);
-    if (add_words)
-        string_free_split (add_words);
+    string_free_split (current_words);
+    string_free_split (add_words);
 }
 
 /*
@@ -1964,10 +1962,8 @@ gui_buffer_remove_highlight_words (struct t_gui_buffer *buffer,
 
     weelist_free (list);
 
-    if (current_words)
-        string_free_split (current_words);
-    if (remove_words)
-        string_free_split (remove_words);
+    string_free_split (current_words);
+    string_free_split (remove_words);
 }
 
 /*

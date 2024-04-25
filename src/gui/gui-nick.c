@@ -324,8 +324,7 @@ gui_nick_find_color_name (const char *nickname, int case_range,
 
 end:
     result = strdup ((ptr_result) ? ptr_result : default_color);
-    if (list_colors)
-        string_free_split (list_colors);
+    string_free_split (list_colors);
     free (nickname2);
     free (nickname3);
     return result;

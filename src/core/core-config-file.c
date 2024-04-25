@@ -4014,8 +4014,7 @@ config_file_option_free_data (struct t_config_option *option)
     free (option->name);
     free (option->parent_name);
     free (option->description);
-    if (option->string_values)
-        string_free_split (option->string_values);
+    string_free_split (option->string_values);
     free (option->default_value);
     free (option->value);
     free (option->callback_check_value_data);

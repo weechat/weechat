@@ -493,8 +493,7 @@ error:
     arraylist_free (args);
     if (result)
         string_dyn_free (result, 1);
-    if (lines)
-        string_free_split (lines);
+    string_free_split (lines);
     return NULL;
 }
 
