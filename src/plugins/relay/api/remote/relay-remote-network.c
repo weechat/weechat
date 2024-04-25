@@ -227,8 +227,7 @@ error:
         (msg_resp_error) ? " (" : "",
         (msg_resp_error) ? msg_resp_error : "",
         (msg_resp_error) ? ")" : "");
-    if (http_resp)
-        relay_http_response_free (http_resp);
+    relay_http_response_free (http_resp);
     return 0;
 }
 

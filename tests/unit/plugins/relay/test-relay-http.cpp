@@ -1041,6 +1041,9 @@ TEST(RelayHttp, ResponseAllocFree)
     POINTERS_EQUAL(NULL, response->body);
 
     relay_http_response_free (response);
+
+    /* test free of NULL response */
+    relay_http_response_free (NULL);
 }
 
 /*

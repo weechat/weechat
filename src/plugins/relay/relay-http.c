@@ -1579,6 +1579,9 @@ relay_http_parse_response (const char *data)
 void
 relay_http_response_free (struct t_relay_http_response *response)
 {
+    if (!response)
+        return;
+
     free (response->http_version);
     free (response->message);
     weechat_hashtable_free (response->headers);
