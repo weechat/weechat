@@ -582,8 +582,7 @@ weechat_shutdown (int return_code, int crash)
     free (weechat_runtime_dir);
     free (weechat_local_charset);
     free (weechat_force_plugin_autoload);
-    if (weechat_startup_commands)
-        weelist_free (weechat_startup_commands);
+    weelist_free (weechat_startup_commands);
     free (weechat_doc_gen_path);
 
     if (crash)

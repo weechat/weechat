@@ -2014,8 +2014,7 @@ gui_color_palette_free_structs ()
 {
     hashtable_free (gui_color_hash_palette_color);
     hashtable_free (gui_color_hash_palette_alias);
-    if (gui_color_list_with_alias)
-        weelist_free (gui_color_list_with_alias);
+    weelist_free (gui_color_list_with_alias);
 }
 
 /*
