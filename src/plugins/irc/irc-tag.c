@@ -429,8 +429,7 @@ irc_tag_add_tags_to_message (const char *message, struct t_hashtable *tags)
 
 end:
     free (msg_str_tags);
-    if (msg_hash_tags)
-        weechat_hashtable_free (msg_hash_tags);
+    weechat_hashtable_free (msg_hash_tags);
     free (new_tags);
 
     return (result) ? weechat_string_dyn_free (result, 0) : NULL;

@@ -189,8 +189,7 @@ exec_buffer_new (const char *name, int free_content, int clear_buffer,
                                            &exec_buffer_input_cb, NULL, NULL,
                                            &exec_buffer_close_cb, NULL, NULL);
 
-    if (buffer_props)
-        weechat_hashtable_free (buffer_props);
+    weechat_hashtable_free (buffer_props);
 
     /* failed to create buffer ? then return */
     if (!new_buffer)

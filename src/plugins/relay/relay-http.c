@@ -1337,13 +1337,10 @@ relay_http_request_free (struct t_relay_http_request *request)
     free (request->path);
     if (request->path_items)
         weechat_string_free_split (request->path_items);
-    if (request->params)
-        weechat_hashtable_free (request->params);
+    weechat_hashtable_free (request->params);
     free (request->http_version);
-    if (request->headers)
-        weechat_hashtable_free (request->headers);
-    if (request->accept_encoding)
-        weechat_hashtable_free (request->accept_encoding);
+    weechat_hashtable_free (request->headers);
+    weechat_hashtable_free (request->accept_encoding);
     if (request->ws_deflate)
         relay_websocket_deflate_free (request->ws_deflate);
     free (request->body);
@@ -1588,8 +1585,7 @@ relay_http_response_free (struct t_relay_http_response *response)
 {
     free (response->http_version);
     free (response->message);
-    if (response->headers)
-        weechat_hashtable_free (response->headers);
+    weechat_hashtable_free (response->headers);
     free (response->body);
 
     free (response);

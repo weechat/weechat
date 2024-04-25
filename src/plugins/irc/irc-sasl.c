@@ -473,8 +473,7 @@ irc_sasl_get_key_content (const char *sasl_key, char **sasl_error)
     if (options)
         weechat_hashtable_set (options, "directory", "config");
     key_path = weechat_string_eval_path_home (sasl_key, NULL, NULL, options);
-    if (options)
-        weechat_hashtable_free (options);
+    weechat_hashtable_free (options);
 
     if (key_path)
         content = weechat_file_get_content (key_path);

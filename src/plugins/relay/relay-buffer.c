@@ -284,6 +284,5 @@ relay_buffer_open ()
         &relay_buffer_input_cb, NULL, NULL,
         &relay_buffer_close_cb, NULL, NULL);
 
-    if (buffer_props)
-        weechat_hashtable_free (buffer_props);
+    weechat_hashtable_free (buffer_props);
 }

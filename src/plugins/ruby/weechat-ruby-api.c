@@ -584,12 +584,9 @@ weechat_ruby_api_string_eval_expression (VALUE class, VALUE expr,
     result = weechat_string_eval_expression (c_expr, c_pointers, c_extra_vars,
                                              c_options);
 
-    if (c_pointers)
-        weechat_hashtable_free (c_pointers);
-    if (c_extra_vars)
-        weechat_hashtable_free (c_extra_vars);
-    if (c_options)
-        weechat_hashtable_free (c_options);
+    weechat_hashtable_free (c_pointers);
+    weechat_hashtable_free (c_extra_vars);
+    weechat_hashtable_free (c_options);
 
     API_RETURN_STRING_FREE(result);
 }
@@ -633,12 +630,9 @@ weechat_ruby_api_string_eval_path_home (VALUE class, VALUE path,
     result = weechat_string_eval_path_home (c_path, c_pointers, c_extra_vars,
                                             c_options);
 
-    if (c_pointers)
-        weechat_hashtable_free (c_pointers);
-    if (c_extra_vars)
-        weechat_hashtable_free (c_extra_vars);
-    if (c_options)
-        weechat_hashtable_free (c_options);
+    weechat_hashtable_free (c_pointers);
+    weechat_hashtable_free (c_extra_vars);
+    weechat_hashtable_free (c_options);
 
     API_RETURN_STRING_FREE(result);
 }
@@ -2504,8 +2498,7 @@ weechat_ruby_api_key_bind (VALUE class, VALUE context, VALUE keys)
 
     num_keys = weechat_key_bind (c_context, c_keys);
 
-    if (c_keys)
-        weechat_hashtable_free (c_keys);
+    weechat_hashtable_free (c_keys);
 
     API_RETURN_INT(num_keys);
 }
@@ -3360,8 +3353,7 @@ weechat_ruby_api_hook_process_hashtable (VALUE class, VALUE command,
                                                                    c_function,
                                                                    c_data));
 
-    if (c_options)
-        weechat_hashtable_free (c_options);
+    weechat_hashtable_free (c_options);
 
     API_RETURN_STRING(result);
 }
@@ -3446,8 +3438,7 @@ weechat_ruby_api_hook_url (VALUE class, VALUE url,
                                                      c_function,
                                                      c_data));
 
-    if (c_options)
-        weechat_hashtable_free (c_options);
+    weechat_hashtable_free (c_options);
 
     API_RETURN_STRING(result);
 }
@@ -3930,8 +3921,7 @@ weechat_ruby_api_hook_hsignal_send (VALUE class, VALUE signal, VALUE hashtable)
 
     rc = weechat_hook_hsignal_send (c_signal, c_hashtable);
 
-    if (c_hashtable)
-        weechat_hashtable_free (c_hashtable);
+    weechat_hashtable_free (c_hashtable);
 
     API_RETURN_INT(rc);
 }
@@ -4570,8 +4560,7 @@ weechat_ruby_api_buffer_new_props (VALUE class, VALUE name, VALUE properties,
             c_function_close,
             c_data_close));
 
-    if (c_properties)
-        weechat_hashtable_free (c_properties);
+    weechat_hashtable_free (c_properties);
 
     API_RETURN_STRING(result);
 }
@@ -5698,8 +5687,7 @@ weechat_ruby_api_command_options (VALUE class, VALUE buffer, VALUE command,
                                             c_command,
                                             c_options);
 
-    if (c_options)
-        weechat_hashtable_free (c_options);
+    weechat_hashtable_free (c_options);
 
     API_RETURN_INT(rc);
 }
@@ -5868,10 +5856,8 @@ weechat_ruby_api_info_get_hashtable (VALUE class, VALUE info_name,
     result_hashtable = weechat_info_get_hashtable (c_info_name, c_hashtable);
     result_hash = weechat_ruby_hashtable_to_hash (result_hashtable);
 
-    if (c_hashtable)
-        weechat_hashtable_free (c_hashtable);
-    if (result_hashtable)
-        weechat_hashtable_free (result_hashtable);
+    weechat_hashtable_free (c_hashtable);
+    weechat_hashtable_free (result_hashtable);
 
     return result_hash;
 }
@@ -6498,12 +6484,9 @@ weechat_ruby_api_hdata_search (VALUE class, VALUE hdata, VALUE pointer,
                                                c_options,
                                                c_move));
 
-    if (c_pointers)
-        weechat_hashtable_free (c_pointers);
-    if (c_extra_vars)
-        weechat_hashtable_free (c_extra_vars);
-    if (c_options)
-        weechat_hashtable_free (c_options);
+    weechat_hashtable_free (c_pointers);
+    weechat_hashtable_free (c_extra_vars);
+    weechat_hashtable_free (c_options);
 
     API_RETURN_STRING(result);
 }
@@ -6778,8 +6761,7 @@ weechat_ruby_api_hdata_update (VALUE class, VALUE hdata, VALUE pointer,
                                   API_STR2PTR(c_pointer),
                                   c_hashtable);
 
-    if (c_hashtable)
-        weechat_hashtable_free (c_hashtable);
+    weechat_hashtable_free (c_hashtable);
 
     API_RETURN_INT(value);
 }

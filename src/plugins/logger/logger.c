@@ -97,10 +97,8 @@ logger_check_conditions (struct t_gui_buffer *buffer, const char *conditions)
     condition_ok = (result && (strcmp (result, "1") == 0));
     free (result);
 
-    if (pointers)
-        weechat_hashtable_free (pointers);
-    if (options)
-        weechat_hashtable_free (options);
+    weechat_hashtable_free (pointers);
+    weechat_hashtable_free (options);
 
     return condition_ok;
 }
@@ -137,8 +135,7 @@ logger_get_file_path ()
         weechat_hashtable_set (options, "directory", "data");
     path = weechat_string_eval_path_home (
         weechat_config_string (logger_config_file_path), NULL, NULL, options);
-    if (options)
-        weechat_hashtable_free (options);
+    weechat_hashtable_free (options);
     if (!path)
         goto end;
 

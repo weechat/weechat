@@ -174,8 +174,7 @@ script_config_get_xml_filename ()
         weechat_hashtable_set (options, "directory", "cache");
     path = weechat_string_eval_path_home (
         weechat_config_string (script_config_scripts_path), NULL, NULL, options);
-    if (options)
-        weechat_hashtable_free (options);
+    weechat_hashtable_free (options);
     length = strlen (path) + 64;
     filename = malloc (length);
     if (filename)
@@ -208,8 +207,7 @@ script_config_get_script_download_filename (struct t_script_repo *script,
         weechat_hashtable_set (options, "directory", "cache");
     path = weechat_string_eval_path_home (
         weechat_config_string (script_config_scripts_path), NULL, NULL, options);
-    if (options)
-        weechat_hashtable_free (options);
+    weechat_hashtable_free (options);
     length = strlen (path) + 1 + strlen (script->name_with_extension)
         + ((suffix) ? strlen (suffix) : 0) + 1;
     filename = malloc (length);

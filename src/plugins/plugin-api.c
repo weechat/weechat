@@ -544,8 +544,7 @@ plugin_api_modifier_eval_path_home_cb (const void *pointer, void *data,
 
     result = string_eval_path_home (string, NULL, NULL, options);
 
-    if (options)
-        hashtable_free (options);
+    hashtable_free (options);
 
     return result;
 }

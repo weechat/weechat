@@ -227,8 +227,7 @@ trigger_buffer_open (const char *filter, int switch_to_buffer)
                 buffer_props,
                 &trigger_buffer_input_cb, NULL, NULL,
                 &trigger_buffer_close_cb, NULL, NULL);
-            if (buffer_props)
-                weechat_hashtable_free (buffer_props);
+            weechat_hashtable_free (buffer_props);
         }
 
         /* failed to create buffer ? then return */

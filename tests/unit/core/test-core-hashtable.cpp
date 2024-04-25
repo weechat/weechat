@@ -177,6 +177,9 @@ TEST(CoreHashtable, SetGetRemove)
     unsigned long long hash;
     int i;
 
+    /* free hashtable with NULL pointer */
+    hashtable_free (NULL);
+
     hashtable = hashtable_new (32,
                                WEECHAT_HASHTABLE_STRING,
                                WEECHAT_HASHTABLE_STRING,

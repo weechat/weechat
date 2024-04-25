@@ -851,8 +851,7 @@ relay_server_new (const char *protocol_string, enum t_relay_protocol protocol,
             weechat_hashtable_set (options, "directory", "runtime");
         new_server->path = weechat_string_eval_path_home (path,
                                                           NULL, NULL, options);
-        if (options)
-            weechat_hashtable_free (options);
+        weechat_hashtable_free (options);
         new_server->ipv4 = ipv4;
         new_server->ipv6 = ipv6;
         new_server->tls = tls;
@@ -900,8 +899,7 @@ relay_server_update_path (struct t_relay_server *server, const char *path)
     if (options)
         weechat_hashtable_set (options, "directory", "runtime");
     new_path = weechat_string_eval_path_home (path, NULL, NULL, options);
-    if (options)
-        weechat_hashtable_free (options);
+    weechat_hashtable_free (options);
     if (!new_path)
         return;
 

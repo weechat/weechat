@@ -770,8 +770,7 @@ irc_redirect_stop (struct t_irc_redirect *redirect, const char *error)
                   redirect->signal, redirect->pattern);
         (void) weechat_hook_hsignal_send (signal_name, hashtable);
 
-        if (hashtable)
-            weechat_hashtable_free (hashtable);
+        weechat_hashtable_free (hashtable);
 
         irc_redirect_free (redirect);
     }
@@ -977,14 +976,10 @@ irc_redirect_free (struct t_irc_redirect *redirect)
     free (redirect->signal);
     free (redirect->string);
     free (redirect->command);
-    if (redirect->cmd_start)
-        weechat_hashtable_free (redirect->cmd_start);
-    if (redirect->cmd_stop)
-        weechat_hashtable_free (redirect->cmd_stop);
-    if (redirect->cmd_extra)
-        weechat_hashtable_free (redirect->cmd_extra);
-    if (redirect->cmd_filter)
-        weechat_hashtable_free (redirect->cmd_filter);
+    weechat_hashtable_free (redirect->cmd_start);
+    weechat_hashtable_free (redirect->cmd_stop);
+    weechat_hashtable_free (redirect->cmd_extra);
+    weechat_hashtable_free (redirect->cmd_filter);
     free (redirect->output);
 
     free (redirect);

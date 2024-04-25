@@ -534,12 +534,9 @@ weechat_guile_api_string_eval_expression (SCM expr, SCM pointers,
                                              c_pointers, c_extra_vars,
                                              c_options);
 
-    if (c_pointers)
-        weechat_hashtable_free (c_pointers);
-    if (c_extra_vars)
-        weechat_hashtable_free (c_extra_vars);
-    if (c_options)
-        weechat_hashtable_free (c_options);
+    weechat_hashtable_free (c_pointers);
+    weechat_hashtable_free (c_extra_vars);
+    weechat_hashtable_free (c_options);
 
     API_RETURN_STRING_FREE(result);
 }
@@ -577,12 +574,9 @@ weechat_guile_api_string_eval_path_home (SCM path, SCM pointers,
                                             c_pointers, c_extra_vars,
                                             c_options);
 
-    if (c_pointers)
-        weechat_hashtable_free (c_pointers);
-    if (c_extra_vars)
-        weechat_hashtable_free (c_extra_vars);
-    if (c_options)
-        weechat_hashtable_free (c_options);
+    weechat_hashtable_free (c_pointers);
+    weechat_hashtable_free (c_extra_vars);
+    weechat_hashtable_free (c_options);
 
     API_RETURN_STRING_FREE(result);
 }
@@ -2024,8 +2018,7 @@ weechat_guile_api_key_bind (SCM context, SCM keys)
 
     num_keys = weechat_key_bind (API_SCM_TO_STRING(context), c_keys);
 
-    if (c_keys)
-        weechat_hashtable_free (c_keys);
+    weechat_hashtable_free (c_keys);
 
     API_RETURN_INT(num_keys);
 }
@@ -2679,8 +2672,7 @@ weechat_guile_api_hook_process_hashtable (SCM command, SCM options, SCM timeout,
                                                                    API_SCM_TO_STRING(function),
                                                                    API_SCM_TO_STRING(data)));
 
-    if (c_options)
-        weechat_hashtable_free (c_options);
+    weechat_hashtable_free (c_options);
 
     API_RETURN_STRING(result);
 }
@@ -2754,8 +2746,7 @@ weechat_guile_api_hook_url (SCM url, SCM options, SCM timeout,
                                                      API_SCM_TO_STRING(function),
                                                      API_SCM_TO_STRING(data)));
 
-    if (c_options)
-        weechat_hashtable_free (c_options);
+    weechat_hashtable_free (c_options);
 
     API_RETURN_STRING(result);
 }
@@ -3170,8 +3161,7 @@ weechat_guile_api_hook_hsignal_send (SCM signal, SCM hashtable)
 
     rc = weechat_hook_hsignal_send (API_SCM_TO_STRING(signal), c_hashtable);
 
-    if (c_hashtable)
-        weechat_hashtable_free (c_hashtable);
+    weechat_hashtable_free (c_hashtable);
 
     API_RETURN_INT(rc);
 }
@@ -3695,8 +3685,7 @@ weechat_guile_api_buffer_new_props (SCM name, SCM properties,
             API_SCM_TO_STRING(function_close),
             API_SCM_TO_STRING(data_close)));
 
-    if (c_properties)
-        weechat_hashtable_free (c_properties);
+    weechat_hashtable_free (c_properties);
 
     API_RETURN_STRING(result);
 }
@@ -4504,8 +4493,7 @@ weechat_guile_api_command_options (SCM buffer, SCM command, SCM options)
                                             API_SCM_TO_STRING(command),
                                             c_options);
 
-    if (c_options)
-        weechat_hashtable_free (c_options);
+    weechat_hashtable_free (c_options);
 
     API_RETURN_INT(rc);
 }
@@ -4626,10 +4614,8 @@ weechat_guile_api_info_get_hashtable (SCM info_name, SCM hash)
                                                    c_hashtable);
     result_alist = weechat_guile_hashtable_to_alist (result_hashtable);
 
-    if (c_hashtable)
-        weechat_hashtable_free (c_hashtable);
-    if (result_hashtable)
-        weechat_hashtable_free (result_hashtable);
+    weechat_hashtable_free (c_hashtable);
+    weechat_hashtable_free (result_hashtable);
 
     API_RETURN_OTHER(result_alist);
 }
@@ -5083,12 +5069,9 @@ weechat_guile_api_hdata_search (SCM hdata, SCM pointer, SCM search,
                                                c_options,
                                                scm_to_int (move)));
 
-    if (c_pointers)
-        weechat_hashtable_free (c_pointers);
-    if (c_extra_vars)
-        weechat_hashtable_free (c_extra_vars);
-    if (c_options)
-        weechat_hashtable_free (c_options);
+    weechat_hashtable_free (c_pointers);
+    weechat_hashtable_free (c_extra_vars);
+    weechat_hashtable_free (c_options);
 
     API_RETURN_STRING(result);
 }
@@ -5271,8 +5254,7 @@ weechat_guile_api_hdata_update (SCM hdata, SCM pointer, SCM hashtable)
                                   API_STR2PTR(API_SCM_TO_STRING(pointer)),
                                   c_hashtable);
 
-    if (c_hashtable)
-        weechat_hashtable_free (c_hashtable);
+    weechat_hashtable_free (c_hashtable);
 
     API_RETURN_INT(value);
 }

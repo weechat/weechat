@@ -1597,8 +1597,7 @@ fset_buffer_open ()
         &fset_buffer_input_cb, NULL, NULL,
         &fset_buffer_close_cb, NULL, NULL);
 
-    if (buffer_props)
-        weechat_hashtable_free (buffer_props);
+    weechat_hashtable_free (buffer_props);
 
     if (!fset_buffer)
         return;

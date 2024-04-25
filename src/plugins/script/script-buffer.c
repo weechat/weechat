@@ -1179,8 +1179,7 @@ script_buffer_open ()
         &script_buffer_input_cb, NULL, NULL,
         &script_buffer_close_cb, NULL, NULL);
 
-    if (buffer_props)
-        weechat_hashtable_free (buffer_props);
+    weechat_hashtable_free (buffer_props);
 
     if (!script_buffer)
         return;

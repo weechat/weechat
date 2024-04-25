@@ -463,8 +463,7 @@ trigger_hook (struct t_trigger *trigger)
                     free (eval_args);
                     free (eval_desc_args);
                     free (eval_completion);
-                    if (extra_vars)
-                        weechat_hashtable_free (extra_vars);
+                    weechat_hashtable_free (extra_vars);
                 }
             }
             break;

@@ -627,12 +627,9 @@ API_FUNC(string_eval_expression)
                                              extra_vars,
                                              options);
 
-    if (pointers)
-        weechat_hashtable_free (pointers);
-    if (extra_vars)
-        weechat_hashtable_free (extra_vars);
-    if (options)
-        weechat_hashtable_free (options);
+    weechat_hashtable_free (pointers);
+    weechat_hashtable_free (extra_vars);
+    weechat_hashtable_free (options);
 
     API_RETURN_STRING_FREE(result);
 }
@@ -672,12 +669,9 @@ API_FUNC(string_eval_path_home)
                                             extra_vars,
                                             options);
 
-    if (pointers)
-        weechat_hashtable_free (pointers);
-    if (extra_vars)
-        weechat_hashtable_free (extra_vars);
-    if (options)
-        weechat_hashtable_free (options);
+    weechat_hashtable_free (pointers);
+    weechat_hashtable_free (extra_vars);
+    weechat_hashtable_free (options);
 
     API_RETURN_STRING_FREE(result);
 }
@@ -2199,8 +2193,7 @@ API_FUNC(key_bind)
 
     result = weechat_key_bind ((const char *)context, keys);
 
-    if (keys)
-        weechat_hashtable_free (keys);
+    weechat_hashtable_free (keys);
 
     API_RETURN_INT(result);
 }
@@ -2870,8 +2863,7 @@ API_FUNC(hook_process_hashtable)
             (const char *)callback_name,
             (const char *)data));
 
-    if (options)
-        weechat_hashtable_free (options);
+    weechat_hashtable_free (options);
 
     API_RETURN_STRING(result);
 }
@@ -2932,8 +2924,7 @@ API_FUNC(hook_url)
             (const char *)callback_name,
             (const char *)data));
 
-    if (options)
-        weechat_hashtable_free (options);
+    weechat_hashtable_free (options);
 
     API_RETURN_STRING(result);
 }
@@ -3261,8 +3252,7 @@ API_FUNC(hook_hsignal_send)
 
     result = weechat_hook_hsignal_send ((const char *)signal, hashtable);
 
-    if (hashtable)
-        weechat_hashtable_free (hashtable);
+    weechat_hashtable_free (hashtable);
 
     API_RETURN_INT(result);
 }
@@ -3741,8 +3731,7 @@ API_FUNC(buffer_new_props)
             (const char *)close_callback_name,
             (const char *)data_close));
 
-    if (properties)
-        weechat_hashtable_free (properties);
+    weechat_hashtable_free (properties);
 
     API_RETURN_STRING(result);
 }
@@ -4737,8 +4726,7 @@ API_FUNC(command_options)
                                                 (const char *)command,
                                                 options);
 
-    if (options)
-        weechat_hashtable_free (options);
+    weechat_hashtable_free (options);
 
     API_RETURN_INT(result);
 }
@@ -4886,8 +4874,7 @@ API_FUNC(info_get_hashtable)
 
     result = weechat_info_get_hashtable ((const char *)info_name, hashtable);
 
-    if (hashtable)
-        weechat_hashtable_free (hashtable);
+    weechat_hashtable_free (hashtable);
 
     weechat_php_hashtable_to_array (result, return_value);
 }
@@ -5467,12 +5454,9 @@ API_FUNC(hdata_search)
             options,
             move));
 
-    if (pointers)
-        weechat_hashtable_free (pointers);
-    if (extra_vars)
-        weechat_hashtable_free (extra_vars);
-    if (options)
-        weechat_hashtable_free (options);
+    weechat_hashtable_free (pointers);
+    weechat_hashtable_free (extra_vars);
+    weechat_hashtable_free (options);
 
     API_RETURN_STRING(result);
 }
@@ -5704,8 +5688,7 @@ API_FUNC(hdata_update)
 
     result = weechat_hdata_update (hdata, pointer, hashtable);
 
-    if (hashtable)
-        weechat_hashtable_free (hashtable);
+    weechat_hashtable_free (hashtable);
 
     API_RETURN_INT(result);
 }

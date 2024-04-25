@@ -276,8 +276,7 @@ xfer_file_find_filename (struct t_xfer *xfer)
     path = weechat_string_eval_path_home (
         weechat_config_string (xfer_config_file_download_path),
         NULL, NULL, options);
-    if (options)
-        weechat_hashtable_free (options);
+    weechat_hashtable_free (options);
     if (!path)
         return;
 

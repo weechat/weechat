@@ -186,8 +186,7 @@ xfer_create_directories ()
         free (path);
     }
 
-    if (options)
-        weechat_hashtable_free (options);
+    weechat_hashtable_free (options);
 }
 
 /*
@@ -1110,8 +1109,7 @@ xfer_add_cb (const void *pointer, void *data,
             path = weechat_string_eval_path_home (
                 weechat_config_string (xfer_config_file_upload_path),
                 NULL, NULL, options);
-            if (options)
-                weechat_hashtable_free (options);
+            weechat_hashtable_free (options);
             if (!path)
             {
                 weechat_printf (NULL,

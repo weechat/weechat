@@ -644,8 +644,7 @@ error:
     free (shell);
     if (new_exec_cmd)
         exec_free (new_exec_cmd);
-    if (process_options)
-        weechat_hashtable_free (process_options);
+    weechat_hashtable_free (process_options);
 
     return WEECHAT_RC_ERROR;
 }

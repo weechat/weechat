@@ -367,6 +367,5 @@ xfer_buffer_open ()
         &xfer_buffer_input_cb, NULL, NULL,
         &xfer_buffer_close_cb, NULL, NULL);
 
-    if (buffer_props)
-        weechat_hashtable_free (buffer_props);
+    weechat_hashtable_free (buffer_props);
 }

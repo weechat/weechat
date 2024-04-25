@@ -559,10 +559,8 @@ fset_command_run_set_cb (const void *pointer, void *data,
         condition_ok = (result && (strcmp (result, "1") == 0));
         free (result);
     }
-    if (eval_extra_vars)
-        weechat_hashtable_free (eval_extra_vars);
-    if (eval_options)
-        weechat_hashtable_free (eval_options);
+    weechat_hashtable_free (eval_extra_vars);
+    weechat_hashtable_free (eval_options);
 
     /* check condition to trigger the fset buffer */
     if (condition_ok)

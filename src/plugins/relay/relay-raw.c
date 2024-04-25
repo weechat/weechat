@@ -101,8 +101,7 @@ relay_raw_open (int switch_to_buffer)
                 buffer_props,
                 &relay_buffer_input_cb, NULL, NULL,
                 &relay_buffer_close_cb, NULL, NULL);
-            if (buffer_props)
-                weechat_hashtable_free (buffer_props);
+            weechat_hashtable_free (buffer_props);
 
             /* failed to create buffer ? then return */
             if (!relay_raw_buffer)

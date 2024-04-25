@@ -1391,8 +1391,7 @@ script_repo_file_read (int quiet)
         script_repo_free (script);
     free (locale);
     free (locale_language);
-    if (descriptions)
-        weechat_hashtable_free (descriptions);
+    weechat_hashtable_free (descriptions);
 
     return 1;
 }

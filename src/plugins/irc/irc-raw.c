@@ -123,8 +123,7 @@ irc_raw_message_match_filter (struct t_irc_raw_message *raw_message,
             hashtable,
             irc_raw_filter_hashtable_options);
         match = (result && (strcmp (result, "1") == 0)) ? 1 : 0;
-        if (hashtable)
-            weechat_hashtable_free (hashtable);
+        weechat_hashtable_free (hashtable);
         free (result);
         return match;
     }
@@ -407,8 +406,7 @@ irc_raw_open (int switch_to_buffer)
                 buffer_props,
                 &irc_input_data_cb, NULL, NULL,
                 &irc_buffer_close_cb, NULL, NULL);
-            if (buffer_props)
-                weechat_hashtable_free (buffer_props);
+            weechat_hashtable_free (buffer_props);
 
             /* failed to create buffer ? then return */
             if (!irc_raw_buffer)

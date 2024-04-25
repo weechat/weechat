@@ -378,10 +378,8 @@ irc_server_eval_expression (struct t_irc_server *server, const char *string)
     value = weechat_string_eval_expression (string,
                                             pointers, extra_vars, NULL);
 
-    if (pointers)
-        weechat_hashtable_free (pointers);
-    if (extra_vars)
-        weechat_hashtable_free (extra_vars);
+    weechat_hashtable_free (pointers);
+    weechat_hashtable_free (extra_vars);
 
     return value;
 }
@@ -1582,8 +1580,7 @@ irc_server_get_default_msg (const char *default_msg,
 
     msg = weechat_string_eval_expression (default_msg, NULL, extra_vars, NULL);
 
-    if (extra_vars)
-        weechat_hashtable_free (extra_vars);
+    weechat_hashtable_free (extra_vars);
 
     return msg;
 }
@@ -2310,10 +2307,8 @@ irc_server_free_data (struct t_irc_server *server)
     free (server->nick);
     free (server->nick_modes);
     free (server->host);
-    if (server->cap_ls)
-        weechat_hashtable_free (server->cap_ls);
-    if (server->cap_list)
-        weechat_hashtable_free (server->cap_list);
+    weechat_hashtable_free (server->cap_ls);
+    weechat_hashtable_free (server->cap_list);
     free (server->isupport);
     free (server->prefix_modes);
     free (server->prefix_chars);
@@ -4763,8 +4758,7 @@ irc_server_create_buffer (struct t_irc_server *server)
         buffer_props,
         &irc_input_data_cb, NULL, NULL,
         &irc_buffer_close_cb, NULL, NULL);
-    if (buffer_props)
-        weechat_hashtable_free (buffer_props);
+    weechat_hashtable_free (buffer_props);
 
     if (!server->buffer)
         return NULL;
@@ -5248,8 +5242,7 @@ irc_server_gnutls_callback (const void *pointer, void *data,
                 weechat_hashtable_set (options, "directory", "config");
             cert_path = weechat_string_eval_path_home (ptr_cert_path,
                                                        NULL, NULL, options);
-            if (options)
-                weechat_hashtable_free (options);
+            weechat_hashtable_free (options);
             if (cert_path)
             {
                 cert_str = weechat_file_get_content (cert_path);

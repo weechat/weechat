@@ -185,8 +185,7 @@ irc_batch_free (struct t_irc_server *server, struct t_irc_batch *batch)
     free (batch->parent_ref);
     free (batch->type);
     free (batch->parameters);
-    if (batch->tags)
-        weechat_hashtable_free (batch->tags);
+    weechat_hashtable_free (batch->tags);
     if (batch->messages)
         weechat_string_dyn_free (batch->messages, 1);
 
@@ -456,8 +455,7 @@ irc_batch_process_multiline (struct t_irc_server *server,
     }
 
 end:
-    if (hash_tags)
-        weechat_hashtable_free (hash_tags);
+    weechat_hashtable_free (hash_tags);
     if (list_messages)
         weechat_string_free_split (list_messages);
 

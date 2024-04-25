@@ -1445,7 +1445,6 @@ error:
                     remote->name);
     free (url);
     free (body);
-    if (options)
-        weechat_hashtable_free (options);
+    weechat_hashtable_free (options);
     return 0;
 }

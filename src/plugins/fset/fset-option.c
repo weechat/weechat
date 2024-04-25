@@ -1405,10 +1405,8 @@ fset_option_export (const char *filename, int with_help)
 
     fclose (file);
 
-    if (hashtable_pointers)
-        weechat_hashtable_free (hashtable_pointers);
-    if (hashtable_extra_vars)
-        weechat_hashtable_free (hashtable_extra_vars);
+    weechat_hashtable_free (hashtable_pointers);
+    weechat_hashtable_free (hashtable_extra_vars);
     free (filename2);
 
     return 1;

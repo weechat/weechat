@@ -956,8 +956,7 @@ irc_list_create_buffer (struct t_irc_server *server)
         &irc_input_data_cb, NULL, NULL,
         &irc_buffer_close_cb, NULL, NULL);
 
-    if (buffer_props)
-        weechat_hashtable_free (buffer_props);
+    weechat_hashtable_free (buffer_props);
 
     irc_list_buffer_set_localvar_filter (buffer, server);
 

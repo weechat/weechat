@@ -81,8 +81,7 @@ relay_network_set_tls_cert_key (int verbose)
         weechat_hashtable_set (options, "directory", "config");
     certkey_path = weechat_string_eval_path_home (ptr_path,
                                                   NULL, NULL, options);
-    if (options)
-        weechat_hashtable_free (options);
+    weechat_hashtable_free (options);
 
     if (certkey_path && certkey_path[0])
     {

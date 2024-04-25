@@ -402,8 +402,7 @@ irc_channel_create_buffer (struct t_irc_server *server,
     }
 
 end:
-    if (buffer_props)
-        weechat_hashtable_free (buffer_props);
+    weechat_hashtable_free (buffer_props);
     free (buffer_name);
     return ptr_buffer;
 }
@@ -1541,8 +1540,7 @@ irc_channel_free (struct t_irc_server *server, struct t_irc_channel *channel)
     free (channel->topic);
     free (channel->modes);
     free (channel->key);
-    if (channel->join_msg_received)
-        weechat_hashtable_free (channel->join_msg_received);
+    weechat_hashtable_free (channel->join_msg_received);
     free (channel->away_message);
     free (channel->pv_remote_nick_color);
     weechat_unhook (channel->hook_autorejoin);
@@ -1551,8 +1549,7 @@ irc_channel_free (struct t_irc_server *server, struct t_irc_channel *channel)
     if (channel->nicks_speaking[1])
         weechat_list_free (channel->nicks_speaking[1]);
     irc_channel_nick_speaking_time_free_all (channel);
-    if (channel->join_smart_filtered)
-        weechat_hashtable_free (channel->join_smart_filtered);
+    weechat_hashtable_free (channel->join_smart_filtered);
     free (channel->buffer_as_string);
 
     free (channel);

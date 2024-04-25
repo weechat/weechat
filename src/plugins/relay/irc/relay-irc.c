@@ -187,9 +187,7 @@ relay_irc_message_parse (const char *message)
     }
 
 end:
-    if (hash_msg)
-        weechat_hashtable_free (hash_msg);
-
+    weechat_hashtable_free (hash_msg);
     return hash_parsed;
 }
 
@@ -290,10 +288,8 @@ relay_irc_sendf (struct t_relay_client *client, const char *format, ...)
 
 end:
     free (new_msg1);
-    if (hashtable_in)
-        weechat_hashtable_free (hashtable_in);
-    if (hashtable_out)
-        weechat_hashtable_free (hashtable_out);
+    weechat_hashtable_free (hashtable_in);
+    weechat_hashtable_free (hashtable_out);
     free (vbuffer);
 }
 
@@ -2161,8 +2157,7 @@ relay_irc_recv (struct t_relay_client *client, const char *data)
 
 end:
     free (new_data);
-    if (hash_parsed)
-        weechat_hashtable_free (hash_parsed);
+    weechat_hashtable_free (hash_parsed);
     free (params);
 }
 
