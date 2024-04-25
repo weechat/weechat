@@ -1884,9 +1884,7 @@ gui_color_palette_free_value_cb (struct t_hashtable *hashtable,
     (void) key;
 
     color_palette = (struct t_gui_color_palette *)value;
-
-    if (color_palette)
-        gui_color_palette_free (color_palette);
+    gui_color_palette_free (color_palette);
 }
 
 /*
