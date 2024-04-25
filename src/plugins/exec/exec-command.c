@@ -642,8 +642,7 @@ exec_command_run (struct t_gui_buffer *buffer,
 
 error:
     free (shell);
-    if (new_exec_cmd)
-        exec_free (new_exec_cmd);
+    exec_free (new_exec_cmd);
     weechat_hashtable_free (process_options);
 
     return WEECHAT_RC_ERROR;
