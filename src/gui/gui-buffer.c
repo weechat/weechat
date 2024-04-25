@@ -3703,8 +3703,7 @@ gui_buffer_close (struct t_gui_buffer *buffer)
     /* free some data */
     gui_buffer_undo_free_all (buffer);
     gui_history_buffer_free (buffer);
-    if (buffer->completion)
-        gui_completion_free (buffer->completion);
+    gui_completion_free (buffer->completion);
     gui_nicklist_remove_all (buffer);
     gui_nicklist_remove_group (buffer, buffer->nicklist_root);
     hashtable_free (buffer->hotlist_max_level_nicks);
