@@ -382,7 +382,9 @@ TEST(GuiBarWindow, SetCurrentSize)
 
 TEST(GuiBarWindow, Free)
 {
-    /* TODO: write tests */
+    /* test free of NULL bar window */
+    gui_bar_window_free (NULL, gui_current_window);
+    gui_bar_window_free (NULL, NULL);
 }
 
 /*

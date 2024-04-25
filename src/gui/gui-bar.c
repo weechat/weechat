@@ -842,8 +842,7 @@ gui_bar_config_change_hidden (const void *pointer, void *data,
         {
             if (CONFIG_BOOLEAN(ptr_bar->options[GUI_BAR_OPTION_HIDDEN]))
             {
-                if (ptr_bar->bar_window)
-                    gui_bar_window_free (ptr_bar->bar_window, NULL);
+                gui_bar_window_free (ptr_bar->bar_window, NULL);
             }
             else
             {
