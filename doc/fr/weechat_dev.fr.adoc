@@ -439,6 +439,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |          test-core-sys.cpp                 | Tests : fonctions système.
 |          hook/                             | Racine des tests pour les hooks.
 |             test-hook-command.cpp          | Tests : hooks "command".
+|             test-hook-modifier.cpp         | Tests : hooks "modifier".
 |       gui/                                 | Racine des tests unitaires pour les interfaces.
 |          test-gui-bar-window.cpp           | Tests : fonctions de fenêtres de barre.
 |          test-gui-buffer.cpp               | Tests : fonctions de tampons.

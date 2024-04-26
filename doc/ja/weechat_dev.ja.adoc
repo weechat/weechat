@@ -487,6 +487,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |          hook/                             | Root of unit tests for hooks.
 // TRANSLATION MISSING
 |             test-hook-command.cpp          | Tests: hooks "command".
+// TRANSLATION MISSING
+|             test-hook-modifier.cpp         | Tests: hooks "modifier".
 |       gui/                                 | インターフェースの単体テストを収める最上位ディレクトリ
 // TRANSLATION MISSING
 |          test-gui-bar-window.cpp           | Tests: bar window functions.

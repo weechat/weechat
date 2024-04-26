@@ -437,6 +437,7 @@ WeeChat "core" is located in following directories:
 |          test-core-sys.cpp                 | Tests: system functions.
 |          hook/                             | Root of unit tests for hooks.
 |             test-hook-command.cpp          | Tests: hooks "command".
+|             test-hook-modifier.cpp         | Tests: hooks "modifier".
 |       gui/                                 | Root of unit tests for interfaces.
 |          test-gui-bar-window.cpp           | Tests: bar window functions.
 |          test-gui-buffer.cpp               | Tests: buffer functions.

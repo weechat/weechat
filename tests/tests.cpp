@@ -80,6 +80,7 @@ IMPORT_TEST_GROUP(CoreUtil);
 IMPORT_TEST_GROUP(CoreSys);
 /* core/hook */
 IMPORT_TEST_GROUP(HookCommand);
+IMPORT_TEST_GROUP(HookModifier);
 /* GUI */
 IMPORT_TEST_GROUP(GuiBar);
 IMPORT_TEST_GROUP(GuiBarItem);
