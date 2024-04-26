@@ -437,7 +437,24 @@ WeeChat "core" is located in following directories:
 |          test-core-sys.cpp                 | Tests: system functions.
 |          hook/                             | Root of unit tests for hooks.
 |             test-hook-command.cpp          | Tests: hooks "command".
+|             test-hook-command-run.cpp      | Tests: hooks "command_run".
+|             test-hook-completion.cpp       | Tests: hooks "completion".
+|             test-hook-config.cpp           | Tests: hooks "config".
+|             test-hook-connect.cpp          | Tests: hooks "connect".
+|             test-hook-fd.cpp               | Tests: hooks "fd".
+|             test-hook-focus.cpp            | Tests: hooks "focus".
+|             test-hook-hdata.cpp            | Tests: hooks "hdata".
+|             test-hook-hsignal.cpp          | Tests: hooks "hsignal".
+|             test-hook-info-hashtable.cpp   | Tests: hooks "info_hashtable".
+|             test-hook-info.cpp             | Tests: hooks "info".
+|             test-hook-infolist.cpp         | Tests: hooks "infolist".
+|             test-hook-line.cpp             | Tests: hooks "line".
 |             test-hook-modifier.cpp         | Tests: hooks "modifier".
+|             test-hook-print.cpp            | Tests: hooks "print".
+|             test-hook-process.cpp          | Tests: hooks "process".
+|             test-hook-signal.cpp           | Tests: hooks "signal".
+|             test-hook-timer.cpp            | Tests: hooks "timer".
+|             test-hook-url.cpp              | Tests: hooks "url".
 |       gui/                                 | Root of unit tests for interfaces.
 |          test-gui-bar-window.cpp           | Tests: bar window functions.
 |          test-gui-buffer.cpp               | Tests: buffer functions.

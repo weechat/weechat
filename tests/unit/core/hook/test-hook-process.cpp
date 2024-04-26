@@ -1,7 +1,7 @@
 /*
- * test-core-hook.cpp - test hook functions
+ * test-hook-process.cpp - test hook process functions
  *
- * Copyright (C) 2018-2024 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2024 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -21,240 +21,173 @@
 
 #include "CppUTest/TestHarness.h"
 
+#include "tests/tests.h"
+
 extern "C"
 {
+#include "src/core/weechat.h"
 }
 
-TEST_GROUP(CoreHook)
+TEST_GROUP(HookProcess)
 {
 };
 
 /*
  * Tests functions:
- *   hook_init
+ *   hook_process_get_description
  */
 
-TEST(CoreHook, Init)
+TEST(HookProcess, GetDescription)
 {
     /* TODO: write tests */
 }
 
 /*
  * Tests functions:
- *   hook_search_type
+ *   hook_process_hashtable
  */
 
-TEST(CoreHook, SearchType)
+TEST(HookProcess, Hashtable)
 {
     /* TODO: write tests */
 }
 
 /*
  * Tests functions:
- *   hook_find_pos
+ *   hook_process
  */
 
-TEST(CoreHook, FindPos)
+TEST(HookProcess, Process)
 {
     /* TODO: write tests */
 }
 
 /*
  * Tests functions:
- *   hook_add_to_list
+ *   hook_process_child
  */
 
-TEST(CoreHook, AddToList)
+TEST(HookProcess, Child)
 {
     /* TODO: write tests */
 }
 
 /*
  * Tests functions:
- *   hook_remove_from_list
+ *   hook_process_send_buffers
  */
 
-TEST(CoreHook, RemoveFromList)
+TEST(HookProcess, SendBuffers)
 {
     /* TODO: write tests */
 }
 
 /*
  * Tests functions:
- *   hook_remove_deleted
+ *   hook_process_add_to_buffer
  */
 
-TEST(CoreHook, RemoveDeleted)
+TEST(HookProcess, AddToBuffer)
 {
     /* TODO: write tests */
 }
 
 /*
  * Tests functions:
- *   hook_init_data
+ *   hook_process_child_read
  */
 
-TEST(CoreHook, InitData)
+TEST(HookProcess, ChildRead)
 {
     /* TODO: write tests */
 }
 
 /*
  * Tests functions:
- *   hook_valid
+ *   hook_process_child_read_stdout_cb
  */
 
-TEST(CoreHook, Valid)
+TEST(HookProcess, ChildReadStdoutCb)
 {
     /* TODO: write tests */
 }
 
 /*
  * Tests functions:
- *   hook_exec_start
+ *   hook_process_child_read_stderr_cb
  */
 
-TEST(CoreHook, ExecStart)
+TEST(HookProcess, ChildReadStderrCb)
 {
     /* TODO: write tests */
 }
 
 /*
  * Tests functions:
- *   hook_exec_end
+ *   hook_process_child_read_until_eof
  */
 
-TEST(CoreHook, ExecEnd)
+TEST(HookProcess, ChildReadUntilEof)
 {
     /* TODO: write tests */
 }
 
 /*
  * Tests functions:
- *   hook_callback_start
+ *   hook_process_timer_cb
  */
 
-TEST(CoreHook, CallbackStart)
+TEST(HookProcess, TimerCb)
 {
     /* TODO: write tests */
 }
 
 /*
  * Tests functions:
- *   hook_callback_end
+ *   hook_process_run
  */
 
-TEST(CoreHook, CallbackEnd)
+TEST(HookProcess, Run)
 {
     /* TODO: write tests */
 }
 
 /*
  * Tests functions:
- *   hook_get_description
+ *   hook_process_exec
  */
 
-TEST(CoreHook, GetDescription)
+TEST(HookProcess, Exec)
 {
     /* TODO: write tests */
 }
 
 /*
  * Tests functions:
- *   hook_set
+ *   hook_process_free_data
  */
 
-TEST(CoreHook, Set)
+TEST(HookProcess, FreeData)
 {
     /* TODO: write tests */
 }
 
 /*
  * Tests functions:
- *   hook_timer_clean_process_cb
+ *   hook_process_add_to_infolist
  */
 
-TEST(CoreHook, TimerCleanProcessCb)
+TEST(HookProcess, AddToInfolist)
 {
     /* TODO: write tests */
 }
 
 /*
  * Tests functions:
- *   hook_schedule_clean_process
+ *   hook_process_print_log
  */
 
-TEST(CoreHook, ScheduleCleanProcess)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
- *   unhook
- */
-
-TEST(CoreHook, Unhook)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
- *   unhook_all_plugin
- */
-
-TEST(CoreHook, UnhookAllPlugin)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
- *   unhook_all
- */
-
-TEST(CoreHook, UnhookAll)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
- *   hook_add_to_infolist_pointer
- */
-
-TEST(CoreHook, AddToInfolistPointer)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
- *   hook_add_to_infolist_type
- */
-
-TEST(CoreHook, AddToInfolistType)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
- *   hook_add_to_infolist
- */
-
-TEST(CoreHook, AddToInfolist)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
- *   hook_print_log
- */
-
-TEST(CoreHook, PrintLog)
+TEST(HookProcess, PrintLog)
 {
     /* TODO: write tests */
 }

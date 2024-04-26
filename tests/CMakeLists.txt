@@ -70,7 +70,24 @@ set(LIB_WEECHAT_UNIT_TESTS_CORE_SRC
   unit/core/test-core-util.cpp
   unit/core/test-core-sys.cpp
   unit/core/hook/test-hook-command.cpp
+  unit/core/hook/test-hook-command-run.cpp
+  unit/core/hook/test-hook-completion.cpp
+  unit/core/hook/test-hook-config.cpp
+  unit/core/hook/test-hook-connect.cpp
+  unit/core/hook/test-hook-fd.cpp
+  unit/core/hook/test-hook-focus.cpp
+  unit/core/hook/test-hook-hdata.cpp
+  unit/core/hook/test-hook-hsignal.cpp
+  unit/core/hook/test-hook-info.cpp
+  unit/core/hook/test-hook-info-hashtable.cpp
+  unit/core/hook/test-hook-infolist.cpp
+  unit/core/hook/test-hook-line.cpp
   unit/core/hook/test-hook-modifier.cpp
+  unit/core/hook/test-hook-print.cpp
+  unit/core/hook/test-hook-process.cpp
+  unit/core/hook/test-hook-signal.cpp
+  unit/core/hook/test-hook-timer.cpp
+  unit/core/hook/test-hook-url.cpp
   unit/gui/test-gui-bar.cpp
   unit/gui/test-gui-bar-item.cpp
   unit/gui/test-gui-bar-item-custom.cpp
