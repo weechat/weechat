@@ -809,14 +809,11 @@ gui_nicklist_get_group_start (const char *name)
     ptr_name = name;
     while (isdigit ((unsigned char)ptr_name[0]))
     {
-        if (ptr_name[0] == '|')
-            break;
         ptr_name++;
     }
-    if ((ptr_name[0] == '|') && (ptr_name != name))
+    if ((ptr_name > name) && (ptr_name[0] == '|'))
         return ptr_name + 1;
-    else
-        return name;
+    return name;
 }
 
 /*
