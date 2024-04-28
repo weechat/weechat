@@ -336,6 +336,16 @@ dir_set_home_path (char *path)
         weechat_cache_dir = string_expand_home (paths[0]);
         weechat_runtime_dir = string_expand_home (paths[0]);
     }
+    else if (num_paths == 4)
+    {
+        /* compatibility with versions between 3.2 and 4.2.x */
+        weechat_config_dir = string_expand_home (paths[0]);
+        weechat_data_dir = string_expand_home (paths[1]);
+        /* state dir = data dir by default */
+        weechat_state_dir = string_expand_home (paths[1]);
+        weechat_cache_dir = string_expand_home (paths[2]);
+        weechat_runtime_dir = string_expand_home (paths[3]);
+    }
     else if (num_paths == 5)
     {
         weechat_config_dir = string_expand_home (paths[0]);
@@ -346,6 +356,10 @@ dir_set_home_path (char *path)
     }
     else
     {
+        /*
+         * value of 4 is not mentioned in the message because it's kept only
+         * for compatibility with old releases, it should not be used any more
+         */
         string_fprintf (stderr,
                         _("Error: wrong number of paths for home directories "
                           "(expected: 1 or 5, received: %d)\n"),
