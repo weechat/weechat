@@ -56,46 +56,6 @@ TEST(GuiNicklist, SendHsignal)
 
 /*
  * Tests functions:
- *   gui_nicklist_find_pos_group
- */
-
-TEST(GuiNicklist, FindPosGroup)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
- *   gui_nicklist_insert_group_sorted
- */
-
-TEST(GuiNicklist, InsertGroupSorted)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
- *   gui_nicklist_search_group_internal
- */
-
-TEST(GuiNicklist, SearchGroupInternal)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
- *   gui_nicklist_search_group
- */
-
-TEST(GuiNicklist, SearchGroup)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
  *   gui_nicklist_generate_id
  */
 
@@ -123,102 +83,298 @@ TEST(GuiNicklist, GenerateId)
 
 /*
  * Tests functions:
+ *   gui_nicklist_find_pos_group
+ *   gui_nicklist_insert_group_sorted
  *   gui_nicklist_add_group_with_id
- */
-
-TEST(GuiNicklist, AddGroupWithId)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
  *   gui_nicklist_add_group
+ *   gui_nicklist_search_group_internal
+ *   gui_nicklist_search_group
+ *   gui_nicklist_remove_group
+ *   gui_nicklist_remove_all
  */
 
 TEST(GuiNicklist, AddGroup)
 {
-    /* TODO: write tests */
+    struct t_gui_buffer *buffer;
+    struct t_gui_nick_group *group1, *group2, *subgroup1, *subgroup2, *subgroup3;
+
+    buffer = gui_buffer_new (NULL, TEST_BUFFER_NAME,
+                             NULL, NULL, NULL,
+                             NULL, NULL, NULL);
+    CHECK(buffer);
+
+    /* invalid: NULL buffer */
+    POINTERS_EQUAL(NULL, gui_nicklist_add_group (NULL, NULL, "group1", "blue", 1));
+
+    group1 = gui_nicklist_add_group (buffer, NULL, "group1", "blue", 1);
+    CHECK(group1);
+    CHECK(group1->id > 0);
+    STRCMP_EQUAL("group1", group1->name);
+    STRCMP_EQUAL("blue", group1->color);
+    LONGS_EQUAL(1, group1->visible);
+    POINTERS_EQUAL(buffer->nicklist_root, group1->parent);
+    POINTERS_EQUAL(NULL, group1->children);
+    POINTERS_EQUAL(NULL, group1->last_child);
+    POINTERS_EQUAL(NULL, group1->nicks);
+    POINTERS_EQUAL(NULL, group1->last_nick);
+    POINTERS_EQUAL(NULL, group1->prev_group);
+    POINTERS_EQUAL(NULL, group1->next_group);
+    POINTERS_EQUAL(group1, buffer->nicklist_root->children);
+    POINTERS_EQUAL(group1, buffer->nicklist_root->last_child);
+
+    group2 = gui_nicklist_add_group (buffer, NULL, "group2", "red", 1);
+    CHECK(group2);
+    CHECK(group2->id > group1->id);
+    STRCMP_EQUAL("group2", group2->name);
+    STRCMP_EQUAL("red", group2->color);
+    LONGS_EQUAL(1, group2->visible);
+    POINTERS_EQUAL(buffer->nicklist_root, group2->parent);
+    POINTERS_EQUAL(NULL, group2->children);
+    POINTERS_EQUAL(NULL, group2->last_child);
+    POINTERS_EQUAL(NULL, group2->nicks);
+    POINTERS_EQUAL(NULL, group2->last_nick);
+    POINTERS_EQUAL(group1, group2->prev_group);
+    POINTERS_EQUAL(NULL, group2->next_group);
+    POINTERS_EQUAL(group2, group1->next_group);
+    POINTERS_EQUAL(group1, buffer->nicklist_root->children);
+    POINTERS_EQUAL(group2, buffer->nicklist_root->last_child);
+
+    subgroup1 = gui_nicklist_add_group (buffer, group2, "1|subgroup1", "magenta", 0);
+    CHECK(subgroup1);
+    CHECK(subgroup1->id > group2->id);
+    STRCMP_EQUAL("1|subgroup1", subgroup1->name);
+    STRCMP_EQUAL("magenta", subgroup1->color);
+    LONGS_EQUAL(0, subgroup1->visible);
+    POINTERS_EQUAL(group2, subgroup1->parent);
+    POINTERS_EQUAL(NULL, subgroup1->children);
+    POINTERS_EQUAL(NULL, subgroup1->last_child);
+    POINTERS_EQUAL(NULL, subgroup1->nicks);
+    POINTERS_EQUAL(NULL, subgroup1->last_nick);
+    POINTERS_EQUAL(NULL, subgroup1->prev_group);
+    POINTERS_EQUAL(NULL, subgroup1->next_group);
+    POINTERS_EQUAL(subgroup1, group2->children);
+    POINTERS_EQUAL(subgroup1, group2->last_child);
+
+    subgroup3 = gui_nicklist_add_group (buffer, group2, "subgroup3", "cyan", 0);
+    CHECK(subgroup3);
+    CHECK(subgroup3->id > subgroup1->id);
+    STRCMP_EQUAL("subgroup3", subgroup3->name);
+    STRCMP_EQUAL("cyan", subgroup3->color);
+    LONGS_EQUAL(0, subgroup3->visible);
+    POINTERS_EQUAL(group2, subgroup3->parent);
+    POINTERS_EQUAL(NULL, subgroup3->children);
+    POINTERS_EQUAL(NULL, subgroup3->last_child);
+    POINTERS_EQUAL(NULL, subgroup3->nicks);
+    POINTERS_EQUAL(NULL, subgroup3->last_nick);
+    POINTERS_EQUAL(subgroup1, subgroup3->prev_group);
+    POINTERS_EQUAL(NULL, subgroup3->next_group);
+    POINTERS_EQUAL(subgroup1, group2->children);
+    POINTERS_EQUAL(subgroup3, group2->last_child);
+
+    subgroup2 = gui_nicklist_add_group (buffer, group2, "subgroup2", "brown", 0);
+    CHECK(subgroup2);
+    CHECK(subgroup2->id > subgroup3->id);
+    STRCMP_EQUAL("subgroup2", subgroup2->name);
+    STRCMP_EQUAL("brown", subgroup2->color);
+    LONGS_EQUAL(0, subgroup2->visible);
+    POINTERS_EQUAL(group2, subgroup2->parent);
+    POINTERS_EQUAL(NULL, subgroup2->children);
+    POINTERS_EQUAL(NULL, subgroup2->last_child);
+    POINTERS_EQUAL(NULL, subgroup2->nicks);
+    POINTERS_EQUAL(NULL, subgroup2->last_nick);
+    POINTERS_EQUAL(subgroup1, subgroup2->prev_group);
+    POINTERS_EQUAL(subgroup3, subgroup2->next_group);
+    POINTERS_EQUAL(subgroup1, group2->children);
+    POINTERS_EQUAL(subgroup3, group2->last_child);
+
+    POINTERS_EQUAL(NULL, gui_nicklist_search_group (NULL, NULL, NULL));
+    POINTERS_EQUAL(NULL, gui_nicklist_search_group (buffer, NULL, NULL));
+    POINTERS_EQUAL(NULL, gui_nicklist_search_group (NULL, NULL, "group1"));
+    POINTERS_EQUAL(NULL, gui_nicklist_search_group (buffer, NULL, "invalid_group"));
+    POINTERS_EQUAL(NULL, gui_nicklist_search_group (buffer, buffer->nicklist_root, "invalid_group"));
+
+    POINTERS_EQUAL(group1, gui_nicklist_search_group (buffer, NULL, "group1"));
+    POINTERS_EQUAL(group1, gui_nicklist_search_group (buffer, buffer->nicklist_root, "group1"));
+    POINTERS_EQUAL(group2, gui_nicklist_search_group (buffer, NULL, "group2"));
+    POINTERS_EQUAL(group2, gui_nicklist_search_group (buffer, buffer->nicklist_root, "group2"));
+    POINTERS_EQUAL(subgroup1, gui_nicklist_search_group (buffer, NULL, "subgroup1"));
+    POINTERS_EQUAL(subgroup1, gui_nicklist_search_group (buffer, NULL, "1|subgroup1"));
+    POINTERS_EQUAL(subgroup1, gui_nicklist_search_group (buffer, buffer->nicklist_root, "subgroup1"));
+    POINTERS_EQUAL(subgroup1, gui_nicklist_search_group (buffer, buffer->nicklist_root, "1|subgroup1"));
+    POINTERS_EQUAL(NULL, gui_nicklist_search_group (buffer, group1, "subgroup1"));
+    POINTERS_EQUAL(NULL, gui_nicklist_search_group (buffer, group1, "1|subgroup1"));
+    POINTERS_EQUAL(subgroup1, gui_nicklist_search_group (buffer, group2, "subgroup1"));
+    POINTERS_EQUAL(subgroup1, gui_nicklist_search_group (buffer, group2, "1|subgroup1"));
+    POINTERS_EQUAL(subgroup2, gui_nicklist_search_group (buffer, NULL, "subgroup2"));
+    POINTERS_EQUAL(subgroup2, gui_nicklist_search_group (buffer, buffer->nicklist_root, "subgroup2"));
+    POINTERS_EQUAL(NULL, gui_nicklist_search_group (buffer, group1, "subgroup2"));
+    POINTERS_EQUAL(subgroup2, gui_nicklist_search_group (buffer, group2, "subgroup2"));
+    POINTERS_EQUAL(subgroup3, gui_nicklist_search_group (buffer, NULL, "subgroup3"));
+    POINTERS_EQUAL(subgroup3, gui_nicklist_search_group (buffer, buffer->nicklist_root, "subgroup3"));
+    POINTERS_EQUAL(NULL, gui_nicklist_search_group (buffer, group1, "subgroup3"));
+    POINTERS_EQUAL(subgroup3, gui_nicklist_search_group (buffer, group2, "subgroup3"));
+
+    /* test remove of NULL buffer/group */
+    gui_nicklist_remove_group (NULL, NULL);
+    gui_nicklist_remove_group (buffer, NULL);
+    gui_nicklist_remove_group (NULL, group1);
+
+    gui_nicklist_remove_group (buffer, group1);
+    POINTERS_EQUAL(NULL, gui_nicklist_search_group (buffer, NULL, "group1"));
+    POINTERS_EQUAL(group2, buffer->nicklist_root->children);
+    POINTERS_EQUAL(group2, buffer->nicklist_root->last_child);
+
+    gui_nicklist_remove_group (buffer, subgroup2);
+    POINTERS_EQUAL(NULL, gui_nicklist_search_group (buffer, NULL, "subgroup2"));
+    POINTERS_EQUAL(subgroup1, group2->children);
+    POINTERS_EQUAL(subgroup3, group2->children->next_group);
+    POINTERS_EQUAL(NULL, group2->children->next_group->next_group);
+
+    gui_nicklist_remove_all (buffer);
+    POINTERS_EQUAL(NULL, gui_nicklist_search_group (buffer, NULL, "group2"));
+    POINTERS_EQUAL(NULL, gui_nicklist_search_group (buffer, NULL, "subgroup1"));
+    POINTERS_EQUAL(NULL, gui_nicklist_search_group (buffer, NULL, "subgroup2"));
+    POINTERS_EQUAL(NULL, gui_nicklist_search_group (buffer, NULL, "subgroup3"));
+    POINTERS_EQUAL(NULL, buffer->nicklist_root->children);
+    POINTERS_EQUAL(NULL, buffer->nicklist_root->last_child);
+
+    gui_buffer_close (buffer);
 }
 
 /*
  * Tests functions:
  *   gui_nicklist_find_pos_nick
- */
-
-TEST(GuiNicklist, FindPosNick)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
  *   gui_nicklist_insert_nick_sorted
- */
-
-TEST(GuiNicklist, InsertNickSorted)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
- *   gui_nicklist_search_nick
- */
-
-TEST(GuiNicklist, SearchNick)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
  *   gui_nicklist_add_nick_with_id
- */
-
-TEST(GuiNicklist, AddNickWithId)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
  *   gui_nicklist_add_nick
+ *   gui_nicklist_search_nick
+ *   gui_nicklist_remove_nick
+ *   gui_nicklist_remove_all
  */
 
 TEST(GuiNicklist, AddNick)
 {
-    /* TODO: write tests */
-}
+    struct t_gui_buffer *buffer;
+    struct t_gui_nick_group *group1, *group2;
+    struct t_gui_nick *nick_root, *nick1, *nick2, *nick3;
 
-/*
- * Tests functions:
- *   gui_nicklist_remove_nick
- */
+    buffer = gui_buffer_new (NULL, TEST_BUFFER_NAME,
+                             NULL, NULL, NULL,
+                             NULL, NULL, NULL);
+    CHECK(buffer);
 
-TEST(GuiNicklist, RemoveNick)
-{
-    /* TODO: write tests */
-}
+    /* invalid: NULL buffer */
+    POINTERS_EQUAL(NULL, gui_nicklist_add_nick (NULL, NULL,
+                                                "nick_root", "green",
+                                                "@", "lightgreen", 1));
 
-/*
- * Tests functions:
- *   gui_nicklist_remove_group
- */
+    nick_root = gui_nicklist_add_nick (buffer, NULL,
+                                       "nick_root", "green",
+                                       "@", "lightgreen", 1);
+    CHECK(nick_root);
+    CHECK(nick_root->id > 0);
+    POINTERS_EQUAL(buffer->nicklist_root, nick_root->group);
+    STRCMP_EQUAL("nick_root", nick_root->name);
+    STRCMP_EQUAL("green", nick_root->color);
+    STRCMP_EQUAL("@", nick_root->prefix);
+    STRCMP_EQUAL("lightgreen", nick_root->prefix_color);
+    LONGS_EQUAL(1, nick_root->visible);
+    POINTERS_EQUAL(NULL, nick_root->prev_nick);
+    POINTERS_EQUAL(NULL, nick_root->next_nick);
+    POINTERS_EQUAL(nick_root, buffer->nicklist_root->nicks);
+    POINTERS_EQUAL(nick_root, buffer->nicklist_root->last_nick);
 
-TEST(GuiNicklist, RemoveGroup)
-{
-    /* TODO: write tests */
-}
+    group1 = gui_nicklist_add_group (buffer, NULL, "group1", "blue", 1);
+    CHECK(group1);
+    POINTERS_EQUAL(NULL, group1->nicks);
+    POINTERS_EQUAL(NULL, group1->last_nick);
 
-/*
- * Tests functions:
- *   gui_nicklist_remove_all
- */
+    group2 = gui_nicklist_add_group (buffer, NULL, "group2", "lightblue", 1);
+    CHECK(group2);
+    POINTERS_EQUAL(NULL, group2->nicks);
+    POINTERS_EQUAL(NULL, group2->last_nick);
 
-TEST(GuiNicklist, RemoveAll)
-{
-    /* TODO: write tests */
+    nick1 = gui_nicklist_add_nick (buffer, group2, "nick1", "cyan", "@", "lightgreen", 1);
+    CHECK(nick1);
+    CHECK(nick1->id > nick_root->id);
+    POINTERS_EQUAL(group2, nick1->group);
+    STRCMP_EQUAL("nick1", nick1->name);
+    STRCMP_EQUAL("cyan", nick1->color);
+    STRCMP_EQUAL("@", nick1->prefix);
+    STRCMP_EQUAL("lightgreen", nick1->prefix_color);
+    LONGS_EQUAL(1, nick1->visible);
+    POINTERS_EQUAL(NULL, nick1->prev_nick);
+    POINTERS_EQUAL(NULL, nick1->next_nick);
+    POINTERS_EQUAL(nick1, group2->nicks);
+    POINTERS_EQUAL(nick1, group2->last_nick);
+
+    nick3 = gui_nicklist_add_nick (buffer, group2, "nick3", "yellow", NULL, NULL, 0);
+    CHECK(nick3);
+    CHECK(nick3->id > nick1->id);
+    POINTERS_EQUAL(group2, nick3->group);
+    STRCMP_EQUAL("nick3", nick3->name);
+    STRCMP_EQUAL("yellow", nick3->color);
+    POINTERS_EQUAL(NULL, nick3->prefix);
+    POINTERS_EQUAL(NULL, nick3->prefix_color);
+    LONGS_EQUAL(0, nick3->visible);
+    POINTERS_EQUAL(nick1, nick3->prev_nick);
+    POINTERS_EQUAL(NULL, nick3->next_nick);
+    POINTERS_EQUAL(nick1, group2->nicks);
+    POINTERS_EQUAL(nick3, group2->last_nick);
+
+    nick2 = gui_nicklist_add_nick (buffer, group2, "nick2", "lightblue", NULL, NULL, 0);
+    CHECK(nick2);
+    CHECK(nick2->id > nick3->id);
+    POINTERS_EQUAL(group2, nick2->group);
+    STRCMP_EQUAL("nick2", nick2->name);
+    STRCMP_EQUAL("lightblue", nick2->color);
+    POINTERS_EQUAL(NULL, nick2->prefix);
+    POINTERS_EQUAL(NULL, nick2->prefix_color);
+    LONGS_EQUAL(0, nick2->visible);
+    POINTERS_EQUAL(nick1, nick2->prev_nick);
+    POINTERS_EQUAL(nick3, nick2->next_nick);
+    POINTERS_EQUAL(nick1, group2->nicks);
+    POINTERS_EQUAL(nick3, group2->last_nick);
+
+    POINTERS_EQUAL(NULL, gui_nicklist_search_nick (NULL, NULL, NULL));
+    POINTERS_EQUAL(NULL, gui_nicklist_search_nick (buffer, NULL, NULL));
+    POINTERS_EQUAL(NULL, gui_nicklist_search_nick (NULL, NULL, "nick_root"));
+    POINTERS_EQUAL(NULL, gui_nicklist_search_nick (buffer, NULL, "invalid_nick"));
+    POINTERS_EQUAL(NULL, gui_nicklist_search_nick (buffer, buffer->nicklist_root, "invalid_nick"));
+
+    POINTERS_EQUAL(nick_root, gui_nicklist_search_nick (buffer, NULL, "nick_root"));
+    POINTERS_EQUAL(nick_root, gui_nicklist_search_nick (buffer, buffer->nicklist_root, "nick_root"));
+    POINTERS_EQUAL(nick1, gui_nicklist_search_nick (buffer, NULL, "nick1"));
+    POINTERS_EQUAL(nick1, gui_nicklist_search_nick (buffer, buffer->nicklist_root, "nick1"));
+    POINTERS_EQUAL(NULL, gui_nicklist_search_nick (buffer, group1, "nick1"));
+    POINTERS_EQUAL(nick1, gui_nicklist_search_nick (buffer, group2, "nick1"));
+    POINTERS_EQUAL(nick2, gui_nicklist_search_nick (buffer, NULL, "nick2"));
+    POINTERS_EQUAL(nick2, gui_nicklist_search_nick (buffer, buffer->nicklist_root, "nick2"));
+    POINTERS_EQUAL(NULL, gui_nicklist_search_nick (buffer, group1, "nick2"));
+    POINTERS_EQUAL(nick2, gui_nicklist_search_nick (buffer, group2, "nick2"));
+    POINTERS_EQUAL(nick3, gui_nicklist_search_nick (buffer, NULL, "nick3"));
+    POINTERS_EQUAL(nick3, gui_nicklist_search_nick (buffer, buffer->nicklist_root, "nick3"));
+    POINTERS_EQUAL(NULL, gui_nicklist_search_nick (buffer, group1, "nick3"));
+    POINTERS_EQUAL(nick3, gui_nicklist_search_nick (buffer, group2, "nick3"));
+
+    /* test remove of NULL buffer/group */
+    gui_nicklist_remove_nick (NULL, NULL);
+    gui_nicklist_remove_nick (buffer, NULL);
+    gui_nicklist_remove_nick (NULL, nick_root);
+
+    gui_nicklist_remove_nick (buffer, nick_root);
+    POINTERS_EQUAL(NULL, gui_nicklist_search_nick (buffer, NULL, "nick_root"));
+    POINTERS_EQUAL(NULL, buffer->nicklist_root->nicks);
+    POINTERS_EQUAL(NULL, buffer->nicklist_root->last_nick);
+
+    gui_nicklist_remove_all (buffer);
+    POINTERS_EQUAL(NULL, gui_nicklist_search_nick (buffer, NULL, "nick1"));
+    POINTERS_EQUAL(NULL, gui_nicklist_search_nick (buffer, NULL, "nick2"));
+    POINTERS_EQUAL(NULL, gui_nicklist_search_nick (buffer, NULL, "nick3"));
+    POINTERS_EQUAL(NULL, buffer->nicklist_root->children);
+    POINTERS_EQUAL(NULL, buffer->nicklist_root->last_child);
+
+    gui_buffer_close (buffer);
 }
 
 /*
@@ -228,7 +384,81 @@ TEST(GuiNicklist, RemoveAll)
 
 TEST(GuiNicklist, GetNextItem)
 {
-    /* TODO: write tests */
+    struct t_gui_buffer *buffer;
+    struct t_gui_nick_group *group1, *group2, *group3, *ptr_group;
+    struct t_gui_nick *nick_root1, *nick_root2, *nick1, *nick2, *nick3, *ptr_nick;
+
+    buffer = gui_buffer_new (NULL, TEST_BUFFER_NAME,
+                             NULL, NULL, NULL,
+                             NULL, NULL, NULL);
+    CHECK(buffer);
+
+    nick_root1 = gui_nicklist_add_nick (buffer, NULL, "nick_root1", "green", "@", "lightgreen", 1);
+    CHECK(nick_root1);
+    nick_root2 = gui_nicklist_add_nick (buffer, NULL, "nick_root2", "green", "@", "lightgreen", 1);
+    CHECK(nick_root2);
+    group1 = gui_nicklist_add_group (buffer, NULL, "group1", "blue", 1);
+    CHECK(group1);
+    group2 = gui_nicklist_add_group (buffer, NULL, "group2", "lightblue", 1);
+    CHECK(group2);
+    group3 = gui_nicklist_add_group (buffer, NULL, "group3", "blue", 1);
+    CHECK(group3);
+    nick1 = gui_nicklist_add_nick (buffer, group2, "nick1", "cyan", "@", "lightgreen", 1);
+    CHECK(nick1);
+    nick3 = gui_nicklist_add_nick (buffer, group2, "nick3", "yellow", NULL, NULL, 0);
+    CHECK(nick3);
+    nick2 = gui_nicklist_add_nick (buffer, group2, "nick2", "lightblue", NULL, NULL, 0);
+    CHECK(nick2);
+
+    ptr_group = NULL;
+    ptr_nick = NULL;
+
+    /* invalid: NULL buffer */
+    gui_nicklist_get_next_item (NULL, &ptr_group, &ptr_nick);
+    POINTERS_EQUAL(NULL, ptr_group);
+    POINTERS_EQUAL(NULL, ptr_nick);
+
+    gui_nicklist_get_next_item (buffer, &ptr_group, &ptr_nick);
+    POINTERS_EQUAL(buffer->nicklist_root, ptr_group);
+    POINTERS_EQUAL(NULL, ptr_nick);
+
+    gui_nicklist_get_next_item (buffer, &ptr_group, &ptr_nick);
+    POINTERS_EQUAL(group1, ptr_group);
+    POINTERS_EQUAL(NULL, ptr_nick);
+
+    gui_nicklist_get_next_item (buffer, &ptr_group, &ptr_nick);
+    POINTERS_EQUAL(group2, ptr_group);
+    POINTERS_EQUAL(NULL, ptr_nick);
+
+    gui_nicklist_get_next_item (buffer, &ptr_group, &ptr_nick);
+    POINTERS_EQUAL(group2, ptr_group);
+    POINTERS_EQUAL(nick1, ptr_nick);
+
+    gui_nicklist_get_next_item (buffer, &ptr_group, &ptr_nick);
+    POINTERS_EQUAL(group2, ptr_group);
+    POINTERS_EQUAL(nick2, ptr_nick);
+
+    gui_nicklist_get_next_item (buffer, &ptr_group, &ptr_nick);
+    POINTERS_EQUAL(group2, ptr_group);
+    POINTERS_EQUAL(nick3, ptr_nick);
+
+    gui_nicklist_get_next_item (buffer, &ptr_group, &ptr_nick);
+    POINTERS_EQUAL(group3, ptr_group);
+    POINTERS_EQUAL(NULL, ptr_nick);
+
+    gui_nicklist_get_next_item (buffer, &ptr_group, &ptr_nick);
+    POINTERS_EQUAL(buffer->nicklist_root, ptr_group);
+    POINTERS_EQUAL(nick_root1, ptr_nick);
+
+    gui_nicklist_get_next_item (buffer, &ptr_group, &ptr_nick);
+    POINTERS_EQUAL(buffer->nicklist_root, ptr_group);
+    POINTERS_EQUAL(nick_root2, ptr_nick);
+
+    gui_nicklist_get_next_item (buffer, &ptr_group, &ptr_nick);
+    POINTERS_EQUAL(NULL, ptr_group);
+    POINTERS_EQUAL(NULL, ptr_nick);
+
+    gui_buffer_close (buffer);
 }
 
 /*
@@ -238,8 +468,14 @@ TEST(GuiNicklist, GetNextItem)
 
 TEST(GuiNicklist, GetGroupStart)
 {
-    /* TODO: write tests */
+    const char *group_empty = "";
+    const char *group1 = "group1";
+    const char *group2 = "01|group2";
 
+    POINTERS_EQUAL(NULL, gui_nicklist_get_group_start (NULL));
+    STRCMP_EQUAL(group_empty, gui_nicklist_get_group_start (group_empty));
+    STRCMP_EQUAL(group1, gui_nicklist_get_group_start (group1));
+    STRCMP_EQUAL(group2 + 3, gui_nicklist_get_group_start (group2));
 }
 
 /*
@@ -249,7 +485,80 @@ TEST(GuiNicklist, GetGroupStart)
 
 TEST(GuiNicklist, ComputeVisibleCount)
 {
-    /* TODO: write tests */
+    struct t_gui_buffer *buffer;
+    struct t_gui_nick_group *group1, *group2;
+    struct t_gui_nick *nick_root, *nick1, *nick2, *nick3;
+
+    gui_nicklist_compute_visible_count (NULL, NULL);
+
+    buffer = gui_buffer_new (NULL, TEST_BUFFER_NAME,
+                             NULL, NULL, NULL,
+                             NULL, NULL, NULL);
+    CHECK(buffer);
+
+    buffer->nicklist_groups_visible_count = 0;
+    buffer->nicklist_nicks_visible_count = 0;
+    gui_nicklist_compute_visible_count (buffer, buffer->nicklist_root);
+    LONGS_EQUAL(0, buffer->nicklist_groups_visible_count);
+    LONGS_EQUAL(0, buffer->nicklist_nicks_visible_count);
+
+    nick_root = gui_nicklist_add_nick (buffer, NULL,
+                                       "nick_root", "green",
+                                       "@", "lightgreen", 1);
+    CHECK(nick_root);
+
+    buffer->nicklist_groups_visible_count = 0;
+    buffer->nicklist_nicks_visible_count = 0;
+    gui_nicklist_compute_visible_count (buffer, buffer->nicklist_root);
+    LONGS_EQUAL(0, buffer->nicklist_groups_visible_count);
+    LONGS_EQUAL(1, buffer->nicklist_nicks_visible_count);
+
+    group1 = gui_nicklist_add_group (buffer, NULL, "group1", "blue", 1);
+    CHECK(group1);
+
+    buffer->nicklist_groups_visible_count = 0;
+    buffer->nicklist_nicks_visible_count = 0;
+    gui_nicklist_compute_visible_count (buffer, buffer->nicklist_root);
+    LONGS_EQUAL(1, buffer->nicklist_groups_visible_count);
+    LONGS_EQUAL(1, buffer->nicklist_nicks_visible_count);
+
+    group2 = gui_nicklist_add_group (buffer, NULL, "group2", "lightblue", 1);
+    CHECK(group2);
+
+    buffer->nicklist_groups_visible_count = 0;
+    buffer->nicklist_nicks_visible_count = 0;
+    gui_nicklist_compute_visible_count (buffer, buffer->nicklist_root);
+    LONGS_EQUAL(2, buffer->nicklist_groups_visible_count);
+    LONGS_EQUAL(1, buffer->nicklist_nicks_visible_count);
+
+    nick1 = gui_nicklist_add_nick (buffer, group2, "nick1", "cyan", "@", "lightgreen", 1);
+    CHECK(nick1);
+
+    buffer->nicklist_groups_visible_count = 0;
+    buffer->nicklist_nicks_visible_count = 0;
+    gui_nicklist_compute_visible_count (buffer, buffer->nicklist_root);
+    LONGS_EQUAL(2, buffer->nicklist_groups_visible_count);
+    LONGS_EQUAL(2, buffer->nicklist_nicks_visible_count);
+
+    nick3 = gui_nicklist_add_nick (buffer, group2, "nick3", "yellow", NULL, NULL, 0);
+    CHECK(nick3);
+
+    buffer->nicklist_groups_visible_count = 0;
+    buffer->nicklist_nicks_visible_count = 0;
+    gui_nicklist_compute_visible_count (buffer, buffer->nicklist_root);
+    LONGS_EQUAL(2, buffer->nicklist_groups_visible_count);
+    LONGS_EQUAL(2, buffer->nicklist_nicks_visible_count);
+
+    nick2 = gui_nicklist_add_nick (buffer, group2, "nick2", "lightblue", NULL, NULL, 0);
+    CHECK(nick2);
+
+    buffer->nicklist_groups_visible_count = 0;
+    buffer->nicklist_nicks_visible_count = 0;
+    gui_nicklist_compute_visible_count (buffer, buffer->nicklist_root);
+    LONGS_EQUAL(2, buffer->nicklist_groups_visible_count);
+    LONGS_EQUAL(2, buffer->nicklist_nicks_visible_count);
+
+    gui_buffer_close (buffer);
 }
 
 /*
@@ -259,7 +568,29 @@ TEST(GuiNicklist, ComputeVisibleCount)
 
 TEST(GuiNicklist, GroupGetInteger)
 {
-    /* TODO: write tests */
+    struct t_gui_buffer *buffer;
+    struct t_gui_nick_group *group;
+
+    buffer = gui_buffer_new (NULL, TEST_BUFFER_NAME,
+                             NULL, NULL, NULL,
+                             NULL, NULL, NULL);
+    CHECK(buffer);
+
+    group = gui_nicklist_add_group (buffer, NULL, "group", "blue", 1);
+    CHECK(group);
+
+    LONGS_EQUAL(0, gui_nicklist_group_get_integer (buffer, NULL, NULL));
+    LONGS_EQUAL(0, gui_nicklist_group_get_integer (buffer, NULL, ""));
+    LONGS_EQUAL(0, gui_nicklist_group_get_integer (buffer, NULL, "zzz"));
+    LONGS_EQUAL(0, gui_nicklist_group_get_integer (buffer, buffer->nicklist_root, ""));
+    LONGS_EQUAL(0, gui_nicklist_group_get_integer (buffer, buffer->nicklist_root, "zzz"));
+
+    LONGS_EQUAL(0, gui_nicklist_group_get_integer (buffer, buffer->nicklist_root, "visible"));
+    LONGS_EQUAL(1, gui_nicklist_group_get_integer (buffer, group, "visible"));
+    LONGS_EQUAL(0, gui_nicklist_group_get_integer (buffer, buffer->nicklist_root, "level"));
+    LONGS_EQUAL(1, gui_nicklist_group_get_integer (buffer, group, "level"));
+
+    gui_buffer_close (buffer);
 }
 
 /*
@@ -269,7 +600,29 @@ TEST(GuiNicklist, GroupGetInteger)
 
 TEST(GuiNicklist, GroupGetString)
 {
-    /* TODO: write tests */
+    struct t_gui_buffer *buffer;
+    struct t_gui_nick_group *group;
+
+    buffer = gui_buffer_new (NULL, TEST_BUFFER_NAME,
+                             NULL, NULL, NULL,
+                             NULL, NULL, NULL);
+    CHECK(buffer);
+
+    group = gui_nicklist_add_group (buffer, NULL, "group", "blue", 1);
+    CHECK(group);
+
+    POINTERS_EQUAL(NULL, gui_nicklist_group_get_string (buffer, NULL, NULL));
+    POINTERS_EQUAL(NULL, gui_nicklist_group_get_string (buffer, NULL, ""));
+    POINTERS_EQUAL(NULL, gui_nicklist_group_get_string (buffer, NULL, "zzz"));
+    POINTERS_EQUAL(NULL, gui_nicklist_group_get_string (buffer, buffer->nicklist_root, ""));
+    POINTERS_EQUAL(NULL, gui_nicklist_group_get_string (buffer, buffer->nicklist_root, "zzz"));
+
+    STRCMP_EQUAL("root", gui_nicklist_group_get_string (buffer, buffer->nicklist_root, "name"));
+    STRCMP_EQUAL("group", gui_nicklist_group_get_string (buffer, group, "name"));
+    POINTERS_EQUAL(NULL, gui_nicklist_group_get_string (buffer, buffer->nicklist_root, "color"));
+    STRCMP_EQUAL("blue", gui_nicklist_group_get_string (buffer, group, "color"));
+
+    gui_buffer_close (buffer);
 }
 
 /*
@@ -279,7 +632,27 @@ TEST(GuiNicklist, GroupGetString)
 
 TEST(GuiNicklist, GroupGetPointer)
 {
-    /* TODO: write tests */
+    struct t_gui_buffer *buffer;
+    struct t_gui_nick_group *group;
+
+    buffer = gui_buffer_new (NULL, TEST_BUFFER_NAME,
+                             NULL, NULL, NULL,
+                             NULL, NULL, NULL);
+    CHECK(buffer);
+
+    group = gui_nicklist_add_group (buffer, NULL, "group", "blue", 1);
+    CHECK(group);
+
+    POINTERS_EQUAL(NULL, gui_nicklist_group_get_pointer (buffer, NULL, NULL));
+    POINTERS_EQUAL(NULL, gui_nicklist_group_get_pointer (buffer, NULL, ""));
+    POINTERS_EQUAL(NULL, gui_nicklist_group_get_pointer (buffer, NULL, "zzz"));
+    POINTERS_EQUAL(NULL, gui_nicklist_group_get_pointer (buffer, buffer->nicklist_root, ""));
+    POINTERS_EQUAL(NULL, gui_nicklist_group_get_pointer (buffer, buffer->nicklist_root, "zzz"));
+
+    POINTERS_EQUAL(NULL, gui_nicklist_group_get_pointer (buffer, buffer->nicklist_root, "parent"));
+    POINTERS_EQUAL(buffer->nicklist_root, gui_nicklist_group_get_pointer (buffer, group, "parent"));
+
+    gui_buffer_close (buffer);
 }
 
 /*
@@ -289,7 +662,31 @@ TEST(GuiNicklist, GroupGetPointer)
 
 TEST(GuiNicklist, GroupSet)
 {
-    /* TODO: write tests */
+    struct t_gui_buffer *buffer;
+    struct t_gui_nick_group *group;
+
+    buffer = gui_buffer_new (NULL, TEST_BUFFER_NAME,
+                             NULL, NULL, NULL,
+                             NULL, NULL, NULL);
+    CHECK(buffer);
+
+    group = gui_nicklist_add_group (buffer, NULL, "group", "blue", 1);
+    CHECK(group);
+
+    gui_nicklist_group_set (NULL, NULL, NULL, NULL);
+    gui_nicklist_group_set (buffer, NULL, NULL, NULL);
+    gui_nicklist_group_set (buffer, group, NULL, NULL);
+    gui_nicklist_group_set (buffer, group, "color", NULL);
+    gui_nicklist_group_set (buffer, group, "zzz", "test");
+
+    gui_nicklist_group_set (buffer, group, "color", "green");
+    STRCMP_EQUAL("green", group->color);
+    gui_nicklist_group_set (buffer, group, "color", "");
+    STRCMP_EQUAL(NULL, group->color);
+    gui_nicklist_group_set (buffer, group, "visible", "0");
+    LONGS_EQUAL(0, group->visible);
+
+    gui_buffer_close (buffer);
 }
 
 /*
@@ -299,7 +696,25 @@ TEST(GuiNicklist, GroupSet)
 
 TEST(GuiNicklist, NickGetInteger)
 {
-    /* TODO: write tests */
+    struct t_gui_buffer *buffer;
+    struct t_gui_nick *nick;
+
+    buffer = gui_buffer_new (NULL, TEST_BUFFER_NAME,
+                             NULL, NULL, NULL,
+                             NULL, NULL, NULL);
+    CHECK(buffer);
+
+    nick = gui_nicklist_add_nick (buffer, NULL, "nick", "green", "@", "lightgreen", 1);
+    CHECK(nick);
+
+    LONGS_EQUAL(0, gui_nicklist_nick_get_integer (buffer, NULL, NULL));
+    LONGS_EQUAL(0, gui_nicklist_nick_get_integer (buffer, NULL, ""));
+    LONGS_EQUAL(0, gui_nicklist_nick_get_integer (buffer, NULL, "zzz"));
+    LONGS_EQUAL(0, gui_nicklist_nick_get_integer (buffer, nick, "zzz"));
+
+    LONGS_EQUAL(1, gui_nicklist_nick_get_integer (buffer, nick, "visible"));
+
+    gui_buffer_close (buffer);
 }
 
 /*
@@ -309,7 +724,28 @@ TEST(GuiNicklist, NickGetInteger)
 
 TEST(GuiNicklist, NickGetString)
 {
-    /* TODO: write tests */
+    struct t_gui_buffer *buffer;
+    struct t_gui_nick *nick;
+
+    buffer = gui_buffer_new (NULL, TEST_BUFFER_NAME,
+                             NULL, NULL, NULL,
+                             NULL, NULL, NULL);
+    CHECK(buffer);
+
+    nick = gui_nicklist_add_nick (buffer, NULL, "nick", "green", "@", "lightgreen", 1);
+    CHECK(nick);
+
+    LONGS_EQUAL(0, gui_nicklist_nick_get_string (buffer, NULL, NULL));
+    LONGS_EQUAL(0, gui_nicklist_nick_get_string (buffer, NULL, ""));
+    LONGS_EQUAL(0, gui_nicklist_nick_get_string (buffer, NULL, "zzz"));
+    LONGS_EQUAL(0, gui_nicklist_nick_get_string (buffer, nick, "zzz"));
+
+    STRCMP_EQUAL("nick", gui_nicklist_nick_get_string (buffer, nick, "name"));
+    STRCMP_EQUAL("green", gui_nicklist_nick_get_string (buffer, nick, "color"));
+    STRCMP_EQUAL("@", gui_nicklist_nick_get_string (buffer, nick, "prefix"));
+    STRCMP_EQUAL("lightgreen", gui_nicklist_nick_get_string (buffer, nick, "prefix_color"));
+
+    gui_buffer_close (buffer);
 }
 
 /*
@@ -319,7 +755,25 @@ TEST(GuiNicklist, NickGetString)
 
 TEST(GuiNicklist, NickGetPointer)
 {
-    /* TODO: write tests */
+    struct t_gui_buffer *buffer;
+    struct t_gui_nick *nick;
+
+    buffer = gui_buffer_new (NULL, TEST_BUFFER_NAME,
+                             NULL, NULL, NULL,
+                             NULL, NULL, NULL);
+    CHECK(buffer);
+
+    nick = gui_nicklist_add_nick (buffer, NULL, "nick", "green", "@", "lightgreen", 1);
+    CHECK(nick);
+
+    LONGS_EQUAL(0, gui_nicklist_nick_get_pointer (buffer, NULL, NULL));
+    LONGS_EQUAL(0, gui_nicklist_nick_get_pointer (buffer, NULL, ""));
+    LONGS_EQUAL(0, gui_nicklist_nick_get_pointer (buffer, NULL, "zzz"));
+    LONGS_EQUAL(0, gui_nicklist_nick_get_pointer (buffer, nick, "zzz"));
+
+    POINTERS_EQUAL(buffer->nicklist_root, gui_nicklist_nick_get_pointer (buffer, nick, "group"));
+
+    gui_buffer_close (buffer);
 }
 
 /*
@@ -329,7 +783,39 @@ TEST(GuiNicklist, NickGetPointer)
 
 TEST(GuiNicklist, NickSet)
 {
-    /* TODO: write tests */
+    struct t_gui_buffer *buffer;
+    struct t_gui_nick *nick;
+
+    buffer = gui_buffer_new (NULL, TEST_BUFFER_NAME,
+                             NULL, NULL, NULL,
+                             NULL, NULL, NULL);
+    CHECK(buffer);
+
+    nick = gui_nicklist_add_nick (buffer, NULL, "nick", "green", "@", "lightgreen", 1);
+    CHECK(nick);
+
+    gui_nicklist_nick_set (NULL, NULL, NULL, NULL);
+    gui_nicklist_nick_set (buffer, NULL, NULL, NULL);
+    gui_nicklist_nick_set (buffer, nick, NULL, NULL);
+    gui_nicklist_nick_set (buffer, nick, "color", NULL);
+    gui_nicklist_nick_set (buffer, nick, "zzz", "test");
+
+    gui_nicklist_nick_set (buffer, nick, "color", "red");
+    STRCMP_EQUAL("red", nick->color);
+    gui_nicklist_nick_set (buffer, nick, "color", "");
+    STRCMP_EQUAL(NULL, nick->color);
+    gui_nicklist_nick_set (buffer, nick, "prefix", "+");
+    STRCMP_EQUAL("+", nick->prefix);
+    gui_nicklist_nick_set (buffer, nick, "prefix", "");
+    STRCMP_EQUAL(NULL, nick->prefix);
+    gui_nicklist_nick_set (buffer, nick, "prefix_color", "lightred");
+    STRCMP_EQUAL("lightred", nick->prefix_color);
+    gui_nicklist_nick_set (buffer, nick, "prefix_color", "");
+    STRCMP_EQUAL(NULL, nick->prefix_color);
+    gui_nicklist_nick_set (buffer, nick, "visible", "0");
+    LONGS_EQUAL(0, nick->visible);
+
+    gui_buffer_close (buffer);
 }
 
 /*

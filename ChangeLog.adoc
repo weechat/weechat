@@ -77,7 +77,7 @@ Tests::
   * ci: add CodeQL code scanning (issue #2102)
   * core: fix tests on function strftimeval on Alpine
   * core: add tests on mouse events (issue #2082)
-  * gui: add tests on hotlist functions
+  * gui: add tests on hotlist and nicklist functions
   * scripts: make tests fail if a compiled scripting plugin fails to load
   * scripts: add tests on constants
 
