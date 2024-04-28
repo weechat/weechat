@@ -803,6 +803,9 @@ gui_nicklist_get_group_start (const char *name)
 {
     const char *ptr_name;
 
+    if (!name)
+        return NULL;
+
     ptr_name = name;
     while (isdigit ((unsigned char)ptr_name[0]))
     {
