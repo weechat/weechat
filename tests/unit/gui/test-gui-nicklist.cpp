@@ -239,16 +239,7 @@ TEST(GuiNicklist, GetNextItem)
 TEST(GuiNicklist, GetGroupStart)
 {
     /* TODO: write tests */
-}
 
-/*
- * Tests functions:
- *   gui_nicklist_get_max_length
- */
-
-TEST(GuiNicklist, GetMaxLength)
-{
-    /* TODO: write tests */
 }
 
 /*

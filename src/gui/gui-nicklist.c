@@ -817,55 +817,6 @@ gui_nicklist_get_group_start (const char *name)
 }
 
 /*
- * Returns longer nickname in the nicklist.
- */
-
-int
-gui_nicklist_get_max_length (struct t_gui_buffer *buffer,
-                             struct t_gui_nick_group *group)
-{
-    int length, max_length;
-    struct t_gui_nick_group *ptr_group;
-    struct t_gui_nick *ptr_nick;
-
-    if (!buffer)
-        return 0;
-
-    max_length = 0;
-    for (ptr_group = (group) ? group : buffer->nicklist_root;
-         ptr_group; ptr_group = ptr_group->next_group)
-    {
-        if (buffer->nicklist_display_groups && ptr_group->visible)
-        {
-            length = utf8_strlen_screen (gui_nicklist_get_group_start (ptr_group->name)) +
-                                         ptr_group->level - 1;
-            if (length > max_length)
-                max_length = length;
-        }
-        for (ptr_nick = ptr_group->nicks; ptr_nick;
-             ptr_nick = ptr_nick->next_nick)
-        {
-            if (ptr_nick->visible)
-            {
-                if (buffer->nicklist_display_groups)
-                    length = utf8_strlen_screen (ptr_nick->name) + ptr_group->level + 1;
-                else
-                    length = utf8_strlen_screen (ptr_nick->name) + 1;
-                if (length > max_length)
-                    max_length = length;
-            }
-        }
-        if (ptr_group->children)
-        {
-            length = gui_nicklist_get_max_length (buffer, ptr_group->children);
-            if (length > max_length)
-                max_length = length;
-        }
-    }
-    return max_length;
-}
-
-/*
  * Computes visible_count variable for a nicklist.
  */
 
