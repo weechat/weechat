@@ -49,6 +49,7 @@ New features::
 
 Bug fixes::
 
+  * core: fix recursive search of group in nicklist
   * core: use nick offline highlight color for prefix of action message when the nick is offline with a highlight
   * core: add missing hdata name "buffer" in hdata "hotlist"
   * core: fix reset to initial scroll position after search of text in buffer (issue #2093)
