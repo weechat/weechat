@@ -119,7 +119,7 @@ TEST(RelayApiMsg, SendEvent)
 TEST(RelayApiMsg, BufferToJson)
 {
     cJSON *json, *json_obj, *json_local_vars, *json_lines;
-    cJSON *json_nicklist, *json_nicks, *json_groups, *json_group;
+    cJSON *json_nicklist_root, *json_nicks, *json_groups, *json_group;
     cJSON *json_group_nicks, *json_nick;
     struct t_gui_buffer *buffer;
     struct t_gui_nick_group *group;
@@ -179,13 +179,13 @@ TEST(RelayApiMsg, BufferToJson)
     CHECK(json_lines);
     CHECK(cJSON_IsArray (json_lines));
     LONGS_EQUAL(0, cJSON_GetArraySize (json_lines));
-    json_nicklist = cJSON_GetObjectItem (json, "nicklist");
-    CHECK(json_nicklist);
-    CHECK(cJSON_IsObject (json_nicklist));
-    WEE_CHECK_OBJ_NUM(0, json_nicklist, "id");
-    WEE_CHECK_OBJ_STR("root", json_nicklist, "name");
-    WEE_CHECK_OBJ_STR("", json_nicklist, "color");
-    json_groups = cJSON_GetObjectItem (json_nicklist, "groups");
+    json_nicklist_root = cJSON_GetObjectItem (json, "nicklist_root");
+    CHECK(json_nicklist_root);
+    CHECK(cJSON_IsObject (json_nicklist_root));
+    WEE_CHECK_OBJ_NUM(0, json_nicklist_root, "id");
+    WEE_CHECK_OBJ_STR("root", json_nicklist_root, "name");
+    WEE_CHECK_OBJ_STR("", json_nicklist_root, "color");
+    json_groups = cJSON_GetObjectItem (json_nicklist_root, "groups");
     CHECK(json_groups);
     CHECK(cJSON_IsArray (json_groups));
     LONGS_EQUAL(1, cJSON_GetArraySize (json_groups));
@@ -256,7 +256,7 @@ TEST(RelayApiMsg, BufferToJson)
     WEE_CHECK_OBJ_STR(color, json_nick, "color");
     free (color);
     WEE_CHECK_OBJ_BOOL(1, json_nick, "visible");
-    json_nicks = cJSON_GetObjectItem (json_nicklist, "nicks");
+    json_nicks = cJSON_GetObjectItem (json_nicklist_root, "nicks");
     CHECK(json_nicks);
     CHECK(cJSON_IsArray (json_nicks));
     LONGS_EQUAL(1, cJSON_GetArraySize (json_nicks));
