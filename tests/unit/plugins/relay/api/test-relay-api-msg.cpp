@@ -142,6 +142,9 @@ TEST(RelayApiMsg, BufferToJson)
     WEE_CHECK_OBJ_NUM(1, json, "number");
     WEE_CHECK_OBJ_STR("formatted", json, "type");
     WEE_CHECK_OBJ_STRN("WeeChat", 7, json, "title");
+    WEE_CHECK_OBJ_BOOL(0, json, "nicklist");
+    WEE_CHECK_OBJ_BOOL(0, json, "nicklist_case_sensitive");
+    WEE_CHECK_OBJ_BOOL(1, json, "nicklist_display_groups");
     json_local_vars = cJSON_GetObjectItem (json, "local_variables");
     CHECK(json_local_vars);
     CHECK(cJSON_IsObject (json_local_vars));
@@ -164,6 +167,9 @@ TEST(RelayApiMsg, BufferToJson)
     /* create a user buffer with 1 group / 4 nicks */
     buffer = gui_buffer_new_user ("test", GUI_BUFFER_TYPE_FORMATTED);
     CHECK(buffer);
+    gui_buffer_set (buffer, "nicklist", "1");
+    gui_buffer_set (buffer, "nicklist_case_sensitive", "0");
+    gui_buffer_set (buffer, "nicklist_display_groups", "0");
     group = gui_nicklist_add_group (buffer, NULL, "group1", "magenta", 1);
     CHECK(group);
     CHECK(gui_nicklist_add_nick (buffer, group, "nick1", "blue", "@", "lightred", 1));
@@ -175,6 +181,9 @@ TEST(RelayApiMsg, BufferToJson)
     json = relay_api_msg_buffer_to_json (buffer, 1, 1, RELAY_API_COLORS_ANSI);
     CHECK(json);
     CHECK(cJSON_IsObject (json));
+    WEE_CHECK_OBJ_BOOL(1, json, "nicklist");
+    WEE_CHECK_OBJ_BOOL(0, json, "nicklist_case_sensitive");
+    WEE_CHECK_OBJ_BOOL(0, json, "nicklist_display_groups");
     json_lines = cJSON_GetObjectItem (json, "lines");
     CHECK(json_lines);
     CHECK(cJSON_IsArray (json_lines));

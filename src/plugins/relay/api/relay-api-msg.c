@@ -390,6 +390,9 @@ relay_api_msg_buffer_to_json (struct t_gui_buffer *buffer,
     ptr_string = weechat_buffer_get_string (buffer, "type");
     MSG_ADD_STR_PTR("type", ptr_string);
     MSG_ADD_HDATA_STR_COLORS("title", "title");
+    MSG_ADD_HDATA_VAR(Bool, "nicklist", integer, "nicklist");
+    MSG_ADD_HDATA_VAR(Bool, "nicklist_case_sensitive", integer, "nicklist_case_sensitive");
+    MSG_ADD_HDATA_VAR(Bool, "nicklist_display_groups", integer, "nicklist_display_groups");
 
     /* local_variables */
     json_local_vars = cJSON_CreateObject ();
