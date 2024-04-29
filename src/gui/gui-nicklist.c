@@ -1037,6 +1037,7 @@ gui_nicklist_group_set (struct t_gui_buffer *buffer,
                         struct t_gui_nick_group *group,
                         const char *property, const char *value)
 {
+    long long id;
     long number;
     char *error;
     int group_changed;
@@ -1046,7 +1047,18 @@ gui_nicklist_group_set (struct t_gui_buffer *buffer,
 
     group_changed = 0;
 
-    if (strcmp (property, "color") == 0)
+    if (strcmp (property, "id") == 0)
+    {
+        id = strtoll (value, &error, 10);
+        if (error && !error[0]
+            && (id != group->id)
+            && !gui_nicklist_search_group_id (buffer, NULL, id))
+        {
+            group->id = id;
+            group_changed = 1;
+        }
+    }
+    else if (strcmp (property, "color") == 0)
     {
         string_shared_free (group->color);
         group->color = (value[0]) ? (char *)string_shared_get (value) : NULL;
@@ -1147,6 +1159,7 @@ gui_nicklist_nick_set (struct t_gui_buffer *buffer,
                        struct t_gui_nick *nick,
                        const char *property, const char *value)
 {
+    long long id;
     long number;
     char *error;
     int nick_changed;
@@ -1156,7 +1169,18 @@ gui_nicklist_nick_set (struct t_gui_buffer *buffer,
 
     nick_changed = 0;
 
-    if (strcmp (property, "color") == 0)
+    if (strcmp (property, "id") == 0)
+    {
+        id = strtoll (value, &error, 10);
+        if (error && !error[0]
+            && (id != nick->id)
+            && !gui_nicklist_search_nick_id (buffer, NULL, id))
+        {
+            nick->id = id;
+            nick_changed = 1;
+        }
+    }
+    else if (strcmp (property, "color") == 0)
     {
         string_shared_free (nick->color);
         nick->color = (value[0]) ? (char *)string_shared_get (value) : NULL;

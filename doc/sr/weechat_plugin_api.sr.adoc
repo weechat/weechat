@@ -15546,7 +15546,7 @@ parent = weechat.nicklist_group_get_pointer(buffer, group, "parent")
 
 ==== nicklist_group_set
 
-_WeeChat ≥ 0.3.4._
+_WeeChat ≥ 0.3.4, ажурирано у верзији 4.3.0._
 
 Поставља стринг вредност особине групе.
 
@@ -15569,14 +15569,20 @@ void weechat_nicklist_group_set (struct t_gui_buffer *buffer,
 
 Особине:
 
-[width="100%", cols="^2,4,8", options="header"]
+[width="100%", cols="^2,^1,4,8", options="header"]
 |===
-| Име | Вредност | Опис
+// TRANSLATION MISSING
+| Име | Min WeeChat | Вредност | Опис
 
-| color | Име опције WeeChat боје
+// TRANSLATION MISSING
+| id | 4.3.0 | long long integer ≥ 0
+| New id for the group (it must be unique in the buffer). +
+  Note: it is not recommended to change this identifier.
+
+| color | | Име опције WeeChat боје
 | Погледајте аргумент „color” функције <<_nicklist_add_group,nicklist_add_group>>.
 
-| visible | "0", "1"
+| visible | | "0", "1"
 | "0" = скривена група, "1" = видљива група.
 |===
 
@@ -15752,7 +15758,7 @@ group = weechat.nicklist_nick_get_pointer(buffer, nick, "group")
 
 ==== nicklist_nick_set
 
-_WeeChat ≥ 0.3.4._
+_WeeChat ≥ 0.3.4, ажурирано у верзији 4.3.0._
 
 Поставља стринг вредност особине надимка.
 
@@ -15775,20 +15781,26 @@ void weechat_nicklist_nick_set (struct t_gui_buffer *buffer,
 
 Особине:
 
-[width="100%", cols="^2,4,8", options="header"]
+[width="100%", cols="^2,^1,4,8", options="header"]
 |===
-| Име | Вредност | Опис
+// TRANSLATION MISSING
+| Име | Min WeeChat | Вредност | Опис
 
-| color | име опције WeeChat боје
+// TRANSLATION MISSING
+| id | 4.3.0 | long long integer ≥ 0
+| New id for the nick (it must be unique in the buffer). +
+  Note: it is not recommended to change this identifier.
+
+| color | | име опције WeeChat боје
 | Погледајте аргумент „color” функције <<_nicklist_add_nick,nicklist_add_nick>>.
 
-| prefix | било који стринг
+| prefix | | било који стринг
 | Префикс надимка.
 
-| prefix_color | име опције WeeChat боје
+| prefix_color | | име опције WeeChat боје
 | Погледајте аргумент „prefix_color” функције <<_nicklist_add_nick,nicklist_add_nick>>.
 
-| visible | "0", "1"
+| visible | | "0", "1"
 | "0" = скривени надимак, "1" = видљиви надимак.
 |===
 

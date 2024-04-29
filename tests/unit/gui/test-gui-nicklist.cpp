@@ -704,28 +704,37 @@ TEST(GuiNicklist, GroupGetPointer)
 TEST(GuiNicklist, GroupSet)
 {
     struct t_gui_buffer *buffer;
-    struct t_gui_nick_group *group;
+    struct t_gui_nick_group *group1, *group2;
 
     buffer = gui_buffer_new (NULL, TEST_BUFFER_NAME,
                              NULL, NULL, NULL,
                              NULL, NULL, NULL);
     CHECK(buffer);
 
-    group = gui_nicklist_add_group (buffer, NULL, "group", "blue", 1);
-    CHECK(group);
+    group1 = gui_nicklist_add_group (buffer, NULL, "group1", "blue", 1);
+    CHECK(group1);
+
+    group2 = gui_nicklist_add_group (buffer, NULL, "group2", "magenta", 1);
+    CHECK(group2);
 
     gui_nicklist_group_set (NULL, NULL, NULL, NULL);
     gui_nicklist_group_set (buffer, NULL, NULL, NULL);
-    gui_nicklist_group_set (buffer, group, NULL, NULL);
-    gui_nicklist_group_set (buffer, group, "color", NULL);
-    gui_nicklist_group_set (buffer, group, "zzz", "test");
+    gui_nicklist_group_set (buffer, group1, NULL, NULL);
+    gui_nicklist_group_set (buffer, group1, "color", NULL);
+    gui_nicklist_group_set (buffer, group1, "zzz", "test");
 
-    gui_nicklist_group_set (buffer, group, "color", "green");
-    STRCMP_EQUAL("green", group->color);
-    gui_nicklist_group_set (buffer, group, "color", "");
-    STRCMP_EQUAL(NULL, group->color);
-    gui_nicklist_group_set (buffer, group, "visible", "0");
-    LONGS_EQUAL(0, group->visible);
+    gui_nicklist_group_set (buffer, group1, "id", "123");
+    CHECK(group1->id == 123);
+    gui_nicklist_group_set (buffer, group2, "id", "123");
+    CHECK(group2->id != 123);
+    gui_nicklist_group_set (buffer, group2, "id", "456");
+    CHECK(group2->id == 456);
+    gui_nicklist_group_set (buffer, group1, "color", "green");
+    STRCMP_EQUAL("green", group1->color);
+    gui_nicklist_group_set (buffer, group1, "color", "");
+    STRCMP_EQUAL(NULL, group1->color);
+    gui_nicklist_group_set (buffer, group1, "visible", "0");
+    LONGS_EQUAL(0, group1->visible);
 
     gui_buffer_close (buffer);
 }
@@ -825,36 +834,45 @@ TEST(GuiNicklist, NickGetPointer)
 TEST(GuiNicklist, NickSet)
 {
     struct t_gui_buffer *buffer;
-    struct t_gui_nick *nick;
+    struct t_gui_nick *nick1, *nick2;
 
     buffer = gui_buffer_new (NULL, TEST_BUFFER_NAME,
                              NULL, NULL, NULL,
                              NULL, NULL, NULL);
     CHECK(buffer);
 
-    nick = gui_nicklist_add_nick (buffer, NULL, "nick", "green", "@", "lightgreen", 1);
-    CHECK(nick);
+    nick1 = gui_nicklist_add_nick (buffer, NULL, "nick1", "green", "@", "lightgreen", 1);
+    CHECK(nick1);
+
+    nick2 = gui_nicklist_add_nick (buffer, NULL, "nick2", "cyan", "+", "lightcyan", 1);
+    CHECK(nick2);
 
     gui_nicklist_nick_set (NULL, NULL, NULL, NULL);
     gui_nicklist_nick_set (buffer, NULL, NULL, NULL);
-    gui_nicklist_nick_set (buffer, nick, NULL, NULL);
-    gui_nicklist_nick_set (buffer, nick, "color", NULL);
-    gui_nicklist_nick_set (buffer, nick, "zzz", "test");
+    gui_nicklist_nick_set (buffer, nick1, NULL, NULL);
+    gui_nicklist_nick_set (buffer, nick1, "color", NULL);
+    gui_nicklist_nick_set (buffer, nick1, "zzz", "test");
 
-    gui_nicklist_nick_set (buffer, nick, "color", "red");
-    STRCMP_EQUAL("red", nick->color);
-    gui_nicklist_nick_set (buffer, nick, "color", "");
-    STRCMP_EQUAL(NULL, nick->color);
-    gui_nicklist_nick_set (buffer, nick, "prefix", "+");
-    STRCMP_EQUAL("+", nick->prefix);
-    gui_nicklist_nick_set (buffer, nick, "prefix", "");
-    STRCMP_EQUAL(NULL, nick->prefix);
-    gui_nicklist_nick_set (buffer, nick, "prefix_color", "lightred");
-    STRCMP_EQUAL("lightred", nick->prefix_color);
-    gui_nicklist_nick_set (buffer, nick, "prefix_color", "");
-    STRCMP_EQUAL(NULL, nick->prefix_color);
-    gui_nicklist_nick_set (buffer, nick, "visible", "0");
-    LONGS_EQUAL(0, nick->visible);
+    gui_nicklist_nick_set (buffer, nick1, "id", "123");
+    CHECK(nick1->id == 123);
+    gui_nicklist_nick_set (buffer, nick2, "id", "123");
+    CHECK(nick2->id != 123);
+    gui_nicklist_nick_set (buffer, nick2, "id", "456");
+    CHECK(nick2->id == 456);
+    gui_nicklist_nick_set (buffer, nick1, "color", "red");
+    STRCMP_EQUAL("red", nick1->color);
+    gui_nicklist_nick_set (buffer, nick1, "color", "");
+    STRCMP_EQUAL(NULL, nick1->color);
+    gui_nicklist_nick_set (buffer, nick1, "prefix", "+");
+    STRCMP_EQUAL("+", nick1->prefix);
+    gui_nicklist_nick_set (buffer, nick1, "prefix", "");
+    STRCMP_EQUAL(NULL, nick1->prefix);
+    gui_nicklist_nick_set (buffer, nick1, "prefix_color", "lightred");
+    STRCMP_EQUAL("lightred", nick1->prefix_color);
+    gui_nicklist_nick_set (buffer, nick1, "prefix_color", "");
+    STRCMP_EQUAL(NULL, nick1->prefix_color);
+    gui_nicklist_nick_set (buffer, nick1, "visible", "0");
+    LONGS_EQUAL(0, nick1->visible);
 
     gui_buffer_close (buffer);
 }
