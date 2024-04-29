@@ -30,6 +30,7 @@ New features::
   * core: add option `-s` in command `/command` to execute multiple commands separated by semicolons
   * core: allow case insensitive search of partial buffer name with `(?i)name` in command `/buffer`
   * core: use function util_strftimeval in evaluation of expression `date:xxx`
+  * api: allow search by group and nick id in functions nicklist_search_group and nicklist_search_nick (issue #2081)
   * api: allow search by buffer id in function buffer_search (issue #2081)
   * api: add modifier "color_decode" to decode WeeChat colors with a replacement string
   * api: use whole replacement string instead of first char in function string_remove_color

@@ -15501,7 +15501,9 @@ group = weechat.nicklist_add_group(my_buffer, my_parent_group, "test_group",
 
 ==== nicklist_search_group
 
-Search a group in a nicklist.
+_Updated in 4.3.0._
+
+Search a group in a nicklist by name or unique identifier (`id`).
 
 Prototype:
 
@@ -15517,7 +15519,8 @@ Arguments:
 * _buffer_: buffer pointer
 * _from_group_: search from this group only, if NULL, then search in whole
   nicklist
-* _name_: group name to search
+* _name_: group name to search; with WeeChat ≥ 4.3.0, a unique identifier can
+  be given with the format: `==id:xxx` (where `xxx` is the identifier)
 
 Return value:
 
@@ -15527,8 +15530,10 @@ C example:
 
 [source,c]
 ----
-struct t_gui_nick_group *ptr_group = weechat_nicklist_search_group (my_buffer,
-                                                                    NULL, "test_group");
+struct t_gui_nick_group *ptr_group1 = weechat_nicklist_search_group (my_buffer,
+                                                                     NULL, "test_group");
+struct t_gui_nick_group *ptr_group2 = weechat_nicklist_search_group (my_buffer,
+                                                                     NULL, "==id:1714382231198764");
 ----
 
 Script (Python):
@@ -15538,8 +15543,9 @@ Script (Python):
 # prototype
 def nicklist_search_group(buffer: str, from_group: str, name: str) -> str: ...
 
-# example
-group = weechat.nicklist_search_group(my_buffer, "", "test_group")
+# examples
+group1 = weechat.nicklist_search_group(my_buffer, "", "test_group")
+group2 = weechat.nicklist_search_group(my_buffer, "", "==id:1714382231198764")
 ----
 
 ==== nicklist_add_nick
@@ -15616,7 +15622,9 @@ nick = weechat.nicklist_add_nick(my_buffer, my_group, "test_nick", color, "@", "
 
 ==== nicklist_search_nick
 
-Search a nick in a nicklist.
+_Updated in 4.3.0._
+
+Search a nick in a nicklist by name or unique identifier (`id`).
 
 Prototype:
 
@@ -15632,7 +15640,8 @@ Arguments:
 * _buffer_: buffer pointer
 * _from_group_: search from this group only, if NULL, then search in whole
   nicklist
-* _name_: nick name to search
+* _name_: nick name to search; with WeeChat ≥ 4.3.0, a unique identifier can
+  be given with the format: `==id:xxx` (where `xxx` is the identifier)
 
 Return value:
 
@@ -15642,8 +15651,10 @@ C example:
 
 [source,c]
 ----
-struct t_gui_nick *ptr_nick = weechat_nicklist_search_nick (my_buffer,
-                                                            NULL, "test_nick");
+struct t_gui_nick *ptr_nick1 = weechat_nicklist_search_nick (my_buffer,
+                                                             NULL, "test_nick");
+struct t_gui_nick *ptr_nick2 = weechat_nicklist_search_nick (my_buffer,
+                                                             NULL, "==id:1714382252187496");
 ----
 
 Script (Python):
@@ -15653,8 +15664,9 @@ Script (Python):
 # prototype
 def nicklist_search_nick(buffer: str, from_group: str, name: str) -> str: ...
 
-# example
-nick = weechat.nicklist_search_nick(my_buffer, "", "test_nick")
+# examples
+nick1 = weechat.nicklist_search_nick(my_buffer, "", "test_nick")
+nick2 = weechat.nicklist_search_nick(my_buffer, "", "==id:1714382252187496")
 ----
 
 ==== nicklist_remove_group

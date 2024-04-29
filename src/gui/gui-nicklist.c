@@ -182,22 +182,58 @@ gui_nicklist_insert_group_sorted (struct t_gui_nick_group **groups,
 }
 
 /*
- * Searches for a group in nicklist (this function must not be called directly).
+ * Searches for a group in nicklist by id (this function must not be called
+ * directly).
  *
  * Returns pointer to group found, NULL if not found.
  */
 
 struct t_gui_nick_group *
-gui_nicklist_search_group_internal (struct t_gui_buffer *buffer,
-                                    struct t_gui_nick_group *from_group,
-                                    const char *name,
-                                    int skip_digits)
+gui_nicklist_search_group_id (struct t_gui_buffer *buffer,
+                              struct t_gui_nick_group *from_group,
+                              long long id)
+{
+    struct t_gui_nick_group *ptr_group, *ptr_group_found;
+
+    if (!from_group)
+        from_group = buffer->nicklist_root;
+
+    if (!from_group)
+        return NULL;
+
+    if (from_group->id == id)
+        return from_group;
+
+    if (from_group->children)
+    {
+        for (ptr_group = from_group->children; ptr_group;
+             ptr_group = ptr_group->next_group)
+        {
+            ptr_group_found = gui_nicklist_search_group_id (buffer, ptr_group, id);
+            if (ptr_group_found)
+                return ptr_group_found;
+        }
+    }
+
+    /* group not found */
+    return NULL;
+}
+
+/*
+ * Searches for a group in nicklist by name (this function must not be called
+ * directly).
+ *
+ * Returns pointer to group found, NULL if not found.
+ */
+
+struct t_gui_nick_group *
+gui_nicklist_search_group_name (struct t_gui_buffer *buffer,
+                                struct t_gui_nick_group *from_group,
+                                const char *name,
+                                int skip_digits)
 {
     struct t_gui_nick_group *ptr_group, *ptr_group_found;
     const char *ptr_name;
-
-    if (!buffer || !name)
-        return NULL;
 
     if (!from_group)
         from_group = buffer->nicklist_root;
@@ -215,7 +251,7 @@ gui_nicklist_search_group_internal (struct t_gui_buffer *buffer,
         for (ptr_group = from_group->children; ptr_group;
              ptr_group = ptr_group->next_group)
         {
-            ptr_group_found = gui_nicklist_search_group_internal (
+            ptr_group_found = gui_nicklist_search_group_name (
                 buffer,
                 ptr_group,
                 name,
@@ -241,14 +277,26 @@ gui_nicklist_search_group (struct t_gui_buffer *buffer,
                            const char *name)
 {
     const char *ptr_name;
+    char *error;
+    long long id;
 
-    if (!buffer || !name)
+    if ((!buffer && !from_group)
+        || !name
+        || (!from_group && !buffer->nicklist_root))
+    {
         return NULL;
+    }
+
+    if (strncmp (name, "==id:", 5) == 0)
+    {
+        id = strtoll (name + 5, &error, 10);
+        if (error && !error[0])
+            return gui_nicklist_search_group_id (buffer, from_group, id);
+    }
 
     ptr_name = gui_nicklist_get_group_start (name);
-
-    return gui_nicklist_search_group_internal (buffer, from_group, name,
-                                               (ptr_name == name) ? 1 : 0);
+    return gui_nicklist_search_group_name (buffer, from_group, name,
+                                           (ptr_name == name) ? 1 : 0);
 }
 
 /*
@@ -431,27 +479,54 @@ gui_nicklist_insert_nick_sorted (struct t_gui_nick_group *group,
 }
 
 /*
- * Searches for a nick in nicklist.
+ * Searches for a nick in nicklist by id (this function must not be called
+ * directly).
  *
  * Returns pointer to nick found, NULL if not found.
  */
 
 struct t_gui_nick *
-gui_nicklist_search_nick (struct t_gui_buffer *buffer,
-                          struct t_gui_nick_group *from_group,
-                          const char *name)
+gui_nicklist_search_nick_id (struct t_gui_buffer *buffer,
+                             struct t_gui_nick_group *from_group,
+                             long long id)
 {
     struct t_gui_nick *ptr_nick;
     struct t_gui_nick_group *ptr_group;
 
-    if (!buffer && !from_group)
-        return NULL;
+    for (ptr_nick = (from_group) ? from_group->nicks : buffer->nicklist_root->nicks;
+         ptr_nick; ptr_nick = ptr_nick->next_nick)
+    {
+        if (ptr_nick->id == id)
+            return ptr_nick;
+    }
 
-    if (!name)
-        return NULL;
+    /* search nick in child groups */
+    for (ptr_group = (from_group) ? from_group->children : buffer->nicklist_root->children;
+         ptr_group; ptr_group = ptr_group->next_group)
+    {
+        ptr_nick = gui_nicklist_search_nick_id (buffer, ptr_group, id);
+        if (ptr_nick)
+            return ptr_nick;
+    }
 
-    if (!from_group && !buffer->nicklist_root)
-        return NULL;
+    /* nick not found */
+    return NULL;
+}
+
+/*
+ * Searches for a nick in nicklist by name (this function must not be called
+ * directly).
+ *
+ * Returns pointer to nick found, NULL if not found.
+ */
+
+struct t_gui_nick *
+gui_nicklist_search_nick_name (struct t_gui_buffer *buffer,
+                               struct t_gui_nick_group *from_group,
+                               const char *name)
+{
+    struct t_gui_nick *ptr_nick;
+    struct t_gui_nick_group *ptr_group;
 
     for (ptr_nick = (from_group) ? from_group->nicks : buffer->nicklist_root->nicks;
          ptr_nick; ptr_nick = ptr_nick->next_nick)
@@ -476,13 +551,44 @@ gui_nicklist_search_nick (struct t_gui_buffer *buffer,
     for (ptr_group = (from_group) ? from_group->children : buffer->nicklist_root->children;
          ptr_group; ptr_group = ptr_group->next_group)
     {
-        ptr_nick = gui_nicklist_search_nick (buffer, ptr_group, name);
+        ptr_nick = gui_nicklist_search_nick_name (buffer, ptr_group, name);
         if (ptr_nick)
             return ptr_nick;
     }
 
     /* nick not found */
     return NULL;
+}
+
+/*
+ * Searches for a nick in nicklist.
+ *
+ * Returns pointer to nick found, NULL if not found.
+ */
+
+struct t_gui_nick *
+gui_nicklist_search_nick (struct t_gui_buffer *buffer,
+                          struct t_gui_nick_group *from_group,
+                          const char *name)
+{
+    long long id;
+    char *error;
+
+    if ((!buffer && !from_group)
+        || !name
+        || (!from_group && !buffer->nicklist_root))
+    {
+        return NULL;
+    }
+
+    if (strncmp (name, "==id:", 5) == 0)
+    {
+        id = strtoll (name + 5, &error, 10);
+        if (error && !error[0])
+            return gui_nicklist_search_nick_id (buffer, from_group, id);
+    }
+
+    return gui_nicklist_search_nick_name (buffer, from_group, name);
 }
 
 /*

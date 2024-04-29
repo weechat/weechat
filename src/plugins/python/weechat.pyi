@@ -2001,8 +2001,9 @@ def nicklist_search_group(buffer: str, from_group: str, name: str) -> str:
     """`nicklist_search_group in WeeChat plugin API reference <https://weechat.org/doc/weechat/api/#_nicklist_search_group>`_
     ::
 
-        # example
-        group = weechat.nicklist_search_group(my_buffer, "", "test_group")
+        # examples
+        group1 = weechat.nicklist_search_group(my_buffer, "", "test_group")
+        group2 = weechat.nicklist_search_group(my_buffer, "", "==id:1714382231198764")
     """
     ...
 
@@ -2025,8 +2026,9 @@ def nicklist_search_nick(buffer: str, from_group: str, name: str) -> str:
     """`nicklist_search_nick in WeeChat plugin API reference <https://weechat.org/doc/weechat/api/#_nicklist_search_nick>`_
     ::
 
-        # example
-        nick = weechat.nicklist_search_nick(my_buffer, "", "test_nick")
+        # examples
+        nick1 = weechat.nicklist_search_nick(my_buffer, "", "test_nick")
+        nick2 = weechat.nicklist_search_nick(my_buffer, "", "==id:1714382252187496")
     """
     ...
 

@@ -87,7 +87,8 @@ TEST(GuiNicklist, GenerateId)
  *   gui_nicklist_insert_group_sorted
  *   gui_nicklist_add_group_with_id
  *   gui_nicklist_add_group
- *   gui_nicklist_search_group_internal
+ *   gui_nicklist_search_group_id
+ *   gui_nicklist_search_group_name
  *   gui_nicklist_search_group
  *   gui_nicklist_remove_group
  *   gui_nicklist_remove_all
@@ -97,6 +98,7 @@ TEST(GuiNicklist, AddGroup)
 {
     struct t_gui_buffer *buffer;
     struct t_gui_nick_group *group1, *group2, *subgroup1, *subgroup2, *subgroup3;
+    char str_search_id[128];
 
     buffer = gui_buffer_new (NULL, TEST_BUFFER_NAME,
                              NULL, NULL, NULL,
@@ -195,8 +197,14 @@ TEST(GuiNicklist, AddGroup)
 
     POINTERS_EQUAL(group1, gui_nicklist_search_group (buffer, NULL, "group1"));
     POINTERS_EQUAL(group1, gui_nicklist_search_group (buffer, buffer->nicklist_root, "group1"));
+    snprintf (str_search_id, sizeof (str_search_id), "==id:%lld", group1->id);
+    POINTERS_EQUAL(group1, gui_nicklist_search_group (buffer, NULL, str_search_id));
+    POINTERS_EQUAL(group1, gui_nicklist_search_group (buffer, buffer->nicklist_root, str_search_id));
     POINTERS_EQUAL(group2, gui_nicklist_search_group (buffer, NULL, "group2"));
     POINTERS_EQUAL(group2, gui_nicklist_search_group (buffer, buffer->nicklist_root, "group2"));
+    snprintf (str_search_id, sizeof (str_search_id), "==id:%lld", group2->id);
+    POINTERS_EQUAL(group2, gui_nicklist_search_group (buffer, NULL, str_search_id));
+    POINTERS_EQUAL(group2, gui_nicklist_search_group (buffer, buffer->nicklist_root, str_search_id));
     POINTERS_EQUAL(subgroup1, gui_nicklist_search_group (buffer, NULL, "subgroup1"));
     POINTERS_EQUAL(subgroup1, gui_nicklist_search_group (buffer, NULL, "1|subgroup1"));
     POINTERS_EQUAL(subgroup1, gui_nicklist_search_group (buffer, buffer->nicklist_root, "subgroup1"));
@@ -205,14 +213,29 @@ TEST(GuiNicklist, AddGroup)
     POINTERS_EQUAL(NULL, gui_nicklist_search_group (buffer, group1, "1|subgroup1"));
     POINTERS_EQUAL(subgroup1, gui_nicklist_search_group (buffer, group2, "subgroup1"));
     POINTERS_EQUAL(subgroup1, gui_nicklist_search_group (buffer, group2, "1|subgroup1"));
+    snprintf (str_search_id, sizeof (str_search_id), "==id:%lld", subgroup1->id);
+    POINTERS_EQUAL(subgroup1, gui_nicklist_search_group (buffer, NULL, str_search_id));
+    POINTERS_EQUAL(subgroup1, gui_nicklist_search_group (buffer, buffer->nicklist_root, str_search_id));
+    POINTERS_EQUAL(NULL, gui_nicklist_search_group (buffer, group1, str_search_id));
+    POINTERS_EQUAL(subgroup1, gui_nicklist_search_group (buffer, group2, str_search_id));
     POINTERS_EQUAL(subgroup2, gui_nicklist_search_group (buffer, NULL, "subgroup2"));
     POINTERS_EQUAL(subgroup2, gui_nicklist_search_group (buffer, buffer->nicklist_root, "subgroup2"));
     POINTERS_EQUAL(NULL, gui_nicklist_search_group (buffer, group1, "subgroup2"));
     POINTERS_EQUAL(subgroup2, gui_nicklist_search_group (buffer, group2, "subgroup2"));
+    snprintf (str_search_id, sizeof (str_search_id), "==id:%lld", subgroup2->id);
+    POINTERS_EQUAL(subgroup2, gui_nicklist_search_group (buffer, NULL, str_search_id));
+    POINTERS_EQUAL(subgroup2, gui_nicklist_search_group (buffer, buffer->nicklist_root, str_search_id));
+    POINTERS_EQUAL(NULL, gui_nicklist_search_group (buffer, group1, str_search_id));
+    POINTERS_EQUAL(subgroup2, gui_nicklist_search_group (buffer, group2, str_search_id));
     POINTERS_EQUAL(subgroup3, gui_nicklist_search_group (buffer, NULL, "subgroup3"));
     POINTERS_EQUAL(subgroup3, gui_nicklist_search_group (buffer, buffer->nicklist_root, "subgroup3"));
     POINTERS_EQUAL(NULL, gui_nicklist_search_group (buffer, group1, "subgroup3"));
     POINTERS_EQUAL(subgroup3, gui_nicklist_search_group (buffer, group2, "subgroup3"));
+    snprintf (str_search_id, sizeof (str_search_id), "==id:%lld", subgroup3->id);
+    POINTERS_EQUAL(subgroup3, gui_nicklist_search_group (buffer, NULL, str_search_id));
+    POINTERS_EQUAL(subgroup3, gui_nicklist_search_group (buffer, buffer->nicklist_root, str_search_id));
+    POINTERS_EQUAL(NULL, gui_nicklist_search_group (buffer, group1, str_search_id));
+    POINTERS_EQUAL(subgroup3, gui_nicklist_search_group (buffer, group2, str_search_id));
 
     /* test remove of NULL buffer/group */
     gui_nicklist_remove_group (NULL, NULL);
@@ -247,6 +270,8 @@ TEST(GuiNicklist, AddGroup)
  *   gui_nicklist_insert_nick_sorted
  *   gui_nicklist_add_nick_with_id
  *   gui_nicklist_add_nick
+ *   gui_nicklist_search_nick_id
+ *   gui_nicklist_search_nick_name
  *   gui_nicklist_search_nick
  *   gui_nicklist_remove_nick
  *   gui_nicklist_remove_all
@@ -257,6 +282,7 @@ TEST(GuiNicklist, AddNick)
     struct t_gui_buffer *buffer;
     struct t_gui_nick_group *group1, *group2;
     struct t_gui_nick *nick_root, *nick1, *nick2, *nick3;
+    char str_search_id[128];
 
     buffer = gui_buffer_new (NULL, TEST_BUFFER_NAME,
                              NULL, NULL, NULL,
@@ -348,14 +374,29 @@ TEST(GuiNicklist, AddNick)
     POINTERS_EQUAL(nick1, gui_nicklist_search_nick (buffer, buffer->nicklist_root, "nick1"));
     POINTERS_EQUAL(NULL, gui_nicklist_search_nick (buffer, group1, "nick1"));
     POINTERS_EQUAL(nick1, gui_nicklist_search_nick (buffer, group2, "nick1"));
+    snprintf (str_search_id, sizeof (str_search_id), "==id:%lld", nick1->id);
+    POINTERS_EQUAL(nick1, gui_nicklist_search_nick (buffer, NULL, str_search_id));
+    POINTERS_EQUAL(nick1, gui_nicklist_search_nick (buffer, buffer->nicklist_root, str_search_id));
+    POINTERS_EQUAL(NULL, gui_nicklist_search_nick (buffer, group1, str_search_id));
+    POINTERS_EQUAL(nick1, gui_nicklist_search_nick (buffer, group2, str_search_id));
     POINTERS_EQUAL(nick2, gui_nicklist_search_nick (buffer, NULL, "nick2"));
     POINTERS_EQUAL(nick2, gui_nicklist_search_nick (buffer, buffer->nicklist_root, "nick2"));
     POINTERS_EQUAL(NULL, gui_nicklist_search_nick (buffer, group1, "nick2"));
     POINTERS_EQUAL(nick2, gui_nicklist_search_nick (buffer, group2, "nick2"));
+    snprintf (str_search_id, sizeof (str_search_id), "==id:%lld", nick2->id);
+    POINTERS_EQUAL(nick2, gui_nicklist_search_nick (buffer, NULL, str_search_id));
+    POINTERS_EQUAL(nick2, gui_nicklist_search_nick (buffer, buffer->nicklist_root, str_search_id));
+    POINTERS_EQUAL(NULL, gui_nicklist_search_nick (buffer, group1, str_search_id));
+    POINTERS_EQUAL(nick2, gui_nicklist_search_nick (buffer, group2, str_search_id));
     POINTERS_EQUAL(nick3, gui_nicklist_search_nick (buffer, NULL, "nick3"));
     POINTERS_EQUAL(nick3, gui_nicklist_search_nick (buffer, buffer->nicklist_root, "nick3"));
     POINTERS_EQUAL(NULL, gui_nicklist_search_nick (buffer, group1, "nick3"));
     POINTERS_EQUAL(nick3, gui_nicklist_search_nick (buffer, group2, "nick3"));
+    snprintf (str_search_id, sizeof (str_search_id), "==id:%lld", nick3->id);
+    POINTERS_EQUAL(nick3, gui_nicklist_search_nick (buffer, NULL, str_search_id));
+    POINTERS_EQUAL(nick3, gui_nicklist_search_nick (buffer, buffer->nicklist_root, str_search_id));
+    POINTERS_EQUAL(NULL, gui_nicklist_search_nick (buffer, group1, str_search_id));
+    POINTERS_EQUAL(nick3, gui_nicklist_search_nick (buffer, group2, str_search_id));
 
     /* test remove of NULL buffer/group */
     gui_nicklist_remove_nick (NULL, NULL);

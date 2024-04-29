@@ -15842,7 +15842,9 @@ group = weechat.nicklist_add_group(my_buffer, my_parent_group, "groupe_test",
 
 ==== nicklist_search_group
 
-Rechercher un groupe dans la liste des pseudos.
+_Mis à jour dans la 4.3.0._
+
+Rechercher un groupe dans la liste des pseudos par nom ou identifiant unique (`id`).
 
 Prototype :
 
@@ -15858,7 +15860,8 @@ Paramètres :
 * _buffer_ : pointeur vers le tampon
 * _from_group_ : recherche depuis ce groupe seulement, si NULL, alors recherche
   dans toute la liste des pseudos
-* _name_ : nom du groupes à rechercher
+* _name_ : nom du groupe à rechercher ; avec WeeChat ≥ 4.3.0, un identifiant
+  unique peut être donné avec le format : `==id:xxx` (où `xxx` est l'identifiant)
 
 Valeur de retour :
 
@@ -15868,8 +15871,10 @@ Exemple en C :
 
 [source,c]
 ----
-struct t_gui_nick_group *ptr_group = weechat_nicklist_search_group (my_buffer,
-                                                                    NULL, "groupe_test");
+struct t_gui_nick_group *ptr_group1 = weechat_nicklist_search_group (my_buffer,
+                                                                     NULL, "groupe_test");
+struct t_gui_nick_group *ptr_group2 = weechat_nicklist_search_group (my_buffer,
+                                                                     NULL, "==id:1714382231198764");
 ----
 
 Script (Python) :
@@ -15879,8 +15884,9 @@ Script (Python) :
 # prototype
 def nicklist_search_group(buffer: str, from_group: str, name: str) -> str: ...
 
-# exemple
-group = weechat.nicklist_search_group(my_buffer, "", "groupe_test")
+# exemples
+group1 = weechat.nicklist_search_group(my_buffer, "", "groupe_test")
+group2 = weechat.nicklist_search_group(my_buffer, "", "==id:1714382231198764")
 ----
 
 ==== nicklist_add_nick
@@ -15957,7 +15963,9 @@ nick = weechat.nicklist_add_nick(my_buffer, my_group, "test_nick", color, "@", "
 
 ==== nicklist_search_nick
 
-Rechercher un pseudo dans la liste des pseudos.
+_Mis à jour dans la 4.3.0._
+
+Rechercher un pseudo dans la liste des pseudos par nom ou identifiant unique (`id`).
 
 Prototype :
 
@@ -15973,7 +15981,8 @@ Paramètres :
 * _buffer_ : pointeur vers le tampon
 * _from_group_ : recherche depuis ce groupe seulement, si NULL, alors recherche
   dans toute la liste des pseudos
-* _name_ : nom du pseudo à rechercher
+* _name_ : nom du pseudo à rechercher ; avec WeeChat ≥ 4.3.0, un identifiant
+  unique peut être donné avec le format : `==id:xxx` (où `xxx` est l'identifiant)
 
 Valeur de retour :
 
@@ -15983,8 +15992,10 @@ Exemple en C :
 
 [source,c]
 ----
-struct t_gui_nick *ptr_nick = weechat_nicklist_search_nick (my_buffer,
-                                                            NULL, "test_nick");
+struct t_gui_nick *ptr_nick1 = weechat_nicklist_search_nick (my_buffer,
+                                                             NULL, "test_nick");
+struct t_gui_nick *ptr_nick2 = weechat_nicklist_search_nick (my_buffer,
+                                                             NULL, "==id:1714382252187496");
 ----
 
 Script (Python) :
@@ -15994,8 +16005,9 @@ Script (Python) :
 # prototype
 def nicklist_search_nick(buffer: str, from_group: str, name: str) -> str: ...
 
-# exemple
-nick = weechat.nicklist_search_nick(my_buffer, "", "test_nick")
+# exemples
+nick1 = weechat.nicklist_search_nick(my_buffer, "", "test_nick")
+nick2 = weechat.nicklist_search_nick(my_buffer, "", "==id:1714382252187496")
 ----
 
 ==== nicklist_remove_group

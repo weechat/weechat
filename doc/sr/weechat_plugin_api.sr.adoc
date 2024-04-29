@@ -15085,7 +15085,10 @@ group = weechat.nicklist_add_group(my_buffer, my_parent_group, "test_group",
 
 ==== nicklist_search_group
 
-Тражи групу у листи надимака.
+_Ажурирано у верзији 4.3.0._
+
+// TRANSLATION MISSING
+Search a group in a nicklist by name or unique identifier (`id`).
 
 Прототип:
 
@@ -15100,7 +15103,9 @@ struct t_gui_nick_group *weechat_nicklist_search_group (struct t_gui_buffer *buf
 
 * _buffer_: показивач на бафер
 * _from_group_: тражи само од ове групе, ако је NULL, онда се претражује цела листа надимака
-* _name_: име групе која се тражи
+// TRANSLATION MISSING
+* _name_: group name to search; with WeeChat ≥ 4.3.0, a unique identifier can
+  be given with the format: `==id:xxx` (where `xxx` is the identifier)
 
 Повратна вредност:
 
@@ -15110,8 +15115,10 @@ C пример:
 
 [source,c]
 ----
-struct t_gui_nick_group *ptr_group = weechat_nicklist_search_group (my_buffer,
-                                                                    NULL, "test_group");
+struct t_gui_nick_group *ptr_group1 = weechat_nicklist_search_group (my_buffer,
+                                                                     NULL, "test_group");
+struct t_gui_nick_group *ptr_group2 = weechat_nicklist_search_group (my_buffer,
+                                                                     NULL, "==id:1714382231198764");
 ----
 
 Скрипта (Python):
@@ -15122,7 +15129,8 @@ struct t_gui_nick_group *ptr_group = weechat_nicklist_search_group (my_buffer,
 def nicklist_search_group(buffer: str, from_group: str, name: str) -> str: ...
 
 # пример
-group = weechat.nicklist_search_group(my_buffer, "", "test_group")
+group1 = weechat.nicklist_search_group(my_buffer, "", "test_group")
+group2 = weechat.nicklist_search_group(my_buffer, "", "==id:1714382231198764")
 ----
 
 ==== nicklist_add_nick
@@ -15199,7 +15207,10 @@ nick = weechat.nicklist_add_nick(my_buffer, my_group, "test_nick", color, "@", "
 
 ==== nicklist_search_nick
 
-Тражи надимак у листи надимака.
+_Ажурирано у верзији 4.3.0._
+
+// TRANSLATION MISSING
+Search a nick in a nicklist by name or unique identifier (`id`).
 
 Прототип:
 
@@ -15214,7 +15225,9 @@ struct t_gui_nick *weechat_nicklist_search_nick (struct t_gui_buffer *buffer,
 
 * _buffer_: показивач на бафер
 * _from_group_: тражи само од ове групе, ако је NULL, онда се претражује цела листа надимака
-* _name_: име надимка који се тражи
+// TRANSLATION MISSING
+* _name_: nick name to search; with WeeChat ≥ 4.3.0, a unique identifier can
+  be given with the format: `==id:xxx` (where `xxx` is the identifier)
 
 Повратна вредност:
 
@@ -15224,8 +15237,10 @@ C пример:
 
 [source,c]
 ----
-struct t_gui_nick *ptr_nick = weechat_nicklist_search_nick (my_buffer,
-                                                            NULL, "test_nick");
+struct t_gui_nick *ptr_nick1 = weechat_nicklist_search_nick (my_buffer,
+                                                             NULL, "test_nick");
+struct t_gui_nick *ptr_nick2 = weechat_nicklist_search_nick (my_buffer,
+                                                             NULL, "==id:1714382252187496");
 ----
 
 Скрипта (Python):
@@ -15236,7 +15251,8 @@ struct t_gui_nick *ptr_nick = weechat_nicklist_search_nick (my_buffer,
 def nicklist_search_nick(buffer: str, from_group: str, name: str) -> str: ...
 
 # пример
-nick = weechat.nicklist_search_nick(my_buffer, "", "test_nick")
+nick1 = weechat.nicklist_search_nick(my_buffer, "", "test_nick")
+nick2 = weechat.nicklist_search_nick(my_buffer, "", "==id:1714382252187496")
 ----
 
 ==== nicklist_remove_group

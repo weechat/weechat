@@ -15744,7 +15744,10 @@ group = weechat.nicklist_add_group(my_buffer, my_parent_group, "test_group",
 
 ==== nicklist_search_group
 
-ニックネームリストからグループを検索。
+_WeeChat バージョン 4.3.0 で更新。_
+
+// TRANSLATION MISSING
+Search a group in a nicklist by name or unique identifier (`id`).
 
 プロトタイプ:
 
@@ -15760,7 +15763,9 @@ struct t_gui_nick_group *weechat_nicklist_search_group (struct t_gui_buffer *buf
 * _buffer_: バッファへのポインタ
 * _from_group_:
   このグループのみを検索、全てのニックネームリストから検索する場合は NULL
-* _name_: 検索するグループ名
+// TRANSLATION MISSING
+* _name_: group name to search; with WeeChat ≥ 4.3.0, a unique identifier can
+  be given with the format: `==id:xxx` (where `xxx` is the identifier)
 
 戻り値:
 
@@ -15770,8 +15775,10 @@ C 言語での使用例:
 
 [source,c]
 ----
-struct t_gui_nick_group *ptr_group = weechat_nicklist_search_group (my_buffer,
-                                                                    NULL, "test_group");
+struct t_gui_nick_group *ptr_group1 = weechat_nicklist_search_group (my_buffer,
+                                                                     NULL, "test_group");
+struct t_gui_nick_group *ptr_group2 = weechat_nicklist_search_group (my_buffer,
+                                                                     NULL, "==id:1714382231198764");
 ----
 
 スクリプト (Python) での使用例:
@@ -15782,7 +15789,8 @@ struct t_gui_nick_group *ptr_group = weechat_nicklist_search_group (my_buffer,
 def nicklist_search_group(buffer: str, from_group: str, name: str) -> str: ...
 
 # 例
-group = weechat.nicklist_search_group(my_buffer, "", "test_group")
+group1 = weechat.nicklist_search_group(my_buffer, "", "test_group")
+group2 = weechat.nicklist_search_group(my_buffer, "", "==id:1714382231198764")
 ----
 
 ==== nicklist_add_nick
@@ -15859,7 +15867,10 @@ nick = weechat.nicklist_add_nick(my_buffer, my_group, "test_nick", color, "@", "
 
 ==== nicklist_search_nick
 
-ニックネームリストからニックネームを検索。
+_WeeChat バージョン 4.3.0 で更新。_
+
+// TRANSLATION MISSING
+Search a nick in a nicklist by name or unique identifier (`id`).
 
 プロトタイプ:
 
@@ -15875,7 +15886,9 @@ struct t_gui_nick *weechat_nicklist_search_nick (struct t_gui_buffer *buffer,
 * _buffer_: バッファへのポインタ
 * _from_group_:
   このグループのみを検索、全てのニックネームリストから検索する場合は NULL
-* _name_: 検索するニックネーム
+// TRANSLATION MISSING
+* _name_: nick name to search; with WeeChat ≥ 4.3.0, a unique identifier can
+  be given with the format: `==id:xxx` (where `xxx` is the identifier)
 
 戻り値:
 
@@ -15885,8 +15898,10 @@ C 言語での使用例:
 
 [source,c]
 ----
-struct t_gui_nick *ptr_nick = weechat_nicklist_search_nick (my_buffer,
-                                                            NULL, "test_nick");
+struct t_gui_nick *ptr_nick1 = weechat_nicklist_search_nick (my_buffer,
+                                                             NULL, "test_nick");
+struct t_gui_nick *ptr_nick2 = weechat_nicklist_search_nick (my_buffer,
+                                                             NULL, "==id:1714382252187496");
 ----
 
 スクリプト (Python) での使用例:
@@ -15897,7 +15912,8 @@ struct t_gui_nick *ptr_nick = weechat_nicklist_search_nick (my_buffer,
 def nicklist_search_nick(buffer: str, from_group: str, name: str) -> str: ...
 
 # 例
-nick = weechat.nicklist_search_nick(my_buffer, "", "test_nick")
+nick1 = weechat.nicklist_search_nick(my_buffer, "", "test_nick")
+nick2 = weechat.nicklist_search_nick(my_buffer, "", "==id:1714382252187496")
 ----
 
 ==== nicklist_remove_group
