@@ -28,6 +28,7 @@
 struct t_relay_remote_event
 {
     struct t_relay_remote *remote;     /* relay remote                      */
+    const char *name;                  /* event name (signal, hsignal)      */
     struct t_gui_buffer *buffer;       /* buffer (can be NULL)              */
     cJSON *json;                       /* JSON object                       */
 };

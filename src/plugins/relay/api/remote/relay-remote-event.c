@@ -55,6 +55,10 @@
     else                                                           \
         __var = NULL;
 
+#define JSON_GET_BOOL(__json, __var)                               \
+    json_obj = cJSON_GetObjectItem (__json, #__var);               \
+    __var = cJSON_IsTrue (json_obj) ? 1 : 0;
+
 
 /*
  * Searches a buffer used for a remote.
@@ -179,6 +183,199 @@ RELAY_REMOTE_EVENT_CALLBACK(line)
 }
 
 /*
+ * Adds or updates a nick on a buffer using JSON object.
+ */
+
+void
+relay_remote_event_handle_nick (struct t_gui_buffer *buffer, cJSON *json)
+{
+    cJSON *json_obj;
+    struct t_gui_nick *ptr_nick;
+    struct t_gui_nick_group *ptr_parent_group;
+    const char *name, *color_name, *prefix, *prefix_color_name;
+    char str_id[128];
+    long long id, parent_group_id;
+    int visible;
+
+    if (!buffer)
+        return;
+
+    JSON_GET_NUM(json, id, -1);
+    JSON_GET_NUM(json, parent_group_id, -1);
+    JSON_GET_STR(json, name);
+    JSON_GET_STR(json, color_name);
+    JSON_GET_STR(json, prefix);
+    JSON_GET_STR(json, prefix_color_name);
+    JSON_GET_BOOL(json, visible);
+
+    snprintf (str_id, sizeof (str_id), "==id:%lld", id);
+    ptr_nick = weechat_nicklist_search_nick (buffer, NULL, str_id);
+    if (ptr_nick)
+    {
+        /* update existing nick */
+        snprintf (str_id, sizeof (str_id), "%lld", id);
+        weechat_nicklist_nick_set (buffer, ptr_nick, "id", str_id);
+        weechat_nicklist_nick_set (buffer, ptr_nick, "color", color_name);
+        weechat_nicklist_nick_set (buffer, ptr_nick, "prefix", prefix);
+        weechat_nicklist_nick_set (buffer, ptr_nick, "prefix_color", prefix_color_name);
+        weechat_nicklist_nick_set (buffer, ptr_nick,
+                                   "visible", (visible) ? "1" : "0");
+    }
+    else
+    {
+        /* create a new nick */
+        if (parent_group_id < 0)
+            return;
+        snprintf (str_id, sizeof (str_id), "==id:%lld", parent_group_id);
+        ptr_parent_group = weechat_nicklist_search_group (buffer, NULL, str_id);
+        if (!ptr_parent_group)
+            return;
+        ptr_nick = weechat_nicklist_add_nick (buffer, ptr_parent_group,
+                                              name, color_name,
+                                              prefix, prefix_color_name,
+                                              visible);
+        if (ptr_nick)
+        {
+            snprintf (str_id, sizeof (str_id), "%lld", id);
+            weechat_nicklist_nick_set (buffer, ptr_nick, "id", str_id);
+        }
+    }
+}
+
+/*
+ * Adds or updates a nick group on a buffer using JSON object.
+ */
+
+void
+relay_remote_event_handle_nick_group (struct t_gui_buffer *buffer, cJSON *json)
+{
+    cJSON *json_obj, *json_groups, *json_group, *json_nicks, *json_nick;
+    struct t_gui_nick_group *ptr_group, *ptr_parent_group;
+    const char *name, *color_name;
+    char str_id[128];
+    long long id, parent_group_id;
+    int visible;
+
+    if (!buffer)
+        return;
+
+    JSON_GET_NUM(json, id, -1);
+    JSON_GET_NUM(json, parent_group_id, -1);
+    JSON_GET_STR(json, name);
+    JSON_GET_STR(json, color_name);
+    JSON_GET_BOOL(json, visible);
+
+    snprintf (str_id, sizeof (str_id), "==id:%lld", id);
+    ptr_group = weechat_nicklist_search_group (buffer, NULL, str_id);
+    if (ptr_group)
+    {
+        /* update existing group */
+        snprintf (str_id, sizeof (str_id), "%lld", id);
+        weechat_nicklist_group_set (buffer, ptr_group, "id", str_id);
+        weechat_nicklist_group_set (buffer, ptr_group, "color", color_name);
+        weechat_nicklist_group_set (buffer, ptr_group,
+                                    "visible", (visible) ? "1" : "0");
+    }
+    else
+    {
+        /* create a new group */
+        if (parent_group_id < 0)
+            return;
+        snprintf (str_id, sizeof (str_id), "==id:%lld", parent_group_id);
+        ptr_parent_group = weechat_nicklist_search_group (buffer, NULL, str_id);
+        if (!ptr_parent_group)
+            return;
+        ptr_group = weechat_nicklist_add_group (buffer, ptr_parent_group,
+                                                name, color_name, visible);
+        if (ptr_group)
+        {
+            snprintf (str_id, sizeof (str_id), "%lld", id);
+            weechat_nicklist_group_set (buffer, ptr_group, "id", str_id);
+        }
+    }
+
+    /* add subgroups */
+    json_groups = cJSON_GetObjectItem (json, "groups");
+    if (json_groups && cJSON_IsArray (json_groups))
+    {
+        cJSON_ArrayForEach (json_group, json_groups)
+        {
+            relay_remote_event_handle_nick_group (buffer, json_group);
+        }
+    }
+
+    /* add nicks */
+    json_nicks = cJSON_GetObjectItem (json, "nicks");
+    if (json_nicks && cJSON_IsArray (json_nicks))
+    {
+        cJSON_ArrayForEach (json_nick, json_nicks)
+        {
+            relay_remote_event_handle_nick (buffer, json_nick);
+        }
+    }
+}
+
+/*
+ * Callback for body type "nick_group".
+ */
+
+RELAY_REMOTE_EVENT_CALLBACK(nick_group)
+{
+    struct t_gui_nick_group *ptr_group;
+    char str_id[128];
+    cJSON *json_obj;
+    long long id;
+
+    if (!event->buffer)
+        return WEECHAT_RC_ERROR;
+
+    if (weechat_strcmp (event->name, "nicklist_group_removing") == 0)
+    {
+        JSON_GET_NUM(event->json, id, -1);
+        snprintf (str_id, sizeof (str_id), "==id:%lld", id);
+        ptr_group = weechat_nicklist_search_group (event->buffer, NULL, str_id);
+        if (ptr_group)
+            weechat_nicklist_remove_group (event->buffer, ptr_group);
+    }
+    else
+    {
+        relay_remote_event_handle_nick_group (event->buffer, event->json);
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * Callback for body type "nick".
+ */
+
+RELAY_REMOTE_EVENT_CALLBACK(nick)
+{
+    struct t_gui_nick *ptr_nick;
+    char str_id[128];
+    cJSON *json_obj;
+    long long id;
+
+    if (!event->buffer)
+        return WEECHAT_RC_ERROR;
+
+    if (weechat_strcmp (event->name, "nicklist_nick_removing") == 0)
+    {
+        JSON_GET_NUM(event->json, id, -1);
+        snprintf (str_id, sizeof (str_id), "==id:%lld", id);
+        ptr_nick = weechat_nicklist_search_nick (event->buffer, NULL, str_id);
+        if (ptr_nick)
+            weechat_nicklist_remove_nick (event->buffer, ptr_nick);
+    }
+    else
+    {
+        relay_remote_event_handle_nick (event->buffer, event->json);
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Applies properties to a buffer.
  */
 
@@ -258,11 +455,11 @@ RELAY_REMOTE_EVENT_CALLBACK(buffer)
     struct t_gui_buffer *ptr_buffer;
     struct t_hashtable *buffer_props;
     struct t_relay_remote_event event_line;
-    cJSON *json_obj, *json_lines, *json_line;
+    cJSON *json_obj, *json_lines, *json_line, *json_nicklist_root;
     const char *name, *short_name, *type, *title;
     char *full_name, str_number[64];
     long long id;
-    int number;
+    int number, nicklist, nicklist_case_sensitive, nicklist_display_groups;
 
     JSON_GET_NUM(event->json, id, -1);
     JSON_GET_STR(event->json, name);
@@ -270,6 +467,9 @@ RELAY_REMOTE_EVENT_CALLBACK(buffer)
     JSON_GET_NUM(event->json, number, -1);
     JSON_GET_STR(event->json, type);
     JSON_GET_STR(event->json, title);
+    JSON_GET_BOOL(event->json, nicklist);
+    JSON_GET_BOOL(event->json, nicklist_case_sensitive);
+    JSON_GET_BOOL(event->json, nicklist_display_groups);
 
     buffer_props = weechat_hashtable_new (32,
                                           WEECHAT_HASHTABLE_STRING,
@@ -283,6 +483,11 @@ RELAY_REMOTE_EVENT_CALLBACK(buffer)
     weechat_hashtable_set (buffer_props, "type", type);
     weechat_hashtable_set (buffer_props, "short_name", short_name);
     weechat_hashtable_set (buffer_props, "title", title);
+    weechat_hashtable_set (buffer_props, "nicklist", (nicklist) ? "1" : "0");
+    weechat_hashtable_set (buffer_props, "nicklist_case_sensitive",
+                           (nicklist_case_sensitive) ? "1" : "0");
+    weechat_hashtable_set (buffer_props, "nicklist_display_groups",
+                           (nicklist_display_groups) ? "1" : "0");
 
     /* extra properties for relay */
     weechat_hashtable_set (buffer_props,
@@ -314,21 +519,28 @@ RELAY_REMOTE_EVENT_CALLBACK(buffer)
         }
     }
 
-    if (ptr_buffer)
+    if (!ptr_buffer)
+        goto end;
+
+    /* add lines */
+    json_lines = cJSON_GetObjectItem (event->json, "lines");
+    if (json_lines && cJSON_IsArray (json_lines))
     {
-        json_lines = cJSON_GetObjectItem (event->json, "lines");
-        if (json_lines && cJSON_IsArray (json_lines))
+        event_line.remote = event->remote;
+        event_line.buffer = ptr_buffer;
+        cJSON_ArrayForEach (json_line, json_lines)
         {
-            event_line.remote = event->remote;
-            event_line.buffer = ptr_buffer;
-            cJSON_ArrayForEach (json_line, json_lines)
-            {
-                event_line.json = json_line;
-                relay_remote_event_cb_line (&event_line);
-            }
+            event_line.json = json_line;
+            relay_remote_event_cb_line (&event_line);
         }
     }
 
+    /* add nicklist groups and nicks */
+    json_nicklist_root = cJSON_GetObjectItem (event->json, "nicklist_root");
+    if (json_nicklist_root && cJSON_IsObject (json_nicklist_root))
+        relay_remote_event_handle_nick_group (ptr_buffer, json_nicklist_root);
+
+end:
     weechat_hashtable_free (buffer_props);
 
     return WEECHAT_RC_OK;
@@ -396,13 +608,15 @@ void
 relay_remote_event_recv (struct t_relay_remote *remote, const char *data)
 {
     cJSON *json, *json_body, *json_event, *json_obj;
-    const char *body_type;
+    const char *body_type, *name;
     long long buffer_id;
     int i, rc, code;
     struct t_relay_remote_event_cb event_cb[] = {
         /* body_type, callback */
         { "buffer", &relay_remote_event_cb_buffer },
         { "line", &relay_remote_event_cb_line },
+        { "nick_group", &relay_remote_event_cb_nick_group },
+        { "nick", &relay_remote_event_cb_nick },
         { "version", &relay_remote_event_cb_version },
         { NULL, NULL },
     };
@@ -425,8 +639,9 @@ relay_remote_event_recv (struct t_relay_remote *remote, const char *data)
         goto error_data;
 
     event.remote = remote;
+    event.name = NULL;
     event.buffer = NULL;
-    event.buffer = NULL;
+    event.json = NULL;
 
     JSON_GET_NUM(json, code, -1);
     JSON_GET_STR(json, body_type);
@@ -442,6 +657,8 @@ relay_remote_event_recv (struct t_relay_remote *remote, const char *data)
 
     if (json_event && cJSON_IsObject (json_event))
     {
+        JSON_GET_STR(json_event, name);
+        event.name = name;
         JSON_GET_NUM(json_event, buffer_id, -1);
         event.buffer = relay_remote_event_search_buffer (remote, buffer_id);
     }

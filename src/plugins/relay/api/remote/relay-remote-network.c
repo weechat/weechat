@@ -383,7 +383,8 @@ relay_remote_network_recv_text (struct t_relay_remote *remote,
         relay_remote_network_send (remote, RELAY_MSG_STANDARD,
                                    request, strlen (request));
         snprintf (request, sizeof (request),
-                  "{\"request\": \"GET /api/buffers?lines=-100&colors=weechat\"}");
+                  "{\"request\": \"GET /api/buffers?"
+                  "lines=-100&nicks=true&colors=weechat\"}");
         relay_remote_network_send (remote, RELAY_MSG_STANDARD,
                                    request, strlen (request));
     }
