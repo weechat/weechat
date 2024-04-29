@@ -584,8 +584,10 @@ relay_api_msg_nick_to_json (struct t_gui_nick *nick,
             (ptr_group) ?
             weechat_hdata_longlong (relay_hdata_nick_group, ptr_group, "id") : -1));
     MSG_ADD_HDATA_STR("prefix", "prefix");
+    MSG_ADD_HDATA_STR("prefix_color_name", "prefix_color");
     MSG_ADD_HDATA_COLOR("prefix_color", "prefix_color");
     MSG_ADD_HDATA_STR("name", "name");
+    MSG_ADD_HDATA_STR("color_name", "color");
     MSG_ADD_HDATA_COLOR("color", "color");
     MSG_ADD_HDATA_VAR(Bool, "visible", integer, "visible");
 
@@ -625,6 +627,7 @@ relay_api_msg_nick_group_to_json (struct t_gui_nick_group *nick_group,
             (ptr_group) ?
             weechat_hdata_longlong (relay_hdata_nick_group, ptr_group, "id") : -1));
     MSG_ADD_HDATA_STR("name", "name");
+    MSG_ADD_HDATA_STR("color_name", "color");
     MSG_ADD_HDATA_COLOR("color", "color");
     MSG_ADD_HDATA_VAR(Bool, "visible", integer, "visible");
 
