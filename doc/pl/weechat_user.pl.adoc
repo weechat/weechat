@@ -158,13 +158,12 @@ WeeChat:
 | ca-certificates |
 | Certyfikaty dla połączeń TLS.
 
-// TRANSLATION MISSING
 | libcjson-dev |
-| Relay plugin: protocol "api" (HTTP REST API).
+| Wtyczka relay: protokół "api" (HTTP REST API).
 
 | libzstd-dev | ≥ 0.8.1
 | Wtyczka logger: kompresja rotowanych plików z logami (zstandard). +
-  Wtyczka Relay: kompresja wiadomości (WeeChat -> klient) za pomocą https://facebook.github.io/zstd/[Zstandard ^↗^^] (protokół weechat).
+  Wtyczka relay: kompresja wiadomości (WeeChat -> klient) za pomocą https://facebook.github.io/zstd/[Zstandard ^↗^^] (protokół weechat).
 
 | libaspell-dev / libenchant-dev |
 | Wtyczka spell.
@@ -281,9 +280,8 @@ Lista dostępnych opcji:
 | ENABLE_CHARSET | `ON`, `OFF` | ON
 | Kompilacja <<charset,wtyczki charset>>.
 
-// TRANSLATION MISSING
 | ENABLE_CJSON | `ON`, `OFF` | ON
-| Support of JSON with https://github.com/DaveGamble/cJSON[cJSON ^↗^^] library.
+| Wsparcie dla JSON z użyciem biblioteki https://github.com/DaveGamble/cJSON[cJSON ^↗^^].
 
 | ENABLE_MAN | `ON`, `OFF` | OFF
 | Generowanie strony manuala.
@@ -2697,8 +2695,7 @@ Możesz zmienić lub dodać przypisania za pomocą komendy `/key` używając kon
 Nazwa zdarzenia zawiera modyfikator (opcjonalny), nazwę klawisza/rolki i gest
 (opcjonalny). Różne elementy są rozdzielane przez `+-+`.
 
-// TRANSLATION MISSING
-List of modifiers (by order in the event name):
+Lista modyfikatorów (według nazwy):
 
 [width="100%",cols="1m,4",options="header"]
 |===
@@ -2708,13 +2705,11 @@ List of modifiers (by order in the event name):
 | shift       | Klawisz kbd:[Shift] ^(1)^
 |===
 
-// TRANSLATION MISSING
 [NOTE]
-^(1)^ The `shift` modifier can rarely be used in WeeChat because many terminals
-use this modifier to catch directly mouse events.
+^(1)^ Modyfikator `shift` można sporadycznie użyć w WeeChat ponieważ terminale
+zazwyczaj używają tego modyfikatora do przechwytywania ewentów myszy.
 
-// TRANSLATION MISSING
-Several modifiers can be combined, for example:
+Modyfikatory można ze sobą łączyć, na przykład:
 
 * `alt-ctrl`
 * `ctrl-shift`
@@ -5345,10 +5340,9 @@ są dodawane do tablicy hashy:
 | pos_text             | ciąg    | Indeks _text_ w wiadomości ("-1" jeśli _text_ nie został znaleziony).
 |===
 
-// TRANSLATION MISSING
 [NOTE]
-^(1)^ The nick is the sender of the message. +
-Your own nick on the server is `${irc_server.nick}`.
+^(1)^ Nick to nadawca wiadomości. +
+Twój nick na serwerze to `${irc_server.nick}`.
 
 Kiedy dane są wskaźnikiem, zmienna `+tg_signal_data+` może zostać użyta do
 odczytania pola w hdata (w tym przypadku jest to wskaźnik na bufor):
