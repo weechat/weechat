@@ -2343,6 +2343,7 @@ gui_key_pressed (const char *key_str)
 {
     int i, insert_into_input, context, length, length_key, signal_sent;
     int rc, rc_expand, exact_match, chunks1_count, chunks2_count, event_size;
+    int buffer_key;
     struct t_gui_key *ptr_key;
     char saved_char, signal_name[128], **commands;
     char *key_name, *key_name_alias, **chunks1, **chunks2;
@@ -2438,6 +2439,7 @@ gui_key_pressed (const char *key_str)
         chunks2_count = 0;
     }
 
+    buffer_key = 0;
     context = gui_key_get_current_context ();
     switch (context)
     {
@@ -2449,6 +2451,8 @@ gui_key_pressed (const char *key_str)
                 (const char **)chunks1, chunks1_count,
                 (const char **)chunks2, chunks2_count,
                 &exact_match);
+            if (ptr_key)
+                buffer_key = 1;
             /* if key is not found for buffer, then look in general table */
             if (!ptr_key)
             {
@@ -2523,8 +2527,12 @@ gui_key_pressed (const char *key_str)
                     {
                         for (i = 0; commands[i]; i++)
                         {
-                            (void) input_data (gui_current_window->buffer,
-                                               commands[i], NULL, 0, 0);
+                            (void) input_data (
+                                gui_current_window->buffer,
+                                commands[i],
+                                NULL,
+                                0,
+                                (buffer_key) ? 1 : 0);
                         }
                         string_free_split (commands);
                     }
