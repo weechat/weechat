@@ -475,9 +475,10 @@ RELAY_REMOTE_EVENT_CALLBACK(buffer)
     struct t_gui_buffer *ptr_buffer;
     struct t_hashtable *buffer_props;
     struct t_relay_remote_event event_line;
-    cJSON *json_obj, *json_lines, *json_line, *json_nicklist_root;
-    const char *name, *short_name, *type, *title;
-    char *full_name, str_number[64];
+    cJSON *json_obj, *json_keys, *json_key, *json_key_name, *json_key_command;
+    cJSON *json_lines, *json_line, *json_nicklist_root;
+    const char *name, *short_name, *type, *title, *ptr_key, *ptr_command;
+    char *full_name, str_number[64], *property;
     long long id;
     int number, nicklist, nicklist_case_sensitive, nicklist_display_groups;
 
@@ -541,6 +542,32 @@ RELAY_REMOTE_EVENT_CALLBACK(buffer)
 
     if (!ptr_buffer)
         goto end;
+
+    /* add keys */
+    json_keys = cJSON_GetObjectItem (event->json, "keys");
+    if (json_keys && cJSON_IsArray (json_keys))
+    {
+        cJSON_ArrayForEach (json_key, json_keys)
+        {
+            json_key_name = cJSON_GetObjectItem (json_key, "key");
+            json_key_command = cJSON_GetObjectItem (json_key, "command");
+            if (json_key_name && cJSON_IsString (json_key_name)
+                && json_key_command && cJSON_IsString (json_key_command))
+            {
+                ptr_key = cJSON_GetStringValue (json_key_name);
+                ptr_command = cJSON_GetStringValue (json_key_command);
+                if (ptr_key && ptr_command)
+                {
+                    if (weechat_asprintf (&property, "key_bind_%s", ptr_key) >= 0)
+                    {
+                        weechat_buffer_set (ptr_buffer, property, ptr_command);
+                        free (property);
+                    }
+                }
+            }
+        }
+    }
+
 
     /* add lines */
     json_lines = cJSON_GetObjectItem (event->json, "lines");
