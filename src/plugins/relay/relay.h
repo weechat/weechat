@@ -27,6 +27,7 @@
 extern struct t_weechat_plugin *weechat_relay_plugin;
 
 extern struct t_hdata *relay_hdata_buffer;
+extern struct t_hdata *relay_hdata_key;
 extern struct t_hdata *relay_hdata_lines;
 extern struct t_hdata *relay_hdata_line;
 extern struct t_hdata *relay_hdata_line_data;

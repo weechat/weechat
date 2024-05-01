@@ -62,6 +62,7 @@ char *relay_msg_type_string[] =        /* prefix in raw buffer for msg      */
 { "", "[PING]\n", "[PONG]\n", "[CLOSE]\n" };
 
 struct t_hdata *relay_hdata_buffer = NULL;
+struct t_hdata *relay_hdata_key = NULL;
 struct t_hdata *relay_hdata_lines = NULL;
 struct t_hdata *relay_hdata_line = NULL;
 struct t_hdata *relay_hdata_line_data = NULL;
@@ -251,6 +252,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     weechat_plugin = plugin;
 
     relay_hdata_buffer = weechat_hdata_get ("buffer");
+    relay_hdata_key = weechat_hdata_get ("key");
     relay_hdata_lines = weechat_hdata_get ("lines");
     relay_hdata_line = weechat_hdata_get ("line");
     relay_hdata_line_data = weechat_hdata_get ("line_data");

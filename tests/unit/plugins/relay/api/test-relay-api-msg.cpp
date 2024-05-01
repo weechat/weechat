@@ -118,7 +118,7 @@ TEST(RelayApiMsg, SendEvent)
 
 TEST(RelayApiMsg, BufferToJson)
 {
-    cJSON *json, *json_obj, *json_local_vars, *json_lines;
+    cJSON *json, *json_obj, *json_local_vars, *json_keys, *json_key, *json_lines;
     cJSON *json_nicklist_root, *json_nicks, *json_groups, *json_group;
     cJSON *json_group_nicks, *json_nick;
     struct t_gui_buffer *buffer;
@@ -131,6 +131,9 @@ TEST(RelayApiMsg, BufferToJson)
     CHECK(cJSON_IsObject (json));
     POINTERS_EQUAL(NULL, cJSON_GetObjectItem (json, "name"));
     cJSON_Delete (json);
+
+    gui_buffer_set (gui_buffers, "key_bind_meta-y,1", "/test1");
+    gui_buffer_set (gui_buffers, "key_bind_meta-y,2", "/test2 arg");
 
     /* buffer without lines and nicks */
     json = relay_api_msg_buffer_to_json (gui_buffers, 0, 0, RELAY_API_COLORS_ANSI);
@@ -148,6 +151,17 @@ TEST(RelayApiMsg, BufferToJson)
     json_local_vars = cJSON_GetObjectItem (json, "local_variables");
     CHECK(json_local_vars);
     CHECK(cJSON_IsObject (json_local_vars));
+    json_keys = cJSON_GetObjectItem (json, "keys");
+    CHECK(json_keys);
+    LONGS_EQUAL(2, cJSON_GetArraySize (json_keys));
+    json_key = cJSON_GetArrayItem (json_keys, 0);
+    CHECK(json_key);
+    WEE_CHECK_OBJ_STR("meta-y,1", json_key, "key");
+    WEE_CHECK_OBJ_STR("/test1", json_key, "command");
+    json_key = cJSON_GetArrayItem (json_keys, 1);
+    CHECK(json_key);
+    WEE_CHECK_OBJ_STR("meta-y,2", json_key, "key");
+    WEE_CHECK_OBJ_STR("/test2 arg", json_key, "command");
     WEE_CHECK_OBJ_STR("core", json_local_vars, "plugin");
     WEE_CHECK_OBJ_STR("weechat", json_local_vars, "name");
     POINTERS_EQUAL(NULL, cJSON_GetObjectItem (json, "lines"));
@@ -297,6 +311,8 @@ TEST(RelayApiMsg, BufferToJson)
     free (color);
     WEE_CHECK_OBJ_BOOL(0, json_nick, "visible");
     cJSON_Delete (json);
+
+    gui_buffer_set (gui_buffers, "key_unbind_meta-y", "");
 
     gui_buffer_close (buffer);
 }

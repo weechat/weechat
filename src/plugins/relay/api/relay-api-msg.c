@@ -405,6 +405,9 @@ relay_api_msg_buffer_to_json (struct t_gui_buffer *buffer,
         cJSON_AddItemToObject (json, "local_variables", json_local_vars);
     }
 
+    /* keys local to buffer */
+    cJSON_AddItemToObject (json, "keys", relay_api_msg_keys_to_json (buffer));
+
     /* lines */
     if (lines != 0)
     {
@@ -421,6 +424,58 @@ relay_api_msg_buffer_to_json (struct t_gui_buffer *buffer,
             colors);
         if (json_nicklist_root)
             cJSON_AddItemToObject (json, "nicklist_root", json_nicklist_root);
+    }
+
+    return json;
+}
+
+/*
+ * Creates a JSON object with a buffer key.
+ */
+
+cJSON *
+relay_api_msg_key_to_json (struct t_gui_key *key)
+{
+    struct t_hdata *hdata;
+    struct t_gui_key *pointer;
+    cJSON *json;
+    const char *ptr_string;
+
+    hdata = relay_hdata_key;
+    pointer = key;
+
+    json = cJSON_CreateObject ();
+    if (!json)
+        return NULL;
+
+    if (!key)
+        return json;
+
+    MSG_ADD_HDATA_STR("key", "key");
+    MSG_ADD_HDATA_STR("command", "command");
+
+    return json;
+}
+
+/*
+ * Creates a JSON object with an array of buffer keys.
+ */
+
+cJSON *
+relay_api_msg_keys_to_json (struct t_gui_buffer *buffer)
+{
+    cJSON *json;
+    struct t_gui_key *ptr_key;
+
+    json = cJSON_CreateArray ();
+    if (!json)
+        return NULL;
+
+    ptr_key = weechat_hdata_pointer (relay_hdata_buffer, buffer, "keys");
+    while (ptr_key)
+    {
+        cJSON_AddItemToArray (json, relay_api_msg_key_to_json (ptr_key));
+        ptr_key = weechat_hdata_move (relay_hdata_key, ptr_key, 1);
     }
 
     return json;

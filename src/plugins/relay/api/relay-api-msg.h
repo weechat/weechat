@@ -41,11 +41,13 @@ extern cJSON *relay_api_msg_buffer_to_json (struct t_gui_buffer *buffer,
                                             long lines,
                                             int nicks,
                                             enum t_relay_api_colors colors);
-extern cJSON *relay_api_msg_lines_to_json (struct t_gui_buffer *pointer,
-                                           long lines,
-                                           enum t_relay_api_colors colors);
+extern cJSON *relay_api_msg_key_to_json (struct t_gui_key *key);
+extern cJSON *relay_api_msg_keys_to_json (struct t_gui_buffer *buffer);
 extern cJSON *relay_api_msg_line_data_to_json (struct t_gui_line_data *line_data,
                                                enum t_relay_api_colors colors);
+extern cJSON *relay_api_msg_lines_to_json (struct t_gui_buffer *buffer,
+                                           long lines,
+                                           enum t_relay_api_colors colors);
 extern cJSON *relay_api_msg_nick_to_json (struct t_gui_nick *nick,
                                           enum t_relay_api_colors colors);
 extern cJSON *relay_api_msg_nick_group_to_json (struct t_gui_nick_group *nick_group,

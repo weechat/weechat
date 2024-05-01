@@ -49,6 +49,7 @@ struct t_gui_bar_window;
 struct t_gui_buffer;
 struct t_gui_completion;
 struct t_gui_hotlist;
+struct t_gui_key;
 struct t_gui_line;
 struct t_gui_line_data;
 struct t_gui_lines;
