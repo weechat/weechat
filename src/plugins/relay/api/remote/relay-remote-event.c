@@ -136,11 +136,13 @@ RELAY_REMOTE_EVENT_CALLBACK(line)
     cJSON *json_obj, *json_tags, *json_tag;
     const char *date, *prefix, *message;
     char **tags;
+    int y;
     struct timeval tv_date;
 
     if (!event->buffer)
         return WEECHAT_RC_ERROR;
 
+    JSON_GET_NUM(event->json, y, -1);
     JSON_GET_STR(event->json, date);
     JSON_GET_STR(event->json, prefix);
     JSON_GET_STR(event->json, message);
@@ -167,15 +169,33 @@ RELAY_REMOTE_EVENT_CALLBACK(line)
         }
     }
 
-    weechat_printf_datetime_tags (
-        event->buffer,
-        tv_date.tv_sec,
-        tv_date.tv_usec,
-        (tags) ? *tags : NULL,
-        "%s%s%s",
-        (prefix && prefix[0]) ? prefix : "",
-        (prefix && prefix[0]) ? "\t" : "",
-        message);
+    if (y >= 0)
+    {
+        /* buffer with free content */
+        weechat_printf_y_datetime_tags (
+            event->buffer,
+            y,
+            tv_date.tv_sec,
+            tv_date.tv_usec,
+            (tags) ? *tags : NULL,
+            "%s%s%s",
+            (prefix && prefix[0]) ? prefix : "",
+            (prefix && prefix[0]) ? "\t" : "",
+            message);
+    }
+    else
+    {
+        /* buffer with formatted content */
+        weechat_printf_datetime_tags (
+            event->buffer,
+            tv_date.tv_sec,
+            tv_date.tv_usec,
+            (tags) ? *tags : NULL,
+            "%s%s%s",
+            (prefix && prefix[0]) ? prefix : "",
+            (prefix && prefix[0]) ? "\t" : "",
+            message);
+    }
 
     weechat_string_dyn_free (tags, 1);
 
