@@ -68,6 +68,8 @@ extern struct t_config_option *relay_config_irc_backlog_since_last_message;
 extern struct t_config_option *relay_config_irc_backlog_tags;
 extern struct t_config_option *relay_config_irc_backlog_time_format;
 
+extern struct t_config_option *relay_config_api_remote_get_lines;
+
 extern int relay_config_auto_open_buffer[];
 extern int relay_config_display_clients[];
 extern regex_t *relay_config_regex_allowed_ips;

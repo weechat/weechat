@@ -34,6 +34,7 @@
 #include "../../../weechat-plugin.h"
 #include "../../relay.h"
 #include "../../relay-auth.h"
+#include "../../relay-config.h"
 #include "../../relay-http.h"
 #include "../../relay-raw.h"
 #include "../../relay-remote.h"
@@ -384,7 +385,8 @@ relay_remote_network_recv_text (struct t_relay_remote *remote,
                                    request, strlen (request));
         snprintf (request, sizeof (request),
                   "{\"request\": \"GET /api/buffers?"
-                  "lines=-100&nicks=true&colors=weechat\"}");
+                  "lines=-%d&nicks=true&colors=weechat\"}",
+                  weechat_config_integer (relay_config_api_remote_get_lines));
         relay_remote_network_send (remote, RELAY_MSG_STANDARD,
                                    request, strlen (request));
     }

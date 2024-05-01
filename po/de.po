@@ -26,7 +26,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-04-14 19:13+0200\n"
+"POT-Creation-Date: 2024-05-01 10:08+0200\n"
 "PO-Revision-Date: 2024-04-15 13:01+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -98,31 +98,6 @@ msgstr ""
 msgid "Usage: %s [option...] [plugin:option...]\n"
 msgstr "Aufruf: %s [Option...] [Erweiterung:Option...]\n"
 
-#| msgid ""
-#| "  -a, --no-connect         disable auto-connect to servers at startup\n"
-#| "  -c, --colors             display default colors in terminal and exit\n"
-#| "  -d, --dir <path>         force a single WeeChat home directory\n"
-#| "                           or 4 different directories separated by colons "
-#| "(in this order: config, data, cache, runtime)\n"
-#| "                           (environment variable WEECHAT_HOME is read if "
-#| "this option is not given)\n"
-#| "  -t, --temp-dir           create a temporary WeeChat home directory and "
-#| "delete it on exit\n"
-#| "                           (incompatible with option \"-d\")\n"
-#| "  -h, --help               display this help and exit\n"
-#| "  -l, --license            display WeeChat license and exit\n"
-#| "  -p, --no-plugin          don't load any plugin at startup\n"
-#| "  -P, --plugins <plugins>  load only these plugins at startup\n"
-#| "                           (see /help weechat.plugin.autoload)\n"
-#| "  -r, --run-command <cmd>  run command(s) after startup;\n"
-#| "                           many commands can be separated by semicolons "
-#| "and are evaluated,\n"
-#| "                           this option can be given multiple times\n"
-#| "  -s, --no-script          don't load any script at startup\n"
-#| "      --upgrade            upgrade WeeChat using session files (see /help "
-#| "upgrade in WeeChat)\n"
-#| "  -v, --version            display WeeChat version and exit\n"
-#| "  plugin:option            option for plugin (see man weechat)\n"
 msgid ""
 "  -a, --no-connect         disable auto-connect to servers at startup\n"
 "  -c, --colors             display default colors in terminal and exit\n"
@@ -1951,14 +1926,12 @@ msgstr "  - ${weechat_config_dir}: WeeChat Konfigurationsverzeichnis"
 msgid "  - ${weechat_data_dir}: WeeChat data directory"
 msgstr "  - ${weechat_data_dir}: WeeChat Datenverzeichnis"
 
-#| msgid "  - ${weechat_data_dir}: WeeChat data directory"
 msgid "  - ${weechat_state_dir}: WeeChat state directory"
 msgstr "  - ${weechat_state_dir}: WeeChat-Statusverzeichnis"
 
 msgid "  - ${weechat_cache_dir}: WeeChat cache directory"
 msgstr "  - ${weechat_cache_dir}: WeeChat Cache Verzeichnis"
 
-#| msgid "  - ${weechat_runtmie_dir}: WeeChat runtime directory"
 msgid "  - ${weechat_runtime_dir}: WeeChat runtime directory"
 msgstr "  - ${weechat_runtime_dir}: WeeChat-Laufzeitverzeichnis"
 
@@ -6375,16 +6348,12 @@ msgid "Error: not enough memory\n"
 msgstr "Fehler: nicht genügend Speicher\n"
 
 #, c-format
-#| msgid ""
-#| "Error: wrong number of paths for home directories (expected: 1 or 4, "
-#| "received: %d)\n"
 msgid ""
 "Error: wrong number of paths for home directories (expected: 1 or 5, "
 "received: %d)\n"
 msgstr ""
-"Fehler: falsche Anzahl von Pfaden für Heimatverzeichnisse (erwartet: 1 oder"
-" 5, "
-"empfangen: %d)\n"
+"Fehler: falsche Anzahl von Pfaden für Heimatverzeichnisse (erwartet: 1 oder "
+"5, empfangen: %d)\n"
 
 #, c-format
 msgid ""
@@ -14379,10 +14348,6 @@ msgstr "WeeChat PID (Prozess-ID)"
 msgid "directory separator"
 msgstr "Trennzeichen für Verzeichnis"
 
-#| msgid ""
-#| "WeeChat directory (*deprecated* since version 3.2, replaced by "
-#| "\"weechat_config_dir\", \"weechat_data_dir\", \"weechat_cache_dir\" and "
-#| "\"weechat_runtime_dir\")"
 msgid ""
 "WeeChat directory (*deprecated* since version 3.2, replaced by "
 "\"weechat_config_dir\", \"weechat_data_dir\", \"weechat_state_dir\" , "
@@ -14398,7 +14363,6 @@ msgstr "WeeChat Konfigurationsverzeichnis"
 msgid "WeeChat data directory"
 msgstr "WeeChat-Datenverzeichnis"
 
-#| msgid "WeeChat data directory"
 msgid "WeeChat state directory"
 msgstr "WeeChat-Statusverzeichnis"
 
@@ -15132,70 +15096,57 @@ msgid "%sremote[%s]: unable to create socket"
 msgstr "%sremote[%s]: Socket kann nicht erstellt werden"
 
 #, c-format
-#| msgid "%sgnutls: failed to initialize certificate structure"
 msgid "%sremote[%s]: gnutls: failed to initialize certificate structure"
 msgstr ""
 "%sremote[%s]: gnutls: Initialisierung der Zertifikatstruktur fehlgeschlagen"
 
 #, c-format
-#| msgid "%sgnutls: receiving %d certificate"
-#| msgid_plural "%sgnutls: receiving %d certificates"
 msgid "remote[%s]: gnutls: receiving %d certificate"
 msgid_plural "remote[%s]: gnutls: receiving %d certificates"
 msgstr[0] "remote[%s]: gnutls: empfange %d Zertifikat"
 msgstr[1] "remote[%s]: gnutls: empfange %d Zertifikate"
 
 #, c-format
-#| msgid "%sgnutls: failed to import certificate[%d]"
 msgid "%sremote[%s]: gnutls: failed to import certificate[%d]"
 msgstr "%sremote[%s]: gnutls: Zertifikat[%d] konnte nicht importiert werden"
 
 #, c-format
-#| msgid "%s - certificate[%d] info:"
 msgid "remote[%s] - certificate[%d] info:"
 msgstr "remote[%s] - Zertifikat[%d]-Information:"
 
 #, c-format
-#| msgid "%sgnutls: certificate has expired"
 msgid "%sremote[%s]: gnutls: certificate has expired"
 msgstr ""
 "%sremote[%s]: gnutls: die Gültigkeitsdauer des Zertifikates ist abgelaufen"
 
 #, c-format
-#| msgid "%sgnutls: certificate is not yet activated"
 msgid "%sremote[%s]: gnutls: certificate is not yet activated"
 msgstr "%sremote[%s]: gnutls: Zertifikat ist noch nicht freigeschaltet"
 
 #, c-format
-#| msgid "%sgnutls: the hostname in the certificate does NOT match \"%s\""
 msgid ""
 "%sremote[%s]: gnutls: the hostname in the certificate does NOT match \"%s\""
 msgstr ""
 "%sremote[%s]: gnutls:der Hostname im Zertifikat \"%s\" stimmt NICHT überein"
 
 #, c-format
-#| msgid "%sgnutls: error while checking peer's certificate"
 msgid "%sremote[%s]: gnutls: error while checking peer's certificate"
 msgstr "%sremote[%s]: gnutls: Fehler bei der Überprüfung des Peer-Zertifikates"
 
 #, c-format
-#| msgid "%sgnutls: peer's certificate is NOT trusted"
 msgid "%sremote[%s]: gnutls: peer's certificate is NOT trusted"
 msgstr "%sremote[%s]: gnutls: Peer-Zertifikat ist NICHT vertrauenswürdig"
 
 #, c-format
-#| msgid "%sgnutls: peer's certificate is trusted"
 msgid "remote[%s]: gnutls: peer's certificate is trusted"
 msgstr "remote[%s]: gnutls:Peer-Zertifikat ist vertrauenswürdig"
 
 #, c-format
-#| msgid "%sgnutls: peer's certificate issuer is unknown"
 msgid "%sremote[%s]: gnutls: peer's certificate issuer is unknown"
 msgstr ""
 "%sremote[%s]: gnutls: Der Aussteller für das Peer-Zertifikat ist unbekannt"
 
 #, c-format
-#| msgid "%sgnutls: the certificate has been revoked"
 msgid "%sremote[%s]: gnutls: the certificate has been revoked"
 msgstr "%sremote[%s]: gnutls: Das Zertifikat wurde widerrufen"
 
@@ -15225,18 +15176,15 @@ msgstr ""
 "Iterationen=%d, totp=%d"
 
 #, c-format
-#| msgid "%s%s: proxy \"%s\" not found for server \"%s\", cannot connect"
 msgid "%sremote[%s]: proxy \"%s\" not found, cannot connect"
 msgstr ""
-"%sremote[%s]: Proxy \"%s\" nicht gefunden, kann keine Verbindung "
-"herstellen"
+"%sremote[%s]: Proxy \"%s\" nicht gefunden, kann keine Verbindung herstellen"
 
 #, c-format
-#| msgid "%s%s: missing proxy settings, check options for proxy \"%s\""
 msgid "%sremote[%s]: missing proxy settings, check options for proxy \"%s\""
 msgstr ""
-"%sremote[%s]: fehlende Proxy-Einstellungen, Optionen für den Proxy \"%s\""
-" überprüfen"
+"%sremote[%s]: fehlende Proxy-Einstellungen, Optionen für den Proxy \"%s\" "
+"überprüfen"
 
 #, c-format
 msgid "%s%s: already connected to remote relay \"%s\"!"
@@ -16071,6 +16019,10 @@ msgstr ""
 "time\", durch den Client aktiviert wurde, da die Zeitanzeige als irc-Tag "
 "gesendet wird); keine Zeichenkette = deaktiviert die Zeitanzeige im "
 "Verlaufsspeicher"
+
+msgid ""
+"number of lines to retrieve on each buffer when connecting to a remote relay"
+msgstr ""
 
 #, c-format
 msgid "%s%s: invalid websocket handshake received for client %s%s%s"
@@ -18447,5 +18399,3 @@ msgstr "%s%s: Zeitüberschreitung für \"%s\" mit %s"
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr ""
 "%s%s: Verbindung konnte nicht hergestellt werden: unerwarteter Fehler (%d)"
-
-

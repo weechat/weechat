@@ -45,6 +45,7 @@ New features::
   * relay: add "api" protocol (HTTP REST API), add option relay.look.display_clients, change option type relay.look.auto_open_buffer to string, rename option relay.weechat.commands to relay.network.commands, add option relay.network.time_window (issue #2066)
   * relay: add support of websocket extension "permessage-deflate" (issue #1549)
   * relay: add command `/remote` to manage remote WeeChat relay servers and connect to them (issue #2066)
+  * relay: add option relay.api.remote_get_lines (issue #2066)
   * script: add option `enable` in command `/script`
   * script: add info "script_loaded"
 

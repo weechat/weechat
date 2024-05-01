@@ -49,6 +49,7 @@ struct t_config_section *relay_config_section_look = NULL;
 struct t_config_section *relay_config_section_color = NULL;
 struct t_config_section *relay_config_section_network = NULL;
 struct t_config_section *relay_config_section_irc = NULL;
+struct t_config_section *relay_config_section_api = NULL;
 struct t_config_section *relay_config_section_port = NULL;
 struct t_config_section *relay_config_section_path = NULL;
 struct t_config_section *relay_config_section_remote = NULL;
@@ -99,6 +100,10 @@ struct t_config_option *relay_config_irc_backlog_since_last_disconnect = NULL;
 struct t_config_option *relay_config_irc_backlog_since_last_message = NULL;
 struct t_config_option *relay_config_irc_backlog_tags = NULL;
 struct t_config_option *relay_config_irc_backlog_time_format = NULL;
+
+/* relay config, api section */
+
+struct t_config_option *relay_config_api_remote_get_lines = NULL;
 
 /* other */
 
@@ -1792,6 +1797,26 @@ relay_config_init ()
                "enabled by client, because time is sent as irc tag); empty "
                "string = disable time in backlog messages"),
             NULL, 0, 0, "[%H:%M] ", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    }
+
+    /* section api */
+    relay_config_section_api = weechat_config_new_section (
+        relay_config_file, "api",
+        0, 0,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL);
+    if (relay_config_section_api)
+    {
+        relay_config_api_remote_get_lines = weechat_config_new_option (
+            relay_config_file, relay_config_section_api,
+            "remote_get_lines", "integer",
+            N_("number of lines to retrieve on each buffer when connecting "
+               "to a remote relay"),
+            NULL, 0, INT_MAX, "1000", NULL, 0,
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     }
 
