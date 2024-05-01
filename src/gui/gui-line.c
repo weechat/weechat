@@ -2049,6 +2049,10 @@ gui_line_add_y (struct t_gui_line *line)
     ptr_line->data->refresh_needed = 1;
 
     gui_buffer_ask_chat_refresh (ptr_line->data->buffer, 1);
+
+    (void) gui_buffer_send_signal (ptr_line->data->buffer,
+                                   "buffer_line_added",
+                                   WEECHAT_HOOK_SIGNAL_POINTER, ptr_line);
 }
 
 /*

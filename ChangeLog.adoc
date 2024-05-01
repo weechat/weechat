@@ -15,6 +15,7 @@ For a list of important changes that require manual actions, please look at rele
 
 New features::
 
+  * core: send signal "buffer_line_added" on buffers with free content
   * core: add support of XDG "state" directory (issue #2106, issue #1747)
   * core: use nick offline color for nick in action message
   * core: display a specific message when the value of option is unchanged after `/set` command
