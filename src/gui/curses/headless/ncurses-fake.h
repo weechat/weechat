@@ -131,7 +131,7 @@ extern int raw ();
 extern int wcolor_set (WINDOW *win, short pair, void *opts);
 extern void cur_term ();
 extern int use_default_colors ();
-extern int resizeterm ();
+extern int resizeterm (int lines, int columns);
 extern int getch ();
 extern int wgetch (WINDOW *win);
 
