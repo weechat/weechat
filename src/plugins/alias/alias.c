@@ -159,7 +159,7 @@ alias_replace_args (const char *alias_args, const char *user_args)
 {
     char **argv, **result, *temp;
     const char *start, *pos;
-    int n, m, argc, args_count, offset;
+    int n, m, argc, offset;
 
     if (!alias_args || !user_args)
         return NULL;
@@ -171,7 +171,6 @@ alias_replace_args (const char *alias_args, const char *user_args)
                                  0, &argc);
 
     result = weechat_string_dyn_alloc (128);
-    args_count = 0;
     start = alias_args;
     pos = start;
     while (pos && pos[0])
@@ -191,7 +190,6 @@ alias_replace_args (const char *alias_args, const char *user_args)
                 if (pos[1] == '*')
                 {
                     /* replace with all arguments */
-                    args_count++;
                     offset = 2;
                     if (pos > start)
                         alias_string_add_word_range (result, start, pos);
@@ -200,7 +198,6 @@ alias_replace_args (const char *alias_args, const char *user_args)
                 else if (pos[1] == '&')
                 {
                     /* replace with all arguments, auto-escaping double quotes */
-                    args_count++;
                     offset = 2;
                     if (pos > start)
                         alias_string_add_word_range (result, start, pos);
@@ -214,7 +211,6 @@ alias_replace_args (const char *alias_args, const char *user_args)
                 else if (pos[1] == '~')
                 {
                     /* replace with last argument */
-                    args_count++;
                     offset = 2;
                     if (pos > start)
                         alias_string_add_word_range (result, start, pos);
@@ -224,7 +220,6 @@ alias_replace_args (const char *alias_args, const char *user_args)
                 else if ((pos[1] == '-') && ALIAS_IS_ARG_NUMBER(pos[2]))
                 {
                     /* replace with arguments 1 to m */
-                    args_count++;
                     offset = 3;
                     if (pos > start)
                         alias_string_add_word_range (result, start, pos);
@@ -236,7 +231,6 @@ alias_replace_args (const char *alias_args, const char *user_args)
                 }
                 else if (ALIAS_IS_ARG_NUMBER(pos[1]))
                 {
-                    args_count++;
                     n = pos[1] - '1';
                     if (pos > start)
                         alias_string_add_word_range (result, start, pos);
