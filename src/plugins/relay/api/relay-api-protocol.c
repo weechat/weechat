@@ -515,6 +515,7 @@ RELAY_API_PROTOCOL_CALLBACK(input)
     if (!json_body)
         return WEECHAT_RC_ERROR;
 
+    ptr_buffer = NULL;
     json_buffer_id = cJSON_GetObjectItem (json_body, "buffer_id");
     if (json_buffer_id)
     {
