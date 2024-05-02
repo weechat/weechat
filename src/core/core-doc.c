@@ -1700,7 +1700,10 @@ doc_generate (const char *path)
         doc_gen_scripting_constants,
         NULL,
     };
-    char lang[3], *localedir;
+    char lang[3];
+#ifdef ENABLE_NLS
+    char *localedir;
+#endif
 
     rc_doc_gen = 0;
     num_files = 0;
