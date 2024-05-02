@@ -129,7 +129,6 @@ void
 relay_command_server_list ()
 {
     struct t_relay_server *ptr_server;
-    int i;
     char date_start[128];
     struct tm *date_tmp;
 
@@ -137,7 +136,6 @@ relay_command_server_list ()
     {
         weechat_printf (NULL, "");
         weechat_printf (NULL, _("Listening on:"));
-        i = 1;
         for (ptr_server = relay_servers; ptr_server;
              ptr_server = ptr_server->next_server)
         {
@@ -178,7 +176,6 @@ relay_command_server_list ()
                     ((ptr_server->ipv4 && ptr_server->ipv6) ? "IPv4+6" : ((ptr_server->ipv6) ? "IPv6" : ((ptr_server->ipv4) ? "IPv4" : "UNIX"))),
                     date_start);
             }
-            i++;
         }
     }
     else
