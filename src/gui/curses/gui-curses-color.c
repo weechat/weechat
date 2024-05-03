@@ -1635,7 +1635,7 @@ void
 gui_color_dump ()
 {
     char str_line[1024];
-    int fg, bg, index, used;
+    int fg, bg, index;
 
     gui_color_info_term_colors (str_line, sizeof (str_line));
 
@@ -1647,7 +1647,6 @@ gui_color_dump ()
                      gui_color_num_pairs - gui_color_pairs_used);
     if (gui_color_pairs)
     {
-        used = 0;
         for (bg = -1; bg <= gui_color_term_colors; bg++)
         {
             for (fg = -1; fg <= gui_color_term_colors; fg++)
@@ -1658,7 +1657,6 @@ gui_color_dump ()
                     gui_chat_printf (NULL,
                                      "  fg:%3d, bg:%3d, pairs[%05d] = %hd",
                                      fg, bg, index, gui_color_pairs[index]);
-                    used++;
                 }
             }
         }
