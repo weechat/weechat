@@ -95,7 +95,7 @@ relay_api_protocol_signal_buffer_cb (const void *pointer, void *data,
         || (strcmp (signal, "buffer_closing") == 0))
     {
         ptr_buffer = (struct t_gui_buffer *)signal_data;
-        if (!ptr_buffer)
+        if (!ptr_buffer || relay_buffer_is_relay (ptr_buffer))
             return WEECHAT_RC_OK;
 
         lines = (strcmp (signal, "buffer_opened") == 0) ? LONG_MIN : 0;
@@ -165,6 +165,9 @@ relay_api_protocol_hsignal_nicklist_cb (const void *pointer, void *data,
 
     /* if there is no parent group (for example "root" group), ignore the signal */
     if (!ptr_parent_group)
+        return WEECHAT_RC_OK;
+
+    if (!ptr_buffer || relay_buffer_is_relay (ptr_buffer))
         return WEECHAT_RC_OK;
 
     if ((strcmp (signal, "nicklist_group_added") == 0)
