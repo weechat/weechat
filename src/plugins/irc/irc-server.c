@@ -1758,7 +1758,7 @@ irc_server_alloc (const char *name)
         weechat_config_integer (irc_config_network_lag_check);
     new_server->lag_last_refresh = 0;
     new_server->cmd_list_regexp = NULL;
-    new_server->list = irc_list_alloc (new_server);
+    new_server->list = irc_list_alloc ();
     new_server->last_away_check = 0;
     new_server->last_data_purge = 0;
     for (i = 0; i < IRC_SERVER_NUM_OUTQUEUES_PRIO; i++)
