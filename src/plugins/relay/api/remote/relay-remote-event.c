@@ -492,6 +492,9 @@ RELAY_REMOTE_EVENT_CALLBACK(buffer)
     if (weechat_strcmp (event->name, "buffer_closing") == 0)
         return WEECHAT_RC_OK;
 
+    if (weechat_strcmp (event->name, "buffer_cleared") == 0)
+        weechat_buffer_clear (event->buffer);
+
     /* for other events, we need a body */
     if (!event->json)
         return WEECHAT_RC_OK;
