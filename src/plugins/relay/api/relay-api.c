@@ -42,6 +42,32 @@
 
 
 /*
+ * Returns buffer id.
+ */
+
+long long
+relay_api_get_buffer_id (struct t_gui_buffer *buffer)
+{
+    const char *ptr_id;
+    char *error;
+    long long id;
+
+    if (!buffer)
+        return -1;
+
+    ptr_id = weechat_buffer_get_string (buffer, "id");
+    if (!ptr_id)
+        return -1;
+
+    error = NULL;
+    id = strtoll (ptr_id, &error, 10);
+    if (!error || error[0])
+        return -1;
+
+    return id;
+}
+
+/*
  * Returns value of "colors" URL parameter, an enum with one of these values:
  *   - RELAY_API_COLORS_ANSI (default)
  *   - RELAY_API_COLORS_WEECHAT
@@ -179,6 +205,12 @@ relay_api_alloc (struct t_relay_client *client)
     RELAY_API_DATA(client, hook_signal_buffer) = NULL;
     RELAY_API_DATA(client, hook_hsignal_nicklist) = NULL;
     RELAY_API_DATA(client, hook_signal_upgrade) = NULL;
+    RELAY_API_DATA(client, buffers_closing) = weechat_hashtable_new (
+        32,
+        WEECHAT_HASHTABLE_POINTER,
+        WEECHAT_HASHTABLE_STRING,
+        NULL,
+        NULL);
     RELAY_API_DATA(client, sync_enabled) = 0;
     RELAY_API_DATA(client, sync_nicks) = 0;
     RELAY_API_DATA(client, sync_colors) = RELAY_API_COLORS_ANSI;
@@ -201,6 +233,12 @@ relay_api_alloc_with_infolist (struct t_relay_client *client,
     RELAY_API_DATA(client, hook_signal_buffer) = NULL;
     RELAY_API_DATA(client, hook_hsignal_nicklist) = NULL;
     RELAY_API_DATA(client, hook_signal_upgrade) = NULL;
+    RELAY_API_DATA(client, buffers_closing) = weechat_hashtable_new (
+        32,
+        WEECHAT_HASHTABLE_POINTER,
+        WEECHAT_HASHTABLE_STRING,
+        NULL,
+        NULL);
     RELAY_API_DATA(client, sync_enabled) = weechat_infolist_integer (
         infolist, "sync_enabled");
     RELAY_API_DATA(client, sync_nicks) = weechat_infolist_integer (
@@ -244,6 +282,7 @@ relay_api_free (struct t_relay_client *client)
         weechat_unhook (RELAY_API_DATA(client, hook_signal_buffer));
         weechat_unhook (RELAY_API_DATA(client, hook_hsignal_nicklist));
         weechat_unhook (RELAY_API_DATA(client, hook_signal_upgrade));
+        weechat_hashtable_free (RELAY_API_DATA(client, buffers_closing));
 
         free (client->protocol_data);
 
@@ -302,6 +341,11 @@ relay_api_print_log (struct t_relay_client *client)
         weechat_log_printf ("    hook_signal_buffer. . . : %p", RELAY_API_DATA(client, hook_signal_buffer));
         weechat_log_printf ("    hook_hsignal_nicklist . : %p", RELAY_API_DATA(client, hook_hsignal_nicklist));
         weechat_log_printf ("    hook_signal_upgrade . . : %p", RELAY_API_DATA(client, hook_signal_upgrade));
+        weechat_log_printf ("    buffers_closing. . . . .: %p (hashtable: '%s')",
+                            RELAY_API_DATA(client, buffers_closing),
+                            weechat_hashtable_get_string (
+                                RELAY_API_DATA(client, buffers_closing),
+                                "keys_values"));
         weechat_log_printf ("    sync_enabled. . . . . . : %d", RELAY_API_DATA(client, sync_enabled));
         weechat_log_printf ("    sync_nicks. . . . . . . : %d", RELAY_API_DATA(client, sync_nicks));
         weechat_log_printf ("    sync_colors . . . . . . : %d", RELAY_API_DATA(client, sync_colors));

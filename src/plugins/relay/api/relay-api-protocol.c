@@ -72,6 +72,9 @@ relay_api_protocol_signal_buffer_cb (const void *pointer, void *data,
     struct t_gui_line_data *ptr_line_data;
     cJSON *json;
     long lines;
+    long long buffer_id;
+    const char *ptr_id;
+    char *error;
 
     /* make C compiler happy */
     (void) data;
@@ -92,18 +95,61 @@ relay_api_protocol_signal_buffer_cb (const void *pointer, void *data,
         || (strcmp (signal, "buffer_title_changed") == 0)
         || (strncmp (signal, "buffer_localvar_", 16) == 0)
         || (strcmp (signal, "buffer_cleared") == 0)
-        || (strcmp (signal, "buffer_closing") == 0))
+        || (strcmp (signal, "buffer_closing") == 0)
+        || (strcmp (signal, "buffer_closed") == 0))
     {
         ptr_buffer = (struct t_gui_buffer *)signal_data;
         if (!ptr_buffer || relay_buffer_is_relay (ptr_buffer))
             return WEECHAT_RC_OK;
 
+        if (strcmp (signal, "buffer_closed") == 0)
+        {
+            /*
+             * when a buffer is closed, we send the buffer id
+             * with body type "buffer" and empty body
+             */
+            buffer_id = -1;
+            ptr_id = weechat_hashtable_get (
+                RELAY_API_DATA(ptr_client, buffers_closing),
+                ptr_buffer);
+            if (ptr_id)
+            {
+                error = NULL;
+                buffer_id = strtoll (ptr_id, &error, 10);
+                if (!error || error[0])
+                    buffer_id = -1;
+                weechat_hashtable_remove (
+                    RELAY_API_DATA(ptr_client, buffers_closing),
+                    ptr_buffer);
+            }
+            relay_api_msg_send_event (ptr_client, signal, buffer_id, "buffer", NULL);
+            return WEECHAT_RC_OK;
+        }
+
+        if (strcmp (signal, "buffer_closing") == 0)
+        {
+            /*
+             * when a buffer is closing, we save its id in the hashtable
+             * "buffers_closing", it will be used when sending the event
+             * "buffer_closed"
+             */
+            weechat_hashtable_set (RELAY_API_DATA(ptr_client, buffers_closing),
+                                   ptr_buffer,
+                                   weechat_buffer_get_string (ptr_buffer, "id"));
+        }
+
+        /* we get all lines when a buffer is opened, otherwise none */
         lines = (strcmp (signal, "buffer_opened") == 0) ? LONG_MIN : 0;
+
+        /* build body with buffer info */
         json = relay_api_msg_buffer_to_json (
             ptr_buffer, lines, 0, RELAY_API_DATA(ptr_client, sync_colors));
+
+        /* send to client */
         if (json)
         {
-            relay_api_msg_send_event (ptr_client, signal, NULL, "buffer", json);
+            buffer_id = relay_api_get_buffer_id (ptr_buffer);
+            relay_api_msg_send_event (ptr_client, signal, buffer_id, "buffer", json);
             cJSON_Delete (json);
         }
     }
@@ -127,7 +173,8 @@ relay_api_protocol_signal_buffer_cb (const void *pointer, void *data,
             ptr_line_data, RELAY_API_DATA(ptr_client, sync_colors));
         if (json)
         {
-            relay_api_msg_send_event (ptr_client, signal, ptr_buffer,
+            buffer_id = relay_api_get_buffer_id (ptr_buffer);
+            relay_api_msg_send_event (ptr_client, signal, buffer_id,
                                       "line", json);
             cJSON_Delete (json);
         }
@@ -150,6 +197,7 @@ relay_api_protocol_hsignal_nicklist_cb (const void *pointer, void *data,
     struct t_gui_nick_group *ptr_parent_group, *ptr_group;
     struct t_gui_nick *ptr_nick;
     cJSON *json;
+    long long buffer_id;
 
     /* make C compiler happy */
     (void) data;
@@ -170,6 +218,8 @@ relay_api_protocol_hsignal_nicklist_cb (const void *pointer, void *data,
     if (!ptr_buffer || relay_buffer_is_relay (ptr_buffer))
         return WEECHAT_RC_OK;
 
+    buffer_id = relay_api_get_buffer_id (ptr_buffer);
+
     if ((strcmp (signal, "nicklist_group_added") == 0)
         || (strcmp (signal, "nicklist_group_changed") == 0)
         || (strcmp (signal, "nicklist_group_removing") == 0))
@@ -179,7 +229,7 @@ relay_api_protocol_hsignal_nicklist_cb (const void *pointer, void *data,
             RELAY_API_DATA(ptr_client, sync_colors));
         if (json)
         {
-            relay_api_msg_send_event (ptr_client, signal, ptr_buffer,
+            relay_api_msg_send_event (ptr_client, signal, buffer_id,
                                       "nick_group", json);
             cJSON_Delete (json);
         }
@@ -193,7 +243,7 @@ relay_api_protocol_hsignal_nicklist_cb (const void *pointer, void *data,
             RELAY_API_DATA(ptr_client, sync_colors));
         if (json)
         {
-            relay_api_msg_send_event (ptr_client, signal, ptr_buffer,
+            relay_api_msg_send_event (ptr_client, signal, buffer_id,
                                       "nick", json);
             cJSON_Delete (json);
         }
@@ -226,7 +276,7 @@ relay_api_protocol_signal_upgrade_cb (const void *pointer, void *data,
     if ((strcmp (signal, "upgrade") == 0)
         || (strcmp (signal, "upgrade_ended") == 0))
     {
-        relay_api_msg_send_event (ptr_client, signal, NULL, NULL, NULL);
+        relay_api_msg_send_event (ptr_client, signal, -1, NULL, NULL);
     }
 
     return WEECHAT_RC_OK;

@@ -139,7 +139,7 @@ RELAY_REMOTE_EVENT_CALLBACK(line)
     int y;
     struct timeval tv_date;
 
-    if (!event->buffer)
+    if (!event->buffer || !event->json)
         return WEECHAT_RC_OK;
 
     JSON_GET_NUM(event->json, y, -1);
@@ -217,7 +217,7 @@ relay_remote_event_handle_nick (struct t_gui_buffer *buffer, cJSON *json)
     long long id, parent_group_id;
     int visible;
 
-    if (!buffer)
+    if (!buffer || !json)
         return;
 
     JSON_GET_NUM(json, id, -1);
@@ -276,7 +276,7 @@ relay_remote_event_handle_nick_group (struct t_gui_buffer *buffer, cJSON *json)
     long long id, parent_group_id;
     int visible;
 
-    if (!buffer)
+    if (!buffer || !json)
         return;
 
     JSON_GET_NUM(json, id, -1);
@@ -346,7 +346,7 @@ RELAY_REMOTE_EVENT_CALLBACK(nick_group)
     cJSON *json_obj;
     long long id;
 
-    if (!event->buffer)
+    if (!event->buffer || !event->json)
         return WEECHAT_RC_OK;
 
     if (weechat_strcmp (event->name, "nicklist_group_removing") == 0)
@@ -376,7 +376,7 @@ RELAY_REMOTE_EVENT_CALLBACK(nick)
     cJSON *json_obj;
     long long id;
 
-    if (!event->buffer)
+    if (!event->buffer || !event->json)
         return WEECHAT_RC_OK;
 
     if (weechat_strcmp (event->name, "nicklist_nick_removing") == 0)
@@ -482,6 +482,20 @@ RELAY_REMOTE_EVENT_CALLBACK(buffer)
     long long id;
     int number, nicklist, nicklist_case_sensitive, nicklist_display_groups;
 
+    if (weechat_strcmp (event->name, "buffer_closed") == 0)
+    {
+        weechat_buffer_close (event->buffer);
+        return WEECHAT_RC_OK;
+    }
+
+    /* ignore "buffer_closing" event */
+    if (weechat_strcmp (event->name, "buffer_closing") == 0)
+        return WEECHAT_RC_OK;
+
+    /* for other events, we need a body */
+    if (!event->json)
+        return WEECHAT_RC_OK;
+
     JSON_GET_NUM(event->json, id, -1);
     JSON_GET_STR(event->json, name);
     JSON_GET_STR(event->json, short_name);
@@ -522,7 +536,7 @@ RELAY_REMOTE_EVENT_CALLBACK(buffer)
     weechat_hashtable_set (buffer_props, "input_get_any_user_data", "1");
 
     /* if buffer exists, set properties, otherwise create buffer */
-    ptr_buffer = relay_remote_event_search_buffer (event->remote, id);
+    ptr_buffer = event->buffer;
     if (ptr_buffer)
     {
         weechat_hashtable_map (buffer_props,
@@ -568,7 +582,6 @@ RELAY_REMOTE_EVENT_CALLBACK(buffer)
         }
     }
 
-
     /* add lines */
     json_lines = cJSON_GetObjectItem (event->json, "lines");
     if (json_lines && cJSON_IsArray (json_lines))
@@ -602,6 +615,9 @@ RELAY_REMOTE_EVENT_CALLBACK(version)
     cJSON *json_obj;
     const char *weechat_version, *weechat_version_git, *relay_api_version;
 
+    if (!event->json)
+        return WEECHAT_RC_OK;
+
     JSON_GET_STR(event->json, weechat_version);
     JSON_GET_STR(event->json, weechat_version_git);
     JSON_GET_STR(event->json, relay_api_version);
@@ -624,6 +640,9 @@ void
 relay_remote_event_sync_with_remote (struct t_relay_remote *remote)
 {
     cJSON *json, *json_body;
+
+    if (!remote)
+        return;
 
     json = cJSON_CreateObject ();
     if (!json)

@@ -34,7 +34,7 @@ extern int relay_api_msg_send_error_json (struct t_relay_client *client,
                                           const char *format, ...);
 extern int relay_api_msg_send_event (struct t_relay_client *client,
                                      const char *name,
-                                     struct t_gui_buffer *buffer,
+                                     long long buffer_id,
                                      const char *body_type,
                                      cJSON *json_body);
 extern cJSON *relay_api_msg_buffer_to_json (struct t_gui_buffer *buffer,

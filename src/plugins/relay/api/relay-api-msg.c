@@ -124,16 +124,14 @@ relay_api_msg_send_json_internal (struct t_relay_client *client,
                                   int return_code,
                                   const char *message,
                                   const char *event_name,
-                                  struct t_gui_buffer *event_buffer,
+                                  long long event_buffer_id,
                                   const char *headers,
                                   const char *body_type,
                                   cJSON *json_body)
 {
     cJSON *json, *json_event;
+    char *string, *request;
     int num_bytes, length;
-    const char *ptr_id;
-    char *string, *error, *request;
-    long long id;
 
     if (!client || !message)
         return -1;
@@ -159,18 +157,9 @@ relay_api_msg_send_json_internal (struct t_relay_client *client,
                     cJSON_AddItemToObject (
                         json_event, "name",
                         cJSON_CreateString ((event_name) ? event_name : ""));
-                    id = -1;
-                    if (event_buffer)
-                    {
-                        ptr_id = weechat_buffer_get_string (event_buffer, "id");
-                        error = NULL;
-                        id = strtoll (ptr_id, &error, 10);
-                        if (!error || error[0])
-                            id = -1;
-                    }
                     cJSON_AddItemToObject (
                         json_event, "buffer_id",
-                        cJSON_CreateNumber (id));
+                        cJSON_CreateNumber (event_buffer_id));
                     cJSON_AddItemToObject (json, "event", json_event);
                 }
             }
@@ -193,12 +182,13 @@ relay_api_msg_send_json_internal (struct t_relay_client *client,
                     free (request);
                 }
             }
-            if (json_body)
+            if (body_type)
             {
                 cJSON_AddItemToObject (json, "body_type",
-                                       cJSON_CreateString ((body_type) ? body_type : ""));
-                cJSON_AddItemToObject (json, "body", json_body);
+                                       cJSON_CreateString (body_type));
             }
+            if (json_body)
+                cJSON_AddItemToObject (json, "body", json_body);
             string = cJSON_PrintUnformatted (json);
             num_bytes = relay_client_send (
                 client,
@@ -239,7 +229,7 @@ relay_api_msg_send_json (struct t_relay_client *client,
                                              return_code,
                                              message,
                                              NULL,  /* event_name */
-                                             NULL,  /* event_buffer */
+                                             -1,    /* event_buffer_id */
                                              NULL,  /* headers */
                                              body_type,
                                              json_body);
@@ -286,7 +276,7 @@ relay_api_msg_send_error_json (struct t_relay_client *client,
                 return_code,
                 message,
                 NULL,  /* event_name */
-                NULL,  /* event_buffer */
+                -1,    /* event_buffer_id */
                 headers,
                 NULL,  /* body_type */
                 json);
@@ -321,14 +311,14 @@ relay_api_msg_send_error_json (struct t_relay_client *client,
 int
 relay_api_msg_send_event (struct t_relay_client *client,
                           const char *name,
-                          struct t_gui_buffer *buffer,
+                          long long buffer_id,
                           const char *body_type,
                           cJSON *json_body)
 {
     return relay_api_msg_send_json_internal (client,
                                              RELAY_API_HTTP_0_EVENT,
                                              name,
-                                             buffer,
+                                             buffer_id,
                                              NULL,  /* headers */
                                              body_type,
                                              json_body);

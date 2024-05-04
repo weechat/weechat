@@ -56,11 +56,13 @@ struct t_relay_api_data
     struct t_hook *hook_signal_buffer;    /* hook for signals "buffer_*"    */
     struct t_hook *hook_hsignal_nicklist; /* hook for hsignals "nicklist_*" */
     struct t_hook *hook_signal_upgrade;   /* hook for signals "upgrade*"    */
+    struct t_hashtable *buffers_closing;  /* ptr -> "id" of buffers closing */
     int sync_enabled;                     /* 1 if sync is enabled           */
     int sync_nicks;                       /* 1 if nicks are synchronized    */
     enum t_relay_api_colors sync_colors;  /* colors to send with sync       */
 };
 
+extern long long relay_api_get_buffer_id (struct t_gui_buffer *buffer);
 extern enum t_relay_api_colors relay_api_search_colors (const char *colors);
 extern void relay_api_hook_signals (struct t_relay_client *client);
 extern void relay_api_unhook_signals (struct t_relay_client *client);
