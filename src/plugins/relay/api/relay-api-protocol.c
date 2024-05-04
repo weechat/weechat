@@ -122,7 +122,7 @@ relay_api_protocol_signal_buffer_cb (const void *pointer, void *data,
                     RELAY_API_DATA(ptr_client, buffers_closing),
                     ptr_buffer);
             }
-            relay_api_msg_send_event (ptr_client, signal, buffer_id, "buffer", NULL);
+            relay_api_msg_send_event (ptr_client, signal, buffer_id, NULL, NULL);
             return WEECHAT_RC_OK;
         }
 

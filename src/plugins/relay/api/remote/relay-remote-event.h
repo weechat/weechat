@@ -37,8 +37,8 @@ typedef int (t_relay_remote_event_func)(struct t_relay_remote_event *event);
 
 struct t_relay_remote_event_cb
 {
-    char *body_type;                    /* body type ("buffer", etc.)       */
-    t_relay_remote_event_func *func;    /* callback                         */
+    char *event_mask;                   /* event name (mask)                */
+    t_relay_remote_event_func *func;    /* callback (can be NULL)           */
 };
 
 extern void relay_remote_event_recv (struct t_relay_remote *remote,

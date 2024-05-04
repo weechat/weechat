@@ -128,7 +128,7 @@ relay_remote_event_get_buffer_id (struct t_gui_buffer *buffer)
 }
 
 /*
- * Callback for body type "line".
+ * Callback for a line event.
  */
 
 RELAY_REMOTE_EVENT_CALLBACK(line)
@@ -336,7 +336,7 @@ relay_remote_event_handle_nick_group (struct t_gui_buffer *buffer, cJSON *json)
 }
 
 /*
- * Callback for body type "nick_group".
+ * Callback for a nick group event.
  */
 
 RELAY_REMOTE_EVENT_CALLBACK(nick_group)
@@ -366,7 +366,7 @@ RELAY_REMOTE_EVENT_CALLBACK(nick_group)
 }
 
 /*
- * Callback for body type "nick".
+ * Callback for a nick event.
  */
 
 RELAY_REMOTE_EVENT_CALLBACK(nick)
@@ -467,7 +467,7 @@ error:
 }
 
 /*
- * Callback for body type "buffer".
+ * Callback for a buffer event or response to GET /api/buffers.
  */
 
 RELAY_REMOTE_EVENT_CALLBACK(buffer)
@@ -482,20 +482,6 @@ RELAY_REMOTE_EVENT_CALLBACK(buffer)
     long long id;
     int number, nicklist, nicklist_case_sensitive, nicklist_display_groups;
 
-    if (weechat_strcmp (event->name, "buffer_closed") == 0)
-    {
-        weechat_buffer_close (event->buffer);
-        return WEECHAT_RC_OK;
-    }
-
-    /* ignore "buffer_closing" event */
-    if (weechat_strcmp (event->name, "buffer_closing") == 0)
-        return WEECHAT_RC_OK;
-
-    if (weechat_strcmp (event->name, "buffer_cleared") == 0)
-        weechat_buffer_clear (event->buffer);
-
-    /* for other events, we need a body */
     if (!event->json)
         return WEECHAT_RC_OK;
 
@@ -610,7 +596,27 @@ end:
 }
 
 /*
- * Callback for body type "version".
+ * Callback for event "buffer_cleared".
+ */
+
+RELAY_REMOTE_EVENT_CALLBACK(buffer_cleared)
+{
+    weechat_buffer_clear (event->buffer);
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * Callback for event "buffer_closed".
+ */
+
+RELAY_REMOTE_EVENT_CALLBACK(buffer_closed)
+{
+    weechat_buffer_close (event->buffer);
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * Callback for response to GET /api/version.
  */
 
 RELAY_REMOTE_EVENT_CALLBACK(version)
@@ -681,12 +687,15 @@ relay_remote_event_recv (struct t_relay_remote *remote, const char *data)
     long long buffer_id;
     int i, rc, code;
     struct t_relay_remote_event_cb event_cb[] = {
-        /* body_type, callback */
-        { "buffer", &relay_remote_event_cb_buffer },
-        { "line", &relay_remote_event_cb_line },
-        { "nick_group", &relay_remote_event_cb_nick_group },
-        { "nick", &relay_remote_event_cb_nick },
-        { "version", &relay_remote_event_cb_version },
+        /* event (mask), callback (NULL = event ignored) */
+        /* note: order is important */
+        { "buffer_line_*", &relay_remote_event_cb_line },
+        { "buffer_closing", NULL },
+        { "buffer_cleared", &relay_remote_event_cb_buffer_cleared },
+        { "buffer_closed", &relay_remote_event_cb_buffer_closed },
+        { "buffer_*", &relay_remote_event_cb_buffer },
+        { "nicklist_group_*", &relay_remote_event_cb_nick_group },
+        { "nicklist_nick_*", &relay_remote_event_cb_nick },
         { NULL, NULL },
     };
     t_relay_remote_event_func *callback;
@@ -717,12 +726,8 @@ relay_remote_event_recv (struct t_relay_remote *remote, const char *data)
     json_event = cJSON_GetObjectItem (json, "event");
     json_body = cJSON_GetObjectItem (json, "body");
 
-    if (!body_type)
-    {
-        if ((code == 200) || (code == 204))
-            return;
-        goto error_data;
-    }
+    if (!body_type && ((code == 200) || (code == 204)))
+        return;
 
     if (json_event && cJSON_IsObject (json_event))
     {
@@ -733,36 +738,52 @@ relay_remote_event_recv (struct t_relay_remote *remote, const char *data)
     }
 
     callback = NULL;
-    for (i = 0; event_cb[i].body_type; i++)
+
+    if (code == 200)
     {
-        if (strcmp (event_cb[i].body_type, body_type) == 0)
+        if (weechat_strcmp (body_type, "buffer") == 0)
+            callback = &relay_remote_event_cb_buffer;
+        else if (weechat_strcmp (body_type, "version") == 0)
+            callback = &relay_remote_event_cb_version;
+    }
+    else if (event.name)
+    {
+        for (i = 0; event_cb[i].event_mask; i++)
         {
-            callback = event_cb[i].func;
-            break;
+            if (weechat_string_match (event.name, event_cb[i].event_mask, 1))
+            {
+                callback = event_cb[i].func;
+                break;
+            }
         }
     }
-    if (!callback)
-        return;
 
-    if (cJSON_IsArray (json_body))
+    if (callback)
     {
-        cJSON_ArrayForEach (json_obj, json_body)
+        rc = WEECHAT_RC_OK;
+        if (cJSON_IsArray (json_body))
         {
-            event.json = json_obj;
+            cJSON_ArrayForEach (json_obj, json_body)
+            {
+                event.json = json_obj;
+                rc = (callback) (&event);
+            }
+        }
+        else
+        {
+            event.json = json_body;
             rc = (callback) (&event);
         }
+        if (rc == WEECHAT_RC_ERROR)
+            goto error_cb;
     }
-    else
+
+    if (!remote->synced
+        && (code == 200)
+        && (weechat_strcmp (body_type, "buffer") == 0))
     {
-        event.json = json_body;
-        rc = (callback) (&event);
-    }
-
-    if (rc == WEECHAT_RC_ERROR)
-        goto error_cb;
-
-    if (!remote->synced && (code == 200) && (strcmp (body_type, "buffer") == 0))
         relay_remote_event_sync_with_remote (remote);
+    }
 
     return;
 
