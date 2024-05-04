@@ -140,7 +140,7 @@ RELAY_REMOTE_EVENT_CALLBACK(line)
     struct timeval tv_date;
 
     if (!event->buffer)
-        return WEECHAT_RC_ERROR;
+        return WEECHAT_RC_OK;
 
     JSON_GET_NUM(event->json, y, -1);
     JSON_GET_STR(event->json, date);
@@ -347,7 +347,7 @@ RELAY_REMOTE_EVENT_CALLBACK(nick_group)
     long long id;
 
     if (!event->buffer)
-        return WEECHAT_RC_ERROR;
+        return WEECHAT_RC_OK;
 
     if (weechat_strcmp (event->name, "nicklist_group_removing") == 0)
     {
@@ -377,7 +377,7 @@ RELAY_REMOTE_EVENT_CALLBACK(nick)
     long long id;
 
     if (!event->buffer)
-        return WEECHAT_RC_ERROR;
+        return WEECHAT_RC_OK;
 
     if (weechat_strcmp (event->name, "nicklist_nick_removing") == 0)
     {
