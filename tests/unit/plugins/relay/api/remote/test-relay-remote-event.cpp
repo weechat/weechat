@@ -1,5 +1,5 @@
-/*
  * test-relay-remote-event.cpp - test event functions for relay remote
+/*
  *
  * Copyright (C) 2024 Sébastien Helleu <flashcode@flashtux.org>
  *
@@ -47,10 +47,110 @@ TEST(RelayRemoteEvent, SearchBuffer)
 
 /*
  * Tests functions:
+ *   relay_remote_event_get_buffer_id
+ */
+
+TEST(RelayRemoteEvent, GetBufferId)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   relay_remote_event_cb_line
+ */
+
+TEST(RelayRemoteEvent, CbLine)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   relay_remote_event_handle_nick
+ */
+
+TEST(RelayRemoteEvent, HandleNick)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   relay_remote_event_handle_nick_group
+ */
+
+TEST(RelayRemoteEvent, HandleNickGroup)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   relay_remote_event_cb_nick_group
+ */
+
+TEST(RelayRemoteEvent, CbNickGroup)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   relay_remote_event_cb_nick
+ */
+
+TEST(RelayRemoteEvent, CbNick)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   relay_remote_event_apply_props
+ */
+
+TEST(RelayRemoteEvent, ApplyProps)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   relay_remote_event_buffer_input_cb
+ */
+
+TEST(RelayRemoteEvent, BufferInputCb)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
  *   relay_remote_event_cb_buffer
  */
 
 TEST(RelayRemoteEvent, CbBuffer)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   relay_remote_event_cb_version
+ */
+
+TEST(RelayRemoteEvent, CbVersion)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   relay_remote_event_sync_with_remote
+ */
+
+TEST(RelayRemoteEvent, SyncWithRemote)
 {
     /* TODO: write tests */
 }
