@@ -953,7 +953,7 @@ relay_remote_print_log ()
         weechat_log_printf ("  gnutls_sess . . . . . . : 0x%lx", ptr_remote->gnutls_sess);
         relay_websocket_deflate_print_log (ptr_remote->ws_deflate, "");
         weechat_log_printf ("  synced. . . . . . . . . : %d", ptr_remote->synced);
-        weechat_log_printf ("  partial_ws_frame. . . . . : %p (%d bytes)",
+        weechat_log_printf ("  partial_ws_frame. . . . : %p (%d bytes)",
                             ptr_remote->partial_ws_frame,
                             ptr_remote->partial_ws_frame_size);
         weechat_log_printf ("  prev_remote . . . . . . : 0x%lx", ptr_remote->prev_remote);
