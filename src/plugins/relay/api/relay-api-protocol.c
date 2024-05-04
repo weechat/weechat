@@ -73,6 +73,7 @@ relay_api_protocol_signal_buffer_cb (const void *pointer, void *data,
     cJSON *json;
     long lines;
     long long buffer_id;
+    int nicks;
     const char *ptr_id;
     char *error;
 
@@ -138,12 +139,21 @@ relay_api_protocol_signal_buffer_cb (const void *pointer, void *data,
                                    weechat_buffer_get_string (ptr_buffer, "id"));
         }
 
-        /* we get all lines when a buffer is opened, otherwise none */
-        lines = (strcmp (signal, "buffer_opened") == 0) ? LONG_MIN : 0;
+        /* we get all lines and nicks when a buffer is opened, otherwise none */
+        if (strcmp (signal, "buffer_opened") == 0)
+        {
+            lines = LONG_MIN;
+            nicks = 1;
+        }
+        else
+        {
+            lines = 0;
+            nicks = 0;
+        }
 
         /* build body with buffer info */
         json = relay_api_msg_buffer_to_json (
-            ptr_buffer, lines, 0, RELAY_API_DATA(ptr_client, sync_colors));
+            ptr_buffer, lines, nicks, RELAY_API_DATA(ptr_client, sync_colors));
 
         /* send to client */
         if (json)
