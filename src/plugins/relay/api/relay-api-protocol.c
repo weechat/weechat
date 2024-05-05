@@ -71,7 +71,7 @@ relay_api_protocol_signal_buffer_cb (const void *pointer, void *data,
     struct t_gui_line *ptr_line;
     struct t_gui_line_data *ptr_line_data;
     cJSON *json;
-    long lines;
+    long lines, lines_free;
     long long buffer_id;
     int nicks;
     const char *ptr_id;
@@ -142,18 +142,21 @@ relay_api_protocol_signal_buffer_cb (const void *pointer, void *data,
         /* we get all lines and nicks when a buffer is opened, otherwise none */
         if (strcmp (signal, "buffer_opened") == 0)
         {
-            lines = LONG_MIN;
+            lines = LONG_MAX;
+            lines_free = LONG_MAX;
             nicks = 1;
         }
         else
         {
             lines = 0;
+            lines_free = 0;
             nicks = 0;
         }
 
         /* build body with buffer info */
         json = relay_api_msg_buffer_to_json (
-            ptr_buffer, lines, nicks, RELAY_API_DATA(ptr_client, sync_colors));
+            ptr_buffer, lines, lines_free, nicks,
+            RELAY_API_DATA(ptr_client, sync_colors));
 
         /* send to client */
         if (json)
@@ -462,7 +465,7 @@ RELAY_API_PROTOCOL_CALLBACK(buffers)
 {
     cJSON *json;
     struct t_gui_buffer *ptr_buffer;
-    long lines;
+    long lines, lines_free;
     int nicks;
     enum t_relay_api_colors colors;
 
@@ -489,7 +492,7 @@ RELAY_API_PROTOCOL_CALLBACK(buffers)
         /* sub-resource of buffers */
         if (strcmp (client->http_req->path_items[3], "lines") == 0)
         {
-            lines = relay_http_get_param_long (client->http_req, "lines", -100L);
+            lines = relay_http_get_param_long (client->http_req, "lines", LONG_MAX);
             json = relay_api_msg_lines_to_json (ptr_buffer, lines, colors);
         }
         else if (strcmp (client->http_req->path_items[3], "nicks") == 0)
@@ -511,9 +514,13 @@ RELAY_API_PROTOCOL_CALLBACK(buffers)
     else
     {
         lines = relay_http_get_param_long (client->http_req, "lines", 0L);
+        lines_free = relay_http_get_param_long (client->http_req,
+                                                "lines_free",
+                                                (lines == 0) ? 0 : LONG_MAX);
         if (ptr_buffer)
         {
-            json = relay_api_msg_buffer_to_json (ptr_buffer, lines, nicks, colors);
+            json = relay_api_msg_buffer_to_json (ptr_buffer, lines, lines_free,
+                                                 nicks, colors);
         }
         else
         {
@@ -526,8 +533,8 @@ RELAY_API_PROTOCOL_CALLBACK(buffers)
             {
                 cJSON_AddItemToArray (
                     json,
-                    relay_api_msg_buffer_to_json (ptr_buffer,
-                                                  lines, nicks, colors));
+                    relay_api_msg_buffer_to_json (ptr_buffer, lines, lines_free,
+                                                  nicks, colors));
                 ptr_buffer = weechat_hdata_move (relay_hdata_buffer, ptr_buffer, 1);
             }
         }

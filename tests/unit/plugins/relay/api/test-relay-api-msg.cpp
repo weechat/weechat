@@ -118,7 +118,8 @@ TEST(RelayApiMsg, SendEvent)
 
 TEST(RelayApiMsg, BufferToJson)
 {
-    cJSON *json, *json_obj, *json_local_vars, *json_keys, *json_key, *json_lines;
+    cJSON *json, *json_obj, *json_local_vars, *json_keys, *json_key;
+    cJSON *json_lines, *json_line;
     cJSON *json_nicklist_root, *json_nicks, *json_groups, *json_group;
     cJSON *json_group_nicks, *json_nick;
     struct t_gui_buffer *buffer;
@@ -126,7 +127,7 @@ TEST(RelayApiMsg, BufferToJson)
     long long group_id;
     char *color;
 
-    json = relay_api_msg_buffer_to_json (NULL, 0, 0, RELAY_API_COLORS_ANSI);
+    json = relay_api_msg_buffer_to_json (NULL, 0L, 0L, 0, RELAY_API_COLORS_ANSI);
     CHECK(json);
     CHECK(cJSON_IsObject (json));
     POINTERS_EQUAL(NULL, cJSON_GetObjectItem (json, "name"));
@@ -136,7 +137,7 @@ TEST(RelayApiMsg, BufferToJson)
     gui_buffer_set (gui_buffers, "key_bind_meta-y,2", "/test2 arg");
 
     /* buffer without lines and nicks */
-    json = relay_api_msg_buffer_to_json (gui_buffers, 0, 0, RELAY_API_COLORS_ANSI);
+    json = relay_api_msg_buffer_to_json (gui_buffers, 0L, 0L, 0, RELAY_API_COLORS_ANSI);
     CHECK(json);
     CHECK(cJSON_IsObject (json));
     WEE_CHECK_OBJ_NUM(gui_buffers->id, json, "id");
@@ -169,7 +170,7 @@ TEST(RelayApiMsg, BufferToJson)
     cJSON_Delete (json);
 
     /* buffer with 2 lines, without nicks */
-    json = relay_api_msg_buffer_to_json (gui_buffers, 2, 0, RELAY_API_COLORS_ANSI);
+    json = relay_api_msg_buffer_to_json (gui_buffers, 2L, 0L, 0, RELAY_API_COLORS_ANSI);
     CHECK(json);
     CHECK(cJSON_IsObject (json));
     json_lines = cJSON_GetObjectItem (json, "lines");
@@ -192,7 +193,7 @@ TEST(RelayApiMsg, BufferToJson)
     CHECK(gui_nicklist_add_nick (buffer, NULL, "root_nick_hidden", "cyan", "+", "yellow", 0));
 
     /* buffer with no lines and 1 group / 4 nicks */
-    json = relay_api_msg_buffer_to_json (buffer, 1, 1, RELAY_API_COLORS_ANSI);
+    json = relay_api_msg_buffer_to_json (buffer, 1L, 0L, 1, RELAY_API_COLORS_ANSI);
     CHECK(json);
     CHECK(cJSON_IsObject (json));
     WEE_CHECK_OBJ_BOOL(1, json, "nicklist");
@@ -313,6 +314,46 @@ TEST(RelayApiMsg, BufferToJson)
     cJSON_Delete (json);
 
     gui_buffer_set (gui_buffers, "key_unbind_meta-y", "");
+
+    gui_buffer_close (buffer);
+
+    buffer = gui_buffer_new_user ("test", GUI_BUFFER_TYPE_FREE);
+    CHECK(buffer);
+    gui_chat_printf_y (buffer, 0, "test line 1");
+    gui_chat_printf_y (buffer, 1, "test line 2");
+    gui_chat_printf_y (buffer, 2, "test line 3");
+    gui_chat_printf_y (buffer, 3, "test line 4");
+    gui_chat_printf_y (buffer, 4, "test line 5");
+
+    json = relay_api_msg_buffer_to_json (buffer, 1L, 2L, 0, RELAY_API_COLORS_ANSI);
+    CHECK(json);
+    CHECK(cJSON_IsObject (json));
+    json_lines = cJSON_GetObjectItem (json, "lines");
+    CHECK(json_lines);
+    CHECK(cJSON_IsArray (json_lines));
+    LONGS_EQUAL(2, cJSON_GetArraySize (json_lines));
+    json_line = cJSON_GetArrayItem (json_lines, 0);
+    CHECK(json_line);
+    WEE_CHECK_OBJ_STR("test line 1", json_line, "message");
+    json_line = cJSON_GetArrayItem (json_lines, 1);
+    CHECK(json_line);
+    WEE_CHECK_OBJ_STR("test line 2", json_line, "message");
+    cJSON_Delete (json);
+
+    json = relay_api_msg_buffer_to_json (buffer, 1L, -2L, 0, RELAY_API_COLORS_ANSI);
+    CHECK(json);
+    CHECK(cJSON_IsObject (json));
+    json_lines = cJSON_GetObjectItem (json, "lines");
+    CHECK(json_lines);
+    CHECK(cJSON_IsArray (json_lines));
+    LONGS_EQUAL(2, cJSON_GetArraySize (json_lines));
+    json_line = cJSON_GetArrayItem (json_lines, 0);
+    CHECK(json_line);
+    WEE_CHECK_OBJ_STR("test line 4", json_line, "message");
+    json_line = cJSON_GetArrayItem (json_lines, 1);
+    CHECK(json_line);
+    WEE_CHECK_OBJ_STR("test line 5", json_line, "message");
+    cJSON_Delete (json);
 
     gui_buffer_close (buffer);
 }

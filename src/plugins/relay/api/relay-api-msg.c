@@ -23,6 +23,7 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <string.h>
+#include <limits.h>
 #include <time.h>
 #include <sys/time.h>
 
@@ -355,6 +356,7 @@ relay_api_msg_buffer_add_local_vars_cb (void *data,
 cJSON *
 relay_api_msg_buffer_to_json (struct t_gui_buffer *buffer,
                               long lines,
+                              long lines_free,
                               int nicks,
                               enum t_relay_api_colors colors)
 {
@@ -379,6 +381,8 @@ relay_api_msg_buffer_to_json (struct t_gui_buffer *buffer,
     MSG_ADD_HDATA_STR("short_name", "short_name");
     MSG_ADD_HDATA_VAR(Number, "number", integer, "number");
     ptr_string = weechat_buffer_get_string (buffer, "type");
+    if (weechat_strcmp (ptr_string, "free") == 0)
+        lines = lines_free;
     MSG_ADD_STR_PTR("type", ptr_string);
     MSG_ADD_HDATA_STR_COLORS("title", "title");
     MSG_ADD_HDATA_VAR(Bool, "nicklist", integer, "nicklist");

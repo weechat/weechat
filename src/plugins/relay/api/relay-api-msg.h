@@ -40,6 +40,7 @@ extern int relay_api_msg_send_event (struct t_relay_client *client,
                                      cJSON *json_body);
 extern cJSON *relay_api_msg_buffer_to_json (struct t_gui_buffer *buffer,
                                             long lines,
+                                            long lines_free,
                                             int nicks,
                                             enum t_relay_api_colors colors);
 extern cJSON *relay_api_msg_key_to_json (struct t_gui_key *key);
