@@ -55,10 +55,14 @@ struct t_relay_api_data
 {
     struct t_hook *hook_signal_buffer;    /* hook for signals "buffer_*"    */
     struct t_hook *hook_hsignal_nicklist; /* hook for hsignals "nicklist_*" */
+    struct t_hook *hook_signal_input;     /* hook for signal                */
+                                          /* "input_text_changed"           */
     struct t_hook *hook_signal_upgrade;   /* hook for signals "upgrade*"    */
     struct t_hashtable *buffers_closing;  /* ptr -> "id" of buffers closing */
     int sync_enabled;                     /* 1 if sync is enabled           */
     int sync_nicks;                       /* 1 if nicks are synchronized    */
+    int sync_input;                       /* 1 if input is synchronized     */
+                                          /* (WeeChat -> client)            */
     enum t_relay_api_colors sync_colors;  /* colors to send with sync       */
 };
 

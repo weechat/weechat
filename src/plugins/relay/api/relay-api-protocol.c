@@ -266,6 +266,47 @@ relay_api_protocol_hsignal_nicklist_cb (const void *pointer, void *data,
 }
 
 /*
+ * Callback for signal "input_text_changed".
+ */
+
+int
+relay_api_protocol_signal_input_cb (const void *pointer, void *data,
+                                    const char *signal,
+                                    const char *type_data,
+                                    void *signal_data)
+{
+    struct t_relay_client *ptr_client;
+    struct t_gui_buffer *ptr_buffer;
+    cJSON *json;
+    long long buffer_id;
+
+    /* make C compiler happy */
+    (void) data;
+    (void) type_data;
+
+    ptr_client = (struct t_relay_client *)pointer;
+    if (!ptr_client || !relay_client_valid (ptr_client))
+        return WEECHAT_RC_OK;
+
+    ptr_buffer = (struct t_gui_buffer *)signal_data;
+    if (!ptr_buffer || relay_buffer_is_relay (ptr_buffer))
+        return WEECHAT_RC_OK;
+
+    json = relay_api_msg_buffer_to_json (
+        ptr_buffer, 0, 0, 0,
+        RELAY_API_DATA(ptr_client, sync_colors));
+
+    if (json)
+    {
+        buffer_id = relay_api_get_buffer_id (ptr_buffer);
+        relay_api_msg_send_event (ptr_client, signal, buffer_id, "buffer", json);
+        cJSON_Delete (json);
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Callback for signals "upgrade*".
  */
 
@@ -763,7 +804,7 @@ RELAY_API_PROTOCOL_CALLBACK(ping)
 
 RELAY_API_PROTOCOL_CALLBACK(sync)
 {
-    cJSON *json_body, *json_sync, *json_nicks, *json_colors;
+    cJSON *json_body, *json_sync, *json_nicks, *json_input, *json_colors;
 
     if (client->websocket != RELAY_CLIENT_WEBSOCKET_READY)
     {
@@ -777,6 +818,7 @@ RELAY_API_PROTOCOL_CALLBACK(sync)
 
     RELAY_API_DATA(client, sync_enabled) = 1;
     RELAY_API_DATA(client, sync_nicks) = 1;
+    RELAY_API_DATA(client, sync_input) = 1;
     RELAY_API_DATA(client, sync_colors) = RELAY_API_COLORS_ANSI;
 
     json_body = cJSON_Parse (client->http_req->body);
@@ -788,6 +830,9 @@ RELAY_API_PROTOCOL_CALLBACK(sync)
         json_nicks = cJSON_GetObjectItem (json_body, "nicks");
         if (json_nicks && cJSON_IsBool (json_nicks))
             RELAY_API_DATA(client, sync_nicks) = (cJSON_IsTrue (json_nicks)) ? 1 : 0;
+        json_input = cJSON_GetObjectItem (json_body, "input");
+        if (json_input && cJSON_IsBool (json_input))
+            RELAY_API_DATA(client, sync_input) = (cJSON_IsTrue (json_input)) ? 1 : 0;
         json_colors = cJSON_GetObjectItem (json_body, "colors");
         if (json_colors && cJSON_IsString (json_colors))
             RELAY_API_DATA(client, sync_colors) = relay_api_search_colors (

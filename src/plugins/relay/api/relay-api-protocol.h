@@ -45,6 +45,10 @@ extern int relay_api_protocol_hsignal_nicklist_cb (const void *pointer,
                                                    void *data,
                                                    const char *signal,
                                                    struct t_hashtable *hashtable);
+extern int relay_api_protocol_signal_input_cb (const void *pointer, void *data,
+                                               const char *signal,
+                                               const char *type_data,
+                                               void *signal_data);
 extern int relay_api_protocol_signal_upgrade_cb (const void *pointer,
                                                  void *data,
                                                  const char *signal,
