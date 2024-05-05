@@ -270,6 +270,7 @@ TEST(RelayApiProtocolWithClient, CbHandshake)
     /* no body */
     test_client_recv_http ("POST /api/handshake", NULL);
     STRCMP_EQUAL("HTTP/1.1 200 OK\r\n"
+                 "Access-Control-Allow-Origin: *\r\n"
                  "Content-Type: application/json; charset=utf-8\r\n"
                  "Content-Length: 74\r\n"
                  "\r\n"
@@ -281,6 +282,7 @@ TEST(RelayApiProtocolWithClient, CbHandshake)
     /* empty body */
     test_client_recv_http ("POST /api/handshake", "{}");
     STRCMP_EQUAL("HTTP/1.1 200 OK\r\n"
+                 "Access-Control-Allow-Origin: *\r\n"
                  "Content-Type: application/json; charset=utf-8\r\n"
                  "Content-Length: 74\r\n"
                  "\r\n"
@@ -293,6 +295,7 @@ TEST(RelayApiProtocolWithClient, CbHandshake)
     test_client_recv_http ("POST /api/handshake",
                            "{\"password_hash_algo\": [\"invalid\"]}");
     STRCMP_EQUAL("HTTP/1.1 200 OK\r\n"
+                 "Access-Control-Allow-Origin: *\r\n"
                  "Content-Type: application/json; charset=utf-8\r\n"
                  "Content-Length: 74\r\n"
                  "\r\n"
@@ -306,6 +309,7 @@ TEST(RelayApiProtocolWithClient, CbHandshake)
         "POST /api/handshake",
         "{\"password_hash_algo\": [\"sha256\", \"pbkdf2+sha512\"]}");
     STRCMP_EQUAL("HTTP/1.1 200 OK\r\n"
+                 "Access-Control-Allow-Origin: *\r\n"
                  "Content-Type: application/json; charset=utf-8\r\n"
                  "Content-Length: 85\r\n"
                  "\r\n"
@@ -348,6 +352,7 @@ TEST(RelayApiProtocolWithClient, CbBuffers)
     /* error: invalid buffer name */
     test_client_recv_http ("GET /api/buffers/invalid", NULL);
     STRCMP_EQUAL("HTTP/1.1 404 Not Found\r\n"
+                 "Access-Control-Allow-Origin: *\r\n"
                  "Content-Type: application/json; charset=utf-8\r\n"
                  "Content-Length: 41\r\n"
                  "\r\n"
@@ -357,6 +362,7 @@ TEST(RelayApiProtocolWithClient, CbBuffers)
     /* error: invalid buffer id */
     test_client_recv_http ("GET /api/buffers/123", NULL);
     STRCMP_EQUAL("HTTP/1.1 404 Not Found\r\n"
+                 "Access-Control-Allow-Origin: *\r\n"
                  "Content-Type: application/json; charset=utf-8\r\n"
                  "Content-Length: 37\r\n"
                  "\r\n"
@@ -366,6 +372,7 @@ TEST(RelayApiProtocolWithClient, CbBuffers)
     /* error: invalid sub-resource */
     test_client_recv_http ("GET /api/buffers/core.weechat/invalid", NULL);
     STRCMP_EQUAL("HTTP/1.1 404 Not Found\r\n"
+                 "Access-Control-Allow-Origin: *\r\n"
                  "Content-Type: application/json; charset=utf-8\r\n"
                  "Content-Length: 59\r\n"
                  "\r\n"
@@ -375,6 +382,7 @@ TEST(RelayApiProtocolWithClient, CbBuffers)
     /* error: too many parameters in path */
     test_client_recv_http ("GET /api/buffers/core.weechat/too/many/parameters", NULL);
     STRCMP_EQUAL("HTTP/1.1 404 Not Found\r\n"
+                 "Access-Control-Allow-Origin: *\r\n"
                  "Content-Type: application/json; charset=utf-8\r\n"
                  "Content-Length: 0\r\n"
                  "\r\n",
@@ -555,6 +563,7 @@ TEST(RelayApiProtocolWithClient, CbInput)
     /* error: no body */
     test_client_recv_http ("POST /api/input", NULL);
     STRCMP_EQUAL("HTTP/1.1 400 Bad Request\r\n"
+                 "Access-Control-Allow-Origin: *\r\n"
                  "Content-Type: application/json; charset=utf-8\r\n"
                  "Content-Length: 0\r\n"
                  "\r\n",
@@ -565,6 +574,7 @@ TEST(RelayApiProtocolWithClient, CbInput)
                            "{\"buffer_name\": \"invalid\", "
                            "\"command\": \"/print test\"}");
     STRCMP_EQUAL("HTTP/1.1 404 Not Found\r\n"
+                 "Access-Control-Allow-Origin: *\r\n"
                  "Content-Type: application/json; charset=utf-8\r\n"
                  "Content-Length: 41\r\n"
                  "\r\n"
@@ -621,6 +631,7 @@ TEST(RelayApiProtocolWithClient, CbPing)
     /* ping without body */
     test_client_recv_http ("POST /api/ping", NULL);
     STRCMP_EQUAL("HTTP/1.1 204 No Content\r\n"
+                 "Access-Control-Allow-Origin: *\r\n"
                  "Content-Type: application/json; charset=utf-8\r\n"
                  "Content-Length: 0\r\n"
                  "\r\n",
@@ -642,6 +653,7 @@ TEST(RelayApiProtocolWithClient, CbSync)
 {
     test_client_recv_http ("POST /api/sync", NULL);
     STRCMP_EQUAL("HTTP/1.1 403 Forbidden\r\n"
+                 "Access-Control-Allow-Origin: *\r\n"
                  "Content-Type: application/json; charset=utf-8\r\n"
                  "Content-Length: 72\r\n"
                  "\r\n"
@@ -775,6 +787,7 @@ TEST(RelayApiProtocolWithClient, RecvHttp404)
     /* resource not found: error 404 */
     test_client_recv_http ("GET / HTTP/1.1", NULL);
     STRCMP_EQUAL("HTTP/1.1 404 Not Found\r\n"
+                 "Access-Control-Allow-Origin: *\r\n"
                  "Content-Type: application/json; charset=utf-8\r\n"
                  "Content-Length: 0\r\n"
                  "\r\n",
@@ -783,6 +796,7 @@ TEST(RelayApiProtocolWithClient, RecvHttp404)
     /* resource not found: error 404 */
     test_client_recv_http ("GET /unknown HTTP/1.1", NULL);
     STRCMP_EQUAL("HTTP/1.1 404 Not Found\r\n"
+                 "Access-Control-Allow-Origin: *\r\n"
                  "Content-Type: application/json; charset=utf-8\r\n"
                  "Content-Length: 0\r\n"
                  "\r\n",
@@ -791,6 +805,7 @@ TEST(RelayApiProtocolWithClient, RecvHttp404)
     /* resource not found: error 404 */
     test_client_recv_http ("GET /unknown/abc HTTP/1.1", NULL);
     STRCMP_EQUAL("HTTP/1.1 404 Not Found\r\n"
+                 "Access-Control-Allow-Origin: *\r\n"
                  "Content-Type: application/json; charset=utf-8\r\n"
                  "Content-Length: 0\r\n"
                  "\r\n",
@@ -799,6 +814,7 @@ TEST(RelayApiProtocolWithClient, RecvHttp404)
     /* resource not found: error 404 */
     test_client_recv_http ("GET /api HTTP/1.1", NULL);
     STRCMP_EQUAL("HTTP/1.1 404 Not Found\r\n"
+                 "Access-Control-Allow-Origin: *\r\n"
                  "Content-Type: application/json; charset=utf-8\r\n"
                  "Content-Length: 0\r\n"
                  "\r\n",
@@ -807,6 +823,7 @@ TEST(RelayApiProtocolWithClient, RecvHttp404)
     /* resource not found: error 404 */
     test_client_recv_http ("GET /api/unknown HTTP/1.1", NULL);
     STRCMP_EQUAL("HTTP/1.1 404 Not Found\r\n"
+                 "Access-Control-Allow-Origin: *\r\n"
                  "Content-Type: application/json; charset=utf-8\r\n"
                  "Content-Length: 0\r\n"
                  "\r\n",
@@ -824,6 +841,7 @@ TEST(RelayApiProtocolWithClient, RecvHttpMissingPassword)
     test_client_recv_http_raw ("GET /api/version HTTP/1.1\r\n"
                                "\r\n");
     STRCMP_EQUAL("HTTP/1.1 401 Unauthorized\r\n"
+                 "Access-Control-Allow-Origin: *\r\n"
                  "Content-Type: application/json; charset=utf-8\r\n"
                  "Content-Length: 29\r\n"
                  "\r\n"
@@ -843,6 +861,7 @@ TEST(RelayApiProtocolWithClient, RecvHttpInvalidPassword)
                                "Authorization: Basic cGxhaW46aW52YWxpZA==\r\n"
                                "\r\n");
     STRCMP_EQUAL("HTTP/1.1 401 Unauthorized\r\n"
+                 "Access-Control-Allow-Origin: *\r\n"
                  "Content-Type: application/json; charset=utf-8\r\n"
                  "Content-Length: 29\r\n"
                  "\r\n"
