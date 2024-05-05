@@ -222,6 +222,7 @@ int
 relay_api_msg_send_json (struct t_relay_client *client,
                          int return_code,
                          const char *message,
+                         const char *headers,
                          const char *body_type,
                          cJSON *json_body)
 {
@@ -230,7 +231,7 @@ relay_api_msg_send_json (struct t_relay_client *client,
                                              message,
                                              NULL,  /* event_name */
                                              -1,    /* event_buffer_id */
-                                             NULL,  /* headers */
+                                             headers,
                                              body_type,
                                              json_body);
 }

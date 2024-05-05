@@ -25,6 +25,7 @@ enum t_relay_api_colors;
 extern int relay_api_msg_send_json (struct t_relay_client *client,
                                     int return_code,
                                     const char *message,
+                                    const char *headers,
                                     const char *body_type,
                                     cJSON *json_body);
 extern int relay_api_msg_send_error_json (struct t_relay_client *client,

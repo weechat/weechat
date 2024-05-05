@@ -1243,25 +1243,19 @@ relay_http_send_json (struct t_relay_client *client,
                       const char *headers,
                       const char *json_string)
 {
-    int num_bytes, length;
+    int num_bytes;
     char *headers2;
 
     if (!client || !message)
         return -1;
 
-    num_bytes = -1;
-    headers2 = NULL;
-
-    length = 128 + ((headers) ? strlen (headers) : 0);
-    headers2 = malloc (length);
-    if (headers2)
-    {
-        snprintf (headers2, length,
-                  "%s%s%s",
-                  (headers) ? headers : "",
-                  (headers && headers[0]) ? "\r\n" : "",
-                  "Content-Type: application/json; charset=utf-8");
-    }
+    weechat_asprintf (
+        &headers2,
+        "%s%s%s",
+        (headers) ? headers : "",
+        (headers && headers[0]) ? "\r\n" : "",
+        "Access-Control-Allow-Origin: *\r\n"
+        "Content-Type: application/json; charset=utf-8");
 
     num_bytes = relay_http_send (client,
                                  return_code,

@@ -293,6 +293,26 @@ relay_api_protocol_signal_upgrade_cb (const void *pointer, void *data,
 }
 
 /*
+ * Callback for the OPTIONS preflight request.
+ *
+ * Routes:
+ *   OPTIONS /api/xxx
+ */
+
+RELAY_API_PROTOCOL_CALLBACK(options)
+{
+    relay_api_msg_send_json (
+        client,
+        RELAY_HTTP_204_NO_CONTENT,
+        "Access-Control-Allow-Methods: GET, POST, PUT, DELETE\r\n"
+        "Access-Control-Allow-Headers: origin, content-type, accept, authorization",
+        NULL,  /* body_type */
+        NULL);  /* json_body */
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Callback for resource "handshake".
  *
  * Routes:
@@ -362,7 +382,7 @@ RELAY_API_PROTOCOL_CALLBACK(handshake)
     cJSON_AddItemToObject (json, "totp",
                            cJSON_CreateBool ((totp_secret && totp_secret[0]) ? 1 : 0));
 
-    relay_api_msg_send_json (client, RELAY_HTTP_200_OK, "handshake", json);
+    relay_api_msg_send_json (client, RELAY_HTTP_200_OK, NULL, "handshake", json);
 
     free (totp_secret);
     cJSON_Delete (json);
@@ -416,7 +436,7 @@ RELAY_API_PROTOCOL_CALLBACK(version)
                            "relay_api_version_number",
                            cJSON_CreateNumber (RELAY_API_VERSION_NUMBER));
 
-    relay_api_msg_send_json (client, RELAY_HTTP_200_OK, "version", json);
+    relay_api_msg_send_json (client, RELAY_HTTP_200_OK, NULL, "version", json);
 
     cJSON_Delete (json);
 
@@ -516,7 +536,7 @@ RELAY_API_PROTOCOL_CALLBACK(buffers)
     if (!json)
         goto error;
 
-    relay_api_msg_send_json (client, RELAY_HTTP_200_OK, "buffer", json);
+    relay_api_msg_send_json (client, RELAY_HTTP_200_OK, NULL, "buffer", json);
     cJSON_Delete (json);
     return WEECHAT_RC_OK;
 
@@ -553,7 +573,7 @@ RELAY_API_PROTOCOL_CALLBACK(hotlist)
         ptr_hotlist = weechat_hdata_move (relay_hdata_hotlist, ptr_hotlist, 1);
     }
 
-    relay_api_msg_send_json (client, RELAY_HTTP_200_OK, "hotlist", json);
+    relay_api_msg_send_json (client, RELAY_HTTP_200_OK, NULL, "hotlist", json);
     cJSON_Delete (json);
     return WEECHAT_RC_OK;
 }
@@ -679,7 +699,7 @@ RELAY_API_PROTOCOL_CALLBACK(input)
     weechat_hashtable_free (options);
     cJSON_Delete (json_body);
 
-    relay_api_msg_send_json (client, RELAY_HTTP_204_NO_CONTENT, NULL, NULL);
+    relay_api_msg_send_json (client, RELAY_HTTP_204_NO_CONTENT, NULL, NULL, NULL);
 
     return WEECHAT_RC_OK;
 }
@@ -715,13 +735,13 @@ RELAY_API_PROTOCOL_CALLBACK(ping)
         }
         cJSON_AddItemToObject (json, "data",
                                cJSON_CreateString ((ptr_data) ? ptr_data : ""));
-        relay_api_msg_send_json (client, RELAY_HTTP_200_OK, "ping", json);
+        relay_api_msg_send_json (client, RELAY_HTTP_200_OK, NULL, "ping", json);
         cJSON_Delete (json);
         cJSON_Delete (json_body);
     }
     else
     {
-        relay_api_msg_send_json (client, RELAY_HTTP_204_NO_CONTENT, NULL, NULL);
+        relay_api_msg_send_json (client, RELAY_HTTP_204_NO_CONTENT, NULL, NULL, NULL);
     }
 
     return WEECHAT_RC_OK;
@@ -772,7 +792,7 @@ RELAY_API_PROTOCOL_CALLBACK(sync)
     else
         relay_api_unhook_signals (client);
 
-    relay_api_msg_send_json (client, RELAY_HTTP_204_NO_CONTENT, NULL, NULL);
+    relay_api_msg_send_json (client, RELAY_HTTP_204_NO_CONTENT, NULL, NULL, NULL);
 
     return WEECHAT_RC_OK;
 }
@@ -850,7 +870,7 @@ relay_api_protocol_recv_json (struct t_relay_client *client, const char *json)
     goto end;
 
 error:
-    relay_api_msg_send_json (client, RELAY_HTTP_400_BAD_REQUEST, NULL, NULL);
+    relay_api_msg_send_json (client, RELAY_HTTP_400_BAD_REQUEST, NULL, NULL, NULL);
 
 end:
     if (json_obj)
@@ -867,14 +887,15 @@ relay_api_protocol_recv_http (struct t_relay_client *client)
     int i, return_code, num_args;
     struct t_relay_api_protocol_cb protocol_cb[] = {
         /* method, resource, auth, min args, max args, callback */
-        { "POST", "handshake", 0, 0, 0, &relay_api_protocol_cb_handshake },
-        { "GET",  "version",   1, 0, 0, &relay_api_protocol_cb_version   },
-        { "GET",  "buffers",   1, 0, 3, &relay_api_protocol_cb_buffers   },
-        { "GET",  "hotlist",   1, 0, 3, &relay_api_protocol_cb_hotlist   },
-        { "POST", "input",     1, 0, 0, &relay_api_protocol_cb_input     },
-        { "POST", "ping",      1, 0, 0, &relay_api_protocol_cb_ping      },
-        { "POST", "sync",      1, 0, 0, &relay_api_protocol_cb_sync      },
-        { NULL,   NULL,        0, 0, 0, NULL                             },
+        { "OPTIONS", "*",         0, 0, -1, &relay_api_protocol_cb_options   },
+        { "POST",    "handshake", 0, 0,  0, &relay_api_protocol_cb_handshake },
+        { "GET",     "version",   1, 0,  0, &relay_api_protocol_cb_version   },
+        { "GET",     "buffers",   1, 0,  3, &relay_api_protocol_cb_buffers   },
+        { "GET",     "hotlist",   1, 0,  3, &relay_api_protocol_cb_hotlist   },
+        { "POST",    "input",     1, 0,  0, &relay_api_protocol_cb_input     },
+        { "POST",    "ping",      1, 0,  0, &relay_api_protocol_cb_ping      },
+        { "POST",    "sync",      1, 0,  0, &relay_api_protocol_cb_sync      },
+        { NULL,      NULL,        0, 0,  0, NULL                             },
     };
 
     if (!client->http_req || RELAY_STATUS_HAS_ENDED(client->status))
@@ -907,8 +928,11 @@ relay_api_protocol_recv_http (struct t_relay_client *client)
 
     for (i = 0; protocol_cb[i].resource; i++)
     {
-        if ((strcmp (protocol_cb[i].method, client->http_req->method) != 0)
-            || (strcmp (protocol_cb[i].resource, client->http_req->path_items[1]) != 0))
+        if (strcmp (protocol_cb[i].method, client->http_req->method) != 0)
+            continue;
+
+        if ((strcmp (protocol_cb[i].resource, "*") != 0)
+            && (strcmp (protocol_cb[i].resource, client->http_req->path_items[1]) != 0))
             continue;
 
         if (protocol_cb[i].auth_required
@@ -940,7 +964,8 @@ relay_api_protocol_recv_http (struct t_relay_client *client)
             goto error404;
         }
 
-        if (num_args > protocol_cb[i].max_args)
+        if ((protocol_cb[i].max_args >= 0)
+            && (num_args > protocol_cb[i].max_args))
         {
             if (weechat_relay_plugin->debug >= 1)
             {
@@ -971,11 +996,11 @@ relay_api_protocol_recv_http (struct t_relay_client *client)
     goto error404;
 
 error400:
-    relay_api_msg_send_json (client, RELAY_HTTP_400_BAD_REQUEST, NULL, NULL);
+    relay_api_msg_send_json (client, RELAY_HTTP_400_BAD_REQUEST, NULL, NULL, NULL);
     goto error;
 
 error404:
-    relay_api_msg_send_json (client, RELAY_HTTP_404_NOT_FOUND, NULL, NULL);
+    relay_api_msg_send_json (client, RELAY_HTTP_404_NOT_FOUND, NULL, NULL, NULL);
     goto error;
 
 error:
