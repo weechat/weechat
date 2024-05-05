@@ -616,6 +616,30 @@ RELAY_REMOTE_EVENT_CALLBACK(buffer_closed)
 }
 
 /*
+ * Callback for an input event.
+ */
+
+RELAY_REMOTE_EVENT_CALLBACK(input)
+{
+    cJSON *json_obj;
+    const char *input;
+    char str_pos[64];
+    int input_position;
+
+    if (!event->buffer || !event->json)
+        return WEECHAT_RC_OK;
+
+    JSON_GET_STR(event->json, input);
+    JSON_GET_NUM(event->json, input_position, 0);
+
+    weechat_buffer_set (event->buffer, "input", input);
+    snprintf (str_pos, sizeof (str_pos), "%d", input_position);
+    weechat_buffer_set (event->buffer, "input_pos", str_pos);
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Callback for response to GET /api/version.
  */
 
@@ -694,6 +718,7 @@ relay_remote_event_recv (struct t_relay_remote *remote, const char *data)
         { "buffer_cleared", &relay_remote_event_cb_buffer_cleared },
         { "buffer_closed", &relay_remote_event_cb_buffer_closed },
         { "buffer_*", &relay_remote_event_cb_buffer },
+        { "input_*", &relay_remote_event_cb_input },
         { "nicklist_group_*", &relay_remote_event_cb_nick_group },
         { "nicklist_nick_*", &relay_remote_event_cb_nick },
         { NULL, NULL },
