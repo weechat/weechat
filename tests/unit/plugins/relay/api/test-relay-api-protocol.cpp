@@ -121,7 +121,9 @@ TEST_GROUP(RelayApiProtocolWithClient)
                                   http_request, strlen (http_request));
     }
 
-    void test_client_recv_http (const char *method_path, const char *body)
+    void test_client_recv_http (const char *method_path,
+                                const char *headers,
+                                const char *body)
     {
         char http_request[4096];
 
@@ -129,12 +131,15 @@ TEST_GROUP(RelayApiProtocolWithClient)
         {
             snprintf (http_request, sizeof (http_request),
                       "%s HTTP/1.1\r\n"
+                      "%s%s"
                       "Authorization: Basic cGxhaW46c2VjcmV0\r\n"
                       "Content-Length: %d\r\n"
                       "Content-Type: application/x-www-form-urlencoded\r\n"
                       "\r\n"
                       "%s",
                       method_path,
+                      (headers && headers[0]) ? headers : "",
+                      (headers && headers[0]) ? "\r\n" : "",
                       (int)strlen (body),
                       body);
         }
@@ -142,9 +147,12 @@ TEST_GROUP(RelayApiProtocolWithClient)
         {
             snprintf (http_request, sizeof (http_request),
                       "%s HTTP/1.1\r\n"
+                      "%s%s"
                       "Authorization: Basic cGxhaW46c2VjcmV0\r\n"
                       "\r\n",
-                      method_path);
+                      method_path,
+                      (headers && headers[0]) ? headers : "",
+                      (headers && headers[0]) ? "\r\n" : "");
         }
         test_client_recv_http_raw (http_request);
     }
@@ -262,13 +270,33 @@ TEST(RelayApiProtocol, SignalUpgradeCb)
 
 /*
  * Tests functions:
+ *   relay_api_protocol_cb_options
+ */
+
+TEST(RelayApiProtocolWithClient, CbOptions)
+{
+    test_client_recv_http ("OPTIONS /api/buffers", NULL,
+                           "{\"password_hash_algo\": [\"invalid\"]}");
+    STRCMP_EQUAL(
+        "HTTP/1.1 204 No Content\r\n"
+        "Access-Control-Allow-Methods: GET, POST, PUT, DELETE\r\n"
+        "Access-Control-Allow-Headers: origin, content-type, accept, authorization\r\n"
+        "Access-Control-Allow-Origin: *\r\n"
+        "Content-Type: application/json; charset=utf-8\r\n"
+        "Content-Length: 0\r\n"
+        "\r\n",
+        data_sent);
+}
+
+/*
+ * Tests functions:
  *   relay_api_protocol_cb_handshake
  */
 
 TEST(RelayApiProtocolWithClient, CbHandshake)
 {
     /* no body */
-    test_client_recv_http ("POST /api/handshake", NULL);
+    test_client_recv_http ("POST /api/handshake", NULL, NULL);
     STRCMP_EQUAL("HTTP/1.1 200 OK\r\n"
                  "Access-Control-Allow-Origin: *\r\n"
                  "Content-Type: application/json; charset=utf-8\r\n"
@@ -280,7 +308,7 @@ TEST(RelayApiProtocolWithClient, CbHandshake)
                  data_sent);
 
     /* empty body */
-    test_client_recv_http ("POST /api/handshake", "{}");
+    test_client_recv_http ("POST /api/handshake", NULL, "{}");
     STRCMP_EQUAL("HTTP/1.1 200 OK\r\n"
                  "Access-Control-Allow-Origin: *\r\n"
                  "Content-Type: application/json; charset=utf-8\r\n"
@@ -292,7 +320,7 @@ TEST(RelayApiProtocolWithClient, CbHandshake)
                  data_sent);
 
     /* unknown password hash algorithm */
-    test_client_recv_http ("POST /api/handshake",
+    test_client_recv_http ("POST /api/handshake", NULL,
                            "{\"password_hash_algo\": [\"invalid\"]}");
     STRCMP_EQUAL("HTTP/1.1 200 OK\r\n"
                  "Access-Control-Allow-Origin: *\r\n"
@@ -307,6 +335,7 @@ TEST(RelayApiProtocolWithClient, CbHandshake)
     /* two supported hash algorithms */
     test_client_recv_http (
         "POST /api/handshake",
+        NULL,
         "{\"password_hash_algo\": [\"sha256\", \"pbkdf2+sha512\"]}");
     STRCMP_EQUAL("HTTP/1.1 200 OK\r\n"
                  "Access-Control-Allow-Origin: *\r\n"
@@ -328,7 +357,7 @@ TEST(RelayApiProtocolWithClient, CbVersion)
 {
     cJSON *json, *json_obj;
 
-    test_client_recv_http ("GET /api/version", NULL);
+    test_client_recv_http ("GET /api/version", NULL, NULL);
     WEE_CHECK_HTTP_CODE(200, "OK");
     json = json_body_sent;
     WEE_CHECK_OBJ_STR(version_get_version (), json, "weechat_version");
@@ -350,7 +379,7 @@ TEST(RelayApiProtocolWithClient, CbBuffers)
     char str_http[256];
 
     /* error: invalid buffer name */
-    test_client_recv_http ("GET /api/buffers/invalid", NULL);
+    test_client_recv_http ("GET /api/buffers/invalid", NULL, NULL);
     STRCMP_EQUAL("HTTP/1.1 404 Not Found\r\n"
                  "Access-Control-Allow-Origin: *\r\n"
                  "Content-Type: application/json; charset=utf-8\r\n"
@@ -360,7 +389,7 @@ TEST(RelayApiProtocolWithClient, CbBuffers)
                  data_sent);
 
     /* error: invalid buffer id */
-    test_client_recv_http ("GET /api/buffers/123", NULL);
+    test_client_recv_http ("GET /api/buffers/123", NULL, NULL);
     STRCMP_EQUAL("HTTP/1.1 404 Not Found\r\n"
                  "Access-Control-Allow-Origin: *\r\n"
                  "Content-Type: application/json; charset=utf-8\r\n"
@@ -370,7 +399,7 @@ TEST(RelayApiProtocolWithClient, CbBuffers)
                  data_sent);
 
     /* error: invalid sub-resource */
-    test_client_recv_http ("GET /api/buffers/core.weechat/invalid", NULL);
+    test_client_recv_http ("GET /api/buffers/core.weechat/invalid", NULL, NULL);
     STRCMP_EQUAL("HTTP/1.1 404 Not Found\r\n"
                  "Access-Control-Allow-Origin: *\r\n"
                  "Content-Type: application/json; charset=utf-8\r\n"
@@ -380,7 +409,8 @@ TEST(RelayApiProtocolWithClient, CbBuffers)
                  data_sent);
 
     /* error: too many parameters in path */
-    test_client_recv_http ("GET /api/buffers/core.weechat/too/many/parameters", NULL);
+    test_client_recv_http ("GET /api/buffers/core.weechat/too/many/parameters",
+                           NULL, NULL);
     STRCMP_EQUAL("HTTP/1.1 404 Not Found\r\n"
                  "Access-Control-Allow-Origin: *\r\n"
                  "Content-Type: application/json; charset=utf-8\r\n"
@@ -389,7 +419,7 @@ TEST(RelayApiProtocolWithClient, CbBuffers)
                  data_sent);
 
     /* get all buffers */
-    test_client_recv_http ("GET /api/buffers", NULL);
+    test_client_recv_http ("GET /api/buffers", NULL, NULL);
     WEE_CHECK_HTTP_CODE(200, "OK");
     CHECK(json_body_sent);
     CHECK(cJSON_IsArray (json_body_sent));
@@ -409,7 +439,7 @@ TEST(RelayApiProtocolWithClient, CbBuffers)
     WEE_CHECK_OBJ_STR("weechat", json_var, "name");
 
     /* get one buffer by name */
-    test_client_recv_http ("GET /api/buffers/core.weechat", NULL);
+    test_client_recv_http ("GET /api/buffers/core.weechat", NULL, NULL);
     WEE_CHECK_HTTP_CODE(200, "OK");
     CHECK(json_body_sent);
     CHECK(cJSON_IsObject (json_body_sent));
@@ -429,7 +459,7 @@ TEST(RelayApiProtocolWithClient, CbBuffers)
     /* get one buffer by id */
     snprintf (str_http, sizeof (str_http),
               "GET /api/buffers/%lld", gui_buffers->id);
-    test_client_recv_http (str_http, NULL);
+    test_client_recv_http (str_http, NULL, NULL);
     WEE_CHECK_HTTP_CODE(200, "OK");
     CHECK(json_body_sent);
     CHECK(cJSON_IsObject (json_body_sent));
@@ -449,7 +479,7 @@ TEST(RelayApiProtocolWithClient, CbBuffers)
     /* get the 2 last lines of core buffer */
     gui_chat_printf (NULL, "test line 1");
     gui_chat_printf (NULL, "test line 2");
-    test_client_recv_http ("GET /api/buffers/core.weechat/lines?lines=-2", NULL);
+    test_client_recv_http ("GET /api/buffers/core.weechat/lines?lines=-2", NULL, NULL);
     WEE_CHECK_HTTP_CODE(200, "OK");
     CHECK(json_body_sent);
     CHECK(cJSON_IsArray (json_body_sent));
@@ -475,7 +505,7 @@ TEST(RelayApiProtocolWithClient, CbBuffers)
     WEE_CHECK_OBJ_STR("test line 2", json, "message");
 
     /* get nicks */
-    test_client_recv_http ("GET /api/buffers/core.weechat/nicks", NULL);
+    test_client_recv_http ("GET /api/buffers/core.weechat/nicks", NULL, NULL);
     WEE_CHECK_HTTP_CODE(200, "OK");
     CHECK(json_body_sent);
     CHECK(cJSON_IsObject (json_body_sent));
@@ -498,7 +528,7 @@ TEST(RelayApiProtocolWithClient, CbHotlist)
     cJSON *json, *json_obj, *json_count;
 
     /* get hotlist (empty) */
-    test_client_recv_http ("GET /api/hotlist", NULL);
+    test_client_recv_http ("GET /api/hotlist", NULL, NULL);
     WEE_CHECK_HTTP_CODE(200, "OK");
     CHECK(json_body_sent);
     CHECK(cJSON_IsArray (json_body_sent));
@@ -516,7 +546,7 @@ TEST(RelayApiProtocolWithClient, CbHotlist)
     gui_hotlist_add (gui_buffers, GUI_HOTLIST_HIGHLIGHT, NULL, 0);
 
     /* get hotlist (one buffer) */
-    test_client_recv_http ("GET /api/hotlist", NULL);
+    test_client_recv_http ("GET /api/hotlist", NULL, NULL);
     WEE_CHECK_HTTP_CODE(200, "OK");
     CHECK(json_body_sent);
     CHECK(cJSON_IsArray (json_body_sent));
@@ -561,7 +591,7 @@ TEST(RelayApiProtocolWithClient, CbInput)
     int old_delay;
 
     /* error: no body */
-    test_client_recv_http ("POST /api/input", NULL);
+    test_client_recv_http ("POST /api/input", NULL, NULL);
     STRCMP_EQUAL("HTTP/1.1 400 Bad Request\r\n"
                  "Access-Control-Allow-Origin: *\r\n"
                  "Content-Type: application/json; charset=utf-8\r\n"
@@ -571,6 +601,7 @@ TEST(RelayApiProtocolWithClient, CbInput)
 
     /* error: invalid buffer name */
     test_client_recv_http ("POST /api/input",
+                           NULL,
                            "{\"buffer_name\": \"invalid\", "
                            "\"command\": \"/print test\"}");
     STRCMP_EQUAL("HTTP/1.1 404 Not Found\r\n"
@@ -586,6 +617,7 @@ TEST(RelayApiProtocolWithClient, CbInput)
     old_delay = relay_api_protocol_command_delay;
     relay_api_protocol_command_delay = 0;
     test_client_recv_http ("POST /api/input",
+                           NULL,
                            "{\"command\": \"/print test from relay 1\"}");
     relay_api_protocol_command_delay = old_delay;
     record_stop ();
@@ -597,6 +629,7 @@ TEST(RelayApiProtocolWithClient, CbInput)
     old_delay = relay_api_protocol_command_delay;
     relay_api_protocol_command_delay = 0;
     test_client_recv_http ("POST /api/input",
+                           NULL,
                            "{\"buffer_name\": \"core.weechat\", "
                            "\"command\": \"/print test from relay 2\"}");
     relay_api_protocol_command_delay = old_delay;
@@ -612,7 +645,7 @@ TEST(RelayApiProtocolWithClient, CbInput)
               "{\"buffer_id\": %lld, "
               "\"command\": \"/print test from relay 3\"}",
               gui_buffers->id);
-    test_client_recv_http ("POST /api/input", str_body);
+    test_client_recv_http ("POST /api/input", NULL, str_body);
     relay_api_protocol_command_delay = old_delay;
     record_stop ();
     WEE_CHECK_HTTP_CODE(204, "No Content");
@@ -629,7 +662,7 @@ TEST(RelayApiProtocolWithClient, CbPing)
     cJSON *json, *json_obj;
 
     /* ping without body */
-    test_client_recv_http ("POST /api/ping", NULL);
+    test_client_recv_http ("POST /api/ping", NULL, NULL);
     STRCMP_EQUAL("HTTP/1.1 204 No Content\r\n"
                  "Access-Control-Allow-Origin: *\r\n"
                  "Content-Type: application/json; charset=utf-8\r\n"
@@ -638,7 +671,7 @@ TEST(RelayApiProtocolWithClient, CbPing)
                  data_sent);
 
     /* ping with a body */
-    test_client_recv_http ("POST /api/ping", "{\"data\": \"abcdef\"}");
+    test_client_recv_http ("POST /api/ping", NULL, "{\"data\": \"abcdef\"}");
     WEE_CHECK_HTTP_CODE(200, "OK");
     json = json_body_sent;
     WEE_CHECK_OBJ_STR("abcdef", json, "data");
@@ -651,7 +684,7 @@ TEST(RelayApiProtocolWithClient, CbPing)
 
 TEST(RelayApiProtocolWithClient, CbSync)
 {
-    test_client_recv_http ("POST /api/sync", NULL);
+    test_client_recv_http ("POST /api/sync", NULL, NULL);
     STRCMP_EQUAL("HTTP/1.1 403 Forbidden\r\n"
                  "Access-Control-Allow-Origin: *\r\n"
                  "Content-Type: application/json; charset=utf-8\r\n"
@@ -785,7 +818,7 @@ TEST(RelayApiProtocolWithClient, RecvJson)
 TEST(RelayApiProtocolWithClient, RecvHttp404)
 {
     /* resource not found: error 404 */
-    test_client_recv_http ("GET / HTTP/1.1", NULL);
+    test_client_recv_http ("GET / HTTP/1.1", NULL, NULL);
     STRCMP_EQUAL("HTTP/1.1 404 Not Found\r\n"
                  "Access-Control-Allow-Origin: *\r\n"
                  "Content-Type: application/json; charset=utf-8\r\n"
@@ -794,7 +827,7 @@ TEST(RelayApiProtocolWithClient, RecvHttp404)
                  data_sent);
 
     /* resource not found: error 404 */
-    test_client_recv_http ("GET /unknown HTTP/1.1", NULL);
+    test_client_recv_http ("GET /unknown HTTP/1.1", NULL, NULL);
     STRCMP_EQUAL("HTTP/1.1 404 Not Found\r\n"
                  "Access-Control-Allow-Origin: *\r\n"
                  "Content-Type: application/json; charset=utf-8\r\n"
@@ -803,7 +836,7 @@ TEST(RelayApiProtocolWithClient, RecvHttp404)
                  data_sent);
 
     /* resource not found: error 404 */
-    test_client_recv_http ("GET /unknown/abc HTTP/1.1", NULL);
+    test_client_recv_http ("GET /unknown/abc HTTP/1.1", NULL, NULL);
     STRCMP_EQUAL("HTTP/1.1 404 Not Found\r\n"
                  "Access-Control-Allow-Origin: *\r\n"
                  "Content-Type: application/json; charset=utf-8\r\n"
@@ -812,7 +845,7 @@ TEST(RelayApiProtocolWithClient, RecvHttp404)
                  data_sent);
 
     /* resource not found: error 404 */
-    test_client_recv_http ("GET /api HTTP/1.1", NULL);
+    test_client_recv_http ("GET /api HTTP/1.1", NULL, NULL);
     STRCMP_EQUAL("HTTP/1.1 404 Not Found\r\n"
                  "Access-Control-Allow-Origin: *\r\n"
                  "Content-Type: application/json; charset=utf-8\r\n"
@@ -821,7 +854,7 @@ TEST(RelayApiProtocolWithClient, RecvHttp404)
                  data_sent);
 
     /* resource not found: error 404 */
-    test_client_recv_http ("GET /api/unknown HTTP/1.1", NULL);
+    test_client_recv_http ("GET /api/unknown HTTP/1.1", NULL, NULL);
     STRCMP_EQUAL("HTTP/1.1 404 Not Found\r\n"
                  "Access-Control-Allow-Origin: *\r\n"
                  "Content-Type: application/json; charset=utf-8\r\n"
