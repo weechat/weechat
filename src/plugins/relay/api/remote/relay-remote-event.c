@@ -481,6 +481,7 @@ RELAY_REMOTE_EVENT_CALLBACK(buffer)
     char *full_name, str_number[64], *property;
     long long id;
     int number, nicklist, nicklist_case_sensitive, nicklist_display_groups;
+    int apply_props;
 
     if (!event->json)
         return WEECHAT_RC_OK;
@@ -525,26 +526,33 @@ RELAY_REMOTE_EVENT_CALLBACK(buffer)
     weechat_hashtable_set (buffer_props, "input_get_any_user_data", "1");
 
     /* if buffer exists, set properties, otherwise create buffer */
+    apply_props = 1;
     ptr_buffer = event->buffer;
-    if (ptr_buffer)
-    {
-        weechat_hashtable_map (buffer_props,
-                               &relay_remote_event_apply_props, ptr_buffer);
-    }
-    else
+    if (!ptr_buffer)
     {
         if (weechat_asprintf (&full_name, "remote.%s.%s", event->remote->name, name) >= 0)
         {
-            ptr_buffer = weechat_buffer_new_props (
-                full_name, buffer_props,
-                &relay_remote_event_buffer_input_cb, event->remote, NULL,
-                NULL, NULL, NULL);
+            ptr_buffer = weechat_buffer_search ("relay", full_name);
+            if (!ptr_buffer)
+            {
+                ptr_buffer = weechat_buffer_new_props (
+                    full_name, buffer_props,
+                    &relay_remote_event_buffer_input_cb, event->remote, NULL,
+                    NULL, NULL, NULL);
+                apply_props = 0;
+            }
             free (full_name);
         }
     }
 
     if (!ptr_buffer)
         goto end;
+
+    if (apply_props)
+    {
+        weechat_hashtable_map (buffer_props,
+                               &relay_remote_event_apply_props, ptr_buffer);
+    }
 
     /* add keys */
     json_keys = cJSON_GetObjectItem (event->json, "keys");
