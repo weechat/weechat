@@ -432,6 +432,9 @@ TEST(RelayApiProtocolWithClient, CbBuffers)
     WEE_CHECK_OBJ_NUM(1, json, "number");
     WEE_CHECK_OBJ_STR("formatted", json, "type");
     WEE_CHECK_OBJ_STRN("WeeChat", 7, json, "title");
+    WEE_CHECK_OBJ_STR("", json, "input");
+    WEE_CHECK_OBJ_NUM(0, json, "input_position");
+    WEE_CHECK_OBJ_BOOL(0, json, "input_multiline");
     json_var = cJSON_GetObjectItem (json, "local_variables");
     CHECK(json_var);
     CHECK(cJSON_IsObject (json_var));
@@ -439,6 +442,9 @@ TEST(RelayApiProtocolWithClient, CbBuffers)
     WEE_CHECK_OBJ_STR("weechat", json_var, "name");
 
     /* get one buffer by name */
+    gui_buffer_set (gui_buffers, "input", "test");
+    gui_buffer_set (gui_buffers, "input_pos", "4");
+    gui_buffer_set (gui_buffers, "input_multiline", "1");
     test_client_recv_http ("GET /api/buffers/core.weechat", NULL, NULL);
     WEE_CHECK_HTTP_CODE(200, "OK");
     CHECK(json_body_sent);
@@ -450,11 +456,16 @@ TEST(RelayApiProtocolWithClient, CbBuffers)
     WEE_CHECK_OBJ_NUM(1, json, "number");
     WEE_CHECK_OBJ_STR("formatted", json, "type");
     WEE_CHECK_OBJ_STRN("WeeChat", 7, json, "title");
+    WEE_CHECK_OBJ_STR("test", json, "input");
+    WEE_CHECK_OBJ_NUM(4, json, "input_position");
+    WEE_CHECK_OBJ_BOOL(1, json, "input_multiline");
     json_var = cJSON_GetObjectItem (json, "local_variables");
     CHECK(json_var);
     CHECK(cJSON_IsObject (json_var));
     WEE_CHECK_OBJ_STR("core", json_var, "plugin");
     WEE_CHECK_OBJ_STR("weechat", json_var, "name");
+    gui_buffer_set (gui_buffers, "input", "");
+    gui_buffer_set (gui_buffers, "input_multiline", "0");
 
     /* get one buffer by id */
     snprintf (str_http, sizeof (str_http),
@@ -470,6 +481,9 @@ TEST(RelayApiProtocolWithClient, CbBuffers)
     WEE_CHECK_OBJ_NUM(1, json, "number");
     WEE_CHECK_OBJ_STR("formatted", json, "type");
     WEE_CHECK_OBJ_STRN("WeeChat", 7, json, "title");
+    WEE_CHECK_OBJ_STR("", json, "input");
+    WEE_CHECK_OBJ_NUM(0, json, "input_position");
+    WEE_CHECK_OBJ_BOOL(0, json, "input_multiline");
     json_var = cJSON_GetObjectItem (json, "local_variables");
     CHECK(json_var);
     CHECK(cJSON_IsObject (json_var));
