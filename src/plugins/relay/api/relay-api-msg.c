@@ -560,7 +560,7 @@ relay_api_msg_lines_to_json (struct t_gui_buffer *buffer,
         ptr_line = weechat_hdata_pointer (relay_hdata_lines, ptr_lines, "last_line");
         if (ptr_line)
         {
-            for (i = 1; i < lines * -1; i++)
+            for (i = -1; i > lines; i--)
             {
                 ptr_line = weechat_hdata_move (relay_hdata_line, ptr_line, -1);
                 if (!ptr_line)
