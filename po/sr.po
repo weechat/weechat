@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2021 Иван Пешић <ivan.pesic@gmail.com>
+# Copyright (C) 2024 Иван Пешић <ivan.pesic@gmail.com>
 #
 # This file is part of WeeChat, the extensible chat client.
 #
@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2024-05-01 10:08+0200\n"
-"PO-Revision-Date: 2024-04-07 14:50+0200\n"
+"PO-Revision-Date: 2024-05-07 14:00+0400\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: sr\n"
@@ -90,32 +90,6 @@ msgstr ""
 msgid "Usage: %s [option...] [plugin:option...]\n"
 msgstr "Употреба: %s [опција...] [додатак:опција...]\n"
 
-#, fuzzy
-#| msgid ""
-#| "  -a, --no-connect         disable auto-connect to servers at startup\n"
-#| "  -c, --colors             display default colors in terminal and exit\n"
-#| "  -d, --dir <path>         force a single WeeChat home directory\n"
-#| "                           or 4 different directories separated by colons "
-#| "(in this order: config, data, cache, runtime)\n"
-#| "                           (environment variable WEECHAT_HOME is read if "
-#| "this option is not given)\n"
-#| "  -t, --temp-dir           create a temporary WeeChat home directory and "
-#| "delete it on exit\n"
-#| "                           (incompatible with option \"-d\")\n"
-#| "  -h, --help               display this help and exit\n"
-#| "  -l, --license            display WeeChat license and exit\n"
-#| "  -p, --no-plugin          don't load any plugin at startup\n"
-#| "  -P, --plugins <plugins>  load only these plugins at startup\n"
-#| "                           (see /help weechat.plugin.autoload)\n"
-#| "  -r, --run-command <cmd>  run command(s) after startup;\n"
-#| "                           many commands can be separated by semicolons "
-#| "and are evaluated,\n"
-#| "                           this option can be given multiple times\n"
-#| "  -s, --no-script          don't load any script at startup\n"
-#| "      --upgrade            upgrade WeeChat using session files (see /help "
-#| "upgrade in WeeChat)\n"
-#| "  -v, --version            display WeeChat version and exit\n"
-#| "  plugin:option            option for plugin (see man weechat)\n"
 msgid ""
 "  -a, --no-connect         disable auto-connect to servers at startup\n"
 "  -c, --colors             display default colors in terminal and exit\n"
@@ -147,8 +121,8 @@ msgstr ""
 "  -c, --colors             приказује подразумеване боје у терминалу и "
 "прекида извршавање\n"
 "  -d, --dir <путања>       поставља WeeChat почетни директоријум\n"
-"                           или 4 различита директоријума раздвојена тачка "
-"зарезима (у следећем редоследу: конфиг, подаци, кеш, дир за време "
+"                           или 5 различита директоријума раздвојена тачка "
+"зарезима (у следећем редоследу: конфиг, подаци, стање, кеш, дир за време "
 "извршавања)\n"
 "                           (ако се ова опција не зада, чита се WEECHAT_HOME "
 "променљива окружења)\n"
@@ -161,8 +135,8 @@ msgstr ""
 "  -P, --plugins <додаци>   приликом покретања се учитавају само ови додаци\n"
 "                           (погледајте /help weechat.plugin.autoload)\n"
 "  -r, --run-command <ком>  покреће команд(у/е) након покретања;\n"
-"                           можете да раздвојите више команди са тачка запета "
-"и оне се израчунавају,\n"
+"                           можете да раздвојите више команди са тачка "
+"запета и оне се израчунавају,\n"
 "                           ова опција може да се зада више пута\n"
 "  -s, --no-script          приликом учитавања се не учитавају никакве "
 "скрипте\n"
@@ -1021,10 +995,8 @@ msgstr "%sНије успело постављање опције „%s”"
 msgid "%sOption \"%s\" not found"
 msgstr "%sНије пронађена опција „%s”"
 
-#, fuzzy
-#| msgid "Option changed: "
 msgid "Option unchanged: "
-msgstr "Измењена опција: "
+msgstr "Опција није измењена: "
 
 msgid "Option changed: "
 msgstr "Измењена опција: "
@@ -1032,10 +1004,9 @@ msgstr "Измењена опција: "
 msgid "Option created: "
 msgstr "Креирана опција: "
 
-#, fuzzy, c-format
-#| msgid "%s: warning: dictionary \"%s\" is not available on your system"
+#, c-format
 msgid "%sFunction \"%s\" is not available on this system"
-msgstr "%s: упозорење: на вашем систему није доступан речник „%s”"
+msgstr "%sФункција „%s” није доступна на овом систему"
 
 #, c-format
 msgid "%sFailed to unset option \"%s\""
@@ -1889,18 +1860,14 @@ msgstr "  - ${weechat_config_dir}: WeeChat конфигурациони дире
 msgid "  - ${weechat_data_dir}: WeeChat data directory"
 msgstr "  - ${weechat_data_dir}: WeeChat директоријум са подацима"
 
-#, fuzzy
-#| msgid "  - ${weechat_data_dir}: WeeChat data directory"
 msgid "  - ${weechat_state_dir}: WeeChat state directory"
-msgstr "  - ${weechat_data_dir}: WeeChat директоријум са подацима"
+msgstr "  - ${weechat_state_dir}: WeeChat директоријум стања"
 
 msgid "  - ${weechat_cache_dir}: WeeChat cache directory"
 msgstr "  - ${weechat_cache_dir}: WeeChat кеш директоријум"
 
-#, fuzzy
-#| msgid "  - ${weechat_runtmie_dir}: WeeChat runtime directory"
 msgid "  - ${weechat_runtime_dir}: WeeChat runtime directory"
-msgstr "  - ${weechat_runtmie_dir}: WeeChat директоријум за време извршавања"
+msgstr "  - ${weechat_runtime_dir}: WeeChat директоријум за време извршавања"
 
 msgid "  - ${eval:string}: the evaluated string"
 msgstr "  - ${eval:стринг}: израчунати стринг"
@@ -3696,11 +3663,10 @@ msgstr ""
 msgid "system actions"
 msgstr "системске акције"
 
-#, fuzzy
-#| msgid "get rlimit|rusage || suspend || waitpid <number>"
 msgid ""
 "get rlimit|rusage || malloc_trim [<size>] || suspend || waitpid <number>"
-msgstr "get rlimit|rusage || suspend || waitpid <број>"
+msgstr ""
+"get rlimit|rusage || malloc_trim [<величина>] || suspend || waitpid <број>"
 
 msgid "raw[get]: display system info"
 msgstr "raw[get]: приказује информације о систему"
@@ -3720,12 +3686,17 @@ msgid ""
 "raw[malloc_trim]: call function malloc_trim to release free memory from the "
 "heap"
 msgstr ""
+"raw[malloc_trim]: позива функцију malloc_trim да се са хипа ослободи "
+"слободна меморија"
 
 msgid ""
 "size: amount of free space to leave untrimmed at the top of the heap "
 "(default is 0: only the minimum amount of memory is maintained at the top of "
 "the heap)"
 msgstr ""
+"величина: количина слободног простора која се оставља на врху хипа "
+"(подразумевано је 0: на врху хипа се оставља само минимална количина "
+"меморије)"
 
 msgid ""
 "raw[suspend]: suspend WeeChat and go back to the shell, by sending signal "
@@ -4403,10 +4374,9 @@ msgstr "Конвертовани тастер старе верзије: „%s�
 msgid "Command converted for key \"%s\": \"%s\" => \"%s\""
 msgstr "Команда конвертована за тастер: „%s”: „%s” => „%s”"
 
-#, fuzzy, c-format
-#| msgid "Legacy key converted: \"%s\" => \"%s\""
+#, c-format
 msgid "Value of option \"%s.%s.%s\" has been converted: \"%s\" => \"%s\""
-msgstr "Конвертовани тастер старе верзије: „%s” => „%s”"
+msgstr "Вредност опције „%s.%s.%s” је конвертована: „%s” => „%s”"
 
 msgid "debug level for plugin (\"core\" for WeeChat core)"
 msgstr "дибаг ниво за додатак („core” за WeeChat језгро)"
@@ -4598,15 +4568,6 @@ msgstr ""
 "подразумевана претрага текста у баферу: у поруци, префиксу, префиксу и поруци"
 
 #. TRANSLATORS: string "${color:xxx}" must NOT be translated
-#, fuzzy
-#| msgid ""
-#| "time format for each line displayed in buffers (see man strftime for date/"
-#| "time specifiers, extra specifiers are supported, see function "
-#| "util_strftimeval in Plugin API reference) (note: content is evaluated, so "
-#| "you can use colors with format \"${color:xxx}\", see /help eval); for "
-#| "example time using grayscale: "
-#| "\"${color:252}%H${color:243}%M${color:237}%S\", the same with "
-#| "milliseconds: \"${color:252}%H${color:243}%M${color:237}%S.%.3\""
 msgid ""
 "time format for each line displayed in buffers (see man strftime for date/"
 "time specifiers, extra specifiers are supported, see function "
@@ -4623,12 +4584,19 @@ msgid ""
 "${color:252}%H${color:243}%M${color:237}%S.%.3}"
 msgstr ""
 "формат времена за сваку линију која се приказује у баферима (погледајте man "
-"strftime за спецификаторе датума/времена, подржани су додатни спецификатори, "
-"погледајте функцију util_strftimeval у референтном приручнику API додатака) "
-"(напомена: садржај се израчунава, тако да са форматом можете да користите и "
-"боје „${color:xxx}”, погледајте /help eval); на пример, време употребом "
-"скале сивих: „${color:252}%H${color:243}%M${color:237}%S”, исто са "
-"милисекундама: „${color:252}%H${color:243}%M${color:237}%S.%.3”"
+"strftime за спецификаторе датума/времена, подржани су додатни "
+"спецификатори, погледајте функцију util_strftimeval у референтном "
+"приручнику API додатака) (напомена: садржај се израчунава, тако да са "
+"форматом можете да користите и боје „${color:xxx}”, погледајте /help eval); "
+"променљива „${highlight}” може да се употреби у услову тако да се добије "
+"формат који је специфичан за линије са истицањем (такође погледајте опцију "
+"weechat.look.highlight_prefix); на пример, време исписано сивим тоновима: "
+"„${color:252}%H${color:243}%M${color:237}%S”, исто са милисекундама: "
+"„${color:252}%H${color:243}%M${color:237}%S.%.3”, црвена позадина у случају "
+"истицања: „${if:${highlight}?${color:,red}}%H:%M:%S”, црвена позадина у "
+"случају истицања у сивим тоновима: ${if:${highlight}?${color:"
+"yellow,124}%H${color:187}%M${color:181}%S.%.3:"
+"${color:252}%H${color:243}%M${color:237}%S.%.3}"
 
 #. TRANSLATORS: string "${color:xxx}" must NOT be translated
 msgid ""
@@ -4838,6 +4806,8 @@ msgid ""
 "use a specific color for prefix of line in case of highlight (see also "
 "option weechat.look.buffer_time_format)"
 msgstr ""
+"у случају истицања, за префикс линије се користи одређена боја (погледајте "
+"такође и опцију weechat.look.buffer_time_format)"
 
 msgid ""
 "POSIX extended regular expression used to check if a message has highlight "
@@ -4940,12 +4910,6 @@ msgstr ""
 "ако је постављено, користи кратка имена за приказ имена бафера у врућој "
 "листи (почињу након првог „.” у имену)"
 
-#, fuzzy
-#| msgid ""
-#| "comma-separated list of fields to sort options (see /help fset for a list "
-#| "of fields); char \"-\" can be used before field to reverse order, char "
-#| "\"~\" can be used to do a case insensitive comparison; example: \"-"
-#| "~name\" for case insensitive and reverse sort on option name"
 msgid ""
 "comma-separated list of fields to sort hotlist; each field is a hdata "
 "variable of hotlist (\"var\") or a hdata variable of buffer (\"buffer."
@@ -4954,11 +4918,14 @@ msgid ""
 "number\" for sort on hotlist priority then by buffer number, \"-~buffer."
 "full_name\" for case insensitive and reverse sort on buffer full name"
 msgstr ""
-"листа поља за сортирање опција раздвојених запетама (погледајте /help fset "
-"за листу поља); карактер „-” може да се користи испред поља чиме се обрће "
-"редослед, карактер „~” може да се употреби за поређење које не прави разлику "
-"у величини слова; пример: „-~name” за поређење које не прави разлику у "
-"величини слова и обрнуто сортирање по имену опције"
+"листа поља за сортирање вруће листе раздвојених запетама; свако поље је "
+"hdata променљива вруће листе („var”) или hdata променљива бафера („buffer."
+"var”); карактер „-” може да се користи испред поља чиме се обрће редослед, "
+"карактер „~” може да се употреби за поређење које не прави разлику у "
+"величини слова; примери: „-priority,buffer.number” за сортирање најпре по "
+"приоритету вруће листе, па онда по броју бафера „-~buffer.full_name” за "
+"поређење које не прави разлику у величини слова и обрнуто сортирање по "
+"пуном имену бафера"
 
 msgid "text displayed at the end of the hotlist"
 msgstr "текст који се приказује на крају вруће листе"
@@ -5720,6 +5687,7 @@ msgstr ""
 
 msgid "if enabled, the completion is case sensitive by default"
 msgstr ""
+"ако је укључено, довршавање подразумевано прави разлику у величини слова"
 
 msgid ""
 "if enabled, the commands inside command line are completed (the command at "
@@ -6044,15 +6012,12 @@ msgstr ""
 msgid "Error: not enough memory\n"
 msgstr "Грешка: нема довољно слободне меморије\n"
 
-#, fuzzy, c-format
-#| msgid ""
-#| "Error: wrong number of paths for home directories (expected: 1 or 4, "
-#| "received: %d)\n"
+#, c-format
 msgid ""
 "Error: wrong number of paths for home directories (expected: 1 or 5, "
 "received: %d)\n"
 msgstr ""
-"Грешка: погрешан број путања за почетне директоријуме (очекивано: 1 или 4, "
+"Грешка: погрешан број путања за почетне директоријуме (очекивано: 1 или 5, "
 "примљено: %d)\n"
 
 #, c-format
@@ -6136,15 +6101,11 @@ msgstr "Приоритет"
 msgid "File"
 msgstr "Фајл"
 
-#, fuzzy
-#| msgid "Constants"
 msgid "Constant"
-msgstr "Константе"
+msgstr "Константа"
 
-#, fuzzy
-#| msgid "values"
 msgid "Value"
-msgstr "вредности"
+msgstr "Вредност"
 
 #, c-format
 msgid ""
@@ -7408,20 +7369,6 @@ msgstr ""
 "листе бафера; ово може да буде корисно ако се у форматима употребљавају неке "
 "кориснички дефинисане променљиве којима је неоходно специфично освежавање"
 
-#, fuzzy
-#| msgid ""
-#| "comma-separated list of fields to sort buffers; each field is a hdata "
-#| "variable of buffer (\"var\"), a hdata variable of IRC server "
-#| "(\"irc_server.var\") or a hdata variable of IRC channel (\"irc_channel."
-#| "var\"); char \"-\" can be used before field to reverse order, char \"~\" "
-#| "can be used to do a case insensitive comparison; examples: \"-"
-#| "~short_name\" for case insensitive and reverse sort on buffer short name, "
-#| "\"-hotlist.priority,hotlist.creation_time.tv_sec,number,-active\" for "
-#| "sort like the hotlist then by buffer number for buffers without activity "
-#| "(note: the content is evaluated, before being split into fields, but at "
-#| "that time \"bar_item\" is the only variable that can be used, to "
-#| "distinguish between different buflist items, for example \"${bar_item."
-#| "name}\")"
 msgid ""
 "comma-separated list of fields to sort buffers; each field is a hdata "
 "variable of buffer (\"var\"), a hdata variable of IRC server (\"irc_server."
@@ -7441,8 +7388,8 @@ msgstr ""
 "да се користи карактер „-” чиме се обрће редослед, а за поређење које не "
 "прави разлику у величини слова, може да се користи карактер „~”; примери: „-"
 "~short_name” за поређење које не води рачуна о величини слова и обрнуто "
-"сортирање по кратком имену бафера, „-hotlist.priority,hotlist.creation_time."
-"tv_sec,number,-active” за сортирање као врућа листа, па онда према броју "
+"сортирање по кратком имену бафера, „-hotlist.priority,hotlist.time,hotlist."
+"time_usec,number,-active” за сортирање као врућа листа, па онда према броју "
 "бафера за бафере без активности (напомена: садржај се израчунава, пре него "
 "што се издели у поља, али у то време је „bar_item” једина променљива која "
 "може да се користи, како би се направила разлика између различитих ставки "
@@ -8143,29 +8090,21 @@ msgstr "%s%s: није приказана ниједна опција, изво�
 msgid "%s%s: not enough memory"
 msgstr "%s%s: нема довољно слободне меморије"
 
-#, fuzzy, c-format
-#| msgid "%s%s: buffer \"%s\" not found"
+#, c-format
 msgid "%s%s: file \"%s\" not found"
-msgstr "%s%s: није пронађен бафер „%s”"
+msgstr "%s%s: није пронађен фајл „%s”"
 
-#, fuzzy, c-format
-#| msgid "%s%s: unable to execute file \"%s\""
+#, c-format
 msgid "%d command executed in file \"%s\""
 msgid_plural "%d commands executed in file \"%s\""
-msgstr[0] "%s%s: фајл „%s” не може да се изврши"
-msgstr[1] "%s%s: фајл „%s” не може да се изврши"
-msgstr[2] "%s%s: фајл „%s” не може да се изврши"
+msgstr[0] "%d команда је извршена у фајлу „%s”"
+msgstr[1] "%d команде су извршене у фајлу „%s”"
+msgstr[2] "%d команди су извршене у фајлу „%s”"
 
 msgid "fast set WeeChat and plugins options"
 msgstr "брзо постављање опција за програм WeeChat и додатке"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
-#, fuzzy
-#| msgid ""
-#| "-bar || -refresh || -up|-down [<number>] || -left|-right [<percent>] || -"
-#| "go <line>|end || -toggle || -add [<value>] || -reset || -unset || -set || "
-#| "-setnew || -append || -mark || -format || -export [-help|-nohelp] "
-#| "<filename> || <filter>"
 msgid ""
 "-bar || -refresh || -up|-down [<number>] || -left|-right [<percent>] || -go "
 "<line>|end || -toggle || -add [<value>] || -reset || -unset || -set || -"
@@ -8175,7 +8114,7 @@ msgstr ""
 "-bar || -refresh || -up|-down [<број>] || -left|-right [<проценат>] || -go "
 "<линија>|end || -toggle || -add [<вредн>] || -reset || -unset || -set || -"
 "setnew || -append || -mark || -format || -export [-help|-nohelp] <имефајла> "
-"|| <филтер>"
+"|| -import <имефајла> || <филтер>"
 
 msgid "raw[-bar]: add the help bar"
 msgstr "raw[-bar]: додавање траке помоћи"
@@ -8262,6 +8201,8 @@ msgid ""
 "raw[-import]: import the options from a file (all lines containing commands "
 "are executed)"
 msgstr ""
+"raw[-import]: увоз опција из фајла (извршавају се све линије које садрже "
+"команде)"
 
 msgid ""
 "raw[-help]: force writing of help on options in exported file (see /help "
@@ -9379,31 +9320,26 @@ msgid "execute a command on all channels of all connected servers"
 msgstr "извршавање команде на свим каналима свих повезаних сервера"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
-#, fuzzy
-#| msgid ""
-#| "[-current] [-parted] [-exclude=<channel>[,<channel>...]] <command> || [-"
-#| "current] [-parted] -include=<channel>[,<channel>...] <command>"
 msgid ""
 "[-current] [-parted|-all] [-exclude=<channel>[,<channel>...]] <command> || [-"
 "current] [-parted|-all] -include=<channel>[,<channel>...] <command>"
 msgstr ""
-"[-current] [-parted] [-exclude=<канал>[,<канал>...]] <команда> || [-current] "
-"[-parted] -include=<канал>[,<канал>...] <команда>"
+"[-current] [-parted|-all] [-exclude=<канал>[,<канал>...]] <команда> || [-"
+"current] [-parted|-all] -include=<канал>[,<канал>...] <команда>"
 
 msgid "raw[-current]: execute command for channels of current server only"
 msgstr "raw[-current]: команда се извршава само за канале текућег сервера"
 
-#, fuzzy
-#| msgid "raw[-parted]: execute on parted channels only"
 msgid ""
 "raw[-parted]: execute command on parted channels (by default: execute "
 "command on active channels only)"
-msgstr "raw[-parted]: команда се извршава само на напуштеним каналима"
+msgstr ""
+"raw[-parted]: команда се извршава само на напуштеним каналима "
+"(подразумевано: команда се извршава само на активним каналима)"
 
-#, fuzzy
-#| msgid "raw[-parted]: execute on parted channels only"
 msgid "raw[-all]: execute command on all channels (active and parted)"
-msgstr "raw[-parted]: команда се извршава само на напуштеним каналима"
+msgstr ""
+"raw[-all]: команда се извршава на свим каналима (активним и напуштеним)"
 
 msgid "raw[-exclude]: exclude some channels (wildcard \"*\" is allowed)"
 msgstr "raw[-exclude]: неки канали се изузимају (дозвољен је џокер „*”)"
@@ -13711,19 +13647,14 @@ msgstr "WeeChat PID (ID процеса)"
 msgid "directory separator"
 msgstr "граничник директоријума"
 
-#, fuzzy
-#| msgid ""
-#| "WeeChat directory (*deprecated* since version 3.2, replaced by "
-#| "\"weechat_config_dir\", \"weechat_data_dir\", \"weechat_cache_dir\" and "
-#| "\"weechat_runtime_dir\")"
 msgid ""
 "WeeChat directory (*deprecated* since version 3.2, replaced by "
 "\"weechat_config_dir\", \"weechat_data_dir\", \"weechat_state_dir\" , "
 "\"weechat_cache_dir\" and \"weechat_runtime_dir\")"
 msgstr ""
 "WeeChat директоријум (*застарело* од верзије 3.2, замењено је са "
-"„weechat_config_dir”, „weechat_data_dir”, „weechat_cache_dir” и "
-"„weechat_runtime_dir”)"
+"„weechat_config_dir”, „weechat_data_dir”, weechat_state_dir” , „weechat_"
+"cache_dir” и „weechat_runtime_dir”)"
 
 msgid "WeeChat config directory"
 msgstr "WeeChat конфигурациони директоријум"
@@ -13731,10 +13662,8 @@ msgstr "WeeChat конфигурациони директоријум"
 msgid "WeeChat data directory"
 msgstr "WeeChat директоријум са подацима"
 
-#, fuzzy
-#| msgid "WeeChat data directory"
 msgid "WeeChat state directory"
-msgstr "WeeChat директоријум са подацима"
+msgstr "WeeChat директоријум стања"
 
 msgid "WeeChat cache directory"
 msgstr "WeeChat кеш директоријум"
@@ -14327,15 +14256,11 @@ msgstr "%s%s: није успело покретање глобалног инт
 msgid "%s%s: unable to get current interpreter state"
 msgstr "%s%s: није успело добијање тренутног стања интерпретера"
 
-#, fuzzy
-#| msgid "list of options"
 msgid "list of scripting API functions"
-msgstr "листа опција"
+msgstr "листа функција скрипт API"
 
-#, fuzzy
-#| msgid "list of options"
 msgid "list of scripting API constants"
-msgstr "листа опција"
+msgstr "листа константи скрипт API"
 
 #, c-format
 msgid "%s%s: unable to free interpreter"
@@ -14363,225 +14288,188 @@ msgstr "%s%s: није успело извршавање руте „%s %s” з
 
 #, c-format
 msgid "remote[%s]: WeeChat: %s (%s), API: %s"
-msgstr ""
+msgstr "удаљени[%s]: WeeChat: %s (%s), API: %s"
 
-#, fuzzy
-#| msgid "invalid priorities"
 msgid "invalid response from remote relay"
-msgstr "неважећи приоритети"
+msgstr "неважећи одговор од удаљеног релеја"
 
-#, fuzzy
-#| msgid "%s%s: authentication failed with client %s%s%s"
 msgid "authentication failed with remote relay"
-msgstr "%s%s: није успела аутентификација клијента %s%s%s"
+msgstr "није успела потврда идентитета са удаљеним релејем"
 
 msgid "invalid websocket response (handshake error)"
-msgstr ""
+msgstr "неважећи вебсокет одговор (грешка усаглашавања)"
 
-#, fuzzy, c-format
-#| msgid "%s    error: %s%s%s%s"
+#, c-format
 msgid "%sremote[%s]: error: %s%s%s%s"
-msgstr "%s    грешка: %s%s%s%s"
+msgstr "%sудаљени[%s]: грешка: %s%s%s%s"
 
-#, fuzzy, c-format
-#| msgid "%s%s: not enough memory"
+#, c-format
 msgid "%sremote[%s]: not enough memory"
-msgstr "%s%s: нема довољно слободне меморије"
+msgstr "%sудаљени[%s]: нема довољно слободне меморије"
 
-#, fuzzy, c-format
-#| msgid "%s%s: error decoding websocket frame for client %s%s%s"
+#, c-format
 msgid "%sremote[%s]: error decoding websocket frame"
-msgstr "%s%s: грешка код декодирања вебсокет оквира ид клијента %s%s%s"
+msgstr "%sудаљени[%s]: грешка код декодирања вебсокет оквира"
 
-#, fuzzy, c-format
-#| msgid "%s%s: reading data on socket: error %d %s"
+#, c-format
 msgid "%sremote[%s]: reading data on socket: error %d %s"
-msgstr "%s%s: читање података са сокета: грешка %d %s"
+msgstr "%sудаљени[%s]: читање података са сокета: грешка %d %s"
 
 #, c-format
 msgid "%sremote[%s]: failed to build authentication"
-msgstr ""
+msgstr "%sудаљени[%s]: није успела изградња потврде идентитета"
 
-#, fuzzy, c-format
-#| msgid "%s%s: connected to %s/%d (%s)"
+#, c-format
 msgid "remote[%s]: connected to %s/%d (%s)"
-msgstr "%s%s: успостављена је веза са %s/%d (%s)"
+msgstr "удаљени[%s]: успостављена је веза са %s/%d (%s)"
 
-#, fuzzy, c-format
-#| msgid "%s%s: address \"%s\" not found"
+#, c-format
 msgid "%sremote[%s]: address \"%s\" not found"
-msgstr "%s%s: није пронађена адреса „%s”"
+msgstr "%sудаљени[%s]: није пронађена адреса „%s”"
 
-#, fuzzy, c-format
-#| msgid "%s%s: error: %s"
+#, c-format
 msgid "%sremote[%s]: error: %s"
-msgstr "%s%s: грешка: %s"
+msgstr "%sудаљени[%s]: грешка: %s"
 
-#, fuzzy, c-format
-#| msgid "%s%s: IP address not found"
+#, c-format
 msgid "%sremote[%s]: IP address not found"
-msgstr "%s%s: није пронађена IP адреса"
+msgstr "%sудаљени[%s]: није пронађена IP адреса"
 
-#, fuzzy, c-format
-#| msgid "%s%s: connection refused"
+#, c-format
 msgid "%sremote[%s]: connection refused"
-msgstr "%s%s: веза је одбијена"
+msgstr "%sудаљени[%s]: веза је одбијена"
 
-#, fuzzy, c-format
-#| msgid ""
-#| "%s%s: proxy fails to establish connection to server (check username/"
-#| "password if used and if server address/port is allowed by proxy)"
+#, c-format
 msgid ""
 "%sremote[%s]: proxy fails to establish connection to server (check username/"
 "password if used and if server address/port is allowed by proxy)"
 msgstr ""
-"%s%s: прокси сервер не успева да успостави везу са сервером (проверите "
-"корисничко име/лозинку ако се користе и да ли прокси дозвољава адресу/порт "
-"сервера)"
+"%sудаљени[%s]: прокси сервер не успева да успостави везу са сервером "
+"(проверите корисничко име/лозинку ако се користе и да ли прокси дозвољава "
+"адресу/порт сервера)"
 
-#, fuzzy, c-format
-#| msgid "%s%s: unable to set local hostname/IP"
+#, c-format
 msgid "%sremote[%s]: unable to set local hostname/IP"
-msgstr "%s%s: није успело постављање локалног имена хоста/IP"
+msgstr "%sудаљени[%s]: није успело постављање локалног имена хоста/IP"
 
-#, fuzzy, c-format
-#| msgid "%s%s: TLS init error"
+#, c-format
 msgid "%sremote[%s]: TLS init error"
-msgstr "%s%s: грешка TLS иницијализације"
+msgstr "%sудаљени[%s]: грешка TLS иницијализације"
 
-#, fuzzy, c-format
-#| msgid "%s%s: TLS handshake failed"
+#, c-format
 msgid "%sremote[%s]: TLS handshake failed"
-msgstr "%s%s: није успело TLS руковање"
+msgstr "%sудаљени[%s]: није успело TLS руковање"
 
-#, fuzzy, c-format
-#| msgid "%s%s: timeout"
+#, c-format
 msgid "%sremote[%s]: timeout"
-msgstr "%s%s: тајмаут"
+msgstr "%sудаљени[%s]: тајмаут"
 
-#, fuzzy, c-format
-#| msgid "%s%s: unable to create socket"
+#, c-format
 msgid "%sremote[%s]: unable to create socket"
-msgstr "%s%s: није могао да се креира сокет"
+msgstr "%sудаљени[%s]: није могао да се креира сокет"
 
-#, fuzzy, c-format
-#| msgid "%sgnutls: failed to initialize certificate structure"
+#, c-format
 msgid "%sremote[%s]: gnutls: failed to initialize certificate structure"
-msgstr "%sgnutls: није успела иницијализација структуре сертификата"
+msgstr ""
+"%sудаљени[%s]: gnutls: није успела иницијализација структуре сертификата"
 
-#, fuzzy, c-format
-#| msgid "%sgnutls: receiving %d certificate"
-#| msgid_plural "%sgnutls: receiving %d certificates"
+#, c-format
 msgid "remote[%s]: gnutls: receiving %d certificate"
 msgid_plural "remote[%s]: gnutls: receiving %d certificates"
-msgstr[0] "%sgnutls: прима се %d сертификат"
-msgstr[1] "%sgnutls: прима се %d сертификата"
-msgstr[2] "%sgnutls: прима се %d сертификата"
+msgstr[0] "удаљени[%s]: gnutls: прима се %d сертификат"
+msgstr[1] "удаљени[%s]: gnutls: прима се %d сертификата"
+msgstr[2] "удаљени[%s]: gnutls: прима се %d сертификата"
 
-#, fuzzy, c-format
-#| msgid "%sgnutls: failed to import certificate[%d]"
+#, c-format
 msgid "%sremote[%s]: gnutls: failed to import certificate[%d]"
-msgstr "%sgnutls: није успео увоз сертификата[%d]"
+msgstr "%sудаљени[%s]: gnutls: није успео увоз сертификата[%d]"
 
-#, fuzzy, c-format
-#| msgid "%s - certificate[%d] info:"
+#, c-format
 msgid "remote[%s] - certificate[%d] info:"
-msgstr "%s - сертификат[%d] инфо:"
+msgstr "удаљени[%s] - инфо сертификата[%d]:"
 
-#, fuzzy, c-format
-#| msgid "%sgnutls: certificate has expired"
+#, c-format
 msgid "%sremote[%s]: gnutls: certificate has expired"
-msgstr "%sgnutls: истекла је важност сертификата"
+msgstr "%sудаљени[%s]: gnutls: истекла је важност сертификата"
 
-#, fuzzy, c-format
-#| msgid "%sgnutls: certificate is not yet activated"
+#, c-format
 msgid "%sremote[%s]: gnutls: certificate is not yet activated"
-msgstr "%sgnutls: сертификат још увек није активиран"
+msgstr "%sудаљени[%s]: gnutls: сертификат још увек није активиран"
 
-#, fuzzy, c-format
-#| msgid "%sgnutls: the hostname in the certificate does NOT match \"%s\""
+#, c-format
 msgid ""
 "%sremote[%s]: gnutls: the hostname in the certificate does NOT match \"%s\""
-msgstr "%sgnutls: име хоста у сертификату се НЕ подудара са „%s”"
+msgstr ""
+"%sудаљени[%s]: gnutls: име хоста у сертификату се НЕ подудара са „%s”"
 
-#, fuzzy, c-format
-#| msgid "%sgnutls: error while checking peer's certificate"
+#, c-format
 msgid "%sremote[%s]: gnutls: error while checking peer's certificate"
-msgstr "%sgnutls: грешка приликом провере сертификата друге стране"
+msgstr ""
+"%sудаљени[%s]: gnutls: грешка приликом провере сертификата друге стране"
 
-#, fuzzy, c-format
-#| msgid "%sgnutls: peer's certificate is NOT trusted"
+#, c-format
 msgid "%sremote[%s]: gnutls: peer's certificate is NOT trusted"
-msgstr "%sgnutls: сертификату друге стране се НЕ верује"
+msgstr "%sудаљени[%s]: gnutls: сертификату друге стране се НЕ верује"
 
-#, fuzzy, c-format
-#| msgid "%sgnutls: peer's certificate is trusted"
+#, c-format
 msgid "remote[%s]: gnutls: peer's certificate is trusted"
-msgstr "%sgnutls: сертификату друге стране се верује"
+msgstr "удаљени[%s]: gnutls: сертификату друге стране се верује"
 
-#, fuzzy, c-format
-#| msgid "%sgnutls: peer's certificate issuer is unknown"
+#, c-format
 msgid "%sremote[%s]: gnutls: peer's certificate issuer is unknown"
-msgstr "%sgnutls: издавач сертификата друге стране није познат"
+msgstr "%sудаљени[%s]: gnutls: издавач сертификата друге стране није познат"
 
-#, fuzzy, c-format
-#| msgid "%sgnutls: the certificate has been revoked"
+#, c-format
 msgid "%sremote[%s]: gnutls: the certificate has been revoked"
-msgstr "%sgnutls: сертификат је повучен"
+msgstr "%sудаљени[%s]: gnutls: сертификат је повучен"
 
-#, fuzzy, c-format
-#| msgid "%s%s: TLS handshake failed for client %s%s%s: error %d %s"
+#, c-format
 msgid "%sremote[%s]: handshake failed with URL %s, response code: %s"
-msgstr "%s%s: TLS руковање са клијентом %s%s%s није успело: грешка %d %s"
+msgstr "%sудаљени[%s]: усаглашавање са URL %s није успело, кôд одговора: %s"
 
-#, fuzzy, c-format
-#| msgid "%s%s: TLS handshake failed for client %s%s%s: error %d %s"
+#, c-format
 msgid "%sremote[%s]: handshake failed with URL %s, error: %s"
-msgstr "%s%s: TLS руковање са клијентом %s%s%s није успело: грешка %d %s"
+msgstr "%sудаљени[%s]: усаглашавање са URL %s није успело, грешка: %s"
 
-#, fuzzy
-#| msgid "%s%s: ignore not found"
 msgid "hash algorithm not found"
-msgstr "%s%s: није пронађено игнорисање"
+msgstr "није пронађен хеш алгоритам"
 
 msgid "unknown number of hash iterations"
-msgstr ""
+msgstr "непознат број хеш итерација"
 
 msgid "unknown TOTP status"
-msgstr ""
+msgstr "непознати TOTP статус"
 
 #, c-format
 msgid ""
 "%sremote[%s]: successful handshake with URL %s: hash_algo=%s, iterations=%d, "
 "totp=%d"
 msgstr ""
+"%sудаљени[%s]: успешно усаглашавање са URL %s: hash_algo=%s, итерација=%d, "
+"totp=%d"
 
-#, fuzzy, c-format
-#| msgid "%s%s: proxy \"%s\" not found for server \"%s\", cannot connect"
+#, c-format
 msgid "%sremote[%s]: proxy \"%s\" not found, cannot connect"
 msgstr ""
-"%s%s: прокси „%s” не може да се пронађе за сервер „%s”, веза не може да се "
+"%sудаљени[%s]: прокси „%s” не може да се пронађе, веза не може да се "
 "успостави"
 
-#, fuzzy, c-format
-#| msgid "%s%s: missing proxy settings, check options for proxy \"%s\""
+#, c-format
 msgid "%sremote[%s]: missing proxy settings, check options for proxy \"%s\""
-msgstr "%s%s: недостају прокси подешавања, проверите опције за прокси „%s”"
+msgstr ""
+"%sудаљени[%s]: недостају прокси подешавања, проверите опције за прокси „%s”"
 
-#, fuzzy, c-format
-#| msgid "%s%s: already connected to server \"%s\"!"
+#, c-format
 msgid "%s%s: already connected to remote relay \"%s\"!"
-msgstr "%s%s: већ постоји веза са сервером „%s”!"
+msgstr "%s%s: већ је успостављена веза са удаљеним релејем „%s”!"
 
-#, fuzzy, c-format
-#| msgid "%s%s: connecting to server %s/%d%s..."
+#, c-format
 msgid "remote[%s]: connecting to remote relay %s/%d%s..."
-msgstr "%s%s: успостављање везе са сервером %s/%d%s..."
+msgstr "удаљени[%s]: успостављање везе са удаљеним релејем %s/%d%s..."
 
-#, fuzzy, c-format
-#| msgid "%s%s: unable to connect to sender"
+#, c-format
 msgid "remote[%s]: failed to connect, not enough memory"
-msgstr "%s%s: није успело повезивање са пошиљаоцем"
+msgstr "удаљени[%s]: није успело повезивање, нема довољно слободне меморије"
 
 #, c-format
 msgid "%s%s: not enough memory for parsing message"
@@ -14619,15 +14507,11 @@ msgstr "Релеј WeeChat података удаљеној апликациј�
 msgid "connecting"
 msgstr "повезивање"
 
-#, fuzzy
-#| msgid "authenticate with SASL"
 msgid "authenticating"
-msgstr "аутентификација са SASL"
+msgstr "потврда идентитета"
 
-#, fuzzy
-#| msgid "auth failed"
 msgid "authentication failed"
-msgstr "аутент није успела"
+msgstr "није успела потврда идентитета"
 
 msgid "disconnected"
 msgstr "веза је прекинута"
@@ -14763,94 +14647,76 @@ msgstr "%s%s: relay „%s” није пронађено"
 
 #, c-format
 msgid "Remote: %s"
-msgstr ""
+msgstr "Удаљени: %s"
 
-#, fuzzy, c-format
-#| msgid "Aliases with \"%s\":"
+#, c-format
 msgid "Relay remotes with \"%s\":"
-msgstr "Алијаси са „%s”:"
+msgstr "Прослеђивање удаљених са „%s”:"
 
-#, fuzzy, c-format
-#| msgid "No server found with \"%s\""
+#, c-format
 msgid "No relay remote found with \"%s\""
-msgstr "Није пронађен ниједан сервер са „%s”"
+msgstr "Није пронађен ниједан прослеђени удаљени са „%s”"
 
-#, fuzzy
-#| msgid "All aliases:"
 msgid "All relay remotes:"
-msgstr "Сви алијаси:"
+msgstr "Сви прослеђени удаљени:"
 
 msgid "No relay remote"
-msgstr ""
+msgstr "Нема ниједног прослеђеног удаљеног"
 
-#, fuzzy, c-format
-#| msgid "%s%s: server \"%s\" already exists, can't add it!"
+#, c-format
 msgid "%s%s: remote relay \"%s\" already exists, can't add it!"
-msgstr "%s%s: сервер „%s” већ постоји, не може да се дода!"
+msgstr "%s%s: релеј удаљених „%s” већ постоји, не може да се дода!"
 
-#, fuzzy, c-format
-#| msgid "%s%s: invalid trigger name: \"%s\""
+#, c-format
 msgid "%s%s: invalid remote relay name: \"%s\""
-msgstr "%s%s: неважеће име окидача: „%s”"
+msgstr "%s%s: неважеће име релеја удаљених: „%s”"
 
-#, fuzzy, c-format
-#| msgid "%s%s: invalid charset: \"%s\""
+#, c-format
 msgid "%s%s: invalid remote relay URL: \"%s\""
-msgstr "%s%s: неважећи скуп карактера: „%s”"
+msgstr "%s%s: неважећи URL релеја удаљених: „%s”"
 
-#, fuzzy, c-format
-#| msgid "%s%s: invalid post action \"%s\""
+#, c-format
 msgid "%s%s: invalid remote relay option: \"%s\""
-msgstr "%s%s: неважећа пост акција „%s”"
+msgstr "%s%s: неважећа опција релеја удаљених: „%s”"
 
-#, fuzzy, c-format
-#| msgid "Bar \"%s\" created"
+#, c-format
 msgid "Remote relay \"%s\" created"
-msgstr "Креирана је трака „%s”"
+msgstr "Креиран је релеј удаљених „%s”"
 
-#, fuzzy, c-format
-#| msgid "%s%s: failed to create trigger \"%s\""
+#, c-format
 msgid "%s%s: failed to create remote relay \"%s\""
-msgstr "%s%s: није успело креирање окидача „%s”"
+msgstr "%s%s: није успело креирање релеја удаљених „%s”"
 
-#, fuzzy, c-format
-#| msgid "%s%s: server \"%s\" not found for \"%s\" command"
+#, c-format
 msgid "%s%s: remote relay \"%s\" not found for \"%s\" command"
-msgstr "%s%s: није пронађен сервер „%s” за команду „%s”"
+msgstr "%s%s: није пронађен релеј удаљених „%s” за команду „%s”"
 
-#, fuzzy, c-format
-#| msgid "%s%s: not connected to server \"%s\"!"
+#, c-format
 msgid "%s%s: no connection to remote relay \"%s\""
-msgstr "%s%s: не постоји веза са сервером „%s”!"
+msgstr "%s%s: не постоји веза са релејем удаљених „%s”"
 
-#, fuzzy, c-format
-#| msgid "%s%s: server \"%s\" already exists for \"%s\" command"
+#, c-format
 msgid "%s%s: remote relay \"%s\" already exists for \"%s\" command"
-msgstr "%s%s: сервер „%s” већ постоји за команду „%s”"
+msgstr "%s%s: релеј удаљених „%s” већ постоји за команду „%s”"
 
-#, fuzzy, c-format
-#| msgid "Layout \"%s\" has been renamed to \"%s\""
+#, c-format
 msgid "%s: remote relay \"%s\" has been renamed to \"%s\""
-msgstr "Распореду „%s” је промењено име на „%s”"
+msgstr "%s: име релеја удаљених „%s” је промењено на „%s”"
 
-#, fuzzy, c-format
-#| msgid ""
-#| "%s%s: you can not delete server \"%s\" because you are connected to. Try "
-#| "\"/disconnect %s\" before."
+#, c-format
 msgid ""
 "%s%s: you can not delete remote relay \"%s\" because you are connected to. "
 "Try \"/remote disconnect %s\" before."
 msgstr ""
-"%s%s: не можете да обришете сервер „%s” јер сте повеза ни са њим. Покушајте "
-"прво да извршите „/disconnect %s”."
+"%s%s: не можете да обришете релеј удаљених „%s” јер сте повезани са њим. "
+"Покушајте прво да извршите „/remote disconnect %s”."
 
-#, fuzzy, c-format
-#| msgid "%s: server %s%s%s has been deleted"
+#, c-format
 msgid "%s: remote relay \"%s\" has been deleted"
-msgstr "%s: сервер %s%s%s је обрисан"
+msgstr "%s: релеј удаљених „%s” је обрисан"
 
 msgid "relay control"
-msgstr "контрола релеја"
+msgstr "контрола преко релеја"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid ""
@@ -14943,10 +14809,8 @@ msgstr ""
 "наведе, име сервера мора да се пошаље клијенту у команди „PASS”, са "
 "форматом: „PASS сервер:лозинка”)"
 
-#, fuzzy
-#| msgid "    - protocol \"weechat\" (name is not used)"
 msgid "    - protocol \"api\" (name is not used)"
-msgstr "    - протокол „weechat” (име се не користи)"
+msgstr "    - протокол „api” (име се не користи)"
 
 msgid "    - protocol \"weechat\" (name is not used)"
 msgstr "    - протокол „weechat” (име се не користи)"
@@ -14958,126 +14822,89 @@ msgstr ""
 "„irc” протокол дозвољава да се било који IRC клијент (укључујући и сам "
 "WeeChat) повеже на порт."
 
-#, fuzzy
-#| msgid ""
-#| "The \"irc\" protocol allows any IRC client (including WeeChat itself) to "
-#| "connect on the port."
 msgid ""
 "The \"api\" protocol allows a remote interface (including WeeChat itself) to "
 "connect on the port."
 msgstr ""
-"„irc” протокол дозвољава да се било који IRC клијент (укључујући и сам "
-"WeeChat) повеже на порт."
+"„api” протокол дозвољава да се удаљени интерфејс (укључујући и сам WeeChat) "
+"повеже на порт."
 
-#, fuzzy
-#| msgid ""
-#| "The \"irc\" protocol allows any IRC client (including WeeChat itself) to "
-#| "connect on the port."
 msgid ""
 "The \"weechat\" protocol allows a remote interface (but not WeeChat itself) "
 "to connect on the port."
 msgstr ""
-"„irc” протокол дозвољава да се било који IRC клијент (укључујући и сам "
-"WeeChat) повеже на порт."
+"„weechat” протокол дозвољава да се удаљени интерфејс (али не и сам WeeChat) "
+"повеже на порт."
 
-#, fuzzy
-#| msgid ""
-#| "The \"weechat\" protocol allows a remote interface to connect on the "
-#| "port, see the list here: https://weechat.org/about/interfaces/"
 msgid ""
 "The list of remote interfaces is here: https://weechat.org/about/interfaces/"
 msgstr ""
-"„weechat” протокол дозвољава да се на порт повеже удаљени интерфејс, "
-"погледајте листу овде: https://weechat.org/about/interfaces/"
+"Листа удаљених интерфејса се налази овде: https://weechat.org/about/"
+"interfaces/"
 
 msgid "Without argument, this command opens buffer with list of relay clients."
 msgstr "Без аргумента ова команда отвара бафер са листом релеј клијената."
 
-#, fuzzy
-#| msgid "disconnect from one or all IRC servers"
 msgid "control of remote relay servers"
-msgstr "прекидање везе са једним или са свим IRC серверима"
+msgstr "контрола сервера релеја за удаљене"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
-#, fuzzy
-#| msgid ""
-#| "list|listfull [<name>] || add <name> <hostname>[/<port>] [-temp] [-"
-#| "<option>[=<value>]] [-no<option>] || copy|rename <name> <new_name> || "
-#| "reorder <name> [<name>...] || open <name>|-all [<name>...] || del|keep "
-#| "<name> || deloutq|jump || raw [<filter>]"
 msgid ""
 "list|listfull [<name>] || add <name> <url> [-<option>[=<value>]] || connect "
 "<name> || send <name> <json> || disconnect <name> || rename <name> "
 "<new_name> || del <name>"
 msgstr ""
-"list|listfull [<име>] || add <име> <имехоста>[/<порт>] [-temp] [-"
-"<опција>[=<вредност>]] [-no<опција>] || copy|rename <име> <ново_име> || "
-"reorder <име> [<име>...] || open <име>|-all [<име>...] || del|keep <име> || "
-"deloutq|jump || raw [<филтер>]"
+"list|listfull [<име>] || add <име> <url> [-<опција>[=<вредност>]] || "
+"connect <име> || send <име> <json> || disconnect <име> || rename <име> "
+"<ново_име> || del <име>"
 
-#, fuzzy
-#| msgid "raw[list]: list servers (without argument, this list is displayed)"
 msgid ""
 "raw[list]: list remote relay servers (without argument, this list is "
 "displayed)"
-msgstr "raw[list]: листа сервера (без аргумента се приказује ова листа)"
+msgstr ""
+"raw[list]: листа сервера релеја удаљених (без аргумента се приказује ова "
+"листа)"
 
-#, fuzzy
-#| msgid "raw[listfull]: list all bars (verbose)"
 msgid "raw[listfull]: list remote relay servers (verbose)"
-msgstr "raw[listfull]: приказује све траке (детаљно)"
+msgstr "raw[listfull]: приказује сервере релеја удаљених (детаљно)"
 
-#, fuzzy
-#| msgid "raw[add]: add a new server"
 msgid "raw[add]: add a remote relay server"
-msgstr "raw[add]: додавање новог сервера"
+msgstr "raw[add]: додавање сервера релеја удаљених"
 
-#, fuzzy
-#| msgid ""
-#| "name: server name, for internal and display use; this name is used to "
-#| "connect to the server (/connect name) and to set server options: irc."
-#| "server.name.xxx"
 msgid ""
 "name: name of remote relay server, for internal and display use; this name "
 "is used to connect to the remote relay and to set remote relay options: "
 "relay.remote.name.xxx"
 msgstr ""
-"име: име сервера, за интерну употребу и за приказ; ово име се користи за "
-"повезивање на сервер (/connect име) и за постављање опција сервера: irc."
-"server.име.xxx"
+"име: име сервера релеја удаљених, за интерну употребу и за приказ; ово име "
+"се користи за повезивање на релеј удаљених и за постављање опција релеја "
+"удаљених: relay.remote.име.xxx"
 
 msgid ""
 "url: URL of the remote relay, format is https://example.com:9000 or http://"
 "example.com:9000 (plain-text connection, not recommended)"
 msgstr ""
+"url: URL релеја удаљених, формат је https://example.com:9000 или http://"
+"example.com:9000 (веза употребом чистог текста, не препоручује се)"
 
 msgid "option: set option for remote relay: proxy, password or totp_secret"
 msgstr ""
+"опција: постављање опције релеја удаљених: proxy, password или totp_secret"
 
-#, fuzzy
-#| msgid "raw[-all]: reconnect to all servers"
 msgid "raw[connect]: connect to a remote relay server"
-msgstr "raw[-all]: поновно повезивање са свим серверима"
+msgstr "raw[connect]: повезивање на сервер релеја удаљених"
 
-#, fuzzy
-#| msgid "> raw[send]: send text to the buffer"
 msgid "raw[send]: send JSON data to a remote relay server"
-msgstr "> raw[send]: шаље текст баферу"
+msgstr "raw[send]: шаље JSON податке серверу релеја удаљених"
 
-#, fuzzy
-#| msgid "raw[-all]: disconnect from all servers"
 msgid "raw[disconnect]: disconnect from a remote relay server"
-msgstr "raw[-all]: прекидање везе са свим серверима"
+msgstr "raw[disconnect]: прекидање везе са сервером релеја удаљених"
 
-#, fuzzy
-#| msgid "raw[rename]: rename a server"
 msgid "raw[rename]: rename a remote relay server"
-msgstr "raw[rename]: промена имена серверу"
+msgstr "raw[rename]: промена имена сервера релеја удаљених"
 
-#, fuzzy
-#| msgid "raw[del]: delete a server"
 msgid "raw[del]: delete a remote relay server"
-msgstr "raw[del]: брисање сервера"
+msgstr "raw[del]: брисање сервера релеја удаљених"
 
 msgid "all possible protocol.name for relay plugin"
 msgstr "сви могући протокол.име за relay додатак"
@@ -15088,10 +14915,8 @@ msgstr "протокол.име текућих релеја за relay дода�
 msgid "first free port for relay plugin"
 msgstr "први слободни порт за relay додатак"
 
-#, fuzzy
-#| msgid "relay control"
 msgid "relay remotes"
-msgstr "контрола релеја"
+msgstr "прослеђивање удаљених"
 
 #, c-format
 msgid ""
@@ -15144,34 +14969,27 @@ msgid ""
 "example.com:9000 or http://example.com:9000 (plain-text connection, not "
 "recommended)"
 msgstr ""
+"URL релеја удаљених са портом који није обавезан (подразумева се 9000), "
+"примери: https://example.com:9000 или http://example.com:9000 (веза "
+"коришћењем чистог текста, не препоручује се)"
 
-#, fuzzy
-#| msgid ""
-#| "name of proxy used for this server (optional, proxy must be defined with "
-#| "command /proxy)"
 msgid ""
 "name of proxy used for this remote relay (optional, proxy must be defined "
 "with command /proxy)"
 msgstr ""
-"име проксија који се користи за овај сервер (необавезно, прокси мора бити "
-"дефинисан командом /proxy)"
+"име проксија који се користи за овај релеј удаљених (није обавезно, прокси "
+"мора бити дефинисан командом /proxy)"
 
-#, fuzzy
-#| msgid ""
-#| "password for proxy server (note: content is evaluated, see /help eval)"
 msgid "password for remote relay (note: content is evaluated, see /help eval)"
 msgstr ""
-"лозинка за прокси сервер (напомена: садржај се израчунава, погледајте /help "
+"лозинка за релеј удаљених (напомена: садржај се израчунава, погледајте /help "
 "eval)"
 
-#, fuzzy
-#| msgid ""
-#| "username for proxy server (note: content is evaluated, see /help eval)"
 msgid ""
 "TOTP secret, encoded in base32 (note: content is evaluated, see /help eval)"
 msgstr ""
-"корисничко име за прокси сервер (напомена: садржај се израчунава, "
-"погледајте /help eval)"
+"TOTP тајна, кодирана у base32 (напомена: садржај се израчунава, погледајте "
+"/help eval)"
 
 #, c-format
 msgid "Relay option renamed: \"relay.network.%s\" => \"relay.network.%s\""
@@ -15215,10 +15033,8 @@ msgstr "боја текста за статус „connecting”"
 msgid "text color for \"disconnected\" status"
 msgstr "боја текста за статус „disconnected”"
 
-#, fuzzy
-#| msgid "text color for \"authentication failed\" status"
 msgid "text color for \"authenticating\" status"
-msgstr "боја текста за статус „authentication failed”"
+msgstr "боја текста за статус „authentication”"
 
 msgid "text color in relay buffer"
 msgstr "боја текста у релеј баферу"
@@ -15358,16 +15174,12 @@ msgstr ""
 "је боље у смислу безбедности, али је спорије за израчунавање; ако је ваш CPU "
 "спор, овај број не би требало да буде сувише велики"
 
-#, fuzzy
-#| msgid ""
-#| "number of seconds to allow before and after the current time for salted "
-#| "password in api protocol"
 msgid ""
 "number of seconds to allow before and after the current time for the hash of "
 "time + password in api protocol"
 msgstr ""
-"број секунди који је дозвољен пре и након текућег времена за посољену "
-"лозинку у api протоколу"
+"број секунди који је дозвољен пре и након текућег времена за хеш времена + "
+"лозинке у api протоколу"
 
 msgid ""
 "file with TLS certificate and private key (for serving clients with TLS) "
@@ -15454,6 +15266,8 @@ msgstr ""
 msgid ""
 "number of lines to retrieve on each buffer when connecting to a remote relay"
 msgstr ""
+"број линија који се преузима из сваког бафера када се успоставља веза са "
+"релејем удаљених"
 
 #, c-format
 msgid "%s%s: invalid websocket handshake received for client %s%s%s"
@@ -15517,14 +15331,13 @@ msgstr "%s%s: није успела иницијализација приори�
 msgid "Relay raw messages"
 msgstr "Релеј сирових порука"
 
-#, fuzzy, c-format
-#| msgid ""
-#| "%s%s: error: unable to add relay \"%s\" (cJSON support is not enabled)"
+#, c-format
 msgid ""
 "%s%s: error: unable to connect to a remote relay via API (cJSON support is "
 "not enabled)"
 msgstr ""
-"%s%s: грешка: не може да се дода релеј „%s” (није укључена cJSON подршка)"
+"%s%s: грешка: не може да се повеже са релејем удаљених преко API (није "
+"укључена cJSON подршка)"
 
 #, c-format
 msgid "%s: socket closed for %s (%s: %s)"
@@ -15855,54 +15668,39 @@ msgstr "Скрипте"
 msgid "Script manager"
 msgstr "Менаџер скрипти"
 
-#, fuzzy, c-format
-#| msgid ""
-#| "%s%s: download of scripts is disabled by default; see /help script."
-#| "scripts.download_enabled"
+#, c-format
 msgid ""
 "%s%s: download of scripts is disabled by default; to enable it, type /script "
 "enable"
 msgstr ""
-"%s%s: преузимање скрипти је подразумевано искључено; погледајте /help script."
-"scripts.download_enabled"
+"%s%s: преузимање скрипти је подразумевано искључено; ако желите да укључите, "
+"откуцајте /script enable"
 
-#, fuzzy, c-format
-#| msgid "%s: downloading list of scripts..."
+#, c-format
 msgid "%s: download of scripts enabled"
-msgstr "%s: преузимање листе скрипти..."
+msgstr "%s: преузимање скрипти је укључено"
 
 msgid "WeeChat script manager"
 msgstr "Менаџер WeeChat скрипти"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
-#, fuzzy
-#| msgid ""
-#| "list [-o|-ol|-i|-il] || search <text> || show <script> || load|unload|"
-#| "reload <script> [<script>...] || autoload|noautoload|toggleautoload "
-#| "<script> [<script>...] || install|remove|installremove|hold [-q] <script> "
-#| "[<script>...] || upgrade || update || -up|-down [<number>] || -go <line>|"
-#| "end"
 msgid ""
 "enable || list [-o|-ol|-i|-il] || search <text> || show <script> || load|"
 "unload|reload <script> [<script>...] || autoload|noautoload|toggleautoload "
 "<script> [<script>...] || install|remove|installremove|hold [-q] <script> "
 "[<script>...] || upgrade || update || -up|-down [<number>] || -go <line>|end"
 msgstr ""
-"list [-o|-ol|-i|-il] || search <текст> || show <скрипта> || load|unload|"
-"reload <скрипта> [<скрипта>...] || autoload|noautoload|toggleautoload "
+"enable || list [-o|-ol|-i|-il] || search <текст> || show <скрипта> || load|"
+"unload|reload <скрипта> [<скрипта>...] || autoload|noautoload|toggleautoload "
 "<скрипта> [<скрипта>...] || install|remove|installremove|hold [-q] <скрипта> "
 "[<скрипта>...] || upgrade || update || -up|-down [<број>] || -go <линија>|end"
 
-#, fuzzy
-#| msgid ""
-#| "%s%s: download of scripts is disabled by default; see /help script."
-#| "scripts.download_enabled"
 msgid ""
 "raw[enable]: enable download of scripts (turn on option script.scripts."
 "download_enabled)"
 msgstr ""
-"%s%s: преузимање скрипти је подразумевано искључено; погледајте /help script."
-"scripts.download_enabled"
+"raw[enable]: укључује преузимање скрипти (укључује опцију script.scripts."
+"download_enabled)"
 
 msgid "raw[list]: list loaded scripts (all languages)"
 msgstr "raw[list]: испис учитаних скрипти (на свим језицима)"
