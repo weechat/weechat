@@ -482,7 +482,7 @@ RELAY_REMOTE_EVENT_CALLBACK(buffer)
     char *full_name, str_number[64], *property;
     long long id;
     int number, nicklist, nicklist_case_sensitive, nicklist_display_groups;
-    int apply_props, input_position;
+    int apply_props, input_position, input_multiline;
 
     if (!event->json)
         return WEECHAT_RC_OK;
@@ -495,6 +495,7 @@ RELAY_REMOTE_EVENT_CALLBACK(buffer)
     JSON_GET_STR(event->json, title);
     JSON_GET_STR(event->json, input);
     JSON_GET_NUM(event->json, input_position, 0);
+    JSON_GET_BOOL(event->json, input_multiline);
     JSON_GET_BOOL(event->json, nicklist);
     JSON_GET_BOOL(event->json, nicklist_case_sensitive);
     JSON_GET_BOOL(event->json, nicklist_display_groups);
@@ -514,6 +515,8 @@ RELAY_REMOTE_EVENT_CALLBACK(buffer)
     weechat_hashtable_set (buffer_props, "input", input);
     snprintf (str_number, sizeof (str_number), "%d", input_position);
     weechat_hashtable_set (buffer_props, "input_pos", str_number);
+    weechat_hashtable_set (buffer_props, "input_multiline",
+                           (input_multiline) ? "1" : "0");
     weechat_hashtable_set (buffer_props, "nicklist", (nicklist) ? "1" : "0");
     weechat_hashtable_set (buffer_props, "nicklist_case_sensitive",
                            (nicklist_case_sensitive) ? "1" : "0");
