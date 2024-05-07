@@ -2536,8 +2536,7 @@ link:weechat_faq.sr.html#mouse[WeeChat ЧПП / Миш ^↗^^].
 
 Име догађаја се састоји од модификатора (није обавезан), имена тастера/точкића и гестикулације (није обавезна). Различити елементи се раздвајају са `+-+`.
 
-// TRANSLATION MISSING
-List of modifiers (by order in the event name):
+Листа модификатора (по редоследу имена догађаја):
 
 [width="100%", cols="1m,4", options="header"]
 |===
@@ -2547,13 +2546,11 @@ List of modifiers (by order in the event name):
 | shift       | Тастер kbd:[Shift] ^(1)^
 |===
 
-// TRANSLATION MISSING
 [NOTE]
-^(1)^ The `shift` modifier can rarely be used in WeeChat because many terminals
-use this modifier to catch directly mouse events.
+^(1)^ Модификатор `shift` може ретко да се користи у програму WeeChat јер га многи терминали
+користе за директно хватање догађаја миша.
 
-// TRANSLATION MISSING
-Several modifiers can be combined, for example:
+Неколико модификатора може да се комбинује, на пример:
 
 * `alt-ctrl`
 * `ctrl-shift`
@@ -5023,10 +5020,9 @@ y/${chars:a-z}${chars:A-Z}/${chars:b-z}a${chars:B-Z}A/
 | pos_text             | стринг    | Индекс _text_ у поруци („-1” ако се _text_ не пронађе).
 |===
 
-// TRANSLATION MISSING
 [NOTE]
-^(1)^ The nick is the sender of the message. +
-Your own nick on the server is `${irc_server.nick}`.
+^(1)^ nick је пошиљалац поруке. +
+Ваш надимак на серверу је `${irc_server.nick}`.
 
 Када су подаци показивач, за читање hdata особине може да се употреби променљива `+tg_signal_data+` на следећи начин (у овом примеру је то показивач на бафер):
 
