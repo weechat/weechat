@@ -47,6 +47,7 @@ New features::
   * relay: add support of websocket extension "permessage-deflate" (issue #1549)
   * relay: add command `/remote` to manage remote WeeChat relay servers and connect to them (issue #2066)
   * relay: add option relay.api.remote_get_lines (issue #2066)
+  * relay: change default value of option "relay.network.commands" to `*,!quit`
   * script: add option `enable` in command `/script`
   * script: add info "script_loaded"
 

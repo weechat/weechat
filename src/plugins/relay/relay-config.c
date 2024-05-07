@@ -1599,7 +1599,7 @@ relay_config_init ()
                "if the relay client is not safe (someone could use it to run "
                "commands); for example \"*,!exec,!quit\" allows any command "
                "except /exec and /quit"),
-            NULL, 0, 0, "", NULL, 0,
+            NULL, 0, 0, "*,!quit", NULL, 0,
             NULL, NULL, NULL,
             NULL, NULL, NULL,
             NULL, NULL, NULL);
