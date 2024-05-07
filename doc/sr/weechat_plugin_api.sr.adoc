@@ -516,14 +516,12 @@ str = weechat.ngettext("file", "files", num_files)
 
 _WeeChat ≥ 4.3.0._
 
-// TRANSLATION MISSING
-Format a message in a string allocated by the function.
+Форматира поруку у стрингу који је алоцирала функција.
 
-// TRANSLATION MISSING
 [NOTE]
-This function is defined for systems where the GNU function `asprintf()`
-is not available. +
-The behavior is almost the same except that `*result` is set to NULL on error.
+Ова функција је дефинисана за системе на којима није доступна GNU функција
+`asprintf()`. +
+Понашање је скоро исто, осим што се у случају грешке `*result` поставља на NULL.
 
 Прототип:
 
@@ -534,16 +532,13 @@ int weechat_asprintf (char **result, const char *fmt, ...);
 
 Аргументи:
 
-// TRANSLATION MISSING
-* _result_: pointer to a string pointer
-// TRANSLATION MISSING
-* _fmt_: format string
+* _result_: показивач на стринг показивач
+* _fmt_: стринг формата
 
 Повратна вредност:
 
-// TRANSLATION MISSING
-* number of bytes written in `*result` (excluding the final null byte),
-  a negative value in case of error.
+* број бајтова које уписан у `*result` (не рачунајући завршни null бајт),
+  негативна вредност у случају грешке.
 
 C пример:
 
@@ -643,10 +638,10 @@ _Ажурирано у верзији 3.8._
 Враћа стринг у којем су велика слова претворена у мала.
 
 [NOTE]
-Behavior has changed in version 3.8: now all uppercase letters are properly
-converted to lowercase (by calling function `towlower`), in addition to the
-range `A` to `Z`. +
-Moreover, a newly allocated string is returned and must be freed after use.
+Понашање је измењено у верзији 3.8: сада се сва велика слова исправно
+претварају у мала (позивом функције `towlower`), не само из опсега
+`A` до `Z`. +
+Уз то, враћа се ново алоцирани стринг и он мора да се ослободи након употребе.
 
 Прототип:
 
@@ -682,10 +677,10 @@ _Ажурирано у верзији 3.8._
 Враћа стринг у којем су мала слова претворена у велика.
 
 [NOTE]
-Behavior has changed in version 3.8: now all lowercase letters are properly
-converted to uppercase (by calling function `towupper`), in addition to the
-range `a` to `z`. +
-Moreover, a newly allocated string is returned and must be freed after use.
+Понашање је измењено у верзији 3.8: сада се сва велика слова исправно
+претварају у мала (позивом функције `towupper`), не само из опсега
+`a` до `z`. +
+Уз то, враћа се ново алоцирани стринг и он мора да се ослободи након употребе.
 
 Прототип:
 
@@ -795,7 +790,7 @@ int diff = weechat_string_charcasecmp ("aaa", "CCC");  /* == -2 */
 
 _WeeChat ≥ 3.8._
 
-Case sensitive string comparison.
+Поређење стрингова које разликује величину слова.
 
 Прототип:
 
@@ -2296,8 +2291,7 @@ char *weechat_string_remove_color (const char *string, const char *replacement);
 Аргументи:
 
 * _string_: стринг
-// TRANSLATION MISSING
-* _replacement_: if not NULL and not empty, WeeChat color codes are replaced by this string, otherwise WeeChat color codes and following chars (if related to color) are removed from string
+* _replacement_: ако није NULL и ако није празно, овај стринг замењује WeeChat кодове боје, у супротном се WeeChat кодови боје и наредни карактери (ако су у вези са бојом) уклањају из стринга
 
 Повратна вредност:
 
@@ -2307,12 +2301,12 @@ C примери:
 
 [source,c]
 ----
-/* remove color codes */
+/* уклони кодове боје */
 char *str = weechat_string_remove_color (my_string1, NULL);
 /* ... */
 free (str);
 
-/* replace color codes by "?" */
+/* замени кодове боје са „?” */
 char *str = weechat_string_remove_color (my_string2, "[color]");
 /* ... */
 free (str);
@@ -6418,49 +6412,49 @@ int config_file_set_version (struct t_config_file *config_file,
 
 Аргументи:
 
-* _config_file_: configuration file pointer
-* _version_: version, must be ≥ 2
-* _callback_update_: function called when configuration file is read, for each
-  section and each option, if the version read is less than the expected version,
-  (optional, can be NULL, see below), arguments and return value:
-** _const void *pointer_: pointer
-** _void *data_: pointer
-** _struct t_config_file *config_file_: configuration file pointer
-** _int version_read_: version read in configuration file (1 by default)
-** _struct t_hashtable *data_read_: hashtable with data read from configuration file
-   (see below)
-** return value:
-*** either "data_read" pointer (hashtable completed), or pointer to a new
-    hashtable (created by callback, with keys and values of type "string")
-* _callback_update_pointer_: pointer given to callback when it is called by
-  WeeChat
-* _callback_update_data_: pointer given to callback when it is called by
-  WeeChat; if not NULL, it must have been allocated with malloc (or similar
-  function) and it is automatically freed when the configuration file is freed
+* _config_file_: показивач на конфигурациони фајл
+* _version_: верзија, мора бити ≥ 2
+* _callback_update_: функција која се позива када се чита конфигурациони фајл, за сваки
+  одељак и сваку опцију, ако је прочитана верзија мања од очекиване верзије,
+  (није обавезно, ноже да буде NULL, погледајте испод), аргументи и повратна вредност:
+** _const void *pointer_: показивач
+** _void *data_: показивач
+** _struct t_config_file *config_file_: показивач на конфигурациони фајл
+** _int version_read_: верзија прочитана у конфигурационом фајлу (подразумевано 1)
+** _struct t_hashtable *data_read_: хеш табела са подацима прочитаним из конфигурационом
+   фајлу (погледајте испод)
+** повратна вредност:
+*** или „data_read” показивач (довршена хеш табелом), или показивача на нову
+    хеш табелу (коју је креирала функција повратног позива, са кључевима и вредностима типа „string”)
+* _callback_update_pointer_: показивач који се прослеђује функцији повратног позива када је
+  позове WeeChat
+* _callback_update_data_: показивач који се прослеђује функцији повратног позива када је
+  позове WeeChat; ако није NULL, мора да је алоциран са malloc (или сличном функцијом)
+  и аутоматски се ослобађа када се ослободи конфигурациони фајл
 
-Update callback:
+Функција повратног позива за ажурирање:
 
-* The callback receives a hashtable with data read from configuration file:
+* Функција повратног озива прихвата хеш табелу са подацима прочитаним из конфигурационог фајла:
 
 [width="100%",cols="1m,2,8",options="header"]
 |===
-| Key        | Availability    | Value
-| config     | Always set      | Name of configuration file, without extension (eg: `weechat`)
-| section    | Always set      | Name of section being read
-| option     | For option only | Name of the option
-| value      | For option only | Value of the option (if not NULL)
-| value_null | For option only | Option as NULL value (value is always `1`)
+| Кључ       | Доступност      | Вредност
+| config     | Увек постављено | Име конфигурационог фајла, без екстензије (нпр.: `weechat`)
+| section    | Увек постављено | Име одељка који се чита
+| option     | Само за опцију  | Име опције
+| value      | Само за опцију  | Вредност опције (ако није NULL)
+| value_null | Само за опцију  | Опција као NULL вредност (вредност је увек `1`)
 |===
 
-* The callback can update "section" for a line with a section and "option", "value"
-  and "value_null" for a line with an option.
-* If "option" is set to empty string by the callback, the line read in
-  configuration file is ignored.
-* Field "value_null" is set to force a NULL value for the option.
+* Функција повратног позива може да ажурира „section” за линију са одељком и „option”, „value”
+  и „value_null” за линију са опцијом.
+* Ако је функција повратног позива поставила „option” на празан стринг, игнорише се линија
+  прочитана из конфигурационог фајла.
+* Поље „value_null” се поставља да би се за опцију форсирала NULL вредност.
 
 Повратна вредност:
 
-* 1 if OK, 0 if error
+* 1 ако је OK, 0 у случају грешке
 
 C пример:
 
@@ -6474,46 +6468,46 @@ my_config_update_cb (const void *pointer, void *data,
 {
     const char *ptr_section, *ptr_option;
 
-    /* return now if version is already up-to-date */
+    /* врати се сад ако је верзија већ ажурна */
     if (version_read >= 2)
         return NULL;
 
     ptr_section = hashtable_get (data_read, "section");
     ptr_option = hashtable_get (data_read, "option");
 
-    /* rename section "abc" to "def" */
+    /* промени име одељка „abc” на „def” */
     if (ptr_section && !ptr_option && (strcmp (ptr_section, "abc") == 0))
     {
         hashtable_set (data_read, "section", "def");
         return data_read;
     }
 
-    /* limit other changes to section "test" */
+    /* ограничи остале измене на одељак „test” */
     if (!ptr_section || !ptr_option || (strcmp (ptr_section, "test") != 0))
         return NULL;
 
-    /* rename option "test1" to "test2" */
+    /* промени име опције „test1” на „test2” */
     if (strcmp (ptr_option, "test1") == 0)
     {
         hashtable_set (data_read, "option", "test2");
         return data_read;
     }
 
-    /* set value to "xxx" for option "test" */
+    /* постави вредност опције „test” на „xxx” */
     if (strcmp (ptr_option, "test") == 0)
     {
         hashtable_set (data_read, "value", "xxx");
         return data_read;
     }
 
-    /* set value to NULL for option "test_null" */
+    /* постави вредност опције „test_null” на NULL */
     if (strcmp (ptr_option, "test_null") == 0)
     {
         hashtable_set (data_read, "value_null", "1");
         return data_read;
     }
 
-    /* no changes */
+    /* нема измена */
     return NULL;
 }
 
@@ -6531,23 +6525,23 @@ def config_set_version(config_file: str, version: int, callback_update: str, cal
 
 # пример
 def my_config_update_cb(data: str, config_file: str, version_read: int, data_read: Dict[str, str]) -> Dict[str, str]:
-    # return now if version is already up-to-date
+    # врати се сад ако је верзија већ ажурна
     if version_read >= 2:
         return {}
 
     section = data_read.get("section")
     option = data_read.get("option")
 
-    # rename section "abc" to "def"
+    # промени име одељка „abc” на „def”
     if section and not option and section == "abc":
         data_read["section"] = "def"
         return data_read
 
-    # limit other changes to section "test"
+    # ограничи остале измене на одељак „test”
     if not section or not option or section != "test":
         return {}
 
-    # rename option "test1" to "test2"
+    # промени име опције „test1” на „test2” */
     if option == "test1":
         data_read["option"] = "test2"
         return data_read
@@ -6557,7 +6551,7 @@ def my_config_update_cb(data: str, config_file: str, version_read: int, data_rea
         data_read["value"] = "xxx"
         return data_read
 
-    # set value to NULL for option "test_null"
+    # постави вредност опције „test_null” на NULL
     if option == "test_null":
         data_read["value_null"] = "1"
         return data_read
@@ -7169,7 +7163,7 @@ void weechat_config_search_section_option (struct t_config_file *config_file,
 * _section_: показивач на одељак
 * _option_name_: име опције
 * _section_found_: показивач на показивач одељка, ако се пронађе, поставиће се на одељак опције
-* _option_found_: показивач на показивач опције, ако се пронађе, поставићесе на показивач опције
+* _option_found_: показивач на показивач опције, ако се пронађе, поставиће се на показивач опције
 
 C пример:
 
@@ -7855,15 +7849,14 @@ if weechat.config_boolean_default(option):
     # ...
 ----
 
-// TRANSLATION MISSING
 ==== config_boolean_inherited
 
 _WeeChat ≥ 4.3.0._
 
-Return inherited boolean value of option: value of option if not NULL,
-or value of the parent option (if option inherits from another option). +
-If the parent option is not found, return the default value of the option. +
-If the parent value is NULL, return the default value of the parent option.
+Враћа наслећену логичку вредност опције: вредност опције ако није NULL,
+или вредност опције-родитеља (ако опција наслеђује вредност од друге опције). +
+Ако се не пронађе опција-родитељ, враћа се подразумевана вредност опције. +
+Ако је вредност опције-родитеља NULL, враћа се подразумевана вредност опције-родитеља.
 
 Прототип:
 
@@ -7876,7 +7869,7 @@ int weechat_config_boolean_inherited (struct t_config_option *option);
 
 * _option_: показивач на опцију
 
-Return value: see functions <<_config_boolean,config_boolean>> and
+Повратна вредност: погледајте функције <<_config_boolean,config_boolean>> и
 <<_config_boolean_default,config_boolean_default>>.
 
 C пример:
@@ -7914,13 +7907,13 @@ int weechat_config_integer (struct t_config_option *option);
 
 * _option_: показивач на опцију
 
-Return value, depending on the option type:
+Повратна вредност, у зависности од типа опције:
 
-* _boolean_: boolean value of option (0 or 1)
-* _integer_: integer value of option
+* _boolean_: логичка вредност опције (0 or 1)
+* _integer_: целобројна вредност опције
 * _string_: 0
-* _color_: color index
-* _enum_: integer value of option (index of enum value)
+* _color_: индекс боје
+* _enum_: целобројна вредност опције (индекс enum вредности)
 
 C пример:
 
@@ -8028,15 +8021,14 @@ option = weechat.config_get("plugin.section.option")
 value = weechat.config_integer_default(option)
 ----
 
-// TRANSLATION MISSING
 ==== config_integer_inherited
 
 _WeeChat ≥ 4.3.0._
 
-Return inherited integer value of option: value of option if not NULL,
-or value of the parent option (if option inherits from another option). +
-If the parent option is not found, return the default value of the option. +
-If the parent value is NULL, return the default value of the parent option.
+Враћа наслеђену целобројну вредност опције: вредност опције ако није NULL,
+или вредност опције-родитеља (ако опција наслеђује вредност од друге опције). +
+Ако се не пронађе опција-родитељ, враћа се подразумевана вредност опције. +
+Ако је вредност опције-родитељ NULL, враћа подразумевану вредност опције-родитеља.
 
 Прототип:
 
@@ -8049,7 +8041,7 @@ int weechat_config_integer_inherited (struct t_config_option *option);
 
 * _option_: показивач на опцију
 
-Return value: see functions <<_config_integer,config_integer>> and
+Повратна вредност: погледајте функције <<_config_integer,config_integer>> и
 <<_config_integer_default,config_integer_default>>.
 
 C пример:
@@ -8158,15 +8150,14 @@ option = weechat.config_get("plugin.section.option")
 value = weechat.config_string_default(option)
 ----
 
-// TRANSLATION MISSING
 ==== config_string_inherited
 
 _WeeChat ≥ 4.3.0._
 
-Return inherited string value of option: value of option if not NULL,
-or value of the parent option (if option inherits from another option). +
-If the parent option is not found, return the default value of the option. +
-If the parent value is NULL, return the default value of the parent option.
+Враћа наслеђену стринг вредност опције: вредност опције ако није NULL,
+или вредност опције-родитеља (ако опција наслеђује вредност од друге опције). +
+Ако се не пронађе опција-родитељ, враћа се подразумевана вредност опције. +
+Ако је вредност опције-родитељ NULL, враћа подразумевану вредност опције-родитеља.
 
 Прототип:
 
@@ -8179,7 +8170,7 @@ const char *weechat_config_string_inherited (struct t_config_option *option);
 
 * _option_: показивач на опцију
 
-Return value: see functions <<_config_string,config_string>> and
+Повратна вредност: погледај функције <<_config_string,config_string>> и
 <<_config_string_default,config_string_default>>.
 
 C пример:
@@ -8288,15 +8279,14 @@ option = weechat.config_get("plugin.section.option")
 color = weechat.config_color_default(option)
 ----
 
-// TRANSLATION MISSING
 ==== config_color_inherited
 
 _WeeChat ≥ 4.3.0._
 
-Return inherited color value of option: value of option if not NULL,
-or value of the parent option (if option inherits from another option). +
-If the parent option is not found, return the default value of the option. +
-If the parent value is NULL, return the default value of the parent option.
+Враћа наслеђену вредност боје опције: вредност опције ако није NULL,
+или вредност опције-родитеља (ако опција наслеђује вредност од друге опције). +
+Ако се не пронађе опција-родитељ, враћа се подразумевана вредност опције. +
+Ако је вредност опције-родитељ NULL, враћа подразумевану вредност опције-родитеља.
 
 Прототип:
 
@@ -8309,7 +8299,7 @@ const char *weechat_config_color_inherited (struct t_config_option *option);
 
 * _option_: показивач на опцију
 
-Return value: see functions <<_config_color,config_color>> and
+Повратна вредност: погледајте функције <<_config_color,config_color>> и
 <<_config_color_default,config_color_default>>.
 
 C пример:
@@ -8422,15 +8412,14 @@ option = weechat.config_get("plugin.section.option")
 value = weechat.config_enum_default(option)
 ----
 
-// TRANSLATION MISSING
 ==== config_enum_inherited
 
 _WeeChat ≥ 4.3.0._
 
-Return inherited enum value of option: value of option if not NULL,
-or value of the parent option (if option inherits from another option). +
-If the parent option is not found, return the default value of the option. +
-If the parent value is NULL, return the default value of the parent option.
+Враћа наслеђену enum вредност опције: вредност опције ако није NULL,
+или вредност опције-родитеља (ако опција наслеђује вредност од друге опције). +
+Ако се не пронађе опција-родитељ, враћа се подразумевана вредност опције. +
+Ако је вредност опције-родитељ NULL, враћа подразумевану вредност опције-родитеља.
 
 Прототип:
 
@@ -8443,7 +8432,7 @@ int weechat_config_enum_inherited (struct t_config_option *option);
 
 * _option_: показивач на опцију
 
-Return value: see functions <<_config_enum,config_enum>> and
+Повратна вредност: погледајте функције <<_config_enum,config_enum>> и
 <<_config_enum_default,config_enum_default>>.
 
 C пример:
@@ -12989,12 +12978,11 @@ char *weechat_hook_modifier_exec (const char *modifier,
 | Стринг са неозначеном вредности IRC ознаке,
   погледајте https://ircv3.net/specs/extensions/message-tags#escaping-values[ову страницу ^↗^^].
 
-// TRANSLATION MISSING
 | [[hook_modifier_color_decode]] color_decode | 4.3.0
-| Replacement string for colors removed
-| Any string.
-| String with WeeChat colors converted to a replacement string
-  (colors stripped if the replacement string is empty).
+| Стринг замене за уклоњене боје
+| Било који стринг.
+| Стринг са WeeChat бојама се претвара у стринг замене
+  (боје се уклањају ако је стринг замене празан).
 
 | [[hook_modifier_color_decode_ansi]] color_decode_ansi | 1.0
 | "1" да се боје задрже, "0" да се боје уклоне
@@ -13943,8 +13931,7 @@ weechat.prnt(weechat.current_buffer(), "Текст у текућем бафер�
 
 _Ажурирано у верзији 1.0, 4.3.0._
 
-// TRANSLATION MISSING
-Search a buffer by plugin/name, full name or unique identifier (`id`).
+Претражује бафер на додатак/име, пуно име или јединствени идентификатор (`id`).
 
 Прототип:
 
@@ -13956,11 +13943,9 @@ struct t_gui_buffer *weechat_buffer_search (const char *plugin,
 
 Аргументи:
 
-// TRANSLATION MISSING
-* _plugin_: name of plugin, following special values are allowed:
+* _plugin_: име додатка, доступне су следеће специјалне вредности:
 ** `+==+`: име које се користи је пуно име бафера (на пример: `irc.libera.#weechat` уместо `libera.#weechat`) _(WeeChat ≥ 1.0)_
-// TRANSLATION MISSING
-** `+==id+`: the name used is the buffer unique identifier (`id`) _(WeeChat ≥ 4.3.0)_
+** `+==id+`: име које се користи је јединствени идентификатор бафера (`id`) _(WeeChat ≥ 4.3.0)_
 * _name_: име бафера, ако је NULL или празан стринг, враћа се текући бафер (бафер који се приказује у текућем прозору); ако име почиње са `(?i)`, претрага не прави разлику у величини слова _(WeeChat ≥ 1.0)_
 
 Повратна вредност:
@@ -14219,8 +14204,7 @@ int weechat_buffer_get_integer (struct t_gui_buffer *buffer,
 ** _nicklist_nicks_count_: број надимака у листи надимака
 ** _nicklist_nicks_visible_count_: број приказаних надимака
 ** _input_: 1 ако је укључен унос, у супротном 0
-// TRANSLATION MISSING
-** _input_get_any_user_data_: 1 if any user data, including commands, are sent to input callback, otherwise 0
+** _input_get_any_user_data_: 1 ако се било који кориснички подаци, укљуљчујући команде, шаљу функцији повратног позива уноса, иначе 0
 ** _input_get_unknown_commands_: 1 ако се непознате команде шаљу функцији повратног позива уноса, у супротном 0
 ** _input_get_empty_: 1 ако се функцији повратног позива уноса шаље празан унос, у супротном 0
 ** _input_multiline_: 1 ако се више линија шаље као једна порука функцији повратног позива уноса, у супротном 0
@@ -14288,8 +14272,7 @@ const char *weechat_buffer_get_string (struct t_gui_buffer *buffer,
 
 * _buffer_: показивач на бафер
 * _property_: име особине:
-// TRANSLATION MISSING
-** _id_: unique identifier _(WeeChat ≥ 4.3.0)_
+** _id_: јединствени идентификатор _(WeeChat ≥ 4.3.0)_
 ** _plugin_: име додатка који је креирао овај бафер („core” за главни бафер програма WeeChat)
 ** _name_: име бафера
 ** _full_name_: пуно име бафера („додатак.име”) _(WeeChat ≥ 0.3.7)_
@@ -14297,8 +14280,7 @@ const char *weechat_buffer_get_string (struct t_gui_buffer *buffer,
 ** _short_name_: кратко име бафера (напомена: користи се само за приказ и корисник може да га промени, ово не сме да се употребљава за проналажење имена бафера, уместо њега употребите _name_, _full_name_ или локалну променљиву _channel_)
 ** _type_: тип бафера: „formatted” или „free” _(WeeChat ≥ 4.2.0)_
 ** _title_: наслов бафера
-// TRANSLATION MISSING
-** _nicklist_last_id_assigned_: last unique identifier used in this buffer for a group or nick _(WeeChat ≥ 4.3.0)_
+** _nicklist_last_id_assigned_: последњи јединствени идентификатор употребљен у овом баферу за групу или надимак _(WeeChat ≥ 4.3.0)_
 ** _input_: текст уноса
 ** _text_search_input_: сачувани унос пре претраге текста
 ** _highlight_words_: листа речи које се истичу
@@ -14541,10 +14523,9 @@ void weechat_buffer_set (struct t_gui_buffer *buffer, const char *property,
 | input_pos | | позиција
 | Поставља позицију курсора у уносу бафера.
 
-// TRANSLATION MISSING
-| input_get_any_user_data | 4.3.0 | "0" or "1"
-| "0" to get only user messages (default behavior), "1" to get everything,
-  including commands.
+| input_get_any_user_data | 4.3.0 | "0" или "1"
+| "0" да се прихвате само корисничке поруке (подразумевано понашање), "1" да се прихвати све,
+  укључујући и команде.
 
 | input_get_unknown_commands | | "0" или "1"
 | "0" да се за овај бафер искључе непознате команде (подразумевано понашање), "1" да
@@ -15087,8 +15068,7 @@ group = weechat.nicklist_add_group(my_buffer, my_parent_group, "test_group",
 
 _Ажурирано у верзији 4.3.0._
 
-// TRANSLATION MISSING
-Search a group in a nicklist by name or unique identifier (`id`).
+Претражује групу у листи надимака по имену или јединственом идентификатору (`id`).
 
 Прототип:
 
@@ -15103,9 +15083,8 @@ struct t_gui_nick_group *weechat_nicklist_search_group (struct t_gui_buffer *buf
 
 * _buffer_: показивач на бафер
 * _from_group_: тражи само од ове групе, ако је NULL, онда се претражује цела листа надимака
-// TRANSLATION MISSING
-* _name_: group name to search; with WeeChat ≥ 4.3.0, a unique identifier can
-  be given with the format: `==id:xxx` (where `xxx` is the identifier)
+* _name_: име групе која се тражи; са WeeChat ≥ 4.3.0, јединствени идентификатор може да се
+  наведе у следећем формату: `==id:xxx` (где је `xxx` идентификатор)
 
 Повратна вредност:
 
@@ -15209,8 +15188,7 @@ nick = weechat.nicklist_add_nick(my_buffer, my_group, "test_nick", color, "@", "
 
 _Ажурирано у верзији 4.3.0._
 
-// TRANSLATION MISSING
-Search a nick in a nicklist by name or unique identifier (`id`).
+Претражује надимак у листи надимака по имену или јединственом идентификатору (`id`).
 
 Прототип:
 
@@ -15225,9 +15203,8 @@ struct t_gui_nick *weechat_nicklist_search_nick (struct t_gui_buffer *buffer,
 
 * _buffer_: показивач на бафер
 * _from_group_: тражи само од ове групе, ако је NULL, онда се претражује цела листа надимака
-// TRANSLATION MISSING
-* _name_: nick name to search; with WeeChat ≥ 4.3.0, a unique identifier can
-  be given with the format: `==id:xxx` (where `xxx` is the identifier)
+* _name_: име надимка који се тражи; са WeeChat ≥ 4.3.0, јединствени идентификатор може да се
+  наведе у следећем формату: `==id:xxx` (где је `xxx` идентификатор)
 
 Повратна вредност:
 
@@ -15473,8 +15450,7 @@ const char *weechat_nicklist_group_get_string (struct t_gui_buffer *buffer,
 * _buffer_: показивач на бафер
 * _group_: показивач на групу
 * _property_: име особине:
-// TRANSLATION MISSING
-** _id_: unique identifier _(WeeChat ≥ 4.3.0)_
+** _id_: јединствени идентификатор _(WeeChat ≥ 4.3.0)_
 ** _name_: име групе
 ** _color_: боја групе у листи надимака
 
@@ -15571,13 +15547,11 @@ void weechat_nicklist_group_set (struct t_gui_buffer *buffer,
 
 [width="100%", cols="^2,^1,4,8", options="header"]
 |===
-// TRANSLATION MISSING
-| Име | Min WeeChat | Вредност | Опис
+| Име | Мин WeeChat | Вредност | Опис
 
-// TRANSLATION MISSING
 | id | 4.3.0 | long long integer ≥ 0
-| New id for the group (it must be unique in the buffer). +
-  Note: it is not recommended to change this identifier.
+| Нови id за групу (мора да биде јединствен за бафер). +
+  Напомена: не препоручује се да мењате овај идентификатор.
 
 | color | | Име опције WeeChat боје
 | Погледајте аргумент „color” функције <<_nicklist_add_group,nicklist_add_group>>.
@@ -15683,8 +15657,7 @@ const char *weechat_nicklist_nick_get_string (struct t_gui_buffer *buffer,
 * _buffer_: показивач на бафер
 * _nick_: показивач на надимак
 * _property_: име особине:
-// TRANSLATION MISSING
-** _id_: unique identifier _(WeeChat ≥ 4.3.0)_
+** _id_: јединствени идентификатор _(WeeChat ≥ 4.3.0)_
 ** _name_: име надимка
 ** _color_: боја надимка у листи надимака
 ** _prefix_: префикс надимка
@@ -15783,13 +15756,11 @@ void weechat_nicklist_nick_set (struct t_gui_buffer *buffer,
 
 [width="100%", cols="^2,^1,4,8", options="header"]
 |===
-// TRANSLATION MISSING
-| Име | Min WeeChat | Вредност | Опис
+| Име | Мин WeeChat | Вредност | Опис
 
-// TRANSLATION MISSING
 | id | 4.3.0 | long long integer ≥ 0
-| New id for the nick (it must be unique in the buffer). +
-  Note: it is not recommended to change this identifier.
+| Нови id за надимак (мора да буде јединствен за бафер). +
+  Напомена: не препоручује се да мењате овај идентификатор.
 
 | color | | име опције WeeChat боје
 | Погледајте аргумент „color” функције <<_nicklist_add_nick,nicklist_add_nick>>.
@@ -16300,10 +16271,9 @@ int weechat_command (struct t_gui_buffer *buffer, const char *command);
 * _buffer_: показивач на бафер (команда се извршава у овом баферу, употребите NULL за текући бафер)
 * _command_: команда која се извршава (ако почиње са „/”), или текст који се шаље у бафер
 
-// TRANSLATION MISSING
 [NOTE]
-On buffer with `input_multiline` set to `0` (default), only the first command
-is executed (before the first newline char: `\n`).
+За бафер којем је `input_multiline` постављено на `0` (подразумевано), извршава се само прва
+команда (пре првог карактера прелома реда: `\n`).
 
 Повратна вредност _(WeeChat ≥ 1.1)_:
 
@@ -16351,8 +16321,7 @@ int weechat_command_options (struct t_gui_buffer *buffer, const char *command,
 * _options_: хеш табела са неким опцијама (кључеви и вредности морају бити стринг) (може да буде NULL):
 ** _commands_: листа команди које смеју да се изврше током овог позива раздвојене запетама; за формат, погледајте функцију <<_string_match_list,string_match_list>>
 ** _delay_: пауза за извршавање команде, у милисекундама
-// TRANSLATION MISSING
-** _split_newline_: `1` to split commands on newline char (`\n`) (_WeeChat ≥ 4.0.0_)
+** _split_newline_: `1` да се команде поделе на карактеру прелома линије (`\n`) (_WeeChat ≥ 4.0.0_)
 
 Повратна вредност:
 
@@ -18644,8 +18613,7 @@ weechat.prnt("", "longvar = %d" % weechat.hdata_long(hdata, pointer, "longvar"))
 
 _WeeChat ≥ 4.3.0._
 
-// TRANSLATION MISSING
-Return value of "long long" variable in structure using hdata.
+Повратна вредност „long long” променљиве у структури користећи hdata.
 
 Прототип:
 
@@ -18662,8 +18630,7 @@ long long weechat_hdata_longlong (struct t_hdata *hdata, void *pointer, const ch
 
 Повратна вредност:
 
-// TRANSLATION MISSING
-* "long long" value of variable
+* „long long” вредност променљиве
 
 C пример:
 
