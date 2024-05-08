@@ -224,13 +224,13 @@ gui_input_search_signal (struct t_gui_buffer *buffer)
 void
 gui_input_set_pos (struct t_gui_buffer *buffer, int pos)
 {
-    if ((pos >= 0) && (buffer->input_buffer_pos != pos))
-    {
-        buffer->input_buffer_pos = pos;
-        if (buffer->input_buffer_pos > buffer->input_buffer_length)
-            buffer->input_buffer_pos = buffer->input_buffer_length;
-        gui_input_text_cursor_moved_signal (buffer);
-    }
+    if (!buffer || (pos < 0) || (buffer->input_buffer_pos == pos))
+        return;
+
+    buffer->input_buffer_pos = pos;
+    if (buffer->input_buffer_pos > buffer->input_buffer_length)
+        buffer->input_buffer_pos = buffer->input_buffer_length;
+    gui_input_text_cursor_moved_signal (buffer);
 }
 
 /*
