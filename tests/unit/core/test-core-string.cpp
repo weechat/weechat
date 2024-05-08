@@ -899,7 +899,7 @@ TEST(CoreString, Match)
 
 /*
  * Tests functions:
- *   string_match
+ *   string_match_list
  */
 
 TEST(CoreString, MatchList)
