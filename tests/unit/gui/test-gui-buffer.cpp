@@ -1003,6 +1003,16 @@ TEST(GuiBuffer, SetType)
 
 /*
  * Tests functions:
+ *   gui_buffer_set_notify
+ */
+
+TEST(GuiBuffer, SetNotify)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
  *   gui_buffer_set_title
  */
 

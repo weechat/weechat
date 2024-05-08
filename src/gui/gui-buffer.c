@@ -1737,6 +1737,46 @@ gui_buffer_set_type (struct t_gui_buffer *buffer, enum t_gui_buffer_type type)
 }
 
 /*
+ * Sets notify for a buffer.
+ */
+
+void
+gui_buffer_set_notify (struct t_gui_buffer *buffer, const char *notify)
+{
+    const char *ptr_notify;
+    char *error;
+    long number;
+    int mute_old;
+
+    if (!buffer)
+        return;
+
+    ptr_notify = NULL;
+    error = NULL;
+    number = strtol (notify, &error, 10);
+    if (error && !error[0])
+    {
+        if (number < GUI_BUFFER_NUM_NOTIFY)
+        {
+            if (number < 0)
+                number = CONFIG_ENUM(config_look_buffer_notify_default);
+            ptr_notify = gui_buffer_notify_string[number];
+        }
+    }
+    else
+    {
+        ptr_notify = notify;
+    }
+    if (ptr_notify)
+    {
+        mute_old = gui_chat_mute;
+        gui_chat_mute = GUI_CHAT_MUTE_ALL_BUFFERS;
+        config_weechat_notify_set (buffer, ptr_notify);
+        gui_chat_mute = mute_old;
+    }
+}
+
+/*
  * Sets title for a buffer.
  */
 
@@ -2447,10 +2487,8 @@ void
 gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
                 const char *value)
 {
-    int gui_chat_mute_old;
     long number;
     char *error;
-    const char *ptr_notify;
 
     if (!property || !value)
         return;
@@ -2575,29 +2613,7 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
     }
     else if (strcmp (property, "notify") == 0)
     {
-        ptr_notify = NULL;
-        error = NULL;
-        number = strtol (value, &error, 10);
-        if (error && !error[0])
-        {
-            if (number < GUI_BUFFER_NUM_NOTIFY)
-            {
-                if (number < 0)
-                    number = CONFIG_ENUM(config_look_buffer_notify_default);
-                ptr_notify = gui_buffer_notify_string[number];
-            }
-        }
-        else
-        {
-            ptr_notify = value;
-        }
-        if (ptr_notify)
-        {
-            gui_chat_mute_old = gui_chat_mute;
-            gui_chat_mute = GUI_CHAT_MUTE_ALL_BUFFERS;
-            config_weechat_notify_set (buffer, ptr_notify);
-            gui_chat_mute = gui_chat_mute_old;
-        }
+        gui_buffer_set_notify (buffer, value);
     }
     else if (strcmp (property, "title") == 0)
     {
