@@ -973,6 +973,16 @@ TEST(GuiBuffer, AskChatRefresh)
 
 /*
  * Tests functions:
+ *   gui_buffer_set_day_change
+ */
+
+TEST(GuiBuffer, SetDayChange)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
  *   gui_buffer_set_name
  */
 

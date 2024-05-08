@@ -1609,6 +1609,22 @@ gui_buffer_ask_chat_refresh (struct t_gui_buffer *buffer, int refresh)
 }
 
 /*
+ * Sets day_change for a buffer.
+ */
+
+void
+gui_buffer_set_day_change (struct t_gui_buffer *buffer, int day_change)
+{
+    day_change = (day_change) ? 1 : 0;
+
+    if (!buffer || (buffer->day_change == day_change))
+        return;
+
+    buffer->day_change = day_change;
+    gui_buffer_ask_chat_refresh (buffer, 2);
+}
+
+/*
  * Sets name for a buffer.
  */
 
@@ -2516,10 +2532,7 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
         error = NULL;
         number = strtol (value, &error, 10);
         if (error && !error[0])
-        {
-            buffer->day_change = (number) ? 1 : 0;
-            gui_buffer_ask_chat_refresh (buffer, 2);
-        }
+            gui_buffer_set_day_change (buffer, number);
     }
     else if (strcmp (property, "clear") == 0)
     {
