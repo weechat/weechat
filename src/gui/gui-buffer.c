@@ -1798,10 +1798,12 @@ void
 gui_buffer_set_time_for_each_line (struct t_gui_buffer *buffer,
                                    int time_for_each_line)
 {
-    if (!buffer)
+    time_for_each_line = (time_for_each_line) ? 1 : 0;
+
+    if (!buffer || (buffer->time_for_each_line == time_for_each_line))
         return;
 
-    buffer->time_for_each_line = (time_for_each_line) ? 1 : 0;
+    buffer->time_for_each_line = time_for_each_line;
     gui_buffer_ask_chat_refresh (buffer, 2);
 }
 
