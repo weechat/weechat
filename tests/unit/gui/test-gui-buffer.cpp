@@ -1209,6 +1209,16 @@ TEST(GuiBuffer, RemoveHotlistMaxLevelNicks)
 
 /*
  * Tests functions:
+ *   gui_buffer_set_input
+ */
+
+TEST(GuiBuffer, SetInput)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
  *   gui_buffer_set_input_get_any_user_data
  */
 

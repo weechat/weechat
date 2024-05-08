@@ -2274,6 +2274,23 @@ gui_buffer_remove_hotlist_max_level_nicks (struct t_gui_buffer *buffer,
 }
 
 /*
+ * Sets buffer input.
+ */
+
+void
+gui_buffer_set_input (struct t_gui_buffer *buffer, const char *input)
+{
+    if (!buffer || (string_strcmp (buffer->input_buffer, input) == 0))
+        return;
+
+    gui_buffer_undo_snap (buffer);
+    gui_input_replace_input (buffer, input);
+    gui_input_text_changed_modifier_and_signal (buffer,
+                                                1, /* save undo */
+                                                1); /* stop completion */
+}
+
+/*
  * Sets flag "input_get_any_user_data" for a buffer.
  */
 
@@ -2677,11 +2694,7 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
     }
     else if (strcmp (property, "input") == 0)
     {
-        gui_buffer_undo_snap (buffer);
-        gui_input_replace_input (buffer, value);
-        gui_input_text_changed_modifier_and_signal (buffer,
-                                                    1, /* save undo */
-                                                    1); /* stop completion */
+        gui_buffer_set_input (buffer, value);
     }
     else if (strcmp (property, "input_pos") == 0)
     {
