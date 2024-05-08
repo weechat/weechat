@@ -1631,11 +1631,7 @@ gui_buffer_set_day_change (struct t_gui_buffer *buffer, int day_change)
 void
 gui_buffer_set_name (struct t_gui_buffer *buffer, const char *name)
 {
-    if (!buffer || !name || !name[0])
-        return;
-
-    /* same name? */
-    if (buffer->name && (strcmp (buffer->name, name) == 0))
+    if (!buffer || !name || !name[0] || (string_strcmp (buffer->name, name) == 0))
         return;
 
     /*
