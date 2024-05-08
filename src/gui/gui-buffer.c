@@ -1666,22 +1666,10 @@ gui_buffer_set_name (struct t_gui_buffer *buffer, const char *name)
 void
 gui_buffer_set_short_name (struct t_gui_buffer *buffer, const char *short_name)
 {
-    if (!buffer)
+    if (!buffer || (string_strcmp (buffer->short_name, short_name) == 0))
         return;
 
-    /* same short name? */
-    if ((!buffer->short_name && !short_name)
-        || (buffer->short_name && short_name
-            && (strcmp (buffer->short_name, short_name) == 0)))
-    {
-        return;
-    }
-
-    if (buffer->short_name)
-    {
-        free (buffer->short_name);
-        buffer->short_name = NULL;
-    }
+    free (buffer->short_name);
     buffer->short_name = (short_name && short_name[0]) ?
         strdup (short_name) : NULL;
 
