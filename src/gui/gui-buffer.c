@@ -1845,10 +1845,12 @@ void
 gui_buffer_set_nicklist_display_groups (struct t_gui_buffer *buffer,
                                         int display_groups)
 {
-    if (!buffer)
+    display_groups = (display_groups) ? 1 : 0;
+
+    if (!buffer || (buffer->nicklist_display_groups == display_groups))
         return;
 
-    buffer->nicklist_display_groups = (display_groups) ? 1 : 0;
+    buffer->nicklist_display_groups = display_groups;
     buffer->nicklist_visible_count = 0;
     buffer->nicklist_groups_visible_count = 0;
     buffer->nicklist_nicks_visible_count = 0;
