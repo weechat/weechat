@@ -1763,16 +1763,8 @@ gui_buffer_set_notify (struct t_gui_buffer *buffer, const char *notify)
 void
 gui_buffer_set_title (struct t_gui_buffer *buffer, const char *new_title)
 {
-    if (!buffer)
+    if (!buffer || (string_strcmp (buffer->title, new_title) == 0))
         return;
-
-    /* same title? */
-    if ((!buffer->title && !new_title)
-        || (buffer->title && new_title
-            && (strcmp (buffer->title, new_title) == 0)))
-    {
-        return;
-    }
 
     free (buffer->title);
     buffer->title = (new_title && new_title[0]) ? strdup (new_title) : NULL;
