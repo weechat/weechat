@@ -1689,11 +1689,7 @@ gui_buffer_set_short_name (struct t_gui_buffer *buffer, const char *short_name)
 void
 gui_buffer_set_type (struct t_gui_buffer *buffer, enum t_gui_buffer_type type)
 {
-    if (!buffer)
-        return;
-
-    /* same type? */
-    if (buffer->type == type)
+    if (!buffer || (buffer->type == type))
         return;
 
     gui_line_free_all (buffer);
