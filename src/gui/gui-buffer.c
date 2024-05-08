@@ -1625,6 +1625,22 @@ gui_buffer_set_day_change (struct t_gui_buffer *buffer, int day_change)
 }
 
 /*
+ * Sets filter for a buffer.
+ */
+
+void
+gui_buffer_set_filter (struct t_gui_buffer *buffer, int filter)
+{
+    filter = (filter) ? 1 : 0;
+
+    if (!buffer || (buffer->filter == filter))
+        return;
+
+    buffer->filter = filter;
+    gui_filter_buffer (buffer, NULL);
+}
+
+/*
  * Sets name for a buffer.
  */
 
@@ -2573,10 +2589,7 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
         error = NULL;
         number = strtol (value, &error, 10);
         if (error && !error[0])
-        {
-            buffer->filter = (number) ? 1 : 0;
-            gui_filter_buffer (buffer, NULL);
-        }
+            gui_buffer_set_filter (buffer, number);
     }
     else if (strcmp (property, "number") == 0)
     {

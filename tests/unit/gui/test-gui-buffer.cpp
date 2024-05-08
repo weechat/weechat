@@ -983,6 +983,16 @@ TEST(GuiBuffer, SetDayChange)
 
 /*
  * Tests functions:
+ *   gui_buffer_set_filter
+ */
+
+TEST(GuiBuffer, SetFilter)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
  *   gui_buffer_set_name
  */
 
