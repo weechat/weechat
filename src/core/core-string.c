@@ -621,6 +621,12 @@ string_strcmp (const char *string1, const char *string2)
 {
     int diff;
 
+    if (!string1 && string2)
+        return -1;
+
+    if (string1 && !string2)
+        return 1;
+
     while (string1 && string1[0] && string2 && string2[0])
     {
         diff = string_charcmp (string1, string2);
@@ -648,6 +654,12 @@ int
 string_strncmp (const char *string1, const char *string2, int max)
 {
     int count, diff;
+
+    if (!string1 && string2)
+        return -1;
+
+    if (string1 && !string2)
+        return 1;
 
     count = 0;
     while ((count < max) && string1 && string1[0] && string2 && string2[0])
@@ -682,6 +694,12 @@ int
 string_strcasecmp (const char *string1, const char *string2)
 {
     int diff;
+
+    if (!string1 && string2)
+        return -1;
+
+    if (string1 && !string2)
+        return 1;
 
     while (string1 && string1[0] && string2 && string2[0])
     {
@@ -721,6 +739,12 @@ string_strcasecmp_range (const char *string1, const char *string2, int range)
 {
     int diff;
 
+    if (!string1 && string2)
+        return -1;
+
+    if (string1 && !string2)
+        return 1;
+
     while (string1 && string1[0] && string2 && string2[0])
     {
         diff = string_charcasecmp_range (string1, string2, range);
@@ -749,6 +773,12 @@ int
 string_strncasecmp (const char *string1, const char *string2, int max)
 {
     int count, diff;
+
+    if (!string1 && string2)
+        return -1;
+
+    if (string1 && !string2)
+        return 1;
 
     count = 0;
     while ((count < max) && string1 && string1[0] && string2 && string2[0])
@@ -794,6 +824,12 @@ string_strncasecmp_range (const char *string1, const char *string2, int max,
 {
     int count, diff;
 
+    if (!string1 && string2)
+        return -1;
+
+    if (string1 && !string2)
+        return 1;
+
     count = 0;
     while ((count < max) && string1 && string1[0] && string2 && string2[0])
     {
@@ -829,6 +865,12 @@ string_strcmp_ignore_chars (const char *string1, const char *string2,
                             const char *chars_ignored, int case_sensitive)
 {
     int diff;
+
+    if (!string1 && string2)
+        return -1;
+
+    if (string1 && !string2)
+        return 1;
 
     while (string1 && string1[0] && string2 && string2[0])
     {

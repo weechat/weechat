@@ -607,8 +607,12 @@ TEST(CoreString, StringComparison)
 {
     /* case-sensitive comparison */
     LONGS_EQUAL(0, string_strcmp (NULL, NULL));
-    LONGS_EQUAL(-97, string_strcmp (NULL, "abc"));
-    LONGS_EQUAL(97, string_strcmp ("abc", NULL));
+    LONGS_EQUAL(-1, string_strcmp (NULL, ""));
+    LONGS_EQUAL(1, string_strcmp ("", NULL));
+    LONGS_EQUAL(-1, string_strcmp (NULL, "abc"));
+    LONGS_EQUAL(1, string_strcmp ("abc", NULL));
+    LONGS_EQUAL(-97, string_strcmp ("", "abc"));
+    LONGS_EQUAL(97, string_strcmp ("abc", ""));
     LONGS_EQUAL(-98, string_strcmp ("", "b"));
     LONGS_EQUAL(98, string_strcmp ("b", ""));
     LONGS_EQUAL(0, string_strcmp ("abc", "abc"));
@@ -627,8 +631,12 @@ TEST(CoreString, StringComparison)
 
     /* case-sensitive comparison with max length */
     LONGS_EQUAL(0, string_strncmp (NULL, NULL, 3));
-    LONGS_EQUAL(-97, string_strncmp (NULL, "abc", 3));
-    LONGS_EQUAL(97, string_strncmp ("abc", NULL, 3));
+    LONGS_EQUAL(-1, string_strncmp (NULL, "", 3));
+    LONGS_EQUAL(1, string_strncmp ("", NULL, 3));
+    LONGS_EQUAL(-1, string_strncmp (NULL, "abc", 3));
+    LONGS_EQUAL(1, string_strncmp ("abc", NULL, 3));
+    LONGS_EQUAL(-97, string_strncmp ("", "abc", 3));
+    LONGS_EQUAL(97, string_strncmp ("abc", "", 3));
     LONGS_EQUAL(-98, string_strncmp ("", "b", 3));
     LONGS_EQUAL(98, string_strncmp ("b", "", 3));
     LONGS_EQUAL(0, string_strncmp ("abc", "abc", 3));
@@ -653,8 +661,12 @@ TEST(CoreString, StringComparison)
 
     /* case-insensitive comparison */
     LONGS_EQUAL(0, string_strcasecmp (NULL, NULL));
-    LONGS_EQUAL(-97, string_strcasecmp (NULL, "abc"));
-    LONGS_EQUAL(97, string_strcasecmp ("abc", NULL));
+    LONGS_EQUAL(-1, string_strcasecmp (NULL, ""));
+    LONGS_EQUAL(1, string_strcasecmp ("", NULL));
+    LONGS_EQUAL(-1, string_strcasecmp (NULL, "abc"));
+    LONGS_EQUAL(1, string_strcasecmp ("abc", NULL));
+    LONGS_EQUAL(-97, string_strcasecmp ("", "abc"));
+    LONGS_EQUAL(97, string_strcasecmp ("abc", ""));
     LONGS_EQUAL(-98, string_strcasecmp ("", "b"));
     LONGS_EQUAL(98, string_strcasecmp ("b", ""));
     LONGS_EQUAL(0, string_strcasecmp ("abc", "abc"));
@@ -673,8 +685,12 @@ TEST(CoreString, StringComparison)
 
     /* case-insensitive comparison with max length */
     LONGS_EQUAL(0, string_strncasecmp (NULL, NULL, 3));
-    LONGS_EQUAL(-97, string_strncasecmp (NULL, "abc", 3));
-    LONGS_EQUAL(97, string_strncasecmp ("abc", NULL, 3));
+    LONGS_EQUAL(-1, string_strncasecmp (NULL, "", 3));
+    LONGS_EQUAL(1, string_strncasecmp ("", NULL, 3));
+    LONGS_EQUAL(-1, string_strncasecmp (NULL, "abc", 3));
+    LONGS_EQUAL(1, string_strncasecmp ("abc", NULL, 3));
+    LONGS_EQUAL(-97, string_strncasecmp ("", "abc", 3));
+    LONGS_EQUAL(97, string_strncasecmp ("abc", "", 3));
     LONGS_EQUAL(-98, string_strncasecmp ("", "b", 3));
     LONGS_EQUAL(98, string_strncasecmp ("b", "", 3));
     LONGS_EQUAL(0, string_strncasecmp ("abc", "abc", 3));
@@ -699,8 +715,12 @@ TEST(CoreString, StringComparison)
 
     /* case-insensitive comparison with a range */
     LONGS_EQUAL(0, string_strcasecmp_range (NULL, NULL, 30));
-    LONGS_EQUAL(-97, string_strcasecmp_range (NULL, "abc", 30));
-    LONGS_EQUAL(97, string_strcasecmp_range ("abc", NULL, 30));
+    LONGS_EQUAL(-1, string_strcasecmp_range (NULL, "", 30));
+    LONGS_EQUAL(1, string_strcasecmp_range ("", NULL, 30));
+    LONGS_EQUAL(-1, string_strcasecmp_range (NULL, "abc", 30));
+    LONGS_EQUAL(1, string_strcasecmp_range ("abc", NULL, 30));
+    LONGS_EQUAL(-97, string_strcasecmp_range ("", "abc", 30));
+    LONGS_EQUAL(97, string_strcasecmp_range ("abc", "", 30));
     LONGS_EQUAL(-98, string_strcasecmp_range ("", "b", 30));
     LONGS_EQUAL(98, string_strcasecmp_range ("b", "", 30));
     LONGS_EQUAL(-2, string_strcasecmp_range ("A", "C", 30));
@@ -727,8 +747,12 @@ TEST(CoreString, StringComparison)
 
     /* case-insensitive comparison with max length and a range */
     LONGS_EQUAL(0, string_strncasecmp_range (NULL, NULL, 3, 30));
-    LONGS_EQUAL(-97, string_strncasecmp_range (NULL, "abc", 3, 30));
-    LONGS_EQUAL(97, string_strncasecmp_range ("abc", NULL, 3, 30));
+    LONGS_EQUAL(-1, string_strncasecmp_range (NULL, "", 3, 30));
+    LONGS_EQUAL(1, string_strncasecmp_range ("", NULL, 3, 30));
+    LONGS_EQUAL(-1, string_strncasecmp_range (NULL, "abc", 3, 30));
+    LONGS_EQUAL(1, string_strncasecmp_range ("abc", NULL, 3, 30));
+    LONGS_EQUAL(-97, string_strncasecmp_range ("", "abc", 3, 30));
+    LONGS_EQUAL(97, string_strncasecmp_range ("abc", "", 3, 30));
     LONGS_EQUAL(-98, string_strncasecmp_range ("", "b", 3, 30));
     LONGS_EQUAL(98, string_strncasecmp_range ("b", "", 3, 30));
     LONGS_EQUAL(-2, string_strncasecmp_range ("ABC", "CCC", 3, 30));
@@ -761,8 +785,12 @@ TEST(CoreString, StringComparison)
 
     /* comparison with chars ignored */
     LONGS_EQUAL(0, string_strcmp_ignore_chars (NULL, NULL, "", 0));
-    LONGS_EQUAL(-97, string_strcmp_ignore_chars (NULL, "abc", "", 0));
-    LONGS_EQUAL(97, string_strcmp_ignore_chars ("abc", NULL, "", 0));
+    LONGS_EQUAL(-1, string_strcmp_ignore_chars (NULL, "", "", 0));
+    LONGS_EQUAL(1, string_strcmp_ignore_chars ("", NULL, "", 0));
+    LONGS_EQUAL(-1, string_strcmp_ignore_chars (NULL, "abc", "", 0));
+    LONGS_EQUAL(1, string_strcmp_ignore_chars ("abc", NULL, "", 0));
+    LONGS_EQUAL(-97, string_strcmp_ignore_chars ("", "abc", "", 0));
+    LONGS_EQUAL(97, string_strcmp_ignore_chars ("abc", "", "", 0));
     LONGS_EQUAL(-98, string_strcmp_ignore_chars ("", "b", "", 0));
     LONGS_EQUAL(98, string_strcmp_ignore_chars ("b", "", "", 0));
     LONGS_EQUAL(-2, string_strcmp_ignore_chars ("ABC", "CCC", "", 0));
