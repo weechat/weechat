@@ -1814,10 +1814,12 @@ gui_buffer_set_time_for_each_line (struct t_gui_buffer *buffer,
 void
 gui_buffer_set_nicklist (struct t_gui_buffer *buffer, int nicklist)
 {
-    if (!buffer)
+    nicklist = (nicklist) ? 1 : 0;
+
+    if (!buffer || (buffer->nicklist == nicklist))
         return;
 
-    buffer->nicklist = (nicklist) ? 1 : 0;
+    buffer->nicklist = nicklist;
     gui_window_ask_refresh (1);
 }
 
