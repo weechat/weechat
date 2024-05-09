@@ -1754,7 +1754,7 @@ TEST(IrcProtocolWithServer, batch_with_batch_cap)
 
     /* assume "draft/multiline" capability is enabled in server */
     hashtable_set (ptr_server->cap_list, "draft/multiline", NULL);
-    irc_server_buffer_set_input_multiline (ptr_server, 1);
+    irc_server_set_buffer_input_multiline (ptr_server, 1);
 
     /* multiline */
     RECV("@time=2023-08-09T07:43:01.830Z;msgid=icqfzy7zdbpix4gy8pvzuv49kw "
@@ -1786,7 +1786,7 @@ TEST(IrcProtocolWithServer, batch_with_batch_cap)
                "irc_action,notify_message,nick_bob,host_user_b@host_b,log1");
 
     hashtable_remove (ptr_server->cap_list, "draft/multiline");
-    irc_server_buffer_set_input_multiline (ptr_server, 0);
+    irc_server_set_buffer_input_multiline (ptr_server, 0);
 
     hashtable_remove (ptr_server->cap_list, "batch");
 }

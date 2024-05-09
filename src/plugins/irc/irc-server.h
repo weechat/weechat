@@ -382,7 +382,7 @@ extern char *irc_server_get_default_msg (const char *default_msg,
                                          struct t_irc_server *server,
                                          const char *channel_name,
                                          const char *target_nick);
-extern void irc_server_buffer_set_input_multiline (struct t_irc_server *server,
+extern void irc_server_set_buffer_input_multiline (struct t_irc_server *server,
                                                    int multiline);
 extern int irc_server_has_channels (struct t_irc_server *server);
 extern struct t_irc_server *irc_server_alloc (const char *name);

@@ -1073,7 +1073,7 @@ IRC_PROTOCOL_CALLBACK(cap)
         if (!ctxt->server->checking_cap_list)
         {
             weechat_hashtable_remove_all (ctxt->server->cap_list);
-            irc_server_buffer_set_input_multiline (ctxt->server, 0);
+            irc_server_set_buffer_input_multiline (ctxt->server, 0);
             ctxt->server->checking_cap_list = 1;
         }
 
@@ -1105,7 +1105,7 @@ IRC_PROTOCOL_CALLBACK(cap)
                         weechat_hashtable_set (ctxt->server->cap_list,
                                                str_name, pos_value + 1);
                         if (strcmp (str_name, "draft/multiline") == 0)
-                            irc_server_buffer_set_input_multiline (ctxt->server, 1);
+                            irc_server_set_buffer_input_multiline (ctxt->server, 1);
                         free (str_name);
                     }
                 }
@@ -1114,7 +1114,7 @@ IRC_PROTOCOL_CALLBACK(cap)
                     weechat_hashtable_set (ctxt->server->cap_list,
                                            caps_enabled[j], NULL);
                     if (strcmp (caps_enabled[j], "draft/multiline") == 0)
-                        irc_server_buffer_set_input_multiline (ctxt->server, 1);
+                        irc_server_set_buffer_input_multiline (ctxt->server, 1);
                 }
             }
             weechat_string_free_split (caps_enabled);
@@ -1173,7 +1173,7 @@ IRC_PROTOCOL_CALLBACK(cap)
                     weechat_hashtable_remove (ctxt->server->cap_list,
                                               caps_supported[j] + 1);
                     if (strcmp (caps_supported[j] + 1, "draft/multiline") == 0)
-                        irc_server_buffer_set_input_multiline (ctxt->server, 0);
+                        irc_server_set_buffer_input_multiline (ctxt->server, 0);
                 }
                 else
                 {
@@ -1185,7 +1185,7 @@ IRC_PROTOCOL_CALLBACK(cap)
                     weechat_hashtable_set (ctxt->server->cap_list,
                                            caps_supported[j], NULL);
                     if (strcmp (caps_supported[j], "draft/multiline") == 0)
-                        irc_server_buffer_set_input_multiline (ctxt->server, 1);
+                        irc_server_set_buffer_input_multiline (ctxt->server, 1);
                     if (strcmp (caps_supported[j], "sasl") == 0)
                         sasl_to_do = 1;
                 }
@@ -1360,7 +1360,7 @@ IRC_PROTOCOL_CALLBACK(cap)
                 weechat_hashtable_remove (ctxt->server->cap_ls, caps_removed[j]);
                 weechat_hashtable_remove (ctxt->server->cap_list, caps_removed[j]);
                 if (strcmp (caps_removed[j], "draft/multiline") == 0)
-                    irc_server_buffer_set_input_multiline (ctxt->server, 0);
+                    irc_server_set_buffer_input_multiline (ctxt->server, 0);
             }
             weechat_string_free_split (caps_removed);
         }

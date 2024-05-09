@@ -1591,7 +1591,7 @@ irc_server_get_default_msg (const char *default_msg,
  */
 
 void
-irc_server_buffer_set_input_multiline (struct t_irc_server *server,
+irc_server_set_buffer_input_multiline (struct t_irc_server *server,
                                        int multiline)
 {
     struct t_irc_channel *ptr_channel;
@@ -5805,7 +5805,7 @@ irc_server_disconnect (struct t_irc_server *server, int switch_address,
 
     irc_server_set_buffer_title (server);
 
-    irc_server_buffer_set_input_multiline (server, 0);
+    irc_server_set_buffer_input_multiline (server, 0);
 
     server->disconnected = 1;
 
