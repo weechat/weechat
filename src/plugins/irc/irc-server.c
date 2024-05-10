@@ -864,11 +864,8 @@ irc_server_set_nick (struct t_irc_server *server, const char *nick)
     struct t_irc_channel *ptr_channel;
 
     /* if nick is the same, just return */
-    if ((!server->nick && !nick)
-        || (server->nick && nick && strcmp (server->nick, nick) == 0))
-    {
+    if (weechat_strcmp (server->nick, nick) == 0)
         return;
-    }
 
     /* update the nick in server */
     free (server->nick);
