@@ -12220,6 +12220,10 @@ List of signals sent by WeeChat and plugins:
 | Pointer: buffer.
 | Text search in buffer.
 
+| weechat | [[hook_signal_input_prompt_changed]] input_prompt_changed |
+| Pointer: buffer.
+| Input prompt changed.
+
 | weechat | [[hook_signal_input_text_changed]] input_text_changed |
 | Pointer: buffer.
 | Input text changed.
@@ -14704,6 +14708,7 @@ Arguments:
 ** _type_: type of buffer: "formatted" or "free" _(WeeChat ≥ 4.2.0)_
 ** _title_: title of buffer
 ** _nicklist_last_id_assigned_: last unique identifier used in this buffer for a group or nick _(WeeChat ≥ 4.3.0)_
+** _input_prompt_: input prompt _(WeeChat ≥ 4.3.0)_
 ** _input_: input text
 ** _text_search_input_: input saved before text search
 ** _highlight_words_: list of words to highlight
@@ -14938,6 +14943,9 @@ Properties:
 
 | key_unbind_xxx | | -
 | Unbind key _xxx_ for this buffer.
+
+| input_prompt | 4.3.0 | any string
+| Set new value for input prompt.
 
 | input | | any string
 | Set new value for buffer input.

@@ -12729,6 +12729,11 @@ List of signals sent by WeeChat and plugins:
 | Puntatore: buffer.
 | Ricerca testo nel buffer.
 
+// TRANSLATION MISSING
+| weechat | [[hook_signal_input_prompt_changed]] input_prompt_changed |
+| Pointer: buffer.
+| Input prompt changed.
+
 | weechat | [[hook_signal_input_text_changed]] input_text_changed |
 | Puntatore: buffer.
 | Testo in input modificato.
@@ -15404,6 +15409,8 @@ Argomenti:
 ** _title_: titolo del buffer
 // TRANSLATION MISSING
 ** _nicklist_last_id_assigned_: last unique identifier used in this buffer for a group or nick _(WeeChat ≥ 4.3.0)_
+// TRANSLATION MISSING
+** _input_prompt_: input prompt _(WeeChat ≥ 4.3.0)_
 ** _input_: testo in ingresso
 ** _text_search_input_: input salvato prima della ricerca nel testo
 ** _highlight_words_: elenco di parole da evidenziare
@@ -15671,6 +15678,10 @@ Properties:
 
 | key_unbind_xxx | | -
 | Rimuove l'assegnazione del tasto _xxx_ per questo buffer.
+
+// TRANSLATION MISSING
+| input_prompt | 4.3.0 | any string
+| Set new value for input prompt.
 
 | input | | qualsiasi stringa
 | Imposta un nuovo valore per l'input del buffer.

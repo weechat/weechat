@@ -815,8 +815,6 @@ gui_bar_item_input_prompt_cb (const void *pointer, void *data,
                               struct t_gui_buffer *buffer,
                               struct t_hashtable *extra_info)
 {
-    const char *nick;
-
     /* make C compiler happy */
     (void) pointer;
     (void) data;
@@ -827,9 +825,7 @@ gui_bar_item_input_prompt_cb (const void *pointer, void *data,
     if (!buffer)
         return NULL;
 
-    nick = (const char *)hashtable_get (buffer->local_variables, "nick");
-
-    return (nick) ? strdup (nick) : NULL;
+    return (buffer->input_prompt) ? strdup (buffer->input_prompt) : NULL;
 }
 
 /*
@@ -2312,7 +2308,8 @@ gui_bar_item_init ()
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_INPUT_PROMPT],
                       &gui_bar_item_input_prompt_cb, NULL, NULL);
-    gui_bar_item_hook_signal ("window_switch;buffer_switch;buffer_localvar_*",
+    gui_bar_item_hook_signal ("window_switch;buffer_switch;input_prompt_changed;"
+                              "buffer_localvar_*",
                               gui_bar_item_names[GUI_BAR_ITEM_INPUT_PROMPT]);
 
     /* input search */

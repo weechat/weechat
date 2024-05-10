@@ -12473,6 +12473,10 @@ Liste des signaux envoyés par WeeChat et les extensions :
 | Pointeur : tampon.
 | Recherche de texte dans le tampon.
 
+| weechat | [[hook_signal_input_prompt_changed]] input_prompt_changed |
+| Pointer: buffer.
+| Invite de la zone de saisie modifiée.
+
 | weechat | [[hook_signal_input_text_changed]] input_text_changed |
 | Pointeur : tampon.
 | Texte modifié dans la barre "input".
@@ -15021,6 +15025,8 @@ Paramètres :
 ** _type_ : type de tampon : "formatted" (formaté) ou "free" (contenu libre) _(WeeChat ≥ 4.2.0)_
 ** _title_ : titre du tampon
 ** _nicklist_last_id_assigned_ : dernier identifiant unique utilisé dans ce tampon pour un groupe ou un pseudo _(WeeChat ≥ 4.3.0)_
+// TRANSLATION MISSING
+** _input_prompt_ : input prompt _(WeeChat ≥ 4.3.0)_
 ** _input_ : texte saisi
 ** _text_search_input_ : texte saisi sauvegardé avant la recherche de texte
 ** _highlight_words_ : liste des mots pour le highlight
@@ -15264,6 +15270,9 @@ Propriétés :
 
 | key_unbind_xxx | | -
 | Supprime la touche _xxx_ pour ce tampon.
+
+| input_prompt | 4.3.0 | toute chaîne
+| Change le contenu de l'invite dans la zone de saisie.
 
 | input | | toute chaîne
 | Change le contenu de la zone de saisie.

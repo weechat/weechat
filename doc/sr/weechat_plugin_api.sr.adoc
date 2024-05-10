@@ -11895,6 +11895,11 @@ struct t_hook *weechat_hook_signal (const char *signal,
 | Показивач: бафер.
 | Претрага текста у баферу.
 
+// TRANSLATION MISSING
+| weechat | [[hook_signal_input_prompt_changed]] input_prompt_changed |
+| Pointer: buffer.
+| Input prompt changed.
+
 | weechat | [[hook_signal_input_text_changed]] input_text_changed |
 | Показивач: бафер.
 | Променио се текст уноса.
@@ -14281,6 +14286,8 @@ const char *weechat_buffer_get_string (struct t_gui_buffer *buffer,
 ** _type_: тип бафера: „formatted” или „free” _(WeeChat ≥ 4.2.0)_
 ** _title_: наслов бафера
 ** _nicklist_last_id_assigned_: последњи јединствени идентификатор употребљен у овом баферу за групу или надимак _(WeeChat ≥ 4.3.0)_
+// TRANSLATION MISSING
+** _input_prompt_: input prompt _(WeeChat ≥ 4.3.0)_
 ** _input_: текст уноса
 ** _text_search_input_: сачувани унос пре претраге текста
 ** _highlight_words_: листа речи које се истичу
@@ -14516,6 +14523,10 @@ void weechat_buffer_set (struct t_gui_buffer *buffer, const char *property,
 
 | key_unbind_xxx | | -
 | Уклања тастерску пречицу _xxx_ за овај бафер.
+
+// TRANSLATION MISSING
+| input_prompt | 4.3.0 | any string
+| Set new value for input prompt.
 
 | input | | било који стринг
 | Поставља нову вредност за унос у бафер.

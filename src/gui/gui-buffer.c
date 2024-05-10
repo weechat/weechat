@@ -110,9 +110,9 @@ char *gui_buffer_properties_get_integer[] =
 };
 char *gui_buffer_properties_get_string[] =
 { "id", "plugin", "name", "full_name", "old_full_name", "short_name", "title",
-  "nicklist_last_id_assigned", "input", "text_search_input", "highlight_words",
-  "highlight_disable_regex", "highlight_regex", "highlight_tags_restrict",
-  "highlight_tags", "hotlist_max_level_nicks",
+  "nicklist_last_id_assigned", "input_prompt", "input", "text_search_input",
+  "highlight_words", "highlight_disable_regex", "highlight_regex",
+  "highlight_tags_restrict", "highlight_tags", "hotlist_max_level_nicks",
   NULL
 };
 char *gui_buffer_properties_get_pointer[] =
@@ -128,8 +128,8 @@ char *gui_buffer_properties_set[] =
   "highlight_words_del", "highlight_disable_regex", "highlight_regex",
   "highlight_tags_restrict", "highlight_tags", "hotlist_max_level_nicks",
   "hotlist_max_level_nicks_add", "hotlist_max_level_nicks_del",
-  "input", "input_pos", "input_get_any_user_data", "input_get_unknown_commands",
-  "input_get_empty", "input_multiline",
+  "input_prompt", "input", "input_pos", "input_get_any_user_data",
+  "input_get_unknown_commands", "input_get_empty", "input_multiline",
   NULL
 };
 
@@ -902,6 +902,7 @@ gui_buffer_new_props_with_id (long long id,
     new_buffer->input_get_unknown_commands = 0;
     new_buffer->input_get_empty = 0;
     new_buffer->input_multiline = 0;
+    new_buffer->input_prompt = NULL;
     gui_buffer_input_buffer_init (new_buffer);
 
     /* undo for input */
@@ -1543,6 +1544,8 @@ gui_buffer_get_string (struct t_gui_buffer *buffer, const char *property)
                   "%lld", buffer->nicklist_last_id_assigned);
         return str_value;
     }
+    else if (strcmp (property, "input_prompt") == 0)
+        return buffer->input_prompt;
     else if (strcmp (property, "input") == 0)
         return buffer->input_buffer;
     else if (strcmp (property, "text_search_input") == 0)
@@ -2296,6 +2299,26 @@ gui_buffer_remove_hotlist_max_level_nicks (struct t_gui_buffer *buffer,
 }
 
 /*
+ * Sets buffer input prompt.
+ */
+
+void
+gui_buffer_set_input_prompt (struct t_gui_buffer *buffer,
+                             const char *input_prompt)
+{
+    if (!buffer || (string_strcmp (buffer->input_prompt, input_prompt) == 0))
+        return;
+
+    free (buffer->input_prompt);
+    buffer->input_prompt = (input_prompt && input_prompt[0]) ?
+        strdup (input_prompt) : NULL;
+
+    (void) gui_buffer_send_signal (buffer,
+                                   "input_prompt_changed",
+                                   WEECHAT_HOOK_SIGNAL_POINTER, buffer);
+}
+
+/*
  * Sets buffer input.
  */
 
@@ -2710,6 +2733,10 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
         {
             gui_key_unbind (buffer, -1, property + 11);
         }
+    }
+    else if (strcmp (property, "input_prompt") == 0)
+    {
+        gui_buffer_set_input_prompt (buffer, value);
     }
     else if (strcmp (property, "input") == 0)
     {
@@ -3750,6 +3777,7 @@ gui_buffer_close (struct t_gui_buffer *buffer)
     free (buffer->old_full_name);
     free (buffer->short_name);
     free (buffer->title);
+    free (buffer->input_prompt);
     free (buffer->input_buffer);
     free (buffer->input_undo_snap);
     free (buffer->text_search_input);
@@ -5203,6 +5231,7 @@ gui_buffer_hdata_buffer_cb (const void *pointer, void *data,
         HDATA_VAR(struct t_gui_buffer, input_get_unknown_commands, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, input_get_empty, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, input_multiline, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_buffer, input_prompt, STRING, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, input_buffer, STRING, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, input_buffer_alloc, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, input_buffer_size, INTEGER, 0, NULL, NULL);
@@ -5425,6 +5454,8 @@ gui_buffer_add_to_infolist (struct t_infolist *infolist,
     if (!infolist_new_var_integer (ptr_item, "input_get_empty", buffer->input_get_empty))
         return 0;
     if (!infolist_new_var_integer (ptr_item, "input_multiline", buffer->input_multiline))
+        return 0;
+    if (!infolist_new_var_string (ptr_item, "input_prompt", buffer->input_prompt))
         return 0;
     if (!infolist_new_var_string (ptr_item, "input_buffer", buffer->input_buffer))
         return 0;
@@ -5659,6 +5690,7 @@ gui_buffer_print_log ()
         log_printf ("  input_get_unknown_cmd . : %d", ptr_buffer->input_get_unknown_commands);
         log_printf ("  input_get_empty . . . . : %d", ptr_buffer->input_get_empty);
         log_printf ("  input_multiline . . . . : %d", ptr_buffer->input_multiline);
+        log_printf ("  input_prompt. . . . . . : '%s'", ptr_buffer->input_prompt);
         log_printf ("  input_buffer. . . . . . : '%s'", ptr_buffer->input_buffer);
         log_printf ("  input_buffer_alloc. . . : %d", ptr_buffer->input_buffer_alloc);
         log_printf ("  input_buffer_size . . . : %d", ptr_buffer->input_buffer_size);

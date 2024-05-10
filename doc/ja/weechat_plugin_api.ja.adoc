@@ -12386,6 +12386,11 @@ WeeChat とプラグインが送信するシグナルのリスト:
 | Pointer: バッファ
 | バッファテキストの検索
 
+// TRANSLATION MISSING
+| weechat | [[hook_signal_input_prompt_changed]] input_prompt_changed |
+| Pointer: buffer.
+| Input prompt changed.
+
 | weechat | [[hook_signal_input_text_changed]] input_text_changed |
 | Pointer: バッファ
 | 入力テキストが変更された
@@ -14939,6 +14944,8 @@ const char *weechat_buffer_get_string (struct t_gui_buffer *buffer,
 ** _title_: バッファのタイトル
 // TRANSLATION MISSING
 ** _nicklist_last_id_assigned_: last unique identifier used in this buffer for a group or nick _(WeeChat ≥ 4.3.0)_
+// TRANSLATION MISSING
+** _input_prompt_: input prompt _(WeeChat ≥ 4.3.0)_
 ** _input_: 入力テキスト
 ** _text_search_input_: テキスト検索前に保存した入力テキスト
 ** _highlight_words_: ハイライトする単語のリスト
@@ -15178,6 +15185,10 @@ void weechat_buffer_set (struct t_gui_buffer *buffer, const char *property,
 
 | key_unbind_xxx | | -
 | 指定したバッファに対してキー _xxx_ の割り当てを解除する
+
+// TRANSLATION MISSING
+| input_prompt | 4.3.0 | any string
+| Set new value for input prompt.
 
 | input | | 任意の文字列
 | バッファ入力に新しい値を設定

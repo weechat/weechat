@@ -42,6 +42,8 @@ extern int gui_buffer_user_input_cb (const void *pointer, void *data,
                                      const char *input_data);
 extern int gui_buffer_user_close_cb (const void *pointer, void *data,
                                      struct t_gui_buffer *buffer);
+extern void gui_buffer_set_input_prompt (struct t_gui_buffer *buffer,
+                                         const char *input_prompt);
 extern void gui_buffer_set_short_name (struct t_gui_buffer *buffer,
                                        const char *short_name);
 extern void gui_buffer_set_highlight_words_list (struct t_gui_buffer *buffer,
@@ -581,6 +583,7 @@ TEST(GuiBuffer, NewProps)
     LONGS_EQUAL(0, buffer->input_get_unknown_commands);
     LONGS_EQUAL(0, buffer->input_get_empty);
     LONGS_EQUAL(0, buffer->input_multiline);
+    POINTERS_EQUAL(NULL, buffer->input_prompt);
     STRCMP_EQUAL("", buffer->input_buffer);
     CHECK(buffer->input_buffer_alloc > 0);
     LONGS_EQUAL(0, buffer->input_buffer_size);
@@ -933,6 +936,7 @@ TEST(GuiBuffer, GetString)
     STRCMP_EQUAL("weechat", gui_buffer_get_string (gui_buffers, "short_name"));
     STRCMP_EQUAL("formatted", gui_buffer_get_string (gui_buffers, "type"));
     STRNCMP_EQUAL("WeeChat ", gui_buffer_get_string (gui_buffers, "title"), 8);
+    POINTERS_EQUAL(NULL, gui_buffer_get_string (gui_buffers, "input_prompt"));
     STRCMP_EQUAL("", gui_buffer_get_string (gui_buffers, "input"));
     POINTERS_EQUAL(NULL, gui_buffer_get_string (gui_buffers, "text_search_input"));
     POINTERS_EQUAL(NULL, gui_buffer_get_string (gui_buffers, "highlight_words"));
@@ -1215,6 +1219,22 @@ TEST(GuiBuffer, AddHotlistMaxLevelNicks)
 TEST(GuiBuffer, RemoveHotlistMaxLevelNicks)
 {
     /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   gui_buffer_set_input_prompt
+ */
+
+TEST(GuiBuffer, SetInputPrompt)
+{
+    POINTERS_EQUAL(NULL, gui_buffers->input_prompt);
+
+    gui_buffer_set_input_prompt (gui_buffers, "test");
+    STRCMP_EQUAL("test", gui_buffers->input_prompt);
+
+    gui_buffer_set_input_prompt (gui_buffers, "");
+    POINTERS_EQUAL(NULL, gui_buffers->input_prompt);
 }
 
 /*
