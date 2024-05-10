@@ -879,7 +879,7 @@ irc_server_set_nick (struct t_irc_server *server, const char *nick)
         weechat_buffer_set (ptr_channel->buffer, "localvar_set_nick", nick);
     }
 
-    weechat_bar_item_update ("input_prompt");
+    irc_server_set_buffer_input_prompt (server);
     weechat_bar_item_update ("irc_nick");
     weechat_bar_item_update ("irc_nick_host");
 }
@@ -1583,6 +1583,53 @@ irc_server_get_default_msg (const char *default_msg,
 }
 
 /*
+ * Sets input prompt on server, channels and private buffers.
+ */
+
+void
+irc_server_set_buffer_input_prompt (struct t_irc_server *server)
+{
+    struct t_irc_channel *ptr_channel;
+    int display_modes;
+    char *prompt;
+
+    if (!server || !server->buffer)
+        return;
+
+    display_modes = (weechat_config_boolean (irc_config_look_item_nick_modes)
+                     && server->nick_modes && server->nick_modes[0]);
+
+    if (server->nick)
+    {
+        weechat_asprintf (&prompt, "%s%s%s%s%s%s%s%s",
+                          IRC_COLOR_INPUT_NICK,
+                          server->nick,
+                          (display_modes) ? IRC_COLOR_BAR_DELIM : "",
+                          (display_modes) ? "(" : "",
+                          (display_modes) ? IRC_COLOR_ITEM_NICK_MODES : "",
+                          (display_modes) ? server->nick_modes : "",
+                          (display_modes) ? IRC_COLOR_BAR_DELIM : "",
+                          (display_modes) ? ")" : "");
+        if (prompt)
+        {
+            weechat_buffer_set (server->buffer, "input_prompt", prompt);
+            free (prompt);
+        }
+    }
+    else
+    {
+        weechat_buffer_set (server->buffer, "input_prompt", "");
+    }
+
+    for (ptr_channel = server->channels; ptr_channel;
+         ptr_channel = ptr_channel->next_channel)
+    {
+        if (ptr_channel->buffer)
+            irc_channel_set_buffer_input_prompt (server, ptr_channel);
+    }
+}
+
+/*
  * Sets "input_multiline" to 1 or 0, according to capability draft/multiline
  * on all channels and private buffers.
  */
@@ -1592,6 +1639,9 @@ irc_server_set_buffer_input_multiline (struct t_irc_server *server,
                                        int multiline)
 {
     struct t_irc_channel *ptr_channel;
+
+    if (!server)
+        return;
 
     for (ptr_channel = server->channels; ptr_channel;
          ptr_channel = ptr_channel->next_channel)
@@ -1613,6 +1663,9 @@ int
 irc_server_has_channels (struct t_irc_server *server)
 {
     struct t_irc_channel *ptr_channel;
+
+    if (!server)
+        return 0;
 
     for (ptr_channel = server->channels; ptr_channel;
          ptr_channel = ptr_channel->next_channel)
@@ -5712,7 +5765,7 @@ irc_server_disconnect (struct t_irc_server *server, int switch_address,
     {
         free (server->nick_modes);
         server->nick_modes = NULL;
-        weechat_bar_item_update ("input_prompt");
+        irc_server_set_buffer_input_prompt (server);
         weechat_bar_item_update ("irc_nick_modes");
     }
     if (server->host)

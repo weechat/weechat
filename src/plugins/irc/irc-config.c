@@ -661,19 +661,26 @@ irc_config_change_look_topic_strip_colors (const void *pointer, void *data,
 }
 
 /*
- * Callback for changes on an option affecting bar item "input_prompt".
+ * Callback for changes on an option affecting input prompt.
  */
 
 void
-irc_config_change_bar_item_input_prompt (const void *pointer, void *data,
-                                         struct t_config_option *option)
+irc_config_change_input_prompt (const void *pointer, void *data,
+                                struct t_config_option *option)
 {
+    struct t_irc_server *ptr_server;
+
     /* make C compiler happy */
     (void) pointer;
     (void) data;
     (void) option;
 
-    weechat_bar_item_update ("input_prompt");
+    for (ptr_server = irc_servers; ptr_server;
+         ptr_server = ptr_server->next_server)
+    {
+        if (ptr_server->buffer)
+            irc_server_set_buffer_input_prompt (ptr_server);
+    }
 }
 
 /*
@@ -722,7 +729,7 @@ irc_config_change_color_item_nick_modes (const void *pointer, void *data,
     (void) data;
     (void) option;
 
-    weechat_bar_item_update ("input_prompt");
+    irc_config_change_input_prompt (NULL, NULL, NULL);
     weechat_bar_item_update ("irc_nick_modes");
 }
 
@@ -872,7 +879,7 @@ irc_config_change_color_nick_prefixes (const void *pointer, void *data,
 
     irc_nick_nicklist_set_prefix_color_all ();
 
-    weechat_bar_item_update ("input_prompt");
+    irc_config_change_input_prompt (NULL, NULL, NULL);
 }
 
 /*
@@ -3377,7 +3384,7 @@ irc_config_init ()
             N_("display nick modes in bar item \"input_prompt\""),
             NULL, 0, 0, "on", NULL, 0,
             NULL, NULL, NULL,
-            &irc_config_change_bar_item_input_prompt, NULL, NULL,
+            &irc_config_change_input_prompt, NULL, NULL,
             NULL, NULL, NULL);
         irc_config_look_item_nick_prefix = weechat_config_new_option (
             irc_config_file, irc_config_section_look,
@@ -3385,7 +3392,7 @@ irc_config_init ()
             N_("display nick prefix in bar item \"input_prompt\""),
             NULL, 0, 0, "on", NULL, 0,
             NULL, NULL, NULL,
-            &irc_config_change_bar_item_input_prompt, NULL, NULL,
+            &irc_config_change_input_prompt, NULL, NULL,
             NULL, NULL, NULL);
         irc_config_look_join_auto_add_chantype = weechat_config_new_option (
             irc_config_file, irc_config_section_look,
@@ -3489,7 +3496,7 @@ irc_config_init ()
                "(not op, voice, ...)"),
             NULL, 0, 0, "off", NULL, 0,
             NULL, NULL, NULL,
-            &irc_config_change_bar_item_input_prompt, NULL, NULL,
+            &irc_config_change_input_prompt, NULL, NULL,
             NULL, NULL, NULL);
         irc_config_look_nicks_hide_password = weechat_config_new_option (
             irc_config_file, irc_config_section_look,
@@ -3722,7 +3729,7 @@ irc_config_init ()
             N_("color for nick in input bar"),
             NULL, -1, 0, "lightcyan", NULL, 0,
             NULL, NULL, NULL,
-            &irc_config_change_bar_item_input_prompt, NULL, NULL,
+            &irc_config_change_input_prompt, NULL, NULL,
             NULL, NULL, NULL);
         irc_config_color_item_channel_modes = weechat_config_new_option (
             irc_config_file, irc_config_section_color,

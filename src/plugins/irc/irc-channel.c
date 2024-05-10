@@ -571,6 +571,68 @@ irc_channel_add_nicklist_groups (struct t_irc_server *server,
 }
 
 /*
+ * Sets input prompt on channel.
+ */
+
+void
+irc_channel_set_buffer_input_prompt (struct t_irc_server *server,
+                                     struct t_irc_channel *channel)
+{
+    struct t_irc_nick *ptr_nick;
+    int display_modes;
+    char str_prefix[64], *prompt;
+
+    if (!server || !channel || !channel->buffer)
+        return;
+
+    if (server->nick)
+    {
+        /* build prefix */
+        str_prefix[0] = '\0';
+        if (weechat_config_boolean (irc_config_look_item_nick_prefix)
+            && (channel->type == IRC_CHANNEL_TYPE_CHANNEL))
+        {
+            ptr_nick = irc_nick_search (server, channel, server->nick);
+            if (ptr_nick)
+            {
+                if (weechat_config_boolean (irc_config_look_nick_mode_empty)
+                    || (ptr_nick->prefix[0] != ' '))
+                {
+                    snprintf (str_prefix, sizeof (str_prefix), "%s%s",
+                              weechat_color (
+                                  irc_nick_get_prefix_color_name (
+                                      server, ptr_nick->prefix[0])),
+                              ptr_nick->prefix);
+                }
+            }
+        }
+
+        display_modes = (weechat_config_boolean (irc_config_look_item_nick_modes)
+                         && server->nick_modes && server->nick_modes[0]);
+
+        weechat_asprintf (&prompt, "%s%s%s%s%s%s%s%s%s",
+                          str_prefix,
+                          IRC_COLOR_INPUT_NICK,
+                          server->nick,
+                          (display_modes) ? IRC_COLOR_BAR_DELIM : "",
+                          (display_modes) ? "(" : "",
+                          (display_modes) ? IRC_COLOR_ITEM_NICK_MODES : "",
+                          (display_modes) ? server->nick_modes : "",
+                          (display_modes) ? IRC_COLOR_BAR_DELIM : "",
+                          (display_modes) ? ")" : "");
+        if (prompt)
+        {
+            weechat_buffer_set (channel->buffer, "input_prompt", prompt);
+            free (prompt);
+        }
+    }
+    else
+    {
+        weechat_buffer_set (channel->buffer, "input_prompt", "");
+    }
+}
+
+/*
  * Sets the buffer title with the channel topic.
  */
 

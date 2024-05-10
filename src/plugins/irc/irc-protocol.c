@@ -2384,6 +2384,8 @@ IRC_PROTOCOL_CALLBACK(nick)
 
                         /* enable hotlist */
                         weechat_buffer_set (NULL, "hotlist", "+");
+
+                        irc_server_set_buffer_input_prompt (ctxt->server);
                     }
                     else
                     {
@@ -6769,9 +6771,8 @@ IRC_PROTOCOL_CALLBACK(366)
     {
         weechat_hashtable_set (ptr_channel->join_msg_received, "353", "1");
         weechat_hashtable_set (ptr_channel->join_msg_received, "366", "1");
+        irc_channel_set_buffer_input_prompt (ctxt->server, ptr_channel);
     }
-
-    weechat_bar_item_update ("input_prompt");
 
     return WEECHAT_RC_OK;
 }

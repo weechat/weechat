@@ -692,7 +692,7 @@ irc_nick_set_mode (struct t_irc_server *server, struct t_irc_channel *channel,
 
     if (irc_server_strcasecmp (server, nick->name, server->nick) == 0)
     {
-        weechat_bar_item_update ("input_prompt");
+        irc_server_set_buffer_input_prompt (server);
         weechat_bar_item_update ("irc_nick");
         weechat_bar_item_update ("irc_nick_host");
     }
@@ -813,6 +813,8 @@ irc_nick_free_all (struct t_irc_server *server, struct t_irc_channel *channel)
 
     /* should be zero, but prevent any bug :D */
     channel->nicks_count = 0;
+
+    irc_channel_set_buffer_input_prompt (server, channel);
 }
 
 /*

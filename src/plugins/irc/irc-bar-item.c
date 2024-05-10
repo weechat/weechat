@@ -590,90 +590,6 @@ irc_bar_item_tls_version (const void *pointer, void *data,
     return NULL;
 }
 
-
-/*
- * Returns content of bar item "input_prompt": bar item with input prompt.
- */
-
-char *
-irc_bar_item_input_prompt (const void *pointer, void *data,
-                           struct t_gui_bar_item *item,
-                           struct t_gui_window *window,
-                           struct t_gui_buffer *buffer,
-                           struct t_hashtable *extra_info)
-{
-    struct t_irc_server *server;
-    struct t_irc_channel *channel;
-    struct t_irc_nick *ptr_nick;
-    char *buf, str_prefix[64];
-    int length;
-
-    /* make C compiler happy */
-    (void) pointer;
-    (void) data;
-    (void) item;
-    (void) window;
-    (void) extra_info;
-
-    if (!buffer)
-        return NULL;
-
-    irc_buffer_get_server_and_channel (buffer, &server, &channel);
-    if (!server || !server->nick)
-        return NULL;
-
-    /* build prefix */
-    str_prefix[0] = '\0';
-    if (weechat_config_boolean (irc_config_look_item_nick_prefix)
-        && channel
-        && (channel->type == IRC_CHANNEL_TYPE_CHANNEL))
-    {
-        ptr_nick = irc_nick_search (server, channel, server->nick);
-        if (ptr_nick)
-        {
-            if (weechat_config_boolean (irc_config_look_nick_mode_empty)
-                || (ptr_nick->prefix[0] != ' '))
-            {
-                snprintf (str_prefix, sizeof (str_prefix), "%s%s",
-                          weechat_color (
-                              irc_nick_get_prefix_color_name (
-                                  server, ptr_nick->prefix[0])),
-                          ptr_nick->prefix);
-            }
-        }
-    }
-
-    /* build bar item */
-    length = 64 + strlen (server->nick) + 64 +
-        ((server->nick_modes) ? strlen (server->nick_modes) : 0) + 64 + 1;
-
-    buf = malloc (length);
-    if (buf)
-    {
-        if (weechat_config_boolean (irc_config_look_item_nick_modes)
-            && server->nick_modes && server->nick_modes[0])
-        {
-            snprintf (buf, length, "%s%s%s%s(%s%s%s)",
-                      str_prefix,
-                      IRC_COLOR_INPUT_NICK,
-                      server->nick,
-                      IRC_COLOR_BAR_DELIM,
-                      IRC_COLOR_ITEM_NICK_MODES,
-                      server->nick_modes,
-                      IRC_COLOR_BAR_DELIM);
-        }
-        else
-        {
-            snprintf (buf, length, "%s%s%s",
-                      str_prefix,
-                      IRC_COLOR_INPUT_NICK,
-                      server->nick);
-        }
-    }
-
-    return buf;
-}
-
 /*
  * Returns content of bar item "nick_modes": bar item with nick modes.
  */
@@ -888,8 +804,6 @@ irc_bar_item_init ()
                           &irc_bar_item_nick_host, NULL, NULL);
     weechat_bar_item_new ("lag",
                           &irc_bar_item_lag, NULL, NULL);
-    weechat_bar_item_new ("input_prompt",
-                          &irc_bar_item_input_prompt, NULL, NULL);
     weechat_bar_item_new ("irc_nick_modes",
                           &irc_bar_item_nick_modes, NULL, NULL);
     weechat_bar_item_new ("irc_nick_prefix",
