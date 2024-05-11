@@ -984,6 +984,40 @@ irc_upgrade_read_cb (const void *pointer, void *data,
 }
 
 /*
+ * Set buffer prompt on IRC buffers where it's not set and if it should be.
+ *
+ * This is needed when upgrading from WeeChat < 4.3.0 to Weechat ≥ 4.3.0,
+ * where the "input_prompt" has been added in buffer.
+ */
+
+void
+irc_upgrade_set_buffer_prompt ()
+{
+    struct t_irc_server *ptr_server;
+    struct t_irc_channel *ptr_channel;
+
+    for (ptr_server = irc_servers; ptr_server;
+         ptr_server = ptr_server->next_server)
+    {
+        if (ptr_server->buffer)
+        {
+            if (!weechat_buffer_get_string (ptr_server->buffer, "input_prompt"))
+            {
+                irc_server_set_buffer_input_prompt (ptr_server);
+            }
+            else
+            {
+                for (ptr_channel = ptr_server->channels; ptr_channel;
+                     ptr_channel = ptr_channel->next_channel)
+                {
+                    irc_channel_set_buffer_input_prompt (ptr_server, ptr_channel);
+                }
+            }
+        }
+    }
+}
+
+/*
  * Loads irc upgrade file.
  *
  * Returns:
@@ -1018,6 +1052,8 @@ irc_upgrade_load ()
         irc_raw_filter_options (
             (ptr_filter && ptr_filter[0]) ? ptr_filter : "*");
     }
+
+    irc_upgrade_set_buffer_prompt ();
 
     return rc;
 }
