@@ -535,6 +535,8 @@ upgrade_weechat_read_buffer (struct t_infolist *infolist)
         infolist_integer (infolist, "time_for_each_line");
 
     /* input */
+    gui_buffer_set_input_prompt (
+        ptr_buffer, infolist_string (infolist, "input_prompt"));
     ptr_buffer->input = infolist_integer (infolist, "input");
     ptr_buffer->input_get_any_user_data =
         infolist_integer (infolist, "input_get_any_user_data");

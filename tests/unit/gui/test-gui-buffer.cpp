@@ -42,8 +42,6 @@ extern int gui_buffer_user_input_cb (const void *pointer, void *data,
                                      const char *input_data);
 extern int gui_buffer_user_close_cb (const void *pointer, void *data,
                                      struct t_gui_buffer *buffer);
-extern void gui_buffer_set_input_prompt (struct t_gui_buffer *buffer,
-                                         const char *input_prompt);
 extern void gui_buffer_set_short_name (struct t_gui_buffer *buffer,
                                        const char *short_name);
 extern void gui_buffer_set_highlight_words_list (struct t_gui_buffer *buffer,
