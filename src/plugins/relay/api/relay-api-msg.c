@@ -385,6 +385,7 @@ relay_api_msg_buffer_to_json (struct t_gui_buffer *buffer,
         lines = lines_free;
     MSG_ADD_STR_PTR("type", ptr_string);
     MSG_ADD_HDATA_STR_COLORS("title", "title");
+    MSG_ADD_HDATA_STR_COLORS("input_prompt", "input_prompt");
     MSG_ADD_HDATA_STR("input", "input_buffer");
     MSG_ADD_HDATA_VAR(Number, "input_position", integer, "input_buffer_pos");
     MSG_ADD_HDATA_VAR(Bool, "input_multiline", integer, "input_multiline");

@@ -432,6 +432,7 @@ TEST(RelayApiProtocolWithClient, CbBuffers)
     WEE_CHECK_OBJ_NUM(1, json, "number");
     WEE_CHECK_OBJ_STR("formatted", json, "type");
     WEE_CHECK_OBJ_STRN("WeeChat", 7, json, "title");
+    WEE_CHECK_OBJ_STR("", json, "input_prompt");
     WEE_CHECK_OBJ_STR("", json, "input");
     WEE_CHECK_OBJ_NUM(0, json, "input_position");
     WEE_CHECK_OBJ_BOOL(0, json, "input_multiline");
@@ -442,6 +443,7 @@ TEST(RelayApiProtocolWithClient, CbBuffers)
     WEE_CHECK_OBJ_STR("weechat", json_var, "name");
 
     /* get one buffer by name */
+    gui_buffer_set (gui_buffers, "input_prompt", "test_prompt");
     gui_buffer_set (gui_buffers, "input", "test");
     gui_buffer_set (gui_buffers, "input_pos", "4");
     gui_buffer_set (gui_buffers, "input_multiline", "1");
@@ -456,6 +458,7 @@ TEST(RelayApiProtocolWithClient, CbBuffers)
     WEE_CHECK_OBJ_NUM(1, json, "number");
     WEE_CHECK_OBJ_STR("formatted", json, "type");
     WEE_CHECK_OBJ_STRN("WeeChat", 7, json, "title");
+    WEE_CHECK_OBJ_STR("test_prompt", json, "input_prompt");
     WEE_CHECK_OBJ_STR("test", json, "input");
     WEE_CHECK_OBJ_NUM(4, json, "input_position");
     WEE_CHECK_OBJ_BOOL(1, json, "input_multiline");
@@ -464,6 +467,7 @@ TEST(RelayApiProtocolWithClient, CbBuffers)
     CHECK(cJSON_IsObject (json_var));
     WEE_CHECK_OBJ_STR("core", json_var, "plugin");
     WEE_CHECK_OBJ_STR("weechat", json_var, "name");
+    gui_buffer_set (gui_buffers, "input_prompt", "");
     gui_buffer_set (gui_buffers, "input", "");
     gui_buffer_set (gui_buffers, "input_multiline", "0");
 
@@ -481,6 +485,7 @@ TEST(RelayApiProtocolWithClient, CbBuffers)
     WEE_CHECK_OBJ_NUM(1, json, "number");
     WEE_CHECK_OBJ_STR("formatted", json, "type");
     WEE_CHECK_OBJ_STRN("WeeChat", 7, json, "title");
+    WEE_CHECK_OBJ_STR("", json, "input_prompt");
     WEE_CHECK_OBJ_STR("", json, "input");
     WEE_CHECK_OBJ_NUM(0, json, "input_position");
     WEE_CHECK_OBJ_BOOL(0, json, "input_multiline");

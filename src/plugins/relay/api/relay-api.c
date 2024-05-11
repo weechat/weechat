@@ -126,7 +126,9 @@ relay_api_hook_signals (struct t_relay_client *client)
         if (!RELAY_API_DATA(client, hook_signal_input))
         {
             RELAY_API_DATA(client, hook_signal_input) =
-                weechat_hook_signal ("input_text_changed;input_text_cursor_moved",
+                weechat_hook_signal ("input_prompt_changed;"
+                                     "input_text_changed;"
+                                     "input_text_cursor_moved",
                                      &relay_api_protocol_signal_input_cb,
                                      client, NULL);
         }
