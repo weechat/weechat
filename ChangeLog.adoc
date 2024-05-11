@@ -55,7 +55,7 @@ New features::
 
 Bug fixes::
 
-  * core: fix conversion of WeeChat "default" color to ANSI color
+  * core: fix conversion of WeeChat colors to ANSI colors: "default", "bar_fg", "bar_bg", "bar_delim"
   * core: fix recursive search of group in nicklist
   * core: use nick offline highlight color for prefix of action message when the nick is offline with a highlight
   * core: add missing hdata name "buffer" in hdata "hotlist"

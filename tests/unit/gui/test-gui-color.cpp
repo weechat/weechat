@@ -797,6 +797,24 @@ TEST(GuiColor, EncodeAnsi)
               gui_color_get_custom ("default"));
     WEE_CHECK_ENCODE_ANSI("test_" "\x1B[39m" "default", string);
 
+    /* text color: bar foreground -> ANSI: 39 (default fg color) */
+    snprintf (string, sizeof (string),
+              "test_" "%s" "bar_fg",
+              gui_color_get_custom ("bar_fg"));
+    WEE_CHECK_ENCODE_ANSI("test_" "\x1B[39m" "bar_fg", string);
+
+    /* text color: bar background -> ANSI: 49 (default bg color) */
+    snprintf (string, sizeof (string),
+              "test_" "%s" "bar_bg",
+              gui_color_get_custom ("bar_bg"));
+    WEE_CHECK_ENCODE_ANSI("test_" "\x1B[49m" "bar_bg", string);
+
+    /* text color: bar delimiter -> color in option weechat.color.chat_delimiters */
+    snprintf (string, sizeof (string),
+              "test_" "%s" "bar_delim",
+              gui_color_get_custom ("bar_delim"));
+    WEE_CHECK_ENCODE_ANSI("test_" "\x1B[48;5;22m" "bar_delim", string);
+
     /* text color */
     snprintf (string, sizeof (string),
               "test_" "%s" "blue",

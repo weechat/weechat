@@ -1544,8 +1544,41 @@ gui_color_encode_ansi (const char *string)
                         switch (ptr_string[0])
                         {
                             case GUI_COLOR_BAR_FG_CHAR:
+                                snprintf (str_concat, sizeof (str_concat),
+                                          "\x1B[%dm",
+                                          GUI_COLOR_ANSI_DEFAULT_FG);
+                                string_dyn_concat (out, str_concat, -1);
+                                ptr_string++;
+                                break;
                             case GUI_COLOR_BAR_BG_CHAR:
+                                snprintf (str_concat, sizeof (str_concat),
+                                          "\x1B[%dm",
+                                          GUI_COLOR_ANSI_DEFAULT_BG);
+                                string_dyn_concat (out, str_concat, -1);
+                                ptr_string++;
+                                break;
                             case GUI_COLOR_BAR_DELIM_CHAR:
+                                color = CONFIG_COLOR(config_color_chat_delimiters);
+                                if (color & GUI_COLOR_EXTENDED_FLAG)
+                                {
+                                    snprintf (str_concat, sizeof (str_concat),
+                                              "\x1B[48;5;%dm",
+                                              color & GUI_COLOR_EXTENDED_MASK);
+                                }
+                                else
+                                {
+                                    ansi_color = gui_color_weechat_to_ansi (
+                                        CONFIG_COLOR(config_color_chat_delimiters));
+                                    snprintf (str_concat, sizeof (str_concat),
+                                              "\x1B[%dm",
+                                              (ansi_color < 0) ?
+                                              GUI_COLOR_ANSI_DEFAULT_FG :
+                                              ((ansi_color < 8) ?
+                                               ansi_color + 40 : ansi_color - 8 + 100));
+                                }
+                                string_dyn_concat (out, str_concat, -1);
+                                ptr_string++;
+                                break;
                             case GUI_COLOR_BAR_START_INPUT_CHAR:
                             case GUI_COLOR_BAR_START_INPUT_HIDDEN_CHAR:
                             case GUI_COLOR_BAR_MOVE_CURSOR_CHAR:
