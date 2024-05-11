@@ -477,8 +477,8 @@ RELAY_REMOTE_EVENT_CALLBACK(buffer)
     struct t_relay_remote_event event_line;
     cJSON *json_obj, *json_keys, *json_key, *json_key_name, *json_key_command;
     cJSON *json_lines, *json_line, *json_nicklist_root;
-    const char *name, *short_name, *type, *title, *input, *ptr_key;
-    const char *ptr_command;
+    const char *name, *short_name, *type, *title, *input_prompt, *input;
+    const char *ptr_key, *ptr_command;
     char *full_name, str_number[64], *property;
     long long id;
     int number, nicklist, nicklist_case_sensitive, nicklist_display_groups;
@@ -493,6 +493,7 @@ RELAY_REMOTE_EVENT_CALLBACK(buffer)
     JSON_GET_NUM(event->json, number, -1);
     JSON_GET_STR(event->json, type);
     JSON_GET_STR(event->json, title);
+    JSON_GET_STR(event->json, input_prompt);
     JSON_GET_STR(event->json, input);
     JSON_GET_NUM(event->json, input_position, 0);
     JSON_GET_BOOL(event->json, input_multiline);
@@ -512,6 +513,7 @@ RELAY_REMOTE_EVENT_CALLBACK(buffer)
     weechat_hashtable_set (buffer_props, "type", type);
     weechat_hashtable_set (buffer_props, "short_name", short_name);
     weechat_hashtable_set (buffer_props, "title", title);
+    weechat_hashtable_set (buffer_props, "input_prompt", input_prompt);
     weechat_hashtable_set (buffer_props, "input", input);
     snprintf (str_number, sizeof (str_number), "%d", input_position);
     weechat_hashtable_set (buffer_props, "input_pos", str_number);
@@ -639,16 +641,18 @@ RELAY_REMOTE_EVENT_CALLBACK(buffer_closed)
 RELAY_REMOTE_EVENT_CALLBACK(input)
 {
     cJSON *json_obj;
-    const char *input;
+    const char *input_prompt, *input;
     char str_pos[64];
     int input_position;
 
     if (!event->buffer || !event->json)
         return WEECHAT_RC_OK;
 
+    JSON_GET_STR(event->json, input_prompt);
     JSON_GET_STR(event->json, input);
     JSON_GET_NUM(event->json, input_position, 0);
 
+    weechat_buffer_set (event->buffer, "input_prompt", input_prompt);
     weechat_buffer_set (event->buffer, "input", input);
     snprintf (str_pos, sizeof (str_pos), "%d", input_position);
     weechat_buffer_set (event->buffer, "input_pos", str_pos);
