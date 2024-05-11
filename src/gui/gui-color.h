@@ -159,6 +159,9 @@ enum t_gui_color_enum
     "([<>])|"                                   \
     "(\\[[0-9;?]*[A-Za-z]))"
 
+#define GUI_COLOR_ANSI_DEFAULT_FG 39
+#define GUI_COLOR_ANSI_DEFAULT_BG 49
+
 #define GUI_COLOR_BUFFER_NAME "color"
 
 /* color structure */

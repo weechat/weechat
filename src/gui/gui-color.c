@@ -1351,14 +1351,13 @@ gui_color_encode_ansi (const char *string)
                                 if (error && !error[0])
                                 {
                                     ansi_color = gui_color_weechat_to_ansi (color);
-                                    if (ansi_color >= 0)
-                                    {
-                                        snprintf (str_concat, sizeof (str_concat),
-                                                  "\x1B[%dm",
-                                                  (ansi_color < 8) ?
-                                                  ansi_color + 30 : ansi_color - 8 + 90);
-                                        string_dyn_concat (out, str_concat, -1);
-                                    }
+                                    snprintf (str_concat, sizeof (str_concat),
+                                              "\x1B[%dm",
+                                              (ansi_color < 0) ?
+                                              GUI_COLOR_ANSI_DEFAULT_FG :
+                                              ((ansi_color < 8) ?
+                                               ansi_color + 30 : ansi_color - 8 + 90));
+                                    string_dyn_concat (out, str_concat, -1);
                                 }
                                 ptr_string += 2;
                             }
@@ -1397,14 +1396,13 @@ gui_color_encode_ansi (const char *string)
                                 if (error && !error[0])
                                 {
                                     ansi_color = gui_color_weechat_to_ansi (color);
-                                    if (ansi_color >= 0)
-                                    {
-                                        snprintf (str_concat, sizeof (str_concat),
-                                                  "\x1B[%dm",
-                                                  (ansi_color < 8) ?
-                                                  ansi_color + 40 : ansi_color - 8 + 100);
-                                        string_dyn_concat (out, str_concat, -1);
-                                    }
+                                    snprintf (str_concat, sizeof (str_concat),
+                                              "\x1B[%dm",
+                                              (ansi_color < 0) ?
+                                              GUI_COLOR_ANSI_DEFAULT_BG :
+                                              ((ansi_color < 8) ?
+                                               ansi_color + 40 : ansi_color - 8 + 100));
+                                    string_dyn_concat (out, str_concat, -1);
                                 }
                                 ptr_string += 2;
                             }
@@ -1453,14 +1451,13 @@ gui_color_encode_ansi (const char *string)
                                 if (error && !error[0])
                                 {
                                     ansi_color = gui_color_weechat_to_ansi (color);
-                                    if (ansi_color >= 0)
-                                    {
-                                        snprintf (str_concat, sizeof (str_concat),
-                                                  "\x1B[%dm",
-                                                  (ansi_color < 8) ?
-                                                  ansi_color + 30 : ansi_color - 8 + 90);
-                                        string_dyn_concat (out, str_concat, -1);
-                                    }
+                                    snprintf (str_concat, sizeof (str_concat),
+                                              "\x1B[%dm",
+                                              (ansi_color < 0) ?
+                                              GUI_COLOR_ANSI_DEFAULT_FG :
+                                              ((ansi_color < 8) ?
+                                               ansi_color + 30 : ansi_color - 8 + 90));
+                                    string_dyn_concat (out, str_concat, -1);
                                 }
                                 ptr_string += 2;
                             }
@@ -1506,14 +1503,13 @@ gui_color_encode_ansi (const char *string)
                                     if (error && !error[0])
                                     {
                                         ansi_color = gui_color_weechat_to_ansi (color);
-                                        if (ansi_color >= 0)
-                                        {
-                                            snprintf (str_concat, sizeof (str_concat),
-                                                      "\x1B[%dm",
-                                                      (ansi_color < 8) ?
-                                                      ansi_color + 40 : ansi_color - 8 + 100);
-                                            string_dyn_concat (out, str_concat, -1);
-                                        }
+                                        snprintf (str_concat, sizeof (str_concat),
+                                                  "\x1B[%dm",
+                                                  (ansi_color < 0) ?
+                                                  GUI_COLOR_ANSI_DEFAULT_BG :
+                                                  ((ansi_color < 8) ?
+                                                   ansi_color + 40 : ansi_color - 8 + 100));
+                                        string_dyn_concat (out, str_concat, -1);
                                     }
                                     ptr_string += 2;
                                 }

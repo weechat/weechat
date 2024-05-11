@@ -791,6 +791,12 @@ TEST(GuiColor, EncodeAnsi)
               gui_color_get_custom ("-underline"));
     WEE_CHECK_ENCODE_ANSI("test_" "\x1B[4m" "underline" "\x1B[24m" "_end", string);
 
+    /* text color: WeeChat: "default" -> ANSI: 39 (default fg color) */
+    snprintf (string, sizeof (string),
+              "test_" "%s" "default",
+              gui_color_get_custom ("default"));
+    WEE_CHECK_ENCODE_ANSI("test_" "\x1B[39m" "default", string);
+
     /* text color */
     snprintf (string, sizeof (string),
               "test_" "%s" "blue",
@@ -808,6 +814,12 @@ TEST(GuiColor, EncodeAnsi)
               "test_" "%s" "214",
               gui_color_get_custom ("214"));
     WEE_CHECK_ENCODE_ANSI("test_" "\x1B[38;5;214m" "214", string);
+
+    /* background color: WeeChat: "default" -> ANSI: 49 (default bg color) */
+    snprintf (string, sizeof (string),
+              "test_" "%s" "bg_default",
+              gui_color_get_custom (",default"));
+    WEE_CHECK_ENCODE_ANSI("test_" "\x1B[49m" "bg_default", string);
 
     /* background color */
     snprintf (string, sizeof (string),
