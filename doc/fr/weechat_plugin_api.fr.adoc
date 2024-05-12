@@ -12473,7 +12473,7 @@ Liste des signaux envoyés par WeeChat et les extensions :
 | Pointeur : tampon.
 | Recherche de texte dans le tampon.
 
-| weechat | [[hook_signal_input_prompt_changed]] input_prompt_changed |
+| weechat | [[hook_signal_input_prompt_changed]] input_prompt_changed | 4.3.0
 | Pointer: buffer.
 | Invite de la zone de saisie modifiée.
 

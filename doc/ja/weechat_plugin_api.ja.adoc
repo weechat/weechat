@@ -12387,7 +12387,7 @@ WeeChat とプラグインが送信するシグナルのリスト:
 | バッファテキストの検索
 
 // TRANSLATION MISSING
-| weechat | [[hook_signal_input_prompt_changed]] input_prompt_changed |
+| weechat | [[hook_signal_input_prompt_changed]] input_prompt_changed | 4.3.0
 | Pointer: buffer.
 | Input prompt changed.
 
