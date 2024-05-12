@@ -94,6 +94,7 @@ relay_api_protocol_signal_buffer_cb (const void *pointer, void *data,
         || (strcmp (signal, "buffer_unhidden") == 0)
         || (strcmp (signal, "buffer_renamed") == 0)
         || (strcmp (signal, "buffer_title_changed") == 0)
+        || (strcmp (signal, "buffer_modes_changed") == 0)
         || (strncmp (signal, "buffer_localvar_", 16) == 0)
         || (strcmp (signal, "buffer_cleared") == 0)
         || (strcmp (signal, "buffer_closing") == 0)

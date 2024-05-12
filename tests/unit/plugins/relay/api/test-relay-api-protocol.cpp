@@ -432,6 +432,7 @@ TEST(RelayApiProtocolWithClient, CbBuffers)
     WEE_CHECK_OBJ_NUM(1, json, "number");
     WEE_CHECK_OBJ_STR("formatted", json, "type");
     WEE_CHECK_OBJ_STRN("WeeChat", 7, json, "title");
+    WEE_CHECK_OBJ_STR("", json, "modes");
     WEE_CHECK_OBJ_STR("", json, "input_prompt");
     WEE_CHECK_OBJ_STR("", json, "input");
     WEE_CHECK_OBJ_NUM(0, json, "input_position");
@@ -458,6 +459,7 @@ TEST(RelayApiProtocolWithClient, CbBuffers)
     WEE_CHECK_OBJ_NUM(1, json, "number");
     WEE_CHECK_OBJ_STR("formatted", json, "type");
     WEE_CHECK_OBJ_STRN("WeeChat", 7, json, "title");
+    WEE_CHECK_OBJ_STR("", json, "modes");
     WEE_CHECK_OBJ_STR("test_prompt", json, "input_prompt");
     WEE_CHECK_OBJ_STR("test", json, "input");
     WEE_CHECK_OBJ_NUM(4, json, "input_position");
@@ -485,6 +487,7 @@ TEST(RelayApiProtocolWithClient, CbBuffers)
     WEE_CHECK_OBJ_NUM(1, json, "number");
     WEE_CHECK_OBJ_STR("formatted", json, "type");
     WEE_CHECK_OBJ_STRN("WeeChat", 7, json, "title");
+    WEE_CHECK_OBJ_STR("", json, "modes");
     WEE_CHECK_OBJ_STR("", json, "input_prompt");
     WEE_CHECK_OBJ_STR("", json, "input");
     WEE_CHECK_OBJ_NUM(0, json, "input_position");
