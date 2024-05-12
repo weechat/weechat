@@ -12647,6 +12647,11 @@ List of signals sent by WeeChat and plugins:
 | Puntatore: buffer.
 | Titolo del buffer modificato.
 
+// TRANSLATION MISSING
+| weechat | [[hook_signal_buffer_modes_changed]] buffer_modes_changed | 4.3.0
+| Pointer: buffer.
+| Modes of buffer changed.
+
 | weechat | [[hook_signal_buffer_type_changed]] buffer_type_changed |
 | Puntatore: buffer.
 | Tipo di buffer modificato.
@@ -15408,6 +15413,8 @@ Argomenti:
 ** _type_: type of buffer: "formatted" or "free" _(WeeChat ≥ 4.2.0)_
 ** _title_: titolo del buffer
 // TRANSLATION MISSING
+** _modes_: modes _(WeeChat ≥ 4.3.0)_
+// TRANSLATION MISSING
 ** _nicklist_last_id_assigned_: last unique identifier used in this buffer for a group or nick _(WeeChat ≥ 4.3.0)_
 // TRANSLATION MISSING
 ** _input_prompt_: input prompt _(WeeChat ≥ 4.3.0)_
@@ -15607,6 +15614,10 @@ Properties:
 
 | title | | qualsiasi stringa
 | Imposta nuovo titolo per il buffer.
+
+// TRANSLATION MISSING
+| modes | 4.3.0 | any string
+| Set new modes for buffer.
 
 | time_for_each_line | | "0" oppure "1"
 | "0" per nascondere l'orario in tutte le righe del buffer, "1" per

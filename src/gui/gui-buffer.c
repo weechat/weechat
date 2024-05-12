@@ -110,9 +110,10 @@ char *gui_buffer_properties_get_integer[] =
 };
 char *gui_buffer_properties_get_string[] =
 { "id", "plugin", "name", "full_name", "old_full_name", "short_name", "title",
-  "nicklist_last_id_assigned", "input_prompt", "input", "text_search_input",
-  "highlight_words", "highlight_disable_regex", "highlight_regex",
-  "highlight_tags_restrict", "highlight_tags", "hotlist_max_level_nicks",
+  "modes", "nicklist_last_id_assigned", "input_prompt", "input",
+  "text_search_input", "highlight_words", "highlight_disable_regex",
+  "highlight_regex", "highlight_tags_restrict", "highlight_tags",
+  "hotlist_max_level_nicks",
   NULL
 };
 char *gui_buffer_properties_get_pointer[] =
@@ -123,7 +124,7 @@ char *gui_buffer_properties_get_pointer[] =
 char *gui_buffer_properties_set[] =
 { "hotlist", "unread", "display", "hidden", "print_hooks_enabled", "day_change",
   "clear", "filter", "number", "name", "short_name", "type", "notify", "title",
-  "time_for_each_line", "nicklist", "nicklist_case_sensitive",
+  "modes", "time_for_each_line", "nicklist", "nicklist_case_sensitive",
   "nicklist_display_groups", "highlight_words", "highlight_words_add",
   "highlight_words_del", "highlight_disable_regex", "highlight_regex",
   "highlight_tags_restrict", "highlight_tags", "hotlist_max_level_nicks",
@@ -867,6 +868,9 @@ gui_buffer_new_props_with_id (long long id,
     /* title */
     new_buffer->title = NULL;
 
+    /* modes */
+    new_buffer->modes = NULL;
+
     /* chat content */
     new_buffer->own_lines = gui_line_lines_alloc ();
     new_buffer->mixed_lines = NULL;
@@ -1538,6 +1542,8 @@ gui_buffer_get_string (struct t_gui_buffer *buffer, const char *property)
        return gui_buffer_type_string[buffer->type];
     else if (strcmp (property, "title") == 0)
         return buffer->title;
+    else if (strcmp (property, "modes") == 0)
+        return buffer->modes;
     else if (strcmp (property, "nicklist_last_id_assigned") == 0)
     {
         snprintf (str_value, sizeof (str_value),
@@ -1790,6 +1796,24 @@ gui_buffer_set_title (struct t_gui_buffer *buffer, const char *new_title)
 
     (void) gui_buffer_send_signal (buffer,
                                    "buffer_title_changed",
+                                   WEECHAT_HOOK_SIGNAL_POINTER, buffer);
+}
+
+/*
+ * Sets modes for a buffer.
+ */
+
+void
+gui_buffer_set_modes (struct t_gui_buffer *buffer, const char *modes)
+{
+    if (!buffer || (string_strcmp (buffer->modes, modes) == 0))
+        return;
+
+    free (buffer->modes);
+    buffer->modes = (modes && modes[0]) ? strdup (modes) : NULL;
+
+    (void) gui_buffer_send_signal (buffer,
+                                   "buffer_modes_changed",
                                    WEECHAT_HOOK_SIGNAL_POINTER, buffer);
 }
 
@@ -2649,6 +2673,10 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
     else if (strcmp (property, "title") == 0)
     {
         gui_buffer_set_title (buffer, value);
+    }
+    else if (strcmp (property, "modes") == 0)
+    {
+        gui_buffer_set_modes (buffer, value);
     }
     else if (strcmp (property, "time_for_each_line") == 0)
     {
@@ -3777,6 +3805,7 @@ gui_buffer_close (struct t_gui_buffer *buffer)
     free (buffer->old_full_name);
     free (buffer->short_name);
     free (buffer->title);
+    free (buffer->modes);
     free (buffer->input_prompt);
     free (buffer->input_buffer);
     free (buffer->input_undo_snap);
@@ -5202,6 +5231,7 @@ gui_buffer_hdata_buffer_cb (const void *pointer, void *data,
         HDATA_VAR(struct t_gui_buffer, close_callback_data, POINTER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, closing, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, title, STRING, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_buffer, modes, STRING, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, own_lines, POINTER, 0, NULL, "lines");
         HDATA_VAR(struct t_gui_buffer, mixed_lines, POINTER, 0, NULL, "lines");
         HDATA_VAR(struct t_gui_buffer, lines, POINTER, 0, NULL, "lines");
@@ -5445,6 +5475,8 @@ gui_buffer_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!infolist_new_var_string (ptr_item, "title", buffer->title))
         return 0;
+    if (!infolist_new_var_string (ptr_item, "modes", buffer->modes))
+        return 0;
     if (!infolist_new_var_integer (ptr_item, "input", buffer->input))
         return 0;
     if (!infolist_new_var_integer (ptr_item, "input_get_any_user_data", buffer->input_get_any_user_data))
@@ -5659,6 +5691,7 @@ gui_buffer_print_log ()
         log_printf ("  close_callback_data . . : %p", ptr_buffer->close_callback_data);
         log_printf ("  closing . . . . . . . . : %d", ptr_buffer->closing);
         log_printf ("  title . . . . . . . . . : '%s'", ptr_buffer->title);
+        log_printf ("  modes . . . . . . . . . : '%s'", ptr_buffer->modes);
         log_printf ("  own_lines . . . . . . . : %p", ptr_buffer->own_lines);
         gui_lines_print_log (ptr_buffer->own_lines);
         log_printf ("  mixed_lines . . . . . . : %p", ptr_buffer->mixed_lines);

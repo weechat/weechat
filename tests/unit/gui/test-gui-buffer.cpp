@@ -552,6 +552,7 @@ TEST(GuiBuffer, NewProps)
     POINTERS_EQUAL(NULL, buffer->close_callback_data);
     LONGS_EQUAL(0, buffer->closing);
     POINTERS_EQUAL(NULL, buffer->title);
+    POINTERS_EQUAL(NULL, buffer->modes);
     CHECK(buffer->own_lines);
     POINTERS_EQUAL(NULL, buffer->own_lines->first_line);
     POINTERS_EQUAL(NULL, buffer->own_lines->last_line);
@@ -639,6 +640,7 @@ TEST(GuiBuffer, NewProps)
     gui_buffer_close (buffer);
 
     hashtable_set (properties, "title", "the buffer title");
+    hashtable_set (properties, "modes", "+nt");
     hashtable_set (properties, "short_name", "the_short_name");
     hashtable_set (properties, "localvar_set_test", "value");
     hashtable_set (properties, "key_bind_meta-y", "/test_y arg1 arg2");
@@ -647,6 +649,7 @@ TEST(GuiBuffer, NewProps)
                                    &test_buffer_input_cb, NULL, NULL,
                                    &test_buffer_close_cb, NULL, NULL);
     STRCMP_EQUAL("the buffer title", buffer->title);
+    STRCMP_EQUAL("+nt", buffer->modes);
     STRCMP_EQUAL("the_short_name", buffer->short_name);
     LONGS_EQUAL(3, buffer->local_variables->items_count);
     STRCMP_EQUAL("value",
@@ -934,6 +937,7 @@ TEST(GuiBuffer, GetString)
     STRCMP_EQUAL("weechat", gui_buffer_get_string (gui_buffers, "short_name"));
     STRCMP_EQUAL("formatted", gui_buffer_get_string (gui_buffers, "type"));
     STRNCMP_EQUAL("WeeChat ", gui_buffer_get_string (gui_buffers, "title"), 8);
+    POINTERS_EQUAL(NULL, gui_buffer_get_string (gui_buffers, "modes"));
     POINTERS_EQUAL(NULL, gui_buffer_get_string (gui_buffers, "input_prompt"));
     STRCMP_EQUAL("", gui_buffer_get_string (gui_buffers, "input"));
     POINTERS_EQUAL(NULL, gui_buffer_get_string (gui_buffers, "text_search_input"));
@@ -1029,6 +1033,16 @@ TEST(GuiBuffer, SetNotify)
  */
 
 TEST(GuiBuffer, SetTitle)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   gui_buffer_set_modes
+ */
+
+TEST(GuiBuffer, SetModes)
 {
     /* TODO: write tests */
 }

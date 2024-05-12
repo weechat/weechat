@@ -1301,10 +1301,12 @@ gui_bar_item_buffer_modes_cb (const void *pointer, void *data,
     (void) data;
     (void) item;
     (void) window;
-    (void) buffer;
     (void) extra_info;
 
-    return NULL;
+    if (!buffer)
+        return NULL;
+
+    return (buffer->modes) ? strdup (buffer->modes) : NULL;
 }
 
 /*
@@ -2387,7 +2389,7 @@ gui_bar_item_init ()
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_MODES],
                       &gui_bar_item_buffer_modes_cb, NULL, NULL);
-    gui_bar_item_hook_signal ("window_switch;buffer_switch",
+    gui_bar_item_hook_signal ("window_switch;buffer_switch;buffer_modes_changed",
                               gui_bar_item_names[GUI_BAR_ITEM_BUFFER_MODES]);
 
     /* buffer filter */

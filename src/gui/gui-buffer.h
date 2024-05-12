@@ -146,6 +146,9 @@ struct t_gui_buffer
     /* buffer title */
     char *title;                       /* buffer title                      */
 
+    /* buffer modes */
+    char *modes;                       /* buffer modes                      */
+
     /* chat content */
     struct t_gui_lines *own_lines;     /* lines (for this buffer only)      */
     struct t_gui_lines *mixed_lines;   /* mixed lines (if buffers merged)   */
@@ -373,6 +376,8 @@ extern void gui_buffer_ask_chat_refresh (struct t_gui_buffer *buffer,
                                          int refresh);
 extern void gui_buffer_set_title (struct t_gui_buffer *buffer,
                                   const char *new_title);
+extern void gui_buffer_set_modes (struct t_gui_buffer *buffer,
+                                  const char *new_modes);
 extern void gui_buffer_set_highlight_words (struct t_gui_buffer *buffer,
                                             const char *new_highlight_words);
 extern void gui_buffer_set_highlight_disable_regex (struct t_gui_buffer *buffer,

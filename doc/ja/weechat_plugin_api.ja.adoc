@@ -12308,6 +12308,11 @@ WeeChat とプラグインが送信するシグナルのリスト:
 | Pointer: バッファ
 | バッファのタイトルを変更
 
+// TRANSLATION MISSING
+| weechat | [[hook_signal_buffer_modes_changed]] buffer_modes_changed | 4.3.0
+| Pointer: buffer.
+| Modes of buffer changed.
+
 | weechat | [[hook_signal_buffer_type_changed]] buffer_type_changed |
 | Pointer: バッファ
 | バッファのタイプを変更
@@ -14943,6 +14948,8 @@ const char *weechat_buffer_get_string (struct t_gui_buffer *buffer,
 ** _type_: type of buffer: "formatted" or "free" _(WeeChat ≥ 4.2.0)_
 ** _title_: バッファのタイトル
 // TRANSLATION MISSING
+** _modes_: modes _(WeeChat ≥ 4.3.0)_
+// TRANSLATION MISSING
 ** _nicklist_last_id_assigned_: last unique identifier used in this buffer for a group or nick _(WeeChat ≥ 4.3.0)_
 // TRANSLATION MISSING
 ** _input_prompt_: input prompt _(WeeChat ≥ 4.3.0)_
@@ -15125,6 +15132,10 @@ void weechat_buffer_set (struct t_gui_buffer *buffer, const char *property,
 
 | title | | 任意の文字列
 | 指定したバッファの新しいタイトルを設定
+
+// TRANSLATION MISSING
+| modes | 4.3.0 | any string
+| Set new modes for buffer.
 
 | time_for_each_line | | "0" または "1"
 | バッファのすべての行に時間を表示しない場合は "0"、表示する場合は

@@ -12146,6 +12146,10 @@ List of signals sent by WeeChat and plugins:
 | Pointer: buffer.
 | Title of buffer changed.
 
+| weechat | [[hook_signal_buffer_modes_changed]] buffer_modes_changed | 4.3.0
+| Pointer: buffer.
+| Modes of buffer changed.
+
 | weechat | [[hook_signal_buffer_type_changed]] buffer_type_changed |
 | Pointer: buffer.
 | Type of buffer changed.
@@ -14707,6 +14711,7 @@ Arguments:
 ** _short_name_: short name of buffer (note: used for display only and can be changed by user, this must not be used to find name of buffer, use instead _name_, _full_name_ or local variable _channel_)
 ** _type_: type of buffer: "formatted" or "free" _(WeeChat ≥ 4.2.0)_
 ** _title_: title of buffer
+** _modes_: modes _(WeeChat ≥ 4.3.0)_
 ** _nicklist_last_id_assigned_: last unique identifier used in this buffer for a group or nick _(WeeChat ≥ 4.3.0)_
 ** _input_prompt_: input prompt _(WeeChat ≥ 4.3.0)_
 ** _input_: input text
@@ -14882,6 +14887,9 @@ Properties:
 
 | title | | any string
 | Set new title for buffer.
+
+| modes | 4.3.0 | any string
+| Set new modes for buffer.
 
 | time_for_each_line | | "0" or "1"
 | "0" to hide time for all lines in buffer, "1" to see time for all lines

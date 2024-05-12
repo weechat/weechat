@@ -11821,6 +11821,11 @@ struct t_hook *weechat_hook_signal (const char *signal,
 | Показивач: бафер.
 | Промењен је наслов бафера.
 
+// TRANSLATION MISSING
+| weechat | [[hook_signal_buffer_modes_changed]] buffer_modes_changed | 4.3.0
+| Pointer: buffer.
+| Modes of buffer changed.
+
 | weechat | [[hook_signal_buffer_type_changed]] buffer_type_changed |
 | Показивач: бафер.
 | Промењен је тип бафера.
@@ -14285,6 +14290,8 @@ const char *weechat_buffer_get_string (struct t_gui_buffer *buffer,
 ** _short_name_: кратко име бафера (напомена: користи се само за приказ и корисник може да га промени, ово не сме да се употребљава за проналажење имена бафера, уместо њега употребите _name_, _full_name_ или локалну променљиву _channel_)
 ** _type_: тип бафера: „formatted” или „free” _(WeeChat ≥ 4.2.0)_
 ** _title_: наслов бафера
+// TRANSLATION MISSING
+** _modes_: modes _(WeeChat ≥ 4.3.0)_
 ** _nicklist_last_id_assigned_: последњи јединствени идентификатор употребљен у овом баферу за групу или надимак _(WeeChat ≥ 4.3.0)_
 // TRANSLATION MISSING
 ** _input_prompt_: input prompt _(WeeChat ≥ 4.3.0)_
@@ -14461,6 +14468,10 @@ void weechat_buffer_set (struct t_gui_buffer *buffer, const char *property,
 
 | title | | било који стринг
 | Поставља нови наслов бафера.
+
+// TRANSLATION MISSING
+| modes | 4.3.0 | any string
+| Set new modes for buffer.
 
 | time_for_each_line | | "0" или "1"
 | "0" да се скрива време у свим линијама бафера, "1" да се приказује у свим
