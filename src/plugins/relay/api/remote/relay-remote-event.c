@@ -477,7 +477,7 @@ RELAY_REMOTE_EVENT_CALLBACK(buffer)
     struct t_relay_remote_event event_line;
     cJSON *json_obj, *json_keys, *json_key, *json_key_name, *json_key_command;
     cJSON *json_lines, *json_line, *json_nicklist_root;
-    const char *name, *short_name, *type, *title, *input_prompt, *input;
+    const char *name, *short_name, *type, *title, *modes, *input_prompt, *input;
     const char *ptr_key, *ptr_command;
     char *full_name, str_number[64], *property;
     long long id;
@@ -493,6 +493,7 @@ RELAY_REMOTE_EVENT_CALLBACK(buffer)
     JSON_GET_NUM(event->json, number, -1);
     JSON_GET_STR(event->json, type);
     JSON_GET_STR(event->json, title);
+    JSON_GET_STR(event->json, modes);
     JSON_GET_STR(event->json, input_prompt);
     JSON_GET_STR(event->json, input);
     JSON_GET_NUM(event->json, input_position, 0);
@@ -513,6 +514,7 @@ RELAY_REMOTE_EVENT_CALLBACK(buffer)
     weechat_hashtable_set (buffer_props, "type", type);
     weechat_hashtable_set (buffer_props, "short_name", short_name);
     weechat_hashtable_set (buffer_props, "title", title);
+    weechat_hashtable_set (buffer_props, "modes", modes);
     weechat_hashtable_set (buffer_props, "input_prompt", input_prompt);
     weechat_hashtable_set (buffer_props, "input", input);
     snprintf (str_number, sizeof (str_number), "%d", input_position);
