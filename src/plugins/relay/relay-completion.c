@@ -48,6 +48,7 @@ relay_completion_protocol_name_cb (const void *pointer, void *data,
     (void) buffer;
     (void) completion_item;
 
+    /* relay "irc" */
     infolist = weechat_infolist_get ("irc_server", NULL, NULL);
     if (infolist)
     {
@@ -75,13 +76,21 @@ relay_completion_protocol_name_cb (const void *pointer, void *data,
         weechat_infolist_free (infolist);
     }
 
-    /* TCP socket */
+    /* relay "api" */
+    weechat_completion_list_add (completion, "api",
+                                 0, WEECHAT_LIST_POS_SORT);
+    weechat_completion_list_add (completion, "tls.api",
+                                 0, WEECHAT_LIST_POS_SORT);
+    weechat_completion_list_add (completion, "unix.api",
+                                 0, WEECHAT_LIST_POS_SORT);
+    weechat_completion_list_add (completion, "unix.tls.api",
+                                 0, WEECHAT_LIST_POS_SORT);
+
+    /* relay "weechat" */
     weechat_completion_list_add (completion, "weechat",
                                  0, WEECHAT_LIST_POS_SORT);
     weechat_completion_list_add (completion, "tls.weechat",
                                  0, WEECHAT_LIST_POS_SORT);
-
-    /* UNIX domain socket */
     weechat_completion_list_add (completion, "unix.weechat",
                                  0, WEECHAT_LIST_POS_SORT);
     weechat_completion_list_add (completion, "unix.tls.weechat",
