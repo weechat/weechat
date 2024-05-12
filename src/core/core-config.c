@@ -285,6 +285,7 @@ struct t_config_option *config_color_status_data_msg = NULL;
 struct t_config_option *config_color_status_data_other = NULL;
 struct t_config_option *config_color_status_data_private = NULL;
 struct t_config_option *config_color_status_filter = NULL;
+struct t_config_option *config_color_status_modes = NULL;
 struct t_config_option *config_color_status_more = NULL;
 struct t_config_option *config_color_status_mouse = NULL;
 struct t_config_option *config_color_status_name = NULL;
@@ -4878,6 +4879,14 @@ config_weechat_init_options ()
             "status_filter", "color",
             N_("text color for filter indicator in status bar"),
             NULL, -1, 0, "green", NULL, 0,
+            NULL, NULL, NULL,
+            &config_change_color, NULL, NULL,
+            NULL, NULL, NULL);
+        config_color_status_modes = config_file_new_option (
+            weechat_config_file, weechat_config_section_color,
+            "status_modes", "color",
+            N_("text color for buffer modes in status bar"),
+            NULL, -1, 0, "default", NULL, 0,
             NULL, NULL, NULL,
             &config_change_color, NULL, NULL,
             NULL, NULL, NULL);

@@ -578,7 +578,7 @@ void
 irc_channel_set_buffer_modes (struct t_irc_server *server,
                               struct t_irc_channel *channel)
 {
-    char *modes, *modes_without_args;
+    char *modes_without_args;
     const char *pos_space;
 
     if (!server || !channel || !channel->buffer)
@@ -599,18 +599,10 @@ irc_channel_set_buffer_modes (struct t_irc_server *server,
                     channel->modes, pos_space - channel->modes);
             }
         }
-        if (weechat_asprintf (
-                &modes, "%s%s",
-                IRC_COLOR_ITEM_CHANNEL_MODES,
-                (modes_without_args) ? modes_without_args : channel->modes) >= 0)
-        {
-            weechat_buffer_set (channel->buffer, "modes", modes);
-            free (modes);
-        }
-        else
-        {
-            weechat_buffer_set (channel->buffer, "modes", "");
-        }
+        weechat_buffer_set (
+            channel->buffer,
+            "modes",
+            (modes_without_args) ? modes_without_args : channel->modes);
         free (modes_without_args);
     }
     else

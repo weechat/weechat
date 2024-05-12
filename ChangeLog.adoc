@@ -43,6 +43,7 @@ New features::
   * api: add support of specifier `%!` for timestamp in function util_strftimeval
   * api: add support of base64url in encode/decode functions
   * fset: add option `-import` in command `/fset`
+  * irc: rename option irc.color.item_channel_modes to weechat.color.status_modes
   * irc: add option `-all` in command `/allchan`, do not execute command on parted channels by default (issue #2085)
   * irc: add server option "autojoin_delay" (delay before autojoin), use option "command_delay" before execution of the command (issue #862)
   * relay: add "api" protocol (HTTP REST API), add option relay.look.display_clients, change option type relay.look.auto_open_buffer to string, rename option relay.weechat.commands to relay.network.commands, add option relay.network.time_window (issue #2066)

@@ -14,6 +14,12 @@ For a complete list of changes, please look at ChangeLog.
 [[v4.3.0]]
 == Version 4.3.0 (under dev)
 
+[[v4.3.0_irc_color_channel_modes]]
+=== Color of IRC channel modes
+
+The option `irc.color.item_channel_modes` has been moved to core and renamed to
+`weechat.color.status_modes`.
+
 [[v4.3.0_signal_buffer_line_added]]
 === Signal "buffer_line_added"
 

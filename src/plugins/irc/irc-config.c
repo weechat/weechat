@@ -135,7 +135,6 @@ struct t_config_option *irc_config_look_topic_strip_colors = NULL;
 /* IRC config, color section */
 
 struct t_config_option *irc_config_color_input_nick = NULL;
-struct t_config_option *irc_config_color_item_channel_modes = NULL;
 struct t_config_option *irc_config_color_item_lag_counting = NULL;
 struct t_config_option *irc_config_color_item_lag_finished = NULL;
 struct t_config_option *irc_config_color_item_nick_modes = NULL;
@@ -3726,14 +3725,6 @@ irc_config_init ()
             NULL, -1, 0, "lightcyan", NULL, 0,
             NULL, NULL, NULL,
             &irc_config_change_buffer_input_prompt, NULL, NULL,
-            NULL, NULL, NULL);
-        irc_config_color_item_channel_modes = weechat_config_new_option (
-            irc_config_file, irc_config_section_color,
-            "item_channel_modes", "color",
-            N_("color for channel modes, near channel name"),
-            NULL, -1, 0, "default", NULL, 0,
-            NULL, NULL, NULL,
-            &irc_config_change_buffer_modes, NULL, NULL,
             NULL, NULL, NULL);
         irc_config_color_item_lag_counting = weechat_config_new_option (
             irc_config_file, irc_config_section_color,

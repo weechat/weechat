@@ -1296,6 +1296,8 @@ gui_bar_item_buffer_modes_cb (const void *pointer, void *data,
                               struct t_gui_buffer *buffer,
                               struct t_hashtable *extra_info)
 {
+    char *modes;
+
     /* make C compiler happy */
     (void) pointer;
     (void) data;
@@ -1303,10 +1305,15 @@ gui_bar_item_buffer_modes_cb (const void *pointer, void *data,
     (void) window;
     (void) extra_info;
 
-    if (!buffer)
+    if (!buffer || !buffer->modes)
         return NULL;
 
-    return (buffer->modes) ? strdup (buffer->modes) : NULL;
+    string_asprintf (
+        &modes,
+        "%s%s",
+        gui_color_get_custom (gui_color_get_name (CONFIG_COLOR(config_color_status_modes))),
+        buffer->modes);
+    return modes;
 }
 
 /*
