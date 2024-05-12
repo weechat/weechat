@@ -15025,8 +15025,7 @@ Paramètres :
 ** _type_ : type de tampon : "formatted" (formaté) ou "free" (contenu libre) _(WeeChat ≥ 4.2.0)_
 ** _title_ : titre du tampon
 ** _nicklist_last_id_assigned_ : dernier identifiant unique utilisé dans ce tampon pour un groupe ou un pseudo _(WeeChat ≥ 4.3.0)_
-// TRANSLATION MISSING
-** _input_prompt_ : input prompt _(WeeChat ≥ 4.3.0)_
+** _input_prompt_ : invite de la zone saisie _(WeeChat ≥ 4.3.0)_
 ** _input_ : texte saisi
 ** _text_search_input_ : texte saisi sauvegardé avant la recherche de texte
 ** _highlight_words_ : liste des mots pour le highlight
