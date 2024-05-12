@@ -984,14 +984,13 @@ irc_upgrade_read_cb (const void *pointer, void *data,
 }
 
 /*
- * Set buffer prompt on IRC buffers where it's not set and if it should be.
- *
- * This is needed when upgrading from WeeChat < 4.3.0 to Weechat ≥ 4.3.0,
- * where the "input_prompt" has been added in buffer.
+ * Set buffer properties on IRC buffers after upgrade:
+ *   - "input_prompt" (introduced in WeeChat 4.3.0)
+ *   - "modes" (introduced in WeeChat 4.3.0)
  */
 
 void
-irc_upgrade_set_buffer_prompt ()
+irc_upgrade_set_buffer_properties ()
 {
     struct t_irc_server *ptr_server;
     struct t_irc_channel *ptr_channel;
@@ -999,20 +998,16 @@ irc_upgrade_set_buffer_prompt ()
     for (ptr_server = irc_servers; ptr_server;
          ptr_server = ptr_server->next_server)
     {
+        /* set input prompt on server and all channels */
         if (ptr_server->buffer)
+            irc_server_set_buffer_input_prompt (ptr_server);
+
+        /* set modes on all channels */
+        for (ptr_channel = ptr_server->channels; ptr_channel;
+             ptr_channel = ptr_channel->next_channel)
         {
-            if (!weechat_buffer_get_string (ptr_server->buffer, "input_prompt"))
-            {
-                irc_server_set_buffer_input_prompt (ptr_server);
-            }
-            else
-            {
-                for (ptr_channel = ptr_server->channels; ptr_channel;
-                     ptr_channel = ptr_channel->next_channel)
-                {
-                    irc_channel_set_buffer_input_prompt (ptr_server, ptr_channel);
-                }
-            }
+            if (ptr_channel->buffer)
+                irc_channel_set_buffer_modes (ptr_server, ptr_channel);
         }
     }
 }
@@ -1053,7 +1048,7 @@ irc_upgrade_load ()
             (ptr_filter && ptr_filter[0]) ? ptr_filter : "*");
     }
 
-    irc_upgrade_set_buffer_prompt ();
+    irc_upgrade_set_buffer_properties ();
 
     return rc;
 }

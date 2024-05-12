@@ -571,7 +571,56 @@ irc_channel_add_nicklist_groups (struct t_irc_server *server,
 }
 
 /*
- * Sets input prompt on channel.
+ * Sets modes on channel buffer.
+ */
+
+void
+irc_channel_set_buffer_modes (struct t_irc_server *server,
+                              struct t_irc_channel *channel)
+{
+    char *modes, *modes_without_args;
+    const char *pos_space;
+
+    if (!server || !channel || !channel->buffer)
+        return;
+
+    if ((channel->type == IRC_CHANNEL_TYPE_CHANNEL)
+        && channel->nicks
+        && channel->modes && channel->modes[0]
+        && (strcmp (channel->modes, "+") != 0))
+    {
+        modes_without_args = NULL;
+        if (!irc_config_display_channel_modes_arguments (channel->modes))
+        {
+            pos_space = strchr (channel->modes, ' ');
+            if (pos_space)
+            {
+                modes_without_args = weechat_strndup (
+                    channel->modes, pos_space - channel->modes);
+            }
+        }
+        if (weechat_asprintf (
+                &modes, "%s%s",
+                IRC_COLOR_ITEM_CHANNEL_MODES,
+                (modes_without_args) ? modes_without_args : channel->modes) >= 0)
+        {
+            weechat_buffer_set (channel->buffer, "modes", modes);
+            free (modes);
+        }
+        else
+        {
+            weechat_buffer_set (channel->buffer, "modes", "");
+        }
+        free (modes_without_args);
+    }
+    else
+    {
+        weechat_buffer_set (channel->buffer, "modes", "");
+    }
+}
+
+/*
+ * Sets input prompt on channel buffer.
  */
 
 void

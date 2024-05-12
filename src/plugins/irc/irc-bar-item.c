@@ -240,66 +240,6 @@ irc_bar_item_buffer_short_name (const void *pointer, void *data,
 }
 
 /*
- * Returns content of bar item "buffer_modes": bar item with buffer modes.
- */
-
-char *
-irc_bar_item_buffer_modes (const void *pointer, void *data,
-                           struct t_gui_bar_item *item,
-                           struct t_gui_window *window,
-                           struct t_gui_buffer *buffer,
-                           struct t_hashtable *extra_info)
-{
-    char modes[128], *modes_without_args;
-    const char *pos_space;
-    int part_from_channel;
-    struct t_irc_server *server;
-    struct t_irc_channel *channel;
-
-    /* make C compiler happy */
-    (void) pointer;
-    (void) data;
-    (void) item;
-    (void) window;
-    (void) extra_info;
-
-    if (!buffer)
-        return NULL;
-
-    modes[0] = '\0';
-
-    irc_buffer_get_server_and_channel (buffer, &server, &channel);
-    if (!channel)
-        return NULL;
-
-    part_from_channel = ((channel->type == IRC_CHANNEL_TYPE_CHANNEL)
-                         && !channel->nicks);
-    if (!part_from_channel
-        && channel->modes && channel->modes[0]
-        && (strcmp (channel->modes, "+") != 0))
-    {
-        modes_without_args = NULL;
-        if (!irc_config_display_channel_modes_arguments (channel->modes))
-        {
-            pos_space = strchr (channel->modes, ' ');
-            if (pos_space)
-            {
-                modes_without_args = weechat_strndup (
-                    channel->modes, pos_space - channel->modes);
-            }
-        }
-        snprintf (modes, sizeof (modes),
-                  "%s%s",
-                  IRC_COLOR_ITEM_CHANNEL_MODES,
-                  (modes_without_args) ? modes_without_args : channel->modes);
-        free (modes_without_args);
-        return strdup (modes);
-    }
-
-    return NULL;
-}
-
-/*
  * Returns content of bar item "irc_channel": bar item with channel name
  * (without modes).
  */
@@ -792,8 +732,6 @@ irc_bar_item_init ()
                           &irc_bar_item_buffer_name, NULL, NULL);
     weechat_bar_item_new ("buffer_short_name",
                           &irc_bar_item_buffer_short_name, NULL, NULL);
-    weechat_bar_item_new ("buffer_modes",
-                          &irc_bar_item_buffer_modes, NULL, NULL);
     weechat_bar_item_new ("irc_channel",
                           &irc_bar_item_channel, NULL, NULL);
     weechat_bar_item_new ("irc_nick",

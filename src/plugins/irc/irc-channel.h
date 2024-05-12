@@ -116,6 +116,8 @@ extern void irc_channel_pv_rename (struct t_irc_server *server,
                                    const char *new_name);
 extern void irc_channel_add_nicklist_groups (struct t_irc_server *server,
                                              struct t_irc_channel *channel);
+extern void irc_channel_set_buffer_modes (struct t_irc_server *server,
+                                          struct t_irc_channel *channel);
 extern void irc_channel_set_buffer_input_prompt (struct t_irc_server *server,
                                                  struct t_irc_channel *channel);
 extern void irc_channel_set_buffer_title (struct t_irc_channel *channel);

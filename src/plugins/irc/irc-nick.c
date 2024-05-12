@@ -814,6 +814,7 @@ irc_nick_free_all (struct t_irc_server *server, struct t_irc_channel *channel)
     /* should be zero, but prevent any bug :D */
     channel->nicks_count = 0;
 
+    irc_channel_set_buffer_modes (server, channel);
     irc_channel_set_buffer_input_prompt (server, channel);
 }
 
