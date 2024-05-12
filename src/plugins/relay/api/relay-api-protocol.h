@@ -21,10 +21,19 @@
 #define WEECHAT_PLUGIN_RELAY_API_PROTOCOL_H
 
 #define RELAY_API_PROTOCOL_CALLBACK(__command)                          \
-    int                                                                 \
+    enum t_relay_api_protocol_rc                                        \
     relay_api_protocol_cb_##__command (struct t_relay_client *client)
 
-typedef int (t_relay_api_cmd_func)(struct t_relay_client *client);
+enum t_relay_api_protocol_rc
+{
+    RELAY_API_PROTOCOL_RC_OK = 0,      /* callback OK                       */
+    RELAY_API_PROTOCOL_RC_BAD_REQUEST, /* bad request (parameters/body)     */
+    RELAY_API_PROTOCOL_RC_MEMORY,      /* out of memory                     */
+    /* number of data types */
+    RELAY_NUM_API_PROTOCOL_RC,
+};
+
+typedef enum t_relay_api_protocol_rc (t_relay_api_cmd_func)(struct t_relay_client *client);
 
 struct t_relay_api_protocol_cb
 {

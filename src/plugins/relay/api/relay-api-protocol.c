@@ -354,7 +354,7 @@ RELAY_API_PROTOCOL_CALLBACK(options)
         NULL,  /* body_type */
         NULL);  /* json_body */
 
-    return WEECHAT_RC_OK;
+    return RELAY_API_PROTOCOL_RC_OK;
 }
 
 /*
@@ -406,7 +406,7 @@ RELAY_API_PROTOCOL_CALLBACK(handshake)
     {
         if (json_body)
             cJSON_Delete (json_body);
-        return WEECHAT_RC_ERROR;
+        return RELAY_API_PROTOCOL_RC_MEMORY;
     }
 
     totp_secret = weechat_string_eval_expression (
@@ -434,7 +434,7 @@ RELAY_API_PROTOCOL_CALLBACK(handshake)
     if (json_body)
         cJSON_Delete (json_body);
 
-    return WEECHAT_RC_OK;
+    return RELAY_API_PROTOCOL_RC_OK;
 }
 
 /*
@@ -452,7 +452,7 @@ RELAY_API_PROTOCOL_CALLBACK(version)
 
     json = cJSON_CreateObject ();
     if (!json)
-        return WEECHAT_RC_ERROR;
+        return RELAY_API_PROTOCOL_RC_MEMORY;
 
     version = weechat_info_get ("version", NULL);
     cJSON_AddItemToObject (json,
@@ -485,7 +485,7 @@ RELAY_API_PROTOCOL_CALLBACK(version)
 
     cJSON_Delete (json);
 
-    return WEECHAT_RC_OK;
+    return RELAY_API_PROTOCOL_RC_OK;
 }
 
 /*
@@ -521,7 +521,7 @@ RELAY_API_PROTOCOL_CALLBACK(buffers)
             relay_api_msg_send_error_json (client, RELAY_HTTP_404_NOT_FOUND, NULL,
                                            "Buffer \"%s\" not found",
                                            client->http_req->path_items[2]);
-            return WEECHAT_RC_OK;
+            return RELAY_API_PROTOCOL_RC_OK;
         }
     }
 
@@ -550,7 +550,7 @@ RELAY_API_PROTOCOL_CALLBACK(buffers)
                 client, RELAY_HTTP_404_NOT_FOUND, NULL,
                 "Sub-resource of buffers not found: \"%s\"",
                 client->http_req->path_items[3]);
-            return WEECHAT_RC_OK;
+            return RELAY_API_PROTOCOL_RC_OK;
         }
     }
     else
@@ -568,7 +568,7 @@ RELAY_API_PROTOCOL_CALLBACK(buffers)
         {
             json = cJSON_CreateArray ();
             if (!json)
-                return WEECHAT_RC_ERROR;
+                return RELAY_API_PROTOCOL_RC_MEMORY;
             ptr_buffer = weechat_hdata_get_list (relay_hdata_buffer,
                                                  "gui_buffers");
             while (ptr_buffer)
@@ -583,18 +583,11 @@ RELAY_API_PROTOCOL_CALLBACK(buffers)
     }
 
     if (!json)
-        goto error;
+        return RELAY_API_PROTOCOL_RC_MEMORY;
 
     relay_api_msg_send_json (client, RELAY_HTTP_200_OK, NULL, "buffer", json);
     cJSON_Delete (json);
-    return WEECHAT_RC_OK;
-
-error:
-    relay_api_msg_send_error_json (client,
-                                   RELAY_HTTP_503_SERVICE_UNAVAILABLE,
-                                   NULL,
-                                   RELAY_HTTP_ERROR_OUT_OF_MEMORY);
-    return WEECHAT_RC_OK;
+    return RELAY_API_PROTOCOL_RC_OK;
 }
 
 /*
@@ -611,7 +604,7 @@ RELAY_API_PROTOCOL_CALLBACK(hotlist)
 
     json = cJSON_CreateArray ();
     if (!json)
-        return WEECHAT_RC_ERROR;
+        return RELAY_API_PROTOCOL_RC_MEMORY;
 
     ptr_hotlist = weechat_hdata_get_list (relay_hdata_hotlist, "gui_hotlist");
     while (ptr_hotlist)
@@ -624,7 +617,7 @@ RELAY_API_PROTOCOL_CALLBACK(hotlist)
 
     relay_api_msg_send_json (client, RELAY_HTTP_200_OK, NULL, "hotlist", json);
     cJSON_Delete (json);
-    return WEECHAT_RC_OK;
+    return RELAY_API_PROTOCOL_RC_OK;
 }
 
 /*
@@ -645,7 +638,7 @@ RELAY_API_PROTOCOL_CALLBACK(input)
 
     json_body = cJSON_Parse (client->http_req->body);
     if (!json_body)
-        return WEECHAT_RC_ERROR;
+        return RELAY_API_PROTOCOL_RC_BAD_REQUEST;
 
     ptr_buffer = NULL;
     json_buffer_id = cJSON_GetObjectItem (json_body, "buffer_id");
@@ -664,7 +657,7 @@ RELAY_API_PROTOCOL_CALLBACK(input)
                     "Buffer \"%lld\" not found",
                     (long long)cJSON_GetNumberValue (json_buffer_id));
                 cJSON_Delete (json_body);
-                return WEECHAT_RC_OK;
+                return RELAY_API_PROTOCOL_RC_OK;
             }
         }
     }
@@ -685,7 +678,7 @@ RELAY_API_PROTOCOL_CALLBACK(input)
                         "Buffer \"%s\" not found",
                         ptr_buffer_name);
                     cJSON_Delete (json_body);
-                    return WEECHAT_RC_OK;
+                    return RELAY_API_PROTOCOL_RC_OK;
                 }
             }
         }
@@ -697,7 +690,7 @@ RELAY_API_PROTOCOL_CALLBACK(input)
     if (!ptr_buffer)
     {
         cJSON_Delete (json_body);
-        return WEECHAT_RC_ERROR;
+        return RELAY_API_PROTOCOL_RC_BAD_REQUEST;
     }
 
     json_command = cJSON_GetObjectItem (json_body, "command");
@@ -705,14 +698,14 @@ RELAY_API_PROTOCOL_CALLBACK(input)
 
     {
         cJSON_Delete (json_body);
-        return WEECHAT_RC_ERROR;
+        return RELAY_API_PROTOCOL_RC_BAD_REQUEST;
     }
 
     ptr_command = cJSON_GetStringValue (json_command);
     if (!ptr_command)
     {
         cJSON_Delete (json_body);
-        return WEECHAT_RC_ERROR;
+        return RELAY_API_PROTOCOL_RC_BAD_REQUEST;
     }
 
     options = weechat_hashtable_new (8,
@@ -726,7 +719,7 @@ RELAY_API_PROTOCOL_CALLBACK(input)
                                        NULL,
                                        RELAY_HTTP_ERROR_OUT_OF_MEMORY);
         cJSON_Delete (json_body);
-        return WEECHAT_RC_OK;
+        return RELAY_API_PROTOCOL_RC_OK;
     }
 
     ptr_commands = weechat_config_string (relay_config_network_commands);
@@ -750,7 +743,7 @@ RELAY_API_PROTOCOL_CALLBACK(input)
 
     relay_api_msg_send_json (client, RELAY_HTTP_204_NO_CONTENT, NULL, NULL, NULL);
 
-    return WEECHAT_RC_OK;
+    return RELAY_API_PROTOCOL_RC_OK;
 }
 
 /*
@@ -780,7 +773,7 @@ RELAY_API_PROTOCOL_CALLBACK(ping)
         if (!json)
         {
             cJSON_Delete (json_body);
-            return WEECHAT_RC_ERROR;
+            return RELAY_API_PROTOCOL_RC_MEMORY;
         }
         cJSON_AddItemToObject (json, "data",
                                cJSON_CreateString ((ptr_data) ? ptr_data : ""));
@@ -793,7 +786,7 @@ RELAY_API_PROTOCOL_CALLBACK(ping)
         relay_api_msg_send_json (client, RELAY_HTTP_204_NO_CONTENT, NULL, NULL, NULL);
     }
 
-    return WEECHAT_RC_OK;
+    return RELAY_API_PROTOCOL_RC_OK;
 }
 
 /*
@@ -814,7 +807,7 @@ RELAY_API_PROTOCOL_CALLBACK(sync)
             RELAY_HTTP_403_FORBIDDEN,
             NULL,
             "Sync resource is available only with a websocket connection");
-        return WEECHAT_RC_OK;
+        return RELAY_API_PROTOCOL_RC_OK;
     }
 
     RELAY_API_DATA(client, sync_enabled) = 1;
@@ -847,7 +840,7 @@ RELAY_API_PROTOCOL_CALLBACK(sync)
 
     relay_api_msg_send_json (client, RELAY_HTTP_204_NO_CONTENT, NULL, NULL, NULL);
 
-    return WEECHAT_RC_OK;
+    return RELAY_API_PROTOCOL_RC_OK;
 }
 
 /*
@@ -937,7 +930,8 @@ end:
 void
 relay_api_protocol_recv_http (struct t_relay_client *client)
 {
-    int i, return_code, num_args;
+    int i, num_args;
+    enum t_relay_api_protocol_rc return_code;
     struct t_relay_api_protocol_cb protocol_cb[] = {
         /* method, resource, auth, min args, max args, callback */
         { "OPTIONS", "*",         0, 0, -1, &relay_api_protocol_cb_options   },
@@ -971,11 +965,11 @@ relay_api_protocol_recv_http (struct t_relay_client *client)
     if ((client->http_req->num_path_items < 2) || !client->http_req->path_items
         || !client->http_req->path_items[0] || !client->http_req->path_items[1])
     {
-        goto error404;
+        goto error_not_found;
     }
 
     if (strcmp (client->http_req->path_items[0], "api") != 0)
-        goto error404;
+        goto error_not_found;
 
     num_args = client->http_req->num_path_items - 2;
 
@@ -1014,7 +1008,7 @@ relay_api_protocol_recv_http (struct t_relay_client *client)
                     num_args,
                     protocol_cb[i].min_args);
             }
-            goto error404;
+            goto error_not_found;
         }
 
         if ((protocol_cb[i].max_args >= 0)
@@ -1036,24 +1030,38 @@ relay_api_protocol_recv_http (struct t_relay_client *client)
                     num_args,
                     protocol_cb[i].max_args);
             }
-            goto error404;
+            goto error_not_found;
         }
 
-        return_code = (int) (protocol_cb[i].cmd_function) (client);
-        if (return_code == WEECHAT_RC_OK)
-            return;
-        else
-            goto error400;
+        return_code = (protocol_cb[i].cmd_function) (client);
+        switch (return_code)
+        {
+            case RELAY_API_PROTOCOL_RC_OK:
+                return;
+            case RELAY_API_PROTOCOL_RC_BAD_REQUEST:
+                goto error_bad_request;
+                break;
+            case RELAY_API_PROTOCOL_RC_MEMORY:
+                goto error_memory;
+                break;
+            case RELAY_NUM_API_PROTOCOL_RC:
+                break;
+        }
     }
 
-    goto error404;
+    goto error_not_found;
 
-error400:
+error_bad_request:
     relay_api_msg_send_json (client, RELAY_HTTP_400_BAD_REQUEST, NULL, NULL, NULL);
     goto error;
 
-error404:
+error_not_found:
     relay_api_msg_send_json (client, RELAY_HTTP_404_NOT_FOUND, NULL, NULL, NULL);
+    goto error;
+
+error_memory:
+    relay_api_msg_send_error_json (client, RELAY_HTTP_503_SERVICE_UNAVAILABLE,
+                                   NULL, RELAY_HTTP_ERROR_OUT_OF_MEMORY);
     goto error;
 
 error:
