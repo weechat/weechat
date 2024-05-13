@@ -126,6 +126,7 @@ if(ENABLE_IRC)
     unit/plugins/irc/test-irc-buffer.cpp
     unit/plugins/irc/test-irc-channel.cpp
     unit/plugins/irc/test-irc-color.cpp
+    unit/plugins/irc/test-irc-command.cpp
     unit/plugins/irc/test-irc-config.cpp
     unit/plugins/irc/test-irc-ctcp.cpp
     unit/plugins/irc/test-irc-info.cpp

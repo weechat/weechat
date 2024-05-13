@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-05-13 22:49+0200\n"
+"POT-Creation-Date: 2024-05-13 22:50+0200\n"
 "PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -10050,7 +10050,7 @@ msgstr "zruší zakázání pro přezdívku nebo hosta"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 #, fuzzy
-msgid "[<channel>] <nick>|<number> [<nick>|<number>...]"
+msgid "[<channel>] <nick>|<number>|<n1>-<n2> [<nick>|<number>|<n1>-<n2>...]"
 msgstr "[<kanál>] <přezdívka> [<přezdívka>...]"
 
 #, fuzzy
@@ -10058,6 +10058,14 @@ msgid "number: ban number (as displayed by command /ban)"
 msgstr ""
 "    kanál: kanál pro zrušení zakázání\n"
 "přezdívka: uživatel nebo host, kterému zrušit zakázání"
+
+#, fuzzy
+#| msgid "IRC servers (internal names)"
+msgid "n1: interval start number"
+msgstr "IRC servery (vnitřní jména)"
+
+msgid "n2: interval end number"
+msgstr ""
 
 #, fuzzy
 msgid "unquiet nicks or hosts"

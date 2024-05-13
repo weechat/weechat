@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-05-13 22:49+0200\n"
+"POT-Creation-Date: 2024-05-13 22:50+0200\n"
 "PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -9645,7 +9645,7 @@ msgstr "gép vagy felhasználó tiltásának visszavonása"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 #, fuzzy
-msgid "[<channel>] <nick>|<number> [<nick>|<number>...]"
+msgid "[<channel>] <nick>|<number>|<n1>-<n2> [<nick>|<number>|<n1>-<n2>...]"
 msgstr "[szoba] név [név ...]"
 
 #, fuzzy
@@ -9653,6 +9653,14 @@ msgid "number: ban number (as displayed by command /ban)"
 msgstr ""
 "szoba: szoba ahol a parancsot végrehajtjuk\n"
 "  név: felhasználó vagy gép melyen a parancsot végrehajtjuk"
+
+#, fuzzy
+#| msgid "target: server name"
+msgid "n1: interval start number"
+msgstr "cél: szerver neve"
+
+msgid "n2: interval end number"
+msgstr ""
 
 #, fuzzy
 msgid "unquiet nicks or hosts"

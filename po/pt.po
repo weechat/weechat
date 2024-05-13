@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-05-13 22:49+0200\n"
+"POT-Creation-Date: 2024-05-13 22:50+0200\n"
 "PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: Vasco Almeida <vascomalmeida@sapo.pt>\n"
 "Language-Team: Portuguese <>\n"
@@ -10527,7 +10527,7 @@ msgstr "remover banimento de nicks ou hosts"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 #, fuzzy
-msgid "[<channel>] <nick>|<number> [<nick>|<number>...]"
+msgid "[<channel>] <nick>|<number>|<n1>-<n2> [<nick>|<number>|<n1>-<n2>...]"
 msgstr "[<canal>] <nick> [<nick>...]"
 
 #, fuzzy
@@ -10537,6 +10537,14 @@ msgstr ""
 " nick: nick ou host\n"
 "\n"
 "Sem argumentos, este comando mostra a lista de banimentos do canal atual."
+
+#, fuzzy
+#| msgid "IRC servers (internal names)"
+msgid "n1: interval start number"
+msgstr "servidores IRC (nomes internos)"
+
+msgid "n2: interval end number"
+msgstr ""
 
 msgid "unquiet nicks or hosts"
 msgstr "remover silêncio de nicks ou hosts"

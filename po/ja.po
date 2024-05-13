@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-05-13 22:49+0200\n"
+"POT-Creation-Date: 2024-05-13 22:50+0200\n"
 "PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -10551,7 +10551,9 @@ msgid "unban nicks or hosts"
 msgstr "ニックネームかホストの禁止設定を解除"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
-msgid "[<channel>] <nick>|<number> [<nick>|<number>...]"
+#, fuzzy
+#| msgid "[<channel>] <nick>|<number> [<nick>|<number>...]"
+msgid "[<channel>] <nick>|<number>|<n1>-<n2> [<nick>|<number>|<n1>-<n2>...]"
 msgstr "[<channel>] <nick>|<number> [<nick>|<number>...]"
 
 #, fuzzy
@@ -10564,6 +10566,14 @@ msgstr ""
 "channel: チャンネル名\n"
 "   nick: ニックネームまたはホスト名\n"
 " number: バンするニックネームの番号 (コマンド /ban で表示される番号)"
+
+#, fuzzy
+#| msgid "IRC servers (internal names)"
+msgid "n1: interval start number"
+msgstr "IRC サーバ (内部名)"
+
+msgid "n2: interval end number"
+msgstr ""
 
 msgid "unquiet nicks or hosts"
 msgstr "ニックネームまたはホスト名に対する発言禁止を解除"

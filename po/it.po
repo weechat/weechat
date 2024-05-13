@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-05-13 22:49+0200\n"
+"POT-Creation-Date: 2024-05-13 22:50+0200\n"
 "PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -10252,7 +10252,7 @@ msgstr "rimuove il ban da nick o host"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 #, fuzzy
-msgid "[<channel>] <nick>|<number> [<nick>|<number>...]"
+msgid "[<channel>] <nick>|<number>|<n1>-<n2> [<nick>|<number>|<n1>-<n2>...]"
 msgstr "[<canale>] <nick> [<nick>...]"
 
 #, fuzzy
@@ -10262,6 +10262,14 @@ msgstr ""
 "  nick: utente o host su cui effettuare il ban\n"
 "\n"
 "Senza argomento, il comando mostra la lista dei ban per il canale corrente."
+
+#, fuzzy
+#| msgid "IRC servers (internal names)"
+msgid "n1: interval start number"
+msgstr "server IRC (nomi interni)"
+
+msgid "n2: interval end number"
+msgstr ""
 
 #, fuzzy
 msgid "unquiet nicks or hosts"

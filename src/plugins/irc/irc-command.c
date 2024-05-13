@@ -221,6 +221,77 @@ irc_command_mode_nicks (struct t_irc_server *server,
 }
 
 /*
+ * Returns arguments with ranges of numbers converted to individual numbers.
+ * Arguments that are not range (format: "N1-N2") are kept as-is.
+ *
+ * For example: ["2" "5-8" "abc"] -> ["2" "5" "6" "7" "8" "abc"]
+ */
+
+char **
+irc_command_mode_masks_convert_ranges (char **argv, int arg_start)
+{
+    char **str_masks, **masks, *error1, *error2, *pos, str_number[32];
+    int i, length, added;
+    long j, number1, number2;
+
+    if (!argv || (arg_start < 0))
+        return NULL;
+
+    str_masks = weechat_string_dyn_alloc (128);
+    if (!str_masks)
+        return NULL;
+
+    for (i = arg_start; argv[i]; i++)
+    {
+        added = 0;
+
+        length = strlen (argv[i]);
+        pos = strchr (argv[i], '-');
+        if ((length > 2)
+            && pos
+            && (argv[i][0] != '-')
+            && (argv[i][length - 1] != '-'))
+        {
+            pos[0] = '\0';
+            error1 = NULL;
+            number1 = strtol (argv[i], &error1, 10);
+            error2 = NULL;
+            number2 = strtol (pos + 1, &error2, 10);
+            if (error1 && !error1[0]
+                && error2 && !error2[0]
+                && (number1 > 0) && (number1 < 128)
+                && (number2 > 0) && (number2 < 128)
+                && (number1 < number2))
+            {
+                for (j = number1; j <= number2; j++)
+                {
+                    if (*str_masks[0])
+                        weechat_string_dyn_concat (str_masks, " ", -1);
+                    snprintf (str_number, sizeof (str_number),
+                              "%ld", j);
+                    weechat_string_dyn_concat (str_masks, str_number, -1);
+                }
+                added = 1;
+            }
+            pos[0] = '-';
+        }
+
+        if (!added)
+        {
+            if (*str_masks[0])
+                weechat_string_dyn_concat (str_masks, " ", -1);
+            weechat_string_dyn_concat (str_masks, argv[i], -1);
+        }
+    }
+
+    masks = weechat_string_split (*str_masks, " ", NULL, 0, 0, NULL);
+
+    weechat_string_dyn_free (str_masks, 1);
+
+    return masks;
+}
+
+/*
  * Sends mode change for many masks on a channel.
  *
  * Argument "set" is "+" or "-", mode can be "b", "q", or any other mode
@@ -6369,7 +6440,7 @@ IRC_COMMAND_CALLBACK(trace)
 
 IRC_COMMAND_CALLBACK(unban)
 {
-    char *pos_channel;
+    char *pos_channel, **masks;
     int pos_args;
 
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
@@ -6409,9 +6480,14 @@ IRC_COMMAND_CALLBACK(unban)
         }
     }
 
-    irc_command_mode_masks (ptr_server, pos_channel,
-                            "unban", "-", "b",
-                            argv, pos_args);
+    masks = irc_command_mode_masks_convert_ranges (argv, pos_args);
+    if (masks)
+    {
+        irc_command_mode_masks (ptr_server, pos_channel,
+                                "unban", "-", "b",
+                                masks, 0);
+        weechat_string_free_split (masks);
+    }
 
     return WEECHAT_RC_OK;
 }
@@ -6422,7 +6498,7 @@ IRC_COMMAND_CALLBACK(unban)
 
 IRC_COMMAND_CALLBACK(unquiet)
 {
-    char *pos_channel;
+    char *pos_channel, **masks;
     int pos_args;
 
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
@@ -6464,9 +6540,14 @@ IRC_COMMAND_CALLBACK(unquiet)
 
     if (argv[pos_args])
     {
-        irc_command_mode_masks (ptr_server, pos_channel,
-                                "unquiet", "-", "q",
-                                argv, pos_args);
+        masks = irc_command_mode_masks_convert_ranges (argv, pos_args);
+        if (masks)
+        {
+            irc_command_mode_masks (ptr_server, pos_channel,
+                                    "unquiet", "-", "q",
+                                    masks, 0);
+            weechat_string_free_split (masks);
+        }
     }
     else
     {
@@ -7923,22 +8004,26 @@ irc_command_init ()
         "unban",
         N_("unban nicks or hosts"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
-        N_("[<channel>] <nick>|<number> [<nick>|<number>...]"),
+        N_("[<channel>] <nick>|<number>|<n1>-<n2> [<nick>|<number>|<n1>-<n2>...]"),
         WEECHAT_CMD_ARGS_DESC(
             N_("channel: channel name"),
             N_("nick: nick or host"),
-            N_("number: ban number (as displayed by command /ban)")),
+            N_("number: ban number (as displayed by command /ban)"),
+            N_("n1: interval start number"),
+            N_("n2: interval end number")),
         "%(irc_modelist_masks:b)|%(irc_modelist_numbers:b)",
         &irc_command_unban, NULL, NULL);
     weechat_hook_command (
         "unquiet",
         N_("unquiet nicks or hosts"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
-        N_("[<channel>] <nick>|<number> [<nick>|<number>...]"),
+        N_("[<channel>] <nick>|<number>|<n1>-<n2> [<nick>|<number>|<n1>-<n2>...]"),
         WEECHAT_CMD_ARGS_DESC(
             N_("channel: channel name"),
             N_("nick: nick or host"),
-            N_("number: quiet number (as displayed by command /quiet)")),
+            N_("number: quiet number (as displayed by command /quiet)"),
+            N_("n1: interval start number"),
+            N_("n2: interval end number")),
         "%(irc_modelist_masks:q)|%(irc_modelist_numbers:q)",
         &irc_command_unquiet, NULL, NULL);
     weechat_hook_command (

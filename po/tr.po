@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-05-13 22:49+0200\n"
+"POT-Creation-Date: 2024-05-13 22:50+0200\n"
 "PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -10678,7 +10678,9 @@ msgid "unban nicks or hosts"
 msgstr "takma adların veya makinelerin yasağını kaldır"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
-msgid "[<channel>] <nick>|<number> [<nick>|<number>...]"
+#, fuzzy
+#| msgid "[<channel>] <nick>|<number> [<nick>|<number>...]"
+msgid "[<channel>] <nick>|<number>|<n1>-<n2> [<nick>|<number>|<n1>-<n2>...]"
 msgstr "[<kanal>] <takmaad>|<sayı> [<takmaad>|<sayı>...]"
 
 #, fuzzy
@@ -10691,6 +10693,14 @@ msgstr ""
 "  kanal: kanal adı\n"
 "takmaad: takma ad veya makine\n"
 "   sayı: yasak numarası (/ban komutunda görüntülendiği üzere)"
+
+#, fuzzy
+#| msgid "IRC servers (internal names)"
+msgid "n1: interval start number"
+msgstr "IRC sunucuları (dahili adlar)"
+
+msgid "n2: interval end number"
+msgstr ""
 
 msgid "unquiet nicks or hosts"
 msgstr "takma adların veya makinelerin sessiz durumunu kaldır"

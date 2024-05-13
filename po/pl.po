@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-05-13 22:49+0200\n"
+"POT-Creation-Date: 2024-05-13 22:50+0200\n"
 "PO-Revision-Date: 2024-05-02 00:06+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -10615,11 +10615,21 @@ msgid "unban nicks or hosts"
 msgstr "odbanowuje nicki lub hosty"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
-msgid "[<channel>] <nick>|<number> [<nick>|<number>...]"
+#, fuzzy
+#| msgid "[<channel>] <nick>|<number> [<nick>|<number>...]"
+msgid "[<channel>] <nick>|<number>|<n1>-<n2> [<nick>|<number>|<n1>-<n2>...]"
 msgstr "[<kanał>] <nick>|<numer> [<nick>|<numer>...]"
 
 msgid "number: ban number (as displayed by command /ban)"
 msgstr "numer: numer bana (wyświetlany na liście za pomocą komendy /ban)"
+
+#, fuzzy
+#| msgid "server: internal server name"
+msgid "n1: interval start number"
+msgstr "serwer: wewnętrzna nazwa serwera"
+
+msgid "n2: interval end number"
+msgstr ""
 
 msgid "unquiet nicks or hosts"
 msgstr "nicki albo hosty przestają być uciszone"
