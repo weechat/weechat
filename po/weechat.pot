@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-05-01 10:08+0200\n"
+"POT-Creation-Date: 2024-05-13 22:49+0200\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4598,6 +4598,9 @@ msgid "text color for buffer with private message (status bar)"
 msgstr ""
 
 msgid "text color for filter indicator in status bar"
+msgstr ""
+
+msgid "text color for buffer modes in status bar"
 msgstr ""
 
 msgid "text color for buffer with new data (status bar)"
@@ -9707,9 +9710,6 @@ msgid "strip colors in topic (used only when displaying buffer title)"
 msgstr ""
 
 msgid "color for nick in input bar"
-msgstr ""
-
-msgid "color for channel modes, near channel name"
 msgstr ""
 
 msgid ""

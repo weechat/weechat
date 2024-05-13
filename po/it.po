@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-05-01 10:08+0200\n"
+"POT-Creation-Date: 2024-05-13 22:49+0200\n"
 "PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5315,6 +5315,11 @@ msgstr ""
 
 msgid "text color for filter indicator in status bar"
 msgstr "colore del testo per l'indicatore di filtro nella barra di stato"
+
+#, fuzzy
+#| msgid "text color for current buffer name in status bar"
+msgid "text color for buffer modes in status bar"
+msgstr "colore del testo per il nome del buffer corrente nella barra di stato"
 
 msgid "text color for buffer with new data (status bar)"
 msgstr "colore del testo per il buffer con nuovi dati (barra di stato)"
@@ -11403,9 +11408,6 @@ msgstr ""
 msgid "color for nick in input bar"
 msgstr "colore per il nick nella riga di input"
 
-msgid "color for channel modes, near channel name"
-msgstr "colore per le modalità dei canali, vicino ai nomi dei canali"
-
 msgid ""
 "color for lag indicator, when counting (pong not received from server, lag "
 "is increasing)"
@@ -17157,3 +17159,6 @@ msgstr "%s%s: timeout per \"%s\" con %s"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: impossibile connettersi al mittente"
+
+#~ msgid "color for channel modes, near channel name"
+#~ msgstr "colore per le modalità dei canali, vicino ai nomi dei canali"

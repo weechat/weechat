@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-05-01 10:08+0200\n"
-"PO-Revision-Date: 2024-05-01 10:09+0200\n"
+"POT-Creation-Date: 2024-05-13 22:49+0200\n"
+"PO-Revision-Date: 2024-05-13 22:50+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -5829,6 +5829,9 @@ msgstr ""
 
 msgid "text color for filter indicator in status bar"
 msgstr "couleur du texte pour l'indicateur de filtrage dans la barre de statut"
+
+msgid "text color for buffer modes in status bar"
+msgstr "couleur du texte pour les modes du tampon dans la barre de statut"
 
 msgid "text color for buffer with new data (status bar)"
 msgstr ""
@@ -12170,9 +12173,6 @@ msgstr ""
 msgid "color for nick in input bar"
 msgstr "couleur du pseudo dans la barre de saisie"
 
-msgid "color for channel modes, near channel name"
-msgstr "couleur pour les modes du canal, à côté du nom du canal"
-
 msgid ""
 "color for lag indicator, when counting (pong not received from server, lag "
 "is increasing)"
@@ -18055,3 +18055,6 @@ msgstr "%s%s : délai d'attente dépassé pour \"%s\" avec %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s : impossible de se connecter : erreur inattendue (%d)"
+
+#~ msgid "color for channel modes, near channel name"
+#~ msgstr "couleur pour les modes du canal, à côté du nom du canal"

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-05-01 10:08+0200\n"
+"POT-Creation-Date: 2024-05-13 22:49+0200\n"
 "PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5537,6 +5537,11 @@ msgstr "kişisel ileti içeren arabellek metin rengi (durum çubuğu)"
 
 msgid "text color for filter indicator in status bar"
 msgstr "durum çubuğundaki süzgeç göstergesi metin rengi"
+
+#, fuzzy
+#| msgid "text color for current buffer name in status bar"
+msgid "text color for buffer modes in status bar"
+msgstr "durum çubuğundaki geçerli arabellek metin rengi"
 
 msgid "text color for buffer with new data (status bar)"
 msgstr "yeni veri içeren arabellek metin rengi (durum çubuğu)"
@@ -11958,9 +11963,6 @@ msgstr ""
 msgid "color for nick in input bar"
 msgstr "girdi çubuğundaki takma ad rengi"
 
-msgid "color for channel modes, near channel name"
-msgstr "kanal kipleri, kanal adı yanı renkler"
-
 msgid ""
 "color for lag indicator, when counting (pong not received from server, lag "
 "is increasing)"
@@ -17908,3 +17910,6 @@ msgstr "%s%s: \"%s\" için %s ile zaman aşımı"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: Bağlanılamıyor: Beklenmedik hata (%d)"
+
+#~ msgid "color for channel modes, near channel name"
+#~ msgstr "kanal kipleri, kanal adı yanı renkler"

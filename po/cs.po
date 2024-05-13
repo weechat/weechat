@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-05-01 10:08+0200\n"
+"POT-Creation-Date: 2024-05-13 22:49+0200\n"
 "PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5215,6 +5215,11 @@ msgstr "barva textu pro buffer se soukromou zprávou (status bar)"
 
 msgid "text color for filter indicator in status bar"
 msgstr "barva textu pro indikátor filtru ve stavovém řádku"
+
+#, fuzzy
+#| msgid "text color for current buffer name in status bar"
+msgid "text color for buffer modes in status bar"
+msgstr "barva textu pro aktuální jméno bufferu ve stavovém řádku"
 
 msgid "text color for buffer with new data (status bar)"
 msgstr "barva textu pro buffer s novými daty (status bar)"
@@ -11128,9 +11133,6 @@ msgstr ""
 msgid "color for nick in input bar"
 msgstr "barva přezdívky ve vstupním poli"
 
-msgid "color for channel modes, near channel name"
-msgstr "barva módů kanálu, blízko jména kanálu"
-
 msgid ""
 "color for lag indicator, when counting (pong not received from server, lag "
 "is increasing)"
@@ -16784,3 +16786,6 @@ msgstr "%s%s: vypršel časový limit \"%s\" pro %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: nemohu se připojit\" neočekávaná chyba (%d)"
+
+#~ msgid "color for channel modes, near channel name"
+#~ msgstr "barva módů kanálu, blízko jména kanálu"

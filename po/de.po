@@ -26,7 +26,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-05-01 10:08+0200\n"
+"POT-Creation-Date: 2024-05-13 22:49+0200\n"
 "PO-Revision-Date: 2024-05-02 07:42+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -5961,6 +5961,11 @@ msgstr "Farbe eines Buffers mit privater Nachricht (Statusbar)"
 
 msgid "text color for filter indicator in status bar"
 msgstr "Farbe des Filterkennzeichens in der Statuszeile"
+
+#, fuzzy
+#| msgid "text color for current buffer name in status bar"
+msgid "text color for buffer modes in status bar"
+msgstr "Farbe des aktuellen Buffer-Namens in der Statuszeile"
 
 msgid "text color for buffer with new data (status bar)"
 msgstr "Farbe eines Buffers mit neuen Daten (Statusbar)"
@@ -12406,9 +12411,6 @@ msgstr ""
 msgid "color for nick in input bar"
 msgstr "Farbe des eigenen Nicknamens in der Eingabezeile"
 
-msgid "color for channel modes, near channel name"
-msgstr "Farbe der Kanal-Modes (neben des Kanalnamens)"
-
 msgid ""
 "color for lag indicator, when counting (pong not received from server, lag "
 "is increasing)"
@@ -16023,8 +16025,8 @@ msgstr ""
 msgid ""
 "number of lines to retrieve on each buffer when connecting to a remote relay"
 msgstr ""
-"Anzahl der Zeilen die von jedem Buffer, beim Verbinden mit einem"
-" Remote-Relay, abgerufen werden sollen"
+"Anzahl der Zeilen die von jedem Buffer, beim Verbinden mit einem Remote-"
+"Relay, abgerufen werden sollen"
 
 #, c-format
 msgid "%s%s: invalid websocket handshake received for client %s%s%s"
@@ -18402,3 +18404,5 @@ msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr ""
 "%s%s: Verbindung konnte nicht hergestellt werden: unerwarteter Fehler (%d)"
 
+#~ msgid "color for channel modes, near channel name"
+#~ msgstr "Farbe der Kanal-Modes (neben des Kanalnamens)"

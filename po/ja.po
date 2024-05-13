@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-05-01 10:08+0200\n"
+"POT-Creation-Date: 2024-05-13 22:49+0200\n"
 "PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -5499,6 +5499,11 @@ msgstr ""
 
 msgid "text color for filter indicator in status bar"
 msgstr "ステータスバー内のフィルタインジケータのテキスト色"
+
+#, fuzzy
+#| msgid "text color for current buffer name in status bar"
+msgid "text color for buffer modes in status bar"
+msgstr "ステータスバー内の現在のバッファ名のテキスト色"
 
 msgid "text color for buffer with new data (status bar)"
 msgstr "新しいデータを受け取ったバッファのテキスト色 (ステータスバー)"
@@ -11796,9 +11801,6 @@ msgstr ""
 msgid "color for nick in input bar"
 msgstr "インプットバーのニックネームに使う色"
 
-msgid "color for channel modes, near channel name"
-msgstr "チャンネル名付近のチャンネルモードに使う色"
-
 msgid ""
 "color for lag indicator, when counting (pong not received from server, lag "
 "is increasing)"
@@ -17661,3 +17663,6 @@ msgstr "%s%s: \"%s\" のタイムアウト %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: 接続できません: 未定義のエラー (%d)"
+
+#~ msgid "color for channel modes, near channel name"
+#~ msgstr "チャンネル名付近のチャンネルモードに使う色"
