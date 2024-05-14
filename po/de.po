@@ -26,7 +26,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-05-13 22:50+0200\n"
+"POT-Creation-Date: 2024-05-14 22:20+0200\n"
 "PO-Revision-Date: 2024-05-14 08:46+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -5962,7 +5962,6 @@ msgstr "Farbe eines Buffers mit privater Nachricht (Statusbar)"
 msgid "text color for filter indicator in status bar"
 msgstr "Farbe des Filterkennzeichens in der Statuszeile"
 
-#| msgid "text color for current buffer name in status bar"
 msgid "text color for buffer modes in status bar"
 msgstr "Farbe für Buffer-Modi in der Statuszeile"
 
@@ -11137,14 +11136,12 @@ msgid "unban nicks or hosts"
 msgstr "Bann von Nicks oder Hosts aufheben"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
-#| msgid "[<channel>] <nick>|<number> [<nick>|<number>...]"
 msgid "[<channel>] <nick>|<number>|<n1>-<n2> [<nick>|<number>|<n1>-<n2>...]"
 msgstr "[<channel>] <nick>|<number>|<n1>-<n2> [<nick>|<number>|<n1>-<n2>...]"
 
 msgid "number: ban number (as displayed by command /ban)"
 msgstr "Nummer: Nummer des Bannes (wird beim Befehl /ban angezeigt)"
 
-#| msgid "server: internal server name"
 msgid "n1: interval start number"
 msgstr "n1: Intervall-Startnummer"
 
@@ -15633,9 +15630,11 @@ msgstr ""
 "url: URL des Remote-Relays im Format https://example.com:9000 oder http://"
 "example.com:9000 (Klartext-Verbindung, nicht empfohlen)"
 
-msgid "option: set option for remote relay: proxy, password or totp_secret"
+#, fuzzy
+#| msgid "option: extra option, for some servers"
+msgid "option: set option for remote relay"
 msgstr ""
-"option: Option für Remote-Relay festlegen: Proxy, Passwort oder totp_secret"
+"option: zusätzliche Einstellung, die von manchen Servern berücksichtigt wird"
 
 msgid "raw[connect]: connect to a remote relay server"
 msgstr "raw[connect]: Verbindung zu einem Remote-Relay-Server herstellen"
@@ -15719,6 +15718,11 @@ msgstr ""
 "Remote-Relay-URL mit optionalem Port (Standard ist 9000), Beispiele: https://"
 "example.com:9000 oder http://example.com:9000 (Klartext-Verbindung, nicht "
 "empfohlen)"
+
+#, fuzzy
+#| msgid "raw[connect]: connect to a remote relay server"
+msgid "auto-connect to the remote relay"
+msgstr "raw[connect]: Verbindung zu einem Remote-Relay-Server herstellen"
 
 msgid ""
 "name of proxy used for this remote relay (optional, proxy must be defined "
@@ -18411,6 +18415,10 @@ msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr ""
 "%s%s: Verbindung konnte nicht hergestellt werden: unerwarteter Fehler (%d)"
 
+#~ msgid "option: set option for remote relay: proxy, password or totp_secret"
+#~ msgstr ""
+#~ "option: Option für Remote-Relay festlegen: Proxy, Passwort oder "
+#~ "totp_secret"
+
 #~ msgid "color for channel modes, near channel name"
 #~ msgstr "Farbe der Kanal-Modes (neben des Kanalnamens)"
-

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-05-13 22:50+0200\n"
+"POT-Creation-Date: 2024-05-14 22:20+0200\n"
 "PO-Revision-Date: 2024-05-07 14:00+0400\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -14898,9 +14898,10 @@ msgstr ""
 "url: URL релеја удаљених, формат је https://example.com:9000 или http://"
 "example.com:9000 (веза употребом чистог текста, не препоручује се)"
 
-msgid "option: set option for remote relay: proxy, password or totp_secret"
-msgstr ""
-"опција: постављање опције релеја удаљених: proxy, password или totp_secret"
+#, fuzzy
+#| msgid "option: extra option, for some servers"
+msgid "option: set option for remote relay"
+msgstr "опција: додатна опција, за неке сервере"
 
 msgid "raw[connect]: connect to a remote relay server"
 msgstr "raw[connect]: повезивање на сервер релеја удаљених"
@@ -14983,6 +14984,11 @@ msgstr ""
 "URL релеја удаљених са портом који није обавезан (подразумева се 9000), "
 "примери: https://example.com:9000 или http://example.com:9000 (веза "
 "коришћењем чистог текста, не препоручује се)"
+
+#, fuzzy
+#| msgid "raw[connect]: connect to a remote relay server"
+msgid "auto-connect to the remote relay"
+msgstr "raw[connect]: повезивање на сервер релеја удаљених"
 
 msgid ""
 "name of proxy used for this remote relay (optional, proxy must be defined "
@@ -17535,6 +17541,10 @@ msgstr "%s%s: тајмаут за „%s” са %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: повезивање није успело: неочекивана грешка (%d)"
+
+#~ msgid "option: set option for remote relay: proxy, password or totp_secret"
+#~ msgstr ""
+#~ "опција: постављање опције релеја удаљених: proxy, password или totp_secret"
 
 #~ msgid "color for channel modes, near channel name"
 #~ msgstr "боја за режиме канала, у близини имена канала"

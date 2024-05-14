@@ -1067,6 +1067,14 @@ relay_config_create_remote_option (const char *remote_name, int index_option,
                 &relay_config_remote_url_change_cb, NULL, NULL,
                 NULL, NULL, NULL);
             break;
+        case RELAY_REMOTE_OPTION_AUTOCONNECT:
+            ptr_option = weechat_config_new_option (
+                relay_config_file, relay_config_section_remote,
+                option_name, "boolean",
+                N_("auto-connect to the remote relay"),
+                NULL, 0, 0, value, NULL, 0,
+                NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+            break;
         case RELAY_REMOTE_OPTION_PROXY:
             ptr_option = weechat_config_new_option (
                 relay_config_file, relay_config_section_remote,

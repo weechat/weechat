@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-05-13 22:50+0200\n"
+"POT-Creation-Date: 2024-05-14 22:20+0200\n"
 "PO-Revision-Date: 2024-05-02 00:06+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -14911,9 +14911,10 @@ msgstr ""
 "url: URL zdalnego pośrednika, w formacie https://example.com:9000 lub http://"
 "example.com:9000 (czysty tekst, nie zalecane)"
 
-msgid "option: set option for remote relay: proxy, password or totp_secret"
-msgstr ""
-"opcja: ustaw opcję dla zdalnego pośrednika: proxy, password lub totp_secret"
+#, fuzzy
+#| msgid "option: extra option, for some servers"
+msgid "option: set option for remote relay"
+msgstr "opcje: dodatkowe opcje, dla niektórych serwerów"
 
 msgid "raw[connect]: connect to a remote relay server"
 msgstr "raw[connect]: połącz się z pośrednikiem"
@@ -14997,6 +14998,11 @@ msgstr ""
 "adres URL zdalnego pośrednika z opcjonalnym portem (domyślnie 9000), "
 "przykłady: https://example.com:9000 lub http://example.com:9000 (czysty "
 "tekst, nie zalecane)"
+
+#, fuzzy
+#| msgid "raw[connect]: connect to a remote relay server"
+msgid "auto-connect to the remote relay"
+msgstr "raw[connect]: połącz się z pośrednikiem"
 
 msgid ""
 "name of proxy used for this remote relay (optional, proxy must be defined "
@@ -17567,6 +17573,11 @@ msgstr "%s%s: przekroczono czas na \"%s\" z %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: nie można połączyć: niespodziewany błąd (%d)"
+
+#~ msgid "option: set option for remote relay: proxy, password or totp_secret"
+#~ msgstr ""
+#~ "opcja: ustaw opcję dla zdalnego pośrednika: proxy, password lub "
+#~ "totp_secret"
 
 #~ msgid "color for channel modes, near channel name"
 #~ msgstr "kolor trybów kanału, przy nazwie kanału"

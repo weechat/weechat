@@ -53,10 +53,14 @@ TEST_GROUP(RelayRemoteNetworkWithRemote)
         config_file_option_set (relay_config_look_auto_open_buffer, "off", 1);
 
         /* create two relay remotes */
-        ptr_relay_remote = relay_remote_new ("remote", "http://localhost:9000",
-                                             NULL, "on", "secret", "secretbase32");
-        ptr_relay_remote2 = relay_remote_new ("remote2", "https://localhost:9001/",
-                                              "my_proxy", "off", "secret", "secretbase32");
+        ptr_relay_remote = relay_remote_new ("remote",
+                                             "http://localhost:9000",
+                                             "off", NULL, "on",
+                                             "secret", "secretbase32");
+        ptr_relay_remote2 = relay_remote_new ("remote2",
+                                              "https://localhost:9001/",
+                                              "off", "my_proxy", "off",
+                                              "secret", "secretbase32");
     }
 
     void teardown ()

@@ -245,6 +245,9 @@ relay_debug_dump_cb (const void *pointer, void *data,
 int
 weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
+    int auto_connect;
+    char *info_auto_connect;
+
     /* make C compiler happy */
     (void) argc;
     (void) argv;
@@ -282,7 +285,19 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     relay_info_init ();
 
     if (weechat_relay_plugin->upgrading)
+    {
         relay_upgrade_load ();
+    }
+    else
+    {
+        /* check if auto-connect is enabled */
+        info_auto_connect = weechat_info_get ("auto_connect", NULL);
+        auto_connect = (info_auto_connect && (strcmp (info_auto_connect, "1") == 0)) ?
+            1 : 0;
+        free (info_auto_connect);
+        if (auto_connect)
+            relay_remote_auto_connect ();
+    }
 
     relay_hook_timer = weechat_hook_timer (1 * 1000, 0, 0,
                                            &relay_client_timer_cb, NULL, NULL);

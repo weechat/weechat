@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-05-13 22:50+0200\n"
+"POT-Creation-Date: 2024-05-14 22:20+0200\n"
 "PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -15212,8 +15212,10 @@ msgid ""
 "example.com:9000 (plain-text connection, not recommended)"
 msgstr ""
 
-msgid "option: set option for remote relay: proxy, password or totp_secret"
-msgstr ""
+#, fuzzy
+#| msgid "option: extra option, for some servers"
+msgid "option: set option for remote relay"
+msgstr "seçenek: bazı sunucular için ek seçenek"
 
 #, fuzzy
 #| msgid "reconnect to server(s)"
@@ -15305,6 +15307,11 @@ msgid ""
 "example.com:9000 or http://example.com:9000 (plain-text connection, not "
 "recommended)"
 msgstr ""
+
+#, fuzzy
+#| msgid "reconnect to server(s)"
+msgid "auto-connect to the remote relay"
+msgstr "sunuculara yeniden bağlan"
 
 #, fuzzy
 #| msgid ""

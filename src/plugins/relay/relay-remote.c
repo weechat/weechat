@@ -42,9 +42,9 @@
 
 
 char *relay_remote_option_string[RELAY_REMOTE_NUM_OPTIONS] =
-{ "url", "proxy", "tls_verify", "password", "totp_secret" };
+{ "url", "autoconnect", "proxy", "tls_verify", "password", "totp_secret" };
 char *relay_remote_option_default[RELAY_REMOTE_NUM_OPTIONS] =
-{ "", "", "on", "", "" };
+{ "", "off", "", "on", "", "" };
 
 struct t_relay_remote *relay_remotes = NULL;
 struct t_relay_remote *last_relay_remote = NULL;
@@ -464,9 +464,9 @@ relay_remote_new_with_options (const char *name, struct t_config_option **option
  */
 
 struct t_relay_remote *
-relay_remote_new (const char *name, const char *url, const char *proxy,
-                  const char *tls_verify, const char *password,
-                  const char *totp_secret)
+relay_remote_new (const char *name, const char *url, const char *autoconnect,
+                  const char *proxy, const char *tls_verify,
+                  const char *password, const char *totp_secret)
 {
     struct t_config_option *option[RELAY_REMOTE_NUM_OPTIONS];
     const char *value[RELAY_REMOTE_NUM_OPTIONS];
@@ -477,6 +477,7 @@ relay_remote_new (const char *name, const char *url, const char *proxy,
         return NULL;
 
     value[RELAY_REMOTE_OPTION_URL] = url;
+    value[RELAY_REMOTE_OPTION_AUTOCONNECT] = autoconnect;
     value[RELAY_REMOTE_OPTION_PROXY] = proxy;
     value[RELAY_REMOTE_OPTION_TLS_VERIFY] = tls_verify;
     value[RELAY_REMOTE_OPTION_PASSWORD] = password;
@@ -647,6 +648,42 @@ relay_remote_connect (struct t_relay_remote *remote)
                     weechat_prefix ("error"), RELAY_PLUGIN_NAME);
     return 0;
 #endif /* HAVE_CJSON */
+}
+
+/*
+ * Callback for auto-connect to remotes (called at startup).
+ */
+
+int
+relay_remote_auto_connect_timer_cb (const void *pointer, void *data,
+                                    int remaining_calls)
+{
+    struct t_relay_remote *ptr_remote;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) remaining_calls;
+
+    for (ptr_remote = relay_remotes; ptr_remote;
+         ptr_remote = ptr_remote->next_remote)
+    {
+        if (weechat_config_boolean (ptr_remote->options[RELAY_REMOTE_OPTION_AUTOCONNECT]))
+            relay_remote_connect (ptr_remote);
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * Auto-connects to all remotes with option autoconnect to "on".
+ */
+
+void
+relay_remote_auto_connect ()
+{
+    weechat_hook_timer (1, 0, 1,
+                        &relay_remote_auto_connect_timer_cb, NULL, NULL);
 }
 
 /*
@@ -927,6 +964,9 @@ relay_remote_print_log ()
         weechat_log_printf ("  name. . . . . . . . . . : '%s'", ptr_remote->name);
         weechat_log_printf ("  url . . . . . . . . . . : '%s'",
                             weechat_config_string (ptr_remote->options[RELAY_REMOTE_OPTION_URL]));
+        weechat_log_printf ("  autoconnect . . . . . . : %s",
+                            (weechat_config_boolean (ptr_remote->options[RELAY_REMOTE_OPTION_AUTOCONNECT])) ?
+                            "on" : "off");
         weechat_log_printf ("  proxy . . . . . . . . . : '%s'",
                             weechat_config_string (ptr_remote->options[RELAY_REMOTE_OPTION_PROXY]));
         weechat_log_printf ("  tls_verify. . . . . . . : %s",

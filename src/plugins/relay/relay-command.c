@@ -397,6 +397,9 @@ relay_command_display_remote (struct t_relay_remote *remote, int with_detail)
         weechat_printf (NULL, _("Remote: %s"), remote->name);
         weechat_printf (NULL, "  url. . . . . . . . . : '%s'",
                         weechat_config_string (remote->options[RELAY_REMOTE_OPTION_URL]));
+        weechat_printf (NULL, "  autoconnect. . . . . : %s",
+                        (weechat_config_string (remote->options[RELAY_REMOTE_OPTION_AUTOCONNECT])) ?
+                        "on" : "off");
         weechat_printf (NULL, "  proxy. . . . . . . . : '%s'",
                         weechat_config_string (remote->options[RELAY_REMOTE_OPTION_PROXY]));
         weechat_printf (NULL, "  tls_verify . . . . . : %s",
@@ -428,7 +431,8 @@ relay_command_remote (const void *pointer, void *data,
 {
     struct t_relay_remote *ptr_remote, *ptr_remote2;
     int i, detailed_list, one_remote_found;
-    const char *ptr_proxy, *ptr_tls_verify, *ptr_password, *ptr_totp_secret;
+    const char *ptr_autoconnect, *ptr_proxy, *ptr_tls_verify, *ptr_password;
+    const char *ptr_totp_secret;
     char *remote_name;
 
     /* make C compiler happy */
@@ -529,13 +533,18 @@ relay_command_remote (const void *pointer, void *data,
                             argv[3]);
             return WEECHAT_RC_OK;
         }
+        ptr_autoconnect = NULL;
         ptr_proxy = NULL;
         ptr_tls_verify = NULL;
         ptr_password = NULL;
         ptr_totp_secret = NULL;
         for (i = 4; i < argc; i++)
         {
-            if (strncmp (argv[i], "-proxy=", 7) == 0)
+            if (strncmp (argv[i], "-autoconnect=", 13) == 0)
+            {
+                ptr_autoconnect = argv[i] + 13;
+            }
+            else if (strncmp (argv[i], "-proxy=", 7) == 0)
             {
                 ptr_proxy = argv[i] + 7;
             }
@@ -561,8 +570,8 @@ relay_command_remote (const void *pointer, void *data,
                 return WEECHAT_RC_OK;
             }
         }
-        ptr_remote = relay_remote_new (argv[2], argv[3], ptr_proxy,
-                                       ptr_tls_verify, ptr_password,
+        ptr_remote = relay_remote_new (argv[2], argv[3], ptr_autoconnect,
+                                       ptr_proxy, ptr_tls_verify, ptr_password,
                                        ptr_totp_secret);
         if (ptr_remote)
         {
@@ -835,7 +844,7 @@ relay_command_init ()
                "remote relay options: relay.remote.name.xxx"),
             N_("url: URL of the remote relay, format is https://example.com:9000 "
                "or http://example.com:9000 (plain-text connection, not recommended)"),
-            N_("option: set option for remote relay: proxy, password or totp_secret"),
+            N_("option: set option for remote relay"),
             N_("raw[connect]: connect to a remote relay server"),
             N_("raw[send]: send JSON data to a remote relay server"),
             N_("raw[disconnect]: disconnect from a remote relay server"),
@@ -850,7 +859,8 @@ relay_command_init ()
         "list %(relay_remotes)"
         " || listfull %(relay_remotes)"
         " || add %(relay_remotes) https://localhost:9000 "
-        "-password=${xxx}|-proxy=xxx|-tls_verify=xxx|-totp_secret=${xxx}|%*"
+        "-autoconnect=on|-password=${xxx}|-proxy=xxx|-tls_verify=off|"
+        "-totp_secret=${xxx}|%*"
         " || connect %(relay_remotes)"
         " || send %(relay_remotes) {\"request\":\"\"}"
         " || disconnect %(relay_remotes)"

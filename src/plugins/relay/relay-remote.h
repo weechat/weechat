@@ -27,6 +27,7 @@
 enum t_relay_remote_option
 {
     RELAY_REMOTE_OPTION_URL = 0,     /* remote URL                          */
+    RELAY_REMOTE_OPTION_AUTOCONNECT, /* auto-connect                        */
     RELAY_REMOTE_OPTION_PROXY,       /* proxy used for remote (optional)    */
     RELAY_REMOTE_OPTION_TLS_VERIFY,  /* check if the connection is trusted  */
     RELAY_REMOTE_OPTION_PASSWORD,    /* password for remote relay           */
@@ -86,6 +87,7 @@ extern void relay_remote_set_url (struct t_relay_remote *remote,
 extern struct t_relay_remote *relay_remote_new_with_options (const char *name,
                                                              struct t_config_option **options);
 extern struct t_relay_remote *relay_remote_new (const char *name,
+                                                const char *autoconnect,
                                                 const char *proxy,
                                                 const char *tls_verify,
                                                 const char *url,
@@ -95,6 +97,7 @@ extern struct t_relay_remote *relay_remote_new_with_infolist (struct t_infolist 
 extern void relay_remote_set_status (struct t_relay_remote *remote,
                                      enum t_relay_status status);
 extern int relay_remote_connect (struct t_relay_remote *remote);
+extern void relay_remote_auto_connect ();
 extern int relay_remote_send (struct t_relay_remote *remote, const char *json);
 extern void relay_remote_disconnect (struct t_relay_remote *remote);
 extern void relay_remote_disconnect_all ();
