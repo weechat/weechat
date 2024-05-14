@@ -27,7 +27,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2024-05-13 22:50+0200\n"
-"PO-Revision-Date: 2024-05-02 07:42+0200\n"
+"PO-Revision-Date: 2024-05-14 08:46+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de_DE\n"
@@ -35,7 +35,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"X-Generator: Lokalize 23.08.1\n"
+"X-Generator: Lokalize 23.08.5\n"
 "X-Poedit-Bookmarks: -1,-1,180,-1,-1,-1,-1,-1,-1,-1\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
@@ -5962,10 +5962,9 @@ msgstr "Farbe eines Buffers mit privater Nachricht (Statusbar)"
 msgid "text color for filter indicator in status bar"
 msgstr "Farbe des Filterkennzeichens in der Statuszeile"
 
-#, fuzzy
 #| msgid "text color for current buffer name in status bar"
 msgid "text color for buffer modes in status bar"
-msgstr "Farbe des aktuellen Buffer-Namens in der Statuszeile"
+msgstr "Farbe für Buffer-Modi in der Statuszeile"
 
 msgid "text color for buffer with new data (status bar)"
 msgstr "Farbe eines Buffers mit neuen Daten (Statusbar)"
@@ -11138,21 +11137,19 @@ msgid "unban nicks or hosts"
 msgstr "Bann von Nicks oder Hosts aufheben"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
-#, fuzzy
 #| msgid "[<channel>] <nick>|<number> [<nick>|<number>...]"
 msgid "[<channel>] <nick>|<number>|<n1>-<n2> [<nick>|<number>|<n1>-<n2>...]"
-msgstr "[<channel>] <nick>|<number> [<nick>|<number>...]"
+msgstr "[<channel>] <nick>|<number>|<n1>-<n2> [<nick>|<number>|<n1>-<n2>...]"
 
 msgid "number: ban number (as displayed by command /ban)"
 msgstr "Nummer: Nummer des Bannes (wird beim Befehl /ban angezeigt)"
 
-#, fuzzy
 #| msgid "server: internal server name"
 msgid "n1: interval start number"
-msgstr "Server: interner Name des Servers"
+msgstr "n1: Intervall-Startnummer"
 
 msgid "n2: interval end number"
-msgstr ""
+msgstr "n2: Intervall-Endnummer"
 
 msgid "unquiet nicks or hosts"
 msgstr "Nicks oder Hosts das Wort erteilen"
@@ -18416,3 +18413,4 @@ msgstr ""
 
 #~ msgid "color for channel modes, near channel name"
 #~ msgstr "Farbe der Kanal-Modes (neben des Kanalnamens)"
+
