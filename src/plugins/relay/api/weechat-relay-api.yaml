@@ -1,0 +1,996 @@
+openapi: 3.1.0
+
+info:
+  title: WeeChat Relay API
+  description: |-
+    This is the [WeeChat](https://weechat.org/) Relay API based on the OpenAPI 3.1 specification.
+
+    WeeChat specification: [Relay HTTP REST API](https://specs.weechat.org/specs/2023-005-relay-http-rest-api.html)
+  contact:
+    name: Sébastien Helleu
+    url: https://weechat.org
+    email: flashcode@flashtux.org
+  license:
+    name: CC BY-NC-SA 4.0
+    url: https://creativecommons.org/licenses/by-nc-sa/4.0/
+  version: 0.0.1
+
+externalDocs:
+  url: https://weechat.org/doc/
+  description: WeeChat documentation
+
+servers:
+  - url: https://localhost:9000/api
+  - url: http://localhost:9000/api
+
+tags:
+  - name: handshake
+  - name: version
+  - name: buffers
+  - name: hotlist
+  - name: input
+  - name: ping
+  - name: sync
+
+paths:
+  /handshake:
+    post:
+      tags:
+        - handshake
+      summary: Perform handshake
+      description: Perform handshake with remote WeeChat
+      operationId: handshake
+      requestBody:
+        $ref: '#/components/requestBodies/HandshakeBody'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Handshake'
+        '503':
+          description: Out of memory
+  /version:
+    get:
+      tags:
+        - version
+      summary: Get the version
+      description: Get the version
+      operationId: getVersion
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Version'
+        '401':
+          description: Unauthorized
+        '503':
+          description: Out of memory
+      security:
+        - password: []
+  /buffers:
+    get:
+      tags:
+        - buffers
+      summary: Get buffers
+      description: Get a list of all buffers
+      operationId: getBuffers
+      parameters:
+        - $ref: '#/components/parameters/bufferLines'
+        - $ref: '#/components/parameters/bufferLinesFree'
+        - $ref: '#/components/parameters/bufferNicks'
+        - $ref: '#/components/parameters/colors'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Buffer'
+        '401':
+          description: Unauthorized
+        '503':
+          description: Out of memory
+      security:
+        - password: []
+  /buffers/{buffer_id}:
+    get:
+      tags:
+        - buffers
+      summary: Get buffer by ID
+      operationId: getBufferById
+      parameters:
+        - $ref: '#/components/parameters/bufferId'
+        - $ref: '#/components/parameters/bufferLines'
+        - $ref: '#/components/parameters/bufferNicks'
+        - $ref: '#/components/parameters/colors'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Buffer'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Buffer not found
+        '503':
+          description: Out of memory
+      security:
+        - password: []
+  /buffers/{buffer_name}:
+    get:
+      tags:
+        - buffers
+      summary: Get buffer by full name
+      operationId: getBufferByName
+      parameters:
+        - $ref: '#/components/parameters/bufferName'
+        - $ref: '#/components/parameters/bufferLines'
+        - $ref: '#/components/parameters/bufferNicks'
+        - $ref: '#/components/parameters/colors'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Buffer'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Buffer not found
+        '503':
+          description: Out of memory
+      security:
+        - password: []
+  /buffers/{buffer_id}/lines:
+    get:
+      tags:
+        - buffers
+      summary: Get lines in a buffer
+      operationId: getBufferByIdLines
+      parameters:
+        - $ref: '#/components/parameters/bufferId'
+        - $ref: '#/components/parameters/bufferLines'
+        - $ref: '#/components/parameters/colors'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Line'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Buffer not found
+        '503':
+          description: Out of memory
+      security:
+        - password: []
+  /buffers/{buffer_id}/lines/{line_id}:
+    get:
+      tags:
+        - buffers
+      summary: Get a line in a buffer
+      operationId: getBufferByIdLineById
+      parameters:
+        - $ref: '#/components/parameters/bufferId'
+        - $ref: '#/components/parameters/lineId'
+        - $ref: '#/components/parameters/bufferLines'
+        - $ref: '#/components/parameters/colors'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Line'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Buffer or line not found
+        '503':
+          description: Out of memory
+      security:
+        - password: []
+  /buffers/{buffer_name}/lines:
+    get:
+      tags:
+        - buffers
+      summary: Get lines in a buffer
+      operationId: getBufferNameLines
+      parameters:
+        - $ref: '#/components/parameters/bufferName'
+        - $ref: '#/components/parameters/bufferLines'
+        - $ref: '#/components/parameters/colors'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Line'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Buffer not found
+        '503':
+          description: Out of memory
+      security:
+        - password: []
+  /buffers/{buffer_name}/lines/{line_id}:
+    get:
+      tags:
+        - buffers
+      summary: Get a line in a buffer
+      operationId: getBufferByNameLineById
+      parameters:
+        - $ref: '#/components/parameters/bufferName'
+        - $ref: '#/components/parameters/lineId'
+        - $ref: '#/components/parameters/bufferLines'
+        - $ref: '#/components/parameters/colors'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Line'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Buffer or line not found
+        '503':
+          description: Out of memory
+      security:
+        - password: []
+  /buffers/{buffer_id}/nicks:
+    get:
+      tags:
+        - buffers
+      summary: Get nicks in a buffer
+      operationId: getBufferByIdNicks
+      parameters:
+        - $ref: '#/components/parameters/bufferId'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NickGroup'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Buffer not found
+        '503':
+          description: Out of memory
+      security:
+        - password: []
+  /buffers/{buffer_name}/nicks:
+    get:
+      tags:
+        - buffers
+      summary: Get nicks in a buffer
+      operationId: getBufferByNameNicks
+      parameters:
+        - $ref: '#/components/parameters/bufferName'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NickGroup'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Buffer not found
+        '503':
+          description: Out of memory
+      security:
+        - password: []
+  /hotlist:
+    get:
+      tags:
+        - hotlist
+      summary: Get hotlist
+      operationId: getHotlist
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Hotlist'
+        '401':
+          description: Unauthorized
+        '400':
+          description: Bad request
+        '503':
+          description: Out of memory
+      security:
+        - password: []
+  /input:
+    post:
+      tags:
+        - input
+      summary: Send text to a buffer
+      description: Send text to a buffer
+      operationId: input
+      requestBody:
+        $ref: '#/components/requestBodies/InputBody'
+      responses:
+        '204':
+          description: Successful operation
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Buffer not found
+      security:
+        - password: []
+  /ping:
+    post:
+      tags:
+        - ping
+      summary: Send ping request to WeeChat
+      description: Send ping request to WeeChat
+      operationId: ping
+      requestBody:
+        $ref: '#/components/requestBodies/PingBody'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ping'
+        '204':
+          description: Successful operation
+        '401':
+          description: Unauthorized
+        '503':
+          description: Out of memory
+      security:
+        - password: []
+  /sync:
+    post:
+      tags:
+        - sync
+      summary: Synchronize with WeeChat
+      description: Synchronize with WeeChat
+      operationId: sync
+      requestBody:
+        $ref: '#/components/requestBodies/SyncBody'
+      responses:
+        '204':
+          description: Successful operation
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+      security:
+        - password: []
+
+components:
+
+  parameters:
+    bufferId:
+      name: buffer_id
+      in: path
+      required: true
+      schema:
+        type: integer
+        format: int64
+      description: Buffer identifier
+    bufferName:
+      name: buffer_name
+      in: path
+      required: true
+      schema:
+        type: string
+      description: >-
+        Buffer full name
+      example: 'irc.libera.#weechat'
+    lineId:
+      name: line_id
+      in: path
+      required: true
+      schema:
+        type: integer
+        format: int64
+      description: Line identifier
+    bufferLines:
+      name: lines
+      in: query
+      required: false
+      schema:
+        type: integer
+        format: int64
+        default: 0
+      description: |
+        Number of lines to return:
+        * negative number: return N lines from the end of buffer (newest lines)
+        * `0`: do not return any line
+        * positive number: return N lines from the beginning of buffer (oldest lines)
+    bufferLinesFree:
+      name: lines_free
+      in: query
+      required: false
+      schema:
+        type: integer
+        format: int64
+        default: 0
+      description: |
+        Number of lines to return in buffers with free content:
+        * negative number: return N lines from the end of buffer (newest lines)
+        * `0`: do not return any line
+        * positive number: return N lines from the beginning of buffer (oldest lines)
+
+        Default value is `0` if "lines" is set to 0, otherwise all lines are returned.
+    bufferNicks:
+      name: nicks
+      in: query
+      required: false
+      schema:
+        type: boolean
+        default: false
+      description: Return buffer nicklist (groups and nicks)
+    colors:
+      name: colors
+      in: query
+      required: false
+      schema:
+        type: string
+        enum:
+          - ansi
+          - weechat
+          - strip
+        default: ansi
+      description: |
+        How to return strings with color codes:
+        * `ansi`: return ANSI color codes
+        * `weechat`: return WeeChat internal color codes
+        * `strip`: strip colors
+
+  schemas:
+    Handshake:
+      type: object
+      properties:
+        password_hash_algo:
+          type: string
+          nullable: true
+          enum:
+            - plain
+            - sha256
+            - sha512
+            - pbkdf2+sha256
+            - pbkdf2+sha512
+          example: pbkdf2+sha512
+        password_hash_iterations:
+          type: integer
+          format: int32
+          example: 100000
+        totp:
+          type: boolean
+          example: true
+      required:
+        - password_hash_algo
+        - password_hash_iterations
+        - totp
+    Version:
+      type: object
+      properties:
+        weechat_version:
+          type: string
+          example: 4.3.0-dev
+        weechat_version_git:
+          type: string
+          example: v4.2.0-360-gccf23ae51
+        weechat_version_number:
+          type: integer
+          format: int32
+          example: 67305472
+        relay_api_version:
+          type: string
+          example: "0.0.1"
+        relay_api_version_number:
+          type: integer
+          format: int32
+          example: 1
+      required:
+        - weechat_version
+        - weechat_version_git
+        - weechat_version_number
+        - relay_api_version
+        - relay_api_version_number
+    Buffer:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: buffer identifier (≥ 0)
+          example: 1709932823238637
+        name:
+          type: string
+          example: 'irc.libera.#weechat'
+        short_name:
+          type: string
+          example: '#weechat'
+        number:
+          type: integer
+          format: int64
+          description: buffer number (≥ 1)
+          example: 3
+        type:
+          type: string
+          enum:
+            - formatted
+            - free
+          description: the buffer type
+          example: formatted
+        title:
+          type: string
+          description: the buffer title (can contain colors)
+          example: 'Welcome to the WeeChat official support channel'
+        modes:
+          type: string
+          description: the buffer modes (can contain colors)
+          example: '+nt'
+        input_prompt:
+          type: string
+          description: the input prompt (can contain colors)
+          example: '[@alice(i)]'
+        input:
+          type: string
+          description: the buffer input
+          example: ''
+        input_position:
+          type: integer
+          format: int32
+          description: position in input (number of UTF-8 chars, ≥ 0)
+          example: 0
+        input_multiline:
+          type: boolean
+          description: buffers allows multiline input
+          example: false
+        nicklist:
+          type: boolean
+          description: buffer has a nicklist
+          example: true
+        nicklist_case_sensitive:
+          type: boolean
+          description: groups and nicks are case sensitive
+          example: false
+        nicklist_display_groups:
+          type: boolean
+          description: groups are displayed in nicklist
+          example: false
+        local_variables:
+          type: object
+          description: the buffer local variables
+          example:
+            plugin: 'irc'
+            name: 'libera.#weechat'
+            type: 'channel'
+            server: 'libera'
+            channel: '#weechat'
+            nick: 'alice'
+            host: '~alice@example.com'
+        keys:
+          type: array
+          items:
+            $ref: '#/components/schemas/Key'
+        lines:
+          type: array
+          items:
+            $ref: '#/components/schemas/Line'
+        nicklist_root:
+          $ref: '#/components/schemas/NickGroup'
+      required:
+        - id
+        - name
+        - short_name
+        - number
+        - type
+        - title
+        - modes
+        - input_prompt
+        - input
+        - input_position
+        - input_multiline
+        - nicklist
+        - nicklist_case_sensitive
+        - nicklist_display_groups
+        - local_variables
+        - keys
+    Key:
+      type: object
+      properties:
+        key:
+          type: string
+          description: key name
+          example: meta-f,meta-a
+        command:
+          type: string
+          description: command
+          example: '/fset -append'
+      required:
+        - key
+        - command
+    Line:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: line identifier (≥ 0, unique in buffer)
+          example: 0
+        y:
+          type: integer
+          format: int64
+          description: line index (≥ 1) on free buffer, -1 on formatted buffer
+          example: -1
+        date:
+          type: string
+          format: date-time
+          description: date and time of line
+          example: '"2023-12-05T19:46:03.847625Z'
+        date_printed:
+          type: string
+          format: date-time
+          description: date and time when the line was printed
+          example: '2023-12-05T19:46:03.847625Z'
+        highlight:
+          type: boolean
+          description: line has a highlight
+          example: false
+        notify_level:
+          type: integer
+          format: int32
+          description: |
+            Notify level:
+            * -1: no notify at all
+            * 0: low
+            * 1: message
+            * 2: private message
+            * 3: message with highlight
+          example: 0
+        prefix:
+          type: string
+          description: prefix displayed before the message (can contain colors)
+          example: '-->'
+        message:
+          type: string
+          description: the message (can contain colors)
+          example: 'alice (~alice@example.com) has joined #test'
+        tags:
+          items:
+            type: string
+          description: tags
+          example:
+            - 'irc_join'
+            - 'irc_tag_account=alice'
+            - 'irc_tag_time=2023-12-05T19:46:03.847Z'
+            - 'nick_alice'
+            - 'host_~alice@example.com'
+            - 'log4'
+      required:
+        - id
+        - y
+        - date
+        - date_printed
+        - highlight
+        - notify_level
+        - prefix
+        - message
+        - tags
+    NickGroup:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: group identifier (≥ 0, unique in buffer)
+          example: 1709932823649181
+        parent_group_id:
+          type: integer
+          format: int64
+          description: parent group identifier, -1 if group is the root of nicklist
+          example: 1709932823145768
+        name:
+          type: string
+          description: group name
+          example: "root"
+        color_name:
+          type: string
+          description: group color name (can be an option or color name)
+          example: 'weechat.color.nicklist_group'
+        color:
+          type: string
+          description: group color
+          example: '\u001b[32m'
+        visible:
+          type: boolean
+          description: the group is displayed
+          example: true
+        groups:
+          type: array
+          items:
+            $ref: '#/components/schemas/NickGroup'
+        nicks:
+          type: array
+          items:
+            $ref: '#/components/schemas/Nick'
+      example:
+        id: 0
+        parent_group_id: -1
+        name: 'root'
+        color_name: ''
+        color: ''
+        visible: false
+        groups:
+          - id: 1709932823649181
+            parent_group_id: 0
+            name: '000|o'
+            color_name: 'weechat.color.nicklist_group'
+            color: '\u001b[32m'
+            visible: true
+            groups: []
+            nicks:
+              - id: 1709932823649184
+                parent_group_id: 1709932823649181
+                prefix: '@'
+                prefix_color_name: 'lightgreen'
+                prefix_color: '\u001b[92m'
+                name: 'alice'
+                color_name: 'bar_fg'
+                color: ''
+                visible: true
+          - id: 1709932823649189
+            parent_group_id: 0
+            name: '001|h'
+            color_name: 'weechat.color.nicklist_group'
+            color: '\u001b[32m'
+            visible: true
+            groups: []
+            nicks: []
+          - id: 1709932823649203
+            parent_group_id: 0
+            name: '002|v'
+            color_name: 'weechat.color.nicklist_group'
+            color: '\u001b[32m'
+            visible: true
+            groups: []
+            nicks: []
+          - id: 1709932823649210
+            parent_group_id: 0
+            name: '999|...'
+            color_name: 'weechat.color.nicklist_group'
+            color: '\u001b[32m'
+            visible: true
+            groups: []
+            nicks: []
+        nicks: []
+      required:
+        - id
+        - parent_group_id
+        - name
+        - color_name
+        - color
+        - visible
+        - groups
+        - nicks
+    Nick:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: group identifier (≥ 0, unique in buffer)
+          example: 1709932823649181
+        parent_group_id:
+          type: integer
+          format: int64
+          description: parent group identifier, -1 if group is the root of nicklist
+          example: 1709932823145768
+        prefix:
+          type: string
+          description: nick prefix
+          example: "@"
+        prefix_color_name:
+          type: string
+          description: prefix color name (can be an option or color name)
+          example: 'lightgreen'
+        prefix_color:
+          type: string
+          description: prefix color
+          example: '\u001b[32m'
+        name:
+          type: string
+          description: nick name
+          example: "alice"
+        color_name:
+          type: string
+          description: nick color name (can be an option or color name)
+          example: 'bar_fg'
+        color:
+          type: string
+          description: nick color
+          example: ''
+        visible:
+          type: boolean
+          description: the nick is displayed
+          example: true
+      required:
+        - id
+        - parent_group_id
+        - prefix
+        - prefix_color_name
+        - prefix_color
+        - name
+        - color_name
+        - color
+        - visible
+    Hotlist:
+      type: object
+      properties:
+        priority:
+          type: integer
+          format: int32
+          description: |
+            Priority of the hotlist entry:
+            * `0`: low
+            * `1`: message
+            * `2`: private
+            * `3`: highlight
+          example: 1
+        date:
+          type: string
+          format: date-time
+          description: date and time of the hotlist entry
+          example: '2024-03-17T16:38:51.572834Z'
+        buffer_id:
+          type: integer
+          format: int64
+          description: buffer identifier
+          example: 1709932823238637
+        count:
+          type: array
+          items:
+            type: integer
+          minItems: 4
+          maxItems: 4
+          example:
+            - 44
+            - 3
+            - 0
+            - 1
+      required:
+        - priority
+        - date
+        - buffer_id
+        - count
+    Ping:
+      type: object
+      properties:
+        data:
+          type: string
+          example: 1714854355123456
+      required:
+        - data
+
+  requestBodies:
+    HandshakeBody:
+      description: Handshake request
+      required: false
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              password_hash_algo:
+                type: array
+                items:
+                  type: string
+                  enum:
+                    - plain
+                    - sha256
+                    - sha512
+                    - pbkdf2+sha256
+                    - pbkdf2+sha512
+                  example:
+                    - plain
+                    - sha256
+                    - sha512
+                    - pbkdf2+sha256
+                    - pbkdf2+sha512
+    InputBody:
+      description: Buffer and command to execute
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              buffer_id:
+                type: integer
+                format: int64
+                description: Buffer identifier (≥ 0)
+                example: 1709932823238637
+              buffer:
+                type: string
+                description: >-
+                  Buffer full name (eg: `irc.libera.#weechat`)
+                example: 'irc.libera.#weechat'
+              command:
+                type: string
+                description: text or command to send
+                example: 'hello, world!'
+            required:
+              - command
+    PingBody:
+      description: Custom data that will be returned in the response
+      required: false
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: string
+                example: 1714854355123456
+    SyncBody:
+      description: Synchronization parameters
+      required: false
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              sync:
+                type: boolean
+                description: Enable synchronization
+                example: true
+              nicks:
+                type: boolean
+                description: Receive nick updates in buffers
+                example: true
+              input:
+                type: boolean
+                description: Receive input changes in buffers (content and cursor position)
+                example: true
+              colors:
+                type: string
+                enum:
+                  - ansi
+                  - weechat
+                  - strip
+                default: ansi
+                description: |
+                  How to return strings with color codes:
+                  * `ansi`: return ANSI color codes
+                  * `weechat`: return WeeChat internal color codes
+                  * `strip`: strip colors
+
+  securitySchemes:
+    password:
+      type: http
+      scheme: basic
