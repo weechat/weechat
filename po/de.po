@@ -27,7 +27,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2024-05-14 22:20+0200\n"
-"PO-Revision-Date: 2024-05-14 08:46+0200\n"
+"PO-Revision-Date: 2024-05-15 18:07+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de_DE\n"
@@ -15630,11 +15630,9 @@ msgstr ""
 "url: URL des Remote-Relays im Format https://example.com:9000 oder http://"
 "example.com:9000 (Klartext-Verbindung, nicht empfohlen)"
 
-#, fuzzy
 #| msgid "option: extra option, for some servers"
 msgid "option: set option for remote relay"
-msgstr ""
-"option: zusätzliche Einstellung, die von manchen Servern berücksichtigt wird"
+msgstr "option: zusätzliche Einstellung, für ein Remote-Relay"
 
 msgid "raw[connect]: connect to a remote relay server"
 msgstr "raw[connect]: Verbindung zu einem Remote-Relay-Server herstellen"
@@ -15719,10 +15717,9 @@ msgstr ""
 "example.com:9000 oder http://example.com:9000 (Klartext-Verbindung, nicht "
 "empfohlen)"
 
-#, fuzzy
 #| msgid "raw[connect]: connect to a remote relay server"
 msgid "auto-connect to the remote relay"
-msgstr "raw[connect]: Verbindung zu einem Remote-Relay-Server herstellen"
+msgstr "automatische Verbindung zu einem Remote-Relay herstellen"
 
 msgid ""
 "name of proxy used for this remote relay (optional, proxy must be defined "
@@ -18422,3 +18419,4 @@ msgstr ""
 
 #~ msgid "color for channel modes, near channel name"
 #~ msgstr "Farbe der Kanal-Modes (neben des Kanalnamens)"
+
