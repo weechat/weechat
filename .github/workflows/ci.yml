@@ -105,6 +105,22 @@ jobs:
         weechat --version
         weechat --run-command "/debug dirs;/debug libs" --run-command "/quit"
 
+    - name: Test Relay OpenAPI
+      if: ${{ matrix.config.name == 'gcc' }}
+      env:
+        RELAY_PASSWORD: test
+      run: |
+        sudo -H pip3 install --ignore-installed schemathesis
+        weechat-headless \
+          --dir /tmp/weechat-test-api \
+          --run-command '/set relay.network.password "${{ env.RELAY_PASSWORD }}"' \
+          --run-command '/relay add api 9000' \
+          --daemon \
+        ;
+        sleep 5
+        ./tools/test_relay_api.sh http://localhost:9000
+        echo '*/quit' >/tmp/weechat-test-api/weechat_fifo_*
+
     - name: Code coverage
       if: ${{ matrix.config.name == 'gcc_coverage' }}
       env:
