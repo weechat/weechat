@@ -516,9 +516,16 @@ RELAY_REMOTE_EVENT_CALLBACK(buffer)
     weechat_hashtable_set (buffer_props, "title", title);
     weechat_hashtable_set (buffer_props, "modes", modes);
     weechat_hashtable_set (buffer_props, "input_prompt", input_prompt);
-    weechat_hashtable_set (buffer_props, "input", input);
-    snprintf (str_number, sizeof (str_number), "%d", input_position);
-    weechat_hashtable_set (buffer_props, "input_pos", str_number);
+    if (!event->buffer)
+    {
+        /*
+         * set input content and position only when the buffer is created;
+         * subsequent updates will be handled via the "input" callback
+         */
+        weechat_hashtable_set (buffer_props, "input", input);
+        snprintf (str_number, sizeof (str_number), "%d", input_position);
+        weechat_hashtable_set (buffer_props, "input_pos", str_number);
+    }
     weechat_hashtable_set (buffer_props, "input_multiline",
                            (input_multiline) ? "1" : "0");
     weechat_hashtable_set (buffer_props, "nicklist", (nicklist) ? "1" : "0");
