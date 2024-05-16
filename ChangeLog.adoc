@@ -44,6 +44,7 @@ New features::
   * api: add support of specifier `%!` for timestamp in function util_strftimeval
   * api: add support of base64url in encode/decode functions
   * fset: add option `-import` in command `/fset`
+  * irc: store lag in channel and private buffers (local variable "lag"), in addition to the server buffer
   * irc: allow range in commands `/unban` and `/unquiet` (issue #2113)
   * irc: rename option irc.color.item_channel_modes to weechat.color.status_modes
   * irc: add option `-all` in command `/allchan`, do not execute command on parted channels by default (issue #2085)

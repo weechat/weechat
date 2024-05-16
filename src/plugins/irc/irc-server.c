@@ -1268,7 +1268,10 @@ irc_server_set_clienttagdeny (struct t_irc_server *server,
 void
 irc_server_set_lag (struct t_irc_server *server)
 {
+    struct t_irc_channel *ptr_channel;
     char str_lag[32];
+
+    str_lag[0] = '\0';
 
     if (server->lag >= weechat_config_integer (irc_config_network_lag_min_show))
     {
@@ -1276,12 +1279,26 @@ irc_server_set_lag (struct t_irc_server *server)
                   ((server->lag_check_time.tv_sec == 0) || (server->lag < 1000)) ?
                   "%.3f" : "%.0f",
                   ((float)(server->lag)) / 1000);
+
+    }
+
+    if (str_lag[0])
         weechat_buffer_set (server->buffer, "localvar_set_lag", str_lag);
-    }
     else
-    {
         weechat_buffer_set (server->buffer, "localvar_del_lag", "");
+
+    for (ptr_channel = server->channels; ptr_channel;
+         ptr_channel = ptr_channel->next_channel)
+    {
+        if (ptr_channel->buffer)
+        {
+            if (str_lag[0])
+                weechat_buffer_set (ptr_channel->buffer, "localvar_set_lag", str_lag);
+            else
+                weechat_buffer_set (ptr_channel->buffer, "localvar_del_lag", "");
+        }
     }
+
     weechat_hook_signal_send ("irc_server_lag_changed",
                               WEECHAT_HOOK_SIGNAL_STRING,
                               server->name);
