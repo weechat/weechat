@@ -467,6 +467,69 @@ error:
 }
 
 /*
+ * Checks if a local variable received in JSON object "local_variables" can
+ * be used.
+ *
+ * The following variables are ignored and must NOT be used:
+ *   - "plugin": contains the plugin name
+ *   - "name": contains the buffer name
+ *   - "relay_remote*": variables reserved for relay remote (in case of nested
+ *     remotes, the variables are not propagated)
+ *
+ * Returns:
+ *   1: variable can be used
+ *   0: variable must NOT be used (reserved)
+ */
+
+int
+relay_remote_event_check_local_var (const char *name)
+{
+    if (!name)
+        return 0;
+
+    return ((strcmp (name, "plugin") != 0)
+            && (strcmp (name, "name") != 0)
+            && (strncmp (name, "relay_remote", 12) != 0)) ?
+        1 : 0;
+}
+
+/*
+ * Remove local variables in buffer that are not in the JSON object
+ * "local_variables".
+ */
+
+void
+relay_remote_event_remove_localvar_cb (void *data,
+                                       struct t_hashtable *hashtable,
+                                       const void *key,
+                                       const void *value)
+{
+    void **pointers;
+    struct t_gui_buffer *buffer;
+    cJSON *json;
+    char str_local_var[1024];
+
+    /* make C compiler happy */
+    (void) hashtable;
+    (void) value;
+
+    pointers = (void **)data;
+    buffer = pointers[0];
+    json = pointers[1];
+
+    if (!relay_remote_event_check_local_var (key))
+        return;
+
+    if (!cJSON_GetObjectItem (json, key))
+    {
+        /* local variable removed on remote? => remove it locally */
+        snprintf (str_local_var, sizeof (str_local_var),
+                  "localvar_del_%s", (const char *)key);
+        weechat_buffer_set (buffer, str_local_var, "");
+    }
+}
+
+/*
  * Callback for a buffer event or response to GET /api/buffers.
  */
 
@@ -475,11 +538,13 @@ RELAY_REMOTE_EVENT_CALLBACK(buffer)
     struct t_gui_buffer *ptr_buffer;
     struct t_hashtable *buffer_props;
     struct t_relay_remote_event event_line;
+    struct t_hashtable *local_variables;
     cJSON *json_obj, *json_keys, *json_key, *json_key_name, *json_key_command;
-    cJSON *json_lines, *json_line, *json_nicklist_root;
+    cJSON *json_vars, *json_var, *json_lines, *json_line, *json_nicklist_root;
+    void *pointers[2];
     const char *name, *short_name, *type, *title, *modes, *input_prompt, *input;
     const char *ptr_key, *ptr_command;
-    char *full_name, str_number[64], *property;
+    char *full_name, str_number[64], str_local_var[1024], *property;
     long long id;
     int number, nicklist, nicklist_case_sensitive, nicklist_display_groups;
     int apply_props, input_position, input_multiline;
@@ -572,6 +637,48 @@ RELAY_REMOTE_EVENT_CALLBACK(buffer)
     {
         weechat_hashtable_map (buffer_props,
                                &relay_remote_event_apply_props, ptr_buffer);
+    }
+
+    json_vars = cJSON_GetObjectItem (event->json, "local_variables");
+    if (json_vars && cJSON_IsObject (json_vars))
+    {
+        if (weechat_strcmp (event->name, "buffer_localvar_removed") == 0)
+        {
+            /*
+             * we don't know which variables have been removed, so we remove any
+             * local variable in the buffer that is not defined in the JSON
+             * object "local_variables" received
+             */
+            pointers[0] = ptr_buffer;
+            pointers[1] = json_vars;
+            local_variables = weechat_hdata_pointer (relay_hdata_buffer,
+                                                     ptr_buffer,
+                                                     "local_variables");
+            if (local_variables)
+            {
+                weechat_hashtable_map (local_variables,
+                                       &relay_remote_event_remove_localvar_cb,
+                                       pointers);
+            }
+        }
+        else
+        {
+            /* add/update local variables */
+            cJSON_ArrayForEach (json_var, json_vars)
+            {
+                if (json_var->string
+                    && cJSON_IsString (json_var)
+                    && relay_remote_event_check_local_var (json_var->string))
+                {
+                    snprintf (str_local_var, sizeof (str_local_var),
+                              "localvar_set_%s",
+                              json_var->string);
+                    weechat_buffer_set (ptr_buffer,
+                                        str_local_var,
+                                        cJSON_GetStringValue (json_var));
+                }
+            }
+        }
     }
 
     /* add keys */
