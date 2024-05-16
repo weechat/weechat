@@ -266,7 +266,11 @@ gui_buffer_local_var_add (struct t_gui_buffer *buffer, const char *name,
         return;
 
     ptr_value = hashtable_get (buffer->local_variables, name);
+    if (string_strcmp (ptr_value, value) == 0)
+        return;
+
     hashtable_set (buffer->local_variables, name, value);
+
     (void) gui_buffer_send_signal (
         buffer,
         (ptr_value) ? "buffer_localvar_changed" : "buffer_localvar_added",
