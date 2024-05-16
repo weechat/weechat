@@ -66,8 +66,8 @@ char *gui_bar_item_names[GUI_BAR_NUM_ITEMS] =
   "buffer_name", "buffer_short_name", "buffer_modes", "buffer_filter",
   "buffer_zoom", "buffer_nicklist_count", "buffer_nicklist_count_groups",
   "buffer_nicklist_count_all", "scroll", "hotlist", "completion",
-  "buffer_title", "buffer_nicklist", "window_number", "mouse_status", "away",
-  "spacer"
+  "buffer_title", "buffer_nicklist", "window_number", "mouse_status", "lag",
+  "away", "spacer"
 };
 struct t_gui_bar_item_hook *gui_bar_item_hooks = NULL;
 struct t_hook *gui_bar_item_timer = NULL;
@@ -2043,6 +2043,38 @@ gui_bar_item_mouse_status_cb (const void *pointer, void *data,
 }
 
 /*
+ * Bar item with buffer lag.
+ */
+
+char *
+gui_bar_item_lag_cb (const void *pointer, void *data,
+                     struct t_gui_bar_item *item,
+                     struct t_gui_window *window,
+                     struct t_gui_buffer *buffer,
+                     struct t_hashtable *extra_info)
+{
+    const char *lag;
+    char str_lag[1024];
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) item;
+    (void) window;
+    (void) extra_info;
+
+    if (!buffer)
+        return NULL;
+
+    lag = (const char *)hashtable_get (buffer->local_variables, "lag");
+    if (!lag)
+        return NULL;
+
+    snprintf (str_lag, sizeof (str_lag), "%s: %s", _("Lag"), lag);
+    return strdup (str_lag);
+}
+
+/*
  * Bar item with away message.
  */
 
@@ -2488,6 +2520,13 @@ gui_bar_item_init ()
                       &gui_bar_item_mouse_status_cb, NULL, NULL);
     gui_bar_item_hook_signal ("mouse_enabled;mouse_disabled",
                               gui_bar_item_names[GUI_BAR_ITEM_MOUSE_STATUS]);
+
+    /* lag */
+    gui_bar_item_new (NULL,
+                      gui_bar_item_names[GUI_BAR_ITEM_LAG],
+                      &gui_bar_item_lag_cb, NULL, NULL);
+    gui_bar_item_hook_signal ("window_switch;buffer_switch;buffer_localvar_*",
+                              gui_bar_item_names[GUI_BAR_ITEM_LAG]);
 
     /* away message */
     gui_bar_item_new (NULL,
