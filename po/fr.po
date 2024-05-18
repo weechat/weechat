@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-05-14 22:20+0200\n"
-"PO-Revision-Date: 2024-05-14 22:23+0200\n"
+"POT-Creation-Date: 2024-05-18 09:15+0200\n"
+"PO-Revision-Date: 2024-05-18 09:16+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -4850,6 +4850,24 @@ msgstr ""
 "exemple /he pour /help"
 
 msgid ""
+"permissions for configuration files (*.conf), as octal value (see man "
+"chmod); it must be a number with 3 digits, each digit can be 0 (no "
+"permissions), 2 (write only), 4 (read only) or 6 (read and write); the first "
+"digit must be 6 so that the user can read and write the file; by default "
+"configuration files can be read and written by the user only, for security "
+"reasons; for example 660 = \"rw-rw-r--\" = file readable and writable by the "
+"user and members of the group"
+msgstr ""
+"permissions pour les fichiers de configuration (*.conf), sous forme de "
+"valeur octale (voir man chmod) ; doit être un nombre avec 3 chiffres, chaque "
+"chiffre peut être 0 (aucune permission), 2 (écriture seule), 4 (lecture "
+"seule) ou 6 (lecture et écriture) ; le premier chiffre doit être 6 pour que "
+"l'utilisateur puisse lire et écrire le fichier ; par défaut les fichiers de "
+"configuration peuvent être lus et écrits par l'utilisateur seulement, pour "
+"des raisons de sécurité ; par exemple 660 = \"rw-rw-r--\" = fichier en "
+"lecture et écriture pour l'utilisateur et les membres du groupe"
+
+msgid ""
 "if set, /quit command must be confirmed with extra argument \"-yes\" (see /"
 "help quit)"
 msgstr ""
@@ -6085,6 +6103,12 @@ msgid "%sCannot create file \"%s\""
 msgstr "%sImpossible de créer le fichier \"%s\""
 
 #, c-format
+msgid "%sWARNING: failed to set permissions on configuration file \"%s\" (%s)"
+msgstr ""
+"%sATTENTION : échec de changement des permissions sur le fichier de "
+"configuration \"%s\" (%s)"
+
+#, c-format
 msgid "%sError writing configuration file \"%s\""
 msgstr "%sErreur d'écriture du fichier de configuration \"%s\""
 
@@ -6954,6 +6978,9 @@ msgstr "debug clavier et souris ('q' pour quitter le mode de debug)"
 #, c-format
 msgid "%s-MORE(%d)-"
 msgstr "%s-PLUS(%d)-"
+
+msgid "Lag"
+msgstr "Lag"
 
 msgid "away"
 msgstr "absent"
@@ -9166,9 +9193,6 @@ msgstr "%s%s : script \"%s\" non chargé"
 
 msgid "server"
 msgstr "serveur"
-
-msgid "Lag"
-msgstr "Lag"
 
 #. TRANSLATORS: this is displayed in a bar item and must be as short as possible
 msgid "cleartext"

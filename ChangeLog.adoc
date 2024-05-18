@@ -15,6 +15,7 @@ For a list of important changes that require manual actions, please look at rele
 
 New features::
 
+  * core: add option weechat.look.config_permissions (issue #2057)
   * core: add bar item "lag"
   * core: add buffer properties "input_prompt" and "modes"
   * core: send signal "buffer_line_added" on buffers with free content

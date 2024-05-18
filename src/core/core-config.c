@@ -133,6 +133,7 @@ struct t_config_option *config_look_color_pairs_auto_reset = NULL;
 struct t_config_option *config_look_color_real_white = NULL;
 struct t_config_option *config_look_command_chars = NULL;
 struct t_config_option *config_look_command_incomplete = NULL;
+struct t_config_option *config_look_config_permissions = NULL;
 struct t_config_option *config_look_confirm_quit = NULL;
 struct t_config_option *config_look_confirm_upgrade = NULL;
 struct t_config_option *config_look_day_change = NULL;
@@ -391,6 +392,35 @@ config_change_sys_rlimit (const void *pointer, void *data,
 
     if (gui_init_ok)
         sys_setrlimit ();
+}
+
+/*
+ * Checks option "weechat.look.config_permissions".
+ */
+
+int
+config_check_config_permissions (const void *pointer, void *data,
+                                 struct t_config_option *option,
+                                 const char *value)
+{
+    const char *ptr_perm;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) option;
+
+    if (!value || (strlen (value) != 3) || (value[0] != '6'))
+        return 0;
+
+    ptr_perm = value;
+    while (ptr_perm && ptr_perm[0])
+    {
+        if (!strchr ("0246", ptr_perm[0]))
+            return 0;
+        ptr_perm++;
+    }
+    return 1;
 }
 
 /*
@@ -3462,6 +3492,21 @@ config_weechat_init_options ()
                "example /he for /help"),
             NULL, 0, 0, "off", NULL, 0,
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        config_look_config_permissions = config_file_new_option (
+            weechat_config_file, weechat_config_section_look,
+            "config_permissions", "string",
+            N_("permissions for configuration files (*.conf), as octal value "
+               "(see man chmod); it must be a number with 3 digits, each digit "
+               "can be 0 (no permissions), 2 (write only), 4 (read only) or "
+               "6 (read and write); the first digit must be 6 so that the user "
+               "can read and write the file; by default configuration files "
+               "can be read and written by the user only, for security "
+               "reasons; for example 660 = \"rw-rw-r--\" = file readable and "
+               "writable by the user and members of the group"),
+            NULL, 0, 0, "600", NULL, 0,
+            &config_check_config_permissions, NULL, NULL,
+            NULL, NULL, NULL,
+            NULL, NULL, NULL);
         config_look_confirm_quit = config_file_new_option (
             weechat_config_file, weechat_config_section_look,
             "confirm_quit", "boolean",

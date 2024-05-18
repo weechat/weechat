@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-05-14 22:20+0200\n"
+"POT-Creation-Date: 2024-05-18 09:15+0200\n"
 "PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4620,6 +4620,16 @@ msgstr ""
 "yerine /he"
 
 msgid ""
+"permissions for configuration files (*.conf), as octal value (see man "
+"chmod); it must be a number with 3 digits, each digit can be 0 (no "
+"permissions), 2 (write only), 4 (read only) or 6 (read and write); the first "
+"digit must be 6 so that the user can read and write the file; by default "
+"configuration files can be read and written by the user only, for security "
+"reasons; for example 660 = \"rw-rw-r--\" = file readable and writable by the "
+"user and members of the group"
+msgstr ""
+
+msgid ""
 "if set, /quit command must be confirmed with extra argument \"-yes\" (see /"
 "help quit)"
 msgstr ""
@@ -5792,6 +5802,11 @@ msgstr "(öntanımlı seçenekler)"
 msgid "%sCannot create file \"%s\""
 msgstr "%s\"%s\" dosyası oluşturulamıyor"
 
+#, fuzzy, c-format
+#| msgid "%sWARNING: failed to read configuration file \"%s\" (%s)"
+msgid "%sWARNING: failed to set permissions on configuration file \"%s\" (%s)"
+msgstr "%sUYARI: \"%s\" yapılandırma dosyası okunamadı (%s)"
+
 #, c-format
 msgid "%sError writing configuration file \"%s\""
 msgstr "%s\"%s\" yapılandırma dosyası yazılırken hata"
@@ -6635,6 +6650,9 @@ msgstr ""
 #, c-format
 msgid "%s-MORE(%d)-"
 msgstr "%s-DAHA FAZLA(%d)-"
+
+msgid "Lag"
+msgstr "Gecikme"
 
 msgid "away"
 msgstr "uzakta"
@@ -8691,9 +8709,6 @@ msgstr "%s%s: \"%s\" betiği yüklenmedi"
 
 msgid "server"
 msgstr "sunucu"
-
-msgid "Lag"
-msgstr "Gecikme"
 
 #. TRANSLATORS: this is displayed in a bar item and must be as short as possible
 msgid "cleartext"

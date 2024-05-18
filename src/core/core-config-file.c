@@ -3193,7 +3193,8 @@ config_file_write_internal (struct t_config_file *config_file,
                             int default_options)
 {
     int filename_length, rc;
-    char *filename, *filename2, resolved_path[PATH_MAX];
+    long file_perms;
+    char *filename, *filename2, resolved_path[PATH_MAX], *error;
     struct t_config_section *ptr_section;
     struct t_config_option *ptr_option;
 
@@ -3339,7 +3340,20 @@ config_file_write_internal (struct t_config_file *config_file,
     config_file->file = NULL;
 
     /* update file mode */
-    chmod (filename2, 0600);
+    error = NULL;
+    file_perms = strtol (CONFIG_STRING(config_look_config_permissions), &error, 8);
+    if (!error || error[0])
+        file_perms = 0600;
+    if (chmod (filename2, file_perms) < 0)
+    {
+        gui_chat_printf (
+            NULL,
+            _("%sWARNING: failed to set permissions on configuration file "
+              "\"%s\" (%s)"),
+            gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+            filename2,
+            strerror (errno));
+    }
 
     /* rename temp file to target file */
     rc = rename (filename2, filename);
