@@ -134,9 +134,9 @@ relay_remote_event_get_buffer_id (struct t_gui_buffer *buffer)
 RELAY_REMOTE_EVENT_CALLBACK(line)
 {
     cJSON *json_obj, *json_tags, *json_tag;
-    const char *date, *prefix, *message;
+    const char *date, *prefix, *message, *ptr_tag;
     char **tags;
-    int y;
+    int y, highlight, tag_notify_highlight;
     struct timeval tv_date;
 
     if (!event->buffer || !event->json)
@@ -144,6 +144,7 @@ RELAY_REMOTE_EVENT_CALLBACK(line)
 
     JSON_GET_NUM(event->json, y, -1);
     JSON_GET_STR(event->json, date);
+    JSON_GET_BOOL(event->json, highlight);
     JSON_GET_STR(event->json, prefix);
     JSON_GET_STR(event->json, message);
 
@@ -153,6 +154,8 @@ RELAY_REMOTE_EVENT_CALLBACK(line)
         tv_date.tv_usec = 0;
     }
 
+    tag_notify_highlight = 0;
+
     tags = weechat_string_dyn_alloc (256);
     if (tags)
     {
@@ -161,11 +164,28 @@ RELAY_REMOTE_EVENT_CALLBACK(line)
         {
             cJSON_ArrayForEach (json_tag, json_tags)
             {
-                if (*tags[0])
-                    weechat_string_dyn_concat (tags, ",", -1);
-                weechat_string_dyn_concat (
-                    tags, cJSON_GetStringValue (json_tag), -1);
+                ptr_tag = cJSON_GetStringValue (json_tag);
+                if (ptr_tag)
+                {
+                    if (*tags[0])
+                        weechat_string_dyn_concat (tags, ",", -1);
+                    if (highlight && (strncmp (ptr_tag, "notify_", 7) == 0))
+                    {
+                        weechat_string_dyn_concat (tags, "notify_highlight", -1);
+                        tag_notify_highlight = 1;
+                    }
+                    else
+                    {
+                        weechat_string_dyn_concat (tags, ptr_tag, -1);
+                    }
+                }
             }
+        }
+        if (highlight && !tag_notify_highlight)
+        {
+            if (*tags[0])
+                weechat_string_dyn_concat (tags, ",", -1);
+            weechat_string_dyn_concat (tags, "notify_highlight", -1);
         }
     }
 
