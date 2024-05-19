@@ -981,7 +981,7 @@ components:
               buffer:
                 type: string
                 description: >-
-                  Buffer full name (eg: `irc.libera.#weechat`)
+                  Buffer full name
                 example: 'irc.libera.#weechat'
               command:
                 type: string
