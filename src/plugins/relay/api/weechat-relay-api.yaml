@@ -60,6 +60,8 @@ paths:
       tags:
         - version
       description: Get the WeeChat and API versions
+      parameters:
+        - $ref: '#/components/parameters/totp'
       operationId: getVersion
       responses:
         '200':
@@ -82,6 +84,7 @@ paths:
         Get a list of all buffers, with optional lines and nicks.
       operationId: getBuffers
       parameters:
+        - $ref: '#/components/parameters/totp'
         - $ref: '#/components/parameters/bufferLines'
         - $ref: '#/components/parameters/bufferLinesFree'
         - $ref: '#/components/parameters/bufferNicks'
@@ -109,6 +112,7 @@ paths:
         Get a single buffer by ID, with optional lines and nicks.
       operationId: getBufferById
       parameters:
+        - $ref: '#/components/parameters/totp'
         - $ref: '#/components/parameters/bufferId'
         - $ref: '#/components/parameters/bufferLines'
         - $ref: '#/components/parameters/bufferNicks'
@@ -136,6 +140,7 @@ paths:
         Get buffer by full name, with optional lines and nicks.
       operationId: getBufferByName
       parameters:
+        - $ref: '#/components/parameters/totp'
         - $ref: '#/components/parameters/bufferName'
         - $ref: '#/components/parameters/bufferLines'
         - $ref: '#/components/parameters/bufferNicks'
@@ -163,6 +168,7 @@ paths:
         Get lines in a buffer by ID.
       operationId: getBufferByIdLines
       parameters:
+        - $ref: '#/components/parameters/totp'
         - $ref: '#/components/parameters/bufferId'
         - $ref: '#/components/parameters/bufferLines'
         - $ref: '#/components/parameters/colors'
@@ -191,6 +197,7 @@ paths:
         Get a line by ID in a buffer by ID.
       operationId: getBufferByIdLineById
       parameters:
+        - $ref: '#/components/parameters/totp'
         - $ref: '#/components/parameters/bufferId'
         - $ref: '#/components/parameters/lineId'
         - $ref: '#/components/parameters/bufferLines'
@@ -218,6 +225,7 @@ paths:
         Get lines in a buffer by full name.
       operationId: getBufferNameLines
       parameters:
+        - $ref: '#/components/parameters/totp'
         - $ref: '#/components/parameters/bufferName'
         - $ref: '#/components/parameters/bufferLines'
         - $ref: '#/components/parameters/colors'
@@ -246,6 +254,7 @@ paths:
         Get a line by ID in a buffer by full name.
       operationId: getBufferByNameLineById
       parameters:
+        - $ref: '#/components/parameters/totp'
         - $ref: '#/components/parameters/bufferName'
         - $ref: '#/components/parameters/lineId'
         - $ref: '#/components/parameters/bufferLines'
@@ -273,6 +282,7 @@ paths:
         Get nicks in a buffer by ID.
       operationId: getBufferByIdNicks
       parameters:
+        - $ref: '#/components/parameters/totp'
         - $ref: '#/components/parameters/bufferId'
       responses:
         '200':
@@ -297,6 +307,7 @@ paths:
         Get nicks in a buffer by full name.
       operationId: getBufferByNameNicks
       parameters:
+        - $ref: '#/components/parameters/totp'
         - $ref: '#/components/parameters/bufferName'
       responses:
         '200':
@@ -319,6 +330,8 @@ paths:
         - hotlist
       description: Get hotlist
       operationId: getHotlist
+      parameters:
+        - $ref: '#/components/parameters/totp'
       responses:
         '200':
           description: Successful operation
@@ -343,6 +356,8 @@ paths:
       description: |
         Send text to a buffer.
       operationId: input
+      parameters:
+        - $ref: '#/components/parameters/totp'
       requestBody:
         $ref: '#/components/requestBodies/InputBody'
       responses:
@@ -363,6 +378,8 @@ paths:
       description: |
         Send ping request to WeeChat.
       operationId: ping
+      parameters:
+        - $ref: '#/components/parameters/totp'
       requestBody:
         $ref: '#/components/requestBodies/PingBody'
       responses:
@@ -387,6 +404,8 @@ paths:
       description: |
         Synchronize with WeeChat.
       operationId: sync
+      parameters:
+        - $ref: '#/components/parameters/totp'
       requestBody:
         $ref: '#/components/requestBodies/SyncBody'
       responses:
@@ -402,6 +421,19 @@ paths:
 components:
 
   parameters:
+    totp:
+      name: x-weechat-totp
+      in: header
+      required: false
+      schema:
+        type: integer
+        format: int32
+        minimum: 0
+        maximum: 999999
+      description: |
+        The TOTP (Time-based One-Time Password) used in authentication
+        if the remote relay has TOTP configured (option
+        relay.network.totp_secret is set).
     bufferId:
       name: buffer_id
       in: path
@@ -1005,3 +1037,27 @@ components:
     password:
       type: http
       scheme: basic
+      description: |
+        The HTTP basic authentication is used to send the relay password,
+        either as plain text or hashed, with one of these formats for user
+        and password:
+        * `plain:<password>`
+        * `hash:sha256:<timestamp>:<hash>`
+        * `hash:sha512:<timestamp>:<hash>`
+        * `hash:pbkdf2+sha256:<timestamp>:<iterations>:<hash>`
+        * `hash:pbkdf2+sha512:<timestamp>:<iterations>:<hash>`
+
+        When the username is `plain`, the password is sent as-is.
+
+        When the username is `hash`, the password is hashed using the given
+        algorithms and the timestamp is the current timestamp as integer
+        (number of seconds since the Unix Epoch); it is used to prevent replay
+        attacks.
+        The timestamp must be put before the password when computing the hash.
+        For example if the current timestamp is `1716119801` and the password
+        is `secret_password`, then the hash is computed on string
+        `1716119801secret_password`.
+
+        If TOTP is enabled on WeeChat/relay side (option relay.network.totp_secret
+        is set), you must send the TOTP value in this header:
+        `x-weechat-totp: 123456`.
