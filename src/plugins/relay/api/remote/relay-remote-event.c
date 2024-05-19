@@ -981,7 +981,7 @@ error_cb:
     weechat_printf (NULL,
                     "%sremote[%s]: callback failed for body type \"%s\"",
                     weechat_prefix ("error"),
-                    body_type,
-                    data);
+                    remote->name,
+                    body_type);
     return;
 }
