@@ -37,8 +37,12 @@ paths:
     post:
       tags:
         - handshake
-      summary: Perform handshake
-      description: Perform handshake with remote WeeChat
+      description: |
+        Perform handshake with remote WeeChat: this is an optional but
+        recommended request allowing the client to agree on the hash algorithm
+        to use and get information to perform the authentication.
+
+        This endpoint does not require authentication.
       operationId: handshake
       requestBody:
         $ref: '#/components/requestBodies/HandshakeBody'
@@ -55,8 +59,7 @@ paths:
     get:
       tags:
         - version
-      summary: Get the version
-      description: Get the version
+      description: Get the WeeChat and API versions
       operationId: getVersion
       responses:
         '200':
@@ -75,8 +78,8 @@ paths:
     get:
       tags:
         - buffers
-      summary: Get buffers
-      description: Get a list of all buffers
+      description: |
+        Get a list of all buffers, with optional lines and nicks.
       operationId: getBuffers
       parameters:
         - $ref: '#/components/parameters/bufferLines'
@@ -102,7 +105,8 @@ paths:
     get:
       tags:
         - buffers
-      summary: Get buffer by ID
+      description: |
+        Get a single buffer by ID, with optional lines and nicks.
       operationId: getBufferById
       parameters:
         - $ref: '#/components/parameters/bufferId'
@@ -128,7 +132,8 @@ paths:
     get:
       tags:
         - buffers
-      summary: Get buffer by full name
+      description: |
+        Get buffer by full name, with optional lines and nicks.
       operationId: getBufferByName
       parameters:
         - $ref: '#/components/parameters/bufferName'
@@ -154,7 +159,8 @@ paths:
     get:
       tags:
         - buffers
-      summary: Get lines in a buffer
+      description: |
+        Get lines in a buffer by ID.
       operationId: getBufferByIdLines
       parameters:
         - $ref: '#/components/parameters/bufferId'
@@ -181,7 +187,8 @@ paths:
     get:
       tags:
         - buffers
-      summary: Get a line in a buffer
+      description: |
+        Get a line by ID in a buffer by ID.
       operationId: getBufferByIdLineById
       parameters:
         - $ref: '#/components/parameters/bufferId'
@@ -207,7 +214,8 @@ paths:
     get:
       tags:
         - buffers
-      summary: Get lines in a buffer
+      description: |
+        Get lines in a buffer by full name.
       operationId: getBufferNameLines
       parameters:
         - $ref: '#/components/parameters/bufferName'
@@ -234,7 +242,8 @@ paths:
     get:
       tags:
         - buffers
-      summary: Get a line in a buffer
+      description: |
+        Get a line by ID in a buffer by full name.
       operationId: getBufferByNameLineById
       parameters:
         - $ref: '#/components/parameters/bufferName'
@@ -260,7 +269,8 @@ paths:
     get:
       tags:
         - buffers
-      summary: Get nicks in a buffer
+      description: |
+        Get nicks in a buffer by ID.
       operationId: getBufferByIdNicks
       parameters:
         - $ref: '#/components/parameters/bufferId'
@@ -283,7 +293,8 @@ paths:
     get:
       tags:
         - buffers
-      summary: Get nicks in a buffer
+      description: |
+        Get nicks in a buffer by full name.
       operationId: getBufferByNameNicks
       parameters:
         - $ref: '#/components/parameters/bufferName'
@@ -306,7 +317,7 @@ paths:
     get:
       tags:
         - hotlist
-      summary: Get hotlist
+      description: Get hotlist
       operationId: getHotlist
       responses:
         '200':
@@ -329,8 +340,8 @@ paths:
     post:
       tags:
         - input
-      summary: Send text to a buffer
-      description: Send text to a buffer
+      description: |
+        Send text to a buffer.
       operationId: input
       requestBody:
         $ref: '#/components/requestBodies/InputBody'
@@ -349,8 +360,8 @@ paths:
     post:
       tags:
         - ping
-      summary: Send ping request to WeeChat
-      description: Send ping request to WeeChat
+      description: |
+        Send ping request to WeeChat.
       operationId: ping
       requestBody:
         $ref: '#/components/requestBodies/PingBody'
@@ -373,8 +384,8 @@ paths:
     post:
       tags:
         - sync
-      summary: Synchronize with WeeChat
-      description: Synchronize with WeeChat
+      description: |
+        Synchronize with WeeChat.
       operationId: sync
       requestBody:
         $ref: '#/components/requestBodies/SyncBody'
