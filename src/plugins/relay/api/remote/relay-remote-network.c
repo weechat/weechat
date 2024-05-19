@@ -34,7 +34,6 @@
 #include "../../../weechat-plugin.h"
 #include "../../relay.h"
 #include "../../relay-auth.h"
-#include "../../relay-config.h"
 #include "../../relay-http.h"
 #include "../../relay-raw.h"
 #include "../../relay-remote.h"
@@ -105,6 +104,7 @@ relay_remote_network_close_connection (struct t_relay_remote *remote)
         remote->sock = -1;
     }
     relay_websocket_deflate_reinit (remote->ws_deflate);
+    remote->version_ok = 0;
     remote->synced = 0;
     if (remote->partial_ws_frame)
     {
@@ -381,12 +381,6 @@ relay_remote_network_recv_text (struct t_relay_remote *remote,
         relay_remote_set_status (remote, RELAY_STATUS_CONNECTED);
         snprintf (request, sizeof (request),
                   "{\"request\": \"GET /api/version\"}");
-        relay_remote_network_send (remote, RELAY_MSG_STANDARD,
-                                   request, strlen (request));
-        snprintf (request, sizeof (request),
-                  "{\"request\": \"GET /api/buffers?"
-                  "lines=-%d&nicks=true&colors=weechat\"}",
-                  weechat_config_integer (relay_config_api_remote_get_lines));
         relay_remote_network_send (remote, RELAY_MSG_STANDARD,
                                    request, strlen (request));
     }

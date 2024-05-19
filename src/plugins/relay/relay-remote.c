@@ -340,6 +340,7 @@ relay_remote_alloc (const char *name)
     new_remote->hook_fd = NULL;
     new_remote->gnutls_sess = NULL;
     new_remote->ws_deflate = relay_websocket_deflate_alloc ();
+    new_remote->version_ok = 0;
     new_remote->synced = 0;
     new_remote->partial_ws_frame = NULL;
     new_remote->partial_ws_frame_size = 0;
@@ -577,6 +578,7 @@ relay_remote_new_with_infolist (struct t_infolist *infolist)
             }
         }
     }
+    new_remote->version_ok = weechat_infolist_integer (infolist, "version_ok");
     new_remote->synced = weechat_infolist_integer (infolist, "synced");
     ptr_ws_frame = weechat_infolist_buffer (infolist, "partial_ws_frame", &ws_frame_size);
     if (ptr_ws_frame && (ws_frame_size > 0))
@@ -941,6 +943,8 @@ relay_remote_add_to_infolist (struct t_infolist *infolist,
             free (dict);
         }
     }
+    if (!weechat_infolist_new_var_integer (ptr_item, "version_ok", remote->version_ok))
+        return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "synced", remote->synced))
         return 0;
 
@@ -992,6 +996,7 @@ relay_remote_print_log ()
         weechat_log_printf ("  hook_fd . . . . . . . . : 0x%lx", ptr_remote->hook_fd);
         weechat_log_printf ("  gnutls_sess . . . . . . : 0x%lx", ptr_remote->gnutls_sess);
         relay_websocket_deflate_print_log (ptr_remote->ws_deflate, "");
+        weechat_log_printf ("  version_ok. . . . . . . : %d", ptr_remote->version_ok);
         weechat_log_printf ("  synced. . . . . . . . . : %d", ptr_remote->synced);
         weechat_log_printf ("  partial_ws_frame. . . . : %p (%d bytes)",
                             ptr_remote->partial_ws_frame,

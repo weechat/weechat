@@ -33,6 +33,7 @@
 #include "../../../weechat-plugin.h"
 #include "../../relay.h"
 #include "../../relay-auth.h"
+#include "../../relay-config.h"
 #include "../../relay-http.h"
 #include "../../relay-raw.h"
 #include "../../relay-remote.h"
@@ -804,6 +805,7 @@ RELAY_REMOTE_EVENT_CALLBACK(version)
 {
     cJSON *json_obj;
     const char *weechat_version, *weechat_version_git, *relay_api_version;
+    char *weechat_version_local, request[1024];
 
     if (!event->json)
         return WEECHAT_RC_OK;
@@ -818,6 +820,40 @@ RELAY_REMOTE_EVENT_CALLBACK(version)
                     weechat_version,
                     weechat_version_git,
                     relay_api_version);
+
+    if (!event->remote->version_ok)
+    {
+        /* check version: the remote API must be exactly the same as local API */
+        if (strcmp (relay_api_version, RELAY_API_VERSION_STR) != 0)
+        {
+                weechat_version_local = weechat_info_get ("version", NULL);
+                weechat_printf (
+                    NULL,
+                    _("%sremote[%s]: API version mismatch: "
+                      "remote API is %s (WeeChat %s), "
+                      "local API %s (WeeChat %s)"),
+                    weechat_prefix ("error"),
+                    event->remote->name,
+                    relay_api_version,
+                    weechat_version,
+                    RELAY_API_VERSION_STR,
+                    weechat_version_local);
+                free (weechat_version_local);
+                relay_remote_network_disconnect (event->remote);
+                return WEECHAT_RC_OK;
+        }
+
+        event->remote->version_ok = 1;
+        snprintf (request, sizeof (request),
+                  "{\"request\": \"GET /api/buffers?"
+                  "lines=-%d"
+                  "&nicks=true"
+                  "&colors=weechat"
+                  "\"}",
+                  weechat_config_integer (relay_config_api_remote_get_lines));
+        relay_remote_network_send (event->remote, RELAY_MSG_STANDARD,
+                                   request, strlen (request));
+    }
 
     return WEECHAT_RC_OK;
 }

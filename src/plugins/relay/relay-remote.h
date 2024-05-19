@@ -57,6 +57,7 @@ struct t_relay_remote
     struct t_hook *hook_fd;            /* hook for socket                   */
     gnutls_session_t gnutls_sess;      /* gnutls session (only if TLS used) */
     struct t_relay_websocket_deflate *ws_deflate; /* websocket deflate data */
+    int version_ok;                    /* remote API version is OK?         */
     int synced;                        /* 1 if synced with remote           */
     char *partial_ws_frame;            /* part. binary websocket frame recv */
     int partial_ws_frame_size;         /* size of partial websocket frame   */
