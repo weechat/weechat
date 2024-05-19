@@ -34,7 +34,8 @@ WeeChat (Wee Enhanced Environment for Chat) је бесплатни чет кл�
   https://datatracker.ietf.org/doc/html/rfc2812[2812 ^↗^^],
   https://datatracker.ietf.org/doc/html/rfc2813[2813 ^↗^^] и
   https://datatracker.ietf.org/doc/html/rfc7194[7194 ^↗^^],
-* IRC прокси и релеј за удаљене интерфејсе
+// TRANSLATION MISSING
+* IRC proxy and relay for WeeChat and remote interfaces
 * подржавање различитих платформи (GNU/Linux, *BSD, macOS, Windows и остале)
 * 100% GPL, слободан софтвер
 
@@ -126,8 +127,10 @@ WeeChat мора да се изгради са CMake.
   Relay додатак: подршка за TLS везе.
 
 | zlib1g-dev |
+// TRANSLATION MISSING
 | Logger додатак: компресија ротирајућих лог фајлова (gzip). +
-  Relay додатак: компресија порука (WeeChat -> клијент) са https://zlib.net/[zlib ^↗^^] (weechat протокол). +
+  Relay додатак: компресија порука (WeeChat -> клијент) са https://zlib.net/[zlib ^↗^^]
+  (api and weechat protocols). +
   Script додатак: читање индекс фајла репозиторијума (gzip).
 |===
 
@@ -155,8 +158,10 @@ WeeChat мора да се изгради са CMake.
 | Relay додатак: протокол „api” (HTTP REST API).
 
 | libzstd-dev | ≥ 0.8.1
+// TRANSLATION MISSING
 | Logger додатак: компресија ротирајућих лог фајлова (zstandard). +
-  Relay додатак: компресија порука (WeeChat -> клијент) са https://facebook.github.io/zstd/[Zstandard ^↗^^] (weechat протокол).
+  Relay додатак: компресија порука (WeeChat -> клијент) са https://facebook.github.io/zstd/[Zstandard ^↗^^]
+  (api and weechat protocols).
 
 | libaspell-dev / libenchant-dev |
 | Spell додатак.
@@ -4304,8 +4309,16 @@ include::{autogendir}/autogen_user_options.sr.adoc[tag=typing_options]
 Релеј додатак се користи за релеј података преко мреже, употребом различитих протокола:
 
 * _irc_: IRC прокси: користи се за дељење веза са IRC серверима са једним или више других клијената
-* _weechat_: протокол који користе удаљени интерфејси да прикажу и омогуће интеракцију са програмом
-  WeeChat, погледајте https://weechat.org/about/interfaces/[ову страницу ^↗^^].
+// TRANSLATION MISSING
+* _api_: HTTP REST API, used by WeeChat and remote interfaces to display and
+  interact with WeeChat
+// TRANSLATION MISSING
+* _weechat_: protocol used by remote interfaces to display and interact with
+  WeeChat.
+
+// TRANSLATION MISSING
+For _api_ and _weechat_ protocols, see the list of remote interfaces on
+https://weechat.org/about/interfaces/[this page ^↗^^].
 
 [[relay_password]]
 === Лозинка
@@ -4317,12 +4330,15 @@ include::{autogendir}/autogen_user_options.sr.adoc[tag=typing_options]
 /set relay.network.password "${sec.data.relay}"
 ----
 
-Ова лозинка се користи и за _irc_ и за _weechat_ протокол.
+// TRANSLATION MISSING
+This password is used with all protocols.
 
 [[relay_totp]]
 === TOTP
 
-TOTP (Time-based One-Time Password) може уз лозинку да се користи као секундарни фактор аутентификације за _weechat_ протокол.
+// TRANSLATION MISSING
+TOTP (Time-based One-Time Password) can be used as secondary authentication
+factor for _api_ and _weechat_ protocols, in addition to the password.
 
 Ово није обавезно, мада повећава ниво безбедности.
 
@@ -4402,6 +4418,40 @@ PASS сервер:лозинка
 /set irc.server.relay.password "${sec.data.relay_libera}"
 ----
 
+// TRANSLATION MISSING
+[[relay_api_protocol]]
+=== API protocol
+
+The Relay plugin can send data to a remote WeeChat or interface using an
+HTTP REST API protocol.
+
+You can browse and test the API online:
+https://weechat.org/api/[WeeChat Relay API ^↗^^].
+
+You can connect with WeeChat or a remote interface, see
+https://weechat.org/about/interfaces/[this page ^↗^^].
+
+For example:
+
+----
+/relay add api 9000
+----
+
+Now you can connect on port 9000 with a WeeChat or a remote interface using
+password "mypassword".
+
+To connect to an _api_ relay with WeeChat:
+
+----
+/remote add weechat http://localhost:9000 -password=mypassword
+/remote connect weechat
+----
+
+[NOTE]
+The remote WeeChat must expose the same API version as the local WeeChat, so
+it's highly recommended to use exactly the same WeeChat version on remote
+and local client.
+
 [[relay_weechat_protocol]]
 === WeeChat протокол
 
@@ -4436,7 +4486,11 @@ https://weechat.org/about/interfaces/[ову страницу ^↗^^].
 websocket = new WebSocket("ws://server.com:9000/weechat");
 ----
 
-Порт (9000 у примеру) је порт који је дефинисан у Релеј додатку. URI увек мора да се завршава са „/weechat” (и за _irc_ и за _weechat_ протокол).
+Порт (9000 у примеру) је порт који је дефинисан у Релеј додатку.
+
+// TRANSLATION MISSING
+The URI must end with "/weechat" for _irc_ and _weechat_ protocols and "/api"
+for _api_ protocol.
 
 [[relay_unix_socket]]
 === UNIX доменски сокети
@@ -4475,7 +4529,7 @@ include::{autogendir}/autogen_user_commands.sr.adoc[tag=relay_commands]
 | network | /set relay.network.*               | Мрежне опције.
 | irc     | /set relay.irc.*                   | Опције специфичне за irc протокол (irc прокси).
 | port    | <<command_relay_relay,/relay add>> +
-            /set relay.port.*                  | Портови који се користе за релеј (irc и weechat протоколи) (у одељку је могуће додавање/уклањање опција).
+            /set relay.port.*                  | Портови који се користе за релеј (у одељку је могуће додавање/уклањање опција).
 |===
 
 Опције:

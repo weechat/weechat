@@ -30,7 +30,7 @@ Main features are:
   https://datatracker.ietf.org/doc/html/rfc2812[2812 ^↗^^],
   https://datatracker.ietf.org/doc/html/rfc2813[2813 ^↗^^] and
   https://datatracker.ietf.org/doc/html/rfc7194[7194 ^↗^^]
-* IRC proxy and relay for remote interfaces
+* IRC proxy and relay for WeeChat and remote interfaces
 * multi-platform (GNU/Linux, *BSD, macOS, Windows and other)
 * 100% GPL, free software
 
@@ -128,7 +128,8 @@ WeeChat:
 
 | zlib1g-dev |
 | Logger plugin: compression of rotated log files (gzip). +
-  Relay plugin: compression of messages (WeeChat -> client) with https://zlib.net/[zlib ^↗^^] (weechat protocol). +
+  Relay plugin: compression of messages with https://zlib.net/[zlib ^↗^^]
+  (api and weechat protocols). +
   Script plugin: read of repository index file (gzip).
 |===
 
@@ -159,7 +160,8 @@ WeeChat:
 
 | libzstd-dev | ≥ 0.8.1
 | Logger plugin: compression of rotated log files (zstandard). +
-  Relay plugin: compression of messages (WeeChat -> client) with https://facebook.github.io/zstd/[Zstandard ^↗^^] (weechat protocol).
+  Relay plugin: compression of messages with https://facebook.github.io/zstd/[Zstandard ^↗^^]
+  (api and weechat protocols).
 
 | libaspell-dev / libenchant-dev |
 | Spell plugin.
@@ -4527,8 +4529,13 @@ The Relay plugin is used to relay data via network, using different protocols:
 
 * _irc_: IRC proxy: used to share connections to IRC servers with one or many
   other IRC clients
+* _api_: HTTP REST API, used by WeeChat and remote interfaces to display and
+  interact with WeeChat
 * _weechat_: protocol used by remote interfaces to display and interact with
-  WeeChat, see https://weechat.org/about/interfaces/[this page ^↗^^].
+  WeeChat.
+
+For _api_ and _weechat_ protocols, see the list of remote interfaces on
+https://weechat.org/about/interfaces/[this page ^↗^^].
 
 [[relay_password]]
 === Password
@@ -4540,13 +4547,13 @@ It is highly recommended to set a password for relay, with these commands:
 /set relay.network.password "${sec.data.relay}"
 ----
 
-This password is used for _irc_ and _weechat_ protocols.
+This password is used with all protocols.
 
 [[relay_totp]]
 === TOTP
 
 TOTP (Time-based One-Time Password) can be used as secondary authentication
-factor for _weechat_ protocol, in addition to the password.
+factor for _api_ and _weechat_ protocols, in addition to the password.
 
 This is optional and increases the security level.
 
@@ -4638,6 +4645,39 @@ commands:
 /set irc.server.relay.password "${sec.data.relay_libera}"
 ----
 
+[[relay_api_protocol]]
+=== API protocol
+
+The Relay plugin can send data to a remote WeeChat or interface using an
+HTTP REST API protocol.
+
+You can browse and test the API online:
+https://weechat.org/api/[WeeChat Relay API ^↗^^].
+
+You can connect with WeeChat or a remote interface, see
+https://weechat.org/about/interfaces/[this page ^↗^^].
+
+For example:
+
+----
+/relay add api 9000
+----
+
+Now you can connect on port 9000 with a WeeChat or a remote interface using
+password "mypassword".
+
+To connect to an _api_ relay with WeeChat:
+
+----
+/remote add weechat http://localhost:9000 -password=mypassword
+/remote connect weechat
+----
+
+[NOTE]
+The remote WeeChat must expose the same API version as the local WeeChat, so
+it's highly recommended to use exactly the same WeeChat version on remote
+and local client.
+
 [[relay_weechat_protocol]]
 === WeeChat protocol
 
@@ -4677,7 +4717,9 @@ websocket = new WebSocket("ws://server.com:9000/weechat");
 ----
 
 The port (9000 in example) is the port defined in Relay plugin.
-The URI must always end with "/weechat" (for _irc_ and _weechat_ protocols).
+
+The URI must end with "/weechat" for _irc_ and _weechat_ protocols and "/api"
+for _api_ protocol.
 
 [[relay_unix_socket]]
 === UNIX domain sockets
@@ -4720,7 +4762,7 @@ Sections in file _relay.conf_:
 | network | /set relay.network.*               | Network options.
 | irc     | /set relay.irc.*                   | Options specific to irc protocol (irc proxy).
 | port    | <<command_relay_relay,/relay add>> +
-            /set relay.port.*                  | Ports used for relay (irc and weechat protocols) (options can be added/removed in section).
+            /set relay.port.*                  | Ports used for relay (options can be added/removed in section).
 |===
 
 Options:
