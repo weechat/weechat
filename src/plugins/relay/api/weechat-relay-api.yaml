@@ -403,6 +403,9 @@ paths:
         - sync
       description: |
         Synchronize with WeeChat.
+
+        This endpoint can only be used when connected via websocket: WeeChat
+        will then push messages to the client at any time.
       operationId: sync
       parameters:
         - $ref: '#/components/parameters/totp'
