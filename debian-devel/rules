@@ -17,7 +17,7 @@ override_dh_auto_configure:
 		-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
 
 override_dh_installchangelogs:
-	dh_installchangelogs ChangeLog.adoc
+	dh_installchangelogs CHANGELOG.md
 
 %:
 	dh $@ --builddirectory=$(BUILDDIR)

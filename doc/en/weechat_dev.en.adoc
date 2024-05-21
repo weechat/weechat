@@ -1188,7 +1188,7 @@ Where _component_ is one of following:
 
 | core
 | AUTHORS.adoc +
-  ChangeLog.adoc +
+  CHANGELOG.md +
   Contributing.adoc +
   .github/FUNDING.yml +
   .github/ISSUE_TEMPLATE/* +

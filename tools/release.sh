@@ -22,7 +22,7 @@
 # Make a new WeeChat release:
 #   1. bump version
 #   2. git commit + tag
-#   3. compile, run, test, build changelog + rn + packages
+#   3. compile, run, test, build rn + packages
 #   4. test package: unpack, compile, run, test
 #
 
@@ -55,7 +55,6 @@ release_start ()
     fi
     mkdir -p "${build_dir}"
     pkg_tar="${build_dir}/weechat-${version}.tar"
-    chglog="${build_dir}/doc/ChangeLog.html"
     rn="${build_dir}/doc/ReleaseNotes.html"
 }
 
@@ -63,15 +62,17 @@ release_bump_version ()
 {
     "${root_dir}/tools/bump_version.sh" stable
     sed -i \
+        -e "s/^\(## Version ${version}\) (under dev)$/\1 (${date})/" \
+        "${root_dir}/CHANGELOG.md"
+    sed -i \
         -e "s/^\(== Version ${version}\) (under dev)$/\1 (${date})/" \
-        "${root_dir}/ChangeLog.adoc" \
         "${root_dir}/ReleaseNotes.adoc"
 }
 
 release_commit_tag ()
 {
     cd "${root_dir}"
-    git commit -m "Version ${version}" version.sh ChangeLog.adoc ReleaseNotes.adoc || release_error "git commit error, release already done?"
+    git commit -m "Version ${version}" version.sh CHANGELOG.md ReleaseNotes.adoc || release_error "git commit error, release already done?"
     git tag -a "v${version}" -m "WeeChat ${version}"
 }
 
@@ -87,7 +88,6 @@ release_build ()
         -DENABLE_TESTS=ON \
         "${root_dir}"
     make install
-    make changelog
     make rn
     make test CTEST_OUTPUT_ON_FAILURE=TRUE
     make dist
@@ -134,13 +134,11 @@ release_end ()
     echo "  version  : ${version}"
     echo "  date     : ${date}"
     echo "  build dir: ${build_dir}"
+    echo "  rn       : $rn"
     echo "  packages :"
     for pkg in "${pkg_tar}".*; do
         echo "    $pkg"
     done
-    echo "  chglog/rn:"
-    echo "    $chglog"
-    echo "    $rn"
     echo "=========================================================================="
     echo
     echo "*** SUCCESS! ***"

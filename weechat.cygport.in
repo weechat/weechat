@@ -116,7 +116,7 @@ weechat_CONTENTS="
     usr/share/locale/
     usr/share/man/
     usr/share/doc/weechat/AUTHORS.adoc
-    usr/share/doc/weechat/ChangeLog.adoc
+    usr/share/doc/weechat/CHANGELOG.md
     usr/share/doc/weechat/Contributing.adoc
     usr/share/doc/weechat/COPYING
     usr/share/doc/weechat/README.adoc

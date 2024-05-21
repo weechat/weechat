@@ -1324,7 +1324,7 @@ _component_ には以下から 1 つ選んで記入してください:
 
 | core
 | AUTHORS.adoc +
-  ChangeLog.adoc +
+  CHANGELOG.md +
   Contributing.adoc +
   .github/FUNDING.yml +
   .github/ISSUE_TEMPLATE/* +
