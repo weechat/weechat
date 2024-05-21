@@ -3007,13 +3007,12 @@ disable IPv6 in relay if you don't plan to use it at all:
 [[v0.3.9.2]]
 == Version 0.3.9.2 (2012-11-18)
 
-This version fixes a security vulnerability when a plugin/script gives
-untrusted command to API function link:https://weechat.org/doc/weechat/plugin/#_hook_process[hook_process].
+No release notes.
 
 [[v0.3.9.1]]
 == Version 0.3.9.1 (2012-11-09)
 
-This version fixes crash when decoding IRC colors in strings.
+No release notes.
 
 [[v0.3.9]]
 == Version 0.3.9 (2012-09-29)
@@ -3321,17 +3320,17 @@ Major differences:
 [[v0.2.6.3]]
 == Version 0.2.6.3 (2009-06-13)
 
-This version fixes gnutls detection.
+No release notes.
 
 [[v0.2.6.2]]
 == Version 0.2.6.2 (2009-04-18)
 
-This version fixes a bug with charset decoding (like "iso2022jp").
+No release notes.
 
 [[v0.2.6.1]]
 == Version 0.2.6.1 (2009-03-14)
 
-This version fixes a major bug: crash with some special chars in IRC messages.
+No release notes.
 
 [[v0.2.6]]
 == Version 0.2.6 (2007-09-06)
@@ -3351,9 +3350,7 @@ No release notes.
 [[v0.2.3]]
 == Version 0.2.3 (2007-01-10)
 
-This version fixes several major bugs of version 0.2.2.
-
-All users of version 0.2.2 should upgrade to this version.
+No release notes.
 
 [[v0.2.2]]
 == Version 0.2.2 (2007-01-06)
