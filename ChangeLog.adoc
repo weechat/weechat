@@ -430,6 +430,8 @@ Build::
 [[v4.0.1]]
 == Version 4.0.1 (2023-06-30)
 
+Bug fixes::
+
   * core: force key "return" to command "/input return" when migrating legacy keys
   * core: display actual key name and command with key kbd:[Alt+k], remove key kbd:[Alt+K] (grab raw key) and associated commands `/input grab_raw_key` and `/input grab_raw_key_command`
   * core: check for newline characters in string_is_whitespace_char (issue #1968)
