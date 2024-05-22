@@ -100,7 +100,7 @@ $HOME/.local/share/weechat/weechat.log::
 
 // tag::copyright[]
 WeeChat est écrit par Sébastien Helleu et des contributeurs (la liste complète
-est dans le fichier AUTHORS.adoc).
+est dans le fichier AUTHORS.md).
 
 Copyright (C) 2003-2024 {author}
 

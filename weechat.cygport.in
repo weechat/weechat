@@ -115,7 +115,7 @@ weechat_CONTENTS="
     usr/share/icons/
     usr/share/locale/
     usr/share/man/
-    usr/share/doc/weechat/AUTHORS.adoc
+    usr/share/doc/weechat/AUTHORS.md
     usr/share/doc/weechat/CHANGELOG.md
     usr/share/doc/weechat/CONTRIBUTING.md
     usr/share/doc/weechat/COPYING

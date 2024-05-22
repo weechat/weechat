@@ -1207,7 +1207,7 @@ Où _composant_ est :
 | Composant | Fichiers | Description
 
 | core
-| AUTHORS.adoc +
+| AUTHORS.md +
   CHANGELOG.md +
   CONTRIBUTING.md +
   .github/FUNDING.yml +

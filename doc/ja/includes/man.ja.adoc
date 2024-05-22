@@ -98,7 +98,7 @@ $HOME/.local/share/weechat/weechat.log::
 
 // tag::copyright[]
 WeeChat は Sébastien Helleu さんと貢献者によって作成されています
-(完全なリストは AUTHORS.adoc ファイルを参照してください)。
+(完全なリストは AUTHORS.md ファイルを参照してください)。
 
 著作権 (C) 2003-2024 {author}
 

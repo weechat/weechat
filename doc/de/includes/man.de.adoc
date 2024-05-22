@@ -98,7 +98,7 @@ $HOME/.local/share/weechat/weechat.log::
 
 // tag::copyright[]
 WeeChat wird programmiert von Sébastien Helleu und weiteren Beteiligten (eine vollständige Auflistung
-findet man in der AUTHORS.adoc Datei).
+findet man in der AUTHORS.md Datei).
 
 Copyright (C) 2003-2024 {author}
 

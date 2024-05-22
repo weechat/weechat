@@ -97,7 +97,7 @@ $HOME/.local/share/weechat/weechat.log::
 
 // tag::copyright[]
 WeeChat je napsán Sébastienem Helleu a přispěvovateli (kompletní seznam je v
-souboru AUTHORS.adoc).
+souboru AUTHORS.md).
 
 Copyright (C) 2003-2024 {author}
 

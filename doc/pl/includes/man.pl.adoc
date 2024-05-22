@@ -99,7 +99,7 @@ $HOME/.local/share/weechat/weechat.log::
 
 // tag::copyright[]
 WeeChat jest tworzony przez Sébastien Helleu i społeczność (pełna lista dostępna
-jest w pliku AUTHORS.adoc).
+jest w pliku AUTHORS.md).
 
 Copyright (C) 2003-2024 {author}
 

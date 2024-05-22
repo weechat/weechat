@@ -97,7 +97,7 @@ $HOME/.local/share/weechat/weechat.log::
 
 // tag::copyright[]
 WeeChat написан Sébastien Helleu и другими участниками (полный список находится
-в файле AUTHORS.adoc).
+в файле AUTHORS.md).
 
 Copyright (C) 2003-2024 {author}
 
