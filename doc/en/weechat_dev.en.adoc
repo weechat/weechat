@@ -1195,7 +1195,7 @@ Where _component_ is one of following:
   icons/* +
   po/* +
   README.adoc +
-  ReleaseNotes.adoc +
+  UPGRADING.md +
   src/core/* +
   src/gui/* +
   version.sh +

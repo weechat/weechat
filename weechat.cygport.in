@@ -120,7 +120,7 @@ weechat_CONTENTS="
     usr/share/doc/weechat/Contributing.adoc
     usr/share/doc/weechat/COPYING
     usr/share/doc/weechat/README.adoc
-    usr/share/doc/weechat/ReleaseNotes.adoc
+    usr/share/doc/weechat/UPGRADING.md
 "
 
 #

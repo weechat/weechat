@@ -808,18 +808,18 @@ $ weechat --upgrade
 [[restart_after_upgrade]]
 === Redémarrage après mise à jour
 
-[[restart_release_notes]]
-==== Notes de version
+[[restart_upgrading_notes]]
+==== Notes de mise à jour
 
-Après une mise à jour, il est *fortement recommandé* de lire les
-https://weechat.org/files/doc/weechat/ReleaseNotes-devel.html[notes de version ^↗^^]
-qui contiennent des informations importantes sur les changements majeurs et
+Après une mise à jour, il est *fortement recommandé* de lire le fichier
+https://github.com/weechat/weechat/blob/master/UPGRADING.md[UPGRADING.md ^↗^^]
+qui contient des informations importantes sur les changements majeurs et
 quelques actions manuelles qui pourraient être nécessaires.
 
-Vous devez lire les notes des versions entre votre version ancienne (exclue)
+Vous devez lire les versions entre votre version ancienne (exclue)
 et votre nouvelle version (incluse). +
-Par exemple si vous passez de la version 3.0 à 3.2, vous devez lire les notes
-des versions 3.1 et 3.2.
+Par exemple si vous passez de la version 4.0.0 à 4.3.0, vous devez lire les
+versions 4.0.1 à 4.3.0.
 
 [[restart_configuration_upgrade]]
 ==== Mise à jour de la configuration

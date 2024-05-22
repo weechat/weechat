@@ -755,13 +755,20 @@ $ weechat --upgrade
 [[restart_after_upgrade]]
 === Поновно покретање након ажурирања
 
-[[restart_release_notes]]
-==== Напомене о издању
+// TRANSLATION MISSING
+[[restart_upgrading_notes]]
+==== Upgrading notes
 
-Након ажурирања, *снажно се препоручује* да прочитате https://weechat.org/files/doc/weechat/ReleaseNotes-devel.html[напомене о издању ^↗^^] које садржи важне информације о променама које прекидају раније понашање програма, као и ручне акције које су због тога можда неопходне.
+// TRANSLATION MISSING
+After an upgrade, it is *strongly recommended* to read the file
+https://github.com/weechat/weechat/blob/master/UPGRADING.md[UPGRADING.md ^↗^^]
+which contains important information about breaking changes and some
+manual actions that could be required.
 
-Морате прочитати све напомене о издању издате између ваше старе (без ње) и ваше нове верзије (укључујући и њу). +
-На пример, ако пређете са верзије 3.0 на 3.2, морате да прочитате напомене о издању за верзије 3.1 и 3.2.
+// TRANSLATION MISSING
+You must read the versions between your old (excluded) and your new version (included). +
+For example if you switch from version 4.0.0 to 4.3.0, you must read versions
+4.0.1 to 4.3.0.
 
 [[restart_configuration_upgrade]]
 ==== Ажурирање конфигурације

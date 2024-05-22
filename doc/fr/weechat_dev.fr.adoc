@@ -1215,7 +1215,7 @@ Où _composant_ est :
   icons/* +
   po/* +
   README.adoc +
-  ReleaseNotes.adoc +
+  UPGRADING.md +
   src/core/* +
   src/gui/* +
   version.sh +

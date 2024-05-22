@@ -800,18 +800,20 @@ $ weechat --upgrade
 [[restart_after_upgrade]]
 === Restart po aktualizacji
 
-[[restart_release_notes]]
-==== Informacje o wydaniu
+// TRANSLATION MISSING
+[[restart_upgrading_notes]]
+==== Upgrading notes
 
-Po aktualizacji *zaleca się* przeczytanie
-https://weechat.org/files/doc/weechat/ReleaseNotes-devel.html[informacji o wydaniu ^↗^^],
-które zawierają ważne informacje o przełomowych zmianach i do zrobienia jakie mogą
-być wymagane.
+// TRANSLATION MISSING
+After an upgrade, it is *strongly recommended* to read the file
+https://github.com/weechat/weechat/blob/master/UPGRADING.md[UPGRADING.md ^↗^^]
+which contains important information about breaking changes and some
+manual actions that could be required.
 
-Powinieneś przeczytać informacje o zmianach dla wyszystkich wersji pomiędzy obecną
-a tą, do której aktualizujesz. +
-Na przykład aktualizując z wersji 3.0 do 3.2, musisz przeczytać informacje dla wersj
-3.1 i 3.2.
+// TRANSLATION MISSING
+You must read the versions between your old (excluded) and your new version (included). +
+For example if you switch from version 4.0.0 to 4.3.0, you must read versions
+4.0.1 to 4.3.0.
 
 [[restart_configuration_upgrade]]
 ==== Aktualizacja konfiguracji

@@ -2,7 +2,7 @@
 
 ## Version 4.3.0 (2024-05-26)
 
-If you are upgrading: please see release notes.
+_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### Changed
 
@@ -79,7 +79,7 @@ If you are upgrading: please see release notes.
 
 ## Version 4.2.2 (2024-04-07)
 
-If you are upgrading: please see release notes.
+_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### Bug fixes
 
@@ -108,7 +108,7 @@ If you are upgrading: please see release notes.
 
 ## Version 4.2.0 (2024-01-21)
 
-If you are upgrading: please see release notes.
+_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### New features
 
@@ -203,7 +203,7 @@ If you are upgrading: please see release notes.
 
 ## Version 4.1.1 (2023-10-26)
 
-If you are upgrading: please see release notes.
+_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### Bug fixes
 
@@ -217,7 +217,7 @@ If you are upgrading: please see release notes.
 
 ## Version 4.1.0 (2023-10-15)
 
-If you are upgrading: please see release notes.
+_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### New features
 
@@ -313,7 +313,7 @@ If you are upgrading: please see release notes.
 
 ## Version 4.0.6 (2023-10-26)
 
-If you are upgrading: please see release notes.
+_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### Bug fixes
 
@@ -405,7 +405,7 @@ If you are upgrading: please see release notes.
 
 ## Version 4.0.1 (2023-06-30)
 
-If you are upgrading: please see release notes.
+_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### Bug fixes
 
@@ -419,7 +419,7 @@ If you are upgrading: please see release notes.
 
 ## Version 4.0.0 (2023-06-24)
 
-If you are upgrading: please see release notes.
+_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### New features
 
@@ -553,7 +553,7 @@ If you are upgrading: please see release notes.
 
 ## Version 3.8 (2023-01-08)
 
-If you are upgrading: please see release notes.
+_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### New features
 
@@ -618,7 +618,7 @@ If you are upgrading: please see release notes.
 
 ## Version 3.7 (2022-10-09)
 
-If you are upgrading: please see release notes.
+_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### New features
 
@@ -684,7 +684,7 @@ If you are upgrading: please see release notes.
 
 ## Version 3.6 (2022-07-10)
 
-If you are upgrading: please see release notes.
+_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### New features
 
@@ -712,7 +712,7 @@ If you are upgrading: please see release notes.
 
 ## Version 3.5 (2022-03-27)
 
-If you are upgrading: please see release notes.
+_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### New features
 
@@ -764,7 +764,7 @@ If you are upgrading: please see release notes.
 
 ## Version 3.4 (2021-12-18)
 
-If you are upgrading: please see release notes.
+_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### New features
 
@@ -808,7 +808,7 @@ If you are upgrading: please see release notes.
 
 ## Version 3.3 (2021-09-19)
 
-If you are upgrading: please see release notes.
+_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### New features
 
@@ -870,7 +870,7 @@ If you are upgrading: please see release notes.
 
 ## Version 3.2 (2021-06-13)
 
-If you are upgrading: please see release notes.
+_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### New features
 
@@ -926,7 +926,7 @@ If you are upgrading: please see release notes.
 
 ## Version 3.1 (2021-03-07)
 
-If you are upgrading: please see release notes.
+_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### New features
 
@@ -968,7 +968,7 @@ If you are upgrading: please see release notes.
 
 ## Version 3.0 (2020-11-11)
 
-If you are upgrading: please see release notes.
+_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### New features
 
@@ -1006,7 +1006,7 @@ If you are upgrading: please see release notes.
 
 ## Version 2.9 (2020-07-18)
 
-If you are upgrading: please see release notes.
+_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### New features
 
@@ -1093,7 +1093,7 @@ If you are upgrading: please see release notes.
 
 ## Version 2.8 (2020-03-29)
 
-If you are upgrading: please see release notes.
+_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### New features
 
@@ -1149,7 +1149,7 @@ If you are upgrading: please see release notes.
 
 ## Version 2.7 (2019-12-08)
 
-If you are upgrading: please see release notes.
+_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### New features
 
@@ -1207,7 +1207,7 @@ If you are upgrading: please see release notes.
 
 ## Version 2.6 (2019-09-08)
 
-If you are upgrading: please see release notes.
+_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### New features
 
@@ -1256,7 +1256,7 @@ If you are upgrading: please see release notes.
 
 ## Version 2.5 (2019-06-06)
 
-If you are upgrading: please see release notes.
+_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### New features
 
@@ -1312,7 +1312,7 @@ If you are upgrading: please see release notes.
 
 ## Version 2.4 (2019-02-17)
 
-If you are upgrading: please see release notes.
+_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### New features
 
@@ -1389,7 +1389,7 @@ If you are upgrading: please see release notes.
 
 ## Version 2.2 (2018-07-14)
 
-If you are upgrading: please see release notes.
+_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### New features
 
@@ -1458,7 +1458,7 @@ If you are upgrading: please see release notes.
 
 ## Version 2.1 (2018-03-18)
 
-If you are upgrading: please see release notes.
+_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### New features
 
@@ -1497,7 +1497,7 @@ If you are upgrading: please see release notes.
 
 ## Version 2.0 (2017-12-03)
 
-If you are upgrading: please see release notes.
+_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### New features
 
@@ -1583,7 +1583,7 @@ If you are upgrading: please see release notes.
 
 ## Version 1.8 (2017-05-13)
 
-If you are upgrading: please see release notes.
+_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### New features
 
@@ -1633,7 +1633,7 @@ If you are upgrading: please see release notes.
 
 ## Version 1.7 (2017-01-15)
 
-If you are upgrading: please see release notes.
+_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### New features
 
@@ -1678,7 +1678,7 @@ If you are upgrading: please see release notes.
 
 ## Version 1.6 (2016-10-02)
 
-If you are upgrading: please see release notes.
+_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### New features
 
@@ -1715,7 +1715,7 @@ If you are upgrading: please see release notes.
 
 ## Version 1.5 (2016-05-01)
 
-If you are upgrading: please see release notes.
+_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### New features
 
@@ -1758,7 +1758,7 @@ If you are upgrading: please see release notes.
 
 ## Version 1.4 (2016-01-10)
 
-If you are upgrading: please see release notes.
+_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### New features
 
@@ -1816,7 +1816,7 @@ If you are upgrading: please see release notes.
 
 ## Version 1.3 (2015-08-16)
 
-If you are upgrading: please see release notes.
+_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### New features
 
@@ -1872,7 +1872,7 @@ If you are upgrading: please see release notes.
 
 ## Version 1.2 (2015-05-10)
 
-If you are upgrading: please see release notes.
+_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### New features
 
@@ -1946,7 +1946,7 @@ If you are upgrading: please see release notes.
 
 ## Version 1.1 (2015-01-11)
 
-If you are upgrading: please see release notes.
+_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### New features
 
@@ -2043,7 +2043,7 @@ If you are upgrading: please see release notes.
 
 ## Version 1.0 (2014-08-15)
 
-If you are upgrading: please see release notes.
+_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### New features
 
@@ -2205,7 +2205,7 @@ If you are upgrading: please see release notes.
 
 ## Version 0.4.3 (2014-02-09)
 
-If you are upgrading: please see release notes.
+_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### New features
 
@@ -2309,7 +2309,7 @@ If you are upgrading: please see release notes.
 
 ## Version 0.4.2 (2013-10-06)
 
-If you are upgrading: please see release notes.
+_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### New features
 
@@ -2392,7 +2392,7 @@ If you are upgrading: please see release notes.
 
 ## Version 0.4.1 (2013-05-20)
 
-If you are upgrading: please see release notes.
+_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### New features
 
@@ -2477,7 +2477,7 @@ If you are upgrading: please see release notes.
 
 ## Version 0.4.0 (2013-01-20)
 
-If you are upgrading: please see release notes.
+_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### New features
 
@@ -2577,7 +2577,7 @@ If you are upgrading: please see release notes.
 
 ## Version 0.3.9 (2012-09-29)
 
-If you are upgrading: please see release notes.
+_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### New features
 
@@ -2666,7 +2666,7 @@ If you are upgrading: please see release notes.
 
 ## Version 0.3.8 (2012-06-03)
 
-If you are upgrading: please see release notes.
+_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### New features
 
@@ -2734,7 +2734,7 @@ If you are upgrading: please see release notes.
 
 ## Version 0.3.7 (2012-02-26)
 
-If you are upgrading: please see release notes.
+_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### New features
 
@@ -2819,7 +2819,7 @@ If you are upgrading: please see release notes.
 
 ## Version 0.3.6 (2011-10-22)
 
-If you are upgrading: please see release notes.
+_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### New features
 
@@ -2912,7 +2912,7 @@ If you are upgrading: please see release notes.
 
 ## Version 0.3.5 (2011-05-15)
 
-If you are upgrading: please see release notes.
+_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### New features
 
@@ -2991,7 +2991,7 @@ If you are upgrading: please see release notes.
 
 ## Version 0.3.4 (2011-01-16)
 
-If you are upgrading: please see release notes.
+_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### New features
 
@@ -3060,7 +3060,7 @@ If you are upgrading: please see release notes.
 
 ## Version 0.3.3 (2010-08-07)
 
-If you are upgrading: please see release notes.
+_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### New features
 
@@ -3104,7 +3104,7 @@ If you are upgrading: please see release notes.
 
 ## Version 0.3.2 (2010-04-18)
 
-If you are upgrading: please see release notes.
+_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### New features
 
@@ -3184,7 +3184,7 @@ If you are upgrading: please see release notes.
 
 ## Version 0.3.1 (2010-01-23)
 
-If you are upgrading: please see release notes.
+_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### New features
 
@@ -3241,7 +3241,7 @@ If you are upgrading: please see release notes.
 
 ## Version 0.3.0 (2009-09-06)
 
-If you are upgrading: please see release notes.
+_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### New features
 
@@ -3461,7 +3461,7 @@ If you are upgrading: please see release notes.
 
 ## Version 0.2.2 (2007-01-06)
 
-If you are upgrading: please see release notes.
+_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### New features
 
@@ -3537,7 +3537,7 @@ If you are upgrading: please see release notes.
 
 ## Version 0.2.0 (2006-08-19)
 
-If you are upgrading: please see release notes.
+_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### New features
 
@@ -3593,7 +3593,7 @@ If you are upgrading: please see release notes.
 
 ## Version 0.1.9 (2006-05-25)
 
-If you are upgrading: please see release notes.
+_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### New features
 
@@ -3651,7 +3651,7 @@ If you are upgrading: please see release notes.
 
 ## Version 0.1.8 (2006-03-18)
 
-If you are upgrading: please see release notes.
+_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### New features
 
@@ -3699,7 +3699,7 @@ If you are upgrading: please see release notes.
 
 ## Version 0.1.7 (2006-01-14)
 
-If you are upgrading: please see release notes.
+_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### New features
 
@@ -3732,7 +3732,7 @@ If you are upgrading: please see release notes.
 
 ## Version 0.1.6 (2005-11-11)
 
-If you are upgrading: please see release notes.
+_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### New features
 

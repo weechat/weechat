@@ -54,11 +54,9 @@ cd "${build_dir}"
 run cmake .. -DENABLE_MAN=ON -DENABLE_DOC=ON -DENABLE_TESTS=ON "${BUILDARGS}"
 if [ -f "build.ninja" ]; then
     ninja -v
-    ninja -v rn
     sudo ninja install
 else
     make VERBOSE=1 --jobs="$(nproc)"
-    make VERBOSE=1 rn
     sudo make install
 fi
 ctest -V
