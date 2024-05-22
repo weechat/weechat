@@ -45,7 +45,7 @@ For detailed instructions, please check the https://weechat.org/doc/weechat/user
 
 == Semantic versioning
 
-WeeChat is following a "practical" semantic versioning, see file link:Contributing.adoc#semantic-versioning[Contributing.adoc].
+WeeChat is following a "practical" semantic versioning, see file link:CONTRIBUTING.md#semantic-versioning[CONTRIBUTING.md].
 
 == Copyright
 

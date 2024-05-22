@@ -9,7 +9,7 @@ body:
         Before submitting a bug, please check that it has not already been reported by searching in [open and closed bugs](https://github.com/weechat/weechat/issues?q=is%3Aissue+label%3Abug).
         If you don't use the latest version, please try if possible with the latest stable release to be sure the issue is still present and report the issue on this version.
 
-        **IMPORTANT**: please do not report any security issue here, see [Contributing.adoc](https://github.com/weechat/weechat/blob/master/Contributing.adoc#security-reports).
+        **IMPORTANT**: please do not report any security issue here, see [CONTRIBUTING.md](https://github.com/weechat/weechat/blob/master/CONTRIBUTING.md#security-reports).
 
   - type: textarea
     id: bug-description

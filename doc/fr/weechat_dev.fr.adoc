@@ -1209,7 +1209,7 @@ Où _composant_ est :
 | core
 | AUTHORS.adoc +
   CHANGELOG.md +
-  Contributing.adoc +
+  CONTRIBUTING.md +
   .github/FUNDING.yml +
   .github/ISSUE_TEMPLATE/* +
   icons/* +
