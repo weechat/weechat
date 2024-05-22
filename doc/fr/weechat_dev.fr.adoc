@@ -1214,7 +1214,7 @@ Où _composant_ est :
   .github/ISSUE_TEMPLATE/* +
   icons/* +
   po/* +
-  README.adoc +
+  README.md +
   UPGRADING.md +
   src/core/* +
   src/gui/* +

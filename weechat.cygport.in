@@ -119,7 +119,7 @@ weechat_CONTENTS="
     usr/share/doc/weechat/CHANGELOG.md
     usr/share/doc/weechat/CONTRIBUTING.md
     usr/share/doc/weechat/COPYING
-    usr/share/doc/weechat/README.adoc
+    usr/share/doc/weechat/README.md
     usr/share/doc/weechat/UPGRADING.md
 "
 

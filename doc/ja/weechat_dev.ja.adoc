@@ -1330,7 +1330,7 @@ _component_ には以下から 1 つ選んで記入してください:
   .github/ISSUE_TEMPLATE/* +
   icons/* +
   po/* +
-  README.adoc +
+  README.md +
   UPGRADING.md +
   src/core/* +
   src/gui/* +

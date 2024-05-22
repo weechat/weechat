@@ -1194,7 +1194,7 @@ Where _component_ is one of following:
   .github/ISSUE_TEMPLATE/* +
   icons/* +
   po/* +
-  README.adoc +
+  README.md +
   UPGRADING.md +
   src/core/* +
   src/gui/* +
