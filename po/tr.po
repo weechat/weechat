@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-05-18 09:15+0200\n"
+"POT-Creation-Date: 2024-05-22 00:15+0200\n"
 "PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -14549,6 +14549,12 @@ msgstr "%s%s: \"%s\" komutu yürütülemedi, %s%s%s istemcisi için"
 
 #, c-format
 msgid "remote[%s]: WeeChat: %s (%s), API: %s"
+msgstr ""
+
+#, c-format
+msgid ""
+"%sremote[%s]: API version mismatch: remote API is %s (WeeChat %s), local API "
+"%s (WeeChat %s)"
 msgstr ""
 
 #, fuzzy

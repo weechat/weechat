@@ -26,7 +26,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-05-18 09:15+0200\n"
+"POT-Creation-Date: 2024-05-22 00:15+0200\n"
 "PO-Revision-Date: 2024-05-15 18:07+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -15037,6 +15037,12 @@ msgstr "%s%s: Route „%s %s“ für Client %s%s%s konnte nicht ausgeführt werd
 #, c-format
 msgid "remote[%s]: WeeChat: %s (%s), API: %s"
 msgstr "remote[%s]: WeeChat: %s (%s), API: %s"
+
+#, c-format
+msgid ""
+"%sremote[%s]: API version mismatch: remote API is %s (WeeChat %s), local API "
+"%s (WeeChat %s)"
+msgstr ""
 
 msgid "invalid response from remote relay"
 msgstr "ungültige Antwort vom Remote-Relay"
