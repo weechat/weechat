@@ -35,8 +35,7 @@ wesentliche Merkmale:
   https://datatracker.ietf.org/doc/html/rfc2812[2812 ^↗^^],
   https://datatracker.ietf.org/doc/html/rfc2813[2813 ^↗^^] und
   https://datatracker.ietf.org/doc/html/rfc7194[7194 ^↗^^]
-// TRANSLATION MISSING
-* IRC proxy and relay for WeeChat and remote interfaces
+* IRC proxy und relay für WeeChat und Remote-Schnittstellen
 * Betriebssystemunabhängig (GNU/Linux, *BSD, macOS, Windows und weitere)
 * 100% GPL, freie Software
 
@@ -133,10 +132,9 @@ Die folgende Tabelle zeigt eine Auflistung der Pakete, die zum Erstellen von Wee
   Relay-Erweiterung: Untersützung von TLS Verbindungen.
 
 | zlib1g-dev |
-// TRANSLATION MISSING
 | Logger-Erweitertung: Kompression von rotierenden Protokolldateien (gzip). +
   Relay-Erweiterung: Kompression von Nachrichten (WeeChat -> client) with https://zlib.net/[zlib ^↗^^]
-  (api and weechat protocols). +
+  (api und weechat Protokollen). +
   Script-Erweiterung: Lesen der Repository-Indexdatei (gzip).
 |===
 
@@ -4611,15 +4609,12 @@ Die Relay-Erweiterung wird genutzt um Daten, mittels unterschiedlicher Protokoll
 
 * _irc_: IRC Proxy: um mittels einem oder mehreren IRC-Clients eine Verbindung zu
   IRC Servern zu unterhalten.
-// TRANSLATION MISSING
-* _api_: HTTP REST API, used by WeeChat and remote interfaces to display and
-  interact with WeeChat
-// TRANSLATION MISSING
-* _weechat_: protocol used by remote interfaces to display and interact with
+* _api_: HTTP REST API, wird von WeeChat und Remote-Schnittstellen zur Anzeige und
+   Interaktion mit WeeChat verwendet
+* _weechat_: von Remote-Schnittstellen verwendetes Protokoll zur Anzeige und Interaktion mit
   WeeChat.
 
-// TRANSLATION MISSING
-For _api_ and _weechat_ protocols, see the list of remote interfaces on
+Für die _api_ und _weechat_ Protokolle findet man eine Liste der Remote-Schnittstellen auf
 https://weechat.org/about/interfaces/[this page ^↗^^].
 
 [[relay_password]]
@@ -4632,15 +4627,13 @@ Es wird dringend empfohlen, mit diesen Befehlen ein Passwort für das Relay fest
 /set relay.network.password "${sec.data.relay}"
 ----
 
-// TRANSLATION MISSING
-This password is used with all protocols.
+Dieses Passwort wird bei allen Protokollen verwendet.
 
 [[relay_totp]]
 === TOTP
 
-// TRANSLATION MISSING
-TOTP (Time-based One-Time Password) can be used as secondary authentication
-factor for _api_ and _weechat_ protocols, in addition to the password.
+TOTP (Time-based One-Time Password) kann als sekundärer Authentifizierungsfaktor
+für die Protokolle _api_ und _weechat_ zusätzlich zum Passwort verwendet werden.
 
 Diese Funktion is optional und erhöht den Sicherheitsgrad.
 
@@ -4737,29 +4730,27 @@ folgenden Befehlen einrichten:
 /set irc.server.relay.password "${sec.data.relay_libera}"
 ----
 
-// TRANSLATION MISSING
 [[relay_api_protocol]]
 === API protocol
 
-The Relay plugin can send data to a remote WeeChat or interface using an
-HTTP REST API protocol.
+Die Relay-Erweiterung kann Daten über ein HTTP REST API-Protokoll an einen Remote-WeeChat oder eine Remote-Schnittstelle senden.
 
-You can browse and test the API online:
+Die API kann online durchstöbert und getestet werden:
 https://weechat.org/api/[WeeChat Relay API ^↗^^].
 
-You can connect with WeeChat or a remote interface, see
+Sie können sich mit WeeChat oder einer Remote-Schnittstelle verbinden, siehe
 https://weechat.org/about/interfaces/[this page ^↗^^].
 
-For example:
+Zum Beispiel:
 
 ----
 /relay add api 9000
 ----
 
-Now you can connect on port 9000 with a WeeChat or a remote interface using
-password "mypassword".
+Jetzt kann man sich über Port 9000 mit einem WeeChat oder einer Remote-Schnittstelle
+verbinden, indem das Passwort „mypassword“ verwendet wird.
 
-To connect to an _api_ relay with WeeChat:
+So stellt man mit WeeChat eine Verbindung zu einem _api_ Relay her:
 
 ----
 /remote add weechat http://localhost:9000 -password=mypassword
@@ -4767,9 +4758,9 @@ To connect to an _api_ relay with WeeChat:
 ----
 
 [NOTE]
-The remote WeeChat must expose the same API version as the local WeeChat, so
-it's highly recommended to use exactly the same WeeChat version on remote
-and local client.
+Der Remote-WeeChat muss dieselbe API-Version wie der lokale WeeChat nutzen.
+Daher wird dringend empfohlen, auf dem Remote- und dem lokalen Client genau
+dieselbe WeeChat-Version zu verwenden.
 
 [[relay_weechat_protocol]]
 === WeeChat Protokoll
@@ -4812,9 +4803,8 @@ websocket = new WebSocket("ws://server.com:9000/weechat");
 
 Der Port (im Beispiel: 9000) ist der Port der in der Relay Erweiterung angegeben wurde.
 
-// TRANSLATION MISSING
-The URI must end with "/weechat" for _irc_ and _weechat_ protocols and "/api"
-for _api_ protocol.
+Die URI muss mit „/weechat“ für die Protokolle _irc_ und _weechat_ und mit „/api“
+für das Protokoll _api_ enden.
 
 [[relay_unix_socket]]
 === UNIX Domain Sockets
