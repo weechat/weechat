@@ -1147,7 +1147,7 @@ relay_http_send (struct t_relay_client *client,
     const char *ptr_body;
     char str_header[1024], str_content_encoding[256];
     char *compressed_body, *http_message, *raw_message;
-    int length_header, length_msg, length_raw, num_bytes;
+    int length_header, length_msg, num_bytes;
     int *ptr_body_size, compressed_body_size;
 
     if (!client || !message || (body_size < 0))
@@ -1197,21 +1197,13 @@ relay_http_send (struct t_relay_client *client,
             memcpy (http_message, str_header, length_header);
             memcpy (http_message + length_header, ptr_body, *ptr_body_size);
             http_message[length_msg] = '\0';
+            raw_message = NULL;
             if (compressed_body)
             {
-                length_raw = strlen (str_header) + 64;
-                raw_message = malloc (length_raw);
-                if (raw_message)
-                {
-                    snprintf (raw_message, length_raw,
-                              "%s[%d bytes data]",
-                              str_header,
-                              *ptr_body_size);
-                }
-            }
-            else
-            {
-                raw_message = NULL;
+                weechat_asprintf (&raw_message,
+                                  "%s[%d bytes data]",
+                                  str_header,
+                                  *ptr_body_size);
             }
             num_bytes = relay_client_send (client, RELAY_MSG_STANDARD,
                                            http_message, length_msg,
