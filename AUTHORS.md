@@ -3,9 +3,9 @@
 ## Developers
 
 - General code
-  - Sébastien Helleu (FlashCode) <[flashcode@flashtux.org](mailto:flashcode@flashtux.org)>
+  - [Sébastien Helleu](https://github.com/flashcode) (FlashCode)
 - Scripts plugins, debian packager
-  - Emmanuel Bouthenot (kolter) <[kolter@openics.org](mailto:kolter@openics.org)>
+  - [Emmanuel Bouthenot](https://github.com/k0lter) (kolter)
 
 ## Contributors
 
