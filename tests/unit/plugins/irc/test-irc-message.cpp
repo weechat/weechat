@@ -1997,6 +1997,21 @@ TEST(IrcMessage, Split)
     hashtable_remove (server->cap_list, "batch");
     hashtable_remove (server->cap_list, "draft/multiline");
 
+    /* PRIVMSG with newlines but no server: BATCH is not used */
+    hashtable = irc_message_split (NULL, "PRIVMSG #channel :test\n\nline 3");
+    CHECK(hashtable);
+    LONGS_EQUAL(7, hashtable->items_count);
+    STRCMP_EQUAL("3", (const char *)hashtable_get (hashtable, "count"));
+    STRCMP_EQUAL("PRIVMSG #channel :test",
+                 (const char *)hashtable_get (hashtable, "msg1"));
+    STRCMP_EQUAL("test", (const char *)hashtable_get (hashtable, "args1"));
+    STRCMP_EQUAL("PRIVMSG #channel :",
+                 (const char *)hashtable_get (hashtable, "msg2"));
+    STRCMP_EQUAL("", (const char *)hashtable_get (hashtable, "args2"));
+    STRCMP_EQUAL("PRIVMSG #channel :line 3",
+                 (const char *)hashtable_get (hashtable, "msg3"));
+    STRCMP_EQUAL("line 3", (const char *)hashtable_get (hashtable, "args3"));
+
     /* 005: no split */
     hashtable = irc_message_split (server, "005 nick " MSG_005);
     CHECK(hashtable);

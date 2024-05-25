@@ -10,6 +10,13 @@ This document lists all the changes for each version. +
 For a list of important changes that require manual actions, please look at release notes.
 
 
+[[v4.2.3]]
+== Version 4.2.3 (under dev)
+
+Bug fixes::
+
+  * irc: fix crash in split of IRC message containing a newline if the server is not given
+
 [[v4.2.2]]
 == Version 4.2.2 (2024-04-07)
 
