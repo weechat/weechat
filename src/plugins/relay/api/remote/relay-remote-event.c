@@ -824,7 +824,7 @@ RELAY_REMOTE_EVENT_CALLBACK(version)
     if (!event->remote->version_ok)
     {
         /* check version: the remote API must be exactly the same as local API */
-        if (strcmp (relay_api_version, RELAY_API_VERSION_STR) != 0)
+        if (weechat_strcmp (relay_api_version, RELAY_API_VERSION_STR) != 0)
         {
                 weechat_version_local = weechat_info_get ("version", NULL);
                 weechat_printf (
