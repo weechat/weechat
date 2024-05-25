@@ -1196,7 +1196,7 @@ TEST(PluginApiInfo, InfolistPluginCb)
     char *name;
 
     /* invalid plugin pointer */
-    infolist = hook_infolist_get (NULL, "plugin", (void *)0x1, NULL);
+    POINTERS_EQUAL(NULL, hook_infolist_get (NULL, "plugin", (void *)0x1, NULL));
 
     /* all plugins */
     infolist = hook_infolist_get (NULL, "plugin", NULL, NULL);
@@ -1240,7 +1240,7 @@ TEST(PluginApiInfo, InfolistProxyCb)
     struct t_proxy *ptr_proxy1, *ptr_proxy2;
 
     /* invalid proxy pointer */
-    infolist = hook_infolist_get (NULL, "proxy", (void *)0x1, NULL);
+    POINTERS_EQUAL(NULL, hook_infolist_get (NULL, "proxy", (void *)0x1, NULL));
 
     ptr_proxy1 = proxy_new ("proxy1", "http", "off",
                             "proxy1.example.com", "8000", "user1", "pass1");
