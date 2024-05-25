@@ -74,6 +74,7 @@
 * core: remove trailing directory separators in home directories (issue #2070)
 * exec: remove trailing space on buffers with free content when line numbers are not displayed
 * exec: add missing exec tags in lines of buffers with free content (issue #2086)
+* irc: fix crash in split of IRC message containing a newline if the server is not given
 * irc: fix display of reply for CTCP request received on a channel when capability echo-message is enabled
 * irc: display CTCP reply to a nick in server buffer instead of channel
 * irc: add missing tags on self action messages when capability echo-message is enabled (issue #2074)
