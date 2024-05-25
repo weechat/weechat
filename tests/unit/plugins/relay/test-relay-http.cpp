@@ -930,14 +930,12 @@ TEST(RelayHttp, Compress)
     }
 
     hashtable_remove_all (request->accept_encoding);
-    buffer = (char *)0x1;
     size = -1;
     buffer = relay_http_compress (request, NULL, 0, &size, NULL, 0);
     POINTERS_EQUAL(NULL, buffer);
     LONGS_EQUAL(0, size);
 
     hashtable_remove_all (request->accept_encoding);
-    buffer = (char *)0x1;
     size = -1;
     snprintf (encoding, sizeof (encoding), "test");
     buffer = relay_http_compress (request, NULL, 0, &size,
@@ -948,7 +946,6 @@ TEST(RelayHttp, Compress)
 
     /* no "Accept-Encoding" header was received => no compression */
     hashtable_remove_all (request->accept_encoding);
-    buffer = (char *)0x1;
     size = -1;
     snprintf (encoding, sizeof (encoding), "test");
     buffer = relay_http_compress (request, body, sizeof (body), &size,
@@ -960,7 +957,6 @@ TEST(RelayHttp, Compress)
     /* "Accept-Encoding: gzip" => gzip compression */
     hashtable_remove_all (request->accept_encoding);
     hashtable_set (request->accept_encoding, "gzip", "");
-    buffer = (char *)0x1;
     size = -1;
     snprintf (encoding, sizeof (encoding), "test");
     buffer = relay_http_compress (request, body, sizeof (body), &size,
@@ -975,7 +971,6 @@ TEST(RelayHttp, Compress)
     hashtable_remove_all (request->accept_encoding);
     hashtable_set (request->accept_encoding, "gzip", "");
     hashtable_set (request->accept_encoding, "zstd", "");
-    buffer = (char *)0x1;
     size = -1;
     snprintf (encoding, sizeof (encoding), "test");
     buffer = relay_http_compress (request, body, sizeof (body), &size,
