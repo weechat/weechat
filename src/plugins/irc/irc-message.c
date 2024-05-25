@@ -1683,8 +1683,9 @@ irc_message_split (struct t_irc_server *server, const char *message)
     }
 
     multiline = (
-        ((weechat_strcasecmp (command, "privmsg") == 0)
-         || (weechat_strcasecmp (command, "notice") == 0))
+        server
+        && ((weechat_strcasecmp (command, "privmsg") == 0)
+            || (weechat_strcasecmp (command, "notice") == 0))
         && message
         && strchr (message, '\n')
         && (index_args + 1 <= argc - 1)
