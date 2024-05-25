@@ -1671,7 +1671,6 @@ irc_message_split (struct t_irc_server *server, const char *message)
         && ((weechat_strcasecmp (command, "privmsg") == 0)
             || (weechat_strcasecmp (command, "notice") == 0))
         && message
-        && strchr (message, '\n')
         && (index_args + 1 <= argc - 1)
         && (weechat_strncmp (argv[index_args + 1], "\01", 1) != 0)
         && (weechat_strncmp (argv[index_args + 1], ":\01", 2) != 0)
