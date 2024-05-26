@@ -33,6 +33,7 @@ extern "C"
 #include "src/gui/gui-hotlist.h"
 #include "src/gui/gui-line.h"
 #include "src/gui/gui-nicklist.h"
+#include "src/plugins/weechat-plugin.h"
 #include "src/plugins/relay/relay.h"
 #include "src/plugins/relay/relay-client.h"
 #include "src/plugins/relay/api/relay-api.h"
@@ -502,6 +503,7 @@ TEST(RelayApiMsg, HotlistToJson)
 {
     char str_date[128];
     cJSON *json, *json_obj, *json_count;
+    time_t time_value;
     struct timeval tv;
     struct tm gm_time;
 
@@ -526,9 +528,10 @@ TEST(RelayApiMsg, HotlistToJson)
     CHECK(json);
     CHECK(cJSON_IsObject (json));
     WEE_CHECK_OBJ_NUM(GUI_HOTLIST_HIGHLIGHT, json, "priority");
-    gmtime_r (&(gui_hotlist->creation_time.tv_sec), &gm_time);
+    time_value = weechat_hdata_time (relay_hdata_hotlist, gui_hotlist, "time");
+    gmtime_r (&time_value, &gm_time);
     tv.tv_sec = mktime (&gm_time);
-    tv.tv_usec = gui_hotlist->creation_time.tv_usec;
+    tv.tv_usec = weechat_hdata_integer (relay_hdata_hotlist, gui_hotlist, "time_usec");
     util_strftimeval (str_date, sizeof (str_date), "%FT%T.%fZ", &tv);
     WEE_CHECK_OBJ_STR(str_date, json, "date");
     WEE_CHECK_OBJ_NUM(gui_buffers->id, json, "buffer_id");
