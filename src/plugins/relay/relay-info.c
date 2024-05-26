@@ -26,7 +26,61 @@
 #include "../weechat-plugin.h"
 #include "relay.h"
 #include "relay-client.h"
+#ifdef HAVE_CJSON
+#include "api/relay-api.h"
+#endif
 
+
+/*
+ * Returns WeeChat info "version".
+ */
+
+char *
+relay_info_info_relay_api_version_cb (const void *pointer, void *data,
+                                      const char *info_name,
+                                      const char *arguments)
+{
+    char version[128];
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) info_name;
+    (void) arguments;
+
+#ifdef HAVE_CJSON
+    snprintf (version, sizeof (version), "%s", RELAY_API_VERSION_STR);
+    return strdup (version);
+#else
+    return NULL;
+#endif
+}
+
+/*
+ * Returns WeeChat info "version_number".
+ */
+
+char *
+relay_info_info_relay_api_version_number_cb (const void *pointer, void *data,
+                                             const char *info_name,
+                                             const char *arguments)
+{
+    char version_number[32];
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) info_name;
+    (void) arguments;
+
+#ifdef HAVE_CJSON
+    snprintf (version_number, sizeof (version_number),
+              "%d", RELAY_API_VERSION_NUMBER);
+    return strdup (version_number);
+#else
+    return NULL;
+#endif
+}
 
 /*
  * Returns relay info "relay_client_count".
@@ -173,6 +227,16 @@ relay_info_init ()
 {
     /* info hooks */
     weechat_hook_info (
+        "relay_api_version",
+        N_("relay API version"),
+        NULL,
+        &relay_info_info_relay_api_version_cb, NULL, NULL);
+    weechat_hook_info (
+        "relay_api_version_number",
+        N_("relay API version (as number)"),
+        NULL,
+        &relay_info_info_relay_api_version_number_cb, NULL, NULL);
+    weechat_hook_info (
         "relay_client_count",
         N_("number of clients for relay"),
         /* TRANSLATORS: please do not translate the status names, they must be used in English */
@@ -180,7 +244,6 @@ relay_info_init ()
            "means all; protocols: irc, weechat; statuses: connecting, "
            "waiting_auth, connected, auth_failed, disconnected)"),
         &relay_info_info_relay_client_count_cb, NULL, NULL);
-
     /* infolist hooks */
     weechat_hook_infolist (
         "relay", N_("list of relay clients"),

@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-05-22 00:15+0200\n"
+"POT-Creation-Date: 2024-05-26 10:37+0200\n"
 "PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: Santiago Forero <santiago@forero.xyz>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -14957,6 +14957,16 @@ msgstr "%s%s: dirección IP \"%s\" no permitida por el repetidor"
 #, c-format
 msgid "%s: websocket client %s%s%s has real IP address \"%s\""
 msgstr ""
+
+#, fuzzy
+#| msgid "WeeChat version"
+msgid "relay API version"
+msgstr "versión de WeeChat"
+
+#, fuzzy
+#| msgid "WeeChat version (as number)"
+msgid "relay API version (as number)"
+msgstr "versión de WeeChat (como un número)"
 
 #, fuzzy
 msgid "number of clients for relay"

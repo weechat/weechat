@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-05-22 00:15+0200\n"
+"POT-Creation-Date: 2024-05-26 10:37+0200\n"
 "PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -15668,6 +15668,16 @@ msgstr "%s%s: \"%s\" kökenine web soketi için izin verilmiyor"
 #, c-format
 msgid "%s: websocket client %s%s%s has real IP address \"%s\""
 msgstr "%s: %s%s%s web soketi istemcisinin gerçek \"%s\" IP adresi var"
+
+#, fuzzy
+#| msgid "WeeChat version"
+msgid "relay API version"
+msgstr "WeeChat sürümü"
+
+#, fuzzy
+#| msgid "WeeChat version (as number)"
+msgid "relay API version (as number)"
+msgstr "WeeChat sürümü (sayı olarak)"
 
 msgid "number of clients for relay"
 msgstr "iletim istemci sayısı"

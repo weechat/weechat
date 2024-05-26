@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-05-22 00:15+0200\n"
+"POT-Creation-Date: 2024-05-26 10:37+0200\n"
 "PO-Revision-Date: 2024-05-07 14:00+0400\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -15318,6 +15318,16 @@ msgstr "%s%s: за вебсокет није дозвољено порекло �
 #, c-format
 msgid "%s: websocket client %s%s%s has real IP address \"%s\""
 msgstr "%s: вебсокет клијент %s%s%s има реалну IP адресу „%s”"
+
+#, fuzzy
+#| msgid "WeeChat version"
+msgid "relay API version"
+msgstr "верзија програма WeeChat"
+
+#, fuzzy
+#| msgid "WeeChat version (as number)"
+msgid "relay API version (as number)"
+msgstr "верзија програма WeeChat (као број)"
 
 msgid "number of clients for relay"
 msgstr "број клијената за релеј"

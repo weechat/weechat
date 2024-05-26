@@ -1,5 +1,11 @@
 # WeeChat ChangeLog
 
+## Version 4.4.0 (under dev)
+
+### Added
+
+- relay: add infos "relay_api_version" and "relay_api_version_number"
+
 ## Version 4.3.0 (2024-05-26)
 
 _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._

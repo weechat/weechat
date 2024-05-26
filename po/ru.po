@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-05-22 00:15+0200\n"
+"POT-Creation-Date: 2024-05-26 10:37+0200\n"
 "PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -14052,6 +14052,14 @@ msgstr "%s адрес \"%s\" не найден\n"
 #, c-format
 msgid "%s: websocket client %s%s%s has real IP address \"%s\""
 msgstr ""
+
+#, fuzzy
+msgid "relay API version"
+msgstr "слоган WeeChat"
+
+#, fuzzy
+msgid "relay API version (as number)"
+msgstr "слоган WeeChat"
 
 #, fuzzy
 msgid "number of clients for relay"
