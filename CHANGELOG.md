@@ -9,9 +9,10 @@
 ### Fixed
 
 - tcl: fix return value for hdata_longlong ([#2119](https://github.com/weechat/weechat/issues/2119))
-- tests: fix relay tests on s390x
-- tests: fix check of php plugin
-- tests: fix compilation of tests on Fedora 40 and Rocky 9.4
+- tests: fix relay tests on s390x ([#2118](https://github.com/weechat/weechat/issues/2118))
+- tests: fix check of php plugin ([#2117](https://github.com/weechat/weechat/issues/2117))
+- tests: fix compilation of tests on Fedora 40 ([#2116](https://github.com/weechat/weechat/issues/2116))
+- tests: fix compilation of tests on Rocky 9.4
 
 ## Version 4.3.0 (2024-05-26)
 
