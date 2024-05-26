@@ -153,7 +153,7 @@ TEST(Scripts, API)
 #ifdef HAVE_JAVASCRIPT
         { "javascript", "js"  },
 #endif
-#ifdef HAVE_PYTHON
+#ifdef HAVE_PHP
         { "php",        "php" },
 #endif
         { NULL,         NULL  }
