@@ -6,6 +6,12 @@
 
 - relay: add infos "relay_api_version" and "relay_api_version_number"
 
+### Fixed
+
+- tests: fix relay tests on s390x
+- tests: fix check of php plugin
+- tests: fix compilation of tests on Fedora 40
+
 ## Version 4.3.0 (2024-05-26)
 
 _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
