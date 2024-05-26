@@ -81,6 +81,7 @@
     RETURN_STRING("");
 #define API_RETURN_INT(__int) RETURN_LONG(__int)
 #define API_RETURN_LONG(__long) RETURN_LONG(__long)
+#define API_RETURN_LONGLONG(__longlong) RETURN_DOUBLE(__longlong)
 #define weechat_php_get_function_name(__zfunc, __str)                   \
     const char *(__str);                                                \
     do                                                                  \
@@ -5545,7 +5546,7 @@ API_FUNC(hdata_longlong)
 
     result = weechat_hdata_longlong (hdata, pointer, (const char *)name);
 
-    API_RETURN_LONG(result);
+    API_RETURN_LONGLONG(result);
 }
 
 API_FUNC(hdata_string)
