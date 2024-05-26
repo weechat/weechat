@@ -125,6 +125,11 @@
         Tcl_SetObjResult (interp, Tcl_NewLongObj (__long));             \
         return TCL_OK;                                                  \
     }
+#define API_RETURN_LONGLONG(__longlong)                                 \
+    {                                                                   \
+        Tcl_SetObjResult (interp, Tcl_NewWideIntObj (__longlong));      \
+        return TCL_OK;                                                  \
+    }
 #define API_RETURN_OBJ(__obj)                                           \
     {                                                                   \
         Tcl_SetObjResult (interp, __obj);                               \
@@ -5368,7 +5373,7 @@ API_FUNC(hdata_longlong)
                                      API_STR2PTR(pointer),
                                      name);
 
-    API_RETURN_LONG(result);
+    API_RETURN_LONGLONG(result);
 }
 
 API_FUNC(hdata_string)
