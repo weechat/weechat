@@ -13,7 +13,7 @@ info:
   license:
     name: CC BY-NC-SA 4.0
     url: https://creativecommons.org/licenses/by-nc-sa/4.0/
-  version: 0.0.1
+  version: 0.1.0
 
 externalDocs:
   url: https://weechat.org/doc/
