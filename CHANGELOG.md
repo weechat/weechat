@@ -10,6 +10,7 @@
 
 - php: fix return value of function hdata_longlong
 - tcl: fix return value of function hdata_longlong ([#2119](https://github.com/weechat/weechat/issues/2119))
+- core, relay: fix include directory of libcjson and libzstd
 - tests: fix relay tests on s390x ([#2118](https://github.com/weechat/weechat/issues/2118))
 - tests: fix check of php plugin ([#2117](https://github.com/weechat/weechat/issues/2117))
 - tests: fix compilation of tests on Fedora 40 ([#2116](https://github.com/weechat/weechat/issues/2116))
