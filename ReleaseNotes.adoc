@@ -12,7 +12,7 @@ For a complete list of changes, please look at ChangeLog.
 
 
 [[v4.3.0]]
-== Version 4.3.0 (under dev)
+== Version 4.3.0 (2024-05-26)
 
 [[v4.3.0_relay_options]]
 === Relay options

@@ -9,7 +9,7 @@
 :breaking: pass:quotes[*[breaking]*]
 
 [[v4.3.0]]
-== Version 4.3.0 (under dev)
+== Version 4.3.0 (2024-05-26)
 
 {see-release-notes}
 
