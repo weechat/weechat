@@ -16,7 +16,7 @@
 
 * tests: fix relay tests on s390x
 * tests: fix check of php plugin
-* tests: fix compilation of tests on Fedora 40
+* tests: fix compilation of tests on Fedora 40 and Rocky 9.4
 
 [[v4.3.0]]
 == Version 4.3.0 (2024-05-26)
