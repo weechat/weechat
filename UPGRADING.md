@@ -14,6 +14,21 @@ The following relay options have been renamed:
 - relay.color.status_waiting_auth → relay.color.status_authenticating
 - relay.weechat.commands → relay.network.commands (new default value: `*,!quit`)
 
+### Lag in buflist
+
+The lag is now stored in all IRC buffers: server (like it always has been),
+channels and private buffers.
+
+Consequently, if you use `${format_lag}` in buflist options, this lag will be
+displayed on server and all channels and private buffers.
+
+If you want to display the lag only on server buffer in buflist, you can use
+such format:
+
+```text
+${if:${type}==server?${format_lag}}
+```
+
 ### Color of IRC channel modes
 
 The option `irc.color.item_channel_modes` has been moved to core and renamed to
