@@ -92,7 +92,7 @@ include_directories(${GNUTLS_INCLUDE_PATH})
 include_directories(${CURL_INCLUDE_DIRS})
 
 if(ENABLE_ZSTD)
-  include_directories(${ZSTD_INCLUDE_DIRS})
+  include_directories(${LIBZSTD_INCLUDE_DIRS})
 endif()
 
 include_directories("${CMAKE_BINARY_DIR}")
