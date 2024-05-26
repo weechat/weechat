@@ -25,6 +25,7 @@
 
 extern "C"
 {
+#include <string.h>
 #include <cjson/cJSON.h>
 #include "src/core/core-config-file.h"
 #include "src/plugins/relay/relay.h"
