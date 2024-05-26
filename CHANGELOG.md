@@ -8,6 +8,7 @@
 
 ### Fixed
 
+- tcl: fix return value for hdata_longlong ([#2119](https://github.com/weechat/weechat/issues/2119))
 - tests: fix relay tests on s390x
 - tests: fix check of php plugin
 - tests: fix compilation of tests on Fedora 40 and Rocky 9.4
