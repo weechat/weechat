@@ -26,6 +26,7 @@ extern "C"
 #include <time.h>
 #include <sys/time.h>
 #include <cjson/cJSON.h>
+#include "src/core/core-hdata.h"
 #include "src/core/core-util.h"
 #include "src/gui/gui-buffer.h"
 #include "src/gui/gui-chat.h"
@@ -502,6 +503,7 @@ TEST(RelayApiMsg, HotlistToJson)
 {
     char str_date[128];
     cJSON *json, *json_obj, *json_count;
+    time_t time_value;
     struct timeval tv;
     struct tm gm_time;
 
@@ -526,9 +528,10 @@ TEST(RelayApiMsg, HotlistToJson)
     CHECK(json);
     CHECK(cJSON_IsObject (json));
     WEE_CHECK_OBJ_NUM(GUI_HOTLIST_HIGHLIGHT, json, "priority");
-    gmtime_r (&(gui_hotlist->creation_time.tv_sec), &gm_time);
+    time_value = hdata_time (relay_hdata_hotlist, gui_hotlist, "time");
+    gmtime_r (&time_value, &gm_time);
     tv.tv_sec = mktime (&gm_time);
-    tv.tv_usec = gui_hotlist->creation_time.tv_usec;
+    tv.tv_usec = hdata_integer (relay_hdata_hotlist, gui_hotlist, "time_usec");
     util_strftimeval (str_date, sizeof (str_date), "%FT%T.%fZ", &tv);
     WEE_CHECK_OBJ_STR(str_date, json, "date");
     WEE_CHECK_OBJ_NUM(gui_buffers->id, json, "buffer_id");
