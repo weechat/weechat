@@ -14,7 +14,8 @@
 [[v4.3.1_fixed]]
 === Fixed
 
-* tcl: fix return value for hdata_longlong (issue #2119)
+* php: fix return value of function hdata_longlong
+* tcl: fix return value of function hdata_longlong (issue #2119)
 * tests: fix relay tests on s390x (issue #2118)
 * tests: fix check of php plugin (issue #2117)
 * tests: fix compilation of tests on Fedora 40 (issue #2116)
