@@ -40,7 +40,9 @@ relay_info_info_relay_api_version_cb (const void *pointer, void *data,
                                       const char *info_name,
                                       const char *arguments)
 {
+#ifdef HAVE_CJSON
     char version[128];
+#endif
 
     /* make C compiler happy */
     (void) pointer;
@@ -65,7 +67,9 @@ relay_info_info_relay_api_version_number_cb (const void *pointer, void *data,
                                              const char *info_name,
                                              const char *arguments)
 {
+#ifdef HAVE_CJSON
     char version_number[32];
+#endif
 
     /* make C compiler happy */
     (void) pointer;
