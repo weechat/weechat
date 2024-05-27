@@ -8,6 +8,7 @@
 
 ### Fixed
 
+- core: fix detection of libgcrypt ≥ 1.11 ([debian #1071960](https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1071960))
 - irc: close /list buffer when the server buffer is closed ([#2121](https://github.com/weechat/weechat/issues/2121))
 - php: fix return value of function hdata_longlong
 - tcl: fix return value of function hdata_longlong ([#2119](https://github.com/weechat/weechat/issues/2119))
