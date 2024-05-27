@@ -184,9 +184,10 @@ if(ENABLE_NLS)
 endif()
 
 # Check for libgcrypt
-find_package(GCRYPT REQUIRED)
+pkg_check_modules(LIBGCRYPT REQUIRED libgcrypt)
 add_definitions(-DHAVE_GCRYPT)
-list(APPEND EXTRA_LIBS ${GCRYPT_LDFLAGS})
+include_directories(${LIBGCRYPT_INCLUDE_DIRS})
+list(APPEND EXTRA_LIBS ${LIBGCRYPT_LDFLAGS})
 
 # Check for GnuTLS
 find_package(GnuTLS REQUIRED)

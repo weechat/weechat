@@ -54,7 +54,7 @@ set(LINK_LIBS)
 include_directories(${GNUTLS_INCLUDE_PATH})
 list(APPEND LINK_LIBS ${GNUTLS_LIBRARY})
 
-list(APPEND LINK_LIBS ${GCRYPT_LDFLAGS})
+list(APPEND LINK_LIBS ${LIBGCRYPT_LDFLAGS})
 
 if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
   # link with resolv lib on macOS

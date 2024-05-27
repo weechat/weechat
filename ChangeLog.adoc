@@ -22,6 +22,10 @@ Bug fixes::
 
   * core, plugins: fix integer overflow in loops (issue #2178)
 
+Build::
+
+  * core: fix detection of libgcrypt ≥ 1.11 (debian #1071960)
+
 [[v3.8]]
 == Version 3.8 (2023-01-08)
 
