@@ -244,6 +244,10 @@ irc_buffer_close_cb (const void *pointer, void *data,
              */
             irc_buffer_close_server_channels (ptr_server);
 
+            /* close list buffer */
+            if (ptr_server->list->buffer)
+                weechat_buffer_close (ptr_server->list->buffer);
+
             ptr_server->buffer = NULL;
         }
         else if (ptr_server && (ptr_server->list->buffer == buffer))
