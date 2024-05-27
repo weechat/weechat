@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-05-26 10:37+0200\n"
-"PO-Revision-Date: 2024-05-26 10:36+0200\n"
+"POT-Creation-Date: 2024-05-27 21:44+0200\n"
+"PO-Revision-Date: 2024-05-27 21:45+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -14749,6 +14749,19 @@ msgid ""
 msgstr ""
 "%sremote[%s] : incompatibilité de version d'API : l'API distance est %s "
 "(WeeChat %s), l'API locale est %s (WeeChat %s)"
+
+#, c-format
+msgid "%sremote[%s]: invalid data received from remote relay: \"%s\""
+msgstr "%sremote[%s] : données invalides reçues du relai distant : \"%s\""
+
+#, c-format
+msgid "%sremote[%s]: callback failed for body type \"%s\""
+msgstr ""
+"%sremote[%s] : la fonction de rappel a échoué pour le type de body \"%s\""
+
+#, c-format
+msgid "remote[%s]: disconnected"
+msgstr "remote[%s] : déconnecté"
 
 msgid "invalid response from remote relay"
 msgstr "réponse invalide du relai distant"

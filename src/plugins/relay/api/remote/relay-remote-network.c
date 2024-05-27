@@ -126,7 +126,7 @@ relay_remote_network_disconnect (struct t_relay_remote *remote)
 
     relay_remote_network_close_connection (remote);
     relay_remote_set_status (remote, RELAY_STATUS_DISCONNECTED);
-    weechat_printf (NULL, "remote[%s]: disconnected", remote->name);
+    weechat_printf (NULL, _("remote[%s]: disconnected"), remote->name);
 }
 
 /*
@@ -716,7 +716,8 @@ relay_remote_network_connect_ws_auth (struct t_relay_remote *remote)
 
     if (!str_auth[0])
     {
-        weechat_printf (NULL, _("%sremote[%s]: failed to build authentication"),
+        weechat_printf (NULL,
+                        _("%sremote[%s]: failed to build authentication"),
                         weechat_prefix ("error"), remote->name);
         relay_remote_network_disconnect (remote);
         goto end;
@@ -792,7 +793,8 @@ relay_remote_network_connect_cb (const void *pointer, void *data, int status,
     switch (status)
     {
         case WEECHAT_HOOK_CONNECT_OK:
-            weechat_printf (NULL, _("remote[%s]: connected to %s/%d (%s)"),
+            weechat_printf (NULL,
+                            _("remote[%s]: connected to %s/%d (%s)"),
                             remote->name, remote->address, remote->port,
                             ip_address);
             remote->hook_fd = weechat_hook_fd (remote->sock, 1, 0, 0,
@@ -802,30 +804,36 @@ relay_remote_network_connect_cb (const void *pointer, void *data, int status,
             relay_remote_network_connect_ws_auth (remote);
             break;
         case WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND:
-            weechat_printf (NULL, _("%sremote[%s]: address \"%s\" not found"),
+            weechat_printf (NULL,
+                            _("%sremote[%s]: address \"%s\" not found"),
                             weechat_prefix ("error"), remote->name,
                             remote->address);
             if (error && error[0])
             {
-                weechat_printf (NULL, _("%sremote[%s]: error: %s"),
+                weechat_printf (NULL,
+                                _("%sremote[%s]: error: %s"),
                                 weechat_prefix ("error"), remote->name, error);
             }
             break;
         case WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND:
-            weechat_printf (NULL, _("%sremote[%s]: IP address not found"),
+            weechat_printf (NULL,
+                            _("%sremote[%s]: IP address not found"),
                             weechat_prefix ("error"), remote->name);
             if (error && error[0])
             {
-                weechat_printf (NULL, _("%sremote[%s]: error: %s"),
+                weechat_printf (NULL,
+                                _("%sremote[%s]: error: %s"),
                                 weechat_prefix ("error"), remote->name, error);
             }
             break;
         case WEECHAT_HOOK_CONNECT_CONNECTION_REFUSED:
-            weechat_printf (NULL, _("%sremote[%s]: connection refused"),
+            weechat_printf (NULL,
+                            _("%sremote[%s]: connection refused"),
                             weechat_prefix ("error"), remote->name);
             if (error && error[0])
             {
-                weechat_printf (NULL, _("%sremote[%s]: error: %s"),
+                weechat_printf (NULL,
+                                _("%sremote[%s]: error: %s"),
                                 weechat_prefix ("error"), remote->name, error);
             }
             break;
@@ -838,61 +846,74 @@ relay_remote_network_connect_cb (const void *pointer, void *data, int status,
                 weechat_prefix ("error"), remote->name);
             if (error && error[0])
             {
-                weechat_printf (NULL, _("%sremote[%s]: error: %s"),
+                weechat_printf (NULL,
+                                _("%sremote[%s]: error: %s"),
                                 weechat_prefix ("error"), remote->name, error);
             }
             break;
         case WEECHAT_HOOK_CONNECT_LOCAL_HOSTNAME_ERROR:
-            weechat_printf (NULL, _("%sremote[%s]: unable to set local hostname/IP"),
+            weechat_printf (NULL,
+                            _("%sremote[%s]: unable to set local hostname/IP"),
                             weechat_prefix ("error"), remote->name);
             if (error && error[0])
             {
-                weechat_printf (NULL, _("%sremote[%s]: error: %s"),
+                weechat_printf (NULL,
+                                _("%sremote[%s]: error: %s"),
                                 weechat_prefix ("error"), remote->name, error);
             }
             break;
         case WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR:
-            weechat_printf (NULL, _("%sremote[%s]: TLS init error"),
+            weechat_printf (NULL,
+                            _("%sremote[%s]: TLS init error"),
                             weechat_prefix ("error"), remote->name);
             if (error && error[0])
             {
-                weechat_printf (NULL, _("%sremote[%s]: error: %s"),
+                weechat_printf (NULL,
+                                _("%sremote[%s]: error: %s"),
                                 weechat_prefix ("error"), remote->name, error);
             }
             break;
         case WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR:
-            weechat_printf (NULL, _("%sremote[%s]: TLS handshake failed"),
+            weechat_printf (NULL,
+                            _("%sremote[%s]: TLS handshake failed"),
                             weechat_prefix ("error"), remote->name);
             if (error && error[0])
             {
-                weechat_printf (NULL, _("%sremote[%s]: error: %s"),
+                weechat_printf (NULL,
+                                _("%sremote[%s]: error: %s"),
                                 weechat_prefix ("error"), remote->name, error);
             }
             break;
         case WEECHAT_HOOK_CONNECT_MEMORY_ERROR:
-            weechat_printf (NULL, _("%sremote[%s]: not enough memory"),
+            weechat_printf (NULL,
+                            _("%sremote[%s]: not enough memory"),
                             weechat_prefix ("error"), remote->name);
             if (error && error[0])
             {
-                weechat_printf (NULL, _("%sremote[%s]: error: %s"),
+                weechat_printf (NULL,
+                                _("%sremote[%s]: error: %s"),
                                 weechat_prefix ("error"), remote->name, error);
             }
             break;
         case WEECHAT_HOOK_CONNECT_TIMEOUT:
-            weechat_printf (NULL, _("%sremote[%s]: timeout"),
+            weechat_printf (NULL,
+                            _("%sremote[%s]: timeout"),
                             weechat_prefix ("error"), remote->name);
             if (error && error[0])
             {
-                weechat_printf (NULL, _("%sremote[%s]: error: %s"),
+                weechat_printf (NULL,
+                                _("%sremote[%s]: error: %s"),
                                 weechat_prefix ("error"), remote->name, error);
             }
             break;
         case WEECHAT_HOOK_CONNECT_SOCKET_ERROR:
-            weechat_printf (NULL, _("%sremote[%s]: unable to create socket"),
+            weechat_printf (NULL,
+                            _("%sremote[%s]: unable to create socket"),
                             weechat_prefix ("error"), remote->name);
             if (error && error[0])
             {
-                weechat_printf (NULL, _("%sremote[%s]: error: %s"),
+                weechat_printf (NULL,
+                                _("%sremote[%s]: error: %s"),
                                 weechat_prefix ("error"), remote->name, error);
             }
             break;
@@ -1159,12 +1180,13 @@ relay_remote_network_url_handshake_cb (const void *pointer,
     ptr_resp_code = weechat_hashtable_get (output, "response_code");
     if (ptr_resp_code && ptr_resp_code[0] && (strcmp (ptr_resp_code, "200") != 0))
     {
-        weechat_printf (NULL,
-                        _("%sremote[%s]: handshake failed with URL %s, response code: %s"),
-                        weechat_prefix ("error"),
-                        remote->name,
-                        weechat_config_string (remote->options[RELAY_REMOTE_OPTION_URL]),
-                        ptr_resp_code);
+        weechat_printf (
+            NULL,
+            _("%sremote[%s]: handshake failed with URL %s, response code: %s"),
+            weechat_prefix ("error"),
+            remote->name,
+            weechat_config_string (remote->options[RELAY_REMOTE_OPTION_URL]),
+            ptr_resp_code);
         relay_remote_set_status (remote, RELAY_STATUS_DISCONNECTED);
         return WEECHAT_RC_OK;
     }
@@ -1172,12 +1194,13 @@ relay_remote_network_url_handshake_cb (const void *pointer,
     ptr_error = weechat_hashtable_get (output, "error");
     if (ptr_error && ptr_error[0])
     {
-        weechat_printf (NULL,
-                        _("%sremote[%s]: handshake failed with URL %s, error: %s"),
-                        weechat_prefix ("error"),
-                        remote->name,
-                        weechat_config_string (remote->options[RELAY_REMOTE_OPTION_URL]),
-                        ptr_error);
+        weechat_printf (
+            NULL,
+            _("%sremote[%s]: handshake failed with URL %s, error: %s"),
+            weechat_prefix ("error"),
+            remote->name,
+            weechat_config_string (remote->options[RELAY_REMOTE_OPTION_URL]),
+            ptr_error);
         relay_remote_set_status (remote, RELAY_STATUS_DISCONNECTED);
         return WEECHAT_RC_OK;
     }
@@ -1208,51 +1231,55 @@ relay_remote_network_url_handshake_cb (const void *pointer,
 
     if (remote->password_hash_algo < 0)
     {
-        weechat_printf (NULL,
-                        _("%sremote[%s]: handshake failed with URL %s, error: %s"),
-                        weechat_prefix ("error"),
-                        remote->name,
-                        weechat_config_string (remote->options[RELAY_REMOTE_OPTION_URL]),
-                        _("hash algorithm not found"));
+        weechat_printf (
+            NULL,
+            _("%sremote[%s]: handshake failed with URL %s, error: %s"),
+            weechat_prefix ("error"),
+            remote->name,
+            weechat_config_string (remote->options[RELAY_REMOTE_OPTION_URL]),
+            _("hash algorithm not found"));
         relay_remote_set_status (remote, RELAY_STATUS_DISCONNECTED);
         return WEECHAT_RC_OK;
     }
 
     if (remote->password_hash_iterations < 0)
     {
-        weechat_printf (NULL,
-                        _("%sremote[%s]: handshake failed with URL %s, error: %s"),
-                        weechat_prefix ("error"),
-                        remote->name,
-                        weechat_config_string (remote->options[RELAY_REMOTE_OPTION_URL]),
-                        _("unknown number of hash iterations"));
+        weechat_printf (
+            NULL,
+            _("%sremote[%s]: handshake failed with URL %s, error: %s"),
+            weechat_prefix ("error"),
+            remote->name,
+            weechat_config_string (remote->options[RELAY_REMOTE_OPTION_URL]),
+            _("unknown number of hash iterations"));
         relay_remote_set_status (remote, RELAY_STATUS_DISCONNECTED);
         return WEECHAT_RC_OK;
     }
 
     if (remote->totp < 0)
     {
-        weechat_printf (NULL,
-                        _("%sremote[%s]: handshake failed with URL %s, error: %s"),
-                        weechat_prefix ("error"),
-                        remote->name,
-                        weechat_config_string (remote->options[RELAY_REMOTE_OPTION_URL]),
-                        _("unknown TOTP status"));
+        weechat_printf (
+            NULL,
+            _("%sremote[%s]: handshake failed with URL %s, error: %s"),
+            weechat_prefix ("error"),
+            remote->name,
+            weechat_config_string (remote->options[RELAY_REMOTE_OPTION_URL]),
+            _("unknown TOTP status"));
         relay_remote_set_status (remote, RELAY_STATUS_DISCONNECTED);
         return WEECHAT_RC_OK;
     }
 
     if (weechat_relay_plugin->debug >= 1)
     {
-        weechat_printf (NULL,
-                        _("%sremote[%s]: successful handshake with URL %s: "
-                          "hash_algo=%s, iterations=%d, totp=%d"),
-                        RELAY_PLUGIN_NAME,
-                        remote->name,
-                        weechat_config_string (remote->options[RELAY_REMOTE_OPTION_URL]),
-                        relay_auth_password_hash_algo_name[remote->password_hash_algo],
-                        remote->password_hash_iterations,
-                        remote->totp);
+        weechat_printf (
+            NULL,
+            _("%sremote[%s]: successful handshake with URL %s: "
+              "hash_algo=%s, iterations=%d, totp=%d"),
+            RELAY_PLUGIN_NAME,
+            remote->name,
+            weechat_config_string (remote->options[RELAY_REMOTE_OPTION_URL]),
+            relay_auth_password_hash_algo_name[remote->password_hash_algo],
+            remote->password_hash_iterations,
+            remote->totp);
     }
 
     proxy_type = NULL;

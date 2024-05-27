@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-05-26 10:37+0200\n"
+"POT-Creation-Date: 2024-05-27 21:44+0200\n"
 "PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: Santiago Forero <santiago@forero.xyz>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -13957,6 +13957,19 @@ msgid ""
 "%sremote[%s]: API version mismatch: remote API is %s (WeeChat %s), local API "
 "%s (WeeChat %s)"
 msgstr ""
+
+#, fuzzy, c-format
+msgid "%sremote[%s]: invalid data received from remote relay: \"%s\""
+msgstr "%s%s: set de caracteres inválido: \"%s\""
+
+#, fuzzy, c-format
+msgid "%sremote[%s]: callback failed for body type \"%s\""
+msgstr "%sError: no se pudo crear la barra \"%s\""
+
+#, fuzzy, c-format
+#| msgid "%s%s: connection refused"
+msgid "remote[%s]: disconnected"
+msgstr "%s%s: conexión rechazada"
 
 #, fuzzy
 #| msgid "invalid priorities"

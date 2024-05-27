@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-05-26 10:37+0200\n"
+"POT-Creation-Date: 2024-05-27 21:44+0200\n"
 "PO-Revision-Date: 2024-05-25 13:34+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -14337,6 +14337,21 @@ msgid ""
 msgstr ""
 "%sremote[%s]: niepasujące wersje AtoPI: zdalne API is %s (WeeChat %s), "
 "lokalne api API %s (WeeChat %s)"
+
+#, fuzzy, c-format
+#| msgid "%s%s: invalid trigger name: \"%s\""
+msgid "%sremote[%s]: invalid data received from remote relay: \"%s\""
+msgstr "%s%s: nieprawidłowe nazwa triggera: \"%s\""
+
+#, fuzzy, c-format
+#| msgid "%s%s: failed to copy trigger \"%s\""
+msgid "%sremote[%s]: callback failed for body type \"%s\""
+msgstr "%s%s: nieudane kopiowanie triggera \"%s\""
+
+#, fuzzy, c-format
+#| msgid "%sremote[%s]: connection refused"
+msgid "remote[%s]: disconnected"
+msgstr "%sremote[%s]: połączenie odrzucone"
 
 msgid "invalid response from remote relay"
 msgstr "nieprawidłowa odpowiedź od pośrednika"

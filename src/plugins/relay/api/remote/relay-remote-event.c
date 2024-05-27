@@ -1006,18 +1006,20 @@ relay_remote_event_recv (struct t_relay_remote *remote, const char *data)
     return;
 
 error_data:
-    weechat_printf (NULL,
-                    "%sremote[%s]: invalid data received from remote: \"%s\"",
-                    weechat_prefix ("error"),
-                    remote->name,
-                    data);
+    weechat_printf (
+        NULL,
+        _("%sremote[%s]: invalid data received from remote relay: \"%s\""),
+        weechat_prefix ("error"),
+        remote->name,
+        data);
     return;
 
 error_cb:
-    weechat_printf (NULL,
-                    "%sremote[%s]: callback failed for body type \"%s\"",
-                    weechat_prefix ("error"),
-                    remote->name,
-                    body_type);
+    weechat_printf (
+        NULL,
+        _("%sremote[%s]: callback failed for body type \"%s\""),
+        weechat_prefix ("error"),
+        remote->name,
+        body_type);
     return;
 }

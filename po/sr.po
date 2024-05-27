@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-05-26 10:37+0200\n"
+"POT-Creation-Date: 2024-05-27 21:44+0200\n"
 "PO-Revision-Date: 2024-05-07 14:00+0400\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -14322,6 +14322,21 @@ msgid ""
 "%sremote[%s]: API version mismatch: remote API is %s (WeeChat %s), local API "
 "%s (WeeChat %s)"
 msgstr ""
+
+#, fuzzy, c-format
+#| msgid "%s%s: invalid trigger name: \"%s\""
+msgid "%sremote[%s]: invalid data received from remote relay: \"%s\""
+msgstr "%s%s: неважеће име окидача: „%s”"
+
+#, fuzzy, c-format
+#| msgid "%s%s: failed to copy trigger \"%s\""
+msgid "%sremote[%s]: callback failed for body type \"%s\""
+msgstr "%s%s: није успело копирање окидача „%s”"
+
+#, fuzzy, c-format
+#| msgid "%sremote[%s]: connection refused"
+msgid "remote[%s]: disconnected"
+msgstr "%sудаљени[%s]: веза је одбијена"
 
 msgid "invalid response from remote relay"
 msgstr "неважећи одговор од удаљеног релеја"

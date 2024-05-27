@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-05-26 10:37+0200\n"
+"POT-Creation-Date: 2024-05-27 21:44+0200\n"
 "PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -13147,6 +13147,18 @@ msgid ""
 "%sremote[%s]: API version mismatch: remote API is %s (WeeChat %s), local API "
 "%s (WeeChat %s)"
 msgstr ""
+
+#, fuzzy, c-format
+msgid "%sremote[%s]: invalid data received from remote relay: \"%s\""
+msgstr "Не могу записать лог-файл \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%sremote[%s]: callback failed for body type \"%s\""
+msgstr "%s не могу сохранить конфигурационный файл pluginов\n"
+
+#, fuzzy, c-format
+msgid "remote[%s]: disconnected"
+msgstr "%s в подключении отказано\n"
 
 msgid "invalid response from remote relay"
 msgstr ""
