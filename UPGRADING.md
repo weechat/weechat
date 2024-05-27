@@ -1,7 +1,9 @@
 # WeeChat Upgrade guidelines
 
 These upgrade guidelines only contain instructions for version upgrades which require manual actions.\
-When upgrading from version X to Y, please read and apply all instructions from version X+1 to version Y (included).
+If a version is not listed here, that means no particular action is required for this version.
+
+When upgrading from version X to Y, please read and apply all instructions from version X+1 to version Y (both included).
 
 For a list of all changes in each version, please see [CHANGELOG.md](CHANGELOG.md).
 
@@ -70,10 +72,6 @@ the keys with the following commands:
 /reset weechat.key_mouse.@chat(script.scripts):wheeldown
 /reset weechat.key_mouse.@chat(script.scripts):wheelup
 ```
-
-## Version 4.2.1
-
-No upgrade guidelines.
 
 ## Version 4.2.0
 
@@ -158,14 +156,6 @@ or can cause a crash of WeeChat).
 The infos irc_nick_color and irc_nick_color_name are deprecated again, and the
 algorithm to compute IRC nick colors has been reverted to case sensitive.\
 The server name has been removed from arguments.
-
-## Version 4.1.3
-
-No upgrade guidelines.
-
-## Version 4.1.2
-
-No upgrade guidelines.
 
 ## Version 4.1.1
 
@@ -280,14 +270,6 @@ You can reset it with this command:
 /reset weechat.key_mouse.@chat(fset.fset):button1
 ```
 
-## Version 4.0.8
-
-No upgrade guidelines.
-
-## Version 4.0.7
-
-No upgrade guidelines.
-
 ## Version 4.0.6
 
 ### Custom bar items
@@ -298,22 +280,6 @@ Custom bar items must now have a different name than default bar items
 If you have such names in your config, WeeChat will now fail to load them
 (this should not happen anyway, since such bar items can not be properly used
 and can cause a crash of WeeChat).
-
-## Version 4.0.5
-
-No upgrade guidelines.
-
-## Version 4.0.4
-
-No upgrade guidelines.
-
-## Version 4.0.3
-
-No upgrade guidelines.
-
-## Version 4.0.2
-
-No upgrade guidelines.
 
 ## Version 4.0.1
 
@@ -741,10 +707,6 @@ The two callbacks "callback_change" and "callback_delete" in scripting API funct
 config_new_option have been changed: an integer return value was expected by error,
 now any return value is ignored (like it has always been in the C API).
 
-## Version 3.7.1
-
-No upgrade guidelines.
-
 ## Version 3.7
 
 ### Argument "object_id" in callback of upgrade_new
@@ -850,10 +812,6 @@ and is now a percentage between `0` and `100`:
 - `0`: disable compression
 - `1`: low compression (fast)
 - `100`: best compression (slow)
-
-## Version 3.4.1
-
-No upgrade guidelines.
 
 ## Version 3.4
 
@@ -997,10 +955,6 @@ For example:
 ```text
 /set irc.server.example.sasl_mechanism scram-sha-256
 ```
-
-## Version 3.2.1
-
-No upgrade guidelines.
 
 ## Version 3.2
 
@@ -1216,10 +1170,6 @@ must adjust the value of the new option, which defaults to 1:
 ```text
 /set buflist.look.use_items 2
 ```
-
-## Version 3.0.1
-
-No upgrade guidelines.
 
 ## Version 3.0
 
@@ -1508,10 +1458,6 @@ version:
 - WeeChat ≥ 2.8: `True` by default, and `False` if `-a` or `--no-connect` is
   given by the user (either on command line or when loading the plugin).
 
-## Version 2.7.1
-
-No upgrade guidelines.
-
 ## Version 2.7
 
 ### CMake errors on missing dependencies
@@ -1736,10 +1682,6 @@ Functions removed from C API:
 - string_encode_base64
 - string_decode_base64
 
-## Version 2.3
-
-No upgrade guidelines.
-
 ## Version 2.2
 
 ### Default conditions for hotlist
@@ -1862,10 +1804,6 @@ List of options moved:
 - plugins.var.javascript.check_license (string) → javascript.look.check_license (boolean)
 - plugins.var.php.check_license (string) → php.look.check_license (boolean)
 
-## Version 2.0.1
-
-No upgrade guidelines.
-
 ## Version 2.0
 
 ### Fset plugin
@@ -1949,14 +1887,6 @@ an integer (it was a string in older releases).\
 To be compatible with all versions, it is recommended to convert the argument
 to integer before using it, for example in Python: `int(fd)`.
 
-## Version 1.9.1
-
-No upgrade guidelines.
-
-## Version 1.9
-
-No upgrade guidelines.
-
 ## Version 1.8
 
 ### Buflist plugin
@@ -2000,10 +1930,6 @@ on your machine.
 Aspell option with color for suggestion on a misspelled word has been renamed:
 
 - aspell.color.suggestions has been renamed to aspell.color.suggestion
-
-## Version 1.7.1
-
-No upgrade guidelines.
 
 ## Version 1.7
 
@@ -2228,10 +2154,6 @@ command:
 /set weechat.look.word_chars_input "!\u00A0,!\x20,*"
 ```
 
-## Version 1.1.1
-
-No upgrade guidelines.
-
 ## Version 1.1
 
 ### New format for regex replacement in triggers
@@ -2333,10 +2255,6 @@ instead of milliseconds:
   returns microseconds
 - function [util_timeval_add](https://weechat.org/doc/weechat/plugin/#_util_timeval_add):
   the argument "interval" is now expressed in microseconds.
-
-## Version 1.0.1
-
-No upgrade guidelines.
 
 ## Version 1.0
 
@@ -2790,14 +2708,6 @@ disable IPv6 in relay if you don't plan to use it at all:
 /set relay.network.ipv6 off
 ```
 
-## Version 0.3.9.2
-
-No upgrade guidelines.
-
-## Version 0.3.9.1
-
-No upgrade guidelines.
-
 ## Version 0.3.9
 
 ### Options moved
@@ -3067,34 +2977,6 @@ Major differences:
   accordingly, scripts and plugins must have been designed for version 0.3.x to
   be loaded into WeeChat.
 
-## Version 0.2.6.3
-
-No upgrade guidelines.
-
-## Version 0.2.6.2
-
-No upgrade guidelines.
-
-## Version 0.2.6.1
-
-No upgrade guidelines.
-
-## Version 0.2.6
-
-No upgrade guidelines.
-
-## Version 0.2.5
-
-No upgrade guidelines.
-
-## Version 0.2.4
-
-No upgrade guidelines.
-
-## Version 0.2.3
-
-No upgrade guidelines.
-
 ## Version 0.2.2
 
 ### Charset plugin
@@ -3138,10 +3020,6 @@ Which gives something like:
 ```text
 /key meta2-21~ scroll_topic_right
 ```
-
-## Version 0.2.1
-
-No upgrade guidelines.
 
 ## Version 0.2.0
 
@@ -3234,63 +3112,3 @@ set to blank for most cases. Forces it only if your locale is not properly
 detected by WeeChat (you can set `UTF-8` or `ISO-8859-15` for example,
 depending on your locale). WeeChat is looking for "UTF-8" in your locale name
 at startup.
-
-## Version 0.1.5
-
-No upgrade guidelines.
-
-## Version 0.1.4
-
-No upgrade guidelines.
-
-## Version 0.1.3
-
-No upgrade guidelines.
-
-## Version 0.1.2
-
-No upgrade guidelines.
-
-## Version 0.1.1
-
-No upgrade guidelines.
-
-## Version 0.1.0
-
-No upgrade guidelines.
-
-## Version 0.0.9
-
-No upgrade guidelines.
-
-## Version 0.0.8
-
-No upgrade guidelines.
-
-## Version 0.0.7
-
-No upgrade guidelines.
-
-## Version 0.0.6
-
-No upgrade guidelines.
-
-## Version 0.0.5
-
-No upgrade guidelines.
-
-## Version 0.0.4
-
-No upgrade guidelines.
-
-## Version 0.0.3
-
-No upgrade guidelines.
-
-## Version 0.0.2
-
-No upgrade guidelines.
-
-## Version 0.0.1
-
-No upgrade guidelines.
