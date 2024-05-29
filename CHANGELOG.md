@@ -5,6 +5,7 @@
 ### Added
 
 - relay: add infos "relay_api_version" and "relay_api_version_number"
+- relay: add option relay.look.raw_messages_max_length ([#2122](https://github.com/weechat/weechat/issues/2122))
 
 ### Fixed
 

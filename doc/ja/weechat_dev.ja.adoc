@@ -612,6 +612,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 // TRANSLATION MISSING
 |             test-relay-http.cpp            | Tests: HTTP functions for Relay plugin.
 // TRANSLATION MISSING
+|             test-relay-raw.cpp             | Tests: raw messages functions for Relay plugin.
+// TRANSLATION MISSING
 |             test-relay-remote.cpp          | Tests: remote functions for Relay plugin.
 // TRANSLATION MISSING
 |             test-relay-websocket.cpp       | Tests: websocket functions for Relay plugin.
