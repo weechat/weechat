@@ -11,6 +11,11 @@
 [[v4.3.2]]
 == Version 4.3.2 (under dev)
 
+[[v4.3.2_added]]
+=== Added
+
+* relay: add option relay.look.raw_messages_max_length (issue #2122)
+
 [[v4.3.2_fixed]]
 === Fixed
 

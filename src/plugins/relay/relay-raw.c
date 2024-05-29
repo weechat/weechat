@@ -303,8 +303,9 @@ relay_raw_message_add (enum t_relay_msg_type msg_type,
                        const char *peer_id,
                        const char *data, int data_size)
 {
-    char *raw_data, *buf, prefix[1024], prefix_arrow[16];
-    int length;
+    char *raw_data, *raw_data_cut, *buf, prefix[1024], prefix_arrow[16];
+    const char *ptr_raw_data;
+    int max_length;
     struct t_relay_raw_message *new_raw_message;
     struct timeval tv_now;
 
@@ -350,15 +351,18 @@ relay_raw_message_add (enum t_relay_msg_type msg_type,
                   (peer_id && peer_id[0]) ? peer_id : "");
     }
 
-    length = strlen (relay_msg_type_string[msg_type]) + strlen (raw_data) + 1;
-    buf = malloc (length);
-    if (buf)
+    raw_data_cut = NULL;
+    ptr_raw_data = raw_data;
+    max_length = weechat_config_integer (relay_config_look_raw_messages_max_length);
+    if (max_length > 0)
     {
-        snprintf (buf, length, "%s%s",
-                  relay_msg_type_string[msg_type],
-                  raw_data);
+        raw_data_cut = weechat_string_cut (raw_data, max_length, 0, 0, " (...)");
+        ptr_raw_data = raw_data_cut;
     }
-
+    weechat_asprintf (&buf, "%s%s",
+                      relay_msg_type_string[msg_type],
+                      (ptr_raw_data) ? ptr_raw_data : "");
+    free (raw_data_cut);
     gettimeofday (&tv_now, NULL);
     new_raw_message = relay_raw_message_add_to_list (
         tv_now.tv_sec,

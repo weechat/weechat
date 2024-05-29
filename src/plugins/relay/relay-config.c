@@ -59,6 +59,7 @@ struct t_config_section *relay_config_section_remote = NULL;
 struct t_config_option *relay_config_look_auto_open_buffer = NULL;
 struct t_config_option *relay_config_look_display_clients = NULL;
 struct t_config_option *relay_config_look_raw_messages = NULL;
+struct t_config_option *relay_config_look_raw_messages_max_length = NULL;
 
 /* relay config, color section */
 
@@ -1454,6 +1455,13 @@ relay_config_init ()
                "is closed (messages will be displayed when opening raw data "
                "buffer)"),
             NULL, 0, 65535, "256", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        relay_config_look_raw_messages_max_length = weechat_config_new_option (
+            relay_config_file, relay_config_section_look,
+            "raw_messages_max_length", "integer",
+            N_("max number of chars to display in raw messages (very long "
+               "messages can cause slowness); 0 = display whole messages"),
+            NULL, 0, INT_MAX, "4096", NULL, 0,
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     }
 
