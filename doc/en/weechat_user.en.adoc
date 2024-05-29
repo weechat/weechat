@@ -1325,7 +1325,7 @@ Tags commonly used (non-exhaustive list):
 | no_filter        | Line can not be filtered.
 | no_highlight     | No highlight is possible on line.
 | no_log           | Line is not written in log file.
-| log0 … log9      | Level of log for line (see `/help logger`).
+| log0 … log9      | Level of log for line (see the <<command_logger_logger,/logger>> command).
 | notify_none      | The line must not be added to hotlist. ^(1)^
 | notify_message   | The line is a user message. ^(1)^
 | notify_private   | The line is a private message. ^(1)^
@@ -3243,7 +3243,7 @@ buffer to see values), just do:
 Secured data can be used in some options that can contain private data like
 password, using this format: "${sec.data.xxx}" where "xxx" is the name of
 secured data (used with `/secure set xxx ...`). +
-For a complete list of supported options, see `/help secure`.
+For a complete list of supported options, see the <<command_weechat_secure,/secure>> command.
 
 To use the _libera_ password, for example with
 <<irc_sasl_authentication,SASL authentication>>:
@@ -4096,7 +4096,7 @@ for example if `#channel1` requires a key but not `#channel2`:
 /set irc.server.libera.autojoin "#channel1,#channel2 key1"
 ----
 
-For help on the format, see `/help irc.server.libera.autojoin`.
+For help on the format, see option <<option_irc.server_default.autojoin,irc.server_default.autojoin>>.
 
 [[irc_private_messages]]
 === Private messages
@@ -4143,7 +4143,7 @@ buffers, for example:
 ----
 
 It is possible to create filter for one channel only or channels beginning with
-same name (see `/help filter`):
+same name (see the <<command_weechat_filter,/filter>> command):
 
 ----
 /filter add irc_smart_weechat irc.libera.#weechat* irc_smart_filter *

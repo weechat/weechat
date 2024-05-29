@@ -1333,7 +1333,8 @@ Popularnie używane tagi (niepełna lista):
 | no_filter        | Linia nie może być filtrowana.
 | no_highlight     | Podświetlenia nie są dozwolone w tej linii.
 | no_log           | Linia nie jest zapisywana w logu.
-| log0 … log9      | Poziom logowania dla linii (zobacz `/help logger`).
+// TRANSLATION MISSING
+| log0 … log9      | Poziom logowania dla linii (see the <<command_logger_logger,/logger>> command).
 | notify_none      | Linia nie może być dodana do hotlisty. ^(1)^
 | notify_message   | Linia jest wiasomością użytkownika. ^(1)^
 | notify_private   | Linia jest wiadomością prywatną. ^(1)^
@@ -3268,7 +3269,8 @@ w buforze, w celu wyświetlenia wartości), po prostu wykonaj:
 Bezpieczne dane mogą zostać użyte w opcjach zawierających prywatne dane jak
 hasła, za pomocą formatu: "${sec.data.xxx}", gdzie "xxx" to nazwa zabezpieczonych
 danych (utworzone za pomocą `/secure set xxx ...`). +
-Pełną listę dostępnych opcji można uzyskać wykonując `/help secure`.
+// TRANSLATION MISSING
+For a complete list of supported options, see the <<command_weechat_secure,/secure>> command.
 
 W celu użycia hasła _libera_, na przykład z
 <<irc_sasl_authentication,uwierzytelnianiem SASL>>:
@@ -4128,7 +4130,8 @@ nie:
 /set irc.server.libera.autojoin "#kanał1,#kanał2 hasło1"
 ----
 
-Informacje na temat formatu można uzyskać za pomocą `/help irc.server.libera.autojoin`.
+// TRANSLATION MISSING
+For help on the format, see option <<option_irc.server_default.autojoin,irc.server_default.autojoin>>.
 
 [[irc_private_messages]]
 === Prywatne wiadomości
@@ -4175,8 +4178,9 @@ wiadomości w buforach, na przydład:
 /filter add irc_smart * irc_smart_filter *
 ----
 
+// TRANSLATION MISSING
 Można stworzyć filtry dla pojedynczego kanału lub kanałów, których nazwy
-zaczynają się tak samo (zobacz `/help filter`):
+zaczynają się tak samo (see the <<command_weechat_filter,/filter>> command):
 
 ----
 /filter add irc_smart_weechat irc.libera.#weechat* irc_smart_filter *

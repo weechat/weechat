@@ -1340,7 +1340,8 @@ Tags die häufig verwendet werden (keine vollständige Auflistung):
 | no_filter        | Zeile kann nicht gefiltert werden.
 | no_highlight     | die Zeile kann nicht gehiglighted werden.
 | no_log           | Zeile wird nicht in die Log-Datei geschrieben.
-| log0 … log9      | Grad der Protokollierung (siehe `/help logger`).
+// TRANSLATION MISSING
+| log0 … log9      | Grad der Protokollierung (see the <<command_logger_logger,/logger>> command).
 | notify_none      | Diese Zeile wird erzeugt keinen Hotlist-Eintrag. ^(1)^
 | notify_message   | Diese Zeile ist eine User Nachricht. ^(1)^
 | notify_private   | Diese Zeile ist eine private Nachricht. ^(1)^
@@ -3300,7 +3301,8 @@ Passwörter beinhalten. Dies dient dazu Passwörter nicht im Klartext als
 Wert einer Option zu sichern. Dazu wird folgendes Format, anstelle des
 Passwortes, verwendet: "${sec.data.xxx}". "xxx" ist hierbei der Name den man
 dem Passwort zugeordnet hat (siehe oben, mittels `/secure set xxx ...`). +
-Für eine vollständige Liste aller unterstützten Optionen, siehe  `/help secure`.
+// TRANSLATION MISSING
+For a complete list of supported options, see the <<command_weechat_secure,/secure>> command.
 
 Um z.B. das oben eingestellte _libera_ Passwort für eine
 <<irc_sasl_authentication,SASL Authentifizierung>> zu nutzen:
@@ -4164,7 +4166,8 @@ Schlüssel erfordert, aber nicht `#channel2`:
 /set irc.server.libera.autojoin "#channel1,#channel2 key1"
 ----
 
-Um eine Hilfe über das Format zu erhalten, siehe `/help irc.server.libera.autojoin`.
+// TRANSLATION MISSING
+For help on the format, see option <<option_irc.server_default.autojoin,irc.server_default.autojoin>>.
 
 [[irc_private_messages]]
 === private Nachrichten
@@ -4212,8 +4215,9 @@ damit die Zeilen im Buffer unterdrückt werden. Zum Beispiel:
 /filter add irc_smart * irc_smart_filter *
 ----
 
+// TRANSLATION MISSING
 Dabei ist es möglich, einen Filter für nur einen Kanal oder für mehrere Kanäle zu erstellen, die mit
-dem selben Namen beginnen (siehe `/help filter`):
+dem selben Namen beginnen (see the <<command_weechat_filter,/filter>> command):
 
 ----
 /filter add irc_smart_weechat irc.libera.#weechat* irc_smart_filter *

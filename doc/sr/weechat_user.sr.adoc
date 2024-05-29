@@ -1257,7 +1257,8 @@ _прозор_ је површина екрана која приказује б
 | no_filter        | Линија не може да буде филтрирана.
 | no_highlight     | У линији није могуће истицање.
 | no_log           | Линија се не уписује у лог фајл.
-| log0 … log9      | Ниво лога за линију (погледајте `/help logger`).
+// TRANSLATION MISSING
+| log0 … log9      | Ниво лога за линију (see the <<command_logger_logger,/logger>> command).
 | notify_none      | Линија не сме да се дода у врућу листу. ^(1)^
 | notify_message   | Линија је корисничка порука. ^(1)^
 | notify_private   | Линија је приватна порука. ^(1)^
@@ -3067,8 +3068,10 @@ libera = "53B1C86FCDA28FC122A95B0456ABD79B5AB74654F21C3D099A6CCA8173239EEA59533A
 /secure
 ----
 
+// TRANSLATION MISSING
 Обезбеђени подаци могу да се користе у неким опцијама које садрже приватне податке као што су лозинке, употребом формата: „${sec.data.xxx}” где је „xxx” име обезбеђених података (постављених са `/secure set xxx ...`). +
-За комплетну листу подржаних опција, погледајте `/help secure`.
+// TRANSLATION MISSING
+For a complete list of supported options, see the <<command_weechat_secure,/secure>> command.
 
 Да бисте употребили _libera_ лозинку, на пример са <<irc_sasl_authentication,SASL аутентификацијом>>:
 
@@ -3895,7 +3898,8 @@ WeeChat приказује све додатне информације које
 /set irc.server.libera.autojoin "#канал1,#канал2 кључ1"
 ----
 
-Помоћ у вези формата потражите помоћу `/help irc.server.libera.autojoin`.
+// TRANSLATION MISSING
+For help on the format, see option <<option_irc.server_default.autojoin,irc.server_default.autojoin>>.
 
 [[irc_private_messages]]
 === Приватне поруке
@@ -3941,8 +3945,9 @@ WeeChat приказује све додатне информације које
 /filter add irc_smart * irc_smart_filter *
 ----
 
+// TRANSLATION MISSING
 Постоји могућност да се креира филтер само за један канал, или за више канала који
-почињу истим именом (погледајте `/help filter`):
+почињу истим именом (see the <<command_weechat_filter,/filter>> command):
 
 ----
 /filter add irc_smart_weechat irc.libera.#weechat* irc_smart_filter *

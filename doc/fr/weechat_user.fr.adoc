@@ -1350,7 +1350,7 @@ Les étiquettes couramment utilisées (liste non exhaustive) :
 | no_filter        | La ligne ne peut pas être filtrée.
 | no_highlight     | Aucun highlight n'est possible sur cette ligne.
 | no_log           | La ligne n'est pas écrite dans le fichier de log.
-| log0 … log9      | Niveau de log pour la ligne (voir `/help logger`).
+| log0 … log9      | Niveau de log pour la ligne (voir la commande <<command_logger_logger,/logger>>).
 | notify_none      | La ligne ne doit pas être ajoutée à la "hotlist". ^(1)^
 | notify_message   | La ligne est un message utilisateur. ^(1)^
 | notify_private   | La ligne est un message privé. ^(1)^
@@ -3339,7 +3339,7 @@ Les données sécurisées peuvent être utilisées dans quelques options qui peu
 contenir des données sensibles comme un mot de passe, en utilisant ce format :
 "${sec.data.xxx}" où "xxx" est le nom de la donnée sécurisée (utilisé dans la
 commande `/secure set xxx ...`). +
-Pour une liste complète des options supportées, voir `/help secure`.
+Pour une liste complète des options supportées, voir la commande <<command_weechat_secure,/secure>>.
 
 Pour utiliser le mot de passe _libera_, par exemple avec
 <<irc_sasl_authentication,l'authentification SASL>> :
@@ -4215,7 +4215,7 @@ des clés, par exemple si `#canal1` requiert une clé mais pas `#canal2`:
 /set irc.server.libera.autojoin "#canal1,#canal2 cle1"
 ----
 
-Pour de l'aide sur le format, voir `/help irc.server.libera.autojoin`.
+Pour de l'aide sur le format, voir l'option <<option_irc.server_default.autojoin,irc.server_default.autojoin>>.
 
 [[irc_private_messages]]
 === Messages privés
@@ -4264,7 +4264,7 @@ pour cacher les lignes sur les tampons, par exemple :
 ----
 
 Il est possible de créer un filtre pour un canal seulement ou plusieurs canaux
-commençant par le même nom (voir `/help filter`) :
+commençant par le même nom (voir la commande <<command_weechat_filter,/filter>>) :
 
 ----
 /filter add irc_smart_weechat irc.libera.#weechat* irc_smart_filter *

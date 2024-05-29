@@ -1419,7 +1419,8 @@ WeeChat は様々な目的で各行にタグを付けます:
 | no_filter        | フィルタできない行
 | no_highlight     | ハイライトできない行
 | no_log           | ログファイルに書き込まれない行
-| log0 … log9      | 行に対するログレベル (`/help logger` を参照)
+// TRANSLATION MISSING
+| log0 … log9      | 行に対するログレベル (see the <<command_logger_logger,/logger>> command).
 // TRANSLATION MISSING
 | notify_none      | The line must not be added to hotlist. ^(1)^
 // TRANSLATION MISSING
@@ -3441,7 +3442,8 @@ IRC サーバのパスワードを設定する例:
 例えばパスワードなどの個人データを含むオプションで暗号化データを使うことができます、書式:
 "${sec.data.xxx}" ここで "xxx" は暗号化データの名前です
 (`/secure set xxx ...` のように使います)。 +
-利用できるオプションの完全なリストはを見るには、`/help secure` を使ってください。
+// TRANSLATION MISSING
+For a complete list of supported options, see the <<command_weechat_secure,/secure>> command.
 
 例えば上の _libera_ パスワードを
 <<irc_sasl_authentication,SASL 認証>>で使うには:
@@ -4318,7 +4320,8 @@ for example if `#channel1` requires a key but not `#channel2`:
 /set irc.server.libera.autojoin "#channel1,#channel2 key1"
 ----
 
-For help on the format, see `/help irc.server.libera.autojoin`.
+// TRANSLATION MISSING
+For help on the format, see option <<option_irc.server_default.autojoin,irc.server_default.autojoin>>.
 
 [[irc_private_messages]]
 === Private messages
@@ -4365,8 +4368,9 @@ buffers, for example:
 /filter add irc_smart * irc_smart_filter *
 ----
 
+// TRANSLATION MISSING
 It is possible to create filter for one channel only or channels beginning with
-same name (see `/help filter`):
+same name (see the <<command_weechat_filter,/filter>> command):
 
 ----
 /filter add irc_smart_weechat irc.libera.#weechat* irc_smart_filter *

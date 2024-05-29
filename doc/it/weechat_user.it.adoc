@@ -1446,7 +1446,8 @@ Tag usati di frequente (elenco non esaustivo):
 | no_filter        | La riga non può essere filtrata.
 | no_highlight     | Evidenziazione non possibile sulla riga.
 | no_log           | La riga non viene scritta nel file di log.
-| log0 … log9      | Livello di log per la riga (consultare `/help logger`).
+// TRANSLATION MISSING
+| log0 … log9      | Livello di log per la riga (see the <<command_logger_logger,/logger>> command).
 // TRANSLATION MISSING
 | notify_none      | The line must not be added to hotlist. ^(1)^
 // TRANSLATION MISSING
@@ -3547,7 +3548,7 @@ buffer to see values), just do:
 Secured data can be used in some options that can contain private data like
 password, using this format: "${sec.data.xxx}" where "xxx" is the name of
 secured data (used with `/secure set xxx ...`). +
-For a complete list of supported options, see `/help secure`.
+For a complete list of supported options, see the <<command_weechat_secure,/secure>> command.
 
 To use the _libera_ password, for example with
 <<irc_sasl_authentication,SASL authentication>>:
@@ -4447,7 +4448,8 @@ for example if `#channel1` requires a key but not `#channel2`:
 /set irc.server.libera.autojoin "#channel1,#channel2 key1"
 ----
 
-For help on the format, see `/help irc.server.libera.autojoin`.
+// TRANSLATION MISSING
+For help on the format, see option <<option_irc.server_default.autojoin,irc.server_default.autojoin>>.
 
 [[irc_private_messages]]
 === Private messages
@@ -4494,8 +4496,9 @@ buffers, for example:
 /filter add irc_smart * irc_smart_filter *
 ----
 
+// TRANSLATION MISSING
 It is possible to create filter for one channel only or channels beginning with
-same name (see `/help filter`):
+same name (see the <<command_weechat_filter,/filter>> command):
 
 ----
 /filter add irc_smart_weechat irc.libera.#weechat* irc_smart_filter *
