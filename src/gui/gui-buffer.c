@@ -2353,7 +2353,7 @@ gui_buffer_set_input_prompt (struct t_gui_buffer *buffer,
 void
 gui_buffer_set_input (struct t_gui_buffer *buffer, const char *input)
 {
-    if (!buffer || (string_strcmp (buffer->input_buffer, input) == 0))
+    if (!buffer)
         return;
 
     gui_buffer_undo_snap (buffer);
