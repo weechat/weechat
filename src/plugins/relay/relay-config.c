@@ -1459,12 +1459,8 @@ relay_config_init ()
         relay_config_look_raw_messages_max_length = weechat_config_new_option (
             relay_config_file, relay_config_section_look,
             "raw_messages_max_length", "integer",
-            N_("maximum length (in number of chars) of a raw message displayed "
-               "(0 = display whole message); the beginning and end of message "
-               "is always displayed with at the middle: \" (...) \"; "
-               "for example if the value is 8 and the raw message is "
-               "\"abcdefghijklmnopqrstuvwxyz\", then the raw message displayed is: "
-               "\"abcd (...) wxyz\""),
+            N_("max number of chars to display in raw messages (very long "
+               "messages can cause slowness); 0 = display whole messages"),
             NULL, 0, INT_MAX, "4096", NULL, 0,
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     }

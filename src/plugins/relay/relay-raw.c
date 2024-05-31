@@ -294,72 +294,6 @@ relay_raw_convert_text_message (const char *data)
 }
 
 /*
- * Cuts a raw message in the middle using max_length: half of max length is
- * displayed at beginning, then " (...) " then half of max length at the end.
- *
- * Note: result must be freed after use.
- */
-
-char *
-relay_raw_message_cut (const char *data, int max_length)
-{
-    int length, chars_start, chars_end, count;
-    const char *ptr_end;
-    char **result;
-
-    if (!data || (max_length < 0))
-        return NULL;
-
-    if (max_length == 0)
-        return strdup (data);
-
-    length = weechat_utf8_strlen (data);
-    if (length <= max_length)
-        return strdup (data);
-
-    chars_end = max_length / 2;
-    chars_start = max_length - chars_end;
-
-    result = weechat_string_dyn_alloc (max_length);
-    if (!result)
-        return NULL;
-
-    if (chars_start > 0)
-    {
-        ptr_end = weechat_utf8_add_offset (data, chars_start);
-        if (!ptr_end)
-        {
-            weechat_string_dyn_free (result, 1);
-            return NULL;
-        }
-        weechat_string_dyn_concat (result, data, ptr_end - data);
-    }
-    if (*result[0])
-        weechat_string_dyn_concat (result, " ", -1);
-    weechat_string_dyn_concat (result, "(...)", -1);
-    if (chars_end > 0)
-    {
-        ptr_end = data + strlen (data);
-        count = 0;
-        while (count < chars_end)
-        {
-            ptr_end = weechat_utf8_prev_char (data, ptr_end);
-            if (!ptr_end)
-            {
-                weechat_string_dyn_free (result, 1);
-                return NULL;
-            }
-            count++;
-        }
-        if (*result[0])
-            weechat_string_dyn_concat (result, " ", -1);
-        weechat_string_dyn_concat (result, ptr_end, -1);
-    }
-
-    return weechat_string_dyn_free (result, 0);
-}
-
-/*
  * Adds a new raw message to list.
  */
 
@@ -422,7 +356,7 @@ relay_raw_message_add (enum t_relay_msg_type msg_type,
     max_length = weechat_config_integer (relay_config_look_raw_messages_max_length);
     if (max_length > 0)
     {
-        raw_data_cut = relay_raw_message_cut (raw_data, max_length);
+        raw_data_cut = weechat_string_cut (raw_data, max_length, 0, 0, " (...)");
         ptr_raw_data = raw_data_cut;
     }
     weechat_asprintf (&buf, "%s%s",

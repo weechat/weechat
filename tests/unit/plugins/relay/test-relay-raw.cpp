@@ -28,8 +28,6 @@ extern "C"
 #include <string.h>
 #include "src/plugins/relay/relay.h"
 #include "src/plugins/relay/relay-raw.h"
-
-char *relay_raw_message_cut (const char *data, int max_length);
 }
 
 
@@ -115,38 +113,6 @@ TEST(RelayRaw, ConvertBinaryMessage)
 TEST(RelayRaw, ConvertTextMessage)
 {
     /* TODO: write tests */
-}
-
-/*
- * Tests functions:
- *   relay_raw_message_cut
- */
-
-TEST(RelayRaw, MessageCut)
-{
-    char *str;
-
-    POINTERS_EQUAL(NULL, relay_raw_message_cut (NULL, -1));
-    POINTERS_EQUAL(NULL, relay_raw_message_cut (NULL, 0));
-    POINTERS_EQUAL(NULL, relay_raw_message_cut ("test", -1));
-
-    WEE_TEST_STR("", relay_raw_message_cut ("", 0));
-    WEE_TEST_STR("this is a test", relay_raw_message_cut ("this is a test", 0));
-    WEE_TEST_STR("t (...)", relay_raw_message_cut ("this is a test", 1));
-    WEE_TEST_STR("t (...) t", relay_raw_message_cut ("this is a test", 2));
-    WEE_TEST_STR("th (...) t", relay_raw_message_cut ("this is a test", 3));
-    WEE_TEST_STR("th (...) st", relay_raw_message_cut ("this is a test", 4));
-    WEE_TEST_STR("thi (...) st", relay_raw_message_cut ("this is a test", 5));
-    WEE_TEST_STR("thi (...) est", relay_raw_message_cut ("this is a test", 6));
-    WEE_TEST_STR("this (...) est", relay_raw_message_cut ("this is a test", 7));
-    WEE_TEST_STR("this (...) test", relay_raw_message_cut ("this is a test", 8));
-    WEE_TEST_STR("this  (...) test", relay_raw_message_cut ("this is a test", 9));
-    WEE_TEST_STR("this  (...)  test", relay_raw_message_cut ("this is a test", 10));
-    WEE_TEST_STR("this i (...)  test", relay_raw_message_cut ("this is a test", 11));
-    WEE_TEST_STR("this i (...) a test", relay_raw_message_cut ("this is a test", 12));
-    WEE_TEST_STR("this is (...) a test", relay_raw_message_cut ("this is a test", 13));
-    WEE_TEST_STR("this is a test", relay_raw_message_cut ("this is a test", 14));
-    WEE_TEST_STR("this is a test", relay_raw_message_cut ("this is a test", 15));
 }
 
 /*
