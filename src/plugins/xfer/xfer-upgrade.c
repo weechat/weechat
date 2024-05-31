@@ -26,6 +26,7 @@
 #include "xfer.h"
 #include "xfer-upgrade.h"
 #include "xfer-buffer.h"
+#include "xfer-chat.h"
 
 
 /*
@@ -80,6 +81,7 @@ xfer_upgrade_set_buffer_callbacks ()
 {
     struct t_infolist *infolist;
     struct t_gui_buffer *ptr_buffer;
+    const char *type;
 
     infolist = weechat_infolist_get ("buffer", NULL, NULL);
     if (infolist)
@@ -89,12 +91,22 @@ xfer_upgrade_set_buffer_callbacks ()
             if (weechat_infolist_pointer (infolist, "plugin") == weechat_xfer_plugin)
             {
                 ptr_buffer = weechat_infolist_pointer (infolist, "pointer");
-                weechat_buffer_set_pointer (ptr_buffer, "close_callback", &xfer_buffer_close_cb);
-                weechat_buffer_set_pointer (ptr_buffer, "input_callback", &xfer_buffer_input_cb);
+                type = weechat_buffer_get_string (ptr_buffer, "localvar_type");
                 if (strcmp (weechat_infolist_string (infolist, "name"),
                             XFER_BUFFER_NAME) == 0)
                 {
                     xfer_buffer = ptr_buffer;
+                    weechat_buffer_set_pointer (
+                        ptr_buffer, "close_callback", &xfer_buffer_close_cb);
+                    weechat_buffer_set_pointer (
+                        ptr_buffer, "input_callback", &xfer_buffer_input_cb);
+                }
+                else if (type && (strcmp (type, "private") == 0))
+                {
+                    weechat_buffer_set_pointer (
+                        ptr_buffer, "close_callback", &xfer_chat_buffer_close_cb);
+                    weechat_buffer_set_pointer (
+                        ptr_buffer, "input_callback", &xfer_chat_buffer_input_cb);
                 }
             }
         }
