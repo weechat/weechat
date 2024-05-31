@@ -71,6 +71,11 @@ the keys with the following commands:
 /reset weechat.key_mouse.@chat(script.scripts):wheelup
 ----
 
+[[v4.2.3]]
+== Version 4.2.3 (2024-05-31)
+
+No release notes.
+
 [[v4.2.2]]
 == Version 4.2.2 (2024-04-07)
 
