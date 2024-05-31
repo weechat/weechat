@@ -676,7 +676,7 @@ Argomenti:
 
 * _string_: string to cut
 * _length_: max chars
-* _count_suffix_: if 1, the length of suffix is counter in the max length
+* _count_suffix_: if 1, the length of suffix is counted in the max length
 * _screen_: if 1, the cut is based on width of chars displayed
 * _cut_suffix_: the suffix added after the string if it is cut
 
