@@ -50,21 +50,6 @@ The option `irc.color.item_channel_modes` has been moved to core and renamed to
 The signal "buffer_line_added" is now sent for every line added or modified
 on a buffer with free content.
 
-### Script keys
-
-Some arguments to the `/script` command were renamed in version 4.1.0, but the
-keys using these arguments were not changed at same time.
-
-They're now using the new arguments by default, but you must reset manually
-the keys with the following commands:
-
-```text
-/reset weechat.key_mouse.@chat(script.scripts):button1
-/reset weechat.key_mouse.@chat(script.scripts):button2
-/reset weechat.key_mouse.@chat(script.scripts):wheeldown
-/reset weechat.key_mouse.@chat(script.scripts):wheelup
-```
-
 ## Version 4.2.2
 
 ### Script keys
