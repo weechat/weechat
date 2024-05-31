@@ -11,6 +11,11 @@ It is recommended to read it when upgrading to a new stable version. +
 For a complete list of changes, please look at ChangeLog.
 
 
+[[v4.2.3]]
+== Version 4.2.3 (under dev)
+
+No release notes.
+
 [[v4.2.2]]
 == Version 4.2.2 (2024-04-07)
 
