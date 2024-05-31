@@ -20,6 +20,21 @@
 - tests: fix compilation of tests on Fedora 40 ([#2116](https://github.com/weechat/weechat/issues/2116))
 - tests: fix compilation of tests on Rocky 9.4
 
+## Version 4.3.1 (2024-05-31)
+
+### Fixed
+
+- irc: close /list buffer when the server buffer is closed ([#2121](https://github.com/weechat/weechat/issues/2121))
+- xfer: fix send of data on the DCC chat buffer after `/upgrade` if the buffer was opened before the upgrade ([#2092](https://github.com/weechat/weechat/issues/2092))
+- php: fix return value of function hdata_longlong
+- tcl: fix return value of function hdata_longlong ([#2119](https://github.com/weechat/weechat/issues/2119))
+- core: fix detection of libgcrypt ≥ 1.11 ([debian #1071960](https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1071960))
+- core, relay: fix include directory of libcjson and libzstd
+- tests: fix relay tests on s390x ([#2118](https://github.com/weechat/weechat/issues/2118))
+- tests: fix check of php plugin ([#2117](https://github.com/weechat/weechat/issues/2117))
+- tests: fix compilation of tests on Fedora 40 ([#2116](https://github.com/weechat/weechat/issues/2116))
+- tests: fix compilation of tests on Rocky 9.4
+
 ## Version 4.3.0 (2024-05-26)
 
 _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._

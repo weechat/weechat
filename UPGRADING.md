@@ -7,6 +7,15 @@ When upgrading from version X to Y, please read and apply all instructions from 
 
 For a list of all changes in each version, please see [CHANGELOG.md](CHANGELOG.md).
 
+## Version 4.3.1
+
+### Detection of libgcrypt
+
+The detection of libgcrypt has been fixed to properly detect libgcrypt ≥ 1.11.\
+As a consequence, the detection of an old version of libgcrypt is failing if the
+file `libgcrypt.pc` is not found.\
+This affects old distributions like Debian Buster and Ubuntu Bionic.
+
 ## Version 4.3.0
 
 ### Relay options
