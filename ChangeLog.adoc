@@ -14,10 +14,11 @@
 [[v4.3.1_fixed]]
 === Fixed
 
-* core: fix detection of libgcrypt ≥ 1.11 (debian #1071960)
 * irc: close /list buffer when the server buffer is closed (issue #2121)
+* xfer: fix send of data on the DCC chat buffer after `/upgrade` if the buffer was opened before the upgrade (issue #2092)
 * php: fix return value of function hdata_longlong
 * tcl: fix return value of function hdata_longlong (issue #2119)
+* core: fix detection of libgcrypt ≥ 1.11 (debian #1071960)
 * core, relay: fix include directory of libcjson and libzstd
 * tests: fix relay tests on s390x (issue #2118)
 * tests: fix check of php plugin (issue #2117)
