@@ -97,6 +97,14 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - tcl: fix truncation of long integer returned by function hdata_long
 - trigger: fix memory leak when adding a new trigger with `/trigger` command
 
+## Version 4.2.3 (2024-05-31)
+
+### Fixed
+
+- xfer: fix send of data on the DCC chat buffer after `/upgrade` if the buffer was opened before the upgrade ([#2092](https://github.com/weechat/weechat/issues/2092))
+- irc: fix crash in split of IRC message containing a newline if the server is not given
+- core, relay: fix include directory of libzstd
+
 ## Version 4.2.2 (2024-04-07)
 
 _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
