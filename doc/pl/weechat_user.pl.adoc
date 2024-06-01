@@ -800,20 +800,18 @@ $ weechat --upgrade
 [[restart_after_upgrade]]
 === Restart po aktualizacji
 
-// TRANSLATION MISSING
 [[restart_upgrading_notes]]
-==== Upgrading notes
+==== Informacje o aktualizacji
 
-// TRANSLATION MISSING
-After an upgrade, it is *strongly recommended* to read the file
-https://github.com/weechat/weechat/blob/master/UPGRADING.md[UPGRADING.md ^↗^^]
-which contains important information about breaking changes and some
-manual actions that could be required.
+Po aktualizacji *zaleca się* zapoznanie z plikiem
+https://github.com/weechat/weechat/blob/master/UPGRADING.md[UPGRADING.md ^↗^^],
+który zawiera ważne informacje o niekompatybilnych zmianach i czynnościach,
+jakie mogą być wymagane.
 
-// TRANSLATION MISSING
-You must read the versions between your old (excluded) and your new version (included). +
-For example if you switch from version 4.0.0 to 4.3.0, you must read versions
-4.0.1 to 4.3.0.
+Powinieneś zapoznać się z informacjami dla wersji pomiędzy tą, która aktualizowałeś
+a nową wersją. +
+Na przykład dla aktualizacji z wersji 4.0.0 do 4.3.0 należy przeczytać informacje
+dotyczące wszystkich wersji od 4.0.1 do 4.3.0 włącznie.
 
 [[restart_configuration_upgrade]]
 ==== Aktualizacja konfiguracji
@@ -1333,8 +1331,7 @@ Popularnie używane tagi (niepełna lista):
 | no_filter        | Linia nie może być filtrowana.
 | no_highlight     | Podświetlenia nie są dozwolone w tej linii.
 | no_log           | Linia nie jest zapisywana w logu.
-// TRANSLATION MISSING
-| log0 … log9      | Poziom logowania dla linii (see the <<command_logger_logger,/logger>> command).
+| log0 … log9      | Poziom logowania dla linii (zobacz komendę <<command_logger_logger,/logger>>).
 | notify_none      | Linia nie może być dodana do hotlisty. ^(1)^
 | notify_message   | Linia jest wiasomością użytkownika. ^(1)^
 | notify_private   | Linia jest wiadomością prywatną. ^(1)^
@@ -3269,8 +3266,7 @@ w buforze, w celu wyświetlenia wartości), po prostu wykonaj:
 Bezpieczne dane mogą zostać użyte w opcjach zawierających prywatne dane jak
 hasła, za pomocą formatu: "${sec.data.xxx}", gdzie "xxx" to nazwa zabezpieczonych
 danych (utworzone za pomocą `/secure set xxx ...`). +
-// TRANSLATION MISSING
-For a complete list of supported options, see the <<command_weechat_secure,/secure>> command.
+Aby otrzymać pełną listę wspieranych opcji zapoznaj się z komendą <<command_weechat_secure,/secure>>.
 
 W celu użycia hasła _libera_, na przykład z
 <<irc_sasl_authentication,uwierzytelnianiem SASL>>:
@@ -4130,8 +4126,7 @@ nie:
 /set irc.server.libera.autojoin "#kanał1,#kanał2 hasło1"
 ----
 
-// TRANSLATION MISSING
-For help on the format, see option <<option_irc.server_default.autojoin,irc.server_default.autojoin>>.
+Informacje o formacie można znaleźć w opcji <<option_irc.server_default.autojoin,irc.server_default.autojoin>>.
 
 [[irc_private_messages]]
 === Prywatne wiadomości
@@ -4178,9 +4173,8 @@ wiadomości w buforach, na przydład:
 /filter add irc_smart * irc_smart_filter *
 ----
 
-// TRANSLATION MISSING
 Można stworzyć filtry dla pojedynczego kanału lub kanałów, których nazwy
-zaczynają się tak samo (see the <<command_weechat_filter,/filter>> command):
+zaczynają się tak samo (zobacz komendę <<command_weechat_filter,/filter>>):
 
 ----
 /filter add irc_smart_weechat irc.libera.#weechat* irc_smart_filter *
