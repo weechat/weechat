@@ -34,6 +34,7 @@
 #include "../../../weechat-plugin.h"
 #include "../../relay.h"
 #include "../../relay-auth.h"
+#include "../../relay-config.h"
 #include "../../relay-http.h"
 #include "../../relay-raw.h"
 #include "../../relay-remote.h"
@@ -642,7 +643,7 @@ relay_remote_network_connect_ws_auth (struct t_relay_remote *remote)
 {
     char *password, *totp_secret, *totp;
     char *salt_password, salt[64], str_auth[4096], str_auth_base64[4096];
-    char str_http[8192], str_totp[128];
+    char str_http[8192], str_totp[128], str_extensions[256];
     char hash[512 / 8], hash_hexa[((512 / 8) * 2) + 1];
     char ws_key[16], ws_key_base64[64];
     int hash_size;
@@ -654,6 +655,7 @@ relay_remote_network_connect_ws_auth (struct t_relay_remote *remote)
     totp_secret = NULL;
     str_auth[0] = '\0';
     str_totp[0] = '\0';
+    str_extensions[0] = '\0';
 
     password = weechat_string_eval_expression (
         weechat_config_string (remote->options[RELAY_REMOTE_OPTION_PASSWORD]),
@@ -744,6 +746,15 @@ relay_remote_network_connect_ws_auth (struct t_relay_remote *remote)
         }
     }
 
+    /* add supported extensions */
+    if (weechat_config_boolean (relay_config_network_websocket_permessage_deflate))
+    {
+        snprintf (str_extensions, sizeof (str_extensions),
+                  "%s",
+                  "Sec-WebSocket-Extensions: permessage-deflate; "
+                  "client_max_window_bits\r\n");
+    }
+
     snprintf (
         str_http, sizeof (str_http),
         "GET /api HTTP/1.1\r\n"
@@ -753,12 +764,13 @@ relay_remote_network_connect_ws_auth (struct t_relay_remote *remote)
         "Sec-WebSocket-Key: %s\r\n"
         "Connection: Upgrade\r\n"
         "Upgrade: websocket\r\n"
-        "Sec-WebSocket-Extensions: permessage-deflate; client_max_window_bits\r\n"
+        "%s"
         "Host: %s:%d\r\n"
         "\r\n",
         str_auth_base64,
         str_totp,
         ws_key_base64,
+        str_extensions,
         remote->address,
         remote->port);
     relay_remote_network_send (remote, RELAY_MSG_STANDARD,

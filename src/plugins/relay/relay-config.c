@@ -92,6 +92,7 @@ struct t_config_option *relay_config_network_tls_priorities = NULL;
 struct t_config_option *relay_config_network_totp_secret = NULL;
 struct t_config_option *relay_config_network_totp_window = NULL;
 struct t_config_option *relay_config_network_websocket_allowed_origins = NULL;
+struct t_config_option *relay_config_network_websocket_permessage_deflate = NULL;
 
 /* relay config, irc section */
 
@@ -1754,6 +1755,19 @@ relay_config_init ()
             NULL, NULL, NULL,
             &relay_config_change_network_websocket_allowed_origins, NULL, NULL,
             NULL, NULL, NULL);
+        relay_config_network_websocket_permessage_deflate = weechat_config_new_option (
+            relay_config_file, relay_config_section_network,
+            "websocket_permessage_deflate", "boolean",
+            N_("enable websocket extension \"permessage-deflate\" to compress "
+               "websocket frames, with weechat and api protocols; if disabled, "
+               "WeeChat (as server) will not enable permessage-deflate even if "
+               "the client supports it, and when connecting to a remote WeeChat "
+               "(api relay only), permessage-deflate support is not advertised "
+               "by WeeChat; it is recommended to keep this option enabled, "
+               "and you should disable it only if you have troubles with this "
+               "extension, either with WeeChat or the client"),
+            NULL, 0, 100, "on", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     }
 
     /* section irc */

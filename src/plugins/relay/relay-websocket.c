@@ -315,7 +315,7 @@ relay_websocket_parse_extensions (const char *extensions,
         params = weechat_string_split (exts[i], ";", " ", 0, 0, &num_params);
         if (params && (num_params >= 1)
             && (strcmp (params[0], "permessage-deflate") == 0)
-            && (weechat_config_integer (relay_config_network_compression) > 0))
+            && (weechat_config_boolean (relay_config_network_websocket_permessage_deflate)))
         {
             ws_deflate->enabled = 1;
             ws_deflate->server_context_takeover = 1;
