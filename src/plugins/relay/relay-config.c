@@ -1434,7 +1434,7 @@ relay_config_init ()
             "auto_open_buffer", "string",
             N_("auto open relay buffer when a new client is connecting "
                "using one of these protocols (comma-separated list); "
-               "allowed protocols: \"irc\", \"weechat\", \"api\""),
+               "allowed protocols: \"api\", \"irc\", \"weechat\""),
             NULL, 0, 0, "irc,weechat", NULL, 0,
             NULL, NULL, NULL,
             &relay_config_change_auto_open_buffer_cb, NULL, NULL,
@@ -1444,7 +1444,7 @@ relay_config_init ()
             "display_clients", "string",
             N_("display messages when clients connect/disconnect from relay "
                "using one of these protocols (comma-separated list); "
-               "allowed protocols: \"irc\", \"weechat\", \"api\""),
+               "allowed protocols: \"api\", \"irc\", \"weechat\""),
             NULL, 0, 0, "irc,weechat", NULL, 0,
             NULL, NULL, NULL,
             &relay_config_change_display_clients_cb, NULL, NULL,
@@ -1608,8 +1608,8 @@ relay_config_init ()
             relay_config_file, relay_config_section_network,
             "commands", "string",
             N_("comma-separated list of commands allowed/denied when input "
-               "data (text or command) is received from a client (weechat "
-               "and api protocols); "
+               "data (text or command) is received from a client (\"api\" and "
+               "\"weechat\" protocols); "
                "\"*\" means any command, a name beginning with \"!\" is "
                "a negative value to prevent a command from being executed, "
                "wildcard \"*\" is allowed in names; this option should be set "
@@ -1623,8 +1623,8 @@ relay_config_init ()
         relay_config_network_compression = weechat_config_new_option (
             relay_config_file, relay_config_section_network,
             "compression", "integer",
-            N_("compression of messages sent to clients with weechat and "
-               "api protocols: 0 = disable compression, "
+            N_("compression of messages sent to clients with \"api\" and "
+               "\"weechat\" protocols: 0 = disable compression, "
                "1 = low compression / fast ... 100 = best compression / slow; "
                "the value is a percentage converted to 1-9 for zlib and 1-19 "
                "for zstd; the default value is recommended, it offers a good "
@@ -1694,7 +1694,7 @@ relay_config_init ()
             relay_config_file, relay_config_section_network,
             "time_window", "integer",
             N_("number of seconds to allow before and after the current time "
-               "for the hash of time + password in api protocol"),
+               "for the hash of time + password in \"api\" protocol"),
             NULL, 0, 256, "5", NULL, 0,
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
         relay_config_network_tls_cert_key = weechat_config_new_option (
@@ -1724,7 +1724,7 @@ relay_config_init ()
             "totp_secret", "string",
             N_("secret for the generation of the Time-based One-Time Password "
                "(TOTP), encoded in base32 (only letters and digits from 2 to 7); "
-               "it is used as second factor in weechat and api protocols, "
+               "it is used as second factor in \"api\" and \"weechat\" protocols, "
                "in addition to the password, which must not be empty "
                "(empty value means no TOTP is required) "
                "(note: content is evaluated, see /help eval)"),
@@ -1759,13 +1759,14 @@ relay_config_init ()
             relay_config_file, relay_config_section_network,
             "websocket_permessage_deflate", "boolean",
             N_("enable websocket extension \"permessage-deflate\" to compress "
-               "websocket frames, with weechat and api protocols; if disabled, "
-               "WeeChat (as server) will not enable permessage-deflate even if "
-               "the client supports it, and when connecting to a remote WeeChat "
-               "(api relay only), permessage-deflate support is not advertised "
-               "by WeeChat; it is recommended to keep this option enabled, "
-               "and you should disable it only if you have troubles with this "
-               "extension, either with WeeChat or the client"),
+               "websocket frames, with \"api\" and \"weechat\" protocols; "
+               "if disabled, WeeChat (as server) will not enable "
+               "permessage-deflate even if the client supports it, and when "
+               "connecting to a remote WeeChat (api relay only), "
+               "permessage-deflate support is not advertised by WeeChat; "
+               "it is recommended to keep this option enabled, and you should "
+               "disable it only if you have troubles with this extension, "
+               "either with WeeChat or the client"),
             NULL, 0, 100, "on", NULL, 0,
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     }
