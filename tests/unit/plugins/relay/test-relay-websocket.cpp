@@ -62,7 +62,7 @@ TEST(RelayWebsocket, DeflateAllocFree)
     ws_deflate = relay_websocket_deflate_alloc ();
     LONGS_EQUAL(0, ws_deflate->enabled);
     LONGS_EQUAL(0, ws_deflate->server_context_takeover);
-    LONGS_EQUAL(0, ws_deflate->server_context_takeover);
+    LONGS_EQUAL(0, ws_deflate->client_context_takeover);
     LONGS_EQUAL(0, ws_deflate->window_bits_deflate);
     LONGS_EQUAL(0, ws_deflate->window_bits_inflate);
     POINTERS_EQUAL(NULL, ws_deflate->strm_deflate);
