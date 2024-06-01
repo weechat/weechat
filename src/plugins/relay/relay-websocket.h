@@ -49,6 +49,8 @@ struct t_relay_websocket_deflate
                                        /* ("server_max_window_bits")        */
     int window_bits_inflate;           /* window bits for client (decomp.)  */
                                        /* ("client_max_window_bits")        */
+    int server_max_window_bits_recv;   /* "server_max_window_bits" received?*/
+    int client_max_window_bits_recv;   /* "client_max_window_bits" received?*/
     z_stream *strm_deflate;            /* stream for deflate (compression)  */
     z_stream *strm_inflate;            /* stream for inflate (decompression)*/
 };

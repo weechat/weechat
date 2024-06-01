@@ -65,6 +65,8 @@ TEST(RelayWebsocket, DeflateAllocFree)
     LONGS_EQUAL(0, ws_deflate->client_context_takeover);
     LONGS_EQUAL(0, ws_deflate->window_bits_deflate);
     LONGS_EQUAL(0, ws_deflate->window_bits_inflate);
+    LONGS_EQUAL(0, ws_deflate->server_max_window_bits_recv);
+    LONGS_EQUAL(0, ws_deflate->client_max_window_bits_recv);
     POINTERS_EQUAL(NULL, ws_deflate->strm_deflate);
     POINTERS_EQUAL(NULL, ws_deflate->strm_inflate);
 
@@ -164,33 +166,75 @@ TEST(RelayWebsocket, ClientHandshakeValid)
     hashtable_set (request->headers, "origin", "example.com");
     LONGS_EQUAL(0, relay_websocket_client_handshake_valid (request));
 
+    relay_websocket_deflate_reinit (request->ws_deflate);
+    relay_websocket_parse_extensions ("permessage-deflate", request->ws_deflate);
+    LONGS_EQUAL(1, request->ws_deflate->enabled);
+    LONGS_EQUAL(1, request->ws_deflate->server_context_takeover);
+    LONGS_EQUAL(1, request->ws_deflate->client_context_takeover);
+    LONGS_EQUAL(15, request->ws_deflate->window_bits_deflate);
+    LONGS_EQUAL(15, request->ws_deflate->window_bits_inflate);
+    LONGS_EQUAL(0, request->ws_deflate->server_max_window_bits_recv);
+    LONGS_EQUAL(0, request->ws_deflate->client_max_window_bits_recv);
+    WEE_TEST_STR(
+        "HTTP/1.1 101 Switching Protocols\r\n"
+        "Upgrade: websocket\r\n"
+        "Connection: Upgrade\r\n"
+        "Sec-WebSocket-Accept: fhLJYtv//ugX2vQXpifQgByRZ5Y=\r\n"
+        "Sec-WebSocket-Extensions: permessage-deflate\r\n"
+        "\r\n",
+        relay_websocket_build_handshake (request));
+
+    relay_websocket_deflate_reinit (request->ws_deflate);
     relay_websocket_parse_extensions (
         "permessage-deflate; client_max_window_bits",
         request->ws_deflate);
+    LONGS_EQUAL(1, request->ws_deflate->enabled);
+    LONGS_EQUAL(1, request->ws_deflate->server_context_takeover);
+    LONGS_EQUAL(1, request->ws_deflate->client_context_takeover);
+    LONGS_EQUAL(15, request->ws_deflate->window_bits_deflate);
+    LONGS_EQUAL(15, request->ws_deflate->window_bits_inflate);
+    LONGS_EQUAL(0, request->ws_deflate->server_max_window_bits_recv);
+    LONGS_EQUAL(1, request->ws_deflate->client_max_window_bits_recv);
     WEE_TEST_STR(
         "HTTP/1.1 101 Switching Protocols\r\n"
         "Upgrade: websocket\r\n"
         "Connection: Upgrade\r\n"
         "Sec-WebSocket-Accept: fhLJYtv//ugX2vQXpifQgByRZ5Y=\r\n"
-        "Sec-WebSocket-Extensions: permessage-deflate; server_max_window_bits=15; client_max_window_bits=15\r\n"
+        "Sec-WebSocket-Extensions: permessage-deflate; client_max_window_bits=15\r\n"
         "\r\n",
         relay_websocket_build_handshake (request));
 
+    relay_websocket_deflate_reinit (request->ws_deflate);
     relay_websocket_parse_extensions (
         "permessage-deflate; client_max_window_bits = 12; server_no_context_takeover",
         request->ws_deflate);
+    LONGS_EQUAL(1, request->ws_deflate->enabled);
+    LONGS_EQUAL(0, request->ws_deflate->server_context_takeover);
+    LONGS_EQUAL(1, request->ws_deflate->client_context_takeover);
+    LONGS_EQUAL(15, request->ws_deflate->window_bits_deflate);
+    LONGS_EQUAL(12, request->ws_deflate->window_bits_inflate);
+    LONGS_EQUAL(0, request->ws_deflate->server_max_window_bits_recv);
+    LONGS_EQUAL(1, request->ws_deflate->client_max_window_bits_recv);
     WEE_TEST_STR(
         "HTTP/1.1 101 Switching Protocols\r\n"
         "Upgrade: websocket\r\n"
         "Connection: Upgrade\r\n"
         "Sec-WebSocket-Accept: fhLJYtv//ugX2vQXpifQgByRZ5Y=\r\n"
-        "Sec-WebSocket-Extensions: permessage-deflate; server_no_context_takeover; server_max_window_bits=15; client_max_window_bits=12\r\n"
+        "Sec-WebSocket-Extensions: permessage-deflate; server_no_context_takeover; client_max_window_bits=12\r\n"
         "\r\n",
         relay_websocket_build_handshake (request));
 
+    relay_websocket_deflate_reinit (request->ws_deflate);
     relay_websocket_parse_extensions (
         "permessage-deflate; client_max_window_bits = 12; server_max_window_bits=8; client_no_context_takeover; server_no_context_takeover",
         request->ws_deflate);
+    LONGS_EQUAL(1, request->ws_deflate->enabled);
+    LONGS_EQUAL(0, request->ws_deflate->server_context_takeover);
+    LONGS_EQUAL(0, request->ws_deflate->client_context_takeover);
+    LONGS_EQUAL(8, request->ws_deflate->window_bits_deflate);
+    LONGS_EQUAL(12, request->ws_deflate->window_bits_inflate);
+    LONGS_EQUAL(1, request->ws_deflate->server_max_window_bits_recv);
+    LONGS_EQUAL(1, request->ws_deflate->client_max_window_bits_recv);
     WEE_TEST_STR(
         "HTTP/1.1 101 Switching Protocols\r\n"
         "Upgrade: websocket\r\n"

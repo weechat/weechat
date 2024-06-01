@@ -14,6 +14,7 @@
 [[v4.3.2_fixed]]
 === Fixed
 
+* relay: fix websocket permessage-deflate extension when the client doesn't send the max window bits parameters
 * relay: fix allocation and reinit of field "client_context_takeover" in websocket deflate structure
 
 [[v4.3.1]]

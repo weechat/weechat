@@ -544,6 +544,8 @@ relay_remote_new_with_infolist (struct t_infolist *infolist)
     new_remote->ws_deflate->client_context_takeover = weechat_infolist_integer (infolist, "ws_deflate_client_context_takeover");
     new_remote->ws_deflate->window_bits_deflate = weechat_infolist_integer (infolist, "ws_deflate_window_bits_deflate");
     new_remote->ws_deflate->window_bits_inflate = weechat_infolist_integer (infolist, "ws_deflate_window_bits_inflate");
+    new_remote->ws_deflate->server_max_window_bits_recv = weechat_infolist_integer (infolist, "ws_deflate_server_max_window_bits_recv");
+    new_remote->ws_deflate->client_max_window_bits_recv = weechat_infolist_integer (infolist, "ws_deflate_client_max_window_bits_recv");
     new_remote->ws_deflate->strm_deflate = NULL;
     new_remote->ws_deflate->strm_inflate = NULL;
     if (weechat_infolist_search_var (infolist, "ws_deflate_strm_deflate_dict"))

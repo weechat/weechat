@@ -1620,6 +1620,8 @@ relay_client_new_with_infolist (struct t_infolist *infolist)
         new_client->ws_deflate->client_context_takeover = weechat_infolist_integer (infolist, "ws_deflate_client_context_takeover");
         new_client->ws_deflate->window_bits_deflate = weechat_infolist_integer (infolist, "ws_deflate_window_bits_deflate");
         new_client->ws_deflate->window_bits_inflate = weechat_infolist_integer (infolist, "ws_deflate_window_bits_inflate");
+        new_client->ws_deflate->server_max_window_bits_recv = weechat_infolist_integer (infolist, "ws_deflate_server_max_window_bits_recv");
+        new_client->ws_deflate->client_max_window_bits_recv = weechat_infolist_integer (infolist, "ws_deflate_client_max_window_bits_recv");
         new_client->ws_deflate->strm_deflate = NULL;
         new_client->ws_deflate->strm_inflate = NULL;
         if (weechat_infolist_search_var (infolist, "ws_deflate_strm_deflate_dict"))
@@ -2072,6 +2074,10 @@ relay_client_add_to_infolist (struct t_infolist *infolist,
     if (!weechat_infolist_new_var_integer (ptr_item, "ws_deflate_window_bits_deflate", client->ws_deflate->window_bits_deflate))
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "ws_deflate_window_bits_inflate", client->ws_deflate->window_bits_inflate))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "ws_deflate_server_max_window_bits_recv", client->ws_deflate->server_max_window_bits_recv))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "ws_deflate_client_max_window_bits_recv", client->ws_deflate->client_max_window_bits_recv))
         return 0;
     if (!weechat_infolist_new_var_pointer (ptr_item, "ws_deflate_strm_deflate", client->ws_deflate->strm_deflate))
         return 0;
