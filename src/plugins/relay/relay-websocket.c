@@ -52,6 +52,8 @@ relay_websocket_deflate_alloc ()
     new_ws_deflate->client_context_takeover = 0;
     new_ws_deflate->window_bits_deflate = 0;
     new_ws_deflate->window_bits_inflate = 0;
+    new_ws_deflate->server_max_window_bits_recv = 0;
+    new_ws_deflate->client_max_window_bits_recv = 0;
     new_ws_deflate->strm_deflate = NULL;
     new_ws_deflate->strm_inflate = NULL;
 
@@ -148,6 +150,8 @@ relay_websocket_deflate_reinit (struct t_relay_websocket_deflate *ws_deflate)
     ws_deflate->client_context_takeover = 0;
     ws_deflate->window_bits_deflate = 0;
     ws_deflate->window_bits_inflate = 0;
+    ws_deflate->server_max_window_bits_recv = 0;
+    ws_deflate->client_max_window_bits_recv = 0;
     relay_websocket_deflate_free_stream_deflate (ws_deflate);
     relay_websocket_deflate_free_stream_inflate (ws_deflate);
 }
@@ -322,6 +326,8 @@ relay_websocket_parse_extensions (const char *extensions,
             ws_deflate->client_context_takeover = 1;
             ws_deflate->window_bits_deflate = 15;
             ws_deflate->window_bits_inflate = 15;
+            ws_deflate->server_max_window_bits_recv = 0;
+            ws_deflate->client_max_window_bits_recv = 0;
             for (j = 1; j < num_params; j++)
             {
                 items = weechat_string_split (params[j], "=", " ", 0, 0, &num_items);
@@ -356,9 +362,15 @@ relay_websocket_parse_extensions (const char *extensions,
                             }
                         }
                         if (strcmp (items[0], "server_max_window_bits") == 0)
+                        {
+                            ws_deflate->server_max_window_bits_recv = 1;
                             ws_deflate->window_bits_deflate = (int)number;
+                        }
                         else
+                        {
+                            ws_deflate->client_max_window_bits_recv = 1;
                             ws_deflate->window_bits_inflate = (int)number;
+                        }
                     }
                 }
                 weechat_string_free_split (items);
@@ -388,7 +400,7 @@ relay_websocket_build_handshake (struct t_relay_http_request *request)
 {
     const char *sec_websocket_key;
     char *key, sec_websocket_accept[128], handshake[4096], hash[160 / 8];
-    char sec_websocket_extensions[512];
+    char **extensions, str_window_bits[128], sec_websocket_extensions[1024];
     int length, hash_size;
 
     if (!request)
@@ -426,17 +438,41 @@ relay_websocket_build_handshake (struct t_relay_http_request *request)
 
     if (request->ws_deflate->enabled)
     {
+        extensions = weechat_string_dyn_alloc (128);
+        if (!extensions)
+            return NULL;
+        weechat_string_dyn_concat (extensions, "permessage-deflate", -1);
+        if (!request->ws_deflate->server_context_takeover)
+        {
+            weechat_string_dyn_concat (extensions, "; ", -1);
+            weechat_string_dyn_concat (extensions, "server_no_context_takeover", -1);
+        }
+        if (!request->ws_deflate->client_context_takeover)
+        {
+            weechat_string_dyn_concat (extensions, "; ", -1);
+            weechat_string_dyn_concat (extensions, "client_no_context_takeover", -1);
+        }
+        if (request->ws_deflate->server_max_window_bits_recv)
+        {
+            weechat_string_dyn_concat (extensions, "; ", -1);
+            snprintf (str_window_bits, sizeof (str_window_bits),
+                      "server_max_window_bits=%d",
+                      request->ws_deflate->window_bits_deflate);
+            weechat_string_dyn_concat (extensions, str_window_bits, -1);
+        }
+        if (request->ws_deflate->client_max_window_bits_recv)
+        {
+            weechat_string_dyn_concat (extensions, "; ", -1);
+            snprintf (str_window_bits, sizeof (str_window_bits),
+                      "client_max_window_bits=%d",
+                      request->ws_deflate->window_bits_inflate);
+            weechat_string_dyn_concat (extensions, str_window_bits, -1);
+        }
         snprintf (
             sec_websocket_extensions, sizeof (sec_websocket_extensions),
-            "Sec-WebSocket-Extensions: permessage-deflate; "
-            "%s"
-            "%s"
-            "server_max_window_bits=%d; "
-            "client_max_window_bits=%d\r\n",
-            (!request->ws_deflate->server_context_takeover) ? "server_no_context_takeover; " : "",
-            (!request->ws_deflate->client_context_takeover) ? "client_no_context_takeover; " : "",
-            request->ws_deflate->window_bits_deflate,
-            request->ws_deflate->window_bits_inflate);
+            "Sec-WebSocket-Extensions: %s\r\n",
+            *extensions);
+        weechat_string_dyn_free (extensions, 1);
     }
     else
     {
@@ -951,11 +987,13 @@ relay_websocket_deflate_print_log (struct t_relay_websocket_deflate *ws_deflate,
                                    const char *prefix)
 {
     weechat_log_printf ("%s  ws_deflate:", prefix);
-    weechat_log_printf ("%s    enabled . . . . . . . . : %d", prefix, ws_deflate->enabled);
-    weechat_log_printf ("%s    server_context_takeover : %d", prefix, ws_deflate->server_context_takeover);
-    weechat_log_printf ("%s    client_context_takeover : %d", prefix, ws_deflate->client_context_takeover);
-    weechat_log_printf ("%s    window_bits_deflate . . : %d", prefix, ws_deflate->window_bits_deflate);
-    weechat_log_printf ("%s    window_bits_inflate . . : %d", prefix, ws_deflate->window_bits_inflate);
-    weechat_log_printf ("%s    strm_deflate. . . . . . : %p", prefix, ws_deflate->strm_deflate);
-    weechat_log_printf ("%s    strm_inflate. . . . . . : %p", prefix, ws_deflate->strm_inflate);
+    weechat_log_printf ("%s    enabled. . . . . . . . . . : %d", prefix, ws_deflate->enabled);
+    weechat_log_printf ("%s    server_context_takeover. . : %d", prefix, ws_deflate->server_context_takeover);
+    weechat_log_printf ("%s    client_context_takeover. . : %d", prefix, ws_deflate->client_context_takeover);
+    weechat_log_printf ("%s    window_bits_deflate. . . . : %d", prefix, ws_deflate->window_bits_deflate);
+    weechat_log_printf ("%s    window_bits_inflate. . . . : %d", prefix, ws_deflate->window_bits_inflate);
+    weechat_log_printf ("%s    server_max_window_bits_recv: %d", prefix, ws_deflate->server_max_window_bits_recv);
+    weechat_log_printf ("%s    client_max_window_bits_recv: %d", prefix, ws_deflate->client_max_window_bits_recv);
+    weechat_log_printf ("%s    strm_deflate . . . . . . . : %p", prefix, ws_deflate->strm_deflate);
+    weechat_log_printf ("%s    strm_inflate . . . . . . . : %p", prefix, ws_deflate->strm_inflate);
 }
