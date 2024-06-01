@@ -8,6 +8,14 @@
 :see-release-notes: If you are upgrading: please see release notes.
 :breaking: pass:quotes[*[breaking]*]
 
+[[v4.3.2]]
+== Version 4.3.2 (under dev)
+
+[[v4.3.2_fixed]]
+=== Fixed
+
+* relay: fix allocation and reinit of field "client_context_takeover" in websocket deflate structure
+
 [[v4.3.1]]
 == Version 4.3.1 (2024-05-31)
 

@@ -49,7 +49,7 @@ relay_websocket_deflate_alloc ()
 
     new_ws_deflate->enabled = 0;
     new_ws_deflate->server_context_takeover = 0;
-    new_ws_deflate->server_context_takeover = 0;
+    new_ws_deflate->client_context_takeover = 0;
     new_ws_deflate->window_bits_deflate = 0;
     new_ws_deflate->window_bits_inflate = 0;
     new_ws_deflate->strm_deflate = NULL;
@@ -145,7 +145,7 @@ relay_websocket_deflate_reinit (struct t_relay_websocket_deflate *ws_deflate)
 {
     ws_deflate->enabled = 0;
     ws_deflate->server_context_takeover = 0;
-    ws_deflate->server_context_takeover = 0;
+    ws_deflate->client_context_takeover = 0;
     ws_deflate->window_bits_deflate = 0;
     ws_deflate->window_bits_inflate = 0;
     relay_websocket_deflate_free_stream_deflate (ws_deflate);

@@ -103,7 +103,7 @@ TEST(RelayHttp, RequestAllocReinitFree)
     CHECK(request->ws_deflate);
     LONGS_EQUAL(0, request->ws_deflate->enabled);
     LONGS_EQUAL(0, request->ws_deflate->server_context_takeover);
-    LONGS_EQUAL(0, request->ws_deflate->server_context_takeover);
+    LONGS_EQUAL(0, request->ws_deflate->client_context_takeover);
     LONGS_EQUAL(0, request->ws_deflate->window_bits_deflate);
     LONGS_EQUAL(0, request->ws_deflate->window_bits_inflate);
     POINTERS_EQUAL(NULL, request->ws_deflate->strm_deflate);
@@ -146,7 +146,7 @@ TEST(RelayHttp, RequestAllocReinitFree)
     CHECK(request->ws_deflate);
     LONGS_EQUAL(0, request->ws_deflate->enabled);
     LONGS_EQUAL(0, request->ws_deflate->server_context_takeover);
-    LONGS_EQUAL(0, request->ws_deflate->server_context_takeover);
+    LONGS_EQUAL(0, request->ws_deflate->client_context_takeover);
     LONGS_EQUAL(0, request->ws_deflate->window_bits_deflate);
     LONGS_EQUAL(0, request->ws_deflate->window_bits_inflate);
     POINTERS_EQUAL(NULL, request->ws_deflate->strm_deflate);
@@ -565,7 +565,7 @@ TEST(RelayHttp, ParseHeader)
     CHECK(request->ws_deflate);
     LONGS_EQUAL(1, request->ws_deflate->enabled);
     LONGS_EQUAL(1, request->ws_deflate->server_context_takeover);
-    LONGS_EQUAL(1, request->ws_deflate->server_context_takeover);
+    LONGS_EQUAL(1, request->ws_deflate->client_context_takeover);
     LONGS_EQUAL(15, request->ws_deflate->window_bits_deflate);
     LONGS_EQUAL(15, request->ws_deflate->window_bits_inflate);
     POINTERS_EQUAL(NULL, request->ws_deflate->strm_deflate);
