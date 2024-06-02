@@ -14,7 +14,7 @@
 [[v4.3.2_changed]]
 === Changed
 
-* relay: enable websocket extension "permessage-deflate" with "api" relay only
+* relay: enable websocket extension "permessage-deflate" with "api" relay only (issue #1549)
 
 [[v4.3.2_added]]
 === Added
@@ -24,8 +24,8 @@
 [[v4.3.2_fixed]]
 === Fixed
 
-* relay: fix websocket permessage-deflate extension when the client doesn't send the max window bits parameters
-* relay: fix allocation and reinit of field "client_context_takeover" in websocket deflate structure
+* relay: fix websocket permessage-deflate extension when the client doesn't send the max window bits parameters (issue #1549)
+* relay: fix allocation and reinit of field "client_context_takeover" in websocket deflate structure (issue #1549)
 
 [[v4.3.1]]
 == Version 4.3.1 (2024-05-31)
