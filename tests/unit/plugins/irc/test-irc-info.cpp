@@ -215,7 +215,10 @@ TEST(IrcInfo, InfoIrcBufferCb)
     struct t_irc_nick *nick;
     char *str, str_pointer[64];
 
-    server = irc_server_alloc ("local");
+    run_cmd_quiet ("/mute /server add local fake:127.0.0.1");
+    run_cmd_quiet ("/connect local");
+
+    server = irc_server_search ("local");
     CHECK(server);
 
     channel = irc_channel_new (server, IRC_CHANNEL_TYPE_CHANNEL, "#test", 0, 0);
@@ -224,18 +227,20 @@ TEST(IrcInfo, InfoIrcBufferCb)
     nick = irc_nick_new (server, channel, "bob", "user@host", "@", 0, NULL, NULL);
     CHECK(nick);
 
-    channel_pv = irc_channel_new (server, IRC_CHANNEL_TYPE_PRIVATE, "bob",
-                                  1, 0);
+    channel_pv = irc_channel_new (server, IRC_CHANNEL_TYPE_PRIVATE, "bob", 1, 0);
     CHECK(channel_pv);
 
     POINTERS_EQUAL(NULL, hook_info_get (NULL, "irc_buffer", NULL));
     POINTERS_EQUAL(NULL, hook_info_get (NULL, "irc_buffer", ""));
     POINTERS_EQUAL(NULL, hook_info_get (NULL, "irc_buffer", "xxx"));
 
-    WEE_TEST_STR(NULL, hook_info_get (NULL, "irc_buffer", "local"));
+    snprintf (str_pointer, sizeof (str_pointer), "%p", server->buffer);
+    WEE_TEST_STR(str_pointer, hook_info_get (NULL, "irc_buffer", "local"));
 
     snprintf (str_pointer, sizeof (str_pointer), "%p", channel->buffer);
     WEE_TEST_STR(str_pointer, hook_info_get (NULL, "irc_buffer", "local,#test"));
+
+    POINTERS_EQUAL(NULL, hook_info_get (NULL, "irc_buffer", "local,#xxx"));
 
     snprintf (str_pointer, sizeof (str_pointer), "%p", channel->buffer);
     WEE_TEST_STR(str_pointer, hook_info_get (NULL, "irc_buffer", "local,#test,bob"));
@@ -245,7 +250,9 @@ TEST(IrcInfo, InfoIrcBufferCb)
         gui_buffer_close (channel_pv->buffer);
     if (channel->buffer)
         gui_buffer_close (channel->buffer);
-    irc_server_free (server);
+
+    run_cmd_quiet ("/mute /disconnect local");
+    run_cmd_quiet ("/mute /server del local");
 }
 
 /*
