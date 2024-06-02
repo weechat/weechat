@@ -11,6 +11,11 @@
 [[v4.3.2]]
 == Version 4.3.2 (under dev)
 
+[[v4.3.2_changed]]
+=== Changed
+
+* relay: enable websocket extension "permessage-deflate" with "api" relay only
+
 [[v4.3.2_added]]
 === Added
 

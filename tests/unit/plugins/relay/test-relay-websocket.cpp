@@ -167,7 +167,7 @@ TEST(RelayWebsocket, ClientHandshakeValid)
     LONGS_EQUAL(0, relay_websocket_client_handshake_valid (request));
 
     relay_websocket_deflate_reinit (request->ws_deflate);
-    relay_websocket_parse_extensions ("permessage-deflate", request->ws_deflate);
+    relay_websocket_parse_extensions ("permessage-deflate", request->ws_deflate, 1);
     LONGS_EQUAL(1, request->ws_deflate->enabled);
     LONGS_EQUAL(1, request->ws_deflate->server_context_takeover);
     LONGS_EQUAL(1, request->ws_deflate->client_context_takeover);
@@ -187,7 +187,8 @@ TEST(RelayWebsocket, ClientHandshakeValid)
     relay_websocket_deflate_reinit (request->ws_deflate);
     relay_websocket_parse_extensions (
         "permessage-deflate; client_max_window_bits",
-        request->ws_deflate);
+        request->ws_deflate,
+        1);
     LONGS_EQUAL(1, request->ws_deflate->enabled);
     LONGS_EQUAL(1, request->ws_deflate->server_context_takeover);
     LONGS_EQUAL(1, request->ws_deflate->client_context_takeover);
@@ -207,7 +208,8 @@ TEST(RelayWebsocket, ClientHandshakeValid)
     relay_websocket_deflate_reinit (request->ws_deflate);
     relay_websocket_parse_extensions (
         "permessage-deflate; client_max_window_bits = 12; server_no_context_takeover",
-        request->ws_deflate);
+        request->ws_deflate,
+        1);
     LONGS_EQUAL(1, request->ws_deflate->enabled);
     LONGS_EQUAL(0, request->ws_deflate->server_context_takeover);
     LONGS_EQUAL(1, request->ws_deflate->client_context_takeover);
@@ -227,7 +229,8 @@ TEST(RelayWebsocket, ClientHandshakeValid)
     relay_websocket_deflate_reinit (request->ws_deflate);
     relay_websocket_parse_extensions (
         "permessage-deflate; client_max_window_bits = 12; server_max_window_bits=8; client_no_context_takeover; server_no_context_takeover",
-        request->ws_deflate);
+        request->ws_deflate,
+        1);
     LONGS_EQUAL(1, request->ws_deflate->enabled);
     LONGS_EQUAL(0, request->ws_deflate->server_context_takeover);
     LONGS_EQUAL(0, request->ws_deflate->client_context_takeover);
@@ -256,16 +259,26 @@ TEST(RelayWebsocket, ParseExtensions)
 {
     struct t_relay_websocket_deflate ws_deflate;
 
-    relay_websocket_parse_extensions (NULL, NULL);
-    relay_websocket_parse_extensions ("test", NULL);
-    relay_websocket_parse_extensions (NULL, &ws_deflate);
+    relay_websocket_parse_extensions (NULL, NULL, 1);
+    relay_websocket_parse_extensions ("test", NULL, 1);
+    relay_websocket_parse_extensions (NULL, &ws_deflate, 1);
 
     memset (&ws_deflate, 0, sizeof (ws_deflate));
-    relay_websocket_parse_extensions ("test", &ws_deflate);
+    relay_websocket_parse_extensions ("test", &ws_deflate, 1);
     LONGS_EQUAL(0, ws_deflate.enabled);
 
     memset (&ws_deflate, 0, sizeof (ws_deflate));
-    relay_websocket_parse_extensions ("permessage-deflate", &ws_deflate);
+    relay_websocket_parse_extensions ("permessage-deflate", &ws_deflate, 0);
+    LONGS_EQUAL(0, ws_deflate.enabled);
+    LONGS_EQUAL(0, ws_deflate.server_context_takeover);
+    LONGS_EQUAL(0, ws_deflate.client_context_takeover);
+    LONGS_EQUAL(0, ws_deflate.window_bits_deflate);
+    LONGS_EQUAL(0, ws_deflate.window_bits_inflate);
+    POINTERS_EQUAL(NULL, ws_deflate.strm_deflate);
+    POINTERS_EQUAL(NULL, ws_deflate.strm_inflate);
+
+    memset (&ws_deflate, 0, sizeof (ws_deflate));
+    relay_websocket_parse_extensions ("permessage-deflate", &ws_deflate, 1);
     LONGS_EQUAL(1, ws_deflate.enabled);
     LONGS_EQUAL(1, ws_deflate.server_context_takeover);
     LONGS_EQUAL(1, ws_deflate.client_context_takeover);
@@ -276,7 +289,8 @@ TEST(RelayWebsocket, ParseExtensions)
 
     memset (&ws_deflate, 0, sizeof (ws_deflate));
     relay_websocket_parse_extensions ("permessage-deflate; client_max_window_bits",
-                                      &ws_deflate);
+                                      &ws_deflate,
+                                      1);
     LONGS_EQUAL(1, ws_deflate.enabled);
     LONGS_EQUAL(1, ws_deflate.server_context_takeover);
     LONGS_EQUAL(1, ws_deflate.client_context_takeover);
@@ -289,7 +303,8 @@ TEST(RelayWebsocket, ParseExtensions)
     memset (&ws_deflate, 0, sizeof (ws_deflate));
     relay_websocket_parse_extensions (
         "permessage-deflate; client_max_window_bits=4",
-        &ws_deflate);
+        &ws_deflate,
+        1);
     LONGS_EQUAL(1, ws_deflate.enabled);
     LONGS_EQUAL(1, ws_deflate.server_context_takeover);
     LONGS_EQUAL(1, ws_deflate.client_context_takeover);
@@ -302,7 +317,8 @@ TEST(RelayWebsocket, ParseExtensions)
     memset (&ws_deflate, 0, sizeof (ws_deflate));
     relay_websocket_parse_extensions (
         "permessage-deflate; client_max_window_bits=30",
-        &ws_deflate);
+        &ws_deflate,
+        1);
     LONGS_EQUAL(1, ws_deflate.enabled);
     LONGS_EQUAL(1, ws_deflate.server_context_takeover);
     LONGS_EQUAL(1, ws_deflate.client_context_takeover);
@@ -315,7 +331,8 @@ TEST(RelayWebsocket, ParseExtensions)
     memset (&ws_deflate, 0, sizeof (ws_deflate));
     relay_websocket_parse_extensions (
         "permessage-deflate; client_max_window_bits=test",
-        &ws_deflate);
+        &ws_deflate,
+        1);
     LONGS_EQUAL(1, ws_deflate.enabled);
     LONGS_EQUAL(1, ws_deflate.server_context_takeover);
     LONGS_EQUAL(1, ws_deflate.client_context_takeover);
@@ -327,7 +344,8 @@ TEST(RelayWebsocket, ParseExtensions)
     memset (&ws_deflate, 0, sizeof (ws_deflate));
     relay_websocket_parse_extensions (
         "permessage-deflate; client_max_window_bits=9",
-        &ws_deflate);
+        &ws_deflate,
+        1);
     LONGS_EQUAL(1, ws_deflate.enabled);
     LONGS_EQUAL(1, ws_deflate.server_context_takeover);
     LONGS_EQUAL(1, ws_deflate.client_context_takeover);
@@ -339,7 +357,8 @@ TEST(RelayWebsocket, ParseExtensions)
     memset (&ws_deflate, 0, sizeof (ws_deflate));
     relay_websocket_parse_extensions (
         "permessage-deflate; client_max_window_bits=9; server_max_window_bits=10",
-        &ws_deflate);
+        &ws_deflate,
+        1);
     LONGS_EQUAL(1, ws_deflate.enabled);
     LONGS_EQUAL(1, ws_deflate.server_context_takeover);
     LONGS_EQUAL(1, ws_deflate.client_context_takeover);
@@ -352,7 +371,8 @@ TEST(RelayWebsocket, ParseExtensions)
     relay_websocket_parse_extensions (
         "permessage-deflate; client_max_window_bits=9; server_max_window_bits=10; "
         "server_no_context_takeover",
-        &ws_deflate);
+        &ws_deflate,
+        1);
     LONGS_EQUAL(1, ws_deflate.enabled);
     LONGS_EQUAL(0, ws_deflate.server_context_takeover);
     LONGS_EQUAL(1, ws_deflate.client_context_takeover);
@@ -365,7 +385,8 @@ TEST(RelayWebsocket, ParseExtensions)
     relay_websocket_parse_extensions (
         "permessage-deflate; client_max_window_bits=9; server_max_window_bits=10; "
         "server_no_context_takeover; client_no_context_takeover",
-        &ws_deflate);
+        &ws_deflate,
+        1);
     LONGS_EQUAL(1, ws_deflate.enabled);
     LONGS_EQUAL(0, ws_deflate.server_context_takeover);
     LONGS_EQUAL(0, ws_deflate.client_context_takeover);
