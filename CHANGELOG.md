@@ -4,11 +4,11 @@
 
 ### Changed
 
-- relay: enable websocket extension "permessage-deflate" with "api" relay only
+- relay: enable websocket extension "permessage-deflate" with "api" relay only ([#1549](https://github.com/weechat/weechat/issues/1549))
 
 ### Added
 
-- relay: add option relay.network.websocket_permessage_deflate
+- relay: add option relay.network.websocket_permessage_deflate ([#1549](https://github.com/weechat/weechat/issues/1549))
 - relay: add option relay.look.raw_messages_max_length ([#2122](https://github.com/weechat/weechat/issues/2122))
 - relay: add infos "relay_api_version" and "relay_api_version_number"
 
@@ -18,8 +18,8 @@
 - xfer: fix send of data on the DCC chat buffer after `/upgrade` if the buffer was opened before the upgrade ([#2092](https://github.com/weechat/weechat/issues/2092))
 - php: fix return value of function hdata_longlong
 - tcl: fix return value of function hdata_longlong ([#2119](https://github.com/weechat/weechat/issues/2119))
-- relay: fix websocket permessage-deflate extension when the client doesn't send the max window bits parameters
-- relay: fix allocation and reinit of field "client_context_takeover" in websocket deflate structure
+- relay: fix websocket permessage-deflate extension when the client doesn't send the max window bits parameters ([#1549](https://github.com/weechat/weechat/issues/1549))
+- relay: fix allocation and reinit of field "client_context_takeover" in websocket deflate structure ([#1549](https://github.com/weechat/weechat/issues/1549))
 - core: fix detection of libgcrypt ≥ 1.11 ([debian #1071960](https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1071960))
 - core, relay: fix include directory of libcjson and libzstd
 - tests: fix relay tests on s390x ([#2118](https://github.com/weechat/weechat/issues/2118))
