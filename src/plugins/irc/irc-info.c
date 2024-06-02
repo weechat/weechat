@@ -298,7 +298,11 @@ irc_info_info_irc_buffer_cb (const void *pointer, void *data,
 
     /* search for server or channel buffer */
     if (server && ptr_server && channel)
+    {
         ptr_channel = irc_channel_search (ptr_server, channel);
+        if (!ptr_channel)
+            ptr_server = NULL;
+    }
 
     free (server);
     free (channel);
