@@ -48,18 +48,18 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### Changed
 
-- **breaking**: irc: add server option "autojoin_delay" (delay before autojoin), use option "command_delay" before execution of the command ([#862](https://github.com/weechat/weechat/issues/862))
-- **breaking**: irc: rename option irc.color.item_channel_modes to weechat.color.status_modes
-- **breaking**: irc: add option `-all` in command `/allchan`, do not execute command on parted channels by default ([#2085](https://github.com/weechat/weechat/issues/2085))
-- **breaking**: relay: rename option relay.weechat.commands to relay.network.commands and change default to `*,!quit` ([#2066](https://github.com/weechat/weechat/issues/2066))
-- **breaking**: relay: change option type relay.look.auto_open_buffer to string ([#2066](https://github.com/weechat/weechat/issues/2066))
-- **breaking**: core: add buffer properties "input_prompt" and "modes", used to display bar items ([#2066](https://github.com/weechat/weechat/issues/2066))
-- **breaking**: core: add bar item "lag" to display lag on relay remote buffers ([#2066](https://github.com/weechat/weechat/issues/2066))
-- **breaking**: core: send signal "buffer_line_added" on buffers with free content
-- **breaking**: core: convert option weechat.look.hotlist_sort to a list of fields ([#2097](https://github.com/weechat/weechat/issues/2097))
-- **breaking**: core: rename variables with creation time in hdata "hotlist": "creation_time.tv_sec" to "time" and "creation_time.tv_usec" to "time_usec"
-- **breaking**: api: return `-1` or `1` if one input string is NULL and not the other in string comparison functions
-- **breaking**: api: use whole replacement string instead of first char in function string_remove_color
+- **breaking:** irc: add server option "autojoin_delay" (delay before autojoin), use option "command_delay" before execution of the command ([#862](https://github.com/weechat/weechat/issues/862))
+- **breaking:** irc: rename option irc.color.item_channel_modes to weechat.color.status_modes
+- **breaking:** irc: add option `-all` in command `/allchan`, do not execute command on parted channels by default ([#2085](https://github.com/weechat/weechat/issues/2085))
+- **breaking:** relay: rename option relay.weechat.commands to relay.network.commands and change default to `*,!quit` ([#2066](https://github.com/weechat/weechat/issues/2066))
+- **breaking:** relay: change option type relay.look.auto_open_buffer to string ([#2066](https://github.com/weechat/weechat/issues/2066))
+- **breaking:** core: add buffer properties "input_prompt" and "modes", used to display bar items ([#2066](https://github.com/weechat/weechat/issues/2066))
+- **breaking:** core: add bar item "lag" to display lag on relay remote buffers ([#2066](https://github.com/weechat/weechat/issues/2066))
+- **breaking:** core: send signal "buffer_line_added" on buffers with free content
+- **breaking:** core: convert option weechat.look.hotlist_sort to a list of fields ([#2097](https://github.com/weechat/weechat/issues/2097))
+- **breaking:** core: rename variables with creation time in hdata "hotlist": "creation_time.tv_sec" to "time" and "creation_time.tv_usec" to "time_usec"
+- **breaking:** api: return `-1` or `1` if one input string is NULL and not the other in string comparison functions
+- **breaking:** api: use whole replacement string instead of first char in function string_remove_color
 - core: use nick offline color for nick in action message
 - core: display a specific message when the value of option is unchanged after `/set` command
 - core: add variable `${highlight}` in option weechat.look.buffer_time_format ([#2079](https://github.com/weechat/weechat/issues/2079))
