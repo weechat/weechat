@@ -71,7 +71,8 @@ extern int relay_websocket_is_valid_http_get (enum t_relay_protocol protocol,
                                               const char *message);
 extern int relay_websocket_client_handshake_valid (struct t_relay_http_request *request);
 extern void relay_websocket_parse_extensions (const char *extensions,
-                                              struct t_relay_websocket_deflate *ws_deflate);
+                                              struct t_relay_websocket_deflate *ws_deflate,
+                                              int ws_deflate_allowed);
 extern char *relay_websocket_build_handshake (struct t_relay_http_request *request);
 extern int relay_websocket_decode_frame (const unsigned char *buffer,
                                          unsigned long long length,

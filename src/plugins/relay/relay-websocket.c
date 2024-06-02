@@ -301,7 +301,8 @@ relay_websocket_client_handshake_valid (struct t_relay_http_request *request)
 
 void
 relay_websocket_parse_extensions (const char *extensions,
-                                  struct t_relay_websocket_deflate *ws_deflate)
+                                  struct t_relay_websocket_deflate *ws_deflate,
+                                  int ws_deflate_allowed)
 {
     char **exts, **params, **items, *error;
     int i, j, num_exts, num_params, num_items;
@@ -319,6 +320,7 @@ relay_websocket_parse_extensions (const char *extensions,
         params = weechat_string_split (exts[i], ";", " ", 0, 0, &num_params);
         if (params && (num_params >= 1)
             && (strcmp (params[0], "permessage-deflate") == 0)
+            && ws_deflate_allowed
             && (weechat_config_boolean (relay_config_network_websocket_permessage_deflate)))
         {
             ws_deflate->enabled = 1;

@@ -207,7 +207,8 @@ relay_remote_network_check_auth (struct t_relay_remote *remote,
 
     relay_websocket_parse_extensions (
         weechat_hashtable_get (http_resp->headers, "sec-websocket-extensions"),
-        remote->ws_deflate);
+        remote->ws_deflate,
+        1);  /* ws_deflate_allowed */
 
     if (!accept_ok)
     {

@@ -2,6 +2,10 @@
 
 ## Version 4.4.0 (under dev)
 
+### Changed
+
+- relay: enable websocket extension "permessage-deflate" with "api" relay only
+
 ### Added
 
 - relay: add option relay.network.websocket_permessage_deflate

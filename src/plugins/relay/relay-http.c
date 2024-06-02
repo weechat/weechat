@@ -385,6 +385,10 @@ error:
 /*
  * Parses and saves a HTTP header in hashtable "headers".
  *
+ * The parameter "ws_deflate_allowed" controls whether the websocket extension
+ * "permessage-deflate" is allowed or not (it is allowed only with "api"
+ * protocol).
+ *
  * Returns:
  *   1: OK, header saved
  *   0: error: invalid format
@@ -392,7 +396,8 @@ error:
 
 int
 relay_http_parse_header (struct t_relay_http_request *request,
-                         const char *header)
+                         const char *header,
+                         int ws_deflate_allowed)
 {
     char *pos, *name, *name_lower, *error, **items;
     const char *ptr_value;
@@ -465,7 +470,12 @@ relay_http_parse_header (struct t_relay_http_request *request,
      * extensions
      */
     if (strcmp (name_lower, "sec-websocket-extensions") == 0)
-        relay_websocket_parse_extensions (ptr_value, request->ws_deflate);
+    {
+        relay_websocket_parse_extensions (
+            ptr_value,
+            request->ws_deflate,
+            ws_deflate_allowed);
+    }
 
     free (name);
     free (name_lower);
@@ -891,7 +901,7 @@ void
 relay_http_recv (struct t_relay_client *client, const char *data)
 {
     char *new_partial, *pos;
-    int length;
+    int length, ws_deflate_allowed;
 
     if (client->partial_message)
     {
@@ -924,8 +934,11 @@ relay_http_recv (struct t_relay_client *client, const char *data)
             }
             else
             {
+                ws_deflate_allowed = (client->protocol == RELAY_PROTOCOL_API) ?
+                    1 : 0;
                 relay_http_parse_header (client->http_req,
-                                         client->partial_message);
+                                         client->partial_message,
+                                         ws_deflate_allowed);
             }
             pos[0] = '\r';
             pos++;

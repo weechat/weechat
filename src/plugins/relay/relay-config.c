@@ -1759,7 +1759,7 @@ relay_config_init ()
             relay_config_file, relay_config_section_network,
             "websocket_permessage_deflate", "boolean",
             N_("enable websocket extension \"permessage-deflate\" to compress "
-               "websocket frames, with \"api\" and \"weechat\" protocols; "
+               "websocket frames (\"api\" protocol only); "
                "if disabled, WeeChat (as server) will not enable "
                "permessage-deflate even if the client supports it, and when "
                "connecting to a remote WeeChat (api relay only), "
