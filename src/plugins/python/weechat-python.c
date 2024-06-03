@@ -1606,6 +1606,12 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
                            "",
                            &weechat_python_infolist_cb, NULL, NULL);
 
+#if PY_VERSION_HEX >= 0x030C0000 && PY_VERSION_HEX < 0x030D0000
+    // Workaround for crash when ending interpreters in Python 3.12
+    // See https://github.com/weechat/weechat/issues/2046
+    weechat_python_eval (NULL, 0, 0, "");
+#endif
+
     /* init OK */
     return WEECHAT_RC_OK;
 }
