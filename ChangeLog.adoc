@@ -24,6 +24,7 @@
 [[v4.3.2_fixed]]
 === Fixed
 
+* irc: fix display of input prompt in private buffers (issue #2128)
 * irc: don't return pointer to irc server if the channel or nick is not found in info "irc_buffer"
 * relay: fix websocket permessage-deflate extension when the client doesn't send the max window bits parameters (issue #1549)
 * relay: fix allocation and reinit of field "client_context_takeover" in websocket deflate structure (issue #1549)
