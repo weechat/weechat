@@ -14,6 +14,7 @@
 
 ### Fixed
 
+- irc: fix display of input prompt in private buffers ([#2128](https://github.com/weechat/weechat/issues/2128))
 - irc: close /list buffer when the server buffer is closed ([#2121](https://github.com/weechat/weechat/issues/2121))
 - xfer: fix send of data on the DCC chat buffer after `/upgrade` if the buffer was opened before the upgrade ([#2092](https://github.com/weechat/weechat/issues/2092))
 - php: fix return value of function hdata_longlong

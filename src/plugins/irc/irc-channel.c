@@ -49,6 +49,10 @@ char *irc_channel_typing_state_string[IRC_CHANNEL_NUM_TYPING_STATES] =
 char *irc_channel_default_chantypes = "#&";
 
 
+char *irc_channel_get_buffer_input_prompt (struct t_irc_server *server,
+                                           struct t_irc_channel *channel);
+
+
 /*
  * Checks if a channel pointer is valid for a server.
  *
@@ -185,7 +189,7 @@ irc_channel_create_buffer (struct t_irc_server *server,
     struct t_hashtable *buffer_props;
     int buffer_created, current_buffer_number, buffer_position;
     int autojoin_join, manual_join, noswitch;
-    char str_number[32], *channel_name_lower, *buffer_name;
+    char str_number[32], *channel_name_lower, *buffer_name, *prompt;
     const char *short_name, *localvar_channel;
 
     buffer_created = 0;
@@ -225,6 +229,9 @@ irc_channel_create_buffer (struct t_irc_server *server,
             buffer_props,
             "localvar_set_type",
             (channel_type == IRC_CHANNEL_TYPE_CHANNEL) ? "channel" : "private");
+        prompt = irc_channel_get_buffer_input_prompt (server, NULL);
+        weechat_hashtable_set (buffer_props, "input_prompt", (prompt) ? prompt : "");
+        free (prompt);
         weechat_hashtable_set (buffer_props, "localvar_set_nick", server->nick);
         weechat_hashtable_set (buffer_props, "localvar_set_host", server->host);
         weechat_hashtable_set (buffer_props, "localvar_set_server", server->name);
@@ -612,6 +619,62 @@ irc_channel_set_buffer_modes (struct t_irc_server *server,
 }
 
 /*
+ * Gets input prompt for a channel (channel is optional: when channel is not
+ * given, the prefix for nick is not returned).
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+irc_channel_get_buffer_input_prompt (struct t_irc_server *server,
+                                     struct t_irc_channel *channel)
+{
+    struct t_irc_nick *ptr_nick;
+    int display_modes;
+    char str_prefix[64], *prompt;
+
+    if (!server || !server->nick)
+        return NULL;
+
+    /* build prefix */
+    str_prefix[0] = '\0';
+    if (channel
+        && (channel->type == IRC_CHANNEL_TYPE_CHANNEL)
+        && weechat_config_boolean (irc_config_look_item_nick_prefix))
+    {
+        ptr_nick = irc_nick_search (server, channel, server->nick);
+        if (ptr_nick)
+        {
+            if (weechat_config_boolean (irc_config_look_nick_mode_empty)
+                || (ptr_nick->prefix[0] != ' '))
+            {
+                snprintf (str_prefix, sizeof (str_prefix), "%s%s",
+                          weechat_color (
+                              irc_nick_get_prefix_color_name (
+                                  server, ptr_nick->prefix[0])),
+                          ptr_nick->prefix);
+            }
+        }
+    }
+
+    display_modes = (weechat_config_boolean (irc_config_look_item_nick_modes)
+                     && server->nick_modes && server->nick_modes[0]);
+
+    weechat_asprintf (&prompt, "%s%s%s%s%s%s%s%s%s",
+                      str_prefix,
+                      IRC_COLOR_INPUT_NICK,
+                      server->nick,
+                      (display_modes) ? IRC_COLOR_BAR_DELIM : "",
+                      (display_modes) ? "(" : "",
+                      (display_modes) ? IRC_COLOR_ITEM_NICK_MODES : "",
+                      (display_modes) ? server->nick_modes : "",
+                      (display_modes) ? IRC_COLOR_BAR_DELIM : "",
+                      (display_modes) ? ")" : "");
+
+    return prompt;
+}
+
+/*
  * Sets input prompt on channel buffer.
  */
 
@@ -619,58 +682,14 @@ void
 irc_channel_set_buffer_input_prompt (struct t_irc_server *server,
                                      struct t_irc_channel *channel)
 {
-    struct t_irc_nick *ptr_nick;
-    int display_modes;
-    char str_prefix[64], *prompt;
+    char *prompt;
 
     if (!server || !channel || !channel->buffer)
         return;
 
-    if (server->nick)
-    {
-        /* build prefix */
-        str_prefix[0] = '\0';
-        if (weechat_config_boolean (irc_config_look_item_nick_prefix)
-            && (channel->type == IRC_CHANNEL_TYPE_CHANNEL))
-        {
-            ptr_nick = irc_nick_search (server, channel, server->nick);
-            if (ptr_nick)
-            {
-                if (weechat_config_boolean (irc_config_look_nick_mode_empty)
-                    || (ptr_nick->prefix[0] != ' '))
-                {
-                    snprintf (str_prefix, sizeof (str_prefix), "%s%s",
-                              weechat_color (
-                                  irc_nick_get_prefix_color_name (
-                                      server, ptr_nick->prefix[0])),
-                              ptr_nick->prefix);
-                }
-            }
-        }
-
-        display_modes = (weechat_config_boolean (irc_config_look_item_nick_modes)
-                         && server->nick_modes && server->nick_modes[0]);
-
-        weechat_asprintf (&prompt, "%s%s%s%s%s%s%s%s%s",
-                          str_prefix,
-                          IRC_COLOR_INPUT_NICK,
-                          server->nick,
-                          (display_modes) ? IRC_COLOR_BAR_DELIM : "",
-                          (display_modes) ? "(" : "",
-                          (display_modes) ? IRC_COLOR_ITEM_NICK_MODES : "",
-                          (display_modes) ? server->nick_modes : "",
-                          (display_modes) ? IRC_COLOR_BAR_DELIM : "",
-                          (display_modes) ? ")" : "");
-        if (prompt)
-        {
-            weechat_buffer_set (channel->buffer, "input_prompt", prompt);
-            free (prompt);
-        }
-    }
-    else
-    {
-        weechat_buffer_set (channel->buffer, "input_prompt", "");
-    }
+    prompt = irc_channel_get_buffer_input_prompt (server, channel);
+    weechat_buffer_set (channel->buffer, "input_prompt", (prompt) ? prompt : "");
+    free (prompt);
 }
 
 /*
