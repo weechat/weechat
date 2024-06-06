@@ -1,3 +1,19 @@
+weechat (4.3.1-1) unstable; urgency=medium
+
+  * New upstream release (Closes: #1067608)
+    - fix FTBFS against libgcrypt 1.11 (Closes: #1071960)
+  * Add build dependency on libcjson-dev
+  * Replace pkg-config build dependency by pkgconf
+  * Minor updates in debian/copyright
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Sat, 01 Jun 2024 14:21:02 +0000
+
+weechat (4.1.1-1) unstable; urgency=medium
+
+  * New upstream release (Closes: #1055278)
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Fri, 03 Nov 2023 20:23:37 +0000
+
 weechat (4.0.5-1) unstable; urgency=medium
 
   * New upstream release
