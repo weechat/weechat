@@ -380,6 +380,7 @@ xfer_chat_open_buffer (struct t_xfer *xfer)
             weechat_buffer_set (xfer->buffer, "short_name",
                                 xfer->remote_nick);
         }
+        weechat_buffer_set (xfer->buffer, "input_prompt", xfer->local_nick);
         weechat_buffer_set (xfer->buffer, "localvar_set_type", "private");
         weechat_buffer_set (xfer->buffer, "localvar_set_nick", xfer->local_nick);
         weechat_buffer_set (xfer->buffer, "localvar_set_channel", xfer->remote_nick);
