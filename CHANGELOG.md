@@ -28,6 +28,23 @@
 - tests: fix compilation of tests on Fedora 40 ([#2116](https://github.com/weechat/weechat/issues/2116))
 - tests: fix compilation of tests on Rocky 9.4
 
+## Version 4.3.2 (2024-06-06)
+
+### Changed
+
+- relay: enable websocket extension "permessage-deflate" with "api" relay only ([#1549](https://github.com/weechat/weechat/issues/1549))
+
+### Added
+
+- relay: add option relay.look.raw_messages_max_length ([#2122](https://github.com/weechat/weechat/issues/2122))
+
+### Fixed
+
+- irc, xfer: fix display of input prompt in IRC private buffers and DCC chat buffers ([#2128](https://github.com/weechat/weechat/issues/2128))
+- irc: don't return pointer to irc server if the channel or nick is not found in info "irc_buffer"
+- relay: fix websocket permessage-deflate extension when the client doesn't send the max window bits parameters ([#1549](https://github.com/weechat/weechat/issues/1549))
+- relay: fix allocation and reinit of field "client_context_takeover" in websocket deflate structure ([#1549](https://github.com/weechat/weechat/issues/1549))
+
 ## Version 4.3.1 (2024-05-31)
 
 ### Fixed
