@@ -115,7 +115,7 @@ Die folgende Tabelle zeigt eine Auflistung der Pakete, die zum Erstellen von Wee
 | cmake | ≥ 3.0
 | bauen.
 
-| pkg-config |
+| pkgconf / pkg-config |
 | entdeckt installierte Bibliotheken.
 
 | libncurses-dev |

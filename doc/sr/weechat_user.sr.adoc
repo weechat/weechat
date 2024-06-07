@@ -110,7 +110,7 @@ WeeChat мора да се изгради са CMake.
 | cmake | ≥ 3.0
 | Изградњу.
 
-| pkg-config |
+| pkgconf / pkg-config |
 | Детекција инсталираних библиотека.
 
 | libncurses-dev |

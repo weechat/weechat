@@ -110,7 +110,7 @@ WeeChat:
 | cmake | ≥ 3.0
 | Build.
 
-| pkg-config |
+| pkgconf / pkg-config |
 | Detect installed libraries.
 
 | libncurses-dev |

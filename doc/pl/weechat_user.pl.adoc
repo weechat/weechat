@@ -114,7 +114,7 @@ WeeChat:
 | cmake | ≥ 3.0
 | Kompilacja.
 
-| pkg-config |
+| pkgconf / pkg-config |
 | Wykrywa zainstalowane biblioteki.
 
 | libncurses-dev |

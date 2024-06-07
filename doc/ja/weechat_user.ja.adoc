@@ -125,7 +125,7 @@ WeeChat:
 | cmake | ≥ 3.0
 | ビルド
 
-| pkg-config |
+| pkgconf / pkg-config |
 | インストール済みライブラリを検出
 
 | libncurses-dev |

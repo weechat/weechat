@@ -110,7 +110,7 @@ Le tableau suivant liste les paquets *requis* pour construire WeeChat :
 | cmake | ≥ 3.0
 | Construction.
 
-| pkg-config |
+| pkgconf / pkg-config |
 | Détection des bibliothèques installées.
 
 | libncurses-dev |

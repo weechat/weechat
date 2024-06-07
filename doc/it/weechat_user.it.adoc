@@ -136,7 +136,7 @@ WeeChat:
 | Build.
 
 // TRANSLATION MISSING
-| pkg-config |
+| pkgconf / pkg-config |
 | Detect installed libraries.
 
 | libncurses-dev |
