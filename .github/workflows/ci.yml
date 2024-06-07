@@ -33,7 +33,7 @@ env:
     libzstd-dev
     ninja-build
     php-dev
-    pkg-config
+    pkgconf
     pylint
     python3-bandit
     python3-dev
@@ -167,7 +167,7 @@ jobs:
           /usr/local/bin/python3.11 \
           /usr/local/bin/python3.11-config \
         ;
-        brew install asciidoctor cjson guile lua pkg-config ruby
+        brew install asciidoctor cjson guile lua pkgconf ruby
 
     - uses: actions/checkout@v2
 
