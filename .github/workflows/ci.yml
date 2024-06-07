@@ -167,7 +167,7 @@ jobs:
           /usr/local/bin/python3.11 \
           /usr/local/bin/python3.11-config \
         ;
-        brew install asciidoctor cjson guile lua pkgconf ruby
+        brew install asciidoctor cjson guile lua pkg-config ruby
 
     - uses: actions/checkout@v2
 
