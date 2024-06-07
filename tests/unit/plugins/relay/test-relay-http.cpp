@@ -47,7 +47,8 @@ extern void relay_http_parse_path (const char *url,
                                    char ***paths, int *num_paths,
                                    struct t_hashtable *params);
 extern int relay_http_parse_header (struct t_relay_http_request *request,
-                                    const char *header);
+                                    const char *header,
+                                    int ws_deflate_allowed);
 extern void relay_http_add_to_body (struct t_relay_http_request *request,
                                     char **partial_message);
 extern int relay_http_get_auth_status (struct t_relay_client *client);
@@ -478,7 +479,7 @@ TEST(RelayHttp, ParseHeader)
     request = relay_http_request_alloc ();
     CHECK(request);
     relay_http_parse_method_path (request, "GET /api/version");
-    relay_http_parse_header (request, NULL);
+    relay_http_parse_header (request, NULL, 1);
     LONGS_EQUAL(RELAY_HTTP_END, request->status);
     STRCMP_EQUAL("GET /api/version\n"
                  "\n",
@@ -489,7 +490,7 @@ TEST(RelayHttp, ParseHeader)
     request = relay_http_request_alloc ();
     CHECK(request);
     relay_http_parse_method_path (request, "GET /api/version");
-    relay_http_parse_header (request, "");
+    relay_http_parse_header (request, "", 1);
     LONGS_EQUAL(RELAY_HTTP_END, request->status);
     STRCMP_EQUAL("GET /api/version\n"
                  "\n",
@@ -500,7 +501,7 @@ TEST(RelayHttp, ParseHeader)
     request = relay_http_request_alloc ();
     CHECK(request);
     relay_http_parse_method_path (request, "GET /api/version");
-    relay_http_parse_header (request, "Test");
+    relay_http_parse_header (request, "Test", 1);
     LONGS_EQUAL(RELAY_HTTP_HEADERS, request->status);
     STRCMP_EQUAL("GET /api/version\n"
                  "Test\n",
@@ -511,7 +512,7 @@ TEST(RelayHttp, ParseHeader)
     request = relay_http_request_alloc ();
     CHECK(request);
     relay_http_parse_method_path (request, "GET /api/version");
-    relay_http_parse_header (request, "X-Test: value");
+    relay_http_parse_header (request, "X-Test: value", 1);
     LONGS_EQUAL(RELAY_HTTP_HEADERS, request->status);
     STRCMP_EQUAL("GET /api/version\n"
                  "X-Test: value\n",
@@ -523,7 +524,7 @@ TEST(RelayHttp, ParseHeader)
     request = relay_http_request_alloc ();
     CHECK(request);
     relay_http_parse_method_path (request, "GET /api/version");
-    relay_http_parse_header (request, "Accept-Encoding: gzip, zstd, br");
+    relay_http_parse_header (request, "Accept-Encoding: gzip, zstd, br", 1);
     LONGS_EQUAL(RELAY_HTTP_HEADERS, request->status);
     STRCMP_EQUAL("GET /api/version\n"
                  "Accept-Encoding: gzip, zstd, br\n",
@@ -540,7 +541,7 @@ TEST(RelayHttp, ParseHeader)
     request = relay_http_request_alloc ();
     CHECK(request);
     relay_http_parse_method_path (request, "GET /api/version");
-    relay_http_parse_header (request, "Content-Length: 123");
+    relay_http_parse_header (request, "Content-Length: 123", 1);
     LONGS_EQUAL(RELAY_HTTP_HEADERS, request->status);
     STRCMP_EQUAL("GET /api/version\n"
                  "Content-Length: 123\n",
@@ -555,7 +556,8 @@ TEST(RelayHttp, ParseHeader)
     relay_http_parse_method_path (request, "GET /api HTTP/1.1");
     relay_http_parse_header (
         request,
-        "Sec-WebSocket-Extensions: permessage-deflate; client_max_window_bits");
+        "Sec-WebSocket-Extensions: permessage-deflate; client_max_window_bits",
+        1);
     LONGS_EQUAL(RELAY_HTTP_HEADERS, request->status);
     STRCMP_EQUAL(
         "GET /api HTTP/1.1\n"
@@ -589,8 +591,8 @@ TEST(RelayHttp, AddToBody)
     LONGS_EQUAL(RELAY_HTTP_METHOD, request->status);
     relay_http_parse_method_path (request, "GET /api/version");
     LONGS_EQUAL(RELAY_HTTP_HEADERS, request->status);
-    relay_http_parse_header (request, "Content-Length: 10");
-    relay_http_parse_header (request, "");
+    relay_http_parse_header (request, "Content-Length: 10", 1);
+    relay_http_parse_header (request, "", 1);
     LONGS_EQUAL(RELAY_HTTP_BODY, request->status);
     LONGS_EQUAL(10, request->content_length);
     LONGS_EQUAL(0, request->body_size);
@@ -616,8 +618,8 @@ TEST(RelayHttp, AddToBody)
     LONGS_EQUAL(RELAY_HTTP_METHOD, request->status);
     relay_http_parse_method_path (request, "GET /api/version");
     LONGS_EQUAL(RELAY_HTTP_HEADERS, request->status);
-    relay_http_parse_header (request, "Content-Length: 5");
-    relay_http_parse_header (request, "");
+    relay_http_parse_header (request, "Content-Length: 5", 1);
+    relay_http_parse_header (request, "", 1);
     LONGS_EQUAL(RELAY_HTTP_BODY, request->status);
     LONGS_EQUAL(5, request->content_length);
     LONGS_EQUAL(0, request->body_size);
