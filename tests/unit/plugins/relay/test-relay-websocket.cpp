@@ -165,6 +165,7 @@ TEST(RelayWebsocket, ClientHandshakeValid)
     LONGS_EQUAL(-2, relay_websocket_client_handshake_valid (request));
     hashtable_set (request->headers, "origin", "example.com");
     LONGS_EQUAL(0, relay_websocket_client_handshake_valid (request));
+    config_file_option_reset (relay_config_network_websocket_allowed_origins, 1);
 
     relay_websocket_deflate_reinit (request->ws_deflate);
     relay_websocket_parse_extensions ("permessage-deflate", request->ws_deflate, 1);
