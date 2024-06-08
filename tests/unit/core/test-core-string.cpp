@@ -1933,6 +1933,65 @@ TEST(CoreString, SplitShell)
     POINTERS_EQUAL(NULL, argv[4]);
     string_free_split (argv);
 
+    /* test with quote characters inside words: they are stripped */
+    argv = string_split_shell ("test\"single\"word", &argc);
+    LONGS_EQUAL(1, argc);
+    CHECK(argv);
+    STRCMP_EQUAL("testsingleword", argv[0]);
+    POINTERS_EQUAL(NULL, argv[1]);
+    string_free_split (argv);
+
+    /* test with enclosing characters in quotes */
+    argv = string_split_shell ("test \"'\"", &argc);
+    LONGS_EQUAL(2, argc);
+    CHECK(argv);
+    STRCMP_EQUAL("test", argv[0]);
+    STRCMP_EQUAL("'", argv[1]);
+    POINTERS_EQUAL(NULL, argv[2]);
+    string_free_split (argv);
+
+    /* test with quoted empty strings */
+    argv = string_split_shell ("test '' \"\"", &argc);
+    LONGS_EQUAL(3, argc);
+    CHECK(argv);
+    STRCMP_EQUAL("test", argv[0]);
+    STRCMP_EQUAL("", argv[1]);
+    STRCMP_EQUAL("", argv[2]);
+    POINTERS_EQUAL(NULL, argv[3]);
+    string_free_split (argv);
+
+    /* test with many quotes */
+    argv = string_split_shell ("test '''' \"\"\"\"", &argc);
+    LONGS_EQUAL(3, argc);
+    CHECK(argv);
+    STRCMP_EQUAL("test", argv[0]);
+    STRCMP_EQUAL("", argv[1]);
+    STRCMP_EQUAL("", argv[2]);
+    POINTERS_EQUAL(NULL, argv[3]);
+    string_free_split (argv);
+
+    /* test with escaped chars in and outside quotes */
+    argv = string_split_shell ("test \\n \"\\n\" '\\n'", &argc);
+    LONGS_EQUAL(4, argc);
+    CHECK(argv);
+    STRCMP_EQUAL("test", argv[0]);
+    STRCMP_EQUAL("n", argv[1]);
+    STRCMP_EQUAL("\\n", argv[2]);
+    STRCMP_EQUAL("\\n", argv[3]);
+    POINTERS_EQUAL(NULL, argv[4]);
+    string_free_split (argv);
+
+    /* test with escaped quotes */
+    argv = string_split_shell (" test \\\"  4  arguments\\\" ", &argc);
+    LONGS_EQUAL(4, argc);
+    CHECK(argv);
+    STRCMP_EQUAL("test", argv[0]);
+    STRCMP_EQUAL("\"", argv[1]);
+    STRCMP_EQUAL("4", argv[2]);
+    STRCMP_EQUAL("arguments\"", argv[3]);
+    POINTERS_EQUAL(NULL, argv[4]);
+    string_free_split (argv);
+
     /* free split with NULL */
     string_free_split_shared (NULL);
 }
