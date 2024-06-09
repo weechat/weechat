@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-09 16:35+0200\n"
+"POT-Creation-Date: 2024-06-09 18:30+0200\n"
 "PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -11215,6 +11215,9 @@ msgstr "Ez az ablak nem egy szoba!\n"
 msgid ""
 "%d channels (total: %d) | Filter: %s | Sort: %s | Key(input): ctrl+j=join "
 "channel, ($)=refresh, (q)=close buffer"
+msgstr ""
+
+msgid "Empty list of channels, try \"$\" to refresh list"
 msgstr ""
 
 #, fuzzy, c-format

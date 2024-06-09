@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-09 16:35+0200\n"
+"POT-Creation-Date: 2024-06-09 18:30+0200\n"
 "PO-Revision-Date: 2024-05-07 14:00+0400\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -12416,6 +12416,9 @@ msgid ""
 msgstr ""
 "%d канала (укупно: %d) | Филтер: %s | Сортирање: %s | Тастер(унос): ctrl+j= "
 "приступ каналу, ($)=освежавање, (q)=затварање бафера"
+
+msgid "Empty list of channels, try \"$\" to refresh list"
+msgstr ""
 
 #, c-format
 msgid "%s%s: error in redirection of /list: %s"

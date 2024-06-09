@@ -550,22 +550,33 @@ irc_list_display_line (struct t_irc_server *server, int line)
 void
 irc_list_buffer_refresh (struct t_irc_server *server, int clear)
 {
-    int num_channels, i;
+    int num_channels, num_filter_channels, i;
 
     if (!server || !server->list->buffer)
         return;
 
-    num_channels = weechat_arraylist_size (server->list->filter_channels);
+    num_channels = weechat_arraylist_size (server->list->channels);
+    num_filter_channels = weechat_arraylist_size (server->list->filter_channels);
 
-    if (clear)
+    if (clear || (num_channels == 0))
     {
         weechat_buffer_clear (server->list->buffer);
         server->list->selected_line = 0;
     }
 
-    for (i = 0; i < num_channels; i++)
+    if (num_channels == 0)
     {
-        irc_list_display_line (server, i);
+        weechat_printf_y (
+            server->list->buffer, 1,
+            "%s",
+            _("Empty list of channels, try \"$\" to refresh list"));
+    }
+    else
+    {
+        for (i = 0; i < num_filter_channels; i++)
+        {
+            irc_list_display_line (server, i);
+        }
     }
 
     irc_list_buffer_set_title (server);

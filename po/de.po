@@ -26,7 +26,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-09 16:35+0200\n"
+"POT-Creation-Date: 2024-06-09 18:30+0200\n"
 "PO-Revision-Date: 2024-05-31 20:32+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -13096,6 +13096,9 @@ msgid ""
 msgstr ""
 "%d Kanäle (Total: %d) | Filter: %s | Sortierung: %s | Taste(Eingabe): "
 "ctrl+j=Kanal betreten, ($)=Aktualisierung, (q)=Buffer schließen"
+
+msgid "Empty list of channels, try \"$\" to refresh list"
+msgstr ""
 
 #, c-format
 msgid "%s%s: error in redirection of /list: %s"

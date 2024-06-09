@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-09 16:35+0200\n"
+"POT-Creation-Date: 2024-06-09 18:30+0200\n"
 "PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -11698,6 +11698,9 @@ msgstr "%s%s: tenhle buffer není kanál!"
 msgid ""
 "%d channels (total: %d) | Filter: %s | Sort: %s | Key(input): ctrl+j=join "
 "channel, ($)=refresh, (q)=close buffer"
+msgstr ""
+
+msgid "Empty list of channels, try \"$\" to refresh list"
 msgstr ""
 
 #, fuzzy, c-format
