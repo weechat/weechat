@@ -14780,6 +14780,15 @@ msgid "No server for relay"
 msgstr "Brak serwera dla relay"
 
 #, c-format
+msgid "%s%s: error: relay for \"%s\" already exists"
+msgstr "%s%s: błąd: relay dla \"%s\" już istnieje"
+
+#, fuzzy, c-format
+#| msgid "%s: relay \"%s\" (%s: %s) added"
+msgid "%s: relay \"%s\" (%s: %s) updated"
+msgstr "%s: pośrednik \"%s\" (%s: %s) dodany"
+
+#, c-format
 msgid "%s: relay \"%s\" (%s: %s) added"
 msgstr "%s: pośrednik \"%s\" (%s: %s) dodany"
 
@@ -14865,9 +14874,13 @@ msgid "relay control"
 msgstr "zarządzanie przesyłaniem"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#, fuzzy
+#| msgid ""
+#| "list|listfull|listrelay || add <name> <port>|<path> || del|start|restart|"
+#| "stop <name> || raw || tlscertkey"
 msgid ""
-"list|listfull|listrelay || add <name> <port>|<path> || del|start|restart|"
-"stop <name> || raw || tlscertkey"
+"list|listfull|listrelay || add|addreplace <name> <port>|<path> || del|start|"
+"restart|stop <name> || raw || tlscertkey"
 msgstr ""
 "list|listfull|listrelay || add <nazwa> <port>|<ścieżka> || del|start|restart|"
 "stop <nazwa> || raw || tlscertkey"
@@ -14883,6 +14896,11 @@ msgstr "raw[listrelay]: wyświetl pośredników (nazwa i port)"
 
 msgid "raw[add]: add a relay (listen on a port/path)"
 msgstr "raw[add]: dodaj pośrednika (nasłuchuj na porcie/ścieżce)"
+
+#, fuzzy
+#| msgid "raw[addreplace]: add or replace an existing filter"
+msgid "raw[addreplace]: add or replace an existing relay"
+msgstr "raw[addreplace]: dodaj lub zastąp istniejący filtr"
 
 msgid "raw[del]: remove a relay (clients remain connected)"
 msgstr "raw[del]: usuń pośrednika (klienci zostają połączeni)"
@@ -15095,10 +15113,6 @@ msgstr "%s%s: błąd: nieznany protokół \"%s\""
 #, c-format
 msgid "%s%s: error: name is not allowed for protocol \"%s\""
 msgstr "%s%s: błąd: nie jest dozwolona dla protokołu \"%s\""
-
-#, c-format
-msgid "%s%s: error: relay for \"%s\" already exists"
-msgstr "%s%s: błąd: relay dla \"%s\" już istnieje"
 
 msgid ""
 "path to a socket file (path is evaluated, see function string_eval_path_home "

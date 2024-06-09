@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-09 15:56+0200\n"
+"POT-Creation-Date: 2024-06-09 16:21+0200\n"
 "PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: Érico Nogueira <ericonr@disroot.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -13946,6 +13946,14 @@ msgstr "  porta %s%d%s, relay: %s%s, %s, iniciado em: %s"
 msgid "No server for relay"
 msgstr "Nenhuma servidor para relay"
 
+#, c-format
+msgid "%s%s: error: relay for \"%s\" already exists"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s: relay \"%s\" (%s: %s) updated"
+msgstr "Todos os filtros foram excluídos"
+
 #, fuzzy, c-format
 msgid "%s: relay \"%s\" (%s: %s) added"
 msgstr "Todos os filtros foram excluídos"
@@ -14037,8 +14045,8 @@ msgstr ""
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid ""
-"list|listfull|listrelay || add <name> <port>|<path> || del|start|restart|"
-"stop <name> || raw || tlscertkey"
+"list|listfull|listrelay || add|addreplace <name> <port>|<path> || del|start|"
+"restart|stop <name> || raw || tlscertkey"
 msgstr ""
 
 msgid "raw[list]: list relay clients (only active relays)"
@@ -14052,6 +14060,11 @@ msgstr ""
 
 msgid "raw[add]: add a relay (listen on a port/path)"
 msgstr ""
+
+#, fuzzy
+#| msgid "%s%s: failed to add word to personal dictionary"
+msgid "raw[addreplace]: add or replace an existing relay"
+msgstr "%s%s: falha ao adicionar palavra no dicionário pessoal"
 
 msgid "raw[del]: remove a relay (clients remain connected)"
 msgstr ""
@@ -14267,10 +14280,6 @@ msgstr "%s%s: erro: protocolo \"%s\" desconhecido"
 #, fuzzy, c-format
 msgid "%s%s: error: name is not allowed for protocol \"%s\""
 msgstr "%s%s: erro: protocolo \"%s\" desconhecido"
-
-#, c-format
-msgid "%s%s: error: relay for \"%s\" already exists"
-msgstr ""
 
 msgid ""
 "path to a socket file (path is evaluated, see function string_eval_path_home "

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-09 15:56+0200\n"
+"POT-Creation-Date: 2024-06-09 16:21+0200\n"
 "PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: Vasco Almeida <vascomalmeida@sapo.pt>\n"
 "Language-Team: Portuguese <>\n"
@@ -14786,6 +14786,14 @@ msgstr "  porta %s%d%s, relay: %s%s%s, %s, iniciado a: %s"
 msgid "No server for relay"
 msgstr "Nenhum servidor para reencaminhar"
 
+#, c-format
+msgid "%s%s: error: relay for \"%s\" already exists"
+msgstr "%s%s: erro: já existe reencaminhamento de \"%s\""
+
+#, fuzzy, c-format
+msgid "%s: relay \"%s\" (%s: %s) updated"
+msgstr "%s: relay \"%s\" (porta %s) adicionado"
+
 #, fuzzy, c-format
 msgid "%s: relay \"%s\" (%s: %s) added"
 msgstr "%s: relay \"%s\" (porta %s) adicionado"
@@ -14892,8 +14900,8 @@ msgstr "controlo de reencaminhamento"
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 #, fuzzy
 msgid ""
-"list|listfull|listrelay || add <name> <port>|<path> || del|start|restart|"
-"stop <name> || raw || tlscertkey"
+"list|listfull|listrelay || add|addreplace <name> <port>|<path> || del|start|"
+"restart|stop <name> || raw || tlscertkey"
 msgstr ""
 "list|listfull|listrelay || add <nome> <porta> || del|stop|restart <nome> || "
 "raw || sslcertkey"
@@ -14909,6 +14917,11 @@ msgstr ""
 
 msgid "raw[add]: add a relay (listen on a port/path)"
 msgstr ""
+
+#, fuzzy
+#| msgid "%s%s: error adding notification"
+msgid "raw[addreplace]: add or replace an existing relay"
+msgstr "%s%s: error ao adicionar a notificação"
 
 msgid "raw[del]: remove a relay (clients remain connected)"
 msgstr ""
@@ -15132,10 +15145,6 @@ msgstr "%s%s: erro: protocolo desconhecido \"%s\""
 #, c-format
 msgid "%s%s: error: name is not allowed for protocol \"%s\""
 msgstr "%s%s: erro: o nome não é permitido no protocolo \"%s\""
-
-#, c-format
-msgid "%s%s: error: relay for \"%s\" already exists"
-msgstr "%s%s: erro: já existe reencaminhamento de \"%s\""
 
 msgid ""
 "path to a socket file (path is evaluated, see function string_eval_path_home "

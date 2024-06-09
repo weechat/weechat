@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-09 15:56+0200\n"
+"POT-Creation-Date: 2024-06-09 16:21+0200\n"
 "PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -15041,6 +15041,15 @@ msgid "No server for relay"
 msgstr "İletim için bir sunucu yok"
 
 #, c-format
+msgid "%s%s: error: relay for \"%s\" already exists"
+msgstr "%s%s: Hata: \"%s\" için iletim halihazırda mevcut"
+
+#, fuzzy, c-format
+#| msgid "%s: relay \"%s\" (%s: %s) added"
+msgid "%s: relay \"%s\" (%s: %s) updated"
+msgstr "%s: \"%s\" ileticisi (%s: %s) eklendi"
+
+#, c-format
 msgid "%s: relay \"%s\" (%s: %s) added"
 msgstr "%s: \"%s\" ileticisi (%s: %s) eklendi"
 
@@ -15149,8 +15158,8 @@ msgstr "iletim denetimi"
 #| "list|listfull|listrelay || add <name> <port>|<path> || del|start|restart|"
 #| "stop <name> || raw || sslcertkey"
 msgid ""
-"list|listfull|listrelay || add <name> <port>|<path> || del|start|restart|"
-"stop <name> || raw || tlscertkey"
+"list|listfull|listrelay || add|addreplace <name> <port>|<path> || del|start|"
+"restart|stop <name> || raw || tlscertkey"
 msgstr ""
 "list|listfull|listrelay || add <ad> <kapı>|<yol> || del|start|restart|stop "
 "<ad> || raw || sslcertkey"
@@ -15166,6 +15175,11 @@ msgstr ""
 
 msgid "raw[add]: add a relay (listen on a port/path)"
 msgstr ""
+
+#, fuzzy
+#| msgid "%s%s: error adding notification"
+msgid "raw[addreplace]: add or replace an existing relay"
+msgstr "%s%s: Bildirim eklerken hata"
 
 msgid "raw[del]: remove a relay (clients remain connected)"
 msgstr ""
@@ -15401,10 +15415,6 @@ msgstr "%s%s: Hata: Bilinmeyen protokol \"%s\""
 #, c-format
 msgid "%s%s: error: name is not allowed for protocol \"%s\""
 msgstr "%s%s: Hata: \"%s\" protokolü için ada izin verilmiyor"
-
-#, c-format
-msgid "%s%s: error: relay for \"%s\" already exists"
-msgstr "%s%s: Hata: \"%s\" için iletim halihazırda mevcut"
 
 msgid ""
 "path to a socket file (path is evaluated, see function string_eval_path_home "

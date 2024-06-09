@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-09 15:56+0200\n"
+"POT-Creation-Date: 2024-06-09 16:21+0200\n"
 "PO-Revision-Date: 2024-05-07 14:00+0400\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -14786,6 +14786,15 @@ msgid "No server for relay"
 msgstr "Нема сервера за релеј"
 
 #, c-format
+msgid "%s%s: error: relay for \"%s\" already exists"
+msgstr "%s%s: грешка: релеј за „%s” већ постоји"
+
+#, fuzzy, c-format
+#| msgid "%s: relay \"%s\" (%s: %s) added"
+msgid "%s: relay \"%s\" (%s: %s) updated"
+msgstr "%s: релеј „%s” (%s: %s) додато"
+
+#, c-format
 msgid "%s: relay \"%s\" (%s: %s) added"
 msgstr "%s: релеј „%s” (%s: %s) додато"
 
@@ -14871,9 +14880,13 @@ msgid "relay control"
 msgstr "контрола преко релеја"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#, fuzzy
+#| msgid ""
+#| "list|listfull|listrelay || add <name> <port>|<path> || del|start|restart|"
+#| "stop <name> || raw || tlscertkey"
 msgid ""
-"list|listfull|listrelay || add <name> <port>|<path> || del|start|restart|"
-"stop <name> || raw || tlscertkey"
+"list|listfull|listrelay || add|addreplace <name> <port>|<path> || del|start|"
+"restart|stop <name> || raw || tlscertkey"
 msgstr ""
 "list|listfull|listrelay || add <име> <порт>|<путања> || del|start|restart|"
 "stop <име> || raw || tlscertkey"
@@ -14889,6 +14902,11 @@ msgstr "raw[listrelay]: испис релеја (име и порт)"
 
 msgid "raw[add]: add a relay (listen on a port/path)"
 msgstr "raw[add]: додавање релеја (слуша на порту/путањи)"
+
+#, fuzzy
+#| msgid "raw[addreplace]: add or replace an existing filter"
+msgid "raw[addreplace]: add or replace an existing relay"
+msgstr "raw[addreplace]: додаје или замењује постојећи филтер"
 
 msgid "raw[del]: remove a relay (clients remain connected)"
 msgstr "raw[del]: уклањање релеја (клијенти остају повезани)"
@@ -15102,10 +15120,6 @@ msgstr "%s%s: грешка: непознати протокол „%s”"
 #, c-format
 msgid "%s%s: error: name is not allowed for protocol \"%s\""
 msgstr "%s%s: грешка: име није дозвољено за протокол „%s”"
-
-#, c-format
-msgid "%s%s: error: relay for \"%s\" already exists"
-msgstr "%s%s: грешка: релеј за „%s” већ постоји"
 
 msgid ""
 "path to a socket file (path is evaluated, see function string_eval_path_home "

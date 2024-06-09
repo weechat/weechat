@@ -194,7 +194,7 @@ relay_command_relay (const void *pointer, void *data,
     struct t_relay_server *ptr_server;
     struct t_config_option *ptr_option;
     char *path;
-    int unix_socket, rc;
+    int unix_socket, rc, update;
 
     /* make C compiler happy */
     (void) pointer;
@@ -221,9 +221,36 @@ relay_command_relay (const void *pointer, void *data,
             return WEECHAT_RC_OK;
         }
 
-        if (weechat_strcmp (argv[1], "add") == 0)
+        if ((weechat_strcmp (argv[1], "add") == 0)
+            || (weechat_strcmp (argv[1], "addreplace") == 0))
         {
             WEECHAT_COMMAND_MIN_ARGS(4, argv[1]);
+            update = 0;
+            ptr_server = relay_server_search (argv[2]);
+            if (ptr_server)
+            {
+                if (weechat_strcmp (argv[1], "addreplace") == 0)
+                {
+                    update = 1;
+                    unix_socket = ptr_server->unix_socket;
+                    relay_server_free (ptr_server);
+                    ptr_option = weechat_config_search_option (
+                        relay_config_file,
+                        (unix_socket) ? relay_config_section_path : relay_config_section_port,
+                        argv[2]);
+                    weechat_config_option_free (ptr_option);
+                }
+                else
+                {
+                    weechat_printf (
+                        NULL,
+                        _("%s%s: error: relay for \"%s\" already exists"),
+                        weechat_prefix ("error"),
+                        RELAY_PLUGIN_NAME,
+                        argv[2]);
+                    return WEECHAT_RC_OK;
+                }
+            }
             relay_server_get_protocol_args (argv[2], NULL, NULL, NULL,
                                             &unix_socket, NULL, NULL);
             rc = relay_config_create_option_port_path (
@@ -234,12 +261,15 @@ relay_command_relay (const void *pointer, void *data,
                 argv_eol[3]);
             if (rc != WEECHAT_CONFIG_OPTION_SET_ERROR)
             {
-                weechat_printf (NULL,
-                                _("%s: relay \"%s\" (%s: %s) added"),
-                                RELAY_PLUGIN_NAME,
-                                argv[2],
-                                (unix_socket) ? _("path") : _("port"),
-                                argv_eol[3]);
+                weechat_printf (
+                    NULL,
+                    (update) ?
+                    _("%s: relay \"%s\" (%s: %s) updated") :
+                    _("%s: relay \"%s\" (%s: %s) added"),
+                    RELAY_PLUGIN_NAME,
+                    argv[2],
+                    (unix_socket) ? _("path") : _("port"),
+                    argv_eol[3]);
             }
             return WEECHAT_RC_OK;
         }
@@ -752,7 +782,7 @@ relay_command_init ()
         N_("relay control"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("list|listfull|listrelay"
-           " || add <name> <port>|<path>"
+           " || add|addreplace <name> <port>|<path>"
            " || del|start|restart|stop <name>"
            " || raw"
            " || tlscertkey"),
@@ -761,6 +791,7 @@ relay_command_init ()
             N_("raw[listfull]: list relay clients (verbose, all relays)"),
             N_("raw[listrelay]: list relays (name and port)"),
             N_("raw[add]: add a relay (listen on a port/path)"),
+            N_("raw[addreplace]: add or replace an existing relay"),
             N_("raw[del]: remove a relay (clients remain connected)"),
             N_("raw[start]: listen on port"),
             N_("raw[restart]: close the server socket and listen again on port "
@@ -815,7 +846,7 @@ relay_command_init ()
         "list %(relay_relays)"
         " || listfull %(relay_relays)"
         " || listrelay"
-        " || add %(relay_protocol_name) %(relay_free_port)"
+        " || add|addreplace %(relay_protocol_name) %(relay_free_port)"
         " || del %(relay_relays)"
         " || start %(relay_relays)"
         " || restart %(relay_relays)"
