@@ -26,7 +26,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-09 15:30+0200\n"
+"POT-Creation-Date: 2024-06-09 15:35+0200\n"
 "PO-Revision-Date: 2024-05-31 20:32+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -9707,6 +9707,11 @@ msgstr "%s%s: Benachrichtigung existiert schon"
 msgid "%sMonitor list is full (%d)"
 msgstr "%sMonitor-Liste ist voll (%d)"
 
+#, fuzzy, c-format
+#| msgid "%s: notification deleted for %s%s%s"
+msgid "%s: notification updated for %s%s%s"
+msgstr "%s: Benachrichtigung für %s%s%s gelöscht"
+
 #, c-format
 msgid "%s: notification added for %s%s%s"
 msgstr "%s: Benachrichtigung für %s%s%s hinzugefügt"
@@ -10833,11 +10838,20 @@ msgstr ""
 "hinzu"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
-msgid "add <nick> [<server> [-away]] || del <nick>|-all [<server>]"
+#, fuzzy
+#| msgid "add <nick> [<server> [-away]] || del <nick>|-all [<server>]"
+msgid "add|addreplace <nick> [<server> [-away]] || del <nick>|-all [<server>]"
 msgstr "add <nick> [<server> [-away]] || del <nick>|-all [<server>]"
 
 msgid "raw[add]: add a notification"
 msgstr "raw[add]: fügt eine Benachrichtigung hinzu"
+
+#, fuzzy
+#| msgid "raw[addreplace]: add or replace an existing filter"
+msgid "raw[addreplace]: add or replace a notification"
+msgstr ""
+"raw[addreplace]: neuen Filter anlegen oder einen schon existierenden Filter "
+"ersetzen"
 
 msgid "server: internal server name (by default current server)"
 msgstr "Server: interner Servername (standardmäßig aktueller Server)"

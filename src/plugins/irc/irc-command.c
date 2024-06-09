@@ -4171,7 +4171,7 @@ IRC_COMMAND_CALLBACK(notice)
 IRC_COMMAND_CALLBACK(notify)
 {
     struct t_irc_notify *ptr_notify;
-    int i, check_away;
+    int i, check_away, update;
 
     IRC_BUFFER_GET_SERVER(buffer);
 
@@ -4189,10 +4189,12 @@ IRC_COMMAND_CALLBACK(notify)
     }
 
     /* add notify */
-    if (weechat_strcmp (argv[1], "add") == 0)
+    if ((weechat_strcmp (argv[1], "add") == 0)
+        || (weechat_strcmp (argv[1], "addreplace") == 0))
     {
         WEECHAT_COMMAND_MIN_ARGS(3, argv[1]);
 
+        update = 0;
         check_away = 0;
 
         if (argc > 3)
@@ -4230,11 +4232,20 @@ IRC_COMMAND_CALLBACK(notify)
         ptr_notify = irc_notify_search (ptr_server, argv[2]);
         if (ptr_notify)
         {
-            weechat_printf (
-                NULL,
-                _("%s%s: notify already exists"),
-                weechat_prefix ("error"), IRC_PLUGIN_NAME);
-            return WEECHAT_RC_OK;
+            if (weechat_strcmp (argv[1], "addreplace") == 0)
+            {
+                update = 1;
+                irc_notify_free (ptr_server, ptr_notify, 1);
+                irc_notify_set_server_option (ptr_server);
+            }
+            else
+            {
+                weechat_printf (
+                    NULL,
+                    _("%s%s: notify already exists"),
+                    weechat_prefix ("error"), IRC_PLUGIN_NAME);
+                return WEECHAT_RC_OK;
+            }
         }
 
         if ((ptr_server->monitor > 0)
@@ -4253,6 +4264,8 @@ IRC_COMMAND_CALLBACK(notify)
             irc_notify_set_server_option (ptr_server);
             weechat_printf (
                 ptr_server->buffer,
+                (update) ?
+                _("%s: notification updated for %s%s%s") :
                 _("%s: notification added for %s%s%s"),
                 IRC_PLUGIN_NAME,
                 irc_nick_color_for_msg (ptr_server, 1, NULL, ptr_notify->nick),
@@ -7654,10 +7667,11 @@ irc_command_init ()
         "notify",
         N_("add a notification for presence or away status of nicks on servers"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
-        N_("add <nick> [<server> [-away]]"
+        N_("add|addreplace <nick> [<server> [-away]]"
            " || del <nick>|-all [<server>]"),
         WEECHAT_CMD_ARGS_DESC(
             N_("raw[add]: add a notification"),
+            N_("raw[addreplace]: add or replace a notification"),
             N_("nick: nick"),
             N_("server: internal server name (by default current server)"),
             N_("raw[-away]: notify when away message is changed (by doing whois on nick)"),
@@ -7671,7 +7685,7 @@ irc_command_init ()
             AI("  /notify add toto"),
             AI("  /notify add toto libera"),
             AI("  /notify add toto libera -away")),
-        "add %(irc_channel_nicks) %(irc_servers) -away %-"
+        "add|addreplace %(irc_channel_nicks) %(irc_servers) -away %-"
         " || del -all|%(irc_notify_nicks) %(irc_servers) %-",
         &irc_command_notify, NULL, NULL);
     weechat_hook_command (

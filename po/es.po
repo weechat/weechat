@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-09 15:30+0200\n"
+"POT-Creation-Date: 2024-06-09 15:35+0200\n"
 "PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: Santiago Forero <santiago@forero.xyz>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8660,6 +8660,10 @@ msgid "%sMonitor list is full (%d)"
 msgstr ""
 
 #, fuzzy, c-format
+msgid "%s: notification updated for %s%s%s"
+msgstr "%s: notificación para %s%s agregada"
+
+#, fuzzy, c-format
 msgid "%s: notification added for %s%s%s"
 msgstr "%s: notificación para %s%s agregada"
 
@@ -9850,12 +9854,19 @@ msgstr ""
 "servidores"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
-msgid "add <nick> [<server> [-away]] || del <nick>|-all [<server>]"
+#, fuzzy
+#| msgid "add <nick> [<server> [-away]] || del <nick>|-all [<server>]"
+msgid "add|addreplace <nick> [<server> [-away]] || del <nick>|-all [<server>]"
 msgstr "add <apodo> [<servidor> [-away]] || del <apodo>|-all [<servidor>]"
 
 #, fuzzy
 #| msgid "%s%s: error adding notification"
 msgid "raw[add]: add a notification"
+msgstr "%s%s: error al agregar la notificación"
+
+#, fuzzy
+#| msgid "%s%s: error adding notification"
+msgid "raw[addreplace]: add or replace a notification"
 msgstr "%s%s: error al agregar la notificación"
 
 msgid "server: internal server name (by default current server)"

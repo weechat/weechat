@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-09 15:30+0200\n"
+"POT-Creation-Date: 2024-06-09 15:35+0200\n"
 "PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8465,6 +8465,10 @@ msgid "%sMonitor list is full (%d)"
 msgstr ""
 
 #, fuzzy, c-format
+msgid "%s: notification updated for %s%s%s"
+msgstr "%s%s: chyba při přidávání notifikace"
+
+#, fuzzy, c-format
 msgid "%s: notification added for %s%s%s"
 msgstr "%s%s: notifikace nenalezena"
 
@@ -9651,12 +9655,19 @@ msgstr ""
 "serveru"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
-msgid "add <nick> [<server> [-away]] || del <nick>|-all [<server>]"
+#, fuzzy
+#| msgid "add <nick> [<server> [-away]] || del <nick>|-all [<server>]"
+msgid "add|addreplace <nick> [<server> [-away]] || del <nick>|-all [<server>]"
 msgstr "add <přezdívka> [<server> [-away]] || del <přezdívka>|-all [<server>]"
 
 #, fuzzy
 #| msgid "%s%s: error adding notification"
 msgid "raw[add]: add a notification"
+msgstr "%s%s: chyba při přidávání notifikace"
+
+#, fuzzy
+#| msgid "%s%s: error adding notification"
+msgid "raw[addreplace]: add or replace a notification"
 msgstr "%s%s: chyba při přidávání notifikace"
 
 msgid "server: internal server name (by default current server)"

@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-09 15:30+0200\n"
+"POT-Creation-Date: 2024-06-09 15:35+0200\n"
 "PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: Érico Nogueira <ericonr@disroot.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8527,6 +8527,10 @@ msgid "%sMonitor list is full (%d)"
 msgstr ""
 
 #, fuzzy, c-format
+msgid "%s: notification updated for %s%s%s"
+msgstr "%s: desconectado do cliente %s%s%s (%s.%s)"
+
+#, fuzzy, c-format
 msgid "%s: notification added for %s%s%s"
 msgstr "%s%s: falha na autenticação com cliente %s%s%s (%s.%s)"
 
@@ -9623,11 +9627,18 @@ msgid "add a notification for presence or away status of nicks on servers"
 msgstr ""
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
-msgid "add <nick> [<server> [-away]] || del <nick>|-all [<server>]"
-msgstr ""
+#, fuzzy
+#| msgid "list || add [re:]<nick> [<server> [<channel>]] || del <number>|-all"
+msgid "add|addreplace <nick> [<server> [-away]] || del <nick>|-all [<server>]"
+msgstr "list || add [re:]<apelido> [<servidor> [<canal>]] || del <número>|-all"
 
 msgid "raw[add]: add a notification"
 msgstr ""
+
+#, fuzzy
+#| msgid "%s%s: failed to add word to personal dictionary"
+msgid "raw[addreplace]: add or replace a notification"
+msgstr "%s%s: falha ao adicionar palavra no dicionário pessoal"
 
 msgid "server: internal server name (by default current server)"
 msgstr ""

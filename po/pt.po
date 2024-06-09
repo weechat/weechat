@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-09 15:30+0200\n"
+"POT-Creation-Date: 2024-06-09 15:35+0200\n"
 "PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: Vasco Almeida <vascomalmeida@sapo.pt>\n"
 "Language-Team: Portuguese <>\n"
@@ -8900,6 +8900,11 @@ msgstr "%s%s: a notificação já existe"
 msgid "%sMonitor list is full (%d)"
 msgstr "%sA lista de monitorização está cheia (%d)"
 
+#, fuzzy, c-format
+#| msgid "%s: notification deleted for %s%s%s"
+msgid "%s: notification updated for %s%s%s"
+msgstr "%s: notificação para %s%s%s eliminada"
+
 #, c-format
 msgid "%s: notification added for %s%s%s"
 msgstr "%s: notificação para %s%s%s adicionada"
@@ -10117,12 +10122,19 @@ msgstr ""
 "servidores"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
-msgid "add <nick> [<server> [-away]] || del <nick>|-all [<server>]"
+#, fuzzy
+#| msgid "add <nick> [<server> [-away]] || del <nick>|-all [<server>]"
+msgid "add|addreplace <nick> [<server> [-away]] || del <nick>|-all [<server>]"
 msgstr "add <nick> [<servidor> [-away]] || del <nick>|-all [<servidor>]"
 
 #, fuzzy
 #| msgid "%s%s: error adding notification"
 msgid "raw[add]: add a notification"
+msgstr "%s%s: error ao adicionar a notificação"
+
+#, fuzzy
+#| msgid "%s%s: error adding notification"
+msgid "raw[addreplace]: add or replace a notification"
 msgstr "%s%s: error ao adicionar a notificação"
 
 msgid "server: internal server name (by default current server)"

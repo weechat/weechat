@@ -9209,6 +9209,11 @@ msgstr "%s%s: powiadomienie juz istnieje"
 msgid "%sMonitor list is full (%d)"
 msgstr "%sLista monitorowania jest pełna (%d)"
 
+#, fuzzy, c-format
+#| msgid "%s: notification deleted for %s%s%s"
+msgid "%s: notification updated for %s%s%s"
+msgstr "%s: powiadomienie usunięte dla %s%s%s"
+
 #, c-format
 msgid "%s: notification added for %s%s%s"
 msgstr "%s: powiadomienie dodane dla %s%s%s"
@@ -10291,11 +10296,18 @@ msgstr ""
 "dodaje powiadomienie o obecności lub statusie nieobecności nicków na serwerze"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
-msgid "add <nick> [<server> [-away]] || del <nick>|-all [<server>]"
+#, fuzzy
+#| msgid "add <nick> [<server> [-away]] || del <nick>|-all [<server>]"
+msgid "add|addreplace <nick> [<server> [-away]] || del <nick>|-all [<server>]"
 msgstr "add <nick> [<serwer> [-away]] || del <nick>|-all [<serwer>]"
 
 msgid "raw[add]: add a notification"
 msgstr "raw[add]: dodaje powiadomienie"
+
+#, fuzzy
+#| msgid "raw[addreplace]: add or replace an existing filter"
+msgid "raw[addreplace]: add or replace a notification"
+msgstr "raw[addreplace]: dodaj lub zastąp istniejący filtr"
 
 msgid "server: internal server name (by default current server)"
 msgstr "serwer: wewnętrzna nazwa serwera (domyślnie obecny serwer)"

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-09 15:30+0200\n"
+"POT-Creation-Date: 2024-06-09 15:35+0200\n"
 "PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -8909,6 +8909,11 @@ msgstr "%s%s: notify は既に存在しています"
 msgid "%sMonitor list is full (%d)"
 msgstr "%sこれ以上監視リストに追加できません (%d)"
 
+#, fuzzy, c-format
+#| msgid "%s: notification deleted for %s%s%s"
+msgid "%s: notification updated for %s%s%s"
+msgstr "%s: %s%s%s の通知を削除"
+
 #, c-format
 msgid "%s: notification added for %s%s%s"
 msgstr "%s: %s%s%s の通知を追加"
@@ -10138,12 +10143,19 @@ msgid "add a notification for presence or away status of nicks on servers"
 msgstr "サーバ上のニックネームに対して接続か離席状態の通知を追加する"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
-msgid "add <nick> [<server> [-away]] || del <nick>|-all [<server>]"
+#, fuzzy
+#| msgid "add <nick> [<server> [-away]] || del <nick>|-all [<server>]"
+msgid "add|addreplace <nick> [<server> [-away]] || del <nick>|-all [<server>]"
 msgstr "add <nick> [<server> [-away]] || del <nick>|-all [<server>]"
 
 #, fuzzy
 #| msgid "%s%s: error adding notification"
 msgid "raw[add]: add a notification"
+msgstr "%s%s: 通知の追加中にエラー"
+
+#, fuzzy
+#| msgid "%s%s: error adding notification"
+msgid "raw[addreplace]: add or replace a notification"
 msgstr "%s%s: 通知の追加中にエラー"
 
 msgid "server: internal server name (by default current server)"

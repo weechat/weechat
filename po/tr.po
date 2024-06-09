@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-09 15:30+0200\n"
+"POT-Creation-Date: 2024-06-09 15:35+0200\n"
 "PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -9022,6 +9022,11 @@ msgstr "%s%s: Bildirim halihazırda mevcut"
 msgid "%sMonitor list is full (%d)"
 msgstr "%sMonitör listesi dolu (%d)"
 
+#, fuzzy, c-format
+#| msgid "%s: notification deleted for %s%s%s"
+msgid "%s: notification updated for %s%s%s"
+msgstr "%s: %s%s%s için bildirim silindi"
+
 #, c-format
 msgid "%s: notification added for %s%s%s"
 msgstr "%s: %s%s%s için bildirim eklendi"
@@ -10264,12 +10269,19 @@ msgstr ""
 "Sunucu takma adlarının buradalığı veya uzakta durumu için bildirim ekle"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
-msgid "add <nick> [<server> [-away]] || del <nick>|-all [<server>]"
+#, fuzzy
+#| msgid "add <nick> [<server> [-away]] || del <nick>|-all [<server>]"
+msgid "add|addreplace <nick> [<server> [-away]] || del <nick>|-all [<server>]"
 msgstr "add <takmaad> [<sunucu> [-away]] || del <takmaad>|-all [<sunucu>]"
 
 #, fuzzy
 #| msgid "%s%s: error adding notification"
 msgid "raw[add]: add a notification"
+msgstr "%s%s: Bildirim eklerken hata"
+
+#, fuzzy
+#| msgid "%s%s: error adding notification"
+msgid "raw[addreplace]: add or replace a notification"
 msgstr "%s%s: Bildirim eklerken hata"
 
 msgid "server: internal server name (by default current server)"
