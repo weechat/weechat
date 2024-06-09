@@ -2636,7 +2636,7 @@ IRC_COMMAND_CALLBACK(ignore)
 {
     struct t_irc_ignore *ptr_ignore;
     char *mask, *regex, *regex2, *ptr_regex, *pos, *server, *channel, *error;
-    int length;
+    int length, update;
     long number;
 
     /* make C compiler happy */
@@ -2665,10 +2665,12 @@ IRC_COMMAND_CALLBACK(ignore)
     }
 
     /* add ignore */
-    if (weechat_strcmp (argv[1], "add") == 0)
+    if ((weechat_strcmp (argv[1], "add") == 0)
+        || (weechat_strcmp (argv[1], "addreplace") == 0))
     {
         WEECHAT_COMMAND_MIN_ARGS(3, argv[1]);
 
+        update = 0;
         mask = argv[2];
         server = (argc > 3) ? argv[3] : NULL;
         channel = (argc > 4) ? argv[4] : NULL;
@@ -2719,14 +2721,23 @@ IRC_COMMAND_CALLBACK(ignore)
             }
         }
 
-        if (irc_ignore_search (ptr_regex, server, channel))
+        ptr_ignore = irc_ignore_search (ptr_regex, server, channel);
+        if (ptr_ignore)
         {
-            free (regex);
-            free (regex2);
-            weechat_printf (NULL,
-                            _("%s%s: ignore already exists"),
-                            weechat_prefix ("error"), IRC_PLUGIN_NAME);
-            return WEECHAT_RC_OK;
+            if (weechat_strcmp (argv[1], "addreplace") == 0)
+            {
+                update = 1;
+                irc_ignore_free (ptr_ignore);
+            }
+            else
+            {
+                free (regex);
+                free (regex2);
+                weechat_printf (NULL,
+                                _("%s%s: ignore already exists"),
+                                weechat_prefix ("error"), IRC_PLUGIN_NAME);
+                return WEECHAT_RC_OK;
+            }
         }
 
         ptr_ignore = irc_ignore_new (ptr_regex, server, channel);
@@ -2737,7 +2748,10 @@ IRC_COMMAND_CALLBACK(ignore)
         if (ptr_ignore)
         {
             weechat_printf (NULL, "");
-            weechat_printf (NULL, _("%s: ignore added:"), IRC_PLUGIN_NAME);
+            weechat_printf (
+                NULL,
+                (update) ? _("%s: ignore updated:") : _("%s: ignore added:"),
+                IRC_PLUGIN_NAME);
             irc_command_ignore_display (ptr_ignore);
         }
         else
@@ -7325,11 +7339,12 @@ irc_command_init ()
         N_("ignore nicks/hosts from servers or channels"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("list"
-           " || add [re:]<nick> [<server> [<channel>]]"
+           " || add|addreplace [re:]<nick> [<server> [<channel>]]"
            " || del <number>|-all"),
         WEECHAT_CMD_ARGS_DESC(
             N_("raw[list]: list all ignores"),
             N_("raw[add]: add an ignore"),
+            N_("raw[addreplace]: add or replace an existing ignore"),
             N_("nick: nick or hostname; can be a POSIX extended regular expression "
                "if \"re:\" is given or a mask using \"*\" to replace zero or more "
                "chars (the regular expression can start with \"(?-i)\" to become "
@@ -7349,7 +7364,8 @@ irc_command_init ()
             AI("  /ignore add toto@domain.com libera"),
             AI("  /ignore add toto*@*.domain.com libera #weechat")),
         "list"
-        " || add %(irc_channel_nicks_hosts) %(irc_servers) %(irc_channels) %-"
+        " || add|addreplace %(irc_channel_nicks_hosts) %(irc_servers) "
+        "%(irc_channels) %-"
         " || del %(irc_ignores_numbers)|-all %-",
         &irc_command_ignore, NULL, NULL);
     weechat_hook_command (

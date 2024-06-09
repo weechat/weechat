@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-09 14:41+0200\n"
+"POT-Creation-Date: 2024-06-09 15:30+0200\n"
 "PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8952,6 +8952,11 @@ msgstr "%s: Listede yok sayma yok"
 msgid "%s%s: ignore already exists"
 msgstr "%s%s: Yok sayma halihazırda mevcut"
 
+#, fuzzy, c-format
+#| msgid "%s: ignore added:"
+msgid "%s: ignore updated:"
+msgstr "%s: Yok sayma eklendi:"
+
 #, c-format
 msgid "%s: ignore added:"
 msgstr "%s: Yok sayma eklendi:"
@@ -9813,7 +9818,11 @@ msgid "ignore nicks/hosts from servers or channels"
 msgstr "kanallardan veya sunuculardan takma adları/makineleri yok say"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
-msgid "list || add [re:]<nick> [<server> [<channel>]] || del <number>|-all"
+#, fuzzy
+#| msgid "list || add [re:]<nick> [<server> [<channel>]] || del <number>|-all"
+msgid ""
+"list || add|addreplace [re:]<nick> [<server> [<channel>]] || del <number>|-"
+"all"
 msgstr "list || add [re:]<takmaad> [<sunucu> [<kanal>]] || del <sayı>|-all"
 
 #, fuzzy
@@ -9822,6 +9831,9 @@ msgid "raw[list]: list all ignores"
 msgstr "IRC yok sayımlarının listesi"
 
 msgid "raw[add]: add an ignore"
+msgstr ""
+
+msgid "raw[addreplace]: add or replace an existing ignore"
 msgstr ""
 
 msgid ""

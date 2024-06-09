@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-09 14:41+0200\n"
+"POT-Creation-Date: 2024-06-09 15:30+0200\n"
 "PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: Santiago Forero <santiago@forero.xyz>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8589,6 +8589,11 @@ msgstr "%s: lista de ignorados vacía"
 msgid "%s%s: ignore already exists"
 msgstr "%s%s: ya se encuentra ignorado"
 
+#, fuzzy, c-format
+#| msgid "%s: ignore added:"
+msgid "%s: ignore updated:"
+msgstr "%s: agregado a la lista de ignorados:"
+
 #, c-format
 msgid "%s: ignore added:"
 msgstr "%s: agregado a la lista de ignorados:"
@@ -9410,7 +9415,11 @@ msgid "ignore nicks/hosts from servers or channels"
 msgstr "ignorar apodos/hosts en servidores o canales"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
-msgid "list || add [re:]<nick> [<server> [<channel>]] || del <number>|-all"
+#, fuzzy
+#| msgid "list || add [re:]<nick> [<server> [<channel>]] || del <number>|-all"
+msgid ""
+"list || add|addreplace [re:]<nick> [<server> [<channel>]] || del <number>|-"
+"all"
 msgstr "list || add [re:]<apodo> [<servidor> [<canal>]] || del <número>|-all"
 
 #, fuzzy
@@ -9419,6 +9428,9 @@ msgid "raw[list]: list all ignores"
 msgstr "lista de IRC ignores"
 
 msgid "raw[add]: add an ignore"
+msgstr ""
+
+msgid "raw[addreplace]: add or replace an existing ignore"
 msgstr ""
 
 msgid ""

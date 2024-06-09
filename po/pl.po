@@ -9138,6 +9138,11 @@ msgstr "%s: brak osób ignorowanych"
 msgid "%s%s: ignore already exists"
 msgstr "%s%s: już jest ignorowane"
 
+#, fuzzy, c-format
+#| msgid "%s: ignore added:"
+msgid "%s: ignore updated:"
+msgstr "%s: dodano nowy wpis na listę ignorowanych:"
+
 #, c-format
 msgid "%s: ignore added:"
 msgstr "%s: dodano nowy wpis na listę ignorowanych:"
@@ -9903,7 +9908,11 @@ msgid "ignore nicks/hosts from servers or channels"
 msgstr "ignoruje nicki/hosty z serwera lub kanałów"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
-msgid "list || add [re:]<nick> [<server> [<channel>]] || del <number>|-all"
+#, fuzzy
+#| msgid "list || add [re:]<nick> [<server> [<channel>]] || del <number>|-all"
+msgid ""
+"list || add|addreplace [re:]<nick> [<server> [<channel>]] || del <number>|-"
+"all"
 msgstr "list || add [re:]<nick> [<serwer> [<kanał>]] || del <numer>|-all"
 
 msgid "raw[list]: list all ignores"
@@ -9911,6 +9920,11 @@ msgstr "raw[list]: wyświetla wszystkich ignorowanych"
 
 msgid "raw[add]: add an ignore"
 msgstr "raw[add]: dodaj ignorowanie"
+
+#, fuzzy
+#| msgid "raw[addreplace]: add or replace an existing trigger"
+msgid "raw[addreplace]: add or replace an existing ignore"
+msgstr "raw[addreplace]: dodaj lub zastąp istniejący trigger"
 
 msgid ""
 "nick: nick or hostname; can be a POSIX extended regular expression if \"re:"

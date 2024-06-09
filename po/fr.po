@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-09 14:41+0200\n"
-"PO-Revision-Date: 2024-06-09 14:42+0200\n"
+"POT-Creation-Date: 2024-06-09 15:30+0200\n"
+"PO-Revision-Date: 2024-06-09 15:30+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -9429,6 +9429,10 @@ msgid "%s%s: ignore already exists"
 msgstr "%s%s : l'ignore existe déjà"
 
 #, c-format
+msgid "%s: ignore updated:"
+msgstr "%s : ignore mis à jour :"
+
+#, c-format
 msgid "%s: ignore added:"
 msgstr "%s : ignore ajouté :"
 
@@ -10214,14 +10218,21 @@ msgid "ignore nicks/hosts from servers or channels"
 msgstr "ignorer des pseudos/hôtes de serveurs ou canaux"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
-msgid "list || add [re:]<nick> [<server> [<channel>]] || del <number>|-all"
-msgstr "list || add [re:]<pseudo> [<serveur> [<canal>]] || del <numéro>|-all"
+msgid ""
+"list || add|addreplace [re:]<nick> [<server> [<channel>]] || del <number>|-"
+"all"
+msgstr ""
+"list || add|addreplace [re:]<pseudo> [<serveur> [<canal>]] || del <numéro>|-"
+"all"
 
 msgid "raw[list]: list all ignores"
 msgstr "raw[list] : lister tous les ignores"
 
 msgid "raw[add]: add an ignore"
 msgstr "raw[add] : ajouter un ignore"
+
+msgid "raw[addreplace]: add or replace an existing ignore"
+msgstr "raw[addreplace] : ajouter ou remplacer un ignore existant"
 
 msgid ""
 "nick: nick or hostname; can be a POSIX extended regular expression if \"re:"

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-09 14:41+0200\n"
+"POT-Creation-Date: 2024-06-09 15:30+0200\n"
 "PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -8840,6 +8840,11 @@ msgstr "%s: 無視リストにエントリがありません"
 msgid "%s%s: ignore already exists"
 msgstr "%s%s: 重複した無視エントリ"
 
+#, fuzzy, c-format
+#| msgid "%s: ignore added:"
+msgid "%s: ignore updated:"
+msgstr "%s: 無視エントリを追加:"
+
 #, c-format
 msgid "%s: ignore added:"
 msgstr "%s: 無視エントリを追加:"
@@ -9694,7 +9699,11 @@ msgid "ignore nicks/hosts from servers or channels"
 msgstr "あるサーバかチャンネルで、指定したニックネーム/ホスト名を無視"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
-msgid "list || add [re:]<nick> [<server> [<channel>]] || del <number>|-all"
+#, fuzzy
+#| msgid "list || add [re:]<nick> [<server> [<channel>]] || del <number>|-all"
+msgid ""
+"list || add|addreplace [re:]<nick> [<server> [<channel>]] || del <number>|-"
+"all"
 msgstr "list || add [re:]<nick> [<server> [<channel>]] || del <number>|-all"
 
 #, fuzzy
@@ -9703,6 +9712,9 @@ msgid "raw[list]: list all ignores"
 msgstr "IRC 無視のリスト"
 
 msgid "raw[add]: add an ignore"
+msgstr ""
+
+msgid "raw[addreplace]: add or replace an existing ignore"
 msgstr ""
 
 msgid ""

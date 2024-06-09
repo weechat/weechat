@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-09 14:41+0200\n"
+"POT-Creation-Date: 2024-06-09 15:30+0200\n"
 "PO-Revision-Date: 2024-05-07 14:00+0400\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -9157,6 +9157,11 @@ msgstr "%s: нема игнорисаних у листи"
 msgid "%s%s: ignore already exists"
 msgstr "%s%s: игнорисање већ постоји"
 
+#, fuzzy, c-format
+#| msgid "%s: ignore added:"
+msgid "%s: ignore updated:"
+msgstr "%s: додато је игнорисање:"
+
 #, c-format
 msgid "%s: ignore added:"
 msgstr "%s: додато је игнорисање:"
@@ -9911,7 +9916,11 @@ msgid "ignore nicks/hosts from servers or channels"
 msgstr "игнорисање надимака/хостова са севера или канала"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
-msgid "list || add [re:]<nick> [<server> [<channel>]] || del <number>|-all"
+#, fuzzy
+#| msgid "list || add [re:]<nick> [<server> [<channel>]] || del <number>|-all"
+msgid ""
+"list || add|addreplace [re:]<nick> [<server> [<channel>]] || del <number>|-"
+"all"
 msgstr "list || add [re:]<надимак> [<сервер> [<канал>]] || del <број>|-all"
 
 msgid "raw[list]: list all ignores"
@@ -9919,6 +9928,11 @@ msgstr "raw[list]: испис свих игнорисања"
 
 msgid "raw[add]: add an ignore"
 msgstr "raw[add]: додавање игнорисања"
+
+#, fuzzy
+#| msgid "raw[addreplace]: add or replace an existing trigger"
+msgid "raw[addreplace]: add or replace an existing ignore"
+msgstr "raw[addreplace]: додавање или замена постојећег окидача"
 
 msgid ""
 "nick: nick or hostname; can be a POSIX extended regular expression if \"re:"

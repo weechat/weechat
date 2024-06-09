@@ -26,7 +26,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-09 14:41+0200\n"
+"POT-Creation-Date: 2024-06-09 15:30+0200\n"
 "PO-Revision-Date: 2024-05-31 20:32+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -9634,6 +9634,11 @@ msgstr "%s keine Ignorierungen vorhanden"
 msgid "%s%s: ignore already exists"
 msgstr "%s%s: diese Ignorierung existiert bereits"
 
+#, fuzzy, c-format
+#| msgid "%s: ignore added:"
+msgid "%s: ignore updated:"
+msgstr "%s: Ignorierung hinzugefügt:"
+
 #, c-format
 msgid "%s: ignore added:"
 msgstr "%s: Ignorierung hinzugefügt:"
@@ -10438,7 +10443,11 @@ msgid "ignore nicks/hosts from servers or channels"
 msgstr "Ignoriert Nicks/Hosts von Kanälen oder Servern"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
-msgid "list || add [re:]<nick> [<server> [<channel>]] || del <number>|-all"
+#, fuzzy
+#| msgid "list || add [re:]<nick> [<server> [<channel>]] || del <number>|-all"
+msgid ""
+"list || add|addreplace [re:]<nick> [<server> [<channel>]] || del <number>|-"
+"all"
 msgstr "list || add [re:]<nick> [<server> [<channel>]] || del <number>|-all"
 
 msgid "raw[list]: list all ignores"
@@ -10446,6 +10455,13 @@ msgstr "raw[list]: zeigt alle Ignorierungen an"
 
 msgid "raw[add]: add an ignore"
 msgstr "raw[add]: fügt eine Ignorierung hinzu"
+
+#, fuzzy
+#| msgid "raw[addreplace]: add or replace an existing trigger"
+msgid "raw[addreplace]: add or replace an existing ignore"
+msgstr ""
+"raw[addreplace]: erzeugt neuen Trigger oder ersetzt einen schon "
+"existierenden Trigger"
 
 msgid ""
 "nick: nick or hostname; can be a POSIX extended regular expression if \"re:"
