@@ -22,6 +22,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <sys/stat.h>
 #include <time.h>
 
 #include "../weechat-plugin.h"
@@ -1052,6 +1053,83 @@ irc_list_hsignal_redirect_list_cb (const void *pointer,
     irc_list_buffer_refresh (ptr_server, 1);
 
     return WEECHAT_RC_OK;
+}
+
+/*
+ * Exports channels currently displayed in /list buffer.
+ *
+ * Returns:
+ *   1: export OK
+ *   0: error
+ */
+
+int
+irc_list_export (struct t_irc_server *server, const char *filename)
+{
+    int num_filter_channels, i;
+    char *filename2, *line;
+    FILE *file;
+    struct t_irc_list_channel *ptr_channel;
+    struct t_hashtable *hashtable_pointers, *hashtable_extra_vars;
+
+    if (!server || !server->list->buffer)
+        return 0;
+
+    filename2 = weechat_string_expand_home (filename);
+    if (!filename2)
+        return 0;
+
+    file = fopen (filename2, "w");
+    if (!file)
+    {
+        free (filename2);
+        return 0;
+    }
+
+    fchmod (fileno (file), 0600);
+
+    hashtable_pointers = weechat_hashtable_new (
+        8,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_POINTER,
+        NULL, NULL);
+    hashtable_extra_vars = weechat_hashtable_new (
+        128,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_STRING,
+        NULL, NULL);
+
+    weechat_hashtable_set (hashtable_pointers, "irc_server", server);
+
+    num_filter_channels = weechat_arraylist_size (server->list->filter_channels);
+    for (i = 0; i < num_filter_channels; i++)
+    {
+        ptr_channel = (struct t_irc_list_channel *)weechat_arraylist_get (
+            server->list->filter_channels, i);
+        if (!ptr_channel)
+            continue;
+
+        weechat_hashtable_set (hashtable_pointers, "irc_list_channel", ptr_channel);
+
+        irc_list_add_channel_in_hashtable (hashtable_extra_vars, ptr_channel);
+
+        line = weechat_string_eval_expression (
+            weechat_config_string (irc_config_look_list_buffer_format_export),
+            hashtable_pointers,
+            hashtable_extra_vars,
+            NULL);
+        if (line && line[0])
+            fprintf (file, "%s\n", line);
+        free (line);
+    }
+
+    fclose (file);
+
+    weechat_hashtable_free (hashtable_pointers);
+    weechat_hashtable_free (hashtable_extra_vars);
+    free (filename2);
+
+    return 1;
 }
 
 /*

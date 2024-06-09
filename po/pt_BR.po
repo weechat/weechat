@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-09 18:30+0200\n"
+"POT-Creation-Date: 2024-06-09 23:12+0200\n"
 "PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: Érico Nogueira <ericonr@disroot.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8496,6 +8496,20 @@ msgstr ""
 msgid "%s%s: mask must begin with nick"
 msgstr ""
 
+#, fuzzy, c-format
+#| msgid "%s%s: this buffer is not a channel!"
+msgid "%s%s: list buffer is not displayed"
+msgstr "%s%s: este buffer não é um canal!"
+
+#, fuzzy, c-format
+msgid "%s%s: no channels displayed on list buffer"
+msgstr "cor do texto para nomes de buffer"
+
+#, fuzzy, c-format
+#| msgid "%s%s: error while loading file \"%s\""
+msgid "%s%s: error exporting channels to file \"%s\""
+msgstr "%s%s: erro na leitura do arquivo \"%s\""
+
 #, c-format
 msgid "%s%s: not enough memory for regular expression"
 msgstr ""
@@ -9398,7 +9412,8 @@ msgstr "listar canais e seus tópicos"
 #, fuzzy
 msgid ""
 "[-server <server>] [-re <regex>] [<channel>[,<channel>...]] [<target>] || -"
-"up|-down [<number>] || -left|-right [<percent>] || -go <line>|end || -join"
+"up|-down [<number>] || -left|-right [<percent>] || -go <line>|end || -join  "
+"|| -export <filename>"
 msgstr "<target> <tipo> [<argumentos>]"
 
 msgid ""
@@ -9411,6 +9426,9 @@ msgstr ""
 #, fuzzy
 msgid "raw[-join]: join the channel on the selected line"
 msgstr "cor para o apelido na barra de entrada"
+
+msgid "raw[-export]: export list of channels to a file"
+msgstr ""
 
 #, fuzzy
 msgid "Sort keys on /list buffer:"
@@ -10896,6 +10914,14 @@ msgstr ""
 
 msgid "use a dedicated buffer for the output of /list"
 msgstr ""
+
+#, fuzzy
+msgid ""
+"format of each channel exported in a file (note: content is evaluated, see /"
+"help list)"
+msgstr ""
+"comando executado quando o WeeChat inicia, antes do carregamento dos plugins "
+"(nota: conteúdo é avaliado, veja /help eval)"
 
 msgid "left/right scroll in /list buffer (percent of width)"
 msgstr ""

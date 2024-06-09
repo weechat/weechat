@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-09 18:30+0200\n"
+"POT-Creation-Date: 2024-06-09 23:12+0200\n"
 "PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8989,6 +8989,23 @@ msgstr "%s%s: \"%s\" komutu, bağlı bir irc sunucusunda yürütülmelidir"
 msgid "%s%s: mask must begin with nick"
 msgstr "%s%s: Maske, takma adla başlamalıdır"
 
+#, fuzzy, c-format
+#| msgid "%s%s: this buffer is not a channel!"
+msgid "%s%s: list buffer is not displayed"
+msgstr "%s%s: Bu arabellek bir kanal değil!"
+
+#, fuzzy, c-format
+#| msgid "strip colors in hashtable values displayed on monitor buffer"
+msgid "%s%s: no channels displayed on list buffer"
+msgstr ""
+"ekran arabelleğinde görüntülenen sağlama tablosu değerlerindeki renkleri "
+"çıkar"
+
+#, fuzzy, c-format
+#| msgid "%s%s: error while loading file \"%s\""
+msgid "%s%s: error exporting channels to file \"%s\""
+msgstr "%s%s: \"%s\" dosyası yüklenirken hata"
+
 #, c-format
 msgid "%s%s: not enough memory for regular expression"
 msgstr "%s%s: Düzenli ifade için yetersiz bellek"
@@ -10010,7 +10027,8 @@ msgstr "kanalları ve konularını listele"
 #| "[-server <server>] [-re <regex>] [<channel>[,<channel>...]] [<target>]"
 msgid ""
 "[-server <server>] [-re <regex>] [<channel>[,<channel>...]] [<target>] || -"
-"up|-down [<number>] || -left|-right [<percent>] || -go <line>|end || -join"
+"up|-down [<number>] || -left|-right [<percent>] || -go <line>|end || -join  "
+"|| -export <filename>"
 msgstr "[-server <sunucu>] [-re <ifade>] [<kanal>[,<kanal>...]] [<hedef>]"
 
 msgid ""
@@ -10024,6 +10042,11 @@ msgstr ""
 #| msgid "color for option if value is changed on the selected line"
 msgid "raw[-join]: join the channel on the selected line"
 msgstr "seçili satırdaki değer değişmişse seçenek rengi"
+
+#, fuzzy
+#| msgid "get/set channel topic"
+msgid "raw[-export]: export list of channels to a file"
+msgstr "kanal konusunu al/ayarla"
 
 #, fuzzy
 #| msgid "text color for selected line in script buffer"
@@ -11791,6 +11814,17 @@ msgstr ""
 
 msgid "use a dedicated buffer for the output of /list"
 msgstr ""
+
+#, fuzzy
+#| msgid ""
+#| "format of each option exported in a file (note: content is evaluated, "
+#| "see /help fset)"
+msgid ""
+"format of each channel exported in a file (note: content is evaluated, see /"
+"help list)"
+msgstr ""
+"bir dosyaya dışa aktarılan her bir seçeneğin biçimi (not: içerik "
+"değerlendirilir, bkz. /help fset)"
 
 #, fuzzy
 #| msgid "left/right scroll in fset buffer (percent of width)"

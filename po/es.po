@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-09 18:30+0200\n"
+"POT-Creation-Date: 2024-06-09 23:12+0200\n"
 "PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: Santiago Forero <santiago@forero.xyz>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8626,6 +8626,22 @@ msgstr "%s%s: el comando \"%s\"debe ser ejecutado en un servidor irc conectado"
 msgid "%s%s: mask must begin with nick"
 msgstr "%s%s: la máscara debe empezar con el apodo"
 
+#, fuzzy, c-format
+#| msgid "%s%s: this buffer is not a channel!"
+msgid "%s%s: list buffer is not displayed"
+msgstr "%s%s: ¡este buffer no es un canal!"
+
+#, fuzzy, c-format
+msgid "%s%s: no channels displayed on list buffer"
+msgstr ""
+"remover colores en el tema (usado solamente cuando se esté mostrando el "
+"buffer de título)"
+
+#, fuzzy, c-format
+#| msgid "%s%s: error while loading file \"%s\""
+msgid "%s%s: error exporting channels to file \"%s\""
+msgstr "%s%s: error mientras se cargaba el archivo \"%s\""
+
 #, c-format
 msgid "%s%s: not enough memory for regular expression"
 msgstr "%s%s: no hay suficiente memoria para la expresión regular"
@@ -9595,7 +9611,8 @@ msgstr "lista canales y sus temas"
 #, fuzzy
 msgid ""
 "[-server <server>] [-re <regex>] [<channel>[,<channel>...]] [<target>] || -"
-"up|-down [<number>] || -left|-right [<percent>] || -go <line>|end || -join"
+"up|-down [<number>] || -left|-right [<percent>] || -go <line>|end || -join  "
+"|| -export <filename>"
 msgstr "[-server <servidor>] [<canal1>[,<canal2>...]] [<clave1>[,<clave2>...]]"
 
 msgid ""
@@ -9608,6 +9625,11 @@ msgstr ""
 #, fuzzy
 msgid "raw[-join]: join the channel on the selected line"
 msgstr "color para el final de línea del último registro"
+
+#, fuzzy
+#| msgid "get/set channel topic"
+msgid "raw[-export]: export list of channels to a file"
+msgstr "ver/establecer el tema del canal"
 
 #, fuzzy
 #| msgid "text color for selected line in script buffer"
@@ -11244,6 +11266,12 @@ msgstr ""
 
 msgid "use a dedicated buffer for the output of /list"
 msgstr ""
+
+#, fuzzy
+msgid ""
+"format of each channel exported in a file (note: content is evaluated, see /"
+"help list)"
+msgstr "comando ejecutado cuando WeeChat inicia, antes de cargar los plugins"
 
 msgid "left/right scroll in /list buffer (percent of width)"
 msgstr ""

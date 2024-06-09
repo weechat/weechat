@@ -3548,6 +3548,36 @@ IRC_COMMAND_CALLBACK(list)
             irc_list_join_channel (ptr_server);
         return WEECHAT_RC_OK;
     }
+    if ((argc > 0) && (weechat_strcmp (argv[1], "-export") == 0))
+    {
+        WEECHAT_COMMAND_MIN_ARGS(3, argv[1]);
+        IRC_COMMAND_CHECK_SERVER("list", 1, 1);
+        if (!ptr_server->list->buffer)
+        {
+            weechat_printf (
+                ptr_server->buffer,
+                _("%s%s: list buffer is not displayed"),
+                weechat_prefix ("error"), IRC_PLUGIN_NAME);
+            return WEECHAT_RC_OK;
+        }
+        if (weechat_arraylist_size (ptr_server->list->channels) == 0)
+        {
+            weechat_printf (
+                ptr_server->buffer,
+                _("%s%s: no channels displayed on list buffer"),
+                weechat_prefix ("error"), IRC_PLUGIN_NAME);
+            return WEECHAT_RC_OK;
+        }
+        if (!irc_list_export (ptr_server, argv_eol[2]))
+        {
+            weechat_printf (
+                ptr_server->buffer,
+                _("%s%s: error exporting channels to file \"%s\""),
+                weechat_prefix ("error"), IRC_PLUGIN_NAME, argv_eol[2]);
+            return WEECHAT_RC_OK;
+        }
+        return WEECHAT_RC_OK;
+    }
 
     for (i = 1; i < argc; i++)
     {
@@ -7507,7 +7537,8 @@ irc_command_init ()
            " || -up|-down [<number>]"
            " || -left|-right [<percent>]"
            " || -go <line>|end"
-           " || -join"),
+           " || -join "
+           " || -export <filename>"),
         WEECHAT_CMD_ARGS_DESC(
             N_("server: send to this server (internal name)"),
             N_("regex: POSIX extended regular expression used to filter results "
@@ -7523,6 +7554,7 @@ irc_command_init ()
             N_("raw[-go]: select a line by number, first line number is 0 "
                "(\"end\" to select the last line)"),
             N_("raw[-join]: join the channel on the selected line"),
+            N_("raw[-export]: export list of channels to a file"),
             "",
             N_("For keys, input and mouse actions on the buffer, "
                "see key bindings in User's guide."),
@@ -7558,7 +7590,8 @@ irc_command_init ()
         " || -left 10|20|30|40|50|60|70|80|90|100"
         " || -right 10|20|30|40|50|60|70|80|90|100"
         " || -go 0|end"
-        " || -join",
+        " || -join"
+        " || -export %(filename)",
         &irc_command_list, NULL, NULL);
     weechat_hook_command (
         "lusers",

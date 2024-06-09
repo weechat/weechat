@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-09 18:30+0200\n"
+"POT-Creation-Date: 2024-06-09 23:12+0200\n"
 "PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: Vasco Almeida <vascomalmeida@sapo.pt>\n"
 "Language-Team: Portuguese <>\n"
@@ -8866,6 +8866,21 @@ msgstr "%s%s: o comando \"%s\" deve ser executado num servidor irc conectado"
 msgid "%s%s: mask must begin with nick"
 msgstr "%s%s: máscara deve começar com um nick"
 
+#, fuzzy, c-format
+#| msgid "%s%s: this buffer is not a channel!"
+msgid "%s%s: list buffer is not displayed"
+msgstr "%s%s: este buffer não é um canal!"
+
+#, fuzzy, c-format
+#| msgid "strip colors in hashtable values displayed on monitor buffer"
+msgid "%s%s: no channels displayed on list buffer"
+msgstr "retirar as cores dos valores da tabela de dispersão no buffer monitor"
+
+#, fuzzy, c-format
+#| msgid "%s%s: error while loading file \"%s\""
+msgid "%s%s: error exporting channels to file \"%s\""
+msgstr "%s%s: erro ao carregar o ficheiro \"%s\""
+
 #, c-format
 msgid "%s%s: not enough memory for regular expression"
 msgstr "%s%s: memória insuficiente para a expressão regular"
@@ -9861,7 +9876,8 @@ msgstr "listar canais e respetivos tópicos"
 #, fuzzy
 msgid ""
 "[-server <server>] [-re <regex>] [<channel>[,<channel>...]] [<target>] || -"
-"up|-down [<number>] || -left|-right [<percent>] || -go <line>|end || -join"
+"up|-down [<number>] || -left|-right [<percent>] || -go <line>|end || -join  "
+"|| -export <filename>"
 msgstr ""
 "[-noswitch] [-server <servidor>] [<canal1>[,<canal2>...]] [<chave1>[,"
 "<chave2>...]]"
@@ -9876,6 +9892,11 @@ msgstr ""
 #, fuzzy
 msgid "raw[-join]: join the channel on the selected line"
 msgstr "cor da linha que termina o registo recente"
+
+#, fuzzy
+#| msgid "get/set channel topic"
+msgid "raw[-export]: export list of channels to a file"
+msgstr "obter/definir o tópico do canal"
 
 #, fuzzy
 #| msgid "text color for selected line in script buffer"
@@ -11585,6 +11606,13 @@ msgstr ""
 
 msgid "use a dedicated buffer for the output of /list"
 msgstr ""
+
+#, fuzzy
+msgid ""
+"format of each channel exported in a file (note: content is evaluated, see /"
+"help list)"
+msgstr ""
+"nome real a usar no servidor (nota: o conteúdo é avaliado, ver /help eval)"
 
 msgid "left/right scroll in /list buffer (percent of width)"
 msgstr ""

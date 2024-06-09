@@ -130,6 +130,7 @@ extern struct t_config_option *irc_config_look_item_nick_modes;
 extern struct t_config_option *irc_config_look_item_nick_prefix;
 extern struct t_config_option *irc_config_look_join_auto_add_chantype;
 extern struct t_config_option *irc_config_look_list_buffer;
+extern struct t_config_option *irc_config_look_list_buffer_format_export;
 extern struct t_config_option *irc_config_look_list_buffer_scroll_horizontal;
 extern struct t_config_option *irc_config_look_list_buffer_sort;
 extern struct t_config_option *irc_config_look_list_buffer_topic_strip_colors;

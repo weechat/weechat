@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-09 18:30+0200\n"
+"POT-Creation-Date: 2024-06-09 23:12+0200\n"
 "PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8107,6 +8107,18 @@ msgid "%s%s: mask must begin with nick"
 msgstr ""
 
 #, fuzzy, c-format
+msgid "%s%s: list buffer is not displayed"
+msgstr "Это окно не является каналом!\n"
+
+#, fuzzy, c-format
+msgid "%s%s: no channels displayed on list buffer"
+msgstr "цвет названия сервера"
+
+#, fuzzy, c-format
+msgid "%s%s: error exporting channels to file \"%s\""
+msgstr "Не могу записать лог-файл \"%s\"\n"
+
+#, fuzzy, c-format
 msgid "%s%s: not enough memory for regular expression"
 msgstr "%s недостаточно памяти для регулярного выражения\n"
 
@@ -9031,7 +9043,8 @@ msgstr "перечислить каналы и их темы"
 #, fuzzy
 msgid ""
 "[-server <server>] [-re <regex>] [<channel>[,<channel>...]] [<target>] || -"
-"up|-down [<number>] || -left|-right [<percent>] || -go <line>|end || -join"
+"up|-down [<number>] || -left|-right [<percent>] || -go <line>|end || -join  "
+"|| -export <filename>"
 msgstr "канал[,канал] [ключ[,ключ]]"
 
 msgid ""
@@ -9044,6 +9057,11 @@ msgstr ""
 #, fuzzy
 msgid "raw[-join]: join the channel on the selected line"
 msgstr "цвет ников"
+
+#, fuzzy
+#| msgid "get/set channel topic"
+msgid "raw[-export]: export list of channels to a file"
+msgstr "получить/установить тему канала"
 
 #, fuzzy
 msgid "Sort keys on /list buffer:"
@@ -10587,6 +10605,12 @@ msgstr ""
 
 msgid "use a dedicated buffer for the output of /list"
 msgstr ""
+
+#, fuzzy
+msgid ""
+"format of each channel exported in a file (note: content is evaluated, see /"
+"help list)"
+msgstr "ник, используемый на IRC сервере"
 
 msgid "left/right scroll in /list buffer (percent of width)"
 msgstr ""

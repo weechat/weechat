@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-09 18:30+0200\n"
+"POT-Creation-Date: 2024-06-09 23:12+0200\n"
 "PO-Revision-Date: 2024-06-09 14:50+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -9175,6 +9175,21 @@ msgstr "%s%s: komenda \"%s\" musi zostać wykonana na połączonym serwerze irc"
 msgid "%s%s: mask must begin with nick"
 msgstr "%s%s: maska musi zaczynać się od nicka"
 
+#, fuzzy, c-format
+#| msgid "%s%s: this buffer is not a channel!"
+msgid "%s%s: list buffer is not displayed"
+msgstr "%s%s: to nie jest bufor kanału!"
+
+#, fuzzy, c-format
+#| msgid "irc channel on /list buffer"
+msgid "%s%s: no channels displayed on list buffer"
+msgstr "kanały irc na /list buffer"
+
+#, fuzzy, c-format
+#| msgid "%s%s: error while loading file \"%s\""
+msgid "%s%s: error exporting channels to file \"%s\""
+msgstr "%s%s: błąd podczas ładowania pliku \"%s\""
+
 #, c-format
 msgid "%s%s: not enough memory for regular expression"
 msgstr "%s%s: za mało pamięci dla wyrażenia regularnego"
@@ -10073,9 +10088,15 @@ msgid "list channels and their topics"
 msgstr "wyświetla kanały i ich tematy"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#, fuzzy
+#| msgid ""
+#| "[-server <server>] [-re <regex>] [<channel>[,<channel>...]] [<target>] || "
+#| "-up|-down [<number>] || -left|-right [<percent>] || -go <line>|end || -"
+#| "join"
 msgid ""
 "[-server <server>] [-re <regex>] [<channel>[,<channel>...]] [<target>] || -"
-"up|-down [<number>] || -left|-right [<percent>] || -go <line>|end || -join"
+"up|-down [<number>] || -left|-right [<percent>] || -go <line>|end || -join  "
+"|| -export <filename>"
 msgstr ""
 "[-server <serwer>] [-re <wyrażenie>] [<kanał>[,<kanał>...]] [<cel>] || -up|-"
 "down [<liczba>] || -left|-right [<procent>] || -go <linia>|end || -join"
@@ -10093,6 +10114,11 @@ msgstr ""
 
 msgid "raw[-join]: join the channel on the selected line"
 msgstr "raw[-join]: wchodzi na kanał z zaznaczonej linii"
+
+#, fuzzy
+#| msgid "raw[-delete]: delete channel topic"
+msgid "raw[-export]: export list of channels to a file"
+msgstr "raw[-delete]: kasuje temat kanału"
 
 msgid "Sort keys on /list buffer:"
 msgstr "Posortowane klawisze w buforze /list:"
@@ -11662,6 +11688,17 @@ msgstr ""
 
 msgid "use a dedicated buffer for the output of /list"
 msgstr "użyj dedykowanego bufora dla wyjścia komendy /list"
+
+#, fuzzy
+#| msgid ""
+#| "format of each option exported in a file (note: content is evaluated, "
+#| "see /help fset)"
+msgid ""
+"format of each channel exported in a file (note: content is evaluated, see /"
+"help list)"
+msgstr ""
+"format każdej opcji eskportowanej do pliku (uwaga: zawartość jest "
+"przetwarzana, zobacz /help fset)"
 
 msgid "left/right scroll in /list buffer (percent of width)"
 msgstr "przewinięcie w lewo/prawo w buforze /list (procent szerokości)"

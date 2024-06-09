@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-09 18:30+0200\n"
+"POT-Creation-Date: 2024-06-09 23:12+0200\n"
 "PO-Revision-Date: 2024-05-07 14:00+0400\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -9194,6 +9194,21 @@ msgstr "%s%s: команда „%s” мора да се изврши над п�
 msgid "%s%s: mask must begin with nick"
 msgstr "%s%s: маска мора да почиње надимком"
 
+#, fuzzy, c-format
+#| msgid "%s%s: this buffer is not a channel!"
+msgid "%s%s: list buffer is not displayed"
+msgstr "%s%s: овај бафер није канал!"
+
+#, fuzzy, c-format
+#| msgid "irc channel on /list buffer"
+msgid "%s%s: no channels displayed on list buffer"
+msgstr "irc канал у /list баферу"
+
+#, fuzzy, c-format
+#| msgid "%s%s: error while loading file \"%s\""
+msgid "%s%s: error exporting channels to file \"%s\""
+msgstr "%s%s: грешка приликом учитавања фајла „%s”"
+
 #, c-format
 msgid "%s%s: not enough memory for regular expression"
 msgstr "%s%s: нема довољно слободне меморије за регуларни израз"
@@ -10078,9 +10093,15 @@ msgid "list channels and their topics"
 msgstr "листа канала и њихових тема"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#, fuzzy
+#| msgid ""
+#| "[-server <server>] [-re <regex>] [<channel>[,<channel>...]] [<target>] || "
+#| "-up|-down [<number>] || -left|-right [<percent>] || -go <line>|end || -"
+#| "join"
 msgid ""
 "[-server <server>] [-re <regex>] [<channel>[,<channel>...]] [<target>] || -"
-"up|-down [<number>] || -left|-right [<percent>] || -go <line>|end || -join"
+"up|-down [<number>] || -left|-right [<percent>] || -go <line>|end || -join  "
+"|| -export <filename>"
 msgstr ""
 "[-server <сервер>] [-re <рег_изр>] [<канал>[,<канал>...]] [<циљ>] || -up|-"
 "down [<број>] || -left|-right [<проценат>] || -go <линија>|end || -join"
@@ -10098,6 +10119,11 @@ msgstr ""
 
 msgid "raw[-join]: join the channel on the selected line"
 msgstr "raw[-join]: приступа каналу на изабраној линији"
+
+#, fuzzy
+#| msgid "raw[-delete]: delete channel topic"
+msgid "raw[-export]: export list of channels to a file"
+msgstr "raw[-delete]: брисање теме канала"
 
 msgid "Sort keys on /list buffer:"
 msgstr "Кључеви сортирања за /list бафер:"
@@ -11668,6 +11694,17 @@ msgstr ""
 
 msgid "use a dedicated buffer for the output of /list"
 msgstr "користи посебан бафер за излаз команде /list"
+
+#, fuzzy
+#| msgid ""
+#| "format of each option exported in a file (note: content is evaluated, "
+#| "see /help fset)"
+msgid ""
+"format of each channel exported in a file (note: content is evaluated, see /"
+"help list)"
+msgstr ""
+"формат сваке опције која се извози у фајл (напомена: садржај се израчунава, "
+"погледајте /help fset)"
 
 msgid "left/right scroll in /list buffer (percent of width)"
 msgstr "скроловање у лево/десно у /list баферу (проценат ширине)"
