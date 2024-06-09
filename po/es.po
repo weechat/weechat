@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-09 15:35+0200\n"
+"POT-Creation-Date: 2024-06-09 15:56+0200\n"
 "PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: Santiago Forero <santiago@forero.xyz>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8743,12 +8743,16 @@ msgid "No server found with \"%s\""
 msgstr "Ningún servidor encontrado con \"%s\""
 
 #, fuzzy, c-format
-msgid "%s%s: server \"%s\" already exists, can't add it!"
-msgstr "%s%s: el servidor \"%s\" ya existe, ¡no se puede crear!"
+msgid "%s%s: server \"%s\" already exists"
+msgstr "%sError: el filtro \"%s\" ya existe"
 
 #, fuzzy, c-format
 msgid "%s%s: unable to add server"
 msgstr "%s%s: no es posible crear el servidor"
+
+#, fuzzy, c-format
+msgid "%s: server updated: %s%s%s -> %s"
+msgstr "%s: servidor %s%s%s creado"
 
 #, fuzzy, c-format
 msgid "%s: server added: %s%s%s -> %s"
@@ -10108,8 +10112,8 @@ msgstr "lista, añade o elimina servidores IRC"
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 #, fuzzy
 msgid ""
-"list|listfull [<name>] || add <name> <hostname>[/<port>] [-temp] [-"
-"<option>[=<value>]] [-no<option>] || copy|rename <name> <new_name> || "
+"list|listfull [<name>] || add|addreplace <name> <hostname>[/<port>] [-temp] "
+"[-<option>[=<value>]] [-no<option>] || copy|rename <name> <new_name> || "
 "reorder <name> [<name>...] || open <name>|-all [<name>...] || del|keep "
 "<name> || deloutq|jump || raw [<filter>]"
 msgstr ""
@@ -10125,6 +10129,11 @@ msgstr ""
 
 msgid "raw[add]: add a new server"
 msgstr ""
+
+#, fuzzy
+#| msgid "%s%s: error adding notification"
+msgid "raw[addreplace]: add or replace an existing server"
+msgstr "%s%s: error al agregar la notificación"
 
 msgid ""
 "name: server name, for internal and display use; this name is used to "
@@ -17228,6 +17237,10 @@ msgstr "%s%s: tiempo de espera máximo para \"%s\" con %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: no es posible conectarse: error (%d)"
+
+#, fuzzy, c-format
+#~ msgid "%s%s: server \"%s\" already exists, can't add it!"
+#~ msgstr "%s%s: el servidor \"%s\" ya existe, ¡no se puede crear!"
 
 #~ msgid "color for channel modes, near channel name"
 #~ msgstr "color para los modos del canal, junto al nombre del canal"

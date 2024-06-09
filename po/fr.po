@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-09 15:35+0200\n"
-"PO-Revision-Date: 2024-06-09 15:37+0200\n"
+"POT-Creation-Date: 2024-06-09 15:56+0200\n"
+"PO-Revision-Date: 2024-06-09 15:57+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -9584,12 +9584,16 @@ msgid "No server found with \"%s\""
 msgstr "Pas de serveur trouvé avec \"%s\""
 
 #, c-format
-msgid "%s%s: server \"%s\" already exists, can't add it!"
-msgstr "%s%s : le serveur \"%s\" existe déjà, impossible de l'ajouter !"
+msgid "%s%s: server \"%s\" already exists"
+msgstr "%s%s : le serveur \"%s\" existe déjà"
 
 #, c-format
 msgid "%s%s: unable to add server"
 msgstr "%s%s : impossible d'ajouter le serveur"
+
+#, c-format
+msgid "%s: server updated: %s%s%s -> %s"
+msgstr "%s : serveur mis à jour : %s%s%s -> %s"
 
 #, c-format
 msgid "%s: server added: %s%s%s -> %s"
@@ -10806,13 +10810,13 @@ msgstr "lister, ajouter ou retirer des serveurs IRC"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid ""
-"list|listfull [<name>] || add <name> <hostname>[/<port>] [-temp] [-"
-"<option>[=<value>]] [-no<option>] || copy|rename <name> <new_name> || "
+"list|listfull [<name>] || add|addreplace <name> <hostname>[/<port>] [-temp] "
+"[-<option>[=<value>]] [-no<option>] || copy|rename <name> <new_name> || "
 "reorder <name> [<name>...] || open <name>|-all [<name>...] || del|keep "
 "<name> || deloutq|jump || raw [<filter>]"
 msgstr ""
-"list|listfull [<nom>] || add <nom> <nom_machine>[/<port>] [-temp] [-"
-"<option>[=<valeur>]] [-no<option>] || copy|rename <nom> <nouveau_nom> || "
+"list|listfull [<nom>] || add|addreplace <nom> <nom_machine>[/<port>] [-temp] "
+"[-<option>[=<valeur>]] [-no<option>] || copy|rename <nom> <nouveau_nom> || "
 "reorder <nom> [<nom>...] || open <nom>|-all [<nom>...] || del|keep <nom> || "
 "deloutq|jump || raw [<filtre>]"
 
@@ -10826,6 +10830,9 @@ msgstr ""
 
 msgid "raw[add]: add a new server"
 msgstr "raw[add] : ajouter un nouveau serveur"
+
+msgid "raw[addreplace]: add or replace an existing server"
+msgstr "raw[addreplace] : ajouter ou remplacer un serveur existant"
 
 msgid ""
 "name: server name, for internal and display use; this name is used to "
@@ -18193,6 +18200,10 @@ msgstr "%s%s : délai d'attente dépassé pour \"%s\" avec %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s : impossible de se connecter : erreur inattendue (%d)"
+
+#, c-format
+#~ msgid "%s%s: server \"%s\" already exists, can't add it!"
+#~ msgstr "%s%s : le serveur \"%s\" existe déjà, impossible de l'ajouter !"
 
 #~ msgid ""
 #~ "maximum length (in number of chars) of a raw message displayed (0 = "

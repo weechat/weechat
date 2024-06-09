@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-09 15:35+0200\n"
+"POT-Creation-Date: 2024-06-09 15:56+0200\n"
 "PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8228,12 +8228,16 @@ msgid "No server found with \"%s\""
 msgstr "Серверы с '%s' не найдены.\n"
 
 #, fuzzy, c-format
-msgid "%s%s: server \"%s\" already exists, can't add it!"
-msgstr "%s сервер \"%s\" уже существует, не могу создать его!\n"
+msgid "%s%s: server \"%s\" already exists"
+msgstr "%s игнорирование уже существует\n"
 
 #, fuzzy, c-format
 msgid "%s%s: unable to add server"
 msgstr "%s не могу создать сервер\n"
+
+#, fuzzy, c-format
+msgid "%s: server updated: %s%s%s -> %s"
+msgstr "Сервер %s%s%s создан\n"
 
 #, fuzzy, c-format
 msgid "%s: server added: %s%s%s -> %s"
@@ -9532,8 +9536,8 @@ msgstr "перечислить, добавить или удалить серв�
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 #, fuzzy
 msgid ""
-"list|listfull [<name>] || add <name> <hostname>[/<port>] [-temp] [-"
-"<option>[=<value>]] [-no<option>] || copy|rename <name> <new_name> || "
+"list|listfull [<name>] || add|addreplace <name> <hostname>[/<port>] [-temp] "
+"[-<option>[=<value>]] [-no<option>] || copy|rename <name> <new_name> || "
 "reorder <name> [<name>...] || open <name>|-all [<name>...] || del|keep "
 "<name> || deloutq|jump || raw [<filter>]"
 msgstr ""
@@ -9551,6 +9555,10 @@ msgstr ""
 
 msgid "raw[add]: add a new server"
 msgstr ""
+
+#, fuzzy
+msgid "raw[addreplace]: add or replace an existing server"
+msgstr "%s недостаточно памяти для сообщения в строке информации\n"
 
 msgid ""
 "name: server name, for internal and display use; this name is used to "
@@ -16249,6 +16257,10 @@ msgstr "%s нет аргумента для параметра \"%s\"\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s DCC: не могу соединиться с отправителем\n"
+
+#, fuzzy, c-format
+#~ msgid "%s%s: server \"%s\" already exists, can't add it!"
+#~ msgstr "%s сервер \"%s\" уже существует, не могу создать его!\n"
 
 #, fuzzy
 #~ msgid "color for channel modes, near channel name"

@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-09 15:35+0200\n"
+"POT-Creation-Date: 2024-06-09 15:56+0200\n"
 "PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: Érico Nogueira <ericonr@disroot.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8610,12 +8610,16 @@ msgid "No server found with \"%s\""
 msgstr ""
 
 #, fuzzy, c-format
-msgid "%s%s: server \"%s\" already exists, can't add it!"
+msgid "%s%s: server \"%s\" already exists"
 msgstr "%sErro: filtro \"%s\" já existe"
 
 #, fuzzy, c-format
 msgid "%s%s: unable to add server"
 msgstr "%s%s: não foi possível redirecionar saída de erro (stderr)"
+
+#, fuzzy, c-format
+msgid "%s: server updated: %s%s%s -> %s"
+msgstr "Todos os filtros foram excluídos"
 
 #, fuzzy, c-format
 msgid "%s: server added: %s%s%s -> %s"
@@ -9859,12 +9863,18 @@ msgid "list, add or remove IRC servers"
 msgstr ""
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#, fuzzy
+#| msgid ""
+#| "list || add <name> <type> <address> <port> [<username> [<password>]] || "
+#| "del <name>|-all || set <name> <option> <value>"
 msgid ""
-"list|listfull [<name>] || add <name> <hostname>[/<port>] [-temp] [-"
-"<option>[=<value>]] [-no<option>] || copy|rename <name> <new_name> || "
+"list|listfull [<name>] || add|addreplace <name> <hostname>[/<port>] [-temp] "
+"[-<option>[=<value>]] [-no<option>] || copy|rename <name> <new_name> || "
 "reorder <name> [<name>...] || open <name>|-all [<name>...] || del|keep "
 "<name> || deloutq|jump || raw [<filter>]"
 msgstr ""
+"list || add <nome> <tipo> <endereço> <porta> [<nome de usuário> [<senha>]] "
+"|| del <nome>|-all || set <nome> <opção> <valor>"
 
 msgid "raw[list]: list servers (without argument, this list is displayed)"
 msgstr ""
@@ -9874,6 +9884,11 @@ msgstr ""
 
 msgid "raw[add]: add a new server"
 msgstr ""
+
+#, fuzzy
+#| msgid "%s%s: failed to add word to personal dictionary"
+msgid "raw[addreplace]: add or replace an existing server"
+msgstr "%s%s: falha ao adicionar palavra no dicionário pessoal"
 
 msgid ""
 "name: server name, for internal and display use; this name is used to "
@@ -16730,6 +16745,10 @@ msgstr "%s%s: tempo esgotado para \"%s\" com %s"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: não foi possível conectar ao remetente"
+
+#, fuzzy, c-format
+#~ msgid "%s%s: server \"%s\" already exists, can't add it!"
+#~ msgstr "%sErro: filtro \"%s\" já existe"
 
 #~ msgid "color for channel modes, near channel name"
 #~ msgstr "cor para os modos de canal, próximo ao nome do canal"

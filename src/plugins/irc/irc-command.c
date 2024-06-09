@@ -5736,7 +5736,7 @@ irc_command_display_server (struct t_irc_server *server, int with_detail)
 
 IRC_COMMAND_CALLBACK(server)
 {
-    int i, detailed_list, one_server_found, length, count, refresh;
+    int i, detailed_list, one_server_found, length, count, refresh, update;
     struct t_irc_server *ptr_server2, *server_found, *new_server;
     char *server_name, *msg_no_quotes, *message, *description;
 
@@ -5808,18 +5808,28 @@ IRC_COMMAND_CALLBACK(server)
         return WEECHAT_RC_OK;
     }
 
-    if (weechat_strcmp (argv[1], "add") == 0)
+    if ((weechat_strcmp (argv[1], "add") == 0)
+        || (weechat_strcmp (argv[1], "addreplace") == 0))
     {
         WEECHAT_COMMAND_MIN_ARGS(4, argv[1]);
 
+        update = 0;
         ptr_server2 = irc_server_search (argv[2]);
         if (ptr_server2)
         {
-            weechat_printf (
-                NULL,
-                _("%s%s: server \"%s\" already exists, can't add it!"),
-                weechat_prefix ("error"), IRC_PLUGIN_NAME, ptr_server2->name);
-            return WEECHAT_RC_OK;
+            if (weechat_strcmp (argv[1], "addreplace") == 0)
+            {
+                update = 1;
+                irc_server_free (ptr_server2);
+            }
+            else
+            {
+                weechat_printf (
+                    NULL,
+                    _("%s%s: server \"%s\" already exists"),
+                    weechat_prefix ("error"), IRC_PLUGIN_NAME, ptr_server2->name);
+                return WEECHAT_RC_OK;
+            }
         }
 
         new_server = irc_server_alloc (argv[2]);
@@ -5840,6 +5850,8 @@ IRC_COMMAND_CALLBACK(server)
 
         weechat_printf (
             NULL,
+            (update) ?
+            _("%s: server updated: %s%s%s -> %s") :
             _("%s: server added: %s%s%s -> %s"),
             IRC_PLUGIN_NAME,
             IRC_COLOR_CHAT_SERVER,
@@ -7872,7 +7884,7 @@ irc_command_init ()
         N_("list, add or remove IRC servers"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("list|listfull [<name>]"
-           " || add <name> <hostname>[/<port>] [-temp] [-<option>[=<value>]] "
+           " || add|addreplace <name> <hostname>[/<port>] [-temp] [-<option>[=<value>]] "
            "[-no<option>]"
            " || copy|rename <name> <new_name>"
            " || reorder <name> [<name>...]"
@@ -7884,6 +7896,7 @@ irc_command_init ()
             N_("raw[list]: list servers (without argument, this list is displayed)"),
             N_("raw[listfull]: list servers with detailed info for each server"),
             N_("raw[add]: add a new server"),
+            N_("raw[addreplace]: add or replace an existing server"),
             N_("name: server name, for internal and display use; this name "
                "is used to connect to the server (/connect name) and to set server "
                "options: irc.server.name.xxx"),
@@ -7937,7 +7950,7 @@ irc_command_init ()
             AI("  /server raw c:${recv} && ${command}==PRIVMSG && ${nick}==foo")),
         "list %(irc_servers)"
         " || listfull %(irc_servers)"
-        " || add %(irc_servers)"
+        " || add|addreplace %(irc_servers)"
         " || copy %(irc_servers) %(irc_servers)"
         " || rename %(irc_servers) %(irc_servers)"
         " || keep %(irc_servers)"

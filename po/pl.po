@@ -9295,13 +9295,19 @@ msgstr "Serwery z \"%s\":"
 msgid "No server found with \"%s\""
 msgstr "Nie znaleziono serwera z  \"%s\""
 
-#, c-format
-msgid "%s%s: server \"%s\" already exists, can't add it!"
-msgstr "%s%s: serwer \"%s\" już istnieje, nie mogę go dodać!"
+#, fuzzy, c-format
+#| msgid "%s%s: trigger \"%s\" already exists"
+msgid "%s%s: server \"%s\" already exists"
+msgstr "%s%s: trigger \"%s\" już istnieje"
 
 #, c-format
 msgid "%s%s: unable to add server"
 msgstr "%s%s: nie można dodać serwera"
+
+#, fuzzy, c-format
+#| msgid "%s: server added: %s%s%s -> %s"
+msgid "%s: server updated: %s%s%s -> %s"
+msgstr "%s: dodano serwer: %s%s%s -> %s"
 
 #, c-format
 msgid "%s: server added: %s%s%s -> %s"
@@ -10494,9 +10500,15 @@ msgid "list, add or remove IRC servers"
 msgstr "wyświetla, dodaje lub usuwa serwery IRC"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#, fuzzy
+#| msgid ""
+#| "list|listfull [<name>] || add <name> <hostname>[/<port>] [-temp] [-"
+#| "<option>[=<value>]] [-no<option>] || copy|rename <name> <new_name> || "
+#| "reorder <name> [<name>...] || open <name>|-all [<name>...] || del|keep "
+#| "<name> || deloutq|jump || raw [<filter>]"
 msgid ""
-"list|listfull [<name>] || add <name> <hostname>[/<port>] [-temp] [-"
-"<option>[=<value>]] [-no<option>] || copy|rename <name> <new_name> || "
+"list|listfull [<name>] || add|addreplace <name> <hostname>[/<port>] [-temp] "
+"[-<option>[=<value>]] [-no<option>] || copy|rename <name> <new_name> || "
 "reorder <name> [<name>...] || open <name>|-all [<name>...] || del|keep "
 "<name> || deloutq|jump || raw [<filter>]"
 msgstr ""
@@ -10516,6 +10528,11 @@ msgstr ""
 
 msgid "raw[add]: add a new server"
 msgstr "raw[add]: dodaj nowy serwer"
+
+#, fuzzy
+#| msgid "raw[addreplace]: add or replace an existing trigger"
+msgid "raw[addreplace]: add or replace an existing server"
+msgstr "raw[addreplace]: dodaj lub zastąp istniejący trigger"
 
 msgid ""
 "name: server name, for internal and display use; this name is used to "
@@ -17707,6 +17724,10 @@ msgstr "%s%s: przekroczono czas na \"%s\" z %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: nie można połączyć: niespodziewany błąd (%d)"
+
+#, c-format
+#~ msgid "%s%s: server \"%s\" already exists, can't add it!"
+#~ msgstr "%s%s: serwer \"%s\" już istnieje, nie mogę go dodać!"
 
 #~ msgid "option: set option for remote relay: proxy, password or totp_secret"
 #~ msgstr ""
