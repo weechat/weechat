@@ -4312,6 +4312,13 @@ irc_server_close_connection (struct t_irc_server *server)
     /* remove all batched events pending */
     irc_batch_free_all (server);
 
+    /* remove all channels on /list buffer */
+    if (server->list->buffer)
+    {
+        irc_list_reset (server);
+        irc_list_buffer_refresh (server, 1);
+    }
+
     /* server is now disconnected */
     server->authentication_method = IRC_SERVER_AUTH_METHOD_NONE;
     server->sasl_mechanism_used = -1;

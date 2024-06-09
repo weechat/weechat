@@ -21,6 +21,7 @@
 
 - irc, xfer: fix display of input prompt in IRC private buffers and DCC chat buffers ([#2128](https://github.com/weechat/weechat/issues/2128))
 - irc: close /list buffer when the server buffer is closed ([#2121](https://github.com/weechat/weechat/issues/2121))
+- irc: clear /list buffer when disconnecting from server ([#2133](https://github.com/weechat/weechat/issues/2133))
 - irc: display an explicit message on /list buffer when the list of channels is empty ([#2133](https://github.com/weechat/weechat/issues/2133))
 - xfer: fix send of data on the DCC chat buffer after `/upgrade` if the buffer was opened before the upgrade ([#2092](https://github.com/weechat/weechat/issues/2092))
 - php: fix return value of function hdata_longlong
