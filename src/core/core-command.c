@@ -237,7 +237,7 @@ command_bar_list (int full)
 
 COMMAND_CALLBACK(bar)
 {
-    int i, type, position, number;
+    int i, type, position, number, update;
     long value;
     char *error, *str_type, *pos_condition, *name;
     struct t_gui_bar *ptr_bar, *ptr_bar2, *ptr_next_bar;
@@ -287,17 +287,28 @@ COMMAND_CALLBACK(bar)
     }
 
     /* add a new bar */
-    if (string_strcmp (argv[1], "add") == 0)
+    if ((string_strcmp (argv[1], "add") == 0)
+        || (string_strcmp (argv[1], "addreplace") == 0))
     {
-        COMMAND_MIN_ARGS(8, "add");
+        COMMAND_MIN_ARGS(8, argv[1]);
+        update = 0;
         ptr_bar = gui_bar_search (argv[2]);
         if (ptr_bar)
         {
-            gui_chat_printf (NULL,
-                             _("%sBar \"%s\" already exists"),
-                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                             argv[2]);
-            return WEECHAT_RC_OK;
+            if (string_strcmp (argv[1], "addreplace") == 0)
+            {
+                update = 1;
+                gui_bar_free (ptr_bar);
+                gui_bar_create_default_input ();
+            }
+            else
+            {
+                gui_chat_printf (NULL,
+                                 _("%sBar \"%s\" already exists"),
+                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                 argv[2]);
+                return WEECHAT_RC_OK;
+            }
         }
         pos_condition = strchr (argv[3], ',');
         if (pos_condition)
@@ -361,8 +372,10 @@ COMMAND_CALLBACK(bar)
                     argv[6],       /* separators */
                     argv_eol[7]))  /* items */
             {
-                gui_chat_printf (NULL, _("Bar \"%s\" created"),
-                                 argv[2]);
+                gui_chat_printf (
+                    NULL,
+                    (update) ? _("Bar \"%s\" updated") : _("Bar \"%s\" created"),
+                    argv[2]);
             }
             else
             {
@@ -7948,7 +7961,8 @@ command_init ()
         N_("manage bars"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("list|listfull|listitems"
-           " || add <name> <type>[,<conditions>] <position> <size> <separator> "
+           " || add|addreplace <name> <type>[,<conditions>] <position> <size> "
+           "<separator> "
            "<item1>[,<item2>...]"
            " || default [input|title|status|nicklist]"
            " || rename <name> <new_name>"
@@ -7961,6 +7975,7 @@ command_init ()
             N_("raw[listfull]: list all bars (verbose)"),
             N_("raw[listitems]: list all bar items"),
             N_("raw[add]: add a new bar"),
+            N_("raw[addreplace]: add or replace an existing bar"),
             N_("name: name of bar (must be unique)"),
             N_("type: type of bar:"),
             N_("> raw[root]: outside windows"),
@@ -8005,7 +8020,7 @@ command_init ()
         "list"
         " || listfull"
         " || listitems"
-        " || add %(bars_names) root|window bottom|top|left|right"
+        " || add|addreplace %(bars_names) root|window bottom|top|left|right"
         " || default input|title|status|nicklist|%*"
         " || rename %(bars_names)"
         " || del %(bars_names)|%*"

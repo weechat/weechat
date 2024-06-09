@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-09 10:04+0200\n"
+"POT-Creation-Date: 2024-06-09 10:12+0200\n"
 "PO-Revision-Date: 2024-06-01 22:06+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -310,6 +310,10 @@ msgstr "%sNieprawidłowy typ \"%s\" dla paska \"%s\""
 #, c-format
 msgid "%sInvalid position \"%s\" for bar \"%s\""
 msgstr "%sZła pozycja \"%s\" dla paska \"%s\""
+
+#, c-format
+msgid "Bar \"%s\" updated"
+msgstr "Uaktualniono pasek \"%s\""
 
 #, c-format
 msgid "Bar \"%s\" created"
@@ -1166,10 +1170,17 @@ msgid "manage bars"
 msgstr "zarządzaj paskami"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#, fuzzy
+#| msgid ""
+#| "list|listfull|listitems || add <name> <type>[,<conditions>] <position> "
+#| "<size> <separator> <item1>[,<item2>...] || default [input|title|status|"
+#| "nicklist] || rename <name> <new_name> || del <name>|<mask> [<name>|"
+#| "<mask>...] || set <name> <option> <value> || hide|show|toggle <name> || "
+#| "scroll <name> <window> <scroll_value>"
 msgid ""
-"list|listfull|listitems || add <name> <type>[,<conditions>] <position> "
-"<size> <separator> <item1>[,<item2>...] || default [input|title|status|"
-"nicklist] || rename <name> <new_name> || del <name>|<mask> [<name>|"
+"list|listfull|listitems || add|addreplace <name> <type>[,<conditions>] "
+"<position> <size> <separator> <item1>[,<item2>...] || default [input|title|"
+"status|nicklist] || rename <name> <new_name> || del <name>|<mask> [<name>|"
 "<mask>...] || set <name> <option> <value> || hide|show|toggle <name> || "
 "scroll <name> <window> <scroll_value>"
 msgstr ""
@@ -1190,6 +1201,11 @@ msgstr "raw[listitems]: wyświetl wszystkie elementy pasków"
 
 msgid "raw[add]: add a new bar"
 msgstr "raw[add]: dodaj nowy pasek"
+
+#, fuzzy
+#| msgid "raw[addreplace]: add or replace an existing filter"
+msgid "raw[addreplace]: add or replace an existing bar"
+msgstr "raw[addreplace]: dodaj lub zastąp istniejący filtr"
 
 msgid "name: name of bar (must be unique)"
 msgstr "nazwa: nazwa paska (musi być unikalna)"
@@ -6731,10 +6747,6 @@ msgstr ""
 "elementy paska, mogą być oddzielone przecinkiem (spacja pomiędzy elementami) "
 "lub \"+\" (skleja elementy); specjalna składnia \"@buffer:item\" może być "
 "użyta w celu wymuszenia bufora używanego podczas wyświetlania elementu paska"
-
-#, c-format
-msgid "Bar \"%s\" updated"
-msgstr "Uaktualniono pasek \"%s\""
 
 #, c-format
 msgid "debug: long callback: bar: %s, item: %s, plugin: %s, time elapsed: %s"

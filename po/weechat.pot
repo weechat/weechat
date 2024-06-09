@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-09 10:04+0200\n"
+"POT-Creation-Date: 2024-06-09 10:12+0200\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -239,6 +239,10 @@ msgstr ""
 
 #, c-format
 msgid "%sInvalid position \"%s\" for bar \"%s\""
+msgstr ""
+
+#, c-format
+msgid "Bar \"%s\" updated"
 msgstr ""
 
 #, c-format
@@ -1043,9 +1047,9 @@ msgstr ""
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid ""
-"list|listfull|listitems || add <name> <type>[,<conditions>] <position> "
-"<size> <separator> <item1>[,<item2>...] || default [input|title|status|"
-"nicklist] || rename <name> <new_name> || del <name>|<mask> [<name>|"
+"list|listfull|listitems || add|addreplace <name> <type>[,<conditions>] "
+"<position> <size> <separator> <item1>[,<item2>...] || default [input|title|"
+"status|nicklist] || rename <name> <new_name> || del <name>|<mask> [<name>|"
 "<mask>...] || set <name> <option> <value> || hide|show|toggle <name> || "
 "scroll <name> <window> <scroll_value>"
 msgstr ""
@@ -1060,6 +1064,9 @@ msgid "raw[listitems]: list all bar items"
 msgstr ""
 
 msgid "raw[add]: add a new bar"
+msgstr ""
+
+msgid "raw[addreplace]: add or replace an existing bar"
 msgstr ""
 
 msgid "name: name of bar (must be unique)"
@@ -5506,10 +5513,6 @@ msgid ""
 "items of bar, they can be separated by comma (space between items) or \"+\" "
 "(glued items); special syntax \"@buffer:item\" can be used to force buffer "
 "used when displaying the bar item"
-msgstr ""
-
-#, c-format
-msgid "Bar \"%s\" updated"
 msgstr ""
 
 #, c-format

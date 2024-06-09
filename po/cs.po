@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-09 10:04+0200\n"
+"POT-Creation-Date: 2024-06-09 10:12+0200\n"
 "PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -288,6 +288,10 @@ msgstr "%sChyba: špatný typ \"%s\" pro pole \"%s\""
 #, fuzzy, c-format
 msgid "%sInvalid position \"%s\" for bar \"%s\""
 msgstr "%sChyba: špatná pozice \"%s\" pro pole \"%s\""
+
+#, c-format
+msgid "Bar \"%s\" updated"
+msgstr "Pole \"%s\" zaktualizováno"
 
 #, c-format
 msgid "Bar \"%s\" created"
@@ -1171,9 +1175,9 @@ msgstr "řídit pole"
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 #, fuzzy
 msgid ""
-"list|listfull|listitems || add <name> <type>[,<conditions>] <position> "
-"<size> <separator> <item1>[,<item2>...] || default [input|title|status|"
-"nicklist] || rename <name> <new_name> || del <name>|<mask> [<name>|"
+"list|listfull|listitems || add|addreplace <name> <type>[,<conditions>] "
+"<position> <size> <separator> <item1>[,<item2>...] || default [input|title|"
+"status|nicklist] || rename <name> <new_name> || del <name>|<mask> [<name>|"
 "<mask>...] || set <name> <option> <value> || hide|show|toggle <name> || "
 "scroll <name> <window> <scroll_value>"
 msgstr ""
@@ -1193,6 +1197,9 @@ msgid "raw[listitems]: list all bar items"
 msgstr ""
 
 msgid "raw[add]: add a new bar"
+msgstr ""
+
+msgid "raw[addreplace]: add or replace an existing bar"
 msgstr ""
 
 msgid "name: name of bar (must be unique)"
@@ -6234,10 +6241,6 @@ msgid ""
 msgstr ""
 "položky pole, můžou být rozděleny čárkou (mezera mezi položkami) nebo \"+\" "
 "(slepené položky)"
-
-#, c-format
-msgid "Bar \"%s\" updated"
-msgstr "Pole \"%s\" zaktualizováno"
 
 #, c-format
 msgid "debug: long callback: bar: %s, item: %s, plugin: %s, time elapsed: %s"

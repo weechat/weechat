@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-09 10:04+0200\n"
+"POT-Creation-Date: 2024-06-09 10:12+0200\n"
 "PO-Revision-Date: 2024-05-07 14:00+0400\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -312,6 +312,10 @@ msgstr "%sНеважећи тип „%s” за траку „%s”"
 #, c-format
 msgid "%sInvalid position \"%s\" for bar \"%s\""
 msgstr "%sНеважећа позиција „%s” за траку „%s”"
+
+#, c-format
+msgid "Bar \"%s\" updated"
+msgstr "Ажурирана је „%s”"
 
 #, c-format
 msgid "Bar \"%s\" created"
@@ -1158,10 +1162,17 @@ msgid "manage bars"
 msgstr "управљање тракама"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#, fuzzy
+#| msgid ""
+#| "list|listfull|listitems || add <name> <type>[,<conditions>] <position> "
+#| "<size> <separator> <item1>[,<item2>...] || default [input|title|status|"
+#| "nicklist] || rename <name> <new_name> || del <name>|<mask> [<name>|"
+#| "<mask>...] || set <name> <option> <value> || hide|show|toggle <name> || "
+#| "scroll <name> <window> <scroll_value>"
 msgid ""
-"list|listfull|listitems || add <name> <type>[,<conditions>] <position> "
-"<size> <separator> <item1>[,<item2>...] || default [input|title|status|"
-"nicklist] || rename <name> <new_name> || del <name>|<mask> [<name>|"
+"list|listfull|listitems || add|addreplace <name> <type>[,<conditions>] "
+"<position> <size> <separator> <item1>[,<item2>...] || default [input|title|"
+"status|nicklist] || rename <name> <new_name> || del <name>|<mask> [<name>|"
 "<mask>...] || set <name> <option> <value> || hide|show|toggle <name> || "
 "scroll <name> <window> <scroll_value>"
 msgstr ""
@@ -1182,6 +1193,11 @@ msgstr "raw[listitems]: приказује све ставке траке"
 
 msgid "raw[add]: add a new bar"
 msgstr "raw[add]: додаје нову траку"
+
+#, fuzzy
+#| msgid "raw[addreplace]: add or replace an existing filter"
+msgid "raw[addreplace]: add or replace an existing bar"
+msgstr "raw[addreplace]: додаје или замењује постојећи филтер"
 
 msgid "name: name of bar (must be unique)"
 msgstr "име: име траке (мора бити јединствено)"
@@ -6722,10 +6738,6 @@ msgstr ""
 "ставке траке, могу да се раздвоје запетом (размак између ставки) или "
 "„+”(слепљене ставке); може да да користи специјална синтакса „@бафер:ставка” "
 "да се форсира бафер када се приказује ставка траке"
-
-#, c-format
-msgid "Bar \"%s\" updated"
-msgstr "Ажурирана је „%s”"
 
 #, c-format
 msgid "debug: long callback: bar: %s, item: %s, plugin: %s, time elapsed: %s"

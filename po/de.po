@@ -26,7 +26,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-09 10:04+0200\n"
+"POT-Creation-Date: 2024-06-09 10:12+0200\n"
 "PO-Revision-Date: 2024-05-31 20:32+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -326,6 +326,10 @@ msgstr "%sFalscher Typ \"%s\" für Bar \"%s\""
 #, c-format
 msgid "%sInvalid position \"%s\" for bar \"%s\""
 msgstr "%sUngültige Position \"%s\" für Bar \"%s\""
+
+#, c-format
+msgid "Bar \"%s\" updated"
+msgstr "Infobar \"%s\" aktualisiert"
 
 #, c-format
 msgid "Bar \"%s\" created"
@@ -1184,10 +1188,17 @@ msgid "manage bars"
 msgstr "Infobars verwalten"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#, fuzzy
+#| msgid ""
+#| "list|listfull|listitems || add <name> <type>[,<conditions>] <position> "
+#| "<size> <separator> <item1>[,<item2>...] || default [input|title|status|"
+#| "nicklist] || rename <name> <new_name> || del <name>|<mask> [<name>|"
+#| "<mask>...] || set <name> <option> <value> || hide|show|toggle <name> || "
+#| "scroll <name> <window> <scroll_value>"
 msgid ""
-"list|listfull|listitems || add <name> <type>[,<conditions>] <position> "
-"<size> <separator> <item1>[,<item2>...] || default [input|title|status|"
-"nicklist] || rename <name> <new_name> || del <name>|<mask> [<name>|"
+"list|listfull|listitems || add|addreplace <name> <type>[,<conditions>] "
+"<position> <size> <separator> <item1>[,<item2>...] || default [input|title|"
+"status|nicklist] || rename <name> <new_name> || del <name>|<mask> [<name>|"
 "<mask>...] || set <name> <option> <value> || hide|show|toggle <name> || "
 "scroll <name> <window> <scroll_value>"
 msgstr ""
@@ -1208,6 +1219,13 @@ msgstr "raw[listitems]: listet alle Bar-Items auf"
 
 msgid "raw[add]: add a new bar"
 msgstr "raw[add]: fügt eine neue Bar hinzu"
+
+#, fuzzy
+#| msgid "raw[addreplace]: add or replace an existing filter"
+msgid "raw[addreplace]: add or replace an existing bar"
+msgstr ""
+"raw[addreplace]: neuen Filter anlegen oder einen schon existierenden Filter "
+"ersetzen"
 
 msgid "name: name of bar (must be unique)"
 msgstr "name: Name der Bar (muss einzigartig sein)"
@@ -7088,10 +7106,6 @@ msgstr ""
 "zusammengefügt werden (Items werden ohne Leerzeichen dargestellt); folgende "
 "erweiterte Syntax,\"@buffer:item\", kann genutzt werden um den Inhalt eines "
 "Items auf den angegeben Buffer bezogen anzuzeigen"
-
-#, c-format
-msgid "Bar \"%s\" updated"
-msgstr "Infobar \"%s\" aktualisiert"
 
 #, c-format
 msgid "debug: long callback: bar: %s, item: %s, plugin: %s, time elapsed: %s"

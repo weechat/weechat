@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-09 10:04+0200\n"
+"POT-Creation-Date: 2024-06-09 10:12+0200\n"
 "PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -308,6 +308,10 @@ msgstr "%1$sエラー: バー \"%3$s\" にタイプ \"%2$s\" は使えません"
 #, fuzzy, c-format
 msgid "%sInvalid position \"%s\" for bar \"%s\""
 msgstr "%1$sエラー: バー \"%3$s\" に位置 \"%2$s\" を設定できません"
+
+#, c-format
+msgid "Bar \"%s\" updated"
+msgstr "バー \"%s\" がアップデートされました"
 
 #, c-format
 msgid "Bar \"%s\" created"
@@ -1197,9 +1201,9 @@ msgstr "バーの管理"
 #| "nicklist] || del <name>|-all || set <name> <option> <value> || hide|show|"
 #| "toggle <name> || scroll <name> <window> <scroll_value>"
 msgid ""
-"list|listfull|listitems || add <name> <type>[,<conditions>] <position> "
-"<size> <separator> <item1>[,<item2>...] || default [input|title|status|"
-"nicklist] || rename <name> <new_name> || del <name>|<mask> [<name>|"
+"list|listfull|listitems || add|addreplace <name> <type>[,<conditions>] "
+"<position> <size> <separator> <item1>[,<item2>...] || default [input|title|"
+"status|nicklist] || rename <name> <new_name> || del <name>|<mask> [<name>|"
 "<mask>...] || set <name> <option> <value> || hide|show|toggle <name> || "
 "scroll <name> <window> <scroll_value>"
 msgstr ""
@@ -1218,6 +1222,9 @@ msgid "raw[listitems]: list all bar items"
 msgstr ""
 
 msgid "raw[add]: add a new bar"
+msgstr ""
+
+msgid "raw[addreplace]: add or replace an existing bar"
 msgstr ""
 
 msgid "name: name of bar (must be unique)"
@@ -6540,10 +6547,6 @@ msgstr ""
 "バーの要素、コンマ (要素間に空白を含める場合) または \"+\" (要素を連結する場"
 "合) 区切り; 特殊構文 \"@buffer:item\" でバー要素を表示する際にバッファを利用"
 "することを強制する"
-
-#, c-format
-msgid "Bar \"%s\" updated"
-msgstr "バー \"%s\" がアップデートされました"
 
 #, c-format
 msgid "debug: long callback: bar: %s, item: %s, plugin: %s, time elapsed: %s"

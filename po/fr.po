@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-09 10:04+0200\n"
-"PO-Revision-Date: 2024-06-09 09:44+0200\n"
+"POT-Creation-Date: 2024-06-09 10:12+0200\n"
+"PO-Revision-Date: 2024-06-09 10:12+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -311,6 +311,10 @@ msgstr "%sType invalide \"%s\" pour la barre \"%s\""
 #, c-format
 msgid "%sInvalid position \"%s\" for bar \"%s\""
 msgstr "%sPosition invalide \"%s\" pour la barre \"%s\""
+
+#, c-format
+msgid "Bar \"%s\" updated"
+msgstr "Barre \"%s\" mise à jour"
 
 #, c-format
 msgid "Bar \"%s\" created"
@@ -1169,17 +1173,17 @@ msgstr "gestion des barres"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid ""
-"list|listfull|listitems || add <name> <type>[,<conditions>] <position> "
-"<size> <separator> <item1>[,<item2>...] || default [input|title|status|"
-"nicklist] || rename <name> <new_name> || del <name>|<mask> [<name>|"
+"list|listfull|listitems || add|addreplace <name> <type>[,<conditions>] "
+"<position> <size> <separator> <item1>[,<item2>...] || default [input|title|"
+"status|nicklist] || rename <name> <new_name> || del <name>|<mask> [<name>|"
 "<mask>...] || set <name> <option> <value> || hide|show|toggle <name> || "
 "scroll <name> <window> <scroll_value>"
 msgstr ""
-"list|listfull|listitems || add <nom> <type>[,<conditions>] <position> "
-"<taille> <séparateur> <objet1>[,<objet2>...] || default [input|title|status|"
-"nicklist] || rename <nom> <nouveau_nom> || del <nom>|<masque> [<nom>|"
-"<masque>...] || set <nom> <option> <valeur> || hide|show|toggle <nom> || "
-"scroll <nom> <fenêtre> <valeur_scroll>"
+"list|listfull|listitems || add|addreplace <nom> <type>[,<conditions>] "
+"<position> <taille> <séparateur> <objet1>[,<objet2>...] || default [input|"
+"title|status|nicklist] || rename <nom> <nouveau_nom> || del <nom>|<masque> "
+"[<nom>|<masque>...] || set <nom> <option> <valeur> || hide|show|toggle <nom> "
+"|| scroll <nom> <fenêtre> <valeur_scroll>"
 
 msgid "raw[list]: list all bars"
 msgstr "raw[list] : lister toutes les barres"
@@ -1192,6 +1196,9 @@ msgstr "raw[listitems] : lister tous les objets de barre"
 
 msgid "raw[add]: add a new bar"
 msgstr "raw[add] : ajouter une nouvelle barre"
+
+msgid "raw[addreplace]: add or replace an existing bar"
+msgstr "raw[addreplace] : ajouter ou remplacer une barre existante"
 
 msgid "name: name of bar (must be unique)"
 msgstr "nom : nom de la barre (doit être unique)"
@@ -6944,10 +6951,6 @@ msgstr ""
 "les objets) ou \"+\" (objets collés) ; la syntaxe spéciale \"@tampon:objet\" "
 "peut être utilisée pour forcer le tampon utilisé lors de l'affichage de "
 "l'objet de barre"
-
-#, c-format
-msgid "Bar \"%s\" updated"
-msgstr "Barre \"%s\" mise à jour"
 
 #, c-format
 msgid "debug: long callback: bar: %s, item: %s, plugin: %s, time elapsed: %s"

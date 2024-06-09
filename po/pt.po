@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-09 10:04+0200\n"
+"POT-Creation-Date: 2024-06-09 10:12+0200\n"
 "PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: Vasco Almeida <vascomalmeida@sapo.pt>\n"
 "Language-Team: Portuguese <>\n"
@@ -290,6 +290,10 @@ msgstr "%sErro: tipo incorreto \"%s\" da barra \"%s\""
 #, fuzzy, c-format
 msgid "%sInvalid position \"%s\" for bar \"%s\""
 msgstr "%sErro: posição incorreta \"%s\" da barra \"%s\""
+
+#, c-format
+msgid "Bar \"%s\" updated"
+msgstr "Barra \"%s\" atualizada"
 
 #, c-format
 msgid "Bar \"%s\" created"
@@ -1189,9 +1193,9 @@ msgstr "gerir barras"
 #| "nicklist] || del <name>|-all || set <name> <option> <value> || hide|show|"
 #| "toggle <name> || scroll <name> <window> <scroll_value>"
 msgid ""
-"list|listfull|listitems || add <name> <type>[,<conditions>] <position> "
-"<size> <separator> <item1>[,<item2>...] || default [input|title|status|"
-"nicklist] || rename <name> <new_name> || del <name>|<mask> [<name>|"
+"list|listfull|listitems || add|addreplace <name> <type>[,<conditions>] "
+"<position> <size> <separator> <item1>[,<item2>...] || default [input|title|"
+"status|nicklist] || rename <name> <new_name> || del <name>|<mask> [<name>|"
 "<mask>...] || set <name> <option> <value> || hide|show|toggle <name> || "
 "scroll <name> <window> <scroll_value>"
 msgstr ""
@@ -1210,6 +1214,9 @@ msgid "raw[listitems]: list all bar items"
 msgstr ""
 
 msgid "raw[add]: add a new bar"
+msgstr ""
+
+msgid "raw[addreplace]: add or replace an existing bar"
 msgstr ""
 
 msgid "name: name of bar (must be unique)"
@@ -6599,10 +6606,6 @@ msgstr ""
 "itens da barra, podem ser separados por vírgula (espaço entre itens) ou por "
 "\"+\" (itens colados); pode usar a sintaxe especial \"@buffer:item\" para "
 "forçar o buffer utilizado para mostrar o item"
-
-#, c-format
-msgid "Bar \"%s\" updated"
-msgstr "Barra \"%s\" atualizada"
 
 #, c-format
 msgid "debug: long callback: bar: %s, item: %s, plugin: %s, time elapsed: %s"

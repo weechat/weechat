@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-09 10:04+0200\n"
+"POT-Creation-Date: 2024-06-09 10:12+0200\n"
 "PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: Santiago Forero <santiago@forero.xyz>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -340,6 +340,10 @@ msgstr "%sError: tipo \"%s\" incorrecto para la barra \"%s\""
 #, c-format
 msgid "%sInvalid position \"%s\" for bar \"%s\""
 msgstr "%sError: posición \"%s\" incorrecta para la barra \"%s\""
+
+#, c-format
+msgid "Bar \"%s\" updated"
+msgstr "Barra \"%s\" actualizada"
 
 #, c-format
 msgid "Bar \"%s\" created"
@@ -1240,9 +1244,9 @@ msgstr "gestionar las barras"
 #| "nicklist] || del <name>|-all || set <name> <option> <value> || hide|show|"
 #| "toggle <name> || scroll <name> <window> <scroll_value>"
 msgid ""
-"list|listfull|listitems || add <name> <type>[,<conditions>] <position> "
-"<size> <separator> <item1>[,<item2>...] || default [input|title|status|"
-"nicklist] || rename <name> <new_name> || del <name>|<mask> [<name>|"
+"list|listfull|listitems || add|addreplace <name> <type>[,<conditions>] "
+"<position> <size> <separator> <item1>[,<item2>...] || default [input|title|"
+"status|nicklist] || rename <name> <new_name> || del <name>|<mask> [<name>|"
 "<mask>...] || set <name> <option> <value> || hide|show|toggle <name> || "
 "scroll <name> <window> <scroll_value>"
 msgstr ""
@@ -1262,6 +1266,9 @@ msgid "raw[listitems]: list all bar items"
 msgstr ""
 
 msgid "raw[add]: add a new bar"
+msgstr ""
+
+msgid "raw[addreplace]: add or replace an existing bar"
 msgstr ""
 
 msgid "name: name of bar (must be unique)"
@@ -6415,10 +6422,6 @@ msgid ""
 msgstr ""
 "elementos de la barra, pueden estar separados por coma (espacio entre "
 "elementos) o \"+\" (elementos pegados entre sí)"
-
-#, c-format
-msgid "Bar \"%s\" updated"
-msgstr "Barra \"%s\" actualizada"
 
 #, c-format
 msgid "debug: long callback: bar: %s, item: %s, plugin: %s, time elapsed: %s"
