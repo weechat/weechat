@@ -264,6 +264,16 @@ TEST(IrcList, HsignalRedirectListCb)
 
 /*
  * Tests functions:
+ *   irc_list_export
+ */
+
+TEST(IrcList, Export)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
  *   irc_list_alloc
  */
 
