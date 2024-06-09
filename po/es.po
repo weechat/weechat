@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-09 09:07+0200\n"
+"POT-Creation-Date: 2024-06-09 10:04+0200\n"
 "PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: Santiago Forero <santiago@forero.xyz>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6602,8 +6602,14 @@ msgstr "%s%s: set de caracteres inválido: \"%s\""
 msgid "%s%s: error creating alias \"%s\" => \"%s\""
 msgstr "%s%s: error al crear el alias \"%s\" => \"%s\""
 
-#, c-format
-msgid "Alias \"%s\" => \"%s\" created"
+#, fuzzy, c-format
+#| msgid "Alias \"%s\" => \"%s\" created"
+msgid "Alias updated: \"%s\" => \"%s\""
+msgstr "Alias \"%s\" => \"%s\" creado"
+
+#, fuzzy, c-format
+#| msgid "Alias \"%s\" => \"%s\" created"
+msgid "Alias created: \"%s\" => \"%s\""
 msgstr "Alias \"%s\" => \"%s\" creado"
 
 #, fuzzy, c-format
@@ -6625,6 +6631,10 @@ msgstr "Ningún alias encontrado con \"%s\""
 msgid "No alias defined"
 msgstr "Ningún alias definido"
 
+#, fuzzy, c-format
+msgid "%sAlias \"%s\" already exists"
+msgstr "%sError: el filtro \"%s\" ya existe"
+
 #, c-format
 msgid "Alias \"%s\" removed"
 msgstr "Alias \"%s\" eliminado"
@@ -6632,10 +6642,6 @@ msgstr "Alias \"%s\" eliminado"
 #, c-format
 msgid "%sAlias \"%s\" not found"
 msgstr "%sAlias \"%s\" no encontrado"
-
-#, fuzzy, c-format
-msgid "%sAlias \"%s\" already exists"
-msgstr "%sError: el filtro \"%s\" ya existe"
 
 #, fuzzy, c-format
 #| msgid "Layout \"%s\" has been renamed to \"%s\""
@@ -6652,9 +6658,10 @@ msgstr "lista, añade o elimina servidores IRC"
 #| "list || add <name> <type> <address> <port> [<username> [<password>]] || "
 #| "del <name>|-all || set <name> <option> <value>"
 msgid ""
-"list [<name>] || add <name> [<command>[;<command>...]] || addcompletion "
-"<completion> <name> [<command>[;<command>...]] || del <name>|<mask> [<name>|"
-"<mask>...] || rename <name> <new_name> || missing"
+"list [<name>] || add|addreplace <name> [<command>[;<command>...]] || "
+"addcompletion|addreplacecompletion <completion> <name> [<command>[;"
+"<command>...]] || del <name>|<mask> [<name>|<mask>...] || rename <name> "
+"<new_name> || missing"
 msgstr ""
 "list || add <nombre> <tipo> <dirección> <puerto> [<usuario> [<clave>]] || "
 "del <nombre>|-all || set <nombre> <opción> <valor>"
@@ -6665,22 +6672,21 @@ msgstr ""
 msgid "raw[add]: add an alias"
 msgstr ""
 
-#, fuzzy
-#| msgid "value of alias"
-msgid "name: name of alias"
-msgstr "valor del alias"
+msgid "raw[addreplace]: add or replace an existing alias"
+msgstr ""
 
 msgid "raw[addcompletion]: add an alias with a custom completion"
 msgstr ""
 
-msgid "raw[del]: delete aliases"
+msgid ""
+"raw[addreplacecompletion]: add or replace an existing alias with a custom "
+"completion"
 msgstr ""
 
-msgid "raw[rename]: rename an alias"
-msgstr ""
-
-msgid "raw[missing]: add missing aliases (using default aliases)"
-msgstr ""
+#, fuzzy
+#| msgid "value of alias"
+msgid "name: name of alias"
+msgstr "valor del alias"
 
 #, c-format
 msgid ""
@@ -6692,6 +6698,15 @@ msgstr ""
 msgid ""
 "command: command name with arguments (many commands can be separated by "
 "semicolons)"
+msgstr ""
+
+msgid "raw[del]: delete aliases"
+msgstr ""
+
+msgid "raw[rename]: rename an alias"
+msgstr ""
+
+msgid "raw[missing]: add missing aliases (using default aliases)"
 msgstr ""
 
 msgid "In command, special variables are replaced:"

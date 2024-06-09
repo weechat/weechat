@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-09 09:07+0200\n"
-"PO-Revision-Date: 2024-06-09 09:08+0200\n"
+"POT-Creation-Date: 2024-06-09 10:04+0200\n"
+"PO-Revision-Date: 2024-06-09 09:44+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -7136,8 +7136,12 @@ msgid "%s%s: error creating alias \"%s\" => \"%s\""
 msgstr "%s%s : erreur en création de l'alias \"%s\" => \"%s\""
 
 #, c-format
-msgid "Alias \"%s\" => \"%s\" created"
-msgstr "Alias \"%s\" => \"%s\" créé"
+msgid "Alias updated: \"%s\" => \"%s\""
+msgstr "Alias mis à jour : \"%s\" => \"%s\""
+
+#, c-format
+msgid "Alias created: \"%s\" => \"%s\""
+msgstr "Alias créé : \"%s\" => \"%s\""
 
 #, c-format
 msgid "Aliases with \"%s\":"
@@ -7157,16 +7161,16 @@ msgid "No alias defined"
 msgstr "Aucun alias défini"
 
 #, c-format
+msgid "%sAlias \"%s\" already exists"
+msgstr "%sL'alias \"%s\" existe déjà"
+
+#, c-format
 msgid "Alias \"%s\" removed"
 msgstr "Alias \"%s\" supprimé"
 
 #, c-format
 msgid "%sAlias \"%s\" not found"
 msgstr "%sAlias \"%s\" non trouvé"
-
-#, c-format
-msgid "%sAlias \"%s\" already exists"
-msgstr "%sL'alias \"%s\" existe déjà"
 
 #, c-format
 msgid "Alias \"%s\" has been renamed to \"%s\""
@@ -7177,13 +7181,15 @@ msgstr "lister, ajouter ou retirer des alias de commande"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid ""
-"list [<name>] || add <name> [<command>[;<command>...]] || addcompletion "
-"<completion> <name> [<command>[;<command>...]] || del <name>|<mask> [<name>|"
-"<mask>...] || rename <name> <new_name> || missing"
+"list [<name>] || add|addreplace <name> [<command>[;<command>...]] || "
+"addcompletion|addreplacecompletion <completion> <name> [<command>[;"
+"<command>...]] || del <name>|<mask> [<name>|<mask>...] || rename <name> "
+"<new_name> || missing"
 msgstr ""
-"list [<nom>] || add <nom> [<commande>[;<commande>...]] || addcompletion "
-"<complétion> <nom> [<commande>[;<commande>...]] || del <nom>|<masque> [<nom>|"
-"<masque>...] || rename <nom> <nouveau_nom> || missing"
+"list [<nom>] || add|addreplace <nom> [<commande>[;<commande>...]] || "
+"addcompletion|addreplacecompletion <complétion> <nom> [<commande>[;"
+"<commande>...]] || del <nom>|<masque> [<nom>|<masque>...] || rename <nom> "
+"<nouveau_nom> || missing"
 
 msgid "raw[list]: list aliases (without argument, this list is displayed)"
 msgstr ""
@@ -7192,23 +7198,22 @@ msgstr ""
 msgid "raw[add]: add an alias"
 msgstr "raw[add] : ajouter un alias"
 
-msgid "name: name of alias"
-msgstr "nom : nom de l'alias"
+msgid "raw[addreplace]: add or replace an existing alias"
+msgstr "raw[addreplace] : ajouter ou remplacer un alias existant"
 
 msgid "raw[addcompletion]: add an alias with a custom completion"
 msgstr ""
 "raw[addcompletion] : ajouter un alias avec une complétion personnalisée"
 
-msgid "raw[del]: delete aliases"
-msgstr "raw[del] : supprimer des alias"
-
-msgid "raw[rename]: rename an alias"
-msgstr "raw[rename] : renommer un alias"
-
-msgid "raw[missing]: add missing aliases (using default aliases)"
+msgid ""
+"raw[addreplacecompletion]: add or replace an existing alias with a custom "
+"completion"
 msgstr ""
-"raw[missing] : ajouter les alias manquants (en utilisant les alias par "
-"défaut)"
+"raw[addreplacecompletion] : ajouter ou remplacer un alias existant avec une "
+"complétion personnalisée"
+
+msgid "name: name of alias"
+msgstr "nom : nom de l'alias"
 
 #, c-format
 msgid ""
@@ -7226,6 +7231,17 @@ msgid ""
 msgstr ""
 "commande : nom de la commande avec les paramètres (plusieurs commandes "
 "peuvent être séparées par des points-virgules)"
+
+msgid "raw[del]: delete aliases"
+msgstr "raw[del] : supprimer des alias"
+
+msgid "raw[rename]: rename an alias"
+msgstr "raw[rename] : renommer un alias"
+
+msgid "raw[missing]: add missing aliases (using default aliases)"
+msgstr ""
+"raw[missing] : ajouter les alias manquants (en utilisant les alias par "
+"défaut)"
 
 msgid "In command, special variables are replaced:"
 msgstr "Dans la commande, les variables spéciales sont remplacées :"

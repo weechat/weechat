@@ -33,7 +33,7 @@
 
 void
 alias_command_add (const char *alias_name, const char *command,
-                   const char *completion)
+                   const char *completion, int update)
 {
     struct t_config_option *ptr_option;
 
@@ -65,7 +65,9 @@ alias_command_add (const char *alias_name, const char *command,
 
     /* display message */
     weechat_printf (NULL,
-                    _("Alias \"%s\" => \"%s\" created"),
+                    (update) ?
+                    _("Alias updated: \"%s\" => \"%s\"") :
+                    _("Alias created: \"%s\" => \"%s\""),
                     alias_name, command);
 }
 
@@ -81,7 +83,7 @@ alias_command_cb (const void *pointer, void *data,
     char *ptr_alias_name, *ptr_alias_name2, *name;
     struct t_alias *ptr_alias, *ptr_alias2, *ptr_next_alias;
     struct t_config_option *ptr_option;
-    int alias_found, i;
+    int alias_found, i, update;
 
     /* make C compiler happy */
     (void) pointer;
@@ -169,25 +171,79 @@ alias_command_cb (const void *pointer, void *data,
         return WEECHAT_RC_OK;
     }
 
-    if (weechat_strcmp (argv[1], "add") == 0)
+    if ((weechat_strcmp (argv[1], "add") == 0)
+        || (weechat_strcmp (argv[1], "addreplace") == 0))
     {
-        WEECHAT_COMMAND_MIN_ARGS(4, "add");
-        alias_command_add (
-            (weechat_string_is_command_char (argv[2])) ?
-            (char *)weechat_utf8_next_char (argv[2]) : argv[2],
-            argv_eol[3],
-            NULL);
+        WEECHAT_COMMAND_MIN_ARGS(4, argv[1]);
+        update = 0;
+        ptr_alias_name = (weechat_string_is_command_char (argv[2])) ?
+            (char *)weechat_utf8_next_char (argv[2]) : argv[2];
+        ptr_alias = alias_search (ptr_alias_name);
+        if (ptr_alias)
+        {
+            if (weechat_strcmp (argv[1], "addreplace") == 0)
+            {
+                alias_free (ptr_alias);
+                ptr_option = weechat_config_search_option (
+                    alias_config_file,
+                    alias_config_section_cmd,
+                    ptr_alias_name);
+                weechat_config_option_free (ptr_option);
+                ptr_option = weechat_config_search_option (
+                    alias_config_file,
+                    alias_config_section_completion,
+                    ptr_alias_name);
+                weechat_config_option_free (ptr_option);
+                update = 1;
+            }
+            else
+            {
+                weechat_printf (NULL,
+                                _("%sAlias \"%s\" already exists"),
+                                weechat_prefix ("error"),
+                                ptr_alias_name);
+                return WEECHAT_RC_OK;
+            }
+        }
+        alias_command_add (ptr_alias_name, argv_eol[3], NULL, update);
         return WEECHAT_RC_OK;
     }
 
-    if (weechat_strcmp (argv[1], "addcompletion") == 0)
+    if ((weechat_strcmp (argv[1], "addcompletion") == 0)
+        || (weechat_strcmp (argv[1], "addreplacecompletion") == 0))
     {
-        WEECHAT_COMMAND_MIN_ARGS(5, "addcompletion");
-        alias_command_add (
-            (weechat_string_is_command_char (argv[3])) ?
-            (char *)weechat_utf8_next_char (argv[3]) : argv[3],
-            argv_eol[4],
-            argv[2]);
+        WEECHAT_COMMAND_MIN_ARGS(5, argv[1]);
+        update = 0;
+        ptr_alias_name = (weechat_string_is_command_char (argv[3])) ?
+            (char *)weechat_utf8_next_char (argv[3]) : argv[3];
+        ptr_alias = alias_search (ptr_alias_name);
+        if (ptr_alias)
+        {
+            if (weechat_strcmp (argv[1], "addreplacecompletion") == 0)
+            {
+                alias_free (ptr_alias);
+                ptr_option = weechat_config_search_option (
+                    alias_config_file,
+                    alias_config_section_cmd,
+                    ptr_alias_name);
+                weechat_config_option_free (ptr_option);
+                ptr_option = weechat_config_search_option (
+                    alias_config_file,
+                    alias_config_section_completion,
+                    ptr_alias_name);
+                weechat_config_option_free (ptr_option);
+                update = 1;
+            }
+            else
+            {
+                weechat_printf (NULL,
+                                _("%sAlias \"%s\" already exists"),
+                                weechat_prefix ("error"),
+                                ptr_alias_name);
+                return WEECHAT_RC_OK;
+            }
+        }
+        alias_command_add (ptr_alias_name, argv_eol[4], argv[2], update);
         return WEECHAT_RC_OK;
     }
 
@@ -275,7 +331,8 @@ alias_command_cb (const void *pointer, void *data,
             {
                 alias_command_add (alias_default[i][0],  /* name */
                                    alias_default[i][1],  /* command */
-                                   alias_default[i][2]);  /* completion */
+                                   alias_default[i][2],  /* completion */
+                                   0);  /* update */
             }
         }
         return WEECHAT_RC_OK;
@@ -296,8 +353,9 @@ alias_command_init ()
         N_("list, add or remove command aliases"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("list [<name>]"
-           " || add <name> [<command>[;<command>...]]"
-           " || addcompletion <completion> <name> [<command>[;<command>...]]"
+           " || add|addreplace <name> [<command>[;<command>...]]"
+           " || addcompletion|addreplacecompletion <completion> <name> "
+           "[<command>[;<command>...]]"
            " || del <name>|<mask> [<name>|<mask>...]"
            " || rename <name> <new_name>"
            " || missing"),
@@ -306,17 +364,20 @@ alias_command_init ()
             N_("raw[list]: list aliases (without argument, this list is "
                "displayed)"),
             N_("raw[add]: add an alias"),
-            N_("name: name of alias"),
+            N_("raw[addreplace]: add or replace an existing alias"),
             N_("raw[addcompletion]: add an alias with a custom completion"),
-            N_("raw[del]: delete aliases"),
-            N_("mask: name where wildcard \"*\" is allowed"),
-            N_("raw[rename]: rename an alias"),
-            N_("raw[missing]: add missing aliases (using default aliases)"),
+            N_("raw[addreplacecompletion]: add or replace an existing alias "
+               "with a custom completion"),
+            N_("name: name of alias"),
             N_("completion: completion for alias: by default completion is "
                "done with target command (you can use \"%%command\" to use the "
                "completion of an existing command)"),
             N_("command: command name with arguments (many commands can be "
                "separated by semicolons)"),
+            N_("raw[del]: delete aliases"),
+            N_("mask: name where wildcard \"*\" is allowed"),
+            N_("raw[rename]: rename an alias"),
+            N_("raw[missing]: add missing aliases (using default aliases)"),
             "",
             N_("In command, special variables are replaced:"),
             N_("  $n: argument \"n\" (between 1 and 9)"),
@@ -336,8 +397,9 @@ alias_command_init ()
             AI("  /alias rename hello Hello"),
             AI("  /alias addcompletion %%sajoin forcejoin /quote forcejoin")),
         "list %(alias)"
-        " || add %(alias) %(commands:/)|%(alias_value)"
-        " || addcompletion %- %(alias) %(commands:/)|%(alias_value)"
+        " || add|addreplace %(alias) %(commands:/)|%(alias_value)"
+        " || addcompletion|addreplacecompletion %- %(alias) "
+        "%(commands:/)|%(alias_value)"
         " || del %(alias)|%*"
         " || rename %(alias) %(alias)"
         " || missing",

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-09 09:07+0200\n"
+"POT-Creation-Date: 2024-06-09 10:04+0200\n"
 "PO-Revision-Date: 2024-05-07 14:00+0400\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6911,9 +6911,15 @@ msgstr "%s%s: неважеће име алијаса: „%s”"
 msgid "%s%s: error creating alias \"%s\" => \"%s\""
 msgstr "%s%s: грешка у креирању алијаса „%s” => „%s”"
 
-#, c-format
-msgid "Alias \"%s\" => \"%s\" created"
+#, fuzzy, c-format
+#| msgid "Alias \"%s\" => \"%s\" created"
+msgid "Alias updated: \"%s\" => \"%s\""
 msgstr "Креиран је алијас „%s” => „%s”"
+
+#, fuzzy, c-format
+#| msgid "Alias converted to lower case: \"%s\" => \"%s\""
+msgid "Alias created: \"%s\" => \"%s\""
+msgstr "Алијас је претворен у мала слова: „%s” => „%s”"
 
 #, c-format
 msgid "Aliases with \"%s\":"
@@ -6933,16 +6939,16 @@ msgid "No alias defined"
 msgstr "Није дефинисан ниједан алијас"
 
 #, c-format
+msgid "%sAlias \"%s\" already exists"
+msgstr "%sАлијас „%s” већ постоји"
+
+#, c-format
 msgid "Alias \"%s\" removed"
 msgstr "Уклоњен је алијас „%s”"
 
 #, c-format
 msgid "%sAlias \"%s\" not found"
 msgstr "%sАлијас „%s” није пронађен"
-
-#, c-format
-msgid "%sAlias \"%s\" already exists"
-msgstr "%sАлијас „%s” већ постоји"
 
 #, c-format
 msgid "Alias \"%s\" has been renamed to \"%s\""
@@ -6952,10 +6958,16 @@ msgid "list, add or remove command aliases"
 msgstr "исписује, додаје или уклања алијасе команди"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#, fuzzy
+#| msgid ""
+#| "list [<name>] || add <name> [<command>[;<command>...]] || addcompletion "
+#| "<completion> <name> [<command>[;<command>...]] || del <name>|<mask> "
+#| "[<name>|<mask>...] || rename <name> <new_name> || missing"
 msgid ""
-"list [<name>] || add <name> [<command>[;<command>...]] || addcompletion "
-"<completion> <name> [<command>[;<command>...]] || del <name>|<mask> [<name>|"
-"<mask>...] || rename <name> <new_name> || missing"
+"list [<name>] || add|addreplace <name> [<command>[;<command>...]] || "
+"addcompletion|addreplacecompletion <completion> <name> [<command>[;"
+"<command>...]] || del <name>|<mask> [<name>|<mask>...] || rename <name> "
+"<new_name> || missing"
 msgstr ""
 "list [<име>] || add <име> [<команда>[;<команда>...]] || addcompletion "
 "<довршавање> <име> [<команда>[;<команда>...]] || del <име>|<маска> "
@@ -6967,21 +6979,25 @@ msgstr "raw[list]: исписује алијасе (без аргумента, �
 msgid "raw[add]: add an alias"
 msgstr "raw[add]: додавање алијаса"
 
-msgid "name: name of alias"
-msgstr "име: име алијаса"
+#, fuzzy
+#| msgid "raw[addreplace]: add or replace an existing filter"
+msgid "raw[addreplace]: add or replace an existing alias"
+msgstr "raw[addreplace]: додаје или замењује постојећи филтер"
 
 msgid "raw[addcompletion]: add an alias with a custom completion"
 msgstr ""
 "raw[addcompletion]: додавање алијаса са кориснички дефинисаним довршавањем"
 
-msgid "raw[del]: delete aliases"
-msgstr "raw[del]: брисање алијаса"
+#, fuzzy
+#| msgid "raw[addcompletion]: add an alias with a custom completion"
+msgid ""
+"raw[addreplacecompletion]: add or replace an existing alias with a custom "
+"completion"
+msgstr ""
+"raw[addcompletion]: додавање алијаса са кориснички дефинисаним довршавањем"
 
-msgid "raw[rename]: rename an alias"
-msgstr "raw[rename]: промена имена алијаса"
-
-msgid "raw[missing]: add missing aliases (using default aliases)"
-msgstr "raw[missing]: додаје алијасе који недостају (користећи подразумеване)"
+msgid "name: name of alias"
+msgstr "име: име алијаса"
 
 #, c-format
 msgid ""
@@ -6998,6 +7014,15 @@ msgid ""
 msgstr ""
 "команда: име команде са аргументима (више команди може да се раздвоји тачка "
 "запетама)"
+
+msgid "raw[del]: delete aliases"
+msgstr "raw[del]: брисање алијаса"
+
+msgid "raw[rename]: rename an alias"
+msgstr "raw[rename]: промена имена алијаса"
+
+msgid "raw[missing]: add missing aliases (using default aliases)"
+msgstr "raw[missing]: додаје алијасе који недостају (користећи подразумеване)"
 
 msgid "In command, special variables are replaced:"
 msgstr "У команди се замењују специјалне променљиве:"

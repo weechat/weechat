@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-09 09:07+0200\n"
+"POT-Creation-Date: 2024-06-09 10:04+0200\n"
 "PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6100,7 +6100,11 @@ msgid "%s%s: error creating alias \"%s\" => \"%s\""
 msgstr "%s nincs elég memória az információs pult üzenethez\n"
 
 #, fuzzy, c-format
-msgid "Alias \"%s\" => \"%s\" created"
+msgid "Alias updated: \"%s\" => \"%s\""
+msgstr "A \"%s\" => \"%s\" aliasz elkészült\n"
+
+#, fuzzy, c-format
+msgid "Alias created: \"%s\" => \"%s\""
 msgstr "A \"%s\" => \"%s\" aliasz elkészült\n"
 
 #, fuzzy, c-format
@@ -6124,16 +6128,16 @@ msgid "No alias defined"
 msgstr "Nincs aliasz definiálva.\n"
 
 #, fuzzy, c-format
+msgid "%sAlias \"%s\" already exists"
+msgstr "%s az ignore már létezik\n"
+
+#, fuzzy, c-format
 msgid "Alias \"%s\" removed"
 msgstr "A \"%s\" aliasz eltávolítva\n"
 
 #, fuzzy, c-format
 msgid "%sAlias \"%s\" not found"
 msgstr "%s cím \"%s\" nem található\n"
-
-#, fuzzy, c-format
-msgid "%sAlias \"%s\" already exists"
-msgstr "%s az ignore már létezik\n"
 
 #, fuzzy, c-format
 msgid "Alias \"%s\" has been renamed to \"%s\""
@@ -6145,9 +6149,10 @@ msgstr "szerverek listázása, hozzáadása vagy eltávolítása"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid ""
-"list [<name>] || add <name> [<command>[;<command>...]] || addcompletion "
-"<completion> <name> [<command>[;<command>...]] || del <name>|<mask> [<name>|"
-"<mask>...] || rename <name> <new_name> || missing"
+"list [<name>] || add|addreplace <name> [<command>[;<command>...]] || "
+"addcompletion|addreplacecompletion <completion> <name> [<command>[;"
+"<command>...]] || del <name>|<mask> [<name>|<mask>...] || rename <name> "
+"<new_name> || missing"
 msgstr ""
 
 msgid "raw[list]: list aliases (without argument, this list is displayed)"
@@ -6156,21 +6161,20 @@ msgstr ""
 msgid "raw[add]: add an alias"
 msgstr ""
 
-#, fuzzy
-msgid "name: name of alias"
-msgstr "Aliaszok listája:\n"
+msgid "raw[addreplace]: add or replace an existing alias"
+msgstr ""
 
 msgid "raw[addcompletion]: add an alias with a custom completion"
 msgstr ""
 
-msgid "raw[del]: delete aliases"
+msgid ""
+"raw[addreplacecompletion]: add or replace an existing alias with a custom "
+"completion"
 msgstr ""
 
-msgid "raw[rename]: rename an alias"
-msgstr ""
-
-msgid "raw[missing]: add missing aliases (using default aliases)"
-msgstr ""
+#, fuzzy
+msgid "name: name of alias"
+msgstr "Aliaszok listája:\n"
 
 #, c-format
 msgid ""
@@ -6182,6 +6186,15 @@ msgstr ""
 msgid ""
 "command: command name with arguments (many commands can be separated by "
 "semicolons)"
+msgstr ""
+
+msgid "raw[del]: delete aliases"
+msgstr ""
+
+msgid "raw[rename]: rename an alias"
+msgstr ""
+
+msgid "raw[missing]: add missing aliases (using default aliases)"
 msgstr ""
 
 msgid "In command, special variables are replaced:"

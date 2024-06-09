@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-09 09:07+0200\n"
+"POT-Creation-Date: 2024-06-09 10:04+0200\n"
 "PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -6736,8 +6736,14 @@ msgstr "%s%s: 別名が間違っています: \"%s\""
 msgid "%s%s: error creating alias \"%s\" => \"%s\""
 msgstr "%s%s: 別名 \"%s\" => \"%s\" 作成中にエラー"
 
-#, c-format
-msgid "Alias \"%s\" => \"%s\" created"
+#, fuzzy, c-format
+#| msgid "Alias \"%s\" => \"%s\" created"
+msgid "Alias updated: \"%s\" => \"%s\""
+msgstr "別名 \"%s\" => \"%s\" を作成しました"
+
+#, fuzzy, c-format
+#| msgid "Alias \"%s\" => \"%s\" created"
+msgid "Alias created: \"%s\" => \"%s\""
 msgstr "別名 \"%s\" => \"%s\" を作成しました"
 
 #, c-format
@@ -6757,6 +6763,11 @@ msgstr "\"%s\" にマッチする別名が見つかりません"
 msgid "No alias defined"
 msgstr "別名が定義されていません"
 
+#, fuzzy, c-format
+#| msgid "%s%s: trigger \"%s\" already exists"
+msgid "%sAlias \"%s\" already exists"
+msgstr "%s%s: トリガ \"%s\" は既に存在します"
+
 #, c-format
 msgid "Alias \"%s\" removed"
 msgstr "別名 \"%s\" が削除されました"
@@ -6764,11 +6775,6 @@ msgstr "別名 \"%s\" が削除されました"
 #, c-format
 msgid "%sAlias \"%s\" not found"
 msgstr "%s別名 \"%s\" が見つかりません"
-
-#, fuzzy, c-format
-#| msgid "%s%s: trigger \"%s\" already exists"
-msgid "%sAlias \"%s\" already exists"
-msgstr "%s%s: トリガ \"%s\" は既に存在します"
 
 #, fuzzy, c-format
 #| msgid "Layout \"%s\" has been renamed to \"%s\""
@@ -6785,9 +6791,10 @@ msgstr "別名コマンドのリストアップ、追加、削除"
 #| "<completion> <alias> [<command>[;<command>...]] || del <alias> "
 #| "[<alias>...]"
 msgid ""
-"list [<name>] || add <name> [<command>[;<command>...]] || addcompletion "
-"<completion> <name> [<command>[;<command>...]] || del <name>|<mask> [<name>|"
-"<mask>...] || rename <name> <new_name> || missing"
+"list [<name>] || add|addreplace <name> [<command>[;<command>...]] || "
+"addcompletion|addreplacecompletion <completion> <name> [<command>[;"
+"<command>...]] || del <name>|<mask> [<name>|<mask>...] || rename <name> "
+"<new_name> || missing"
 msgstr ""
 "list [<alias>] || add <alias> [<command>[;<command>...]] || addcompletion "
 "<completion> <alias> [<command>[;<command>...]] || del <alias> [<alias>...]"
@@ -6798,22 +6805,21 @@ msgstr ""
 msgid "raw[add]: add an alias"
 msgstr ""
 
-#, fuzzy
-#| msgid "value of alias"
-msgid "name: name of alias"
-msgstr "別名の値"
+msgid "raw[addreplace]: add or replace an existing alias"
+msgstr ""
 
 msgid "raw[addcompletion]: add an alias with a custom completion"
 msgstr ""
 
-msgid "raw[del]: delete aliases"
+msgid ""
+"raw[addreplacecompletion]: add or replace an existing alias with a custom "
+"completion"
 msgstr ""
 
-msgid "raw[rename]: rename an alias"
-msgstr ""
-
-msgid "raw[missing]: add missing aliases (using default aliases)"
-msgstr ""
+#, fuzzy
+#| msgid "value of alias"
+msgid "name: name of alias"
+msgstr "別名の値"
 
 #, c-format
 msgid ""
@@ -6832,6 +6838,15 @@ msgid ""
 msgstr ""
 "正規表現置換が行われた後に条件が満足された場合に実行するコマンド (多くのコマ"
 "ンドを実行するにはセミコロンで区切ってください)"
+
+msgid "raw[del]: delete aliases"
+msgstr ""
+
+msgid "raw[rename]: rename an alias"
+msgstr ""
+
+msgid "raw[missing]: add missing aliases (using default aliases)"
+msgstr ""
 
 msgid "In command, special variables are replaced:"
 msgstr ""

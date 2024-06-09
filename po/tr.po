@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-09 09:07+0200\n"
+"POT-Creation-Date: 2024-06-09 10:04+0200\n"
 "PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6805,8 +6805,14 @@ msgstr "%s%s: geçersiz arma adı: \"%s\""
 msgid "%s%s: error creating alias \"%s\" => \"%s\""
 msgstr "%s%s: \"%s\" => \"%s\" arması oluşturulurken hata"
 
-#, c-format
-msgid "Alias \"%s\" => \"%s\" created"
+#, fuzzy, c-format
+#| msgid "Alias \"%s\" => \"%s\" created"
+msgid "Alias updated: \"%s\" => \"%s\""
+msgstr "\"%s\" => \"%s\" arması oluşturuldu"
+
+#, fuzzy, c-format
+#| msgid "Alias \"%s\" => \"%s\" created"
+msgid "Alias created: \"%s\" => \"%s\""
 msgstr "\"%s\" => \"%s\" arması oluşturuldu"
 
 #, c-format
@@ -6826,6 +6832,11 @@ msgstr "\"%s\" ile eşleşen bir arma bulunamadı"
 msgid "No alias defined"
 msgstr "Bir arma tanımlı değil"
 
+#, fuzzy, c-format
+#| msgid "%s%s: trigger \"%s\" already exists"
+msgid "%sAlias \"%s\" already exists"
+msgstr "%s%s: \"%s\" tetiği halihazırda mevcut"
+
 #, c-format
 msgid "Alias \"%s\" removed"
 msgstr "\"%s\" arması kaldırıldı"
@@ -6833,11 +6844,6 @@ msgstr "\"%s\" arması kaldırıldı"
 #, c-format
 msgid "%sAlias \"%s\" not found"
 msgstr "%s\"%s\" arması bulunamadı"
-
-#, fuzzy, c-format
-#| msgid "%s%s: trigger \"%s\" already exists"
-msgid "%sAlias \"%s\" already exists"
-msgstr "%s%s: \"%s\" tetiği halihazırda mevcut"
 
 #, fuzzy, c-format
 #| msgid "Layout \"%s\" has been renamed to \"%s\""
@@ -6854,9 +6860,10 @@ msgstr "komut armalarını listele, ekle veya kaldır"
 #| "<completion> <alias> [<command>[;<command>...]] || del <alias> "
 #| "[<alias>...]"
 msgid ""
-"list [<name>] || add <name> [<command>[;<command>...]] || addcompletion "
-"<completion> <name> [<command>[;<command>...]] || del <name>|<mask> [<name>|"
-"<mask>...] || rename <name> <new_name> || missing"
+"list [<name>] || add|addreplace <name> [<command>[;<command>...]] || "
+"addcompletion|addreplacecompletion <completion> <name> [<command>[;"
+"<command>...]] || del <name>|<mask> [<name>|<mask>...] || rename <name> "
+"<new_name> || missing"
 msgstr ""
 "list [<arma>] || add <arma> [<komut>[;<komut>...]] || addcompletion "
 "<tamamlama> <arma> [<komut>[;<komut>...]] || del <arma> [<arma>...]"
@@ -6867,22 +6874,21 @@ msgstr ""
 msgid "raw[add]: add an alias"
 msgstr ""
 
-#, fuzzy
-#| msgid "value of alias"
-msgid "name: name of alias"
-msgstr "arma değeri"
+msgid "raw[addreplace]: add or replace an existing alias"
+msgstr ""
 
 msgid "raw[addcompletion]: add an alias with a custom completion"
 msgstr ""
 
-msgid "raw[del]: delete aliases"
+msgid ""
+"raw[addreplacecompletion]: add or replace an existing alias with a custom "
+"completion"
 msgstr ""
 
-msgid "raw[rename]: rename an alias"
-msgstr ""
-
-msgid "raw[missing]: add missing aliases (using default aliases)"
-msgstr ""
+#, fuzzy
+#| msgid "value of alias"
+msgid "name: name of alias"
+msgstr "arma değeri"
 
 #, c-format
 msgid ""
@@ -6901,6 +6907,15 @@ msgid ""
 msgstr ""
 "düzenli ifade değiştirmelerinden sonra koşullar sağlanırsa çalıştırılacak "
 "komutlar (birden çok komut noktalı virgül ile ayrılabilir)"
+
+msgid "raw[del]: delete aliases"
+msgstr ""
+
+msgid "raw[rename]: rename an alias"
+msgstr ""
+
+msgid "raw[missing]: add missing aliases (using default aliases)"
+msgstr ""
 
 msgid "In command, special variables are replaced:"
 msgstr ""

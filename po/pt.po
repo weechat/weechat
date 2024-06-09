@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-09 09:07+0200\n"
+"POT-Creation-Date: 2024-06-09 10:04+0200\n"
 "PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: Vasco Almeida <vascomalmeida@sapo.pt>\n"
 "Language-Team: Portuguese <>\n"
@@ -6795,8 +6795,14 @@ msgstr "%s%s: nome de alias inválido: \"%s\""
 msgid "%s%s: error creating alias \"%s\" => \"%s\""
 msgstr "%s%s: erro ao criar alias \"%s\" => \"%s\""
 
-#, c-format
-msgid "Alias \"%s\" => \"%s\" created"
+#, fuzzy, c-format
+#| msgid "Alias \"%s\" => \"%s\" created"
+msgid "Alias updated: \"%s\" => \"%s\""
+msgstr "Alias \"%s\" => \"%s\" criado"
+
+#, fuzzy, c-format
+#| msgid "Alias \"%s\" => \"%s\" created"
+msgid "Alias created: \"%s\" => \"%s\""
 msgstr "Alias \"%s\" => \"%s\" criado"
 
 #, c-format
@@ -6816,6 +6822,11 @@ msgstr "Nenhum alias de \"%s\" encontrado"
 msgid "No alias defined"
 msgstr "Nenhum alias definido"
 
+#, fuzzy, c-format
+#| msgid "%s%s: trigger \"%s\" already exists"
+msgid "%sAlias \"%s\" already exists"
+msgstr "%s%s: o acionador \"%s\" já existe"
+
 #, c-format
 msgid "Alias \"%s\" removed"
 msgstr "Alias \"%s\" removido"
@@ -6823,11 +6834,6 @@ msgstr "Alias \"%s\" removido"
 #, c-format
 msgid "%sAlias \"%s\" not found"
 msgstr "%sAlias \"%s\" não encontrado"
-
-#, fuzzy, c-format
-#| msgid "%s%s: trigger \"%s\" already exists"
-msgid "%sAlias \"%s\" already exists"
-msgstr "%s%s: o acionador \"%s\" já existe"
 
 #, fuzzy, c-format
 #| msgid "Layout \"%s\" has been renamed to \"%s\""
@@ -6844,9 +6850,10 @@ msgstr "listar, adicionar ou remover alias de comandos"
 #| "<completion> <alias> [<command>[;<command>...]] || del <alias> "
 #| "[<alias>...]"
 msgid ""
-"list [<name>] || add <name> [<command>[;<command>...]] || addcompletion "
-"<completion> <name> [<command>[;<command>...]] || del <name>|<mask> [<name>|"
-"<mask>...] || rename <name> <new_name> || missing"
+"list [<name>] || add|addreplace <name> [<command>[;<command>...]] || "
+"addcompletion|addreplacecompletion <completion> <name> [<command>[;"
+"<command>...]] || del <name>|<mask> [<name>|<mask>...] || rename <name> "
+"<new_name> || missing"
 msgstr ""
 "list [<alias>] || add <alias> [<comando>[;<comando>...]] || addcompletion "
 "<completação> <alias> [<comando>[;<comando>...]] || del <alias> [<alias>...]"
@@ -6857,22 +6864,21 @@ msgstr ""
 msgid "raw[add]: add an alias"
 msgstr ""
 
-#, fuzzy
-#| msgid "value of alias"
-msgid "name: name of alias"
-msgstr "valor do alias"
+msgid "raw[addreplace]: add or replace an existing alias"
+msgstr ""
 
 msgid "raw[addcompletion]: add an alias with a custom completion"
 msgstr ""
 
-msgid "raw[del]: delete aliases"
+msgid ""
+"raw[addreplacecompletion]: add or replace an existing alias with a custom "
+"completion"
 msgstr ""
 
-msgid "raw[rename]: rename an alias"
-msgstr ""
-
-msgid "raw[missing]: add missing aliases (using default aliases)"
-msgstr ""
+#, fuzzy
+#| msgid "value of alias"
+msgid "name: name of alias"
+msgstr "valor do alias"
 
 #, c-format
 msgid ""
@@ -6891,6 +6897,15 @@ msgid ""
 msgstr ""
 "comandos a executar se as condições estiverem bem, depois de substituir as "
 "expressões regulares (pode separar vários comandos por ponto e vírgula)"
+
+msgid "raw[del]: delete aliases"
+msgstr ""
+
+msgid "raw[rename]: rename an alias"
+msgstr ""
+
+msgid "raw[missing]: add missing aliases (using default aliases)"
+msgstr ""
 
 msgid "In command, special variables are replaced:"
 msgstr ""
