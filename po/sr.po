@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-09 10:12+0200\n"
+"POT-Creation-Date: 2024-06-09 14:41+0200\n"
 "PO-Revision-Date: 2024-05-07 14:00+0400\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -782,9 +782,19 @@ msgstr "(ништа)"
 msgid "No proxy defined"
 msgstr "Није дефинисан ниједан прокси"
 
+#, fuzzy, c-format
+#| msgid "%sBar \"%s\" already exists"
+msgid "%sProxy \"%s\" already exists"
+msgstr "%sТрака „%s” већ постоји"
+
 #, c-format
 msgid "%sInvalid type \"%s\" for proxy \"%s\""
 msgstr "%sНеважећи тип „%s” за прокси „%s”"
+
+#, fuzzy, c-format
+#| msgid "Proxy \"%s\" deleted"
+msgid "Proxy \"%s\" updated"
+msgstr "Прокси „%s” је обрисан"
 
 #, c-format
 msgid "Proxy \"%s\" added"
@@ -3304,9 +3314,14 @@ msgid "manage proxies"
 msgstr "управљање проксијима"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#, fuzzy
+#| msgid ""
+#| "list || add <name> <type> <address> <port> [<username> [<password>]] || "
+#| "del <name>|<mask> [<name>|<mask>...] || set <name> <option> <value>"
 msgid ""
-"list || add <name> <type> <address> <port> [<username> [<password>]] || del "
-"<name>|<mask> [<name>|<mask>...] || set <name> <option> <value>"
+"list || add|addreplace <name> <type> <address> <port> [<username> "
+"[<password>]] || del <name>|<mask> [<name>|<mask>...] || set <name> <option> "
+"<value>"
 msgstr ""
 "list || add <име> <тип> <адреса> <порт> [<кориме> [<лозинка>]] || del <име>|"
 "<маска> [<име>|<маска>...] || set <име> <опција> <вредност>"
@@ -3316,6 +3331,11 @@ msgstr "raw[list]: исписује све проксије"
 
 msgid "raw[add]: add a new proxy"
 msgstr "raw[add]: исписује све проксије"
+
+#, fuzzy
+#| msgid "raw[addreplace]: add or replace an existing filter"
+msgid "raw[addreplace]: add or replace an existing proxy"
+msgstr "raw[addreplace]: додаје или замењује постојећи филтер"
 
 msgid "name: name of proxy (must be unique)"
 msgstr "име: име проксија (мора да буде јединствено)"

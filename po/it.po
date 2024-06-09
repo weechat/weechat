@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-09 10:12+0200\n"
+"POT-Creation-Date: 2024-06-09 14:41+0200\n"
 "PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -757,8 +757,17 @@ msgid "No proxy defined"
 msgstr "Nessun proxy definito"
 
 #, fuzzy, c-format
+msgid "%sProxy \"%s\" already exists"
+msgstr "%sErrore: il filtro \"%s\" esiste già"
+
+#, fuzzy, c-format
 msgid "%sInvalid type \"%s\" for proxy \"%s\""
 msgstr "%sErrore: tipo \"%s\" errato per il proxy \"%s\""
+
+#, fuzzy, c-format
+#| msgid "Proxy deleted"
+msgid "Proxy \"%s\" updated"
+msgstr "Proxy eliminato"
 
 #, fuzzy, c-format
 msgid "Proxy \"%s\" added"
@@ -3080,8 +3089,9 @@ msgstr "gestione dei proxy"
 #| "list || add <name> <type> <address> <port> [<username> [<password>]] || "
 #| "del <name>|-all || set <name> <option> <value>"
 msgid ""
-"list || add <name> <type> <address> <port> [<username> [<password>]] || del "
-"<name>|<mask> [<name>|<mask>...] || set <name> <option> <value>"
+"list || add|addreplace <name> <type> <address> <port> [<username> "
+"[<password>]] || del <name>|<mask> [<name>|<mask>...] || set <name> <option> "
+"<value>"
 msgstr ""
 "list || add <nome> <tipo> <indirizzo> <porta> [<nomeutente> [<password>]] || "
 "del <nome>|-all || set <nome> <opzione> <valore>"
@@ -3092,6 +3102,9 @@ msgid "raw[list]: list all proxies"
 msgstr "elenco dei proxy"
 
 msgid "raw[add]: add a new proxy"
+msgstr ""
+
+msgid "raw[addreplace]: add or replace an existing proxy"
 msgstr ""
 
 msgid "name: name of proxy (must be unique)"

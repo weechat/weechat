@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-09 10:12+0200\n"
+"POT-Creation-Date: 2024-06-09 14:41+0200\n"
 "PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -771,8 +771,16 @@ msgid "No proxy defined"
 msgstr "Сокращения не заданы.\n"
 
 #, fuzzy, c-format
+msgid "%sProxy \"%s\" already exists"
+msgstr "%s игнорирование уже существует\n"
+
+#, fuzzy, c-format
 msgid "%sInvalid type \"%s\" for proxy \"%s\""
 msgstr "%s некорректное количество аргументов команды \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "Proxy \"%s\" updated"
+msgstr "команда users отключена"
 
 #, fuzzy, c-format
 msgid "Proxy \"%s\" added"
@@ -2996,8 +3004,9 @@ msgstr "управление буферами"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid ""
-"list || add <name> <type> <address> <port> [<username> [<password>]] || del "
-"<name>|<mask> [<name>|<mask>...] || set <name> <option> <value>"
+"list || add|addreplace <name> <type> <address> <port> [<username> "
+"[<password>]] || del <name>|<mask> [<name>|<mask>...] || set <name> <option> "
+"<value>"
 msgstr ""
 
 #, fuzzy
@@ -3005,6 +3014,9 @@ msgid "raw[list]: list all proxies"
 msgstr "Список сокращений:\n"
 
 msgid "raw[add]: add a new proxy"
+msgstr ""
+
+msgid "raw[addreplace]: add or replace an existing proxy"
 msgstr ""
 
 msgid "name: name of proxy (must be unique)"

@@ -785,9 +785,19 @@ msgstr "(brak)"
 msgid "No proxy defined"
 msgstr "Nie zdefiniowano proxy"
 
+#, fuzzy, c-format
+#| msgid "%sBar \"%s\" already exists"
+msgid "%sProxy \"%s\" already exists"
+msgstr "%sPasek \"%s\" już istnieje"
+
 #, c-format
 msgid "%sInvalid type \"%s\" for proxy \"%s\""
 msgstr "%sZły typ \"%s\" dla pośrednika \"%s\""
+
+#, fuzzy, c-format
+#| msgid "Proxy \"%s\" deleted"
+msgid "Proxy \"%s\" updated"
+msgstr "Usunięto pośrednika \"%s\""
 
 #, c-format
 msgid "Proxy \"%s\" added"
@@ -3304,9 +3314,14 @@ msgid "manage proxies"
 msgstr "zarządzanie proxy"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#, fuzzy
+#| msgid ""
+#| "list || add <name> <type> <address> <port> [<username> [<password>]] || "
+#| "del <name>|<mask> [<name>|<mask>...] || set <name> <option> <value>"
 msgid ""
-"list || add <name> <type> <address> <port> [<username> [<password>]] || del "
-"<name>|<mask> [<name>|<mask>...] || set <name> <option> <value>"
+"list || add|addreplace <name> <type> <address> <port> [<username> "
+"[<password>]] || del <name>|<mask> [<name>|<mask>...] || set <name> <option> "
+"<value>"
 msgstr ""
 "list || add <nazwa> <typ> <adres> <port> [<użytkownik> [<hasło>]] || del "
 "<nazwa>|<maska> [<nazwa>|<maska>...] || set <nazwa> <opcja> <wartość>"
@@ -3316,6 +3331,11 @@ msgstr "raw[list]: wyświetla wszystkich pośredników"
 
 msgid "raw[add]: add a new proxy"
 msgstr "raw[add]: dodaj nowego pośrednika"
+
+#, fuzzy
+#| msgid "raw[addreplace]: add or replace an existing filter"
+msgid "raw[addreplace]: add or replace an existing proxy"
+msgstr "raw[addreplace]: dodaj lub zastąp istniejący filtr"
 
 msgid "name: name of proxy (must be unique)"
 msgstr "nazwa: nazwa pośrednika (musi być unikalna)"

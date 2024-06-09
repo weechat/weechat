@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-09 10:12+0200\n"
+"POT-Creation-Date: 2024-06-09 14:41+0200\n"
 "PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -809,8 +809,18 @@ msgid "No proxy defined"
 msgstr "プロキシが定義されていません"
 
 #, fuzzy, c-format
+#| msgid "%s%s: trigger \"%s\" already exists"
+msgid "%sProxy \"%s\" already exists"
+msgstr "%s%s: トリガ \"%s\" は既に存在します"
+
+#, fuzzy, c-format
 msgid "%sInvalid type \"%s\" for proxy \"%s\""
 msgstr "%1$sエラー: プロキシ \"%3$s\" に対するタイプ \"%2$s\" が間違っています"
+
+#, fuzzy, c-format
+#| msgid "Proxy deleted"
+msgid "Proxy \"%s\" updated"
+msgstr "プロキシを削除しました"
 
 #, c-format
 msgid "Proxy \"%s\" added"
@@ -3165,8 +3175,9 @@ msgstr "プロキシの管理"
 #| "list || add <name> <type> <address> <port> [<username> [<password>]] || "
 #| "del <name>|-all || set <name> <option> <value>"
 msgid ""
-"list || add <name> <type> <address> <port> [<username> [<password>]] || del "
-"<name>|<mask> [<name>|<mask>...] || set <name> <option> <value>"
+"list || add|addreplace <name> <type> <address> <port> [<username> "
+"[<password>]] || del <name>|<mask> [<name>|<mask>...] || set <name> <option> "
+"<value>"
 msgstr ""
 "list || add <name> <type> <address> <port> [<username> [<password>]] || del "
 "<name>|-all || set <name> <option> <value>"
@@ -3177,6 +3188,9 @@ msgid "raw[list]: list all proxies"
 msgstr "プロキシリスト"
 
 msgid "raw[add]: add a new proxy"
+msgstr ""
+
+msgid "raw[addreplace]: add or replace an existing proxy"
 msgstr ""
 
 msgid "name: name of proxy (must be unique)"

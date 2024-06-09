@@ -5507,7 +5507,7 @@ COMMAND_CALLBACK(proxy)
 {
     struct t_proxy *ptr_proxy, *ptr_next_proxy;
     char *error, *name;
-    int type, i;
+    int type, i, update;
     long value;
 
     /* make C compiler happy */
@@ -5523,9 +5523,28 @@ COMMAND_CALLBACK(proxy)
     }
 
     /* add a new proxy */
-    if (string_strcmp (argv[1], "add") == 0)
+    if ((string_strcmp (argv[1], "add") == 0)
+        || (string_strcmp (argv[1], "addreplace") == 0))
     {
         COMMAND_MIN_ARGS(6, argv[1]);
+        update = 0;
+        ptr_proxy = proxy_search (argv[2]);
+        if (ptr_proxy)
+        {
+            if (string_strcmp (argv[1], "addreplace") == 0)
+            {
+                update = 1;
+                proxy_free (ptr_proxy);
+            }
+            else
+            {
+                gui_chat_printf (NULL,
+                                 _("%sProxy \"%s\" already exists"),
+                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                 argv[2]);
+                return WEECHAT_RC_OK;
+            }
+        }
         type = proxy_search_type (argv[3]);
         if (type < 0)
         {
@@ -5545,8 +5564,10 @@ COMMAND_CALLBACK(proxy)
                            (argc >= 7) ? argv[6] : NULL,
                            (argc >= 8) ? argv_eol[7] : NULL))
             {
-                gui_chat_printf (NULL, _("Proxy \"%s\" added"),
-                                 argv[2]);
+                gui_chat_printf (
+                    NULL,
+                    (update) ? _("Proxy \"%s\" updated") : _("Proxy \"%s\" added"),
+                    argv[2]);
             }
             else
             {
@@ -9103,12 +9124,14 @@ command_init ()
         N_("manage proxies"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("list"
-           " || add <name> <type> <address> <port> [<username> [<password>]]"
+           " || add|addreplace <name> <type> <address> <port> "
+           "[<username> [<password>]]"
            " || del <name>|<mask> [<name>|<mask>...]"
            " || set <name> <option> <value>"),
         CMD_ARGS_DESC(
             N_("raw[list]: list all proxies"),
             N_("raw[add]: add a new proxy"),
+            N_("raw[addreplace]: add or replace an existing proxy"),
             N_("name: name of proxy (must be unique)"),
             N_("type: http, socks4 or socks5"),
             N_("address: IP or hostname"),
@@ -9133,7 +9156,7 @@ command_init ()
             N_("  delete a proxy:"),
             AI("    /proxy del myproxy")),
         "list"
-        " || add %(proxies_names) http|socks4|socks5"
+        " || add|addreplace %(proxies_names) http|socks4|socks5"
         " || del %(proxies_names)|%*"
         " || set %(proxies_names) %(proxies_options)",
         &command_proxy, NULL, NULL);

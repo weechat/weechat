@@ -26,7 +26,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-09 10:12+0200\n"
+"POT-Creation-Date: 2024-06-09 14:41+0200\n"
 "PO-Revision-Date: 2024-05-31 20:32+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -809,9 +809,19 @@ msgstr "(keine)"
 msgid "No proxy defined"
 msgstr "Kein Proxy definiert"
 
+#, fuzzy, c-format
+#| msgid "%sBar \"%s\" already exists"
+msgid "%sProxy \"%s\" already exists"
+msgstr "%sBar \"%s\" existiert bereits"
+
 #, c-format
 msgid "%sInvalid type \"%s\" for proxy \"%s\""
 msgstr "%sFalscher Typ \"%s\" für Proxy \"%s\""
+
+#, fuzzy, c-format
+#| msgid "Proxy \"%s\" deleted"
+msgid "Proxy \"%s\" updated"
+msgstr "Proxy \"%s\" gelöscht"
 
 #, c-format
 msgid "Proxy \"%s\" added"
@@ -3466,9 +3476,14 @@ msgid "manage proxies"
 msgstr "Proxys verwalten"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#, fuzzy
+#| msgid ""
+#| "list || add <name> <type> <address> <port> [<username> [<password>]] || "
+#| "del <name>|<mask> [<name>|<mask>...] || set <name> <option> <value>"
 msgid ""
-"list || add <name> <type> <address> <port> [<username> [<password>]] || del "
-"<name>|<mask> [<name>|<mask>...] || set <name> <option> <value>"
+"list || add|addreplace <name> <type> <address> <port> [<username> "
+"[<password>]] || del <name>|<mask> [<name>|<mask>...] || set <name> <option> "
+"<value>"
 msgstr ""
 "list || add <name> <type> <address> <port> [<username> [<password>]] || del "
 "<name>|<mask> [<name>|<mask>...] || set <name> <option> <value>"
@@ -3478,6 +3493,13 @@ msgstr "raw[list]: Auflistung aller Proxys"
 
 msgid "raw[add]: add a new proxy"
 msgstr "raw[add]: fügt neuen Proxy hinzu"
+
+#, fuzzy
+#| msgid "raw[addreplace]: add or replace an existing filter"
+msgid "raw[addreplace]: add or replace an existing proxy"
+msgstr ""
+"raw[addreplace]: neuen Filter anlegen oder einen schon existierenden Filter "
+"ersetzen"
 
 msgid "name: name of proxy (must be unique)"
 msgstr "name: Name des neuen Proxy (der Name darf nur einmal genutzt werden)"
