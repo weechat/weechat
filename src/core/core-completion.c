@@ -112,6 +112,34 @@ completion_list_add_bars_names_cb (const void *pointer, void *data,
 }
 
 /*
+ * Adds bar items to completion list.
+ */
+
+int
+completion_list_add_bars_items_cb (const void *pointer, void *data,
+                                   const char *completion_item,
+                                   struct t_gui_buffer *buffer,
+                                   struct t_gui_completion *completion)
+{
+    struct t_gui_bar_item *ptr_bar_item;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) completion_item;
+    (void) buffer;
+
+    for (ptr_bar_item = gui_bar_items; ptr_bar_item;
+         ptr_bar_item = ptr_bar_item->next_item)
+    {
+        gui_completion_list_add (completion, ptr_bar_item->name,
+                                 0, WEECHAT_LIST_POS_SORT);
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Adds custom bar items names to completion list.
  */
 
@@ -2275,6 +2303,9 @@ completion_init ()
     hook_completion (NULL, "bars_names", /* formerly "%r" */
                      N_("names of bars"),
                      &completion_list_add_bars_names_cb, NULL, NULL);
+    hook_completion (NULL, "bars_items",
+                     N_("names of bar items"),
+                     &completion_list_add_bars_items_cb, NULL, NULL);
     hook_completion (NULL, "custom_bar_items_names",
                      N_("names of custom bar items"),
                      &completion_list_add_custom_bar_items_names_cb, NULL, NULL);

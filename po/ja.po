@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-02 09:01+0200\n"
+"POT-Creation-Date: 2024-06-09 09:07+0200\n"
 "PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -4159,6 +4159,11 @@ msgstr ""
 "クス"
 
 msgid "names of bars"
+msgstr "バーの名前"
+
+#, fuzzy
+#| msgid "names of bars"
+msgid "names of bar items"
 msgstr "バーの名前"
 
 #, fuzzy
