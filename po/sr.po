@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-09 16:21+0200\n"
+"POT-Creation-Date: 2024-06-09 16:35+0200\n"
 "PO-Revision-Date: 2024-05-07 14:00+0400\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -14825,8 +14825,17 @@ msgid "No relay remote"
 msgstr "Нема ниједног прослеђеног удаљеног"
 
 #, c-format
-msgid "%s%s: remote relay \"%s\" already exists, can't add it!"
-msgstr "%s%s: релеј удаљених „%s” већ постоји, не може да се дода!"
+msgid ""
+"%s%s: you can not delete remote relay \"%s\" because you are connected to. "
+"Try \"/remote disconnect %s\" before."
+msgstr ""
+"%s%s: не можете да обришете релеј удаљених „%s” јер сте повезани са њим. "
+"Покушајте прво да извршите „/remote disconnect %s”."
+
+#, fuzzy, c-format
+#| msgid "%s%s: error: relay for \"%s\" already exists"
+msgid "%s%s: remote relay \"%s\" already exists"
+msgstr "%s%s: грешка: релеј за „%s” већ постоји"
 
 #, c-format
 msgid "%s%s: invalid remote relay name: \"%s\""
@@ -14839,6 +14848,11 @@ msgstr "%s%s: неважећи URL релеја удаљених: „%s”"
 #, c-format
 msgid "%s%s: invalid remote relay option: \"%s\""
 msgstr "%s%s: неважећа опција релеја удаљених: „%s”"
+
+#, fuzzy, c-format
+#| msgid "Remote relay \"%s\" created"
+msgid "Remote relay \"%s\" updated"
+msgstr "Креиран је релеј удаљених „%s”"
 
 #, c-format
 msgid "Remote relay \"%s\" created"
@@ -14863,14 +14877,6 @@ msgstr "%s%s: релеј удаљених „%s” већ постоји за к
 #, c-format
 msgid "%s: remote relay \"%s\" has been renamed to \"%s\""
 msgstr "%s: име релеја удаљених „%s” је промењено на „%s”"
-
-#, c-format
-msgid ""
-"%s%s: you can not delete remote relay \"%s\" because you are connected to. "
-"Try \"/remote disconnect %s\" before."
-msgstr ""
-"%s%s: не можете да обришете релеј удаљених „%s” јер сте повезани са њим. "
-"Покушајте прво да извршите „/remote disconnect %s”."
 
 #, c-format
 msgid "%s: remote relay \"%s\" has been deleted"
@@ -15019,10 +15025,15 @@ msgid "control of remote relay servers"
 msgstr "контрола сервера релеја за удаљене"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#, fuzzy
+#| msgid ""
+#| "list|listfull [<name>] || add <name> <url> [-<option>[=<value>]] || "
+#| "connect <name> || send <name> <json> || disconnect <name> || rename "
+#| "<name> <new_name> || del <name>"
 msgid ""
-"list|listfull [<name>] || add <name> <url> [-<option>[=<value>]] || connect "
-"<name> || send <name> <json> || disconnect <name> || rename <name> "
-"<new_name> || del <name>"
+"list|listfull [<name>] || add|addreplace <name> <url> [-<option>[=<value>]] "
+"|| connect <name> || send <name> <json> || disconnect <name> || rename "
+"<name> <new_name> || del <name>"
 msgstr ""
 "list|listfull [<име>] || add <име> <url> [-<опција>[=<вредност>]] || connect "
 "<име> || send <име> <json> || disconnect <име> || rename <име> <ново_име> || "
@@ -15040,6 +15051,11 @@ msgstr "raw[listfull]: приказује сервере релеја удаље
 
 msgid "raw[add]: add a remote relay server"
 msgstr "raw[add]: додавање сервера релеја удаљених"
+
+#, fuzzy
+#| msgid "raw[addreplace]: add or replace an existing trigger"
+msgid "raw[addreplace]: add or replace an existing remote relay server"
+msgstr "raw[addreplace]: додавање или замена постојећег окидача"
 
 msgid ""
 "name: name of remote relay server, for internal and display use; this name "
@@ -17758,6 +17774,10 @@ msgstr "%s%s: тајмаут за „%s” са %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: повезивање није успело: неочекивана грешка (%d)"
+
+#, c-format
+#~ msgid "%s%s: remote relay \"%s\" already exists, can't add it!"
+#~ msgstr "%s%s: релеј удаљених „%s” већ постоји, не може да се дода!"
 
 #, c-format
 #~ msgid "%s%s: server \"%s\" already exists, can't add it!"

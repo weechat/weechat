@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-09 16:21+0200\n"
+"POT-Creation-Date: 2024-06-09 16:35+0200\n"
 "PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -13540,8 +13540,16 @@ msgid "No relay remote"
 msgstr ""
 
 #, fuzzy, c-format
-msgid "%s%s: remote relay \"%s\" already exists, can't add it!"
-msgstr "%s a \"%s\" szerver már létezik, nem hozhatja létre!\n"
+msgid ""
+"%s%s: you can not delete remote relay \"%s\" because you are connected to. "
+"Try \"/remote disconnect %s\" before."
+msgstr ""
+"%s nem tudja törölni a \"%s\" szervert, mert csatlakozva van hozzá. Próbálja "
+"a /disconnect %s parancsot előbb.\n"
+
+#, fuzzy, c-format
+msgid "%s%s: remote relay \"%s\" already exists"
+msgstr "%s az ignore már létezik\n"
 
 #, fuzzy, c-format
 msgid "%s%s: invalid remote relay name: \"%s\""
@@ -13554,6 +13562,10 @@ msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
 #, fuzzy, c-format
 msgid "%s%s: invalid remote relay option: \"%s\""
 msgstr "%s nem sikerült a(z) \"%s\" billentyűparancsot visszavonni\n"
+
+#, fuzzy, c-format
+msgid "Remote relay \"%s\" updated"
+msgstr "A \"%s\" => \"%s\" aliasz elkészült\n"
 
 #, fuzzy, c-format
 msgid "Remote relay \"%s\" created"
@@ -13578,14 +13590,6 @@ msgstr "%s a \"%s\" szerver már létezik a(z) \"%s\" parancshoz\n"
 #, fuzzy, c-format
 msgid "%s: remote relay \"%s\" has been renamed to \"%s\""
 msgstr "a felhasználók le lettek tiltva"
-
-#, fuzzy, c-format
-msgid ""
-"%s%s: you can not delete remote relay \"%s\" because you are connected to. "
-"Try \"/remote disconnect %s\" before."
-msgstr ""
-"%s nem tudja törölni a \"%s\" szervert, mert csatlakozva van hozzá. Próbálja "
-"a /disconnect %s parancsot előbb.\n"
 
 #, fuzzy, c-format
 msgid "%s: remote relay \"%s\" has been deleted"
@@ -13714,9 +13718,9 @@ msgstr "kilépés a szerver(ek)ről"
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 #, fuzzy
 msgid ""
-"list|listfull [<name>] || add <name> <url> [-<option>[=<value>]] || connect "
-"<name> || send <name> <json> || disconnect <name> || rename <name> "
-"<new_name> || del <name>"
+"list|listfull [<name>] || add|addreplace <name> <url> [-<option>[=<value>]] "
+"|| connect <name> || send <name> <json> || disconnect <name> || rename "
+"<name> <new_name> || del <name>"
 msgstr ""
 "[list [szervernév]] | [listfull [szervernév]] | [add szervernév gépnév [-"
 "port port] [-temp] [-auto | -noauto] [-ipv6] [-ssl] [-pwd jelszó] [-nicks "
@@ -13736,6 +13740,10 @@ msgstr ""
 #, fuzzy
 msgid "raw[add]: add a remote relay server"
 msgstr "Aliaszok listája:\n"
+
+#, fuzzy
+msgid "raw[addreplace]: add or replace an existing remote relay server"
+msgstr "%s nincs elég memória az információs pult üzenethez\n"
 
 msgid ""
 "name: name of remote relay server, for internal and display use; this name "
@@ -16215,6 +16223,10 @@ msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s DCC: nem sikerült kapcsolódni a küldőhöz\n"
+
+#, fuzzy, c-format
+#~ msgid "%s%s: remote relay \"%s\" already exists, can't add it!"
+#~ msgstr "%s a \"%s\" szerver már létezik, nem hozhatja létre!\n"
 
 #, fuzzy, c-format
 #~ msgid "%s%s: server \"%s\" already exists, can't add it!"

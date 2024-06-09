@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-09 16:21+0200\n"
+"POT-Creation-Date: 2024-06-09 16:35+0200\n"
 "PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: Santiago Forero <santiago@forero.xyz>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -14464,8 +14464,20 @@ msgid "No relay remote"
 msgstr ""
 
 #, fuzzy, c-format
-msgid "%s%s: remote relay \"%s\" already exists, can't add it!"
-msgstr "%s%s: el servidor \"%s\" ya existe, ¡no se puede crear!"
+#| msgid ""
+#| "%s%s: you can not delete server \"%s\" because you are connected to. Try "
+#| "\"/disconnect %s\" before."
+msgid ""
+"%s%s: you can not delete remote relay \"%s\" because you are connected to. "
+"Try \"/remote disconnect %s\" before."
+msgstr ""
+"%s%s: no puede eliminar el servidor \"%s\" al que ya está conectado. Pruebe "
+"\"/disconnect %s\" antes."
+
+#, fuzzy, c-format
+#| msgid "%s%s: error: relay for \"%s\" already exists"
+msgid "%s%s: remote relay \"%s\" already exists"
+msgstr "%s%s: error: repetidor para \"%s\" ya existe"
 
 #, fuzzy, c-format
 msgid "%s%s: invalid remote relay name: \"%s\""
@@ -14479,6 +14491,11 @@ msgstr "%s%s: set de caracteres inválido: \"%s\""
 #, fuzzy, c-format
 msgid "%s%s: invalid remote relay option: \"%s\""
 msgstr "%sError: no se pudo deshacer el atajo \"%s\""
+
+#, fuzzy, c-format
+#| msgid "Bar \"%s\" created"
+msgid "Remote relay \"%s\" updated"
+msgstr "Barra \"%s\" creada"
 
 #, fuzzy, c-format
 #| msgid "Bar \"%s\" created"
@@ -14508,17 +14525,6 @@ msgstr "%s%s: ya existe el servidor \"%s\" para el comando \"%s\""
 #| msgid "Layout \"%s\" has been renamed to \"%s\""
 msgid "%s: remote relay \"%s\" has been renamed to \"%s\""
 msgstr "Tema \"%s\" renombrado a \"%s\""
-
-#, fuzzy, c-format
-#| msgid ""
-#| "%s%s: you can not delete server \"%s\" because you are connected to. Try "
-#| "\"/disconnect %s\" before."
-msgid ""
-"%s%s: you can not delete remote relay \"%s\" because you are connected to. "
-"Try \"/remote disconnect %s\" before."
-msgstr ""
-"%s%s: no puede eliminar el servidor \"%s\" al que ya está conectado. Pruebe "
-"\"/disconnect %s\" antes."
 
 #, fuzzy, c-format
 msgid "%s: remote relay \"%s\" has been deleted"
@@ -14662,9 +14668,9 @@ msgstr "desconectarse de un o todos los servidores IRC"
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 #, fuzzy
 msgid ""
-"list|listfull [<name>] || add <name> <url> [-<option>[=<value>]] || connect "
-"<name> || send <name> <json> || disconnect <name> || rename <name> "
-"<new_name> || del <name>"
+"list|listfull [<name>] || add|addreplace <name> <url> [-<option>[=<value>]] "
+"|| connect <name> || send <name> <json> || disconnect <name> || rename "
+"<name> <new_name> || del <name>"
 msgstr ""
 "list|listfull [<servidor>] || add <servidor> <hostname>[/<puerto>] [-temp] [-"
 "<opción>[=<valor>]] [-no<opción>] || copy|rename <servidor> <nuevo_nombre> "
@@ -14684,6 +14690,11 @@ msgstr ""
 #| msgid "list of bar items"
 msgid "raw[add]: add a remote relay server"
 msgstr "lista de elementos de barra"
+
+#, fuzzy
+#| msgid "%s%s: error adding notification"
+msgid "raw[addreplace]: add or replace an existing remote relay server"
+msgstr "%s%s: error al agregar la notificación"
 
 msgid ""
 "name: name of remote relay server, for internal and display use; this name "
@@ -17246,6 +17257,10 @@ msgstr "%s%s: tiempo de espera máximo para \"%s\" con %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: no es posible conectarse: error (%d)"
+
+#, fuzzy, c-format
+#~ msgid "%s%s: remote relay \"%s\" already exists, can't add it!"
+#~ msgstr "%s%s: el servidor \"%s\" ya existe, ¡no se puede crear!"
 
 #, fuzzy, c-format
 #~ msgid "%s%s: server \"%s\" already exists, can't add it!"

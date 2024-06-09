@@ -460,7 +460,7 @@ relay_command_remote (const void *pointer, void *data,
                       char **argv, char **argv_eol)
 {
     struct t_relay_remote *ptr_remote, *ptr_remote2;
-    int i, detailed_list, one_remote_found;
+    int i, detailed_list, one_remote_found, update;
     const char *ptr_autoconnect, *ptr_proxy, *ptr_tls_verify, *ptr_password;
     const char *ptr_totp_secret;
     char *remote_name;
@@ -533,17 +533,41 @@ relay_command_remote (const void *pointer, void *data,
         return WEECHAT_RC_OK;
     }
 
-    if (weechat_strcmp (argv[1], "add") == 0)
+    if ((weechat_strcmp (argv[1], "add") == 0)
+        || (weechat_strcmp (argv[1], "addreplace") == 0))
     {
         WEECHAT_COMMAND_MIN_ARGS(4, argv[1]);
+        update = 0;
         ptr_remote = relay_remote_search (argv[2]);
         if (ptr_remote)
         {
-            weechat_printf (
-                NULL,
-                _("%s%s: remote relay \"%s\" already exists, can't add it!"),
-                weechat_prefix ("error"), RELAY_PLUGIN_NAME, ptr_remote->name);
-            return WEECHAT_RC_OK;
+            if (weechat_strcmp (argv[1], "addreplace") == 0)
+            {
+                if (!RELAY_STATUS_HAS_ENDED(ptr_remote->status))
+                {
+                    weechat_printf (
+                        NULL,
+                        _("%s%s: you can not delete remote relay \"%s\" because "
+                          "you are connected to. Try \"/remote disconnect %s\" "
+                          "before."),
+                        weechat_prefix ("error"),
+                        RELAY_PLUGIN_NAME,
+                        argv[2],
+                        argv[2]);
+                    return WEECHAT_RC_OK;
+                }
+                update = 1;
+                relay_remote_free (ptr_remote);
+            }
+            else
+            {
+                weechat_printf (
+                    NULL,
+                    _("%s%s: remote relay \"%s\" already exists"),
+                    weechat_prefix ("error"), RELAY_PLUGIN_NAME,
+                    ptr_remote->name);
+                return WEECHAT_RC_OK;
+            }
         }
         if (!relay_remote_name_valid (argv[2]))
         {
@@ -605,7 +629,12 @@ relay_command_remote (const void *pointer, void *data,
                                        ptr_totp_secret);
         if (ptr_remote)
         {
-            weechat_printf (NULL, _("Remote relay \"%s\" created"), argv[2]);
+            weechat_printf (
+                NULL,
+                (update) ?
+                _("Remote relay \"%s\" updated") :
+                _("Remote relay \"%s\" created"),
+                argv[2]);
         }
         else
         {
@@ -859,7 +888,7 @@ relay_command_init ()
         N_("control of remote relay servers"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("list|listfull [<name>]"
-           " || add <name> <url> [-<option>[=<value>]]"
+           " || add|addreplace <name> <url> [-<option>[=<value>]]"
            " || connect <name>"
            " || send <name> <json>"
            " || disconnect <name>"
@@ -870,6 +899,7 @@ relay_command_init ()
                "(without argument, this list is displayed)"),
             N_("raw[listfull]: list remote relay servers (verbose)"),
             N_("raw[add]: add a remote relay server"),
+            N_("raw[addreplace]: add or replace an existing remote relay server"),
             N_("name: name of remote relay server, for internal and display use; "
                "this name is used to connect to the remote relay and to set "
                "remote relay options: relay.remote.name.xxx"),
@@ -889,7 +919,7 @@ relay_command_init ()
             AI("  /remote del example")),
         "list %(relay_remotes)"
         " || listfull %(relay_remotes)"
-        " || add %(relay_remotes) https://localhost:9000 "
+        " || add|addreplace %(relay_remotes) https://localhost:9000 "
         "-autoconnect=on|-password=${xxx}|-proxy=xxx|-tls_verify=off|"
         "-totp_secret=${xxx}|%*"
         " || connect %(relay_remotes)"

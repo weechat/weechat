@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-09 16:21+0200\n"
+"POT-Creation-Date: 2024-06-09 16:35+0200\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -12396,7 +12396,13 @@ msgid "No relay remote"
 msgstr ""
 
 #, c-format
-msgid "%s%s: remote relay \"%s\" already exists, can't add it!"
+msgid ""
+"%s%s: you can not delete remote relay \"%s\" because you are connected to. "
+"Try \"/remote disconnect %s\" before."
+msgstr ""
+
+#, c-format
+msgid "%s%s: remote relay \"%s\" already exists"
 msgstr ""
 
 #, c-format
@@ -12409,6 +12415,10 @@ msgstr ""
 
 #, c-format
 msgid "%s%s: invalid remote relay option: \"%s\""
+msgstr ""
+
+#, c-format
+msgid "Remote relay \"%s\" updated"
 msgstr ""
 
 #, c-format
@@ -12433,12 +12443,6 @@ msgstr ""
 
 #, c-format
 msgid "%s: remote relay \"%s\" has been renamed to \"%s\""
-msgstr ""
-
-#, c-format
-msgid ""
-"%s%s: you can not delete remote relay \"%s\" because you are connected to. "
-"Try \"/remote disconnect %s\" before."
 msgstr ""
 
 #, c-format
@@ -12561,9 +12565,9 @@ msgstr ""
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid ""
-"list|listfull [<name>] || add <name> <url> [-<option>[=<value>]] || connect "
-"<name> || send <name> <json> || disconnect <name> || rename <name> "
-"<new_name> || del <name>"
+"list|listfull [<name>] || add|addreplace <name> <url> [-<option>[=<value>]] "
+"|| connect <name> || send <name> <json> || disconnect <name> || rename "
+"<name> <new_name> || del <name>"
 msgstr ""
 
 msgid ""
@@ -12575,6 +12579,9 @@ msgid "raw[listfull]: list remote relay servers (verbose)"
 msgstr ""
 
 msgid "raw[add]: add a remote relay server"
+msgstr ""
+
+msgid "raw[addreplace]: add or replace an existing remote relay server"
 msgstr ""
 
 msgid ""

@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-09 16:21+0200\n"
+"POT-Creation-Date: 2024-06-09 16:35+0200\n"
 "PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -13594,8 +13594,16 @@ msgid "No relay remote"
 msgstr ""
 
 #, fuzzy, c-format
-msgid "%s%s: remote relay \"%s\" already exists, can't add it!"
-msgstr "%s сервер \"%s\" уже существует, не могу создать его!\n"
+msgid ""
+"%s%s: you can not delete remote relay \"%s\" because you are connected to. "
+"Try \"/remote disconnect %s\" before."
+msgstr ""
+"%s вы не можете удалить сервер \"%s\" потому, что подключены к нему. "
+"Попробуйте отключиться (/disconnect) %s перед удалением.\n"
+
+#, fuzzy, c-format
+msgid "%s%s: remote relay \"%s\" already exists"
+msgstr "%s игнорирование уже существует\n"
 
 #, fuzzy, c-format
 msgid "%s%s: invalid remote relay name: \"%s\""
@@ -13608,6 +13616,10 @@ msgstr "Не могу записать лог-файл \"%s\"\n"
 #, fuzzy, c-format
 msgid "%s%s: invalid remote relay option: \"%s\""
 msgstr "%s не могу отвязать клавишу \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "Remote relay \"%s\" updated"
+msgstr "Сокращение \"%s\" => \"%s\" создано\n"
 
 #, fuzzy, c-format
 msgid "Remote relay \"%s\" created"
@@ -13632,14 +13644,6 @@ msgstr "%s сервер \"%s\" уже существует для команды
 #, fuzzy, c-format
 msgid "%s: remote relay \"%s\" has been renamed to \"%s\""
 msgstr "команда users отключена"
-
-#, fuzzy, c-format
-msgid ""
-"%s%s: you can not delete remote relay \"%s\" because you are connected to. "
-"Try \"/remote disconnect %s\" before."
-msgstr ""
-"%s вы не можете удалить сервер \"%s\" потому, что подключены к нему. "
-"Попробуйте отключиться (/disconnect) %s перед удалением.\n"
 
 #, fuzzy, c-format
 msgid "%s: remote relay \"%s\" has been deleted"
@@ -13768,9 +13772,9 @@ msgstr "отключиться от сервера(-ов)"
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 #, fuzzy
 msgid ""
-"list|listfull [<name>] || add <name> <url> [-<option>[=<value>]] || connect "
-"<name> || send <name> <json> || disconnect <name> || rename <name> "
-"<new_name> || del <name>"
+"list|listfull [<name>] || add|addreplace <name> <url> [-<option>[=<value>]] "
+"|| connect <name> || send <name> <json> || disconnect <name> || rename "
+"<name> <new_name> || del <name>"
 msgstr ""
 "[list [сервер]] | [listfull [сервер]] | [add сервер адрес [-port порт] [-"
 "temp] [-auto | -noauto] [-ipv6] [-ssl] [-pwd пароль] [-nicks ник1 ник2 ник3] "
@@ -13790,6 +13794,10 @@ msgstr ""
 #, fuzzy
 msgid "raw[add]: add a remote relay server"
 msgstr "Список сокращений:\n"
+
+#, fuzzy
+msgid "raw[addreplace]: add or replace an existing remote relay server"
+msgstr "%s недостаточно памяти для сообщения в строке информации\n"
 
 msgid ""
 "name: name of remote relay server, for internal and display use; this name "
@@ -16265,6 +16273,10 @@ msgstr "%s нет аргумента для параметра \"%s\"\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s DCC: не могу соединиться с отправителем\n"
+
+#, fuzzy, c-format
+#~ msgid "%s%s: remote relay \"%s\" already exists, can't add it!"
+#~ msgstr "%s сервер \"%s\" уже существует, не могу создать его!\n"
 
 #, fuzzy, c-format
 #~ msgid "%s%s: server \"%s\" already exists, can't add it!"

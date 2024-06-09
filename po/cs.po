@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-09 16:21+0200\n"
+"POT-Creation-Date: 2024-06-09 16:35+0200\n"
 "PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -14138,8 +14138,20 @@ msgid "No relay remote"
 msgstr ""
 
 #, fuzzy, c-format
-msgid "%s%s: remote relay \"%s\" already exists, can't add it!"
-msgstr "%s%s: server \"%s\" pro příkaz \"%s\" již existuje"
+#| msgid ""
+#| "%s%s: you can not delete server \"%s\" because you are connected to. Try "
+#| "\"/disconnect %s\" before."
+msgid ""
+"%s%s: you can not delete remote relay \"%s\" because you are connected to. "
+"Try \"/remote disconnect %s\" before."
+msgstr ""
+"%s%s: nemůžete odebrat server \"%s\", protože jste k němu připojent. Skuste "
+"nejprve \"/dissconnect %s\"."
+
+#, fuzzy, c-format
+#| msgid "%s%s: error: relay for \"%s\" already exists"
+msgid "%s%s: remote relay \"%s\" already exists"
+msgstr "%s%s: chyba: přesměrování pro\"%s\" již existuje"
 
 #, fuzzy, c-format
 msgid "%s%s: invalid remote relay name: \"%s\""
@@ -14153,6 +14165,11 @@ msgstr "%s%s: nekorektní znaková sada: \"%s\""
 #, fuzzy, c-format
 msgid "%s%s: invalid remote relay option: \"%s\""
 msgstr "%s%s: neplatný návratový kód \"%s\""
+
+#, fuzzy, c-format
+#| msgid "Bar \"%s\" created"
+msgid "Remote relay \"%s\" updated"
+msgstr "Pole \"%s\" vytvořeno"
 
 #, fuzzy, c-format
 #| msgid "Bar \"%s\" created"
@@ -14182,17 +14199,6 @@ msgstr "%s%s: server \"%s\" pro příkaz \"%s\" již existuje"
 #| msgid "Layout \"%s\" has been renamed to \"%s\""
 msgid "%s: remote relay \"%s\" has been renamed to \"%s\""
 msgstr "Rozložení \"%s\" přejmenováno na  %s"
-
-#, fuzzy, c-format
-#| msgid ""
-#| "%s%s: you can not delete server \"%s\" because you are connected to. Try "
-#| "\"/disconnect %s\" before."
-msgid ""
-"%s%s: you can not delete remote relay \"%s\" because you are connected to. "
-"Try \"/remote disconnect %s\" before."
-msgstr ""
-"%s%s: nemůžete odebrat server \"%s\", protože jste k němu připojent. Skuste "
-"nejprve \"/dissconnect %s\"."
 
 #, fuzzy, c-format
 msgid "%s: remote relay \"%s\" has been deleted"
@@ -14340,9 +14346,9 @@ msgstr "odpojit z jednoho nebo všech IRC serverů"
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 #, fuzzy
 msgid ""
-"list|listfull [<name>] || add <name> <url> [-<option>[=<value>]] || connect "
-"<name> || send <name> <json> || disconnect <name> || rename <name> "
-"<new_name> || del <name>"
+"list|listfull [<name>] || add|addreplace <name> <url> [-<option>[=<value>]] "
+"|| connect <name> || send <name> <json> || disconnect <name> || rename "
+"<name> <new_name> || del <name>"
 msgstr ""
 "list|listfull [<server>] || add <server> <hostname>[/<port>] [-temp] [-"
 "<option>[=<value>]] [-no<option>] || copy|rename <server> <new_name> || del|"
@@ -14362,6 +14368,11 @@ msgstr ""
 #| msgid "list of bar items"
 msgid "raw[add]: add a remote relay server"
 msgstr "seznam položek polí"
+
+#, fuzzy
+#| msgid "%s%s: error adding notification"
+msgid "raw[addreplace]: add or replace an existing remote relay server"
+msgstr "%s%s: chyba při přidávání notifikace"
 
 msgid ""
 "name: name of remote relay server, for internal and display use; this name "
@@ -16937,6 +16948,10 @@ msgstr "%s%s: vypršel časový limit \"%s\" pro %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: nemohu se připojit\" neočekávaná chyba (%d)"
+
+#, fuzzy, c-format
+#~ msgid "%s%s: remote relay \"%s\" already exists, can't add it!"
+#~ msgstr "%s%s: server \"%s\" pro příkaz \"%s\" již existuje"
 
 #, fuzzy, c-format
 #~ msgid "%s%s: server \"%s\" already exists, can't add it!"

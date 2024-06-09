@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-09 16:21+0200\n"
+"POT-Creation-Date: 2024-06-09 16:35+0200\n"
 "PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: Érico Nogueira <ericonr@disroot.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -13986,8 +13986,14 @@ msgstr "Atalhos de Cor:"
 msgid "No relay remote"
 msgstr ""
 
+#, c-format
+msgid ""
+"%s%s: you can not delete remote relay \"%s\" because you are connected to. "
+"Try \"/remote disconnect %s\" before."
+msgstr ""
+
 #, fuzzy, c-format
-msgid "%s%s: remote relay \"%s\" already exists, can't add it!"
+msgid "%s%s: remote relay \"%s\" already exists"
 msgstr "%sErro: filtro \"%s\" já existe"
 
 #, fuzzy, c-format
@@ -14002,6 +14008,11 @@ msgstr "%s%s: charset inválido: \"%s\""
 #, fuzzy, c-format
 msgid "%s%s: invalid remote relay option: \"%s\""
 msgstr "%sErro: não foi possível desassociar a tecla de atalho \"%s\""
+
+#, fuzzy, c-format
+#| msgid "Bar \"%s\" created"
+msgid "Remote relay \"%s\" updated"
+msgstr "Barra \"%s\" criada"
 
 #, fuzzy, c-format
 #| msgid "Bar \"%s\" created"
@@ -14029,12 +14040,6 @@ msgstr "%sErro: disposição \"%s\" já existe para comando \"%s\""
 #| msgid "Layout \"%s\" has been renamed to \"%s\""
 msgid "%s: remote relay \"%s\" has been renamed to \"%s\""
 msgstr "Disposição \"%s\" renomeado para \"%s\""
-
-#, c-format
-msgid ""
-"%s%s: you can not delete remote relay \"%s\" because you are connected to. "
-"Try \"/remote disconnect %s\" before."
-msgstr ""
 
 #, fuzzy, c-format
 msgid "%s: remote relay \"%s\" has been deleted"
@@ -14178,9 +14183,9 @@ msgstr "desconectar de um ou todos os servidores IRC"
 #| "list || add <name> <type> <address> <port> [<username> [<password>]] || "
 #| "del <name>|-all || set <name> <option> <value>"
 msgid ""
-"list|listfull [<name>] || add <name> <url> [-<option>[=<value>]] || connect "
-"<name> || send <name> <json> || disconnect <name> || rename <name> "
-"<new_name> || del <name>"
+"list|listfull [<name>] || add|addreplace <name> <url> [-<option>[=<value>]] "
+"|| connect <name> || send <name> <json> || disconnect <name> || rename "
+"<name> <new_name> || del <name>"
 msgstr ""
 "list || add <nome> <tipo> <endereço> <porta> [<nome de usuário> [<senha>]] "
 "|| del <nome>|-all || set <nome> <opção> <valor>"
@@ -14199,6 +14204,11 @@ msgstr ""
 #| msgid "list of bar items"
 msgid "raw[add]: add a remote relay server"
 msgstr "lista de itens da barra"
+
+#, fuzzy
+#| msgid "%s%s: failed to add word to personal dictionary"
+msgid "raw[addreplace]: add or replace an existing remote relay server"
+msgstr "%s%s: falha ao adicionar palavra no dicionário pessoal"
 
 msgid ""
 "name: name of remote relay server, for internal and display use; this name "

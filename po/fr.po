@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-09 16:21+0200\n"
-"PO-Revision-Date: 2024-06-09 16:22+0200\n"
+"POT-Creation-Date: 2024-06-09 16:35+0200\n"
+"PO-Revision-Date: 2024-06-09 16:36+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -15213,8 +15213,16 @@ msgid "No relay remote"
 msgstr "Pas de relai distant"
 
 #, c-format
-msgid "%s%s: remote relay \"%s\" already exists, can't add it!"
-msgstr "%s%s : le relai distant \"%s\" existe déjà, impossible de l'ajouter !"
+msgid ""
+"%s%s: you can not delete remote relay \"%s\" because you are connected to. "
+"Try \"/remote disconnect %s\" before."
+msgstr ""
+"%s%s : vous ne pouvez pas supprimer le relai distant \"%s\" car vous êtes "
+"connecté dessus. Essayez \"/remote disconnect %s\" avant."
+
+#, c-format
+msgid "%s%s: remote relay \"%s\" already exists"
+msgstr "%s%s : le relai distant \"%s\" existe déjà"
 
 #, c-format
 msgid "%s%s: invalid remote relay name: \"%s\""
@@ -15227,6 +15235,10 @@ msgstr "%s%s : URL de relai distant invalide : \"%s\""
 #, c-format
 msgid "%s%s: invalid remote relay option: \"%s\""
 msgstr "%s%s : option de relai distant invalide : \"%s\""
+
+#, c-format
+msgid "Remote relay \"%s\" updated"
+msgstr "Relai distant \"%s\" mis à jour"
 
 #, c-format
 msgid "Remote relay \"%s\" created"
@@ -15251,14 +15263,6 @@ msgstr "%s%s : le relai distant \"%s\" existe déjà pour la commande \"%s\""
 #, c-format
 msgid "%s: remote relay \"%s\" has been renamed to \"%s\""
 msgstr "%s : relai distant \"%s\" renommé en \"%s\""
-
-#, c-format
-msgid ""
-"%s%s: you can not delete remote relay \"%s\" because you are connected to. "
-"Try \"/remote disconnect %s\" before."
-msgstr ""
-"%s%s : vous ne pouvez pas supprimer le relai distant \"%s\" car vous êtes "
-"connecté dessus. Essayez \"/remote disconnect %s\" avant."
 
 #, c-format
 msgid "%s: remote relay \"%s\" has been deleted"
@@ -15404,13 +15408,13 @@ msgstr "contrôle des relais distants"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid ""
-"list|listfull [<name>] || add <name> <url> [-<option>[=<value>]] || connect "
-"<name> || send <name> <json> || disconnect <name> || rename <name> "
-"<new_name> || del <name>"
+"list|listfull [<name>] || add|addreplace <name> <url> [-<option>[=<value>]] "
+"|| connect <name> || send <name> <json> || disconnect <name> || rename "
+"<name> <new_name> || del <name>"
 msgstr ""
-"list|listfull [<nom>] || add <nom> <url> [-<option>[=<valeur>]] || connect "
-"<nom> || send <nom> <json> || disconnect <nom> || rename <nom> <nouveau_nom> "
-"|| del <nom>"
+"list|listfull [<nom>] || add|addreplace <nom> <url> [-<option>[=<valeur>]] "
+"|| connect <nom> || send <nom> <json> || disconnect <nom> || rename <nom> "
+"<nouveau_nom> || del <nom>"
 
 msgid ""
 "raw[list]: list remote relay servers (without argument, this list is "
@@ -15424,6 +15428,9 @@ msgstr "raw[listfull] : afficher les relais distants (verbeux)"
 
 msgid "raw[add]: add a remote relay server"
 msgstr "raw[add] : ajouter un relai distant"
+
+msgid "raw[addreplace]: add or replace an existing remote relay server"
+msgstr "raw[addreplace] : ajouter ou remplacer un relai distant"
 
 msgid ""
 "name: name of remote relay server, for internal and display use; this name "
@@ -18207,6 +18214,11 @@ msgstr "%s%s : délai d'attente dépassé pour \"%s\" avec %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s : impossible de se connecter : erreur inattendue (%d)"
+
+#, c-format
+#~ msgid "%s%s: remote relay \"%s\" already exists, can't add it!"
+#~ msgstr ""
+#~ "%s%s : le relai distant \"%s\" existe déjà, impossible de l'ajouter !"
 
 #, c-format
 #~ msgid "%s%s: server \"%s\" already exists, can't add it!"

@@ -14819,8 +14819,17 @@ msgid "No relay remote"
 msgstr "Brak zdalnego pośrednika"
 
 #, c-format
-msgid "%s%s: remote relay \"%s\" already exists, can't add it!"
-msgstr "%s%s: zdalny pośrednik „%s” już istnieje, nie mogę go dodać!"
+msgid ""
+"%s%s: you can not delete remote relay \"%s\" because you are connected to. "
+"Try \"/remote disconnect %s\" before."
+msgstr ""
+"%s%s: nie możesz usunąć zdalnego pośrednika „%s”, ponieważ jesteś z nim "
+"połączony. Spróbuj najpierw wpisać \"/remote disconnect %s\"."
+
+#, fuzzy, c-format
+#| msgid "%s%s: error: relay for \"%s\" already exists"
+msgid "%s%s: remote relay \"%s\" already exists"
+msgstr "%s%s: błąd: relay dla \"%s\" już istnieje"
 
 #, c-format
 msgid "%s%s: invalid remote relay name: \"%s\""
@@ -14833,6 +14842,11 @@ msgstr "%s%s: nieprawidłowy URL zdalnego pośrednika: „%s”"
 #, c-format
 msgid "%s%s: invalid remote relay option: \"%s\""
 msgstr "%s%s: nieprawidłowa opcja zdalnego pośrednika „%s”"
+
+#, fuzzy, c-format
+#| msgid "Remote relay \"%s\" created"
+msgid "Remote relay \"%s\" updated"
+msgstr "Utworzono pośrednika „%s”"
 
 #, c-format
 msgid "Remote relay \"%s\" created"
@@ -14857,14 +14871,6 @@ msgstr "%s%s: zdalny pośrednik „%s” już istnieje dla komendy „%s”"
 #, c-format
 msgid "%s: remote relay \"%s\" has been renamed to \"%s\""
 msgstr "%s: zmieniono nazwę pośrednika „%s” na „%s”"
-
-#, c-format
-msgid ""
-"%s%s: you can not delete remote relay \"%s\" because you are connected to. "
-"Try \"/remote disconnect %s\" before."
-msgstr ""
-"%s%s: nie możesz usunąć zdalnego pośrednika „%s”, ponieważ jesteś z nim "
-"połączony. Spróbuj najpierw wpisać \"/remote disconnect %s\"."
 
 #, c-format
 msgid "%s: remote relay \"%s\" has been deleted"
@@ -15013,10 +15019,15 @@ msgid "control of remote relay servers"
 msgstr "kontrola nad serwerami pośredników"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#, fuzzy
+#| msgid ""
+#| "list|listfull [<name>] || add <name> <url> [-<option>[=<value>]] || "
+#| "connect <name> || send <name> <json> || disconnect <name> || rename "
+#| "<name> <new_name> || del <name>"
 msgid ""
-"list|listfull [<name>] || add <name> <url> [-<option>[=<value>]] || connect "
-"<name> || send <name> <json> || disconnect <name> || rename <name> "
-"<new_name> || del <name>"
+"list|listfull [<name>] || add|addreplace <name> <url> [-<option>[=<value>]] "
+"|| connect <name> || send <name> <json> || disconnect <name> || rename "
+"<name> <new_name> || del <name>"
 msgstr ""
 "list|listfull [<nazwa>] || add <nazwa> <url> [-<opcja>[=<wartość>]] || "
 "connect <nazwa> || send <nazwa> <json> || disconnect <nazwa> || rename "
@@ -15034,6 +15045,11 @@ msgstr "raw[listfull]: wyświetl wszystkich pośredników (ze szczegółami)"
 
 msgid "raw[add]: add a remote relay server"
 msgstr "raw[add]: dodaj nowego pośrednika"
+
+#, fuzzy
+#| msgid "raw[addreplace]: add or replace an existing trigger"
+msgid "raw[addreplace]: add or replace an existing remote relay server"
+msgstr "raw[addreplace]: dodaj lub zastąp istniejący trigger"
 
 msgid ""
 "name: name of remote relay server, for internal and display use; this name "
@@ -17738,6 +17754,10 @@ msgstr "%s%s: przekroczono czas na \"%s\" z %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: nie można połączyć: niespodziewany błąd (%d)"
+
+#, c-format
+#~ msgid "%s%s: remote relay \"%s\" already exists, can't add it!"
+#~ msgstr "%s%s: zdalny pośrednik „%s” już istnieje, nie mogę go dodać!"
 
 #, c-format
 #~ msgid "%s%s: server \"%s\" already exists, can't add it!"

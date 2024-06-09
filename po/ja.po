@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-09 16:21+0200\n"
+"POT-Creation-Date: 2024-06-09 16:35+0200\n"
 "PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -14912,9 +14912,20 @@ msgid "No relay remote"
 msgstr ""
 
 #, fuzzy, c-format
-#| msgid "%s%s: server \"%s\" already exists, can't add it!"
-msgid "%s%s: remote relay \"%s\" already exists, can't add it!"
-msgstr "%s%s: サーバ \"%s\" は既に存在しており、追加できません"
+#| msgid ""
+#| "%s%s: you can not delete server \"%s\" because you are connected to. Try "
+#| "\"/disconnect %s\" before."
+msgid ""
+"%s%s: you can not delete remote relay \"%s\" because you are connected to. "
+"Try \"/remote disconnect %s\" before."
+msgstr ""
+"%s%s: サーバ \"%s\" に接続しているためこれを削除できません。まず \"/"
+"disconnect %s\" をしてください。"
+
+#, fuzzy, c-format
+#| msgid "%s%s: error: relay for \"%s\" already exists"
+msgid "%s%s: remote relay \"%s\" already exists"
+msgstr "%s%s: エラー: \"%s\" のリレーは既に存在しています"
 
 #, fuzzy, c-format
 #| msgid "%s%s: invalid trigger name: \"%s\""
@@ -14930,6 +14941,11 @@ msgstr "%s%s: 不正な文字セット: \"%s\""
 #| msgid "%s%s: invalid post action \"%s\""
 msgid "%s%s: invalid remote relay option: \"%s\""
 msgstr "%s%s: トリガ実行後処理の設定値が間違っています: \"%s\""
+
+#, fuzzy, c-format
+#| msgid "Bar \"%s\" created"
+msgid "Remote relay \"%s\" updated"
+msgstr "バー \"%s\" が作成されました"
 
 #, fuzzy, c-format
 #| msgid "Bar \"%s\" created"
@@ -14960,17 +14976,6 @@ msgstr "%1$s%2$s: \"%4$s\" コマンドのサーバ \"%3$s\" は既に存在し�
 #| msgid "Layout \"%s\" has been renamed to \"%s\""
 msgid "%s: remote relay \"%s\" has been renamed to \"%s\""
 msgstr "レイアウト \"%s\" を \"%s\" にリネームしました"
-
-#, fuzzy, c-format
-#| msgid ""
-#| "%s%s: you can not delete server \"%s\" because you are connected to. Try "
-#| "\"/disconnect %s\" before."
-msgid ""
-"%s%s: you can not delete remote relay \"%s\" because you are connected to. "
-"Try \"/remote disconnect %s\" before."
-msgstr ""
-"%s%s: サーバ \"%s\" に接続しているためこれを削除できません。まず \"/"
-"disconnect %s\" をしてください。"
 
 #, fuzzy, c-format
 #| msgid "%s: server %s%s%s has been deleted"
@@ -15123,9 +15128,9 @@ msgstr "特定のまたは全ての IRC サーバとの接続を切断"
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 #, fuzzy
 msgid ""
-"list|listfull [<name>] || add <name> <url> [-<option>[=<value>]] || connect "
-"<name> || send <name> <json> || disconnect <name> || rename <name> "
-"<new_name> || del <name>"
+"list|listfull [<name>] || add|addreplace <name> <url> [-<option>[=<value>]] "
+"|| connect <name> || send <name> <json> || disconnect <name> || rename "
+"<name> <new_name> || del <name>"
 msgstr ""
 "list|listfull [<name>] || add <name> <hostname>[/<port>] [-temp] [-"
 "<option>[=<value>]] [-no<option>] || copy|rename <name> <new_name> || "
@@ -15146,6 +15151,11 @@ msgstr ""
 #| msgid "list of bar items"
 msgid "raw[add]: add a remote relay server"
 msgstr "バー要素のリスト"
+
+#, fuzzy
+#| msgid "%s%s: error adding notification"
+msgid "raw[addreplace]: add or replace an existing remote relay server"
+msgstr "%s%s: 通知の追加中にエラー"
 
 msgid ""
 "name: name of remote relay server, for internal and display use; this name "
@@ -17822,6 +17832,11 @@ msgstr "%s%s: \"%s\" のタイムアウト %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: 接続できません: 未定義のエラー (%d)"
+
+#, fuzzy, c-format
+#~| msgid "%s%s: server \"%s\" already exists, can't add it!"
+#~ msgid "%s%s: remote relay \"%s\" already exists, can't add it!"
+#~ msgstr "%s%s: サーバ \"%s\" は既に存在しており、追加できません"
 
 #, c-format
 #~ msgid "%s%s: server \"%s\" already exists, can't add it!"

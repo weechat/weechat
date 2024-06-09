@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-09 16:21+0200\n"
+"POT-Creation-Date: 2024-06-09 16:35+0200\n"
 "PO-Revision-Date: 2024-04-07 14:50+0200\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -15084,9 +15084,20 @@ msgid "No relay remote"
 msgstr ""
 
 #, fuzzy, c-format
-#| msgid "%s%s: server \"%s\" already exists, can't add it!"
-msgid "%s%s: remote relay \"%s\" already exists, can't add it!"
-msgstr "%s%s: \"%s\" sunucusu halihazırda mevcut, eklenemiyor!"
+#| msgid ""
+#| "%s%s: you can not delete server \"%s\" because you are connected to. Try "
+#| "\"/disconnect %s\" before."
+msgid ""
+"%s%s: you can not delete remote relay \"%s\" because you are connected to. "
+"Try \"/remote disconnect %s\" before."
+msgstr ""
+"%s%s: \"%s\" sunucusunu silemezsiniz; çünkü ona bağlı değilsiniz. Önce \"/ "
+"disconnect %s\" deneyin."
+
+#, fuzzy, c-format
+#| msgid "%s%s: error: relay for \"%s\" already exists"
+msgid "%s%s: remote relay \"%s\" already exists"
+msgstr "%s%s: Hata: \"%s\" için iletim halihazırda mevcut"
 
 #, fuzzy, c-format
 #| msgid "%s%s: invalid trigger name: \"%s\""
@@ -15102,6 +15113,11 @@ msgstr "%s%s: Geçersiz karakter seti: \"%s\""
 #| msgid "%s%s: invalid post action \"%s\""
 msgid "%s%s: invalid remote relay option: \"%s\""
 msgstr "%s%s: Geçersiz gönderme eylemi \"%s\""
+
+#, fuzzy, c-format
+#| msgid "Bar \"%s\" created"
+msgid "Remote relay \"%s\" updated"
+msgstr "\"%s\" çubuğu oluşturuldu"
 
 #, fuzzy, c-format
 #| msgid "Bar \"%s\" created"
@@ -15132,17 +15148,6 @@ msgstr "%s%s: \"%s\" sunucusu \"%s\" komutu için halihazırda mevcut"
 #| msgid "Layout \"%s\" has been renamed to \"%s\""
 msgid "%s: remote relay \"%s\" has been renamed to \"%s\""
 msgstr "\"%s\" diziliminin adı \"%s\" olarak değiştirildi"
-
-#, fuzzy, c-format
-#| msgid ""
-#| "%s%s: you can not delete server \"%s\" because you are connected to. Try "
-#| "\"/disconnect %s\" before."
-msgid ""
-"%s%s: you can not delete remote relay \"%s\" because you are connected to. "
-"Try \"/remote disconnect %s\" before."
-msgstr ""
-"%s%s: \"%s\" sunucusunu silemezsiniz; çünkü ona bağlı değilsiniz. Önce \"/ "
-"disconnect %s\" deneyin."
 
 #, fuzzy, c-format
 #| msgid "%s: server %s%s%s has been deleted"
@@ -15305,9 +15310,9 @@ msgstr "bir veya diğer tüm IRC sunucuları bağlantısını kes"
 #| "reorder <name> [<name>...] || open <name>|-all [<name>...] || del|keep "
 #| "<name> || deloutq|jump || raw [<filter>]"
 msgid ""
-"list|listfull [<name>] || add <name> <url> [-<option>[=<value>]] || connect "
-"<name> || send <name> <json> || disconnect <name> || rename <name> "
-"<new_name> || del <name>"
+"list|listfull [<name>] || add|addreplace <name> <url> [-<option>[=<value>]] "
+"|| connect <name> || send <name> <json> || disconnect <name> || rename "
+"<name> <new_name> || del <name>"
 msgstr ""
 "list|listfull [<ad>] || add <ad> <makine>[/<kapı>] [-temp] [-"
 "<seçenek>[=<değer>]] [-no<seçenek>] || copy|rename <ad> <yeni_ad> || reorder "
@@ -15328,6 +15333,11 @@ msgstr ""
 #| msgid "manage custom bar items"
 msgid "raw[add]: add a remote relay server"
 msgstr "özel çubuk ögelerini yönet"
+
+#, fuzzy
+#| msgid "%s%s: error adding notification"
+msgid "raw[addreplace]: add or replace an existing remote relay server"
+msgstr "%s%s: Bildirim eklerken hata"
 
 msgid ""
 "name: name of remote relay server, for internal and display use; this name "
@@ -18076,6 +18086,11 @@ msgstr "%s%s: \"%s\" için %s ile zaman aşımı"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: Bağlanılamıyor: Beklenmedik hata (%d)"
+
+#, fuzzy, c-format
+#~| msgid "%s%s: server \"%s\" already exists, can't add it!"
+#~ msgid "%s%s: remote relay \"%s\" already exists, can't add it!"
+#~ msgstr "%s%s: \"%s\" sunucusu halihazırda mevcut, eklenemiyor!"
 
 #, c-format
 #~ msgid "%s%s: server \"%s\" already exists, can't add it!"

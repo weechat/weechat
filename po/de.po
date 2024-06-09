@@ -26,7 +26,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-09 16:21+0200\n"
+"POT-Creation-Date: 2024-06-09 16:35+0200\n"
 "PO-Revision-Date: 2024-05-31 20:32+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -15569,10 +15569,17 @@ msgid "No relay remote"
 msgstr "Kein Relay-Remote"
 
 #, c-format
-msgid "%s%s: remote relay \"%s\" already exists, can't add it!"
+msgid ""
+"%s%s: you can not delete remote relay \"%s\" because you are connected to. "
+"Try \"/remote disconnect %s\" before."
 msgstr ""
-"%s%s: Remote-Relay \"%s\" existiert bereits und kann daher nicht angelegt "
-"werden!"
+"%s%s: Das Remote-Relay „%s“ kann nicht gelöscht werden, da eine Verbindung "
+"besteht. Die Verbindung sollte mit „/remote disconnect %s“ beendet werden."
+
+#, fuzzy, c-format
+#| msgid "%s%s: error: relay for \"%s\" already exists"
+msgid "%s%s: remote relay \"%s\" already exists"
+msgstr "%s%s: Fehler: Relay für \"%s\" existiert bereits"
 
 #, c-format
 msgid "%s%s: invalid remote relay name: \"%s\""
@@ -15585,6 +15592,11 @@ msgstr "%s%s: ungültige Remote-Relay-URL: „%s“"
 #, c-format
 msgid "%s%s: invalid remote relay option: \"%s\""
 msgstr "%s%s: ungültige Remote-Relay-Option: \"%s\""
+
+#, fuzzy, c-format
+#| msgid "Remote relay \"%s\" created"
+msgid "Remote relay \"%s\" updated"
+msgstr "Remote-Relay \"%s\" erstellt"
 
 #, c-format
 msgid "Remote relay \"%s\" created"
@@ -15609,14 +15621,6 @@ msgstr "%s%s: Remote Relay \"%s\" existiert bereits für den Befehl „%s“"
 #, c-format
 msgid "%s: remote relay \"%s\" has been renamed to \"%s\""
 msgstr "%s: Remote Relay \"%s\" wurde umbenannt zu \"%s\""
-
-#, c-format
-msgid ""
-"%s%s: you can not delete remote relay \"%s\" because you are connected to. "
-"Try \"/remote disconnect %s\" before."
-msgstr ""
-"%s%s: Das Remote-Relay „%s“ kann nicht gelöscht werden, da eine Verbindung "
-"besteht. Die Verbindung sollte mit „/remote disconnect %s“ beendet werden."
 
 #, c-format
 msgid "%s: remote relay \"%s\" has been deleted"
@@ -15772,10 +15776,15 @@ msgid "control of remote relay servers"
 msgstr "Steuerung von Remote-Relay-Servern"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#, fuzzy
+#| msgid ""
+#| "list|listfull [<name>] || add <name> <url> [-<option>[=<value>]] || "
+#| "connect <name> || send <name> <json> || disconnect <name> || rename "
+#| "<name> <new_name> || del <name>"
 msgid ""
-"list|listfull [<name>] || add <name> <url> [-<option>[=<value>]] || connect "
-"<name> || send <name> <json> || disconnect <name> || rename <name> "
-"<new_name> || del <name>"
+"list|listfull [<name>] || add|addreplace <name> <url> [-<option>[=<value>]] "
+"|| connect <name> || send <name> <json> || disconnect <name> || rename "
+"<name> <new_name> || del <name>"
 msgstr ""
 "list|listfull [<name>] || add <name> <url> [-<option>[=<value>]] || connect "
 "<name> || send <name> <json> || disconnect <name> || rename <name> "
@@ -15793,6 +15802,13 @@ msgstr "raw[listfull]: listet alle relay-Server auf (ausführlich)"
 
 msgid "raw[add]: add a remote relay server"
 msgstr "raw[add]: erstellt einen neuen relay-Server"
+
+#, fuzzy
+#| msgid "raw[addreplace]: add or replace an existing trigger"
+msgid "raw[addreplace]: add or replace an existing remote relay server"
+msgstr ""
+"raw[addreplace]: erzeugt neuen Trigger oder ersetzt einen schon "
+"existierenden Trigger"
 
 msgid ""
 "name: name of remote relay server, for internal and display use; this name "
@@ -18646,6 +18662,12 @@ msgstr "%s%s: Zeitüberschreitung für \"%s\" mit %s"
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr ""
 "%s%s: Verbindung konnte nicht hergestellt werden: unerwarteter Fehler (%d)"
+
+#, c-format
+#~ msgid "%s%s: remote relay \"%s\" already exists, can't add it!"
+#~ msgstr ""
+#~ "%s%s: Remote-Relay \"%s\" existiert bereits und kann daher nicht angelegt "
+#~ "werden!"
 
 #, c-format
 #~ msgid "%s%s: server \"%s\" already exists, can't add it!"
