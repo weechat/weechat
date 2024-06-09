@@ -429,7 +429,7 @@ spell_command_cb (const void *pointer, void *data,
     /* set dictionary for current buffer */
     if (weechat_strcmp (argv[1], "setdict") == 0)
     {
-        WEECHAT_COMMAND_MIN_ARGS(3, "setdict");
+        WEECHAT_COMMAND_MIN_ARGS(3, argv[1]);
         dicts = weechat_string_replace (argv_eol[2], " ", "");
         spell_command_set_dict (buffer,
                                 (dicts) ? dicts : argv[2]);
@@ -447,7 +447,7 @@ spell_command_cb (const void *pointer, void *data,
     /* add word to personal dictionary */
     if (weechat_strcmp (argv[1], "addword") == 0)
     {
-        WEECHAT_COMMAND_MIN_ARGS(3, "addword");
+        WEECHAT_COMMAND_MIN_ARGS(3, argv[1]);
         if (argc > 3)
         {
             /* use a given dict */

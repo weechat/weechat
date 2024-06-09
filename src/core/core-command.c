@@ -423,7 +423,7 @@ COMMAND_CALLBACK(bar)
     /* rename a bar */
     if (string_strcmp (argv[1], "rename") == 0)
     {
-        COMMAND_MIN_ARGS(4, "rename");
+        COMMAND_MIN_ARGS(4, argv[1]);
         ptr_bar = gui_bar_search (argv[2]);
         if (!ptr_bar)
         {
@@ -451,7 +451,7 @@ COMMAND_CALLBACK(bar)
     /* delete a bar */
     if (string_strcmp (argv[1], "del") == 0)
     {
-        COMMAND_MIN_ARGS(3, "del");
+        COMMAND_MIN_ARGS(3, argv[1]);
         for (i = 2; i < argc; i++)
         {
             ptr_bar = gui_bars;
@@ -475,7 +475,7 @@ COMMAND_CALLBACK(bar)
     /* set a bar property */
     if (string_strcmp (argv[1], "set") == 0)
     {
-        COMMAND_MIN_ARGS(5, "set");
+        COMMAND_MIN_ARGS(5, argv[1]);
         ptr_bar = gui_bar_search (argv[2]);
         if (!ptr_bar)
         {
@@ -499,7 +499,7 @@ COMMAND_CALLBACK(bar)
     /* hide a bar */
     if (string_strcmp (argv[1], "hide") == 0)
     {
-        COMMAND_MIN_ARGS(3, "hide");
+        COMMAND_MIN_ARGS(3, argv[1]);
         ptr_bar = gui_bar_search (argv[2]);
         if (!ptr_bar)
         {
@@ -517,7 +517,7 @@ COMMAND_CALLBACK(bar)
     /* show a bar */
     if (string_strcmp (argv[1], "show") == 0)
     {
-        COMMAND_MIN_ARGS(3, "show");
+        COMMAND_MIN_ARGS(3, argv[1]);
         ptr_bar = gui_bar_search (argv[2]);
         if (!ptr_bar)
         {
@@ -535,7 +535,7 @@ COMMAND_CALLBACK(bar)
     /* toggle a bar visible/hidden */
     if (string_strcmp (argv[1], "toggle") == 0)
     {
-        COMMAND_MIN_ARGS(3, "toggle");
+        COMMAND_MIN_ARGS(3, argv[1]);
         ptr_bar = gui_bar_search (argv[2]);
         if (!ptr_bar)
         {
@@ -553,7 +553,7 @@ COMMAND_CALLBACK(bar)
     /* scroll in a bar */
     if (string_strcmp (argv[1], "scroll") == 0)
     {
-        COMMAND_MIN_ARGS(5, "scroll");
+        COMMAND_MIN_ARGS(5, argv[1]);
         ptr_bar = gui_bar_search (argv[2]);
         if (ptr_bar)
         {
@@ -703,7 +703,7 @@ COMMAND_CALLBACK(buffer)
     /* create a new buffer */
     if (string_strcmp (argv[1], "add") == 0)
     {
-        COMMAND_MIN_ARGS(3, "add");
+        COMMAND_MIN_ARGS(3, argv[1]);
         arg_name = 2;
         type_free = 0;
         switch_to_buffer = 0;
@@ -794,7 +794,7 @@ COMMAND_CALLBACK(buffer)
     /* move buffer to another number in the list */
     if (string_strcmp (argv[1], "move") == 0)
     {
-        COMMAND_MIN_ARGS(3, "move");
+        COMMAND_MIN_ARGS(3, argv[1]);
         if (strcmp (argv[2], "-") == 0)
         {
             gui_buffer_move_to_number (buffer, gui_buffers->number);
@@ -839,7 +839,7 @@ COMMAND_CALLBACK(buffer)
     /* swap buffers */
     if (string_strcmp (argv[1], "swap") == 0)
     {
-        COMMAND_MIN_ARGS(3, "swap");
+        COMMAND_MIN_ARGS(3, argv[1]);
 
         ptr_buffer = NULL;
         ptr_buffer2 = NULL;
@@ -881,7 +881,7 @@ COMMAND_CALLBACK(buffer)
     /* cycle between a list of buffers */
     if (string_strcmp (argv[1], "cycle") == 0)
     {
-        COMMAND_MIN_ARGS(3, "cycle");
+        COMMAND_MIN_ARGS(3, argv[1]);
 
         /* first buffer found different from current one */
         ptr_buffer1 = NULL;
@@ -929,7 +929,7 @@ COMMAND_CALLBACK(buffer)
     /* merge buffer with another buffer in the list */
     if (string_strcmp (argv[1], "merge") == 0)
     {
-        COMMAND_MIN_ARGS(3, "merge");
+        COMMAND_MIN_ARGS(3, argv[1]);
         error = NULL;
         ptr_buffer = gui_buffer_search_by_number_or_name (argv[2]);
         if (!ptr_buffer)
@@ -1303,7 +1303,7 @@ COMMAND_CALLBACK(buffer)
     /* set a local variable in buffer */
     if (string_strcmp (argv[1], "setvar") == 0)
     {
-        COMMAND_MIN_ARGS(3, "setvar");
+        COMMAND_MIN_ARGS(3, argv[1]);
         if (argc == 3)
         {
             gui_buffer_local_var_add (buffer, argv[2], "");
@@ -1322,7 +1322,7 @@ COMMAND_CALLBACK(buffer)
     /* delete a local variable from a buffer */
     if (string_strcmp (argv[1], "delvar") == 0)
     {
-        COMMAND_MIN_ARGS(3, "delvar");
+        COMMAND_MIN_ARGS(3, argv[1]);
         gui_buffer_local_var_remove (buffer, argv[2]);
         return WEECHAT_RC_OK;
     }
@@ -1330,7 +1330,7 @@ COMMAND_CALLBACK(buffer)
     /* set a property on buffer */
     if (string_strcmp (argv[1], "set") == 0)
     {
-        COMMAND_MIN_ARGS(3, "set");
+        COMMAND_MIN_ARGS(3, argv[1]);
         if (argc == 3)
         {
             /*
@@ -1354,7 +1354,7 @@ COMMAND_CALLBACK(buffer)
      */
     if (string_strcmp (argv[1], "setauto") == 0)
     {
-        COMMAND_MIN_ARGS(3, "setauto");
+        COMMAND_MIN_ARGS(3, argv[1]);
         if (argc == 3)
         {
             /*
@@ -1385,7 +1385,7 @@ COMMAND_CALLBACK(buffer)
     /* get a buffer property */
     if (string_strcmp (argv[1], "get") == 0)
     {
-        COMMAND_MIN_ARGS(3, "get");
+        COMMAND_MIN_ARGS(3, argv[1]);
         if (gui_buffer_property_in_list (gui_buffer_properties_get_integer,
                                          argv[2]))
         {
@@ -1423,7 +1423,7 @@ COMMAND_CALLBACK(buffer)
     /* jump to another buffer */
     if (string_strcmp (argv[1], "jump") == 0)
     {
-        COMMAND_MIN_ARGS(3, "jump");
+        COMMAND_MIN_ARGS(3, argv[1]);
         if (string_strcmp (argv[2], "smart") == 0)
              gui_buffer_jump_smart (gui_current_window);
         else if (string_strcmp (argv[2], "last_displayed") == 0)
@@ -1668,7 +1668,7 @@ COMMAND_CALLBACK(color)
     /* add a color alias */
     if (string_strcmp (argv[1], "alias") == 0)
     {
-        COMMAND_MIN_ARGS(4, "alias");
+        COMMAND_MIN_ARGS(4, argv[1]);
 
         /* check color number */
         error = NULL;
@@ -1728,7 +1728,7 @@ COMMAND_CALLBACK(color)
     /* delete a color alias */
     if (string_strcmp (argv[1], "unalias") == 0)
     {
-        COMMAND_MIN_ARGS(3, "unalias");
+        COMMAND_MIN_ARGS(3, argv[1]);
 
         /* check color number */
         error = NULL;
@@ -1789,7 +1789,7 @@ COMMAND_CALLBACK(color)
     /* convert terminal color to RGB color */
     if (string_strcmp (argv[1], "term2rgb") == 0)
     {
-        COMMAND_MIN_ARGS(3, "term2rgb");
+        COMMAND_MIN_ARGS(3, argv[1]);
         error = NULL;
         number = strtol (argv[2], &error, 10);
         if (!error || error[0] || (number < 0) || (number > 255))
@@ -1804,7 +1804,7 @@ COMMAND_CALLBACK(color)
     /* convert RGB color to terminal color */
     if (string_strcmp (argv[1], "rgb2term") == 0)
     {
-        COMMAND_MIN_ARGS(3, "rgb2term");
+        COMMAND_MIN_ARGS(3, argv[1]);
         if (sscanf ((argv[2][0] == '#') ? argv[2] + 1 : argv[2], "%x", &rgb) != 1)
             COMMAND_ERROR;
         if (rgb > 0xFFFFFF)
@@ -2067,7 +2067,7 @@ COMMAND_CALLBACK(debug)
 
     if (string_strcmp (argv[1], "callbacks") == 0)
     {
-        COMMAND_MIN_ARGS(3, "callbacks");
+        COMMAND_MIN_ARGS(3, argv[1]);
         threshold = util_parse_delay (argv[2], 1);
         if (threshold > 0)
         {
@@ -2195,7 +2195,7 @@ COMMAND_CALLBACK(debug)
 
     if (string_strcmp (argv[1], "set") == 0)
     {
-        COMMAND_MIN_ARGS(4, "set");
+        COMMAND_MIN_ARGS(4, argv[1]);
         if (strcmp (argv[3], "0") == 0)
         {
             /* disable debug for a plugin */
@@ -2241,7 +2241,7 @@ COMMAND_CALLBACK(debug)
 
     if (string_strcmp (argv[1], "time") == 0)
     {
-        COMMAND_MIN_ARGS(3, "time");
+        COMMAND_MIN_ARGS(3, argv[1]);
         gettimeofday (&time_start, NULL);
         (void) input_data (buffer,
                            argv_eol[2],
@@ -2255,7 +2255,7 @@ COMMAND_CALLBACK(debug)
 
     if (string_strcmp (argv[1], "unicode") == 0)
     {
-        COMMAND_MIN_ARGS(3, "unicode");
+        COMMAND_MIN_ARGS(3, argv[1]);
         result = eval_expression (argv_eol[2], NULL, NULL, NULL);
         if (result)
         {
@@ -2775,7 +2775,7 @@ COMMAND_CALLBACK(filter)
     /* recreate a filter */
     if (string_strcmp (argv[1], "recreate") == 0)
     {
-        COMMAND_MIN_ARGS(3, "recreate");
+        COMMAND_MIN_ARGS(3, argv[1]);
         ptr_filter = gui_filter_search_by_name (argv[2]);
         if (ptr_filter)
         {
@@ -2803,7 +2803,7 @@ COMMAND_CALLBACK(filter)
     /* rename a filter */
     if (string_strcmp (argv[1], "rename") == 0)
     {
-        COMMAND_MIN_ARGS(4, "rename");
+        COMMAND_MIN_ARGS(4, argv[1]);
         ptr_filter = gui_filter_search_by_name (argv[2]);
         if (ptr_filter)
         {
@@ -2835,7 +2835,7 @@ COMMAND_CALLBACK(filter)
     /* delete filter */
     if (string_strcmp (argv[1], "del") == 0)
     {
-        COMMAND_MIN_ARGS(3, "del");
+        COMMAND_MIN_ARGS(3, argv[1]);
         for (i = 2; i < argc; i++)
         {
             ptr_filter = gui_filters;
@@ -3853,7 +3853,7 @@ COMMAND_CALLBACK(item)
     /* recreate a custom bar item */
     if (string_strcmp (argv[1], "recreate") == 0)
     {
-        COMMAND_MIN_ARGS(3, "recreate");
+        COMMAND_MIN_ARGS(3, argv[1]);
         ptr_bar_item_custom = gui_bar_item_custom_search (argv[2]);
         if (ptr_bar_item_custom)
         {
@@ -3880,7 +3880,7 @@ COMMAND_CALLBACK(item)
     /* rename a custom bar item */
     if (string_strcmp (argv[1], "rename") == 0)
     {
-        COMMAND_MIN_ARGS(4, "rename");
+        COMMAND_MIN_ARGS(4, argv[1]);
         ptr_bar_item_custom = gui_bar_item_custom_search (argv[2]);
         if (ptr_bar_item_custom)
         {
@@ -3912,7 +3912,7 @@ COMMAND_CALLBACK(item)
     /* delete a custom bar item */
     if (string_strcmp (argv[1], "del") == 0)
     {
-        COMMAND_MIN_ARGS(3, "del");
+        COMMAND_MIN_ARGS(3, argv[1]);
         for (i = 2; i < argc; i++)
         {
             ptr_bar_item_custom = gui_custom_bar_items;
@@ -4222,7 +4222,7 @@ COMMAND_CALLBACK(key)
     /* bind a key (or display binding) */
     if (string_strcmp (argv[1], "bind") == 0)
     {
-        COMMAND_MIN_ARGS(3, "bind");
+        COMMAND_MIN_ARGS(3, argv[1]);
 
         /* display a key binding */
         if (argc == 3)
@@ -4259,7 +4259,7 @@ COMMAND_CALLBACK(key)
     /* bind a key for given context (or display binding) */
     if (string_strcmp (argv[1], "bindctxt") == 0)
     {
-        COMMAND_MIN_ARGS(4, "bindctxt");
+        COMMAND_MIN_ARGS(4, argv[1]);
 
         /* search context */
         context = gui_key_search_context (argv[2]);
@@ -4306,7 +4306,7 @@ COMMAND_CALLBACK(key)
     /* unbind a key */
     if (string_strcmp (argv[1], "unbind") == 0)
     {
-        COMMAND_MIN_ARGS(3, "unbind");
+        COMMAND_MIN_ARGS(3, argv[1]);
 
         gui_key_verbose = 1;
         rc = gui_key_unbind (NULL, GUI_KEY_CONTEXT_DEFAULT, argv[2]);
@@ -4326,7 +4326,7 @@ COMMAND_CALLBACK(key)
     /* unbind a key for a given context */
     if (string_strcmp (argv[1], "unbindctxt") == 0)
     {
-        COMMAND_MIN_ARGS(4, "unbindctxt");
+        COMMAND_MIN_ARGS(4, argv[1]);
 
         /* search context */
         context = gui_key_search_context (argv[2]);
@@ -4357,14 +4357,14 @@ COMMAND_CALLBACK(key)
     /* reset a key to default binding */
     if (string_strcmp (argv[1], "reset") == 0)
     {
-        COMMAND_MIN_ARGS(3, "reset");
+        COMMAND_MIN_ARGS(3, argv[1]);
         return command_key_reset (GUI_KEY_CONTEXT_DEFAULT, argv[2]);
     }
 
     /* reset a key to default binding for a given context */
     if (string_strcmp (argv[1], "resetctxt") == 0)
     {
-        COMMAND_MIN_ARGS(4, "resetctxt");
+        COMMAND_MIN_ARGS(4, argv[1]);
 
         /* search context */
         context = gui_key_search_context (argv[2]);
@@ -4712,7 +4712,7 @@ COMMAND_CALLBACK(layout)
     /* rename layout */
     if (string_strcmp (argv[1], "rename") == 0)
     {
-        COMMAND_MIN_ARGS(4, "rename");
+        COMMAND_MIN_ARGS(4, argv[1]);
         ptr_layout = gui_layout_search (argv[2]);
         if (!ptr_layout)
         {
@@ -4880,7 +4880,7 @@ COMMAND_CALLBACK(mute)
     }
     else if (string_strcmp (argv[1], "-buffer") == 0)
     {
-        COMMAND_MIN_ARGS(3, "-buffer");
+        COMMAND_MIN_ARGS(3, argv[1]);
         ptr_buffer = gui_buffer_search_by_full_name (argv[2]);
         if (ptr_buffer)
         {
@@ -5145,7 +5145,7 @@ COMMAND_CALLBACK(plugin)
 
     if (string_strcmp (argv[1], "load") == 0)
     {
-        COMMAND_MIN_ARGS(3, "load");
+        COMMAND_MIN_ARGS(3, argv[1]);
         plugin_argv = NULL;
         plugin_argc = 0;
         if (argc > 3)
@@ -5525,7 +5525,7 @@ COMMAND_CALLBACK(proxy)
     /* add a new proxy */
     if (string_strcmp (argv[1], "add") == 0)
     {
-        COMMAND_MIN_ARGS(6, "add");
+        COMMAND_MIN_ARGS(6, argv[1]);
         type = proxy_search_type (argv[3]);
         if (type < 0)
         {
@@ -5569,7 +5569,7 @@ COMMAND_CALLBACK(proxy)
     /* delete a proxy */
     if (string_strcmp (argv[1], "del") == 0)
     {
-        COMMAND_MIN_ARGS(3, "del");
+        COMMAND_MIN_ARGS(3, argv[1]);
         for (i = 2; i < argc; i++)
         {
             ptr_proxy = weechat_proxies;
@@ -5592,7 +5592,7 @@ COMMAND_CALLBACK(proxy)
     /* set a proxy property */
     if (string_strcmp (argv[1], "set") == 0)
     {
-        COMMAND_MIN_ARGS(5, "set");
+        COMMAND_MIN_ARGS(5, argv[1]);
         ptr_proxy = proxy_search (argv[2]);
         if (!ptr_proxy)
         {
@@ -5991,7 +5991,7 @@ COMMAND_CALLBACK(reset)
 
     if (string_strcmp (argv[1], "-mask") == 0)
     {
-        COMMAND_MIN_ARGS(3, "-mask");
+        COMMAND_MIN_ARGS(3, argv[1]);
         mask = 1;
         ptr_name = argv_eol[2];
     }
@@ -6148,7 +6148,7 @@ COMMAND_CALLBACK(secure)
     /* decrypt data still encrypted */
     if (string_strcmp (argv[1], "decrypt") == 0)
     {
-        COMMAND_MIN_ARGS(3, "decrypt");
+        COMMAND_MIN_ARGS(3, argv[1]);
         if (count_encrypted == 0)
         {
             gui_chat_printf (NULL, _("There is no encrypted data"));
@@ -6208,7 +6208,7 @@ COMMAND_CALLBACK(secure)
     /* set the passphrase */
     if (string_strcmp (argv[1], "passphrase") == 0)
     {
-        COMMAND_MIN_ARGS(3, "passphrase");
+        COMMAND_MIN_ARGS(3, argv[1]);
         if ((strcmp (argv[2], "-delete") != 0)
             && (strlen (argv_eol[2]) > SECURE_PASSPHRASE_MAX_LENGTH))
         {
@@ -6263,7 +6263,7 @@ COMMAND_CALLBACK(secure)
     /* set a secured data */
     if (string_strcmp (argv[1], "set") == 0)
     {
-        COMMAND_MIN_ARGS(4, "set");
+        COMMAND_MIN_ARGS(4, argv[1]);
         hashtable_set (secure_hashtable_data, argv[2], argv_eol[3]);
         gui_chat_printf (NULL, _("Secured data \"%s\" set"), argv[2]);
         command_save_file (secure_config_file);
@@ -6274,7 +6274,7 @@ COMMAND_CALLBACK(secure)
     /* delete a secured data */
     if (string_strcmp (argv[1], "del") == 0)
     {
-        COMMAND_MIN_ARGS(3, "del");
+        COMMAND_MIN_ARGS(3, argv[1]);
         if (hashtable_has_key (secure_hashtable_data, argv[2]))
         {
             hashtable_remove (secure_hashtable_data, argv[2]);
@@ -6787,7 +6787,7 @@ COMMAND_CALLBACK(sys)
 
     if (string_strcmp (argv[1], "get") == 0)
     {
-        COMMAND_MIN_ARGS(3, "get");
+        COMMAND_MIN_ARGS(3, argv[1]);
         if (string_strcmp (argv[2], "rlimit") == 0)
             sys_display_rlimit ();
         else if (string_strcmp (argv[2], "rusage") == 0)
@@ -6827,7 +6827,7 @@ COMMAND_CALLBACK(sys)
 
     if (string_strcmp (argv[1], "waitpid") == 0)
     {
-        COMMAND_MIN_ARGS(3, "waitpid");
+        COMMAND_MIN_ARGS(3, argv[1]);
         error = NULL;
         value = strtol (argv[2], &error, 10);
         if (!error || error[0])
@@ -6981,7 +6981,7 @@ COMMAND_CALLBACK(unset)
 
     if (string_strcmp (argv[1], "-mask") == 0)
     {
-        COMMAND_MIN_ARGS(3, "-mask");
+        COMMAND_MIN_ARGS(3, argv[1]);
         mask = 1;
         ptr_name = argv_eol[2];
     }

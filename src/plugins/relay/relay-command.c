@@ -223,7 +223,7 @@ relay_command_relay (const void *pointer, void *data,
 
         if (weechat_strcmp (argv[1], "add") == 0)
         {
-            WEECHAT_COMMAND_MIN_ARGS(4, "add");
+            WEECHAT_COMMAND_MIN_ARGS(4, argv[1]);
             relay_server_get_protocol_args (argv[2], NULL, NULL, NULL,
                                             &unix_socket, NULL, NULL);
             rc = relay_config_create_option_port_path (
@@ -246,7 +246,7 @@ relay_command_relay (const void *pointer, void *data,
 
         if (weechat_strcmp (argv[1], "del") == 0)
         {
-            WEECHAT_COMMAND_MIN_ARGS(3, "del");
+            WEECHAT_COMMAND_MIN_ARGS(3, argv[1]);
             ptr_server = relay_server_search (argv_eol[2]);
             if (ptr_server)
             {
@@ -279,7 +279,7 @@ relay_command_relay (const void *pointer, void *data,
 
         if (weechat_strcmp (argv[1], "stop") == 0)
         {
-            WEECHAT_COMMAND_MIN_ARGS(3, "stop");
+            WEECHAT_COMMAND_MIN_ARGS(3, argv[1]);
             ptr_server = relay_server_search (argv_eol[2]);
             if (ptr_server)
             {
@@ -298,7 +298,7 @@ relay_command_relay (const void *pointer, void *data,
 
         if (weechat_strcmp (argv[1], "start") == 0)
         {
-            WEECHAT_COMMAND_MIN_ARGS(3, "start");
+            WEECHAT_COMMAND_MIN_ARGS(3, argv[1]);
             ptr_server = relay_server_search (argv_eol[2]);
             if (ptr_server)
             {
@@ -318,7 +318,7 @@ relay_command_relay (const void *pointer, void *data,
 
         if (weechat_strcmp (argv[1], "restart") == 0)
         {
-            WEECHAT_COMMAND_MIN_ARGS(3, "restart");
+            WEECHAT_COMMAND_MIN_ARGS(3, argv[1]);
             ptr_server = relay_server_search (argv_eol[2]);
             if (ptr_server)
             {
@@ -505,7 +505,7 @@ relay_command_remote (const void *pointer, void *data,
 
     if (weechat_strcmp (argv[1], "add") == 0)
     {
-        WEECHAT_COMMAND_MIN_ARGS(4, "add");
+        WEECHAT_COMMAND_MIN_ARGS(4, argv[1]);
         ptr_remote = relay_remote_search (argv[2]);
         if (ptr_remote)
         {
@@ -590,7 +590,7 @@ relay_command_remote (const void *pointer, void *data,
 
     if (weechat_strcmp (argv[1], "connect") == 0)
     {
-        WEECHAT_COMMAND_MIN_ARGS(3, "connect");
+        WEECHAT_COMMAND_MIN_ARGS(3, argv[1]);
         ptr_remote = relay_remote_search (argv[2]);
         if (!ptr_remote)
         {
@@ -609,7 +609,7 @@ relay_command_remote (const void *pointer, void *data,
 
     if (weechat_strcmp (argv[1], "send") == 0)
     {
-        WEECHAT_COMMAND_MIN_ARGS(4, "send");
+        WEECHAT_COMMAND_MIN_ARGS(4, argv[1]);
         ptr_remote = relay_remote_search (argv[2]);
         if (!ptr_remote)
         {
@@ -638,7 +638,7 @@ relay_command_remote (const void *pointer, void *data,
 
     if (weechat_strcmp (argv[1], "disconnect") == 0)
     {
-        WEECHAT_COMMAND_MIN_ARGS(3, "disconnect");
+        WEECHAT_COMMAND_MIN_ARGS(3, argv[1]);
         ptr_remote = relay_remote_search (argv[2]);
         if (!ptr_remote)
         {
@@ -657,7 +657,7 @@ relay_command_remote (const void *pointer, void *data,
 
     if (weechat_strcmp (argv[1], "rename") == 0)
     {
-        WEECHAT_COMMAND_MIN_ARGS(4, "rename");
+        WEECHAT_COMMAND_MIN_ARGS(4, argv[1]);
         /* look for remote by name */
         ptr_remote = relay_remote_search (argv[2]);
         if (!ptr_remote)
@@ -700,7 +700,7 @@ relay_command_remote (const void *pointer, void *data,
 
     if (weechat_strcmp (argv[1], "del") == 0)
     {
-        WEECHAT_COMMAND_MIN_ARGS(3, "del");
+        WEECHAT_COMMAND_MIN_ARGS(3, argv[1]);
         /* look for remote by name */
         ptr_remote = relay_remote_search (argv[2]);
         if (!ptr_remote)

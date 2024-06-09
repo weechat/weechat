@@ -1230,7 +1230,7 @@ IRC_COMMAND_CALLBACK(autojoin)
         if (argc < 3)
         {
             free (old_autojoin);
-            WEECHAT_COMMAND_MIN_ARGS(3, "addraw");
+            WEECHAT_COMMAND_MIN_ARGS(3, argv[1]);
         }
         irc_join_add_channels_to_autojoin (ptr_server, argv_eol[2]);
         goto end;
@@ -2198,7 +2198,7 @@ IRC_COMMAND_CALLBACK(dcc)
     /* DCC SEND file */
     if (weechat_strcmp (argv[1], "send") == 0)
     {
-        WEECHAT_COMMAND_MIN_ARGS(4, "send");
+        WEECHAT_COMMAND_MIN_ARGS(4, argv[1]);
         infolist = weechat_infolist_new ();
         if (infolist)
         {
@@ -2225,7 +2225,7 @@ IRC_COMMAND_CALLBACK(dcc)
     /* DCC CHAT */
     if (weechat_strcmp (argv[1], "chat") == 0)
     {
-        WEECHAT_COMMAND_MIN_ARGS(3, "chat");
+        WEECHAT_COMMAND_MIN_ARGS(3, argv[1]);
         infolist = weechat_infolist_new ();
         if (infolist)
         {
@@ -2667,7 +2667,7 @@ IRC_COMMAND_CALLBACK(ignore)
     /* add ignore */
     if (weechat_strcmp (argv[1], "add") == 0)
     {
-        WEECHAT_COMMAND_MIN_ARGS(3, "add");
+        WEECHAT_COMMAND_MIN_ARGS(3, argv[1]);
 
         mask = argv[2];
         server = (argc > 3) ? argv[3] : NULL;
@@ -2752,7 +2752,7 @@ IRC_COMMAND_CALLBACK(ignore)
     /* delete ignore */
     if (weechat_strcmp (argv[1], "del") == 0)
     {
-        WEECHAT_COMMAND_MIN_ARGS(3, "del");
+        WEECHAT_COMMAND_MIN_ARGS(3, argv[1]);
 
         if (weechat_strcmp (argv[2], "-all") == 0)
         {
@@ -4177,7 +4177,7 @@ IRC_COMMAND_CALLBACK(notify)
     /* add notify */
     if (weechat_strcmp (argv[1], "add") == 0)
     {
-        WEECHAT_COMMAND_MIN_ARGS(3, "add");
+        WEECHAT_COMMAND_MIN_ARGS(3, argv[1]);
 
         check_away = 0;
 
@@ -4260,7 +4260,7 @@ IRC_COMMAND_CALLBACK(notify)
     /* delete notify */
     if (weechat_strcmp (argv[1], "del") == 0)
     {
-        WEECHAT_COMMAND_MIN_ARGS(3, "del");
+        WEECHAT_COMMAND_MIN_ARGS(3, argv[1]);
 
         if (argc > 3)
         {
@@ -5783,7 +5783,7 @@ IRC_COMMAND_CALLBACK(server)
 
     if (weechat_strcmp (argv[1], "add") == 0)
     {
-        WEECHAT_COMMAND_MIN_ARGS(4, "add");
+        WEECHAT_COMMAND_MIN_ARGS(4, argv[1]);
 
         ptr_server2 = irc_server_search (argv[2]);
         if (ptr_server2)
@@ -5833,7 +5833,7 @@ IRC_COMMAND_CALLBACK(server)
 
     if (weechat_strcmp (argv[1], "copy") == 0)
     {
-        WEECHAT_COMMAND_MIN_ARGS(4, "copy");
+        WEECHAT_COMMAND_MIN_ARGS(4, argv[1]);
 
         /* look for server by name */
         server_found = irc_server_search (argv[2]);
@@ -5881,7 +5881,7 @@ IRC_COMMAND_CALLBACK(server)
 
     if (weechat_strcmp (argv[1], "rename") == 0)
     {
-        WEECHAT_COMMAND_MIN_ARGS(4, "rename");
+        WEECHAT_COMMAND_MIN_ARGS(4, argv[1]);
 
         /* look for server by name */
         server_found = irc_server_search (argv[2]);
@@ -5928,7 +5928,7 @@ IRC_COMMAND_CALLBACK(server)
 
     if (weechat_strcmp (argv[1], "reorder") == 0)
     {
-        WEECHAT_COMMAND_MIN_ARGS(3, "reorder");
+        WEECHAT_COMMAND_MIN_ARGS(3, argv[1]);
 
         count = irc_server_reorder (((const char **)argv) + 2, argc - 2);
         weechat_printf (NULL,
@@ -5940,7 +5940,7 @@ IRC_COMMAND_CALLBACK(server)
 
     if (weechat_strcmp (argv[1], "open") == 0)
     {
-        WEECHAT_COMMAND_MIN_ARGS(3, "open");
+        WEECHAT_COMMAND_MIN_ARGS(3, argv[1]);
 
         if (weechat_strcmp (argv[2], "-all") == 0)
         {
@@ -5989,7 +5989,7 @@ IRC_COMMAND_CALLBACK(server)
 
     if (weechat_strcmp (argv[1], "keep") == 0)
     {
-        WEECHAT_COMMAND_MIN_ARGS(3, "keep");
+        WEECHAT_COMMAND_MIN_ARGS(3, argv[1]);
 
         /* look for server by name */
         server_found = irc_server_search (argv[2]);
@@ -6030,7 +6030,7 @@ IRC_COMMAND_CALLBACK(server)
 
     if (weechat_strcmp (argv[1], "del") == 0)
     {
-        WEECHAT_COMMAND_MIN_ARGS(3, "del");
+        WEECHAT_COMMAND_MIN_ARGS(3, argv[1]);
 
         /* look for server by name */
         server_found = irc_server_search (argv[2]);
@@ -6105,7 +6105,7 @@ IRC_COMMAND_CALLBACK(server)
 
     if (weechat_strcmp (argv[1], "fakerecv") == 0)
     {
-        WEECHAT_COMMAND_MIN_ARGS(3, "fakerecv");
+        WEECHAT_COMMAND_MIN_ARGS(3, argv[1]);
         IRC_COMMAND_CHECK_SERVER("server fakerecv", 0, 1);
         msg_no_quotes = weechat_string_remove_quotes (argv_eol[2], "\"");
         length = strlen (msg_no_quotes);

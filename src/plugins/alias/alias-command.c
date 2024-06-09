@@ -249,7 +249,7 @@ alias_command_cb (const void *pointer, void *data,
 
     if (weechat_strcmp (argv[1], "del") == 0)
     {
-        WEECHAT_COMMAND_MIN_ARGS(3, "del");
+        WEECHAT_COMMAND_MIN_ARGS(3, argv[1]);
         for (i = 2; i < argc; i++)
         {
             ptr_alias_name = (weechat_string_is_command_char (argv[i])) ?
@@ -283,7 +283,7 @@ alias_command_cb (const void *pointer, void *data,
 
     if (weechat_strcmp (argv[1], "rename") == 0)
     {
-        WEECHAT_COMMAND_MIN_ARGS(4, "rename");
+        WEECHAT_COMMAND_MIN_ARGS(4, argv[1]);
 
         ptr_alias_name = (weechat_string_is_command_char (argv[2])) ?
             (char *)weechat_utf8_next_char (argv[2]) : argv[2];
