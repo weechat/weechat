@@ -685,7 +685,7 @@ fset_command_init ()
                "of option (move the cursor at the end of value)"),
             N_("raw[-mark]: toggle mark"),
             N_("raw[-format]: switch to the next available format"),
-            N_("raw[-export]: export the options and values displayed in a file "
+            N_("raw[-export]: export the options and values displayed to a file "
                "(each line has format: \"/set name value\" or \"/unset name\")"),
             N_("raw[-import]: import the options from a file "
                "(all lines containing commands are executed)"),
