@@ -8799,7 +8799,7 @@ command_init ()
         "list"
         " || add|addreplace %(custom_bar_item_add_arguments)|%*"
         " || rename %(custom_bar_items_names) %(custom_bar_items_names)"
-        " || refresh %(custom_bar_items_names)|%*"
+        " || refresh %(bars_items)|%*"
         " || recreate %(custom_bar_items_names)"
         " || del %(custom_bar_items_names)|%*",
         &command_item, NULL, NULL);

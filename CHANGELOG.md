@@ -22,6 +22,7 @@
 - tcl: fix return value of function hdata_longlong ([#2119](https://github.com/weechat/weechat/issues/2119))
 - relay: fix websocket permessage-deflate extension when the client doesn't send the max window bits parameters ([#1549](https://github.com/weechat/weechat/issues/1549))
 - relay: fix allocation and reinit of field "client_context_takeover" in websocket deflate structure ([#1549](https://github.com/weechat/weechat/issues/1549))
+- core: fix completion of command `/item refresh`
 - core: fix detection of libgcrypt ≥ 1.11 ([debian #1071960](https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1071960))
 - core, relay: fix include directory of libcjson and libzstd
 - tests: fix relay tests on s390x ([#2118](https://github.com/weechat/weechat/issues/2118))
