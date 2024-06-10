@@ -760,18 +760,15 @@ gui_color_code_size (const char *string)
                     break;
             }
             return ptr_string - string;
-            break;
         case GUI_COLOR_SET_ATTR_CHAR:
         case GUI_COLOR_REMOVE_ATTR_CHAR:
             ptr_string++;
             if (ptr_string[0])
                 ptr_string++;
             return ptr_string - string;
-            break;
         case GUI_COLOR_RESET_CHAR:
             ptr_string++;
             return ptr_string - string;
-            break;
     }
 
     return 0;

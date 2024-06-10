@@ -359,7 +359,6 @@ gui_chat_string_next_char (struct t_gui_window *window, struct t_gui_line *line,
                 break;
             default:
                 return (char *)string;
-                break;
         }
     }
 

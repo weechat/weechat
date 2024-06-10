@@ -2406,7 +2406,6 @@ config_file_option_value_to_string (struct t_config_option *option,
                       (use_colors) ? GUI_COLOR(GUI_COLOR_CHAT_VALUE) : "",
                       (enabled) ? "on" : "off");
             return value;
-            break;
         case CONFIG_OPTION_TYPE_INTEGER:
             length = 31 + ((use_colors) ? 64 : 0) + 1;
             value = malloc (length);
@@ -2417,7 +2416,6 @@ config_file_option_value_to_string (struct t_config_option *option,
                       (use_colors) ? GUI_COLOR(GUI_COLOR_CHAT_VALUE) : "",
                       (default_value) ? CONFIG_INTEGER_DEFAULT(option) : CONFIG_INTEGER(option));
             return value;
-            break;
         case CONFIG_OPTION_TYPE_STRING:
             ptr_value = (default_value) ? CONFIG_STRING_DEFAULT(option) : CONFIG_STRING(option);
             length = strlen (ptr_value) + ((use_colors) ? 64 : 0) + 1;
@@ -2433,7 +2431,6 @@ config_file_option_value_to_string (struct t_config_option *option,
                       (use_colors && use_delimiters) ? GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS) : "",
                       (use_delimiters) ? "\"" : "");
             return value;
-            break;
         case CONFIG_OPTION_TYPE_COLOR:
             ptr_value = gui_color_get_name (
                 (default_value) ? CONFIG_COLOR_DEFAULT(option) : CONFIG_COLOR(option));
@@ -2448,7 +2445,6 @@ config_file_option_value_to_string (struct t_config_option *option,
                       (use_colors) ? GUI_COLOR(GUI_COLOR_CHAT_VALUE) : "",
                       ptr_value);
             return value;
-            break;
         case CONFIG_OPTION_TYPE_ENUM:
             ptr_value = (default_value) ?
                 option->string_values[CONFIG_ENUM_DEFAULT(option)] :
@@ -2462,7 +2458,6 @@ config_file_option_value_to_string (struct t_config_option *option,
                       (use_colors) ? GUI_COLOR(GUI_COLOR_CHAT_VALUE) : "",
                       ptr_value);
             return value;
-            break;
         case CONFIG_NUM_OPTION_TYPES:
             /* make C compiler happy */
             break;

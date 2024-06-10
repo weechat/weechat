@@ -1668,7 +1668,6 @@ gui_window_search_text (struct t_gui_window *window)
                 window->buffer,
                 (window->buffer->text_search_history == GUI_BUFFER_SEARCH_HISTORY_LOCAL) ?
                 window->buffer->history : gui_history);
-            break;
         case GUI_BUFFER_NUM_SEARCH:
             break;
     }

@@ -1240,7 +1240,6 @@ hdata_set (struct t_hdata *hdata, void *pointer, const char *name,
         case WEECHAT_HDATA_CHAR:
             *((char *)(pointer + var->offset)) = (value) ? value[0] : '\0';
             return 1;
-            break;
         case WEECHAT_HDATA_INTEGER:
             error = NULL;
             number = strtol (value, &error, 10);
@@ -1273,13 +1272,11 @@ hdata_set (struct t_hdata *hdata, void *pointer, const char *name,
             free (*ptr_string);
             *ptr_string = (value) ? strdup (value) : NULL;
             return 1;
-            break;
         case WEECHAT_HDATA_SHARED_STRING:
             ptr_string = (char **)(pointer + var->offset);
             string_shared_free (*ptr_string);
             *ptr_string = (value) ? (char *)string_shared_get (value) : NULL;
             return 1;
-            break;
         case WEECHAT_HDATA_POINTER:
             if (value)
             {

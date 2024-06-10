@@ -214,7 +214,6 @@ exec_decode_color (struct t_exec_cmd *exec_cmd, const char *string)
     {
         case EXEC_COLOR_ANSI:
             return strdup (string);
-            break;
         case EXEC_COLOR_AUTO:
             irc_color = (exec_cmd->output_to_buffer || exec_cmd->pipe_command);
             break;
