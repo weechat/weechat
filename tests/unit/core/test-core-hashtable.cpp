@@ -25,6 +25,7 @@ extern "C"
 {
 #include <stdio.h>
 #include <string.h>
+#include <time.h>
 #include "src/core/core-hashtable.h"
 #include "src/core/core-infolist.h"
 #include "src/core/core-list.h"
@@ -175,7 +176,8 @@ TEST(CoreHashtable, SetGetRemove)
     const char *str_value = HASHTABLE_TEST_VALUE;
     const char *ptr_value;
     unsigned long long hash;
-    int i;
+    int i, value_int, value_int2, *ptr_int;
+    time_t value_time;
 
     /* free hashtable with NULL pointer */
     hashtable_free (NULL);
@@ -472,6 +474,67 @@ TEST(CoreHashtable, SetGetRemove)
     POINTERS_EQUAL(NULL, hashtable->htable[7]);
 
     /* free hashtable */
+    hashtable_free (hashtable);
+
+    /* test hashtable: integer -> integer */
+    hashtable = hashtable_new (8,
+                               WEECHAT_HASHTABLE_INTEGER,
+                               WEECHAT_HASHTABLE_INTEGER,
+                               NULL,
+                               NULL);
+    value_int = -1;
+    value_int2 = -500;
+    hashtable_set (hashtable, &value_int, &value_int2);
+    value_int = 123;
+    value_int2 = 500;
+    hashtable_set (hashtable, &value_int, &value_int2);
+    value_int = -2;
+    POINTERS_EQUAL(NULL, hashtable_get (hashtable, &value_int));
+    value_int = -1;
+    ptr_int = (int *)hashtable_get (hashtable, &value_int);
+    CHECK(ptr_int);
+    LONGS_EQUAL(-500, *ptr_int);
+    value_int = 123;
+    ptr_int = (int *)hashtable_get (hashtable, &value_int);
+    CHECK(ptr_int);
+    LONGS_EQUAL(500, *ptr_int);
+    hashtable_free (hashtable);
+
+    /* test hashtable: pointer -> integer */
+    hashtable = hashtable_new (8,
+                               WEECHAT_HASHTABLE_POINTER,
+                               WEECHAT_HASHTABLE_INTEGER,
+                               NULL,
+                               NULL);
+    value_int = -500;
+    hashtable_set (hashtable, (void *)0x0, &value_int);
+    value_int = 500;
+    hashtable_set (hashtable, (void *)0x1, &value_int);
+    POINTERS_EQUAL(NULL, hashtable_get (hashtable, (void *)0x2));
+    ptr_int = (int *)hashtable_get (hashtable, (void *)0x0);
+    CHECK(ptr_int);
+    LONGS_EQUAL(-500, *ptr_int);
+    ptr_int = (int *)hashtable_get (hashtable, (void *)0x1);
+    CHECK(ptr_int);
+    LONGS_EQUAL(500, *ptr_int);
+    hashtable_free (hashtable);
+
+    /* test hashtable: time -> string */
+    hashtable = hashtable_new (8,
+                               WEECHAT_HASHTABLE_TIME,
+                               WEECHAT_HASHTABLE_STRING,
+                               NULL,
+                               NULL);
+    value_time = 0;
+    hashtable_set (hashtable, &value_time, "test_0");
+    value_time = 1718036808;
+    hashtable_set (hashtable, &value_time, "test_1718036808");
+    value_time = 1;
+    POINTERS_EQUAL(NULL, (const char *)hashtable_get (hashtable, &value_time));
+    value_time = 0;
+    STRCMP_EQUAL("test_0", (const char *)hashtable_get (hashtable, &value_time));
+    value_time = 1718036808;
+    STRCMP_EQUAL("test_1718036808", (const char *)hashtable_get (hashtable, &value_time));
     hashtable_free (hashtable);
 }
 
