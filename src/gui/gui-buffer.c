@@ -76,7 +76,8 @@ int gui_buffers_visited_count = 0;              /* number of visited buffers*/
 int gui_buffers_visited_frozen = 0;             /* 1 to forbid list updates */
 struct t_gui_buffer *gui_buffer_last_displayed = NULL; /* last b. displayed */
 
-long long gui_buffer_last_id_assigned = -1;      /* last id assigned         */
+struct t_hashtable *gui_buffer_by_id = NULL;    /* buffers by id            */
+long long gui_buffer_last_id_assigned = -1;     /* last id assigned         */
 
 char *gui_buffer_reserved_names[] =
 { GUI_BUFFER_MAIN, SECURE_BUFFER_NAME, GUI_COLOR_BUFFER_NAME,
@@ -832,6 +833,16 @@ gui_buffer_new_props_with_id (long long id,
     new_buffer = malloc (sizeof (*new_buffer));
     if (!new_buffer)
         return NULL;
+
+    if (!gui_buffer_by_id)
+    {
+        gui_buffer_by_id = hashtable_new (
+            64,
+            WEECHAT_HASHTABLE_LONGLONG,
+            WEECHAT_HASHTABLE_POINTER,
+            NULL, NULL);
+    }
+    hashtable_set (gui_buffer_by_id, &id, new_buffer);
 
     /* init buffer */
     new_buffer->id = id;
@@ -2979,17 +2990,8 @@ gui_buffer_search_main ()
 struct t_gui_buffer *
 gui_buffer_search_by_id (long long id)
 {
-    struct t_gui_buffer *ptr_buffer;
-
-    for (ptr_buffer = gui_buffers; ptr_buffer;
-         ptr_buffer = ptr_buffer->next_buffer)
-    {
-        if (ptr_buffer->id == id)
-            return ptr_buffer;
-    }
-
-    /* buffer not found */
-    return NULL;
+    return (gui_buffer_by_id) ?
+        hashtable_get (gui_buffer_by_id, &id) : NULL;
 }
 
 /*
@@ -3849,6 +3851,12 @@ gui_buffer_close (struct t_gui_buffer *buffer)
         gui_buffers = buffer->next_buffer;
     if (last_gui_buffer == buffer)
         last_gui_buffer = buffer->prev_buffer;
+    hashtable_remove (gui_buffer_by_id, &buffer->id);
+    if (gui_buffer_by_id->items_count == 0)
+    {
+        free (gui_buffer_by_id);
+        gui_buffer_by_id = NULL;
+    }
 
     for (ptr_window = gui_windows; ptr_window;
          ptr_window = ptr_window->next_window)

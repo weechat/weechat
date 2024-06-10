@@ -1403,6 +1403,7 @@ TEST(GuiBuffer, SearchMain)
 TEST(GuiBuffer, SearchById)
 {
     struct t_gui_buffer *buffer;
+    long long id;
 
     buffer = gui_buffer_new (NULL, TEST_BUFFER_NAME,
                              NULL, NULL, NULL,
@@ -1415,7 +1416,9 @@ TEST(GuiBuffer, SearchById)
     POINTERS_EQUAL(gui_buffers, gui_buffer_search_by_id (gui_buffers->id));
     POINTERS_EQUAL(buffer, gui_buffer_search_by_id (buffer->id));
 
+    id = buffer->id;
     gui_buffer_close (buffer);
+    POINTERS_EQUAL(NULL, gui_buffer_search_by_id (id));
 }
 
 /*
