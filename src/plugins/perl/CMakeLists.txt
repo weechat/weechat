@@ -32,7 +32,7 @@ if(PERL_FOUND)
   add_definitions(${PERL_CFLAGS})
   include_directories(${PERL_INCLUDE_PATH})
   # ugly hack to force linking against Dynaloader.a
-  string(REGEX MATCH "/[^ $]*/DynaLoader.a" PERL_DYNALOADER ${PERL_LFLAGS})
+  string(REGEX MATCH "/[^ $]*/DynaLoader.a" PERL_DYNALOADER "${PERL_LFLAGS}")
   if(PERL_DYNALOADER)
     string(REPLACE "${PERL_DYNALOADER}" "" PERL_LFLAGS "${PERL_LFLAGS}")
     set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} ${PERL_LFLAGS}")
