@@ -9,6 +9,7 @@
 - irc: add option `addreplace` in commands `/ignore`, `/notify` and `/server` ([#2095](https://github.com/weechat/weechat/issues/2095))
 - relay: add option `addreplace` in commands `/relay` and `/remote` ([#2095](https://github.com/weechat/weechat/issues/2095))
 - relay: enable websocket extension "permessage-deflate" with "api" relay only ([#1549](https://github.com/weechat/weechat/issues/1549))
+- api: allow NULL value for key in hashtable
 
 ### Added
 

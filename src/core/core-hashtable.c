@@ -81,9 +81,12 @@ hashtable_hash_key_djb2 (const char *string)
     const char *ptr_string;
 
     hash = 5381;
-    for (ptr_string = string; ptr_string[0]; ptr_string++)
+    if (string)
     {
-        hash ^= (hash << 5) + (hash >> 2) + (int)(ptr_string[0]);
+        for (ptr_string = string; ptr_string[0]; ptr_string++)
+        {
+            hash ^= (hash << 5) + (hash >> 2) + (int)(ptr_string[0]);
+        }
     }
 
     return hash;
@@ -98,31 +101,28 @@ hashtable_hash_key_djb2 (const char *string)
 unsigned long long
 hashtable_hash_key_default_cb (struct t_hashtable *hashtable, const void *key)
 {
-    unsigned long long hash;
-
-    hash = 0;
-
     switch (hashtable->type_keys)
     {
         case HASHTABLE_INTEGER:
-            hash = (unsigned long long)(*((int *)key));
+            if (key)
+                return (unsigned long long)(*((int *)key));
             break;
         case HASHTABLE_STRING:
-            hash = hashtable_hash_key_djb2 ((const char *)key);
+            if (key)
+                return hashtable_hash_key_djb2 ((const char *)key);
             break;
         case HASHTABLE_POINTER:
-            hash = (unsigned long long)((unsigned long)((void *)key));
-            break;
+            return (unsigned long long)key;
         case HASHTABLE_BUFFER:
             break;
         case HASHTABLE_TIME:
-            hash = (unsigned long long)(*((time_t *)key));
+            if (key)
+                return (unsigned long long)(*((time_t *)key));
             break;
         case HASHTABLE_NUM_TYPES:
             break;
     }
-
-    return hash;
+    return 0ULL;
 }
 
 /*
@@ -142,6 +142,13 @@ hashtable_keycmp_default_cb (struct t_hashtable *hashtable,
 
     /* make C compiler happy */
     (void) hashtable;
+
+    if (!key1 && !key2)
+        return 0;
+    if (!key1 && key2)
+        return -1;
+    if (key1 && !key2)
+        return 1;
 
     rc = 0;
 
@@ -379,7 +386,7 @@ hashtable_set_with_size (struct t_hashtable *hashtable,
     unsigned long long hash;
     struct t_hashtable_item *ptr_item, *pos_item, *new_item;
 
-    if (!hashtable || !key
+    if (!hashtable
         || ((hashtable->type_keys == HASHTABLE_BUFFER) && (key_size <= 0))
         || ((hashtable->type_values == HASHTABLE_BUFFER) && (value_size <= 0)))
     {
@@ -484,7 +491,7 @@ hashtable_get_item (struct t_hashtable *hashtable, const void *key,
     unsigned long long key_hash;
     struct t_hashtable_item *ptr_item;
 
-    if (!hashtable || !key)
+    if (!hashtable)
         return NULL;
 
     key_hash = hashtable->callback_hash_key (hashtable, key) % hashtable->size;
