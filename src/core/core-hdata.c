@@ -1163,6 +1163,12 @@ hdata_compare (struct t_hdata *hdata, void *pointer1, void *pointer2,
                             rc = (time_value1 < time_value2) ?
                                 -1 : ((time_value1 > time_value2) ? 1 : 0);
                             break;
+                        case HASHTABLE_LONGLONG:
+                            longlong_value1 = *((long long *)ptr_value1);
+                            longlong_value2 = *((long long *)ptr_value2);
+                            rc = (longlong_value1 < longlong_value2) ?
+                                -1 : ((longlong_value1 > longlong_value2) ? 1 : 0);
+                            break;
                         case HASHTABLE_NUM_TYPES:
                             break;
                     }

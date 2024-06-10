@@ -5948,7 +5948,7 @@ weechat_arraylist_free (arraylist);
 
 ==== hashtable_new
 
-_WeeChat バージョン 0.3.3 以上で利用可。_
+_WeeChat バージョン 0.3.3 以上で利用可、バージョン 4.4.0 で更新。_
 
 新しいハッシュテーブルを作成。
 
@@ -5977,12 +5977,14 @@ struct t_hashtable *weechat_hashtable_new (int size,
 ** _WEECHAT_HASHTABLE_POINTER_
 ** _WEECHAT_HASHTABLE_BUFFER_
 ** _WEECHAT_HASHTABLE_TIME_
+** _WEECHAT_HASHTABLE_LONGLONG_ _(WeeChat ≥ 4.4.0)_
 * _type_values_: ハッシュテーブルの値の種類:
 ** _WEECHAT_HASHTABLE_INTEGER_
 ** _WEECHAT_HASHTABLE_STRING_
 ** _WEECHAT_HASHTABLE_POINTER_
 ** _WEECHAT_HASHTABLE_BUFFER_
 ** _WEECHAT_HASHTABLE_TIME_
+** _WEECHAT_HASHTABLE_LONGLONG_ _(WeeChat ≥ 4.4.0)_
 * _callback_hash_key_: キーを「ハッシュ化」する (キーを整数値にする)
   際のコールバック関数、キーの種類が "buffer" 以外の場合、コールバックは
   NULL でも可 (デフォルトのハッシュ関数を使います)、引数と戻り値:

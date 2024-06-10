@@ -39,9 +39,12 @@
 
 
 char *hashtable_type_string[HASHTABLE_NUM_TYPES] =
-{ WEECHAT_HASHTABLE_INTEGER, WEECHAT_HASHTABLE_STRING,
-  WEECHAT_HASHTABLE_POINTER, WEECHAT_HASHTABLE_BUFFER,
-  WEECHAT_HASHTABLE_TIME };
+{ WEECHAT_HASHTABLE_INTEGER,
+  WEECHAT_HASHTABLE_STRING,
+  WEECHAT_HASHTABLE_POINTER,
+  WEECHAT_HASHTABLE_BUFFER,
+  WEECHAT_HASHTABLE_TIME,
+  WEECHAT_HASHTABLE_LONGLONG };
 
 
 /*
@@ -119,6 +122,10 @@ hashtable_hash_key_default_cb (struct t_hashtable *hashtable, const void *key)
             if (key)
                 return (unsigned long long)(*((time_t *)key));
             break;
+        case HASHTABLE_LONGLONG:
+            if (key)
+                return (unsigned long long)(*((long long *)key));
+            break;
         case HASHTABLE_NUM_TYPES:
             break;
     }
@@ -175,6 +182,12 @@ hashtable_keycmp_default_cb (struct t_hashtable *hashtable,
             if (*((time_t *)key1) < *((time_t *)key2))
                 rc = -1;
             else if (*((time_t *)key1) > *((time_t *)key2))
+                rc = 1;
+            break;
+        case HASHTABLE_LONGLONG:
+            if (*((long long *)key1) < *((long long *)key2))
+                rc = -1;
+            else if (*((long long *)key1) > *((long long *)key2))
                 rc = 1;
             break;
         case HASHTABLE_NUM_TYPES:
@@ -302,6 +315,17 @@ hashtable_alloc_type (enum t_hashtable_type type,
                 *pointer = NULL;
             *size = (*pointer) ? sizeof (time_t) : 0;
             break;
+        case HASHTABLE_LONGLONG:
+            if (value)
+            {
+                *pointer = malloc (sizeof (long long));
+                if (*pointer)
+                    *((long long *)(*pointer)) = *((long long *)value);
+            }
+            else
+                *pointer = NULL;
+            *size = (*pointer) ? sizeof (long long) : 0;
+            break;
         case HASHTABLE_NUM_TYPES:
             break;
     }
@@ -328,6 +352,7 @@ hashtable_free_key (struct t_hashtable *hashtable,
             case HASHTABLE_STRING:
             case HASHTABLE_BUFFER:
             case HASHTABLE_TIME:
+            case HASHTABLE_LONGLONG:
                 free (item->key);
                 break;
             case HASHTABLE_POINTER:
@@ -360,6 +385,7 @@ hashtable_free_value (struct t_hashtable *hashtable,
             case HASHTABLE_STRING:
             case HASHTABLE_BUFFER:
             case HASHTABLE_TIME:
+            case HASHTABLE_LONGLONG:
                 free (item->value);
                 break;
             case HASHTABLE_POINTER:
@@ -569,6 +595,10 @@ hashtable_to_string (enum t_hashtable_type type, const void *value)
         case HASHTABLE_TIME:
             snprintf (str_value, sizeof (str_value),
                       "%lld", (long long)(*((time_t *)value)));
+            return str_value;
+        case HASHTABLE_LONGLONG:
+            snprintf (str_value, sizeof (str_value),
+                      "%lld", *((long long *)value));
             return str_value;
         case HASHTABLE_NUM_TYPES:
             break;
@@ -1054,7 +1084,7 @@ hashtable_add_to_infolist (struct t_hashtable *hashtable,
 {
     int item_number;
     struct t_hashtable_item *ptr_item;
-    char option_name[128];
+    char option_name[128], value[128];
 
     if (!hashtable || !infolist_item || !prefix)
         return 0;
@@ -1097,6 +1127,12 @@ hashtable_add_to_infolist (struct t_hashtable *hashtable,
             case HASHTABLE_TIME:
                 if (!infolist_new_var_time (infolist_item, option_name,
                                             *((time_t *)ptr_item->value)))
+                    return 0;
+                break;
+            case HASHTABLE_LONGLONG:
+                snprintf (value, sizeof (value),
+                          "%lld", *((long long *)ptr_item->value));
+                if (!infolist_new_var_string (infolist_item, option_name, value))
                     return 0;
                 break;
             case HASHTABLE_NUM_TYPES:
@@ -1168,6 +1204,10 @@ hashtable_add_from_infolist (struct t_hashtable *hashtable,
                         break;
                     case HASHTABLE_TIME:
                         if (ptr_value->type != INFOLIST_TIME)
+                            return 0;
+                        break;
+                    case HASHTABLE_LONGLONG:
+                        if (ptr_value->type != INFOLIST_STRING)
                             return 0;
                         break;
                     case HASHTABLE_NUM_TYPES:
@@ -1341,6 +1381,9 @@ hashtable_print_log (struct t_hashtable *hashtable, const char *name)
                 case HASHTABLE_TIME:
                     log_printf ("      key (time) . . . . : %lld", (long long)(*((time_t *)ptr_item->key)));
                     break;
+                case HASHTABLE_LONGLONG:
+                    log_printf ("      key (long long). . : %lld", *((long long *)ptr_item->key));
+                    break;
                 case HASHTABLE_NUM_TYPES:
                     break;
             }
@@ -1361,6 +1404,9 @@ hashtable_print_log (struct t_hashtable *hashtable, const char *name)
                     break;
                 case HASHTABLE_TIME:
                     log_printf ("      value (time) . . . : %lld", (long long)(*((time_t *)ptr_item->value)));
+                    break;
+                case HASHTABLE_LONGLONG:
+                    log_printf ("      value (long long). : %lld", *((long long *)ptr_item->value));
                     break;
                 case HASHTABLE_NUM_TYPES:
                     break;

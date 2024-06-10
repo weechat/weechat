@@ -177,6 +177,7 @@ TEST(CoreHashtable, SetGetRemove)
     const char *ptr_value;
     unsigned long long hash;
     int i, value_int, value_int2, *ptr_int;
+    long long value_longlong;
     time_t value_time;
 
     /* free hashtable with NULL pointer */
@@ -535,6 +536,24 @@ TEST(CoreHashtable, SetGetRemove)
     STRCMP_EQUAL("test_0", (const char *)hashtable_get (hashtable, &value_time));
     value_time = 1718036808;
     STRCMP_EQUAL("test_1718036808", (const char *)hashtable_get (hashtable, &value_time));
+    hashtable_free (hashtable);
+
+    /* test hashtable: long long -> string */
+    hashtable = hashtable_new (8,
+                               WEECHAT_HASHTABLE_LONGLONG,
+                               WEECHAT_HASHTABLE_STRING,
+                               NULL,
+                               NULL);
+    value_longlong = -1;
+    hashtable_set (hashtable, &value_longlong, "test_-1");
+    value_longlong = 123;
+    hashtable_set (hashtable, &value_longlong, "test_123");
+    value_longlong = 0;
+    POINTERS_EQUAL(NULL, (const char *)hashtable_get (hashtable, &value_longlong));
+    value_longlong = -1;
+    STRCMP_EQUAL("test_-1", (const char *)hashtable_get (hashtable, &value_longlong));
+    value_longlong = 123;
+    STRCMP_EQUAL("test_123", (const char *)hashtable_get (hashtable, &value_longlong));
     hashtable_free (hashtable);
 }
 

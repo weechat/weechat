@@ -6068,7 +6068,8 @@ Funzioni per le tabelle hash.
 
 ==== hashtable_new
 
-_WeeChat ≥ 0.3.3._
+// TRANSLATION MISSING
+_WeeChat ≥ 0.3.3, updated in 4.4.0._
 
 Crea una nuova tabella hash.
 
@@ -6097,12 +6098,14 @@ Argomenti:
 ** _WEECHAT_HASHTABLE_POINTER_
 ** _WEECHAT_HASHTABLE_BUFFER_
 ** _WEECHAT_HASHTABLE_TIME_
+** _WEECHAT_HASHTABLE_LONGLONG_ _(WeeChat ≥ 4.4.0)_
 * _type_values_: tipo per i valori nella tabella hash:
 ** _WEECHAT_HASHTABLE_INTEGER_
 ** _WEECHAT_HASHTABLE_STRING_
 ** _WEECHAT_HASHTABLE_POINTER_
 ** _WEECHAT_HASHTABLE_BUFFER_
 ** _WEECHAT_HASHTABLE_TIME_
+** _WEECHAT_HASHTABLE_LONGLONG_ _(WeeChat ≥ 4.4.0)_
 // TRANSLATION MISSING
 * _callback_hash_key_: callback used to "hash" a key (key as integer value), can
   be NULL if key type is not "buffer" (a default hash function is used),

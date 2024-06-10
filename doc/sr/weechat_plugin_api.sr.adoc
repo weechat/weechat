@@ -5664,7 +5664,7 @@ weechat_arraylist_free (arraylist);
 
 ==== hashtable_new
 
-_WeeChat ≥ 0.3.3._
+_WeeChat ≥ 0.3.3, ажурирано у верзији 4.4.0._
 
 Креира нову хеш табелу.
 
@@ -5691,12 +5691,14 @@ struct t_hashtable *weechat_hashtable_new (int size,
 ** _WEECHAT_HASHTABLE_POINTER_
 ** _WEECHAT_HASHTABLE_BUFFER_
 ** _WEECHAT_HASHTABLE_TIME_
+** _WEECHAT_HASHTABLE_LONGLONG_ _(WeeChat ≥ 4.4.0)_
 * _type_values_: тип вредности у хеш табели:
 ** _WEECHAT_HASHTABLE_INTEGER_
 ** _WEECHAT_HASHTABLE_STRING_
 ** _WEECHAT_HASHTABLE_POINTER_
 ** _WEECHAT_HASHTABLE_BUFFER_
 ** _WEECHAT_HASHTABLE_TIME_
+** _WEECHAT_HASHTABLE_LONGLONG_ _(WeeChat ≥ 4.4.0)_
 * _callback_hash_key_: функција повратног позива која се користи за „хеширање” кључа (кључ у облику целог броја), може да буде NULL ако тип кључа није „buffer” (користи се подразумевана хеш функција), аргументи и повратна вредност су:
 ** _struct t_hashtable *hashtable_: показивач на хеш табелу
 ** _const void *key_: кључ

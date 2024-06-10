@@ -18,6 +18,7 @@
 - relay: add option relay.look.raw_messages_max_length ([#2122](https://github.com/weechat/weechat/issues/2122))
 - relay: add infos "relay_api_version" and "relay_api_version_number"
 - core: add completion "bars_items"
+- api: add hashtable type "longlong"
 
 ### Fixed
 

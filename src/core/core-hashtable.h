@@ -104,6 +104,7 @@ enum t_hashtable_type
     HASHTABLE_POINTER,
     HASHTABLE_BUFFER,
     HASHTABLE_TIME,
+    HASHTABLE_LONGLONG,
     /* number of hashtable types */
     HASHTABLE_NUM_TYPES,
 };

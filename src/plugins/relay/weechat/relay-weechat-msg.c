@@ -300,6 +300,8 @@ relay_weechat_msg_hashtable_map_cb (void *data,
             relay_weechat_msg_add_pointer (msg, (void *)pointers[i]);
         else if (strcmp (type, WEECHAT_HASHTABLE_TIME) == 0)
             relay_weechat_msg_add_time (msg, *((time_t *)pointers[i]));
+        else if (strcmp (type, WEECHAT_HASHTABLE_LONGLONG) == 0)
+            relay_weechat_msg_add_longlong (msg, *((long long *)pointers[i]));
     }
 }
 
@@ -328,6 +330,8 @@ relay_weechat_msg_add_hashtable (struct t_relay_weechat_msg *msg,
             relay_weechat_msg_add_type (msg, RELAY_WEECHAT_MSG_OBJ_POINTER);
         else if (strcmp (type, WEECHAT_HASHTABLE_TIME) == 0)
             relay_weechat_msg_add_type (msg, RELAY_WEECHAT_MSG_OBJ_TIME);
+        else if (strcmp (type, WEECHAT_HASHTABLE_LONGLONG) == 0)
+            relay_weechat_msg_add_type (msg, RELAY_WEECHAT_MSG_OBJ_LONG);
     }
 
     /* number of items */

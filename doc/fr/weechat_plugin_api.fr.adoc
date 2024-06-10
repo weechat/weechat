@@ -5898,7 +5898,7 @@ Fonctions pour les tables de hachage.
 
 ==== hashtable_new
 
-_WeeChat ≥ 0.3.3._
+_WeeChat ≥ 0.3.3, mis à jour dans la 4.4.0._
 
 Créer une nouvelle table de hachage.
 
@@ -5928,12 +5928,14 @@ Paramètres :
 ** _WEECHAT_HASHTABLE_POINTER_
 ** _WEECHAT_HASHTABLE_BUFFER_
 ** _WEECHAT_HASHTABLE_TIME_
+** _WEECHAT_HASHTABLE_LONGLONG_ _(WeeChat ≥ 4.4.0)_
 * _type_values_ : type pour les valeurs dans la table de hachage :
 ** _WEECHAT_HASHTABLE_INTEGER_
 ** _WEECHAT_HASHTABLE_STRING_
 ** _WEECHAT_HASHTABLE_POINTER_
 ** _WEECHAT_HASHTABLE_BUFFER_
 ** _WEECHAT_HASHTABLE_TIME_
+** _WEECHAT_HASHTABLE_LONGLONG_ _(WeeChat ≥ 4.4.0)_
 * _callback_hash_key_ : fonction appelée pour rendre le hachage d'une clé (la
   clé sous forme de nombre entier), peut être NULL si le type de clé n'est pas
   "buffer" (une fonction de hachage par défaut est utilisée), paramètres et

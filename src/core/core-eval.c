@@ -1281,6 +1281,11 @@ eval_hdata_get_value (struct t_hdata *hdata, void *pointer, const char *path,
                                       "%lld", (long long)(*((time_t *)ptr_value)));
                             value = strdup (str_value);
                             break;
+                        case HASHTABLE_LONGLONG:
+                            snprintf (str_value, sizeof (str_value),
+                                      "%lld", (long long)(*((long long *)ptr_value)));
+                            value = strdup (str_value);
+                            break;
                         case HASHTABLE_NUM_TYPES:
                             break;
                     }

@@ -5808,7 +5808,7 @@ Hashtable functions.
 
 ==== hashtable_new
 
-_WeeChat ≥ 0.3.3._
+_WeeChat ≥ 0.3.3, updated in 4.4.0._
 
 Create a new hashtable.
 
@@ -5837,12 +5837,14 @@ Arguments:
 ** _WEECHAT_HASHTABLE_POINTER_
 ** _WEECHAT_HASHTABLE_BUFFER_
 ** _WEECHAT_HASHTABLE_TIME_
+** _WEECHAT_HASHTABLE_LONGLONG_ _(WeeChat ≥ 4.4.0)_
 * _type_values_: type for values in hashtable:
 ** _WEECHAT_HASHTABLE_INTEGER_
 ** _WEECHAT_HASHTABLE_STRING_
 ** _WEECHAT_HASHTABLE_POINTER_
 ** _WEECHAT_HASHTABLE_BUFFER_
 ** _WEECHAT_HASHTABLE_TIME_
+** _WEECHAT_HASHTABLE_LONGLONG_ _(WeeChat ≥ 4.4.0)_
 * _callback_hash_key_: callback used to "hash" a key (key as integer value), can
   be NULL if key type is not "buffer" (a default hash function is used),
   arguments and return value:
