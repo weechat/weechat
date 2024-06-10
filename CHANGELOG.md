@@ -88,7 +88,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - **breaking:** core: rename variables with creation time in hdata "hotlist": "creation_time.tv_sec" to "time" and "creation_time.tv_usec" to "time_usec"
 - **breaking:** api: return `-1` or `1` if one input string is NULL and not the other in string comparison functions
 - **breaking:** api: use whole replacement string instead of first char in function string_remove_color
-- core: use nick offline color for nick in action message
+- core: use nick offline color for nick in action message ([#446](https://github.com/weechat/weechat/issues/446))
 - core: display a specific message when the value of option is unchanged after `/set` command
 - core: add variable `${highlight}` in option weechat.look.buffer_time_format ([#2079](https://github.com/weechat/weechat/issues/2079))
 - core: reintroduce help on the variables and operators in `/help eval` ([#2005](https://github.com/weechat/weechat/issues/2005))
