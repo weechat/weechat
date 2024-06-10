@@ -716,6 +716,7 @@ gui_window_new (struct t_gui_window *parent_window, struct t_gui_buffer *buffer,
 
     /* scroll */
     gui_window_scroll_init (new_window->scroll, buffer);
+    new_window->scroll_changed = 0;
 
     /* coordinates */
     new_window->coords_size = 0;
@@ -1964,6 +1965,7 @@ gui_window_hdata_window_cb (const void *pointer, void *data,
         HDATA_VAR(struct t_gui_window, layout_plugin_name, STRING, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_window, layout_buffer_name, STRING, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_window, scroll, POINTER, 0, NULL, "window_scroll");
+        HDATA_VAR(struct t_gui_window, scroll_changed, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_window, ptr_tree, POINTER, 0, NULL, "window_tree");
         HDATA_VAR(struct t_gui_window, prev_window, POINTER, 0, NULL, hdata_name);
         HDATA_VAR(struct t_gui_window, next_window, POINTER, 0, NULL, hdata_name);
@@ -2134,6 +2136,7 @@ gui_window_print_log ()
         log_printf ("  layout_plugin_name. : '%s'", ptr_window->layout_plugin_name);
         log_printf ("  layout_buffer_name. : '%s'", ptr_window->layout_buffer_name);
         log_printf ("  scroll. . . . . . . : %p", ptr_window->scroll);
+        log_printf ("  scroll_changed. . . : %d", ptr_window->scroll_changed);
         log_printf ("  coords_size . . . . : %d", ptr_window->coords_size);
         log_printf ("  coords. . . . . . . : %p", ptr_window->coords);
         log_printf ("  ptr_tree. . . . . . : %p", ptr_window->ptr_tree);

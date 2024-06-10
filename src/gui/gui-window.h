@@ -72,6 +72,7 @@ struct t_gui_window
     /* scroll */
     struct t_gui_window_scroll *scroll; /* scroll infos for each buffer     */
                                         /* scrolled in this window          */
+    int scroll_changed;                 /* scrolled changed?                */
 
     /* coordinates (for focus) */
     int coords_size;                   /* size of coords (number of lines)  */

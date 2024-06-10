@@ -1288,6 +1288,7 @@ gui_line_remove_from_list (struct t_gui_buffer *buffer,
                     ptr_scroll->lines_after = 0;
                     gui_window_ask_refresh (1);
                 }
+                ptr_win->scroll_changed = 1;
             }
 
             if (ptr_scroll->text_search_start_line == line)
@@ -1441,9 +1442,27 @@ gui_line_free (struct t_gui_buffer *buffer, struct t_gui_line *line)
 void
 gui_line_free_all (struct t_gui_buffer *buffer)
 {
+    struct t_gui_window *ptr_win;
+
+    for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
+    {
+        ptr_win->scroll_changed = 0;
+    }
+
     while (buffer->own_lines->first_line)
     {
         gui_line_free (buffer, buffer->own_lines->first_line);
+    }
+
+    for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
+    {
+        if (ptr_win->scroll_changed)
+        {
+            ptr_win->scroll_changed = 0;
+            (void) hook_signal_send ("window_scrolled",
+                                     WEECHAT_HOOK_SIGNAL_POINTER,
+                                     ptr_win);
+        }
     }
 }
 
