@@ -55,7 +55,7 @@ xfer_command_me (const void *pointer, void *data,
                         _("%s%s: can't find xfer for buffer \"%s\""),
                         weechat_prefix ("error"), XFER_PLUGIN_NAME,
                         weechat_buffer_get_string (buffer, "name"));
-        return WEECHAT_RC_OK;
+        return WEECHAT_RC_ERROR;
     }
 
     if (!XFER_HAS_ENDED(ptr_xfer->status))

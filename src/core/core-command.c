@@ -307,7 +307,7 @@ COMMAND_CALLBACK(bar)
                                  _("%sBar \"%s\" already exists"),
                                  gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                                  argv[2]);
-                return WEECHAT_RC_OK;
+                return WEECHAT_RC_ERROR;
             }
         }
         pos_condition = strchr (argv[3], ',');
@@ -326,7 +326,7 @@ COMMAND_CALLBACK(bar)
                              _("%sNot enough memory (%s)"),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                              "/bar");
-            return WEECHAT_RC_OK;
+            return WEECHAT_RC_ERROR;
         }
         type = gui_bar_search_type (str_type);
         if (type < 0)
@@ -336,7 +336,7 @@ COMMAND_CALLBACK(bar)
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                              str_type, argv[2]);
             free (str_type);
-            return WEECHAT_RC_OK;
+            return WEECHAT_RC_ERROR;
         }
         position = gui_bar_search_position (argv[4]);
         if (position < 0)
@@ -346,7 +346,7 @@ COMMAND_CALLBACK(bar)
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                              argv[4], argv[2]);
             free (str_type);
-            return WEECHAT_RC_OK;
+            return WEECHAT_RC_ERROR;
         }
         error = NULL;
         value = strtol (argv[5], &error, 10);
@@ -382,6 +382,8 @@ COMMAND_CALLBACK(bar)
                 gui_chat_printf (NULL, _("%sFailed to create bar \"%s\""),
                                  gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                                  argv[2]);
+                free (str_type);
+                return WEECHAT_RC_ERROR;
             }
         }
         else
@@ -391,7 +393,7 @@ COMMAND_CALLBACK(bar)
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                              argv[5], argv[2]);
             free (str_type);
-            return WEECHAT_RC_OK;
+            return WEECHAT_RC_ERROR;
         }
         free (str_type);
 
@@ -431,7 +433,7 @@ COMMAND_CALLBACK(bar)
                              _("%sBar \"%s\" not found"),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                              argv[2]);
-            return WEECHAT_RC_OK;
+            return WEECHAT_RC_ERROR;
         }
         ptr_bar2 = gui_bar_search (argv[3]);
         if (ptr_bar2)
@@ -441,7 +443,7 @@ COMMAND_CALLBACK(bar)
                                "\"%s\" command"),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                              argv[3], "bar rename");
-            return WEECHAT_RC_OK;
+            return WEECHAT_RC_ERROR;
         }
         gui_bar_set (ptr_bar, "name", argv[3]);
         gui_chat_printf (NULL, _("Bar \"%s\" renamed to \"%s\""), argv[2], argv[3]);
@@ -483,7 +485,7 @@ COMMAND_CALLBACK(bar)
                              _("%sBar \"%s\" not found"),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                              argv[2]);
-            return WEECHAT_RC_OK;
+            return WEECHAT_RC_ERROR;
         }
         if (!gui_bar_set (ptr_bar, argv[3], argv_eol[4]))
         {
@@ -491,7 +493,7 @@ COMMAND_CALLBACK(bar)
                              _("%sUnable to set option \"%s\" for bar \"%s\""),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                              argv[3], argv[2]);
-            return WEECHAT_RC_OK;
+            return WEECHAT_RC_ERROR;
         }
         return WEECHAT_RC_OK;
     }
@@ -507,7 +509,7 @@ COMMAND_CALLBACK(bar)
                              _("%sBar \"%s\" not found"),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                              argv[2]);
-            return WEECHAT_RC_OK;
+            return WEECHAT_RC_ERROR;
         }
         if (!CONFIG_BOOLEAN(ptr_bar->options[GUI_BAR_OPTION_HIDDEN]))
             gui_bar_set (ptr_bar, "hidden", "1");
@@ -525,7 +527,7 @@ COMMAND_CALLBACK(bar)
                              _("%sBar \"%s\" not found"),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                              argv[2]);
-            return WEECHAT_RC_OK;
+            return WEECHAT_RC_ERROR;
         }
         if (CONFIG_BOOLEAN(ptr_bar->options[GUI_BAR_OPTION_HIDDEN]))
             gui_bar_set (ptr_bar, "hidden", "0");
@@ -543,7 +545,7 @@ COMMAND_CALLBACK(bar)
                              _("%sBar \"%s\" not found"),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                              argv[2]);
-            return WEECHAT_RC_OK;
+            return WEECHAT_RC_ERROR;
         }
         gui_bar_set (ptr_bar, "hidden",
                      CONFIG_BOOLEAN(ptr_bar->options[GUI_BAR_OPTION_HIDDEN]) ? "0" : "1");
@@ -572,7 +574,7 @@ COMMAND_CALLBACK(bar)
                 gui_chat_printf (NULL,
                                  _("%sWindow not found for \"%s\" command"),
                                  gui_chat_prefix[GUI_CHAT_PREFIX_ERROR], "bar");
-                return WEECHAT_RC_OK;
+                return WEECHAT_RC_ERROR;
             }
             if (!gui_bar_scroll (ptr_bar, ptr_window, argv_eol[4]))
             {
@@ -580,7 +582,7 @@ COMMAND_CALLBACK(bar)
                                  _("%sUnable to scroll bar \"%s\""),
                                  gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                                  argv[2]);
-                return WEECHAT_RC_OK;
+                return WEECHAT_RC_ERROR;
             }
         }
         return WEECHAT_RC_OK;
@@ -722,7 +724,7 @@ COMMAND_CALLBACK(buffer)
                              _("%sBuffer name \"%s\" is reserved for WeeChat"),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                              argv[arg_name]);
-            return WEECHAT_RC_OK;
+            return WEECHAT_RC_ERROR;
         }
         ptr_buffer = gui_buffer_search (PLUGIN_CORE, argv[arg_name]);
         if (!ptr_buffer)
@@ -829,7 +831,7 @@ COMMAND_CALLBACK(buffer)
                                  _("%sInvalid buffer number: \"%s\""),
                                  gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                                  argv[2]);
-                return WEECHAT_RC_OK;
+                return WEECHAT_RC_ERROR;
             }
         }
 
@@ -853,7 +855,7 @@ COMMAND_CALLBACK(buffer)
                              _("%sBuffer \"%s\" not found"),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                              argv[2]);
-            return WEECHAT_RC_OK;
+            return WEECHAT_RC_ERROR;
         }
         if (argc > 3)
         {
@@ -865,7 +867,7 @@ COMMAND_CALLBACK(buffer)
                                  _("%sBuffer \"%s\" not found"),
                                  gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                                  argv[3]);
-                return WEECHAT_RC_OK;
+                return WEECHAT_RC_ERROR;
             }
         }
         else
@@ -938,7 +940,7 @@ COMMAND_CALLBACK(buffer)
                              _("%sBuffer \"%s\" not found"),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                              argv[2]);
-            return WEECHAT_RC_OK;
+            return WEECHAT_RC_ERROR;
         }
         gui_buffer_merge (buffer, ptr_buffer);
         return WEECHAT_RC_OK;
@@ -966,7 +968,7 @@ COMMAND_CALLBACK(buffer)
                                      _("%sInvalid buffer number: \"%s\""),
                                      gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                                      argv[2]);
-                    return WEECHAT_RC_OK;
+                    return WEECHAT_RC_ERROR;
                 }
                 if (!command_buffer_check_number ((int)number))
                     COMMAND_ERROR;
@@ -1081,7 +1083,7 @@ COMMAND_CALLBACK(buffer)
                              _("%sRenumbering is allowed only if option "
                                "weechat.look.buffer_auto_renumber is off"),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
-            return WEECHAT_RC_OK;
+            return WEECHAT_RC_ERROR;
         }
 
         for (i = 0; i < 3; i++)
@@ -1097,7 +1099,7 @@ COMMAND_CALLBACK(buffer)
                                      _("%sInvalid buffer number: \"%s\""),
                                      gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                                      argv[i + 2]);
-                    return WEECHAT_RC_OK;
+                    return WEECHAT_RC_ERROR;
                 }
                 if ((i == 2) && !command_buffer_check_number ((int)numbers[i]))
                     return WEECHAT_RC_OK;
@@ -1256,6 +1258,7 @@ COMMAND_CALLBACK(buffer)
                                  _("%sUnable to set notify level \"%s\""),
                                  gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                                  argv_eol[2]);
+                return WEECHAT_RC_ERROR;
             }
         }
         return WEECHAT_RC_OK;
@@ -1378,6 +1381,7 @@ COMMAND_CALLBACK(buffer)
                 _("%sUnable to create option for buffer property \"%s\""),
                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                 argv[2]);
+            return WEECHAT_RC_ERROR;
         }
         return WEECHAT_RC_OK;
     }
@@ -1502,7 +1506,7 @@ COMMAND_CALLBACK(buffer)
                                  _("%sInvalid buffer number: \"%s\""),
                                  gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                                  argv[1] + 1);
-                return WEECHAT_RC_OK;
+                return WEECHAT_RC_ERROR;
             }
         }
         return WEECHAT_RC_OK;
@@ -1563,7 +1567,7 @@ COMMAND_CALLBACK(buffer)
                                  _("%sInvalid buffer number: \"%s\""),
                                  gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                                  argv[1] + 1);
-                return WEECHAT_RC_OK;
+                return WEECHAT_RC_ERROR;
             }
         }
         return WEECHAT_RC_OK;
@@ -1599,7 +1603,7 @@ COMMAND_CALLBACK(buffer)
                              _("%sInvalid buffer number: \"%s\""),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                              argv[1] + 1);
-            return WEECHAT_RC_OK;
+            return WEECHAT_RC_ERROR;
         }
         return WEECHAT_RC_OK;
     }
@@ -1689,7 +1693,7 @@ COMMAND_CALLBACK(color)
                                "between %d and %d)"),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                              argv[2], 0, gui_color_get_term_colors ());
-            return WEECHAT_RC_OK;
+            return WEECHAT_RC_ERROR;
         }
 
         /* check other arguments */
@@ -1749,7 +1753,7 @@ COMMAND_CALLBACK(color)
                                "between %d and %d)"),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                              argv[2], 0, gui_color_get_term_colors ());
-            return WEECHAT_RC_OK;
+            return WEECHAT_RC_ERROR;
         }
 
         /* search color */
@@ -1760,7 +1764,7 @@ COMMAND_CALLBACK(color)
                              _("%sColor \"%s\" is not defined in palette"),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                              argv[2]);
-            return WEECHAT_RC_OK;
+            return WEECHAT_RC_ERROR;
         }
 
         /* delete color alias */
@@ -1876,7 +1880,7 @@ COMMAND_CALLBACK(command)
                              _("%sBuffer \"%s\" not found"),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                              argv[2]);
-            return WEECHAT_RC_OK;
+            return WEECHAT_RC_ERROR;
         }
         index_args = 3;
     }
@@ -1894,7 +1898,7 @@ COMMAND_CALLBACK(command)
             gui_chat_printf (NULL, _("%sPlugin \"%s\" not found"),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                              argv[index_args]);
-            return WEECHAT_RC_OK;
+            return WEECHAT_RC_ERROR;
         }
     }
     if (string_is_command_char (argv_eol[index_args + 1]))
@@ -2319,7 +2323,7 @@ command_eval_print_debug (const char *debug)
 
 COMMAND_CALLBACK(eval)
 {
-    int i, print_only, split_command, condition, debug, error;
+    int i, rc, print_only, split_command, condition, debug, error;
     char *result, *ptr_args, **commands, str_debug[32];
     const char *debug_output;
     struct t_hashtable *pointers, *options;
@@ -2329,6 +2333,7 @@ COMMAND_CALLBACK(eval)
     (void) data;
     (void) argv;
 
+    rc = WEECHAT_RC_OK;
     print_only = 0;
     split_command = 0;
     condition = 0;
@@ -2496,13 +2501,14 @@ COMMAND_CALLBACK(eval)
             gui_chat_printf (NULL,
                              _("%sError in expression to evaluate"),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+            rc = WEECHAT_RC_ERROR;
         }
 
         hashtable_free (pointers);
         hashtable_free (options);
     }
 
-    return WEECHAT_RC_OK;
+    return rc;
 }
 
 /*
@@ -2739,7 +2745,7 @@ COMMAND_CALLBACK(filter)
                                        _("%sYou must specify at least tags "
                                          "or regex for filter"),
                                        gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
-            return WEECHAT_RC_OK;
+            return WEECHAT_RC_ERROR;
         }
 
         update = 0;
@@ -2796,6 +2802,7 @@ COMMAND_CALLBACK(filter)
                                        _("%sFilter \"%s\" not found"),
                                        gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                                        argv[2]);
+            return WEECHAT_RC_ERROR;
         }
         return WEECHAT_RC_OK;
     }
@@ -2820,6 +2827,7 @@ COMMAND_CALLBACK(filter)
                                              "\"%s\" to \"%s\""),
                                            gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                                            argv[2], argv[3]);
+                return WEECHAT_RC_ERROR;
             }
         }
         else
@@ -2828,6 +2836,7 @@ COMMAND_CALLBACK(filter)
                                        _("%sFilter \"%s\" not found"),
                                        gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                                        argv[2]);
+            return WEECHAT_RC_ERROR;
         }
         return WEECHAT_RC_OK;
     }
@@ -3428,7 +3437,7 @@ COMMAND_CALLBACK(help)
                      gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                      argv[1]);
 
-    return WEECHAT_RC_OK;
+    return WEECHAT_RC_ERROR;
 }
 
 /*
@@ -3833,6 +3842,7 @@ COMMAND_CALLBACK(item)
                              _("%sUnable to add custom bar item \"%s\""),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                              sargv[0]);
+            return WEECHAT_RC_ERROR;
         }
 
         string_free_split (sargv);
@@ -3873,6 +3883,7 @@ COMMAND_CALLBACK(item)
                              _("%sCustom bar item \"%s\" not found"),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                              argv[2]);
+            return WEECHAT_RC_ERROR;
         }
         return WEECHAT_RC_OK;
     }
@@ -3897,6 +3908,7 @@ COMMAND_CALLBACK(item)
                                    "\"%s\" to \"%s\""),
                                  gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                                  argv[2], argv[3]);
+                return WEECHAT_RC_ERROR;
             }
         }
         else
@@ -3905,6 +3917,7 @@ COMMAND_CALLBACK(item)
                              _("%sCustom bar item \"%s\" not found"),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                              argv[2]);
+            return WEECHAT_RC_ERROR;
         }
         return WEECHAT_RC_OK;
     }
@@ -4124,7 +4137,7 @@ command_key_reset (int context, const char *key)
                                  _("%sUnable to unbind key \"%s\""),
                                  gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                                  key);
-                return WEECHAT_RC_OK;
+                return WEECHAT_RC_ERROR;
             }
         }
         else
@@ -4141,6 +4154,7 @@ command_key_reset (int context, const char *key)
         gui_chat_printf (NULL, _("%sKey \"%s\" not found"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                          key);
+        return WEECHAT_RC_ERROR;
     }
     return WEECHAT_RC_OK;
 }
@@ -4269,7 +4283,7 @@ COMMAND_CALLBACK(key)
                              _("%sContext \"%s\" not found"),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                              argv[2]);
-            return WEECHAT_RC_OK;
+            return WEECHAT_RC_ERROR;
         }
 
         /* display a key binding */
@@ -4317,7 +4331,7 @@ COMMAND_CALLBACK(key)
                              _("%sUnable to unbind key \"%s\""),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                              argv[2]);
-            return WEECHAT_RC_OK;
+            return WEECHAT_RC_ERROR;
         }
 
         return WEECHAT_RC_OK;
@@ -4336,7 +4350,7 @@ COMMAND_CALLBACK(key)
                              _("%sContext \"%s\" not found"),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                              argv[2]);
-            return WEECHAT_RC_OK;
+            return WEECHAT_RC_ERROR;
         }
 
         gui_key_verbose = 1;
@@ -4348,7 +4362,7 @@ COMMAND_CALLBACK(key)
                              _("%sUnable to unbind key \"%s\""),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                              argv[3]);
-            return WEECHAT_RC_OK;
+            return WEECHAT_RC_ERROR;
         }
 
         return WEECHAT_RC_OK;
@@ -4374,7 +4388,7 @@ COMMAND_CALLBACK(key)
                              _("%sContext \"%s\" not found"),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                              argv[2]);
-            return WEECHAT_RC_OK;
+            return WEECHAT_RC_ERROR;
         }
 
         return command_key_reset (context, argv[3]);
@@ -4410,7 +4424,7 @@ COMMAND_CALLBACK(key)
                              _("%sArgument \"-yes\" is required for "
                                "keys reset (security reason)"),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
-            return WEECHAT_RC_OK;
+            return WEECHAT_RC_ERROR;
         }
         return WEECHAT_RC_OK;
     }
@@ -4720,7 +4734,7 @@ COMMAND_CALLBACK(layout)
                              _("%sLayout \"%s\" not found"),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                              argv[2]);
-            return WEECHAT_RC_OK;
+            return WEECHAT_RC_ERROR;
         }
         ptr_layout2 = gui_layout_search (argv[3]);
         if (ptr_layout2)
@@ -4730,7 +4744,7 @@ COMMAND_CALLBACK(layout)
                                "\"%s\" command"),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                              argv[3], "layout rename");
-            return WEECHAT_RC_OK;
+            return WEECHAT_RC_ERROR;
         }
         gui_layout_rename (ptr_layout, argv[3]);
         gui_chat_printf (NULL, _("Layout \"%s\" has been renamed to \"%s\""),
@@ -5391,7 +5405,7 @@ COMMAND_CALLBACK(print)
                              _("%sBuffer name \"%s\" is reserved for WeeChat"),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                              argv[arg_new_buffer_name]);
-            return WEECHAT_RC_OK;
+            return WEECHAT_RC_ERROR;
         }
         ptr_buffer = gui_buffer_search (PLUGIN_CORE, argv[arg_new_buffer_name]);
         if (!ptr_buffer)
@@ -5542,7 +5556,7 @@ COMMAND_CALLBACK(proxy)
                                  _("%sProxy \"%s\" already exists"),
                                  gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                                  argv[2]);
-                return WEECHAT_RC_OK;
+                return WEECHAT_RC_ERROR;
             }
         }
         type = proxy_search_type (argv[3]);
@@ -5552,7 +5566,7 @@ COMMAND_CALLBACK(proxy)
                              _("%sInvalid type \"%s\" for proxy \"%s\""),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                              argv[3], argv[2]);
-            return WEECHAT_RC_OK;
+            return WEECHAT_RC_ERROR;
         }
         error = NULL;
         value = strtol (argv[5], &error, 10);
@@ -5574,6 +5588,7 @@ COMMAND_CALLBACK(proxy)
                 gui_chat_printf (NULL, _("%sFailed to add proxy \"%s\""),
                                  gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                                  argv[2]);
+                return WEECHAT_RC_ERROR;
             }
         }
         else
@@ -5582,7 +5597,7 @@ COMMAND_CALLBACK(proxy)
                              _("%sInvalid port \"%s\" for proxy \"%s\""),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                              argv[5], argv[2]);
-            return WEECHAT_RC_OK;
+            return WEECHAT_RC_ERROR;
         }
         return WEECHAT_RC_OK;
     }
@@ -5621,7 +5636,7 @@ COMMAND_CALLBACK(proxy)
                              _("%sProxy \"%s\" not found"),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                              argv[2]);
-            return WEECHAT_RC_OK;
+            return WEECHAT_RC_ERROR;
         }
         if (!proxy_set (ptr_proxy, argv[3], argv_eol[4]))
         {
@@ -5629,7 +5644,7 @@ COMMAND_CALLBACK(proxy)
                              _("%sUnable to set option \"%s\" for proxy \"%s\""),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                              argv[3], argv[2]);
-            return WEECHAT_RC_OK;
+            return WEECHAT_RC_ERROR;
         }
         return WEECHAT_RC_OK;
     }
@@ -5677,7 +5692,7 @@ COMMAND_CALLBACK(quit)
                            "argument \"-yes\" (see /help %s)"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                          "quit", "quit");
-        return WEECHAT_RC_OK;
+        return WEECHAT_RC_ERROR;
     }
 
     /*
@@ -5914,7 +5929,7 @@ COMMAND_CALLBACK(repeat)
                          _("%sInvalid number: \"%s\""),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                          argv[arg_count]);
-        return WEECHAT_RC_OK;
+        return WEECHAT_RC_ERROR;
     }
 
     cmd_repeat = malloc (sizeof (*cmd_repeat));
@@ -5924,7 +5939,7 @@ COMMAND_CALLBACK(repeat)
                          _("%sNot enough memory (%s)"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                          "/repeat");
-        return WEECHAT_RC_OK;
+        return WEECHAT_RC_ERROR;
     }
     cmd_repeat->buffer_name = strdup (buffer->full_name);
     cmd_repeat->command = strdup (argv_eol[arg_count + 1]);
@@ -6022,7 +6037,7 @@ COMMAND_CALLBACK(reset)
         gui_chat_printf (NULL,
                          _("%sReset of all options is not allowed"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
-        return WEECHAT_RC_OK;
+        return WEECHAT_RC_ERROR;
     }
 
     if (mask)
@@ -6190,6 +6205,7 @@ COMMAND_CALLBACK(secure)
                   "available (ligbcrypt version is too old?)"),
                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                 config_file_option_string (secure_config_crypt_hash_algo));
+            return WEECHAT_RC_ERROR;
         }
         else if (rc == -3)
         {
@@ -6199,13 +6215,14 @@ COMMAND_CALLBACK(secure)
                   "available (ligbcrypt version is too old?)"),
                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                 config_file_option_string (secure_config_crypt_cipher));
+            return WEECHAT_RC_ERROR;
         }
         else if ((rc == -1) || (rc == 0))
         {
             gui_chat_printf (NULL,
                              _("%sFailed to decrypt data: wrong passphrase?"),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
-
+            return WEECHAT_RC_ERROR;
         }
         else
         {
@@ -6223,7 +6240,7 @@ COMMAND_CALLBACK(secure)
                          _("%sYou must decrypt data still encrypted before "
                            "doing any operation on secured data or passphrase"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
-        return WEECHAT_RC_OK;
+        return WEECHAT_RC_ERROR;
     }
 
     /* set the passphrase */
@@ -6237,7 +6254,7 @@ COMMAND_CALLBACK(secure)
                              _("%sPassphrase is too long (max: %d chars)"),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                              SECURE_PASSPHRASE_MAX_LENGTH);
-            return WEECHAT_RC_OK;
+            return WEECHAT_RC_ERROR;
         }
         passphrase_was_set = 0;
         if (secure_passphrase)
@@ -6309,6 +6326,7 @@ COMMAND_CALLBACK(secure)
                              _("%sSecured data \"%s\" not found"),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                              argv[2]);
+            return WEECHAT_RC_ERROR;
         }
         return WEECHAT_RC_OK;
     }
@@ -6676,6 +6694,8 @@ COMMAND_CALLBACK(set)
                                  gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                                  argv[2],
                                  strerror (errno));
+                free (value);
+                return WEECHAT_RC_ERROR;
             }
         }
         else
@@ -6694,6 +6714,8 @@ COMMAND_CALLBACK(set)
                                  gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                                  argv[2],
                                  strerror (errno));
+                free (value);
+                return WEECHAT_RC_ERROR;
             }
         }
         free (value);
@@ -6765,13 +6787,13 @@ COMMAND_CALLBACK(set)
                              _("%sFailed to set option \"%s\""),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                              argv[1]);
-            return WEECHAT_RC_OK;
+            return WEECHAT_RC_ERROR;
         case WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND:
             gui_chat_printf (NULL,
                              _("%sOption \"%s\" not found"),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                              argv[1]);
-            return WEECHAT_RC_OK;
+            return WEECHAT_RC_ERROR;
         default:
             config_file_search_with_string (argv[1], NULL, NULL,
                                             &ptr_option, NULL);
@@ -6836,14 +6858,15 @@ COMMAND_CALLBACK(sys)
                 COMMAND_ERROR;
         }
         malloc_trim ((size_t)value);
+        return WEECHAT_RC_OK;
 #else
         gui_chat_printf (NULL,
                          _("%sFunction \"%s\" is not available on "
                            "this system"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                          "malloc_trim");
+        return WEECHAT_RC_ERROR;
 #endif
-        return WEECHAT_RC_OK;
     }
 
     if (string_strcmp (argv[1], "waitpid") == 0)
@@ -6894,7 +6917,7 @@ COMMAND_CALLBACK(toggle)
                              _("%sOption \"%s\" not found"),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                              argv[1]);
-            return WEECHAT_RC_OK;
+            return WEECHAT_RC_ERROR;
         }
     }
 
@@ -6931,7 +6954,7 @@ COMMAND_CALLBACK(toggle)
                              _("%sFailed to set option \"%s\""),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                              argv[1]);
-            return WEECHAT_RC_OK;
+            return WEECHAT_RC_ERROR;
         case WEECHAT_CONFIG_OPTION_SET_OK_CHANGED:
             command_set_display_option (ptr_option, _("Option changed: "));
             break;
@@ -7012,7 +7035,7 @@ COMMAND_CALLBACK(unset)
         gui_chat_printf (NULL,
                          _("%sReset of all options is not allowed"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
-        return WEECHAT_RC_OK;
+        return WEECHAT_RC_ERROR;
     }
 
     if (mask)
@@ -7186,7 +7209,7 @@ COMMAND_CALLBACK(upgrade)
                            "argument \"-yes\" (see /help %s)"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                          "upgrade", "upgrade");
-        return WEECHAT_RC_OK;
+        return WEECHAT_RC_ERROR;
     }
 
     if ((argc > index_args)
@@ -7207,6 +7230,7 @@ COMMAND_CALLBACK(upgrade)
                              _("%sUnable to save WeeChat session "
                                "(files *.upgrade)"),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+            return WEECHAT_RC_ERROR;
         }
         gui_chat_printf (NULL, _("WeeChat session saved (files *.upgrade)"));
         return WEECHAT_RC_OK;
@@ -7225,7 +7249,7 @@ COMMAND_CALLBACK(upgrade)
                            "process/thread running (hook type: process, "
                            "connect or url)"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
-        return WEECHAT_RC_OK;
+        return WEECHAT_RC_ERROR;
     }
 
     ptr_binary = NULL;
@@ -7250,7 +7274,7 @@ COMMAND_CALLBACK(upgrade)
                                      gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                                      ptr_binary);
                     free (ptr_binary);
-                    return WEECHAT_RC_OK;
+                    return WEECHAT_RC_ERROR;
                 }
                 if ((!(stat_buf.st_mode & S_IXUSR)) && (!(stat_buf.st_mode & S_IXGRP))
                     && (!(stat_buf.st_mode & S_IXOTH)))
@@ -7261,7 +7285,7 @@ COMMAND_CALLBACK(upgrade)
                                      gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                                      ptr_binary);
                     free (ptr_binary);
-                    return WEECHAT_RC_OK;
+                    return WEECHAT_RC_ERROR;
                 }
             }
         }
@@ -7274,7 +7298,7 @@ COMMAND_CALLBACK(upgrade)
             gui_chat_printf (NULL,
                              _("%sNo binary specified"),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
-            return WEECHAT_RC_OK;
+            return WEECHAT_RC_ERROR;
         }
     }
 
@@ -7284,7 +7308,7 @@ COMMAND_CALLBACK(upgrade)
                          _("%sNot enough memory (%s)"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                          "/upgrade");
-        return WEECHAT_RC_OK;
+        return WEECHAT_RC_ERROR;
     }
 
     if (ptr_binary)
@@ -7305,7 +7329,7 @@ COMMAND_CALLBACK(upgrade)
                            "(files *.upgrade)"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
         free (ptr_binary);
-        return WEECHAT_RC_OK;
+        return WEECHAT_RC_ERROR;
     }
 
     weechat_quit = 1;
@@ -7633,12 +7657,12 @@ COMMAND_CALLBACK(window)
                              _("%sInvalid window number: \"%s\""),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                              argv[3]);
-            return WEECHAT_RC_OK;
+            return WEECHAT_RC_ERROR;
         }
         win_args = 4;
     }
     if (!ptr_win)
-        return WEECHAT_RC_OK;
+        return WEECHAT_RC_ERROR;
 
     /* page up */
     if (string_strcmp (argv[1], "page_up") == 0)
@@ -7824,7 +7848,7 @@ COMMAND_CALLBACK(window)
                                  _("%sCan not merge windows, there's no other "
                                    "window with same size near current one"),
                                  gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
-                return WEECHAT_RC_OK;
+                return WEECHAT_RC_ERROR;
             }
         }
         return WEECHAT_RC_OK;
@@ -7839,7 +7863,7 @@ COMMAND_CALLBACK(window)
                              _("%sCan not close window, there's no other "
                                "window with same size near current one"),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
-            return WEECHAT_RC_OK;
+            return WEECHAT_RC_ERROR;
         }
         return WEECHAT_RC_OK;
     }

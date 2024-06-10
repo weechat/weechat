@@ -818,7 +818,7 @@ IRC_COMMAND_CALLBACK(allchan)
                                   "irc buffer (server, channel or private)"),
                                 weechat_prefix ("error"), IRC_PLUGIN_NAME,
                                 "allchan", "-current");
-                return WEECHAT_RC_OK;
+                return WEECHAT_RC_ERROR;
             }
             current_server = 1;
             ptr_command = argv_eol[i + 1];
@@ -901,7 +901,7 @@ IRC_COMMAND_CALLBACK(allpv)
                                   "irc buffer (server, channel or private)"),
                                 weechat_prefix ("error"), IRC_PLUGIN_NAME,
                                 "allpv", "-current");
-                return WEECHAT_RC_OK;
+                return WEECHAT_RC_ERROR;
             }
             current_server = 1;
             ptr_command = argv_eol[i + 1];
@@ -1089,7 +1089,7 @@ IRC_COMMAND_CALLBACK(auth)
               "via server options \"sasl_*\" (or you must give username and "
               "password)"),
             weechat_prefix ("error"), IRC_PLUGIN_NAME, "auth");
-        return WEECHAT_RC_OK;
+        return WEECHAT_RC_ERROR;
     }
 
     if (weechat_hashtable_has_key (ptr_server->cap_list, "sasl"))
@@ -1142,6 +1142,7 @@ IRC_COMMAND_CALLBACK(auth)
                 ptr_server->buffer,
                 _("%s%s: SASL is not supported by the server"),
                 weechat_prefix ("error"), IRC_PLUGIN_NAME);
+            return WEECHAT_RC_ERROR;
         }
     }
 
@@ -1158,7 +1159,7 @@ IRC_COMMAND_CALLBACK(autojoin)
     const char *ptr_autojoin;
     char *old_autojoin, *autojoin;
     enum t_irc_join_sort sort;
-    int i;
+    int i, rc;
 
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
     IRC_COMMAND_CHECK_SERVER("autojoin", 1, 1);
@@ -1168,6 +1169,8 @@ IRC_COMMAND_CALLBACK(autojoin)
     (void) data;
 
     WEECHAT_COMMAND_MIN_ARGS(2, "");
+
+    rc = WEECHAT_RC_OK;
 
     ptr_autojoin = IRC_SERVER_OPTION_STRING(ptr_server,
                                             IRC_SERVER_OPTION_AUTOJOIN);
@@ -1202,6 +1205,7 @@ IRC_COMMAND_CALLBACK(autojoin)
                     _("%s%s: \"%s\" command can only be executed in a channel "
                       "buffer"),
                     weechat_prefix ("error"), IRC_PLUGIN_NAME, "autojoin add");
+                rc = WEECHAT_RC_ERROR;
                 goto end;
             }
             irc_join_add_channel_to_autojoin (ptr_server, ptr_channel->name,
@@ -1249,6 +1253,7 @@ IRC_COMMAND_CALLBACK(autojoin)
                     _("%s%s: \"%s\" command can only be executed in a channel "
                       "buffer"),
                     weechat_prefix ("error"), IRC_PLUGIN_NAME, "autojoin add");
+                rc = WEECHAT_RC_ERROR;
                 goto end;
             }
             irc_join_remove_channel_from_autojoin (ptr_server,
@@ -1300,7 +1305,7 @@ end:
     }
     free (old_autojoin);
 
-    return WEECHAT_RC_OK;
+    return rc;
 }
 
 /*
@@ -1623,7 +1628,7 @@ IRC_COMMAND_CALLBACK(ban)
                     _("%s%s: \"%s\" command can only be executed in a channel "
                       "buffer"),
                     weechat_prefix ("error"), IRC_PLUGIN_NAME, "ban");
-                return WEECHAT_RC_OK;
+                return WEECHAT_RC_ERROR;
             }
         }
 
@@ -1649,7 +1654,7 @@ IRC_COMMAND_CALLBACK(ban)
                 _("%s%s: \"%s\" command can only be executed in a channel "
                   "buffer"),
                 weechat_prefix ("error"), IRC_PLUGIN_NAME, "ban");
-            return WEECHAT_RC_OK;
+            return WEECHAT_RC_ERROR;
         }
         irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
                           "MODE %s +b", ptr_channel->name);
@@ -2119,7 +2124,7 @@ IRC_COMMAND_CALLBACK(cycle)
                     _("%s%s: \"%s\" command can not be executed on a server "
                       "buffer"),
                     weechat_prefix ("error"), IRC_PLUGIN_NAME, "cycle");
-                return WEECHAT_RC_OK;
+                return WEECHAT_RC_ERROR;
             }
 
             /* does nothing on private buffer (cycle has no sense!) */
@@ -2140,7 +2145,7 @@ IRC_COMMAND_CALLBACK(cycle)
                 _("%s%s: \"%s\" command can not be executed on a server "
                   "buffer"),
                 weechat_prefix ("error"), IRC_PLUGIN_NAME, "part");
-            return WEECHAT_RC_OK;
+            return WEECHAT_RC_ERROR;
         }
 
         /* does nothing on private buffer (cycle has no sense!) */
@@ -2296,7 +2301,7 @@ IRC_COMMAND_CALLBACK(dehalfop)
             ptr_server->buffer,
             _("%s%s: \"%s\" command can only be executed in a channel buffer"),
             weechat_prefix ("error"), IRC_PLUGIN_NAME, "dehalfop");
-        return WEECHAT_RC_OK;
+        return WEECHAT_RC_ERROR;
     }
 
     if (argc < 2)
@@ -2335,7 +2340,7 @@ IRC_COMMAND_CALLBACK(deop)
             ptr_server->buffer,
             _("%s%s: \"%s\" command can only be executed in a channel buffer"),
             weechat_prefix ("error"), IRC_PLUGIN_NAME, "deop");
-        return WEECHAT_RC_OK;
+        return WEECHAT_RC_ERROR;
     }
 
     if (argc < 2)
@@ -2374,7 +2379,7 @@ IRC_COMMAND_CALLBACK(devoice)
             ptr_server->buffer,
             _("%s%s: \"%s\" command can only be executed in a channel buffer"),
             weechat_prefix ("error"), IRC_PLUGIN_NAME, "devoice");
-        return WEECHAT_RC_OK;
+        return WEECHAT_RC_ERROR;
     }
 
     if (argc < 2)
@@ -2589,7 +2594,7 @@ IRC_COMMAND_CALLBACK(halfop)
             ptr_server->buffer,
             _("%s%s: \"%s\" command can only be executed in a channel buffer"),
             weechat_prefix ("error"), IRC_PLUGIN_NAME, "halfop");
-        return WEECHAT_RC_OK;
+        return WEECHAT_RC_ERROR;
     }
 
     if (argc < 2)
@@ -2736,7 +2741,7 @@ IRC_COMMAND_CALLBACK(ignore)
                 weechat_printf (NULL,
                                 _("%s%s: ignore already exists"),
                                 weechat_prefix ("error"), IRC_PLUGIN_NAME);
-                return WEECHAT_RC_OK;
+                return WEECHAT_RC_ERROR;
             }
         }
 
@@ -2758,6 +2763,7 @@ IRC_COMMAND_CALLBACK(ignore)
         {
             weechat_printf (NULL, _("%s%s: error adding ignore"),
                             weechat_prefix ("error"), IRC_PLUGIN_NAME);
+            return WEECHAT_RC_ERROR;
         }
 
         return WEECHAT_RC_OK;
@@ -2802,7 +2808,7 @@ IRC_COMMAND_CALLBACK(ignore)
                     weechat_printf (NULL,
                                     _("%s%s: ignore not found"),
                                     weechat_prefix ("error"), IRC_PLUGIN_NAME);
-                    return WEECHAT_RC_OK;
+                    return WEECHAT_RC_ERROR;
                 }
             }
             else
@@ -2810,7 +2816,7 @@ IRC_COMMAND_CALLBACK(ignore)
                 weechat_printf (NULL,
                                 _("%s%s: wrong ignore number"),
                                 weechat_prefix ("error"), IRC_PLUGIN_NAME);
-                return WEECHAT_RC_OK;
+                return WEECHAT_RC_ERROR;
             }
         }
 
@@ -2909,7 +2915,7 @@ error:
         ptr_server->buffer,
         _("%s%s: \"%s\" command can only be executed in a channel buffer"),
         weechat_prefix ("error"), IRC_PLUGIN_NAME, "invite");
-    return WEECHAT_RC_OK;
+    return WEECHAT_RC_ERROR;
 }
 
 /*
@@ -3245,7 +3251,7 @@ IRC_COMMAND_CALLBACK(kick)
                 _("%s%s: \"%s\" command can only be executed in a channel "
                   "buffer"),
                 weechat_prefix ("error"), IRC_PLUGIN_NAME, "kick");
-            return WEECHAT_RC_OK;
+            return WEECHAT_RC_ERROR;
         }
         pos_channel = ptr_channel->name;
         pos_nick = argv[1];
@@ -3293,7 +3299,7 @@ IRC_COMMAND_CALLBACK(kickban)
                 _("%s%s: \"%s\" command can only be executed in a channel "
                   "buffer"),
                 weechat_prefix ("error"), IRC_PLUGIN_NAME, "kickban");
-            return WEECHAT_RC_OK;
+            return WEECHAT_RC_ERROR;
         }
         pos_channel = ptr_channel->name;
         pos_nick = argv[1];
@@ -3319,7 +3325,7 @@ IRC_COMMAND_CALLBACK(kickban)
             _("%s%s: mask must begin with nick"),
             weechat_prefix ("error"), IRC_PLUGIN_NAME);
         free (nick_only);
-        return WEECHAT_RC_OK;
+        return WEECHAT_RC_ERROR;
     }
 
     /* set ban for nick(+host) on channel */
@@ -3558,7 +3564,7 @@ IRC_COMMAND_CALLBACK(list)
                 ptr_server->buffer,
                 _("%s%s: list buffer is not displayed"),
                 weechat_prefix ("error"), IRC_PLUGIN_NAME);
-            return WEECHAT_RC_OK;
+            return WEECHAT_RC_ERROR;
         }
         if (weechat_arraylist_size (ptr_server->list->channels) == 0)
         {
@@ -3566,7 +3572,7 @@ IRC_COMMAND_CALLBACK(list)
                 ptr_server->buffer,
                 _("%s%s: no channels displayed on list buffer"),
                 weechat_prefix ("error"), IRC_PLUGIN_NAME);
-            return WEECHAT_RC_OK;
+            return WEECHAT_RC_ERROR;
         }
         if (!irc_list_export (ptr_server, argv_eol[2]))
         {
@@ -3574,7 +3580,7 @@ IRC_COMMAND_CALLBACK(list)
                 ptr_server->buffer,
                 _("%s%s: error exporting channels to file \"%s\""),
                 weechat_prefix ("error"), IRC_PLUGIN_NAME, argv_eol[2]);
-            return WEECHAT_RC_OK;
+            return WEECHAT_RC_ERROR;
         }
         return WEECHAT_RC_OK;
     }
@@ -3617,7 +3623,7 @@ IRC_COMMAND_CALLBACK(list)
                 ptr_server->buffer,
                 _("%s%s: not enough memory for regular expression"),
                 weechat_prefix ("error"), IRC_PLUGIN_NAME);
-            return WEECHAT_RC_OK;
+            return WEECHAT_RC_ERROR;
         }
         ret = weechat_string_regcomp (new_regexp,
                                       ptr_regex,
@@ -3632,7 +3638,7 @@ IRC_COMMAND_CALLBACK(list)
                 weechat_prefix ("error"), IRC_PLUGIN_NAME,
                 ptr_regex, buf);
             free (new_regexp);
-            return WEECHAT_RC_OK;
+            return WEECHAT_RC_ERROR;
         }
         if (ptr_server->cmd_list_regexp)
         {
@@ -3768,7 +3774,7 @@ IRC_COMMAND_CALLBACK(me)
             ptr_server->buffer,
             _("%s%s: \"%s\" command can not be executed on a server buffer"),
             weechat_prefix ("error"), IRC_PLUGIN_NAME, "me");
-        return WEECHAT_RC_OK;
+        return WEECHAT_RC_ERROR;
     }
 
     irc_command_me_channel (ptr_server, ptr_channel->name,
@@ -3831,7 +3837,7 @@ IRC_COMMAND_CALLBACK(mode)
                     _("%s%s: you must specify channel for \"%s\" command if "
                       "you're not in a channel"),
                     weechat_prefix ("error"), IRC_PLUGIN_NAME, "mode");
-                return WEECHAT_RC_OK;
+                return WEECHAT_RC_ERROR;
             }
             irc_command_mode_server (ptr_server, "MODE", ptr_channel,
                                      argv_eol[1],
@@ -4044,7 +4050,7 @@ IRC_COMMAND_CALLBACK(names)
             _("%s%s: \"%s\" command can only be executed in a channel "
               "buffer"),
             weechat_prefix ("error"), IRC_PLUGIN_NAME, "names");
-        return WEECHAT_RC_OK;
+        return WEECHAT_RC_ERROR;
     }
 
     if (filter[0])
@@ -4236,7 +4242,7 @@ IRC_COMMAND_CALLBACK(notify)
                     NULL,
                     _("%s%s: server \"%s\" not found"),
                     weechat_prefix ("error"), IRC_PLUGIN_NAME, argv[3]);
-                return WEECHAT_RC_OK;
+                return WEECHAT_RC_ERROR;
             }
         }
 
@@ -4247,7 +4253,7 @@ IRC_COMMAND_CALLBACK(notify)
                 _("%s%s: server must be specified because you are not on an "
                   "irc server or channel"),
                 weechat_prefix ("error"), IRC_PLUGIN_NAME);
-            return WEECHAT_RC_OK;
+            return WEECHAT_RC_ERROR;
         }
 
         if (argc > 4)
@@ -4274,7 +4280,7 @@ IRC_COMMAND_CALLBACK(notify)
                     NULL,
                     _("%s%s: notify already exists"),
                     weechat_prefix ("error"), IRC_PLUGIN_NAME);
-                return WEECHAT_RC_OK;
+                return WEECHAT_RC_ERROR;
             }
         }
 
@@ -4285,7 +4291,7 @@ IRC_COMMAND_CALLBACK(notify)
                 ptr_server->buffer,
                 _("%sMonitor list is full (%d)"),
                 weechat_prefix ("error"), ptr_server->monitor);
-            return WEECHAT_RC_OK;
+            return WEECHAT_RC_ERROR;
         }
 
         ptr_notify = irc_notify_new (ptr_server, argv[2], check_away);
@@ -4309,6 +4315,7 @@ IRC_COMMAND_CALLBACK(notify)
                 NULL,
                 _("%s%s: error adding notification"),
                 weechat_prefix ("error"), IRC_PLUGIN_NAME);
+            return WEECHAT_RC_ERROR;
         }
 
         return WEECHAT_RC_OK;
@@ -4328,7 +4335,7 @@ IRC_COMMAND_CALLBACK(notify)
                     NULL,
                     _("%s%s: server \"%s\" not found"),
                     weechat_prefix ("error"), IRC_PLUGIN_NAME, argv[3]);
-                return WEECHAT_RC_OK;
+                return WEECHAT_RC_ERROR;
             }
         }
 
@@ -4339,7 +4346,7 @@ IRC_COMMAND_CALLBACK(notify)
                 _("%s%s: server must be specified because you are not on an "
                   "irc server or channel"),
                 weechat_prefix ("error"), IRC_PLUGIN_NAME);
-            return WEECHAT_RC_OK;
+            return WEECHAT_RC_ERROR;
         }
 
         if (weechat_strcmp (argv[2], "-all") == 0)
@@ -4383,7 +4390,7 @@ IRC_COMMAND_CALLBACK(notify)
                     NULL,
                     _("%s%s: notification not found"),
                     weechat_prefix ("error"), IRC_PLUGIN_NAME);
-                return WEECHAT_RC_OK;
+                return WEECHAT_RC_ERROR;
             }
         }
 
@@ -4413,7 +4420,7 @@ IRC_COMMAND_CALLBACK(op)
             ptr_server->buffer,
             _("%s%s: \"%s\" command can only be executed in a channel buffer"),
             weechat_prefix ("error"), IRC_PLUGIN_NAME, "op");
-        return WEECHAT_RC_OK;
+        return WEECHAT_RC_ERROR;
     }
 
     if (argc < 2)
@@ -4517,7 +4524,7 @@ IRC_COMMAND_CALLBACK(part)
                     _("%s%s: \"%s\" command can only be executed in a channel "
                       "or private buffer"),
                     weechat_prefix ("error"), IRC_PLUGIN_NAME, "part");
-                return WEECHAT_RC_OK;
+                return WEECHAT_RC_ERROR;
             }
             channel_name = ptr_channel->name;
             pos_args = argv_eol[1];
@@ -4532,7 +4539,7 @@ IRC_COMMAND_CALLBACK(part)
                 _("%s%s: \"%s\" command can only be executed in a channel or "
                   "private buffer"),
                 weechat_prefix ("error"), IRC_PLUGIN_NAME, "part");
-            return WEECHAT_RC_OK;
+            return WEECHAT_RC_ERROR;
         }
         channel_name = ptr_channel->name;
         pos_args = NULL;
@@ -4788,7 +4795,7 @@ IRC_COMMAND_CALLBACK(quiet)
                     _("%s%s: \"%s\" command can only be executed in a channel "
                       "buffer"),
                     weechat_prefix ("error"), IRC_PLUGIN_NAME, "quiet");
-                return WEECHAT_RC_OK;
+                return WEECHAT_RC_ERROR;
             }
         }
 
@@ -4814,7 +4821,7 @@ IRC_COMMAND_CALLBACK(quiet)
                 _("%s%s: \"%s\" command can only be executed in a channel "
                   "buffer"),
                 weechat_prefix ("error"), IRC_PLUGIN_NAME, "quiet");
-            return WEECHAT_RC_OK;
+            return WEECHAT_RC_ERROR;
         }
         irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
                           "MODE %s +q", ptr_channel->name);
@@ -5055,7 +5062,7 @@ IRC_COMMAND_CALLBACK(remove)
             ptr_server->buffer,
             _("%s%s: \"%s\" command can only be executed in a channel buffer"),
             weechat_prefix ("error"), IRC_PLUGIN_NAME, "remove");
-        return WEECHAT_RC_OK;
+        return WEECHAT_RC_ERROR;
     }
 
     if (argc > index_nick + 1)
@@ -5178,7 +5185,7 @@ IRC_COMMAND_CALLBACK(samode)
                     _("%s%s: you must specify channel for \"%s\" command if "
                       "you're not in a channel"),
                     weechat_prefix ("error"), IRC_PLUGIN_NAME, "samode");
-                return WEECHAT_RC_OK;
+                return WEECHAT_RC_ERROR;
             }
             irc_command_mode_server (ptr_server, "SAMODE", ptr_channel,
                                      argv_eol[1],
@@ -5205,7 +5212,7 @@ IRC_COMMAND_CALLBACK(samode)
                 _("%s%s: you must specify channel for \"%s\" command if "
                   "you're not in a channel"),
                 weechat_prefix ("error"), IRC_PLUGIN_NAME, "samode");
-            return WEECHAT_RC_OK;
+            return WEECHAT_RC_ERROR;
         }
     }
 
@@ -5858,7 +5865,7 @@ IRC_COMMAND_CALLBACK(server)
                     NULL,
                     _("%s%s: server \"%s\" already exists"),
                     weechat_prefix ("error"), IRC_PLUGIN_NAME, ptr_server2->name);
-                return WEECHAT_RC_OK;
+                return WEECHAT_RC_ERROR;
             }
         }
 
@@ -5869,7 +5876,7 @@ IRC_COMMAND_CALLBACK(server)
                 NULL,
                 _("%s%s: unable to add server"),
                 weechat_prefix ("error"), IRC_PLUGIN_NAME);
-            return WEECHAT_RC_OK;
+            return WEECHAT_RC_ERROR;
         }
 
         weechat_config_option_set (
@@ -5913,7 +5920,7 @@ IRC_COMMAND_CALLBACK(server)
                 _("%s%s: server \"%s\" not found for \"%s\" command"),
                 weechat_prefix ("error"), IRC_PLUGIN_NAME,
                 argv[2], "server copy");
-            return WEECHAT_RC_OK;
+            return WEECHAT_RC_ERROR;
         }
 
         /* check if target name already exists */
@@ -5925,7 +5932,7 @@ IRC_COMMAND_CALLBACK(server)
                 _("%s%s: server \"%s\" already exists for \"%s\" command"),
                 weechat_prefix ("error"), IRC_PLUGIN_NAME,
                 ptr_server2->name, "server copy");
-            return WEECHAT_RC_OK;
+            return WEECHAT_RC_ERROR;
         }
 
         /* copy server */
@@ -5961,7 +5968,7 @@ IRC_COMMAND_CALLBACK(server)
                 _("%s%s: server \"%s\" not found for \"%s\" command"),
                 weechat_prefix ("error"), IRC_PLUGIN_NAME,
                 argv[2], "server rename");
-            return WEECHAT_RC_OK;
+            return WEECHAT_RC_ERROR;
         }
 
         /* check if target name already exists */
@@ -5973,7 +5980,7 @@ IRC_COMMAND_CALLBACK(server)
                 _("%s%s: server \"%s\" already exists for \"%s\" command"),
                 weechat_prefix ("error"), IRC_PLUGIN_NAME,
                 ptr_server2->name, "server rename");
-            return WEECHAT_RC_OK;
+            return WEECHAT_RC_ERROR;
         }
 
         /* rename server */
@@ -6049,6 +6056,7 @@ IRC_COMMAND_CALLBACK(server)
                         _("%s%s: server \"%s\" not found for \"%s\" command"),
                         weechat_prefix ("error"), IRC_PLUGIN_NAME,
                         argv[i], "server open");
+                    return WEECHAT_RC_ERROR;
                 }
             }
         }
@@ -6069,7 +6077,7 @@ IRC_COMMAND_CALLBACK(server)
                 _("%s%s: server \"%s\" not found for \"%s\" command"),
                 weechat_prefix ("error"), IRC_PLUGIN_NAME,
                 argv[2], "server keep");
-            return WEECHAT_RC_OK;
+            return WEECHAT_RC_ERROR;
         }
 
         /* check that is it temporary server */
@@ -6080,7 +6088,7 @@ IRC_COMMAND_CALLBACK(server)
                 _("%s%s: server \"%s\" is not a temporary server"),
                 weechat_prefix ("error"), IRC_PLUGIN_NAME,
                 argv[2], "server keep");
-            return WEECHAT_RC_OK;
+            return WEECHAT_RC_ERROR;
         }
 
         /* remove temporary flag on server */
@@ -6110,7 +6118,7 @@ IRC_COMMAND_CALLBACK(server)
                 _("%s%s: server \"%s\" not found for \"%s\" command"),
                 weechat_prefix ("error"), IRC_PLUGIN_NAME,
                 argv[2], "server del");
-            return WEECHAT_RC_OK;
+            return WEECHAT_RC_ERROR;
         }
         if (server_found->is_connected)
         {
@@ -6119,7 +6127,7 @@ IRC_COMMAND_CALLBACK(server)
                 _("%s%s: you can not delete server \"%s\" because you are "
                   "connected to. Try \"/disconnect %s\" before."),
                 weechat_prefix ("error"), IRC_PLUGIN_NAME, argv[2], argv[2]);
-            return WEECHAT_RC_OK;
+            return WEECHAT_RC_ERROR;
         }
 
         server_name = strdup (server_found->name);
@@ -6443,7 +6451,7 @@ IRC_COMMAND_CALLBACK(topic)
                 _("%s%s: \"%s\" command can only be executed in a channel "
                   "buffer"),
                 weechat_prefix ("error"), IRC_PLUGIN_NAME, "topic");
-            return WEECHAT_RC_OK;
+            return WEECHAT_RC_ERROR;
         }
     }
 
@@ -6545,7 +6553,7 @@ IRC_COMMAND_CALLBACK(unban)
                 _("%s%s: \"%s\" command can only be executed in a channel "
                   "buffer"),
                 weechat_prefix ("error"), IRC_PLUGIN_NAME, "unban");
-            return WEECHAT_RC_OK;
+            return WEECHAT_RC_ERROR;
         }
     }
 
@@ -6603,7 +6611,7 @@ IRC_COMMAND_CALLBACK(unquiet)
                 _("%s%s: \"%s\" command can only be executed in a channel "
                   "buffer"),
                 weechat_prefix ("error"), IRC_PLUGIN_NAME, "unquiet");
-            return WEECHAT_RC_OK;
+            return WEECHAT_RC_ERROR;
         }
     }
 
@@ -6737,7 +6745,7 @@ IRC_COMMAND_CALLBACK(voice)
             ptr_server->buffer,
             _("%s%s: \"%s\" command can only be executed in a channel buffer"),
             weechat_prefix ("error"), IRC_PLUGIN_NAME, "voice");
-        return WEECHAT_RC_OK;
+        return WEECHAT_RC_ERROR;
     }
 
     if (argc < 2)
@@ -6799,7 +6807,7 @@ IRC_COMMAND_CALLBACK(wallchops)
                 _("%s%s: \"%s\" command can only be executed in a channel "
                   "buffer"),
                 weechat_prefix ("error"), IRC_PLUGIN_NAME, "wallchops");
-            return WEECHAT_RC_OK;
+            return WEECHAT_RC_ERROR;
         }
     }
 
@@ -6810,7 +6818,7 @@ IRC_COMMAND_CALLBACK(wallchops)
             ptr_server->buffer,
             _("%s%s: you are not on channel \"%s\""),
             weechat_prefix ("error"), IRC_PLUGIN_NAME, pos_channel);
-        return WEECHAT_RC_OK;
+        return WEECHAT_RC_ERROR;
     }
 
     weechat_printf (

@@ -416,7 +416,7 @@ fset_command_fset (const void *pointer, void *data,
                                 _("%s%s: there are no options displayed, "
                                   "unable to export."),
                                 weechat_prefix ("error"), FSET_PLUGIN_NAME);
-                return WEECHAT_RC_OK;
+                return WEECHAT_RC_ERROR;
             }
             if (!fset_option_export (ptr_filename, with_help))
                 WEECHAT_COMMAND_ERROR;
@@ -434,13 +434,13 @@ fset_command_fset (const void *pointer, void *data,
                     weechat_printf (NULL,
                         _("%s%s: not enough memory"),
                         weechat_prefix ("error"), FSET_PLUGIN_NAME);
-                    break;
+                    return WEECHAT_RC_ERROR;
                 case -1:
                     weechat_printf (NULL,
                                     _("%s%s: file \"%s\" not found"),
                                     weechat_prefix ("error"), FSET_PLUGIN_NAME,
                                     argv_eol[2]);
-                    break;
+                    return WEECHAT_RC_ERROR;
                 default:
                     weechat_printf (NULL,
                                     NG_("%d command executed in file \"%s\"",

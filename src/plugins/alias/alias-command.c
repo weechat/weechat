@@ -202,7 +202,7 @@ alias_command_cb (const void *pointer, void *data,
                                 _("%sAlias \"%s\" already exists"),
                                 weechat_prefix ("error"),
                                 ptr_alias_name);
-                return WEECHAT_RC_OK;
+                return WEECHAT_RC_ERROR;
             }
         }
         alias_command_add (ptr_alias_name, argv_eol[3], NULL, update);
@@ -240,7 +240,7 @@ alias_command_cb (const void *pointer, void *data,
                                 _("%sAlias \"%s\" already exists"),
                                 weechat_prefix ("error"),
                                 ptr_alias_name);
-                return WEECHAT_RC_OK;
+                return WEECHAT_RC_ERROR;
             }
         }
         alias_command_add (ptr_alias_name, argv_eol[4], argv[2], update);
@@ -297,6 +297,7 @@ alias_command_cb (const void *pointer, void *data,
                             _("%sAlias \"%s\" not found"),
                             weechat_prefix ("error"),
                             ptr_alias_name);
+            return WEECHAT_RC_ERROR;
         }
         else
         {
@@ -306,6 +307,7 @@ alias_command_cb (const void *pointer, void *data,
             {
                 weechat_printf (NULL, _("%sAlias \"%s\" already exists"),
                                 weechat_prefix ("error"), ptr_alias_name2);
+                return WEECHAT_RC_ERROR;
             }
             else
             {
