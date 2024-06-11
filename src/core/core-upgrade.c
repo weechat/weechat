@@ -31,6 +31,7 @@
 #include "weechat.h"
 #include "core-upgrade.h"
 #include "core-dir.h"
+#include "core-hashtable.h"
 #include "core-hook.h"
 #include "core-infolist.h"
 #include "core-secure-buffer.h"
@@ -437,7 +438,9 @@ upgrade_weechat_read_buffer (struct t_infolist *infolist)
     {
         /* use WeeChat main buffer */
         upgrade_current_buffer = gui_buffers;
+        hashtable_remove (gui_buffer_by_id, &(upgrade_current_buffer->id));
         upgrade_current_buffer->id = id;
+        hashtable_set (gui_buffer_by_id, &id, upgrade_current_buffer);
     }
     else
     {
