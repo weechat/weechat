@@ -454,6 +454,7 @@ TEST(CoreEval, EvalExpression)
 {
     struct t_hashtable *pointers, *extra_vars, *options;
     struct t_config_option *ptr_option;
+    struct t_gui_buffer *test_buffer;
     char *value, str_value[256], str_expr[256], *error;
     const char *ptr_debug_output;
     long number;
@@ -995,6 +996,28 @@ TEST(CoreEval, EvalExpression)
     /* test buffer local variable */
     WEE_CHECK_EVAL("core", "${plugin}");
     WEE_CHECK_EVAL("weechat", "${name}");
+
+    /* test hdata count */
+    WEE_CHECK_EVAL("0", "${hdata_count:}");
+    WEE_CHECK_EVAL("0", "${hdata_count:xxx}");
+    WEE_CHECK_EVAL("0", "${hdata_count:buffer[xxx]}");
+    WEE_CHECK_EVAL("0", "${hdata_count:buffer[0x0]}");
+    WEE_CHECK_EVAL("1", "${hdata_count:buffer[gui_buffers]}");
+    snprintf (str_expr, sizeof (str_expr),
+              "${hdata_count:buffer[%p]}", gui_buffers);
+    WEE_CHECK_EVAL("1", str_expr);
+    test_buffer = gui_buffer_new (NULL, "test",
+                                  NULL, NULL, NULL,
+                                  NULL, NULL, NULL);
+    CHECK(test_buffer);
+    WEE_CHECK_EVAL("2", "${hdata_count:buffer[gui_buffers]}");
+    snprintf (str_expr, sizeof (str_expr),
+              "${hdata_count:buffer[%p]}", gui_buffers);
+    WEE_CHECK_EVAL("2", "${hdata_count:buffer[gui_buffers]}");
+    snprintf (str_expr, sizeof (str_expr),
+              "${hdata_count:buffer[%p]}", test_buffer);
+    WEE_CHECK_EVAL("1", str_expr);
+    gui_buffer_close (test_buffer);
 
     /* test hdata */
     hashtable_set (pointers, "my_null_pointer", (const void *)0x0);

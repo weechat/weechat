@@ -1135,6 +1135,87 @@ eval_string_define (const char *text, struct t_eval_context *eval_context)
 }
 
 /*
+ * Returns count of items in a hdata, as a string.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+eval_hdata_count (const char *text, struct t_eval_context *eval_context)
+{
+    struct t_hdata *hdata;
+    void *pointer;
+    char *pos1, *pos2, *value, *hdata_name, *pointer_name, str_count[64];
+    int rc, count;
+
+    value = NULL;
+    hdata_name = NULL;
+    pointer_name = NULL;
+    pointer = NULL;
+
+    pos1 = strchr (text, '[');
+    if (!pos1)
+        goto end;
+    pos2 = strchr (pos1 + 1, ']');
+    if (!pos2 || (pos2 == pos1 + 1))
+        goto end;
+
+    hdata_name = string_strndup (text, pos1 - text);
+    if (!hdata_name)
+        goto end;
+
+    hdata = hook_hdata_get (NULL, hdata_name);
+    if (!hdata)
+        goto end;
+
+    pointer_name = string_strndup (pos1 + 1, pos2 - pos1 - 1);
+    if (!pointer_name)
+        goto end;
+
+    if (strncmp (pointer_name, "0x", 2) == 0)
+    {
+        rc = sscanf (pointer_name, "%p", &pointer);
+        if ((rc != EOF) && (rc != 0))
+        {
+            if (!hdata_check_pointer (hdata, NULL, pointer))
+                goto end;
+        }
+        else
+            goto end;
+    }
+    else
+    {
+        pointer = hdata_get_list (hdata, pointer_name);
+        if (!pointer)
+        {
+            pointer = hashtable_get (eval_context->pointers, pointer_name);
+            if (!pointer)
+                goto end;
+            if (!hdata_check_pointer (hdata, NULL, pointer))
+                goto end;
+        }
+    }
+
+    if (!pointer)
+    {
+        pointer = hashtable_get (eval_context->pointers, hdata_name);
+        if (!pointer)
+            goto end;
+        if (!hdata_check_pointer (hdata, NULL, pointer))
+            goto end;
+    }
+
+    count = hdata_count (hdata, pointer);
+    snprintf (str_count, sizeof (str_count), "%d", count);
+    value = strdup (str_count);
+
+end:
+    free (hdata_name);
+    free (pointer_name);
+    return (value) ? value : strdup ("0");
+}
+
+/*
  * Gets value of hdata using "path" to a variable.
  *
  * Note: result must be freed after use.
@@ -1588,6 +1669,8 @@ eval_syntax_highlight (const char *text, struct t_eval_context *eval_context)
  *   - ${random:min,max}: a random integer number between "min" and "max" (inclusive)
  *   - ${translate:string}: the translated string
  *   - ${define:name,value}: declaration of a user variable (return an empty string)
+ *   - ${hdata_count:name[list]}: number of items in this hdata with list
+ *   - ${hdata_count:name[ptr]}: number of items in this hdata with pointer
  *   - ${sec.data.xxx}: the value of the secured data "xxx"
  *   - ${file.section.option}: the value of the config option
  *   - ${name}: the local variable in buffer
@@ -1927,6 +2010,13 @@ eval_replace_vars_cb (void *data,
     {
         eval_string_define (text + 7, eval_context);
         value = strdup ("");
+        goto end;
+    }
+
+    /* hdata count */
+    if (strncmp (text, "hdata_count:", 12) == 0)
+    {
+        value = eval_hdata_count (text + 12, eval_context);
         goto end;
     }
 
