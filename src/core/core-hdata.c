@@ -657,6 +657,27 @@ end:
 }
 
 /*
+ * Returns number of item in this hdata, starting at "pointer".
+ */
+
+int
+hdata_count (struct t_hdata *hdata, void *pointer)
+{
+    int count;
+
+    if (!hdata || !pointer)
+        return 0;
+
+    count = 0;
+    while (pointer)
+    {
+        count++;
+        pointer = hdata_move (hdata, pointer, 1);
+    }
+    return count;
+}
+
+/*
  * Extracts index from name of a variable.
  *
  * A name can contain index with this format: "NNN|name" (where NNN is an

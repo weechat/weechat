@@ -1730,6 +1730,21 @@ TEST(CoreHdataWithList, Search)
 
 /*
  * Tests functions:
+ *   hdata_count
+ */
+
+TEST(CoreHdataWithList, Count)
+{
+    LONGS_EQUAL(0, hdata_count (NULL, NULL));
+    LONGS_EQUAL(0, hdata_count (ptr_hdata, NULL));
+    LONGS_EQUAL(0, hdata_count (NULL, items));
+
+    LONGS_EQUAL(2, hdata_count (ptr_hdata, items));
+    LONGS_EQUAL(1, hdata_count (ptr_hdata, ptr_item2));
+}
+
+/*
+ * Tests functions:
  *   hdata_get_index_and_name
  */
 
