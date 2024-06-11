@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-09 23:15+0200\n"
-"PO-Revision-Date: 2024-04-07 14:50+0200\n"
+"POT-Creation-Date: 2024-06-11 07:59+0200\n"
+"PO-Revision-Date: 2024-06-11 07:49+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: hu\n"
@@ -1276,15 +1276,16 @@ msgstr "pufferek kezelése"
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid ""
 "list || add [-free] [-switch] <name> || clear [<number>|<name>|-merged|-all "
-"[<number>|<name>...]] || move <number>|-|+ || swap <number1>|<name1> "
-"[<number2>|<name2>] || cycle <number>|<name> [<number>|<name>...] || merge "
-"<number>|<name> || unmerge [<number>|-all] || hide [<number>|<name>|-all "
-"[<number>|<name>...]] || unhide [<number>|<name>|-all [<number>|<name>...]] "
-"|| switch [-previous] || zoom || renumber [<number1> [<number2> [<start>]]] "
-"|| close [<n1>[-<n2>]|<name>...] || notify [<level>] || listvar [<number>|"
-"<name>] || setvar <name> [<value>] || delvar <name> || set <property> "
-"[<value>] || setauto <property> [<value>] || get <property> || jump smart|"
-"last_displayed|prev_visited|next_visited || <number>|-|+|<name>"
+"[<id>|<number>|<name>...]] || move <number>|-|+ || swap <id1>|<number1>|"
+"<name1> [<id2>|<number2>|<name2>] || cycle <id>|<number>|<name> [<id>|"
+"<number>|<name>...] || merge <id>|<number>|<name> || unmerge [<number>|-all] "
+"|| hide [<id>|<number>|<name>|-all [<id>|<number>|<name>...]] || unhide "
+"[<id>|<number>|<name>|-all [<id>|<number>|<name>...]] || switch [-previous] "
+"|| zoom || renumber [<number1> [<number2> [<start>]]] || close [<n1>[-<n2>]|"
+"<name>...] || notify [<level>] || listvar [<id>|<number>|<name>] || setvar "
+"<name> [<value>] || delvar <name> || set <property> [<value>] || setauto "
+"<property> [<value>] || get <property> || jump smart|last_displayed|"
+"prev_visited|next_visited || <id>|<number>|-|+|<name>"
 msgstr ""
 
 msgid "raw[list]: list buffers (without argument, this list is displayed)"
@@ -1401,6 +1402,9 @@ msgid "> raw[prev_visited]: previously visited buffer"
 msgstr ""
 
 msgid "> raw[next_visited]: jump to next visited buffer"
+msgstr ""
+
+msgid "id: jump to buffer by id"
 msgstr ""
 
 msgid "number: jump to buffer by number, possible prefix:"
@@ -2858,7 +2862,7 @@ msgstr "szerver nevének színe"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid ""
-"[-buffer <number>|<name>] [-newbuffer <name>] [-free] [-switch] [-core|-"
+"[-buffer <id>|<number>|<name>] [-newbuffer <name>] [-free] [-switch] [-core|-"
 "current] [-y <line>] [-escape] [-date <date>] [-tags <tags>] [-action|-"
 "error|-join|-network|-quit] [<text>] || -stdout|-stderr [<text>] || -beep"
 msgstr ""
@@ -16250,15 +16254,3 @@ msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s DCC: nem sikerült kapcsolódni a küldőhöz\n"
-
-#, fuzzy, c-format
-#~ msgid "%s%s: remote relay \"%s\" already exists, can't add it!"
-#~ msgstr "%s a \"%s\" szerver már létezik, nem hozhatja létre!\n"
-
-#, fuzzy, c-format
-#~ msgid "%s%s: server \"%s\" already exists, can't add it!"
-#~ msgstr "%s a \"%s\" szerver már létezik, nem hozhatja létre!\n"
-
-#, fuzzy
-#~ msgid "color for channel modes, near channel name"
-#~ msgstr "szobanevek színe az eseményekben"

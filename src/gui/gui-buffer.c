@@ -3251,14 +3251,14 @@ gui_buffer_search_by_number (int number)
 }
 
 /*
- * Searches for a buffer by number, full name or partial name.
+ * Searches for a buffer by id, number, full name or partial name.
  */
 
 struct t_gui_buffer *
-gui_buffer_search_by_number_or_name (const char *string)
+gui_buffer_search_by_id_number_name (const char *string)
 {
     struct t_gui_buffer *ptr_buffer;
-    long number;
+    long long number;
     char *error;
 
     if (!string)
@@ -3267,10 +3267,12 @@ gui_buffer_search_by_number_or_name (const char *string)
     ptr_buffer = NULL;
 
     error = NULL;
-    number = strtol (string, &error, 10);
+    number = strtoll (string, &error, 10);
     if (error && !error[0])
     {
-        ptr_buffer = gui_buffer_search_by_number (number);
+        ptr_buffer = gui_buffer_search_by_id (number);
+        if (!ptr_buffer)
+            ptr_buffer = gui_buffer_search_by_number (number);
     }
     else
     {

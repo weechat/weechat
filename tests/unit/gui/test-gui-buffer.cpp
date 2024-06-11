@@ -1571,37 +1571,46 @@ TEST(GuiBuffer, SearchByNumber)
 
 /*
  * Tests functions:
- *   gui_buffer_search_by_number_or_name
+ *   gui_buffer_search_by_id_number_name
  */
 
-TEST(GuiBuffer, SearchByNumberOrName)
+TEST(GuiBuffer, SearchByIdNumberName)
 {
     struct t_gui_buffer *buffer;
+    char str_id[64];
 
     buffer = gui_buffer_new (NULL, TEST_BUFFER_NAME,
                              NULL, NULL, NULL,
                              NULL, NULL, NULL);
     CHECK(buffer);
 
-    POINTERS_EQUAL(NULL, gui_buffer_search_by_number_or_name (NULL));
-    POINTERS_EQUAL(NULL, gui_buffer_search_by_number_or_name (""));
-    POINTERS_EQUAL(NULL, gui_buffer_search_by_number_or_name ("xxx"));
-    POINTERS_EQUAL(NULL, gui_buffer_search_by_number_or_name ("-1"));
-    POINTERS_EQUAL(NULL, gui_buffer_search_by_number_or_name ("0"));
-    POINTERS_EQUAL(NULL, gui_buffer_search_by_number_or_name ("3"));
+    /* buffer not found */
+    POINTERS_EQUAL(NULL, gui_buffer_search_by_id_number_name (NULL));
+    POINTERS_EQUAL(NULL, gui_buffer_search_by_id_number_name (""));
+    POINTERS_EQUAL(NULL, gui_buffer_search_by_id_number_name ("xxx"));
+    POINTERS_EQUAL(NULL, gui_buffer_search_by_id_number_name ("-1"));
+    POINTERS_EQUAL(NULL, gui_buffer_search_by_id_number_name ("0"));
+    POINTERS_EQUAL(NULL, gui_buffer_search_by_id_number_name ("3"));
 
-    POINTERS_EQUAL(gui_buffers, gui_buffer_search_by_number_or_name ("1"));
-    POINTERS_EQUAL(buffer, gui_buffer_search_by_number_or_name ("2"));
+    /* search by id */
+    snprintf (str_id, sizeof (str_id), "%lld", gui_buffers->id);
+    POINTERS_EQUAL(gui_buffers, gui_buffer_search_by_id_number_name (str_id));
+    snprintf (str_id, sizeof (str_id), "%lld", buffer->id);
+    POINTERS_EQUAL(buffer, gui_buffer_search_by_id_number_name (str_id));
 
-    POINTERS_EQUAL(gui_buffers, gui_buffer_search_by_number_or_name ("weechat"));
-    POINTERS_EQUAL(gui_buffers, gui_buffer_search_by_number_or_name ("core.weechat"));
-    POINTERS_EQUAL(NULL, gui_buffer_search_by_number_or_name ("CORE.WEECHAT"));
-    POINTERS_EQUAL(gui_buffers, gui_buffer_search_by_number_or_name ("(?i)CORE.WEECHAT"));
+    /* search by number */
+    POINTERS_EQUAL(gui_buffers, gui_buffer_search_by_id_number_name ("1"));
+    POINTERS_EQUAL(buffer, gui_buffer_search_by_id_number_name ("2"));
 
-    POINTERS_EQUAL(buffer, gui_buffer_search_by_number_or_name (TEST_BUFFER_NAME));
-    POINTERS_EQUAL(buffer, gui_buffer_search_by_number_or_name ("core." TEST_BUFFER_NAME));
-    POINTERS_EQUAL(NULL, gui_buffer_search_by_number_or_name ("CORE." TEST_BUFFER_NAME));
-    POINTERS_EQUAL(buffer, gui_buffer_search_by_number_or_name ("(?i)CORE." TEST_BUFFER_NAME));
+    /* search by name */
+    POINTERS_EQUAL(gui_buffers, gui_buffer_search_by_id_number_name ("weechat"));
+    POINTERS_EQUAL(gui_buffers, gui_buffer_search_by_id_number_name ("core.weechat"));
+    POINTERS_EQUAL(NULL, gui_buffer_search_by_id_number_name ("CORE.WEECHAT"));
+    POINTERS_EQUAL(gui_buffers, gui_buffer_search_by_id_number_name ("(?i)CORE.WEECHAT"));
+    POINTERS_EQUAL(buffer, gui_buffer_search_by_id_number_name (TEST_BUFFER_NAME));
+    POINTERS_EQUAL(buffer, gui_buffer_search_by_id_number_name ("core." TEST_BUFFER_NAME));
+    POINTERS_EQUAL(NULL, gui_buffer_search_by_id_number_name ("CORE." TEST_BUFFER_NAME));
+    POINTERS_EQUAL(buffer, gui_buffer_search_by_id_number_name ("(?i)CORE." TEST_BUFFER_NAME));
 
     gui_buffer_close (buffer);
 }

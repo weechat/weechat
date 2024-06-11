@@ -661,6 +661,7 @@ COMMAND_CALLBACK(buffer)
     struct t_gui_buffer *weechat_buffer;
     struct t_arraylist *buffers_to_close;
     long number, number1, number2, numbers[3];
+    long long number_id;
     char *error, *value, *pos, *str_number1, *pos_number2;
     int i, count, prev_number, clear_number, list_size;
     int buffer_found, arg_name, type_free, switch_to_buffer, rc;
@@ -756,7 +757,7 @@ COMMAND_CALLBACK(buffer)
                     }
                     else
                     {
-                        ptr_buffer = gui_buffer_search_by_number_or_name (argv[i]);
+                        ptr_buffer = gui_buffer_search_by_id_number_name (argv[i]);
                         error = NULL;
                         (void) strtol (argv[i], &error, 10);
                         clear_number = (error && !error[0]);
@@ -847,7 +848,7 @@ COMMAND_CALLBACK(buffer)
         ptr_buffer2 = NULL;
 
         /* search buffers to swap */
-        ptr_buffer = gui_buffer_search_by_number_or_name (argv[2]);
+        ptr_buffer = gui_buffer_search_by_id_number_name (argv[2]);
         if (!ptr_buffer)
         {
             /* invalid buffer name/number */
@@ -859,7 +860,7 @@ COMMAND_CALLBACK(buffer)
         }
         if (argc > 3)
         {
-            ptr_buffer2 = gui_buffer_search_by_number_or_name (argv[3]);
+            ptr_buffer2 = gui_buffer_search_by_id_number_name (argv[3]);
             if (!ptr_buffer2)
             {
                 /* invalid buffer name/number */
@@ -893,7 +894,7 @@ COMMAND_CALLBACK(buffer)
 
         for (i = 2; i < argc; i++)
         {
-            ptr_buffer = gui_buffer_search_by_number_or_name (argv[i]);
+            ptr_buffer = gui_buffer_search_by_id_number_name (argv[i]);
             if (!ptr_buffer)
                 continue;
             if (ptr_buffer == buffer)
@@ -933,7 +934,7 @@ COMMAND_CALLBACK(buffer)
     {
         COMMAND_MIN_ARGS(3, argv[1]);
         error = NULL;
-        ptr_buffer = gui_buffer_search_by_number_or_name (argv[2]);
+        ptr_buffer = gui_buffer_search_by_id_number_name (argv[2]);
         if (!ptr_buffer)
         {
             gui_chat_printf (NULL,
@@ -990,7 +991,7 @@ COMMAND_CALLBACK(buffer)
             {
                 for (i = 2; i < argc; i++)
                 {
-                    ptr_buffer = gui_buffer_search_by_number_or_name (argv[i]);
+                    ptr_buffer = gui_buffer_search_by_id_number_name (argv[i]);
                     if (ptr_buffer)
                     {
                         error = NULL;
@@ -1029,7 +1030,7 @@ COMMAND_CALLBACK(buffer)
             {
                 for (i = 2; i < argc; i++)
                 {
-                    ptr_buffer = gui_buffer_search_by_number_or_name (argv[i]);
+                    ptr_buffer = gui_buffer_search_by_id_number_name (argv[i]);
                     if (ptr_buffer)
                     {
                         error = NULL;
@@ -1275,7 +1276,7 @@ COMMAND_CALLBACK(buffer)
         || (string_strcmp (argv[1], "localvar") == 0))
     {
         if (argc > 2)
-            ptr_buffer = gui_buffer_search_by_number_or_name (argv[2]);
+            ptr_buffer = gui_buffer_search_by_id_number_name (argv[2]);
         else
             ptr_buffer = buffer;
 
@@ -1608,13 +1609,16 @@ COMMAND_CALLBACK(buffer)
         return WEECHAT_RC_OK;
     }
 
-    /* jump to buffer by number or name */
+    /* jump to buffer by id, number or name */
     error = NULL;
-    number = strtol (argv[1], &error, 10);
+    number_id = strtoll (argv[1], &error, 10);
     if (error && !error[0])
     {
-        gui_buffer_switch_by_number (gui_current_window,
-                                     (int) number);
+        ptr_buffer = gui_buffer_search_by_id (number_id);
+        if (ptr_buffer)
+            gui_window_switch_to_buffer (gui_current_window, ptr_buffer, 1);
+        else
+            gui_buffer_switch_by_number (gui_current_window, (int) number_id);
         return WEECHAT_RC_OK;
     }
     else
@@ -5262,7 +5266,7 @@ COMMAND_CALLBACK(print)
             if (i + 1 >= argc)
                 COMMAND_ERROR;
             i++;
-            ptr_buffer = gui_buffer_search_by_number_or_name (argv[i]);
+            ptr_buffer = gui_buffer_search_by_id_number_name (argv[i]);
             if (!ptr_buffer)
                 COMMAND_ERROR;
         }
@@ -8081,27 +8085,27 @@ command_init ()
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("list"
            " || add [-free] [-switch] <name>"
-           " || clear [<number>|<name>|-merged|-all [<number>|<name>...]]"
+           " || clear [<number>|<name>|-merged|-all [<id>|<number>|<name>...]]"
            " || move <number>|-|+"
-           " || swap <number1>|<name1> [<number2>|<name2>]"
-           " || cycle <number>|<name> [<number>|<name>...]"
-           " || merge <number>|<name>"
+           " || swap <id1>|<number1>|<name1> [<id2>|<number2>|<name2>]"
+           " || cycle <id>|<number>|<name> [<id>|<number>|<name>...]"
+           " || merge <id>|<number>|<name>"
            " || unmerge [<number>|-all]"
-           " || hide [<number>|<name>|-all [<number>|<name>...]]"
-           " || unhide [<number>|<name>|-all [<number>|<name>...]]"
+           " || hide [<id>|<number>|<name>|-all [<id>|<number>|<name>...]]"
+           " || unhide [<id>|<number>|<name>|-all [<id>|<number>|<name>...]]"
            " || switch [-previous]"
            " || zoom"
            " || renumber [<number1> [<number2> [<start>]]]"
            " || close [<n1>[-<n2>]|<name>...]"
            " || notify [<level>]"
-           " || listvar [<number>|<name>]"
+           " || listvar [<id>|<number>|<name>]"
            " || setvar <name> [<value>]"
            " || delvar <name>"
            " || set <property> [<value>]"
            " || setauto <property> [<value>]"
            " || get <property>"
            " || jump smart|last_displayed|prev_visited|next_visited"
-           " || <number>|-|+|<name>"),
+           " || <id>|<number>|-|+|<name>"),
         CMD_ARGS_DESC(
             N_("raw[list]: list buffers (without argument, this list is displayed)"),
             N_("raw[add]: add a new buffer (it can be closed with \"/buffer close\" "
@@ -8147,6 +8151,7 @@ command_init ()
                "to a buffer)"),
             N_("> raw[prev_visited]: previously visited buffer"),
             N_("> raw[next_visited]: jump to next visited buffer"),
+            N_("id: jump to buffer by id"),
             N_("number: jump to buffer by number, possible prefix:"),
             N_("> \"+\": relative jump, add number to current"),
             N_("> \"-\": relative jump, sub number to current"),
@@ -9079,7 +9084,7 @@ command_init ()
         NULL, "print",
         N_("display text on a buffer"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
-        N_("[-buffer <number>|<name>] [-newbuffer <name>] [-free] [-switch] "
+        N_("[-buffer <id>|<number>|<name>] [-newbuffer <name>] [-free] [-switch] "
            "[-core|-current] [-y <line>] [-escape] [-date <date>] "
            "[-tags <tags>] [-action|-error|-join|-network|-quit] [<text>]"
            " || -stdout|-stderr [<text>]"
