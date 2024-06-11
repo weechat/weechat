@@ -6475,12 +6475,16 @@ Argomenti:
 *** _pointer_: puntatore
 *** _buffer_: buffer
 *** _time_: tempo
+// TRANSLATION MISSING
+*** _longlong_: long long integer
 ** _type_values_: tipo per i valori:
 *** _integer_: intero
 *** _string_: stringa
 *** _pointer_: puntatore
 *** _buffer_: buffer
 *** _time_: tempo
+// TRANSLATION MISSING
+*** _longlong_: long long integer
 ** _keys_: stringa con la lista di chiavi (formato: "chiave1,chiave2,chiave3")
 ** _keys_sorted_: stringa con l'elenco di chiavi ordinate (formato: "chiave1,chiave2,chiave3")
 ** _values_: stringa  con la lista di valori (formato: "valore1,valore2,valore3")

@@ -6303,12 +6303,14 @@ Paramètres :
 *** _pointer_ : pointeur
 *** _buffer_ : buffer
 *** _time_ : heure
+*** _longlong_: entier de type "long long"
 ** _type_values_ : type pour les valeurs :
 *** _integer_ : entier
 *** _string_ : chaîne
 *** _pointer_ : pointeur
 *** _buffer_ : buffer
 *** _time_ : heure
+*** _longlong_: entier de type "long long"
 ** _keys_ : chaîne avec la liste des clés (format : "clé1,clé2,clé3")
 ** _keys_sorted_ : chaîne avec la liste triée des clés (format :
    "clé1,clé2,clé3")

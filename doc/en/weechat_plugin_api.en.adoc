@@ -6205,12 +6205,14 @@ Arguments:
 *** _pointer_: pointer
 *** _buffer_: buffer
 *** _time_: time
+*** _longlong_: long long integer
 ** _type_values_: type for values:
 *** _integer_: integer
 *** _string_: string
 *** _pointer_: pointer
 *** _buffer_: buffer
 *** _time_: time
+*** _longlong_: long long integer
 ** _keys_: string with list of keys (format: "key1,key2,key3")
 ** _keys_sorted_: string with list of sorted keys (format: "key1,key2,key3")
 ** _values_: string with list of values (format: "value1,value2,value3")

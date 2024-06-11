@@ -6347,12 +6347,16 @@ const char *weechat_hashtable_get_string (struct t_hashtable *hashtable,
 *** _pointer_: ポインタ
 *** _buffer_: バッファ
 *** _time_: 時間
+// TRANSLATION MISSING
+*** _longlong_: long long integer
 ** _type_values_: 値の型:
 *** _integer_: 整数
 *** _string_: 文字列
 *** _pointer_: ポインタ
 *** _buffer_: バッファ
 *** _time_: 時間
+// TRANSLATION MISSING
+*** _longlong_: long long integer
 ** _keys_: キーのリストを含む文字列 (書式: "key1,key2,key3")
 ** _keys_sorted_: ソートされたキーのリストを含む文字列 (書式: "key1,key2,key3")
 ** _values_: 値のリストを含む文字列 (書式: "value1,value2,value3")

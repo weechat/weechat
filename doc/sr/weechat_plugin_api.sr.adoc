@@ -6052,12 +6052,16 @@ const char *weechat_hashtable_get_string (struct t_hashtable *hashtable,
 *** _pointer_: показивач
 *** _buffer_: бафер
 *** _time_: време
+// TRANSLATION MISSING
+*** _longlong_: long long integer
 ** _type_values_: тип вредности:
 *** _integer_: цео број
 *** _string_: стринг
 *** _pointer_: показивач
 *** _buffer_: бафер
 *** _time_: време
+// TRANSLATION MISSING
+*** _longlong_: long long integer
 ** _keys_: стринг са листом кључева (у формату: „кључ1,кључ2,кључ3”)
 ** _keys_sorted_: стринг са листом сортираних кључева (у формату: „кључ1,кључ2,кључ3”)
 ** _values_: стринг са листом вредности
