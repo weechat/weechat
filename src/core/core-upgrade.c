@@ -441,7 +441,7 @@ upgrade_weechat_read_buffer (struct t_infolist *infolist)
     }
     else
     {
-        /* create buffer it it's not main buffer */
+        /* create buffer if it's not main buffer */
         upgrade_current_buffer = gui_buffer_new_props_with_id (
             id,
             NULL,  /* plugin */
