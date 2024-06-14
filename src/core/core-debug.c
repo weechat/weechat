@@ -240,7 +240,7 @@ debug_windows_tree_display (struct t_gui_window_tree *tree, int indent)
             snprintf (format,
                       sizeof (format),
                       "%%-%dsnode: "
-                      "0x%%lx, "
+                      "%%p, "
                       "parent:%%p, "
                       "pct:%%d, "
                       "horizontal:%%d, "
