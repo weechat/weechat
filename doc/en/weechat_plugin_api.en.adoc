@@ -14789,7 +14789,7 @@ C example:
 
 [source,c]
 ----
-weechat_printf (NULL, "plugin pointer of my buffer: %lx",
+weechat_printf (NULL, "plugin pointer of my buffer: %p",
                 weechat_buffer_get_pointer (my_buffer, "plugin"));
 ----
 
@@ -15265,7 +15265,7 @@ C example:
 [source,c]
 ----
 weechat_printf (NULL,
-                "window displaying core buffer: %lx",
+                "window displaying core buffer: %p",
                 weechat_window_search_with_buffer (weechat_buffer_search_main ()));
 ----
 
@@ -15402,7 +15402,7 @@ C example:
 [source,c]
 ----
 weechat_printf (NULL,
-                "buffer displayed in current window: %lx",
+                "buffer displayed in current window: %p",
                 weechat_window_get_pointer (weechat_current_window (), "buffer"));
 ----
 
@@ -19270,7 +19270,7 @@ C example:
 ----
 struct t_hdata *hdata = weechat_hdata_get ("buffer");
 struct t_gui_buffer *buffer = weechat_buffer_search_main ();
-weechat_printf (NULL, "lines = %lx", weechat_hdata_pointer (hdata, buffer, "lines"));
+weechat_printf (NULL, "lines = %p", weechat_hdata_pointer (hdata, buffer, "lines"));
 ----
 
 Script (Python):

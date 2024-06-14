@@ -15106,7 +15106,7 @@ Exemple en C :
 
 [source,c]
 ----
-weechat_printf (NULL, "pointeur vers l'extension de mon tampon : %lx",
+weechat_printf (NULL, "pointeur vers l'extension de mon tampon : %p",
                 weechat_buffer_get_pointer (mon_tampon, "plugin"));
 ----
 
@@ -15597,7 +15597,7 @@ Exemple en C :
 [source,c]
 ----
 weechat_printf (NULL,
-                "fenêtre affichant le tampon core : %lx",
+                "fenêtre affichant le tampon core : %p",
                 weechat_window_search_with_buffer (weechat_buffer_search_main ()));
 ----
 
@@ -15742,7 +15742,7 @@ Exemple en C :
 [source,c]
 ----
 weechat_printf (NULL,
-                "tampon affiché dans la fenêtre courante : %lx",
+                "tampon affiché dans la fenêtre courante : %p",
                 weechat_window_get_pointer (weechat_current_window (), "buffer"));
 ----
 
@@ -19673,7 +19673,7 @@ Exemple en C :
 ----
 struct t_hdata *hdata = weechat_hdata_get ("buffer");
 struct t_gui_buffer *buffer = weechat_buffer_search_main ();
-weechat_printf (NULL, "lines = %lx", weechat_hdata_pointer (hdata, buffer, "lines"));
+weechat_printf (NULL, "lines = %p", weechat_hdata_pointer (hdata, buffer, "lines"));
 ----
 
 Script (Python) :

@@ -14374,7 +14374,7 @@ C пример:
 
 [source,c]
 ----
-weechat_printf (NULL, "показивач на додатак мог бафера: %lx",
+weechat_printf (NULL, "показивач на додатак мог бафера: %p",
                 weechat_buffer_get_pointer (my_buffer, "plugin"));
 ----
 
@@ -14850,7 +14850,7 @@ C пример:
 [source,c]
 ----
 weechat_printf (NULL,
-                "прозор који приказује core бафер: %lx",
+                "прозор који приказује core бафер: %p",
                 weechat_window_search_with_buffer (weechat_buffer_search_main ()));
 ----
 
@@ -14983,7 +14983,7 @@ C пример:
 [source,c]
 ----
 weechat_printf (NULL,
-                "бафер који се приказује у текућем прозору: %lx",
+                "бафер који се приказује у текућем прозору: %p",
                 weechat_window_get_pointer (weechat_current_window (), "buffer"));
 ----
 
@@ -18759,7 +18759,7 @@ C пример:
 ----
 struct t_hdata *hdata = weechat_hdata_get ("buffer");
 struct t_gui_buffer *buffer = weechat_buffer_search_main ();
-weechat_printf (NULL, "lines = %lx", weechat_hdata_pointer (hdata, buffer, "lines"));
+weechat_printf (NULL, "lines = %p", weechat_hdata_pointer (hdata, buffer, "lines"));
 ----
 
 Скрипта (Python):
