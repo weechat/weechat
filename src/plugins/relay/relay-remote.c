@@ -991,7 +991,7 @@ relay_remote_print_log ()
         weechat_log_printf ("  password_hash_algo. . . : %d", ptr_remote->password_hash_algo);
         weechat_log_printf ("  password_hash_iterations: %d", ptr_remote->password_hash_iterations);
         weechat_log_printf ("  totp. . . . . . . . . . : %d", ptr_remote->totp);
-        weechat_log_printf ("  websocket_key . . . . . : 0x%ls", ptr_remote->websocket_key);
+        weechat_log_printf ("  websocket_key . . . . . : %p", ptr_remote->websocket_key);
         weechat_log_printf ("  sock. . . . . . . . . . : %d", ptr_remote->sock);
         weechat_log_printf ("  hook_url_handshake. . . : 0x%lx", ptr_remote->hook_url_handshake);
         weechat_log_printf ("  hook_connect. . . . . . : 0x%lx", ptr_remote->hook_connect);
