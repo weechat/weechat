@@ -245,8 +245,7 @@ relay_weechat_msg_add_pointer (struct t_relay_weechat_msg *msg, void *pointer)
     char str_pointer[128];
     unsigned char length;
 
-    snprintf (str_pointer, sizeof (str_pointer),
-              "%lx", (unsigned long)pointer);
+    snprintf (str_pointer, sizeof (str_pointer), "%p", pointer);
     length = strlen (str_pointer);
     relay_weechat_msg_add_bytes (msg, &length, 1);
     relay_weechat_msg_add_bytes (msg, str_pointer, length);
