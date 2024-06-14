@@ -1018,6 +1018,7 @@ TEST(CoreEval, EvalExpression)
               "${hdata_count:buffer[%p]}", test_buffer);
     WEE_CHECK_EVAL("1", str_expr);
     gui_buffer_close (test_buffer);
+    WEE_CHECK_EVAL("0", "${hdata_count:layout[gui_layouts]}");
 
     /* test hdata */
     hashtable_set (pointers, "my_null_pointer", (const void *)0x0);
