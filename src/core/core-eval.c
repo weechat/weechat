@@ -1196,15 +1196,6 @@ eval_hdata_count (const char *text, struct t_eval_context *eval_context)
         }
     }
 
-    if (!pointer)
-    {
-        pointer = hashtable_get (eval_context->pointers, hdata_name);
-        if (!pointer)
-            goto end;
-        if (!hdata_check_pointer (hdata, NULL, pointer))
-            goto end;
-    }
-
     count = hdata_count (hdata, pointer);
     snprintf (str_count, sizeof (str_count), "%d", count);
     value = strdup (str_count);
