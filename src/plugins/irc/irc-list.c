@@ -1305,7 +1305,6 @@ irc_list_mouse_hsignal_cb (const void *pointer, void *data, const char *signal,
 {
     const char *ptr_key, *ptr_chat_line_y, *ptr_buffer_pointer;
     struct t_gui_buffer *ptr_buffer;
-    unsigned long value;
     char str_command[1024];
     int rc;
 
@@ -1321,10 +1320,9 @@ irc_list_mouse_hsignal_cb (const void *pointer, void *data, const char *signal,
     if (!ptr_key || !ptr_buffer_pointer || !ptr_chat_line_y)
         return WEECHAT_RC_OK;
 
-    rc = sscanf (ptr_buffer_pointer, "%lx", &value);
+    rc = sscanf (ptr_buffer_pointer, "%p", &ptr_buffer);
     if ((rc == EOF) || (rc == 0))
         return WEECHAT_RC_OK;
-    ptr_buffer = (struct t_gui_buffer *)value;
     if (!ptr_buffer)
         return WEECHAT_RC_OK;
 

@@ -39,7 +39,6 @@ script_mouse_focus_chat_cb (const void *pointer, void *data,
 {
     const char *buffer;
     int rc;
-    unsigned long value;
     struct t_gui_buffer *ptr_buffer;
     long x;
     char *error, str_date[64];
@@ -57,11 +56,9 @@ script_mouse_focus_chat_cb (const void *pointer, void *data,
     if (!buffer)
         return info;
 
-    rc = sscanf (buffer, "%lx", &value);
+    rc = sscanf (buffer, "%p", &ptr_buffer);
     if ((rc == EOF) || (rc == 0))
         return info;
-
-    ptr_buffer = (struct t_gui_buffer *)value;
 
     if (!ptr_buffer || (ptr_buffer != script_buffer))
         return info;

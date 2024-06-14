@@ -630,7 +630,6 @@ struct t_hashtable *
 irc_bar_item_focus_buffer_nicklist (const void *pointer, void *data,
                                     struct t_hashtable *info)
 {
-    unsigned long value;
     int rc;
     struct t_gui_buffer *buffer;
     struct t_irc_nick *ptr_nick;
@@ -641,11 +640,9 @@ irc_bar_item_focus_buffer_nicklist (const void *pointer, void *data,
     if (!str_buffer || !str_buffer[0])
         return NULL;
 
-    rc = sscanf (str_buffer, "%lx", &value);
+    rc = sscanf (str_buffer, "%p", &buffer);
     if ((rc == EOF) || (rc == 0))
         return NULL;
-
-    buffer = (struct t_gui_buffer *)value;
 
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
 

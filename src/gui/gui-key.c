@@ -2042,7 +2042,6 @@ gui_key_focus_command (const char *key, int context,
 {
     struct t_gui_key *ptr_key;
     int i, matching, debug, rc;
-    unsigned long value;
     char *command, **commands;
     const char *str_buffer;
     struct t_hashtable *hashtable;
@@ -2100,9 +2099,9 @@ gui_key_focus_command (const char *key, int context,
         str_buffer = hashtable_get (hashtable, "_buffer");
         if (str_buffer && str_buffer[0])
         {
-            rc = sscanf (str_buffer, "%lx", &value);
-            if ((rc != EOF) && (rc != 0))
-                ptr_buffer = (struct t_gui_buffer *)value;
+            rc = sscanf (str_buffer, "%p", &ptr_buffer);
+            if ((rc == EOF) || (rc == 0))
+                ptr_buffer = gui_current_window->buffer;
         }
         if (!ptr_buffer)
             continue;

@@ -395,7 +395,7 @@ plugin_script_str2ptr (struct t_weechat_plugin *weechat_plugin,
                        const char *script_name, const char *function_name,
                        const char *str_pointer)
 {
-    unsigned long value;
+    void *pointer;
     int rc;
     struct t_gui_buffer *ptr_buffer;
 
@@ -405,9 +405,9 @@ plugin_script_str2ptr (struct t_weechat_plugin *weechat_plugin,
     if ((str_pointer[0] != '0') || (str_pointer[1] != 'x'))
         goto invalid;
 
-    rc = sscanf (str_pointer + 2, "%lx", &value);
+    rc = sscanf (str_pointer, "%p", &pointer);
     if ((rc != EOF) && (rc >= 1))
-        return (void *)value;
+        return pointer;
 
 invalid:
     if ((weechat_plugin->debug >= 1) && script_name && function_name)

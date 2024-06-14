@@ -2163,7 +2163,6 @@ gui_bar_item_focus_buffer_nicklist_cb (const void *pointer,
     struct t_gui_nick_group *ptr_group;
     struct t_gui_nick *ptr_nick;
     int i, rc, bar_item_line;
-    unsigned long value;
     const char *str_window, *str_buffer, *str_bar_item_line;
     struct t_gui_window *window;
     struct t_gui_buffer *buffer;
@@ -2181,10 +2180,9 @@ gui_bar_item_focus_buffer_nicklist_cb (const void *pointer,
     str_window = hashtable_get (info, "_window");
     if (str_window && str_window[0])
     {
-        rc = sscanf (str_window, "%lx", &value);
+        rc = sscanf (str_window, "%p", &window);
         if ((rc == EOF) || (rc == 0))
             return NULL;
-        window = (struct t_gui_window *)value;
     }
     else
     {
@@ -2199,10 +2197,9 @@ gui_bar_item_focus_buffer_nicklist_cb (const void *pointer,
     str_buffer = hashtable_get (info, "_buffer");
     if (str_buffer && str_buffer[0])
     {
-        rc = sscanf (str_buffer, "%lx", &value);
+        rc = sscanf (str_buffer, "%p", &buffer);
         if ((rc == EOF) || (rc == 0))
             return NULL;
-        buffer = (struct t_gui_buffer *)value;
     }
     if (!buffer)
         return NULL;
