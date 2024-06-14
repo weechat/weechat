@@ -1641,7 +1641,7 @@ relay_http_print_log_response (struct t_relay_http_response *response)
     weechat_log_printf ("    http_version. . . . . . : '%s'", response->http_version);
     weechat_log_printf ("    return_code . . . . . . : %d", response->return_code);
     weechat_log_printf ("    message . . . . . . . . : '%s'", response->message);
-    weechat_log_printf ("    headers . . . . . . . . : 0x%lx (hashtable: '%s')",
+    weechat_log_printf ("    headers . . . . . . . . : %p (hashtable: '%s')",
                         response->headers,
                         weechat_hashtable_get_string (response->headers, "keys_values"));
     weechat_log_printf ("    content_length. . . . . : %d", response->content_length);

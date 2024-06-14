@@ -966,7 +966,7 @@ relay_remote_print_log ()
          ptr_remote = ptr_remote->next_remote)
     {
         weechat_log_printf ("");
-        weechat_log_printf ("[relay remote (addr:0x%lx)]", ptr_remote);
+        weechat_log_printf ("[relay remote (addr:%p)]", ptr_remote);
         weechat_log_printf ("  name. . . . . . . . . . : '%s'", ptr_remote->name);
         weechat_log_printf ("  url . . . . . . . . . . : '%s'",
                             weechat_config_string (ptr_remote->options[RELAY_REMOTE_OPTION_URL]));
@@ -993,17 +993,17 @@ relay_remote_print_log ()
         weechat_log_printf ("  totp. . . . . . . . . . : %d", ptr_remote->totp);
         weechat_log_printf ("  websocket_key . . . . . : %p", ptr_remote->websocket_key);
         weechat_log_printf ("  sock. . . . . . . . . . : %d", ptr_remote->sock);
-        weechat_log_printf ("  hook_url_handshake. . . : 0x%lx", ptr_remote->hook_url_handshake);
-        weechat_log_printf ("  hook_connect. . . . . . : 0x%lx", ptr_remote->hook_connect);
-        weechat_log_printf ("  hook_fd . . . . . . . . : 0x%lx", ptr_remote->hook_fd);
-        weechat_log_printf ("  gnutls_sess . . . . . . : 0x%lx", ptr_remote->gnutls_sess);
+        weechat_log_printf ("  hook_url_handshake. . . : %p", ptr_remote->hook_url_handshake);
+        weechat_log_printf ("  hook_connect. . . . . . : %p", ptr_remote->hook_connect);
+        weechat_log_printf ("  hook_fd . . . . . . . . : %p", ptr_remote->hook_fd);
+        weechat_log_printf ("  gnutls_sess . . . . . . : %p", ptr_remote->gnutls_sess);
         relay_websocket_deflate_print_log (ptr_remote->ws_deflate, "");
         weechat_log_printf ("  version_ok. . . . . . . : %d", ptr_remote->version_ok);
         weechat_log_printf ("  synced. . . . . . . . . : %d", ptr_remote->synced);
         weechat_log_printf ("  partial_ws_frame. . . . : %p (%d bytes)",
                             ptr_remote->partial_ws_frame,
                             ptr_remote->partial_ws_frame_size);
-        weechat_log_printf ("  prev_remote . . . . . . : 0x%lx", ptr_remote->prev_remote);
-        weechat_log_printf ("  next_remote . . . . . . : 0x%lx", ptr_remote->next_remote);
+        weechat_log_printf ("  prev_remote . . . . . . : %p", ptr_remote->prev_remote);
+        weechat_log_printf ("  next_remote . . . . . . : %p", ptr_remote->next_remote);
     }
 }
