@@ -203,29 +203,32 @@ enum t_weechat_hdata
 
 /* macro to format string with variable args, using dynamic buffer size */
 #define weechat_va_format(__format)                                     \
-    va_list argptr;                                                     \
-    int vaa_size, vaa_num;                                              \
-    char *vbuffer, *vaa_buffer2;                                        \
-    vaa_size = 1024;                                                    \
-    vbuffer = malloc (vaa_size);                                        \
-    if (vbuffer)                                                        \
+    va_list __argptr;                                                   \
+    int __num_bytes;                                                    \
+    size_t __size;                                                      \
+    char *vbuffer = NULL;                                               \
+                                                                        \
+    if (__format)                                                       \
     {                                                                   \
-        while (1)                                                       \
+        va_start (__argptr, __format);                                  \
+        __num_bytes = vsnprintf (NULL, 0, __format, __argptr);          \
+        va_end (__argptr);                                              \
+        if (__num_bytes >= 0)                                           \
         {                                                               \
-            va_start (argptr, __format);                                \
-            vaa_num = vsnprintf (vbuffer, vaa_size, __format, argptr);  \
-            va_end (argptr);                                            \
-            if ((vaa_num >= 0) && (vaa_num < vaa_size))                 \
-                break;                                                  \
-            vaa_size = (vaa_num >= 0) ? vaa_num + 1 : vaa_size * 2;     \
-            vaa_buffer2 = realloc (vbuffer, vaa_size);                  \
-            if (!vaa_buffer2)                                           \
+            __size = (size_t)__num_bytes + 1;                           \
+            vbuffer = malloc(__size);                                   \
+            if (vbuffer)                                                \
             {                                                           \
-                free (vbuffer);                                         \
-                vbuffer = NULL;                                         \
-                break;                                                  \
+                va_start (__argptr, __format);                          \
+                __num_bytes = vsnprintf (vbuffer, __size,               \
+                                         __format, __argptr);           \
+                va_end (__argptr);                                      \
+                if (__num_bytes < 0)                                    \
+                {                                                       \
+                    free (vbuffer);                                     \
+                    vbuffer = NULL;                                     \
+                }                                                       \
             }                                                           \
-            vbuffer = vaa_buffer2;                                      \
         }                                                               \
     }
 
