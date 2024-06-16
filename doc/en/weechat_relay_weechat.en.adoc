@@ -6,7 +6,7 @@
 [[introduction]]
 == Introduction
 
-This document is the specification of WeeChat Relay protocol: the protocol used
+This document is the specification of _weechat_ relay protocol: the protocol used
 to relay WeeChat data to clients, which are mostly remote interfaces.
 
 [[terminology]]
@@ -39,13 +39,11 @@ The _clients_ are connected to _relay_ like shown in this diagram:
 
 └────────────┘   └───────────────────┘╘══════╛└────────────────────────────────┘
 network servers    ncurses interface    relay         remote interfaces
-                                      protocol
 ....
 
 [NOTE]
-All clients here are clients using _weechat_ protocol in _relay_ plugin. The
-_relay_ plugin also allows IRC clients, then _relay_ plugin acts as an
-_IRC proxy_ (not described in this document).
+All clients here are clients using _weechat_ protocol in _relay_ plugin. +
+The _relay_ plugin also allows _api_ and _irc_ protocols (not described in this document).
 
 [[protocol_generalities]]
 == Protocol generalities

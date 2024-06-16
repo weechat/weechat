@@ -11,7 +11,7 @@
 [[introduction]]
 == はじめに
 
-この文書は WeeChat リレープロトコルについて述べたものです: リレープロトコルとは、WeeChat
+この文書は _weechat_ リレープロトコルについて述べたものです: リレープロトコルとは、WeeChat
 データをクライアントに中継するためのもので、多くの場合クライアントはリモートインターフェースを指します。
 
 [[terminology]]
@@ -47,10 +47,10 @@
     サーバ          インターフェース   プロトコル
 ....
 
+// TRANSLATION MISSING
 [NOTE]
-この文書で述べる全てのクライアントは _リレー_ プラグインの _weechat_ プロトコルを使っています。また
-_リレー_ プラグインは IRC クライアントからの接続を受け入れることができます、この場合
-_リレー_ プラグインは _IRC プロキシ_ のように振舞います (この文書では説明しません)。
+All clients here are clients using _weechat_ protocol in _relay_ plugin. +
+The _relay_ plugin also allows _api_ and _irc_ protocols (not described in this document).
 
 [[protocol_generalities]]
 == プロトコルの一般的説明

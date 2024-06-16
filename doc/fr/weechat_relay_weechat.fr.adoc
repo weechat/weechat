@@ -7,7 +7,7 @@
 [[introduction]]
 == Introduction
 
-Ce document est une spécification du protocole Relay de WeeChat : le protocole
+Ce document est une spécification du protocole relay _weechat_ : le protocole
 utilisé pour relayer les données de WeeChat aux clients, qui sont surtout des
 interfaces distantes.
 
@@ -47,8 +47,7 @@ Les _clients_ sont connectés au _relay_ comme dans le diagramme ci-dessous :
 
 [NOTE]
 Tous les clients ici utilisent le protocole _weechat_ dans l'extension _relay_.
-L'extension _relay_ autorise aussi des clients IRC, et _relay_ agit alors comme
-un _proxy IRC_ (non décrit dans ce document).
+L'extension _relay_ autorise aussi les protocoles _api_ et _irc_ (non décrits dans ce document).
 
 [[protocol_generalities]]
 == Généralités sur le protocole
