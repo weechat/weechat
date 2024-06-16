@@ -1,0 +1,18 @@
+// tag::diagram[]
+....
+                                              ┌──────────┐ Workstation
+ ┌────────┐                               ┌───┤ client 1 │ (Linux, Windows,
+ │  irc   │◄──┐  ╔═══════════╤═══════╗    │   └──────────┘ BSD, macOS, …)
+ └────────┘   └──╢           │       ║◄───┘   ┌──────────┐
+   ......        ║  WeeChat  │ Relay ║◄───────┤ client 2 │ Mobile device
+ ┌────────┐   ┌──╢           │       ║◄───┐   └──────────┘ (Android, iPhone, …)
+ │ jabber │◄──┘  ╚═══════════╧═══════╝    │      ......
+ └────────┘                               │   ┌──────────┐
+   ......                                 └───┤ client N │ Other devices
+                                              └──────────┘
+
+
+└────────────┘   └───────────────────┘╘══════╛└────────────────────────────────┘
+network servers    ncurses interface    relay         remote interfaces
+....
+// end::diagram[]

@@ -27,23 +27,7 @@ Les termes suivants sont utilisés dans ce document :
 
 Les _clients_ sont connectés au _relay_ comme dans le diagramme ci-dessous :
 
-....
-                                              ┌──────────┐ Station de travail
- ┌────────┐                               ┌───┤ client 1 │ (Linux, Windows,
- │  irc   │◄──┐  ╔═══════════╤═══════╗    │   └──────────┘ BSD, macOS ...)
- └────────┘   └──╢           │       ║◄───┘   ┌──────────┐
-   ......        ║  WeeChat  │ Relay ║◄───────┤ client 2 │ Appareil mobile
- ┌────────┐   ┌──╢           │       ║◄───┐   └──────────┘ (Android, iPhone ...)
- │ jabber │◄──┘  ╚═══════════╧═══════╝    │      ......
- └────────┘                               │   ┌──────────┐
-   ......                                 └───┤ client N │ Autres appareils
-                                              └──────────┘
-
-
-└────────────┘   └───────────────────┘╘══════╛└────────────────────────────────┘
-   serveurs        interface ncurses  protocole      interfaces distantes
-                                        relay
-....
+include::includes/relay.fr.adoc[tag=diagram]
 
 [NOTE]
 Tous les clients ici utilisent le protocole _weechat_ dans l'extension _relay_.

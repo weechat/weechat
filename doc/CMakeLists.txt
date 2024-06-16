@@ -283,6 +283,7 @@ if(ENABLE_MAN OR ENABLE_DOC)
           DEPENDS
           "${CMAKE_CURRENT_SOURCE_DIR}/docinfo.html"
           "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/weechat_relay_weechat.${lang}.adoc"
+          "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/includes/relay.${lang}.adoc"
           WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
           COMMENT "Building weechat_relay_weechat.${lang}.html"
         )
