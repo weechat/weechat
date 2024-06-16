@@ -18,8 +18,9 @@
 
 Запуск из шелла:
 
+[source,shell]
 ----
-$ weechat
+weechat
 ----
 
 // TRANSLATION MISSING

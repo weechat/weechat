@@ -1298,9 +1298,10 @@ Gettext files are in directory _po/_.
 If you want to initialize a new language, use command `msginit`. For example to
 create a file which is ready to translate to Dutch:
 
+[source,shell]
 ----
-$ cd po
-$ msginit -i weechat.pot -l nl_NL -o nl.po
+cd po
+msginit -i weechat.pot -l nl_NL -o nl.po
 ----
 
 Base language for WeeChat is English, so you must of course perfectly understand
@@ -1309,8 +1310,9 @@ English in order to translate to your language.
 After changes in sources, you can regenerate all translations files: run this
 command in the CMake "build" directory:
 
+[source,shell]
 ----
-$ make translations && make update-po
+make translations && make update-po
 ----
 
 Then you can edit .po files (if you can translate in a language).
@@ -1318,8 +1320,9 @@ Then you can edit .po files (if you can translate in a language).
 When done, you *have* to check your file with
 https://github.com/flashcode/msgcheck[msgcheck ^↗^^]:
 
+[source,shell]
 ----
-$ msgcheck.py xx.po
+msgcheck.py xx.po
 ----
 
 And then you can recompile WeeChat to use the new translations.

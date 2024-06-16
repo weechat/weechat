@@ -370,9 +370,10 @@ Możesz zrobić dowiązanie w katalogu _język/autoload_ jeśli chcesz automatyc
 
 Na przykład dla Pythona:
 
+[source,shell]
 ----
-$ cd ~/.local/share/weechat/python/autoload
-$ ln -s ../skrypt.py
+cd ~/.local/share/weechat/python/autoload
+ln -s ../skrypt.py
 ----
 
 [NOTE]

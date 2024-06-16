@@ -16,8 +16,9 @@ X 用端末エミュレータは rxvt-unicode を推奨します: UTF-8
 
 シェルから起動するには:
 
+[source,shell]
 ----
-$ weechat
+weechat
 ----
 
 [[help]]

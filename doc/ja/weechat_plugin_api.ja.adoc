@@ -174,9 +174,10 @@ int weechat_plugin_end (struct t_weechat_plugin *plugin);
 
 1 つのファイル "toto.c" からなるプラグインは以下のようにコンパイルします (GNU/Linux の場合):
 
+[source,shell]
 ----
-$ gcc -fPIC -Wall -c toto.c
-$ gcc -shared -fPIC -o toto.so toto.o
+gcc -fPIC -Wall -c toto.c
+gcc -shared -fPIC -o toto.so toto.o
 ----
 
 [[load_plugin]]

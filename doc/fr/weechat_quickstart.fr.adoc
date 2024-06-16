@@ -13,8 +13,9 @@ touches par défaut.
 
 Lancer depuis votre shell :
 
+[source,shell]
 ----
-$ weechat
+weechat
 ----
 
 [[help]]

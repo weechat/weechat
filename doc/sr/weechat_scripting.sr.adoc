@@ -341,9 +341,10 @@ weechat_print('', 'Поздрав од PHP скрипте!');
 
 На пример, са језиком Python:
 
+[source,shell]
 ----
-$ cd ~/.local/share/weechat/python/autoload
-$ ln -s ../script.py
+cd ~/.local/share/weechat/python/autoload
+ln -s ../script.py
 ----
 
 [NOTE]

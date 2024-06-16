@@ -50,12 +50,14 @@ Si vous avez toujours des problèmes, merci de les remonter aux développeurs.
 Il est recommandé d'utiliser https://brew.sh/[Homebrew ^↗^^],
 vous pouvez avoir de l'aide avec :
 
+[source,shell]
 ----
 brew info weechat
 ----
 
 Vous pouvez installer WeeChat avec cette commande :
 
+[source,shell]
 ----
 brew install weechat
 ----
@@ -393,6 +395,7 @@ d'environnement `TZ` doit être positionnée à la valeur appropriée.
 Dans votre fichier d'initialisation du shell ou sur la ligne de commande, avant
 de démarrer WeeChat :
 
+[source,shell]
 ----
 export TZ=Europe/Paris
 ----
@@ -704,8 +707,9 @@ Selon le terminfo utilisé, la souris peut ne pas être supportée.
 
 Vous pouvez tester le support de la souris dans le terminal :
 
+[source,shell]
 ----
-$ printf '\033[?1002h'
+printf '\033[?1002h'
 ----
 
 Et cliquez sur le premier caractère du terminal (en haut à gauche). Vous devriez
@@ -713,8 +717,9 @@ voir " !!#!!".
 
 Pour désactiver la souris dans le terminal :
 
+[source,shell]
 ----
-$ printf '\033[?1002l'
+printf '\033[?1002l'
 ----
 
 [[mouse_coords]]
@@ -1035,8 +1040,9 @@ Consultez d'abord les questions à propos des connexions TLS dans cette FAQ.
 Si cela ne fonctionne toujours pas, essayez de supprimer manuellement le fichier
 avec les scripts (dans votre shell) :
 
+[source,shell]
 ----
-$ rm ~/.cache/weechat/script/plugins.xml.gz
+rm ~/.cache/weechat/script/plugins.xml.gz
 ----
 
 [NOTE]
@@ -1062,15 +1068,17 @@ vous-même pour obtenir les mises à jour) :
 
 * dans votre shell, avec curl installé :
 
+[source,shell]
 ----
-$ cd ~/.cache/weechat/script
-$ curl -O https://weechat.org/files/plugins.xml.gz
+cd ~/.cache/weechat/script
+curl -O https://weechat.org/files/plugins.xml.gz
 ----
 
 Si vous êtes sous macOS et que le fichier téléchargé a une taille de 0 octet,
 essayez de définir cette variable dans votre fichier d'initialisation du shell
 ou sur la ligne de commande, avant de démarrer WeeChat :
 
+[source,shell]
 ----
 export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
 ----
@@ -1252,6 +1260,7 @@ Voir https://weechat.org/about/support/[cette page ^↗^^].
 
 Quand vous lancez WeeChat sous gdb, vous pouvez avoir cette erreur :
 
+[source,shell]
 ----
 $ gdb /path/to/weechat
 (gdb) run
@@ -1262,6 +1271,7 @@ Cannot find new threads: generic error
 Pour corriger ça, vous pouvez lancer gdb avec cette commande (remplacez le
 chemin vers libpthread et WeeChat avec les chemins sur votre système) :
 
+[source,shell]
 ----
 $ LD_PRELOAD=/lib/libpthread.so.0 gdb /path/to/weechat
 (gdb) run

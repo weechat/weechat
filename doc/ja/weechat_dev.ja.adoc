@@ -1451,9 +1451,10 @@ Gettext ファイルは _po/_
 ディレクトリに入っています。新しい言語の翻訳を始める際は、コマンド
 `msginit` を使ってください。例えばオランダ語の空ファイルを作成するには:
 
+[source,shell]
 ----
-$ cd po
-$ msginit -i weechat.pot -l nl_NL -o nl.po
+cd po
+msginit -i weechat.pot -l nl_NL -o nl.po
 ----
 
 WeeChat
@@ -1462,8 +1463,9 @@ WeeChat
 ソースに変更があった際は、以下のコマンドを Cmake の "build"
 ディレクトリで実行することで、すべての翻訳を再生成する事が可能です。
 
+[source,shell]
 ----
-$ make translations && make update-po
+make translations && make update-po
 ----
 
 その後翻訳できるならば .po ファイルを編集します。
@@ -1472,8 +1474,9 @@ $ make translations && make update-po
 When done, you *have* to check your file with
 https://github.com/flashcode/msgcheck[msgcheck ^↗^^]:
 
+[source,shell]
 ----
-$ msgcheck.py xx.po
+msgcheck.py xx.po
 ----
 
 新しい翻訳を使うには WeeChat を再コンパイルしてください。

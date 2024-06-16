@@ -18,8 +18,9 @@ le scorciatoie da tastiera predefinite.
 
 Avviare dalla propria shell:
 
+[source,shell]
 ----
-$ weechat
+weechat
 ----
 
 [[help]]

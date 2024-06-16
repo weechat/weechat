@@ -19,8 +19,9 @@ keine Probleme mit der Standard Tastaturbelegung.
 
 Programmstart aus deiner Shell:
 
+[source,shell]
 ----
-$ weechat
+weechat
 ----
 
 [[help]]

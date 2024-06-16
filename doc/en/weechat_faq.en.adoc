@@ -48,12 +48,14 @@ If you still have issues, please report them to the developers.
 It is recommended to use https://brew.sh/[Homebrew ^↗^^],
 you can get help with:
 
+[source,shell]
 ----
 brew info weechat
 ----
 
 You can install WeeChat with this command:
 
+[source,shell]
 ----
 brew install weechat
 ----
@@ -379,6 +381,7 @@ There is no option in WeeChat to change the timezone, the environment variable
 
 In your shell initialization file or on command line, before starting WeeChat:
 
+[source,shell]
 ----
 export TZ=America/New_York
 ----
@@ -682,16 +685,18 @@ According to terminfo used, mouse may not be supported.
 
 You can test mouse support in terminal:
 
+[source,shell]
 ----
-$ printf '\033[?1002h'
+printf '\033[?1002h'
 ----
 
 And then click on first char of terminal (upper left). You should see " !!#!!".
 
 To disable mouse in terminal:
 
+[source,shell]
 ----
-$ printf '\033[?1002l'
+printf '\033[?1002l'
 ----
 
 [[mouse_coords]]
@@ -999,8 +1004,9 @@ First check questions about TLS connection in this FAQ.
 
 If still not working, try to manually delete the scripts file (in your shell):
 
+[source,shell]
 ----
-$ rm ~/.cache/weechat/script/plugins.xml.gz
+rm ~/.cache/weechat/script/plugins.xml.gz
 ----
 
 [NOTE]
@@ -1024,15 +1030,17 @@ have to update manually the file yourself to get updates):
 
 * in your shell, with curl installed:
 
+[source,shell]
 ----
-$ cd ~/.cache/weechat/script
-$ curl -O https://weechat.org/files/plugins.xml.gz
+cd ~/.cache/weechat/script
+curl -O https://weechat.org/files/plugins.xml.gz
 ----
 
 If you're running macOS and the downloaded file has a size of 0 bytes,
 try to set this variable in your shell initialization file or on command line,
 before starting WeeChat:
 
+[source,shell]
 ----
 export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
 ----
@@ -1202,6 +1210,7 @@ See https://weechat.org/about/support/[this page ^↗^^].
 
 When you run WeeChat under gdb, you may have this error:
 
+[source,shell]
 ----
 $ gdb /path/to/weechat
 (gdb) run
@@ -1212,6 +1221,7 @@ Cannot find new threads: generic error
 To fix that, you can run gdb with this command (replace path to libpthread and
 WeeChat with paths on your system):
 
+[source,shell]
 ----
 $ LD_PRELOAD=/lib/libpthread.so.0 gdb /path/to/weechat
 (gdb) run

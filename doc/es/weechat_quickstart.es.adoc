@@ -18,8 +18,9 @@ los atajos de teclado predeterminados.
 
 Ejecuta desde una consola:
 
+[source,shell]
 ----
-$ weechat
+weechat
 ----
 
 [[help]]

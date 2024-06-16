@@ -373,9 +373,10 @@ anlegen, der in das Verzeichnis _Skriptsprache/autoload_ zeigt.
 
 Ein Beispiel für ein Python-Skript:
 
+[source,shell]
 ----
-$ cd ~/.local/share/weechat/python/autoload
-$ ln -s ../script.py
+cd ~/.local/share/weechat/python/autoload
+ln -s ../script.py
 ----
 
 [NOTE]

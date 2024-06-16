@@ -384,9 +384,10 @@ automaticamente gli script all'avvio di WeeChat.
 
 Ad esempio con Python:
 
+[source,shell]
 ----
-$ cd ~/.local/share/weechat/python/autoload
-$ ln -s ../script.py
+cd ~/.local/share/weechat/python/autoload
+ln -s ../script.py
 ----
 
 [NOTE]

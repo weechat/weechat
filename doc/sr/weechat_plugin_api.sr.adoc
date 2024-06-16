@@ -151,9 +151,10 @@ int weechat_plugin_end (struct t_weechat_plugin *plugin);
 
 Да бисте компајлирали додатак који има само један фајл „toto.c” (на систему GNU/Linux):
 
+[source,shell]
 ----
-$ gcc -fPIC -Wall -c toto.c
-$ gcc -shared -fPIC -o toto.so toto.o
+gcc -fPIC -Wall -c toto.c
+gcc -shared -fPIC -o toto.so toto.o
 ----
 
 [[load_plugin]]

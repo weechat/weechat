@@ -17,8 +17,9 @@ klawiszowymi.
 
 Wywołaj z terminala:
 
+[source,shell]
 ----
-$ weechat
+weechat
 ----
 
 [[help]]

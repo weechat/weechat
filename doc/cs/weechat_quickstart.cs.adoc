@@ -12,8 +12,9 @@ klávesových zkratek.
 
 Spustění z Vašeho shellu:
 
+[source,shell]
 ----
-$ weechat
+weechat
 ----
 
 [[help]]

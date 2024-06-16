@@ -54,12 +54,14 @@ Wenn Sie weiterhin Probleme haben, melden Sie diese bitte den Entwicklern.
 Wir empfehlen, dass zur Installation https://brew.sh/[Homebrew ^↗^^] genutzt wird.
 Hilfe erhält man mittels:
 
+[source,shell]
 ----
 brew info weechat
 ----
 
 WeeChat kann durch folgenden Befehl installiert werden:
 
+[source,shell]
 ----
 brew install weechat
 ----
@@ -399,6 +401,7 @@ Umgebungsvariable `TZ` muss auf einen entsprechenden Wert eingestellt werden.
 Am Besten machen Sie dies in Ihrer Shell-Initialisierungsdatei oder in der
 Befehlszeile, bevor Sie WeeChat starten:
 
+[source,shell]
 ----
 export TZ=Europe/Berlin
 ----
@@ -713,8 +716,9 @@ Entsprechend der ausgegebenen Information, wird ggf. eine Maus nicht unterstütz
 Um zu testen ob eine Mausunterstützung vom Terminal bereitgestellt wird, sollte
 man folgende Zeile im Terminal eingeben:
 
+[source,shell]
 ----
-$ printf '\033[?1002h'
+printf '\033[?1002h'
 ----
 
 Jetzt klickt man mit der Maus auf das erste Zeichen im Terminal (linke obere
@@ -722,8 +726,9 @@ Ecke). Als Ergebnis sollte man folgende Zeichenkette erhalten: " !!#!!".
 
 Um die Mausunterstützung im Terminal zu beenden:
 
+[source,shell]
 ----
-$ printf '\033[?1002l'
+printf '\033[?1002l'
 ----
 
 [[mouse_coords]]
@@ -1067,8 +1072,9 @@ Als erstes sollte das Kapitel über TLS Verbindungen in dieser FAQ gelesen werde
 Wenn das nicht hilft, sollte die Skriptliste von Hand gelöscht werden. Dazu
 folgenden Befehl in der Shell ausführen:
 
+[source,shell]
 ----
-$ rm ~/.cache/weechat/script/plugins.xml.gz
+rm ~/.cache/weechat/script/plugins.xml.gz
 ----
 
 [NOTE]
@@ -1092,15 +1098,17 @@ Das bedeutet aber auch, dass die Skripten von Hand aktuell gehalten werden müss
 
 * und in der Shell, mit installiertem curl:
 
+[source,shell]
 ----
-$ cd ~/.cache/weechat/script
-$ curl -O https://weechat.org/files/plugins.xml.gz
+cd ~/.cache/weechat/script
+curl -O https://weechat.org/files/plugins.xml.gz
 ----
 
 Wenn Sie macOS ausführen und die heruntergeladene Datei eine Größe von 0 Byte hat,
 versuchen Sie, diese Variable in Ihrer Shell-Initialisierungsdatei oder auf der
 Befehlszeile zu setzen. Bevor Sie WeeChat starten:
 
+[source,shell]
 ----
 export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
 ----
@@ -1272,6 +1280,7 @@ siehe https://weechat.org/about/support/[this page ^↗^^].
 
 Falls man WeeChat in gdb ausführt, kann folgende Fehlermeldung erscheinen:
 
+[source,shell]
 ----
 $ gdb /Pfad/zu/weechat
 (gdb) run
@@ -1282,6 +1291,7 @@ Cannot find new threads: generic error
 Um diesen Fehler zu beheben, sollte man gdb wie folgt aufrufen (der Pfad zu
 libpthread und WeeChat muss natürlich an das eigene System angepasst werden):
 
+[source,shell]
 ----
 $ LD_PRELOAD=/lib/libpthread.so.0 gdb /Pfad/zu/weechat
 (gdb) run

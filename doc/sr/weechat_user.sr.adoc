@@ -215,8 +215,9 @@ WeeChat мора да се изгради са CMake.
 
 Ако користите дистрибуцију базирану на Debian/Ubuntu и ако имате неке „deb-src” изворне ставке у фајлу _/etc/apt/sources.list_, можете инсталирати све зависности командом:
 
+[source,shell]
 ----
-# apt-get build-dep weechat
+sudo apt-get build-dep weechat
 ----
 
 [[build]]
@@ -224,22 +225,24 @@ WeeChat мора да се изгради са CMake.
 
 * Инсталација у системске директоријуме (неопходне су _root_ привилегије):
 
+[source,shell]
 ----
-$ mkdir build
-$ cd build
-$ cmake ..
-$ make
-$ sudo make install
+mkdir build
+cd build
+cmake ..
+make
+sudo make install
 ----
 
 * Инсталација у директоријум по жељи (на пример, у ваш почетни):
 
+[source,shell]
 ----
-$ mkdir build
-$ cd build
-$ cmake .. -DCMAKE_INSTALL_PREFIX=/путања/до/директоријума
-$ make
-$ make install
+mkdir build
+cd build
+cmake .. -DCMAKE_INSTALL_PREFIX=/путања/до/директоријума
+make
+make install
 ----
 
 Можете да користите опције за CMake, у формату: `-DОПЦИЈА=ВРЕДНОСТ`.
@@ -375,14 +378,16 @@ $ make install
 
 Остале команде могу да се прикажу следећом командом:
 
+[source,shell]
 ----
-$ cmake -LA
+cmake -LA
 ----
 
 или са Curses интерфејсом:
 
+[source,shell]
 ----
-$ ccmake ..
+ccmake ..
 ----
 
 [[tests]]
@@ -395,14 +400,16 @@ $ ccmake ..
 
 Када се компајлира програм WeeChat, тестови морају да се укључе:
 
+[source,shell]
 ----
-$ cmake .. -DENABLE_TESTS=ON
+cmake .. -DENABLE_TESTS=ON
 ----
 
 Након компајлирања могу да се покрену из директоријума у који је изграђен програм:
 
+[source,shell]
 ----
-$ ctest -V
+ctest -V
 ----
 
 [[git_sources]]
@@ -412,8 +419,9 @@ $ ctest -V
 
 Да бисте преузели Git изворе, извршите следећу команду:
 
+[source,shell]
 ----
-$ git clone https://github.com/weechat/weechat.git
+git clone https://github.com/weechat/weechat.git
 ----
 
 Затим следите инструкције за <<source_package,пакет са изворима>>).
@@ -434,8 +442,9 @@ $ git clone https://github.com/weechat/weechat.git
 
 Ако компајлирате са CMake:
 
+[source,shell]
 ----
-$ cmake .. -DCMAKE_BUILD_TYPE=Debug
+cmake .. -DCMAKE_BUILD_TYPE=Debug
 ----
 
 [[address_sanitizer]]
@@ -443,8 +452,9 @@ $ cmake .. -DCMAKE_BUILD_TYPE=Debug
 
 Можете и да укључите чистач адресе, помоћу кога се програм WeeChat тренутно руши чим дође до неког проблема:
 
+[source,shell]
 ----
-$ cmake .. -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_FLAGS=-fsanitize=address -DCMAKE_CXX_FLAGS=-fsanitize=address -DCMAKE_EXE_LINKER_FLAGS=-fsanitize=address
+cmake .. -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_FLAGS=-fsanitize=address -DCMAKE_CXX_FLAGS=-fsanitize=address -DCMAKE_EXE_LINKER_FLAGS=-fsanitize=address
 ----
 
 [WARNING]
@@ -452,8 +462,9 @@ $ cmake .. -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_FLAGS=-fsanitize=address -DCMAKE_C
 
 Затим када се компајлира и инсталира, програм WeeChat морате покренути на следећи начин:
 
+[source,shell]
 ----
-$ ASAN_OPTIONS="detect_odr_violation=0 log_path=asan.log" weechat
+ASAN_OPTIONS="detect_odr_violation=0 log_path=asan.log" weechat
 ----
 
 У случају краха, дневник се налази у фајлу `asan.log`.
@@ -471,12 +482,14 @@ $ ASAN_OPTIONS="detect_odr_violation=0 log_path=asan.log" weechat
 
 На пример, на Linux систему са _bash_ командним окружењем, додајте следећу линију у свој `~/.bashrc`:
 
+[source,shell]
 ----
 ulimit -c unlimited
 ----
 
 Или поставите макс величину:
 
+[source,shell]
 ----
 ulimit -c 200000
 ----
@@ -493,6 +506,7 @@ https://wiki.archlinux.org/title/Core_dump[вики страницу ^↗^^].
 
 На пример, ако је _weechat_ инсталиран у _/usr/bin/_ а _core_ фајл се налази у _/home/user/_, онда покрените gdb следећом командом:
 
+[source,shell]
 ----
 gdb /usr/bin/weechat /home/user/core
 ----
@@ -537,6 +551,7 @@ Copying output to /tmp/crash.txt.
 
 Ако желите да вршите дибаг програма WeeChat који се извршава (на пример, ако изгледа да је програм WeeChat блокиран), можете употребите gdb са id процеса (замените _12345_ са PID weechat процеса):
 
+[source,shell]
 ----
 gdb /usr/bin/weechat 12345
 ----
@@ -552,8 +567,9 @@ gdb /usr/bin/weechat 12345
 
 Ако желите да покренете програм WeeChat, задајте следећу команду:
 
+[source,shell]
 ----
-$ weechat
+weechat
 ----
 
 Када по први пут покренете програм WeeChat, у директоријуму _~/.config/weechat_ се креирају подразумевани конфигурациони фајлови са подразумеваним опцијама и вредностима (погледајте <<files_and_directories,Фајлови и директоријуми>>).
@@ -745,8 +761,9 @@ WeeChat подразумевано користи XDG директоријуме
 
 Ово чува тренутно стање у `*.upgrade` фајлове. Након тога можете или да поново покренете машину, или да комплетне WeeChat директоријуме (config, data, cache) преместите на неку другу машину и касније покренете програм WeeChat следећом командом:
 
+[source,shell]
 ----
-$ weechat --upgrade
+weechat --upgrade
 ----
 
 [[restart_after_upgrade]]
@@ -2658,8 +2675,9 @@ Spell додатак вам омогућава да проверите прав�
 
 Име опције је aspell конфигурациона опција. Листа опција може да се пронађе у командном окружењу помоћу следеће команде:
 
+[source,shell]
 ----
-$ aspell config
+aspell config
 ----
 
 На пример, ако желите да укључите опцију „ignore-case”:
@@ -3180,8 +3198,9 @@ irc[6][s]://[надимак[:лозинка]@]irc.пример.org[:порт][/�
 
 Пример за приступ каналима _#weechat_ и _#weechat-fr_ на серверу _irc.libera.chat_,подразумевани порт (6667), користећи надимак _alice_:
 
+[source,shell]
 ----
-$ weechat irc://alice@irc.libera.chat/#weechat,#weechat-fr
+weechat irc://alice@irc.libera.chat/#weechat,#weechat-fr
 ----
 
 [[irc_servers]]
@@ -3331,9 +3350,10 @@ irc.server.xxx.tls_verify::
 
 * Увоз сертификата у командном окружењу:
 
+[source,shell]
 ----
-$ mkdir -p ~/.config/weechat/tls
-$ wget -O ~/.config/weechat/tls/CAs.pem https://www.spi-inc.org/ca/spi-cacert.crt
+mkdir -p ~/.config/weechat/tls
+wget -O ~/.config/weechat/tls/CAs.pem https://www.spi-inc.org/ca/spi-cacert.crt
 ----
 
 [NOTE]
@@ -3353,10 +3373,11 @@ $ wget -O ~/.config/weechat/tls/CAs.pem https://www.spi-inc.org/ca/spi-cacert.cr
 
 * Креирајте сертификат у командном окружењу:
 
+[source,shell]
 ----
-$ mkdir -p ~/.config/weechat/tls
-$ cd ~/.config/weechat/tls
-$ openssl req -nodes -newkey rsa:2048 -keyout nick.pem -x509 -days 365 -out nick.pem
+mkdir -p ~/.config/weechat/tls
+cd ~/.config/weechat/tls
+openssl req -nodes -newkey rsa:2048 -keyout nick.pem -x509 -days 365 -out nick.pem
 ----
 
 [NOTE]
@@ -3401,8 +3422,9 @@ https://www.oftc.net/NickServ/CertFP/[ову страницу ^↗^^].
 
 Кључ можете да генеришете следећом командом:
 
+[source,shell]
 ----
-$ openssl ecparam -genkey -name prime256v1 -out ~/.config/weechat/ecdsa.pem
+openssl ecparam -genkey -name prime256v1 -out ~/.config/weechat/ecdsa.pem
 ----
 
 [NOTE]
@@ -3410,8 +3432,9 @@ $ openssl ecparam -genkey -name prime256v1 -out ~/.config/weechat/ecdsa.pem
 
 Набавите јавни кључ (кодиран у base64) следећом командом:
 
+[source,shell]
 ----
-$ openssl ec -noout -text -conv_form compressed -in ~/.config/weechat/ecdsa.pem | grep '^pub:' -A 3 | tail -n 3 | tr -d ' \n:' | xxd -r -p | base64
+openssl ec -noout -text -conv_form compressed -in ~/.config/weechat/ecdsa.pem | grep '^pub:' -A 3 | tail -n 3 | tr -d ' \n:' | xxd -r -p | base64
 ----
 
 Повежите се са сервером, идентификујте се (на пример са „nickserv identify”) и поставите свој јавни кључ у налог, користећи nickserv (замените base64 вредност са вредношћу вашег јавног кључа):
@@ -3475,8 +3498,9 @@ $ openssl ec -noout -text -conv_form compressed -in ~/.config/weechat/ecdsa.pem 
 
 Најпре морате да инсталирате Tor. За Debian (и изведене из њега):
 
+[source,shell]
 ----
-$ sudo apt-get install tor
+sudo apt-get install tor
 ----
 
 У програму WeeChat морате да додате socks5 прокси за Tor сервис (имехоста/IP и порт зависе од ваше Tor конфигурације):
@@ -4365,10 +4389,11 @@ TLS можете да користите креирањем сертификат
 
 Сертификат и приватни кључ можете да креирате следећим командама:
 
+[source,shell]
 ----
-$ mkdir -p ~/.config/weechat/tls
-$ cd ~/.config/weechat/tls
-$ openssl req -nodes -newkey rsa:2048 -keyout relay.pem -x509 -days 365 -out relay.pem
+mkdir -p ~/.config/weechat/tls
+cd ~/.config/weechat/tls
+openssl req -nodes -newkey rsa:2048 -keyout relay.pem -x509 -days 365 -out relay.pem
 ----
 
 [NOTE]
@@ -4499,8 +4524,9 @@ URI мора да се завршава са „/weechat” за _irc_ и _weech
 
 Употребом OpenSSH:
 
+[source,shell]
 ----
-$ ssh -L 9000:.weechat/relay_socket корисник@имехоста
+ssh -L 9000:.weechat/relay_socket корисник@имехоста
 ----
 
 Ово преусмерава локалне релеј клијенте који се повезују на порт 9000 на инстанцу програма WeeChat која се извршава на машини „имехоста”.
@@ -4582,33 +4608,38 @@ FIFO пајп се налази у WeeChat директоријуму за вр�
 
 * Измена надимка на IRC серверу libera на „newnick”:
 
+[source,shell]
 ----
-$ echo 'irc.server.libera */nick newnick' >/run/user/1000/weechat/weechat_fifo_12345
+echo 'irc.server.libera */nick newnick' >/run/user/1000/weechat/weechat_fifo_12345
 ----
 
 * Слање поруке на #weechat IRC канал:
 
+[source,shell]
 ----
-$ echo 'irc.libera.#weechat *hello!' >/run/user/1000/weechat/weechat_fifo_12345
+echo 'irc.libera.#weechat *hello!' >/run/user/1000/weechat/weechat_fifo_12345
 ----
 
 * Слање вишелинијске поруке на IRC канал #test, у случају да је могућност „draft/multiline”
   укључена на ergo серверу:
 
+[source,shell]
 ----
-$ echo 'irc.ergo.#test \здраво\n...на две линије!' >/run/user/1000/weechat/weechat_fifo_12345
+echo 'irc.ergo.#test \здраво\n...на две линије!' >/run/user/1000/weechat/weechat_fifo_12345
 ----
 
 * Слање поруке у текући бафер:
 
+[source,shell]
 ----
-$ echo '*здраво!' >/run/user/1000/weechat/weechat_fifo_12345
+echo '*здраво!' >/run/user/1000/weechat/weechat_fifo_12345
 ----
 
 * Слање две команде за уклањање из меморије/поновно учитавање Python скрипти (морате да их раздвојите са „\n”):
 
+[source,shell]
 ----
-$ printf '%b' '*/python unload\n*/python autoload\n' >/run/user/1000/weechat/weechat_fifo_12345
+printf '%b' '*/python unload\n*/python autoload\n' >/run/user/1000/weechat/weechat_fifo_12345
 ----
 
 [[fifo_commands]]

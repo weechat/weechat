@@ -376,9 +376,10 @@ automatiquement le script quand WeeChat démarre.
 
 Par exemple en Python :
 
+[source,shell]
 ----
-$ cd ~/.local/share/weechat/python/autoload
-$ ln -s ../script.py
+cd ~/.local/share/weechat/python/autoload
+ln -s ../script.py
 ----
 
 [NOTE]

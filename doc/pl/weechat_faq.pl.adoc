@@ -51,12 +51,14 @@ Jeśli nadal występują jakieś problemy zgłoś je do developerów.
 
 Zaleca się użycie https://brew.sh/[Homebrew ^↗^^], pomoc uzyskasz za pomocą komendy:
 
+[source,shell]
 ----
 brew info weechat
 ----
 
 Możesz zainstalować WeeChat za pomocą komendy:
 
+[source,shell]
 ----
 brew install weechat
 ----
@@ -378,6 +380,7 @@ być ustawiona na odpowiednią wartość.
 
 W pliku inicjalizującym powłokę lub w linii poleceń, przed uruchomieniem WeeChat wpisz:
 
+[source,shell]
 ----
 export TZ=Europe/Warsaw
 ----
@@ -682,16 +685,18 @@ W zależności od używanego terminfo, mysz może nie być wspierana.
 
 Możesz sprawdzić wsparcie myszy w terminalu:
 
+[source,shell]
 ----
-$ printf '\033[?1002h'
+printf '\033[?1002h'
 ----
 
 Następnie kliknij pierwszy znak w terminalu (górny lewy róg). Powinieneś zobaczyć " !!#!!".
 
 Aby wyłączyć wsparcie dla myszy w terminalu:
 
+[source,shell]
 ----
-$ printf '\033[?1002l'
+printf '\033[?1002l'
 ----
 
 [[mouse_coords]]
@@ -1001,8 +1006,9 @@ w tym dokumencie.
 
 Jeśli to nie pomoże spróbuj ręcznie usunąć plik z listą skryptów (z poziomu powłoki):
 
+[source,shell]
 ----
-$ rm ~/.cache/weechat/script/plugins.xml.gz
+rm ~/.cache/weechat/script/plugins.xml.gz
 ----
 
 [NOTE]
@@ -1026,15 +1032,17 @@ have to update manually the file yourself to get updates):
 
 * w powłoce, z zainstalowanym programem curl:
 
+[source,shell]
 ----
-$ cd ~/.cache/weechat/script
-$ curl -O https://weechat.org/files/plugins.xml.gz
+cd ~/.cache/weechat/script
+curl -O https://weechat.org/files/plugins.xml.gz
 ----
 
 Jeśli używasz macOS i pobrany plik ma wielkość 0 bajtów, spróbuj ustawić poniższą
 zmianną w inicjalizującym powłokę w terminalu lub z linii poleceń przed
 uruchomieniem WeeChat:
 
+[source,shell]
 ----
 export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
 ----
@@ -1204,6 +1212,7 @@ Zobacz https://weechat.org/about/support/[tą strone ^↗^^].
 
 Podczas uruchamiania WeeChat pod gdb, można spotkać się z takim błędem:
 
+[source,shell]
 ----
 $ gdb /scieżka/do/weechat
 (gdb) run
@@ -1214,6 +1223,7 @@ Cannot find new threads: generic error
 Żeby to naprawić, można użyć takiej komendy(należy zmienić ścieżki do libpthread oraz
 WeeChat na właściwe dla naszego systemu):
 
+[source,shell]
 ----
 $ LD_PRELOAD=/lib/libpthread.so.0 gdb /ścieżka/do/weechat
 (gdb) run

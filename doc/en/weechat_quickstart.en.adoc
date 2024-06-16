@@ -11,8 +11,9 @@ It has good UTF-8 support and works well with WeeChat's default key bindings.
 
 Run from your shell:
 
+[source,shell]
 ----
-$ weechat
+weechat
 ----
 
 [[help]]

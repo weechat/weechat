@@ -244,8 +244,9 @@ Debian および Ubuntu
 ベースのディストリビューションを使っており、_/etc/apt/sources.list_ ファイルで "deb-src"
 ソースエントリを指定しているならば、すべての依存関係にあるパッケージを以下のコマンドでインストール可能です:
 
+[source,shell]
 ----
-# apt-get build-dep weechat
+sudo apt-get build-dep weechat
 ----
 
 // TRANSLATION MISSING
@@ -254,22 +255,24 @@ Debian および Ubuntu
 
 * システムディレクトリにインストールする場合 (_root_ 特権が必要です):
 
+[source,shell]
 ----
-$ mkdir build
-$ cd build
-$ cmake ..
-$ make
-$ sudo make install
+mkdir build
+cd build
+cmake ..
+make
+sudo make install
 ----
 
 * 任意のディレクトリ (例えば自分のホームディレクトリ) にインストールする場合:
 
+[source,shell]
 ----
-$ mkdir build
-$ cd build
-$ cmake .. -DCMAKE_INSTALL_PREFIX=/path/to/directory
-$ make
-$ make install
+mkdir build
+cd build
+cmake .. -DCMAKE_INSTALL_PREFIX=/path/to/directory
+make
+make install
 ----
 
 CMake に対するオプションを指定するには、以下の書式を使ってください: `-DOPTION=VALUE`。
@@ -411,14 +414,16 @@ List of available options:
 
 その他のオプションは以下のコマンドで確認してください:
 
+[source,shell]
 ----
-$ cmake -LA
+cmake -LA
 ----
 
 Curses インターフェースを使う場合は以下のコマンドを使ってください:
 
+[source,shell]
 ----
-$ ccmake ..
+ccmake ..
 ----
 
 // TRANSLATION MISSING
@@ -432,14 +437,16 @@ $ ccmake ..
 
 テストは WeeChat のコンパイル時に有効化しなければいけません:
 
+[source,shell]
 ----
-$ cmake .. -DENABLE_TESTS=ON
+cmake .. -DENABLE_TESTS=ON
 ----
 
 コンパイル終了後、build ディレクトリでテストを起動してください:
 
+[source,shell]
 ----
-$ ctest -V
+ctest -V
 ----
 
 [[git_sources]]
@@ -450,8 +457,9 @@ $ ctest -V
 
 Git ソースを入手するには、以下のコマンドを使ってください:
 
+[source,shell]
 ----
-$ git clone https://github.com/weechat/weechat.git
+git clone https://github.com/weechat/weechat.git
 ----
 
 その後は、ソースパッケージの説明に従ってください
@@ -476,8 +484,9 @@ WeeChat がクラッシュした場合、または WeeChat
 
 CMake でコンパイルする場合:
 
+[source,shell]
 ----
-$ cmake .. -DCMAKE_BUILD_TYPE=Debug
+cmake .. -DCMAKE_BUILD_TYPE=Debug
 ----
 
 // TRANSLATION MISSING
@@ -488,8 +497,9 @@ $ cmake .. -DCMAKE_BUILD_TYPE=Debug
 You can additionally enable the address sanitizer, which causes WeeChat to
 crash immediately in case of problem:
 
+[source,shell]
 ----
-$ cmake .. -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_FLAGS=-fsanitize=address -DCMAKE_CXX_FLAGS=-fsanitize=address -DCMAKE_EXE_LINKER_FLAGS=-fsanitize=address
+cmake .. -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_FLAGS=-fsanitize=address -DCMAKE_CXX_FLAGS=-fsanitize=address -DCMAKE_EXE_LINKER_FLAGS=-fsanitize=address
 ----
 
 // TRANSLATION MISSING
@@ -500,8 +510,9 @@ this is not recommended in production.
 // TRANSLATION MISSING
 Then once compiled and installed, you must run WeeChat like this:
 
+[source,shell]
 ----
-$ ASAN_OPTIONS="detect_odr_violation=0 log_path=asan.log" weechat
+ASAN_OPTIONS="detect_odr_violation=0 log_path=asan.log" weechat
 ----
 
 // TRANSLATION MISSING
@@ -522,12 +533,14 @@ WeeChat バージョン 0.3.8 以下または WeeChat の実行前に core
 
 Linux で _bash_ シェルを使っている場合、以下の内容を `~/.bashrc` に追加してください:
 
+[source,shell]
 ----
 ulimit -c unlimited
 ----
 
 サイズを指定する場合は:
 
+[source,shell]
 ----
 ulimit -c 200000
 ----
@@ -550,6 +563,7 @@ https://wiki.archlinux.org/title/Core_dump[wiki page ^↗^^].
 例えば、_weechat_ が _/usr/bin/_ にインストールされ、_core_ ファイルが
 _/home/user/_ にある場合、以下のコマンドで gdb を起動してください:
 
+[source,shell]
 ----
 gdb /usr/bin/weechat /home/user/core
 ----
@@ -596,6 +610,7 @@ Copying output to /tmp/crash.txt.
 起動している WeeChat をデバッグするには (例えば WeeChat がフリーズしているような場合)、gdb
 の引数にプロセス番号を与えて起動します (_12345_ は weechat プロセスの PID に変更してください):
 
+[source,shell]
 ----
 gdb /usr/bin/weechat 12345
 ----
@@ -611,8 +626,9 @@ gdb /usr/bin/weechat 12345
 
 WeeChat を起動させるには、以下コマンドを実行:
 
+[source,shell]
 ----
-$ weechat
+weechat
 ----
 
 WeeChat の初回起動時にデフォルトのオプション設定を含む設定ファイルが
@@ -844,8 +860,9 @@ This saves the current state in `*.upgrade` files. You can then either reboot
 or move the whole WeeChat directories (config, data, cache) to another machine,
 and restart WeeChat later with this command:
 
+[source,shell]
 ----
-$ weechat --upgrade
+weechat --upgrade
 ----
 
 // TRANSLATION MISSING
@@ -2999,8 +3016,9 @@ Speller オプションは aspell 設定の "option"
 ここで利用するオプション名は aspell
 設定オプションと同じものです。オプションのリストはシェルで以下のコマンドを実行することで確認できます:
 
+[source,shell]
 ----
-$ aspell config
+aspell config
 ----
 
 例えば、"ignore-case" オプションを有効化するには:
@@ -3572,8 +3590,9 @@ irc[6][s]://[nick[:password]@]irc.example.org[:port][/channel][,channel[...]]
 _alice_ というニックネームを使って _irc.libera.chat_ ホストのデフォルトポート (6667)
 で稼働中の IRC サーバ上の _#weechat_ と _#weechat-fr_ チャンネルに参加する例:
 
+[source,shell]
 ----
-$ weechat irc://alice@irc.libera.chat/#weechat,#weechat-fr
+weechat irc://alice@irc.libera.chat/#weechat,#weechat-fr
 ----
 
 // TRANSLATION MISSING
@@ -3730,9 +3749,10 @@ irc.server.xxx.tls_verify::
 
 * シェルを使って証明書をインポート:
 
+[source,shell]
 ----
-$ mkdir -p ~/.config/weechat/tls
-$ wget -O ~/.config/weechat/tls/CAs.pem https://www.spi-inc.org/ca/spi-cacert.crt
+mkdir -p ~/.config/weechat/tls
+wget -O ~/.config/weechat/tls/CAs.pem https://www.spi-inc.org/ca/spi-cacert.crt
 ----
 
 // TRANSLATION MISSING
@@ -3754,10 +3774,11 @@ CAs.pem ファイル中で複数の証明書を連結することもできます
 
 * シェルで証明書を作成:
 
+[source,shell]
 ----
-$ mkdir -p ~/.config/weechat/tls
-$ cd ~/.config/weechat/tls
-$ openssl req -nodes -newkey rsa:2048 -keyout nick.pem -x509 -days 365 -out nick.pem
+mkdir -p ~/.config/weechat/tls
+cd ~/.config/weechat/tls
+openssl req -nodes -newkey rsa:2048 -keyout nick.pem -x509 -days 365 -out nick.pem
 ----
 
 // TRANSLATION MISSING
@@ -3810,8 +3831,9 @@ ECDSA-NIST256P-CHALLENGE を使って認証を行うためには、秘密鍵を�
 
 鍵を作成するには、以下のコマンドを使ってください:
 
+[source,shell]
 ----
-$ openssl ecparam -genkey -name prime256v1 -out ~/.config/weechat/ecdsa.pem
+openssl ecparam -genkey -name prime256v1 -out ~/.config/weechat/ecdsa.pem
 ----
 
 // TRANSLATION MISSING
@@ -3821,8 +3843,9 @@ which can also be for example `~/.weechat`.
 
 公開鍵を (base64 エンコード形式で) 作成するには、以下のコマンドを使ってください:
 
+[source,shell]
 ----
-$ openssl ec -noout -text -conv_form compressed -in ~/.config/weechat/ecdsa.pem | grep '^pub:' -A 3 | tail -n 3 | tr -d ' \n:' | xxd -r -p | base64
+openssl ec -noout -text -conv_form compressed -in ~/.config/weechat/ecdsa.pem | grep '^pub:' -A 3 | tail -n 3 | tr -d ' \n:' | xxd -r -p | base64
 ----
 
 サーバに接続、本人確認 (例えば "nickserv identify" を使って)、nickserv
@@ -3892,8 +3915,9 @@ privacy and security on the Internet.
 
 最初に、Tor をインストールしてください。Debian (とその派生ディストリビューション) の場合:
 
+[source,shell]
 ----
-$ sudo apt-get install tor
+sudo apt-get install tor
 ----
 
 WeeChat で Tor サービスを使った socks5 プロキシを作成してください
@@ -4827,10 +4851,11 @@ The default path to certificate/key is defined by option
 
 以下のコマンドを使って証明書と秘密鍵ファイルを作成します:
 
+[source,shell]
 ----
-$ mkdir -p ~/.config/weechat/tls
-$ cd ~/.config/weechat/tls
-$ openssl req -nodes -newkey rsa:2048 -keyout relay.pem -x509 -days 365 -out relay.pem
+mkdir -p ~/.config/weechat/tls
+cd ~/.config/weechat/tls
+openssl req -nodes -newkey rsa:2048 -keyout relay.pem -x509 -days 365 -out relay.pem
 ----
 
 // TRANSLATION MISSING
@@ -4982,8 +5007,9 @@ SSH 転送を許可する際に特に便利です。
 
 OpenSSH を使った例:
 
+[source,shell]
 ----
-$ ssh -L 9000:.weechat/relay_socket user@hostname
+ssh -L 9000:.weechat/relay_socket user@hostname
 ----
 
 これでポート 9000 番に接続してきたローカルのリレークライアントは
@@ -5073,35 +5099,40 @@ allowing for example to send multiline messages:
 
 * IRC サーバ libera で使うニックネームを "newnick" に変更する:
 
+[source,shell]
 ----
-$ echo 'irc.server.libera */nick newnick' >/run/user/1000/weechat/weechat_fifo_12345
+echo 'irc.server.libera */nick newnick' >/run/user/1000/weechat/weechat_fifo_12345
 ----
 
 * IRC チャンネル #weechat に対してテキストを送信:
 
+[source,shell]
 ----
-$ echo 'irc.libera.#weechat *hello!' >/run/user/1000/weechat/weechat_fifo_12345
+echo 'irc.libera.#weechat *hello!' >/run/user/1000/weechat/weechat_fifo_12345
 ----
 
 // TRANSLATION MISSING
 * Send a multiline message on IRC #test channel, if capability "draft/multiline"
   is enabled on the ergo server:
 
+[source,shell]
 ----
-$ echo 'irc.ergo.#test \hello\n...on two lines!' >/run/user/1000/weechat/weechat_fifo_12345
+echo 'irc.ergo.#test \hello\n...on two lines!' >/run/user/1000/weechat/weechat_fifo_12345
 ----
 
 * 現在のバッファに対してテキストを送信:
 
+[source,shell]
 ----
-$ echo '*hello!' >/run/user/1000/weechat/weechat_fifo_12345
+echo '*hello!' >/run/user/1000/weechat/weechat_fifo_12345
 ----
 
 * Python スクリプトのアンロードとロードを行う 2 つのコマンドを送信
   (複数のコマンドは "\n" で分割してください):
 
+[source,shell]
 ----
-$ printf '%b' '*/python unload\n*/python autoload\n' >/run/user/1000/weechat/weechat_fifo_12345
+printf '%b' '*/python unload\n*/python autoload\n' >/run/user/1000/weechat/weechat_fifo_12345
 ----
 
 [[fifo_commands]]

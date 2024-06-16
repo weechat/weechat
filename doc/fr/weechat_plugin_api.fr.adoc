@@ -170,9 +170,10 @@ _weechat-plugin.h_ est requis.
 
 Pour compiler l'extension qui n'a qu'un fichier "toto.c" (sous GNU/Linux) :
 
+[source,shell]
 ----
-$ gcc -fPIC -Wall -c toto.c
-$ gcc -shared -fPIC -o toto.so toto.o
+gcc -fPIC -Wall -c toto.c
+gcc -shared -fPIC -o toto.so toto.o
 ----
 
 [[load_plugin]]

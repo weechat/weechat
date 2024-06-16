@@ -57,12 +57,14 @@ If you still have issues, please report them to the developers.
 
 https://brew.sh/[Homebrew ^↗^^] を使うことをお勧めします、ヘルプを見るには:
 
+[source,shell]
 ----
 brew info weechat
 ----
 
 以下のコマンドで WeeChat をインストールします:
 
+[source,shell]
 ----
 brew install weechat
 ----
@@ -390,6 +392,7 @@ There is no option in WeeChat to change the timezone, the environment variable
 // TRANSLATION MISSING
 In your shell initialization file or on command line, before starting WeeChat:
 
+[source,shell]
 ----
 export TZ=Asia/Tokyo
 ----
@@ -700,16 +703,18 @@ to display its code):
 
 マウスサポートを端末から確認するには:
 
+[source,shell]
 ----
-$ printf '\033[?1002h'
+printf '\033[?1002h'
 ----
 
 端末の最初の文字 (左上) をクリックしてください。" !!#!!" と見えるはずです。
 
 端末のマウスサポートを無効化するには:
 
+[source,shell]
 ----
-$ printf '\033[?1002l'
+printf '\033[?1002l'
 ----
 
 [[mouse_coords]]
@@ -1032,8 +1037,9 @@ for help).
 
 それでもだめなら、手作業で (シェルから) スクリプトリストファイルを削除してください:
 
+[source,shell]
 ----
-$ rm ~/.cache/weechat/script/plugins.xml.gz
+rm ~/.cache/weechat/script/plugins.xml.gz
 ----
 
 // TRANSLATION MISSING
@@ -1058,9 +1064,10 @@ If you are not using the XDG directories, the path could be: _~/.weechat/script/
 
 * シェルからスクリプトリストファイルをダウンロードします (必要なら curl をインストールしてください):
 
+[source,shell]
 ----
-$ cd ~/.cache/weechat/script
-$ curl -O https://weechat.org/files/plugins.xml.gz
+cd ~/.cache/weechat/script
+curl -O https://weechat.org/files/plugins.xml.gz
 ----
 
 // TRANSLATION MISSING
@@ -1068,6 +1075,7 @@ If you're running macOS and the downloaded file has a size of 0 bytes,
 try to set this variable in your shell initialization file or on command line,
 before starting WeeChat:
 
+[source,shell]
 ----
 export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
 ----
@@ -1244,6 +1252,7 @@ See https://weechat.org/about/support/[this page ^↗^^].
 
 gdb で WeeChat を実行する場合、以下のエラーが出るかもしれません:
 
+[source,shell]
 ----
 $ gdb /path/to/weechat
 (gdb) run
@@ -1254,6 +1263,7 @@ Cannot find new threads: generic error
 これを修正するには、以下のコマンドを使って gdb を実行してください
 (システム上の libpthread と WeeChat へのパスを変更):
 
+[source,shell]
 ----
 $ LD_PRELOAD=/lib/libpthread.so.0 gdb /path/to/weechat
 (gdb) run

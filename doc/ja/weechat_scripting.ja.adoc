@@ -381,9 +381,10 @@ _language/autoload_ ディレクトリ内にリンクを作ってください。
 
 例えば Python の場合:
 
+[source,shell]
 ----
-$ cd ~/.local/share/weechat/python/autoload
-$ ln -s ../script.py
+cd ~/.local/share/weechat/python/autoload
+ln -s ../script.py
 ----
 
 [NOTE]

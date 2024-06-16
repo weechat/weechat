@@ -58,12 +58,14 @@ If you still have issues, please report them to the developers.
 Se recomienda utilizar https://brew.sh/[Homebrew ^↗^^],
 puede obtener ayuda con el comando:
 
+[source,shell]
 ----
 brew info weechat
 ----
 
 Puede instalar WeeChat con este comando:
 
+[source,shell]
 ----
 brew install weechat
 ----
@@ -394,6 +396,7 @@ No hay razón en WeeChat para cambiar la zona horaria, la variable de entorno
 
 En el archivo de inicialización de su shell o en la línea de comando, antes de ejecutar WeeChat:
 
+[source,shell]
 ----
 export TZ=America/New_York
 ----
@@ -701,16 +704,18 @@ De acuerdo a la información usada, el ratón podrá o no estar soportado.
 
 Puede comprobar el soporte del ratón en la terminal:
 
+[source,shell]
 ----
-$ printf '\033[?1002h'
+printf '\033[?1002h'
 ----
 
 Y después haga clic en el primer caracter de la terminal (superior izquierdo). Debería ver " !!#!!".
 
 Para inhabilitar el ratón en la terminal:
 
+[source,shell]
 ----
-$ printf '\033[?1002l'
+printf '\033[?1002l'
 ----
 
 [[mouse_coords]]
@@ -1033,8 +1038,9 @@ Primero compruebe las preguntas sobre la conexión TLS en este documento.
 
 Si todavía no funciona, trate de manera manual eliminar los archivos de scripts (escriba en su terminal):
 
+[source,shell]
 ----
-$ rm ~/.cache/weechat/script/plugins.xml.gz
+rm ~/.cache/weechat/script/plugins.xml.gz
 ----
 
 // TRANSLATION MISSING
@@ -1059,9 +1065,10 @@ que actualizar manualmente el archivo usted mismo para obtener las actualizacion
 
 * en su terminal, con el software curl instalado:
 
+[source,shell]
 ----
-$ cd ~/.cache/weechat/script
-$ curl -O https://weechat.org/files/plugins.xml.gz
+cd ~/.cache/weechat/script
+curl -O https://weechat.org/files/plugins.xml.gz
 ----
 
 // TRANSLATION MISSING
@@ -1069,6 +1076,7 @@ If you're running macOS and the downloaded file has a size of 0 bytes,
 try to set this variable in your shell initialization file or on command line,
 before starting WeeChat:
 
+[source,shell]
 ----
 export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
 ----
@@ -1243,6 +1251,7 @@ See https://weechat.org/about/support/[this page ^↗^^].
 
 Cuando ejecuta WeeChat bajo gdb, puede tener este error:
 
+[source,shell]
 ----
 $ gdb /ruta/a/weechat
 (gdb) run
@@ -1253,6 +1262,7 @@ Cannot find new threads: generic error
 Para solucionar esto, puede ejecutar gdb con este comando (reemplace la ruta a libpthread y
 WeeChat con las rutas de su sistema):
 
+[source,shell]
 ----
 $ LD_PRELOAD=/lib/libpthread.so.0 gdb /ruta/a/weechat
 (gdb) run

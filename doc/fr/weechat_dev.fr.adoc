@@ -1318,9 +1318,10 @@ Si vous souhaitez initialiser une nouvelle langue, utilisez la commande
 `msginit`. Par exemple pour créer un fichier qui est prêt à traduire en
 néerlandais :
 
+[source,shell]
 ----
-$ cd po
-$ msginit -i weechat.pot -l nl_NL -o nl.po
+cd po
+msginit -i weechat.pot -l nl_NL -o nl.po
 ----
 
 La langue de base pour WeeChat est l'anglais, donc vous devez évidemment
@@ -1329,8 +1330,9 @@ comprendre parfaitement l'anglais pour traduire vers votre langue.
 Après des changements dans les sources, vous pouvez regénérer toutes les
 traductions : lancez cette commande dans le répertoire "build" de CMake :
 
+[source,shell]
 ----
-$ make translations && make update-po
+make translations && make update-po
 ----
 
 Vous pouvez alors éditer les fichiers .po (si vous pouvez traduire dans une
@@ -1339,8 +1341,9 @@ langue).
 Une fois terminé, vous *devez* vérifier votre fichier avec
 https://github.com/flashcode/msgcheck[msgcheck ^↗^^] :
 
+[source,shell]
 ----
-$ msgcheck.py xx.po
+msgcheck.py xx.po
 ----
 
 Et vous pouvez alors recompiler WeeChat pour utiliser les nouvelles traductions.

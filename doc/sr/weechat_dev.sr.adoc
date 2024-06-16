@@ -1267,17 +1267,19 @@ Gettext фајлови се налазе у _po/_ директоријуму.
 
 Ако желите да иницијализујете нови језик, употребите команду `msginit`. На пример, да бисте креирали нови фајл који је спреман за превод на холандски:
 
+[source,shell]
 ----
-$ cd po
-$ msginit -i weechat.pot -l nl_NL -o nl.po
+cd po
+msginit -i weechat.pot -l nl_NL -o nl.po
 ----
 
 Базни језик за програм WeeChat је енглески, тако да се подразумева да перфектно разумете енглески како бисте могли да урадите превод на свој језик.
 
 Након измена у изворним фајловима, можете да регенеришете све фајлове превода следећом командом у CMake „build” директоријуму:
 
+[source,shell]
 ----
-$ make translations && make update-po
+make translations && make update-po
 ----
 
 Затим можете да уређујте .po фајлове (ако можете да преводите на језик).
@@ -1285,8 +1287,9 @@ $ make translations && make update-po
 Када завршите, *морате* да проверите свој фајл са
 https://github.com/flashcode/msgcheck[msgcheck ^↗^^]:
 
+[source,shell]
 ----
-$ msgcheck.py xx.po
+msgcheck.py xx.po
 ----
 
 И након тога можете да рекомпајлирате програм WeeChat тако да користи нове преводе.

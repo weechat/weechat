@@ -227,8 +227,9 @@ Falls eine Debian/Ubuntu basierte Distribution genutzt wird und man einen
 es mit folgendem Befehl möglich alle notwendigen Abhängigkeiten zu
 installieren:
 
+[source,shell]
 ----
-# apt-get build-dep weechat
+sudo apt-get build-dep weechat
 ----
 
 [[build]]
@@ -236,22 +237,24 @@ installieren:
 
 * Installation in das Systemverzeichnis (benötigt _root_ Privilegien):
 
+[source,shell]
 ----
-$ mkdir build
-$ cd build
-$ cmake ..
-$ make
-$ sudo make install
+mkdir build
+cd build
+cmake ..
+make
+sudo make install
 ----
 
 * Installation in ein benutzerdefiniertes Verzeichnis (zum Beispiel ins Heimatverzeichnis):
 
+[source,shell]
 ----
-$ mkdir build
-$ cd build
-$ cmake .. -DCMAKE_INSTALL_PREFIX=/Pfad/zum/Verzeichnis
-$ make
-$ make install
+mkdir build
+cd build
+cmake .. -DCMAKE_INSTALL_PREFIX=/Pfad/zum/Verzeichnis
+make
+make install
 ----
 
 Optionen für CMake können mit dem Format, `-DOPTION=VALUE`, genutzt werden.
@@ -387,14 +390,16 @@ Liste der verfügbaren Optionen:
 
 Weitere Optionen können mit folgendem Befehl angezeigt werden:
 
+[source,shell]
 ----
-$ cmake -LA
+cmake -LA
 ----
 
 oder mittels der Curses-Oberfläche:
 
+[source,shell]
 ----
-$ ccmake ..
+ccmake ..
 ----
 
 [[tests]]
@@ -407,14 +412,16 @@ Folgende Pakete werden *benötigt* um Tests zu kompilieren:
 
 Tests muss aktiviert werden wenn WeeChat kompiliert wird:
 
+[source,shell]
 ----
-$ cmake .. -DENABLE_TESTS=ON
+cmake .. -DENABLE_TESTS=ON
 ----
 
 Nach der Kompilierung wird die Testumgebung im build-Verzeichnis ausgeführt:
 
+[source,shell]
 ----
-$ ctest -V
+ctest -V
 ----
 
 [[git_sources]]
@@ -425,8 +432,9 @@ sich die Quellen nicht kompilieren oder der Code ist nicht stabil. Sie sind hier
 
 Um die Git Quellen zu beziehen nutzen Sie folgende Befehle:
 
+[source,shell]
 ----
-$ git clone https://github.com/weechat/weechat.git
+git clone https://github.com/weechat/weechat.git
 ----
 
 Folgen Sie bitte der Anleitung zur Erstellung aus Quellpaketen (siehe <<source_package,Quellpakete>>).
@@ -447,8 +455,9 @@ Falls WeeChat abgestürzt sein sollte und Sie diesen Fehler melden möchten:
 
 Bei der Kompilierung mit CMake muss folgende Option gesetzt werden:
 
+[source,shell]
 ----
-$ cmake .. -DCMAKE_BUILD_TYPE=Debug
+cmake .. -DCMAKE_BUILD_TYPE=Debug
 ----
 
 [[address_sanitizer]]
@@ -457,8 +466,9 @@ $ cmake .. -DCMAKE_BUILD_TYPE=Debug
 Sie können zusätzlich den Adress-Sanitizer aktivieren, der bei Problemen sofort
 zum Absturz von WeeChat führt:
 
+[source,shell]
 ----
-$ cmake .. -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_FLAGS=-fsanitize=address -DCMAKE_CXX_FLAGS=-fsanitize=address -DCMAKE_EXE_LINKER_FLAGS=-fsanitize=address
+cmake .. -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_FLAGS=-fsanitize=address -DCMAKE_CXX_FLAGS=-fsanitize=address -DCMAKE_EXE_LINKER_FLAGS=-fsanitize=address
 ----
 
 [WARNING]
@@ -467,8 +477,9 @@ Absturz zu provozieren. Diese Funktion wird im produktiven Einsatz nicht empfohl
 
 Nach dem Kompilieren und Installieren müssen Sie WeeChat folgendermaßen ausführen:
 
+[source,shell]
 ----
-$ ASAN_OPTIONS="detect_odr_violation=0 log_path=asan.log" weechat
+ASAN_OPTIONS="detect_odr_violation=0 log_path=asan.log" weechat
 ----
 
 Im Falle eines Absturzes befinden sich zusätzliche Informationen in der Datei, `asan.log`.
@@ -489,12 +500,14 @@ aktivieren, bevor WeeChat gestaret wird, wird der Befehl `ulimit` benötigt.
 Zum Beispiel muss unter Linux in einer _bash_ Shell folgender Befehl in die `~/.bashrc`
 Datei eingetragen werden:
 
+[source,shell]
 ----
 ulimit -c unlimited
 ----
 
 optional kann noch die maximale Dateigröße bestimmt werden:
 
+[source,shell]
 ----
 ulimit -c 200000
 ----
@@ -518,6 +531,7 @@ https://wiki.archlinux.org/title/Core_dump[wiki page ^↗^^].
 Beispiel: _weechat_ ist in _/usr/bin/_ installiert und die _core_ Datei befindet sich
 in _/home/user/_. Nun wird gdb mit folgendem Befehl aufgerufen:
 
+[source,shell]
 ----
 gdb /usr/bin/weechat /home/user/core
 ----
@@ -565,6 +579,7 @@ Um eine laufende Sitzung von WeeChat zu debuggen (zum Beispiel wenn WeeChat nich
 mehr reagieren sollte) sollte man gdb mit der Prozess-ID starten (_12345_ muss durch
 die PID des laufenden weechat Prozesses ersetzt werden):
 
+[source,shell]
 ----
 gdb /usr/bin/weechat 12345
 ----
@@ -580,8 +595,9 @@ Sollte WeeChat abgestürzt sein, muss der Befehl `bt full` genutzt werden:
 
 Um WeeChat zu starten muss folgender Befehl ausgeführt werden:
 
+[source,shell]
 ----
-$ weechat
+weechat
 ----
 
 Wird WeeChat das erste mal ausgeführt, wird die Standardkonfiguration und
@@ -799,8 +815,9 @@ Dies speichert den aktuellen Status in `*.upgrade`-Dateien. Sie können dann ent
 die gesamten WeeChat-Verzeichnisse (Konfiguration, Daten, Cache) neu starten oder auf
 einen anderen Computer verschieben und WeeChat später mit diesem Befehl neu starten:
 
+[source,shell]
 ----
-$ weechat --upgrade
+weechat --upgrade
 ----
 
 [[restart_after_upgrade]]
@@ -2847,8 +2864,9 @@ Option in die Sektion "option" der Aspell-Konfiguration hinzufügt.
 Den Name der Option findet man in der ASpell-Konfigurationsdatei. Eine Auflistung aller
 möglichen Optionen erhält man durch:
 
+[source,shell]
 ----
-$ aspell config
+aspell config
 ----
 
 Um zum Beispiel die Option "ignore-case" einzuschalten:
@@ -3423,8 +3441,9 @@ irc[6][s]://[nick[:password]@]irc.example.org[:port][/channel][,channel[...]]
 Beispiel: Anmelden beim Server _irc.libera.chat_ mit dem Nick _alice_ und betreten
 der Kanäle _#weechat_ und _#weechat-fr_ (Standardport (6667) wird genutzt):
 
+[source,shell]
 ----
-$ weechat irc://alice@irc.libera.chat/#weechat,#weechat-fr
+weechat irc://alice@irc.libera.chat/#weechat,#weechat-fr
 ----
 
 [[irc_servers]]
@@ -3582,9 +3601,10 @@ die Verbindung mit einer vorherigen Version (<0.3.1) funktioniert hat.
 
 * Importieren Sie die Zertifikate in einer Shell:
 
+[source,shell]
 ----
-$ mkdir -p ~/.config/weechat/tls
-$ wget -O ~/.config/weechat/tls/CAs.pem https://www.spi-inc.org/ca/spi-cacert.crt
+mkdir -p ~/.config/weechat/tls
+wget -O ~/.config/weechat/tls/CAs.pem https://www.spi-inc.org/ca/spi-cacert.crt
 ----
 
 [NOTE]
@@ -3605,10 +3625,11 @@ Es ist möglich mehrere Zertifikate in der Datei CAs.pem zu verwenden.
 
 * Erstellen Sie ein Zertifikat in der Shell:
 
+[source,shell]
 ----
-$ mkdir -p ~/.config/weechat/tls
-$ cd ~/.config/weechat/tls
-$ openssl req -nodes -newkey rsa:2048 -keyout nick.pem -x509 -days 365 -out nick.pem
+mkdir -p ~/.config/weechat/tls
+cd ~/.config/weechat/tls
+openssl req -nodes -newkey rsa:2048 -keyout nick.pem -x509 -days 365 -out nick.pem
 ----
 
 [NOTE]
@@ -3657,8 +3678,9 @@ dadurch kein Passwort während des Verbindungsaufbaus benötigt).
 
 Ein Schlüssel kann mit folgendem Befehl erzeugt werden:
 
+[source,shell]
 ----
-$ openssl ecparam -genkey -name prime256v1 -out ~/.config/weechat/ecdsa.pem
+openssl ecparam -genkey -name prime256v1 -out ~/.config/weechat/ecdsa.pem
 ----
 
 [NOTE]
@@ -3668,8 +3690,9 @@ das auch beispielsweise `~/.weechat` sein kann.
 Um den öffentlichen Schlüssel zu erhalten (base64 enkodiert) muss
 folgender Befehl ausgeführt werden:
 
+[source,shell]
 ----
-$ openssl ec -noout -text -conv_form compressed -in ~/.config/weechat/ecdsa.pem | grep '^pub:' -A 3 | tail -n 3 | tr -d ' \n:' | xxd -r -p | base64
+openssl ec -noout -text -conv_form compressed -in ~/.config/weechat/ecdsa.pem | grep '^pub:' -A 3 | tail -n 3 | tr -d ' \n:' | xxd -r -p | base64
 ----
 
 Nun Verbindung zum Server herstellen, identifizieren (z.B. mittels "nickserv identify")
@@ -3739,8 +3762,9 @@ Privatsphäre und Sicherheit im Internet verbessern können.
 
 Im ersten Schritt muss Tor installiert werden. Für Debian (und Derivate):
 
+[source,shell]
 ----
-$ sudo apt-get install tor
+sudo apt-get install tor
 ----
 
 In WeeChat muss nun ein socks5-Proxy für den Tor Service erstellt werden (Hostname/IP
@@ -4669,10 +4693,11 @@ Der Standardpfad zum Zertifikat/Schlüssel wird durch die Option definiert
 Ein Zertifikat und einen privaten Schlüssel kann man mit folgenden Befehlen
 erstellen:
 
+[source,shell]
 ----
-$ mkdir -p ~/.config/weechat/tls
-$ cd ~/.config/weechat/tls
-$ openssl req -nodes -newkey rsa:2048 -keyout relay.pem -x509 -days 365 -out relay.pem
+mkdir -p ~/.config/weechat/tls
+cd ~/.config/weechat/tls
+openssl req -nodes -newkey rsa:2048 -keyout relay.pem -x509 -days 365 -out relay.pem
 ----
 
 [NOTE]
@@ -4822,8 +4847,9 @@ andere Ports nicht geöffnet werden können.
 
 OpenSSH nutzen:
 
+[source,shell]
 ----
-$ ssh -L 9000:.weechat/relay_socket user@hostname
+ssh -L 9000:.weechat/relay_socket user@hostname
 ----
 
 Dies leitet lokale relay Client Verbindungen von Port 9000 um, zu
@@ -4911,34 +4937,39 @@ einige Beispiele:
 
 * Ändert den eigenen Nick auf dem IRC Server libera in "newnick":
 
+[source,shell]
 ----
-$ echo 'irc.server.libera */nick newnick' >/run/user/1000/weechat/weechat_fifo_12345
+echo 'irc.server.libera */nick newnick' >/run/user/1000/weechat/weechat_fifo_12345
 ----
 
 * Schickt eine Nachrich in den IRC #weechat Channel:
 
+[source,shell]
 ----
-$ echo 'irc.libera.#weechat *hello!' >/run/user/1000/weechat/weechat_fifo_12345
+echo 'irc.libera.#weechat *hello!' >/run/user/1000/weechat/weechat_fifo_12345
 ----
 
 * Sendet eine mehrzeilige Nachricht in den IRC Kanal #test, wenn die Fähigkeit "draft/multiline"
   auf dem Ergo Server aktiviert ist:
 
+[source,shell]
 ----
-$ echo 'irc.ergo.#test \hello\n...on two lines!' >/run/user/1000/weechat/weechat_fifo_12345
+echo 'irc.ergo.#test \hello\n...on two lines!' >/run/user/1000/weechat/weechat_fifo_12345
 ----
 
 * Schickt eine Nachricht in den aktuellen Buffer:
 
+[source,shell]
 ----
-$ echo '*hello!' >/run/user/1000/weechat/weechat_fifo_12345
+echo '*hello!' >/run/user/1000/weechat/weechat_fifo_12345
 ----
 
 * Sendet zwei Befehle um alle Python-Skripten zu entfernen und dann neu zu laden (die beiden Befehle müssen
   mit "\n" getrennt werden):
 
+[source,shell]
 ----
-$ printf '%b' '*/python unload\n*/python autoload\n' >/run/user/1000/weechat/weechat_fifo_12345
+printf '%b' '*/python unload\n*/python autoload\n' >/run/user/1000/weechat/weechat_fifo_12345
 ----
 
 [[fifo_commands]]
