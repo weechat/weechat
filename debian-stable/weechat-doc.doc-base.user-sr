@@ -1,0 +1,10 @@
+Document: weechat-user-sr
+Title: WeeChat user's guide (Serbian)
+Author: Sébastien Helleu
+Abstract: This manual describes how to use the WeeChat
+ IRC client (Serbian version).
+Section: Network/Communication
+
+Format: HTML
+Index: /usr/share/doc/weechat-doc/html/weechat_user.sr.html
+Files: /usr/share/doc/weechat-doc/html/weechat_user.sr.html

@@ -1,0 +1,10 @@
+Document: weechat-scripting-sr
+Title: WeeChat scripting guide (Serbian)
+Author: Sébastien Helleu
+Abstract: This document describes the API to create scripts
+ for WeeChat (Serbian version).
+Section: Network/Communication
+
+Format: HTML
+Index: /usr/share/doc/weechat-doc/html/weechat_scripting.sr.html
+Files: /usr/share/doc/weechat-doc/html/weechat_scripting.sr.html

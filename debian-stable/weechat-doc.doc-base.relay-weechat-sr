@@ -1,0 +1,10 @@
+Document: weechat-relay-weechat-sr
+Title: WeeChat Relay "weechat" protocol (Serbian)
+Author: Sébastien Helleu
+Abstract: This manual describes WeeChat Relay "weechat" protocol, used by
+ remote GUI to communicate with Relay plugin (Serbian version).
+Section: Network/Communication
+
+Format: HTML
+Index: /usr/share/doc/weechat-doc/html/weechat_relay_weechat.sr.html
+Files: /usr/share/doc/weechat-doc/html/weechat_relay_weechat.sr.html
