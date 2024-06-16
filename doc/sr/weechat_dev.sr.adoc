@@ -534,7 +534,8 @@ WeeChat „језгро” се налази у следећим директо�
 |       weechat_faq.XX.adoc                     | link:weechat_faq.sr.html[ЧПП ^↗^^].
 |       weechat_plugin_api.XX.adoc              | link:weechat_plugin_api.sr.html[Референца за API додатака ^↗^^].
 |       weechat_quickstart.XX.adoc              | link:weechat_quickstart.sr.html[Водич за брзи почетак ^↗^^].
-|       weechat_relay_protocol.XX.adoc          | link:weechat_relay_protocol.sr.html[Релеј протокол ^↗^^] (за удаљене интерфејсе).
+// TRANSLATION MISSING
+|       weechat_relay_weechat.XX.adoc           | link:weechat_relay_weechat.sr.html[Relay "weechat" protocol ^↗^^] (for remote interfaces).
 |       weechat_scripting.XX.adoc               | link:weechat_scripting.sr.html[Водич за скриптовање ^↗^^].
 |       weechat_user.XX.adoc                    | link:weechat_user.sr.html[Корисничко упутство ^↗^^].
 |       includes/                               | Фајлови укључени у документацију.
@@ -1223,8 +1224,9 @@ server->hook_timer_sasl = weechat_hook_timer (timeout * 1000,
 | Референтни приручник API додатака
 
 | doc/relay
-| doc/xx/weechat_relay_protocol.xx.adoc
-| Релеј протокол
+| doc/xx/weechat_relay_weechat.xx.adoc
+// TRANSLATION MISSING
+| Relay "weechat" protocol
 
 | doc/dev
 | doc/xx/weechat_dev.en.adoc

@@ -12,6 +12,7 @@
 - core: allow buffer id in commands `/buffer` and `/print`, in addition to number and name
 - relay: enable websocket extension "permessage-deflate" with "api" relay only ([#1549](https://github.com/weechat/weechat/issues/1549))
 - api: allow NULL value for key in hashtable
+- doc: rename doc "weechat_relay_protocol" to "weechat_relay_weechat"
 
 ### Added
 

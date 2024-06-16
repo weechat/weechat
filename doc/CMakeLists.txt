@@ -28,7 +28,7 @@ if(ENABLE_MAN OR ENABLE_DOC)
   set(SCRIPTING_LANG de en fr it ja pl sr)
   set(FAQ_LANG de en es fr it ja pl sr)
   set(QUICKSTART_LANG cs de en es fr it ja pl ru sr)
-  set(RELAY_LANG en fr ja sr)
+  set(RELAY_WEECHAT_LANG en fr ja sr)
   set(DEV_LANG en fr ja sr)
 
   find_package(Asciidoctor)
@@ -93,8 +93,8 @@ if(ENABLE_MAN OR ENABLE_DOC)
       -a docinfo1
     )
 
-    # asciidoctor arguments for relay protocol
-    set(ASCIIDOCTOR_RELAY_ARGS
+    # asciidoctor arguments for relay "weechat"
+    set(ASCIIDOCTOR_RELAY_WEECHAT_ARGS
       -a toc=left
       -a toclevels=3
       -a sectnums
@@ -275,19 +275,19 @@ if(ENABLE_MAN OR ENABLE_DOC)
         add_custom_target(doc-quickstart-${lang} ALL DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.${lang}.html")
         install(FILES "${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.${lang}.html" DESTINATION "${DATAROOTDIR}/doc/${PROJECT_NAME}")
       endforeach()
-      # relay protocol
-      foreach(lang ${RELAY_LANG})
+      # relay "weechat"
+      foreach(lang ${RELAY_WEECHAT_LANG})
         add_custom_command(
-          OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/weechat_relay_protocol.${lang}.html"
-          COMMAND "${ASCIIDOCTOR_EXECUTABLE}" ARGS ${ASCIIDOCTOR_ARGS} ${ASCIIDOCTOR_RELAY_ARGS} -o "weechat_relay_protocol.${lang}.html" "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/weechat_relay_protocol.${lang}.adoc"
+          OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/weechat_relay_weechat.${lang}.html"
+          COMMAND "${ASCIIDOCTOR_EXECUTABLE}" ARGS ${ASCIIDOCTOR_ARGS} ${ASCIIDOCTOR_RELAY_WEECHAT_ARGS} -o "weechat_relay_weechat.${lang}.html" "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/weechat_relay_weechat.${lang}.adoc"
           DEPENDS
           "${CMAKE_CURRENT_SOURCE_DIR}/docinfo.html"
-          "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/weechat_relay_protocol.${lang}.adoc"
+          "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/weechat_relay_weechat.${lang}.adoc"
           WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
-          COMMENT "Building weechat_relay_protocol.${lang}.html"
+          COMMENT "Building weechat_relay_weechat.${lang}.html"
         )
-        add_custom_target(doc-relay-protocol-${lang} ALL DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/weechat_relay_protocol.${lang}.html")
-        install(FILES "${CMAKE_CURRENT_BINARY_DIR}/weechat_relay_protocol.${lang}.html" DESTINATION "${DATAROOTDIR}/doc/${PROJECT_NAME}")
+        add_custom_target(doc-relay-weechat-${lang} ALL DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/weechat_relay_weechat.${lang}.html")
+        install(FILES "${CMAKE_CURRENT_BINARY_DIR}/weechat_relay_weechat.${lang}.html" DESTINATION "${DATAROOTDIR}/doc/${PROJECT_NAME}")
       endforeach()
       # developer's guide
       foreach(lang ${DEV_LANG})

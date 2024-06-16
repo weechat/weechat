@@ -1,0 +1,10 @@
+Document: weechat-relay-weechat-fr
+Title: WeeChat Relay "weechat" protocol (French)
+Author: Sébastien Helleu
+Abstract: This manual describes WeeChat Relay "weechat" protocol, used by
+ remote GUI to communicate with Relay plugin (French version).
+Section: Network/Communication
+
+Format: HTML
+Index: /usr/share/doc/weechat-doc/html/weechat_relay_weechat.fr.html
+Files: /usr/share/doc/weechat-doc/html/weechat_relay_weechat.fr.html
