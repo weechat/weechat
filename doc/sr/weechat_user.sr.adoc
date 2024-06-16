@@ -34,8 +34,7 @@ WeeChat (Wee Enhanced Environment for Chat) је бесплатни чет кл�
   https://datatracker.ietf.org/doc/html/rfc2812[2812 ^↗^^],
   https://datatracker.ietf.org/doc/html/rfc2813[2813 ^↗^^] и
   https://datatracker.ietf.org/doc/html/rfc7194[7194 ^↗^^],
-// TRANSLATION MISSING
-* IRC proxy and relay for WeeChat and remote interfaces
+* IRC прокси и релеј за WeeChat и удаљене интерфејсе
 * подржавање различитих платформи (GNU/Linux, *BSD, macOS, Windows и остале)
 * 100% GPL, слободан софтвер
 
@@ -127,10 +126,9 @@ WeeChat мора да се изгради са CMake.
   Relay додатак: подршка за TLS везе.
 
 | zlib1g-dev |
-// TRANSLATION MISSING
 | Logger додатак: компресија ротирајућих лог фајлова (gzip). +
-  Relay додатак: компресија порука (WeeChat -> клијент) са https://zlib.net/[zlib ^↗^^]
-  (api and weechat protocols). +
+  Релеј додатак: компресија порука (WeeChat -> клијент) са https://zlib.net/[zlib ^↗^^]
+  (api и weechat протоколи). +
   Script додатак: читање индекс фајла репозиторијума (gzip).
 |===
 
@@ -158,10 +156,9 @@ WeeChat мора да се изгради са CMake.
 | Relay додатак: протокол „api” (HTTP REST API).
 
 | libzstd-dev | ≥ 0.8.1
-// TRANSLATION MISSING
 | Logger додатак: компресија ротирајућих лог фајлова (zstandard). +
-  Relay додатак: компресија порука (WeeChat -> клијент) са https://facebook.github.io/zstd/[Zstandard ^↗^^]
-  (api and weechat protocols).
+  Релеј додатак: компресија порука (WeeChat -> клијент) са https://facebook.github.io/zstd/[Zstandard ^↗^^]
+  (api и weechat протоколи).
 
 | libaspell-dev / libenchant-dev |
 | Spell додатак.
@@ -755,20 +752,17 @@ $ weechat --upgrade
 [[restart_after_upgrade]]
 === Поновно покретање након ажурирања
 
-// TRANSLATION MISSING
 [[restart_upgrading_notes]]
-==== Upgrading notes
+==== Напомене у вези са ажурирањем
 
-// TRANSLATION MISSING
-After an upgrade, it is *strongly recommended* to read the file
+Након ажурирања, *снажно се препоручује* да прочитате фајл
 https://github.com/weechat/weechat/blob/master/UPGRADING.md[UPGRADING.md ^↗^^]
-which contains important information about breaking changes and some
-manual actions that could be required.
+који садржи важне информације у вези са изменама које могу да покваре понашање и
+неке ручне акције које могу да буду неопходне.
 
-// TRANSLATION MISSING
-You must read the versions between your old (excluded) and your new version (included). +
-For example if you switch from version 4.0.0 to 4.3.0, you must read versions
-4.0.1 to 4.3.0.
+Морате да прочитате верзије између ваше старе (искључујући) и нове верзије (укључујући). +
+На пример, ако прелазите са верзије 4.0.0 на 4.3.0, морате да прочитате верзије
+4.0.1 до 4.3.0.
 
 [[restart_configuration_upgrade]]
 ==== Ажурирање конфигурације
@@ -1257,8 +1251,7 @@ _прозор_ је површина екрана која приказује б
 | no_filter        | Линија не може да буде филтрирана.
 | no_highlight     | У линији није могуће истицање.
 | no_log           | Линија се не уписује у лог фајл.
-// TRANSLATION MISSING
-| log0 … log9      | Ниво лога за линију (see the <<command_logger_logger,/logger>> command).
+| log0 … log9      | Ниво лога за линију (погледајте команду <<command_logger_logger,/logger>>).
 | notify_none      | Линија не сме да се дода у врућу листу. ^(1)^
 | notify_message   | Линија је корисничка порука. ^(1)^
 | notify_private   | Линија је приватна порука. ^(1)^
@@ -3068,10 +3061,8 @@ libera = "53B1C86FCDA28FC122A95B0456ABD79B5AB74654F21C3D099A6CCA8173239EEA59533A
 /secure
 ----
 
-// TRANSLATION MISSING
 Обезбеђени подаци могу да се користе у неким опцијама које садрже приватне податке као што су лозинке, употребом формата: „${sec.data.xxx}” где је „xxx” име обезбеђених података (постављених са `/secure set xxx ...`). +
-// TRANSLATION MISSING
-For a complete list of supported options, see the <<command_weechat_secure,/secure>> command.
+За комплетну листу подржаних опција, погледајте команду <<command_weechat_secure,/secure>>.
 
 Да бисте употребили _libera_ лозинку, на пример са <<irc_sasl_authentication,SASL аутентификацијом>>:
 
@@ -3898,8 +3889,7 @@ WeeChat приказује све додатне информације које
 /set irc.server.libera.autojoin "#канал1,#канал2 кључ1"
 ----
 
-// TRANSLATION MISSING
-For help on the format, see option <<option_irc.server_default.autojoin,irc.server_default.autojoin>>.
+За помоћ у вези са форматом, погледајте опцију <<option_irc.server_default.autojoin,irc.server_default.autojoin>>.
 
 [[irc_private_messages]]
 === Приватне поруке
@@ -3945,9 +3935,8 @@ For help on the format, see option <<option_irc.server_default.autojoin,irc.serv
 /filter add irc_smart * irc_smart_filter *
 ----
 
-// TRANSLATION MISSING
 Постоји могућност да се креира филтер само за један канал, или за више канала који
-почињу истим именом (see the <<command_weechat_filter,/filter>> command):
+почињу истим именом (погледајте команду <<command_weechat_filter,/filter>>):
 
 ----
 /filter add irc_smart_weechat irc.libera.#weechat* irc_smart_filter *
@@ -4321,16 +4310,13 @@ include::{autogendir}/autogen_user_options.sr.adoc[tag=typing_options]
 Релеј додатак се користи за релеј података преко мреже, употребом различитих протокола:
 
 * _irc_: IRC прокси: користи се за дељење веза са IRC серверима са једним или више других клијената
-// TRANSLATION MISSING
-* _api_: HTTP REST API, used by WeeChat and remote interfaces to display and
-  interact with WeeChat
-// TRANSLATION MISSING
-* _weechat_: protocol used by remote interfaces to display and interact with
+* _api_: HTTP REST API, користе га WeeChat и удаљени интерфејси да прикажу и да имају интеракцију
+  са WeeChat
+* _weechat_: протокол који удаљени интерфејси користе да прикажу и да имају интеракцију са
   WeeChat.
 
-// TRANSLATION MISSING
-For _api_ and _weechat_ protocols, see the list of remote interfaces on
-https://weechat.org/about/interfaces/[this page ^↗^^].
+За _api_ и _weechat_ протоколе, погледајте листу удаљених интерфејса на
+https://weechat.org/about/interfaces/[овој страници ^↗^^].
 
 [[relay_password]]
 === Лозинка
@@ -4342,15 +4328,13 @@ https://weechat.org/about/interfaces/[this page ^↗^^].
 /set relay.network.password "${sec.data.relay}"
 ----
 
-// TRANSLATION MISSING
-This password is used with all protocols.
+Ова лозинка се користи са свим протоколима.
 
 [[relay_totp]]
 === TOTP
 
-// TRANSLATION MISSING
-TOTP (Time-based One-Time Password) can be used as secondary authentication
-factor for _api_ and _weechat_ protocols, in addition to the password.
+Уз лозинку, као други фактор за _api_ и _weechat_ протоколе може да се користи TOTP
+(Time-based One-Time Password) (једнократна лозинка базирана на времену).
 
 Ово није обавезно, мада повећава ниво безбедности.
 
@@ -4430,29 +4414,28 @@ PASS сервер:лозинка
 /set irc.server.relay.password "${sec.data.relay_libera}"
 ----
 
-// TRANSLATION MISSING
 [[relay_api_protocol]]
-=== API protocol
+=== API протокол
 
-The Relay plugin can send data to a remote WeeChat or interface using an
-HTTP REST API protocol.
+Релеј додатак може да шаље податке удаљеном WeeChat програму или интерфејсу користећи
+HTTP REST API протокол.
 
-You can browse and test the API online:
-https://weechat.org/api/[WeeChat Relay API ^↗^^].
+API можете да погледате и тестирате на мрежи:
+https://weechat.org/api/[WeeChat Релеј API ^↗^^].
 
-You can connect with WeeChat or a remote interface, see
-https://weechat.org/about/interfaces/[this page ^↗^^].
+Можете да се повежете са програмом WeeChat или са удаљеним интерфејсом, погледајте
+https://weechat.org/about/interfaces/[ову страницу ^↗^^].
 
-For example:
+На пример:
 
 ----
 /relay add api 9000
 ----
 
-Now you can connect on port 9000 with a WeeChat or a remote interface using
-password "mypassword".
+Сада са WeeChat или са удаљеним интерфејсом можете да се повежете портом 9000 користећи
+лозинку „mypassword”.
 
-To connect to an _api_ relay with WeeChat:
+Ако желите да се повежете на _api_ рејел са WeeChat:
 
 ----
 /remote add weechat http://localhost:9000 -password=mypassword
@@ -4460,9 +4443,9 @@ To connect to an _api_ relay with WeeChat:
 ----
 
 [NOTE]
-The remote WeeChat must expose the same API version as the local WeeChat, so
-it's highly recommended to use exactly the same WeeChat version on remote
-and local client.
+Удаљени WeeChat мора да објави исту API верзију као и локални WeeChat, тако
+да се снажно препоручује да користите потпуно исту WeeChat верзију на удаљеном
+и на локалном клијенту.
 
 [[relay_weechat_protocol]]
 === WeeChat протокол
@@ -4500,9 +4483,8 @@ websocket = new WebSocket("ws://server.com:9000/weechat");
 
 Порт (9000 у примеру) је порт који је дефинисан у Релеј додатку.
 
-// TRANSLATION MISSING
-The URI must end with "/weechat" for _irc_ and _weechat_ protocols and "/api"
-for _api_ protocol.
+URI мора да се завршава са „/weechat” за _irc_ и _weechat_ протоколе, а са „/api”
+за _api_ протокол.
 
 [[relay_unix_socket]]
 === UNIX доменски сокети

@@ -3215,16 +3215,15 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   +
   ^(1)^ пример из француског
 
-| `+${define:name,value}+` | 3.4
+| `+${define:име,вредност}+` | 3.4
 | Дефинисање променљиве `име` постављене на `вредност`, која онда може да се користи у истом
   израчунатом изразу са `+${име}+`.
 | >> `+${define:len,${calc:5+3}}${len}x${len}+` +
   == `+8x8+`
 
-// TRANSLATION MISSING
-| `+${hdata_count:name[list]}+` +
-  `+${hdata_count:name[pointer]}+` | 4.4.0
-| Number of items in a hdata list or starting at `pointer`.
+| `+${hdata_count:име[листа]}+` +
+  `+${hdata_count:име[показивач]}+` | 4.4.0
+| Број ставки у hdata листи или почевши од `показивач`.
 | >> `+${hdata_count:buffer[gui_buffers]}+` +
   == `+15+`
 
@@ -6059,16 +6058,14 @@ const char *weechat_hashtable_get_string (struct t_hashtable *hashtable,
 *** _pointer_: показивач
 *** _buffer_: бафер
 *** _time_: време
-// TRANSLATION MISSING
-*** _longlong_: long long integer
+*** _longlong_: long long цео број
 ** _type_values_: тип вредности:
 *** _integer_: цео број
 *** _string_: стринг
 *** _pointer_: показивач
 *** _buffer_: бафер
 *** _time_: време
-// TRANSLATION MISSING
-*** _longlong_: long long integer
+*** _longlong_: long long цео број
 ** _keys_: стринг са листом кључева (у формату: „кључ1,кључ2,кључ3”)
 ** _keys_sorted_: стринг са листом сортираних кључева (у формату: „кључ1,кључ2,кључ3”)
 ** _values_: стринг са листом вредности
@@ -11834,10 +11831,9 @@ struct t_hook *weechat_hook_signal (const char *signal,
 | Показивач: бафер.
 | Промењен је наслов бафера.
 
-// TRANSLATION MISSING
 | weechat | [[hook_signal_buffer_modes_changed]] buffer_modes_changed | 4.3.0
-| Pointer: buffer.
-| Modes of buffer changed.
+| Показивач: бафер.
+| Промењени су режими бафера.
 
 | weechat | [[hook_signal_buffer_type_changed]] buffer_type_changed |
 | Показивач: бафер.
@@ -11913,10 +11909,9 @@ struct t_hook *weechat_hook_signal (const char *signal,
 | Показивач: бафер.
 | Претрага текста у баферу.
 
-// TRANSLATION MISSING
 | weechat | [[hook_signal_input_prompt_changed]] input_prompt_changed | 4.3.0
-| Pointer: buffer.
-| Input prompt changed.
+| Показивач: бафер.
+| Промењено је питање уноса.
 
 | weechat | [[hook_signal_input_text_changed]] input_text_changed |
 | Показивач: бафер.
@@ -14303,11 +14298,9 @@ const char *weechat_buffer_get_string (struct t_gui_buffer *buffer,
 ** _short_name_: кратко име бафера (напомена: користи се само за приказ и корисник може да га промени, ово не сме да се употребљава за проналажење имена бафера, уместо њега употребите _name_, _full_name_ или локалну променљиву _channel_)
 ** _type_: тип бафера: „formatted” или „free” _(WeeChat ≥ 4.2.0)_
 ** _title_: наслов бафера
-// TRANSLATION MISSING
-** _modes_: modes _(WeeChat ≥ 4.3.0)_
+** _modes_: режими _(WeeChat ≥ 4.3.0)_
 ** _nicklist_last_id_assigned_: последњи јединствени идентификатор употребљен у овом баферу за групу или надимак _(WeeChat ≥ 4.3.0)_
-// TRANSLATION MISSING
-** _input_prompt_: input prompt _(WeeChat ≥ 4.3.0)_
+** _input_prompt_: питање уноса _(WeeChat ≥ 4.3.0)_
 ** _input_: текст уноса
 ** _text_search_input_: сачувани унос пре претраге текста
 ** _highlight_words_: листа речи које се истичу
@@ -14482,9 +14475,8 @@ void weechat_buffer_set (struct t_gui_buffer *buffer, const char *property,
 | title | | било који стринг
 | Поставља нови наслов бафера.
 
-// TRANSLATION MISSING
-| modes | 4.3.0 | any string
-| Set new modes for buffer.
+| modes | 4.3.0 | било који стринг
+| Поставља нове режиме за бафер.
 
 | time_for_each_line | | "0" или "1"
 | "0" да се скрива време у свим линијама бафера, "1" да се приказује у свим
@@ -14548,9 +14540,8 @@ void weechat_buffer_set (struct t_gui_buffer *buffer, const char *property,
 | key_unbind_xxx | | -
 | Уклања тастерску пречицу _xxx_ за овај бафер.
 
-// TRANSLATION MISSING
-| input_prompt | 4.3.0 | any string
-| Set new value for input prompt.
+| input_prompt | 4.3.0 | било који стринг
+| Поставља нову вредност за питање уноса.
 
 | input | | било који стринг
 | Поставља нову вредност за унос у бафер.
