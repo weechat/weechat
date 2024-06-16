@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2024-06-16 09:14+0200\n"
-"PO-Revision-Date: 2024-06-11 07:49+0200\n"
+"PO-Revision-Date: 2024-06-16 20:38+0400\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: sr\n"
@@ -782,19 +782,17 @@ msgstr "(ништа)"
 msgid "No proxy defined"
 msgstr "Није дефинисан ниједан прокси"
 
-#, fuzzy, c-format
-#| msgid "%sBar \"%s\" already exists"
+#, c-format
 msgid "%sProxy \"%s\" already exists"
-msgstr "%sТрака „%s” већ постоји"
+msgstr "%sПрокси „%s” већ постоји"
 
 #, c-format
 msgid "%sInvalid type \"%s\" for proxy \"%s\""
 msgstr "%sНеважећи тип „%s” за прокси „%s”"
 
-#, fuzzy, c-format
-#| msgid "Proxy \"%s\" deleted"
+#, c-format
 msgid "Proxy \"%s\" updated"
-msgstr "Прокси „%s” је обрисан"
+msgstr "Прокси „%s” је ажуриран"
 
 #, c-format
 msgid "Proxy \"%s\" added"
@@ -1172,13 +1170,6 @@ msgid "manage bars"
 msgstr "управљање тракама"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
-#, fuzzy
-#| msgid ""
-#| "list|listfull|listitems || add <name> <type>[,<conditions>] <position> "
-#| "<size> <separator> <item1>[,<item2>...] || default [input|title|status|"
-#| "nicklist] || rename <name> <new_name> || del <name>|<mask> [<name>|"
-#| "<mask>...] || set <name> <option> <value> || hide|show|toggle <name> || "
-#| "scroll <name> <window> <scroll_value>"
 msgid ""
 "list|listfull|listitems || add|addreplace <name> <type>[,<conditions>] "
 "<position> <size> <separator> <item1>[,<item2>...] || default [input|title|"
@@ -1186,11 +1177,11 @@ msgid ""
 "<mask>...] || set <name> <option> <value> || hide|show|toggle <name> || "
 "scroll <name> <window> <scroll_value>"
 msgstr ""
-"list|listfull|listitems || add <име> <тип>[,<услови>] <позиција> <величина> "
-"<граничник> <ставка1>[,<ставка2>...] || default [input|title|status|"
-"nicklist] || rename <име> <ново_име> || del <име>|<маска> [<име>|<маска>...] "
-"|| set <име> <опција> <вредност> || hide|show|toggle <име> || scroll <име> "
-"<прозор> <скрол_вредн>"
+"list|listfull|listitems || add|addreplace <име> <тип>[,<услови>] "
+"<позиција> <величина> <граничник> <ставка1>[,<ставка2>...] || default "
+"[input|title|status|nicklist] || rename <име> <ново_име> || del <име>|"
+"<маска> [<име>|<маска>...] || set <име> <опција> <вредност> || hide|show|"
+"toggle <име> || scroll <име> <прозор> <скрол_вредн>"
 
 msgid "raw[list]: list all bars"
 msgstr "raw[list]: приказује све траке"
@@ -1204,10 +1195,8 @@ msgstr "raw[listitems]: приказује све ставке траке"
 msgid "raw[add]: add a new bar"
 msgstr "raw[add]: додаје нову траку"
 
-#, fuzzy
-#| msgid "raw[addreplace]: add or replace an existing filter"
 msgid "raw[addreplace]: add or replace an existing bar"
-msgstr "raw[addreplace]: додаје или замењује постојећи филтер"
+msgstr "raw[addreplace]: додаје или замењује постојећу траку"
 
 msgid "name: name of bar (must be unique)"
 msgstr "име: име траке (мора бити јединствено)"
@@ -1331,19 +1320,6 @@ msgid "manage buffers"
 msgstr "управљање баферима"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
-#, fuzzy
-#| msgid ""
-#| "list || add [-free] [-switch] <name> || clear [<number>|<name>|-merged|-"
-#| "all [<number>|<name>...]] || move <number>|-|+ || swap <number1>|<name1> "
-#| "[<number2>|<name2>] || cycle <number>|<name> [<number>|<name>...] || "
-#| "merge <number>|<name> || unmerge [<number>|-all] || hide [<number>|"
-#| "<name>|-all [<number>|<name>...]] || unhide [<number>|<name>|-all "
-#| "[<number>|<name>...]] || switch [-previous] || zoom || renumber "
-#| "[<number1> [<number2> [<start>]]] || close [<n1>[-<n2>]|<name>...] || "
-#| "notify [<level>] || listvar [<number>|<name>] || setvar <name> [<value>] "
-#| "|| delvar <name> || set <property> [<value>] || setauto <property> "
-#| "[<value>] || get <property> || jump smart|last_displayed|prev_visited|"
-#| "next_visited || <number>|-|+|<name>"
 msgid ""
 "list || add [-free] [-switch] <name> || clear [<number>|<name>|-merged|-all "
 "[<id>|<number>|<name>...]] || move <number>|-|+ || swap <id1>|<number1>|"
@@ -1358,15 +1334,15 @@ msgid ""
 "prev_visited|next_visited || <id>|<number>|-|+|<name>"
 msgstr ""
 "list || add [-free] [-switch] <име> || clear [<број>|<име>|-merged|-all "
-"[<број>|<име>...]] || move <број>|-|+ || swap <број1>|<име1> [<број2>|"
-"<име2>] || cycle <број>|<име> [<број>|<име>...] || merge <број>|<име> || "
-"unmerge [<број>|-all] || hide [<број>|<име>|-all [<број>|<име>...]] || "
-"unhide [<број>|<име>|-all [<број>|<име>...]] || switch [-previous] || zoom "
-"|| renumber [<број1> [<број2> [<старт>]]] || close [<n1>[-<n2>]|<име>...] || "
-"notify [<ниво>] || listvar [<број>|<име>] || setvar <име> [<вредн>] || "
-"delvar <име> || set <особина> [<вредн>] || setauto <особина> [<вредн>] || "
-"get <особина> || jump smart|last_displayed|prev_visited|next_visited || "
-"<број>|-|+|<име>"
+"[<ид><број>|<име>...]] || move <број>|-|+ || swap <ид1>|<број1>|<име1> "
+"[<ид2>|<број2>|<име2>] || cycle <ид>|<број>|<име> [<ид>|<број>|<име>...] || "
+"merge <ид>|<број>|<име> || unmerge [<број>|-all] || hide [<ид>|<број>|<име>|"
+"-all [<ид>|<број>|<име>...]] || unhide [<ид>|<број>|<име>|-all [<ид>|<број>|"
+"<име>...]] || switch [-previous] || zoom || renumber [<број1> [<број2> "
+"[<старт>]]] || close [<n1>[-<n2>]|<име>...] || notify [<ниво>] || listvar "
+"[<ид>|<број>|<име>] || setvar <име> [<вредн>] || delvar <име> || set "
+"<особина> [<вредн>] || setauto <особина> [<вредн>] || get <особина> || jump "
+"smart|last_displayed|prev_visited|next_visited || <ид>|<број>|-|+|<име>"
 
 msgid "raw[list]: list buffers (without argument, this list is displayed)"
 msgstr "raw[list]: листа бафера (без аргумента, исписује се ова листа)"
@@ -1503,10 +1479,8 @@ msgstr "> raw[prev_visited]: претходно посећени бафер"
 msgid "> raw[next_visited]: jump to next visited buffer"
 msgstr "> raw[next_visited]: скок на наредни посећени бафер"
 
-#, fuzzy
-#| msgid "raw[+]: jump to last buffer number"
 msgid "id: jump to buffer by id"
-msgstr "raw[+]: скок на последњи број бафера"
+msgstr "ид: скок на последњи бафера по идентификатору"
 
 msgid "number: jump to buffer by number, possible prefix:"
 msgstr "број: скок на бафер са бројем, могући префикси:"
@@ -3192,19 +3166,14 @@ msgid "display text on a buffer"
 msgstr "исписује текст у бафер"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
-#, fuzzy
-#| msgid ""
-#| "[-buffer <number>|<name>] [-newbuffer <name>] [-free] [-switch] [-core|-"
-#| "current] [-y <line>] [-escape] [-date <date>] [-tags <tags>] [-action|-"
-#| "error|-join|-network|-quit] [<text>] || -stdout|-stderr [<text>] || -beep"
 msgid ""
 "[-buffer <id>|<number>|<name>] [-newbuffer <name>] [-free] [-switch] [-core|-"
 "current] [-y <line>] [-escape] [-date <date>] [-tags <tags>] [-action|-"
 "error|-join|-network|-quit] [<text>] || -stdout|-stderr [<text>] || -beep"
 msgstr ""
-"[-buffer <број>|<име>] [-newbuffer <име>] [-free] [-switch] [-core|-current] "
-"[-y <линија>] [-escape] [-date <датум>] [-tags <ознаке>] [-action|-error|-"
-"join|-network|-quit] [<текст>] || -stdout|-stderr [<текст>] || -beep"
+"[-buffer <ид>|<број>|<име>] [-newbuffer <име>] [-free] [-switch] [-core|"
+"-current] [-y <линија>] [-escape] [-date <датум>] [-tags <ознаке>] [-action|"
+"-error|-join|-network|-quit] [<текст>] || -stdout|-stderr [<текст>] || -beep"
 
 msgid ""
 "raw[-buffer]: display text in this buffer (default: buffer where command is "
@@ -3338,17 +3307,13 @@ msgid "manage proxies"
 msgstr "управљање проксијима"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
-#, fuzzy
-#| msgid ""
-#| "list || add <name> <type> <address> <port> [<username> [<password>]] || "
-#| "del <name>|<mask> [<name>|<mask>...] || set <name> <option> <value>"
 msgid ""
 "list || add|addreplace <name> <type> <address> <port> [<username> "
 "[<password>]] || del <name>|<mask> [<name>|<mask>...] || set <name> <option> "
 "<value>"
 msgstr ""
-"list || add <име> <тип> <адреса> <порт> [<кориме> [<лозинка>]] || del <име>|"
-"<маска> [<име>|<маска>...] || set <име> <опција> <вредност>"
+"list || add|addreplace <име> <тип> <адреса> <порт> [<кориме> [<лозинка>]] ||"
+" del <име>|<маска> [<име>|<маска>...] || set <име> <опција> <вредност>"
 
 msgid "raw[list]: list all proxies"
 msgstr "raw[list]: исписује све проксије"
@@ -3356,10 +3321,8 @@ msgstr "raw[list]: исписује све проксије"
 msgid "raw[add]: add a new proxy"
 msgstr "raw[add]: исписује све проксије"
 
-#, fuzzy
-#| msgid "raw[addreplace]: add or replace an existing filter"
 msgid "raw[addreplace]: add or replace an existing proxy"
-msgstr "raw[addreplace]: додаје или замењује постојећи филтер"
+msgstr "raw[addreplace]: додаје или замењује постојећи прокси"
 
 msgid "name: name of proxy (must be unique)"
 msgstr "име: име проксија (мора да буде јединствено)"
@@ -4331,10 +4294,8 @@ msgstr ""
 msgid "names of bars"
 msgstr "имена трака"
 
-#, fuzzy
-#| msgid "names of bars"
 msgid "names of bar items"
-msgstr "имена трака"
+msgstr "имена ставки траке"
 
 msgid "names of custom bar items"
 msgstr "имена прилагођених ставки траке"
@@ -4784,6 +4745,13 @@ msgid ""
 "reasons; for example 660 = \"rw-rw-r--\" = file readable and writable by the "
 "user and members of the group"
 msgstr ""
+"дозволе за конфигурационе фајлове (*.conf), као октална вредност (погледајте "
+"man chmod); мора да буде број са три цифре, свака цифра може да буде 0 (нема "
+"дозвола), 2 (само упис), 4 (само читање) или 6 (читање и упис); прва цифра "
+"мора да буде 6 тако да корисник може да чита и уписује у фајл; из разлога "
+"безбедности, конфигурационе фајлови подразумевано може да чита и у њих "
+"уписује само корисник; на пример 660 = „rw-rw-r--” = право читања и уписа у "
+"фајл има само корисник и чланови групе"
 
 msgid ""
 "if set, /quit command must be confirmed with extra argument \"-yes\" (see /"
@@ -5720,10 +5688,8 @@ msgstr "боја текста за бафер са приватном порук
 msgid "text color for filter indicator in status bar"
 msgstr "боја текста за индикатор филтера у статусној траци"
 
-#, fuzzy
-#| msgid "text color for current buffer name in status bar"
 msgid "text color for buffer modes in status bar"
-msgstr "боја текста за име текућег бафера у статусној траци"
+msgstr "боја текста за режиме бафера у статусној траци"
 
 msgid "text color for buffer with new data (status bar)"
 msgstr "боја текста за бафер са новим подацима (статусна трака)"
@@ -5965,10 +5931,9 @@ msgstr "(подразумеване опције)"
 msgid "%sCannot create file \"%s\""
 msgstr "%sНе може да се креира фајл „%s”"
 
-#, fuzzy, c-format
-#| msgid "%sWARNING: failed to read configuration file \"%s\" (%s)"
+#, c-format
 msgid "%sWARNING: failed to set permissions on configuration file \"%s\" (%s)"
-msgstr "%sУПОЗОРЕЊЕ: није могао да се прочита конфигурациони фајл „%s” (%s)"
+msgstr "%sУПОЗОРЕЊЕ: нису могле да се поставе дозволе за конфигурациони фајл „%s” (%s)"
 
 #, c-format
 msgid "%sError writing configuration file \"%s\""
@@ -6967,15 +6932,13 @@ msgstr "%s%s: неважеће име алијаса: „%s”"
 msgid "%s%s: error creating alias \"%s\" => \"%s\""
 msgstr "%s%s: грешка у креирању алијаса „%s” => „%s”"
 
-#, fuzzy, c-format
-#| msgid "Alias \"%s\" => \"%s\" created"
+#, c-format
 msgid "Alias updated: \"%s\" => \"%s\""
-msgstr "Креиран је алијас „%s” => „%s”"
+msgstr "Ажуриран је алијас „%s” => „%s”"
 
-#, fuzzy, c-format
-#| msgid "Alias converted to lower case: \"%s\" => \"%s\""
+#, c-format
 msgid "Alias created: \"%s\" => \"%s\""
-msgstr "Алијас је претворен у мала слова: „%s” => „%s”"
+msgstr "Креиран је алијас: „%s” => „%s”"
 
 #, c-format
 msgid "Aliases with \"%s\":"
@@ -7014,20 +6977,16 @@ msgid "list, add or remove command aliases"
 msgstr "исписује, додаје или уклања алијасе команди"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
-#, fuzzy
-#| msgid ""
-#| "list [<name>] || add <name> [<command>[;<command>...]] || addcompletion "
-#| "<completion> <name> [<command>[;<command>...]] || del <name>|<mask> "
-#| "[<name>|<mask>...] || rename <name> <new_name> || missing"
 msgid ""
 "list [<name>] || add|addreplace <name> [<command>[;<command>...]] || "
 "addcompletion|addreplacecompletion <completion> <name> [<command>[;"
 "<command>...]] || del <name>|<mask> [<name>|<mask>...] || rename <name> "
 "<new_name> || missing"
 msgstr ""
-"list [<име>] || add <име> [<команда>[;<команда>...]] || addcompletion "
-"<довршавање> <име> [<команда>[;<команда>...]] || del <име>|<маска> "
-"[<име>...] || rename <име> <ново_име> || missing"
+"list [<име>] || add|addreplace <име> [<команда>[;<команда>...]] || "
+"addcompletion|addreplacecompletion <довршавање> <име> [<команда>"
+"[;<команда>...]] || del <име>|<маска> [<име>|<маска>...] || rename <име> "
+"<ново_име> || missing"
 
 msgid "raw[list]: list aliases (without argument, this list is displayed)"
 msgstr "raw[list]: исписује алијасе (без аргумента, приказује се ова листа)"
@@ -7035,22 +6994,19 @@ msgstr "raw[list]: исписује алијасе (без аргумента, �
 msgid "raw[add]: add an alias"
 msgstr "raw[add]: додавање алијаса"
 
-#, fuzzy
-#| msgid "raw[addreplace]: add or replace an existing filter"
 msgid "raw[addreplace]: add or replace an existing alias"
-msgstr "raw[addreplace]: додаје или замењује постојећи филтер"
+msgstr "raw[addreplace]: додаје или замењује постојећи алијас"
 
 msgid "raw[addcompletion]: add an alias with a custom completion"
 msgstr ""
 "raw[addcompletion]: додавање алијаса са кориснички дефинисаним довршавањем"
 
-#, fuzzy
-#| msgid "raw[addcompletion]: add an alias with a custom completion"
 msgid ""
 "raw[addreplacecompletion]: add or replace an existing alias with a custom "
 "completion"
 msgstr ""
-"raw[addcompletion]: додавање алијаса са кориснички дефинисаним довршавањем"
+"raw[addreplacecompletion]: додавање или замена алијаса са кориснички "
+"дефинисаним довршавањем"
 
 msgid "name: name of alias"
 msgstr "име: име алијаса"
@@ -8299,16 +8255,12 @@ msgstr "raw[-mark]: пребацивање маркера"
 msgid "raw[-format]: switch to the next available format"
 msgstr "raw[-format]: прелаз на следећи доступан формат"
 
-#, fuzzy
-#| msgid ""
-#| "raw[-export]: export the options and values displayed in a file (each "
-#| "line has format: \"/set name value\" or \"/unset name\")"
 msgid ""
 "raw[-export]: export the options and values displayed to a file (each line "
 "has format: \"/set name value\" or \"/unset name\")"
 msgstr ""
-"raw[-export]: извоз опција и вредности које су приказане у фајлу (свака "
-"линија има формат: „/set име вредност” или „/unset име”)"
+"raw[-export]: извоз приказаних опција и вредности у фајл (свака линија има "
+"формат: „/set име вредност” или „/unset име”)"
 
 msgid ""
 "raw[-import]: import the options from a file (all lines containing commands "
@@ -9185,10 +9137,9 @@ msgstr "%s: нема игнорисаних у листи"
 msgid "%s%s: ignore already exists"
 msgstr "%s%s: игнорисање већ постоји"
 
-#, fuzzy, c-format
-#| msgid "%s: ignore added:"
+#, c-format
 msgid "%s: ignore updated:"
-msgstr "%s: додато је игнорисање:"
+msgstr "%s: игнорисање је ажурирано:"
 
 #, c-format
 msgid "%s: ignore added:"
@@ -9222,20 +9173,17 @@ msgstr "%s%s: команда „%s” мора да се изврши над п�
 msgid "%s%s: mask must begin with nick"
 msgstr "%s%s: маска мора да почиње надимком"
 
-#, fuzzy, c-format
-#| msgid "%s%s: this buffer is not a channel!"
+#, c-format
 msgid "%s%s: list buffer is not displayed"
-msgstr "%s%s: овај бафер није канал!"
+msgstr "%s%s: овај бафер се не приказује"
 
-#, fuzzy, c-format
-#| msgid "irc channel on /list buffer"
+#, c-format
 msgid "%s%s: no channels displayed on list buffer"
-msgstr "irc канал у /list баферу"
+msgstr "%s%s: у баферу листе се не приказује ниједан канал"
 
-#, fuzzy, c-format
-#| msgid "%s%s: error while loading file \"%s\""
+#, c-format
 msgid "%s%s: error exporting channels to file \"%s\""
-msgstr "%s%s: грешка приликом учитавања фајла „%s”"
+msgstr "%s%s: грешка приликом извоза канала у фајл „%s”"
 
 #, c-format
 msgid "%s%s: not enough memory for regular expression"
@@ -9268,10 +9216,9 @@ msgstr "%s%s: већ постоји обавештење"
 msgid "%sMonitor list is full (%d)"
 msgstr "%sМонитор листа је пуна (%d)"
 
-#, fuzzy, c-format
-#| msgid "%s: notification deleted for %s%s%s"
+#, c-format
 msgid "%s: notification updated for %s%s%s"
-msgstr "%s: обрисано је обавештење за %s%s%s"
+msgstr "%s: ажурирано је обавештење за %s%s%s"
 
 #, c-format
 msgid "%s: notification added for %s%s%s"
@@ -9354,19 +9301,17 @@ msgstr "Сервери са „%s”:"
 msgid "No server found with \"%s\""
 msgstr "Није пронађен ниједан сервер са „%s”"
 
-#, fuzzy, c-format
-#| msgid "%s%s: trigger \"%s\" already exists"
+#, c-format
 msgid "%s%s: server \"%s\" already exists"
-msgstr "%s%s: окидач „%s” већ постоји"
+msgstr "%s%s: сервер „%s” већ постоји"
 
 #, c-format
 msgid "%s%s: unable to add server"
 msgstr "%s%s: сервер није могао да се дода"
 
-#, fuzzy, c-format
-#| msgid "%s: server added: %s%s%s -> %s"
+#, c-format
 msgid "%s: server updated: %s%s%s -> %s"
-msgstr "%s: додат је сервер: %s%s%s -> %s"
+msgstr "%s: ажуриран је сервер: %s%s%s -> %s"
 
 #, c-format
 msgid "%s: server added: %s%s%s -> %s"
@@ -9970,12 +9915,12 @@ msgid "ignore nicks/hosts from servers or channels"
 msgstr "игнорисање надимака/хостова са севера или канала"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
-#, fuzzy
-#| msgid "list || add [re:]<nick> [<server> [<channel>]] || del <number>|-all"
 msgid ""
 "list || add|addreplace [re:]<nick> [<server> [<channel>]] || del <number>|-"
 "all"
-msgstr "list || add [re:]<надимак> [<сервер> [<канал>]] || del <број>|-all"
+msgstr ""
+"list || add|addreplace [re:]<надимак> [<сервер> [<канал>]] || del <број>|"
+"-all"
 
 msgid "raw[list]: list all ignores"
 msgstr "raw[list]: испис свих игнорисања"
@@ -9983,10 +9928,8 @@ msgstr "raw[list]: испис свих игнорисања"
 msgid "raw[add]: add an ignore"
 msgstr "raw[add]: додавање игнорисања"
 
-#, fuzzy
-#| msgid "raw[addreplace]: add or replace an existing trigger"
 msgid "raw[addreplace]: add or replace an existing ignore"
-msgstr "raw[addreplace]: додавање или замена постојећег окидача"
+msgstr "raw[addreplace]: додавање или замена постојећег игнорисања"
 
 msgid ""
 "nick: nick or hostname; can be a POSIX extended regular expression if \"re:"
@@ -10121,29 +10064,20 @@ msgid "list channels and their topics"
 msgstr "листа канала и њихових тема"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
-#, fuzzy
-#| msgid ""
-#| "[-server <server>] [-re <regex>] [<channel>[,<channel>...]] [<target>] || "
-#| "-up|-down [<number>] || -left|-right [<percent>] || -go <line>|end || -"
-#| "join"
 msgid ""
 "[-server <server>] [<channel>[,<channel>...]] [<target>] || [-server "
 "<server>] [-raw *|<regex>] || -up|-down [<number>] || -left|-right "
 "[<percent>] || -go <line>|end || -join  || -export <filename>"
 msgstr ""
-"[-server <сервер>] [-re <рег_изр>] [<канал>[,<канал>...]] [<циљ>] || -up|-"
-"down [<број>] || -left|-right [<проценат>] || -go <линија>|end || -join"
+"[-server <сервер>] [<канал>[,<канал>...]] [<циљ>] || [-server <сервер>] "
+"[-raw *|<рег_изр>] -up|-down [<број>] || -left|-right [<проценат>] || -go "
+"<линија>|end || -join || -export <имефајла>"
 
 msgid ""
 "raw[-raw]: display result on server buffer instead of a dedicated buffer"
 msgstr ""
+"raw[-raw]: приказује резултат на баферу сервера уместо на посебном баферу"
 
-#, fuzzy
-#| msgid ""
-#| "regex: POSIX extended regular expression used to filter results (case "
-#| "insensitive, can start by \"(?-i)\" to become case sensitive); when a "
-#| "regular expression is used, the result is displayed on server buffer "
-#| "instead of a dedicated buffer"
 msgid ""
 "regex: POSIX extended regular expression used to filter results (case "
 "insensitive, can start by \"(?-i)\" to become case sensitive); the special "
@@ -10151,16 +10085,13 @@ msgid ""
 msgstr ""
 "рег_изр: POSIX проширени регуларни израз који се користи за филтрирање "
 "резултата (без разликовања величине слова, може да почне са „(?-i)” па ће се "
-"онда правити разлика); када се користи регуларни израз, резултат се исписује "
-"у баферу сервера, а не у посебном баферу"
+"онда правити разлика); специјална вредност „*” не филтрира резултате"
 
 msgid "raw[-join]: join the channel on the selected line"
 msgstr "raw[-join]: приступа каналу на изабраној линији"
 
-#, fuzzy
-#| msgid "raw[-delete]: delete channel topic"
 msgid "raw[-export]: export list of channels to a file"
-msgstr "raw[-delete]: брисање теме канала"
+msgstr "raw[-export]: извоз листе канала у фајл"
 
 msgid "Sort keys on /list buffer:"
 msgstr "Кључеви сортирања за /list бафер:"
@@ -10177,42 +10108,28 @@ msgstr "  raw[users]: број корисника на каналу"
 msgid "  raw[topic]: channel topic"
 msgstr "  raw[topic]: тема канала"
 
-#, fuzzy
-#| msgid ""
-#| "  list all channels beginning with \"#weechat\" (can be very slow on "
-#| "large networks):"
 msgid ""
 "  list all channels on server buffer (no dedicated buffer and can be slow on "
 "large networks):"
 msgstr ""
-"  приказује све канале који почињу на „#weechat” (може да буде врло споро на "
-"великим мрежама):"
+"  приказује све канале у баферу сервера (нема посебног бафера и може да буде "
+"врло споро на великим мрежама):"
 
-#, fuzzy
-#| msgid ""
-#| "  list all channels beginning with \"#weechat\" (can be very slow on "
-#| "large networks):"
 msgid ""
 "  list all channels beginning with \"#weechat\" on server buffer (no "
 "dedicated buffer and can be slow on large networks):"
 msgstr ""
-"  приказује све канале који почињу на „#weechat” (може да буде врло споро на "
-"великим мрежама):"
+"  приказује све канале који почињу на „#weechat” у баферу сервера (нема "
+"посебног бафера и може да буде врло споро на великим мрежама):"
 
-#, fuzzy
-#| msgid ""
-#| "  list all channels on server and display them in a dedicated buffer (can "
-#| "be slow on large networks):"
 msgid ""
 "  list all channels on a dedicated buffer (can be slow on large networks):"
 msgstr ""
-"  приказује све канале на серверу и исписује их у посебном баферу (може да "
-"буде споро на великим мрежама):"
+"  приказује све канале у посебном баферу (може да буде споро на великим "
+"мрежама):"
 
-#, fuzzy
-#| msgid "  list channel #weechat:"
 msgid "  list channel #weechat on a dedicated buffer:"
-msgstr "  приказује канал #weechat:"
+msgstr "  приказује канал #weechat у посебном баферу:"
 
 msgid "  on /list buffer:"
 msgstr "  у /list баферу:"
@@ -10388,18 +10305,14 @@ msgid "add a notification for presence or away status of nicks on servers"
 msgstr "додавање обавештења присуства или одсуства надимака на серверима"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
-#, fuzzy
-#| msgid "add <nick> [<server> [-away]] || del <nick>|-all [<server>]"
 msgid "add|addreplace <nick> [<server> [-away]] || del <nick>|-all [<server>]"
-msgstr "add <надимак> [<сервер> [-away]] || del <надимак>|-all [<сервер>]"
+msgstr "add|addreplace <надимак> [<сервер> [-away]] || del <надимак>|-all [<сервер>]"
 
 msgid "raw[add]: add a notification"
 msgstr "raw[add]: додавање обавештења"
 
-#, fuzzy
-#| msgid "raw[addreplace]: add or replace an existing filter"
 msgid "raw[addreplace]: add or replace a notification"
-msgstr "raw[addreplace]: додаје или замењује постојећи филтер"
+msgstr "raw[addreplace]: додаје или замењује обавештење"
 
 msgid "server: internal server name (by default current server)"
 msgstr "сервер: интерно име сервера (подразумевано је то текући сервер)"
@@ -10585,19 +10498,13 @@ msgid "list, add or remove IRC servers"
 msgstr "испис, додавање или уклањање IRC сервера"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
-#, fuzzy
-#| msgid ""
-#| "list|listfull [<name>] || add <name> <hostname>[/<port>] [-temp] [-"
-#| "<option>[=<value>]] [-no<option>] || copy|rename <name> <new_name> || "
-#| "reorder <name> [<name>...] || open <name>|-all [<name>...] || del|keep "
-#| "<name> || deloutq|jump || raw [<filter>]"
 msgid ""
 "list|listfull [<name>] || add|addreplace <name> <hostname>[/<port>] [-temp] "
 "[-<option>[=<value>]] [-no<option>] || copy|rename <name> <new_name> || "
 "reorder <name> [<name>...] || open <name>|-all [<name>...] || del|keep "
 "<name> || deloutq|jump || raw [<filter>]"
 msgstr ""
-"list|listfull [<име>] || add <име> <имехоста>[/<порт>] [-temp] [-"
+"list|listfull [<име>] || add|addreplace <име> <имехоста>[/<порт>] [-temp] [-"
 "<опција>[=<вредност>]] [-no<опција>] || copy|rename <име> <ново_име> || "
 "reorder <име> [<име>...] || open <име>|-all [<име>...] || del|keep <име> || "
 "deloutq|jump || raw [<филтер>]"
@@ -10611,10 +10518,8 @@ msgstr "raw[listfull]: листа сервера са детаљним инфо 
 msgid "raw[add]: add a new server"
 msgstr "raw[add]: додавање новог сервера"
 
-#, fuzzy
-#| msgid "raw[addreplace]: add or replace an existing trigger"
 msgid "raw[addreplace]: add or replace an existing server"
-msgstr "raw[addreplace]: додавање или замена постојећег окидача"
+msgstr "raw[addreplace]: додавање или замена постојећег сервера"
 
 msgid ""
 "name: server name, for internal and display use; this name is used to "
@@ -10806,21 +10711,17 @@ msgid "unban nicks or hosts"
 msgstr "уклањање забране надимцима или хостовима"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
-#, fuzzy
-#| msgid "[<channel>] <nick>|<number> [<nick>|<number>...]"
 msgid "[<channel>] <nick>|<number>|<n1>-<n2> [<nick>|<number>|<n1>-<n2>...]"
-msgstr "[<канал>] <надимак>|<број> [<надимак>|<број>...]"
+msgstr "[<канал>] <надимак>|<број>|<n1>-<n2> [<надимак>|<број>|<n1>-<n2>...]"
 
 msgid "number: ban number (as displayed by command /ban)"
 msgstr "број: број забране (као што га исписује команда /ban)"
 
-#, fuzzy
-#| msgid "server: internal server name"
 msgid "n1: interval start number"
-msgstr "сервер: интерно име сервера"
+msgstr "n1: број почетка интервала"
 
 msgid "n2: interval end number"
-msgstr ""
+msgstr "n2: број краја интервала"
 
 msgid "unquiet nicks or hosts"
 msgstr "уклањање ућуткивања надимака или хостова"
@@ -11752,16 +11653,12 @@ msgstr ""
 msgid "use a dedicated buffer for the output of /list"
 msgstr "користи посебан бафер за излаз команде /list"
 
-#, fuzzy
-#| msgid ""
-#| "format of each option exported in a file (note: content is evaluated, "
-#| "see /help fset)"
 msgid ""
 "format of each channel exported in a file (note: content is evaluated, see /"
 "help list)"
 msgstr ""
-"формат сваке опције која се извози у фајл (напомена: садржај се израчунава, "
-"погледајте /help fset)"
+"формат сваког канала који се извози у фајл (напомена: садржај се израчунава, "
+"погледајте /help list)"
 
 msgid "left/right scroll in /list buffer (percent of width)"
 msgstr "скроловање у лево/десно у /list баферу (проценат ширине)"
@@ -12512,7 +12409,7 @@ msgstr ""
 "приступ каналу, ($)=освежавање, (q)=затварање бафера"
 
 msgid "Empty list of channels, try \"$\" to refresh list"
-msgstr ""
+msgstr "Празна листа канала, покушајте „$” да освежите листу"
 
 #, c-format
 msgid "%s%s: error in redirection of /list: %s"
@@ -14524,21 +14421,20 @@ msgid ""
 "%sremote[%s]: API version mismatch: remote API is %s (WeeChat %s), local API "
 "%s (WeeChat %s)"
 msgstr ""
+"%sудаљени[%s]: API верзија се не подудара: удаљени API је %s (WeeChat %s), а "
+"локални API %s (WeeChat %s)"
 
-#, fuzzy, c-format
-#| msgid "%s%s: invalid trigger name: \"%s\""
+#, c-format
 msgid "%sremote[%s]: invalid data received from remote relay: \"%s\""
-msgstr "%s%s: неважеће име окидача: „%s”"
+msgstr "%sудаљени[%s]: примљени су неисправни подаци од удаљеног релеја: „%s”"
 
-#, fuzzy, c-format
-#| msgid "%s%s: failed to copy trigger \"%s\""
+#, c-format
 msgid "%sremote[%s]: callback failed for body type \"%s\""
-msgstr "%s%s: није успело копирање окидача „%s”"
+msgstr "%sудаљени[%s]: није успела функција повратног позива за тип тела „%s”"
 
-#, fuzzy, c-format
-#| msgid "%sremote[%s]: connection refused"
+#, c-format
 msgid "remote[%s]: disconnected"
-msgstr "%sудаљени[%s]: веза је одбијена"
+msgstr "удаљени[%s]: веза је прекинута"
 
 msgid "invalid response from remote relay"
 msgstr "неважећи одговор од удаљеног релеја"
@@ -14886,22 +14782,21 @@ msgstr "Нема сервера за релеј"
 msgid "%s%s: error: relay for \"%s\" already exists"
 msgstr "%s%s: грешка: релеј за „%s” већ постоји"
 
-#, fuzzy, c-format
-#| msgid "%s: relay \"%s\" (%s: %s) added"
+#, c-format
 msgid "%s: relay \"%s\" (%s: %s) updated"
-msgstr "%s: релеј „%s” (%s: %s) додато"
+msgstr "%s: релеј „%s” (%s: %s) је ажуриран"
 
 #, c-format
 msgid "%s: relay \"%s\" (%s: %s) added"
-msgstr "%s: релеј „%s” (%s: %s) додато"
+msgstr "%s: релеј „%s” (%s: %s) додат"
 
 #, c-format
 msgid "%s: relay \"%s\" (%s: %s) removed"
-msgstr "%s: релеј „%s” (%s: %s) уклоњено"
+msgstr "%s: релеј „%s” (%s: %s) уклоњен"
 
 #, c-format
 msgid "%s%s: relay \"%s\" not found"
-msgstr "%s%s: relay „%s” није пронађено"
+msgstr "%s%s: релеј „%s” није пронађен"
 
 #, c-format
 msgid "Remote: %s"
@@ -14929,10 +14824,9 @@ msgstr ""
 "%s%s: не можете да обришете релеј удаљених „%s” јер сте повезани са њим. "
 "Покушајте прво да извршите „/remote disconnect %s”."
 
-#, fuzzy, c-format
-#| msgid "%s%s: error: relay for \"%s\" already exists"
+#, c-format
 msgid "%s%s: remote relay \"%s\" already exists"
-msgstr "%s%s: грешка: релеј за „%s” већ постоји"
+msgstr "%s%s: релеј удаљених „%s” већ постоји"
 
 #, c-format
 msgid "%s%s: invalid remote relay name: \"%s\""
@@ -14946,10 +14840,9 @@ msgstr "%s%s: неважећи URL релеја удаљених: „%s”"
 msgid "%s%s: invalid remote relay option: \"%s\""
 msgstr "%s%s: неважећа опција релеја удаљених: „%s”"
 
-#, fuzzy, c-format
-#| msgid "Remote relay \"%s\" created"
+#, c-format
 msgid "Remote relay \"%s\" updated"
-msgstr "Креиран је релеј удаљених „%s”"
+msgstr "Ажуриран је релеј удаљених „%s”"
 
 #, c-format
 msgid "Remote relay \"%s\" created"
@@ -14983,16 +14876,12 @@ msgid "relay control"
 msgstr "контрола преко релеја"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
-#, fuzzy
-#| msgid ""
-#| "list|listfull|listrelay || add <name> <port>|<path> || del|start|restart|"
-#| "stop <name> || raw || tlscertkey"
 msgid ""
 "list|listfull|listrelay || add|addreplace <name> <port>|<path> || del|start|"
 "restart|stop <name> || raw || tlscertkey"
 msgstr ""
-"list|listfull|listrelay || add <име> <порт>|<путања> || del|start|restart|"
-"stop <име> || raw || tlscertkey"
+"list|listfull|listrelay || add|addreplace <име> <порт>|<путања> || del|start|"
+"restart|stop <име> || raw || tlscertkey"
 
 msgid "raw[list]: list relay clients (only active relays)"
 msgstr "raw[list]: испис клијената релеја (само активних релеја)"
@@ -15006,10 +14895,8 @@ msgstr "raw[listrelay]: испис релеја (име и порт)"
 msgid "raw[add]: add a relay (listen on a port/path)"
 msgstr "raw[add]: додавање релеја (слуша на порту/путањи)"
 
-#, fuzzy
-#| msgid "raw[addreplace]: add or replace an existing filter"
 msgid "raw[addreplace]: add or replace an existing relay"
-msgstr "raw[addreplace]: додаје или замењује постојећи филтер"
+msgstr "raw[addreplace]: додаје или замењује постојећи релеј"
 
 msgid "raw[del]: remove a relay (clients remain connected)"
 msgstr "raw[del]: уклањање релеја (клијенти остају повезани)"
@@ -15122,19 +15009,14 @@ msgid "control of remote relay servers"
 msgstr "контрола сервера релеја за удаљене"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
-#, fuzzy
-#| msgid ""
-#| "list|listfull [<name>] || add <name> <url> [-<option>[=<value>]] || "
-#| "connect <name> || send <name> <json> || disconnect <name> || rename "
-#| "<name> <new_name> || del <name>"
 msgid ""
 "list|listfull [<name>] || add|addreplace <name> <url> [-<option>[=<value>]] "
 "|| connect <name> || send <name> <json> || disconnect <name> || rename "
 "<name> <new_name> || del <name>"
 msgstr ""
-"list|listfull [<име>] || add <име> <url> [-<опција>[=<вредност>]] || connect "
-"<име> || send <име> <json> || disconnect <име> || rename <име> <ново_име> || "
-"del <име>"
+"list|listfull [<име>] || add|addreplace <име> <url> [-<опција>[=<вредност>]] "
+"|| connect <име> || send <име> <json> || disconnect <име> || rename <име> "
+"<ново_име> || del <име>"
 
 msgid ""
 "raw[list]: list remote relay servers (without argument, this list is "
@@ -15149,10 +15031,9 @@ msgstr "raw[listfull]: приказује сервере релеја удаље
 msgid "raw[add]: add a remote relay server"
 msgstr "raw[add]: додавање сервера релеја удаљених"
 
-#, fuzzy
-#| msgid "raw[addreplace]: add or replace an existing trigger"
 msgid "raw[addreplace]: add or replace an existing remote relay server"
-msgstr "raw[addreplace]: додавање или замена постојећег окидача"
+msgstr ""
+"raw[addreplace]: додавање или замена постојећег сервера релеја удаљених"
 
 msgid ""
 "name: name of remote relay server, for internal and display use; this name "
@@ -15170,10 +15051,8 @@ msgstr ""
 "url: URL релеја удаљених, формат је https://example.com:9000 или http://"
 "example.com:9000 (веза употребом чистог текста, не препоручује се)"
 
-#, fuzzy
-#| msgid "option: extra option, for some servers"
 msgid "option: set option for remote relay"
-msgstr "опција: додатна опција, за неке сервере"
+msgstr "опција: поставља опцију за релеј удаљених"
 
 msgid "raw[connect]: connect to a remote relay server"
 msgstr "raw[connect]: повезивање на сервер релеја удаљених"
@@ -15253,10 +15132,8 @@ msgstr ""
 "примери: https://example.com:9000 или http://example.com:9000 (веза "
 "коришћењем чистог текста, не препоручује се)"
 
-#, fuzzy
-#| msgid "raw[connect]: connect to a remote relay server"
 msgid "auto-connect to the remote relay"
-msgstr "raw[connect]: повезивање на сервер релеја удаљених"
+msgstr "ауто-повезивање на релеј удаљених"
 
 msgid ""
 "name of proxy used for this remote relay (optional, proxy must be defined "
@@ -15285,11 +15162,6 @@ msgstr ""
 msgid "Relay option renamed: \"relay.%s.%s\" => \"relay.%s.%s\""
 msgstr "Промењено је име Релеј опције: „relay.%s.%s” => „relay.%s.%s”"
 
-#, fuzzy
-#| msgid ""
-#| "auto open relay buffer when a new client is connecting using one of these "
-#| "protocols (comma-separated list); allowed protocols: \"irc\", "
-#| "\"weechat\", \"api\""
 msgid ""
 "auto open relay buffer when a new client is connecting using one of these "
 "protocols (comma-separated list); allowed protocols: \"api\", \"irc\", "
@@ -15297,13 +15169,8 @@ msgid ""
 msgstr ""
 "аутоматски отвара релеј бафер када се нови клијент повезује користећи један "
 "од следећих протокола (листа раздвојена запетама); дозвољени протоколи: "
-"„irc”, „weechat”, „api”"
+"„api”, „irc”, „weechat”"
 
-#, fuzzy
-#| msgid ""
-#| "display messages when clients connect/disconnect from relay using one of "
-#| "these protocols (comma-separated list); allowed protocols: \"irc\", "
-#| "\"weechat\", \"api\""
 msgid ""
 "display messages when clients connect/disconnect from relay using one of "
 "these protocols (comma-separated list); allowed protocols: \"api\", \"irc\", "
@@ -15311,12 +15178,14 @@ msgid ""
 msgstr ""
 "приказује поруке када се клијенти повезују/прекидају везу са релејем "
 "користећи један од следећих протокола (листа раздвојена запетама); дозвољени "
-"протоколи: „irc”, „weechat”, „api”"
+"протоколи: „api”, „irc”, „weechat”"
 
 msgid ""
 "max number of chars to display in raw messages (very long messages can cause "
 "slowness); 0 = display whole messages"
 msgstr ""
+"макс број карактера који се приказује у сировим порукама (врло дугачке поруке "
+"могу да успоре програм); 0 = приказ комплетних порука"
 
 msgid "text color for client description"
 msgstr "боја текста за опис клијента"
@@ -15387,15 +15256,6 @@ msgstr ""
 "време за чишћење клијената који су прекинули везу (у минутима, 0 = клијенти "
 "се чисте тренутно, -1 = никада се не чисти)"
 
-#, fuzzy
-#| msgid ""
-#| "comma-separated list of commands allowed/denied when input data (text or "
-#| "command) is received from a client (weechat and api protocols); \"*\" "
-#| "means any command, a name beginning with \"!\" is a negative value to "
-#| "prevent a command from being executed, wildcard \"*\" is allowed in "
-#| "names; this option should be set if the relay client is not safe (someone "
-#| "could use it to run commands); for example \"*,!exec,!quit\" allows any "
-#| "command except /exec and /quit"
 msgid ""
 "comma-separated list of commands allowed/denied when input data (text or "
 "command) is received from a client (\"api\" and \"weechat\" protocols); "
@@ -15406,19 +15266,13 @@ msgid ""
 "except /exec and /quit"
 msgstr ""
 "листа команди раздвојених запетама које су дозвољене/забрањене када се од "
-"клијента приме улазни подаци; „*” значи било која команда, име које почиње "
-"са „!” је негативна вредност којом се спречава да се команда изврши, у "
-"именима је дозвољен џокер „*”; ова опција би требало да се постави ако релеј "
-"клијент није безбедан (неко би могао да га користи за покретање команди); на "
-"пример „*,!exec,!quit” дозвољава све команде осим /exec и /quit"
+"клијента („api” и „weechat” протоколи) приме улазни подаци (текст или "
+"команда); „*” значи било која команда, име које почиње са „!” је негативна "
+"вредност којом се спречава да се команда изврши, у именима је дозвољен џокер "
+"„*”; ова опција би требало да се постави ако релеј клијент није безбедан "
+"(неко би могао да га користи за покретање команди); на пример „*,!exec,"
+"!quit” дозвољава све команде осим /exec и /quit"
 
-#, fuzzy
-#| msgid ""
-#| "compression of messages sent to clients with weechat and api protocols: 0 "
-#| "= disable compression, 1 = low compression / fast ... 100 = best "
-#| "compression / slow; the value is a percentage converted to 1-9 for zlib "
-#| "and 1-19 for zstd; the default value is recommended, it offers a good "
-#| "compromise between compression and speed"
 msgid ""
 "compression of messages sent to clients with \"api\" and \"weechat\" "
 "protocols: 0 = disable compression, 1 = low compression / fast ... 100 = "
@@ -15426,8 +15280,8 @@ msgid ""
 "and 1-19 for zstd; the default value is recommended, it offers a good "
 "compromise between compression and speed"
 msgstr ""
-"компресија порука које се клијентима шаљу weechat и api протоколима: 0 = без "
-"компресије, 1 = ниска компресија / брзо ... 100 = најбоља компресија / "
+"компресија порука које се клијентима шаљу „api” и „weechat” протоколима: 0 = "
+"без компресије, 1 = ниска компресија / брзо ... 100 = најбоља компресија / "
 "споро; вредност је проценат који се конвертује у 1-9 за zlib и 1-19 за zstd; "
 "препоручује се подразумевана вредност јер нуди добар компромис између "
 "компресије и брзине"
@@ -15490,16 +15344,12 @@ msgstr ""
 "је боље у смислу безбедности, али је спорије за израчунавање; ако је ваш CPU "
 "спор, овај број не би требало да буде сувише велики"
 
-#, fuzzy
-#| msgid ""
-#| "number of seconds to allow before and after the current time for the hash "
-#| "of time + password in api protocol"
 msgid ""
 "number of seconds to allow before and after the current time for the hash of "
 "time + password in \"api\" protocol"
 msgstr ""
 "број секунди који је дозвољен пре и након текућег времена за хеш времена + "
-"лозинке у api протоколу"
+"лозинке у „api” протоколу"
 
 msgid ""
 "file with TLS certificate and private key (for serving clients with TLS) "
@@ -15510,13 +15360,6 @@ msgstr ""
 "TLS) (путања се израчунава, погледајте функцију string_eval_path_home у "
 "референтном приручнику API додатака)"
 
-#, fuzzy
-#| msgid ""
-#| "secret for the generation of the Time-based One-Time Password (TOTP), "
-#| "encoded in base32 (only letters and digits from 2 to 7); it is used as "
-#| "second factor in weechat and api protocols, in addition to the password, "
-#| "which must not be empty (empty value means no TOTP is required) (note: "
-#| "content is evaluated, see /help eval)"
 msgid ""
 "secret for the generation of the Time-based One-Time Password (TOTP), "
 "encoded in base32 (only letters and digits from 2 to 7); it is used as "
@@ -15525,9 +15368,10 @@ msgid ""
 "(note: content is evaluated, see /help eval)"
 msgstr ""
 "тајна за генерисање Time-based One-Time Password (TOTP), кодирана у base32 "
-"(само слова и цифре од 2 до 7); у weechat и api протоколима се, уз лозинку, "
-"користи као други фактор, не сме бити празна (празна вредност значи да се "
-"TOTP не захтева) (напомена: садржај се израчунава, погледајте /help eval)"
+"(само слова и цифре од 2 до 7); у „api” и „weechat” протоколима се, уз "
+"лозинку, користи као други фактор, не сме бити празна (празна вредност "
+"значи да се TOTP не захтева) (напомена: садржај се израчунава, погледајте "
+"/help eval)"
 
 msgid ""
 "number of Time-based One-Time Passwords to accept before and after the "
@@ -15561,6 +15405,13 @@ msgid ""
 "and you should disable it only if you have troubles with this extension, "
 "either with WeeChat or the client"
 msgstr ""
+"укључује вебсокет проширење „permessage-deflate” за компресију вебсокет "
+"оквира (само „api” протокол); ако је искључено, WeeChat (као сервер) неће "
+"укључити permessage-deflate чак и када га клијент подржава, а када се "
+"повезује на удаљени WeeChat (само api релеј), WeeChat не оглашава "
+"permessage-deflate подршку; препоручује се ову опцију држите укључену, "
+"требало би да је искључите само ако имате проблема са овим проширењем, било "
+"у WeeChat или у клијенту"
 
 msgid ""
 "maximum number of minutes in backlog per IRC channel (0 = unlimited, "
@@ -15618,15 +15469,11 @@ msgstr "%s%s: за вебсокет није дозвољено порекло �
 msgid "%s: websocket client %s%s%s has real IP address \"%s\""
 msgstr "%s: вебсокет клијент %s%s%s има реалну IP адресу „%s”"
 
-#, fuzzy
-#| msgid "WeeChat version"
 msgid "relay API version"
-msgstr "верзија програма WeeChat"
+msgstr "верзија API релеја"
 
-#, fuzzy
-#| msgid "WeeChat version (as number)"
 msgid "relay API version (as number)"
-msgstr "верзија програма WeeChat (као број)"
+msgstr "верзија API релеја (као број)"
 
 msgid "number of clients for relay"
 msgstr "број клијената за релеј"
