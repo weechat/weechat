@@ -3596,13 +3596,13 @@ IRC_COMMAND_CALLBACK(list)
                 WEECHAT_COMMAND_ERROR;
             i++;
         }
-        else if (weechat_strcmp (argv[i], "-re") == 0)
+        else if (weechat_strcmp (argv[i], "-raw") == 0)
         {
             if (argc <= i + 1)
                 WEECHAT_COMMAND_ERROR;
             ptr_regex = argv_eol[i + 1];
             use_list_buffer = 0;
-            i++;
+            break;
         }
         else if (!ptr_channel_name)
             ptr_channel_name = argv[i];
@@ -3625,9 +3625,10 @@ IRC_COMMAND_CALLBACK(list)
                 weechat_prefix ("error"), IRC_PLUGIN_NAME);
             return WEECHAT_RC_ERROR;
         }
-        ret = weechat_string_regcomp (new_regexp,
-                                      ptr_regex,
-                                      REG_EXTENDED | REG_ICASE | REG_NOSUB);
+        ret = weechat_string_regcomp (
+            new_regexp,
+            (weechat_strcmp (ptr_regex, "*") == 0) ? ".*" : ptr_regex,
+            REG_EXTENDED | REG_ICASE | REG_NOSUB);
         if (ret != 0)
         {
             regerror (ret, new_regexp, buf, sizeof (buf));
@@ -7540,8 +7541,8 @@ irc_command_init ()
         "list",
         N_("list channels and their topics"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
-        N_("[-server <server>] [-re <regex>] [<channel>[,<channel>...]] "
-           "[<target>]"
+        N_("[-server <server>] [<channel>[,<channel>...]] [<target>]"
+           " || [-server <server>] [-raw *|<regex>]"
            " || -up|-down [<number>]"
            " || -left|-right [<percent>]"
            " || -go <line>|end"
@@ -7549,12 +7550,13 @@ irc_command_init ()
            " || -export <filename>"),
         WEECHAT_CMD_ARGS_DESC(
             N_("server: send to this server (internal name)"),
-            N_("regex: POSIX extended regular expression used to filter results "
-               "(case insensitive, can start by \"(?-i)\" to become case "
-               "sensitive); when a regular expression is used, the result is "
-               "displayed on server buffer instead of a dedicated buffer"),
             N_("channel: channel name"),
             N_("target: server name"),
+            N_("raw[-raw]: display result on server buffer instead of a "
+               "dedicated buffer"),
+            N_("regex: POSIX extended regular expression used to filter results "
+               "(case insensitive, can start by \"(?-i)\" to become case "
+               "sensitive); the special value \"*\" doesn't filter results"),
             N_("raw[-up]: move the selected line up by \"number\" lines"),
             N_("raw[-down]: move the selected line down by \"number\" lines"),
             N_("raw[-left]: scroll the buffer by \"percent\" of width on the left"),
@@ -7574,14 +7576,17 @@ irc_command_init ()
             N_("  raw[topic]: channel topic"),
             "",
             N_("Examples:"),
-            N_("  list all channels on server and display them in a dedicated buffer "
+            N_("  list all channels on server buffer "
+               "(no dedicated buffer and can be slow on large networks):"),
+            AI("    /list -raw *"),
+            N_("  list all channels beginning with \"#weechat\" on server buffer "
+               "(no dedicated buffer and can be slow on large networks):"),
+            AI("    /list -raw #weechat.*"),
+            N_("  list all channels on a dedicated buffer "
                "(can be slow on large networks):"),
             AI("    /list"),
-            N_("  list channel #weechat:"),
+            N_("  list channel #weechat on a dedicated buffer:"),
             AI("    /list #weechat"),
-            N_("  list all channels beginning with \"#weechat\" (can be very slow "
-               "on large networks):"),
-            AI("    /list -re #weechat.*"),
             N_("  on /list buffer:"),
             N_("    channels with \"weechat\" in name:"),
             AI("      n:weechat"),
@@ -7592,7 +7597,7 @@ irc_command_init ()
             N_("    sort channels by users (big channels first), then name2 (name without prefix):"),
             AI("      s:-users,name2")),
         "-server %(irc_servers)"
-        " || -re"
+        " || -raw *|.*"
         " || -up 1|2|3|4|5"
         " || -down 1|2|3|4|5"
         " || -left 10|20|30|40|50|60|70|80|90|100"

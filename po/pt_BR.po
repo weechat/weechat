@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-11 07:59+0200\n"
+"POT-Creation-Date: 2024-06-16 09:14+0200\n"
 "PO-Revision-Date: 2024-06-11 07:49+0200\n"
 "Last-Translator: Érico Nogueira <ericonr@disroot.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -9415,17 +9415,23 @@ msgstr "listar canais e seus tópicos"
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 #, fuzzy
 msgid ""
-"[-server <server>] [-re <regex>] [<channel>[,<channel>...]] [<target>] || -"
-"up|-down [<number>] || -left|-right [<percent>] || -go <line>|end || -join  "
-"|| -export <filename>"
+"[-server <server>] [<channel>[,<channel>...]] [<target>] || [-server "
+"<server>] [-raw *|<regex>] || -up|-down [<number>] || -left|-right "
+"[<percent>] || -go <line>|end || -join  || -export <filename>"
 msgstr "<target> <tipo> [<argumentos>]"
 
 msgid ""
-"regex: POSIX extended regular expression used to filter results (case "
-"insensitive, can start by \"(?-i)\" to become case sensitive); when a "
-"regular expression is used, the result is displayed on server buffer instead "
-"of a dedicated buffer"
+"raw[-raw]: display result on server buffer instead of a dedicated buffer"
 msgstr ""
+
+#, fuzzy
+msgid ""
+"regex: POSIX extended regular expression used to filter results (case "
+"insensitive, can start by \"(?-i)\" to become case sensitive); the special "
+"value \"*\" doesn't filter results"
+msgstr ""
+"expressão regular com IPs permitidos a usar o relay, por exemplo: "
+"\"^(123\\.45\\.67\\.89|192\\.160\\..*)$\""
 
 #, fuzzy
 msgid "raw[-join]: join the channel on the selected line"
@@ -9451,16 +9457,20 @@ msgid "  raw[topic]: channel topic"
 msgstr ""
 
 msgid ""
-"  list all channels on server and display them in a dedicated buffer (can be "
-"slow on large networks):"
-msgstr ""
-
-msgid "  list channel #weechat:"
+"  list all channels on server buffer (no dedicated buffer and can be slow on "
+"large networks):"
 msgstr ""
 
 msgid ""
-"  list all channels beginning with \"#weechat\" (can be very slow on large "
-"networks):"
+"  list all channels beginning with \"#weechat\" on server buffer (no "
+"dedicated buffer and can be slow on large networks):"
+msgstr ""
+
+msgid ""
+"  list all channels on a dedicated buffer (can be slow on large networks):"
+msgstr ""
+
+msgid "  list channel #weechat on a dedicated buffer:"
 msgstr ""
 
 #, fuzzy

@@ -4385,7 +4385,7 @@ TEST(IrcProtocolWithServer, 322)
     CHECK_SRV("--", "#test(3): topic of channel ",
               "irc_322,irc_numeric,nick_server,log3");
 
-    run_cmd_quiet ("/list -server " IRC_FAKE_SERVER " -re #test.*");
+    run_cmd_quiet ("/list -server " IRC_FAKE_SERVER " -raw #test.*");
     CHECK_SRV("--", "#test(3): topic of channel ",
               "irc_322,irc_numeric,nick_server,log3");
 
