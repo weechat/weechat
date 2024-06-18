@@ -654,6 +654,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |       weechat_plugin_api.XX.adoc              | link:weechat_plugin_api.ja.html[プラグイン API リファレンス ^↗^^]
 |       weechat_quickstart.XX.adoc              | link:weechat_quickstart.ja.html[クイックスタートガイド ^↗^^]
 // TRANSLATION MISSING
+|       weechat_relay_api.XX.adoc               | Relay "api" protocol (for remote interfaces).
+// TRANSLATION MISSING
 |       weechat_relay_weechat.XX.adoc           | link:weechat_relay_weechat.ja.html[Relay "weechat" protocol ^↗^^] (for remote interfaces).
 |       weechat_scripting.XX.adoc               | link:weechat_scripting.ja.html[スクリプト作成ガイド ^↗^^]
 |       weechat_user.XX.adoc                    | link:weechat_user.ja.html[ユーザーズガイド ^↗^^]
@@ -1338,87 +1340,88 @@ _component_ には以下から 1 つ選んで記入してください:
   src/core/* +
   src/gui/* +
   version.sh +
-  weechat.desktop |
+  weechat.desktop
 // TRANSLATION MISSING
-  WeeChat core
+| WeeChat core
 
 | build
 | CMakeLists.txt +
   cmake/* +
   tools/* +
-  weechat.cygport.in |
+  weechat.cygport.in
 // TRANSLATION MISSING
-  Build
+|  Build
 
 | ci
-| .github/workflows/* |
+| .github/workflows/*
 // TRANSLATION MISSING
-  Continuous integration
+| Continuous integration
 
 | debian
 | debian-devel/* +
-  debian-stable/* |
+  debian-stable/*
 // TRANSLATION MISSING
-  Debian packaging
+| Debian packaging
 
 | tests
-| tests/* |
+| tests/*
 // TRANSLATION MISSING
-  Tests
+| Tests
 
 | doc
-| doc/* |
+| doc/*
 // TRANSLATION MISSING
-  General doc updates, for example build
+| General doc updates, for example build
 
 | doc/man
 | doc/xx/weechat.1.xx.adoc +
-  doc/xx/weechat-headless.1.xx.adoc |
+  doc/xx/weechat-headless.1.xx.adoc
 // TRANSLATION MISSING
-  Man pages
+| Man pages
 
 | doc/faq
-| doc/xx/weechat_faq.xx.adoc |
+| doc/xx/weechat_faq.xx.adoc
 // TRANSLATION MISSING
-  Frequently asked questions (FAQ)
+| Frequently asked questions (FAQ)
 
 | doc/quickstart
-| doc/xx/weechat_quickstart.xx.adoc |
+| doc/xx/weechat_quickstart.xx.adoc
 // TRANSLATION MISSING
-  Quickstart guide
+| Quickstart guide
 
 | doc/user
-| doc/xx/weechat_user.xx.adoc |
+| doc/xx/weechat_user.xx.adoc
 // TRANSLATION MISSING
-  User's guide
+| User's guide
 
 | doc/scripting
-| doc/xx/weechat_scripting.xx.adoc |
+| doc/xx/weechat_scripting.xx.adoc
 // TRANSLATION MISSING
-  Scripting guide
+| Scripting guide
 
 | doc/api
-| doc/xx/weechat_plugin_api.xx.adoc |
+| doc/xx/weechat_plugin_api.xx.adoc
 // TRANSLATION MISSING
-  Plugin API reference
+| Plugin API reference
 
 | doc/relay
-| doc/xx/weechat_relay_weechat.xx.adoc |
+| doc/xx/weechat_relay_api.xx.adoc +
+  doc/xx/weechat_relay_weechat.xx.adoc
 // TRANSLATION MISSING
-  Relay "weechat" protocol
+| Relay protocols
 
 | doc/dev
-| doc/xx/weechat_dev.en.adoc |
+| doc/xx/weechat_dev.en.adoc
 // TRANSLATION MISSING
-  Developer's guide
+| Developer's guide
 
 | irc +
   python +
   relay +
   …
-| src/plugins/<name>/* |
+| src/plugins/<name>/*
 // TRANSLATION MISSING
-  Plugin
+| Plugin
 
 |===
 

@@ -23,6 +23,7 @@
 - core: add hdata count in evaluation of expressions with `hdata_count:name[list]` or `hdata_count:name[pointer]`
 - core: add completion "bars_items"
 - api: add hashtable type "longlong"
+- doc: add doc on "api" relay
 
 ### Fixed
 

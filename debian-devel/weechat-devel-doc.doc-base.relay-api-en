@@ -1,0 +1,10 @@
+Document: weechat-relay-api-en
+Title: WeeChat Relay "api" protocol (English)
+Author: Sébastien Helleu
+Abstract: This manual describes WeeChat Relay "api" protocol, used by
+ remote GUI or WeeChat to communicate with Relay plugin (English version).
+Section: Network/Communication
+
+Format: HTML
+Index: /usr/share/doc/weechat-devel-doc/html/weechat_relay_api.en.html
+Files: /usr/share/doc/weechat-devel-doc/html/weechat_relay_api.en.html

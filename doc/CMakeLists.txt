@@ -28,6 +28,7 @@ if(ENABLE_MAN OR ENABLE_DOC)
   set(SCRIPTING_LANG de en fr it ja pl sr)
   set(FAQ_LANG de en es fr it ja pl sr)
   set(QUICKSTART_LANG cs de en es fr it ja pl ru sr)
+  set(RELAY_API_LANG en fr)
   set(RELAY_WEECHAT_LANG en fr ja sr)
   set(DEV_LANG en fr ja sr)
 
@@ -88,6 +89,15 @@ if(ENABLE_MAN OR ENABLE_DOC)
     set(ASCIIDOCTOR_QUICKSTART_ARGS
       -a toc=left
       -a toclevels=2
+      -a sectnums
+      -a sectnumlevels=2
+      -a docinfo1
+    )
+
+    # asciidoctor arguments for relay "api"
+    set(ASCIIDOCTOR_RELAY_API_ARGS
+      -a toc=left
+      -a toclevels=3
       -a sectnums
       -a sectnumlevels=2
       -a docinfo1
@@ -274,6 +284,21 @@ if(ENABLE_MAN OR ENABLE_DOC)
         )
         add_custom_target(doc-quickstart-${lang} ALL DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.${lang}.html")
         install(FILES "${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.${lang}.html" DESTINATION "${DATAROOTDIR}/doc/${PROJECT_NAME}")
+      endforeach()
+      # relay "api"
+      foreach(lang ${RELAY_API_LANG})
+        add_custom_command(
+          OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/weechat_relay_api.${lang}.html"
+          COMMAND "${ASCIIDOCTOR_EXECUTABLE}" ARGS ${ASCIIDOCTOR_ARGS} ${ASCIIDOCTOR_RELAY_API_ARGS} -o "weechat_relay_api.${lang}.html" "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/weechat_relay_api.${lang}.adoc"
+          DEPENDS
+          "${CMAKE_CURRENT_SOURCE_DIR}/docinfo.html"
+          "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/weechat_relay_api.${lang}.adoc"
+          "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/includes/relay.${lang}.adoc"
+          WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
+          COMMENT "Building weechat_relay_api.${lang}.html"
+        )
+        add_custom_target(doc-relay-api-${lang} ALL DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/weechat_relay_api.${lang}.html")
+        install(FILES "${CMAKE_CURRENT_BINARY_DIR}/weechat_relay_api.${lang}.html" DESTINATION "${DATAROOTDIR}/doc/${PROJECT_NAME}")
       endforeach()
       # relay "weechat"
       foreach(lang ${RELAY_WEECHAT_LANG})

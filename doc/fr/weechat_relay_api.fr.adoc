@@ -1,0 +1,1673 @@
+= Relai API WeeChat
+:author: Sébastien Helleu
+:email: flashcode@flashtux.org
+:lang: fr
+:toc-title: Table des matières
+
+[[introduction]]
+== Introduction
+
+Ce document est une spécification du protocole relay _api_ : le protocole
+utilisé pour relayer les données de WeeChat aux clients avec une API REST HTTP.
+
+[[terminology]]
+=== Terminologie
+
+Les termes suivants sont utilisés dans ce document :
+
+* _relay_ : il s'agit de l'extension "relay" de WeeChat, qui agit comme un
+  "serveur" et autorise les _clients_ à se connecter
+* _client_ : il s'agit d'un logiciel connecté au _relay_ via une connexion réseau
+  (WeeChat lui-même ou une interface distante).
+
+[[network_diagram]]
+=== Diagramme réseau
+
+Les _clients_ sont connectés au _relay_ comme dans le diagramme ci-dessous :
+
+include::includes/relay.fr.adoc[tag=diagram]
+
+[NOTE]
+Tous les clients ici utilisent le protocole _api_ dans l'extension _relay_. +
+L'extension _relay_ autorise aussi les protocoles _irc_ et _weechat_
+(non décrits dans ce document).
+
+[[protocol_generalities]]
+== Généralités sur le protocole
+
+* Les connexions du _client_ vers _relay_ sont faites avec des sockets TCP sur
+  l'IP/port utilisé par _relay_ pour écouter les nouvelles connexions.
+* Le nombre de clients est limité par l'option _relay.network.max_clients_.
+* Chaque _client_ est indépendant des autres clients.
+* Le relai _api_ est une API REST HTTP utilisant le format JSON pour les
+  entrées/sorties.
+* Les messages sont automatiquement compressés (deflate, gzip, zstd et permessage-deflate
+  pour le protocole websocket).
+* WeeChat peut être utilisé comme client de ce relai.
+
+[[api_versioning]]
+=== Version de l'API
+
+La version de l'API suit une https://semver.org/lang/fr/[version sémantique ^↗^^]
+« pragmatique », comme WeeChat, sur 3 chiffres `X.Y.Z`, où :
+
+* `X` est la version majeure
+* `Y` est la version mineure
+* `Z` est la version de patch.
+
+Exemple : la version `2.0.0` apporte des changements incompatibles avec la version
+`1.2.3`.
+
+La version de l'API est retournée par la ressource <<resource_version,version>>.
+
+[[api_schema]]
+=== Schéma d'API
+
+Vous pouvez parcourir et tester l'API en ligne : https://weechat.org/api/[API relay WeeChat ^↗^^].
+
+[[response_codes]]
+=== Codes réponse
+
+Les codes réponse HTTP suivants peuvent être retournés au client :
+
+* `200 OK` : réponse OK avec un corps (JSON)
+* `204 No Content` : réponse OK sans corps
+* `400 Bad Request` : requête invalide reçue
+* `401 Unauthorized` : informations d'identification manquantes ou invalides
+* `403 Forbidden` : permissions insuffisantes
+* `404 Not Found` : ressource non trouvée
+* `500 Internal Server Error` : erreur interne du serveur
+* `503 Service Unavailable` : service non disponible
+
+Lors d'une connexion via le protocole websocket, un code de réponse supplémentaire
+est envoyé quand WeeChat pousse des données vers le client sur des évènements :
+
+* `0 Event` : évènement poussé au client, si la synchronisation est activée par la
+  ressource <<resource_sync,sync>>.
+
+[[date_format]]
+=== Format de date
+
+Le format de date est https://en.wikipedia.org/wiki/ISO_8601[ISO 8601 ^↗^^],
+en utilisant le fuseau horaire UTC (cela est donc différent de l'affichage par
+WeeChat qui utilise le fuseau horaire local). +
+Les dates sont retournées avec le maximum de précision : jusqu'aux microsecondes
+si cela est possible ou bien les millisecondes, ou juste secondes.
+
+Exemples :
+
+----
+2023-12-05T19:46:03.847625Z
+2023-12-05T19:46:03.847Z
+2023-12-05T19:46:03Z
+----
+
+[[authentication]]
+== Authentification
+
+Le mot de passe doit être envoyé dans l'en-tête `Authorization` avec le schéma
+d'authentification `Basic`.
+
+Le mot de passe peut être envoyé en clair ou haché, avec l'un des formats
+suivants pour l'utilisateur et le mot de passe :
+
+* `plain:<mot_de_passe>`
+* `hash:sha256:<horodatage>:<hash>`
+* `hash:sha512:<horodatage>:<hash>`
+* `hash:pbkdf2+sha256:<horodatage>:<itérations>:<hash>`
+* `hash:pbkdf2+sha512:<horodatage>:<itérations>:<hash>`
+
+Où :
+
+* `<mot_de_passe>` est le mot de passe en clair
+* `<horodatage>` est l'horodatage courant sous forme d'entier (nombre de secondes
+  depuis l'époque Unix) ; il est utilisé pour prévenir les attaques par rejeu
+* `<itérations>` est le nombre d'itérations (pour l'algorithme PBKDF2 seulement)
+* `<hash>` est la valeur hachée de l'horodatage + mot de passe (en hexadécimal)
+
+[NOTE]
+Le nombre maximal de secondes autorisé avant et après l'heure reçue (lorsque le
+mot de passe est haché) est configurable avec l'option _relay.network.time_window_.
+
+Exemple :
+
+* l'horodatage courant est `1706431066`
+* le mot de passe est `secret_password`
+* l'algorithme de hachage est `sha256`
+* le résultat du "hash" est le SHA256 de la chaîne `1706431066secret_password`
+  qui est en hexadécimal : `dfa1db3f6bb6445d18d9ec7427c10f6421274e3a4751e6c1ffc7dd28c94eadf6`
+* l'en-tête `Authorization` est la valeur encodée en base64 de la chaîne
+  `hash:sha256:1706431066:dfa1db3f6bb6445d18d9ec7427c10f6421274e3a4751e6c1ffc7dd28c94eadf6` :
+  `aGFzaDpzaGEyNTY6MTcwNjQzMTA2NjpkZmExZGIzZjZiYjY0NDVkMThkOWVjNzQyN2MxMGY2NDIxMjc0ZTNhNDc1MWU2YzFmZmM3ZGQyOGM5NGVhZGY2`.
+
+L'en-tête `Authorization` est autorisé dans la première requête avec le protocole
+websocket ou toute requête HTTP dans les autres cas.
+
+Exemple de requête avec un mot de passe en clair :
+
+[source,shell]
+----
+curl -L -u 'plain:secret_password' 'https://localhost:9000/api/version'
+----
+
+Exemple de requête avec un mot de passe haché (SHA256) :
+
+[source,shell]
+----
+curl -L -u 'hash:sha256:1706431066:dfa1db3f6bb6445d18d9ec7427c10f6421274e3a4751e6c1ffc7dd28c94eadf6' 'https://localhost:9000/api/version'
+----
+
+Si TOTP (« Time-based One-Time Password » : mot de passe à usage unique basé sur le
+temps) est activé dans WeeChat/relay (option `relay.network.totp_secret` définie),
+vous devez envoyer la valeur TOTP dans l'en-tête `x-weechat-totp` comme ceci :
+
+[source,shell]
+----
+curl -L -u 'hash:sha256:1706431066:dfa1db3f6bb6445d18d9ec7427c10f6421274e3a4751e6c1ffc7dd28c94eadf6' -H "x-weechat-totp: 123456" 'https://localhost:9000/api/version'
+----
+
+En cas d'erreur, une réponse `401 Unauthorized` est retournée avec un champ
+`error` dans les données JSON qui décrit l'erreur.
+
+Réponse : mot de passe manquant :
+
+[source,http]
+----
+HTTP/1.1 401 Unauthorized
+----
+
+[source,json]
+----
+{
+    "error": "Missing password"
+}
+----
+
+Réponse : mot de passe invalide :
+
+[source,http]
+----
+HTTP/1.1 401 Unauthorized
+----
+
+[source,json]
+----
+{
+    "error": "Invalid password"
+}
+----
+
+Réponse : algorithme de hachage invalide :
+
+[source,http]
+----
+HTTP/1.1 401 Unauthorized
+----
+
+[source,json]
+----
+{
+    "error": "Invalid hash algorithm (not found or not supported)"
+}
+----
+
+Réponse : horodatage invalide :
+
+[source,http]
+----
+HTTP/1.1 401 Unauthorized
+----
+
+[source,json]
+----
+{
+    "error": "Invalid timestamp"
+}
+----
+
+Réponse : nombre d'itérations invalide :
+
+[source,http]
+----
+HTTP/1.1 401 Unauthorized
+----
+
+[source,json]
+----
+{
+    "error": "Invalid number of iterations"
+}
+----
+
+Réponse : TOTP manquant :
+
+[source,http]
+----
+HTTP/1.1 401 Unauthorized
+----
+
+[source,json]
+----
+{
+    "error": "Missing TOTP"
+}
+----
+
+Réponse : TOTP invalide :
+
+[source,http]
+----
+HTTP/1.1 401 Unauthorized
+----
+
+[source,json]
+----
+{
+    "error": "Invalid TOTP"
+}
+----
+
+[[compression]]
+== Compression
+
+La compression du corps de la réponse est automatique et basée sur l'en-tête
+`Accept-Encoding` envoyé par le client.
+
+Les formats de compression supportés sont :
+
+* `deflate` (zlib)
+* `gzip`
+* `zstd`
+
+Exemple de requête :
+
+[source,shell]
+----
+curl -L -u 'plain:secret_password' -H "Accept-Encoding: gzip" 'https://localhost:9000/api/version'
+----
+
+Réponse :
+
+[source,http]
+----
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+Content-Encoding: gzip
+Content-Length: 77
+----
+
+----
+[77 octets de données]
+----
+
+[NOTE]
+Avec le protocole websocket, l'extension "permessage-deflate" autorise
+la compression des messages avec zlib.
+
+[[resources]]
+== Ressources
+
+[[resource_preflight]]
+=== Requête « preflight »
+
+La requête « preflight » avec la méthode HTTP `OPTIONS` est utilisée par les
+navigateurs web pour vérifier que le serveur (WeeChat) autorisera la requête
+proprement dite.
+
+Exemple de requête : vérifier que la requête `GET /api/version` est autorisée :
+
+[source,http]
+----
+OPTIONS /api/version HTTP/1.1
+Host: localhost:9000
+Connection: keep-alive
+Accept: */*
+Access-Control-Request-Method: GET
+Access-Control-Request-Headers: authorization
+Origin: https://localhost
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36
+Sec-Fetch-Mode: cors
+Sec-Fetch-Site: same-site
+Sec-Fetch-Dest: empty
+Referer: https://localhost/
+Accept-Encoding: gzip, deflate, br, zstd
+Accept-Language: en-US,en;q=0.9,fr;q=0.8
+----
+
+Réponse :
+
+[source,http]
+----
+HTTP/1.1 204 No Content
+Access-Control-Allow-Methods: GET, POST, PUT, DELETE
+Access-Control-Allow-Headers: origin, content-type, accept, authorization
+Access-Control-Allow-Origin: *
+Content-Type: application/json; charset=utf-8
+Content-Length: 0
+----
+
+[[resource_handshake]]
+=== Poignée de main
+
+Effectuer une poignée de main entre le client et WeeChat.
+
+Cette ressource est accessible sans authentification.
+
+Point de terminaison :
+
+----
+POST /api/handshake
+----
+
+Paramètres du corps :
+
+* `password_hash_algo` (tableau de chaînes, facultatif) : liste des algorithmes
+  de hachage supportés par le client, chaque chaîne peut être :
+** `plain` : mot de passe en clair (pas de hachage)
+** `sha256` : hash SHA256
+** `sha512` : hash SHA512
+** `pbkdf2+sha256` : hash PBKDF2 avec SHA256
+** `pbkdf2+sha512` : hash PBKDF2 avec SHA512
+
+La réponse a les champs suivants :
+
+* `password_hash_algo` (chaîne) : l'algorithme de hachage à utiliser
+  (`null` si aucun algorithme n'est compatible)
+* `password_hash_iterations` (entier) : le nombre d'itérations à utiliser si le
+  hachage PBKDF2 est utilisé
+* `totp` (booléen) : `true` si le TOTP est activé dans WeeChat (le client doit
+  alors envoyer le TOTP dans un en-tête spécifique), `false` sinon
+
+Exemple de requête :
+
+[source,shell]
+----
+curl -L -X POST -d '{"password_hash_algo": ["plain", "sha256", "sha512"]}' 'https://localhost:9000/api/handshake'
+----
+
+Réponse :
+
+[source,http]
+----
+HTTP/1.1 200 OK
+----
+
+[source,json]
+----
+{
+    "password_hash_algo": "sha512",
+    "password_hash_iterations": 100000,
+    "totp": false
+}
+----
+
+[[resource_version]]
+=== Version
+
+Retourner la version de WeeChat et du relai API.
+
+Point de terminaison :
+
+----
+GET /api/version
+----
+
+Exemple de requête :
+
+[source,shell]
+----
+curl -L -u 'plain:secret_password' 'https://localhost:9000/api/version'
+----
+
+Réponse :
+
+[source,http]
+----
+HTTP/1.1 200 OK
+----
+
+[source,json]
+----
+{
+    "weechat_version": "4.2.0-dev",
+    "weechat_version_git": "v4.1.0-143-g0b1cda1c4",
+    "weechat_version_number": 67239936,
+    "relay_api_version": "0.0.1",
+    "relay_api_version_number": 1
+}
+----
+
+[[resource_buffers]]
+=== Tampons
+
+Retourner les tampons, lignes et pseudos.
+
+Points de terminaison :
+
+----
+GET /api/buffers
+GET /api/buffers/{buffer_id}
+GET /api/buffers/{buffer_name}
+----
+
+Paramètres du chemin :
+
+* `buffer_id` (entier, facultatif) : identifiant unique du tampon (à ne pas
+  confondre avec le numéro du tampon, qui est différent)
+* `buffer_name` (chaîne, facultatif) : nom de tampon
+
+Paramètres de la requête :
+
+* `lines` (entier, facultatif, par défaut : `0`) : nombre de lignes à retourner
+  dans les tampons avec contenu formaté :
+** nombre négatif : retourner N lignes depuis la fin du tampon
+   (lignes les plus récentes)
+** `0` : ne retourner aucune ligne
+** nombre positif : retourner N lignes depuis le début du tampon
+   (lignes les plus anciennes)
+* `lines_free` (entier, facultatif, par défaut : `0` si `lines` est `0`, sinon
+  toutes les lignes) : nombre de lignes à retourner avec un contenu libre :
+** nombre négatif : retourner N lignes depuis la fin du tampon
+** `0` : ne retourner aucune ligne
+** nombre positif : retourner N lignes depuis le début du tampon
+* `nicks` (booléen, facultatif, par défaut : `false`) : retourner les pseudos
+  du tampon
+* `colors` (chaîne, facultatif, par défaut : `ansi`) : comment les chaînes avec
+  des couleurs sont retournées :
+** `ansi` : retourner les codes couleur ANSI
+** `weechat` : retourner les codes couleur internes WeeChat
+** `strip` : supprimer les couleurs
+
+Exemple de requête : obtenir tous les tampons sans les lignes :
+
+[source,shell]
+----
+curl -L -u 'plain:secret_password' 'https://localhost:9000/api/buffers'
+----
+
+Réponse :
+
+[source,http]
+----
+HTTP/1.1 200 OK
+----
+
+[source,json]
+----
+[
+    {
+        "id": 1709932823238637,
+        "name": "core.weechat",
+        "short_name": "weechat",
+        "number": 1,
+        "type": "formatted",
+        "title": "WeeChat 4.2.0-dev (C) 2003-2023 - https://weechat.org/",
+        "modes": "",
+        "input_prompt": "",
+        "input": "",
+        "input_position": 0,
+        "input_multiline": false,
+        "nicklist": false,
+        "nicklist_case_sensitive": false,
+        "nicklist_display_groups": true,
+        "local_variables": {
+            "plugin": "core",
+            "name": "weechat"
+        },
+        "keys": []
+    },
+    {
+        "id": 1709932823423765,
+        "name": "irc.server.libera",
+        "short_name": "libera",
+        "number": 2,
+        "type": "formatted",
+        "title": "IRC: irc.libera.chat/6697 (2001:4b7a:a008::6667)",
+        "modes": "",
+        "input_prompt": "",
+        "input": "",
+        "input_position": 0,
+        "input_multiline": false,
+        "nicklist": false,
+        "nicklist_case_sensitive": false,
+        "nicklist_display_groups": true,
+        "local_variables": {
+            "plugin": "irc",
+            "name": "server.libera",
+            "type": "server",
+            "server": "libera",
+            "channel": "libera",
+            "charset_modifier": "irc.libera",
+            "nick": "alice",
+            "tls_version": "TLS1.3",
+            "host": "~alice@example.com"
+        },
+        "keys": []
+    },
+    {
+        "id": 1709932823649069,
+        "name": "irc.libera.#weechat",
+        "short_name": "#weechat",
+        "number": 3,
+        "type": "formatted",
+        "title": "Welcome to the WeeChat official support channel",
+        "modes": "+nt",
+        "input_prompt": "\u001b[92m@\u001b[96malice\u001b[48;5;22m(\u001b[39mi\u001b[48;5;22m)",
+        "input": "",
+        "input_position": 0,
+        "input_multiline": false,
+        "nicklist": true,
+        "nicklist_case_sensitive": false,
+        "nicklist_display_groups": false,
+        "local_variables": {
+            "plugin": "irc",
+            "name": "libera.#weechat",
+            "type": "channel",
+            "server": "libera",
+            "channel": "#weechat",
+            "nick": "alice",
+            "host": "~alice@example.com"
+        },
+        "keys": []
+    }
+]
+----
+
+Exemple de requête : obtenir le tampon WeeChat "core" avec la dernière ligne
+seulement et aucun code couleur :
+
+[source,shell]
+----
+curl -L -u 'plain:secret_password' 'https://localhost:9000/api/buffers/core.weechat?lines=-1&colors=strip'
+----
+
+Réponse :
+
+[source,http]
+----
+HTTP/1.1 200 OK
+----
+
+[source,json]
+----
+{
+    "id": 1709932823238637,
+    "name": "core.weechat",
+    "short_name": "weechat",
+    "number": 1,
+    "type": "formatted",
+    "title": "WeeChat 4.2.0-dev (C) 2003-2023 - https://weechat.org/",
+    "modes": "",
+    "input_prompt": "",
+    "input": "",
+    "input_position": 0,
+    "input_multiline": false,
+    "nicklist": false,
+    "nicklist_case_sensitive": false,
+    "nicklist_display_groups": true,
+    "local_variables": {
+        "plugin": "core",
+        "name": "weechat"
+    },
+    "keys": [],
+    "lines": [
+        {
+            "id": 10,
+            "y": -1,
+            "date": "2023-12-24T08:17:20.786538Z",
+            "date_printed": "2023-12-24T08:17:20.786538Z",
+            "displayed": true,
+            "highlight": false,
+            "notify_level": 0,
+            "prefix": "",
+            "message": "Plugins loaded: alias, buflist, charset, exec, fifo, fset, guile, irc, javascript, logger, lua, perl, php, python, relay, ruby, script, spell, tcl, trigger, typing, xfer",
+            "tags": []
+        }
+    ]
+}
+----
+
+Exemple de requête : obtenir un tampon de canal IRC avec les pseudos :
+
+[source,shell]
+----
+curl -L -u 'plain:secret_password' 'https://localhost:9000/api/buffers/irc.libera.%23weechat?nicks=true'
+----
+
+Réponse :
+
+[source,http]
+----
+HTTP/1.1 200 OK
+----
+
+[source,json]
+----
+{
+    "id": 1709932823649069,
+    "name": "irc.libera.#weechat",
+    "short_name": "#weechat",
+    "number": 3,
+    "type": "formatted",
+    "title": "Welcome to the WeeChat official support channel",
+    "modes": "+nt",
+    "input_prompt": "\u001b[92m@\u001b[96malice\u001b[48;5;22m(\u001b[39mi\u001b[48;5;22m)",
+    "input": "",
+    "input_position": 0,
+    "input_multiline": false,
+    "nicklist": true,
+    "nicklist_case_sensitive": false,
+    "nicklist_display_groups": false,
+    "local_variables": {
+        "plugin": "irc",
+        "name": "libera.#weechat",
+        "type": "channel",
+        "server": "libera",
+        "channel": "#weechat",
+        "nick": "alice",
+        "host": "~alice@example.com"
+    },
+    "keys": [],
+    "nicklist_root": {
+        "id": 0,
+        "parent_group_id": -1,
+        "name": "root",
+        "color_name": "",
+        "color": "",
+        "visible": false,
+        "groups": [
+            {
+                "id": 1709932823649181,
+                "parent_group_id": 0,
+                "name": "000|o",
+                "color_name": "weechat.color.nicklist_group",
+                "color": "\u001b[32m",
+                "visible": true,
+                "groups": [],
+                "nicks": [
+                    {
+                        "id": 1709932823649184,
+                        "parent_group_id": 1709932823649181,
+                        "prefix": "@",
+                        "prefix_color_name": "lightgreen",
+                        "prefix_color": "\u001b[92m",
+                        "name": "alice",
+                        "color_name": "bar_fg",
+                        "color": "",
+                        "visible": true
+                    }
+                ]
+            },
+            {
+                "id": 1709932823649189,
+                "parent_group_id": 0,
+                "name": "001|h",
+                "color_name": "weechat.color.nicklist_group",
+                "color": "\u001b[32m",
+                "visible": true,
+                "groups": [],
+                "nicks": []
+            },
+            {
+                "id": 1709932823649203,
+                "parent_group_id": 0,
+                "name": "002|v",
+                "color_name": "weechat.color.nicklist_group",
+                "color": "\u001b[32m",
+                "visible": true,
+                "groups": [],
+                "nicks": []
+            },
+            {
+                "id": 1709932823649210,
+                "parent_group_id": 0,
+                "name": "999|...",
+                "color_name": "weechat.color.nicklist_group",
+                "color": "\u001b[32m",
+                "visible": true,
+                "groups": [],
+                "nicks": []
+            }
+        ],
+        "nicks": []
+    }
+}
+----
+
+Exemple de requête : obtenir le tampon fset :
+
+[source,shell]
+----
+curl -L -u 'plain:secret_password' 'https://localhost:9000/api/buffers/fset.fset'
+----
+
+Réponse :
+
+[source,http]
+----
+HTTP/1.1 200 OK
+----
+
+[source,json]
+----
+{
+    "id": 1709932823897200,
+    "name": "fset.fset",
+    "short_name": "",
+    "number": 4,
+    "type": "free",
+    "title": "\u001b[96m1/\u001b[36m3565 | Filter: \u001b[93m* | Sort: \u001b[97m~name | Key(input): alt+space=toggle boolean, alt+'-'(-)=subtract 1 or set, alt+'+'(+)=add 1 or append, alt+f,alt+r(r)=reset, alt+f,alt+u(u)=unset, alt+enter(s)=set, alt+f,alt+n(n)=set new value, alt+f,alt+a(a)=append, alt+','=mark/unmark, shift+down=mark and move down, shift+up=move up and mark, ($)=refresh, ($$)=unmark/refresh, (m)=mark matching options, (u)=unmark matching options, alt+p(p)=toggle plugins desc, alt+v(v)=toggle help bar, ctrl+x(x)=switch format, (q)=close buffer",
+    "modes": "",
+    "input_prompt": "",
+    "input": "",
+    "input_position": 0,
+    "input_multiline": false,
+    "nicklist": false,
+    "nicklist_case_sensitive": false,
+    "nicklist_display_groups": true,
+    "local_variables": {
+        "plugin": "fset",
+        "name": "fset",
+        "type": "option",
+        "filter": "*"
+    },
+    "keys": [
+        {
+            "key": "ctrl-l",
+            "command": "/fset -refresh"
+        },
+        {
+            "key": "ctrl-n",
+            "command": "/eval ${if:${weechat.bar.buflist.hidden}?/fset -down:/buffer +1}"
+        },
+        {
+            "key": "ctrl-x",
+            "command": "/fset -format"
+        },
+        {
+            "key": "down",
+            "command": "/fset -down"
+        },
+        {
+            "key": "f11",
+            "command": "/fset -left"
+        },
+        {
+            "key": "f12",
+            "command": "/fset -right"
+        },
+        {
+            "key": "meta-+",
+            "command": "/fset -add 1"
+        },
+        {
+            "key": "meta--",
+            "command": "/fset -add -1"
+        },
+        {
+            "key": "meta-comma",
+            "command": "/fset -mark"
+        },
+        {
+            "key": "meta-end",
+            "command": "/fset -go end"
+        },
+        {
+            "key": "meta-f,meta-a",
+            "command": "/fset -append"
+        },
+        {
+            "key": "meta-f,meta-n",
+            "command": "/fset -setnew"
+        },
+        {
+            "key": "meta-f,meta-r",
+            "command": "/fset -reset"
+        },
+        {
+            "key": "meta-f,meta-u",
+            "command": "/fset -unset"
+        },
+        {
+            "key": "meta-home",
+            "command": "/fset -go 0"
+        },
+        {
+            "key": "meta-p",
+            "command": "/mute /set fset.look.show_plugins_desc toggle"
+        },
+        {
+            "key": "meta-q",
+            "command": "/input insert meta-q fset ${property}"
+        },
+        {
+            "key": "meta-return",
+            "command": "/fset -set"
+        },
+        {
+            "key": "meta-space",
+            "command": "/fset -toggle"
+        },
+        {
+            "key": "meta-v",
+            "command": "/bar toggle fset"
+        },
+        {
+            "key": "shift-down",
+            "command": "/fset -mark; /fset -down"
+        },
+        {
+            "key": "shift-up",
+            "command": "/fset -up; /fset -mark"
+        },
+        {
+            "key": "up",
+            "command": "/fset -up"
+        }
+    ]
+}
+----
+
+[[resource_buffers_lines]]
+==== Lignes
+
+Retourner les lignes d'un tampon.
+
+Points de terminaison :
+
+----
+GET /api/buffers/{buffer_id}/lines
+GET /api/buffers/{buffer_id}/lines/{line_id}
+GET /api/buffers/{buffer_name}/lines
+GET /api/buffers/{buffer_name}/lines/{line_id}
+----
+
+Paramètres de chemin :
+
+* `buffer_id` (entier, **obligatoire**) : identifiant unique de tampon (à ne pas
+  confondre avec le numéro du tampon, qui est différent)
+* `buffer_name` (chaîne, **obligatoire**) : nom du tampon
+* `line_id` (entier, facultatif) : retourner une seule ligne avec cet identifiant
+
+Paramètres de requête :
+
+* `lines` (entier, facultatif, par défaut : toutes les lignes) : nombre de lignes
+  à retourner :
+** nombre négatif : retourner N lignes depuis la fin du tampon
+   (lignes les plus récentes)
+** `0` : ne retourner aucune ligne (autorisé mais ne fait pas vraiment de sens
+   avec cette ressource)
+** nombre positif : retourner N lignes depuis le début du tampon
+   (lignes les plus anciennes)
+* `colors` (chaîne, facultatif, par défaut : `ansi`) : comment les chaînes avec
+  des couleurs sont retournées :
+** `ansi` : retourner les codes couleur ANSI
+** `weechat` : retourner les codes couleur internes WeeChat
+** `strip` : supprimer les couleurs
+
+Exemple de requête : obtenir les 1000 dernières lignes d'un tampon, sans codes
+couleur :
+
+[source,shell]
+----
+curl -L -u 'plain:secret_password' 'https://localhost:9000/api/buffers/irc.libera.%23weechat/lines?lines=-1000&colors=strip'
+----
+
+Réponse :
+
+[source,http]
+----
+HTTP/1.1 200 OK
+----
+
+[source,json]
+----
+[
+    {
+        "id": 0,
+        "y": -1,
+        "date": "2023-12-05T19:46:03.847625Z",
+        "date_printed": "2023-12-05T19:46:03.847625Z",
+        "displayed": true,
+        "highlight": false,
+        "notify_level": 0,
+        "prefix": "-->",
+        "message": "alice (~alice@example.com) has joined #test",
+        "tags": [
+            "irc_join",
+            "irc_tag_account=alice",
+            "irc_tag_time=2023-12-05T19:46:03.847Z",
+            "nick_alice",
+            "host_~alice@example.com",
+            "log4"
+        ]
+    },
+    {
+        "id": 1,
+        "y": -1,
+        "date": "2023-12-05T19:46:03.986543Z",
+        "date_printed": "2023-12-05T19:46:03.986543Z",
+        "displayed": true,
+        "highlight": false,
+        "notify_level": 0,
+        "prefix": "--",
+        "message": "Mode #test [+Cnst] by zirconium.libera.chat",
+        "tags": [
+            "irc_mode",
+            "irc_tag_time=2023-12-05T19:46:03.986Z",
+            "nick_zirconium.libera.chat",
+            "log3"
+        ]
+    },
+    {
+        "id": 2,
+        "y": -1,
+        "date": "2023-12-05T19:46:04.287546Z",
+        "date_printed": "2023-12-05T19:46:04.287546Z",
+        "displayed": true,
+        "highlight": false,
+        "notify_level": 0,
+        "prefix": "--",
+        "message": "Channel #test: 1 nick (1 op, 0 voiced, 0 regular)",
+        "tags": [
+            "irc_366",
+            "irc_numeric",
+            "irc_tag_time=2023-12-05T19:46:04.287Z",
+            "nick_zirconium.libera.chat",
+            "log3"
+        ]
+    }
+]
+----
+
+[[resources_buffers_nicks]]
+==== Pseudos
+
+Retourner les pseudos d'un tampon.
+
+Points de terminaison :
+
+----
+GET /api/buffers/{buffer_id}/nicks
+GET /api/buffers/{buffer_name}/nicks
+----
+
+Paramètres de chemin :
+
+* `buffer_id` (entier, **obligatoire**) : identifiant unique de tampon (à ne pas
+  confondre avec le numéro du tampon, qui est différent)
+* `buffer_name` (chaîne, **obligatoire**) : nom du tampon
+
+Exemple de requête : obtenir les pseudos d'un tampon :
+
+[source,shell]
+----
+curl -L -u 'plain:secret_password' 'https://localhost:9000/api/buffers/irc.libera.%23weechat/nicks'
+----
+
+Réponse :
+
+[source,http]
+----
+HTTP/1.1 200 OK
+----
+
+[source,json]
+----
+{
+    "id": 0,
+    "parent_group_id": -1,
+    "name": "root",
+    "color_name": "",
+    "color": "",
+    "visible": false,
+    "groups": [
+        {
+            "id": 1709932823649181,
+            "parent_group_id": 0,
+            "name": "000|o",
+            "color_name": "weechat.color.nicklist_group",
+            "color": "\u001b[32m",
+            "visible": true,
+            "groups": [],
+            "nicks": [
+                {
+                    "id": 1709932823649184,
+                    "parent_group_id": 1709932823649181,
+                    "prefix": "@",
+                    "prefix_color_name": "lightgreen",
+                    "prefix_color": "\u001b[92m",
+                    "name": "alice",
+                    "color_name": "bar_fg",
+                    "color": "",
+                    "visible": true
+                }
+            ]
+        },
+        {
+            "id": 1709932823649189,
+            "parent_group_id": 0,
+            "name": "001|h",
+            "color_name": "weechat.color.nicklist_group",
+            "color": "\u001b[32m",
+            "visible": true,
+            "groups": [],
+            "nicks": []
+        },
+        {
+            "id": 1709932823649203,
+            "parent_group_id": 0,
+            "name": "002|v",
+            "color_name": "weechat.color.nicklist_group",
+            "color": "\u001b[32m",
+            "visible": true,
+            "groups": [],
+            "nicks": []
+        },
+        {
+            "id": 1709932823649210,
+            "parent_group_id": 0,
+            "name": "999|...",
+            "color_name": "weechat.color.nicklist_group",
+            "color": "\u001b[32m",
+            "visible": true,
+            "groups": [],
+            "nicks": []
+        }
+    ],
+    "nicks": []
+}
+----
+
+[[resource_hotlist]]
+=== Hotlist
+
+Retourner la "hotlist" (notification d'activité sur les tampons).
+
+Point de terminaison :
+
+----
+GET /api/hotlist
+----
+
+Exemple de requête :
+
+[source,shell]
+----
+curl -L -u 'plain:secret_password' 'https://localhost:9000/api/hotlist'
+----
+
+Réponse :
+
+[source,http]
+----
+HTTP/1.1 200 OK
+----
+
+[source,json]
+----
+[
+    {
+        "priority": 0,
+        "date": "2024-03-17T16:38:51.572834Z",
+        "buffer_id": 1710693531508204,
+        "count": [
+            44,
+            0,
+            0,
+            0
+        ]
+    },
+    {
+        "priority": 0,
+        "date": "2024-03-17T16:38:51.573028Z",
+        "buffer_id": 1710693530395959,
+        "count": [
+            14,
+            0,
+            0,
+            0
+        ]
+    },
+    {
+        "priority": 0,
+        "date": "2024-03-17T16:38:51.611617Z",
+        "buffer_id": 1710693531529248,
+        "count": [
+            4,
+            0,
+            0,
+            0
+        ]
+    }
+]
+----
+
+[[resource_input]]
+=== Entrée
+
+Envoyer une commande ou du texte à un tampon.
+
+Point de terminaison :
+
+----
+POST /api/input
+----
+
+Paramètres du corps :
+
+* `buffer_id` (entier, facultatif) : identifiant unique du tampon (à ne pas
+  confondre avec le numéro du tampon, qui est différent)
+* `buffer_name` (chaîne, facultatif) : nom de tampon
+* `command` (chaîne, **obligatoire**) : commande ou texte à envoyer au tampon
+
+Exemple de requête : dire "hello!" sur le canal #weechat :
+
+[source,shell]
+----
+curl -L -u 'plain:secret_password' -X POST \
+  -d '{"buffer": "irc.libera.#weechat", "command": "hello!"}' \
+  'https://localhost:9000/api/input'
+----
+
+Réponse :
+
+[source,http]
+----
+HTTP/1.1 204 No content
+----
+
+Exemple de requête : quitter et fermer le canal #weechat (commande exécutée
+sur le tampon "core" WeeChat) :
+
+[source,shell]
+----
+curl -L -u 'plain:secret_password' -X POST \
+  -d '{"command": "/buffer close irc.libera.#weechat"}' \
+  'https://localhost:9000/api/input'
+----
+
+Réponse :
+
+[source,http]
+----
+HTTP/1.1 204 No content
+----
+
+[[resource_ping]]
+=== Ping
+
+Envoyer une requête "ping".
+
+Point de terminaison :
+
+----
+POST /api/ping
+----
+
+Paramètres du corps :
+
+* `data` (chaîne, facultatif) : chaîne qui est retournée dans la réponse
+
+Exemple de requête : pas de corps :
+
+[source,shell]
+----
+curl -L -u 'plain:secret_password' -X POST 'https://localhost:9000/api/ping'
+----
+
+Réponse :
+
+[source,http]
+----
+HTTP/1.1 204 No content
+----
+
+Exemple de requête : avec des données :
+
+[source,shell]
+----
+curl -L -u 'plain:secret_password' -X POST \
+  -d '{"data": "1702835741"}' \
+  'https://localhost:9000/api/ping'
+----
+
+Réponse :
+
+[source,http]
+----
+HTTP/1.1 200 OK
+----
+
+[source,json]
+----
+{
+    "data": "1702835741"
+}
+----
+
+[[resource_sync]]
+=== Sync
+
+Démarrer ou arrêter la synchronisation des données avec WeeChat.
+
+Cette ressource ne peut être utilisée que si le client est connecté avec le protocole
+websocket, pour que WeeChat puisse pousser des messages au client à tout moment.
+
+Si cette ressource est utilisée sans connexion websocket, une erreur 403 (Forbidden)
+est retournée.
+
+Point de terminaison :
+
+----
+POST /api/sync
+----
+
+Paramètres du corps :
+
+* `sync` (booléen, facultatif, par défaut : `true`) : `true` pour activer la
+  synchronisation avec WeeChat
+* `nicks` (booléen, facultatif, par défaut : `true`) : `true` pour recevoir
+  les mises à jour de pseudos dans les tampons (utilisé seulement si `sync`
+  vaut `true`)
+* `input` (booléen, facultatif, par défaut : `true`) : `true` pour synchroniser
+  l'entrée de tampon depuis le relai distant vers le client local (utilisé
+  seulement si `sync` vaut `true`)
+* `colors` (chaîne, facultatif, par défaut : `ansi`) : comment les chaînes avec
+  des couleurs sont retournées :
+** `ansi` : retourner les codes couleur ANSI
+** `weechat` : retourner les codes couleur internes WeeChat
+** `strip` : supprimer les couleurs
+
+Exemple de requête avec le protocole websocket :
+
+[source,json]
+----
+{
+    "request": "POST /api/sync",
+    "body": {
+        "nicks": false
+    }
+}
+----
+
+Réponse :
+
+[source,json]
+----
+{
+    "code": 204,
+    "message": "No Content"
+}
+----
+
+Exemple de requête dans le protocole websocket (non autorisé) :
+
+[source,shell]
+----
+curl -L -u 'plain:secret_password' -X POST \
+  -d '{"nicks": false}' \
+  'https://localhost:9000/api/sync'
+----
+
+Réponse :
+
+[source,http]
+----
+HTTP/1.1 403 Forbidden
+----
+
+[source,json]
+----
+{
+    "error": "Sync resource is available only with a websocket connection"
+}
+----
+
+[[websocket]]
+== Websocket
+
+Le protocole websocket est utilisé pour effectuer une connexion persistante entre
+le client et WeeChat et recevoir les évènements en temps réel si la synchronisation
+est activée avec la ressource <<resource_sync,sync>>.
+
+L'authentification doit être effectuée seulement une fois lorsque le protocole
+websocket est utilisé (voir <<authentication,authentification>>).
+
+[[websocket_handshake]]
+=== Poignée de main websocket
+
+Pour établir la connexion, une poignée de main est effectuée sur le point de
+terminaison `/api` et ressemble à ceci :
+
+[source,http]
+----
+GET /api HTTP/1.1
+Host: localhost:9000
+Connection: Upgrade
+Pragma: no-cache
+Cache-Control: no-cache
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
+Upgrade: websocket
+Origin: https://example.com
+Sec-WebSocket-Version: 13
+Accept-Encoding: gzip, deflate, br
+Accept-Language: en-US,en;q=0.9,fr;q=0.8
+Sec-WebSocket-Key: 2XE8VAJktqi3Tpw5QnfxVQ==
+Sec-WebSocket-Extensions: permessage-deflate; client_max_window_bits
+----
+
+WeeChat retourne sa réponse à la poignée de main pour confirmer que le protocole
+websocket est bien supporté (et que l'authentification est réussie) :
+
+[source,http]
+----
+HTTP/1.1 101 Switching Protocols
+Upgrade: websocket
+Connection: Upgrade
+Sec-WebSocket-Accept: PaY9vRflWeOKuD0/F7e5gD9At9U=
+Sec-WebSocket-Extensions: permessage-deflate; client_max_window_bits
+----
+
+[NOTE]
+La valeur `Sec-WebSocket-Accept` retournée est le hachage SHA-1 de la valeur
+reçue, concaténée au GUID `258EAFA5-E914-47DA-95CA-C5AB0DC85B11`
+(le hachage SHA-1 est encodé en base64). +
+Dans l'exemple ci-dessus, le hachage SHA-1 de
+`2XE8VAJktqi3Tpw5QnfxVQ==258EAFA5-E914-47DA-95CA-C5AB0DC85B11` est
+`PaY9vRflWeOKuD0/F7e5gD9At9U=` (en base64).
+
+[[websocket_frames]]
+=== Frames
+
+Lorsque le client est connecté via le protocole websocket :
+
+* les requêtes et réponses sont en JSON, à l'intérieur des "frames" websocket
+* si la synchronisation est activée avec la ressource <<resource_sync,sync>>,
+  WeeChat peut envoyer des "frames" au client à tout moment.
+
+Les requêtes envoyées vers WeeChat sont faites avec un objet JSON qui contient
+les champs suivants :
+
+* `request` (chaîne) : la méthode HTTP et le chemin
+  (exemple : `GET /api/buffers?lines=-100`)
+* `body` (objet ou tableau) : le corps (facultatif, pour les méthodes `POST` et `PUT`)
+
+Les réponses vers le client sont faites avec un objet JSON qui contient
+les champs suivants :
+
+* `code` (entier) : code réponse HTTP (exemple : `200`)
+* `message` (chaîne) : message pour le code (exemple : `OK`)
+* `request` (chaîne) : la requête (exemple : `GET /api/buffers?lines=-100`)
+* `request_body` (objet) : le corps de la requête, ou `null` si la requête
+  n'avait pas de corps
+
+Lorsque la réponse a un corps, ces deux champs supplémentaires sont retournés :
+
+* `body_type` (chaîne) : type des objets retournés dans le corps (voir ci-dessous)
+* `body` (objet ou tableau) : le corps retourné
+
+Les types de corps qui peuvent être retournés :
+
+* `handshake`
+* `version`
+* `buffer`
+* `line`
+* `nick_group`
+* `nick`
+* `hotlist`
+* `ping`
+
+Exemple de requête : obtenir la version :
+
+[source,json]
+----
+{
+    "request": "GET /api/version"
+}
+----
+
+Réponse :
+
+[source,json]
+----
+{
+    "code": 200,
+    "message": "OK",
+    "request": "GET /api/version",
+    "request_body": null,
+    "body_type": "version",
+    "body": {
+        "weechat_version": "4.2.0-dev",
+        "weechat_version_git": "v4.1.0-143-g0b1cda1c4",
+        "weechat_version_number": 67239936,
+        "relay_api_version": "0.0.1",
+        "relay_api_version_number": 1
+    }
+}
+----
+
+Exemple de requête : dire "hello!" sur le canal #weechat :
+
+[source,json]
+----
+{
+    "request": "POST /api/input",
+    "body": {
+        "buffer_name": "irc.libera.#weechat",
+        "command": "hello!"
+    }
+}
+----
+
+Réponse :
+
+[source,json]
+----
+{
+    "code": 204,
+    "message": "No Content",
+    "request": "POST /api/input",
+    "request_body": {
+        "buffer_name": "irc.libera.#weechat",
+        "command": "hello!"
+    }
+}
+----
+
+WeeChat pousse des données au client à tout moment sur des évènements : lorsque
+des lignes sont affichées, des tampons ajoutés/supprimés/changés, des pseudos
+ajoutés/supprimés/changés, etc.
+
+Les messages envoyés au client ont les champs suivants :
+
+* `code` : `0`
+* `message` : `Event`
+* `event` : objet avec les champs suivants :
+** `name` (chaîne) : le nom de l'évènement (nom du signal ou hsignal)
+** `buffer_id` (entier) : l'identifiant unique du tampon, défini seulement pour
+   les sous-objets, -1 dans les autres cas
+
+Les évènements suivants sont envoyés au client, selon les options de synchronisation :
+
+[width="100%",cols="5,3,3,5",options="header"]
+|===
+| Évènement                 | Id tampon | Type de corps | Corps
+| `buffer_opened`           | id tampon | `buffer`      | tampon avec les lignes et pseudos
+| `buffer_type_changed`     | id tampon | `buffer`      | tampon
+| `buffer_moved`            | id tampon | `buffer`      | tampon
+| `buffer_merged`           | id tampon | `buffer`      | tampon
+| `buffer_unmerged`         | id tampon | `buffer`      | tampon
+| `buffer_hidden`           | id tampon | `buffer`      | tampon
+| `buffer_unhidden`         | id tampon | `buffer`      | tampon
+| `buffer_renamed`          | id tampon | `buffer`      | tampon
+| `buffer_title_changed`    | id tampon | `buffer`      | tampon
+| `buffer_localvar_added`   | id tampon | `buffer`      | tampon
+| `buffer_localvar_changed` | id tampon | `buffer`      | tampon
+| `buffer_localvar_removed` | id tampon | `buffer`      | tampon
+| `buffer_cleared`          | id tampon | `buffer`      | tampon
+| `buffer_closing`          | id tampon | `buffer`      | tampon
+| `buffer_closed`           | id tampon | (non défini)  | (non défini)
+| `buffer_line_added`       | id tampon | `line`        | ligne de tampon
+| `input_text_changed`      | id tampon | `buffer`      | tampon
+| `input_text_cursor_moved` | id tampon | `buffer`      | tampon
+| `upgrade` ^(1)^           | -1        | (non défini)  | (non défini)
+| `upgrade_ended` ^(1)^     | -1        | (non défini)  | (non défini)
+| `nicklist_group_changed`  | id tampon | `nick_group`  | groupe de pseudos
+| `nicklist_group_added`    | id tampon | `nick_group`  | groupe de pseudos
+| `nicklist_group_removing` | id tampon | `nick_group`  | groupe de pseudos
+| `nicklist_nick_added`     | id tampon | `nick`        | pseudo
+| `nicklist_nick_removing`  | id tampon | `nick`        | pseudo
+| `nicklist_nick_changed`   | id tampon | `nick`        | pseudo
+|===
+
+[NOTE]
+^(1)^ Les évènements `upgrade` et `upgrade_ended` sont envoyés seulement si
+le client est connecté sans chiffrement (pas de TLS), car avec TLS le client est
+déconnecté avant que la mise à jour soit faire (la mise à jour des connexions TLS
+n'est pas supportée).
+
+Exemple : nouveau tampon : le canal `#weechat` a été rejoint :
+
+[source,json]
+----
+{
+    "code": 0,
+    "message": "Event",
+    "event": {
+        "name": "buffer_opened",
+        "buffer_id": 1709932823649069
+    },
+    "body_type": "buffer",
+    "body": {
+        "id": 1709932823649069,
+        "name": "irc.libera.#test",
+        "short_name": "",
+        "number": 4,
+        "type": "formatted",
+        "title": "",
+        "modes": "+nt",
+        "input_prompt": "\u001b[92m@\u001b[96malice\u001b[48;5;22m(\u001b[39mi\u001b[48;5;22m)",
+        "input": "",
+        "input_position": 0,
+        "input_multiline": false,
+        "nicklist": true,
+        "nicklist_case_sensitive": false,
+        "nicklist_display_groups": false,
+        "local_variables": {
+            "plugin": "irc",
+            "name": "libera.#test",
+            "type": "channel",
+            "nick": "alice",
+            "host": "~alice@example.com",
+            "server": "libera",
+            "channel": "#test"
+        },
+        "keys": [],
+        "lines": []
+    }
+}
+----
+
+Exemple : nouvelle ligne affichée sur le canal `#weechat` :
+
+[source,json]
+----
+{
+    "code": 0,
+    "message": "Event",
+    "event": {
+        "name": "buffer_line_added",
+        "buffer_id": 1709932823649069
+    },
+    "body_type": "line",
+    "body": {
+        "id": 5,
+        "index": -1,
+        "date": "2024-01-07T08:54:00.179483Z",
+        "date_printed": "2024-01-07T08:54:00.179483Z",
+        "displayed": true,
+        "highlight": false,
+        "notify_level": 0,
+        "prefix": "alice",
+        "message": "hello!",
+        "tags": [
+            "irc_privmsg",
+            "self_msg",
+            "notify_none",
+            "no_highlight",
+            "prefix_nick_white",
+            "nick_alice",
+            "log1"
+        ]
+    }
+}
+----
+
+Exemple : le pseudo `bob` est ajouté avec le statut opérateur sur le canal `#weechat` :
+
+[source,json]
+----
+{
+    "code": 0,
+    "message": "Event",
+    "event": {
+        "name": "nicklist_nick_added",
+        "buffer_id": 1709932823649069
+    },
+    "body_type": "nick",
+    "body": {
+        "id": 1709932823649902,
+        "parent_group_id": 1709932823649181,
+        "prefix": "@",
+        "prefix_color_name": "lightgreen",
+        "prefix_color": "\u001b[92m",
+        "name": "bob",
+        "color_name": "bar_fg",
+        "color": "",
+        "visible": true
+    }
+}
+----
+
+Exemple : le tampon du canal `#weechat` a été fermé :
+
+[source,json]
+----
+{
+    "code": 0,
+    "message": "Event",
+    "event": {
+        "name": "buffer_closed",
+        "buffer_id": 1709932823649069
+    }
+}
+----
+
+Exemple : WeeChat est en cours de mise à jour :
+
+[source,json]
+----
+{
+    "code": 0,
+    "message": "Event",
+    "event": {
+        "name": "upgrade",
+        "buffer_id": -1
+    }
+}
+----
+
+Exemple : la mise à jour de WeeChat est terminée :
+
+[source,json]
+----
+{
+    "code": 0,
+    "message": "Event",
+    "event": {
+        "name": "upgrade_ended",
+        "buffer_id": -1
+    }
+}
+----
