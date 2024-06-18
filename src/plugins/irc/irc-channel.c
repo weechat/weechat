@@ -190,7 +190,6 @@ irc_channel_create_buffer (struct t_irc_server *server,
     int buffer_created, current_buffer_number, buffer_position;
     int autojoin_join, manual_join, noswitch;
     char str_number[32], *channel_name_lower, *buffer_name, *prompt;
-    const char *short_name, *localvar_channel;
 
     buffer_created = 0;
     buffer_props = NULL;
@@ -218,6 +217,7 @@ irc_channel_create_buffer (struct t_irc_server *server,
         NULL, NULL);
     if (buffer_props)
     {
+        weechat_hashtable_set (buffer_props, "short_name", channel_name);
         weechat_hashtable_set (
             buffer_props,
             "input_multiline",
@@ -251,6 +251,7 @@ irc_channel_create_buffer (struct t_irc_server *server,
     {
         if (!irc_upgrading)
             weechat_nicklist_remove_all (ptr_buffer);
+        weechat_hashtable_remove (buffer_props, "short_name");
         weechat_hashtable_map (buffer_props, &irc_channel_apply_props, ptr_buffer);
     }
     else
@@ -310,25 +311,6 @@ irc_channel_create_buffer (struct t_irc_server *server,
                 weechat_buffer_merge (ptr_buffer, ptr_buffer_for_merge);
         }
         buffer_created = 1;
-    }
-
-    if (buffer_created)
-    {
-        if (!weechat_buffer_get_integer (ptr_buffer, "short_name_is_set"))
-            weechat_buffer_set (ptr_buffer, "short_name", channel_name);
-    }
-    else
-    {
-        short_name = weechat_buffer_get_string (ptr_buffer, "short_name");
-        localvar_channel = weechat_buffer_get_string (ptr_buffer,
-                                                      "localvar_channel");
-        if (!short_name
-            || (localvar_channel
-                && (strcmp (localvar_channel, short_name) == 0)))
-        {
-            /* update the short_name only if it was not changed by the user */
-            weechat_buffer_set (ptr_buffer, "short_name", channel_name);
-        }
     }
 
     if (buffer_created)

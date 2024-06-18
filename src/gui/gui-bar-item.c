@@ -1277,7 +1277,7 @@ gui_bar_item_buffer_short_name_cb (const void *pointer, void *data,
     snprintf (str_short_name, sizeof (str_short_name), "%s%s",
               gui_color_get_custom (
                   gui_color_get_name (CONFIG_COLOR(config_color_status_name))),
-              gui_buffer_get_short_name (buffer));
+              buffer->short_name);
 
     return strdup (str_short_name);
 }
@@ -1628,7 +1628,7 @@ gui_bar_item_hotlist_cb (const void *pointer, void *data,
                 strcat (str_hotlist, ":");
                 strcat (str_hotlist, GUI_COLOR_CUSTOM_BAR_FG);
                 ptr_buffer_name = (CONFIG_BOOLEAN(config_look_hotlist_short_names)) ?
-                    gui_buffer_get_short_name (ptr_hotlist->buffer) : ptr_hotlist->buffer->name;
+                    ptr_hotlist->buffer->short_name : ptr_hotlist->buffer->name;
                 if (CONFIG_INTEGER(config_look_hotlist_names_length) == 0)
                 {
                     buffer_name = strdup (ptr_buffer_name);

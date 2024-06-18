@@ -15292,7 +15292,6 @@ Argomenti:
 ** _number_: numero del buffer (inizia da 1)
 ** _layout_number_: numero del buffer salvato nel layout
 ** _layout_number_merge_order_: ordine di unione per i layout
-** _short_name_is_set_: 1 se il nome breve è impostato, 0 in caso contrario
 ** _type_: tipo dibuffer (0: formattato, 1: contenuto libero)
 ** _notify_: livello di notifica per il buffer
 ** _num_displayed_: numero delle finestre che visualizzano il buffer

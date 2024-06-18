@@ -212,6 +212,8 @@ trigger_buffer_open (const char *filter, int switch_to_buffer)
             if (buffer_props)
             {
                 weechat_hashtable_set (
+                    buffer_props, "short_name", TRIGGER_BUFFER_NAME);
+                weechat_hashtable_set (
                     buffer_props, "localvar_set_type", "debug");
                 weechat_hashtable_set (
                     buffer_props, "localvar_set_server", TRIGGER_BUFFER_NAME);
@@ -233,9 +235,6 @@ trigger_buffer_open (const char *filter, int switch_to_buffer)
         /* failed to create buffer ? then return */
         if (!trigger_buffer)
             return;
-
-        if (!weechat_buffer_get_integer (trigger_buffer, "short_name_is_set"))
-            weechat_buffer_set (trigger_buffer, "short_name", TRIGGER_BUFFER_NAME);
     }
 
     if (filter && filter[0])

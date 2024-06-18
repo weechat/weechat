@@ -4804,6 +4804,7 @@ irc_server_create_buffer (struct t_irc_server *server)
         NULL, NULL);
     if (buffer_props)
     {
+        weechat_hashtable_set (buffer_props, "short_name", server->name);
         weechat_hashtable_set (buffer_props, "localvar_set_type", "server");
         weechat_hashtable_set (buffer_props,
                                "localvar_set_server", server->name);
@@ -4832,9 +4833,6 @@ irc_server_create_buffer (struct t_irc_server *server)
 
     if (!server->buffer)
         return NULL;
-
-    if (!weechat_buffer_get_integer (server->buffer, "short_name_is_set"))
-        weechat_buffer_set (server->buffer, "short_name", server->name);
 
     (void) weechat_hook_signal_send ("logger_backlog",
                                      WEECHAT_HOOK_SIGNAL_POINTER,

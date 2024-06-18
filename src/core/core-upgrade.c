@@ -448,7 +448,7 @@ upgrade_weechat_read_buffer (struct t_infolist *infolist)
         upgrade_current_buffer = gui_buffer_new_props_with_id (
             id,
             NULL,  /* plugin */
-            infolist_string (infolist, "name"),
+            name,
             NULL,  /* properties */
             NULL, NULL, NULL,  /* input callback */
             NULL, NULL, NULL);  /* close callback */
@@ -480,7 +480,7 @@ upgrade_weechat_read_buffer (struct t_infolist *infolist)
     /* short name */
     free (ptr_buffer->short_name);
     str = infolist_string (infolist, "short_name");
-    ptr_buffer->short_name = (str) ? strdup (str) : NULL;
+    ptr_buffer->short_name = strdup ((str) ? str : name);
 
     /* buffer type */
     ptr_buffer->type = infolist_integer (infolist, "type");

@@ -329,7 +329,7 @@ gui_line_get_align (struct t_gui_buffer *buffer, struct t_gui_line *line,
     {
         if ((CONFIG_ENUM(config_look_prefix_buffer_align) == CONFIG_LOOK_PREFIX_BUFFER_ALIGN_NONE)
             && (CONFIG_ENUM(config_look_prefix_align) == CONFIG_LOOK_PREFIX_ALIGN_NONE))
-            length_buffer = gui_chat_strlen_screen (gui_buffer_get_short_name (line->data->buffer)) + 1;
+            length_buffer = gui_chat_strlen_screen (line->data->buffer->short_name) + 1;
         else
         {
             if (CONFIG_ENUM(config_look_prefix_buffer_align) == CONFIG_LOOK_PREFIX_BUFFER_ALIGN_NONE)
@@ -1149,17 +1149,15 @@ gui_line_compute_buffer_max_length (struct t_gui_buffer *buffer,
 {
     struct t_gui_buffer *ptr_buffer;
     int length;
-    const char *short_name;
 
     lines->buffer_max_length = 0;
 
     for (ptr_buffer = gui_buffers; ptr_buffer;
          ptr_buffer = ptr_buffer->next_buffer)
     {
-        short_name = gui_buffer_get_short_name (ptr_buffer);
         if (ptr_buffer->number == buffer->number)
         {
-            length = gui_chat_strlen_screen (short_name);
+            length = gui_chat_strlen_screen (ptr_buffer->short_name);
             if (length > lines->buffer_max_length)
                 lines->buffer_max_length = length;
         }

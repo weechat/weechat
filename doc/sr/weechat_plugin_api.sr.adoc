@@ -14196,7 +14196,6 @@ int weechat_buffer_get_integer (struct t_gui_buffer *buffer,
 ** _number_: број бафера (почиње се од 1)
 ** _layout_number_: број бафера сачуван у распореду
 ** _layout_number_merge_order_: редослед у спајању за распоред
-** _short_name_is_set_: 1 ако је постављено кратко име, 0 ако није
 ** _type_: тип бафера (0: форматиран, 1: слободни садржај)
 ** _notify_: ниво обавештавања за бафер
 ** _num_displayed_: број прозора који приказују бафер

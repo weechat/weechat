@@ -215,21 +215,6 @@ gui_buffer_get_plugin_name (struct t_gui_buffer *buffer)
 }
 
 /*
- * Get short name of buffer (or name if short_name is NULL).
- *
- * Note: this function never returns NULL.
- */
-
-const char *
-gui_buffer_get_short_name (struct t_gui_buffer *buffer)
-{
-    if (!buffer)
-        return NULL;
-
-    return (buffer->short_name) ? buffer->short_name : buffer->name;
-}
-
-/*
  * Builds "full_name" of buffer (for example after changing name or
  * plugin_name_for_upgrade).
  */
@@ -862,7 +847,7 @@ gui_buffer_new_props_with_id (long long id,
     new_buffer->full_name = NULL;
     new_buffer->old_full_name = NULL;
     gui_buffer_build_full_name (new_buffer);
-    new_buffer->short_name = NULL;
+    new_buffer->short_name = strdup (name);
     new_buffer->type = GUI_BUFFER_TYPE_DEFAULT;
     new_buffer->notify = CONFIG_ENUM(config_look_buffer_notify_default);
     new_buffer->num_displayed = 0;
@@ -1435,8 +1420,6 @@ gui_buffer_get_integer (struct t_gui_buffer *buffer, const char *property)
         return buffer->layout_number;
     else if (strcmp (property, "layout_number_merge_order") == 0)
         return buffer->layout_number_merge_order;
-    else if (strcmp (property, "short_name_is_set") == 0)
-        return (buffer->short_name) ? 1 : 0;
     else if (strcmp (property, "type") == 0)
         return buffer->type;
     else if (strcmp (property, "notify") == 0)
@@ -1552,7 +1535,7 @@ gui_buffer_get_string (struct t_gui_buffer *buffer, const char *property)
     else if (strcmp (property, "old_full_name") == 0)
         return buffer->old_full_name;
     else if (strcmp (property, "short_name") == 0)
-        return gui_buffer_get_short_name (buffer);
+        return buffer->short_name;
     else if (strcmp (property, "type") == 0)
        return gui_buffer_type_string[buffer->type];
     else if (strcmp (property, "title") == 0)
@@ -1706,12 +1689,14 @@ gui_buffer_set_name (struct t_gui_buffer *buffer, const char *name)
 void
 gui_buffer_set_short_name (struct t_gui_buffer *buffer, const char *short_name)
 {
-    if (!buffer || (string_strcmp (buffer->short_name, short_name) == 0))
+    if (!buffer || !short_name || !short_name[0]
+        || (string_strcmp (buffer->short_name, short_name) == 0))
+    {
         return;
+    }
 
     free (buffer->short_name);
-    buffer->short_name = (short_name && short_name[0]) ?
-        strdup (short_name) : NULL;
+    buffer->short_name = strdup (short_name);
 
     if (buffer->mixed_lines)
         buffer->mixed_lines->buffer_max_length_refresh = 1;
@@ -5432,7 +5417,7 @@ gui_buffer_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!infolist_new_var_string (ptr_item, "old_full_name", buffer->old_full_name))
         return 0;
-    if (!infolist_new_var_string (ptr_item, "short_name", gui_buffer_get_short_name (buffer)))
+    if (!infolist_new_var_string (ptr_item, "short_name", buffer->short_name))
         return 0;
     if (!infolist_new_var_integer (ptr_item, "type", buffer->type))
         return 0;

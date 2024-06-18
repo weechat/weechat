@@ -84,6 +84,8 @@ relay_raw_open (int switch_to_buffer)
             if (buffer_props)
             {
                 weechat_hashtable_set (buffer_props,
+                                       "short_name", RELAY_RAW_BUFFER_NAME);
+                weechat_hashtable_set (buffer_props,
                                        "title", _("Relay raw messages"));
                 weechat_hashtable_set (buffer_props,
                                        "localvar_set_type", "debug");
@@ -106,12 +108,6 @@ relay_raw_open (int switch_to_buffer)
             /* failed to create buffer ? then return */
             if (!relay_raw_buffer)
                 return;
-
-            if (!weechat_buffer_get_integer (relay_raw_buffer, "short_name_is_set"))
-            {
-                weechat_buffer_set (relay_raw_buffer, "short_name",
-                                    RELAY_RAW_BUFFER_NAME);
-            }
 
             /* print messages in list */
             for (ptr_raw_message = relay_raw_messages; ptr_raw_message;

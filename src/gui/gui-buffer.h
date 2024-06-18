@@ -302,7 +302,6 @@ extern int gui_buffer_send_signal (struct t_gui_buffer *buffer,
                                    const char *signal,
                                    const char *type_data, void *signal_data);
 extern const char *gui_buffer_get_plugin_name (struct t_gui_buffer *buffer);
-extern const char *gui_buffer_get_short_name (struct t_gui_buffer *buffer);
 extern void gui_buffer_build_full_name (struct t_gui_buffer *buffer);
 extern void gui_buffer_local_var_add (struct t_gui_buffer *buffer,
                                       const char *name,

@@ -173,11 +173,10 @@ TEST(GuiBuffer, GetPluginName)
 
 /*
  * Tests functions:
- *   gui_buffer_get_short_name
  *   gui_buffer_set_short_name
  */
 
-TEST(GuiBuffer, GetSetShortName)
+TEST(GuiBuffer, SetShortName)
 {
     struct t_gui_buffer *buffer;
 
@@ -186,22 +185,14 @@ TEST(GuiBuffer, GetSetShortName)
                              NULL, NULL, NULL);
     CHECK(buffer);
 
-    POINTERS_EQUAL(NULL, gui_buffer_get_short_name (NULL));
+    STRCMP_EQUAL(TEST_BUFFER_NAME, buffer->short_name);
 
-    POINTERS_EQUAL(NULL, buffer->short_name);
-    STRCMP_EQUAL(TEST_BUFFER_NAME, gui_buffer_get_short_name (buffer));
-
-    gui_buffer_set_short_name (buffer, NULL);
-    POINTERS_EQUAL(NULL, buffer->short_name);
-    STRCMP_EQUAL(TEST_BUFFER_NAME, gui_buffer_get_short_name (buffer));
-
-    gui_buffer_set_short_name (buffer, "short");
-    STRCMP_EQUAL("short", buffer->short_name);
-    STRCMP_EQUAL("short", gui_buffer_get_short_name (buffer));
-
+    /* forbidden value => short_name unchanged */
     gui_buffer_set_short_name (buffer, "");
-    POINTERS_EQUAL(NULL, buffer->short_name);
-    STRCMP_EQUAL(TEST_BUFFER_NAME, gui_buffer_get_short_name (buffer));
+    STRCMP_EQUAL(TEST_BUFFER_NAME, buffer->short_name);
+
+    gui_buffer_set_short_name (buffer, "t");
+    STRCMP_EQUAL("t", buffer->short_name);
 
     gui_buffer_close (buffer);
 }
@@ -468,7 +459,7 @@ TEST(GuiBuffer, ApplyConfigProperties)
                              NULL, NULL, NULL);
     CHECK(buffer);
 
-    POINTERS_EQUAL(NULL, buffer->short_name);
+    STRCMP_EQUAL(TEST_BUFFER_NAME, buffer->short_name);
 
     gui_buffer_close (buffer);
 }
@@ -536,7 +527,7 @@ TEST(GuiBuffer, NewProps)
     STRCMP_EQUAL(TEST_BUFFER_NAME, buffer->name);
     STRCMP_EQUAL("core." TEST_BUFFER_NAME, buffer->full_name);
     POINTERS_EQUAL(NULL, buffer->old_full_name);
-    POINTERS_EQUAL(NULL, buffer->short_name);
+    STRCMP_EQUAL(TEST_BUFFER_NAME, buffer->short_name);
     LONGS_EQUAL(GUI_BUFFER_TYPE_FREE, buffer->type);
     LONGS_EQUAL(GUI_BUFFER_NOTIFY_ALL, buffer->notify);
     LONGS_EQUAL(0, buffer->num_displayed);
@@ -690,7 +681,7 @@ TEST(GuiBuffer, New)
     STRCMP_EQUAL(TEST_BUFFER_NAME, buffer->name);
     STRCMP_EQUAL("core." TEST_BUFFER_NAME, buffer->full_name);
     POINTERS_EQUAL(NULL, buffer->old_full_name);
-    POINTERS_EQUAL(NULL, buffer->short_name);
+    STRCMP_EQUAL(TEST_BUFFER_NAME, buffer->short_name);
     gui_buffer_close (buffer);
 }
 
@@ -875,7 +866,6 @@ TEST(GuiBuffer, GetInteger)
     LONGS_EQUAL(1, gui_buffer_get_integer (gui_buffers, "number"));
     LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "layout_number"));
     LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "layout_number_merge_order"));
-    LONGS_EQUAL(1, gui_buffer_get_integer (gui_buffers, "short_name_is_set"));
     LONGS_EQUAL(GUI_BUFFER_TYPE_FORMATTED, gui_buffer_get_integer (gui_buffers, "type"));
     LONGS_EQUAL(GUI_BUFFER_NOTIFY_ALL, gui_buffer_get_integer (gui_buffers, "notify"));
     LONGS_EQUAL(1, gui_buffer_get_integer (gui_buffers, "num_displayed"));

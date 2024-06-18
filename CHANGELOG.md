@@ -4,6 +4,7 @@
 
 ### Changed
 
+- **breaking:** core, plugins: force "short_name" in buffers to non-empty value (name by default), remove buffer property "short_name_is_set"
 - **breaking:** alias: display an error with `/alias add` or `/alias addcompletion` when the alias already exists, add options `addreplace` and `addreplacecompletion` in command `/alias` ([#2095](https://github.com/weechat/weechat/issues/2095))
 - **breaking:** irc: rename parameter `-re` to `-raw` in command `/list` ([#2124](https://github.com/weechat/weechat/issues/2124))
 - core: add option `addreplace` in commands `/bar` and `/proxy` ([#2095](https://github.com/weechat/weechat/issues/2095))

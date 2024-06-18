@@ -336,56 +336,75 @@ xfer_chat_buffer_close_cb (const void *pointer, void *data,
 }
 
 /*
+ * Applies properties to a buffer.
+ */
+
+void
+xfer_chat_apply_props (void *data,
+                       struct t_hashtable *hashtable,
+                       const void *key,
+                       const void *value)
+{
+    /* make C compiler happy */
+    (void) hashtable;
+
+    weechat_buffer_set ((struct t_gui_buffer *)data,
+                        (const char *)key,
+                        (const char *)value);
+}
+
+/*
  * Creates buffer for DCC chat.
  */
 
 void
 xfer_chat_open_buffer (struct t_xfer *xfer)
 {
+    struct t_hashtable *buffer_props;
     char *name;
-    int length, buffer_created;
 
-    buffer_created = 0;
+    buffer_props = NULL;
 
-    length = strlen (xfer->plugin_name) + 8 + strlen (xfer->plugin_id) + 1
-        + strlen (xfer->remote_nick) + 1;
-    name = malloc (length);
-    if (!name)
-        return;
+    if (weechat_asprintf (&name, "%s_dcc.%s.%s",
+                          xfer->plugin_name,
+                          xfer->plugin_id,
+                          xfer->remote_nick) < 0)
+        goto end;
 
-    snprintf (name, length, "%s_dcc.%s.%s",
-              xfer->plugin_name, xfer->plugin_id, xfer->remote_nick);
-    xfer->buffer = weechat_buffer_search (XFER_PLUGIN_NAME, name);
-    if (!xfer->buffer)
+    buffer_props = weechat_hashtable_new (
+        32,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_STRING,
+        NULL, NULL);
+    if (buffer_props)
     {
-        xfer->buffer = weechat_buffer_new (
-            name,
-            &xfer_chat_buffer_input_cb, NULL, NULL,
-            &xfer_chat_buffer_close_cb, NULL, NULL);
-        buffer_created = 1;
 
-        /* failed to create buffer ? then return */
-        if (!xfer->buffer)
-        {
-            free (name);
-            return;
-        }
+        weechat_hashtable_set (buffer_props, "title", _("xfer chat"));
+        weechat_hashtable_set (buffer_props, "short_name", xfer->remote_nick);
+        weechat_hashtable_set (buffer_props, "input_prompt", xfer->local_nick);
+        weechat_hashtable_set (buffer_props, "localvar_set_type", "private");
+        weechat_hashtable_set (buffer_props, "localvar_set_nick", xfer->local_nick);
+        weechat_hashtable_set (buffer_props, "localvar_set_channel", xfer->remote_nick);
+        weechat_hashtable_set (buffer_props, "localvar_set_tls_version", "cleartext");
+        weechat_hashtable_set (buffer_props, "highlight_words_add", "$nick");
     }
 
-    if (buffer_created)
+    xfer->buffer = weechat_buffer_search (XFER_PLUGIN_NAME, name);
+    if (xfer->buffer)
     {
-        weechat_buffer_set (xfer->buffer, "title", _("xfer chat"));
-        if (!weechat_buffer_get_integer (xfer->buffer, "short_name_is_set"))
-        {
-            weechat_buffer_set (xfer->buffer, "short_name",
-                                xfer->remote_nick);
-        }
-        weechat_buffer_set (xfer->buffer, "input_prompt", xfer->local_nick);
-        weechat_buffer_set (xfer->buffer, "localvar_set_type", "private");
-        weechat_buffer_set (xfer->buffer, "localvar_set_nick", xfer->local_nick);
-        weechat_buffer_set (xfer->buffer, "localvar_set_channel", xfer->remote_nick);
-        weechat_buffer_set (xfer->buffer, "localvar_set_tls_version", "cleartext");
-        weechat_buffer_set (xfer->buffer, "highlight_words_add", "$nick");
+        weechat_hashtable_remove (buffer_props, "short_name");
+        weechat_hashtable_remove (buffer_props, "highlight_words_add");
+        weechat_hashtable_map (buffer_props, &xfer_chat_apply_props, xfer->buffer);
+    }
+    else
+    {
+        xfer->buffer = weechat_buffer_new_props (
+            name,
+            buffer_props,
+            &xfer_chat_buffer_input_cb, NULL, NULL,
+            &xfer_chat_buffer_close_cb, NULL, NULL);
+        if (!xfer->buffer)
+            goto end;
     }
 
     weechat_printf (xfer->buffer,
@@ -395,5 +414,7 @@ xfer_chat_open_buffer (struct t_xfer *xfer)
                     xfer->remote_nick,
                     xfer->remote_address_str);
 
+end:
+    weechat_hashtable_free (buffer_props);
     free (name);
 }

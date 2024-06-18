@@ -391,6 +391,8 @@ irc_raw_open (int switch_to_buffer)
             if (buffer_props)
             {
                 weechat_hashtable_set (buffer_props,
+                                       "short_name", IRC_RAW_BUFFER_NAME);
+                weechat_hashtable_set (buffer_props,
                                        "localvar_set_type", "debug");
                 weechat_hashtable_set (buffer_props,
                                        "localvar_set_server", IRC_RAW_BUFFER_NAME);
@@ -411,12 +413,6 @@ irc_raw_open (int switch_to_buffer)
             /* failed to create buffer ? then return */
             if (!irc_raw_buffer)
                 return;
-
-            if (!weechat_buffer_get_integer (irc_raw_buffer, "short_name_is_set"))
-            {
-                weechat_buffer_set (irc_raw_buffer, "short_name",
-                                    IRC_RAW_BUFFER_NAME);
-            }
 
             irc_raw_set_localvar_filter ();
 

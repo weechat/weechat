@@ -906,7 +906,7 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
         else
             length_allowed = mixed_lines->buffer_max_length;
 
-        short_name = gui_buffer_get_short_name (line->data->buffer);
+        short_name = line->data->buffer->short_name;
         length = gui_chat_strlen_screen (short_name);
         num_spaces = length_allowed - length;
 
