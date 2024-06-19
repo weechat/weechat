@@ -1680,6 +1680,9 @@ gui_buffer_set_name (struct t_gui_buffer *buffer, const char *name)
         free (buffer->old_full_name);
         buffer->old_full_name = NULL;
     }
+
+    /* apply properties (from options weechat.buffer.*) */
+    gui_buffer_apply_config_properties (buffer);
 }
 
 /*
