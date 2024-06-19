@@ -252,10 +252,17 @@ irc_channel_create_buffer (struct t_irc_server *server,
     {
         if (!irc_upgrading)
             weechat_nicklist_remove_all (ptr_buffer);
+        /*
+         * first set name property so that properties (options weechat.buffer.*)
+         * are applied
+         */
+        weechat_buffer_set (ptr_buffer, "name", buffer_name);
+        weechat_hashtable_remove (buffer_props, "name");
         /* change short_name only if it's the same or with different case */
         ptr_short_name = weechat_buffer_get_string (ptr_buffer, "short_name");
         if (irc_server_strcasecmp (server, ptr_short_name, channel_name) != 0)
             weechat_hashtable_remove (buffer_props, "short_name");
+        /* apply properties */
         weechat_hashtable_map (buffer_props, &irc_channel_apply_props, ptr_buffer);
     }
     else
