@@ -29,6 +29,7 @@
 ### Fixed
 
 - irc, xfer: fix display of input prompt in IRC private buffers and DCC chat buffers ([#2128](https://github.com/weechat/weechat/issues/2128))
+- irc: fix property "short_name" of channel buffer when the joined channel has a different case than the `/join` command
 - irc: close /list buffer when the server buffer is closed ([#2121](https://github.com/weechat/weechat/issues/2121))
 - irc: clear /list buffer when disconnecting from server ([#2133](https://github.com/weechat/weechat/issues/2133))
 - irc: display an explicit message on /list buffer when the list of channels is empty ([#2133](https://github.com/weechat/weechat/issues/2133))

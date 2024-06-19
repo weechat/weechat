@@ -189,6 +189,7 @@ irc_channel_create_buffer (struct t_irc_server *server,
     struct t_hashtable *buffer_props;
     int buffer_created, current_buffer_number, buffer_position;
     int autojoin_join, manual_join, noswitch;
+    const char *ptr_short_name;
     char str_number[32], *channel_name_lower, *buffer_name, *prompt;
 
     buffer_created = 0;
@@ -217,7 +218,6 @@ irc_channel_create_buffer (struct t_irc_server *server,
         NULL, NULL);
     if (buffer_props)
     {
-        weechat_hashtable_set (buffer_props, "short_name", channel_name);
         weechat_hashtable_set (
             buffer_props,
             "input_multiline",
@@ -225,6 +225,7 @@ irc_channel_create_buffer (struct t_irc_server *server,
              && weechat_hashtable_has_key (server->cap_list, "draft/multiline")) ?
             "1" : "0");
         weechat_hashtable_set (buffer_props, "name", buffer_name);
+        weechat_hashtable_set (buffer_props, "short_name", channel_name);
         weechat_hashtable_set (
             buffer_props,
             "localvar_set_type",
@@ -251,7 +252,10 @@ irc_channel_create_buffer (struct t_irc_server *server,
     {
         if (!irc_upgrading)
             weechat_nicklist_remove_all (ptr_buffer);
-        weechat_hashtable_remove (buffer_props, "short_name");
+        /* change short_name only if it's the same or with different case */
+        ptr_short_name = weechat_buffer_get_string (ptr_buffer, "short_name");
+        if (irc_server_strcasecmp (server, ptr_short_name, channel_name) != 0)
+            weechat_hashtable_remove (buffer_props, "short_name");
         weechat_hashtable_map (buffer_props, &irc_channel_apply_props, ptr_buffer);
     }
     else
