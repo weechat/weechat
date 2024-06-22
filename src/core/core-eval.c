@@ -1149,9 +1149,9 @@ eval_hdata_get_value (struct t_hdata *hdata, void *pointer, const char *path,
     int type, debug_id;
     struct t_hashtable *hashtable;
 
-    EVAL_DEBUG_MSG(1, "eval_hdata_get_value(\"%s\", %p, \"%s\")",
+    EVAL_DEBUG_MSG(1, "eval_hdata_get_value(\"%s\", 0x%lx, \"%s\")",
                    (hdata) ? hdata->name : "(null)",
-                   pointer,
+                   (unsigned long)pointer,
                    path);
 
     value = NULL;
@@ -1167,7 +1167,7 @@ eval_hdata_get_value (struct t_hdata *hdata, void *pointer, const char *path,
     /* no path? just return current pointer as string */
     if (!path || !path[0])
     {
-        snprintf (str_value, sizeof (str_value), "%p", pointer);
+        snprintf (str_value, sizeof (str_value), "0x%lx", (unsigned long)pointer);
         value = strdup (str_value);
         goto end;
     }
@@ -1224,7 +1224,8 @@ eval_hdata_get_value (struct t_hdata *hdata, void *pointer, const char *path,
             break;
         case WEECHAT_HDATA_POINTER:
             pointer = hdata_pointer (hdata, pointer, var_name);
-            snprintf (str_value, sizeof (str_value), "%p", pointer);
+            snprintf (str_value, sizeof (str_value),
+                      "0x%lx", (unsigned long)pointer);
             value = strdup (str_value);
             break;
         case WEECHAT_HDATA_TIME:
@@ -1273,7 +1274,7 @@ eval_hdata_get_value (struct t_hdata *hdata, void *pointer, const char *path,
                         case HASHTABLE_POINTER:
                         case HASHTABLE_BUFFER:
                             snprintf (str_value, sizeof (str_value),
-                                      "%p", ptr_value);
+                                      "0x%lx", (unsigned long)ptr_value);
                             value = strdup (str_value);
                             break;
                         case HASHTABLE_TIME:
@@ -1288,7 +1289,8 @@ eval_hdata_get_value (struct t_hdata *hdata, void *pointer, const char *path,
             }
             else
             {
-                snprintf (str_value, sizeof (str_value), "%p", pointer);
+                snprintf (str_value, sizeof (str_value),
+                          "0x%lx", (unsigned long)pointer);
                 value = strdup (str_value);
             }
             break;
@@ -2432,8 +2434,8 @@ eval_replace_regex (const char *string, regex_t *regex, const char *replace,
 
     result = NULL;
 
-    EVAL_DEBUG_MSG(1, "eval_replace_regex(\"%s\", %p, \"%s\")",
-                   string, regex, replace);
+    EVAL_DEBUG_MSG(1, "eval_replace_regex(\"%s\", 0x%lx, \"%s\")",
+                   string, (unsigned long)regex, replace);
 
     if (!string || !regex || !replace)
         goto end;

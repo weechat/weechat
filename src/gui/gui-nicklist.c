@@ -69,8 +69,8 @@ gui_nicklist_send_signal (const char *signal, struct t_gui_buffer *buffer,
         if (str_args)
         {
             snprintf (str_args, length,
-                      "%p,%s",
-                      buffer,
+                      "0x%lx,%s",
+                      (unsigned long)buffer,
                       (arguments) ? arguments : "");
             (void) hook_signal_send (signal,
                                      WEECHAT_HOOK_SIGNAL_STRING, str_args);

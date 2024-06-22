@@ -143,8 +143,8 @@ irc_typing_channel_set_nick (struct t_irc_channel *channel, const char *nick,
     char signal_data[1024];
 
     snprintf (signal_data, sizeof (signal_data),
-              "%p;%s;%s",
-              channel->buffer,
+              "0x%lx;%s;%s",
+              (unsigned long)channel->buffer,
               (state == IRC_CHANNEL_TYPING_STATE_ACTIVE) ? "typing" :
               ((state == IRC_CHANNEL_TYPING_STATE_PAUSED) ? "paused" : "off"),
               nick);

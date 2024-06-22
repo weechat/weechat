@@ -947,7 +947,7 @@ gui_bar_item_input_text_cb (const void *pointer, void *data,
     }
 
     /* for modifiers */
-    snprintf (str_buffer, sizeof (str_buffer), "%p", buffer);
+    snprintf (str_buffer, sizeof (str_buffer), "0x%lx", (unsigned long)buffer);
 
     /* execute modifier with basic string (without cursor tag) */
     ptr_input = NULL;

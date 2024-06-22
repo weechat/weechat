@@ -215,7 +215,8 @@ relay_irc_sendf (struct t_relay_client *client, const char *format, ...)
     hashtable_in = NULL;
     hashtable_out = NULL;
 
-    snprintf (modifier_data, sizeof (modifier_data), "%p", client);
+    snprintf (modifier_data, sizeof (modifier_data),
+              "0x%lx", (unsigned long)client);
     new_msg1 = weechat_hook_modifier_exec ("relay_client_irc_out1",
                                            modifier_data, vbuffer);
 
@@ -1641,7 +1642,8 @@ relay_irc_recv (struct t_relay_client *client, const char *data)
                         data);
     }
 
-    snprintf (modifier_data, sizeof (modifier_data), "%p", client);
+    snprintf (modifier_data, sizeof (modifier_data),
+              "0x%lx", (unsigned long)client);
     new_data = weechat_hook_modifier_exec ("relay_client_irc_in",
                                            modifier_data, data);
 

@@ -8,6 +8,14 @@
 :see-release-notes: If you are upgrading: please see release notes.
 :breaking: pass:quotes[*[breaking]*]
 
+[[v4.3.3]]
+== Version 4.3.3 (under dev)
+
+[[v4.3.3_fixed]]
+=== Fixed
+
+* core, plugins: return "0x0" instead of "(nil)" for pointers formatted in strings
+
 [[v4.3.2]]
 == Version 4.3.2 (2024-06-06)
 
