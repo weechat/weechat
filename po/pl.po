@@ -23,7 +23,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2024-06-16 09:14+0200\n"
-"PO-Revision-Date: 2024-06-11 07:49+0200\n"
+"PO-Revision-Date: 2024-06-22 19:43+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: pl\n"
@@ -785,19 +785,17 @@ msgstr "(brak)"
 msgid "No proxy defined"
 msgstr "Nie zdefiniowano proxy"
 
-#, fuzzy, c-format
-#| msgid "%sBar \"%s\" already exists"
+#, c-format
 msgid "%sProxy \"%s\" already exists"
-msgstr "%sPasek \"%s\" już istnieje"
+msgstr "%sProxy „%s” już istnieje"
 
 #, c-format
 msgid "%sInvalid type \"%s\" for proxy \"%s\""
 msgstr "%sZły typ \"%s\" dla pośrednika \"%s\""
 
-#, fuzzy, c-format
-#| msgid "Proxy \"%s\" deleted"
+#, c-format
 msgid "Proxy \"%s\" updated"
-msgstr "Usunięto pośrednika \"%s\""
+msgstr "Proksy „%s” zaktualizowane"
 
 #, c-format
 msgid "Proxy \"%s\" added"
@@ -827,8 +825,8 @@ msgstr "%sNie można ustawić opcji \"%s\" dla proxy \"%s\""
 msgid ""
 "%sYou must confirm /%s command with extra argument \"-yes\" (see /help %s)"
 msgstr ""
-"%sMusisz potwierdzić użycie komendy /%s dodatkowym argumentem \"-yes\" "
-"(zobacz /help %s)"
+"%sMusisz potwierdzić użycie komendy /%s dodatkowym argumentem \"-"
+"yes\" (zobacz /help %s)"
 
 #, c-format
 msgid "Options reloaded from %s"
@@ -1327,19 +1325,6 @@ msgid "manage buffers"
 msgstr "zarządzaj buforami"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
-#, fuzzy
-#| msgid ""
-#| "list || add [-free] [-switch] <name> || clear [<number>|<name>|-merged|-"
-#| "all [<number>|<name>...]] || move <number>|-|+ || swap <number1>|<name1> "
-#| "[<number2>|<name2>] || cycle <number>|<name> [<number>|<name>...] || "
-#| "merge <number>|<name> || unmerge [<number>|-all] || hide [<number>|"
-#| "<name>|-all [<number>|<name>...]] || unhide [<number>|<name>|-all "
-#| "[<number>|<name>...]] || switch [-previous] || zoom || renumber "
-#| "[<number1> [<number2> [<start>]]] || close [<n1>[-<n2>]|<name>...] || "
-#| "notify [<level>] || listvar [<number>|<name>] || setvar <name> [<value>] "
-#| "|| delvar <name> || set <property> [<value>] || setauto <property> "
-#| "[<value>] || get <property> || jump smart|last_displayed|prev_visited|"
-#| "next_visited || <number>|-|+|<name>"
 msgid ""
 "list || add [-free] [-switch] <name> || clear [<number>|<name>|-merged|-all "
 "[<id>|<number>|<name>...]] || move <number>|-|+ || swap <id1>|<number1>|"
@@ -1354,15 +1339,16 @@ msgid ""
 "prev_visited|next_visited || <id>|<number>|-|+|<name>"
 msgstr ""
 "list || add [-free] [-switch] <nazwa> || clear [<numer>|<nazwa>|-merged|-all "
-"[<numer>|<nazwa>...]] || move <numer>|-|+ || swap <numer1>|<nazwa1> "
-"[<numer2>|<nazwa2>] || cycle <numer>|<nazwa> [<numer>|<nazwa>...] || merge "
-"<numer>|<nazwa> || unmerge [<numer>|-all] || hide [<numer>|<nazwa>|-all "
-"[<numer>|<nazwa>...]] || unhide [<numer>|<nazwa>|-all [<numer>|<nazwa>...]] "
-"|| switch [-previous] || zoom || renumber [<numer1> [<numer2> [<start>]]] || "
-"close [<n1>[-<n2>]|<nazwa>...] || notify <poziom> || listvar [<numer>|"
-"<nazwa>] || setvar <nazwa> [<wartość>] || delvar <nazwa> || set <właściwość> "
-"[<wartość>] || setauto <właściwość> [<wartość>] || get <właściwość> || jump "
-"smart|last_displayed|prev_visited|next_visited || <numer>|-|+|<nazwa>"
+"[<id>|<numer>|<nazwa>...]] || move <numer>|-|+ || swap <id1>|<numer1>|"
+"<nazwa1> [<id2>|<numer2>|<nazwa2>] || cycle <id>|<numer>|<nazwa> [<id>|"
+"<numer>|<nazwa>...] || merge <id>|<numer>|<nazwa> || unmerge [<numer>|-all] "
+"|| hide [<id>|<numer>|<nazwa>|-all [<id>|<numer>|<nazwa>...]] || unhide "
+"[<id>|<numer>|<nazwa>|-all [<id>|<numer>|<nazwa>...]] || switch [-previous] "
+"|| zoom || renumber [<numer1> [<numer2> [<start>]]] || close [<n1>[-<n2>]|"
+"<nazwa>...] || notify <poziom> || listvar [<id>|<numer>|<nazwa>] || setvar "
+"<nazwa> [<wartość>] || delvar <nazwa> || set <właściwość> [<wartość>] || "
+"setauto <właściwość> [<wartość>] || get <właściwość> || jump smart|"
+"last_displayed|prev_visited|next_visited || <id>|<numer>|-|+|<nazwa>"
 
 msgid "raw[list]: list buffers (without argument, this list is displayed)"
 msgstr ""
@@ -1500,10 +1486,8 @@ msgstr "> raw[prev_visited]: poprzednio odwiedzony bufor"
 msgid "> raw[next_visited]: jump to next visited buffer"
 msgstr "> raw[next_visited]: przejdź do następnego odwiedzonego bufora"
 
-#, fuzzy
-#| msgid "raw[+]: jump to last buffer number"
 msgid "id: jump to buffer by id"
-msgstr "raw[+]: skocz do ostatniego numeru bufora"
+msgstr "id: skocz do bufora po id"
 
 msgid "number: jump to buffer by number, possible prefix:"
 msgstr "numer: przeskocz do bufora według numeru, możliwe przedrostki:"
@@ -2080,8 +2064,8 @@ msgstr ""
 "*, /, //, %, **)"
 
 msgid ""
-"  - ${random:min,max}: a random integer number between \"min\" and \"max\" "
-"(inclusive)"
+"  - ${random:min,max}: a random integer number between \"min\" and "
+"\"max\" (inclusive)"
 msgstr ""
 "  - ${random:min,max}: losowa liczba całkowita z przedziału od „min” do "
 "„max” (włącznie)"
@@ -3194,19 +3178,15 @@ msgid "display text on a buffer"
 msgstr "wyświetl tekst w buforze"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
-#, fuzzy
-#| msgid ""
-#| "[-buffer <number>|<name>] [-newbuffer <name>] [-free] [-switch] [-core|-"
-#| "current] [-y <line>] [-escape] [-date <date>] [-tags <tags>] [-action|-"
-#| "error|-join|-network|-quit] [<text>] || -stdout|-stderr [<text>] || -beep"
 msgid ""
 "[-buffer <id>|<number>|<name>] [-newbuffer <name>] [-free] [-switch] [-core|-"
 "current] [-y <line>] [-escape] [-date <date>] [-tags <tags>] [-action|-"
 "error|-join|-network|-quit] [<text>] || -stdout|-stderr [<text>] || -beep"
 msgstr ""
-"[-buffer <numer>|<nazwa>] [-newbuffer <nazwa>] [-free] [-switch] [-core|-"
-"current] [-y <linia>] [-escape] [-date <data>] [-tags <tagi>] [-action|-"
-"error|-join|-network|-quit] [<tekst>] || -stdout|-stderr [<tekst>] || -beep"
+"[-buffer <id>|<numer>|<nazwa>] [-newbuffer <nazwa>] [-free] [-switch] [-"
+"core|-current] [-y <linia>] [-escape] [-date <data>] [-tags <tagi>] [-"
+"action|-error|-join|-network|-quit] [<tekst>] || -stdout|-stderr [<tekst>] "
+"|| -beep"
 
 msgid ""
 "raw[-buffer]: display text in this buffer (default: buffer where command is "
@@ -3338,17 +3318,13 @@ msgid "manage proxies"
 msgstr "zarządzanie proxy"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
-#, fuzzy
-#| msgid ""
-#| "list || add <name> <type> <address> <port> [<username> [<password>]] || "
-#| "del <name>|<mask> [<name>|<mask>...] || set <name> <option> <value>"
 msgid ""
 "list || add|addreplace <name> <type> <address> <port> [<username> "
 "[<password>]] || del <name>|<mask> [<name>|<mask>...] || set <name> <option> "
 "<value>"
 msgstr ""
-"list || add <nazwa> <typ> <adres> <port> [<użytkownik> [<hasło>]] || del "
-"<nazwa>|<maska> [<nazwa>|<maska>...] || set <nazwa> <opcja> <wartość>"
+"list || add|addreplace <nazwa> <typ> <adres> <port> [<użytkownik> [<hasło>]] "
+"|| del <nazwa>|<maska> [<nazwa>|<maska>...] || set <nazwa> <opcja> <wartość>"
 
 msgid "raw[list]: list all proxies"
 msgstr "raw[list]: wyświetla wszystkich pośredników"
@@ -3356,10 +3332,8 @@ msgstr "raw[list]: wyświetla wszystkich pośredników"
 msgid "raw[add]: add a new proxy"
 msgstr "raw[add]: dodaj nowego pośrednika"
 
-#, fuzzy
-#| msgid "raw[addreplace]: add or replace an existing filter"
 msgid "raw[addreplace]: add or replace an existing proxy"
-msgstr "raw[addreplace]: dodaj lub zastąp istniejący filtr"
+msgstr "raw[addreplace]: dodaj lub zastąp istniejące proksy"
 
 msgid "name: name of proxy (must be unique)"
 msgstr "nazwa: nazwa pośrednika (musi być unikalna)"
@@ -4795,8 +4769,8 @@ msgstr ""
 "\"-yes\" (zobacz /help quit)"
 
 msgid ""
-"if set, /upgrade command must be confirmed with extra argument \"-yes\" "
-"(see /help upgrade)"
+"if set, /upgrade command must be confirmed with extra argument \"-"
+"yes\" (see /help upgrade)"
 msgstr ""
 "jeśli ustawione, komenda /upgrade musi być potwierdzona dodatkowym "
 "argumentem \"-yes\" (zobacz /help upgrade)"
@@ -6726,15 +6700,15 @@ msgid "bar position (bottom, top, left, right)"
 msgstr "pozycja paska (bottom (dół), top (góra), left (lewo), right (prawo))"
 
 msgid ""
-"bar filling direction (\"horizontal\" (from left to right) or \"vertical\" "
-"(from top to bottom)) when bar position is top or bottom"
+"bar filling direction (\"horizontal\" (from left to right) or "
+"\"vertical\" (from top to bottom)) when bar position is top or bottom"
 msgstr ""
 "kierunek wypełniania paska (\"horizontal\" (od lewej do prawej) lub "
 "\"vertical\" (od góry do dołu)), kiedy pozycja paska to góra albo dół"
 
 msgid ""
-"bar filling direction (\"horizontal\" (from left to right) or \"vertical\" "
-"(from top to bottom)) when bar position is left or right"
+"bar filling direction (\"horizontal\" (from left to right) or "
+"\"vertical\" (from top to bottom)) when bar position is left or right"
 msgstr ""
 "kierunek wypełniania paska (\"horizontal\" (od lewej do prawej) lub "
 "\"vertical\" (od góry do dołu)), kiedy pozycja paska to lewo albo prawo"
@@ -6773,9 +6747,9 @@ msgid "separator line between bar and other bars/windows"
 msgstr "separator pomiędzy paskiem a innymi paskami/oknami"
 
 msgid ""
-"items of bar, they can be separated by comma (space between items) or \"+\" "
-"(glued items); special syntax \"@buffer:item\" can be used to force buffer "
-"used when displaying the bar item"
+"items of bar, they can be separated by comma (space between items) or \"+"
+"\" (glued items); special syntax \"@buffer:item\" can be used to force "
+"buffer used when displaying the bar item"
 msgstr ""
 "elementy paska, mogą być oddzielone przecinkiem (spacja pomiędzy elementami) "
 "lub \"+\" (skleja elementy); specjalna składnia \"@buffer:item\" może być "
@@ -8022,8 +7996,8 @@ msgid ""
 msgstr ""
 "powłoka używana przez komendę \"/exec -sh\"; może to być nazwa powłoki jeśli "
 "znajduje się ona w PATH (na przykład \"bash\") lub ścieżka absolutna (na "
-"przykład \"/bin/bash\"); jeśli wartość jest pusta, zostanie użyte \"sh\" "
-"(uwaga: zawartość jest przetwarzana, zobacz /help eval)"
+"przykład \"/bin/bash\"); jeśli wartość jest pusta, zostanie użyte "
+"\"sh\" (uwaga: zawartość jest przetwarzana, zobacz /help eval)"
 
 msgid "text color for a finished command flag in list of commands"
 msgstr "kolor tekstu dla flagi zakończonej komendy na liście komend"
@@ -8275,15 +8249,11 @@ msgstr "raw[-mark]: przełącz zaznaczenie"
 msgid "raw[-format]: switch to the next available format"
 msgstr "raw[-format]: przełącz na następny dostępny format"
 
-#, fuzzy
-#| msgid ""
-#| "raw[-export]: export the options and values displayed in a file (each "
-#| "line has format: \"/set name value\" or \"/unset name\")"
 msgid ""
 "raw[-export]: export the options and values displayed to a file (each line "
 "has format: \"/set name value\" or \"/unset name\")"
 msgstr ""
-"raw[-export]: wyeksportuj opcje i wartości wyświetlane w pliku (każda linia "
+"raw[-export]: wyeksportuj opcje i wartości wyświetlane do pliku (każda linia "
 "ma format: „/set nazwa wartość” lub „/unset nazwa”)"
 
 msgid ""
@@ -8450,8 +8420,8 @@ msgid "    - ${description}: option description (translated)"
 msgstr "    - ${description}: opis opcji (przetłumaczony)"
 
 msgid ""
-"    - ${description2}: option description (translated), \"(no description)\" "
-"(translated) if there's no description"
+"    - ${description2}: option description (translated), \"(no "
+"description)\" (translated) if there's no description"
 msgstr ""
 "    - ${description2}: opis opcji (przetłumaczony), „(brak opisu)” jeśli nie "
 "ma opisu"
@@ -9116,13 +9086,13 @@ msgstr ""
 
 #, c-format
 msgid ""
-"%s%s: if you want to add a standard server, use the command \"/server add\" "
-"(see /help server); if you really want to add a temporary server (NOT "
+"%s%s: if you want to add a standard server, use the command \"/server "
+"add\" (see /help server); if you really want to add a temporary server (NOT "
 "SAVED), turn on the option irc.look.temporary_servers"
 msgstr ""
-"%s%s: jeśli chcesz dodać standardowy serwer, użyj komendy \"/server add\" "
-"(zobacz /help server); jeśli naprawdę chcesz utworzyć serwer tymczasowy (NIE "
-"ZAPISANY), włącz opcję irc.look.temporary_servers"
+"%s%s: jeśli chcesz dodać standardowy serwer, użyj komendy \"/server "
+"add\" (zobacz /help server); jeśli naprawdę chcesz utworzyć serwer "
+"tymczasowy (NIE ZAPISANY), włącz opcję irc.look.temporary_servers"
 
 #, c-format
 msgid "%s%s: \"%s\" command can not be executed on a server buffer"
@@ -9166,10 +9136,9 @@ msgstr "%s: brak osób ignorowanych"
 msgid "%s%s: ignore already exists"
 msgstr "%s%s: już jest ignorowane"
 
-#, fuzzy, c-format
-#| msgid "%s: ignore added:"
+#, c-format
 msgid "%s: ignore updated:"
-msgstr "%s: dodano nowy wpis na listę ignorowanych:"
+msgstr "%s: zaktualizowano ignorowania:"
 
 #, c-format
 msgid "%s: ignore added:"
@@ -9203,20 +9172,19 @@ msgstr "%s%s: komenda \"%s\" musi zostać wykonana na połączonym serwerze irc"
 msgid "%s%s: mask must begin with nick"
 msgstr "%s%s: maska musi zaczynać się od nicka"
 
-#, fuzzy, c-format
+#, c-format
 #| msgid "%s%s: this buffer is not a channel!"
 msgid "%s%s: list buffer is not displayed"
-msgstr "%s%s: to nie jest bufor kanału!"
+msgstr "%s%s: bufor z listą nie jest wyświetlany"
 
-#, fuzzy, c-format
+#, c-format
 #| msgid "irc channel on /list buffer"
 msgid "%s%s: no channels displayed on list buffer"
-msgstr "kanały irc na /list buffer"
+msgstr "%s%s: żadne kanały nie są wyświetlane w buforze z listą"
 
-#, fuzzy, c-format
-#| msgid "%s%s: error while loading file \"%s\""
+#, c-format
 msgid "%s%s: error exporting channels to file \"%s\""
-msgstr "%s%s: błąd podczas ładowania pliku \"%s\""
+msgstr "%s%s: błąd podczas eksportowania kanałów do pliku „%s”"
 
 #, c-format
 msgid "%s%s: not enough memory for regular expression"
@@ -9252,10 +9220,9 @@ msgstr "%s%s: powiadomienie juz istnieje"
 msgid "%sMonitor list is full (%d)"
 msgstr "%sLista monitorowania jest pełna (%d)"
 
-#, fuzzy, c-format
-#| msgid "%s: notification deleted for %s%s%s"
+#, c-format
 msgid "%s: notification updated for %s%s%s"
-msgstr "%s: powiadomienie usunięte dla %s%s%s"
+msgstr "%s: powiadomienie zaktualizowane dla %s%s%s"
 
 #, c-format
 msgid "%s: notification added for %s%s%s"
@@ -9338,19 +9305,17 @@ msgstr "Serwery z \"%s\":"
 msgid "No server found with \"%s\""
 msgstr "Nie znaleziono serwera z  \"%s\""
 
-#, fuzzy, c-format
-#| msgid "%s%s: trigger \"%s\" already exists"
+#, c-format
 msgid "%s%s: server \"%s\" already exists"
-msgstr "%s%s: trigger \"%s\" już istnieje"
+msgstr "%s%s: serwer „%s” już istnieje"
 
 #, c-format
 msgid "%s%s: unable to add server"
 msgstr "%s%s: nie można dodać serwera"
 
-#, fuzzy, c-format
-#| msgid "%s: server added: %s%s%s -> %s"
+#, c-format
 msgid "%s: server updated: %s%s%s -> %s"
-msgstr "%s: dodano serwer: %s%s%s -> %s"
+msgstr "%s: zaktualizowano serwer: %s%s%s -> %s"
 
 #, c-format
 msgid "%s: server added: %s%s%s -> %s"
@@ -9962,12 +9927,11 @@ msgid "ignore nicks/hosts from servers or channels"
 msgstr "ignoruje nicki/hosty z serwera lub kanałów"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
-#, fuzzy
-#| msgid "list || add [re:]<nick> [<server> [<channel>]] || del <number>|-all"
 msgid ""
 "list || add|addreplace [re:]<nick> [<server> [<channel>]] || del <number>|-"
 "all"
-msgstr "list || add [re:]<nick> [<serwer> [<kanał>]] || del <numer>|-all"
+msgstr ""
+"list || add|addreplace [re:]<nick> [<serwer> [<kanał>]] || del <numer>|-all"
 
 msgid "raw[list]: list all ignores"
 msgstr "raw[list]: wyświetla wszystkich ignorowanych"
@@ -9975,10 +9939,8 @@ msgstr "raw[list]: wyświetla wszystkich ignorowanych"
 msgid "raw[add]: add an ignore"
 msgstr "raw[add]: dodaj ignorowanie"
 
-#, fuzzy
-#| msgid "raw[addreplace]: add or replace an existing trigger"
 msgid "raw[addreplace]: add or replace an existing ignore"
-msgstr "raw[addreplace]: dodaj lub zastąp istniejący trigger"
+msgstr "raw[addreplace]: dodaj lub zastąp istniejące ignorowanie"
 
 msgid ""
 "nick: nick or hostname; can be a POSIX extended regular expression if \"re:"
@@ -10116,29 +10078,20 @@ msgid "list channels and their topics"
 msgstr "wyświetla kanały i ich tematy"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
-#, fuzzy
-#| msgid ""
-#| "[-server <server>] [-re <regex>] [<channel>[,<channel>...]] [<target>] || "
-#| "-up|-down [<number>] || -left|-right [<percent>] || -go <line>|end || -"
-#| "join"
 msgid ""
 "[-server <server>] [<channel>[,<channel>...]] [<target>] || [-server "
 "<server>] [-raw *|<regex>] || -up|-down [<number>] || -left|-right "
 "[<percent>] || -go <line>|end || -join  || -export <filename>"
 msgstr ""
-"[-server <serwer>] [-re <wyrażenie>] [<kanał>[,<kanał>...]] [<cel>] || -up|-"
-"down [<liczba>] || -left|-right [<procent>] || -go <linia>|end || -join"
+"[-server <serwer>] [<kanał>[,<kanał>...]] [<cel>] || [-server <serwer>] [-"
+"raw *|<regex>] || -up|-down [<liczba>] || -left|-right [<procent>] || -go "
+"<linia>|end || -join  || -export <nazwa_pliku>"
 
 msgid ""
 "raw[-raw]: display result on server buffer instead of a dedicated buffer"
 msgstr ""
+"raw[-raw]: wyświetl wynik w buforze serwera zamiast w dedykowanym buforze"
 
-#, fuzzy
-#| msgid ""
-#| "regex: POSIX extended regular expression used to filter results (case "
-#| "insensitive, can start by \"(?-i)\" to become case sensitive); when a "
-#| "regular expression is used, the result is displayed on server buffer "
-#| "instead of a dedicated buffer"
 msgid ""
 "regex: POSIX extended regular expression used to filter results (case "
 "insensitive, can start by \"(?-i)\" to become case sensitive); the special "
@@ -10146,16 +10099,15 @@ msgid ""
 msgstr ""
 "regex: rozszerzone wyrażenie regularne POSIX używane do filtrowania wyników "
 "(nie uwzględnia wielkości znaków, można to zmienić zaczynając je od „(?-i)” "
-"żeby wielkość znaków była uwzględniana); kiedy wyrażenie regularne zostanie "
-"użyte, wynik wyświetlany jest w buforze serwera zamiast dedykowanego"
+"żeby wielkość znaków była uwzględniana); specjalna wartość „*” nie filtruje "
+"wyników"
 
 msgid "raw[-join]: join the channel on the selected line"
 msgstr "raw[-join]: wchodzi na kanał z zaznaczonej linii"
 
-#, fuzzy
 #| msgid "raw[-delete]: delete channel topic"
 msgid "raw[-export]: export list of channels to a file"
-msgstr "raw[-delete]: kasuje temat kanału"
+msgstr "raw[-export]: wyeksportuj listę kanałów do pliku"
 
 msgid "Sort keys on /list buffer:"
 msgstr "Posortowane klawisze w buforze /list:"
@@ -10172,42 +10124,28 @@ msgstr "  raw[users]: ilość użytkowników na kanale"
 msgid "  raw[topic]: channel topic"
 msgstr "  raw[topic]: temat kanału"
 
-#, fuzzy
-#| msgid ""
-#| "  list all channels beginning with \"#weechat\" (can be very slow on "
-#| "large networks):"
 msgid ""
 "  list all channels on server buffer (no dedicated buffer and can be slow on "
 "large networks):"
 msgstr ""
-"  pokaż wszystkie kanały zaczynające się od „#weechat” (może być bardzo "
-"wolne w dużych sieciach):"
+"  pokaż wszystkie kanały w buforze serwera (nie w dedykowanym buforze imoże "
+"być bardzo wolne w dużych sieciach):"
 
-#, fuzzy
-#| msgid ""
-#| "  list all channels beginning with \"#weechat\" (can be very slow on "
-#| "large networks):"
 msgid ""
 "  list all channels beginning with \"#weechat\" on server buffer (no "
 "dedicated buffer and can be slow on large networks):"
 msgstr ""
-"  pokaż wszystkie kanały zaczynające się od „#weechat” (może być bardzo "
-"wolne w dużych sieciach):"
+"  pokaż wszystkie kanały zaczynające się od „#weechat” w buforze serwera "
+"(nie w dedykowanym buforze i może być bardzo wolne w dużych sieciach):"
 
-#, fuzzy
-#| msgid ""
-#| "  list all channels on server and display them in a dedicated buffer (can "
-#| "be slow on large networks):"
 msgid ""
 "  list all channels on a dedicated buffer (can be slow on large networks):"
 msgstr ""
-"  pokaż wszystkie kanały na serwerze i wyświetl je w dedykowanym buforze "
-"(może być wolne w dużych sieciach):"
+"  pokaż wszystkie kanały w dedykowanym buforze (może być wolne w dużych "
+"sieciach):"
 
-#, fuzzy
-#| msgid "  list channel #weechat:"
 msgid "  list channel #weechat on a dedicated buffer:"
-msgstr "  pokaż kanał #weechat:"
+msgstr "  pokaż kanał #weechat w dedykowanym buforze:"
 
 msgid "  on /list buffer:"
 msgstr "  na /list buffer:"
@@ -10385,18 +10323,15 @@ msgstr ""
 "dodaje powiadomienie o obecności lub statusie nieobecności nicków na serwerze"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
-#, fuzzy
-#| msgid "add <nick> [<server> [-away]] || del <nick>|-all [<server>]"
 msgid "add|addreplace <nick> [<server> [-away]] || del <nick>|-all [<server>]"
-msgstr "add <nick> [<serwer> [-away]] || del <nick>|-all [<serwer>]"
+msgstr "add|addreplace <nick> [<serwer> [-away]] || del <nick>|-all [<serwer>]"
 
 msgid "raw[add]: add a notification"
 msgstr "raw[add]: dodaje powiadomienie"
 
-#, fuzzy
 #| msgid "raw[addreplace]: add or replace an existing filter"
 msgid "raw[addreplace]: add or replace a notification"
-msgstr "raw[addreplace]: dodaj lub zastąp istniejący filtr"
+msgstr "raw[addreplace]: dodaj lub zastąp powiadomienie"
 
 msgid "server: internal server name (by default current server)"
 msgstr "serwer: wewnętrzna nazwa serwera (domyślnie obecny serwer)"
@@ -10583,19 +10518,13 @@ msgid "list, add or remove IRC servers"
 msgstr "wyświetla, dodaje lub usuwa serwery IRC"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
-#, fuzzy
-#| msgid ""
-#| "list|listfull [<name>] || add <name> <hostname>[/<port>] [-temp] [-"
-#| "<option>[=<value>]] [-no<option>] || copy|rename <name> <new_name> || "
-#| "reorder <name> [<name>...] || open <name>|-all [<name>...] || del|keep "
-#| "<name> || deloutq|jump || raw [<filter>]"
 msgid ""
 "list|listfull [<name>] || add|addreplace <name> <hostname>[/<port>] [-temp] "
 "[-<option>[=<value>]] [-no<option>] || copy|rename <name> <new_name> || "
 "reorder <name> [<name>...] || open <name>|-all [<name>...] || del|keep "
 "<name> || deloutq|jump || raw [<filter>]"
 msgstr ""
-"list|listfull [<nazwa>] || add <nazwa> <host>[/<port>] [-temp] [-"
+"list|listfull [<nazwa>] || add|addreplace <nazwa> <host>[/<port>] [-temp] [-"
 "<opcja>[=<wartość>]] [-no<opcja>] || copy|rename <nazwa> <nowa_nazwa> || "
 "reorder <nazwa> [<nazwa>...] || open <nazwa>|-all [<nazwa>...] || del|keep "
 "<nazwa> || deloutq|jump || raw [<filter>]"
@@ -10612,10 +10541,8 @@ msgstr ""
 msgid "raw[add]: add a new server"
 msgstr "raw[add]: dodaj nowy serwer"
 
-#, fuzzy
-#| msgid "raw[addreplace]: add or replace an existing trigger"
 msgid "raw[addreplace]: add or replace an existing server"
-msgstr "raw[addreplace]: dodaj lub zastąp istniejący trigger"
+msgstr "raw[addreplace]: dodaj lub zastąp istniejący serwer"
 
 msgid ""
 "name: server name, for internal and display use; this name is used to "
@@ -11228,9 +11155,9 @@ msgid ""
 "file with ECC private key for mechanism \"ecdsa-nist256p-challenge\" (path "
 "is evaluated, see function string_eval_path_home in plugin API reference)"
 msgstr ""
-"plik z kluczem prywatnym ECC dla mechanizmu \"ecdsa-nist256p-challenge\" "
-"(ścieżka jest przetwarzana, zobacz funkcję string_eval_path_home w opisie "
-"API wtyczek)"
+"plik z kluczem prywatnym ECC dla mechanizmu \"ecdsa-nist256p-"
+"challenge\" (ścieżka jest przetwarzana, zobacz funkcję string_eval_path_home "
+"w opisie API wtyczek)"
 
 msgid "timeout (in seconds) before giving up SASL authentication"
 msgstr ""
@@ -11746,16 +11673,12 @@ msgstr ""
 msgid "use a dedicated buffer for the output of /list"
 msgstr "użyj dedykowanego bufora dla wyjścia komendy /list"
 
-#, fuzzy
-#| msgid ""
-#| "format of each option exported in a file (note: content is evaluated, "
-#| "see /help fset)"
 msgid ""
 "format of each channel exported in a file (note: content is evaluated, see /"
 "help list)"
 msgstr ""
-"format każdej opcji eskportowanej do pliku (uwaga: zawartość jest "
-"przetwarzana, zobacz /help fset)"
+"format każdego kanału eksportowanego do pliku (uwaga: zawartość jest "
+"przetwarzana, zobacz /help list)"
 
 msgid "left/right scroll in /list buffer (percent of width)"
 msgstr "przewinięcie w lewo/prawo w buforze /list (procent szerokości)"
@@ -12518,7 +12441,7 @@ msgstr ""
 "ctrl+j=wejdź na kanał, ($)=odśwież, (q)=zamknij bufor"
 
 msgid "Empty list of channels, try \"$\" to refresh list"
-msgstr ""
+msgstr "Pusta lista kanałów, spróbuj „$” żeby odświeżyć listę"
 
 #, c-format
 msgid "%s%s: error in redirection of /list: %s"
@@ -14490,19 +14413,19 @@ msgstr "%s%s: nie można zwolnić interpretera"
 
 #, c-format
 msgid ""
-"%s%s: too few arguments received from client %s%s%s for resource \"%s\" "
-"(received: %d arguments, expected: at least %d)"
+"%s%s: too few arguments received from client %s%s%s for resource "
+"\"%s\" (received: %d arguments, expected: at least %d)"
 msgstr ""
-"%s%s: otrzymano za mało argumentów od klienta %s%s%s dla zasobu „%s” "
-"(otrzymano: %d argumentów, spodziewano się: przynajmniej %d)"
+"%s%s: otrzymano za mało argumentów od klienta %s%s%s dla zasobu "
+"„%s” (otrzymano: %d argumentów, spodziewano się: przynajmniej %d)"
 
 #, c-format
 msgid ""
-"%s%s: too many arguments received from client %s%s%s for resource \"%s\" "
-"(received: %d arguments, expected: at most %d)"
+"%s%s: too many arguments received from client %s%s%s for resource "
+"\"%s\" (received: %d arguments, expected: at most %d)"
 msgstr ""
-"%s%s: otrzymano za mało argumentów od klienta %s%s%s dla zasobu „%s” "
-"(otrzymano: %d argumentów, spodziewano się: najwyżej %d)"
+"%s%s: otrzymano za mało argumentów od klienta %s%s%s dla zasobu "
+"„%s” (otrzymano: %d argumentów, spodziewano się: najwyżej %d)"
 
 #, c-format
 msgid "%s%s: failed to execute route \"%s %s\" for client %s%s%s"
@@ -14880,10 +14803,9 @@ msgstr "Brak serwera dla relay"
 msgid "%s%s: error: relay for \"%s\" already exists"
 msgstr "%s%s: błąd: relay dla \"%s\" już istnieje"
 
-#, fuzzy, c-format
-#| msgid "%s: relay \"%s\" (%s: %s) added"
+#, c-format
 msgid "%s: relay \"%s\" (%s: %s) updated"
-msgstr "%s: pośrednik \"%s\" (%s: %s) dodany"
+msgstr "%s: pośrednik „%s” (%s: %s) zaktualizowany"
 
 #, c-format
 msgid "%s: relay \"%s\" (%s: %s) added"
@@ -14923,10 +14845,9 @@ msgstr ""
 "%s%s: nie możesz usunąć zdalnego pośrednika „%s”, ponieważ jesteś z nim "
 "połączony. Spróbuj najpierw wpisać \"/remote disconnect %s\"."
 
-#, fuzzy, c-format
-#| msgid "%s%s: error: relay for \"%s\" already exists"
+#, c-format
 msgid "%s%s: remote relay \"%s\" already exists"
-msgstr "%s%s: błąd: relay dla \"%s\" już istnieje"
+msgstr "%s%s: zdalny pośrednik „%s” już istnieje"
 
 #, c-format
 msgid "%s%s: invalid remote relay name: \"%s\""
@@ -14940,10 +14861,9 @@ msgstr "%s%s: nieprawidłowy URL zdalnego pośrednika: „%s”"
 msgid "%s%s: invalid remote relay option: \"%s\""
 msgstr "%s%s: nieprawidłowa opcja zdalnego pośrednika „%s”"
 
-#, fuzzy, c-format
-#| msgid "Remote relay \"%s\" created"
+#, c-format
 msgid "Remote relay \"%s\" updated"
-msgstr "Utworzono pośrednika „%s”"
+msgstr "Zdalny pośrednik „%s” zaktualizowany"
 
 #, c-format
 msgid "Remote relay \"%s\" created"
@@ -14977,16 +14897,12 @@ msgid "relay control"
 msgstr "zarządzanie przesyłaniem"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
-#, fuzzy
-#| msgid ""
-#| "list|listfull|listrelay || add <name> <port>|<path> || del|start|restart|"
-#| "stop <name> || raw || tlscertkey"
 msgid ""
 "list|listfull|listrelay || add|addreplace <name> <port>|<path> || del|start|"
 "restart|stop <name> || raw || tlscertkey"
 msgstr ""
-"list|listfull|listrelay || add <nazwa> <port>|<ścieżka> || del|start|restart|"
-"stop <nazwa> || raw || tlscertkey"
+"list|listfull|listrelay || add|addreplace <nazwa> <port>|<ścieżka> || del|"
+"start|restart|stop <nazwa> || raw || tlscertkey"
 
 msgid "raw[list]: list relay clients (only active relays)"
 msgstr "raw[list]: wyświetl pośredników (tylko aktywni pośrednicy)"
@@ -15000,10 +14916,8 @@ msgstr "raw[listrelay]: wyświetl pośredników (nazwa i port)"
 msgid "raw[add]: add a relay (listen on a port/path)"
 msgstr "raw[add]: dodaj pośrednika (nasłuchuj na porcie/ścieżce)"
 
-#, fuzzy
-#| msgid "raw[addreplace]: add or replace an existing filter"
 msgid "raw[addreplace]: add or replace an existing relay"
-msgstr "raw[addreplace]: dodaj lub zastąp istniejący filtr"
+msgstr "raw[addreplace]: dodaj lub zastąp istniejącego pośrednika"
 
 msgid "raw[del]: remove a relay (clients remain connected)"
 msgstr "raw[del]: usuń pośrednika (klienci zostają połączeni)"
@@ -15116,19 +15030,14 @@ msgid "control of remote relay servers"
 msgstr "kontrola nad serwerami pośredników"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
-#, fuzzy
-#| msgid ""
-#| "list|listfull [<name>] || add <name> <url> [-<option>[=<value>]] || "
-#| "connect <name> || send <name> <json> || disconnect <name> || rename "
-#| "<name> <new_name> || del <name>"
 msgid ""
 "list|listfull [<name>] || add|addreplace <name> <url> [-<option>[=<value>]] "
 "|| connect <name> || send <name> <json> || disconnect <name> || rename "
 "<name> <new_name> || del <name>"
 msgstr ""
-"list|listfull [<nazwa>] || add <nazwa> <url> [-<opcja>[=<wartość>]] || "
-"connect <nazwa> || send <nazwa> <json> || disconnect <nazwa> || rename "
-"<nazwa> <nowa_nazwa> || del <nazwa>"
+"list|listfull [<nazwa>] || add|addreplace <nazwa> <url> [-"
+"<opcja>[=<wartość>]] || connect <nazwa> || send <nazwa> <json> || disconnect "
+"<nazwa> || rename <nazwa> <nowa_nazwa> || del <nazwa>"
 
 msgid ""
 "raw[list]: list remote relay servers (without argument, this list is "
@@ -15143,10 +15052,8 @@ msgstr "raw[listfull]: wyświetl wszystkich pośredników (ze szczegółami)"
 msgid "raw[add]: add a remote relay server"
 msgstr "raw[add]: dodaj nowego pośrednika"
 
-#, fuzzy
-#| msgid "raw[addreplace]: add or replace an existing trigger"
 msgid "raw[addreplace]: add or replace an existing remote relay server"
-msgstr "raw[addreplace]: dodaj lub zastąp istniejący trigger"
+msgstr "raw[addreplace]: dodaj lub zastąp istniejący zdalny serwer pośrednika"
 
 msgid ""
 "name: name of remote relay server, for internal and display use; this name "
@@ -15439,8 +15346,8 @@ msgid ""
 "(examples: \"*\", \"pbkdf2*\", \"*,!plain\")"
 msgstr ""
 "oddzielona przecinkami lista algorytmów hashujących używanych dla "
-"uwierzytelnienia hasłem w protokole weechat, dostępne wartości: \"plain\" "
-"(hasło w postaci jawnej, nie zahashowane), \"sha256\", \"sha512\", "
+"uwierzytelnienia hasłem w protokole weechat, dostępne wartości: "
+"\"plain\" (hasło w postaci jawnej, nie zahashowane), \"sha256\", \"sha512\", "
 "\"pbkdf2+sha256\", \"pbkdf2+sha512\", \"*\" oznacza wszystkie algorytmy, "
 "nazwa zaczynająca się od \"!\" oznacza wartość negatywną w celu uniknięcia "
 "użycia algorytmu, znak \"*\" może zostać użyty w nazwie (przykłady: \"*\", "
@@ -15631,8 +15538,8 @@ msgid ""
 "%s%s: error: file with TLS certificate/key is not readable: \"%s\" (option "
 "relay.network.tls_cert_key)"
 msgstr ""
-"%s%s: błąd: nie można odczytać pliku z certyfikatem/kluczem TLS: \"%s\" "
-"(opcja relay.network.tls_cert_key)"
+"%s%s: błąd: nie można odczytać pliku z certyfikatem/kluczem TLS: "
+"\"%s\" (opcja relay.network.tls_cert_key)"
 
 #, c-format
 msgid "%s%s: unable to initialize priority for TLS"
@@ -15782,11 +15689,11 @@ msgstr "%s%s: nie udało się wykonać komendy \"%s\" dla klienta %s%s%s"
 
 #, c-format
 msgid ""
-"%s%s: too few arguments received from client %s%s%s for command \"%s\" "
-"(received: %d arguments, expected: at least %d)"
+"%s%s: too few arguments received from client %s%s%s for command "
+"\"%s\" (received: %d arguments, expected: at least %d)"
 msgstr ""
-"%s%s: otrzymano za mało argumentów od klienta %s%s%s dla komendy \"%s\" "
-"(otrzymano: %d argumentów, spodziewano się: przynajmniej %d)"
+"%s%s: otrzymano za mało argumentów od klienta %s%s%s dla komendy "
+"\"%s\" (otrzymano: %d argumentów, spodziewano się: przynajmniej %d)"
 
 msgid "Support of ruby scripts"
 msgstr "Wsparcie dla skryptów ruby"
@@ -16887,22 +16794,23 @@ msgstr "zarządzaj triggerami, scyzorykiem WeeChat"
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid ""
 "list [-o|-ol|-i|-il] || listfull || listdefault || add|addoff|addreplace "
-"<name> <hook> [\"<arguments>\" [\"<conditions>\" [\"<regex>\" [\"<command>\" "
-"[\"<return_code>\" [\"<post_action>\"]]]]]] || addinput [<hook>] || input|"
-"output|recreate <name> || set <name> <option> <value> || rename|copy <name> "
-"<new_name> || enable|disable|toggle [<name>|<mask> [<name>|<mask>...]] || "
-"restart <name>|<mask> [<name>|<mask>...] || show <name> || del <name>|<mask> "
-"[<name>|<mask>...] || restore <name>|<mask> [<name>|<mask>...] || default -"
-"yes || monitor [<filter>]"
+"<name> <hook> "
+"[\"<arguments>\" [\"<conditions>\" [\"<regex>\" [\"<command>\" [\"<return_code>\" [\"<post_action>\"]]]]]] "
+"|| addinput [<hook>] || input|output|recreate <name> || set <name> <option> "
+"<value> || rename|copy <name> <new_name> || enable|disable|toggle [<name>|"
+"<mask> [<name>|<mask>...]] || restart <name>|<mask> [<name>|<mask>...] || "
+"show <name> || del <name>|<mask> [<name>|<mask>...] || restore <name>|<mask> "
+"[<name>|<mask>...] || default -yes || monitor [<filter>]"
 msgstr ""
 "list [-o|-ol|-i|-il] || listfull || listdefault || add|addoff|addreplace "
-"<nazwa> <hook> [\"<argumenty>\" [\"<warunki>\" [\"<regex>\" [\"<komenda>\" "
-"[\"<zwracany_kod>\" [\"<post_action>\"]]]]]] || addinput [<hook>] || input|"
-"output|recreate <nazwa> || set <nazwa> <opcja> <wartość> || rename|copy "
-"<nazwa> <nowa_nazwa> || enable|disable|toggle [<nazwa>|<maska> [<nazwa>|"
-"<maska>...]] || restart <nazwa>|<maska> [<nazwa>|<maska>...] || show <nazwa> "
-"|| del <nazwa>|<maska> [<nazwa>|<maska>...] || restore <nazwa>|<maska> "
-"[<nazwa>|<maska>...] || default -yes || monitor [<filtr>]"
+"<nazwa> <hook> "
+"[\"<argumenty>\" [\"<warunki>\" [\"<regex>\" [\"<komenda>\" [\"<zwracany_kod>\" [\"<post_action>\"]]]]]] "
+"|| addinput [<hook>] || input|output|recreate <nazwa> || set <nazwa> <opcja> "
+"<wartość> || rename|copy <nazwa> <nowa_nazwa> || enable|disable|toggle "
+"[<nazwa>|<maska> [<nazwa>|<maska>...]] || restart <nazwa>|<maska> [<nazwa>|"
+"<maska>...] || show <nazwa> || del <nazwa>|<maska> [<nazwa>|<maska>...] || "
+"restore <nazwa>|<maska> [<nazwa>|<maska>...] || default -yes || monitor "
+"[<filtr>]"
 
 msgid "raw[list]: list triggers (without argument, this list is displayed)"
 msgstr ""
@@ -17278,14 +17186,15 @@ msgstr ""
 "zastępuje tekst za pomocą rozszerzonego wyrażenia regularnego POSIX "
 "(następuje to tylko wtedy, jeśli warunki są spełnione i przed wykonaniem "
 "komendy) (uwaga: zawartość jest przetwarzana, kiedy trigger jest "
-"uruchamiany, zobacz /help eval); format to: \"/regex/zastąp/zmienna\" "
-"(zmienna to zmienna w tablicy hashy do zamiany, jest to opcjonalne), wiele "
-"wyrażeń można oddzielić spacja, na przykład: \"/regex1/replace1/var1 /regex2/"
-"replace2/var2\"; wyescapowane znaki są interpretowane w wyrażeniu (na "
-"przykład \"\\n\"); separator \"/\" może być zastąpiony dowolnym znakiem "
-"(jednym lub więcej identycznych znaków); pasujące grupy mogą być użyte w "
-"zastępowaniu: ${re:0} do ${re:99}, ${re:+} dla ostatniego dopasowania i "
-"${hide:c,${re:N}} do zastąpienia wszystkich znaków w grupie N znakiem 'c'"
+"uruchamiany, zobacz /help eval); format to: \"/regex/zastąp/"
+"zmienna\" (zmienna to zmienna w tablicy hashy do zamiany, jest to "
+"opcjonalne), wiele wyrażeń można oddzielić spacja, na przykład: \"/regex1/"
+"replace1/var1 /regex2/replace2/var2\"; wyescapowane znaki są interpretowane "
+"w wyrażeniu (na przykład \"\\n\"); separator \"/\" może być zastąpiony "
+"dowolnym znakiem (jednym lub więcej identycznych znaków); pasujące grupy "
+"mogą być użyte w zastępowaniu: ${re:0} do ${re:99}, ${re:+} dla ostatniego "
+"dopasowania i ${hide:c,${re:N}} do zastąpienia wszystkich znaków w grupie N "
+"znakiem 'c'"
 
 msgid ""
 "command(s) to run if conditions are OK, after regex replacements (many "
