@@ -379,7 +379,7 @@ plugin_script_ptr2str (void *pointer)
         return str_pointer[index_pointer];
 
     snprintf (str_pointer[index_pointer], sizeof (str_pointer[index_pointer]),
-              "%p", pointer);
+              "0x%lx", (unsigned long)pointer);
 
     return str_pointer[index_pointer];
 }

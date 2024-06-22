@@ -79,7 +79,8 @@ fset_mouse_focus_cb (const void *pointer, void *data, struct t_hashtable *info)
     if (!ptr_fset_option)
         return info;
 
-    snprintf (str_value, sizeof (str_value), "%p", ptr_fset_option);
+    snprintf (str_value, sizeof (str_value),
+              "0x%lx", (unsigned long)ptr_fset_option);
     weechat_hashtable_set (info, "fset_option", str_value);
     snprintf (str_value, sizeof (str_value), "%ld", option_index);
     weechat_hashtable_set (info, "fset_option_index", str_value);

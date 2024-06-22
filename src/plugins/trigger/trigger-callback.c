@@ -733,7 +733,10 @@ trigger_callback_signal_cb (const void *pointer, void *data,
     {
         str_data[0] = '\0';
         if (signal_data)
-            snprintf (str_data, sizeof (str_data), "%p", signal_data);
+        {
+            snprintf (str_data, sizeof (str_data),
+                      "0x%lx", (unsigned long)signal_data);
+        }
         ptr_signal_data = str_data;
     }
     weechat_hashtable_set (ctx.extra_vars, "tg_signal_data", ptr_signal_data);

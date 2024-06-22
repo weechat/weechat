@@ -677,8 +677,8 @@ gui_chat_printf_datetime_tags_internal (struct t_gui_buffer *buffer,
     if (modifier_data && string)
     {
         snprintf (modifier_data, length_data,
-                  "%p;%s",
-                  buffer,
+                  "0x%lx;%s",
+                  (unsigned long)buffer,
                   (tags) ? tags : "");
         if (display_time)
         {

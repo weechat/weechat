@@ -590,7 +590,8 @@ hashtable_to_string (enum t_hashtable_type type, const void *value)
             return (const char *)value;
         case HASHTABLE_POINTER:
         case HASHTABLE_BUFFER:
-            snprintf (str_value, sizeof (str_value), "%p", value);
+            snprintf (str_value, sizeof (str_value), "0x%lx",
+                      (unsigned long)value);
             return str_value;
         case HASHTABLE_TIME:
             snprintf (str_value, sizeof (str_value),
