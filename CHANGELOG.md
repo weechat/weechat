@@ -49,6 +49,12 @@
 - tests: fix compilation of tests on Fedora 40 ([#2116](https://github.com/weechat/weechat/issues/2116))
 - tests: fix compilation of tests on Rocky 9.4
 
+## Version 4.3.3 (2024-06-22)
+
+### Fixed
+
+- core, plugins: return "0x0" instead of "(nil)" for pointers formatted in strings
+
 ## Version 4.3.2 (2024-06-06)
 
 ### Changed
