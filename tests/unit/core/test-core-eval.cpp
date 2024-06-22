@@ -1016,6 +1016,9 @@ TEST(CoreEval, EvalExpression)
     WEE_CHECK_EVAL("", "${my_null_pointer}");
     snprintf (str_value, sizeof (str_value), "%p", gui_buffers);
     WEE_CHECK_EVAL(str_value, "${my_buffer_pointer}");
+    WEE_CHECK_EVAL(str_value, "${buffer}");
+    WEE_CHECK_EVAL("0x0", "${buffer.prev_buffer}");
+    WEE_CHECK_EVAL("0x0", "${buffer.next_buffer}");
     WEE_CHECK_EVAL("0x1234abcd", "${my_other_pointer}");
     WEE_CHECK_EVAL("", "${buffer[unknown_pointer].full_name}");
     WEE_CHECK_EVAL("", "${buffer[my_null_pointer].full_name}");
