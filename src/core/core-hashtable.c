@@ -115,7 +115,7 @@ hashtable_hash_key_default_cb (struct t_hashtable *hashtable, const void *key)
                 return hashtable_hash_key_djb2 ((const char *)key);
             break;
         case HASHTABLE_POINTER:
-            return (unsigned long long)key;
+            return (unsigned long long)((unsigned long)((void *)key));
         case HASHTABLE_BUFFER:
             break;
         case HASHTABLE_TIME:
