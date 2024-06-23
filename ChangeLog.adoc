@@ -8,6 +8,14 @@
 :see-release-notes: If you are upgrading: please see release notes.
 :breaking: pass:quotes[*[breaking]*]
 
+[[v4.3.4]]
+== Version 4.3.4 (under dev)
+
+[[v4.3.4_fixed]]
+=== Fixed
+
+* python: fix crash on quit with Python 3.12 (issue #2046, issue #2126)
+
 [[v4.3.3]]
 == Version 4.3.3 (2024-06-22)
 
