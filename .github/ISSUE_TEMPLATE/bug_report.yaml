@@ -85,9 +85,9 @@ body:
   - type: input
     id: os-version
     attributes:
-      label: What OS are you using?
+      label: What OS/distribution are you using?
       description: Name of the operating system and its version.
-      placeholder: Debian 12, Ubuntu 23.10, MacOS 14, ...
+      placeholder: Debian 12, Ubuntu 24.04, MacOS 14, ...
     validations:
       required: true
 
