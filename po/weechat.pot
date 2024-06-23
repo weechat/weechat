@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-16 09:14+0200\n"
+"POT-Creation-Date: 2024-06-23 09:45+0200\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -226,10 +226,6 @@ msgid "No bar item defined"
 msgstr ""
 
 #, c-format
-msgid "%sBar \"%s\" already exists"
-msgstr ""
-
-#, c-format
 msgid "%sNot enough memory (%s)"
 msgstr ""
 
@@ -242,6 +238,14 @@ msgid "%sInvalid position \"%s\" for bar \"%s\""
 msgstr ""
 
 #, c-format
+msgid "%sInvalid size \"%s\" for bar \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%sBar \"%s\" already exists"
+msgstr ""
+
+#, c-format
 msgid "Bar \"%s\" updated"
 msgstr ""
 
@@ -251,10 +255,6 @@ msgstr ""
 
 #, c-format
 msgid "%sFailed to create bar \"%s\""
-msgstr ""
-
-#, c-format
-msgid "%sInvalid size \"%s\" for bar \"%s\""
 msgstr ""
 
 #, c-format

@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-16 09:14+0200\n"
+"POT-Creation-Date: 2024-06-23 09:45+0200\n"
 "PO-Revision-Date: 2024-06-11 07:49+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -251,10 +251,6 @@ msgid "No bar item defined"
 msgstr "Сокращения не заданы.\n"
 
 #, fuzzy, c-format
-msgid "%sBar \"%s\" already exists"
-msgstr "%s игнорирование уже существует\n"
-
-#, fuzzy, c-format
 msgid "%sNot enough memory (%s)"
 msgstr "Недостаточно памяти для новой строчки\n"
 
@@ -267,6 +263,14 @@ msgid "%sInvalid position \"%s\" for bar \"%s\""
 msgstr "%s неизвестный параметр для команды \"%s\"\n"
 
 #, fuzzy, c-format
+msgid "%sInvalid size \"%s\" for bar \"%s\""
+msgstr "%s некорректное количество аргументов команды \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%sBar \"%s\" already exists"
+msgstr "%s игнорирование уже существует\n"
+
+#, fuzzy, c-format
 msgid "Bar \"%s\" updated"
 msgstr "Сокращение \"%s\" => \"%s\" создано\n"
 
@@ -277,10 +281,6 @@ msgstr "Сокращение \"%s\" => \"%s\" создано\n"
 #, fuzzy, c-format
 msgid "%sFailed to create bar \"%s\""
 msgstr "%s не могу сохранить конфигурационный файл pluginов\n"
-
-#, fuzzy, c-format
-msgid "%sInvalid size \"%s\" for bar \"%s\""
-msgstr "%s некорректное количество аргументов команды \"%s\"\n"
 
 #, fuzzy, c-format
 msgid "%sBar \"%s\" not found"

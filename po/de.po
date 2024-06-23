@@ -26,7 +26,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-16 09:14+0200\n"
+"POT-Creation-Date: 2024-06-23 09:45+0200\n"
 "PO-Revision-Date: 2024-06-11 07:49+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -312,10 +312,6 @@ msgid "No bar item defined"
 msgstr "Es wurde kein Bar-Item festgelegt"
 
 #, c-format
-msgid "%sBar \"%s\" already exists"
-msgstr "%sBar \"%s\" existiert bereits"
-
-#, c-format
 msgid "%sNot enough memory (%s)"
 msgstr "%sNicht ausreichend Speicher (%s)"
 
@@ -328,6 +324,14 @@ msgid "%sInvalid position \"%s\" for bar \"%s\""
 msgstr "%sUngültige Position \"%s\" für Bar \"%s\""
 
 #, c-format
+msgid "%sInvalid size \"%s\" for bar \"%s\""
+msgstr "%sFehlerhafte Größe \"%s\" für die Bar \"%s\""
+
+#, c-format
+msgid "%sBar \"%s\" already exists"
+msgstr "%sBar \"%s\" existiert bereits"
+
+#, c-format
 msgid "Bar \"%s\" updated"
 msgstr "Infobar \"%s\" aktualisiert"
 
@@ -338,10 +342,6 @@ msgstr "Infobar \"%s\" erstellt"
 #, c-format
 msgid "%sFailed to create bar \"%s\""
 msgstr "%sBar \"%s\" konnte nicht erstellt werden"
-
-#, c-format
-msgid "%sInvalid size \"%s\" for bar \"%s\""
-msgstr "%sFehlerhafte Größe \"%s\" für die Bar \"%s\""
 
 #, c-format
 msgid "%sBar \"%s\" not found"

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-16 09:14+0200\n"
+"POT-Creation-Date: 2024-06-23 09:45+0200\n"
 "PO-Revision-Date: 2024-06-11 07:49+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -247,10 +247,6 @@ msgid "No bar item defined"
 msgstr "Nincs aliasz definiálva.\n"
 
 #, fuzzy, c-format
-msgid "%sBar \"%s\" already exists"
-msgstr "%s az ignore már létezik\n"
-
-#, fuzzy, c-format
 msgid "%sNot enough memory (%s)"
 msgstr "Nincs elég memória az új sorhoz\n"
 
@@ -263,6 +259,14 @@ msgid "%sInvalid position \"%s\" for bar \"%s\""
 msgstr "%s ismeretlen opció a \"%s\" parancsnak\n"
 
 #, fuzzy, c-format
+msgid "%sInvalid size \"%s\" for bar \"%s\""
+msgstr "%s rossz argumentum szám a \"%s\" parancsnak\n"
+
+#, fuzzy, c-format
+msgid "%sBar \"%s\" already exists"
+msgstr "%s az ignore már létezik\n"
+
+#, fuzzy, c-format
 msgid "Bar \"%s\" updated"
 msgstr "A \"%s\" => \"%s\" aliasz elkészült\n"
 
@@ -273,10 +277,6 @@ msgstr "A \"%s\" => \"%s\" aliasz elkészült\n"
 #, fuzzy, c-format
 msgid "%sFailed to create bar \"%s\""
 msgstr "%s nem sikerült a modul opciókat elmenteni\n"
-
-#, fuzzy, c-format
-msgid "%sInvalid size \"%s\" for bar \"%s\""
-msgstr "%s rossz argumentum szám a \"%s\" parancsnak\n"
 
 #, fuzzy, c-format
 msgid "%sBar \"%s\" not found"

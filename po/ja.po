@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-16 09:14+0200\n"
+"POT-Creation-Date: 2024-06-23 09:45+0200\n"
 "PO-Revision-Date: 2024-06-11 07:49+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -292,11 +292,6 @@ msgstr "  %s (プラグイン: %s)"
 msgid "No bar item defined"
 msgstr "バー要素が定義されていません"
 
-#, fuzzy, c-format
-#| msgid "%s%s: trigger \"%s\" already exists"
-msgid "%sBar \"%s\" already exists"
-msgstr "%s%s: トリガ \"%s\" は既に存在します"
-
 #, c-format
 msgid "%sNot enough memory (%s)"
 msgstr "%sメモリ不足 (%s)"
@@ -309,6 +304,15 @@ msgstr "%1$sエラー: バー \"%3$s\" にタイプ \"%2$s\" は使えません"
 msgid "%sInvalid position \"%s\" for bar \"%s\""
 msgstr "%1$sエラー: バー \"%3$s\" に位置 \"%2$s\" を設定できません"
 
+#, fuzzy, c-format
+msgid "%sInvalid size \"%s\" for bar \"%s\""
+msgstr "%1$sエラー: バー \"%3$s\" にサイズ \"%2$s\" を設定できません"
+
+#, fuzzy, c-format
+#| msgid "%s%s: trigger \"%s\" already exists"
+msgid "%sBar \"%s\" already exists"
+msgstr "%s%s: トリガ \"%s\" は既に存在します"
+
 #, c-format
 msgid "Bar \"%s\" updated"
 msgstr "バー \"%s\" がアップデートされました"
@@ -320,10 +324,6 @@ msgstr "バー \"%s\" が作成されました"
 #, fuzzy, c-format
 msgid "%sFailed to create bar \"%s\""
 msgstr "%sエラー: バー \"%s\" の作成に失敗しました"
-
-#, fuzzy, c-format
-msgid "%sInvalid size \"%s\" for bar \"%s\""
-msgstr "%1$sエラー: バー \"%3$s\" にサイズ \"%2$s\" を設定できません"
 
 #, fuzzy, c-format
 msgid "%sBar \"%s\" not found"

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-16 09:14+0200\n"
+"POT-Creation-Date: 2024-06-23 09:45+0200\n"
 "PO-Revision-Date: 2024-06-11 07:49+0200\n"
 "Last-Translator: Vasco Almeida <vascomalmeida@sapo.pt>\n"
 "Language-Team: Portuguese <>\n"
@@ -274,11 +274,6 @@ msgstr "  %s (plugin: %s)"
 msgid "No bar item defined"
 msgstr "Nenhum item de barra definido"
 
-#, fuzzy, c-format
-#| msgid "%s%s: trigger \"%s\" already exists"
-msgid "%sBar \"%s\" already exists"
-msgstr "%s%s: o acionador \"%s\" já existe"
-
 #, c-format
 msgid "%sNot enough memory (%s)"
 msgstr "%sMemória insuficiente (%s)"
@@ -291,6 +286,15 @@ msgstr "%sErro: tipo incorreto \"%s\" da barra \"%s\""
 msgid "%sInvalid position \"%s\" for bar \"%s\""
 msgstr "%sErro: posição incorreta \"%s\" da barra \"%s\""
 
+#, fuzzy, c-format
+msgid "%sInvalid size \"%s\" for bar \"%s\""
+msgstr "%sErro: tamanho incorreto \"%s\" da barra \"%s\""
+
+#, fuzzy, c-format
+#| msgid "%s%s: trigger \"%s\" already exists"
+msgid "%sBar \"%s\" already exists"
+msgstr "%s%s: o acionador \"%s\" já existe"
+
 #, c-format
 msgid "Bar \"%s\" updated"
 msgstr "Barra \"%s\" atualizada"
@@ -302,10 +306,6 @@ msgstr "Barra \"%s\" criada"
 #, fuzzy, c-format
 msgid "%sFailed to create bar \"%s\""
 msgstr "%sErro: falha ao criar a barra \"%s\""
-
-#, fuzzy, c-format
-msgid "%sInvalid size \"%s\" for bar \"%s\""
-msgstr "%sErro: tamanho incorreto \"%s\" da barra \"%s\""
 
 #, fuzzy, c-format
 msgid "%sBar \"%s\" not found"

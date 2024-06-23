@@ -291,25 +291,6 @@ COMMAND_CALLBACK(bar)
         || (string_strcmp (argv[1], "addreplace") == 0))
     {
         COMMAND_MIN_ARGS(8, argv[1]);
-        update = 0;
-        ptr_bar = gui_bar_search (argv[2]);
-        if (ptr_bar)
-        {
-            if (string_strcmp (argv[1], "addreplace") == 0)
-            {
-                update = 1;
-                gui_bar_free (ptr_bar);
-                gui_bar_create_default_input ();
-            }
-            else
-            {
-                gui_chat_printf (NULL,
-                                 _("%sBar \"%s\" already exists"),
-                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                 argv[2]);
-                return WEECHAT_RC_ERROR;
-            }
-        }
         pos_condition = strchr (argv[3], ',');
         if (pos_condition)
         {
@@ -351,47 +332,65 @@ COMMAND_CALLBACK(bar)
         error = NULL;
         value = strtol (argv[5], &error, 10);
         (void) value;
-        if (error && !error[0])
-        {
-            /* create bar */
-            if (gui_bar_new (
-                    argv[2],       /* name */
-                    "0",           /* hidden */
-                    "0",           /* priority */
-                    str_type,      /* type */
-                    (pos_condition) ? pos_condition : "",  /* conditions */
-                    argv[4],       /* position */
-                    "horizontal",  /* filling_top_bottom */
-                    "vertical",    /* filling_left_right */
-                    argv[5],       /* size */
-                    "0",           /* size_max */
-                    "default",     /* color fg */
-                    "default",     /* color delim */
-                    "default",     /* color bg */
-                    "default",     /* color bg inactive */
-                    argv[6],       /* separators */
-                    argv_eol[7]))  /* items */
-            {
-                gui_chat_printf (
-                    NULL,
-                    (update) ? _("Bar \"%s\" updated") : _("Bar \"%s\" created"),
-                    argv[2]);
-            }
-            else
-            {
-                gui_chat_printf (NULL, _("%sFailed to create bar \"%s\""),
-                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                 argv[2]);
-                free (str_type);
-                return WEECHAT_RC_ERROR;
-            }
-        }
-        else
+        if (!error || error[0])
         {
             gui_chat_printf (NULL,
                              _("%sInvalid size \"%s\" for bar \"%s\""),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                              argv[5], argv[2]);
+            free (str_type);
+            return WEECHAT_RC_ERROR;
+        }
+        update = 0;
+        ptr_bar = gui_bar_search (argv[2]);
+        if (ptr_bar)
+        {
+            if (string_strcmp (argv[1], "addreplace") == 0)
+            {
+                update = 1;
+                gui_bar_free (ptr_bar);
+            }
+            else
+            {
+                gui_chat_printf (NULL,
+                                 _("%sBar \"%s\" already exists"),
+                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                 argv[2]);
+                return WEECHAT_RC_ERROR;
+            }
+        }
+        /* create bar */
+        ptr_bar = gui_bar_new (
+            argv[2],       /* name */
+            "0",           /* hidden */
+            "0",           /* priority */
+            str_type,      /* type */
+            (pos_condition) ? pos_condition : "",  /* conditions */
+            argv[4],       /* position */
+            "horizontal",  /* filling_top_bottom */
+            "vertical",    /* filling_left_right */
+            argv[5],       /* size */
+            "0",           /* size_max */
+            "default",     /* color fg */
+            "default",     /* color delim */
+            "default",     /* color bg */
+            "default",     /* color bg inactive */
+            argv[6],       /* separators */
+            argv_eol[7]);  /* items */
+        if (update)
+            gui_bar_create_default_input ();
+        if (ptr_bar)
+        {
+            gui_chat_printf (
+                NULL,
+                (update) ? _("Bar \"%s\" updated") : _("Bar \"%s\" created"),
+                argv[2]);
+        }
+        else
+        {
+            gui_chat_printf (NULL, _("%sFailed to create bar \"%s\""),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             argv[2]);
             free (str_type);
             return WEECHAT_RC_ERROR;
         }

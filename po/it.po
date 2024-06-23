@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-16 09:14+0200\n"
+"POT-Creation-Date: 2024-06-23 09:45+0200\n"
 "PO-Revision-Date: 2024-06-11 07:49+0200\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -250,10 +250,6 @@ msgid "No bar item defined"
 msgstr "Nessun elemento barra definito"
 
 #, fuzzy, c-format
-msgid "%sBar \"%s\" already exists"
-msgstr "%sErrore: il filtro \"%s\" esiste già"
-
-#, fuzzy, c-format
 msgid "%sNot enough memory (%s)"
 msgstr "%sSpazio non sufficiente"
 
@@ -264,6 +260,14 @@ msgstr "%sErrore: tipo \"%s\" errato per la barra \"%s\""
 #, fuzzy, c-format
 msgid "%sInvalid position \"%s\" for bar \"%s\""
 msgstr "%sErrore: posizione \"%s\" errata per la barra \"%s\""
+
+#, fuzzy, c-format
+msgid "%sInvalid size \"%s\" for bar \"%s\""
+msgstr "%sErrore: dimensione \"%s\" errata per la barra \"%s\""
+
+#, fuzzy, c-format
+msgid "%sBar \"%s\" already exists"
+msgstr "%sErrore: il filtro \"%s\" esiste già"
 
 #, c-format
 msgid "Bar \"%s\" updated"
@@ -276,10 +280,6 @@ msgstr "Barra \"%s\" creata"
 #, fuzzy, c-format
 msgid "%sFailed to create bar \"%s\""
 msgstr "%sErrore: creazione della barra \"%s\" fallita"
-
-#, fuzzy, c-format
-msgid "%sInvalid size \"%s\" for bar \"%s\""
-msgstr "%sErrore: dimensione \"%s\" errata per la barra \"%s\""
 
 #, fuzzy, c-format
 msgid "%sBar \"%s\" not found"

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-06-16 09:14+0200\n"
+"POT-Creation-Date: 2024-06-23 09:45+0200\n"
 "PO-Revision-Date: 2024-06-11 07:49+0200\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -314,11 +314,6 @@ msgstr "  %s (eklenti: %s)"
 msgid "No bar item defined"
 msgstr "Çubuk ögesi tanımlanmamış"
 
-#, fuzzy, c-format
-#| msgid "%s%s: trigger \"%s\" already exists"
-msgid "%sBar \"%s\" already exists"
-msgstr "%s%s: \"%s\" tetiği halihazırda mevcut"
-
 #, c-format
 msgid "%sNot enough memory (%s)"
 msgstr "%sBellek yetersiz (%s)"
@@ -332,6 +327,15 @@ msgid "%sInvalid position \"%s\" for bar \"%s\""
 msgstr "%sŞu çubuk için hatalı konum \"%s\": \"%s\""
 
 #, c-format
+msgid "%sInvalid size \"%s\" for bar \"%s\""
+msgstr "%sŞu çubuk için hatalı boyut \"%s\": \"%s\""
+
+#, fuzzy, c-format
+#| msgid "%s%s: trigger \"%s\" already exists"
+msgid "%sBar \"%s\" already exists"
+msgstr "%s%s: \"%s\" tetiği halihazırda mevcut"
+
+#, c-format
 msgid "Bar \"%s\" updated"
 msgstr "\"%s\" çubuğu güncellendi"
 
@@ -342,10 +346,6 @@ msgstr "\"%s\" çubuğu oluşturuldu"
 #, c-format
 msgid "%sFailed to create bar \"%s\""
 msgstr "%s\"%s\" çubuğu oluşturulamadı"
-
-#, c-format
-msgid "%sInvalid size \"%s\" for bar \"%s\""
-msgstr "%sŞu çubuk için hatalı boyut \"%s\": \"%s\""
 
 #, c-format
 msgid "%sBar \"%s\" not found"
