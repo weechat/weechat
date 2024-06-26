@@ -1041,13 +1041,15 @@ weechat_python_eval (struct t_gui_buffer *buffer, int send_to_buffer_as_input,
                      int exec_commands, const char *code)
 {
     void *func_argv[1], *result;
+    int old_python_quiet;
 
     if (!python_script_eval)
     {
+        old_python_quiet = python_quiet;
         python_quiet = 1;
         python_script_eval = weechat_python_load (WEECHAT_SCRIPT_EVAL_NAME,
                                                   PYTHON_EVAL_SCRIPT);
-        python_quiet = 0;
+        python_quiet = old_python_quiet;
         if (!python_script_eval)
             return 0;
     }
@@ -1076,9 +1078,10 @@ weechat_python_eval (struct t_gui_buffer *buffer, int send_to_buffer_as_input,
 
     if (!weechat_config_boolean (python_config_look_eval_keep_context))
     {
+        old_python_quiet = python_quiet;
         python_quiet = 1;
         weechat_python_unload (python_script_eval);
-        python_quiet = 0;
+        python_quiet = old_python_quiet;
         python_script_eval = NULL;
     }
 
@@ -1095,7 +1098,7 @@ weechat_python_command_cb (const void *pointer, void *data,
                            int argc, char **argv, char **argv_eol)
 {
     char *ptr_name, *ptr_code, *path_script;
-    int i, send_to_buffer_as_input, exec_commands;
+    int i, send_to_buffer_as_input, exec_commands, old_python_quiet;
 
     /* make C compiler happy */
     (void) pointer;
@@ -1154,6 +1157,7 @@ weechat_python_command_cb (const void *pointer, void *data,
                  || (weechat_strcmp (argv[1], "reload") == 0)
                  || (weechat_strcmp (argv[1], "unload") == 0))
         {
+            old_python_quiet = python_quiet;
             ptr_name = argv_eol[2];
             if (strncmp (ptr_name, "-q ", 3) == 0)
             {
@@ -1183,7 +1187,7 @@ weechat_python_command_cb (const void *pointer, void *data,
                 /* unload python script */
                 weechat_python_unload_name (ptr_name);
             }
-            python_quiet = 0;
+            python_quiet = old_python_quiet;
         }
         else if (weechat_strcmp (argv[1], "eval") == 0)
         {
@@ -1513,6 +1517,8 @@ weechat_python_signal_script_action_cb (const void *pointer, void *data,
 int
 weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
+    int old_python_quiet;
+
     /* make C compiler happy */
     (void) argc;
     (void) argv;
@@ -1588,9 +1594,10 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     python_data.callback_load_file = &weechat_python_load_cb;
     python_data.unload_all = &weechat_python_unload_all;
 
+    old_python_quiet = python_quiet;
     python_quiet = 1;
     plugin_script_init (weechat_python_plugin, &python_data);
-    python_quiet = 0;
+    python_quiet = old_python_quiet;
 
     plugin_script_display_short_list (weechat_python_plugin,
                                       python_scripts);
@@ -1623,7 +1630,10 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 int
 weechat_plugin_end (struct t_weechat_plugin *plugin)
 {
+    int old_python_quiet;
+
     /* unload all scripts */
+    old_python_quiet = python_quiet;
     python_quiet = 1;
     plugin_script_end (plugin, &python_data);
     if (python_script_eval)
@@ -1631,7 +1641,7 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
         weechat_python_unload (python_script_eval);
         python_script_eval = NULL;
     }
-    python_quiet = 0;
+    python_quiet = old_python_quiet;
 
     /* free python interpreter */
     if (python_mainThreadState != NULL)

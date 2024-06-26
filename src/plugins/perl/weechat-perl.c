@@ -832,13 +832,15 @@ weechat_perl_eval (struct t_gui_buffer *buffer, int send_to_buffer_as_input,
                    int exec_commands, const char *code)
 {
     void *func_argv[1], *result;
+    int old_perl_quiet;
 
     if (!perl_script_eval)
     {
+        old_perl_quiet = perl_quiet;
         perl_quiet = 1;
         perl_script_eval = weechat_perl_load (WEECHAT_SCRIPT_EVAL_NAME,
                                               PERL_EVAL_SCRIPT);
-        perl_quiet = 0;
+        perl_quiet = old_perl_quiet;
         if (!perl_script_eval)
             return 0;
     }
@@ -867,9 +869,10 @@ weechat_perl_eval (struct t_gui_buffer *buffer, int send_to_buffer_as_input,
 
     if (!weechat_config_boolean (perl_config_look_eval_keep_context))
     {
+        old_perl_quiet = perl_quiet;
         perl_quiet = 1;
         weechat_perl_unload (perl_script_eval);
-        perl_quiet = 0;
+        perl_quiet = old_perl_quiet;
         perl_script_eval = NULL;
     }
 
@@ -886,7 +889,7 @@ weechat_perl_command_cb (const void *pointer, void *data,
                          int argc, char **argv, char **argv_eol)
 {
     char *ptr_name, *ptr_code, *path_script;
-    int i, send_to_buffer_as_input, exec_commands;
+    int i, send_to_buffer_as_input, exec_commands, old_perl_quiet;
 
     /* make C compiler happy */
     (void) pointer;
@@ -945,6 +948,7 @@ weechat_perl_command_cb (const void *pointer, void *data,
                  || (weechat_strcmp (argv[1], "reload") == 0)
                  || (weechat_strcmp (argv[1], "unload") == 0))
         {
+            old_perl_quiet = perl_quiet;
             ptr_name = argv_eol[2];
             if (strncmp (ptr_name, "-q ", 3) == 0)
             {
@@ -974,7 +978,7 @@ weechat_perl_command_cb (const void *pointer, void *data,
                 /* unload perl script */
                 weechat_perl_unload_name (ptr_name);
             }
-            perl_quiet = 0;
+            perl_quiet = old_perl_quiet;
         }
         else if (weechat_strcmp (argv[1], "eval") == 0)
         {
@@ -1243,6 +1247,8 @@ weechat_perl_signal_quit_upgrade_cb (const void *pointer, void *data,
 int
 weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
+    int old_perl_quiet;
+
 #ifdef PERL_SYS_INIT3
     int a;
     char **perl_args_local;
@@ -1316,9 +1322,10 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     perl_data.callback_load_file = &weechat_perl_load_cb;
     perl_data.unload_all = &weechat_perl_unload_all;
 
+    old_perl_quiet = perl_quiet;
     perl_quiet = 1;
     plugin_script_init (weechat_perl_plugin, &perl_data);
-    perl_quiet = 0;
+    perl_quiet = old_perl_quiet;
 
     plugin_script_display_short_list (weechat_perl_plugin,
                                       perl_scripts);
@@ -1337,7 +1344,10 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 int
 weechat_plugin_end (struct t_weechat_plugin *plugin)
 {
+    int old_perl_quiet;
+
     /* unload all scripts */
+    old_perl_quiet = perl_quiet;
     perl_quiet = 1;
     if (perl_script_eval)
     {
@@ -1345,7 +1355,7 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
         perl_script_eval = NULL;
     }
     plugin_script_end (plugin, &perl_data);
-    perl_quiet = 0;
+    perl_quiet = old_perl_quiet;
 
 #ifndef MULTIPLICITY
     /* free perl interpreter */

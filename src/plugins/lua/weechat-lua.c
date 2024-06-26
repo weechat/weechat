@@ -861,13 +861,15 @@ weechat_lua_eval (struct t_gui_buffer *buffer, int send_to_buffer_as_input,
                   int exec_commands, const char *code)
 {
     void *func_argv[1], *result;
+    int old_lua_quiet;
 
     if (!lua_script_eval)
     {
+        old_lua_quiet = lua_quiet;
         lua_quiet = 1;
         lua_script_eval = weechat_lua_load (WEECHAT_SCRIPT_EVAL_NAME,
                                             LUA_EVAL_SCRIPT);
-        lua_quiet = 0;
+        lua_quiet = old_lua_quiet;
         if (!lua_script_eval)
             return 0;
     }
@@ -896,9 +898,10 @@ weechat_lua_eval (struct t_gui_buffer *buffer, int send_to_buffer_as_input,
 
     if (!weechat_config_boolean (lua_config_look_eval_keep_context))
     {
+        old_lua_quiet = lua_quiet;
         lua_quiet = 1;
         weechat_lua_unload (lua_script_eval);
-        lua_quiet = 0;
+        lua_quiet = old_lua_quiet;
         lua_script_eval = NULL;
     }
 
@@ -915,7 +918,7 @@ weechat_lua_command_cb (const void *pointer, void *data,
                         int argc, char **argv, char **argv_eol)
 {
     char *ptr_name, *ptr_code, *path_script;
-    int i, send_to_buffer_as_input, exec_commands;
+    int i, send_to_buffer_as_input, exec_commands, old_lua_quiet;
 
     /* make C compiler happy */
     (void) pointer;
@@ -974,6 +977,7 @@ weechat_lua_command_cb (const void *pointer, void *data,
                  || (weechat_strcmp (argv[1], "reload") == 0)
                  || (weechat_strcmp (argv[1], "unload") == 0))
         {
+            old_lua_quiet = lua_quiet;
             ptr_name = argv_eol[2];
             if (strncmp (ptr_name, "-q ", 3) == 0)
             {
@@ -1003,7 +1007,7 @@ weechat_lua_command_cb (const void *pointer, void *data,
                 /* unload lua script */
                 weechat_lua_unload_name (ptr_name);
             }
-            lua_quiet = 0;
+            lua_quiet = old_lua_quiet;
         }
         else if (weechat_strcmp (argv[1], "eval") == 0)
         {
@@ -1249,6 +1253,8 @@ weechat_lua_signal_script_action_cb (const void *pointer, void *data,
 int
 weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
+    int old_lua_quiet;
+
     /* make C compiler happy */
     (void) argc;
     (void) argv;
@@ -1291,9 +1297,10 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     lua_data.callback_load_file = &weechat_lua_load_cb;
     lua_data.unload_all = &weechat_lua_unload_all;
 
+    old_lua_quiet = lua_quiet;
     lua_quiet = 1;
     plugin_script_init (weechat_lua_plugin, &lua_data);
-    lua_quiet = 0;
+    lua_quiet = old_lua_quiet;
 
     plugin_script_display_short_list (weechat_lua_plugin,
                                       lua_scripts);
@@ -1309,7 +1316,10 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 int
 weechat_plugin_end (struct t_weechat_plugin *plugin)
 {
+    int old_lua_quiet;
+
     /* unload all scripts */
+    old_lua_quiet = lua_quiet;
     lua_quiet = 1;
     if (lua_script_eval)
     {
@@ -1317,7 +1327,7 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
         lua_script_eval = NULL;
     }
     plugin_script_end (plugin, &lua_data);
-    lua_quiet = 0;
+    lua_quiet = old_lua_quiet;
 
     /* free some data */
     if (lua_action_install_list)
