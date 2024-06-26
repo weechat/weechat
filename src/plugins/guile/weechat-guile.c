@@ -1321,6 +1321,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     guile_data.callback_signal_debug_dump = &weechat_guile_signal_debug_dump_cb;
     guile_data.callback_signal_script_action = &weechat_guile_signal_script_action_cb;
     guile_data.callback_load_file = &weechat_guile_load_cb;
+    guile_data.init_before_autoload = NULL;
     guile_data.unload_all = &weechat_guile_unload_all;
 
     old_guile_quiet = guile_quiet;

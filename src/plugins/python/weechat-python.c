@@ -1089,6 +1089,23 @@ weechat_python_eval (struct t_gui_buffer *buffer, int send_to_buffer_as_input,
 }
 
 /*
+ * Function called before the auto-load of scripts.
+ */
+
+void
+weechat_python_init_before_autoload ()
+{
+#if PY_VERSION_HEX >= 0x030C0000 && PY_VERSION_HEX < 0x030D0000
+    /*
+     * Workaround for crash when ending interpreters in Python 3.12:
+     * the first time we load a script, we eval an empty string.
+     * See https://github.com/weechat/weechat/issues/2046
+     */
+    weechat_python_eval (NULL, 0, 0, "");
+#endif
+}
+
+/*
  * Callback for command "/python".
  */
 
@@ -1592,6 +1609,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     python_data.callback_signal_debug_dump = &weechat_python_signal_debug_dump_cb;
     python_data.callback_signal_script_action = &weechat_python_signal_script_action_cb;
     python_data.callback_load_file = &weechat_python_load_cb;
+    python_data.init_before_autoload = &weechat_python_init_before_autoload;
     python_data.unload_all = &weechat_python_unload_all;
 
     old_python_quiet = python_quiet;
@@ -1612,12 +1630,6 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
                            "",
                            "",
                            &weechat_python_infolist_cb, NULL, NULL);
-
-#if PY_VERSION_HEX >= 0x030C0000 && PY_VERSION_HEX < 0x030D0000
-    // Workaround for crash when ending interpreters in Python 3.12
-    // See https://github.com/weechat/weechat/issues/2046
-    weechat_python_eval (NULL, 0, 0, "");
-#endif
 
     /* init OK */
     return WEECHAT_RC_OK;

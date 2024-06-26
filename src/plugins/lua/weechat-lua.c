@@ -1295,6 +1295,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     lua_data.callback_signal_debug_dump = &weechat_lua_signal_debug_dump_cb;
     lua_data.callback_signal_script_action = &weechat_lua_signal_script_action_cb;
     lua_data.callback_load_file = &weechat_lua_load_cb;
+    lua_data.init_before_autoload = NULL;
     lua_data.unload_all = &weechat_lua_unload_all;
 
     old_lua_quiet = lua_quiet;

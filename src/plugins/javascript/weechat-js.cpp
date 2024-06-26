@@ -955,6 +955,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     js_data.callback_signal_debug_dump = &weechat_js_signal_debug_dump_cb;
     js_data.callback_signal_script_action = &weechat_js_signal_script_action_cb;
     js_data.callback_load_file = &weechat_js_load_cb;
+    js_data.init_before_autoload = NULL;
     js_data.unload_all = &weechat_js_unload_all;
 
     old_js_quiet = js_quiet;
