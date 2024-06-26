@@ -605,7 +605,7 @@ def timer_cb(data, remaining_calls):
 
 
 def test_hooks():
-    """Test function hook_command."""
+    """Test hook functions."""
     # hook_completion / hook_completion_args / and hook_command
     hook_cmplt = weechat.hook_completion('{SCRIPT_NAME}', 'description',
                                          'completion_cb', 'completion_data')
