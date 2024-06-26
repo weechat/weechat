@@ -1320,6 +1320,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     perl_data.callback_signal_debug_dump = &weechat_perl_signal_debug_dump_cb;
     perl_data.callback_signal_script_action = &weechat_perl_signal_script_action_cb;
     perl_data.callback_load_file = &weechat_perl_load_cb;
+    perl_data.init_before_autoload = NULL;
     perl_data.unload_all = &weechat_perl_unload_all;
 
     old_perl_quiet = perl_quiet;

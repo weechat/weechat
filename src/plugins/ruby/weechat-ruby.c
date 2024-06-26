@@ -1408,6 +1408,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     ruby_data.callback_signal_debug_dump = &weechat_ruby_signal_debug_dump_cb;
     ruby_data.callback_signal_script_action = &weechat_ruby_signal_script_action_cb;
     ruby_data.callback_load_file = &weechat_ruby_load_cb;
+    ruby_data.init_before_autoload = NULL;
     ruby_data.unload_all = &weechat_ruby_unload_all;
 
     old_ruby_quiet = ruby_quiet;

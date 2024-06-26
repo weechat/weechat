@@ -1305,6 +1305,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     php_data.callback_signal_debug_dump = &weechat_php_signal_debug_dump_cb;
     php_data.callback_signal_script_action = &weechat_php_signal_script_action_cb;
     php_data.callback_load_file = &weechat_php_load_cb;
+    php_data.init_before_autoload = NULL;
     php_data.unload_all = &weechat_php_unload_all;
 
     php_embed_module.startup = php_weechat_startup;

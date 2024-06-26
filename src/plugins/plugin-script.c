@@ -317,6 +317,13 @@ plugin_script_init (struct t_weechat_plugin *weechat_plugin,
                        &plugin_script_info_version_cb,
                        weechat_plugin, NULL);
 
+    /*
+     * call function "init_before_autoload"
+     * (called even if no scripts are auto-loaded)
+     */
+    if (plugin_data->init_before_autoload)
+        (void)(plugin_data->init_before_autoload) ();
+
     /* check if auto-load of scripts is enabled */
     info_auto_load_scripts = weechat_info_get ("auto_load_scripts", NULL);
     auto_load_scripts = (info_auto_load_scripts

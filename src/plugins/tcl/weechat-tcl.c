@@ -948,6 +948,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     tcl_data.callback_signal_debug_dump = &weechat_tcl_signal_debug_dump_cb;
     tcl_data.callback_signal_script_action = &weechat_tcl_signal_script_action_cb;
     tcl_data.callback_load_file = &weechat_tcl_load_cb;
+    tcl_data.init_before_autoload = NULL;
     tcl_data.unload_all = &weechat_tcl_unload_all;
 
     old_tcl_quiet = tcl_quiet;
