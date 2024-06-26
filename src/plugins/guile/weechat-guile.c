@@ -742,13 +742,15 @@ weechat_guile_eval (struct t_gui_buffer *buffer, int send_to_buffer_as_input,
                     int exec_commands, const char *code)
 {
     void *func_argv[1], *result;
+    int old_guile_quiet;
 
     if (!guile_script_eval)
     {
+        old_guile_quiet = guile_quiet;
         guile_quiet = 1;
         guile_script_eval = weechat_guile_load (WEECHAT_SCRIPT_EVAL_NAME,
                                                 GUILE_EVAL_SCRIPT);
-        guile_quiet = 0;
+        guile_quiet = old_guile_quiet;
         if (!guile_script_eval)
             return 0;
     }
@@ -777,9 +779,10 @@ weechat_guile_eval (struct t_gui_buffer *buffer, int send_to_buffer_as_input,
 
     if (!weechat_config_boolean (guile_config_look_eval_keep_context))
     {
+        old_guile_quiet = guile_quiet;
         guile_quiet = 1;
         weechat_guile_unload (guile_script_eval);
-        guile_quiet = 0;
+        guile_quiet = old_guile_quiet;
         guile_script_eval = NULL;
     }
 
@@ -796,7 +799,7 @@ weechat_guile_command_cb (const void *pointer, void *data,
                           int argc, char **argv, char **argv_eol)
 {
     char *ptr_name, *ptr_code, *path_script;
-    int i, send_to_buffer_as_input, exec_commands;
+    int i, send_to_buffer_as_input, exec_commands, old_guile_quiet;
 
     /* make C compiler happy */
     (void) pointer;
@@ -855,6 +858,7 @@ weechat_guile_command_cb (const void *pointer, void *data,
                  || (weechat_strcmp (argv[1], "reload") == 0)
                  || (weechat_strcmp (argv[1], "unload") == 0))
         {
+            old_guile_quiet = guile_quiet;
             ptr_name = argv_eol[2];
             if (strncmp (ptr_name, "-q ", 3) == 0)
             {
@@ -884,7 +888,7 @@ weechat_guile_command_cb (const void *pointer, void *data,
                 /* unload guile script */
                 weechat_guile_unload_name (ptr_name);
             }
-            guile_quiet = 0;
+            guile_quiet = old_guile_quiet;
         }
         else if (weechat_strcmp (argv[1], "eval") == 0)
         {
@@ -1243,6 +1247,7 @@ int
 weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
     char str_version[128];
+    int old_guile_quiet;
 
     /* make C compiler happy */
     (void) argc;
@@ -1318,9 +1323,10 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     guile_data.callback_load_file = &weechat_guile_load_cb;
     guile_data.unload_all = &weechat_guile_unload_all;
 
+    old_guile_quiet = guile_quiet;
     guile_quiet = 1;
     plugin_script_init (weechat_guile_plugin, &guile_data);
-    guile_quiet = 0;
+    guile_quiet = old_guile_quiet;
 
     plugin_script_display_short_list (weechat_guile_plugin,
                                       guile_scripts);
@@ -1336,7 +1342,10 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 int
 weechat_plugin_end (struct t_weechat_plugin *plugin)
 {
+    int old_guile_quiet;
+
     /* unload all scripts */
+    old_guile_quiet = guile_quiet;
     guile_quiet = 1;
     if (guile_script_eval)
     {
@@ -1344,7 +1353,7 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
         guile_script_eval = NULL;
     }
     plugin_script_end (plugin, &guile_data);
-    guile_quiet = 0;
+    guile_quiet = old_guile_quiet;
 
     /* unprotect module */
     weechat_guile_catch (scm_gc_unprotect_object, (void *)guile_module_weechat);

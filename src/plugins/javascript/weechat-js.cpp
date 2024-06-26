@@ -582,7 +582,7 @@ weechat_js_command_cb (const void *pointer, void *data,
                        int argc, char **argv, char **argv_eol)
 {
     char *ptr_name, *ptr_code, *path_script;
-    int i, send_to_buffer_as_input, exec_commands;
+    int i, send_to_buffer_as_input, exec_commands, old_js_quiet;
 
     /* make C++ compiler happy */
     (void) pointer;
@@ -641,6 +641,7 @@ weechat_js_command_cb (const void *pointer, void *data,
                  || (weechat_strcmp (argv[1], "reload") == 0)
                  || (weechat_strcmp (argv[1], "unload") == 0))
         {
+            old_js_quiet = js_quiet;
             ptr_name = argv_eol[2];
             if (strncmp (ptr_name, "-q ", 3) == 0)
             {
@@ -670,7 +671,7 @@ weechat_js_command_cb (const void *pointer, void *data,
                 /* unload javascript script */
                 weechat_js_unload_name (ptr_name);
             }
-            js_quiet = 0;
+            js_quiet = old_js_quiet;
         }
         else if (weechat_strcmp (argv[1], "eval") == 0)
         {
@@ -920,6 +921,7 @@ EXPORT int
 weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
     char str_interpreter[64];
+    int old_js_quiet;
 
     /* make C compiler happy */
     (void) argc;
@@ -955,9 +957,10 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     js_data.callback_load_file = &weechat_js_load_cb;
     js_data.unload_all = &weechat_js_unload_all;
 
+    old_js_quiet = js_quiet;
     js_quiet = 1;
     plugin_script_init (plugin, &js_data);
-    js_quiet = 0;
+    js_quiet = old_js_quiet;
 
     plugin_script_display_short_list (weechat_js_plugin, js_scripts);
 
@@ -971,6 +974,9 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 EXPORT int
 weechat_plugin_end (struct t_weechat_plugin *plugin)
 {
+    int old_js_quiet;
+
+    old_js_quiet = js_quiet;
     js_quiet = 1;
     if (js_script_eval)
     {
@@ -978,7 +984,7 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
         js_script_eval = NULL;
     }
     plugin_script_end (plugin, &js_data);
-    js_quiet = 0;
+    js_quiet = old_js_quiet;
 
     /* free some data */
     if (js_action_install_list)
