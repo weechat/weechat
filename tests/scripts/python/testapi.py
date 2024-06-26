@@ -680,6 +680,20 @@ def test_buffers():
     weechat.buffer_close(buffer2)
 
 
+def test_windows():
+    """Test window functions."""
+    window = weechat.current_window()
+    check(window != '')
+    buffer = weechat.buffer_search_main()
+    check(weechat.window_search_with_buffer(buffer) != '')
+    buffer1 = weechat.buffer_new('test1', 'buffer_input_cb', '', 'buffer_close_cb', '')
+    check(buffer1 != '')
+    check(weechat.window_search_with_buffer(buffer1) == '')
+    weechat.buffer_close(buffer1)
+    check(weechat.window_get_integer(window, 'number') == 1)
+    check(weechat.window_get_string(window, 'xxx') == '')
+
+
 def test_command():
     """Test command functions."""
     check(weechat.command('', '/mute') == 0)
@@ -850,6 +864,7 @@ def cmd_test_cb(data, buf, args):
     test_display()
     test_hooks()
     test_buffers()
+    test_windows()
     test_command()
     test_infolist()
     test_hdata()
