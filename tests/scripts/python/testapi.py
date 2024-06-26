@@ -633,6 +633,53 @@ def test_hooks():
     weechat.unhook(hook_timer)
 
 
+def test_buffers():
+    """Test buffer functions."""
+    buffer1 = weechat.buffer_new('test1', 'buffer_input_cb', '', 'buffer_close_cb', '')
+    check(buffer1 != '')
+    check(weechat.buffer_get_integer(buffer1, 'number') == 2)
+    check(weechat.buffer_get_string(buffer1, 'short_name') == 'test1')
+    props = {
+        'short_name': 't2',
+    }
+    buffer2 = weechat.buffer_new_props('test2', props, 'buffer_input_cb', '', 'buffer_close_cb', '')
+    check(buffer2 != '')
+    check(weechat.buffer_get_integer(buffer2, 'number') == 3)
+    check(weechat.buffer_get_string(buffer2, 'short_name') == 't2')
+    check(weechat.buffer_get_integer(buffer2, 'next_line_id') == 0)
+    weechat.prnt(buffer2, '## test line 1')
+    check(weechat.buffer_get_integer(buffer2, 'next_line_id') == 1)
+    weechat.buffer_clear(buffer2)
+    weechat.buffer_merge(buffer2, buffer1)
+    check(weechat.buffer_get_integer(buffer1, 'number') == 2)
+    check(weechat.buffer_get_integer(buffer2, 'number') == 2)
+    weechat.buffer_unmerge(buffer2, 3)
+    check(weechat.buffer_get_integer(buffer1, 'number') == 2)
+    check(weechat.buffer_get_integer(buffer2, 'number') == 3)
+    check(weechat.current_buffer() != '')
+    check(weechat.buffer_get_integer(buffer1, 'hidden') == 0)
+    weechat.buffer_set(buffer1, 'hidden', '1')
+    check(weechat.buffer_get_integer(buffer1, 'hidden') == 1)
+    weechat.buffer_set(buffer1, 'hidden', '0')
+    check(weechat.buffer_get_integer(buffer1, 'hidden') == 0)
+    weechat.buffer_set(buffer1, 'localvar_set_var1', 'value1')
+    check(weechat.buffer_string_replace_local_var(buffer1, 'test $var1') == 'test value1')
+    buffer = weechat.buffer_search_main()
+    buffer_id = weechat.buffer_get_string(buffer, 'id')
+    check(weechat.buffer_search('xxx', 'yyy') == '')
+    check(weechat.buffer_search('==', 'xxx') == '')
+    check(weechat.buffer_search('==id', '0') == '')
+    check(weechat.buffer_search('core', 'weechat') == buffer)
+    check(weechat.buffer_search('==', 'core.weechat') == buffer)
+    check(weechat.buffer_search('==id', buffer_id) == buffer)
+    check(weechat.buffer_match_list(buffer, '') == 0)
+    check(weechat.buffer_match_list(buffer, '*') == 1)
+    check(weechat.buffer_match_list(buffer, 'core.weechat') == 1)
+    check(weechat.buffer_match_list(buffer, '*,!core.weechat') == 0)
+    weechat.buffer_close(buffer1)
+    weechat.buffer_close(buffer2)
+
+
 def test_command():
     """Test command functions."""
     check(weechat.command('', '/mute') == 0)
@@ -802,6 +849,7 @@ def cmd_test_cb(data, buf, args):
     test_key()
     test_display()
     test_hooks()
+    test_buffers()
     test_command()
     test_infolist()
     test_hdata()
