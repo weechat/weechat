@@ -507,8 +507,11 @@ RELAY_API_PROTOCOL_CALLBACK(buffers)
 {
     cJSON *json;
     struct t_gui_buffer *ptr_buffer;
-    long lines, lines_free;
+    struct t_gui_line *ptr_line;
+    struct t_gui_line_data *ptr_line_data;
+    long lines, lines_free, line_id;
     int nicks;
+    char *error;
     enum t_relay_api_colors colors;
 
     ptr_buffer = NULL;
@@ -534,8 +537,28 @@ RELAY_API_PROTOCOL_CALLBACK(buffers)
         /* sub-resource of buffers */
         if (strcmp (client->http_req->path_items[3], "lines") == 0)
         {
-            lines = relay_http_get_param_long (client->http_req, "lines", LONG_MAX);
-            json = relay_api_msg_lines_to_json (ptr_buffer, lines, colors);
+            if (client->http_req->num_path_items > 4)
+            {
+                line_id = strtol (client->http_req->path_items[4], &error, 10);
+                ptr_line = (error && !error[0]) ?
+                    weechat_line_search_by_id (ptr_buffer, line_id) : NULL;
+                ptr_line_data = (ptr_line) ?
+                    weechat_hdata_pointer (relay_hdata_line, ptr_line, "data") : NULL;
+                if (!ptr_line_data)
+                {
+                    relay_api_msg_send_error_json (client, RELAY_HTTP_404_NOT_FOUND, NULL,
+                                                   "Line \"%s\" not found in buffer \"%s\"",
+                                                   client->http_req->path_items[4],
+                                                   client->http_req->path_items[2]);
+                    return RELAY_API_PROTOCOL_RC_OK;
+                }
+                json = relay_api_msg_line_data_to_json (ptr_line_data, colors);
+            }
+            else
+            {
+                lines = relay_http_get_param_long (client->http_req, "lines", LONG_MAX);
+                json = relay_api_msg_lines_to_json (ptr_buffer, lines, colors);
+            }
         }
         else if (strcmp (client->http_req->path_items[3], "nicks") == 0)
         {
