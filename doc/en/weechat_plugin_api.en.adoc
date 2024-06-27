@@ -15201,6 +15201,46 @@ if buffer:
     weechat.prnt("", "%d" % weechat.buffer_match_list(buffer, "irc.oftc.*,python.*"))  # 0
 ----
 
+[[buffer_lines]]
+=== Buffer lines
+
+Functions for buffer lines.
+
+==== line_search_by_id
+
+_WeeChat ≥ 4.4.0._
+
+Search line in buffer by identifier.
+
+Prototype:
+
+[source,c]
+----
+struct t_gui_line *weechat_line_search_by_id (struct t_gui_buffer *buffer, int id);
+----
+
+Return value:
+
+* pointer to line found, NULL if not found
+
+C example:
+
+[source,c]
+----
+struct t_gui_line *line = weechat_line_search_by_id (buffer, 123);
+----
+
+Script (Python):
+
+[source,python]
+----
+# prototype
+def line_search_by_id(buffer: str, line_id: int) -> str: ...
+
+# example
+line = weechat.line_search_by_id(buffer, 123)
+----
+
 [[windows]]
 === Windows
 

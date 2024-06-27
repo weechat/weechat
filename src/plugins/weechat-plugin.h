@@ -74,7 +74,7 @@ struct t_weelist_item;
  * please change the date with current one; for a second change at same
  * date, increment the 01, otherwise please keep 01.
  */
-#define WEECHAT_PLUGIN_API_VERSION "20240610-01"
+#define WEECHAT_PLUGIN_API_VERSION "20240627-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -1007,6 +1007,9 @@ struct t_weechat_plugin
     char *(*buffer_string_replace_local_var) (struct t_gui_buffer *buffer,
                                               const char *string);
     int (*buffer_match_list) (struct t_gui_buffer *buffer, const char *string);
+
+    /* buffer lines */
+    struct t_gui_line *(*line_search_by_id) (struct t_gui_buffer *buffer, int id);
 
     /* windows */
     struct t_gui_window *(*window_search_with_buffer) (struct t_gui_buffer *buffer);
@@ -2066,6 +2069,10 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
                                                       __string)
 #define weechat_buffer_match_list(__buffer, __string)                   \
     (weechat_plugin->buffer_match_list)(__buffer, __string)
+
+/* buffer lines */
+#define weechat_line_search_by_id(__buffer, __id)                       \
+    (weechat_plugin->line_search_by_id)(__buffer, __id)
 
 /* windows */
 #define weechat_window_search_with_buffer(__buffer)                     \

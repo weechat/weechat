@@ -183,6 +183,7 @@ PHP_FUNCTION(weechat_buffer_get_pointer);
 PHP_FUNCTION(weechat_buffer_set);
 PHP_FUNCTION(weechat_buffer_string_replace_local_var);
 PHP_FUNCTION(weechat_buffer_match_list);
+PHP_FUNCTION(weechat_line_search_by_id);
 PHP_FUNCTION(weechat_current_window);
 PHP_FUNCTION(weechat_window_search_with_buffer);
 PHP_FUNCTION(weechat_window_get_integer);

@@ -4043,6 +4043,25 @@ API_FUNC(buffer_match_list)
     API_RETURN_INT(result);
 }
 
+API_FUNC(line_search_by_id)
+{
+    char *buffer;
+    int id;
+    const char *result;
+
+    API_INIT_FUNC(1, "line_search_by_id", API_RETURN_EMPTY);
+    if (objc < 3)
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    buffer = Tcl_GetString (objv[1]);
+    if (Tcl_GetIntFromObj (interp, objv[2], &id) != TCL_OK)
+        API_WRONG_ARGS(API_RETURN_ERROR);
+
+    result = API_PTR2STR(weechat_line_search_by_id (API_STR2PTR(buffer), id));
+
+    API_RETURN_STRING(result);
+}
+
 API_FUNC(current_window)
 {
     const char *result;
@@ -5821,6 +5840,7 @@ void weechat_tcl_api_init (Tcl_Interp *interp)
     API_DEF_FUNC(buffer_set);
     API_DEF_FUNC(buffer_string_replace_local_var);
     API_DEF_FUNC(buffer_match_list);
+    API_DEF_FUNC(line_search_by_id);
     API_DEF_FUNC(current_window);
     API_DEF_FUNC(window_search_with_buffer);
     API_DEF_FUNC(window_get_integer);

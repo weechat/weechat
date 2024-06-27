@@ -384,6 +384,22 @@ TEST(GuiLine, GetNextDisplayed)
 
 /*
  * Tests functions:
+ *   gui_line_search_by_id
+ */
+
+TEST(GuiLine, SearchById)
+{
+    POINTERS_EQUAL(NULL, gui_line_search_by_id (NULL, -1));
+    POINTERS_EQUAL(NULL, gui_line_search_by_id (gui_buffers, -1));
+
+    POINTERS_EQUAL(
+        gui_buffers->own_lines->last_line,
+        gui_line_search_by_id (gui_buffers,
+                               gui_buffers->own_lines->last_line->data->id));
+}
+
+/*
+ * Tests functions:
  *   gui_line_search_text
  */
 

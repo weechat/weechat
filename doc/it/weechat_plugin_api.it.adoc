@@ -15954,6 +15954,50 @@ if buffer:
     weechat.prnt("", "%d" % weechat.buffer_match_list(buffer, "irc.oftc.*,python.*"))  # 0
 ----
 
+// TRANSLATION MISSING
+[[buffer_lines]]
+=== Buffer lines
+
+// TRANSLATION MISSING
+Functions for buffer lines.
+
+==== line_search_by_id
+
+_WeeChat ≥ 4.4.0._
+
+// TRANSLATION MISSING
+Search line in buffer by identifier.
+
+Prototipo:
+
+[source,c]
+----
+struct t_gui_line *weechat_line_search_by_id (struct t_gui_buffer *buffer, int id);
+----
+
+Valore restituito:
+
+// TRANSLATION MISSING
+* pointer to line found, NULL if not found
+
+Esempio in C:
+
+[source,c]
+----
+struct t_gui_line *line = weechat_line_search_by_id (buffer, 123);
+----
+
+Script (Python):
+
+[source,python]
+----
+# prototipo
+def line_search_by_id(buffer: str, line_id: int) -> str: ...
+
+# esempio
+line = weechat.line_search_by_id(buffer, 123)
+----
+
 [[windows]]
 === Finestre
 

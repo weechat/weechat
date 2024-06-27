@@ -3976,6 +3976,27 @@ API_FUNC(buffer_match_list)
     API_RETURN_INT(result);
 }
 
+API_FUNC(line_search_by_id)
+{
+    zend_string *z_buffer;
+    zend_long z_id;
+    struct t_gui_buffer *buffer;
+    int id;
+    const char *result;
+
+    API_INIT_FUNC(1, "line_search_by_id", API_RETURN_EMPTY);
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "Sl", &z_buffer,
+                               &z_id) == FAILURE)
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    buffer = (struct t_gui_buffer *)API_STR2PTR(ZSTR_VAL(z_buffer));
+    id = (int)z_id;
+
+    result = API_PTR2STR(weechat_line_search_by_id (buffer, id));
+
+    API_RETURN_STRING(result);
+}
+
 API_FUNC(current_window)
 {
     const char *result;

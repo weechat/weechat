@@ -15532,6 +15532,46 @@ if buffer:
     weechat.prnt("", "%d" % weechat.buffer_match_list(buffer, "irc.oftc.*,python.*"))  # 0
 ----
 
+[[buffer_lines]]
+=== Lignes de tampons
+
+Fonctions pour les lignes de tampons.
+
+==== line_search_by_id
+
+_WeeChat ≥ 4.4.0._
+
+Rechercher une ligne du tampon par son identifiant.
+
+Prototype :
+
+[source,c]
+----
+struct t_gui_line *weechat_line_search_by_id (struct t_gui_buffer *buffer, int id);
+----
+
+Valeur de retour :
+
+* pointeur vers la ligne trouvée, NULL si non trouvée
+
+Exemple en C :
+
+[source,c]
+----
+struct t_gui_line *line = weechat_line_search_by_id (buffer, 123);
+----
+
+Script (Python) :
+
+[source,python]
+----
+# prototype
+def line_search_by_id(buffer: str, line_id: int) -> str: ...
+
+# exemple
+line = weechat.line_search_by_id(buffer, 123)
+----
+
 [[windows]]
 === Fenêtres
 

@@ -4823,6 +4823,29 @@ weechat_ruby_api_buffer_match_list (VALUE class, VALUE buffer, VALUE string)
 }
 
 static VALUE
+weechat_ruby_api_line_search_by_id (VALUE class, VALUE buffer, VALUE id)
+{
+    char *c_buffer;
+    int c_id;
+    const char *result;
+
+    API_INIT_FUNC(1, "line_search_by_id", API_RETURN_EMPTY);
+    if (NIL_P (buffer) || NIL_P (id))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    Check_Type (buffer, T_STRING);
+    CHECK_INTEGER(id);
+
+    c_buffer = StringValuePtr (buffer);
+    c_id = NUM2INT (id);
+
+    result = API_PTR2STR(weechat_line_search_by_id (API_STR2PTR(c_buffer),
+                                                    c_id));
+
+    API_RETURN_STRING(result);
+}
+
+static VALUE
 weechat_ruby_api_current_window (VALUE class)
 {
     const char *result;
@@ -7081,6 +7104,7 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     API_DEF_FUNC(buffer_set, 3);
     API_DEF_FUNC(buffer_string_replace_local_var, 2);
     API_DEF_FUNC(buffer_match_list, 2);
+    API_DEF_FUNC(line_search_by_id, 2);
     API_DEF_FUNC(current_window, 0);
     API_DEF_FUNC(window_search_with_buffer, 1);
     API_DEF_FUNC(window_get_integer, 2);

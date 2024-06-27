@@ -603,6 +603,31 @@ gui_line_get_next_displayed (struct t_gui_line *line)
 }
 
 /*
+ * Searches a line by id.
+ *
+ * Returns pointer to line found, NULL if not found.
+ */
+
+struct t_gui_line *
+gui_line_search_by_id (struct t_gui_buffer *buffer, int id)
+{
+    struct t_gui_line *ptr_line;
+
+    if (!buffer || !buffer->own_lines)
+        return NULL;
+
+    for (ptr_line = buffer->own_lines->last_line; ptr_line;
+         ptr_line = ptr_line->prev_line)
+    {
+        if (ptr_line->data && (ptr_line->data->id == id))
+            return ptr_line;
+    }
+
+    /* line not found */
+    return NULL;
+}
+
+/*
  * Searches for text in a line.
  *
  * Returns:

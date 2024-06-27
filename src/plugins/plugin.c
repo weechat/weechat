@@ -58,6 +58,7 @@
 #include "../gui/gui-color.h"
 #include "../gui/gui-completion.h"
 #include "../gui/gui-key.h"
+#include "../gui/gui-line.h"
 #include "../gui/gui-nicklist.h"
 #include "../gui/gui-window.h"
 #include "plugin.h"
@@ -844,6 +845,8 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
         new_plugin->buffer_set_pointer = &gui_buffer_set_pointer;
         new_plugin->buffer_string_replace_local_var = &gui_buffer_string_replace_local_var;
         new_plugin->buffer_match_list = &gui_buffer_match_list;
+
+        new_plugin->line_search_by_id = &gui_line_search_by_id;
 
         new_plugin->window_search_with_buffer = &gui_window_search_with_buffer;
         new_plugin->window_get_integer = &gui_window_get_integer;

@@ -241,6 +241,7 @@ const zend_function_entry weechat_functions[] = {
     PHP_FE(weechat_buffer_set, arginfo_weechat_buffer_set)
     PHP_FE(weechat_buffer_string_replace_local_var, arginfo_weechat_buffer_string_replace_local_var)
     PHP_FE(weechat_buffer_match_list, arginfo_weechat_buffer_match_list)
+    PHP_FE(weechat_line_search_by_id, arginfo_weechat_line_search_by_id)
     PHP_FE(weechat_current_window, arginfo_weechat_current_window)
     PHP_FE(weechat_window_search_with_buffer, arginfo_weechat_window_search_with_buffer)
     PHP_FE(weechat_window_get_integer, arginfo_weechat_window_get_integer)

@@ -1926,6 +1926,16 @@ def buffer_match_list(buffer: str, string: str) -> int:
     ...
 
 
+def line_search_by_id(buffer: str, line_id: int) -> str:
+    """`line_search_by_id in WeeChat plugin API reference <https://weechat.org/doc/weechat/api/#_line_search_by_id>`_
+    ::
+
+        # example
+        line = weechat.line_search_by_id(buffer, 123)
+    """
+    ...
+
+
 def current_window() -> str:
     """`current_window in WeeChat plugin API reference <https://weechat.org/doc/weechat/api/#_current_window>`_
     ::

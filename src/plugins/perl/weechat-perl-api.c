@@ -3976,6 +3976,23 @@ API_FUNC(buffer_match_list)
     API_RETURN_INT(value);
 }
 
+API_FUNC(line_search_by_id)
+{
+    const char *result;
+    dXSARGS;
+
+    API_INIT_FUNC(1, "line_search_by_id", API_RETURN_EMPTY);
+    if (items < 2)
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    result = API_PTR2STR(
+        weechat_line_search_by_id (
+            API_STR2PTR(SvPV_nolen (ST (0))), /* buffer */
+            SvIV (ST (1)))); /* id */
+
+    API_RETURN_STRING(result);
+}
+
 API_FUNC(current_window)
 {
     const char *result;
@@ -5817,6 +5834,7 @@ weechat_perl_api_init (pTHX)
     API_DEF_FUNC(buffer_set);
     API_DEF_FUNC(buffer_string_replace_local_var);
     API_DEF_FUNC(buffer_match_list);
+    API_DEF_FUNC(line_search_by_id);
     API_DEF_FUNC(current_window);
     API_DEF_FUNC(window_search_with_buffer);
     API_DEF_FUNC(window_get_integer);

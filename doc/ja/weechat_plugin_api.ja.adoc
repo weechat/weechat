@@ -15453,6 +15453,50 @@ if buffer:
     weechat.prnt("", "%d" % weechat.buffer_match_list(buffer, "irc.oftc.*,python.*"))  # 0
 ----
 
+// TRANSLATION MISSING
+[[buffer_lines]]
+=== Buffer lines
+
+// TRANSLATION MISSING
+Functions for buffer lines.
+
+==== line_search_by_id
+
+_WeeChat ≥ 4.4.0._
+
+// TRANSLATION MISSING
+Search line in buffer by identifier.
+
+プロトタイプ:
+
+[source,c]
+----
+struct t_gui_line *weechat_line_search_by_id (struct t_gui_buffer *buffer, int id);
+----
+
+戻り値:
+
+// TRANSLATION MISSING
+* pointer to line found, NULL if not found
+
+C 言語での使用例:
+
+[source,c]
+----
+struct t_gui_line *line = weechat_line_search_by_id (buffer, 123);
+----
+
+スクリプト (Python) での使用例:
+
+[source,python]
+----
+# プロトタイプ
+def line_search_by_id(buffer: str, line_id: int) -> str: ...
+
+# 例
+line = weechat.line_search_by_id(buffer, 123)
+----
+
 [[windows]]
 === ウィンドウ
 

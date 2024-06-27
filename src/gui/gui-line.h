@@ -97,6 +97,8 @@ extern struct t_gui_line *gui_line_get_first_displayed (struct t_gui_buffer *buf
 extern struct t_gui_line *gui_line_get_last_displayed (struct t_gui_buffer *buffer);
 extern struct t_gui_line *gui_line_get_prev_displayed (struct t_gui_line *line);
 extern struct t_gui_line *gui_line_get_next_displayed (struct t_gui_line *line);
+extern struct t_gui_line *gui_line_search_by_id (struct t_gui_buffer *buffer,
+                                                 int id);
 extern int gui_line_search_text (struct t_gui_buffer *buffer,
                                  struct t_gui_line *line);
 extern int gui_line_match_regex (struct t_gui_line_data *line_data,

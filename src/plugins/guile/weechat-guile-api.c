@@ -3876,6 +3876,22 @@ weechat_guile_api_buffer_match_list (SCM buffer, SCM string)
 }
 
 SCM
+weechat_guile_api_line_search_by_id (SCM buffer, SCM id)
+{
+    const char *result;
+    SCM return_value;
+
+    API_INIT_FUNC(1, "line_search_by_id", API_RETURN_EMPTY);
+    if (!scm_is_string (buffer) || !scm_is_integer (id))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    result = API_PTR2STR(weechat_line_search_by_id (API_STR2PTR(API_SCM_TO_STRING(buffer)),
+                                                    scm_to_int (id)));
+
+    API_RETURN_STRING(result);
+}
+
+SCM
 weechat_guile_api_current_window ()
 {
     const char *result;
@@ -5557,6 +5573,7 @@ weechat_guile_api_module_init (void *data)
     API_DEF_FUNC(buffer_set, 3);
     API_DEF_FUNC(buffer_string_replace_local_var, 2);
     API_DEF_FUNC(buffer_match_list, 2);
+    API_DEF_FUNC(line_search_by_id, 2);
     API_DEF_FUNC(current_window, 0);
     API_DEF_FUNC(window_search_with_buffer, 1);
     API_DEF_FUNC(window_get_integer, 2);

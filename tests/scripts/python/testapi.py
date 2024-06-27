@@ -680,6 +680,14 @@ def test_buffers():
     weechat.buffer_close(buffer2)
 
 
+def test_lines():
+    """Test line functions."""
+    buffer = weechat.buffer_search_main()
+    check(weechat.line_search_by_id(buffer, -1) == '')
+    check(weechat.line_search_by_id(buffer, 1234567) == '')
+    check(weechat.line_search_by_id(buffer, 0) != '')
+
+
 def test_windows():
     """Test window functions."""
     window = weechat.current_window()
@@ -864,6 +872,7 @@ def cmd_test_cb(data, buf, args):
     test_display()
     test_hooks()
     test_buffers()
+    test_lines()
     test_windows()
     test_command()
     test_infolist()

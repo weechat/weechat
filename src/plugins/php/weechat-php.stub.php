@@ -149,6 +149,7 @@ function weechat_buffer_get_pointer(string $p0, string $p1): string {}
 function weechat_buffer_set(string $p0, string $p1, string $p2): int {}
 function weechat_buffer_string_replace_local_var(string $p0, string $p1): string {}
 function weechat_buffer_match_list(string $p0, string $p1): int {}
+function weechat_line_search_by_id(string $p0, int $p1): string {}
 function weechat_current_window(): string {}
 function weechat_window_search_with_buffer(string $p0): string {}
 function weechat_window_get_integer(string $p0, string $p1): int {}
