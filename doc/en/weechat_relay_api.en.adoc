@@ -1466,33 +1466,34 @@ The following events are sent to the client, according to synchronization option
 
 [width="100%",cols="5,3,3,5",options="header"]
 |===
-| Event                     | Buffer id | Body type     | Body
-| `buffer_opened`           | buffer id | `buffer`      | buffer with all lines and nicks
-| `buffer_type_changed`     | buffer id | `buffer`      | buffer
-| `buffer_moved`            | buffer id | `buffer`      | buffer
-| `buffer_merged`           | buffer id | `buffer`      | buffer
-| `buffer_unmerged`         | buffer id | `buffer`      | buffer
-| `buffer_hidden`           | buffer id | `buffer`      | buffer
-| `buffer_unhidden`         | buffer id | `buffer`      | buffer
-| `buffer_renamed`          | buffer id | `buffer`      | buffer
-| `buffer_title_changed`    | buffer id | `buffer`      | buffer
-| `buffer_localvar_added`   | buffer id | `buffer`      | buffer
-| `buffer_localvar_changed` | buffer id | `buffer`      | buffer
-| `buffer_localvar_removed` | buffer id | `buffer`      | buffer
-| `buffer_cleared`          | buffer id | `buffer`      | buffer
-| `buffer_closing`          | buffer id | `buffer`      | buffer
-| `buffer_closed`           | buffer id | (not defined) | (not defined)
-| `buffer_line_added`       | buffer id | `line`        | buffer line
-| `input_text_changed`      | buffer id | `buffer`      | buffer
-| `input_text_cursor_moved` | buffer id | `buffer`      | buffer
-| `upgrade` ^(1)^           | -1        | (not defined) | (not defined)
-| `upgrade_ended` ^(1)^     | -1        | (not defined) | (not defined)
-| `nicklist_group_changed`  | buffer id | `nick_group`  | nick group
-| `nicklist_group_added`    | buffer id | `nick_group`  | nick group
-| `nicklist_group_removing` | buffer id | `nick_group`  | nick group
-| `nicklist_nick_added`     | buffer id | `nick`        | nick
-| `nicklist_nick_removing`  | buffer id | `nick`        | nick
-| `nicklist_nick_changed`   | buffer id | `nick`        | nick
+| Event                      | Buffer id | Body type     | Body
+| `buffer_opened`            | buffer id | `buffer`      | buffer with all lines and nicks
+| `buffer_type_changed`      | buffer id | `buffer`      | buffer
+| `buffer_moved`             | buffer id | `buffer`      | buffer
+| `buffer_merged`            | buffer id | `buffer`      | buffer
+| `buffer_unmerged`          | buffer id | `buffer`      | buffer
+| `buffer_hidden`            | buffer id | `buffer`      | buffer
+| `buffer_unhidden`          | buffer id | `buffer`      | buffer
+| `buffer_renamed`           | buffer id | `buffer`      | buffer
+| `buffer_title_changed`     | buffer id | `buffer`      | buffer
+| `buffer_localvar_added`    | buffer id | `buffer`      | buffer
+| `buffer_localvar_changed`  | buffer id | `buffer`      | buffer
+| `buffer_localvar_removed`  | buffer id | `buffer`      | buffer
+| `buffer_cleared`           | buffer id | `buffer`      | buffer
+| `buffer_closing`           | buffer id | `buffer`      | buffer
+| `buffer_closed`            | buffer id | (not defined) | (not defined)
+| `buffer_line_added`        | buffer id | `line`        | buffer line
+| `buffer_line_data_changed` | buffer id | `line`        | buffer line
+| `input_text_changed`       | buffer id | `buffer`      | buffer
+| `input_text_cursor_moved`  | buffer id | `buffer`      | buffer
+| `upgrade` ^(1)^            | -1        | (not defined) | (not defined)
+| `upgrade_ended` ^(1)^      | -1        | (not defined) | (not defined)
+| `nicklist_group_changed`   | buffer id | `nick_group`  | nick group
+| `nicklist_group_added`     | buffer id | `nick_group`  | nick group
+| `nicklist_group_removing`  | buffer id | `nick_group`  | nick group
+| `nicklist_nick_added`      | buffer id | `nick`        | nick
+| `nicklist_nick_removing`   | buffer id | `nick`        | nick
+| `nicklist_nick_changed`    | buffer id | `nick`        | nick
 |===
 
 [NOTE]

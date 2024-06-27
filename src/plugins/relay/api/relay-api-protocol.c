@@ -193,6 +193,27 @@ relay_api_protocol_signal_buffer_cb (const void *pointer, void *data,
             cJSON_Delete (json);
         }
     }
+    else if (strcmp (signal, "buffer_line_data_changed") == 0)
+    {
+        ptr_line_data = (struct t_gui_line_data *)signal_data;
+        if (!ptr_line_data)
+            return WEECHAT_RC_OK;
+
+        ptr_buffer = weechat_hdata_pointer (relay_hdata_line_data,
+                                            ptr_line_data, "buffer");
+        if (!ptr_buffer || relay_buffer_is_relay (ptr_buffer))
+            return WEECHAT_RC_OK;
+
+        json = relay_api_msg_line_data_to_json (
+            ptr_line_data, RELAY_API_DATA(ptr_client, sync_colors));
+        if (json)
+        {
+            buffer_id = relay_api_get_buffer_id (ptr_buffer);
+            relay_api_msg_send_event (ptr_client, signal, buffer_id,
+                                      "line", json);
+            cJSON_Delete (json);
+        }
+    }
 
     return WEECHAT_RC_OK;
 }

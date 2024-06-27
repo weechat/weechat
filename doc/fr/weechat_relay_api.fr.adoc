@@ -1492,33 +1492,34 @@ Les évènements suivants sont envoyés au client, selon les options de synchron
 
 [width="100%",cols="5,3,3,5",options="header"]
 |===
-| Évènement                 | Id tampon | Type de corps | Corps
-| `buffer_opened`           | id tampon | `buffer`      | tampon avec les lignes et pseudos
-| `buffer_type_changed`     | id tampon | `buffer`      | tampon
-| `buffer_moved`            | id tampon | `buffer`      | tampon
-| `buffer_merged`           | id tampon | `buffer`      | tampon
-| `buffer_unmerged`         | id tampon | `buffer`      | tampon
-| `buffer_hidden`           | id tampon | `buffer`      | tampon
-| `buffer_unhidden`         | id tampon | `buffer`      | tampon
-| `buffer_renamed`          | id tampon | `buffer`      | tampon
-| `buffer_title_changed`    | id tampon | `buffer`      | tampon
-| `buffer_localvar_added`   | id tampon | `buffer`      | tampon
-| `buffer_localvar_changed` | id tampon | `buffer`      | tampon
-| `buffer_localvar_removed` | id tampon | `buffer`      | tampon
-| `buffer_cleared`          | id tampon | `buffer`      | tampon
-| `buffer_closing`          | id tampon | `buffer`      | tampon
-| `buffer_closed`           | id tampon | (non défini)  | (non défini)
-| `buffer_line_added`       | id tampon | `line`        | ligne de tampon
-| `input_text_changed`      | id tampon | `buffer`      | tampon
-| `input_text_cursor_moved` | id tampon | `buffer`      | tampon
-| `upgrade` ^(1)^           | -1        | (non défini)  | (non défini)
-| `upgrade_ended` ^(1)^     | -1        | (non défini)  | (non défini)
-| `nicklist_group_changed`  | id tampon | `nick_group`  | groupe de pseudos
-| `nicklist_group_added`    | id tampon | `nick_group`  | groupe de pseudos
-| `nicklist_group_removing` | id tampon | `nick_group`  | groupe de pseudos
-| `nicklist_nick_added`     | id tampon | `nick`        | pseudo
-| `nicklist_nick_removing`  | id tampon | `nick`        | pseudo
-| `nicklist_nick_changed`   | id tampon | `nick`        | pseudo
+| Évènement                  | Id tampon | Type de corps | Corps
+| `buffer_opened`            | id tampon | `buffer`      | tampon avec les lignes et pseudos
+| `buffer_type_changed`      | id tampon | `buffer`      | tampon
+| `buffer_moved`             | id tampon | `buffer`      | tampon
+| `buffer_merged`            | id tampon | `buffer`      | tampon
+| `buffer_unmerged`          | id tampon | `buffer`      | tampon
+| `buffer_hidden`            | id tampon | `buffer`      | tampon
+| `buffer_unhidden`          | id tampon | `buffer`      | tampon
+| `buffer_renamed`           | id tampon | `buffer`      | tampon
+| `buffer_title_changed`     | id tampon | `buffer`      | tampon
+| `buffer_localvar_added`    | id tampon | `buffer`      | tampon
+| `buffer_localvar_changed`  | id tampon | `buffer`      | tampon
+| `buffer_localvar_removed`  | id tampon | `buffer`      | tampon
+| `buffer_cleared`           | id tampon | `buffer`      | tampon
+| `buffer_closing`           | id tampon | `buffer`      | tampon
+| `buffer_closed`            | id tampon | (non défini)  | (non défini)
+| `buffer_line_added`        | id tampon | `line`        | ligne de tampon
+| `buffer_line_data_changed` | id tampon | `line`        | ligne de tampon
+| `input_text_changed`       | id tampon | `buffer`      | tampon
+| `input_text_cursor_moved`  | id tampon | `buffer`      | tampon
+| `upgrade` ^(1)^            | -1        | (non défini)  | (non défini)
+| `upgrade_ended` ^(1)^      | -1        | (non défini)  | (non défini)
+| `nicklist_group_changed`   | id tampon | `nick_group`  | groupe de pseudos
+| `nicklist_group_added`     | id tampon | `nick_group`  | groupe de pseudos
+| `nicklist_group_removing`  | id tampon | `nick_group`  | groupe de pseudos
+| `nicklist_nick_added`      | id tampon | `nick`        | pseudo
+| `nicklist_nick_removing`   | id tampon | `nick`        | pseudo
+| `nicklist_nick_changed`    | id tampon | `nick`        | pseudo
 |===
 
 [NOTE]
