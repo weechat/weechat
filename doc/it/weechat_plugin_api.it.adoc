@@ -12618,6 +12618,11 @@ List of signals sent by WeeChat and plugins:
 | Puntatore: riga.
 | Riga aggiunta in un buffer.
 
+// TRANSLATION MISSING
+| weechat | [[hook_signal_buffer_line_data_changed]] buffer_line_data_changed | 4.4.0
+| Pointer: line data.
+| Line data has been updated in a buffer.
+
 | weechat | [[hook_signal_buffer_lines_hidden]] buffer_lines_hidden |
 | Puntatore: buffer.
 | Righe nascoste nel buffer.

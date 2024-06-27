@@ -2396,6 +2396,9 @@ gui_line_hdata_line_data_update_cb (void *data,
         }
         gui_filter_buffer (line_data->buffer, line_data);
         gui_buffer_ask_chat_refresh (line_data->buffer, 1);
+        (void) gui_buffer_send_signal (line_data->buffer,
+                                       "buffer_line_data_changed",
+                                       WEECHAT_HOOK_SIGNAL_POINTER, line_data);
     }
 
     return rc;

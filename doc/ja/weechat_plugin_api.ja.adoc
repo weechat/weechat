@@ -12281,6 +12281,11 @@ WeeChat とプラグインが送信するシグナルのリスト:
 | Pointer: 行
 | バッファに行を追加
 
+// TRANSLATION MISSING
+| weechat | [[hook_signal_buffer_line_data_changed]] buffer_line_data_changed | 4.4.0
+| Pointer: line data.
+| Line data has been updated in a buffer.
+
 | weechat | [[hook_signal_buffer_lines_hidden]] buffer_lines_hidden |
 | Pointer: バッファ
 | バッファから行を隠す

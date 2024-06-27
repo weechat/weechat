@@ -12116,6 +12116,10 @@ List of signals sent by WeeChat and plugins:
 | Pointer: line.
 | Line added in a buffer.
 
+| weechat | [[hook_signal_buffer_line_data_changed]] buffer_line_data_changed | 4.4.0
+| Pointer: line data.
+| Line data has been updated in a buffer.
+
 | weechat | [[hook_signal_buffer_lines_hidden]] buffer_lines_hidden |
 | Pointer: buffer.
 | Lines hidden in buffer.
