@@ -57,6 +57,46 @@ TEST(RelayRemoteEvent, GetBufferId)
 
 /*
  * Tests functions:
+ *   relay_remote_build_string_tags
+ */
+
+TEST(RelayRemoteEvent, BuildStringTags)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   relay_remote_event_line_add
+ */
+
+TEST(RelayRemoteEvent, LineAdd)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   relay_remote_event_search_line_by_id
+ */
+
+TEST(RelayRemoteEvent, SearchLineById)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   relay_remote_event_line_update
+ */
+
+TEST(RelayRemoteEvent, LineUpdate)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
  *   relay_remote_event_cb_line
  */
 
@@ -127,10 +167,60 @@ TEST(RelayRemoteEvent, BufferInputCb)
 
 /*
  * Tests functions:
+ *   relay_remote_event_check_local_var
+ */
+
+TEST(RelayRemoteEvent, CheckLocalVar)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   relay_remote_event_remove_localvar_cb
+ */
+
+TEST(RelayRemoteEvent, RemoveLocalVarCb)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
  *   relay_remote_event_cb_buffer
  */
 
 TEST(RelayRemoteEvent, CbBuffer)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   relay_remote_event_cb_buffer_cleared
+ */
+
+TEST(RelayRemoteEvent, CbBufferCleared)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   relay_remote_event_cb_buffer_closed
+ */
+
+TEST(RelayRemoteEvent, CbBufferClosed)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   relay_remote_event_cb_vinput
+ */
+
+TEST(RelayRemoteEvent, CbInput)
 {
     /* TODO: write tests */
 }

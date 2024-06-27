@@ -129,20 +129,84 @@ relay_remote_event_get_buffer_id (struct t_gui_buffer *buffer)
 }
 
 /*
- * Callback for a line event.
+ * Builds a string with tags of a received line.
+ *
+ * Returns dynamically string built, NULL if error.
  */
 
-RELAY_REMOTE_EVENT_CALLBACK(line)
+char **
+relay_remote_build_string_tags (cJSON *json_tags, int line_id, int highlight)
 {
-    cJSON *json_obj, *json_tags, *json_tag;
-    const char *date, *prefix, *message, *ptr_tag;
+    cJSON *json_tag;
+    const char *ptr_tag;
+    char **tags, str_tag_id[512];
+    int tag_notify_highlight;
+
+    tags = weechat_string_dyn_alloc (256);
+    if (!tags)
+        return NULL;
+
+    tag_notify_highlight = 0;
+
+    if (json_tags && cJSON_IsArray (json_tags))
+    {
+        cJSON_ArrayForEach (json_tag, json_tags)
+        {
+            ptr_tag = cJSON_GetStringValue (json_tag);
+            if (ptr_tag)
+            {
+                if (*tags[0])
+                    weechat_string_dyn_concat (tags, ",", -1);
+                if (highlight && (strncmp (ptr_tag, "notify_", 7) == 0))
+                {
+                    weechat_string_dyn_concat (tags, "notify_highlight", -1);
+                    tag_notify_highlight = 1;
+                }
+                else
+                {
+                    weechat_string_dyn_concat (tags, ptr_tag, -1);
+                }
+            }
+        }
+    }
+
+    /*
+     * add "notify_highlight" if line has highlight but no highlight tag
+     * was present
+     */
+    if (highlight && !tag_notify_highlight)
+    {
+        if (*tags[0])
+            weechat_string_dyn_concat (tags, ",", -1);
+        weechat_string_dyn_concat (tags, "notify_highlight", -1);
+    }
+
+    /* add tag with remote line id */
+    snprintf (str_tag_id, sizeof (str_tag_id), "relay_remote_line_id_%d", line_id);
+    if (*tags[0])
+        weechat_string_dyn_concat (tags, ",", -1);
+    weechat_string_dyn_concat (tags, str_tag_id, -1);
+
+    return tags;
+}
+
+/*
+ * Adds a new line in a buffer.
+ */
+
+void
+relay_remote_event_line_add (struct t_relay_remote_event *event)
+{
+    cJSON *json_obj;
+    const char *date, *prefix, *message;
     char **tags;
-    int y, highlight, tag_notify_highlight;
+    int id, y, highlight;
     struct timeval tv_date;
 
-    if (!event->buffer || !event->json)
-        return WEECHAT_RC_OK;
+    if (!event->buffer)
+        return;
 
+    JSON_GET_NUM(event->json, id, -1);
     JSON_GET_NUM(event->json, y, -1);
     JSON_GET_STR(event->json, date);
     JSON_GET_BOOL(event->json, highlight);
@@ -155,40 +219,8 @@ RELAY_REMOTE_EVENT_CALLBACK(line)
         tv_date.tv_usec = 0;
     }
 
-    tag_notify_highlight = 0;
-
-    tags = weechat_string_dyn_alloc (256);
-    if (tags)
-    {
-        json_tags = cJSON_GetObjectItem (event->json, "tags");
-        if (json_tags && cJSON_IsArray (json_tags))
-        {
-            cJSON_ArrayForEach (json_tag, json_tags)
-            {
-                ptr_tag = cJSON_GetStringValue (json_tag);
-                if (ptr_tag)
-                {
-                    if (*tags[0])
-                        weechat_string_dyn_concat (tags, ",", -1);
-                    if (highlight && (strncmp (ptr_tag, "notify_", 7) == 0))
-                    {
-                        weechat_string_dyn_concat (tags, "notify_highlight", -1);
-                        tag_notify_highlight = 1;
-                    }
-                    else
-                    {
-                        weechat_string_dyn_concat (tags, ptr_tag, -1);
-                    }
-                }
-            }
-        }
-        if (highlight && !tag_notify_highlight)
-        {
-            if (*tags[0])
-                weechat_string_dyn_concat (tags, ",", -1);
-            weechat_string_dyn_concat (tags, "notify_highlight", -1);
-        }
-    }
+    tags = relay_remote_build_string_tags (
+        cJSON_GetObjectItem (event->json, "tags"), id, highlight);
 
     if (y >= 0)
     {
@@ -219,6 +251,153 @@ RELAY_REMOTE_EVENT_CALLBACK(line)
     }
 
     weechat_string_dyn_free (tags, 1);
+}
+
+/*
+ * Searches a line by its id in relay remote buffer (by searching tag
+ * "relay_remote_id_123456", where 123456 is the line id).
+ *
+ * Returns pointer to line found, NULL if not found.
+ */
+
+struct t_gui_line *
+relay_remote_event_search_line_by_id (struct t_gui_buffer *buffer, int id)
+{
+    struct t_gui_lines *ptr_lines;
+    struct t_gui_line *ptr_line;
+    struct t_gui_line_data *ptr_line_data;
+    const char **tags;
+    char str_tag_id[512];
+    int i;
+
+    if (!buffer)
+        return NULL;
+
+    ptr_lines = weechat_hdata_pointer (relay_hdata_buffer, buffer, "own_lines");
+    if (!ptr_lines)
+        return NULL;
+
+    ptr_line = weechat_hdata_pointer (relay_hdata_lines, ptr_lines, "last_line");
+    if (!ptr_line)
+        return NULL;
+
+    snprintf (str_tag_id, sizeof (str_tag_id), "relay_remote_line_id_%d", id);
+
+    while (ptr_line)
+    {
+        ptr_line_data = weechat_hdata_pointer (relay_hdata_line, ptr_line, "data");
+        if (!ptr_line_data)
+            continue;
+        tags = weechat_hdata_pointer (relay_hdata_line_data, ptr_line_data, "tags_array");
+        if (tags)
+        {
+            for (i = 0; tags[i]; i++)
+            {
+                if (strcmp (tags[i], str_tag_id) == 0)
+                    return ptr_line;
+            }
+        }
+        ptr_line = weechat_hdata_move (relay_hdata_line, ptr_line, -1);
+    }
+
+    /* line not found */
+    return NULL;
+}
+
+/*
+ * Updates a line in a buffer.
+ */
+
+void
+relay_remote_event_line_update (struct t_relay_remote_event *event)
+{
+    cJSON *json_obj;
+    struct t_gui_line *ptr_line;
+    struct t_gui_line_data *ptr_line_data;
+    const char *date, *date_printed, *prefix, *message;
+    char **tags, str_value[1024];
+    int id, highlight;
+    struct timeval tv_date, tv_date_printed;
+    struct t_hashtable *hashtable;
+
+    if (!event->buffer)
+        return;
+
+    JSON_GET_NUM(event->json, id, -1);
+
+    ptr_line = relay_remote_event_search_line_by_id (event->buffer, id);
+    if (!ptr_line)
+        return;
+
+    ptr_line_data = weechat_hdata_pointer (relay_hdata_line, ptr_line, "data");
+    if (!ptr_line_data)
+        return;
+
+    JSON_GET_STR(event->json, date);
+    JSON_GET_STR(event->json, date_printed);
+    JSON_GET_BOOL(event->json, highlight);
+    JSON_GET_STR(event->json, prefix);
+    JSON_GET_STR(event->json, message);
+
+    if (!weechat_util_parse_time (date, &tv_date))
+    {
+        tv_date.tv_sec = 0;
+        tv_date.tv_usec = 0;
+    }
+
+    if (!weechat_util_parse_time (date_printed, &tv_date_printed))
+    {
+        tv_date_printed.tv_sec = 0;
+        tv_date_printed.tv_usec = 0;
+    }
+
+    hashtable = weechat_hashtable_new (32,
+                                       WEECHAT_HASHTABLE_STRING,
+                                       WEECHAT_HASHTABLE_STRING,
+                                       NULL,
+                                       NULL);
+    if (!hashtable)
+        return;
+
+    snprintf (str_value, sizeof (str_value), "%ld", tv_date.tv_sec);
+    weechat_hashtable_set (hashtable, "date", str_value);
+    snprintf (str_value, sizeof (str_value), "%ld", tv_date.tv_usec);
+    weechat_hashtable_set (hashtable, "date_usec", str_value);
+
+    snprintf (str_value, sizeof (str_value), "%ld", tv_date_printed.tv_sec);
+    weechat_hashtable_set (hashtable, "date_printed", str_value);
+    snprintf (str_value, sizeof (str_value), "%ld", tv_date_printed.tv_usec);
+    weechat_hashtable_set (hashtable, "date_usec_printed", str_value);
+
+    tags = relay_remote_build_string_tags (
+        cJSON_GetObjectItem (event->json, "tags"), id, highlight);
+    if (tags)
+    {
+        weechat_hashtable_set (hashtable, "tags_array", *tags);
+        weechat_string_dyn_free (tags, 1);
+    }
+
+    weechat_hashtable_set (hashtable, "prefix", prefix);
+    weechat_hashtable_set (hashtable, "message", message);
+
+    weechat_hdata_update (relay_hdata_line_data, ptr_line_data, hashtable);
+
+    weechat_hashtable_free (hashtable);
+}
+
+/*
+ * Callback for a line event.
+ */
+
+RELAY_REMOTE_EVENT_CALLBACK(line)
+{
+    if (!event->buffer || !event->json)
+        return WEECHAT_RC_OK;
+
+    if (weechat_strcmp (event->name, "buffer_line_data_changed") == 0)
+        relay_remote_event_line_update (event);
+    else
+        relay_remote_event_line_add (event);
 
     return WEECHAT_RC_OK;
 }
@@ -731,6 +910,7 @@ RELAY_REMOTE_EVENT_CALLBACK(buffer)
     json_lines = cJSON_GetObjectItem (event->json, "lines");
     if (json_lines && cJSON_IsArray (json_lines))
     {
+        event_line.name = "buffer_line_added";
         event_line.remote = event->remote;
         event_line.buffer = ptr_buffer;
         cJSON_ArrayForEach (json_line, json_lines)
