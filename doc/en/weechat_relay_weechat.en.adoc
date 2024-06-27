@@ -1488,6 +1488,9 @@ WeeChat reserved identifiers:
 | _buffer_line_added | buffer | hdata: line
 | Line added in buffer. | Display line in buffer.
 
+| _buffer_line_data_changed | buffer | hdata: line
+| Line changed in buffer. | Update line displayed in buffer.
+
 | _nicklist | nicklist | hdata: nicklist_item
 | Nicklist for a buffer. | Replace nicklist.
 
@@ -2060,6 +2063,74 @@ Example: new message _hello!_ from nick _FlashCode_ on buffer _irc.libera.#weech
 [source,python]
 ----
 id: '_buffer_line_added'
+hda:
+    keys: {
+        'buffer': 'ptr',
+        'id': 'int',
+        'date': 'tim',
+        'date_usec': 'int',
+        'date_printed': 'tim',
+        'date_usec_printed': 'int',
+        'displayed': 'chr',
+        'notify_level': 'chr',
+        'highlight': 'chr',
+        'tags_array': 'arr',
+        'prefix': 'str',
+        'message': 'str',
+    }
+    path: ['line_data']
+    item 1:
+        __path: ['0x4a49600']
+        buffer: '0x4a715d0'
+        id: 12
+        date: 1362728993
+        date_usec: 902765
+        date_printed: 1362728993
+        date_usec_printed: 902765
+        displayed: 1
+        notify_level: 1
+        highlight: 0
+        tags_array: [
+            'irc_privmsg',
+            'notify_message',
+            'prefix_nick_142',
+            'nick_FlashCode',
+            'log1',
+        ]
+        prefix: 'F06@F@00142FlashCode'
+        message: 'hello!'
+----
+
+[[message_buffer_line_data_changed]]
+==== _buffer_line_data_changed
+
+This message is sent to the client when the signal "buffer_line_data_changed"
+is sent by WeeChat.
+
+Data sent as hdata:
+
+[width="100%",cols="3m,2,10",options="header"]
+|===
+| Name              | Type             | Description
+| buffer            | pointer          | Buffer pointer.
+| id                | integer          | Line identifier.
+| date              | time             | Date of message.
+| date_usec         | integer          | Microseconds of date.
+| date_printed      | time             | Date when WeeChat displayed message.
+| date_usec_printed | integer          | Microseconds of date when WeeChat displayed message.
+| displayed         | char             | 1 if message is displayed, 0 if message is filtered (hidden).
+| notify_level      | char             | Notify level: -1 = notify disabled, 0 = low, 1 = message, 2 = private, 3 = highlight.
+| highlight         | char             | 1 if line has a highlight, otherwise 0.
+| tags_array        | array of strings | List of tags for line.
+| prefix            | string           | Prefix.
+| message           | string           | Message.
+|===
+
+Example: message _hello!_ from nick _FlashCode_ on buffer _irc.libera.#weechat_ has been updated:
+
+[source,python]
+----
+id: '_buffer_line_data_changed'
 hda:
     keys: {
         'buffer': 'ptr',

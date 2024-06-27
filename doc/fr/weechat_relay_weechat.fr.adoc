@@ -1514,6 +1514,9 @@ Les identifiants réservés par WeeChat :
 | _buffer_line_added | buffer | hdata : line
 | Ligne ajoutée dans le tampon. | Afficher la ligne dans le tampon.
 
+| _buffer_line_data_changed | buffer | hdata : line
+| Ligne changée dans le tampon. | Modifier la ligne affichée dans le tampon.
+
 | _nicklist | nicklist | hdata : nicklist_item
 | Liste de pseudos pour un tampon. | Remplacer la liste de pseudos.
 
@@ -2089,6 +2092,74 @@ _irc.libera.#weechat_ :
 [source,python]
 ----
 id: '_buffer_line_added'
+hda:
+    keys: {
+        'buffer': 'ptr',
+        'id': 'int',
+        'date': 'tim',
+        'date_usec': 'int',
+        'date_printed': 'tim',
+        'date_usec_printed': 'int',
+        'displayed': 'chr',
+        'notify_level': 'chr',
+        'highlight': 'chr',
+        'tags_array': 'arr',
+        'prefix': 'str',
+        'message': 'str',
+    }
+    path: ['line_data']
+    item 1:
+        __path: ['0x4a49600']
+        buffer: '0x4a715d0'
+        id: 12
+        date: 1362728993
+        date_usec: 902765
+        date_printed: 1362728993
+        date_usec_printed: 902765
+        displayed: 1
+        notify_level: 1
+        highlight: 0
+        tags_array: [
+            'irc_privmsg',
+            'notify_message',
+            'prefix_nick_142',
+            'nick_FlashCode',
+            'log1',
+        ]
+        prefix: 'F06@F@00142FlashCode'
+        message: 'hello!'
+----
+
+[[message_buffer_line_data_changed]]
+==== _buffer_line_data_changed
+
+Ce message est envoyé au client lorsque le signal "buffer_line_data_changed"
+est envoyé par WeeChat.
+
+Données envoyées dans le hdata :
+
+[width="100%",cols="3m,2,10",options="header"]
+|===
+| Nom               | Type               | Description
+| buffer            | pointeur           | Pointeur vers le tampon.
+| id                | entier             | Identifiant de ligne.
+| date              | date/heure         | Date du message.
+| date_usec         | entier             | Microsecondes de la date.
+| date_printed      | date/heure         | Date d'affichage du message.
+| date_usec_printed | entier             | Microsecondes de la date d'affichage du message.
+| displayed         | caractère          | 1 si le message est affiché, 0 si le message est filtré (caché).
+| notify_level      | caractère          | Niveau de notification : -1 = notification désactivée, 0 = bas, 1 = message, 2 = privé, 3 = highlight.
+| highlight         | caractère          | 1 si la ligne a un highlight, sinon 0.
+| tags_array        | tableau de chaînes | Liste des étiquettes de la ligne.
+| prefix            | chaîne             | Préfixe.
+| message           | chaîne             | Message.
+|===
+
+Exemple : le message _hello!_ du pseudo _FlashCode_ sur le tampon _irc.libera.#weechat_ a été mis à jour :
+
+[source,python]
+----
+id: '_buffer_line_data_changed'
 hda:
     keys: {
         'buffer': 'ptr',

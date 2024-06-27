@@ -1403,6 +1403,10 @@ WeeChat резервисани идентификатори:
 | _buffer_line_added | buffer | hdata: line
 | У бафер је додата линија. | Приказ линије у баферу.
 
+// TRANSLATION MISSING
+| _buffer_line_data_changed | buffer | hdata: line
+| Line changed in buffer. | Update line displayed in buffer.
+
 | _nicklist | nicklist | hdata: nicklist_item
 | Листа надимака за бафер. | Замена листе надимака.
 
@@ -1960,6 +1964,77 @@ hda:
 [source,python]
 ----
 id: '_buffer_line_added'
+hda:
+    keys: {
+        'buffer': 'ptr',
+        'id': 'int',
+        'date': 'tim',
+        'date_usec': 'int',
+        'date_printed': 'tim',
+        'date_usec_printed': 'int',
+        'displayed': 'chr',
+        'notify_level': 'chr',
+        'highlight': 'chr',
+        'tags_array': 'arr',
+        'prefix': 'str',
+        'message': 'str',
+    }
+    path: ['line_data']
+    item 1:
+        __path: ['0x4a49600']
+        buffer: '0x4a715d0'
+        id: 12
+        date: 1362728993
+        date_usec: 902765
+        date_printed: 1362728993
+        date_usec_printed: 902765
+        displayed: 1
+        notify_level: 1
+        highlight: 0
+        tags_array: [
+            'irc_privmsg',
+            'notify_message',
+            'prefix_nick_142',
+            'nick_FlashCode',
+            'log1',
+        ]
+        prefix: 'F06@F@00142FlashCode'
+        message: 'здраво!'
+----
+
+[[message_buffer_line_data_changed]]
+==== _buffer_line_data_changed
+
+// TRANSLATION MISSING
+This message is sent to the client when the signal "buffer_line_data_changed"
+is sent by WeeChat.
+
+Подаци се шаљу као hdata:
+
+[width="100%", cols="3m,2,10", options="header"]
+|===
+| Име               | Тип              | Опис
+| buffer            | показивач        | Показивач на бафер.
+// TRANSLATION MISSING
+| id                | цео број         | Line identifier.
+| date              | време            | Датум поруке.
+| date_usec         | цео број         | Микросекунде датума.
+| date_printed      | време            | Датум када је програм WeeChat приказао поруку.
+| date_usec_printed | цео број         | Микросекунде датума када је WeeChat приказао поруку.
+| displayed         | карактер         | 1 ако је порука приказана, 0 ако је порука филтрирана (скривена).
+| notify_level      | карактер         | Ниво обавештења: -1 = обавештење искључено, 0 = ниски, 1 = порука, 2 = приватно, 3 = истицање.
+| highlight         | карактер         | 1 ако се у линији налази истицање, у супротном 0.
+| tags_array        | низ стрингова    | Листа ознака за линију.
+| prefix            | стринг           | Префикс.
+| message           | стринг           | Порука.
+|===
+
+// TRANSLATION MISSING
+Example: message _hello!_ from nick _FlashCode_ on buffer _irc.libera.#weechat_ has been updated:
+
+[source,python]
+----
+id: '_buffer_line_data_changed'
 hda:
     keys: {
         'buffer': 'ptr',

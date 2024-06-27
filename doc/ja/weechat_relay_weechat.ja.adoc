@@ -1524,6 +1524,10 @@ WeeChat の予約識別子:
 | _buffer_line_added | buffer | hdata: line
 | バッファへの行追加 | バッファに行を表示
 
+// TRANSLATION MISSING
+| _buffer_line_data_changed | buffer | hdata: line
+| Line changed in buffer. | Update line displayed in buffer.
+
 | _nicklist | nicklist | hdata: nicklist_item
 | バッファのニックネームリスト | ニックネームリストを置換
 
@@ -2100,6 +2104,80 @@ hdata として送られるデータ:
 [source,python]
 ----
 id: '_buffer_line_added'
+hda:
+    keys: {
+        'buffer': 'ptr',
+        'id': 'int',
+        'date': 'tim',
+        'date_used': 'int',
+        'date_printed': 'tim',
+        'date_usec_printed': 'int',
+        'displayed': 'chr',
+        'notify_level': 'chr',
+        'highlight': 'chr',
+        'tags_array': 'arr',
+        'prefix': 'str',
+        'message': 'str',
+    }
+    path: ['line_data']
+    item 1:
+        __path: ['0x4a49600']
+        buffer: '0x4a715d0'
+        id: 12
+        date: 1362728993
+        date_usec: 902765
+        date_printed: 1362728993
+        date_usec_printed: 902765
+        displayed: 1
+        notify_level: 1
+        highlight: 0
+        tags_array: [
+            'irc_privmsg',
+            'notify_message',
+            'prefix_nick_142',
+            'nick_FlashCode',
+            'log1',
+        ]
+        prefix: 'F06@F@00142FlashCode'
+        message: 'hello!'
+----
+
+[[message_buffer_line_added]]
+==== _buffer_line_added
+
+// TRANSLATION MISSING
+This message is sent to the client when the signal "buffer_line_data_changed"
+is sent by WeeChat.
+
+hdata として送られるデータ:
+
+[width="100%",cols="3m,2,10",options="header"]
+|===
+| 名前              | 型            | 説明
+| buffer            | pointer       | バッファへのポインタ
+// TRANSLATION MISSING
+| id                | integer       | Line identifier.
+| date              | time          | メッセージの日付
+// TRANSLATION MISSING
+| date_usec         | integer       | Microseconds of date.
+| date_printed      | time          | WeeChat メッセージを表示した日付
+// TRANSLATION MISSING
+| date_usec_printed | integer       | Microseconds of date when WeeChat displayed message.
+| displayed         | char          | メッセージが表示される場合は 1、メッセージがフィルタされる (隠される) 場合は 0
+// TRANSLATION MISSING
+| notify_level      | char          | Notify level: -1 = notify disabled, 0 = low, 1 = message, 2 = private, 3 = highlight.
+| highlight         | char          | 行がハイライト部分を含む場合は 1、それ以外は 0
+| tags_array        | string の配列 | 行に対するタグのリスト
+| prefix            | string        | プレフィックス
+| message           | string        | メッセージ
+|===
+
+// TRANSLATION MISSING
+Example: message _hello!_ from nick _FlashCode_ on buffer _irc.libera.#weechat_ has been updated:
+
+[source,python]
+----
+id: '_buffer_line_data_changed'
 hda:
     keys: {
         'buffer': 'ptr',

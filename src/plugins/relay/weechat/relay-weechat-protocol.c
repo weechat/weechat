@@ -1128,6 +1128,37 @@ relay_weechat_protocol_signal_buffer_cb (const void *pointer, void *data,
             }
         }
     }
+    else if (strcmp (signal, "buffer_line_data_changed") == 0)
+    {
+        ptr_line_data = (struct t_gui_line_data *)signal_data;
+        if (!ptr_line_data)
+            return WEECHAT_RC_OK;
+
+        ptr_buffer = weechat_hdata_pointer (relay_hdata_line_data, ptr_line_data,
+                                            "buffer");
+        if (!ptr_buffer || relay_buffer_is_relay (ptr_buffer))
+            return WEECHAT_RC_OK;
+
+        /* send signal only if sync with flag "buffer" */
+        if (relay_weechat_protocol_is_sync (ptr_client, ptr_buffer,
+                                            RELAY_WEECHAT_PROTOCOL_SYNC_BUFFER))
+        {
+            msg = relay_weechat_msg_new (str_signal);
+            if (msg)
+            {
+                snprintf (cmd_hdata, sizeof (cmd_hdata),
+                          "line_data:0x%lx",
+                          (unsigned long)ptr_line_data);
+                relay_weechat_msg_add_hdata (
+                    msg, cmd_hdata,
+                    "buffer,id,date,date_usec,date_printed,date_usec_printed,"
+                    "displayed,notify_level,highlight,tags_array,"
+                    "prefix,message");
+                relay_weechat_msg_send (ptr_client, msg);
+                relay_weechat_msg_free (msg);
+            }
+        }
+    }
     else if (strcmp (signal, "buffer_closing") == 0)
     {
         ptr_buffer = (struct t_gui_buffer *)signal_data;
