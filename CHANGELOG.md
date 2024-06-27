@@ -29,6 +29,7 @@
 ### Fixed
 
 - python: fix crash on quit with Python 3.12 ([#2046](https://github.com/weechat/weechat/issues/2046), [#2126](https://github.com/weechat/weechat/issues/2126))
+- core: fix crash when deleting a bar that has no items ([#2138](https://github.com/weechat/weechat/issues/2138))
 - irc, xfer: fix display of input prompt in IRC private buffers and DCC chat buffers ([#2128](https://github.com/weechat/weechat/issues/2128))
 - core: apply buffer properties (options weechat.buffer.*) when a buffer name is changed
 - irc: fix property "short_name" of channel buffer when the joined channel has a different case than the `/join` command

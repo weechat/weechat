@@ -788,6 +788,13 @@ gui_bar_set_items_array (struct t_gui_bar *bar, const char *items)
                                                &bar->items_suffix[i][j]);
                     }
                 }
+                else
+                {
+                    bar->items_buffer[i] = NULL;
+                    bar->items_prefix[i] = NULL;
+                    bar->items_name[i] = NULL;
+                    bar->items_suffix[i] = NULL;
+                }
             }
         }
         string_free_split (tmp_array);
