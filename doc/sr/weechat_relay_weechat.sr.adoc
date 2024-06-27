@@ -1941,6 +1941,8 @@ hda:
 |===
 | Име               | Тип              | Опис
 | buffer            | показивач        | Показивач на бафер.
+// TRANSLATION MISSING
+| id                | цео број         | Line identifier.
 | date              | време            | Датум поруке.
 | date_usec         | цео број         | Микросекунде датума.
 | date_printed      | време            | Датум када је програм WeeChat приказао поруку.
@@ -1961,6 +1963,7 @@ id: '_buffer_line_added'
 hda:
     keys: {
         'buffer': 'ptr',
+        'id': 'int',
         'date': 'tim',
         'date_usec': 'int',
         'date_printed': 'tim',
@@ -1976,6 +1979,7 @@ hda:
     item 1:
         __path: ['0x4a49600']
         buffer: '0x4a715d0'
+        id: 12
         date: 1362728993
         date_usec: 902765
         date_printed: 1362728993

@@ -2078,6 +2078,8 @@ hdata として送られるデータ:
 |===
 | 名前              | 型            | 説明
 | buffer            | pointer       | バッファへのポインタ
+// TRANSLATION MISSING
+| id                | integer       | Line identifier.
 | date              | time          | メッセージの日付
 // TRANSLATION MISSING
 | date_usec         | integer       | Microseconds of date.
@@ -2101,6 +2103,7 @@ id: '_buffer_line_added'
 hda:
     keys: {
         'buffer': 'ptr',
+        'id': 'int',
         'date': 'tim',
         'date_used': 'int',
         'date_printed': 'tim',
@@ -2116,6 +2119,7 @@ hda:
     item 1:
         __path: ['0x4a49600']
         buffer: '0x4a715d0'
+        id: 12
         date: 1362728993
         date_usec: 902765
         date_printed: 1362728993
