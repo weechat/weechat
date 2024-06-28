@@ -226,7 +226,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - core: move key `Ctrl`+`s`, `Ctrl`+`u` to `Alt`+`Shift`+`U` ([#2040](https://github.com/weechat/weechat/issues/2040))
 - core: display only version with command `/version`, add options `-o` and `-ol` in command `/upgrade`
 - core: add number of processes in command `/sys waitpid`
-- core, alias, trigger: allow wildcard in commands `/bar`, `/item`, `/proxy`, `/alias` and `/trigger` ([#1956](https://github.com/weechat/weechat/issues/1956))
+- core, alias, trigger: allow wildcard in commands `/bar`, `/item`, `/proxy`, `/alias`, `/trigger`, and `/filter` ([#1956](https://github.com/weechat/weechat/issues/1956))
 - api: add support of format/translation of command arguments description line by line ([#2005](https://github.com/weechat/weechat/issues/2005))
 - api: add function string_concat ([#2005](https://github.com/weechat/weechat/issues/2005))
 - api: add functions util_strftimeval, util_parse_time, printf_datetime_tags, printf_y_datetime_tags ([#649](https://github.com/weechat/weechat/issues/649))
