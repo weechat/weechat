@@ -1266,6 +1266,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
     int ruby_error, old_ruby_quiet;
     VALUE err;
+    char* process_options_argv[] = { "ruby", "-enil", NULL };
     char *weechat_ruby_code = {
         "$stdout = WeechatOutputs\n"
         "$stderr = WeechatOutputs\n"
@@ -1363,6 +1364,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 #endif
 
     ruby_init ();
+
+    ruby_process_options (2, process_options_argv);
 
     /* redirect stdin and stdout */
     ruby_mWeechatOutputs = rb_define_module ("WeechatOutputs");
