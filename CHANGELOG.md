@@ -46,6 +46,7 @@
 - ruby: fix builtin functions not available ([#2109](https://github.com/weechat/weechat/issues/2109))
 - php: fix return value of function hdata_longlong
 - tcl: fix return value of function hdata_longlong ([#2119](https://github.com/weechat/weechat/issues/2119))
+- relay/api: fix "body_type" returned when lines or nicks of a buffer are requested
 - relay: fix read of one buffer line in API protocol
 - relay: fix websocket permessage-deflate extension when the client doesn't send the max window bits parameters ([#1549](https://github.com/weechat/weechat/issues/1549))
 - relay: fix allocation and reinit of field "client_context_takeover" in websocket deflate structure ([#1549](https://github.com/weechat/weechat/issues/1549))
