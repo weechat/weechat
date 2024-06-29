@@ -203,7 +203,7 @@ New features::
   * core: move key kbd:[Ctrl+s], kbd:[Ctrl+u] to kbd:[Alt+Shift+U] (issue #2040)
   * core: display only version with command `/version`, add options `-o` and `-ol` in command `/upgrade`
   * core: add number of processes in command `/sys waitpid`
-  * core, alias, trigger: allow wildcard in commands `/bar`, `/item`, `/proxy`, `/alias` and `/trigger` (issue #1956)
+  * core, alias, trigger: allow wildcard in commands `/bar`, `/filter`, `/item`, `/proxy`, `/alias` and `/trigger` (issue #1956)
   * api: add support of format/translation of command arguments description line by line (issue #2005)
   * api: add function string_concat (issue #2005)
   * api: add functions util_strftimeval, util_parse_time, printf_datetime_tags, printf_y_datetime_tags (issue #649)
