@@ -59,8 +59,9 @@ extern int relay_api_protocol_command_delay;
                  "\"message\":\"" __message "\","                       \
                  "\"request\":\"" __request "\","                       \
                  "\"request_body\":" __body ","                         \
-                 "\"body_type\":null,"                                 \
-                 "\"body\":null"                                       \
+                 "\"request_id\":null,"                                 \
+                 "\"body_type\":null,"                                  \
+                 "\"body\":null"                                        \
                  "}",                                                   \
                  data_sent);
 
