@@ -13,7 +13,7 @@ info:
   license:
     name: CC BY-NC-SA 4.0
     url: https://creativecommons.org/licenses/by-nc-sa/4.0/
-  version: 0.1.0
+  version: 0.2.0
 
 externalDocs:
   url: https://weechat.org/doc/
@@ -545,21 +545,21 @@ components:
       properties:
         weechat_version:
           type: string
-          example: 4.3.0-dev
+          example: 4.4.0-dev
         weechat_version_git:
           type: string
-          example: v4.2.0-360-gccf23ae51
+          example: v4.3.0-147-g0256ee945
         weechat_version_number:
           type: integer
           format: int32
-          example: 67305472
+          example: 67371008
         relay_api_version:
           type: string
-          example: "0.0.1"
+          example: "0.2.0"
         relay_api_version_number:
           type: integer
           format: int32
-          example: 1
+          example: 512
       required:
         - weechat_version
         - weechat_version_git
