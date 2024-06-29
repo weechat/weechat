@@ -17,6 +17,7 @@
 * python: fix crash on quit with Python 3.12 (issue #2046, issue #2126)
 * core: fix crash when deleting a bar that has no items (issue #2138)
 * ruby: fix builtin functions not available (issue #2109)
+* relay/api: fix "body_type" returned when lines or nicks of a buffer are requested
 
 [[v4.3.3]]
 == Version 4.3.3 (2024-06-22)

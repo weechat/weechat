@@ -511,6 +511,8 @@ RELAY_API_PROTOCOL_CALLBACK(buffers)
     int nicks;
     enum t_relay_api_colors colors;
 
+    json = NULL;
+
     ptr_buffer = NULL;
     if (client->http_req->num_path_items > 2)
     {
@@ -536,6 +538,11 @@ RELAY_API_PROTOCOL_CALLBACK(buffers)
         {
             lines = relay_http_get_param_long (client->http_req, "lines", LONG_MAX);
             json = relay_api_msg_lines_to_json (ptr_buffer, lines, colors);
+            if (json)
+            {
+                relay_api_msg_send_json (client, RELAY_HTTP_200_OK, NULL,
+                                         "line", json);
+            }
         }
         else if (strcmp (client->http_req->path_items[3], "nicks") == 0)
         {
@@ -543,6 +550,11 @@ RELAY_API_PROTOCOL_CALLBACK(buffers)
                 weechat_hdata_pointer (relay_hdata_buffer,
                                        ptr_buffer, "nicklist_root"),
                 colors);
+            if (json)
+            {
+                relay_api_msg_send_json (client, RELAY_HTTP_200_OK, NULL,
+                                         "nick_group", json);
+            }
         }
         else
         {
@@ -580,13 +592,18 @@ RELAY_API_PROTOCOL_CALLBACK(buffers)
                 ptr_buffer = weechat_hdata_move (relay_hdata_buffer, ptr_buffer, 1);
             }
         }
+        if (json)
+        {
+            relay_api_msg_send_json (client, RELAY_HTTP_200_OK, NULL,
+                                     "buffer", json);
+        }
     }
 
     if (!json)
         return RELAY_API_PROTOCOL_RC_MEMORY;
 
-    relay_api_msg_send_json (client, RELAY_HTTP_200_OK, NULL, "buffer", json);
     cJSON_Delete (json);
+
     return RELAY_API_PROTOCOL_RC_OK;
 }
 
