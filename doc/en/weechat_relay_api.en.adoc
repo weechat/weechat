@@ -1457,16 +1457,15 @@ The messages sent to client have the following fields:
 
 * `code`: `0`
 * `message`: `Event`
-* `event`: object with the following fields:
-** `name` (string): the event name (name of signal or hsignal)
-** `buffer_id` (integer): the buffer unique identifier, set only for sub-objects,
-   -1 in other cases
+* `event_name` (string): the event name (name of signal or hsignal)
+* `buffer_id` (integer): the buffer unique identifier, set only for sub-objects,
+  -1 in other cases
 
 The following events are sent to the client, according to synchronization options:
 
 [width="100%",cols="5,3,3,5",options="header"]
 |===
-| Event                      | Buffer id | Body type     | Body
+| Event name                 | Buffer id | Body type     | Body
 | `buffer_opened`            | buffer id | `buffer`      | buffer with all lines and nicks
 | `buffer_type_changed`      | buffer id | `buffer`      | buffer
 | `buffer_moved`             | buffer id | `buffer`      | buffer
@@ -1497,7 +1496,7 @@ The following events are sent to the client, according to synchronization option
 |===
 
 [NOTE]
-^(1)^ The `upgrade` and `upgrade_ended` events are sent only if the client is
+^(1)^ The events `upgrade` and `upgrade_ended` are sent only if the client is
 connected with plain text (no TLS), because with TLS the client is disconnected
 before the upgrade is done (upgrade of TLS connections is not supported).
 
@@ -1508,10 +1507,8 @@ Example: new buffer: channel `#weechat` has been joined:
 {
     "code": 0,
     "message": "Event",
-    "event": {
-        "name": "buffer_opened",
-        "buffer_id": 1709932823649069
-    },
+    "event_name": "buffer_opened",
+    "buffer_id": 1709932823649069,
     "body_type": "buffer",
     "body": {
         "id": 1709932823649069,
@@ -1550,10 +1547,8 @@ Example: new line displayed on channel `#weechat`:
 {
     "code": 0,
     "message": "Event",
-    "event": {
-        "name": "buffer_line_added",
-        "buffer_id": 1709932823649069
-    },
+    "event_name": "buffer_line_added",
+    "buffer_id": 1709932823649069,
     "body_type": "line",
     "body": {
         "id": 5,
@@ -1585,10 +1580,8 @@ Example: nick `bob` added with operator status in channel `#weechat`:
 {
     "code": 0,
     "message": "Event",
-    "event": {
-        "name": "nicklist_nick_added",
-        "buffer_id": 1709932823649069
-    },
+    "event_name": "nicklist_nick_added",
+    "buffer_id": 1709932823649069,
     "body_type": "nick",
     "body": {
         "id": 1709932823649902,
@@ -1611,10 +1604,8 @@ Example: channel buffer `#weechat` has been closed:
 {
     "code": 0,
     "message": "Event",
-    "event": {
-        "name": "buffer_closed",
-        "buffer_id": 1709932823649069
-    }
+    "event_name": "buffer_closed",
+    "buffer_id": 1709932823649069
 }
 ----
 
@@ -1625,10 +1616,8 @@ Example: WeeChat is upgrading:
 {
     "code": 0,
     "message": "Event",
-    "event": {
-        "name": "upgrade",
-        "buffer_id": -1
-    }
+    "event_name": "upgrade",
+    "buffer_id": -1
 }
 ----
 
@@ -1639,9 +1628,7 @@ Example: upgrade of WeeChat is done:
 {
     "code": 0,
     "message": "Event",
-    "event": {
-        "name": "upgrade_ended",
-        "buffer_id": -1
-    }
+    "event_name": "upgrade_ended",
+    "buffer_id": -1
 }
 ----

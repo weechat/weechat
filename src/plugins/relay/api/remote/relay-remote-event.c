@@ -1079,8 +1079,8 @@ end:
 void
 relay_remote_event_recv (struct t_relay_remote *remote, const char *data)
 {
-    cJSON *json, *json_body, *json_event, *json_obj;
-    const char *body_type, *name;
+    cJSON *json, *json_body, *json_obj;
+    const char *body_type, *event_name;
     long long buffer_id;
     int i, rc, code;
     struct t_relay_remote_event_cb event_cb[] = {
@@ -1121,19 +1121,15 @@ relay_remote_event_recv (struct t_relay_remote *remote, const char *data)
 
     JSON_GET_NUM(json, code, -1);
     JSON_GET_STR(json, body_type);
-    json_event = cJSON_GetObjectItem (json, "event");
     json_body = cJSON_GetObjectItem (json, "body");
 
     if (!body_type && ((code == 200) || (code == 204)))
         return;
 
-    if (json_event && cJSON_IsObject (json_event))
-    {
-        JSON_GET_STR(json_event, name);
-        event.name = name;
-        JSON_GET_NUM(json_event, buffer_id, -1);
-        event.buffer = relay_remote_event_search_buffer (remote, buffer_id);
-    }
+    JSON_GET_STR(json, event_name);
+    event.name = event_name;
+    JSON_GET_NUM(json, buffer_id, -1);
+    event.buffer = relay_remote_event_search_buffer (remote, buffer_id);
 
     callback = NULL;
 
