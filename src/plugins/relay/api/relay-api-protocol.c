@@ -915,7 +915,8 @@ RELAY_API_PROTOCOL_CALLBACK(sync)
 void
 relay_api_protocol_recv_json (struct t_relay_client *client, const char *json)
 {
-    cJSON *json_obj, *json_request, *json_body;
+    cJSON *json_obj, *json_request, *json_body, *json_request_id;
+    const char *ptr_request_id;
     char *string_body;
     int length;
 
@@ -954,6 +955,19 @@ relay_api_protocol_recv_json (struct t_relay_client *client, const char *json)
             }
             free (string_body);
         }
+    }
+
+    free (client->http_req->id);
+    client->http_req->id = NULL;
+    json_request_id = cJSON_GetObjectItem (json_obj, "request_id");
+    if (json_request_id)
+    {
+        if (!cJSON_IsString (json_request_id) && !cJSON_IsNull (json_request_id))
+            goto error;
+        free (client->http_req->id);
+        ptr_request_id = cJSON_GetStringValue (json_request_id);
+        client->http_req->id = (ptr_request_id) ?
+            strdup (ptr_request_id) : NULL;
     }
 
     relay_api_protocol_recv_http (client);

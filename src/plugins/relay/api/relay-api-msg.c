@@ -177,6 +177,10 @@ relay_api_msg_send_json_internal (struct t_relay_client *client,
                         cJSON_Parse (client->http_req->body) : cJSON_CreateNull ());
                     free (request);
                 }
+                cJSON_AddItemToObject (
+                    json, "request_id",
+                    (client->http_req->id) ?
+                    cJSON_CreateString (client->http_req->id) : cJSON_CreateNull ());
             }
             cJSON_AddItemToObject (
                 json, "body_type",

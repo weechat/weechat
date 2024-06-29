@@ -1375,6 +1375,7 @@ Requests to WeeChat are made with a JSON object containing these fields:
 
 * `request` (string): the HTTP method and path (example: `GET /api/buffers?lines=-100`)
 * `body` (object or array): the body (optional, for `POST` and `PUT` methods)
+* `request_id` (string): identifier sent back in the response
 
 Responses to client are made with a JSON object containing these fields:
 
@@ -1382,6 +1383,7 @@ Responses to client are made with a JSON object containing these fields:
 * `message` (string): message for the code (example: `OK`)
 * `request` (string): the request (example: `GET /api/buffers?lines=-100`)
 * `request_body` (object): the request body, or `null` if the request had no body
+* `request_id` (string): the request id, or `null` if the request had no id
 * `body_type` (string): type of objects returned in body (see below), or `null`
   if the response has no body
 * `body` (object or array): the body returned, or `null` if the response has no body
@@ -1402,7 +1404,8 @@ Request example: get version:
 [source,json]
 ----
 {
-    "request": "GET /api/version"
+    "request": "GET /api/version",
+    "request_id": "get_version"
 }
 ----
 
@@ -1415,6 +1418,7 @@ Response:
     "message": "OK",
     "request": "GET /api/version",
     "request_body": null,
+    "request_id": "get_version",
     "body_type": "version",
     "body": {
         "weechat_version": "4.2.0-dev",
@@ -1451,6 +1455,7 @@ Response:
         "buffer_name": "irc.libera.#weechat",
         "command": "hello!"
     },
+    "request_id": null,
     "body_type": null,
     "body": null
 }

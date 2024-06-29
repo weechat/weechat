@@ -73,6 +73,8 @@ relay_http_request_reinit (struct t_relay_http_request *request)
     request->body_size = 0;
     free (request->body);
     request->body = NULL;
+    free (request->id);
+    request->id = NULL;
 }
 
 /*
@@ -114,6 +116,7 @@ relay_http_request_alloc ()
     new_request->content_length = 0;
     new_request->body_size = 0;
     new_request->body = NULL;
+    new_request->id = NULL;
 
     return new_request;
 }
@@ -1320,6 +1323,7 @@ relay_http_request_free (struct t_relay_http_request *request)
     weechat_hashtable_free (request->accept_encoding);
     relay_websocket_deflate_free (request->ws_deflate);
     free (request->body);
+    free (request->id);
 
     free (request);
 }
@@ -1609,6 +1613,7 @@ relay_http_print_log_request (struct t_relay_http_request *request)
     weechat_log_printf ("    content_length. . . . . : %d", request->content_length);
     weechat_log_printf ("    body_size . . . . . . . : %d", request->body_size);
     weechat_log_printf ("    body. . . . . . . . . . : '%s'", request->body);
+    weechat_log_printf ("    id. . . . . . . . . . . : '%s'", request->id);
 }
 
 /*

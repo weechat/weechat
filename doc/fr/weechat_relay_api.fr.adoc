@@ -1398,6 +1398,7 @@ les champs suivants :
 * `request` (chaîne) : la méthode HTTP et le chemin
   (exemple : `GET /api/buffers?lines=-100`)
 * `body` (objet ou tableau) : le corps (facultatif, pour les méthodes `POST` et `PUT`)
+* `request_id` (chaîne) : identifiant renvoyé dans la réponse
 
 Les réponses vers le client sont faites avec un objet JSON qui contient
 les champs suivants :
@@ -1407,6 +1408,8 @@ les champs suivants :
 * `request` (chaîne) : la requête (exemple : `GET /api/buffers?lines=-100`)
 * `request_body` (objet) : le corps de la requête, ou `null` si la requête
   n'avait pas de corps
+* `request_id` (chaîne) : l'identifiant de la requête, ou `null` si la requête
+  n'avait pas d'identifiant
 * `body_type` (chaîne) : type des objets retournés dans le corps (voir ci-dessous),
   ou `null` si la réponse n'a pas de corps
 * `body` (objet ou tableau) : le corps retourné, ou `null` si la réponse n'a pas
@@ -1428,7 +1431,8 @@ Exemple de requête : obtenir la version :
 [source,json]
 ----
 {
-    "request": "GET /api/version"
+    "request": "GET /api/version",
+    "request_id": "get_version"
 }
 ----
 
@@ -1441,6 +1445,7 @@ Réponse :
     "message": "OK",
     "request": "GET /api/version",
     "request_body": null,
+    "request_id": "get_version",
     "body_type": "version",
     "body": {
         "weechat_version": "4.2.0-dev",
@@ -1477,6 +1482,7 @@ Réponse :
         "buffer_name": "irc.libera.#weechat",
         "command": "hello!"
     },
+    "request_id": null,
     "body_type": null,
     "body": null
 }

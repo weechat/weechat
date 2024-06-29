@@ -69,6 +69,7 @@ struct t_relay_http_request
     int content_length;                /* value of header "Content-Length"  */
     int body_size;                     /* size of HTTP body read so far     */
     char *body;                        /* HTTP body (can be NULL)           */
+    char *id;                          /* request id (sent in response)     */
 };
 
 struct t_relay_http_response
