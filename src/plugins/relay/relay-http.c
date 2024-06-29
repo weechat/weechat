@@ -55,42 +55,24 @@ relay_http_request_reinit (struct t_relay_http_request *request)
 {
     request->status = RELAY_HTTP_METHOD;
     weechat_string_dyn_copy (request->raw, NULL);
-    if (request->method)
-    {
-        free (request->method);
-        request->method = NULL;
-    }
-    if (request->path)
-    {
-        free (request->path);
-        request->path = NULL;
-    }
-    if (request->path_items)
-    {
-        weechat_string_free_split (request->path_items);
-        request->path_items = NULL;
-    }
+    free (request->method);
+    request->method = NULL;
+    free (request->path);
+    request->path = NULL;
+    weechat_string_free_split (request->path_items);
+    request->path_items = NULL;
     request->num_path_items = 0;
     weechat_hashtable_remove_all (request->params);
-    if (request->http_version)
-    {
-        free (request->http_version);
-        request->http_version = NULL;
-    }
+    free (request->http_version);
+    request->http_version = NULL;
     weechat_hashtable_remove_all (request->headers);
     weechat_hashtable_remove_all (request->accept_encoding);
-    if (request->ws_deflate)
-    {
-        relay_websocket_deflate_free (request->ws_deflate);
-        request->ws_deflate = relay_websocket_deflate_alloc ();
-    }
+    relay_websocket_deflate_free (request->ws_deflate);
+    request->ws_deflate = relay_websocket_deflate_alloc ();
     request->content_length = 0;
     request->body_size = 0;
-    if (request->body)
-    {
-        free (request->body);
-        request->body = NULL;
-    }
+    free (request->body);
+    request->body = NULL;
 }
 
 /*
