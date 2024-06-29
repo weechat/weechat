@@ -1276,7 +1276,13 @@ Response:
 ----
 {
     "code": 204,
-    "message": "No Content"
+    "message": "No Content",
+    "request": "POST /api/sync",
+    "request_body": {
+        "nicks":false
+    },
+    "body_type": null,
+    "body": null
 }
 ----
 
@@ -1376,11 +1382,9 @@ Responses to client are made with a JSON object containing these fields:
 * `message` (string): message for the code (example: `OK`)
 * `request` (string): the request (example: `GET /api/buffers?lines=-100`)
 * `request_body` (object): the request body, or `null` if the request had no body
-
-When the response has a body, these two extra fields are returned:
-
-* `body_type` (string): type of objects returned in body (see below)
-* `body` (object or array): the body returned
+* `body_type` (string): type of objects returned in body (see below), or `null`
+  if the response has no body
+* `body` (object or array): the body returned, or `null` if the response has no body
 
 Body types that can be returned:
 
@@ -1446,7 +1450,9 @@ Response:
     "request_body": {
         "buffer_name": "irc.libera.#weechat",
         "command": "hello!"
-    }
+    },
+    "body_type": null,
+    "body": null
 }
 ----
 
@@ -1480,13 +1486,13 @@ The following events are sent to the client, according to synchronization option
 | `buffer_localvar_removed`  | buffer id | `buffer`      | buffer
 | `buffer_cleared`           | buffer id | `buffer`      | buffer
 | `buffer_closing`           | buffer id | `buffer`      | buffer
-| `buffer_closed`            | buffer id | (not defined) | (not defined)
+| `buffer_closed`            | buffer id | null          | null
 | `buffer_line_added`        | buffer id | `line`        | buffer line
 | `buffer_line_data_changed` | buffer id | `line`        | buffer line
 | `input_text_changed`       | buffer id | `buffer`      | buffer
 | `input_text_cursor_moved`  | buffer id | `buffer`      | buffer
-| `upgrade` ^(1)^            | -1        | (not defined) | (not defined)
-| `upgrade_ended` ^(1)^      | -1        | (not defined) | (not defined)
+| `upgrade` ^(1)^            | -1        | null          | null
+| `upgrade_ended` ^(1)^      | -1        | null          | null
 | `nicklist_group_changed`   | buffer id | `nick_group`  | nick group
 | `nicklist_group_added`     | buffer id | `nick_group`  | nick group
 | `nicklist_group_removing`  | buffer id | `nick_group`  | nick group
@@ -1605,7 +1611,9 @@ Example: channel buffer `#weechat` has been closed:
     "code": 0,
     "message": "Event",
     "event_name": "buffer_closed",
-    "buffer_id": 1709932823649069
+    "buffer_id": 1709932823649069,
+    "body_type": null,
+    "body": null
 }
 ----
 
@@ -1617,7 +1625,9 @@ Example: WeeChat is upgrading:
     "code": 0,
     "message": "Event",
     "event_name": "upgrade",
-    "buffer_id": -1
+    "buffer_id": -1,
+    "body_type": null,
+    "body": null
 }
 ----
 
@@ -1629,6 +1639,8 @@ Example: upgrade of WeeChat is done:
     "code": 0,
     "message": "Event",
     "event_name": "upgrade_ended",
-    "buffer_id": -1
+    "buffer_id": -1,
+    "body_type": null,
+    "body": null
 }
 ----

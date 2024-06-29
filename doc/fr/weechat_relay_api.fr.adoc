@@ -1297,7 +1297,13 @@ Réponse :
 ----
 {
     "code": 204,
-    "message": "No Content"
+    "message": "No Content",
+    "request": "POST /api/sync",
+    "request_body": {
+        "nicks": false
+    },
+    "body_type": null,
+    "body": null
 }
 ----
 
@@ -1401,11 +1407,10 @@ les champs suivants :
 * `request` (chaîne) : la requête (exemple : `GET /api/buffers?lines=-100`)
 * `request_body` (objet) : le corps de la requête, ou `null` si la requête
   n'avait pas de corps
-
-Lorsque la réponse a un corps, ces deux champs supplémentaires sont retournés :
-
-* `body_type` (chaîne) : type des objets retournés dans le corps (voir ci-dessous)
-* `body` (objet ou tableau) : le corps retourné
+* `body_type` (chaîne) : type des objets retournés dans le corps (voir ci-dessous),
+  ou `null` si la réponse n'a pas de corps
+* `body` (objet ou tableau) : le corps retourné, ou `null` si la réponse n'a pas
+  de corps
 
 Les types de corps qui peuvent être retournés :
 
@@ -1471,7 +1476,9 @@ Réponse :
     "request_body": {
         "buffer_name": "irc.libera.#weechat",
         "command": "hello!"
-    }
+    },
+    "body_type": null,
+    "body": null
 }
 ----
 
@@ -1506,13 +1513,13 @@ Les évènements suivants sont envoyés au client, selon les options de synchron
 | `buffer_localvar_removed`  | id tampon | `buffer`      | tampon
 | `buffer_cleared`           | id tampon | `buffer`      | tampon
 | `buffer_closing`           | id tampon | `buffer`      | tampon
-| `buffer_closed`            | id tampon | (non défini)  | (non défini)
+| `buffer_closed`            | id tampon | null          | null
 | `buffer_line_added`        | id tampon | `line`        | ligne de tampon
 | `buffer_line_data_changed` | id tampon | `line`        | ligne de tampon
 | `input_text_changed`       | id tampon | `buffer`      | tampon
 | `input_text_cursor_moved`  | id tampon | `buffer`      | tampon
-| `upgrade` ^(1)^            | -1        | (non défini)  | (non défini)
-| `upgrade_ended` ^(1)^      | -1        | (non défini)  | (non défini)
+| `upgrade` ^(1)^            | -1        | null          | null
+| `upgrade_ended` ^(1)^      | -1        | null          | null
 | `nicklist_group_changed`   | id tampon | `nick_group`  | groupe de pseudos
 | `nicklist_group_added`     | id tampon | `nick_group`  | groupe de pseudos
 | `nicklist_group_removing`  | id tampon | `nick_group`  | groupe de pseudos
@@ -1632,7 +1639,9 @@ Exemple : le tampon du canal `#weechat` a été fermé :
     "code": 0,
     "message": "Event",
     "event_name": "buffer_closed",
-    "buffer_id": 1709932823649069
+    "buffer_id": 1709932823649069,
+    "body_type": null,
+    "body": null
 }
 ----
 
@@ -1644,7 +1653,9 @@ Exemple : WeeChat est en cours de mise à jour :
     "code": 0,
     "message": "Event",
     "event_name": "upgrade",
-    "buffer_id": -1
+    "buffer_id": -1,
+    "body_type": null,
+    "body": null
 }
 ----
 
@@ -1656,6 +1667,8 @@ Exemple : la mise à jour de WeeChat est terminée :
     "code": 0,
     "message": "Event",
     "event_name": "upgrade_ended",
-    "buffer_id": -1
+    "buffer_id": -1,
+    "body_type": null,
+    "body": null
 }
 ----

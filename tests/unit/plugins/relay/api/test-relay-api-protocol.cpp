@@ -58,7 +58,9 @@ extern int relay_api_protocol_command_delay;
     STRCMP_EQUAL("{\"code\":" #__code ","                               \
                  "\"message\":\"" __message "\","                       \
                  "\"request\":\"" __request "\","                       \
-                 "\"request_body\":" __body ""                          \
+                 "\"request_body\":" __body ","                         \
+                 "\"body_type\":null,"                                 \
+                 "\"body\":null"                                       \
                  "}",                                                   \
                  data_sent);
 

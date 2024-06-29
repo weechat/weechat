@@ -174,17 +174,17 @@ relay_api_msg_send_json_internal (struct t_relay_client *client,
                     cJSON_AddItemToObject (
                         json, "request_body",
                         (client->http_req->body) ?
-                        cJSON_Parse (client->http_req->body) :cJSON_CreateNull ());
+                        cJSON_Parse (client->http_req->body) : cJSON_CreateNull ());
                     free (request);
                 }
             }
-            if (body_type)
-            {
-                cJSON_AddItemToObject (json, "body_type",
-                                       cJSON_CreateString (body_type));
-            }
-            if (json_body)
-                cJSON_AddItemToObject (json, "body", json_body);
+            cJSON_AddItemToObject (
+                json, "body_type",
+                (body_type) ?
+                cJSON_CreateString (body_type) : cJSON_CreateNull ());
+            cJSON_AddItemToObject (
+                json, "body",
+                (json_body) ? json_body : cJSON_CreateNull ());
             string = cJSON_PrintUnformatted (json);
             num_bytes = relay_client_send (
                 client,
