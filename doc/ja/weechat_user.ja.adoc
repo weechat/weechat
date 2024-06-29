@@ -4961,10 +4961,10 @@ https://weechat.org/about/interfaces/[this page ^↗^^].
 例:
 
 ----
-/relay add weechat 9000
+/relay add weechat 9500
 ----
 
-この後、リモートインターフェースを使って 9000
+この後、リモートインターフェースを使って 9500
 番ポートに対して、パスワード "mypass" で接続することができます。
 
 [[relay_websocket]]
@@ -4982,10 +4982,10 @@ HTML5 を使えばたった 1 行の JavaScript で WebSocket をオープンす
 
 [source,javascript]
 ----
-websocket = new WebSocket("ws://server.com:9000/weechat");
+websocket = new WebSocket("ws://server.com:9500/weechat");
 ----
 
-ポート番号 (例では 9000 番) は Relay プラグインで定義したものです。
+ポート番号 (例では 9500 番) は Relay プラグインで定義したものです。
 
 // TRANSLATION MISSING
 The URI must end with "/weechat" for _irc_ and _weechat_ protocols and "/api"

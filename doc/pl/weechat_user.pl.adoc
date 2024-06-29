@@ -4757,10 +4757,10 @@ WeeChat NIE MOŻE się połączyć z innym WeeChat za pomocą tego protokołu.
 Na przykład:
 
 ----
-/relay add weechat 9000
+/relay add weechat 9500
 ----
 
-Teraz możesz się połączyć zdalnym interfejsem na porcie 9000 za pomocą hasła
+Teraz możesz się połączyć zdalnym interfejsem na porcie 9500 za pomocą hasła
 "moje_hasło".
 
 [[relay_websocket]]
@@ -4778,10 +4778,10 @@ WebSocket może zostać otworzony w HTML5 za pomocą jednej linii w JavaScript:
 
 [source,javascript]
 ----
-websocket = new WebSocket("ws://server.com:9000/weechat");
+websocket = new WebSocket("ws://server.com:9500/weechat");
 ----
 
-Port (9000 w przykładzie) to port zdefiniowany we wtyczce relay.
+Port (9500 w przykładzie) to port zdefiniowany we wtyczce relay.
 
 URI musi się kończyć "/weechat" dla protokołów _irc_ i _weechat_ oraz "/api"
 dla protokołu _api_.

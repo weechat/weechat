@@ -4801,10 +4801,10 @@ dieses Protokoll verbinden.
 Zum Beispiel:
 
 ----
-/relay add weechat 9000
+/relay add weechat 9500
 ----
 
-Nun kann man über den Port 9000 mittels einer Oberfläche und dem Passwort
+Nun kann man über den Port 9500 mittels einer Oberfläche und dem Passwort
 "meinPasswort" eine Verbindung zu WeeChat herstellen.
 
 [[relay_websocket]]
@@ -4821,10 +4821,10 @@ Ein WebSocket kann in HTML5, mit einer JavaScript Zeile, geöffnet werden:
 
 [source,javascript]
 ----
-websocket = new WebSocket("ws://server.com:9000/weechat");
+websocket = new WebSocket("ws://server.com:9500/weechat");
 ----
 
-Der Port (im Beispiel: 9000) ist der Port der in der Relay Erweiterung angegeben wurde.
+Der Port (im Beispiel: 9500) ist der Port der in der Relay Erweiterung angegeben wurde.
 
 Die URI muss mit „/weechat“ für die Protokolle _irc_ und _weechat_ und mit „/api“
 für das Protokoll _api_ enden.

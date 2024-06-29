@@ -5111,10 +5111,10 @@ WeeChat itself can NOT connect to another WeeChat with this protocol.
 Ad esempio:
 
 ----
-/relay add weechat 9000
+/relay add weechat 9500
 ----
 
-Ora è possibile connettersi sulla porta 9000 con un'interfaccia remota usando la
+Ora è possibile connettersi sulla porta 9500 con un'interfaccia remota usando la
 password "miapass".
 
 // TRANSLATION MISSING
@@ -5133,10 +5133,10 @@ A WebSocket can be opened in a HTML5 with a single line of JavaScript:
 
 [source,javascript]
 ----
-websocket = new WebSocket("ws://server.com:9000/weechat");
+websocket = new WebSocket("ws://server.com:9500/weechat");
 ----
 
-The port (9000 in example) is the port defined in Relay plugin.
+The port (9500 in example) is the port defined in Relay plugin.
 
 The URI must end with "/weechat" for _irc_ and _weechat_ protocols and "/api"
 for _api_ protocol.

@@ -4486,10 +4486,10 @@ https://weechat.org/about/interfaces/[ову страницу ^↗^^].
 На пример:
 
 ----
-/relay add weechat 9000
+/relay add weechat 9500
 ----
 
-Сада можете да се повежете са удаљеног интерфејса преко порта 9000 користећи лозинку „мојалозинка”.
+Сада можете да се повежете са удаљеног интерфејса преко порта 9500 користећи лозинку „мојалозинка”.
 
 [[relay_websocket]]
 === ВебСокет
@@ -4503,10 +4503,10 @@ https://weechat.org/about/interfaces/[ову страницу ^↗^^].
 
 [source,javascript]
 ----
-websocket = new WebSocket("ws://server.com:9000/weechat");
+websocket = new WebSocket("ws://server.com:9500/weechat");
 ----
 
-Порт (9000 у примеру) је порт који је дефинисан у Релеј додатку.
+Порт (9500 у примеру) је порт који је дефинисан у Релеј додатку.
 
 URI мора да се завршава са „/weechat” за _irc_ и _weechat_ протоколе, а са „/api”
 за _api_ протокол.
