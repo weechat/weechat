@@ -1417,14 +1417,19 @@ les champs suivants :
 
 Les types de corps qui peuvent être retournés :
 
-* `handshake`
-* `version`
-* `buffer`
-* `line`
-* `nick_group`
-* `nick`
-* `hotlist`
-* `ping`
+* `handshake` (objet)
+* `version` (objet)
+* `buffers` (tableau)
+* `buffer` (objet)
+* `lines` (tableau)
+* `line` (objet)
+* `nick_group` (objet)
+* `nick` (objet)
+* `hotlist` (objet)
+* `ping` (objet)
+
+[TIP]
+Vous pouvez parcourir les schémas en ligne : https://weechat.org/api/[API relay WeeChat ^↗^^].
 
 Exemple de requête : obtenir la version :
 

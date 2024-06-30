@@ -576,16 +576,21 @@ RELAY_API_PROTOCOL_CALLBACK(buffers)
                     return RELAY_API_PROTOCOL_RC_OK;
                 }
                 json = relay_api_msg_line_data_to_json (ptr_line_data, colors);
+                if (json)
+                {
+                    relay_api_msg_send_json (client, RELAY_HTTP_200_OK, NULL,
+                                             "line", json);
+                }
             }
             else
             {
                 lines = relay_http_get_param_long (client->http_req, "lines", LONG_MAX);
                 json = relay_api_msg_lines_to_json (ptr_buffer, lines, colors);
-            }
-            if (json)
-            {
-                relay_api_msg_send_json (client, RELAY_HTTP_200_OK, NULL,
-                                         "line", json);
+                if (json)
+                {
+                    relay_api_msg_send_json (client, RELAY_HTTP_200_OK, NULL,
+                                             "lines", json);
+                }
             }
         }
         else if (strcmp (client->http_req->path_items[3], "nicks") == 0)
@@ -619,6 +624,11 @@ RELAY_API_PROTOCOL_CALLBACK(buffers)
         {
             json = relay_api_msg_buffer_to_json (ptr_buffer, lines, lines_free,
                                                  nicks, colors);
+            if (json)
+            {
+                relay_api_msg_send_json (client, RELAY_HTTP_200_OK, NULL,
+                                         "buffer", json);
+            }
         }
         else
         {
@@ -635,11 +645,11 @@ RELAY_API_PROTOCOL_CALLBACK(buffers)
                                                   nicks, colors));
                 ptr_buffer = weechat_hdata_move (relay_hdata_buffer, ptr_buffer, 1);
             }
-        }
-        if (json)
-        {
-            relay_api_msg_send_json (client, RELAY_HTTP_200_OK, NULL,
-                                     "buffer", json);
+            if (json)
+            {
+                relay_api_msg_send_json (client, RELAY_HTTP_200_OK, NULL,
+                                         "buffers", json);
+            }
         }
     }
 

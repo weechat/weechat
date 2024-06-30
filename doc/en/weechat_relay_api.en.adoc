@@ -1390,14 +1390,19 @@ Responses to client are made with a JSON object containing these fields:
 
 Body types that can be returned:
 
-* `handshake`
-* `version`
-* `buffer`
-* `line`
-* `nick_group`
-* `nick`
-* `hotlist`
-* `ping`
+* `handshake` (object)
+* `version` (object)
+* `buffers` (array)
+* `buffer` (object)
+* `lines` (array)
+* `line` (object)
+* `nick_group` (object)
+* `nick` (object)
+* `hotlist` (object)
+* `ping` (object)
+
+[TIP]
+You can browse these schemas online: https://weechat.org/api/[WeeChat Relay API ^↗^^].
 
 Request example: get version:
 
