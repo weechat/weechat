@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-07-01 20:50+0200\n"
+"POT-Creation-Date: 2024-07-01 21:19+0200\n"
 "PO-Revision-Date: 2024-06-11 07:49+0200\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -13618,6 +13618,16 @@ msgstr "Plugin caricati:"
 #, fuzzy
 msgid "plugin name"
 msgstr "nomi dei plugin"
+
+#, fuzzy
+#| msgid "window pointer (optional)"
+msgid "window pointer"
+msgstr "puntatore alla finestra (opzionale)"
+
+#, fuzzy
+#| msgid "window"
+msgid "window number"
+msgstr "finestra"
 
 msgid "get focus info"
 msgstr ""

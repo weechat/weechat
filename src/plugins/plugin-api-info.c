@@ -1224,6 +1224,40 @@ plugin_api_info_plugin_loaded_cb (const void *pointer, void *data,
 }
 
 /*
+ * Returns WeeChat info "window".
+ */
+
+char *
+plugin_api_info_window_cb (const void *pointer, void *data,
+                           const char *info_name,
+                           const char *arguments)
+{
+    struct t_gui_window *ptr_window;
+    long number;
+    char *error, value[64];
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) info_name;
+
+    if (!arguments || !arguments[0])
+        return NULL;
+
+    error = NULL;
+    number = (int)strtol (arguments, &error, 10);
+    if (!error || error[0])
+        return NULL;
+
+    ptr_window = gui_window_search_by_number (number);
+    if (!ptr_window)
+        return NULL;
+
+    snprintf (value, sizeof (value), "0x%lx", (unsigned long)ptr_window);
+    return strdup (value);
+}
+
+/*
  * Returns secured data hashtable.
  */
 
@@ -2286,6 +2320,10 @@ plugin_api_info_init ()
                N_("1 if plugin is loaded"),
                N_("plugin name"),
                &plugin_api_info_plugin_loaded_cb, NULL, NULL);
+    hook_info (NULL, "window",
+               N_("window pointer"),
+               N_("window number"),
+               &plugin_api_info_window_cb, NULL, NULL);
 
     /* WeeChat core info_hashtable hooks */
     hook_info_hashtable (NULL,

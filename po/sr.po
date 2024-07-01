@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-07-01 20:50+0200\n"
+"POT-Creation-Date: 2024-07-01 21:19+0200\n"
 "PO-Revision-Date: 2024-06-16 20:38+0400\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -13987,6 +13987,16 @@ msgstr "1 ако је додатак учитан"
 
 msgid "plugin name"
 msgstr "име додатка"
+
+#, fuzzy
+#| msgid "window pointer (optional)"
+msgid "window pointer"
+msgstr "показивач на прозор (није обавезан)"
+
+#, fuzzy
+#| msgid "window"
+msgid "window number"
+msgstr "прозор"
 
 msgid "get focus info"
 msgstr "враћање инфо о фокусу"

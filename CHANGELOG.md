@@ -25,6 +25,7 @@
 - relay: add option relay.look.raw_messages_max_length ([#2122](https://github.com/weechat/weechat/issues/2122))
 - relay: add infos "relay_api_version" and "relay_api_version_number"
 - core: add hdata count in evaluation of expressions with `hdata_count:name[list]` or `hdata_count:name[pointer]`
+- core: add info "window" ([#2141](https://github.com/weechat/weechat/issues/2141))
 - core: add completion "bars_items"
 - api, relay: send new signal "buffer_line_data_changed" when a line is updated in a buffer via hdata, send event "buffer_line_data_changed" to clients of "api" and "weechat" protocols
 - api: add hashtable type "longlong"

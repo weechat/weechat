@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-07-01 20:50+0200\n"
+"POT-Creation-Date: 2024-07-01 21:19+0200\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -11656,6 +11656,12 @@ msgid "1 if plugin is loaded"
 msgstr ""
 
 msgid "plugin name"
+msgstr ""
+
+msgid "window pointer"
+msgstr ""
+
+msgid "window number"
 msgstr ""
 
 msgid "get focus info"

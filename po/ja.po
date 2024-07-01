@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-07-01 20:50+0200\n"
+"POT-Creation-Date: 2024-07-01 21:19+0200\n"
 "PO-Revision-Date: 2024-06-11 07:49+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -14068,6 +14068,16 @@ msgstr "ロード済みプラグイン:"
 #| msgid "names of plugins installed"
 msgid "plugin name"
 msgstr "インストールされたプラグインの名前"
+
+#, fuzzy
+#| msgid "window pointer (optional)"
+msgid "window pointer"
+msgstr "ウィンドウポインタ (任意)"
+
+#, fuzzy
+#| msgid "window"
+msgid "window number"
+msgstr "ウィンドウ"
 
 msgid "get focus info"
 msgstr ""

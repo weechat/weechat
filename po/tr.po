@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-07-01 20:50+0200\n"
+"POT-Creation-Date: 2024-07-01 21:19+0200\n"
 "PO-Revision-Date: 2024-06-11 07:49+0200\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -14248,6 +14248,16 @@ msgstr "Hiçbir eklenti yüklü değil"
 #| msgid "names of plugins installed"
 msgid "plugin name"
 msgstr "yüklü eklentilerin adları"
+
+#, fuzzy
+#| msgid "window pointer (optional)"
+msgid "window pointer"
+msgstr "pencere işaretçisi (isteğe bağlı)"
+
+#, fuzzy
+#| msgid "window"
+msgid "window number"
+msgstr "pencere"
 
 msgid "get focus info"
 msgstr "odak bilgisi al"
