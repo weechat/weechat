@@ -3765,6 +3765,7 @@ COMMAND_CALLBACK(input)
 COMMAND_CALLBACK(item)
 {
     struct t_gui_bar_item_custom *ptr_bar_item_custom, *ptr_next_bar_item_custom;
+    struct t_gui_bar_item *ptr_bar_item;
     char str_command[4096], str_pos[16], **sargv, *name;
     int i, update, sargc;
 
@@ -3858,7 +3859,12 @@ COMMAND_CALLBACK(item)
     {
         for (i = 2; i < argc; i++)
         {
-            gui_bar_item_update (argv[i]);
+            for (ptr_bar_item = gui_bar_items; ptr_bar_item;
+                 ptr_bar_item = ptr_bar_item->next_item)
+            {
+                if (string_match (ptr_bar_item->name, argv[i], 1))
+                    gui_bar_item_update (ptr_bar_item->name);
+            }
         }
         return WEECHAT_RC_OK;
     }
@@ -8812,7 +8818,7 @@ command_init ()
         N_("list"
            " || add|addreplace <name> \"<conditions>\" \"<content>\""
            " || rename <name> <new_name>"
-           " || refresh <name> [<name>...]"
+           " || refresh <name>|<mask> [<name>|<mask>...]"
            " || recreate <name>"
            " || del <name>|<mask> [<name>|<mask>...]"),
         CMD_ARGS_DESC(
@@ -8820,6 +8826,7 @@ command_init ()
             N_("raw[add]: add a custom bar item"),
             N_("raw[addreplace]: add or replace an existing custom bar item"),
             N_("name: custom bar item name"),
+            N_("mask: name where wildcard \"*\" is allowed"),
             N_("conditions: evaluated conditions to display the bar item "
                "(for example to display the bar item only in specific buffers)"),
             N_("content: content (evaluated, see /help eval)"),
@@ -8830,7 +8837,6 @@ command_init ()
             N_("raw[recreate]: set input with the command used to edit the custom "
                "bar item"),
             N_("raw[del]: delete custom bar items"),
-            N_("mask: name where wildcard \"*\" is allowed"),
             "",
             N_("Examples:"),
             N_("  add item with terminal size, displayed only in buffers with "
