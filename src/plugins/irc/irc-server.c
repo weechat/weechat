@@ -4144,7 +4144,7 @@ irc_server_timer_cb (const void *pointer, void *data, int remaining_calls)
                             refresh_lag = 1;
                         }
 
-                        /* schedule next lag check in 5 seconds */
+                        /* schedule next lag check */
                         ptr_server->lag_check_time.tv_sec = 0;
                         ptr_server->lag_check_time.tv_usec = 0;
                         ptr_server->lag_next_check = time (NULL) +
