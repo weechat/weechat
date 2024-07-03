@@ -60,6 +60,15 @@
 - tests: fix compilation of tests on Fedora 40 ([#2116](https://github.com/weechat/weechat/issues/2116))
 - tests: fix compilation of tests on Rocky 9.4
 
+## Version 4.3.4 (2024-07-03)
+
+### Fixed
+
+- python: fix crash on quit with Python 3.12 ([#2046](https://github.com/weechat/weechat/issues/2046), [#2126](https://github.com/weechat/weechat/issues/2126))
+- core: fix crash when deleting a bar that has no items ([#2138](https://github.com/weechat/weechat/issues/2138))
+- ruby: fix builtin functions not available ([#2109](https://github.com/weechat/weechat/issues/2109))
+- relay/api: fix "body_type" returned when lines or nicks of a buffer are requested
+
 ## Version 4.3.3 (2024-06-22)
 
 ### Fixed
