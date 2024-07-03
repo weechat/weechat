@@ -12,7 +12,7 @@ For a complete list of changes, please look at ChangeLog.
 
 
 [[v4.3.4]]
-== Version 4.3.4 (under dev)
+== Version 4.3.4 (2024-07-03)
 
 No release notes.
 
