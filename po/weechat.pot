@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-07-01 21:19+0200\n"
+"POT-Creation-Date: 2024-07-06 11:05+0200\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -13709,6 +13709,14 @@ msgid "%s: error: dictionary \"%s\" is not available on your system"
 msgstr ""
 
 #, c-format
+msgid "%s%s: unable to create new speller"
+msgstr ""
+
+#, c-format
+msgid "%s%s: no speller found"
+msgstr ""
+
+#, c-format
 msgid "%s%s: no dictionary on this buffer for adding word"
 msgstr ""
 
@@ -13723,7 +13731,7 @@ msgid "%s: word \"%s\" added to personal dictionary"
 msgstr ""
 
 #, c-format
-msgid "%s%s: failed to add word to personal dictionary"
+msgid "%s%s: failed to add word to personal dictionary: %s"
 msgstr ""
 
 #. TRANSLATORS: second "%s" is "aspell" or "enchant"

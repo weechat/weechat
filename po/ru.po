@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-07-01 21:19+0200\n"
+"POT-Creation-Date: 2024-07-06 11:05+0200\n"
 "PO-Revision-Date: 2024-06-11 07:49+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -15022,6 +15022,14 @@ msgstr "Сокращение \"%s\" удалено\n"
 msgid "%s: error: dictionary \"%s\" is not available on your system"
 msgstr ""
 
+#, fuzzy, c-format
+msgid "%s%s: unable to create new speller"
+msgstr "%s не могу создать сервер\n"
+
+#, fuzzy, c-format
+msgid "%s%s: no speller found"
+msgstr "подпись не найдена"
+
 #, c-format
 msgid "%s%s: no dictionary on this buffer for adding word"
 msgstr ""
@@ -15036,9 +15044,9 @@ msgstr ""
 msgid "%s: word \"%s\" added to personal dictionary"
 msgstr ""
 
-#, c-format
-msgid "%s%s: failed to add word to personal dictionary"
-msgstr ""
+#, fuzzy, c-format
+msgid "%s%s: failed to add word to personal dictionary: %s"
+msgstr "%s не могу сохранить конфигурационный файл pluginов\n"
 
 #. TRANSLATORS: second "%s" is "aspell" or "enchant"
 #, fuzzy, c-format

@@ -267,11 +267,16 @@ spell_command_add_word (struct t_gui_buffer *buffer, const char *dict,
                                 _("%s: error: dictionary \"%s\" is not "
                                   "available on your system"),
                                 SPELL_PLUGIN_NAME, dict);
-                return;
+                goto end;
             }
             new_speller = spell_speller_new (dict);
             if (!new_speller)
-                return;
+            {
+                weechat_printf (NULL,
+                                _("%s%s: unable to create new speller"),
+                                weechat_prefix ("error"), SPELL_PLUGIN_NAME);
+                goto end;
+            }
             ptr_speller = new_speller;
         }
     }
@@ -282,7 +287,12 @@ spell_command_add_word (struct t_gui_buffer *buffer, const char *dict,
         if (!ptr_speller_buffer)
             ptr_speller_buffer = spell_speller_buffer_new (buffer);
         if (!ptr_speller_buffer)
-            goto error;
+        {
+            weechat_printf (NULL,
+                            _("%s%s: no speller found"),
+                            weechat_prefix ("error"), SPELL_PLUGIN_NAME);
+            goto end;
+        }
         if (!ptr_speller_buffer->spellers || !ptr_speller_buffer->spellers[0])
         {
             weechat_printf (NULL,
@@ -290,7 +300,7 @@ spell_command_add_word (struct t_gui_buffer *buffer, const char *dict,
                               "adding word"),
                             weechat_prefix ("error"),
                             SPELL_PLUGIN_NAME);
-            return;
+            goto end;
         }
         else if (ptr_speller_buffer->spellers[1])
         {
@@ -299,7 +309,7 @@ spell_command_add_word (struct t_gui_buffer *buffer, const char *dict,
                               "this buffer, please specify dictionary"),
                             weechat_prefix ("error"),
                             SPELL_PLUGIN_NAME);
-            return;
+            goto end;
         }
         ptr_speller = ptr_speller_buffer->spellers[0];
     }
@@ -316,16 +326,15 @@ spell_command_add_word (struct t_gui_buffer *buffer, const char *dict,
                         SPELL_PLUGIN_NAME, word);
     }
     else
-        goto error;
+    {
+        weechat_printf (NULL,
+                        _("%s%s: failed to add word to personal "
+                          "dictionary: %s"),
+                        weechat_prefix ("error"),
+                        SPELL_PLUGIN_NAME,
+                        aspell_speller_error_message (ptr_speller));
+    }
 #endif /* USE_ENCHANT */
-
-    goto end;
-
-error:
-    weechat_printf (NULL,
-                    _("%s%s: failed to add word to personal "
-                      "dictionary"),
-                    weechat_prefix ("error"), SPELL_PLUGIN_NAME);
 
 end:
     if (new_speller)

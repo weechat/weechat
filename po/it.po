@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-07-01 21:19+0200\n"
+"POT-Creation-Date: 2024-07-06 11:05+0200\n"
 "PO-Revision-Date: 2024-06-11 07:49+0200\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -16029,6 +16029,16 @@ msgstr "%s; \"%s\" eliminato"
 msgid "%s: error: dictionary \"%s\" is not available on your system"
 msgstr "%s: errore: il dizionario \"%s\" non è disponibile su questo sistema"
 
+#, fuzzy, c-format
+#| msgid "%s%s: unable to create new interpreter"
+msgid "%s%s: unable to create new speller"
+msgstr "%s%s: impossibile creare un nuovo interprete"
+
+#, fuzzy, c-format
+#| msgid "%s%s: ignore not found"
+msgid "%s%s: no speller found"
+msgstr "%s%s: ignore non trovato"
+
 #, c-format
 msgid "%s%s: no dictionary on this buffer for adding word"
 msgstr "%s%s: nessun dizionario su questo buffer per aggiungere parole"
@@ -16045,8 +16055,9 @@ msgstr ""
 msgid "%s: word \"%s\" added to personal dictionary"
 msgstr "%s: la parola \"%s\" è stata aggiunta al dizionario personale"
 
-#, c-format
-msgid "%s%s: failed to add word to personal dictionary"
+#, fuzzy, c-format
+#| msgid "%s%s: failed to add word to personal dictionary"
+msgid "%s%s: failed to add word to personal dictionary: %s"
 msgstr "%s%s: impossibile aggiungere la parola al dizionario personale"
 
 #. TRANSLATORS: second "%s" is "aspell" or "enchant"

@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-07-01 21:19+0200\n"
-"PO-Revision-Date: 2024-07-01 21:20+0200\n"
+"POT-Creation-Date: 2024-07-06 11:05+0200\n"
+"PO-Revision-Date: 2024-07-06 11:06+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -16814,6 +16814,14 @@ msgstr ""
 "%s : erreur : le dictionnaire \"%s\" n'est pas disponible sur votre système"
 
 #, c-format
+msgid "%s%s: unable to create new speller"
+msgstr "%s%s : impossible de créer le correcteur orthographique"
+
+#, c-format
+msgid "%s%s: no speller found"
+msgstr "%s%s : correcteur orthographique non trouvé"
+
+#, c-format
 msgid "%s%s: no dictionary on this buffer for adding word"
 msgstr "%s%s : pas de dictionnaire sur ce tampon pour ajouter le mot"
 
@@ -16830,8 +16838,8 @@ msgid "%s: word \"%s\" added to personal dictionary"
 msgstr "%s : mot \"%s\" ajouté dans le dictionnaire personnel"
 
 #, c-format
-msgid "%s%s: failed to add word to personal dictionary"
-msgstr "%s%s : impossible d'ajouter le mot dans le dictionnaire personnel"
+msgid "%s%s: failed to add word to personal dictionary: %s"
+msgstr "%s%s : impossible d'ajouter le mot dans le dictionnaire personnel : %s"
 
 #. TRANSLATORS: second "%s" is "aspell" or "enchant"
 #, c-format

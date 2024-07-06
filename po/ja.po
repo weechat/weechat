@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-07-01 21:19+0200\n"
+"POT-Creation-Date: 2024-07-06 11:05+0200\n"
 "PO-Revision-Date: 2024-06-11 07:49+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -16525,6 +16525,16 @@ msgstr "%s: \"%s\" 削除しました"
 msgid "%s: error: dictionary \"%s\" is not available on your system"
 msgstr "%s: エラー: 辞書 \"%s\" がシステム上に見つかりません"
 
+#, fuzzy, c-format
+#| msgid "%s%s: unable to create new interpreter"
+msgid "%s%s: unable to create new speller"
+msgstr "%s%s: 新しいインタプリタを作成できません"
+
+#, fuzzy, c-format
+#| msgid "%s%s: ignore not found"
+msgid "%s%s: no speller found"
+msgstr "%s%s: 無視エントリが見つかりません"
+
 #, c-format
 msgid "%s%s: no dictionary on this buffer for adding word"
 msgstr "%s%s: このバッファ上には単語を追加する辞書がありません"
@@ -16540,8 +16550,9 @@ msgstr ""
 msgid "%s: word \"%s\" added to personal dictionary"
 msgstr "%s: 単語 \"%s\" を個人辞書に追加"
 
-#, c-format
-msgid "%s%s: failed to add word to personal dictionary"
+#, fuzzy, c-format
+#| msgid "%s%s: failed to add word to personal dictionary"
+msgid "%s%s: failed to add word to personal dictionary: %s"
 msgstr "%s%s: 単語の個人辞書への登録に失敗"
 
 #. TRANSLATORS: second "%s" is "aspell" or "enchant"

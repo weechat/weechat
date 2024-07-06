@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-07-01 21:19+0200\n"
+"POT-Creation-Date: 2024-07-06 11:05+0200\n"
 "PO-Revision-Date: 2024-06-11 07:49+0200\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -16756,6 +16756,16 @@ msgstr "%s: \"%s\" kaldırıldı"
 msgid "%s: error: dictionary \"%s\" is not available on your system"
 msgstr "%s: Hata: \"%s\" sözlüğü sisteminizde yok"
 
+#, fuzzy, c-format
+#| msgid "%s%s: unable to create new interpreter"
+msgid "%s%s: unable to create new speller"
+msgstr "%s%s: Yeni yorumlayıcı oluşturulamıyor"
+
+#, fuzzy, c-format
+#| msgid "%s%s: ignore not found"
+msgid "%s%s: no speller found"
+msgstr "%s%s: Yok sayma bulunamadı"
+
 #, c-format
 msgid "%s%s: no dictionary on this buffer for adding word"
 msgstr "%s%s: Sözcük eklemek için bu arabellekte bir sözlük yok"
@@ -16770,8 +16780,9 @@ msgstr "%s%s: Bu arabellek için çok sözlük tanımlanmış, lütfen sözlük 
 msgid "%s: word \"%s\" added to personal dictionary"
 msgstr "%s: \"%s\" sözcüğü kişisel sözlüğe eklendi"
 
-#, c-format
-msgid "%s%s: failed to add word to personal dictionary"
+#, fuzzy, c-format
+#| msgid "%s%s: failed to add word to personal dictionary"
+msgid "%s%s: failed to add word to personal dictionary: %s"
 msgstr "%s%s: Sözcük kişisel sözlüğe eklenemedi"
 
 #. TRANSLATORS: second "%s" is "aspell" or "enchant"

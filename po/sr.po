@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-07-01 21:19+0200\n"
+"POT-Creation-Date: 2024-07-06 11:05+0200\n"
 "PO-Revision-Date: 2024-06-16 20:38+0400\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -16344,6 +16344,16 @@ msgstr "%s: „%s” је уклоњен"
 msgid "%s: error: dictionary \"%s\" is not available on your system"
 msgstr "%s: грешка: на вашем систему није доступан речник „%s”"
 
+#, fuzzy, c-format
+#| msgid "%s%s: unable to create new interpreter"
+msgid "%s%s: unable to create new speller"
+msgstr "%s%s: није успело креирање новог интерпретера"
+
+#, fuzzy, c-format
+#| msgid "%s%s: ignore not found"
+msgid "%s%s: no speller found"
+msgstr "%s%s: није пронађено игнорисање"
+
 #, c-format
 msgid "%s%s: no dictionary on this buffer for adding word"
 msgstr "%s%s: за овај бафер нема речника у који могу да се додају речи"
@@ -16359,8 +16369,9 @@ msgstr ""
 msgid "%s: word \"%s\" added to personal dictionary"
 msgstr "%s: реч „%s” је додата у лични речник"
 
-#, c-format
-msgid "%s%s: failed to add word to personal dictionary"
+#, fuzzy, c-format
+#| msgid "%s%s: failed to add word to personal dictionary"
+msgid "%s%s: failed to add word to personal dictionary: %s"
 msgstr "%s%s: није успело додавање речи у лични речник"
 
 #. TRANSLATORS: second "%s" is "aspell" or "enchant"
