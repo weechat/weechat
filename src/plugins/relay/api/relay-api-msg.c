@@ -55,11 +55,6 @@
         cJSON_Create##__json_type (                                     \
             weechat_hdata_##__var_type (hdata, pointer, __var_name)));
 
-#define MSG_ADD_HDATA_TIME(__json_name, __var_name)                     \
-    date = weechat_hdata_time (hdata, pointer, __var_name);             \
-    strftime (str_time, sizeof (str_time), "%FT%TZ", gmtime (&date));   \
-    MSG_ADD_STR_BUF(__json_name, str_time);
-
 #define MSG_ADD_HDATA_TIME_USEC(__json_name,                            \
                                 __var_name, __var_name_usec)            \
     time_value = weechat_hdata_time (hdata, pointer, __var_name);       \
