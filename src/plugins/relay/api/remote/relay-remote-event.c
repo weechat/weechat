@@ -1135,10 +1135,15 @@ relay_remote_event_recv (struct t_relay_remote *remote, const char *data)
 
     if (code == 200)
     {
-        if (weechat_strcmp (body_type, "buffer") == 0)
+        if ((weechat_strcmp (body_type, "buffers") == 0)
+            || (weechat_strcmp (body_type, "buffer") == 0))
+        {
             callback = &relay_remote_event_cb_buffer;
+        }
         else if (weechat_strcmp (body_type, "version") == 0)
+        {
             callback = &relay_remote_event_cb_version;
+        }
     }
     else if (event.name)
     {
@@ -1174,7 +1179,8 @@ relay_remote_event_recv (struct t_relay_remote *remote, const char *data)
 
     if (!remote->synced
         && (code == 200)
-        && (weechat_strcmp (body_type, "buffer") == 0))
+        && ((weechat_strcmp (body_type, "buffers") == 0)
+            || (weechat_strcmp (body_type, "buffer") == 0)))
     {
         relay_remote_event_sync_with_remote (remote);
     }
