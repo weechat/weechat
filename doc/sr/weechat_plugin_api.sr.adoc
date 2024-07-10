@@ -11792,10 +11792,9 @@ struct t_hook *weechat_hook_signal (const char *signal,
 | Показивач: линија.
 | У бафер је додата линија.
 
-// TRANSLATION MISSING
 | weechat | [[hook_signal_buffer_line_data_changed]] buffer_line_data_changed | 4.4.0
-| Pointer: line data.
-| Line data has been updated in a buffer.
+| Показивач: подаци линије.
+| У баферу су ажурирани подаци линије.
 
 | weechat | [[hook_signal_buffer_lines_hidden]] buffer_lines_hidden |
 | Показивач: бафер.
@@ -14782,19 +14781,16 @@ if buffer:
     weechat.prnt("", "%d" % weechat.buffer_match_list(buffer, "irc.oftc.*,python.*"))  # 0
 ----
 
-// TRANSLATION MISSING
 [[buffer_lines]]
-=== Buffer lines
+=== Линије бафера
 
-// TRANSLATION MISSING
-Functions for buffer lines.
+Функције за линије бафера.
 
 ==== line_search_by_id
 
 _WeeChat ≥ 4.4.0._
 
-// TRANSLATION MISSING
-Search line in buffer by identifier.
+Претрага линије у баферу по идентификатору.
 
 Прототип:
 
@@ -14805,8 +14801,7 @@ struct t_gui_line *weechat_line_search_by_id (struct t_gui_buffer *buffer, int i
 
 Повратна вредност:
 
-// TRANSLATION MISSING
-* pointer to line found, NULL if not found
+* показивач на пронађену линију, NULL ако се не пронађе
 
 C пример:
 

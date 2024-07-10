@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2024-07-06 11:05+0200\n"
-"PO-Revision-Date: 2024-06-16 20:38+0400\n"
+"PO-Revision-Date: 2024-07-10 11:29+0400\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: sr\n"
@@ -2067,11 +2067,12 @@ msgstr ""
 "стринг)"
 
 msgid "  - ${hdata_count:name[list]}: number of items in this hdata with list"
-msgstr ""
+msgstr "  - ${hdata_count:име[листа]}: број ставки у овом hdata са листом"
 
 msgid ""
 "  - ${hdata_count:name[ptr]}: number of items in this hdata with pointer"
 msgstr ""
+"  - ${hdata_count:име[пок]}: број ставки у овом hdata са показивачем"
 
 msgid "  - ${sec.data.xxx}: the value of the secured data \"xxx\""
 msgstr "  - ${sec.data.xxx}: вредност безбедних података „xxx”"
@@ -2707,19 +2708,14 @@ msgid "manage custom bar items"
 msgstr "управљање прилагођеним ставкама траке"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
-#, fuzzy
-#| msgid ""
-#| "list || add|addreplace <name> \"<conditions>\" \"<content>\" || rename "
-#| "<name> <new_name> || refresh <name> [<name>...] || recreate <name> || del "
-#| "<name>|<mask> [<name>|<mask>...]"
 msgid ""
 "list || add|addreplace <name> \"<conditions>\" \"<content>\" || rename "
 "<name> <new_name> || refresh <name>|<mask> [<name>|<mask>...] || recreate "
 "<name> || del <name>|<mask> [<name>|<mask>...]"
 msgstr ""
 "list || add|addreplace <име> \"<услови>\" \"<садржај>\" || rename <име> "
-"<ново_име> || refresh <име> [<име>...] || recreate <име> || del <име>|"
-"<маска> [<име>|<маска>...]"
+"<ново_име> || refresh <име>|<маска> [<име>|<маска>...] || recreate <име> || "
+"del <име>|<маска> [<име>|<маска>...]"
 
 msgid "raw[list]: list all custom bar items"
 msgstr "raw[list]: приказује све прилагођене ставке траке"
@@ -13988,15 +13984,11 @@ msgstr "1 ако је додатак учитан"
 msgid "plugin name"
 msgstr "име додатка"
 
-#, fuzzy
-#| msgid "window pointer (optional)"
 msgid "window pointer"
-msgstr "показивач на прозор (није обавезан)"
+msgstr "показивач на прозор"
 
-#, fuzzy
-#| msgid "window"
 msgid "window number"
-msgstr "прозор"
+msgstr "број прозора"
 
 msgid "get focus info"
 msgstr "враћање инфо о фокусу"
@@ -16344,15 +16336,13 @@ msgstr "%s: „%s” је уклоњен"
 msgid "%s: error: dictionary \"%s\" is not available on your system"
 msgstr "%s: грешка: на вашем систему није доступан речник „%s”"
 
-#, fuzzy, c-format
-#| msgid "%s%s: unable to create new interpreter"
+#, c-format
 msgid "%s%s: unable to create new speller"
-msgstr "%s%s: није успело креирање новог интерпретера"
+msgstr "%s%s: није успело креирање новог механизма за проверу правописа"
 
-#, fuzzy, c-format
-#| msgid "%s%s: ignore not found"
+#, c-format
 msgid "%s%s: no speller found"
-msgstr "%s%s: није пронађено игнорисање"
+msgstr "%s%s: није пронађен ниједан механизам за проверу правописа"
 
 #, c-format
 msgid "%s%s: no dictionary on this buffer for adding word"
@@ -16369,10 +16359,9 @@ msgstr ""
 msgid "%s: word \"%s\" added to personal dictionary"
 msgstr "%s: реч „%s” је додата у лични речник"
 
-#, fuzzy, c-format
-#| msgid "%s%s: failed to add word to personal dictionary"
+#, c-format
 msgid "%s%s: failed to add word to personal dictionary: %s"
-msgstr "%s%s: није успело додавање речи у лични речник"
+msgstr "%s%s: није успело додавање речи у лични речник: %s"
 
 #. TRANSLATORS: second "%s" is "aspell" or "enchant"
 #, c-format

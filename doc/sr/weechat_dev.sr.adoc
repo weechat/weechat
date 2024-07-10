@@ -534,10 +534,8 @@ WeeChat „језгро” се налази у следећим директо�
 |       weechat_faq.XX.adoc                     | link:weechat_faq.sr.html[ЧПП ^↗^^].
 |       weechat_plugin_api.XX.adoc              | link:weechat_plugin_api.sr.html[Референца за API додатака ^↗^^].
 |       weechat_quickstart.XX.adoc              | link:weechat_quickstart.sr.html[Водич за брзи почетак ^↗^^].
-// TRANSLATION MISSING
-|       weechat_relay_api.XX.adoc               | Relay "api" protocol (for remote interfaces).
-// TRANSLATION MISSING
-|       weechat_relay_weechat.XX.adoc           | link:weechat_relay_weechat.sr.html[Relay "weechat" protocol ^↗^^] (for remote interfaces).
+|       weechat_relay_api.XX.adoc               | Релеј „api” протокол (за удаљене интерфејсе).
+|       weechat_relay_weechat.XX.adoc           | link:weechat_relay_weechat.sr.html[Релеј „weechat” протокол ^↗^^] (за удаљене интерфејсе).
 |       weechat_scripting.XX.adoc               | link:weechat_scripting.sr.html[Водич за скриптовање ^↗^^].
 |       weechat_user.XX.adoc                    | link:weechat_user.sr.html[Корисничко упутство ^↗^^].
 |       includes/                               | Фајлови укључени у документацију.
@@ -1228,8 +1226,7 @@ server->hook_timer_sasl = weechat_hook_timer (timeout * 1000,
 | doc/relay
 | doc/xx/weechat_relay_api.xx.adoc +
   doc/xx/weechat_relay_weechat.xx.adoc
-// TRANSLATION MISSING
-| Relay protocols
+| Релеј протоколи
 
 | doc/dev
 | doc/xx/weechat_dev.en.adoc
