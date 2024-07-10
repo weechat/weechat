@@ -30,8 +30,7 @@ include::includes/relay.sr.adoc[tag=diagram]
 
 [NOTE]
 Сви клијенти овде су клијенти који користе _weechat_ протокол у _релеј_ додатку. +
-// TRANSLATION MISSING
-The _relay_ plugin also allows _api_ and _irc_ protocols (not described in this document).
+_релеј_ додатак такође подржава _api_ и _irc_ протоколе (који нису описани у овом документу).
 
 [[protocol_generalities]]
 == Уопштено о протоколу
@@ -1403,9 +1402,8 @@ WeeChat резервисани идентификатори:
 | _buffer_line_added | buffer | hdata: line
 | У бафер је додата линија. | Приказ линије у баферу.
 
-// TRANSLATION MISSING
 | _buffer_line_data_changed | buffer | hdata: line
-| Line changed in buffer. | Update line displayed in buffer.
+| У баферу је променњена линија. | Ажурирање линије приказане у баферу.
 
 | _nicklist | nicklist | hdata: nicklist_item
 | Листа надимака за бафер. | Замена листе надимака.
@@ -1945,8 +1943,7 @@ hda:
 |===
 | Име               | Тип              | Опис
 | buffer            | показивач        | Показивач на бафер.
-// TRANSLATION MISSING
-| id                | цео број         | Line identifier.
+| id                | цео број         | Идентификатор линије.
 | date              | време            | Датум поруке.
 | date_usec         | цео број         | Микросекунде датума.
 | date_printed      | време            | Датум када је програм WeeChat приказао поруку.
@@ -2005,9 +2002,7 @@ hda:
 [[message_buffer_line_data_changed]]
 ==== _buffer_line_data_changed
 
-// TRANSLATION MISSING
-This message is sent to the client when the signal "buffer_line_data_changed"
-is sent by WeeChat.
+Ова порука се шаље клијенту онда када WeeChat пошаље сигнал „buffer_line_data_changed”.
 
 Подаци се шаљу као hdata:
 
@@ -2015,8 +2010,7 @@ is sent by WeeChat.
 |===
 | Име               | Тип              | Опис
 | buffer            | показивач        | Показивач на бафер.
-// TRANSLATION MISSING
-| id                | цео број         | Line identifier.
+| id                | цео број         | Идентификатор линије.
 | date              | време            | Датум поруке.
 | date_usec         | цео број         | Микросекунде датума.
 | date_printed      | време            | Датум када је програм WeeChat приказао поруку.
@@ -2029,8 +2023,7 @@ is sent by WeeChat.
 | message           | стринг           | Порука.
 |===
 
-// TRANSLATION MISSING
-Example: message _hello!_ from nick _FlashCode_ on buffer _irc.libera.#weechat_ has been updated:
+Пример: порука _hello!_ од надимка _FlashCode_ у баферу _irc.libera.#weechat_ је ажурирана:
 
 [source,python]
 ----
