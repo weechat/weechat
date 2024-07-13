@@ -91,7 +91,7 @@ relay_command_client_list (int full)
                             ptr_client->desc,
                             RELAY_COLOR_CHAT,
                             weechat_color (weechat_config_string (relay_config_color_status[ptr_client->status])),
-                            relay_status_string[ptr_client->status],
+                            _(relay_status_string[ptr_client->status]),
                             RELAY_COLOR_CHAT,
                             date_start,
                             date_activity,
@@ -106,7 +106,7 @@ relay_command_client_list (int full)
                             ptr_client->desc,
                             RELAY_COLOR_CHAT,
                             weechat_color (weechat_config_string (relay_config_color_status[ptr_client->status])),
-                            relay_status_string[ptr_client->status],
+                            _(relay_status_string[ptr_client->status]),
                             RELAY_COLOR_CHAT,
                             date_start);
         }
