@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-07-06 11:05+0200\n"
+"POT-Creation-Date: 2024-07-13 10:31+0200\n"
 "PO-Revision-Date: 2024-06-11 07:49+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -13627,9 +13627,9 @@ msgstr "%s сервер \"%s\" не найден\n"
 msgid "%s%s: relay \"%s\" not found"
 msgstr "%s сервер \"%s\" не найден\n"
 
-#, c-format
-msgid "Remote: %s"
-msgstr ""
+#, fuzzy, c-format
+msgid "Remote: %s %s[%s%s%s]"
+msgstr "Режим %s%s %s[%s%s%s]%s установлен пользователем %s%s\n"
 
 #, fuzzy, c-format
 msgid "Relay remotes with \"%s\":"

@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-07-06 11:05+0200\n"
-"PO-Revision-Date: 2024-07-06 11:06+0200\n"
+"POT-Creation-Date: 2024-07-13 10:31+0200\n"
+"PO-Revision-Date: 2024-07-13 10:32+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -15253,8 +15253,8 @@ msgid "%s%s: relay \"%s\" not found"
 msgstr "%s%s : relai \"%s\" non trouvé"
 
 #, c-format
-msgid "Remote: %s"
-msgstr "Remote : %s"
+msgid "Remote: %s %s[%s%s%s]"
+msgstr "Remote : %s %s[%s%s%s]"
 
 #, c-format
 msgid "Relay remotes with \"%s\":"
@@ -18280,3 +18280,7 @@ msgstr "%s%s : délai d'attente dépassé pour \"%s\" avec %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s : impossible de se connecter : erreur inattendue (%d)"
+
+#, c-format
+#~ msgid "Remote: %s"
+#~ msgstr "Remote : %s"

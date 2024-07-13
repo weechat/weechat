@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-07-06 11:05+0200\n"
+"POT-Creation-Date: 2024-07-13 10:31+0200\n"
 "PO-Revision-Date: 2024-06-11 07:49+0200\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -15139,9 +15139,10 @@ msgstr "%s: \"%s\" ileticisi (%s: %s) kaldırıldı"
 msgid "%s%s: relay \"%s\" not found"
 msgstr "%s%s: \"%s\" ileticisi bulunamadı"
 
-#, c-format
-msgid "Remote: %s"
-msgstr ""
+#, fuzzy, c-format
+#| msgid "%sMode %s%s %s[%s%s%s]"
+msgid "Remote: %s %s[%s%s%s]"
+msgstr "%sKip %s%s %s[%s%s%s]"
 
 #, fuzzy, c-format
 #| msgid "Aliases with \"%s\":"

@@ -428,7 +428,12 @@ relay_command_display_remote (struct t_relay_remote *remote, int with_detail)
     if (with_detail)
     {
         weechat_printf (NULL, "");
-        weechat_printf (NULL, _("Remote: %s"), remote->name);
+        weechat_printf (NULL, _("Remote: %s %s[%s%s%s]"),
+                        remote->name,
+                        weechat_color ("chat_delimiters"),
+                        weechat_color ("reset"),
+                        _(relay_status_string[remote->status]),
+                        weechat_color ("chat_delimiters"));
         weechat_printf (NULL, "  url. . . . . . . . . : '%s'",
                         weechat_config_string (remote->options[RELAY_REMOTE_OPTION_URL]));
         weechat_printf (NULL, "  autoconnect. . . . . : %s",
@@ -448,9 +453,13 @@ relay_command_display_remote (struct t_relay_remote *remote, int with_detail)
     {
         weechat_printf (
             NULL,
-            "  %s: %s",
+            "  %s: %s %s[%s%s%s]",
             remote->name,
-            weechat_config_string (remote->options[RELAY_REMOTE_OPTION_URL]));
+            weechat_config_string (remote->options[RELAY_REMOTE_OPTION_URL]),
+            weechat_color ("chat_delimiters"),
+            weechat_color ("reset"),
+            _(relay_status_string[remote->status]),
+            weechat_color ("chat_delimiters"));
     }
 }
 

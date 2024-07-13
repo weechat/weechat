@@ -15,6 +15,7 @@
 - core: allow mask in command `/item refresh`
 - relay: enable websocket extension "permessage-deflate" with "api" relay only ([#1549](https://github.com/weechat/weechat/issues/1549))
 - relay/weechat: add line id in buffer lines sent to clients
+- relay: display connection status in output of commands `/remote list` and `/remote listfull`
 - api: allow NULL value for key in hashtable
 - doc: rename doc "weechat_relay_protocol" to "weechat_relay_weechat"
 
