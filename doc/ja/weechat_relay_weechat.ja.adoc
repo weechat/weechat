@@ -2142,8 +2142,8 @@ hda:
         message: 'hello!'
 ----
 
-[[message_buffer_line_added]]
-==== _buffer_line_added
+[[message_buffer_line_changed]]
+==== _buffer_line_changed
 
 // TRANSLATION MISSING
 This message is sent to the client when the signal "buffer_line_data_changed"
