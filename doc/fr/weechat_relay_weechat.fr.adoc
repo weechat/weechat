@@ -2136,24 +2136,8 @@ hda:
 Ce message est envoyé au client lorsque le signal "buffer_line_data_changed"
 est envoyé par WeeChat.
 
-Données envoyées dans le hdata :
-
-[width="100%",cols="3m,2,10",options="header"]
-|===
-| Nom               | Type               | Description
-| buffer            | pointeur           | Pointeur vers le tampon.
-| id                | entier             | Identifiant de ligne.
-| date              | date/heure         | Date du message.
-| date_usec         | entier             | Microsecondes de la date.
-| date_printed      | date/heure         | Date d'affichage du message.
-| date_usec_printed | entier             | Microsecondes de la date d'affichage du message.
-| displayed         | caractère          | 1 si le message est affiché, 0 si le message est filtré (caché).
-| notify_level      | caractère          | Niveau de notification : -1 = notification désactivée, 0 = bas, 1 = message, 2 = privé, 3 = highlight.
-| highlight         | caractère          | 1 si la ligne a un highlight, sinon 0.
-| tags_array        | tableau de chaînes | Liste des étiquettes de la ligne.
-| prefix            | chaîne             | Préfixe.
-| message           | chaîne             | Message.
-|===
+Données envoyées dans le hdata : mêmes données que pour
+<<message_buffer_line_added,_buffer_line_added>>.
 
 Exemple : le message _hello!_ du pseudo _FlashCode_ sur le tampon _irc.libera.#weechat_ a été mis à jour :
 

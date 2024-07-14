@@ -2107,24 +2107,7 @@ hda:
 This message is sent to the client when the signal "buffer_line_data_changed"
 is sent by WeeChat.
 
-Data sent as hdata:
-
-[width="100%",cols="3m,2,10",options="header"]
-|===
-| Name              | Type             | Description
-| buffer            | pointer          | Buffer pointer.
-| id                | integer          | Line identifier.
-| date              | time             | Date of message.
-| date_usec         | integer          | Microseconds of date.
-| date_printed      | time             | Date when WeeChat displayed message.
-| date_usec_printed | integer          | Microseconds of date when WeeChat displayed message.
-| displayed         | char             | 1 if message is displayed, 0 if message is filtered (hidden).
-| notify_level      | char             | Notify level: -1 = notify disabled, 0 = low, 1 = message, 2 = private, 3 = highlight.
-| highlight         | char             | 1 if line has a highlight, otherwise 0.
-| tags_array        | array of strings | List of tags for line.
-| prefix            | string           | Prefix.
-| message           | string           | Message.
-|===
+Data sent as hdata: same data as <<message_buffer_line_added,_buffer_line_added>>.
 
 Example: message _hello!_ from nick _FlashCode_ on buffer _irc.libera.#weechat_ has been updated:
 

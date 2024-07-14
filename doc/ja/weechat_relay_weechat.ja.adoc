@@ -2149,28 +2149,8 @@ hda:
 This message is sent to the client when the signal "buffer_line_data_changed"
 is sent by WeeChat.
 
-hdata として送られるデータ:
-
-[width="100%",cols="3m,2,10",options="header"]
-|===
-| 名前              | 型            | 説明
-| buffer            | pointer       | バッファへのポインタ
 // TRANSLATION MISSING
-| id                | integer       | Line identifier.
-| date              | time          | メッセージの日付
-// TRANSLATION MISSING
-| date_usec         | integer       | Microseconds of date.
-| date_printed      | time          | WeeChat メッセージを表示した日付
-// TRANSLATION MISSING
-| date_usec_printed | integer       | Microseconds of date when WeeChat displayed message.
-| displayed         | char          | メッセージが表示される場合は 1、メッセージがフィルタされる (隠される) 場合は 0
-// TRANSLATION MISSING
-| notify_level      | char          | Notify level: -1 = notify disabled, 0 = low, 1 = message, 2 = private, 3 = highlight.
-| highlight         | char          | 行がハイライト部分を含む場合は 1、それ以外は 0
-| tags_array        | string の配列 | 行に対するタグのリスト
-| prefix            | string        | プレフィックス
-| message           | string        | メッセージ
-|===
+Data sent as hdata: same data as <<message_buffer_line_added,_buffer_line_added>>.
 
 // TRANSLATION MISSING
 Example: message _hello!_ from nick _FlashCode_ on buffer _irc.libera.#weechat_ has been updated:
