@@ -8,6 +8,14 @@
 :see-release-notes: If you are upgrading: please see release notes.
 :breaking: pass:quotes[*[breaking]*]
 
+[[v4.3.5]]
+== Version 4.3.5 (under dev)
+
+[[v4.3.5_fixed]]
+=== Fixed
+
+* ruby: fix crash in plugin initialization (issue #2163)
+
 [[v4.3.4]]
 == Version 4.3.4 (2024-07-03)
 
