@@ -15,6 +15,7 @@
 === Fixed
 
 * relay/api: fix crash when sending data to a remote buffer when the remote has been deleted (issue #2157)
+* relay/api: fix timezone of dates sent to clients (issue #2151)
 
 [[v4.3.5]]
 == Version 4.3.5 (2024-07-16)

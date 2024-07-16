@@ -58,8 +58,10 @@
 #define MSG_ADD_HDATA_TIME_USEC(__json_name,                            \
                                 __var_name, __var_name_usec)            \
     time_value = weechat_hdata_time (hdata, pointer, __var_name);       \
-    gmtime_r (&time_value, &gm_time);                                   \
-    tv.tv_sec = mktime (&gm_time);                                      \
+    local_time = localtime (&time_value);                               \
+    time_value -= local_time->tm_gmtoff;                                \
+    local_time = localtime (&time_value);                               \
+    tv.tv_sec = mktime (local_time);                                    \
     tv.tv_usec = weechat_hdata_integer (hdata, pointer,                 \
                                         __var_name_usec);               \
     weechat_util_strftimeval (str_time, sizeof (str_time),              \
@@ -492,7 +494,7 @@ relay_api_msg_line_data_to_json (struct t_gui_line_data *line_data,
     int i, tags_count;
     time_t time_value;
     struct timeval tv;
-    struct tm gm_time;
+    struct tm *local_time;
 
     hdata = relay_hdata_line_data;
     pointer = line_data;
@@ -731,7 +733,7 @@ relay_api_msg_hotlist_to_json (struct t_gui_hotlist *hotlist)
     cJSON *json, *json_count;
     time_t time_value;
     struct timeval tv;
-    struct tm gm_time;
+    struct tm *local_time;
     char str_time[256], str_key[32];
     int i, array_size;
     long long buffer_id;
