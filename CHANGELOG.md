@@ -63,6 +63,12 @@
 - tests: fix compilation of tests on Fedora 40 ([#2116](https://github.com/weechat/weechat/issues/2116))
 - tests: fix compilation of tests on Rocky 9.4
 
+## Version 4.3.5 (2024-07-16)
+
+### Fixed
+
+- ruby: fix crash in plugin initialization ([#2163](https://github.com/weechat/weechat/issues/2163))
+
 ## Version 4.3.4 (2024-07-03)
 
 ### Fixed
