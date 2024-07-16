@@ -623,14 +623,17 @@ relay_remote_event_buffer_input_cb (const void *pointer,
                                     struct t_gui_buffer *buffer,
                                     const char *input_data)
 {
-    struct t_relay_remote *remote;
+    struct t_relay_remote *ptr_remote;
     cJSON *json, *json_body;
     long long buffer_id;
 
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
 
-    remote = (struct t_relay_remote *)pointer;
+    ptr_remote = relay_remote_search (weechat_buffer_get_string (buffer, "localvar_relay_remote"));
+    if (!ptr_remote)
+        return WEECHAT_RC_OK;
 
     json = NULL;
 
@@ -654,7 +657,7 @@ relay_remote_event_buffer_input_cb (const void *pointer,
                            cJSON_CreateString (input_data));
     cJSON_AddItemToObject (json, "body", json_body);
 
-    relay_remote_network_send_json (remote, json);
+    relay_remote_network_send_json (ptr_remote, json);
 
     cJSON_Delete (json);
 
@@ -822,7 +825,7 @@ RELAY_REMOTE_EVENT_CALLBACK(buffer)
             {
                 ptr_buffer = weechat_buffer_new_props (
                     full_name, buffer_props,
-                    &relay_remote_event_buffer_input_cb, event->remote, NULL,
+                    &relay_remote_event_buffer_input_cb, NULL, NULL,
                     NULL, NULL, NULL);
                 apply_props = 0;
             }
