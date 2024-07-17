@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-07-13 10:31+0200\n"
+"POT-Creation-Date: 2024-07-17 22:20+0200\n"
 "PO-Revision-Date: 2024-06-11 07:49+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -16441,6 +16441,17 @@ msgstr "ロードされた %s スクリプト:"
 #| msgid "list of script extensions"
 msgid "script name with extension"
 msgstr "スクリプトの拡張子のリスト"
+
+#, fuzzy
+#| msgid "list of scripts"
+msgid "info on a script"
+msgstr "スクリプトのリスト"
+
+#, fuzzy
+#| msgid "script name with extension (wildcard \"*\" is allowed) (optional)"
+msgid "script,info (script name with extension and info is a hdata variable"
+msgstr ""
+"拡張子を含めたスクリプト名 (ワイルドカード \"*\" を使うことができます) (任意)"
 
 msgid "script name with extension (wildcard \"*\" is allowed) (optional)"
 msgstr ""

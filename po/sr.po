@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-07-13 10:31+0200\n"
+"POT-Creation-Date: 2024-07-17 22:20+0200\n"
 "PO-Revision-Date: 2024-07-10 11:29+0400\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -16250,6 +16250,16 @@ msgstr "1 ако је скрипта учитана"
 
 msgid "script name with extension"
 msgstr "име скрипте са екстензијом"
+
+#, fuzzy
+#| msgid "list of scripts"
+msgid "info on a script"
+msgstr "листа скрипти"
+
+#, fuzzy
+#| msgid "script name with extension (wildcard \"*\" is allowed) (optional)"
+msgid "script,info (script name with extension and info is a hdata variable"
+msgstr "име скрипте са екстензијом (дозвољен је џокер „*”) (није обавезно)"
 
 msgid "script name with extension (wildcard \"*\" is allowed) (optional)"
 msgstr "име скрипте са екстензијом (дозвољен је џокер „*”) (није обавезно)"

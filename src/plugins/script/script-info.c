@@ -29,6 +29,84 @@
 
 
 /*
+ * Returns script info "script_info".
+ */
+
+char *
+script_info_info_script_info_cb (const void *pointer, void *data,
+                                 const char *info_name,
+                                 const char *arguments)
+{
+    int i, length;
+    char *script_name, hdata_name[128], *str_to_eval, *info;
+    const char *ptr_info, *ptr_name;
+    struct t_hdata *hdata;
+    struct t_hashtable *pointers;
+    void *ptr_script;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) info_name;
+
+    if (!arguments || !arguments[0])
+        return NULL;
+
+    ptr_info = strchr (arguments, ',');
+    if (!ptr_info)
+        return NULL;
+
+    info = NULL;
+
+    script_name = weechat_strndup (arguments, ptr_info - arguments);
+    if (!script_name)
+        goto end;
+
+    ptr_info++;
+
+    for (i = 0; i < SCRIPT_NUM_LANGUAGES; i++)
+    {
+        snprintf (hdata_name, sizeof (hdata_name),
+                  "%s_script", script_language[i]);
+        hdata = weechat_hdata_get (hdata_name);
+        ptr_script = weechat_hdata_get_list (hdata, "scripts");
+        while (ptr_script)
+        {
+            ptr_name = weechat_hdata_string (hdata, ptr_script, "name");
+            if (ptr_name)
+            {
+                length = strlen (ptr_name);
+                if ((strncmp (script_name, ptr_name, length) == 0)
+                    && (script_name[length] == '.')
+                    && (strcmp (script_name + length + 1, script_extension[i]) == 0))
+                {
+                    pointers = weechat_hashtable_new (
+                        32,
+                        WEECHAT_HASHTABLE_STRING,
+                        WEECHAT_HASHTABLE_POINTER,
+                        NULL,
+                        NULL);
+                    weechat_hashtable_set (pointers, hdata_name, ptr_script);
+                    if (weechat_asprintf (&str_to_eval, "${%s.%s}", hdata_name, ptr_info) >= 0)
+                    {
+                        info = weechat_string_eval_expression (
+                            str_to_eval, pointers, NULL, NULL);
+                        free (str_to_eval);
+                    }
+                    weechat_hashtable_free (pointers);
+                    goto end;
+                }
+            }
+            ptr_script = weechat_hdata_move (hdata, ptr_script, 1);
+        }
+    }
+
+end:
+    free (script_name);
+    return info;
+}
+
+/*
  * Returns script info "script_loaded".
  */
 
@@ -145,6 +223,11 @@ void
 script_info_init ()
 {
     /* info hooks */
+    weechat_hook_info (
+        "script_info",
+        N_("info on a script"),
+        N_("script,info (script name with extension and info is a hdata variable"),
+        &script_info_info_script_info_cb, NULL, NULL);
     weechat_hook_info (
         "script_loaded",
         N_("1 if script is loaded"),

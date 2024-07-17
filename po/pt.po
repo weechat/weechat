@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-07-13 10:31+0200\n"
+"POT-Creation-Date: 2024-07-17 22:20+0200\n"
 "PO-Revision-Date: 2024-06-11 07:49+0200\n"
 "Last-Translator: Vasco Almeida <vascomalmeida@sapo.pt>\n"
 "Language-Team: Portuguese <>\n"
@@ -16331,6 +16331,18 @@ msgstr "scripts %s carregados:"
 #| msgid "list of script extensions"
 msgid "script name with extension"
 msgstr "lista de extensões de script"
+
+#, fuzzy
+#| msgid "list of scripts"
+msgid "info on a script"
+msgstr "lista de scripts"
+
+#, fuzzy
+#| msgid "script name with extension (wildcard \"*\" is allowed) (optional)"
+msgid "script,info (script name with extension and info is a hdata variable"
+msgstr ""
+"nome do script com extensão (o caráter universal \"*\" é permitido) "
+"(opcional)"
 
 msgid "script name with extension (wildcard \"*\" is allowed) (optional)"
 msgstr ""

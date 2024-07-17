@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-07-13 10:31+0200\n"
+"POT-Creation-Date: 2024-07-17 22:20+0200\n"
 "PO-Revision-Date: 2024-06-22 19:43+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -16287,6 +16287,17 @@ msgstr "1 jeśli skrypt jest załadowany"
 
 msgid "script name with extension"
 msgstr "nazwa skryptu z rozszerzeniem"
+
+#, fuzzy
+#| msgid "list of scripts"
+msgid "info on a script"
+msgstr "lista skryptów"
+
+#, fuzzy
+#| msgid "script name with extension (wildcard \"*\" is allowed) (optional)"
+msgid "script,info (script name with extension and info is a hdata variable"
+msgstr ""
+"nazwa skryptu z rozszerzeniem (wildcard \"*\" jest dozwolony) (opcjonalne)\""
 
 msgid "script name with extension (wildcard \"*\" is allowed) (optional)"
 msgstr ""
