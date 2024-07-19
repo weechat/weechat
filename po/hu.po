@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-07-17 22:20+0200\n"
+"POT-Creation-Date: 2024-07-19 09:17+0200\n"
 "PO-Revision-Date: 2024-06-11 07:49+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -13772,8 +13772,8 @@ msgstr "kilépés a szerver(ek)ről"
 #, fuzzy
 msgid ""
 "list|listfull [<name>] || add|addreplace <name> <url> [-<option>[=<value>]] "
-"|| connect <name> || send <name> <json> || disconnect <name> || rename "
-"<name> <new_name> || del <name>"
+"|| connect|reconnect|disconnect|del <name> || send <name> <json> || rename "
+"<name> <new_name>"
 msgstr ""
 "[list [szervernév]] | [listfull [szervernév]] | [add szervernév gépnév [-"
 "port port] [-temp] [-auto | -noauto] [-ipv6] [-ssl] [-pwd jelszó] [-nicks "
@@ -13819,19 +13819,24 @@ msgid "raw[connect]: connect to a remote relay server"
 msgstr "újracsatlakozás a szerver(ek)hez"
 
 #, fuzzy
-msgid "raw[send]: send JSON data to a remote relay server"
-msgstr "Aliaszok listája:\n"
+#| msgid "reconnect to server(s)"
+msgid "raw[reconnect]: reconnect to a remote relay server"
+msgstr "újracsatlakozás a szerver(ek)hez"
 
 #, fuzzy
 msgid "raw[disconnect]: disconnect from a remote relay server"
 msgstr "kilépés a szerver(ek)ről"
 
 #, fuzzy
-msgid "raw[rename]: rename a remote relay server"
+msgid "raw[del]: delete a remote relay server"
 msgstr "Aliaszok listája:\n"
 
 #, fuzzy
-msgid "raw[del]: delete a remote relay server"
+msgid "raw[send]: send JSON data to a remote relay server"
+msgstr "Aliaszok listája:\n"
+
+#, fuzzy
+msgid "raw[rename]: rename a remote relay server"
 msgstr "Aliaszok listája:\n"
 
 msgid "all possible protocol.name for relay plugin"
@@ -14880,19 +14885,19 @@ msgid "URL for file with list of scripts"
 msgstr "%s adatküldési hiba az IRC szerveren\n"
 
 #, fuzzy
+msgid "info on a script"
+msgstr "Aliaszok listája:\n"
+
+msgid "script,info (script name with extension and info is a hdata variable"
+msgstr ""
+
+#, fuzzy
 msgid "1 if script is loaded"
 msgstr "FIFO cső bezárva\n"
 
 #, fuzzy
 msgid "script name with extension"
 msgstr "Aliaszok listája:\n"
-
-#, fuzzy
-msgid "info on a script"
-msgstr "Aliaszok listája:\n"
-
-msgid "script,info (script name with extension and info is a hdata variable"
-msgstr ""
 
 msgid "script name with extension (wildcard \"*\" is allowed) (optional)"
 msgstr ""

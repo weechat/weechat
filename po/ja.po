@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-07-17 22:20+0200\n"
+"POT-Creation-Date: 2024-07-19 09:17+0200\n"
 "PO-Revision-Date: 2024-06-11 07:49+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -15206,8 +15206,8 @@ msgstr "特定のまたは全ての IRC サーバとの接続を切断"
 #, fuzzy
 msgid ""
 "list|listfull [<name>] || add|addreplace <name> <url> [-<option>[=<value>]] "
-"|| connect <name> || send <name> <json> || disconnect <name> || rename "
-"<name> <new_name> || del <name>"
+"|| connect|reconnect|disconnect|del <name> || send <name> <json> || rename "
+"<name> <new_name>"
 msgstr ""
 "list|listfull [<name>] || add <name> <hostname>[/<port>] [-temp] [-"
 "<option>[=<value>]] [-no<option>] || copy|rename <name> <new_name> || "
@@ -15256,9 +15256,9 @@ msgid "raw[connect]: connect to a remote relay server"
 msgstr "サーバに再接続"
 
 #, fuzzy
-#| msgid "list of bar items"
-msgid "raw[send]: send JSON data to a remote relay server"
-msgstr "バー要素のリスト"
+#| msgid "reconnect to server(s)"
+msgid "raw[reconnect]: reconnect to a remote relay server"
+msgstr "サーバに再接続"
 
 #, fuzzy
 #| msgid "disconnect from one or all IRC servers"
@@ -15266,14 +15266,19 @@ msgid "raw[disconnect]: disconnect from a remote relay server"
 msgstr "特定のまたは全ての IRC サーバとの接続を切断"
 
 #, fuzzy
-#| msgid "names of filters"
-msgid "raw[rename]: rename a remote relay server"
-msgstr "フィルタ名"
-
-#, fuzzy
 #| msgid "default triggers"
 msgid "raw[del]: delete a remote relay server"
 msgstr "デフォルトトリガ"
+
+#, fuzzy
+#| msgid "list of bar items"
+msgid "raw[send]: send JSON data to a remote relay server"
+msgstr "バー要素のリスト"
+
+#, fuzzy
+#| msgid "names of filters"
+msgid "raw[rename]: rename a remote relay server"
+msgstr "フィルタ名"
 
 msgid "all possible protocol.name for relay plugin"
 msgstr "リレープラグインで利用可能な全ての protocol.name"
@@ -16434,15 +16439,6 @@ msgid "URL for file with list of scripts"
 msgstr "スクリプトのリストを含むファイルの URL"
 
 #, fuzzy
-msgid "1 if script is loaded"
-msgstr "ロードされた %s スクリプト:"
-
-#, fuzzy
-#| msgid "list of script extensions"
-msgid "script name with extension"
-msgstr "スクリプトの拡張子のリスト"
-
-#, fuzzy
 #| msgid "list of scripts"
 msgid "info on a script"
 msgstr "スクリプトのリスト"
@@ -16452,6 +16448,15 @@ msgstr "スクリプトのリスト"
 msgid "script,info (script name with extension and info is a hdata variable"
 msgstr ""
 "拡張子を含めたスクリプト名 (ワイルドカード \"*\" を使うことができます) (任意)"
+
+#, fuzzy
+msgid "1 if script is loaded"
+msgstr "ロードされた %s スクリプト:"
+
+#, fuzzy
+#| msgid "list of script extensions"
+msgid "script name with extension"
+msgstr "スクリプトの拡張子のリスト"
 
 msgid "script name with extension (wildcard \"*\" is allowed) (optional)"
 msgstr ""

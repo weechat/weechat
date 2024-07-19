@@ -639,13 +639,12 @@ relay_remote_set_status (struct t_relay_remote *remote,
 int
 relay_remote_connect (struct t_relay_remote *remote)
 {
-#ifdef HAVE_CJSON
     if (!remote)
         return 0;
 
+#ifdef HAVE_CJSON
     return relay_remote_network_connect (remote);
 #else
-    (void) remote;
     weechat_printf (NULL,
                     _("%s%s: error: unable to connect to a remote relay via API "
                       "(cJSON support is not enabled)"),
@@ -773,16 +772,51 @@ relay_remote_rename (struct t_relay_remote *remote, const char *name)
 
 /*
  * Disconnects one remote.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
  */
 
-void
+int
 relay_remote_disconnect (struct t_relay_remote *remote)
 {
+    if (!remote)
+        return 0;
+
 #ifdef HAVE_CJSON
     if (remote->sock >= 0)
         relay_remote_network_disconnect (remote);
+    return 1;
 #else
-    (void) remote;
+    return 0;
+#endif /* HAVE_CJSON */
+}
+
+/*
+ * Reconnects to a remote WeeChat relay/api.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
+ */
+
+int
+relay_remote_reconnect (struct t_relay_remote *remote)
+{
+    if (!remote)
+        return 0;
+
+#ifdef HAVE_CJSON
+    if (!relay_remote_disconnect (remote))
+        return 0;
+    return relay_remote_network_connect (remote);
+#else
+    weechat_printf (NULL,
+                    _("%s%s: error: unable to connect to a remote relay via API "
+                      "(cJSON support is not enabled)"),
+                    weechat_prefix ("error"), RELAY_PLUGIN_NAME);
+    return 0;
 #endif /* HAVE_CJSON */
 }
 

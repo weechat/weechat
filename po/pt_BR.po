@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-07-17 22:20+0200\n"
+"POT-Creation-Date: 2024-07-19 09:17+0200\n"
 "PO-Revision-Date: 2024-06-11 07:49+0200\n"
 "Last-Translator: Érico Nogueira <ericonr@disroot.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -14245,8 +14245,8 @@ msgstr "desconectar de um ou todos os servidores IRC"
 #| "del <name>|-all || set <name> <option> <value>"
 msgid ""
 "list|listfull [<name>] || add|addreplace <name> <url> [-<option>[=<value>]] "
-"|| connect <name> || send <name> <json> || disconnect <name> || rename "
-"<name> <new_name> || del <name>"
+"|| connect|reconnect|disconnect|del <name> || send <name> <json> || rename "
+"<name> <new_name>"
 msgstr ""
 "list || add <nome> <tipo> <endereço> <porta> [<nome de usuário> [<senha>]] "
 "|| del <nome>|-all || set <nome> <opção> <valor>"
@@ -14292,9 +14292,8 @@ msgid "raw[connect]: connect to a remote relay server"
 msgstr "%s: reconectando ao servidor..."
 
 #, fuzzy
-#| msgid "list of bar items"
-msgid "raw[send]: send JSON data to a remote relay server"
-msgstr "lista de itens da barra"
+msgid "raw[reconnect]: reconnect to a remote relay server"
+msgstr "%s: reconectando ao servidor..."
 
 #, fuzzy
 #| msgid "disconnect from one or all IRC servers"
@@ -14302,13 +14301,18 @@ msgid "raw[disconnect]: disconnect from a remote relay server"
 msgstr "desconectar de um ou todos os servidores IRC"
 
 #, fuzzy
+msgid "raw[del]: delete a remote relay server"
+msgstr "lista de atalhos"
+
+#, fuzzy
+#| msgid "list of bar items"
+msgid "raw[send]: send JSON data to a remote relay server"
+msgstr "lista de itens da barra"
+
+#, fuzzy
 #| msgid "names of filters"
 msgid "raw[rename]: rename a remote relay server"
 msgstr "nomes dos filtros"
-
-#, fuzzy
-msgid "raw[del]: delete a remote relay server"
-msgstr "lista de atalhos"
 
 msgid "all possible protocol.name for relay plugin"
 msgstr ""
@@ -15387,14 +15391,6 @@ msgid "URL for file with list of scripts"
 msgstr "%s%s: erro ao criar transferência"
 
 #, fuzzy
-msgid "1 if script is loaded"
-msgstr "scripts %s carregados:"
-
-#, fuzzy
-msgid "script name with extension"
-msgstr "list de scripts"
-
-#, fuzzy
 #| msgid "list of scripts"
 msgid "info on a script"
 msgstr "list de scripts"
@@ -15404,6 +15400,14 @@ msgid "script,info (script name with extension and info is a hdata variable"
 msgstr ""
 "nome do script (pode começar ou terminar com \"*\" como um coringa) "
 "(opcional)"
+
+#, fuzzy
+msgid "1 if script is loaded"
+msgstr "scripts %s carregados:"
+
+#, fuzzy
+msgid "script name with extension"
+msgstr "list de scripts"
 
 #, fuzzy
 msgid "script name with extension (wildcard \"*\" is allowed) (optional)"

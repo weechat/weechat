@@ -100,7 +100,8 @@ extern void relay_remote_set_status (struct t_relay_remote *remote,
 extern int relay_remote_connect (struct t_relay_remote *remote);
 extern void relay_remote_auto_connect ();
 extern int relay_remote_send (struct t_relay_remote *remote, const char *json);
-extern void relay_remote_disconnect (struct t_relay_remote *remote);
+extern int relay_remote_disconnect (struct t_relay_remote *remote);
+extern int relay_remote_reconnect (struct t_relay_remote *remote);
 extern void relay_remote_disconnect_all ();
 extern int relay_remote_rename (struct t_relay_remote *remote, const char *name);
 extern void relay_remote_free (struct t_relay_remote *remote);

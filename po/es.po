@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-07-17 22:20+0200\n"
+"POT-Creation-Date: 2024-07-19 09:17+0200\n"
 "PO-Revision-Date: 2024-06-11 07:49+0200\n"
 "Last-Translator: Santiago Forero <santiago@forero.xyz>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -14736,8 +14736,8 @@ msgstr "desconectarse de un o todos los servidores IRC"
 #, fuzzy
 msgid ""
 "list|listfull [<name>] || add|addreplace <name> <url> [-<option>[=<value>]] "
-"|| connect <name> || send <name> <json> || disconnect <name> || rename "
-"<name> <new_name> || del <name>"
+"|| connect|reconnect|disconnect|del <name> || send <name> <json> || rename "
+"<name> <new_name>"
 msgstr ""
 "list|listfull [<servidor>] || add <servidor> <hostname>[/<puerto>] [-temp] [-"
 "<opción>[=<valor>]] [-no<opción>] || copy|rename <servidor> <nuevo_nombre> "
@@ -14785,9 +14785,9 @@ msgid "raw[connect]: connect to a remote relay server"
 msgstr "reconectar al servidor(es)"
 
 #, fuzzy
-#| msgid "list of bar items"
-msgid "raw[send]: send JSON data to a remote relay server"
-msgstr "lista de elementos de barra"
+#| msgid "reconnect to server(s)"
+msgid "raw[reconnect]: reconnect to a remote relay server"
+msgstr "reconectar al servidor(es)"
 
 #, fuzzy
 #| msgid "disconnect from one or all IRC servers"
@@ -14795,13 +14795,18 @@ msgid "raw[disconnect]: disconnect from a remote relay server"
 msgstr "desconectarse de un o todos los servidores IRC"
 
 #, fuzzy
+msgid "raw[del]: delete a remote relay server"
+msgstr "Lista de alias:"
+
+#, fuzzy
+#| msgid "list of bar items"
+msgid "raw[send]: send JSON data to a remote relay server"
+msgstr "lista de elementos de barra"
+
+#, fuzzy
 #| msgid "names of filters"
 msgid "raw[rename]: rename a remote relay server"
 msgstr "nombre de los filtros"
-
-#, fuzzy
-msgid "raw[del]: delete a remote relay server"
-msgstr "Lista de alias:"
 
 msgid "all possible protocol.name for relay plugin"
 msgstr "todos los posibles protocolo.nombre para el plugin relay"
@@ -15868,14 +15873,6 @@ msgid "URL for file with list of scripts"
 msgstr "%s%s: error al leer la lista de scripts"
 
 #, fuzzy
-msgid "1 if script is loaded"
-msgstr "scripts en %s cargados:"
-
-#, fuzzy
-msgid "script name with extension"
-msgstr "lista de scripts"
-
-#, fuzzy
 #| msgid "list of scripts"
 msgid "info on a script"
 msgstr "lista de scripts"
@@ -15885,6 +15882,14 @@ msgid "script,info (script name with extension and info is a hdata variable"
 msgstr ""
 "nombre del script con extensión (puede empezar o terminar con \"*\" como "
 "comodín) (opcional)"
+
+#, fuzzy
+msgid "1 if script is loaded"
+msgstr "scripts en %s cargados:"
+
+#, fuzzy
+msgid "script name with extension"
+msgstr "lista de scripts"
 
 #, fuzzy
 msgid "script name with extension (wildcard \"*\" is allowed) (optional)"

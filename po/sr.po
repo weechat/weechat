@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-07-17 22:20+0200\n"
+"POT-Creation-Date: 2024-07-19 09:17+0200\n"
 "PO-Revision-Date: 2024-07-10 11:29+0400\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -15025,10 +15025,15 @@ msgid "control of remote relay servers"
 msgstr "контрола сервера релеја за удаљене"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#, fuzzy
+#| msgid ""
+#| "list|listfull [<name>] || add|addreplace <name> <url> [-"
+#| "<option>[=<value>]] || connect <name> || send <name> <json> || disconnect "
+#| "<name> || rename <name> <new_name> || del <name>"
 msgid ""
 "list|listfull [<name>] || add|addreplace <name> <url> [-<option>[=<value>]] "
-"|| connect <name> || send <name> <json> || disconnect <name> || rename "
-"<name> <new_name> || del <name>"
+"|| connect|reconnect|disconnect|del <name> || send <name> <json> || rename "
+"<name> <new_name>"
 msgstr ""
 "list|listfull [<име>] || add|addreplace <име> <url> [-<опција>[=<вредност>]] "
 "|| connect <име> || send <име> <json> || disconnect <име> || rename <име> "
@@ -15073,17 +15078,22 @@ msgstr "опција: поставља опцију за релеј удаљен
 msgid "raw[connect]: connect to a remote relay server"
 msgstr "raw[connect]: повезивање на сервер релеја удаљених"
 
-msgid "raw[send]: send JSON data to a remote relay server"
-msgstr "raw[send]: шаље JSON податке серверу релеја удаљених"
+#, fuzzy
+#| msgid "raw[connect]: connect to a remote relay server"
+msgid "raw[reconnect]: reconnect to a remote relay server"
+msgstr "raw[connect]: повезивање на сервер релеја удаљених"
 
 msgid "raw[disconnect]: disconnect from a remote relay server"
 msgstr "raw[disconnect]: прекидање везе са сервером релеја удаљених"
 
-msgid "raw[rename]: rename a remote relay server"
-msgstr "raw[rename]: промена имена сервера релеја удаљених"
-
 msgid "raw[del]: delete a remote relay server"
 msgstr "raw[del]: брисање сервера релеја удаљених"
+
+msgid "raw[send]: send JSON data to a remote relay server"
+msgstr "raw[send]: шаље JSON податке серверу релеја удаљених"
+
+msgid "raw[rename]: rename a remote relay server"
+msgstr "raw[rename]: промена имена сервера релеја удаљених"
 
 msgid "all possible protocol.name for relay plugin"
 msgstr "сви могући протокол.име за relay додатак"
@@ -16245,12 +16255,6 @@ msgstr ""
 msgid "URL for file with list of scripts"
 msgstr "URL фајла са листом скрипти"
 
-msgid "1 if script is loaded"
-msgstr "1 ако је скрипта учитана"
-
-msgid "script name with extension"
-msgstr "име скрипте са екстензијом"
-
 #, fuzzy
 #| msgid "list of scripts"
 msgid "info on a script"
@@ -16260,6 +16264,12 @@ msgstr "листа скрипти"
 #| msgid "script name with extension (wildcard \"*\" is allowed) (optional)"
 msgid "script,info (script name with extension and info is a hdata variable"
 msgstr "име скрипте са екстензијом (дозвољен је џокер „*”) (није обавезно)"
+
+msgid "1 if script is loaded"
+msgstr "1 ако је скрипта учитана"
+
+msgid "script name with extension"
+msgstr "име скрипте са екстензијом"
 
 msgid "script name with extension (wildcard \"*\" is allowed) (optional)"
 msgstr "име скрипте са екстензијом (дозвољен је џокер „*”) (није обавезно)"

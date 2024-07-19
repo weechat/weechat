@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-07-17 22:20+0200\n"
+"POT-Creation-Date: 2024-07-19 09:17+0200\n"
 "PO-Revision-Date: 2024-06-11 07:49+0200\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -15390,8 +15390,8 @@ msgstr "bir veya diğer tüm IRC sunucuları bağlantısını kes"
 #| "<name> || deloutq|jump || raw [<filter>]"
 msgid ""
 "list|listfull [<name>] || add|addreplace <name> <url> [-<option>[=<value>]] "
-"|| connect <name> || send <name> <json> || disconnect <name> || rename "
-"<name> <new_name> || del <name>"
+"|| connect|reconnect|disconnect|del <name> || send <name> <json> || rename "
+"<name> <new_name>"
 msgstr ""
 "list|listfull [<ad>] || add <ad> <makine>[/<kapı>] [-temp] [-"
 "<seçenek>[=<değer>]] [-no<seçenek>] || copy|rename <ad> <yeni_ad> || reorder "
@@ -15440,9 +15440,9 @@ msgid "raw[connect]: connect to a remote relay server"
 msgstr "sunuculara yeniden bağlan"
 
 #, fuzzy
-#| msgid "manage custom bar items"
-msgid "raw[send]: send JSON data to a remote relay server"
-msgstr "özel çubuk ögelerini yönet"
+#| msgid "reconnect to server(s)"
+msgid "raw[reconnect]: reconnect to a remote relay server"
+msgstr "sunuculara yeniden bağlan"
 
 #, fuzzy
 #| msgid "disconnect from one or all IRC servers"
@@ -15450,14 +15450,19 @@ msgid "raw[disconnect]: disconnect from a remote relay server"
 msgstr "bir veya diğer tüm IRC sunucuları bağlantısını kes"
 
 #, fuzzy
-#| msgid "names of filters"
-msgid "raw[rename]: rename a remote relay server"
-msgstr "süzgeçlerin adları"
-
-#, fuzzy
 #| msgid "default triggers"
 msgid "raw[del]: delete a remote relay server"
 msgstr "öntanımlı tetikler"
+
+#, fuzzy
+#| msgid "manage custom bar items"
+msgid "raw[send]: send JSON data to a remote relay server"
+msgstr "özel çubuk ögelerini yönet"
+
+#, fuzzy
+#| msgid "names of filters"
+msgid "raw[rename]: rename a remote relay server"
+msgstr "süzgeçlerin adları"
 
 msgid "all possible protocol.name for relay plugin"
 msgstr "iletim eklentisi için tüm olası protokol.ad"
@@ -16665,16 +16670,6 @@ msgid "URL for file with list of scripts"
 msgstr "Betik listeli dosya URL'si"
 
 #, fuzzy
-#| msgid "No scripts loaded"
-msgid "1 if script is loaded"
-msgstr "Hiçbir betik yüklenmedi"
-
-#, fuzzy
-#| msgid "list of script extensions"
-msgid "script name with extension"
-msgstr "betik uzantılarının listesi"
-
-#, fuzzy
 #| msgid "list of scripts"
 msgid "info on a script"
 msgstr "betiklerin listesi"
@@ -16683,6 +16678,16 @@ msgstr "betiklerin listesi"
 #| msgid "script name with extension (wildcard \"*\" is allowed) (optional)"
 msgid "script,info (script name with extension and info is a hdata variable"
 msgstr "betik adı, uzantı ile (\"*\" jokerine izin verilir) (isteğe bağlı)"
+
+#, fuzzy
+#| msgid "No scripts loaded"
+msgid "1 if script is loaded"
+msgstr "Hiçbir betik yüklenmedi"
+
+#, fuzzy
+#| msgid "list of script extensions"
+msgid "script name with extension"
+msgstr "betik uzantılarının listesi"
 
 msgid "script name with extension (wildcard \"*\" is allowed) (optional)"
 msgstr "betik adı, uzantı ile (\"*\" jokerine izin verilir) (isteğe bağlı)"

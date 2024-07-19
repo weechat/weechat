@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-07-17 22:20+0200\n"
-"PO-Revision-Date: 2024-07-17 22:33+0200\n"
+"POT-Creation-Date: 2024-07-19 09:17+0200\n"
+"PO-Revision-Date: 2024-07-19 09:17+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -15467,12 +15467,12 @@ msgstr "contrôle des relais distants"
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid ""
 "list|listfull [<name>] || add|addreplace <name> <url> [-<option>[=<value>]] "
-"|| connect <name> || send <name> <json> || disconnect <name> || rename "
-"<name> <new_name> || del <name>"
+"|| connect|reconnect|disconnect|del <name> || send <name> <json> || rename "
+"<name> <new_name>"
 msgstr ""
 "list|listfull [<nom>] || add|addreplace <nom> <url> [-<option>[=<valeur>]] "
-"|| connect <nom> || send <nom> <json> || disconnect <nom> || rename <nom> "
-"<nouveau_nom> || del <nom>"
+"|| connect|reconnect|disconnect|del <nom> || send <nom> <json> rename <nom> "
+"<nouveau_nom>"
 
 msgid ""
 "raw[list]: list remote relay servers (without argument, this list is "
@@ -15512,17 +15512,20 @@ msgstr "option : définir l'option pour le relai distant"
 msgid "raw[connect]: connect to a remote relay server"
 msgstr "raw[connect] : se connecter au relai distant"
 
-msgid "raw[send]: send JSON data to a remote relay server"
-msgstr "raw[send] : envoyer des données JSON au relai distant"
+msgid "raw[reconnect]: reconnect to a remote relay server"
+msgstr "raw[reconnect] : se reconnecter au relai distant"
 
 msgid "raw[disconnect]: disconnect from a remote relay server"
 msgstr "raw[disconnect] : se déconnecter du relai distant"
 
-msgid "raw[rename]: rename a remote relay server"
-msgstr "raw[rename] : renommer un relai distant"
-
 msgid "raw[del]: delete a remote relay server"
 msgstr "raw[del] : supprimer un relai distant"
+
+msgid "raw[send]: send JSON data to a remote relay server"
+msgstr "raw[send] : envoyer des données JSON au relai distant"
+
+msgid "raw[rename]: rename a remote relay server"
+msgstr "raw[rename] : renommer un relai distant"
 
 msgid "all possible protocol.name for relay plugin"
 msgstr "tous les protocole.nom possible pour l'extension relay"
@@ -16719,18 +16722,18 @@ msgstr ""
 msgid "URL for file with list of scripts"
 msgstr "URL pour le fichier avec la liste des scripts"
 
-msgid "1 if script is loaded"
-msgstr "1 si le script est chargé"
-
-msgid "script name with extension"
-msgstr "nom du script avec l'extension"
-
 msgid "info on a script"
 msgstr "info sur un script"
 
 msgid "script,info (script name with extension and info is a hdata variable"
 msgstr ""
 "script,info (nom du script avec extension et info est une variable hdata)"
+
+msgid "1 if script is loaded"
+msgstr "1 si le script est chargé"
+
+msgid "script name with extension"
+msgstr "nom du script avec l'extension"
 
 msgid "script name with extension (wildcard \"*\" is allowed) (optional)"
 msgstr ""
