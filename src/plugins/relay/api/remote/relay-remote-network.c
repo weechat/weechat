@@ -655,6 +655,7 @@ relay_remote_network_connect_ws_auth (struct t_relay_remote *remote)
     password = NULL;
     totp_secret = NULL;
     str_auth[0] = '\0';
+    str_auth_base64[0] = '\0';
     str_totp[0] = '\0';
     str_extensions[0] = '\0';
 
@@ -717,7 +718,7 @@ relay_remote_network_connect_ws_auth (struct t_relay_remote *remote)
             break;
     }
 
-    if (!str_auth[0])
+    if (password[0] && !str_auth[0])
     {
         weechat_printf (NULL,
                         _("%sremote[%s]: failed to build authentication"),
@@ -732,7 +733,8 @@ relay_remote_network_connect_ws_auth (struct t_relay_remote *remote)
     free (remote->websocket_key);
     remote->websocket_key = strdup (ws_key_base64);
 
-    weechat_string_base_encode ("64", str_auth, strlen (str_auth), str_auth_base64);
+    if (str_auth[0])
+        weechat_string_base_encode ("64", str_auth, strlen (str_auth), str_auth_base64);
 
     if (totp_secret && totp_secret[0])
     {
@@ -759,7 +761,7 @@ relay_remote_network_connect_ws_auth (struct t_relay_remote *remote)
     snprintf (
         str_http, sizeof (str_http),
         "GET /api HTTP/1.1\r\n"
-        "Authorization: Basic %s\r\n"
+        "%s%s%s"
         "%s"
         "Sec-WebSocket-Version: 13\r\n"
         "Sec-WebSocket-Key: %s\r\n"
@@ -768,7 +770,9 @@ relay_remote_network_connect_ws_auth (struct t_relay_remote *remote)
         "%s"
         "Host: %s:%d\r\n"
         "\r\n",
-        str_auth_base64,
+        (str_auth_base64[0]) ? "Authorization: Basic " : "",
+        (str_auth_base64[0]) ? str_auth_base64 : "",
+        (str_auth_base64[0]) ? "\r\n" : "",
         str_totp,
         ws_key_base64,
         str_extensions,
