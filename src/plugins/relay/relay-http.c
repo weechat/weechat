@@ -579,72 +579,82 @@ relay_http_get_auth_status (struct t_relay_client *client)
         goto end;
     }
 
-    auth = weechat_hashtable_get (client->http_req->headers, "authorization");
-    if (!auth || (weechat_strncasecmp (auth, "basic ", 6) != 0))
-    {
-        rc = -1;
-        goto end;
-    }
-
-    pos = auth + 6;
-    while (pos[0] == ' ')
-    {
-        pos++;
-    }
-
-    length = strlen (pos);
-    user_pass = malloc (length + 1);
-    if (!user_pass)
-    {
-        rc = -8;
-        goto end;
-    }
-    length = weechat_string_base_decode ("64", pos, user_pass);
-    if (length < 0)
+    if (!relay_password[0]
+        && !weechat_config_boolean (relay_config_network_allow_empty_password))
     {
         rc = -2;
         goto end;
     }
-    if (strncmp (user_pass, "plain:", 6) == 0)
+
+    if (relay_password[0])
     {
-        switch (relay_auth_check_password_plain (client, user_pass + 6, relay_password))
+        auth = weechat_hashtable_get (client->http_req->headers, "authorization");
+        if (!auth || (weechat_strncasecmp (auth, "basic ", 6) != 0))
         {
-            case 0: /* password OK */
-                break;
-            case -1: /* "plain" is not allowed */
-                rc = -5;
-                goto end;
-            case -2: /* invalid password */
-            default:
-                rc = -2;
-                goto end;
+            rc = -1;
+            goto end;
         }
-    }
-    else if (strncmp (user_pass, "hash:", 5) == 0)
-    {
-        switch (relay_auth_password_hash (client, user_pass + 5, relay_password))
+
+        pos = auth + 6;
+        while (pos[0] == ' ')
         {
-            case 0: /* password OK */
-                break;
-            case -1: /* invalid hash algorithm */
-                rc = -5;
-                goto end;
-            case -2: /* invalid timestamp */
-                rc = -6;
-                goto end;
-            case -3: /* invalid iterations */
-                rc = -7;
-                goto end;
-            case -4: /* invalid password */
-            default:
-                rc = -2;
-                goto end;
+            pos++;
         }
-    }
-    else
-    {
-        rc = -2;
-        goto end;
+
+        length = strlen (pos);
+        user_pass = malloc (length + 1);
+        if (!user_pass)
+        {
+            rc = -8;
+            goto end;
+        }
+        length = weechat_string_base_decode ("64", pos, user_pass);
+        if (length < 0)
+        {
+            rc = -2;
+            goto end;
+        }
+        if (strncmp (user_pass, "plain:", 6) == 0)
+        {
+            switch (relay_auth_check_password_plain (client, user_pass + 6, relay_password))
+            {
+                case 0: /* password OK */
+                    break;
+                case -1: /* "plain" is not allowed */
+                    rc = -5;
+                    goto end;
+                case -2: /* invalid password */
+                default:
+                    rc = -2;
+                    goto end;
+            }
+        }
+        else if (strncmp (user_pass, "hash:", 5) == 0)
+        {
+            switch (relay_auth_password_hash (client, user_pass + 5, relay_password))
+            {
+                case 0: /* password OK */
+                    break;
+                case -1: /* invalid hash algorithm */
+                    rc = -5;
+                    goto end;
+                case -2: /* invalid timestamp */
+                    rc = -6;
+                    goto end;
+                case -3: /* invalid iterations */
+                    rc = -7;
+                    goto end;
+                case -4: /* invalid password */
+                default:
+                    rc = -2;
+                    goto end;
+            }
+        }
+        else
+        {
+            rc = -2;
+            goto end;
+        }
     }
 
     totp_secret = weechat_string_eval_expression (
