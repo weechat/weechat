@@ -92,6 +92,7 @@ Alphabetically:
 - Max Anton Teufel
 - Maxim Baz
 - Michael Siegel
+- Miko
 - Miroslav Koskar
 - Murilo Opsfelder Araujo
 - Neui
