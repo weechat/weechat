@@ -4721,7 +4721,7 @@ TEST(IrcProtocolWithServer, 341)
 
 /*
  * Tests functions:
- *   irc_protocol_cb_344 (channel reop)
+ *   irc_protocol_cb_344 (channel reop / whois (geo info))
  */
 
 TEST(IrcProtocolWithServer, 344)
