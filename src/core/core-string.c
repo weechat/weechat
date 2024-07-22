@@ -2883,7 +2883,7 @@ string_free_split_shared (char **split_string)
  * If index_end < 0, then all arguments are used until NULL is found.
  * If NULL is found before index_end, then the build stops there (at NULL).
  *
- * Note: result must be free after use.
+ * Note: result must be freed after use.
  */
 
 char *

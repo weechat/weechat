@@ -285,7 +285,7 @@ weechat_guile_hashtable_to_alist (struct t_hashtable *hashtable)
 /*
  * Converts a guile alist to a WeeChat hashtable.
  *
- * Note: hashtable must be free after use.
+ * Note: hashtable must be freed after use.
  */
 
 struct t_hashtable *

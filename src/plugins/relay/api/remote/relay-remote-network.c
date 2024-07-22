@@ -49,7 +49,7 @@
  * For example if remote URL is "https://localhost:9000" and the resource is
  * "handshake", it returns: "https://localhost:9000/api/handshake".
  *
- * Note: result must be free after use.
+ * Note: result must be freed after use.
  */
 
 char *
@@ -1375,7 +1375,7 @@ relay_remote_network_url_handshake_cb (const void *pointer,
 /*
  * Builds a string with the API HTTP handshake request.
  *
- * Note: result must be free after use.
+ * Note: result must be freed after use.
  */
 
 char *

@@ -373,7 +373,7 @@ irc_protocol_nick_address (struct t_irc_server *server,
  * Builds a string with concatenation of IRC command parameters, from
  * arg_start to arg_end.
  *
- * Note: result must be free after use.
+ * Note: result must be freed after use.
  */
 
 char *
