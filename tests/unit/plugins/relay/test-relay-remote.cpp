@@ -21,6 +21,8 @@
 
 #include "CppUTest/TestHarness.h"
 
+#include "tests/tests.h"
+
 extern "C"
 {
 #include <stdio.h>
@@ -28,8 +30,20 @@ extern "C"
 #include "src/plugins/relay/relay.h"
 #include "src/plugins/relay/relay-remote.h"
 
-extern char *relay_remote_get_address (const char *url);
+extern int relay_remote_parse_url (const char *url,
+                                   int *tls, char **address, int *port);
 }
+
+#define WEE_CHECK_PARSE_URL(__result, __result_tls, __result_address,   \
+                            __result_port, __url)                       \
+    tls = -1;                                                           \
+    address = NULL;                                                     \
+    port = -1;                                                          \
+    relay_remote_parse_url (__url, &tls, &address, &port);              \
+    LONGS_EQUAL(__result_tls, tls);                                     \
+    STRCMP_EQUAL(__result_address, address);                            \
+    LONGS_EQUAL(__result_port, port);                                   \
+    free (address);
 
 TEST_GROUP(RelayRemote)
 {
@@ -91,6 +105,57 @@ TEST(RelayRemote, NameValid)
 
 /*
  * Tests functions:
+ *   relay_remote_parse_url
+ */
+
+TEST(RelayRemote, ParseUrl)
+{
+    int tls, port;
+    char *address;
+
+    LONGS_EQUAL(0, relay_remote_parse_url (NULL, NULL, NULL, NULL));
+    LONGS_EQUAL(0, relay_remote_parse_url ("", NULL, NULL, NULL));
+    LONGS_EQUAL(0, relay_remote_parse_url ("zzz", NULL, NULL, NULL));
+    LONGS_EQUAL(0, relay_remote_parse_url ("http://[::1", NULL, NULL, NULL));
+    LONGS_EQUAL(0, relay_remote_parse_url ("https://[::1", NULL, NULL, NULL));
+
+    LONGS_EQUAL(1, relay_remote_parse_url ("http://example.com", NULL, NULL, NULL));
+    LONGS_EQUAL(1, relay_remote_parse_url ("https://example.com", NULL, NULL, NULL));
+    LONGS_EQUAL(1, relay_remote_parse_url ("https://example.com/", NULL, NULL, NULL));
+    LONGS_EQUAL(1, relay_remote_parse_url ("https://example.com?option=1", NULL, NULL, NULL));
+    LONGS_EQUAL(1, relay_remote_parse_url ("https://example.com/?option=1", NULL, NULL, NULL));
+    LONGS_EQUAL(1, relay_remote_parse_url ("https://example.com:9876", NULL, NULL, NULL));
+    LONGS_EQUAL(1, relay_remote_parse_url ("https://example.com:9876/", NULL, NULL, NULL));
+    LONGS_EQUAL(1, relay_remote_parse_url ("https://example.com:9876?option=1", NULL, NULL, NULL));
+    LONGS_EQUAL(1, relay_remote_parse_url ("https://example.com:9876/?option=1", NULL, NULL, NULL));
+
+    WEE_CHECK_PARSE_URL(1, 0, "", RELAY_REMOTE_DEFAULT_PORT, "http://");
+    WEE_CHECK_PARSE_URL(1, 1, "", RELAY_REMOTE_DEFAULT_PORT, "https://");
+
+    WEE_CHECK_PARSE_URL(1, 0, "localhost", RELAY_REMOTE_DEFAULT_PORT, "http://localhost");
+    WEE_CHECK_PARSE_URL(1, 1, "localhost", RELAY_REMOTE_DEFAULT_PORT, "https://localhost");
+    WEE_CHECK_PARSE_URL(1, 1, "example.com", RELAY_REMOTE_DEFAULT_PORT, "https://example.com");
+    WEE_CHECK_PARSE_URL(1, 1, "example.com", RELAY_REMOTE_DEFAULT_PORT, "https://example.com/");
+    WEE_CHECK_PARSE_URL(1, 1, "example.com", RELAY_REMOTE_DEFAULT_PORT, "https://example.com?option=1");
+    WEE_CHECK_PARSE_URL(1, 1, "example.com", RELAY_REMOTE_DEFAULT_PORT, "https://example.com/?option=1");
+    WEE_CHECK_PARSE_URL(1, 1, "example.com", 9876, "https://example.com:9876");
+    WEE_CHECK_PARSE_URL(1, 1, "example.com", 9876, "https://example.com:9876/");
+    WEE_CHECK_PARSE_URL(1, 1, "example.com", 9876, "https://example.com:9876?option=1");
+    WEE_CHECK_PARSE_URL(1, 1, "example.com", 9876, "https://example.com:9876/?option=1");
+
+    WEE_CHECK_PARSE_URL(1, 0, "::1", RELAY_REMOTE_DEFAULT_PORT, "http://[::1]");
+    WEE_CHECK_PARSE_URL(1, 1, "::1", RELAY_REMOTE_DEFAULT_PORT, "https://[::1]");
+    WEE_CHECK_PARSE_URL(1, 1, "::1", RELAY_REMOTE_DEFAULT_PORT, "https://[::1]/");
+    WEE_CHECK_PARSE_URL(1, 1, "::1", RELAY_REMOTE_DEFAULT_PORT, "https://[::1]?option=1");
+    WEE_CHECK_PARSE_URL(1, 1, "::1", RELAY_REMOTE_DEFAULT_PORT, "https://[::1]/?option=1");
+    WEE_CHECK_PARSE_URL(1, 1, "::1", 9876, "https://[::1]:9876");
+    WEE_CHECK_PARSE_URL(1, 1, "::1", 9876, "https://[::1]:9876/");
+    WEE_CHECK_PARSE_URL(1, 1, "::1", 9876, "https://[::1]:9876?option=1");
+    WEE_CHECK_PARSE_URL(1, 1, "::1", 9876, "https://[::1]:9876/?option=1");
+}
+
+/*
+ * Tests functions:
  *   relay_remote_url_valid
  */
 
@@ -105,38 +170,6 @@ TEST(RelayRemote, UrlValid)
  */
 
 TEST(RelayRemote, SendSignal)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
- *   relay_remote_get_address
- */
-
-TEST(RelayRemote, GetAddress)
-{
-    POINTERS_EQUAL(NULL, relay_remote_get_address (NULL));
-    POINTERS_EQUAL(NULL, relay_remote_get_address (""));
-    POINTERS_EQUAL(NULL, relay_remote_get_address ("zzz"));
-
-    STRCMP_EQUAL("", relay_remote_get_address ("http://"));
-    STRCMP_EQUAL("", relay_remote_get_address ("https://"));
-
-    STRCMP_EQUAL("localhost", relay_remote_get_address ("https://localhost"));
-    STRCMP_EQUAL("example.com", relay_remote_get_address ("https://example.com"));
-    STRCMP_EQUAL("example.com", relay_remote_get_address ("https://example.com:8000"));
-    STRCMP_EQUAL("example.com", relay_remote_get_address ("https://example.com:8000/"));
-    STRCMP_EQUAL("example.com", relay_remote_get_address ("https://example.com:8000/?option=1"));
-    STRCMP_EQUAL("example.com", relay_remote_get_address ("https://example.com?option=1"));
-}
-
-/*
- * Tests functions:
- *   relay_remote_get_port
- */
-
-TEST(RelayRemote, GetPort)
 {
     /* TODO: write tests */
 }

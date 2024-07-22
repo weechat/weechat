@@ -57,13 +57,17 @@ relay_remote_network_get_url_resource (struct t_relay_remote *remote,
                                        const char *resource)
 {
     char *url;
+    int colon_in_address;
 
     if (!remote || !remote->address || !resource || !resource[0])
         return NULL;
 
-    weechat_asprintf (&url, "%s://%s:%d/api/%s",
+    colon_in_address = (strchr (remote->address, ':')) ? 1 : 0;
+    weechat_asprintf (&url, "%s://%s%s%s:%d/api/%s",
                       (remote->tls) ? "https" : "http",
+                      (colon_in_address) ? "[" : "",
                       remote->address,
+                      (colon_in_address) ? "]" : "",
                       remote->port,
                       resource);
 

@@ -185,7 +185,107 @@ relay_remote_name_valid (const char *name)
 }
 
 /*
- * Checks if a remote URL is valid;
+ * Extracts TLS, address and port from remote URL.
+ *
+ * If address is an IPv6 like "[::1]", the square brackets are removed.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error, invalid URL
+ */
+
+int
+relay_remote_parse_url (const char *url,
+                        int *tls, char **address, int *port)
+{
+    const char *ptr_url;
+    char *pos, *str_port, *error;
+    long number;
+
+    if (tls)
+        *tls = 0;
+    if (address)
+        *address = NULL;
+    if (port)
+        *port = RELAY_REMOTE_DEFAULT_PORT;
+
+    if (!url || !url[0])
+        return 0;
+
+    /* check scheme and extract TLS flag */
+    if (strncmp (url, "http://", 7) == 0)
+    {
+        ptr_url = url + 7;
+    }
+    else if (strncmp (url, "https://", 8) == 0)
+    {
+        if (tls)
+            *tls = 1;
+        ptr_url = url + 8;
+    }
+    else
+    {
+        return 0;
+    }
+
+    /* check if there is an IPv6 address with square brackets, like "[::1]" */
+    if (ptr_url[0] == '[')
+    {
+        /* extract IPv6 address between square brackets */
+        pos = strchr (ptr_url, ']');
+        if (!pos)
+            return 0;
+        if (address)
+            *address = weechat_strndup (ptr_url + 1, pos - ptr_url - 1);
+        ptr_url = pos + 1;
+    }
+    else
+    {
+        /* extract another address */
+        pos = strrchr (ptr_url, ':');
+        if (!pos)
+            pos = strchr (ptr_url, '/');
+        if (!pos)
+            pos = strchr (ptr_url, '?');
+        if (address)
+        {
+            *address = (pos) ?
+                weechat_strndup (ptr_url, pos - ptr_url) : strdup (ptr_url);
+        }
+    }
+
+    /* extract port number */
+    pos = strrchr (ptr_url, ':');
+    if (pos)
+    {
+        ptr_url = pos + 1;
+        pos = strchr (ptr_url, '/');
+        if (!pos)
+            pos = strchr (ptr_url, '?');
+        str_port = (pos) ?
+            weechat_strndup (ptr_url, pos - ptr_url) : strdup (ptr_url);
+        if (!str_port)
+            return 0;
+        error = NULL;
+        number = strtol (str_port, &error, 10);
+        if (error && !error[0] && (number >= 0) && (number <= 65535))
+        {
+            if (port)
+                *port = number;
+            free (str_port);
+        }
+        else
+        {
+            free (str_port);
+            return 0;
+        }
+    }
+
+    return 1;
+}
+
+/*
+ * Checks if a remote URL is valid.
  *
  * Returns:
  *   1: URL is valid
@@ -195,23 +295,7 @@ relay_remote_name_valid (const char *name)
 int
 relay_remote_url_valid (const char *url)
 {
-    const char *pos;
-
-    if (!url || !url[0])
-        return 0;
-
-    /* URL must start with "https://" or "http://" */
-    if ((strncmp (url, "https://", 8) != 0) && (strncmp (url, "http://", 7) != 0))
-        return 0;
-
-    pos = strchr (url + 7, ':');
-
-    /* invalid port? */
-    if (pos && !isdigit ((unsigned char)pos[1]))
-        return 0;
-
-    /* URL is valid */
-    return 1;
+    return relay_remote_parse_url (url, NULL, NULL, NULL);
 }
 
 /*
@@ -227,76 +311,6 @@ relay_remote_send_signal (struct t_relay_remote *remote)
               "relay_remote_%s",
               relay_status_name[remote->status]);
     weechat_hook_signal_send (signal, WEECHAT_HOOK_SIGNAL_POINTER, remote);
-}
-
-/*
- * Extracts address from URL.
- *
- * Note: result must be free after use.
- */
-
-char *
-relay_remote_get_address (const char *url)
-{
-    const char *ptr_start;
-    char *pos;
-
-    if (!url)
-        return NULL;
-
-    if (strncmp (url, "http://", 7) == 0)
-        ptr_start = url + 7;
-    else if (strncmp (url, "https://", 8) == 0)
-        ptr_start = url + 8;
-    else
-        return NULL;
-
-    pos = strchr (ptr_start, ':');
-    if (!pos)
-        pos = strchr (ptr_start, '?');
-
-    return (pos) ?
-        weechat_strndup (ptr_start, pos - ptr_start) : strdup (ptr_start);
-}
-
-/*
- * Extracts port from URL.
- */
-
-int
-relay_remote_get_port (const char *url)
-{
-    char *pos, *pos2, *str_port, *error;
-    long port;
-
-    if (!url)
-        goto error;
-
-    pos = strchr (url + 7, ':');
-    if (!pos)
-        goto error;
-
-    pos++;
-
-    pos2 = strchr (pos, '/');
-    if (pos2)
-        str_port = weechat_strndup (pos, pos2 - pos);
-    else
-        str_port = strdup (pos);
-    if (!str_port)
-        goto error;
-
-    error = NULL;
-    port = strtol (str_port, &error, 10);
-    if (error && !error[0])
-    {
-        free (str_port);
-        return (int)port;
-    }
-    free (str_port);
-
-error:
-    return RELAY_REMOTE_DEFAULT_PORT;
 }
 
 /*
@@ -415,9 +429,7 @@ void
 relay_remote_set_url (struct t_relay_remote *remote, const char *url)
 {
     free (remote->address);
-    remote->address = relay_remote_get_address (url);
-    remote->port = relay_remote_get_port (url);
-    remote->tls = (weechat_strncmp (url, "https:", 6) == 0) ? 1 : 0;
+    relay_remote_parse_url (url, &remote->tls, &remote->address, &remote->port);
 }
 
 /*

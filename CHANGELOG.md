@@ -53,6 +53,7 @@
 - ruby: fix builtin functions not available ([#2109](https://github.com/weechat/weechat/issues/2109))
 - php: fix return value of function hdata_longlong
 - tcl: fix return value of function hdata_longlong ([#2119](https://github.com/weechat/weechat/issues/2119))
+- relay/api: fix connection to remote using an IPv6 address with square brackets ([#2156](https://github.com/weechat/weechat/issues/2156))
 - relay/api: allow clients without authentication when no relay password is defined and option relay.network.allow_empty_password is on ([#2158](https://github.com/weechat/weechat/issues/2158))
 - relay/api: fix connection to remote without password ([#2158](https://github.com/weechat/weechat/issues/2158))
 - relay/api: fix timezone of dates sent to clients ([#2151](https://github.com/weechat/weechat/issues/2151))
