@@ -4414,26 +4414,35 @@ IRC_PROTOCOL_CALLBACK(306)
 IRC_PROTOCOL_CALLBACK(whois_nick_msg)
 {
     char *str_params;
+    int extra_param;
 
     IRC_PROTOCOL_MIN_PARAMS(2);
 
     if (ctxt->num_params >= 3)
     {
-        str_params = irc_protocol_string_params (ctxt->params, 2, ctxt->num_params - 1);
+        str_params = irc_protocol_string_params (
+            ctxt->params,
+            (ctxt->num_params >= 4) ? 3 : 2,
+            ctxt->num_params - 1);
+        extra_param = (ctxt->num_params >= 4)
+            && (strcmp (ctxt->params[2], "*") != 0);
         weechat_printf_datetime_tags (
             irc_msgbuffer_get_target_buffer (
                 ctxt->server, ctxt->params[1], ctxt->command, "whois", NULL),
             ctxt->date,
             ctxt->date_usec,
             irc_protocol_tags (ctxt, NULL),
-            "%s%s[%s%s%s] %s%s",
+            "%s%s[%s%s%s] %s%s%s%s%s",
             weechat_prefix ("network"),
             IRC_COLOR_CHAT_DELIMITERS,
             irc_nick_color_for_msg (ctxt->server, 1, NULL, ctxt->params[1]),
             ctxt->params[1],
             IRC_COLOR_CHAT_DELIMITERS,
             IRC_COLOR_RESET,
-            str_params);
+            str_params,
+            (extra_param) ? " (" : "",
+            (extra_param) ? ctxt->params[2] : "",
+            (extra_param) ? ")" : "");
         free (str_params);
     }
     else
@@ -5469,7 +5478,7 @@ IRC_PROTOCOL_CALLBACK(341)
 
 IRC_PROTOCOL_CALLBACK(344)
 {
-    char *str_host, *str_params;
+    char *str_host;
 
     IRC_PROTOCOL_MIN_PARAMS(3);
 
@@ -5494,36 +5503,7 @@ IRC_PROTOCOL_CALLBACK(344)
     else
     {
         /* whois, geo info (UnrealIRCd) */
-        if (ctxt->num_params >= 3)
-        {
-            str_params = irc_protocol_string_params (
-                ctxt->params,
-                (ctxt->num_params >= 4) ? 3 : 2,
-                ctxt->num_params - 1);
-            weechat_printf_datetime_tags (
-                irc_msgbuffer_get_target_buffer (
-                    ctxt->server, ctxt->params[1], ctxt->command, "whois", NULL),
-                ctxt->date,
-                ctxt->date_usec,
-                irc_protocol_tags (ctxt, NULL),
-                "%s%s[%s%s%s] %s%s%s%s%s",
-                weechat_prefix ("network"),
-                IRC_COLOR_CHAT_DELIMITERS,
-                irc_nick_color_for_msg (ctxt->server, 1, NULL, ctxt->params[1]),
-                ctxt->params[1],
-                IRC_COLOR_CHAT_DELIMITERS,
-                IRC_COLOR_RESET,
-                str_params,
-                (ctxt->num_params >= 4) ? " (" : "",
-                (ctxt->num_params >= 4) ? ctxt->params[2] : "",
-                (ctxt->num_params >= 4) ? ")" : "");
-            free (str_params);
-        }
-        else
-        {
-            /* not enough arguments: use the default whois callback */
-            irc_protocol_cb_whois_nick_msg (ctxt);
-        }
+        irc_protocol_cb_whois_nick_msg (ctxt);
     }
 
     return WEECHAT_RC_OK;
@@ -8087,6 +8067,7 @@ irc_protocol_recv_command (struct t_irc_server *server,
         IRCB(501, 1, 0, generic_error),  /* unknown mode flag               */
         IRCB(502, 1, 0, generic_error),  /* can't chg mode for other users  */
         IRCB(524, 1, 0, help),           /* HELP/HELPOP (help not found)    */
+        IRCB(569, 1, 0, whois_nick_msg), /* whois (connecting from)         */
         IRCB(671, 1, 0, whois_nick_msg), /* whois (secure connection)       */
         IRCB(704, 1, 0, help),           /* start of HELP/HELPOP            */
         IRCB(705, 1, 0, help),           /* body of HELP/HELPOP             */

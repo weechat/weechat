@@ -17,6 +17,7 @@
 - relay/weechat: add line id in buffer lines sent to clients
 - relay: display connection status in output of commands `/remote list` and `/remote listfull`
 - relay: add option `reconnect` in command `/remote` ([#2160](https://github.com/weechat/weechat/issues/2160))
+- irc: add support of message 569 (whois, connecting from) ([#2162](https://github.com/weechat/weechat/issues/2162))
 - api: allow NULL value for key in hashtable
 - doc: rename doc "weechat_relay_protocol" to "weechat_relay_weechat"
 

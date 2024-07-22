@@ -4952,7 +4952,6 @@ TEST(IrcProtocolWithServer, 349)
               "irc_349,irc_numeric,nick_server,log3");
 }
 
-
 /*
  * Tests functions:
  *   irc_protocol_cb_350 (whois, gateway)
@@ -4973,7 +4972,7 @@ TEST(IrcProtocolWithServer, 350)
     CHECK_SRV("--", "[bob] something here",
               "irc_350,irc_numeric,nick_server,log3");
     RECV(":server 350 alice bob * :something here");
-    CHECK_SRV("--", "[bob] * something here",
+    CHECK_SRV("--", "[bob] something here",
               "irc_350,irc_numeric,nick_server,log3");
 
     /* non-standard parameters (using default whois callback) */
@@ -5973,6 +5972,32 @@ TEST(IrcProtocolWithServer, 524)
     RECV(":server 524 alice UNKNOWN :Help not found");
     CHECK_SRV("--", "Help not found",
               "irc_524,irc_numeric,notify_private,nick_server,log3");
+}
+
+/*
+ * Tests functions:
+ *   irc_protocol_cb_569 (whois, connecting from)
+ */
+
+TEST(IrcProtocolWithServer, 569)
+{
+    SRV_INIT_JOIN;
+
+    /* not enough parameters */
+    RECV(":server 569");
+    CHECK_ERROR_PARAMS("569", 0, 2);
+    RECV(":server 569 alice");
+    CHECK_ERROR_PARAMS("569", 1, 2);
+
+    /* whois, connecting from (UnrealIRCd) */
+    RECV(":server 569 alice bob 12345 :is connecting from AS12345 [Hoster]");
+    CHECK_SRV("--", "[bob] is connecting from AS12345 [Hoster] (12345)",
+              "irc_569,irc_numeric,nick_server,log3");
+
+    /* whois, connecting from (UnrealIRCd), no ASN */
+    RECV(":server 569 alice bob :is connecting from AS12345 [Hoster]");
+    CHECK_SRV("--", "[bob] is connecting from AS12345 [Hoster]",
+              "irc_569,irc_numeric,nick_server,log3");
 }
 
 /*
