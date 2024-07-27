@@ -11543,7 +11543,7 @@ hook2 = weechat.hook_url("http://localhost:8080/", options, 20000, "my_url_cb", 
 ==== hook_connect
 
 // TRANSLATION MISSING
-_Updated in 1.5, 2.0._
+_Updated in 1.5, 2.0, 4.4.0._
 
 Hook su una connessione (connessione in secondo piano ad un host remoto).
 
@@ -11579,7 +11579,13 @@ Argomenti:
 * _address_: nome o indirizzo IP al quale connettersi
 * _port_: numero della porta
 // TRANSLATION MISSING
-* _ipv6_: 1 to use IPv6 (with fallback to IPv4), 0 to use only IPv4
+* _ipv6_:
+// TRANSLATION MISSING
+** `WEECHAT_HOOK_CONNECT_IPV6_DISABLE` ^(1)^: disable IPv6 (use only IPv4)
+// TRANSLATION MISSING
+** `WEECHAT_HOOK_CONNECT_IPV6_AUTO` ^(1)^: use IPv6 with fallback to IPv4
+// TRANSLATION MISSING
+** `WEECHAT_HOOK_CONNECT_IPV6_FORCE` ^(1)^: force IPv6 (do not use IPv4) _(WeeChat ≥ 4.4.0)_
 // TRANSLATION MISSING
 * _retry_: retry count, used to fallback to IPv4 hosts if IPv6 hosts connect
   but then fail to accept the client
@@ -11602,7 +11608,7 @@ Argomenti:
   successo oppure no, argomenti e valore restituito:
 ** _const void *pointer_: puntatore
 ** _void *data_: puntatore
-** _int status_: stato della connessione:
+** _int status_: stato della connessione ^(2)^:
 *** _WEECHAT_HOOK_CONNECT_OK_: connessione avvenuta con successo
 *** _WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND_: indirizzo non trovato
 *** _WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND_: indirizzo IP non trovato
@@ -11614,8 +11620,8 @@ Argomenti:
 *** _WEECHAT_HOOK_CONNECT_MEMORY_ERROR_: memoria insufficiente
 *** _WEECHAT_HOOK_CONNECT_TIMEOUT_: timeout
 *** _WEECHAT_HOOK_CONNECT_SOCKET_ERROR_: errore nella creazione socket
-** _gnutls_rc_: valore del risultato di _gnutls_handshake()_
-** _sock_: socket utilizzato per la connessione
+** _gnutls_rc_: valore del risultato di _gnutls_handshake()_ ^(2)^
+** _sock_: socket utilizzato per la connessione ^(2)^
 ** _const char *error_: valore del risultato di _gnutls_strerror(gnutls_rc)_
 ** _const char *ip_address_: indirizzo IP trovato
 ** valore restituito:
@@ -11627,16 +11633,19 @@ Argomenti:
   if not NULL, it must have been allocated with malloc (or similar function)
   and it is automatically freed when the hook is deleted
 
-Valore restituito:
-
-* puntatore al nuovo hook, NULL in caso di errore
-
 // TRANSLATION MISSING
-[IMPORTANT]
-In scripts, with WeeChat ≥ 2.0, the callback arguments _status_, _gnutls_rc_
+[NOTE]
+^(1)^ Constants for parameter _ipv6_ are available since WeeChat 4.4.0. +
+For older releases, allowed values are `1` (use IPv6 with fallback to IPv4) and
+`0` (disable IPv6, use only IPv4). +
+^(2)^ In scripts, with WeeChat ≥ 2.0, the callback arguments _status_, _gnutls_rc_
 and _sock_ are integers (with WeeChat ≤ 1.9, they were strings). +
 To be compatible with all versions, it is recommended to convert the argument
 to integer before using it, for example in Python: `int(sock)`.
+
+Valore restituito:
+
+* puntatore al nuovo hook, NULL in caso di errore
 
 Esempio in C:
 
@@ -11687,7 +11696,8 @@ my_connect_cb (const void *pointer, void *data, int status, int gnutls_rc,
 
 struct t_hook *my_connect_hook = weechat_hook_connect (NULL,
                                                        "my.server.org", 1234,
-                                                       1, 0,
+                                                       WEECHAT_HOOK_CONNECT_IPV6_AUTO,
+                                                       0,
                                                        NULL, NULL, 0,  /* GnuTLS */
                                                        NULL,
                                                        &my_connect_cb, NULL, NULL);
@@ -11727,7 +11737,8 @@ def my_connect_cb(data: str, status: int, gnutls_rc: int, sock: int, error: str,
         # ...
     return weechat.WEECHAT_RC_OK
 
-hook = weechat.hook_connect("", "my.server.org", 1234, 1, 0, "",
+hook = weechat.hook_connect("", "my.server.org", 1234,
+                            weechat.WEECHAT_HOOK_CONNECT_IPV6_AUTO, 0, "",
                             "my_connect_cb", "")
 ----
 

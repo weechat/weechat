@@ -74,7 +74,7 @@ struct t_weelist_item;
  * please change the date with current one; for a second change at same
  * date, increment the 01, otherwise please keep 01.
  */
-#define WEECHAT_PLUGIN_API_VERSION "20240627-01"
+#define WEECHAT_PLUGIN_API_VERSION "20240727-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -178,6 +178,11 @@ enum t_weechat_hdata
 #define WEECHAT_HOOK_PROCESS_RUNNING                -1
 #define WEECHAT_HOOK_PROCESS_ERROR                  -2
 #define WEECHAT_HOOK_PROCESS_CHILD                  -3
+
+/* IPv6 for connect hook */
+#define WEECHAT_HOOK_CONNECT_IPV6_DISABLE           0
+#define WEECHAT_HOOK_CONNECT_IPV6_AUTO              1
+#define WEECHAT_HOOK_CONNECT_IPV6_FORCE             2
 
 /* connect status for connection hooked */
 #define WEECHAT_HOOK_CONNECT_OK                     0

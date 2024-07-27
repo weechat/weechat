@@ -31,6 +31,9 @@ WEECHAT_HOTLIST_PRIVATE: str = "2"
 WEECHAT_HOTLIST_HIGHLIGHT: str = "3"
 WEECHAT_HOOK_PROCESS_RUNNING: int = -1
 WEECHAT_HOOK_PROCESS_ERROR: int = -2
+WEECHAT_HOOK_CONNECT_IPV6_DISABLE: int = 0
+WEECHAT_HOOK_CONNECT_IPV6_AUTO: int = 1
+WEECHAT_HOOK_CONNECT_IPV6_FORCE: int = 2
 WEECHAT_HOOK_CONNECT_OK: int = 0
 WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND: int = 1
 WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND: int = 2
@@ -1498,7 +1501,8 @@ def hook_connect(proxy: str, address: str, port: int, ipv6: int, retry: int, loc
                 # ...
             return weechat.WEECHAT_RC_OK
 
-        hook = weechat.hook_connect("", "my.server.org", 1234, 1, 0, "",
+        hook = weechat.hook_connect("", "my.server.org", 1234,
+                                    weechat.WEECHAT_HOOK_CONNECT_IPV6_AUTO, 0, "",
                                     "my_connect_cb", "")
     """
     ...

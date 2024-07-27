@@ -11273,7 +11273,8 @@ hook2 = weechat.hook_url("http://localhost:8080/", options, 20000, "my_url_cb", 
 
 ==== hook_connect
 
-_WeeChat バージョン 1.5 と 2.0 で更新。_
+// TRANSLATION MISSING
+_Updated in 1.5, 2.0, 4.4.0._
 
 接続をフックする (リモートホストへのバックグラウンド接続)。
 
@@ -11308,7 +11309,13 @@ struct t_hook *weechat_hook_connect (const char *proxy,
   (任意、プロキシを使わない場合は NULL)
 * _address_: 接続先のドメイン名または IP アドレス
 * _port_: ポート番号
-* _ipv6_: (IPv4 フォールバックを有効にして) IPv6 を使う場合は 1、IPv4 のみを使う場合は 0
+* _ipv6_:
+// TRANSLATION MISSING
+** `WEECHAT_HOOK_CONNECT_IPV6_DISABLE` ^(1)^: disable IPv6 (use only IPv4)
+// TRANSLATION MISSING
+** `WEECHAT_HOOK_CONNECT_IPV6_AUTO` ^(1)^: use IPv6 with fallback to IPv4
+// TRANSLATION MISSING
+** `WEECHAT_HOOK_CONNECT_IPV6_FORCE` ^(1)^: force IPv6 (do not use IPv4) _(WeeChat ≥ 4.4.0)_
 * _retry_: 再試行回数、IPv6 ホストに接続したもののクライアントの受け入れに失敗した際に
   IPv4 ホストへフォールバックする際に使う
 * _gnutls_sess_: GnuTLS セッション (任意)
@@ -11328,7 +11335,7 @@ struct t_hook *weechat_hook_connect (const char *proxy,
   接続に成功および失敗した際に呼び出すコールバック関数、引数と戻り値:
 ** _const void *pointer_: ポインタ
 ** _void *data_: ポインタ
-** _int status_: 接続状態:
+** _int status_: 接続状態 ^(2)^:
 *** _WEECHAT_HOOK_CONNECT_OK_: 接続成功
 *** _WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND_: アドレスが見つかりません
 *** _WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND_: IP アドレスが見つかりません
@@ -11340,8 +11347,8 @@ struct t_hook *weechat_hook_connect (const char *proxy,
 *** _WEECHAT_HOOK_CONNECT_MEMORY_ERROR_: メモリ不足
 *** _WEECHAT_HOOK_CONNECT_TIMEOUT_: タイムアウト
 *** _WEECHAT_HOOK_CONNECT_SOCKET_ERROR_: ソケットの作成に失敗
-** _gnutls_rc_: _gnutls_handshake()_ の戻り値
-** _sock_: 接続に使うソケット
+** _gnutls_rc_: _gnutls_handshake()_ の戻り値 ^(2)^
+** _sock_: 接続に使うソケット ^(2)^
 ** _const char *error_: _gnutls_strerror(gnutls_rc)_ の戻り値
 ** _const char *ip_address_: 見つかった IP アドレス
 ** 戻り値:
@@ -11352,15 +11359,19 @@ struct t_hook *weechat_hook_connect (const char *proxy,
   このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
   によって割り当てられたものでなければいけません。さらに、このポインタはここで作成したフックが削除された時点で自動的に開放されます
 
-戻り値:
-
-* 新しいフックへのポインタ、エラーが起きた場合は NULL
-
-[IMPORTANT]
-スクリプトにおけるコールバック引数 _status_、_gnutls_rc_、_sock_  は
+// TRANSLATION MISSING
+[NOTE]
+^(1)^ Constants for parameter _ipv6_ are available since WeeChat 4.4.0. +
+For older releases, allowed values are `1` (use IPv6 with fallback to IPv4) and
+`0` (disable IPv6, use only IPv4). +
+^(2)^ スクリプトにおけるコールバック引数 _status_、_gnutls_rc_、_sock_  は
 WeeChat バージョン 2.0 以上では整数、バージョン 1.9 以下では文字列です。 +
 すべてのバージョンで互換性を保つには、使用前にコールバック引数 _status_、_gnutls_rc_、_sock_
 を整数へ変換することを推奨します (Python の場合 `int(sock)` のように変換してください)。
+
+戻り値:
+
+* 新しいフックへのポインタ、エラーが起きた場合は NULL
 
 C 言語での使用例:
 
@@ -11411,7 +11422,8 @@ my_connect_cb (const void *pointer, void *data, int status, int gnutls_rc,
 
 struct t_hook *my_connect_hook = weechat_hook_connect (NULL,
                                                        "my.server.org", 1234,
-                                                       1, 0,
+                                                       WEECHAT_HOOK_CONNECT_IPV6_AUTO,
+                                                       0,
                                                        NULL, NULL, 0,  /* GnuTLS */
                                                        NULL,
                                                        &my_connect_cb, NULL, NULL);
@@ -11451,7 +11463,8 @@ def my_connect_cb(data: str, status: int, gnutls_rc: int, sock: int, error: str,
         # ...
     return weechat.WEECHAT_RC_OK
 
-hook = weechat.hook_connect("", "my.server.org", 1234, 1, 0, "",
+hook = weechat.hook_connect("", "my.server.org", 1234,
+                            weechat.WEECHAT_HOOK_CONNECT_IPV6_AUTO, 0, "",
                             "my_connect_cb", "")
 ----
 

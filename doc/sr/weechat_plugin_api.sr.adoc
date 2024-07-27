@@ -10843,7 +10843,7 @@ hook2 = weechat.hook_url("http://localhost:8080/", options, 20000, "my_url_cb", 
 
 ==== hook_connect
 
-_Ажурирано у верзијама 1.5, 2.0._
+_Ажурирано у верзијама 1.5, 2.0, 4.4.0._
 
 Качи се на везу (везу у позадини са удаљеним хостом).
 
@@ -10877,7 +10877,13 @@ struct t_hook *weechat_hook_connect (const char *proxy,
 * _proxy_: име проксија који се користи за везу (није обавезно, NULL значи да је веза без проксија)
 * _address_: име или IP адреса са којом се повезује
 * _port_: број порта
-* _ipv6_: 1 да се користи IPv6 (или IPv4 у случају да не може), 0 да се користи само IPv4
+* _ipv6_:
+// TRANSLATION MISSING
+** `WEECHAT_HOOK_CONNECT_IPV6_DISABLE` ^(1)^: disable IPv6 (use only IPv4)
+// TRANSLATION MISSING
+** `WEECHAT_HOOK_CONNECT_IPV6_AUTO` ^(1)^: use IPv6 with fallback to IPv4
+// TRANSLATION MISSING
+** `WEECHAT_HOOK_CONNECT_IPV6_FORCE` ^(1)^: force IPv6 (do not use IPv4) _(WeeChat ≥ 4.4.0)_
 * _retry_: број поновних покушаја, користи се за прелаз на IPv4 хостове ако се IPv6 хостови успостављају везу али онда не прихватају клијента
 * _gnutls_sess_: GnuTLS сесија (није обавезна)
 * _gnutls_cb_: GnuTLS функција повратног позива (није обавезна)
@@ -10893,7 +10899,7 @@ struct t_hook *weechat_hook_connect (const char *proxy,
 * _callback_: функција која се позива када је веза OK или не успе да се успостави, аргументи и повратна вредност су:
 ** _const void *pointer_: показивач
 ** _void *data_: показивач
-** _int status_: статус везе:
+** _int status_: статус везе ^(2)^:
 *** _WEECHAT_HOOK_CONNECT_OK_: веза је OK
 *** _WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND_: адреса није пронађена
 *** _WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND_: IP адреса није пронађена
@@ -10905,8 +10911,8 @@ struct t_hook *weechat_hook_connect (const char *proxy,
 *** _WEECHAT_HOOK_CONNECT_MEMORY_ERROR_: нема довољно слободне меморије
 *** _WEECHAT_HOOK_CONNECT_TIMEOUT_: тајмаут
 *** _WEECHAT_HOOK_CONNECT_SOCKET_ERROR_: сокет није могао да се креира
-** _gnutls_rc_: повратна вредност функције _gnutls_handshake()_
-** _sock_: сокет који се употребљен за везу
+** _gnutls_rc_: повратна вредност функције _gnutls_handshake()_ ^(2)^
+** _sock_: сокет који се употребљен за везу ^(2)^
 ** _const char *error_: повратна вредност _gnutls_strerror(gnutls_rc)_
 ** _const char *ip_address_: IP адреса није нађена
 ** повратна вредност:
@@ -10915,13 +10921,17 @@ struct t_hook *weechat_hook_connect (const char *proxy,
 * _callback_pointer_: показивач који се прослеђује функцији повратног позива када је позове програм WeeChat
 * _callback_data_: показивач који се прослеђује функцији повратног позива када је позове програм WeeChat; ако није NULL, алоцирала га је malloc (или нека слична функција) и аутоматски се ослобађа када се кука обрише
 
+// TRANSLATION MISSING
+[NOTE]
+^(1)^ Constants for parameter _ipv6_ are available since WeeChat 4.4.0. +
+For older releases, allowed values are `1` (use IPv6 with fallback to IPv4) and
+`0` (disable IPv6, use only IPv4). +
+^(2)^ У скриптама и програмом WeeChat ≥ 2.0, аргументи функције повратног позива _status_, _gnutls_rc_ и _sock_ су цели бројеви (у програму WeeChat ≤ 1.9, били су стрингови). +
+Да би се одржала компатибилност са свим верзијама, препоручује се да аргумент пре употребе конвертујете у цео број, на пример у језику Python: `int(sock)`.
+
 Повратна вредност:
 
 * показивач на нову куку, NULL у случају грешке
-
-[IMPORTANT]
-У скриптама и програмом WeeChat ≥ 2.0, аргументи функције повратног позива _status_, _gnutls_rc_ и _sock_ су цели бројеви (у програму WeeChat ≤ 1.9, били су стрингови). +
-Да би се одржала компатибилност са свим верзијама, препоручује се да аргумент пре употребе конвертујете у цео број, на пример у језику Python: `int(sock)`.
 
 C пример:
 
@@ -10972,7 +10982,8 @@ my_connect_cb (const void *pointer, void *data, int status, int gnutls_rc,
 
 struct t_hook *my_connect_hook = weechat_hook_connect (NULL,
                                                        "my.server.org", 1234,
-                                                       1, 0,
+                                                       WEECHAT_HOOK_CONNECT_IPV6_AUTO,
+                                                       0,
                                                        NULL, NULL, 0,  /* GnuTLS */
                                                        NULL,
                                                        &my_connect_cb, NULL, NULL);
@@ -11012,7 +11023,8 @@ def my_connect_cb(data: str, status: int, gnutls_rc: int, sock: int, error: str,
         # ...
     return weechat.WEECHAT_RC_OK
 
-hook = weechat.hook_connect("", "my.server.org", 1234, 1, 0, "",
+hook = weechat.hook_connect("", "my.server.org", 1234,
+                            weechat.WEECHAT_HOOK_CONNECT_IPV6_AUTO, 0, "",
                             "my_connect_cb", "")
 ----
 

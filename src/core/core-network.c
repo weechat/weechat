@@ -1002,7 +1002,25 @@ network_connect_child (struct t_hook *hook_connect)
     }
     else
     {
-        hints.ai_family = HOOK_CONNECT(hook_connect, ipv6) ? AF_UNSPEC : AF_INET;
+        switch (HOOK_CONNECT(hook_connect, ipv6))
+        {
+            case WEECHAT_HOOK_CONNECT_IPV6_DISABLE:
+                /* force IPv4 */
+                hints.ai_family = AF_INET;
+                break;
+            case WEECHAT_HOOK_CONNECT_IPV6_AUTO:
+                /* auto: IPv6 / IPv4 */
+                hints.ai_family = AF_UNSPEC;
+                break;
+            case WEECHAT_HOOK_CONNECT_IPV6_FORCE:
+                /* force IPv6 */
+                hints.ai_family = AF_INET6;
+                break;
+            default:
+                /* auto by default */
+                hints.ai_family = AF_UNSPEC;
+                break;
+        }
         snprintf (port, sizeof (port), "%d", HOOK_CONNECT(hook_connect, port));
         rc = getaddrinfo (HOOK_CONNECT(hook_connect, address), port, &hints, &res_remote);
     }
