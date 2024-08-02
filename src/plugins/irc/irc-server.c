@@ -76,13 +76,16 @@ struct t_irc_server *last_irc_server = NULL;
 struct t_irc_message *irc_recv_msgq = NULL;
 struct t_irc_message *irc_msgq_last_msg = NULL;
 
+char *irc_server_ipv6_string[IRC_SERVER_NUM_IPV6] =
+{ "disable", "auto", "force" };
+
 char *irc_server_sasl_fail_string[IRC_SERVER_NUM_SASL_FAIL] =
 { "continue", "reconnect", "disconnect" };
 
 char *irc_server_options[IRC_SERVER_NUM_OPTIONS][2] =
 { { "addresses",            ""                        },
   { "proxy",                ""                        },
-  { "ipv6",                 "on"                      },
+  { "ipv6",                 "auto"                    },
   { "tls",                  "on"                      },
   { "tls_cert",             ""                        },
   { "tls_password",         ""                        },
@@ -2076,7 +2079,7 @@ irc_server_alloc_with_url (const char *irc_url)
             }
         }
         weechat_config_option_set (ptr_server->options[IRC_SERVER_OPTION_IPV6],
-                                   (ipv6) ? "on" : "off",
+                                   (ipv6) ? "auto" : "disable",
                                    1);
         weechat_config_option_set (ptr_server->options[IRC_SERVER_OPTION_TLS],
                                    (tls) ? "on" : "off",
@@ -5629,7 +5632,7 @@ irc_server_connect (struct t_irc_server *server)
             proxy,
             server->current_address,
             server->current_port,
-            proxy_type ? weechat_config_integer (proxy_ipv6) : IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_IPV6),
+            proxy_type ? weechat_config_integer (proxy_ipv6) : IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_IPV6),
             server->current_retry,
             (server->tls_connected) ? &server->gnutls_sess : NULL,
             (server->tls_connected) ? &irc_server_gnutls_callback : NULL,
@@ -6708,7 +6711,7 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
                                           IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_PROXY)))
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "ipv6",
-                                           IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_IPV6)))
+                                           IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_IPV6)))
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "tls",
                                            IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_TLS)))
@@ -7051,13 +7054,11 @@ irc_server_print_log ()
                                 weechat_config_string (ptr_server->options[IRC_SERVER_OPTION_PROXY]));
         /* ipv6 */
         if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_IPV6]))
-            weechat_log_printf ("  ipv6. . . . . . . . . . . : null (%s)",
-                                (IRC_SERVER_OPTION_BOOLEAN(ptr_server, IRC_SERVER_OPTION_IPV6)) ?
-                                "on" : "off");
+            weechat_log_printf ("  ipv6. . . . . . . . . . . : null ('%s')",
+                                irc_server_ipv6_string[IRC_SERVER_OPTION_ENUM(ptr_server, IRC_SERVER_OPTION_IPV6)]);
         else
-            weechat_log_printf ("  ipv6. . . . . . . . . . . : %s",
-                                (weechat_config_boolean (ptr_server->options[IRC_SERVER_OPTION_IPV6])) ?
-                                "on" : "off");
+            weechat_log_printf ("  ipv6. . . . . . . . . . . : '%s'",
+                                irc_server_ipv6_string[weechat_config_enum (ptr_server->options[IRC_SERVER_OPTION_IPV6])]);
         /* tls */
         if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_TLS]))
             weechat_log_printf ("  tls . . . . . . . . . . . : null (%s)",

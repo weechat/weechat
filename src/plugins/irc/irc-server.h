@@ -31,6 +31,15 @@
 #define NI_MAXHOST 256
 #endif /* NI_MAXHOST */
 
+enum t_irc_server_ipv6
+{
+    IRC_SERVER_IPV6_DISABLE = 0,
+    IRC_SERVER_IPV6_AUTO,
+    IRC_SERVER_IPV6_FORCE,
+    /* number of IPv6 options */
+    IRC_SERVER_NUM_IPV6,
+};
+
 enum t_irc_server_sasl_fail
 {
     IRC_SERVER_SASL_FAIL_CONTINUE = 0,
@@ -324,6 +333,7 @@ extern struct t_irc_server *irc_servers;
 extern const int gnutls_cert_type_prio[];
 extern const int gnutls_prot_prio[];
 extern struct t_irc_message *irc_recv_msgq, *irc_msgq_last_msg;
+extern char *irc_server_ipv6_string[];
 extern char *irc_server_sasl_fail_string[];
 extern char *irc_server_options[][2];
 

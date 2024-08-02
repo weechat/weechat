@@ -5337,14 +5337,12 @@ irc_command_display_server (struct t_irc_server *server, int with_detail)
                             weechat_config_string (server->options[IRC_SERVER_OPTION_PROXY]));
         /* ipv6 */
         if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_IPV6]))
-            weechat_printf (NULL, "  ipv6 . . . . . . . . :   (%s)",
-                            (IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_IPV6)) ?
-                            _("on") : _("off"));
+            weechat_printf (NULL, "  ipv6 . . . . . . . . :   ('%s')",
+                            irc_server_ipv6_string[IRC_SERVER_OPTION_ENUM(server, IRC_SERVER_OPTION_IPV6)]);
         else
-            weechat_printf (NULL, "  ipv6 . . . . . . . . : %s%s",
+            weechat_printf (NULL, "  ipv6 . . . . . . . . : %s'%s'",
                             IRC_COLOR_CHAT_VALUE,
-                            (weechat_config_boolean (server->options[IRC_SERVER_OPTION_IPV6])) ?
-                            _("on") : _("off"));
+                            irc_server_ipv6_string[weechat_config_enum (server->options[IRC_SERVER_OPTION_IPV6])]);
         /* tls */
         if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_TLS]))
             weechat_printf (NULL, "  tls. . . . . . . . . :   (%s)",
@@ -7289,7 +7287,7 @@ irc_command_init ()
             AI("  /connect libera"),
             AI("  /connect irc.oftc.net"),
             AI("  /connect irc.oftc.net/6667 -notls"),
-            AI("  /connect irc6.oftc.net/9999 -ipv6"),
+            AI("  /connect irc6.oftc.net/9999 -ipv6=force"),
             AI("  /connect my.server.org -password=test"),
             AI("  /connect irc://nick@irc.oftc.net/#channel"),
             AI("  /connect -switch")),

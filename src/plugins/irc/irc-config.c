@@ -1886,10 +1886,9 @@ irc_config_server_new_option (struct t_config_file *config_file,
         case IRC_SERVER_OPTION_IPV6:
             new_option = weechat_config_new_option (
                 config_file, section,
-                option_name, "boolean",
-                N_("use IPv6 protocol for server communication (try IPv6 then "
-                   "fallback to IPv4); if disabled, only IPv4 is used"),
-                NULL, 0, 0,
+                option_name, "enum",
+                N_("use IPv6 protocol for server communication"),
+                "disable|auto|force", 0, 0,
                 default_value, value,
                 null_value_allowed,
                 callback_check_value,
@@ -2889,7 +2888,7 @@ irc_config_update_cb (const void *pointer, void *data,
                       int version_read,
                       struct t_hashtable *data_read)
 {
-    const char *ptr_section, *ptr_option, *ptr_value;
+    const char *ptr_config, *ptr_section, *ptr_option, *ptr_value;
     const char *option_autojoin_delay = "autojoin_delay";
     char *new_option, *pos_option, *new_value;
     int changes, length;
@@ -3043,6 +3042,70 @@ irc_config_update_cb (const void *pointer, void *data,
                     weechat_hashtable_set (data_read, "option", new_option);
                     changes++;
                     free (new_option);
+                }
+            }
+        }
+    }
+
+    if (version_read < 5)
+    {
+        /*
+         * changes in v5 (WeeChat 4.4.0):
+         *   - server option "ipv6" is converted from boolean to enum:
+         *       - "on"  -> "auto"
+         *       - "off" -> "disable"
+         *     (new possible value "force" is not set by this function)
+         */
+        ptr_config = weechat_hashtable_get (data_read, "config");
+        ptr_section = weechat_hashtable_get (data_read, "section");
+        ptr_option = weechat_hashtable_get (data_read, "option");
+        ptr_value = weechat_hashtable_get (data_read, "value");
+        if (ptr_section
+            && ptr_option
+            && (strcmp (ptr_section, "server_default") == 0)
+            && (strcmp (ptr_option, "ipv6") == 0)
+            && ptr_value)
+        {
+            new_value = (strcmp (ptr_value, "off") == 0) ?
+                strdup ("disable") : strdup ("auto");
+            if (new_value)
+            {
+                weechat_printf (
+                    NULL,
+                    _("Value of option \"%s.%s.%s\" has been converted: \"%s\" => \"%s\""),
+                    ptr_config,
+                    ptr_section,
+                    ptr_option,
+                    ptr_value,
+                    new_value);
+                weechat_hashtable_set (data_read, "value", new_value);
+                changes++;
+                free (new_value);
+            }
+        }
+        else if (ptr_section
+                 && ptr_option
+                 && (strcmp (ptr_section, "server") == 0)
+                 && ptr_value)
+        {
+            pos_option = strrchr (ptr_option, '.');
+            if (pos_option && (strcmp (pos_option + 1, "ipv6") == 0))
+            {
+                new_value = (strcmp (ptr_value, "off") == 0) ?
+                    strdup ("disable") : strdup ("auto");
+                if (new_value)
+                {
+                    weechat_printf (
+                        NULL,
+                        _("Value of option \"%s.%s.%s\" has been converted: \"%s\" => \"%s\""),
+                        ptr_config,
+                        ptr_section,
+                        ptr_option,
+                        ptr_value,
+                        new_value);
+                    weechat_hashtable_set (data_read, "value", new_value);
+                    changes++;
+                    free (new_value);
                 }
             }
         }
