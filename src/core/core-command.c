@@ -5492,6 +5492,7 @@ void
 command_proxy_list ()
 {
     struct t_proxy *ptr_proxy;
+    const char *ipv6_status;
 
     if (weechat_proxies)
     {
@@ -5500,6 +5501,21 @@ command_proxy_list ()
         for (ptr_proxy = weechat_proxies; ptr_proxy;
              ptr_proxy = ptr_proxy->next_proxy)
         {
+            switch (CONFIG_ENUM(ptr_proxy->options[PROXY_OPTION_IPV6]))
+            {
+                case PROXY_IPV6_DISABLE:
+                    ipv6_status = _("IPv6: disabled");
+                    break;
+                case PROXY_IPV6_AUTO:
+                    ipv6_status = _("IPv6: automatic");
+                    break;
+                case PROXY_IPV6_FORCE:
+                    ipv6_status = _("IPv6: forced");
+                    break;
+                default:
+                    ipv6_status = NULL;
+                    break;
+            }
             gui_chat_printf (NULL,
                              _("  %s%s%s: %s, %s/%d (%s), username: %s, "
                                "password: %s"),
@@ -5509,7 +5525,7 @@ command_proxy_list ()
                              proxy_type_string[CONFIG_ENUM(ptr_proxy->options[PROXY_OPTION_TYPE])],
                              CONFIG_STRING(ptr_proxy->options[PROXY_OPTION_ADDRESS]),
                              CONFIG_INTEGER(ptr_proxy->options[PROXY_OPTION_PORT]),
-                             (CONFIG_INTEGER(ptr_proxy->options[PROXY_OPTION_IPV6])) ? "IPv6" : "IPv4",
+                             (ipv6_status) ? ipv6_status : "?",
                              (CONFIG_STRING(ptr_proxy->options[PROXY_OPTION_USERNAME]) &&
                               CONFIG_STRING(ptr_proxy->options[PROXY_OPTION_USERNAME])[0]) ?
                              CONFIG_STRING(ptr_proxy->options[PROXY_OPTION_USERNAME]) : _("(none)"),
@@ -5583,7 +5599,7 @@ COMMAND_CALLBACK(proxy)
         if (error && !error[0])
         {
             /* add proxy */
-            if (proxy_new (argv[2], argv[3], "off", argv[4], argv[5],
+            if (proxy_new (argv[2], argv[3], "disable", argv[4], argv[5],
                            (argc >= 7) ? argv[6] : NULL,
                            (argc >= 8) ? argv_eol[7] : NULL))
             {
@@ -9185,9 +9201,9 @@ command_init ()
             N_("Examples:"),
             N_("  add a http proxy, running on local host, port 8888:"),
             AI("    /proxy add local http 127.0.0.1 8888"),
-            N_("  add a http proxy using IPv6 protocol:"),
+            N_("  add a http proxy using IPv6 protocol only:"),
             AI("    /proxy add local http ::1 8888"),
-            AI("    /proxy set local ipv6 on"),
+            AI("    /proxy set local ipv6 force"),
             N_("  add a socks5 proxy with username/password:"),
             AI("    /proxy add myproxy socks5 sample.host.org 3128 myuser mypass"),
             N_("  delete a proxy:"),

@@ -31,7 +31,7 @@ struct t_gui_buffer;
 #define WEECHAT_CONFIG_NAME "weechat"
 #define WEECHAT_CONFIG_PRIO_NAME "110000|weechat"
 
-#define WEECHAT_CONFIG_VERSION 3
+#define WEECHAT_CONFIG_VERSION 4
 
 #define TAB_MAX_WIDTH 64
 

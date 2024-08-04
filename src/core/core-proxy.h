@@ -43,6 +43,15 @@ enum t_proxy_type
     PROXY_NUM_TYPES,
 };
 
+enum t_proxy_ipv6
+{
+    PROXY_IPV6_DISABLE = 0,
+    PROXY_IPV6_AUTO,
+    PROXY_IPV6_FORCE,
+    /* number of IPv6 options */
+    PROXY_NUM_IPV6,
+};
+
 struct t_proxy
 {
     char *name;                         /* proxy name                       */
@@ -56,6 +65,7 @@ struct t_proxy
 
 extern char *proxy_option_string[];
 extern char *proxy_type_string[];
+extern char *proxy_ipv6_string[];
 extern struct t_proxy *weechat_proxies;
 extern struct t_proxy *last_weechat_proxy;
 extern struct t_proxy *weechat_temp_proxies;

@@ -1652,7 +1652,7 @@ config_weechat_update_cb (const void *pointer, void *data,
         { "number_desc" "-buffer.number" },
         { NULL, NULL },
     };
-    char *new_option;
+    char *new_option, *new_value, *pos_option;
     int changes, i;
 
     /* make C compiler happy */
@@ -1801,6 +1801,47 @@ config_weechat_update_cb (const void *pointer, void *data,
                     hashtable_set (data_read, "value", new_hotlist_sort[i][1]);
                     changes++;
                     break;
+                }
+            }
+        }
+    }
+
+    if (version_read < 4)
+    {
+        /*
+         * changes in v4 (WeeChat 4.4.0):
+         *   - proxy option "ipv6" is converted from boolean to enum:
+         *       - "on"  -> "auto"
+         *       - "off" -> "disable"
+         *     (new possible value "force" is not set by this function)
+         */
+        ptr_config = hashtable_get (data_read, "config");
+        ptr_section = hashtable_get (data_read, "section");
+        ptr_option = hashtable_get (data_read, "option");
+        ptr_value = hashtable_get (data_read, "value");
+        if (ptr_section
+            && ptr_option
+            && (strcmp (ptr_section, "proxy") == 0)
+            && ptr_value)
+        {
+            pos_option = strrchr (ptr_option, '.');
+            if (pos_option && (strcmp (pos_option + 1, "ipv6") == 0))
+            {
+                new_value = (strcmp (ptr_value, "off") == 0) ?
+                    strdup ("disable") : strdup ("auto");
+                if (new_value)
+                {
+                    gui_chat_printf (
+                        NULL,
+                        _("Value of option \"%s.%s.%s\" has been converted: \"%s\" => \"%s\""),
+                        ptr_config,
+                        ptr_section,
+                        ptr_option,
+                        ptr_value,
+                        new_value);
+                    hashtable_set (data_read, "value", new_value);
+                    changes++;
+                    free (new_value);
                 }
             }
         }

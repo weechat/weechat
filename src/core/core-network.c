@@ -994,8 +994,25 @@ network_connect_child (struct t_hook *hook_connect)
     res_init ();
     if (ptr_proxy)
     {
-        hints.ai_family = (CONFIG_BOOLEAN(ptr_proxy->options[PROXY_OPTION_IPV6])) ?
-            AF_UNSPEC : AF_INET;
+        switch (CONFIG_ENUM(ptr_proxy->options[PROXY_OPTION_IPV6]))
+        {
+            case PROXY_IPV6_DISABLE:
+                /* force IPv4 */
+                hints.ai_family = AF_INET;
+                break;
+            case PROXY_IPV6_AUTO:
+                /* auto: IPv6 / IPv4 */
+                hints.ai_family = AF_UNSPEC;
+                break;
+            case PROXY_IPV6_FORCE:
+                /* force IPv6 */
+                hints.ai_family = AF_INET6;
+                break;
+            default:
+                /* auto by default */
+                hints.ai_family = AF_UNSPEC;
+                break;
+        }
         snprintf (port, sizeof (port), "%d", CONFIG_INTEGER(ptr_proxy->options[PROXY_OPTION_PORT]));
         rc = getaddrinfo (CONFIG_STRING(ptr_proxy->options[PROXY_OPTION_ADDRESS]),
                           port, &hints, &res_remote);

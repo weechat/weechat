@@ -40,9 +40,11 @@
 char *proxy_option_string[PROXY_NUM_OPTIONS] =
 { "type", "ipv6", "address", "port", "username", "password" };
 char *proxy_option_default[PROXY_NUM_OPTIONS] =
-{ "http", "off", "127.0.0.1", "3128", "", "" };
+{ "http", "auto", "127.0.0.1", "3128", "", "" };
 char *proxy_type_string[PROXY_NUM_TYPES] =
 { "http", "socks4", "socks5" };
+char *proxy_ipv6_string[PROXY_NUM_IPV6] =
+{ "disable", "auto", "force" };
 
 struct t_proxy *weechat_proxies = NULL;    /* first proxy                   */
 struct t_proxy *last_weechat_proxy = NULL; /* last proxy                    */
@@ -279,9 +281,9 @@ proxy_create_option (const char *proxy_name, int index_option,
         case PROXY_OPTION_IPV6:
             ptr_option = config_file_new_option (
                 weechat_config_file, weechat_config_section_proxy,
-                option_name, "boolean",
-                N_("connect to proxy using ipv6"),
-                NULL, 0, 0, value, NULL, 0,
+                option_name, "enum",
+                N_("connect to proxy using IPv6"),
+                "disable|auto|force", 0, 0, value, NULL, 0,
                 NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
             break;
         case PROXY_OPTION_ADDRESS:
@@ -660,7 +662,9 @@ proxy_print_log ()
         log_printf ("  type . . . . . . . . . : %d (%s)",
                     CONFIG_ENUM(ptr_proxy->options[PROXY_OPTION_TYPE]),
                     proxy_type_string[CONFIG_ENUM(ptr_proxy->options[PROXY_OPTION_TYPE])]);
-        log_printf ("  ipv6 . . . . . . . . . : %d", CONFIG_INTEGER(ptr_proxy->options[PROXY_OPTION_IPV6]));
+        log_printf ("  ipv6 . . . . . . . . . : %d (%s)",
+                    CONFIG_ENUM(ptr_proxy->options[PROXY_OPTION_IPV6]),
+                    proxy_ipv6_string[CONFIG_ENUM(ptr_proxy->options[PROXY_OPTION_IPV6])]);
         log_printf ("  address. . . . . . . . : '%s'", CONFIG_STRING(ptr_proxy->options[PROXY_OPTION_ADDRESS]));
         log_printf ("  port . . . . . . . . . : %d", CONFIG_INTEGER(ptr_proxy->options[PROXY_OPTION_PORT]));
         log_printf ("  username . . . . . . . : '%s'", CONFIG_STRING(ptr_proxy->options[PROXY_OPTION_USERNAME]));
