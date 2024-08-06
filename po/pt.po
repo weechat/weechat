@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-07-19 09:17+0200\n"
+"POT-Creation-Date: 2024-08-06 08:27+0200\n"
 "PO-Revision-Date: 2024-06-11 07:49+0200\n"
 "Last-Translator: Vasco Almeida <vascomalmeida@sapo.pt>\n"
 "Language-Team: Portuguese <>\n"
@@ -780,6 +780,17 @@ msgstr "Plugins carregados:"
 
 msgid "List of proxies:"
 msgstr "Lista de proxies:"
+
+#, fuzzy
+#| msgid "(disabled)"
+msgid "IPv6: disabled"
+msgstr "(desativado)"
+
+msgid "IPv6: automatic"
+msgstr ""
+
+msgid "IPv6: forced"
+msgstr ""
 
 #, c-format
 msgid "  %s%s%s: %s, %s/%d (%s), username: %s, password: %s"
@@ -3243,7 +3254,7 @@ msgstr ""
 msgid "  add a http proxy, running on local host, port 8888:"
 msgstr ""
 
-msgid "  add a http proxy using IPv6 protocol:"
+msgid "  add a http proxy using IPv6 protocol only:"
 msgstr ""
 
 msgid "  add a socks5 proxy with username/password:"
@@ -6136,7 +6147,9 @@ msgstr "propriedades incorretas"
 msgid "proxy type (http (default), socks4, socks5)"
 msgstr "tipo de proxy (http (predefinição), socks4, socks5)"
 
-msgid "connect to proxy using ipv6"
+#, fuzzy
+#| msgid "connect to proxy using ipv6"
+msgid "connect to proxy using IPv6"
 msgstr "conectar-se ao proxy usando ipv6"
 
 msgid "proxy server address (IP or hostname)"
@@ -10993,12 +11006,10 @@ msgstr ""
 "nome do proxy usado neste servidor (opcional, o proxy deve ser definido pelo "
 "comando /proxy)"
 
-msgid ""
-"use IPv6 protocol for server communication (try IPv6 then fallback to IPv4); "
-"if disabled, only IPv4 is used"
-msgstr ""
-"usar o protocolo IPv6 na comunicação com o servidor (tentar IPv6 ou recorrer "
-"a IPv4); se desativado, apenas é usado IPv4"
+#, fuzzy
+#| msgid "use SSL for server communication"
+msgid "use IPv6 protocol for server communication"
+msgstr "usar SSL na comunicação com o servidor"
 
 #, fuzzy
 #| msgid "use SSL for server communication"
@@ -17858,3 +17869,10 @@ msgstr "%s%s: tempo limite de \"%s\" com %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: não foi possível conectar: erro inesperado (%d)"
+
+#~ msgid ""
+#~ "use IPv6 protocol for server communication (try IPv6 then fallback to "
+#~ "IPv4); if disabled, only IPv4 is used"
+#~ msgstr ""
+#~ "usar o protocolo IPv6 na comunicação com o servidor (tentar IPv6 ou "
+#~ "recorrer a IPv4); se desativado, apenas é usado IPv4"

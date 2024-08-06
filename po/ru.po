@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-07-19 09:17+0200\n"
+"POT-Creation-Date: 2024-08-06 08:27+0200\n"
 "PO-Revision-Date: 2024-06-11 07:49+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -757,6 +757,16 @@ msgstr "Загруженные plugin'ы\n"
 #, fuzzy
 msgid "List of proxies:"
 msgstr "Список сокращений:\n"
+
+#, fuzzy
+msgid "IPv6: disabled"
+msgstr "команда users отключена"
+
+msgid "IPv6: automatic"
+msgstr ""
+
+msgid "IPv6: forced"
+msgstr ""
 
 #, c-format
 msgid "  %s%s%s: %s, %s/%d (%s), username: %s, password: %s"
@@ -3070,7 +3080,7 @@ msgstr ""
 msgid "  add a http proxy, running on local host, port 8888:"
 msgstr ""
 
-msgid "  add a http proxy using IPv6 protocol:"
+msgid "  add a http proxy using IPv6 protocol only:"
 msgstr ""
 
 msgid "  add a socks5 proxy with username/password:"
@@ -5533,7 +5543,7 @@ msgid "proxy type (http (default), socks4, socks5)"
 msgstr "тип proxy сервера (http (по-умолчанию), socks4, socks5)"
 
 #, fuzzy
-msgid "connect to proxy using ipv6"
+msgid "connect to proxy using IPv6"
 msgstr "подключаться к прокси используя ipv6"
 
 msgid "proxy server address (IP or hostname)"
@@ -10106,10 +10116,10 @@ msgid ""
 "command /proxy)"
 msgstr ""
 
-msgid ""
-"use IPv6 protocol for server communication (try IPv6 then fallback to IPv4); "
-"if disabled, only IPv4 is used"
-msgstr ""
+#, fuzzy
+#| msgid "use SSL for server communication"
+msgid "use IPv6 protocol for server communication"
+msgstr "использовать SSL при связи с сервером"
 
 #, fuzzy
 #| msgid "use SSL for server communication"

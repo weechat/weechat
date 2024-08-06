@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-07-19 09:17+0200\n"
+"POT-Creation-Date: 2024-08-06 08:27+0200\n"
 "PO-Revision-Date: 2024-07-10 11:29+0400\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -771,6 +771,17 @@ msgstr "Није учитан ниједан додатак"
 
 msgid "List of proxies:"
 msgstr "Листа проксија:"
+
+#, fuzzy
+#| msgid "disabled"
+msgid "IPv6: disabled"
+msgstr "искључен"
+
+msgid "IPv6: automatic"
+msgstr ""
+
+msgid "IPv6: forced"
+msgstr ""
 
 #, c-format
 msgid "  %s%s%s: %s, %s/%d (%s), username: %s, password: %s"
@@ -3365,7 +3376,9 @@ msgstr ""
 msgid "  add a http proxy, running on local host, port 8888:"
 msgstr "  додаје http прокси који се извршава на локалном хосту, порт 8888:"
 
-msgid "  add a http proxy using IPv6 protocol:"
+#, fuzzy
+#| msgid "  add a http proxy using IPv6 protocol:"
+msgid "  add a http proxy using IPv6 protocol only:"
 msgstr "  додаје http прокси који користи IPv6 протокол:"
 
 msgid "  add a socks5 proxy with username/password:"
@@ -6260,7 +6273,9 @@ msgstr "неважећи приоритети"
 msgid "proxy type (http (default), socks4, socks5)"
 msgstr "тип проксија (http (подразумевани), socks4, socks5)"
 
-msgid "connect to proxy using ipv6"
+#, fuzzy
+#| msgid "connect to proxy using ipv6"
+msgid "connect to proxy using IPv6"
 msgstr "на прокси се повезује употребом ipv6"
 
 msgid "proxy server address (IP or hostname)"
@@ -11016,12 +11031,10 @@ msgstr ""
 "име проксија који се користи за овај сервер (необавезно, прокси мора бити "
 "дефинисан командом /proxy)"
 
-msgid ""
-"use IPv6 protocol for server communication (try IPv6 then fallback to IPv4); "
-"if disabled, only IPv4 is used"
-msgstr ""
-"за комуникацију са сервером се користи IPv6 протокол (покушава се IPv6 па се "
-"прелази на IPv4 ако не ради); ако је искључено, користи се само IPv4"
+#, fuzzy
+#| msgid "use TLS for server communication"
+msgid "use IPv6 protocol for server communication"
+msgstr "за комуникацију са сервером се користи TLS"
 
 msgid "use TLS for server communication"
 msgstr "за комуникацију са сервером се користи TLS"
@@ -17762,6 +17775,13 @@ msgstr "%s%s: тајмаут за „%s” са %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: повезивање није успело: неочекивана грешка (%d)"
+
+#~ msgid ""
+#~ "use IPv6 protocol for server communication (try IPv6 then fallback to "
+#~ "IPv4); if disabled, only IPv4 is used"
+#~ msgstr ""
+#~ "за комуникацију са сервером се користи IPv6 протокол (покушава се IPv6 па "
+#~ "се прелази на IPv4 ако не ради); ако је искључено, користи се само IPv4"
 
 #, c-format
 #~ msgid "Remote: %s"

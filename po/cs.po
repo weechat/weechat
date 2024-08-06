@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-07-19 09:17+0200\n"
+"POT-Creation-Date: 2024-08-06 08:27+0200\n"
 "PO-Revision-Date: 2024-06-11 07:49+0200\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -777,6 +777,17 @@ msgstr "Načtené pluginy:"
 
 msgid "List of proxies:"
 msgstr "Seznam proxy:"
+
+#, fuzzy
+#| msgid "(disabled)"
+msgid "IPv6: disabled"
+msgstr "(vypnuto)"
+
+msgid "IPv6: automatic"
+msgstr ""
+
+msgid "IPv6: forced"
+msgstr ""
 
 #, c-format
 msgid "  %s%s%s: %s, %s/%d (%s), username: %s, password: %s"
@@ -3162,7 +3173,7 @@ msgstr ""
 msgid "  add a http proxy, running on local host, port 8888:"
 msgstr ""
 
-msgid "  add a http proxy using IPv6 protocol:"
+msgid "  add a http proxy using IPv6 protocol only:"
 msgstr ""
 
 msgid "  add a socks5 proxy with username/password:"
@@ -5803,7 +5814,9 @@ msgstr "nekorektní priority"
 msgid "proxy type (http (default), socks4, socks5)"
 msgstr "typ proxy (http (výchozí), socks4, socks5)"
 
-msgid "connect to proxy using ipv6"
+#, fuzzy
+#| msgid "connect to proxy using ipv6"
+msgid "connect to proxy using IPv6"
 msgstr "připojit na proxy pomocí ipv6"
 
 msgid "proxy server address (IP or hostname)"
@@ -10489,12 +10502,9 @@ msgid ""
 msgstr ""
 
 #, fuzzy
-msgid ""
-"use IPv6 protocol for server communication (try IPv6 then fallback to IPv4); "
-"if disabled, only IPv4 is used"
-msgstr ""
-"použije IPv6 pro komunikaci se serverem (vyzkouší IPv6 a pokud selže použije "
-"IPv4); pokud je vypnuta použije pouze IPv4"
+#| msgid "use SSL for server communication"
+msgid "use IPv6 protocol for server communication"
+msgstr "použít SSL pro komunikaci se serverem"
 
 #, fuzzy
 #| msgid "use SSL for server communication"
@@ -17033,3 +17043,11 @@ msgstr "%s%s: vypršel časový limit \"%s\" pro %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: nemohu se připojit\" neočekávaná chyba (%d)"
+
+#, fuzzy
+#~ msgid ""
+#~ "use IPv6 protocol for server communication (try IPv6 then fallback to "
+#~ "IPv4); if disabled, only IPv4 is used"
+#~ msgstr ""
+#~ "použije IPv6 pro komunikaci se serverem (vyzkouší IPv6 a pokud selže "
+#~ "použije IPv4); pokud je vypnuta použije pouze IPv4"

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-07-19 09:17+0200\n"
+"POT-Creation-Date: 2024-08-06 08:27+0200\n"
 "PO-Revision-Date: 2024-06-11 07:49+0200\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -801,6 +801,17 @@ msgstr "Hiçbir eklenti yüklü değil"
 
 msgid "List of proxies:"
 msgstr "Vekiller listesi:"
+
+#, fuzzy
+#| msgid "(disabled)"
+msgid "IPv6: disabled"
+msgstr "(devre dışı)"
+
+msgid "IPv6: automatic"
+msgstr ""
+
+msgid "IPv6: forced"
+msgstr ""
 
 #, c-format
 msgid "  %s%s%s: %s, %s/%d (%s), username: %s, password: %s"
@@ -3289,7 +3300,7 @@ msgstr ""
 msgid "  add a http proxy, running on local host, port 8888:"
 msgstr ""
 
-msgid "  add a http proxy using IPv6 protocol:"
+msgid "  add a http proxy using IPv6 protocol only:"
 msgstr ""
 
 msgid "  add a socks5 proxy with username/password:"
@@ -6157,7 +6168,9 @@ msgstr "geçersiz öncelikler"
 msgid "proxy type (http (default), socks4, socks5)"
 msgstr "vekil türü (http (öntanımlı), socks4, socks5)"
 
-msgid "connect to proxy using ipv6"
+#, fuzzy
+#| msgid "connect to proxy using ipv6"
+msgid "connect to proxy using IPv6"
 msgstr "vekil sunucuya ipv6 kullanarak bağlan"
 
 msgid "proxy server address (IP or hostname)"
@@ -11164,12 +11177,10 @@ msgstr ""
 "bu sunucu için kullanılan vekil (isteğe bağlı, /proxy komutu ile "
 "tanımlanmalıdır)"
 
-msgid ""
-"use IPv6 protocol for server communication (try IPv6 then fallback to IPv4); "
-"if disabled, only IPv4 is used"
-msgstr ""
-"sunucu iletişimi için IPv6 protokolünü kullanın (önce IPv6 deneyin, olmazsa "
-"IPv4'e dönün); devre dışı ise yalnızca IPv4 kullanılır"
+#, fuzzy
+#| msgid "use SSL for server communication"
+msgid "use IPv6 protocol for server communication"
+msgstr "sunucu iletişimi için SSL kullan"
 
 #, fuzzy
 #| msgid "use SSL for server communication"
@@ -18191,3 +18202,10 @@ msgstr "%s%s: \"%s\" için %s ile zaman aşımı"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: Bağlanılamıyor: Beklenmedik hata (%d)"
+
+#~ msgid ""
+#~ "use IPv6 protocol for server communication (try IPv6 then fallback to "
+#~ "IPv4); if disabled, only IPv4 is used"
+#~ msgstr ""
+#~ "sunucu iletişimi için IPv6 protokolünü kullanın (önce IPv6 deneyin, "
+#~ "olmazsa IPv4'e dönün); devre dışı ise yalnızca IPv4 kullanılır"

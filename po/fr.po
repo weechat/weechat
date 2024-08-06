@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-07-19 09:17+0200\n"
-"PO-Revision-Date: 2024-07-19 09:17+0200\n"
+"POT-Creation-Date: 2024-08-06 08:27+0200\n"
+"PO-Revision-Date: 2024-08-06 08:29+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -780,6 +780,15 @@ msgstr "Aucune extension chargée"
 
 msgid "List of proxies:"
 msgstr "Liste des proxies :"
+
+msgid "IPv6: disabled"
+msgstr "IPv6 : désactivé"
+
+msgid "IPv6: automatic"
+msgstr "IPv6 : automatique"
+
+msgid "IPv6: forced"
+msgstr "IPv6 : forcé"
 
 #, c-format
 msgid "  %s%s%s: %s, %s/%d (%s), username: %s, password: %s"
@@ -3469,8 +3478,8 @@ msgstr ""
 msgid "  add a http proxy, running on local host, port 8888:"
 msgstr "  ajouter un proxy http, tournant en local, port 8888 :"
 
-msgid "  add a http proxy using IPv6 protocol:"
-msgstr "  ajouter un proxy http en utilisant le protocole IPv6 :"
+msgid "  add a http proxy using IPv6 protocol only:"
+msgstr "  ajouter un proxy http en utilisant seulement le protocole IPv6 :"
 
 msgid "  add a socks5 proxy with username/password:"
 msgstr "  ajouter un proxy socks5 avec un utilisateur/mot de passe :"
@@ -6464,8 +6473,8 @@ msgstr "priorités invalides"
 msgid "proxy type (http (default), socks4, socks5)"
 msgstr "type de proxy (http (défaut), socks4, socks5)"
 
-msgid "connect to proxy using ipv6"
-msgstr "se connecter au proxy en ipv6"
+msgid "connect to proxy using IPv6"
+msgstr "se connecter au proxy en IPv6"
 
 msgid "proxy server address (IP or hostname)"
 msgstr "adresse du serveur proxy (IP ou nom de machine)"
@@ -11375,12 +11384,8 @@ msgstr ""
 "nom du proxy utilisé pour ce serveur (optionnel, le proxy doit être défini "
 "avec la commande /proxy)"
 
-msgid ""
-"use IPv6 protocol for server communication (try IPv6 then fallback to IPv4); "
-"if disabled, only IPv4 is used"
-msgstr ""
-"utiliser le protocole IPv6 pour la communication avec le serveur (essayer "
-"IPv6 puis repli sur l'IPv4) ; si désactivé, seulement l'IPv4 est utilisé"
+msgid "use IPv6 protocol for server communication"
+msgstr "utiliser le protocole IPv6 pour la communication avec le serveur"
 
 msgid "use TLS for server communication"
 msgstr "utiliser TLS pour la communication avec le serveur"
@@ -18290,6 +18295,13 @@ msgstr "%s%s : délai d'attente dépassé pour \"%s\" avec %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s : impossible de se connecter : erreur inattendue (%d)"
+
+#~ msgid ""
+#~ "use IPv6 protocol for server communication (try IPv6 then fallback to "
+#~ "IPv4); if disabled, only IPv4 is used"
+#~ msgstr ""
+#~ "utiliser le protocole IPv6 pour la communication avec le serveur (essayer "
+#~ "IPv6 puis repli sur l'IPv4) ; si désactivé, seulement l'IPv4 est utilisé"
 
 #, c-format
 #~ msgid "Remote: %s"
