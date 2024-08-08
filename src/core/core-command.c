@@ -5599,7 +5599,7 @@ COMMAND_CALLBACK(proxy)
         if (error && !error[0])
         {
             /* add proxy */
-            if (proxy_new (argv[2], argv[3], "disable", argv[4], argv[5],
+            if (proxy_new (argv[2], argv[3], "auto", argv[4], argv[5],
                            (argc >= 7) ? argv[6] : NULL,
                            (argc >= 8) ? argv_eol[7] : NULL))
             {

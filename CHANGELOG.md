@@ -10,7 +10,7 @@
 - **breaking:** irc: rename parameter `-re` to `-raw` in command `/list` ([#2124](https://github.com/weechat/weechat/issues/2124))
 - **breaking:** api: add constants for IPv6 and allow force of IPv6 in function hook_connect ([#2164](https://github.com/weechat/weechat/issues/2164))
 - **breaking:** irc: convert server option `ipv6` from boolean to enum (disable, auto, force) ([#2164](https://github.com/weechat/weechat/issues/2164))
-- **breaking:** core: convert proxy option `ipv6` from boolean to enum (disable, auto, force) ([#2164](https://github.com/weechat/weechat/issues/2164))
+- **breaking:** core: convert proxy option `ipv6` from boolean to enum (disable, auto, force), set option to `auto` by default when creating a new proxy ([#2164](https://github.com/weechat/weechat/issues/2164))
 - core: add option `addreplace` in commands `/bar` and `/proxy` ([#2095](https://github.com/weechat/weechat/issues/2095))
 - irc: add option `addreplace` in commands `/ignore`, `/notify` and `/server` ([#2095](https://github.com/weechat/weechat/issues/2095))
 - relay: add option `addreplace` in commands `/relay` and `/remote` ([#2095](https://github.com/weechat/weechat/issues/2095))
