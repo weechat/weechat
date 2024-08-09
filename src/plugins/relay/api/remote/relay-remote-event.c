@@ -733,6 +733,91 @@ relay_remote_event_remove_localvar_cb (void *data,
 }
 
 /*
+ * Initial sync of buffers: remove any remote buffer that is not received
+ * from the remote (case of buffers still present after a previous connection
+ * to the remove).
+ */
+
+void
+relay_remote_event_initial_sync_buffers (struct t_relay_remote_event *event)
+{
+    struct t_gui_buffer *ptr_buffer;
+    struct t_arraylist *remote_buffers;
+    struct t_hashtable *buffers_id;
+    const char *ptr_name, *ptr_id;
+    char str_id[64];
+    cJSON *json_buffer, *json_obj;
+    long long id;
+    int i, list_size;
+
+    if (!event->remote)
+        return;
+
+    /* build a list of existing buffers for the remote */
+    remote_buffers = weechat_arraylist_new (32, 0, 0,
+                                            NULL, NULL, NULL, NULL);
+    if (!remote_buffers)
+    {
+        relay_remote_network_disconnect (event->remote);
+        return;
+    }
+    ptr_buffer = weechat_hdata_get_list (relay_hdata_buffer, "gui_buffers");
+    while (ptr_buffer)
+    {
+        ptr_name = weechat_buffer_get_string (ptr_buffer, "localvar_relay_remote");
+        if (ptr_name && (weechat_strcmp (ptr_name, event->remote->name) == 0))
+        {
+            weechat_arraylist_add (remote_buffers, ptr_buffer);
+        }
+        ptr_buffer = weechat_hdata_move (relay_hdata_buffer, ptr_buffer, 1);
+    }
+
+    /* build a list of remote buffers ids received in JSON */
+    buffers_id = weechat_hashtable_new (32,
+                                        WEECHAT_HASHTABLE_STRING,
+                                        WEECHAT_HASHTABLE_POINTER,
+                                        NULL,
+                                        NULL);
+    if (!buffers_id)
+    {
+        weechat_arraylist_free (remote_buffers);
+        relay_remote_network_disconnect (event->remote);
+        return;
+    }
+    if (event->json && cJSON_IsArray (event->json))
+    {
+        cJSON_ArrayForEach (json_buffer, event->json)
+        {
+            JSON_GET_NUM(json_buffer, id, -1);
+            snprintf (str_id, sizeof (str_id), "%lld", id);
+            weechat_hashtable_set (buffers_id, str_id, NULL);
+        }
+    }
+
+    /* close any remote buffer that was not received in JSON */
+    list_size = weechat_arraylist_size (remote_buffers);
+    for (i = 0; i < list_size; i++)
+    {
+        ptr_buffer = (struct t_gui_buffer *)weechat_arraylist_get (remote_buffers, i);
+        if (!weechat_hdata_check_pointer (
+                relay_hdata_buffer,
+                weechat_hdata_get_list (relay_hdata_buffer, "gui_buffers"),
+                ptr_buffer))
+        {
+            continue;
+        }
+        ptr_id = weechat_buffer_get_string (ptr_buffer, "localvar_relay_remote_id");
+        if (ptr_id && !weechat_hashtable_has_key (buffers_id, ptr_id))
+        {
+            weechat_buffer_close (ptr_buffer);
+        }
+    }
+
+    weechat_arraylist_free (remote_buffers);
+    weechat_hashtable_free (buffers_id);
+}
+
+/*
  * Callback for a buffer event or response to GET /api/buffers.
  */
 
@@ -1052,13 +1137,14 @@ RELAY_REMOTE_EVENT_CALLBACK(version)
         }
         relay_remote_event_clear_buffers (event->remote);
         event->remote->version_ok = 1;
-        snprintf (request, sizeof (request),
-                  "{\"request\": \"GET /api/buffers?"
-                  "lines=-%d"
-                  "&nicks=true"
-                  "&colors=weechat"
-                  "\"}",
-                  weechat_config_integer (relay_config_api_remote_get_lines));
+        snprintf (
+            request, sizeof (request),
+            "{"
+            "\"request\": "
+            "\"GET /api/buffers?lines=-%d&nicks=true&colors=weechat\", "
+            "\"request_id\": \"" RELAY_REMOTE_EVENT_ID_INITIAL_SYNC "\""
+            "}",
+            weechat_config_integer (relay_config_api_remote_get_lines));
         relay_remote_network_send (event->remote, RELAY_MSG_STANDARD,
                                    request, strlen (request));
     }
@@ -1108,7 +1194,7 @@ void
 relay_remote_event_recv (struct t_relay_remote *remote, const char *data)
 {
     cJSON *json, *json_body, *json_obj;
-    const char *body_type, *event_name;
+    const char *body_type, *event_name, *request_id;
     long long buffer_id;
     int i, rc, code;
     struct t_relay_remote_event_cb event_cb[] = {
@@ -1149,6 +1235,7 @@ relay_remote_event_recv (struct t_relay_remote *remote, const char *data)
 
     JSON_GET_NUM(json, code, -1);
     JSON_GET_STR(json, body_type);
+    JSON_GET_STR(json, request_id);
     json_body = cJSON_GetObjectItem (json, "body");
 
     if (!body_type && ((code == 200) || (code == 204)))
@@ -1187,6 +1274,13 @@ relay_remote_event_recv (struct t_relay_remote *remote, const char *data)
 
     if (callback)
     {
+        event.json = json_body;
+        if ((weechat_strcmp (body_type, "buffers") == 0)
+            && (weechat_strcmp (request_id,
+                                RELAY_REMOTE_EVENT_ID_INITIAL_SYNC) == 0))
+        {
+            relay_remote_event_initial_sync_buffers (&event);
+        }
         rc = WEECHAT_RC_OK;
         if (cJSON_IsArray (json_body))
         {
@@ -1198,7 +1292,6 @@ relay_remote_event_recv (struct t_relay_remote *remote, const char *data)
         }
         else
         {
-            event.json = json_body;
             rc = (callback) (&event);
         }
         if (rc == WEECHAT_RC_ERROR)

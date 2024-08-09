@@ -20,6 +20,8 @@
 #ifndef WEECHAT_PLUGIN_RELAY_REMOTE_EVENT_H
 #define WEECHAT_PLUGIN_RELAY_REMOTE_EVENT_H
 
+#define RELAY_REMOTE_EVENT_ID_INITIAL_SYNC "initial_sync"
+
 #define RELAY_REMOTE_EVENT_CALLBACK(__body_type)                        \
     int                                                                 \
     relay_remote_event_cb_##__body_type (                               \

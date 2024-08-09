@@ -187,6 +187,16 @@ TEST(RelayRemoteEvent, RemoveLocalVarCb)
 
 /*
  * Tests functions:
+ *   relay_remote_event_initial_sync_buffers
+ */
+
+TEST(RelayRemoteEvent, InitialSyncBuffers)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
  *   relay_remote_event_cb_buffer
  */
 
