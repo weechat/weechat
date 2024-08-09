@@ -784,16 +784,6 @@ RELAY_REMOTE_EVENT_CALLBACK(buffer)
     weechat_hashtable_set (buffer_props, "title", title);
     weechat_hashtable_set (buffer_props, "modes", modes);
     weechat_hashtable_set (buffer_props, "input_prompt", input_prompt);
-    if (!event->buffer)
-    {
-        /*
-         * set input content and position only when the buffer is created;
-         * subsequent updates will be handled via the "input" callback
-         */
-        weechat_hashtable_set (buffer_props, "input", input);
-        snprintf (str_number, sizeof (str_number), "%d", input_position);
-        weechat_hashtable_set (buffer_props, "input_pos", str_number);
-    }
     weechat_hashtable_set (buffer_props, "input_multiline",
                            (input_multiline) ? "1" : "0");
     weechat_hashtable_set (buffer_props, "nicklist", (nicklist) ? "1" : "0");
@@ -825,6 +815,13 @@ RELAY_REMOTE_EVENT_CALLBACK(buffer)
             ptr_buffer = weechat_buffer_search ("relay", full_name);
             if (!ptr_buffer)
             {
+                /*
+                 * set input content and position only when the buffer is created;
+                 * subsequent updates will be handled via the "input" callback
+                 */
+                weechat_hashtable_set (buffer_props, "input", input);
+                snprintf (str_number, sizeof (str_number), "%d", input_position);
+                weechat_hashtable_set (buffer_props, "input_pos", str_number);
                 ptr_buffer = weechat_buffer_new_props (
                     full_name, buffer_props,
                     &relay_remote_event_buffer_input_cb, NULL, NULL,
