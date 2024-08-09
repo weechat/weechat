@@ -61,6 +61,7 @@
 - relay/api: fix connection to remote without password ([#2158](https://github.com/weechat/weechat/issues/2158))
 - relay/api: fix timezone of dates sent to clients ([#2151](https://github.com/weechat/weechat/issues/2151))
 - relay/api: clear lines and nicklist on all remote buffers upon successful connection to the remote ([#2161](https://github.com/weechat/weechat/issues/2161))
+- relay/api: fix buffers synchronization with existing buffers that have been renamed on remote in the meanwhile ([#2169](https://github.com/weechat/weechat/issues/2169))
 - relay/api: fix "body_type" returned when lines or nicks of a buffer are requested
 - relay/api: fix read of one buffer line
 - relay: fix websocket permessage-deflate extension when the client doesn't send the max window bits parameters ([#1549](https://github.com/weechat/weechat/issues/1549))

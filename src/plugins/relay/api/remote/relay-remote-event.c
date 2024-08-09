@@ -817,6 +817,8 @@ RELAY_REMOTE_EVENT_CALLBACK(buffer)
     apply_props = 1;
     ptr_buffer = event->buffer;
     if (!ptr_buffer)
+        ptr_buffer = relay_remote_event_search_buffer (event->remote, id);
+    if (!ptr_buffer)
     {
         if (weechat_asprintf (&full_name, "remote.%s.%s", event->remote->name, name) >= 0)
         {
