@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-08-06 08:27+0200\n"
+"POT-Creation-Date: 2024-08-09 18:24+0200\n"
 "PO-Revision-Date: 2024-06-11 07:49+0200\n"
 "Last-Translator: Érico Nogueira <ericonr@disroot.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -13630,6 +13630,10 @@ msgstr ""
 #, fuzzy, c-format
 msgid "%s%s: failed to execute route \"%s %s\" for client %s%s%s"
 msgstr "%s%s: falha ao executar comando \"%s\" para cliente %d"
+
+#, fuzzy, c-format
+msgid "%sremote[%s]: unable to send data, disconnecting"
+msgstr "%s%s: não foi possível criar pipe"
 
 #, c-format
 msgid "remote[%s]: WeeChat: %s (%s), API: %s"

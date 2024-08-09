@@ -67,6 +67,7 @@
 - relay/api: fix "body_type" returned when lines or nicks of a buffer are requested
 - relay/api: fix read of one buffer line
 - relay/api: automatically disconnect when the command `/upgrade` is executed on the remote
+- relay/api: disconnect from remote in case of error when sending data
 - relay: fix websocket permessage-deflate extension when the client doesn't send the max window bits parameters ([#1549](https://github.com/weechat/weechat/issues/1549))
 - relay: fix allocation and reinit of field "client_context_takeover" in websocket deflate structure ([#1549](https://github.com/weechat/weechat/issues/1549))
 - spell: improve error displayed when a word can not be added to the dictionary ([#2144](https://github.com/weechat/weechat/issues/2144))

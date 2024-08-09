@@ -657,7 +657,15 @@ relay_remote_event_buffer_input_cb (const void *pointer,
                            cJSON_CreateString (input_data));
     cJSON_AddItemToObject (json, "body", json_body);
 
-    relay_remote_network_send_json (ptr_remote, json);
+    if (relay_remote_network_send_json (ptr_remote, json) <= 0)
+    {
+        weechat_printf (
+            NULL,
+            _("%sremote[%s]: unable to send data, disconnecting"),
+            weechat_prefix ("error"),
+            ptr_remote->name);
+        relay_remote_network_disconnect (ptr_remote);
+    }
 
     cJSON_Delete (json);
 
