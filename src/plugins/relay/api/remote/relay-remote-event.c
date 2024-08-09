@@ -88,8 +88,8 @@ relay_remote_event_search_buffer (struct t_relay_remote *remote, long long id)
         ptr_id = weechat_buffer_get_string (ptr_buffer, "localvar_relay_remote_id");
         if (ptr_name
             && ptr_id
-            && (strcmp (ptr_name, remote->name) == 0)
-            && (strcmp (ptr_id, str_id) == 0))
+            && (weechat_strcmp (ptr_name, remote->name) == 0)
+            && (weechat_strcmp (ptr_id, str_id) == 0))
         {
             ptr_buffer_found = ptr_buffer;
             break;
@@ -293,7 +293,7 @@ relay_remote_event_search_line_by_id (struct t_gui_buffer *buffer, int id)
         {
             for (i = 0; tags[i]; i++)
             {
-                if (strcmp (tags[i], str_tag_id) == 0)
+                if (weechat_strcmp (tags[i], str_tag_id) == 0)
                     return ptr_line;
             }
         }
