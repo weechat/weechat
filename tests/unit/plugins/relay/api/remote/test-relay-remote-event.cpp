@@ -1,5 +1,5 @@
- * test-relay-remote-event.cpp - test event functions for relay remote
 /*
+ * test-relay-remote-event.cpp - test event functions for relay remote
  *
  * Copyright (C) 2024 Sébastien Helleu <flashcode@flashtux.org>
  *
