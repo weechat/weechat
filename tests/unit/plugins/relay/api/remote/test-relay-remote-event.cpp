@@ -227,6 +227,16 @@ TEST(RelayRemoteEvent, CbInput)
 
 /*
  * Tests functions:
+ *   relay_remote_event_clear_buffers
+ */
+
+TEST(RelayRemoteEvent, ClearBuffers)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
  *   relay_remote_event_cb_version
  */
 

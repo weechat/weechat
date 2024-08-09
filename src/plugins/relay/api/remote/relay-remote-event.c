@@ -981,6 +981,32 @@ RELAY_REMOTE_EVENT_CALLBACK(input)
 }
 
 /*
+ * Clears buffers lines/nicklist for a remote.
+ */
+
+void
+relay_remote_event_clear_buffers (struct t_relay_remote *remote)
+{
+    struct t_gui_buffer *ptr_buffer;
+    const char *ptr_name;
+
+    if (!remote)
+        return;
+
+    ptr_buffer = weechat_hdata_get_list (relay_hdata_buffer, "gui_buffers");
+    while (ptr_buffer)
+    {
+        ptr_name = weechat_buffer_get_string (ptr_buffer, "localvar_relay_remote");
+        if (ptr_name && (weechat_strcmp (ptr_name, remote->name) == 0))
+        {
+            weechat_buffer_clear (ptr_buffer);
+            weechat_nicklist_remove_all (ptr_buffer);
+        }
+        ptr_buffer = weechat_hdata_move (relay_hdata_buffer, ptr_buffer, 1);
+    }
+}
+
+/*
  * Callback for response to GET /api/version.
  */
 
@@ -1025,7 +1051,7 @@ RELAY_REMOTE_EVENT_CALLBACK(version)
                 relay_remote_network_disconnect (event->remote);
                 return WEECHAT_RC_OK;
         }
-
+        relay_remote_event_clear_buffers (event->remote);
         event->remote->version_ok = 1;
         snprintf (request, sizeof (request),
                   "{\"request\": \"GET /api/buffers?"
