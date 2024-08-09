@@ -257,6 +257,26 @@ TEST(RelayRemoteEvent, CbVersion)
 
 /*
  * Tests functions:
+ *   relay_remote_event_cb_upgrade
+ */
+
+TEST(RelayRemoteEvent, CbUpgrade)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   relay_remote_event_cb_quit
+ */
+
+TEST(RelayRemoteEvent, CbQuit)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
  *   relay_remote_event_sync_with_remote
  */
 
