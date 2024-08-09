@@ -1153,6 +1153,16 @@ RELAY_REMOTE_EVENT_CALLBACK(version)
 }
 
 /*
+ * Callback for events "upgrade" and "upgrade_ended".
+ */
+
+RELAY_REMOTE_EVENT_CALLBACK(upgrade)
+{
+    relay_remote_network_disconnect (event->remote);
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Synchronizes with remote.
  */
 
@@ -1208,6 +1218,7 @@ relay_remote_event_recv (struct t_relay_remote *remote, const char *data)
         { "input_*", &relay_remote_event_cb_input },
         { "nicklist_group_*", &relay_remote_event_cb_nick_group },
         { "nicklist_nick_*", &relay_remote_event_cb_nick },
+        { "upgrade*", &relay_remote_event_cb_upgrade },
         { NULL, NULL },
     };
     t_relay_remote_event_func *callback;
