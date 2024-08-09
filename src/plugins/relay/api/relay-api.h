@@ -58,6 +58,7 @@ struct t_relay_api_data
     struct t_hook *hook_signal_input;     /* hook for signal                */
                                           /* "input_text_changed"           */
     struct t_hook *hook_signal_upgrade;   /* hook for signals "upgrade*"    */
+                                          /* and "quit"                     */
     struct t_hashtable *buffers_closing;  /* ptr -> "id" of buffers closing */
     int sync_enabled;                     /* 1 if sync is enabled           */
     int sync_nicks;                       /* 1 if nicks are synchronized    */

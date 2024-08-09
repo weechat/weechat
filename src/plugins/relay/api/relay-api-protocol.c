@@ -350,7 +350,8 @@ relay_api_protocol_signal_upgrade_cb (const void *pointer, void *data,
         return WEECHAT_RC_OK;
 
     if ((strcmp (signal, "upgrade") == 0)
-        || (strcmp (signal, "upgrade_ended") == 0))
+        || (strcmp (signal, "upgrade_ended") == 0)
+        || (strcmp (signal, "quit") == 0))
     {
         relay_api_msg_send_event (ptr_client, signal, -1, NULL, NULL);
     }

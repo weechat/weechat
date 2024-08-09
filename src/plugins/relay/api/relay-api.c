@@ -144,7 +144,7 @@ relay_api_hook_signals (struct t_relay_client *client)
     if (!RELAY_API_DATA(client, hook_signal_upgrade))
     {
         RELAY_API_DATA(client, hook_signal_upgrade) =
-            weechat_hook_signal ("upgrade*",
+            weechat_hook_signal ("upgrade*;quit",
                                  &relay_api_protocol_signal_upgrade_cb,
                                  client, NULL);
     }

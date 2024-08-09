@@ -30,6 +30,7 @@
 - relay: add option relay.network.websocket_permessage_deflate ([#1549](https://github.com/weechat/weechat/issues/1549))
 - relay: add option relay.look.raw_messages_max_length ([#2122](https://github.com/weechat/weechat/issues/2122))
 - relay: add infos "relay_api_version" and "relay_api_version_number"
+- relay/api: add event "quit", sent to clients when WeeChat is quitting ([#2168](https://github.com/weechat/weechat/issues/2168))
 - script: add info "script_info"
 - core: add hdata count in evaluation of expressions with `hdata_count:name[list]` or `hdata_count:name[pointer]`
 - core: add info "window" ([#2141](https://github.com/weechat/weechat/issues/2141))
