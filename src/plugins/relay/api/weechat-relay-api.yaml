@@ -592,6 +592,10 @@ components:
             - free
           description: the buffer type
           example: formatted
+        hidden:
+          type: boolean
+          description: buffer is hidden
+          example: false
         title:
           type: string
           description: the buffer title (can contain colors)
@@ -656,6 +660,7 @@ components:
         - short_name
         - number
         - type
+        - hidden
         - title
         - modes
         - input_prompt

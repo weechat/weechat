@@ -146,6 +146,7 @@ TEST(RelayApiMsg, BufferToJson)
     WEE_CHECK_OBJ_STR("weechat", json, "short_name");
     WEE_CHECK_OBJ_NUM(1, json, "number");
     WEE_CHECK_OBJ_STR("formatted", json, "type");
+    WEE_CHECK_OBJ_BOOL(0, json, "hidden");
     WEE_CHECK_OBJ_STRN("WeeChat", 7, json, "title");
     WEE_CHECK_OBJ_BOOL(0, json, "nicklist");
     WEE_CHECK_OBJ_BOOL(0, json, "nicklist_case_sensitive");
@@ -169,6 +170,16 @@ TEST(RelayApiMsg, BufferToJson)
     POINTERS_EQUAL(NULL, cJSON_GetObjectItem (json, "lines"));
     POINTERS_EQUAL(NULL, cJSON_GetObjectItem (json, "nicks"));
     cJSON_Delete (json);
+
+    gui_buffer_hide (gui_buffers);
+
+    json = relay_api_msg_buffer_to_json (gui_buffers, 0L, 0L, 0, RELAY_API_COLORS_ANSI);
+    CHECK(json);
+    CHECK(cJSON_IsObject (json));
+    WEE_CHECK_OBJ_BOOL(1, json, "hidden");
+    cJSON_Delete (json);
+
+    gui_buffer_unhide (gui_buffers);
 
     /* buffer with 2 lines, without nicks */
     json = relay_api_msg_buffer_to_json (gui_buffers, 2L, 0L, 0, RELAY_API_COLORS_ANSI);

@@ -380,6 +380,7 @@ relay_api_msg_buffer_to_json (struct t_gui_buffer *buffer,
     if (weechat_strcmp (ptr_string, "free") == 0)
         lines = lines_free;
     MSG_ADD_STR_PTR("type", ptr_string);
+    MSG_ADD_HDATA_VAR(Bool, "hidden", integer, "hidden");
     MSG_ADD_HDATA_STR_COLORS("title", "title");
     MSG_ADD_HDATA_STR_COLORS("modes", "modes");
     MSG_ADD_HDATA_STR_COLORS("input_prompt", "input_prompt");
