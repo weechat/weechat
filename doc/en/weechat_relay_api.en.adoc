@@ -499,6 +499,7 @@ HTTP/1.1 200 OK
         "nicklist": false,
         "nicklist_case_sensitive": false,
         "nicklist_display_groups": true,
+        "time_displayed": true,
         "local_variables": {
             "plugin": "core",
             "name": "weechat"
@@ -521,6 +522,7 @@ HTTP/1.1 200 OK
         "nicklist": false,
         "nicklist_case_sensitive": false,
         "nicklist_display_groups": true,
+        "time_displayed": true,
         "local_variables": {
             "plugin": "irc",
             "name": "server.libera",
@@ -550,6 +552,7 @@ HTTP/1.1 200 OK
         "nicklist": true,
         "nicklist_case_sensitive": false,
         "nicklist_display_groups": false,
+        "time_displayed": true,
         "local_variables": {
             "plugin": "irc",
             "name": "libera.#weechat",
@@ -596,6 +599,7 @@ HTTP/1.1 200 OK
     "nicklist": false,
     "nicklist_case_sensitive": false,
     "nicklist_display_groups": true,
+    "time_displayed": true,
     "local_variables": {
         "plugin": "core",
         "name": "weechat"
@@ -650,6 +654,7 @@ HTTP/1.1 200 OK
     "nicklist": true,
     "nicklist_case_sensitive": false,
     "nicklist_display_groups": false,
+    "time_displayed": true,
     "local_variables": {
         "plugin": "irc",
         "name": "libera.#weechat",
@@ -758,6 +763,7 @@ HTTP/1.1 200 OK
     "nicklist": false,
     "nicklist_case_sensitive": false,
     "nicklist_display_groups": true,
+    "time_displayed": true,
     "local_variables": {
         "plugin": "fset",
         "name": "fset",
@@ -1549,6 +1555,7 @@ Example: new buffer: channel `#weechat` has been joined:
         "nicklist": true,
         "nicklist_case_sensitive": false,
         "nicklist_display_groups": false,
+        "time_displayed": true,
         "local_variables": {
             "plugin": "irc",
             "name": "libera.#test",

@@ -378,6 +378,8 @@ extern void gui_buffer_set_title (struct t_gui_buffer *buffer,
                                   const char *new_title);
 extern void gui_buffer_set_modes (struct t_gui_buffer *buffer,
                                   const char *new_modes);
+extern void gui_buffer_set_time_for_each_line (struct t_gui_buffer *buffer,
+                                               int time_for_each_line);
 extern void gui_buffer_set_highlight_words (struct t_gui_buffer *buffer,
                                             const char *new_highlight_words);
 extern void gui_buffer_set_highlight_disable_regex (struct t_gui_buffer *buffer,

@@ -633,6 +633,10 @@ components:
           type: boolean
           description: groups are displayed in nicklist
           example: false
+        time_displayed:
+          type: boolean
+          description: time is displayed on each line
+          example: true
         local_variables:
           type: object
           description: the buffer local variables
@@ -670,6 +674,7 @@ components:
         - nicklist
         - nicklist_case_sensitive
         - nicklist_display_groups
+        - time_displayed
         - local_variables
         - keys
     Key:
