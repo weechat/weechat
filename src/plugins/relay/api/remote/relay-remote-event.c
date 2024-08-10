@@ -842,7 +842,8 @@ RELAY_REMOTE_EVENT_CALLBACK(buffer)
     const char *ptr_key, *ptr_command;
     char *full_name, str_number[64], str_local_var[1024], *property;
     long long id;
-    int number, nicklist, nicklist_case_sensitive, nicklist_display_groups;
+    int number, hidden, nicklist;
+    int nicklist_case_sensitive, nicklist_display_groups;
     int apply_props, input_position, input_multiline;
 
     if (!event->json)
@@ -853,6 +854,7 @@ RELAY_REMOTE_EVENT_CALLBACK(buffer)
     JSON_GET_STR(event->json, short_name);
     JSON_GET_NUM(event->json, number, -1);
     JSON_GET_STR(event->json, type);
+    JSON_GET_BOOL(event->json, hidden);
     JSON_GET_STR(event->json, title);
     JSON_GET_STR(event->json, modes);
     JSON_GET_STR(event->json, input_prompt);
@@ -873,6 +875,7 @@ RELAY_REMOTE_EVENT_CALLBACK(buffer)
 
     /* buffer base properties */
     weechat_hashtable_set (buffer_props, "type", type);
+    weechat_hashtable_set (buffer_props, "hidden", (hidden) ? "1" : "0");
     weechat_hashtable_set (buffer_props, "short_name", short_name);
     weechat_hashtable_set (buffer_props, "title", title);
     weechat_hashtable_set (buffer_props, "modes", modes);
