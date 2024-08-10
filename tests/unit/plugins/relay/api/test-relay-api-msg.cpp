@@ -148,6 +148,11 @@ TEST(RelayApiMsg, BufferToJson)
     WEE_CHECK_OBJ_STR("formatted", json, "type");
     WEE_CHECK_OBJ_BOOL(0, json, "hidden");
     WEE_CHECK_OBJ_STRN("WeeChat", 7, json, "title");
+    WEE_CHECK_OBJ_STR("", json, "modes");
+    WEE_CHECK_OBJ_STR("", json, "input_prompt");
+    WEE_CHECK_OBJ_STR("", json, "input");
+    WEE_CHECK_OBJ_NUM(0, json, "input_position");
+    WEE_CHECK_OBJ_BOOL(0, json, "input_multiline");
     WEE_CHECK_OBJ_BOOL(0, json, "nicklist");
     WEE_CHECK_OBJ_BOOL(0, json, "nicklist_case_sensitive");
     WEE_CHECK_OBJ_BOOL(1, json, "nicklist_display_groups");
