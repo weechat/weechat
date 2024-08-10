@@ -12423,6 +12423,10 @@ Liste des signaux envoyés par WeeChat et les extensions :
 | Pointeur : tampon.
 | Modes du tampon changés.
 
+| weechat | [[hook_signal_buffer_time_for_each_line_changed]] buffer_time_for_each_line_changed | 4.4.0
+| Pointeur : tampon.
+| Affichage de l'heure pour chaque ligne changé.
+
 | weechat | [[hook_signal_buffer_type_changed]] buffer_type_changed |
 | Pointeur : tampon.
 | Type de tampon changé.

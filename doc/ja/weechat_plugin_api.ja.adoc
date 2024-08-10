@@ -12344,6 +12344,11 @@ WeeChat とプラグインが送信するシグナルのリスト:
 | Pointer: buffer.
 | Modes of buffer changed.
 
+// TRANSLATION MISSING
+| weechat | [[hook_signal_buffer_time_for_each_line_changed]] buffer_time_for_each_line_changed | 4.4.0
+| Pointer: buffer.
+| Display time for each line changed.
+
 | weechat | [[hook_signal_buffer_type_changed]] buffer_type_changed |
 | Pointer: バッファ
 | バッファのタイプを変更

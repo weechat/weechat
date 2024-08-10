@@ -11852,6 +11852,11 @@ struct t_hook *weechat_hook_signal (const char *signal,
 | Показивач: бафер.
 | Промењени су режими бафера.
 
+| weechat | [[hook_signal_buffer_time_for_each_line_changed]] buffer_time_for_each_line_changed | 4.4.0
+| Показивач: бафер.
+// TRANSLATION MISSING
+| Display time for each line changed.
+
 | weechat | [[hook_signal_buffer_type_changed]] buffer_type_changed |
 | Показивач: бафер.
 | Промењен је тип бафера.

@@ -1835,6 +1835,10 @@ gui_buffer_set_time_for_each_line (struct t_gui_buffer *buffer,
 
     buffer->time_for_each_line = time_for_each_line;
     gui_buffer_ask_chat_refresh (buffer, 2);
+
+    (void) gui_buffer_send_signal (buffer,
+                                   "buffer_time_for_each_line_changed",
+                                   WEECHAT_HOOK_SIGNAL_POINTER, buffer);
 }
 
 /*
