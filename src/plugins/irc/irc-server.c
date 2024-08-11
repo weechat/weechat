@@ -4332,7 +4332,7 @@ irc_server_close_connection (struct t_irc_server *server)
 }
 
 /*
- * Schedules reconnection on server.
+ * Schedules reconnection to server.
  */
 
 void
