@@ -993,7 +993,6 @@ relay_api_protocol_recv_json (struct t_relay_client *client, const char *json)
     {
         if (!cJSON_IsString (json_request_id) && !cJSON_IsNull (json_request_id))
             goto error;
-        free (client->http_req->id);
         ptr_request_id = cJSON_GetStringValue (json_request_id);
         client->http_req->id = (ptr_request_id) ?
             strdup (ptr_request_id) : NULL;
