@@ -29,6 +29,7 @@
 #include "relay-buffer.h"
 #include "relay-client.h"
 #include "relay-config.h"
+#include "relay-remote.h"
 #include "relay-raw.h"
 
 
@@ -172,6 +173,7 @@ relay_buffer_input_cb (const void *pointer, void *data,
                        const char *input_data)
 {
     struct t_relay_client *client, *ptr_client, *next_client;
+    const char *ptr_remote_name, *ptr_remote_id;
 
     /* make C compiler happy */
     (void) pointer;
@@ -221,6 +223,18 @@ relay_buffer_input_cb (const void *pointer, void *data,
                 relay_client_free (client);
                 relay_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
             }
+        }
+    }
+    else
+    {
+        ptr_remote_name = weechat_buffer_get_string (buffer,
+                                                     "localvar_relay_remote");
+        ptr_remote_id = weechat_buffer_get_string (buffer,
+                                                   "localvar_relay_remote_id");
+        if (ptr_remote_name && ptr_remote_name[0]
+            && ptr_remote_id && ptr_remote_id[0])
+        {
+            relay_remote_buffer_input (buffer, input_data);
         }
     }
 

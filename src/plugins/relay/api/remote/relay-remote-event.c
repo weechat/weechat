@@ -33,6 +33,7 @@
 #include "../../../weechat-plugin.h"
 #include "../../relay.h"
 #include "../../relay-auth.h"
+#include "../../relay-buffer.h"
 #include "../../relay-config.h"
 #include "../../relay-http.h"
 #include "../../relay-raw.h"
@@ -617,23 +618,18 @@ relay_remote_event_apply_props (void *data,
  * Callback for remote buffer input.
  */
 
-int
-relay_remote_event_buffer_input_cb (const void *pointer,
-                                    void *data,
-                                    struct t_gui_buffer *buffer,
-                                    const char *input_data)
+void
+relay_remote_event_buffer_input (struct t_gui_buffer *buffer,
+                                 const char *input_data)
 {
     struct t_relay_remote *ptr_remote;
     cJSON *json, *json_body;
     long long buffer_id;
 
-    /* make C compiler happy */
-    (void) pointer;
-    (void) data;
-
-    ptr_remote = relay_remote_search (weechat_buffer_get_string (buffer, "localvar_relay_remote"));
+    ptr_remote = relay_remote_search (
+        weechat_buffer_get_string (buffer, "localvar_relay_remote"));
     if (!ptr_remote)
-        return WEECHAT_RC_OK;
+        return;
 
     json = NULL;
 
@@ -669,12 +665,12 @@ relay_remote_event_buffer_input_cb (const void *pointer,
 
     cJSON_Delete (json);
 
-    return WEECHAT_RC_OK;
+    return;
 
 error:
     if (json)
         cJSON_Delete (json);
-    return WEECHAT_RC_OK;
+    return;
 }
 
 /*
@@ -923,7 +919,7 @@ RELAY_REMOTE_EVENT_CALLBACK(buffer)
                 weechat_hashtable_set (buffer_props, "input_pos", str_number);
                 ptr_buffer = weechat_buffer_new_props (
                     full_name, buffer_props,
-                    &relay_remote_event_buffer_input_cb, NULL, NULL,
+                    &relay_buffer_input_cb, NULL, NULL,
                     NULL, NULL, NULL);
                 apply_props = 0;
             }

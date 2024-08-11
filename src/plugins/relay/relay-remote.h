@@ -111,6 +111,8 @@ extern int relay_remote_reconnect (struct t_relay_remote *remote);
 extern void relay_remote_timer ();
 extern void relay_remote_disconnect_all ();
 extern int relay_remote_rename (struct t_relay_remote *remote, const char *name);
+extern void relay_remote_buffer_input (struct t_gui_buffer *buffer,
+                                       const char *input_data);
 extern void relay_remote_free (struct t_relay_remote *remote);
 extern void relay_remote_free_all ();
 extern int relay_remote_add_to_infolist (struct t_infolist *infolist,

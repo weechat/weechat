@@ -37,6 +37,7 @@
 #include "relay-remote.h"
 #include "relay-websocket.h"
 #ifdef HAVE_CJSON
+#include "api/remote/relay-remote-event.h"
 #include "api/remote/relay-remote-network.h"
 #endif
 
@@ -955,6 +956,18 @@ relay_remote_disconnect_all ()
     {
         relay_remote_disconnect (ptr_remote);
     }
+}
+
+/*
+ * Callback for input data in a remote buffer.
+ */
+
+void
+relay_remote_buffer_input (struct t_gui_buffer *buffer, const char *input_data)
+{
+#ifdef HAVE_CJSON
+    relay_remote_event_buffer_input (buffer, input_data);
+#endif
 }
 
 /*
