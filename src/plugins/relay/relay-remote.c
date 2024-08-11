@@ -42,9 +42,10 @@
 
 
 char *relay_remote_option_string[RELAY_REMOTE_NUM_OPTIONS] =
-{ "url", "autoconnect", "proxy", "tls_verify", "password", "totp_secret" };
+{ "url", "autoconnect", "autoreconnect_delay", "proxy", "tls_verify",
+  "password", "totp_secret" };
 char *relay_remote_option_default[RELAY_REMOTE_NUM_OPTIONS] =
-{ "", "off", "", "on", "", "" };
+{ "", "off", "10", "", "on", "", "" };
 
 struct t_relay_remote *relay_remotes = NULL;
 struct t_relay_remote *last_relay_remote = NULL;
@@ -358,6 +359,8 @@ relay_remote_alloc (const char *name)
     new_remote->synced = 0;
     new_remote->partial_ws_frame = NULL;
     new_remote->partial_ws_frame_size = 0;
+    new_remote->reconnect_delay = 0;
+    new_remote->reconnect_start = 0;
     new_remote->prev_remote = NULL;
     new_remote->next_remote = NULL;
 
@@ -477,9 +480,14 @@ relay_remote_new_with_options (const char *name, struct t_config_option **option
  */
 
 struct t_relay_remote *
-relay_remote_new (const char *name, const char *url, const char *autoconnect,
-                  const char *proxy, const char *tls_verify,
-                  const char *password, const char *totp_secret)
+relay_remote_new (const char *name,
+                  const char *url,
+                  const char *autoconnect,
+                  const char *autoreconnect_delay,
+                  const char *proxy,
+                  const char *tls_verify,
+                  const char *password,
+                  const char *totp_secret)
 {
     struct t_config_option *option[RELAY_REMOTE_NUM_OPTIONS];
     const char *value[RELAY_REMOTE_NUM_OPTIONS];
@@ -491,6 +499,7 @@ relay_remote_new (const char *name, const char *url, const char *autoconnect,
 
     value[RELAY_REMOTE_OPTION_URL] = url;
     value[RELAY_REMOTE_OPTION_AUTOCONNECT] = autoconnect;
+    value[RELAY_REMOTE_OPTION_AUTORECONNECT_DELAY] = autoreconnect_delay;
     value[RELAY_REMOTE_OPTION_PROXY] = proxy;
     value[RELAY_REMOTE_OPTION_TLS_VERIFY] = tls_verify;
     value[RELAY_REMOTE_OPTION_PASSWORD] = password;
@@ -594,6 +603,8 @@ relay_remote_new_with_infolist (struct t_infolist *infolist)
     }
     new_remote->version_ok = weechat_infolist_integer (infolist, "version_ok");
     new_remote->synced = weechat_infolist_integer (infolist, "synced");
+    new_remote->reconnect_delay = weechat_infolist_integer (infolist, "reconnect_delay");
+    new_remote->reconnect_start = weechat_infolist_integer (infolist, "reconnect_start");
     ptr_ws_frame = weechat_infolist_buffer (infolist, "partial_ws_frame", &ws_frame_size);
     if (ptr_ws_frame && (ws_frame_size > 0))
     {
@@ -806,6 +817,68 @@ relay_remote_disconnect (struct t_relay_remote *remote)
 }
 
 /*
+ * Schedules reconnection to remote.
+ */
+
+void
+relay_remote_reconnect_schedule (struct t_relay_remote *remote)
+{
+    int minutes, seconds;
+
+    if (weechat_config_integer (remote->options[RELAY_REMOTE_OPTION_AUTORECONNECT_DELAY]) == 0)
+    {
+        remote->reconnect_delay = 0;
+        remote->reconnect_start = 0;
+        return;
+    }
+
+    /* growing reconnect delay */
+    if (remote->reconnect_delay == 0)
+        remote->reconnect_delay = weechat_config_integer (remote->options[RELAY_REMOTE_OPTION_AUTORECONNECT_DELAY]);
+    else
+        remote->reconnect_delay = remote->reconnect_delay * weechat_config_integer (relay_config_api_remote_autoreconnect_delay_growing);
+    if ((weechat_config_integer (relay_config_api_remote_autoreconnect_delay_max) > 0)
+        && (remote->reconnect_delay > weechat_config_integer (relay_config_api_remote_autoreconnect_delay_max)))
+    {
+        remote->reconnect_delay = weechat_config_integer (relay_config_api_remote_autoreconnect_delay_max);
+    }
+
+    remote->reconnect_start = time (NULL);
+
+    minutes = remote->reconnect_delay / 60;
+    seconds = remote->reconnect_delay % 60;
+    if ((minutes > 0) && (seconds > 0))
+    {
+        weechat_printf (
+            NULL,
+            _("remote[%s]: reconnecting to remote relay in %d %s, %d %s"),
+            remote->name,
+            minutes,
+            NG_("minute", "minutes", minutes),
+            seconds,
+            NG_("second", "seconds", seconds));
+    }
+    else if (minutes > 0)
+    {
+        weechat_printf (
+            NULL,
+            _("remote[%s]: reconnecting to remote relay in %d %s"),
+            remote->name,
+            minutes,
+            NG_("minute", "minutes", minutes));
+    }
+    else
+    {
+        weechat_printf (
+            NULL,
+            _("remote[%s]: reconnecting to remote relay in %d %s"),
+            remote->name,
+            seconds,
+            NG_("second", "seconds", seconds));
+    }
+}
+
+/*
  * Reconnects to a remote WeeChat relay/api.
  *
  * Returns:
@@ -816,13 +889,20 @@ relay_remote_disconnect (struct t_relay_remote *remote)
 int
 relay_remote_reconnect (struct t_relay_remote *remote)
 {
+    int rc;
+
     if (!remote)
         return 0;
+
+    remote->reconnect_start = 0;
 
 #ifdef HAVE_CJSON
     if (!relay_remote_disconnect (remote))
         return 0;
-    return relay_remote_network_connect (remote);
+    rc = relay_remote_network_connect (remote);
+    if (!rc)
+        relay_remote_reconnect_schedule (remote);
+    return rc;
 #else
     weechat_printf (NULL,
                     _("%s%s: error: unable to connect to a remote relay via API "
@@ -830,6 +910,35 @@ relay_remote_reconnect (struct t_relay_remote *remote)
                     weechat_prefix ("error"), RELAY_PLUGIN_NAME);
     return 0;
 #endif /* HAVE_CJSON */
+}
+
+/*
+ * Timer used to auto-reconnect to remotes.
+ */
+
+void
+relay_remote_timer ()
+{
+    struct t_relay_remote *ptr_remote, *ptr_next_remote;
+    time_t current_time;
+
+    current_time = time (NULL);
+
+    ptr_remote = relay_remotes;
+    while (ptr_remote)
+    {
+        ptr_next_remote = ptr_remote->next_remote;
+
+        /* check if reconnection is pending */
+        if ((ptr_remote->sock <= 0)
+            && (ptr_remote->reconnect_start > 0)
+            && (current_time >= (ptr_remote->reconnect_start + ptr_remote->reconnect_delay)))
+        {
+            relay_remote_reconnect (ptr_remote);
+        }
+
+        ptr_remote = ptr_next_remote;
+    }
 }
 
 /*
@@ -993,6 +1102,10 @@ relay_remote_add_to_infolist (struct t_infolist *infolist,
     }
     if (!weechat_infolist_new_var_integer (ptr_item, "version_ok", remote->version_ok))
         return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "reconnect_delay", remote->reconnect_delay))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "reconnect_start", remote->reconnect_start))
+        return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "synced", remote->synced))
         return 0;
 
@@ -1019,6 +1132,8 @@ relay_remote_print_log ()
         weechat_log_printf ("  autoconnect . . . . . . : %s",
                             (weechat_config_boolean (ptr_remote->options[RELAY_REMOTE_OPTION_AUTOCONNECT])) ?
                             "on" : "off");
+        weechat_log_printf ("  autoreconnect_delay . . : %d",
+                            weechat_config_integer (ptr_remote->options[RELAY_REMOTE_OPTION_AUTORECONNECT_DELAY]));
         weechat_log_printf ("  proxy . . . . . . . . . : '%s'",
                             weechat_config_string (ptr_remote->options[RELAY_REMOTE_OPTION_PROXY]));
         weechat_log_printf ("  tls_verify. . . . . . . : %s",
@@ -1045,6 +1160,8 @@ relay_remote_print_log ()
         weechat_log_printf ("  gnutls_sess . . . . . . : %p", ptr_remote->gnutls_sess);
         relay_websocket_deflate_print_log (ptr_remote->ws_deflate, "");
         weechat_log_printf ("  version_ok. . . . . . . : %d", ptr_remote->version_ok);
+        weechat_log_printf ("  reconnect_delay . . . . : %d", ptr_remote->reconnect_delay);
+        weechat_log_printf ("  reconnect_start . . . . : %d", ptr_remote->reconnect_start);
         weechat_log_printf ("  synced. . . . . . . . . : %d", ptr_remote->synced);
         weechat_log_printf ("  partial_ws_frame. . . . : %p (%d bytes)",
                             ptr_remote->partial_ws_frame,

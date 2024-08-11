@@ -131,8 +131,7 @@ extern int relay_client_send (struct t_relay_client *client,
                               enum t_relay_msg_type msg_type,
                               const char *data,
                               int data_size, const char *message_raw_buffer);
-extern int relay_client_timer_cb (const void *pointer, void *data,
-                                  int remaining_calls);
+extern void relay_client_timer ();
 extern struct t_relay_client *relay_client_new (int sock, const char *address,
                                                 struct t_relay_server *server);
 extern struct t_relay_client *relay_client_new_with_infolist (struct t_infolist *infolist);

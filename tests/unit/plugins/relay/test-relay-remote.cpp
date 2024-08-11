@@ -266,6 +266,56 @@ TEST(RelayRemote, Rename)
 
 /*
  * Tests functions:
+ *   relay_remote_disconnect
+ */
+
+TEST(RelayRemote, Disconnect)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   relay_remote_reconnect_schedule
+ */
+
+TEST(RelayRemote, ReconnectSchedule)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   relay_remote_reconnect
+ */
+
+TEST(RelayRemote, Reconnect)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   relay_remote_timer
+ */
+
+TEST(RelayRemote, Timer)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   relay_remote_disconnect_all
+ */
+
+TEST(RelayRemote, DisconnectAll)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
  *   relay_remote_free
  */
 
@@ -280,26 +330,6 @@ TEST(RelayRemote, Free)
  */
 
 TEST(RelayRemote, FreeAll)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
- *   relay_remote_disconnect
- */
-
-TEST(RelayRemote, Disconnect)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
- *   relay_remote_disconnect_all
- */
-
-TEST(RelayRemote, DisconnectAll)
 {
     /* TODO: write tests */
 }

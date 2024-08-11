@@ -439,6 +439,8 @@ relay_command_display_remote (struct t_relay_remote *remote, int with_detail)
         weechat_printf (NULL, "  autoconnect. . . . . : %s",
                         (weechat_config_string (remote->options[RELAY_REMOTE_OPTION_AUTOCONNECT])) ?
                         "on" : "off");
+        weechat_printf (NULL, "  autoreconnect_delay. : %d",
+                        weechat_config_integer (remote->options[RELAY_REMOTE_OPTION_AUTORECONNECT_DELAY]));
         weechat_printf (NULL, "  proxy. . . . . . . . : '%s'",
                         weechat_config_string (remote->options[RELAY_REMOTE_OPTION_PROXY]));
         weechat_printf (NULL, "  tls_verify . . . . . : %s",
@@ -474,7 +476,8 @@ relay_command_remote (const void *pointer, void *data,
 {
     struct t_relay_remote *ptr_remote, *ptr_remote2;
     int i, detailed_list, one_remote_found, update;
-    const char *ptr_autoconnect, *ptr_proxy, *ptr_tls_verify, *ptr_password;
+    const char *ptr_autoconnect, *ptr_autoreconnect_delay, *ptr_proxy;
+    const char *ptr_tls_verify, *ptr_password;
     const char *ptr_totp_secret;
     char *remote_name;
 
@@ -601,6 +604,7 @@ relay_command_remote (const void *pointer, void *data,
             return WEECHAT_RC_ERROR;
         }
         ptr_autoconnect = NULL;
+        ptr_autoreconnect_delay = NULL;
         ptr_proxy = NULL;
         ptr_tls_verify = NULL;
         ptr_password = NULL;
@@ -610,6 +614,10 @@ relay_command_remote (const void *pointer, void *data,
             if (strncmp (argv[i], "-autoconnect=", 13) == 0)
             {
                 ptr_autoconnect = argv[i] + 13;
+            }
+            else if (strncmp (argv[i], "-autoreconnect_delay=", 21) == 0)
+            {
+                ptr_autoreconnect_delay = argv[i] + 21;
             }
             else if (strncmp (argv[i], "-proxy=", 7) == 0)
             {
@@ -638,7 +646,8 @@ relay_command_remote (const void *pointer, void *data,
             }
         }
         ptr_remote = relay_remote_new (argv[2], argv[3], ptr_autoconnect,
-                                       ptr_proxy, ptr_tls_verify, ptr_password,
+                                       ptr_autoreconnect_delay, ptr_proxy,
+                                       ptr_tls_verify, ptr_password,
                                        ptr_totp_secret);
         if (ptr_remote)
         {
@@ -744,6 +753,14 @@ relay_command_remote (const void *pointer, void *data,
             return WEECHAT_RC_ERROR;
         }
         relay_remote_disconnect (ptr_remote);
+        if (ptr_remote->reconnect_start > 0)
+        {
+            ptr_remote->reconnect_delay = 0;
+            ptr_remote->reconnect_start = 0;
+            weechat_printf (NULL,
+                            _("remote[%s]: auto-reconnection is cancelled"),
+                            ptr_remote->name);
+        }
         return WEECHAT_RC_OK;
     }
 

@@ -106,6 +106,8 @@ struct t_config_option *relay_config_irc_backlog_time_format = NULL;
 /* relay config, api section */
 
 struct t_config_option *relay_config_api_remote_get_lines = NULL;
+struct t_config_option *relay_config_api_remote_autoreconnect_delay_growing = NULL;
+struct t_config_option *relay_config_api_remote_autoreconnect_delay_max = NULL;
 
 /* other */
 
@@ -1073,8 +1075,17 @@ relay_config_create_remote_option (const char *remote_name, int index_option,
             ptr_option = weechat_config_new_option (
                 relay_config_file, relay_config_section_remote,
                 option_name, "boolean",
-                N_("auto-connect to the remote relay"),
+                N_("automatically connect to the remote relay"),
                 NULL, 0, 0, value, NULL, 0,
+                NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+            break;
+        case RELAY_REMOTE_OPTION_AUTORECONNECT_DELAY:
+            ptr_option = weechat_config_new_option (
+                relay_config_file, relay_config_section_remote,
+                option_name, "integer",
+                N_("automatically reconnect to the remote relay after this delay, "
+                   "in seconds (0 = disable automatic reconnection)"),
+                NULL, 0, 65535, value, NULL, 0,
                 NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
             break;
         case RELAY_REMOTE_OPTION_PROXY:
@@ -1848,6 +1859,20 @@ relay_config_init ()
             N_("number of lines to retrieve on each buffer when connecting "
                "to a remote relay"),
             NULL, 0, INT_MAX, "1000", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        relay_config_api_remote_autoreconnect_delay_growing = weechat_config_new_option (
+            relay_config_file, relay_config_section_api,
+            "remote_autoreconnect_delay_growing", "integer",
+            N_("growing factor for autoreconnect delay to remote relay (1 = always "
+               "same delay, 2 = delay*2 for each retry, etc.)"),
+            NULL, 1, 100, "2", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        relay_config_api_remote_autoreconnect_delay_max = weechat_config_new_option (
+            relay_config_file, relay_config_section_api,
+            "remote_autoreconnect_delay_max", "integer",
+            N_("maximum autoreconnect delay to remote relay (in seconds, 0 = no "
+               "maximum)"),
+            NULL, 0, 3600 * 24 * 7, "600", NULL, 0,
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     }
 

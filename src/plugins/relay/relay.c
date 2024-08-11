@@ -239,6 +239,24 @@ relay_debug_dump_cb (const void *pointer, void *data,
 }
 
 /*
+ * Timer callback, called each second.
+ */
+
+int
+relay_timer_cb (const void *pointer, void *data, int remaining_calls)
+{
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) remaining_calls;
+
+    relay_client_timer ();
+    relay_remote_timer ();
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Initializes relay plugin.
  */
 
@@ -300,7 +318,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     }
 
     relay_hook_timer = weechat_hook_timer (1 * 1000, 0, 0,
-                                           &relay_client_timer_cb, NULL, NULL);
+                                           &relay_timer_cb, NULL, NULL);
 
     return WEECHAT_RC_OK;
 }

@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-08-09 18:24+0200\n"
-"PO-Revision-Date: 2024-08-09 18:25+0200\n"
+"POT-Creation-Date: 2024-08-11 12:15+0200\n"
+"PO-Revision-Date: 2024-08-11 12:15+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -15324,6 +15324,10 @@ msgid "%s%s: no connection to remote relay \"%s\""
 msgstr "%s%s : non connecté au relai distant \"%s\" !"
 
 #, c-format
+msgid "remote[%s]: auto-reconnection is cancelled"
+msgstr "remote[%s] : la reconnexion automatique est annulée"
+
+#, c-format
 msgid "%s%s: remote relay \"%s\" already exists for \"%s\" command"
 msgstr "%s%s : le relai distant \"%s\" existe déjà pour la commande \"%s\""
 
@@ -15601,8 +15605,15 @@ msgstr ""
 "https://example.com:9000 ou http://example.com:9000 (connexion en clair, non "
 "recommandé)"
 
-msgid "auto-connect to the remote relay"
+msgid "automatically connect to the remote relay"
 msgstr "connexion automatique au relai distant"
+
+msgid ""
+"automatically reconnect to the remote relay after this delay, in seconds (0 "
+"= disable automatic reconnection)"
+msgstr ""
+"reconnexion automatique au relai distant après ce délai, en secondes (0 = "
+"désactiver la reconnexion automatique)"
 
 msgid ""
 "name of proxy used for this remote relay (optional, proxy must be defined "
@@ -15930,6 +15941,19 @@ msgstr ""
 "nombre de lignes à récupérer sur chaque tampon lors d'une connexion à un "
 "relai distant"
 
+msgid ""
+"growing factor for autoreconnect delay to remote relay (1 = always same "
+"delay, 2 = delay*2 for each retry, etc.)"
+msgstr ""
+"facteur de croissance du délai d'auto-reconnexion au relai distant (1 = "
+"toujours le même délai, 2 = délai*2 pour chaque tentative, etc.)"
+
+msgid ""
+"maximum autoreconnect delay to remote relay (in seconds, 0 = no maximum)"
+msgstr ""
+"délai maximum d'auto-reconnexion au relai distant (en secondes, 0 = pas de "
+"maximum)"
+
 #, c-format
 msgid "%s%s: invalid websocket handshake received for client %s%s%s"
 msgstr ""
@@ -16007,6 +16031,14 @@ msgid ""
 msgstr ""
 "%s%s : erreur : impossible de se connecter à un relai distant par API (le "
 "support cJSON n'est pas activé)"
+
+#, c-format
+msgid "remote[%s]: reconnecting to remote relay in %d %s, %d %s"
+msgstr "remote[%s] : reconnexion au relai distant dans %d %s, %d %s"
+
+#, c-format
+msgid "remote[%s]: reconnecting to remote relay in %d %s"
+msgstr "remote[%s] : reconnexion au relai distant dans %d %s"
 
 #, c-format
 msgid "%s: socket closed for %s (%s: %s)"

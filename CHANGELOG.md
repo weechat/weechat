@@ -17,6 +17,7 @@
 - core: allow buffer id in commands `/buffer` and `/print`, in addition to number and name
 - core: allow mask in command `/item refresh`
 - relay: enable websocket extension "permessage-deflate" with "api" relay only ([#1549](https://github.com/weechat/weechat/issues/1549))
+- relay/api: add automatic reconnection to remote, add remote option "autoreconnect_delay" in remote, add options relay.api.remote_autoreconnect_delay_growing and relay.api.remote_autoreconnect_delay_max ([#2166](https://github.com/weechat/weechat/issues/2166))
 - relay/api: add field "hidden" in GET /api/buffers, add support of hidden buffers in remote client ([#2159](https://github.com/weechat/weechat/issues/2159))
 - relay/api: add field "time_displayed" in GET /api/buffers, add support of time displayed in remote client buffers
 - relay/weechat: add line id in buffer lines sent to clients

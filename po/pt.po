@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-08-09 18:24+0200\n"
+"POT-Creation-Date: 2024-08-11 12:15+0200\n"
 "PO-Revision-Date: 2024-06-11 07:49+0200\n"
 "Last-Translator: Vasco Almeida <vascomalmeida@sapo.pt>\n"
 "Language-Team: Portuguese <>\n"
@@ -14969,6 +14969,11 @@ msgid "%s%s: no connection to remote relay \"%s\""
 msgstr "%s%s: não está conectado ao servidor \"%s\"!"
 
 #, fuzzy, c-format
+#| msgid "%s: auto-reconnection is cancelled"
+msgid "remote[%s]: auto-reconnection is cancelled"
+msgstr "%s: a reconexão automática foi cancelada"
+
+#, fuzzy, c-format
 #| msgid "%s%s: server \"%s\" already exists for \"%s\" command"
 msgid "%s%s: remote relay \"%s\" already exists for \"%s\" command"
 msgstr "%s%s: o servidor \"%s\" do comando \"%s\" já existe"
@@ -15262,8 +15267,13 @@ msgstr ""
 
 #, fuzzy
 #| msgid "reconnect to server(s)"
-msgid "auto-connect to the remote relay"
+msgid "automatically connect to the remote relay"
 msgstr "reconectar-se a um servidor"
+
+msgid ""
+"automatically reconnect to the remote relay after this delay, in seconds (0 "
+"= disable automatic reconnection)"
+msgstr ""
 
 #, fuzzy
 #| msgid ""
@@ -15546,6 +15556,22 @@ msgid ""
 "number of lines to retrieve on each buffer when connecting to a remote relay"
 msgstr ""
 
+#, fuzzy
+msgid ""
+"growing factor for autoreconnect delay to remote relay (1 = always same "
+"delay, 2 = delay*2 for each retry, etc.)"
+msgstr ""
+"fator de crescimento do atraso para reconectar automaticamente ao servidor "
+"(1 = usar sempre o mesmo, 2 = atraso*2 por cada tentativa, ...)"
+
+#, fuzzy
+#| msgid "maximum autoreconnect delay to server (in seconds, 0 = no maximum)"
+msgid ""
+"maximum autoreconnect delay to remote relay (in seconds, 0 = no maximum)"
+msgstr ""
+"atraso máximo (em segundos) para reconectar automaticamente ao servidor (0 = "
+"sem limite)"
+
 #, c-format
 msgid "%s%s: invalid websocket handshake received for client %s%s%s"
 msgstr "%s%s: websocket handshake inválido recebido do cliente %s%s%s"
@@ -15637,6 +15663,17 @@ msgid ""
 "%s%s: error: unable to connect to a remote relay via API (cJSON support is "
 "not enabled)"
 msgstr ""
+
+# "%d %s, %d %s" at the end is n minutes, m seconds
+#, fuzzy, c-format
+#| msgid "%s%s: reconnecting to server in %d %s, %d %s"
+msgid "remote[%s]: reconnecting to remote relay in %d %s, %d %s"
+msgstr "%s%s: a reconectar ao servidor dentro de %d %s e %d %s"
+
+#, fuzzy, c-format
+#| msgid "%s%s: connecting to server %s/%d%s..."
+msgid "remote[%s]: reconnecting to remote relay in %d %s"
+msgstr "%s%s: a conectar ao servidor %s/%d%s..."
 
 #, fuzzy, c-format
 msgid "%s: socket closed for %s (%s: %s)"

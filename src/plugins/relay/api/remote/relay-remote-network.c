@@ -132,6 +132,7 @@ relay_remote_network_disconnect (struct t_relay_remote *remote)
     relay_remote_network_close_connection (remote);
     relay_remote_set_status (remote, RELAY_STATUS_DISCONNECTED);
     weechat_printf (NULL, _("remote[%s]: disconnected"), remote->name);
+    relay_remote_reconnect_schedule (remote);
 }
 
 /*
@@ -385,6 +386,8 @@ relay_remote_network_recv_text (struct t_relay_remote *remote,
             return;
         }
         relay_remote_set_status (remote, RELAY_STATUS_CONNECTED);
+        remote->reconnect_delay = 0;
+        remote->reconnect_start = 0;
         snprintf (request, sizeof (request),
                   "{\"request\": \"GET /api/version\"}");
         relay_remote_network_send (remote, RELAY_MSG_STANDARD,
@@ -835,6 +838,7 @@ relay_remote_network_connect_cb (const void *pointer, void *data, int status,
                                 _("%sremote[%s]: error: %s"),
                                 weechat_prefix ("error"), remote->name, error);
             }
+            relay_remote_network_disconnect (remote);
             break;
         case WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND:
             weechat_printf (NULL,
@@ -846,6 +850,7 @@ relay_remote_network_connect_cb (const void *pointer, void *data, int status,
                                 _("%sremote[%s]: error: %s"),
                                 weechat_prefix ("error"), remote->name, error);
             }
+            relay_remote_network_disconnect (remote);
             break;
         case WEECHAT_HOOK_CONNECT_CONNECTION_REFUSED:
             weechat_printf (NULL,
@@ -857,6 +862,7 @@ relay_remote_network_connect_cb (const void *pointer, void *data, int status,
                                 _("%sremote[%s]: error: %s"),
                                 weechat_prefix ("error"), remote->name, error);
             }
+            relay_remote_network_disconnect (remote);
             break;
         case WEECHAT_HOOK_CONNECT_PROXY_ERROR:
             weechat_printf (
@@ -871,6 +877,7 @@ relay_remote_network_connect_cb (const void *pointer, void *data, int status,
                                 _("%sremote[%s]: error: %s"),
                                 weechat_prefix ("error"), remote->name, error);
             }
+            relay_remote_network_disconnect (remote);
             break;
         case WEECHAT_HOOK_CONNECT_LOCAL_HOSTNAME_ERROR:
             weechat_printf (NULL,
@@ -882,6 +889,7 @@ relay_remote_network_connect_cb (const void *pointer, void *data, int status,
                                 _("%sremote[%s]: error: %s"),
                                 weechat_prefix ("error"), remote->name, error);
             }
+            relay_remote_network_disconnect (remote);
             break;
         case WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR:
             weechat_printf (NULL,
@@ -893,6 +901,7 @@ relay_remote_network_connect_cb (const void *pointer, void *data, int status,
                                 _("%sremote[%s]: error: %s"),
                                 weechat_prefix ("error"), remote->name, error);
             }
+            relay_remote_network_disconnect (remote);
             break;
         case WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR:
             weechat_printf (NULL,
@@ -904,6 +913,7 @@ relay_remote_network_connect_cb (const void *pointer, void *data, int status,
                                 _("%sremote[%s]: error: %s"),
                                 weechat_prefix ("error"), remote->name, error);
             }
+            relay_remote_network_disconnect (remote);
             break;
         case WEECHAT_HOOK_CONNECT_MEMORY_ERROR:
             weechat_printf (NULL,
@@ -915,6 +925,7 @@ relay_remote_network_connect_cb (const void *pointer, void *data, int status,
                                 _("%sremote[%s]: error: %s"),
                                 weechat_prefix ("error"), remote->name, error);
             }
+            relay_remote_network_disconnect (remote);
             break;
         case WEECHAT_HOOK_CONNECT_TIMEOUT:
             weechat_printf (NULL,
@@ -926,6 +937,7 @@ relay_remote_network_connect_cb (const void *pointer, void *data, int status,
                                 _("%sremote[%s]: error: %s"),
                                 weechat_prefix ("error"), remote->name, error);
             }
+            relay_remote_network_disconnect (remote);
             break;
         case WEECHAT_HOOK_CONNECT_SOCKET_ERROR:
             weechat_printf (NULL,
@@ -937,6 +949,7 @@ relay_remote_network_connect_cb (const void *pointer, void *data, int status,
                                 _("%sremote[%s]: error: %s"),
                                 weechat_prefix ("error"), remote->name, error);
             }
+            relay_remote_network_disconnect (remote);
             break;
     }
 
@@ -1208,7 +1221,7 @@ relay_remote_network_url_handshake_cb (const void *pointer,
             remote->name,
             weechat_config_string (remote->options[RELAY_REMOTE_OPTION_URL]),
             ptr_resp_code);
-        relay_remote_set_status (remote, RELAY_STATUS_DISCONNECTED);
+        relay_remote_network_disconnect (remote);
         return WEECHAT_RC_OK;
     }
 
@@ -1222,7 +1235,7 @@ relay_remote_network_url_handshake_cb (const void *pointer,
             remote->name,
             weechat_config_string (remote->options[RELAY_REMOTE_OPTION_URL]),
             ptr_error);
-        relay_remote_set_status (remote, RELAY_STATUS_DISCONNECTED);
+        relay_remote_network_disconnect (remote);
         return WEECHAT_RC_OK;
     }
 
@@ -1259,7 +1272,7 @@ relay_remote_network_url_handshake_cb (const void *pointer,
             remote->name,
             weechat_config_string (remote->options[RELAY_REMOTE_OPTION_URL]),
             _("hash algorithm not found"));
-        relay_remote_set_status (remote, RELAY_STATUS_DISCONNECTED);
+        relay_remote_network_disconnect (remote);
         return WEECHAT_RC_OK;
     }
 
@@ -1272,7 +1285,7 @@ relay_remote_network_url_handshake_cb (const void *pointer,
             remote->name,
             weechat_config_string (remote->options[RELAY_REMOTE_OPTION_URL]),
             _("unknown number of hash iterations"));
-        relay_remote_set_status (remote, RELAY_STATUS_DISCONNECTED);
+        relay_remote_network_disconnect (remote);
         return WEECHAT_RC_OK;
     }
 
@@ -1285,7 +1298,7 @@ relay_remote_network_url_handshake_cb (const void *pointer,
             remote->name,
             weechat_config_string (remote->options[RELAY_REMOTE_OPTION_URL]),
             _("unknown TOTP status"));
-        relay_remote_set_status (remote, RELAY_STATUS_DISCONNECTED);
+        relay_remote_network_disconnect (remote);
         return WEECHAT_RC_OK;
     }
 
@@ -1322,7 +1335,7 @@ relay_remote_network_url_handshake_cb (const void *pointer,
                 _("%sremote[%s]: not enough memory"),
                 weechat_prefix ("error"),
                 remote->name);
-            relay_remote_set_status (remote, RELAY_STATUS_DISCONNECTED);
+            relay_remote_network_disconnect (remote);
             return WEECHAT_RC_OK;
         }
         snprintf (option_name, length, "weechat.proxy.%s.type", proxy);
@@ -1340,7 +1353,7 @@ relay_remote_network_url_handshake_cb (const void *pointer,
                 NULL,
                 _("%sremote[%s]: proxy \"%s\" not found, cannot connect"),
                 weechat_prefix ("error"), remote->name, proxy);
-            relay_remote_set_status (remote, RELAY_STATUS_DISCONNECTED);
+            relay_remote_network_disconnect (remote);
             return WEECHAT_RC_OK;
         }
         str_proxy_type = weechat_config_string (proxy_type);
@@ -1353,7 +1366,7 @@ relay_remote_network_url_handshake_cb (const void *pointer,
                 _("%sremote[%s]: missing proxy settings, check options for "
                   "proxy \"%s\""),
                 weechat_prefix ("error"), remote->name, proxy);
-            relay_remote_set_status (remote, RELAY_STATUS_DISCONNECTED);
+            relay_remote_network_disconnect (remote);
             return WEECHAT_RC_OK;
         }
     }

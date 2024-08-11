@@ -28,6 +28,8 @@ enum t_relay_remote_option
 {
     RELAY_REMOTE_OPTION_URL = 0,     /* remote URL                          */
     RELAY_REMOTE_OPTION_AUTOCONNECT, /* auto-connect                        */
+    RELAY_REMOTE_OPTION_AUTORECONNECT_DELAY, /* delay for auto-reconnect    */
+                                             /* (0 = no auto-reconnect)     */
     RELAY_REMOTE_OPTION_PROXY,       /* proxy used for remote (optional)    */
     RELAY_REMOTE_OPTION_TLS_VERIFY,  /* check if the connection is trusted  */
     RELAY_REMOTE_OPTION_PASSWORD,    /* password for remote relay           */
@@ -61,6 +63,8 @@ struct t_relay_remote
     int synced;                        /* 1 if synced with remote           */
     char *partial_ws_frame;            /* part. binary websocket frame recv */
     int partial_ws_frame_size;         /* size of partial websocket frame   */
+    int reconnect_delay;               /* current reconnect delay (growing) */
+    time_t reconnect_start;            /* this time + delay = reconn. time  */
     struct t_relay_remote *prev_remote;/* link to previous remote           */
     struct t_relay_remote *next_remote;/* link to next remote               */
 };
@@ -89,6 +93,7 @@ extern struct t_relay_remote *relay_remote_new_with_options (const char *name,
                                                              struct t_config_option **options);
 extern struct t_relay_remote *relay_remote_new (const char *name,
                                                 const char *autoconnect,
+                                                const char *autoreconnect_delay,
                                                 const char *proxy,
                                                 const char *tls_verify,
                                                 const char *url,
@@ -101,7 +106,9 @@ extern int relay_remote_connect (struct t_relay_remote *remote);
 extern void relay_remote_auto_connect ();
 extern int relay_remote_send (struct t_relay_remote *remote, const char *json);
 extern int relay_remote_disconnect (struct t_relay_remote *remote);
+extern void relay_remote_reconnect_schedule (struct t_relay_remote *remote);
 extern int relay_remote_reconnect (struct t_relay_remote *remote);
+extern void relay_remote_timer ();
 extern void relay_remote_disconnect_all ();
 extern int relay_remote_rename (struct t_relay_remote *remote, const char *name);
 extern void relay_remote_free (struct t_relay_remote *remote);

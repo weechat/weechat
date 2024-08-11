@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-08-09 18:24+0200\n"
+"POT-Creation-Date: 2024-08-11 12:15+0200\n"
 "PO-Revision-Date: 2024-06-11 07:49+0200\n"
 "Last-Translator: Érico Nogueira <ericonr@disroot.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -14109,6 +14109,11 @@ msgid "%s%s: no connection to remote relay \"%s\""
 msgstr "%s%s: sem conexão com o servidor \"%s\" para redirecionamento"
 
 #, fuzzy, c-format
+#| msgid "%s%s: connection refused"
+msgid "remote[%s]: auto-reconnection is cancelled"
+msgstr "%s%s: conexão recusada"
+
+#, fuzzy, c-format
 msgid "%s%s: remote relay \"%s\" already exists for \"%s\" command"
 msgstr "%sErro: disposição \"%s\" já existe para comando \"%s\""
 
@@ -14387,8 +14392,13 @@ msgid ""
 msgstr ""
 
 #, fuzzy
-msgid "auto-connect to the remote relay"
+msgid "automatically connect to the remote relay"
 msgstr "%s: reconectando ao servidor..."
+
+msgid ""
+"automatically reconnect to the remote relay after this delay, in seconds (0 "
+"= disable automatic reconnection)"
+msgstr ""
 
 msgid ""
 "name of proxy used for this remote relay (optional, proxy must be defined "
@@ -14653,6 +14663,23 @@ msgid ""
 "number of lines to retrieve on each buffer when connecting to a remote relay"
 msgstr ""
 
+#, fuzzy
+msgid ""
+"growing factor for autoreconnect delay to remote relay (1 = always same "
+"delay, 2 = delay*2 for each retry, etc.)"
+msgstr ""
+"fator de crescimento do tempo de espera para a auto-reconexão ao servidor (1 "
+"= sempre o mesmo tempo de espera, 2 = tempo de espera*2 para cada "
+"tentativa, ..)"
+
+#, fuzzy
+#| msgid "maximum autoreconnect delay to server (in seconds, 0 = no maximum)"
+msgid ""
+"maximum autoreconnect delay to remote relay (in seconds, 0 = no maximum)"
+msgstr ""
+"máximo tempo de espera para auto-reconectar ao servidor (em segundos, 0 = "
+"sem máximo)"
+
 #, fuzzy, c-format
 msgid "%s%s: invalid websocket handshake received for client %s%s%s"
 msgstr "%s%s: handshake TLS falhou"
@@ -14724,6 +14751,15 @@ msgid ""
 "%s%s: error: unable to connect to a remote relay via API (cJSON support is "
 "not enabled)"
 msgstr ""
+
+#, fuzzy, c-format
+#| msgid "%s%s: reconnecting to server in %d %s, %d %s"
+msgid "remote[%s]: reconnecting to remote relay in %d %s, %d %s"
+msgstr "%s%s: reconectando ao servidor em %d %s, %d %s"
+
+#, fuzzy, c-format
+msgid "remote[%s]: reconnecting to remote relay in %d %s"
+msgstr "%s%s: conectando ao servidor %s/%d%s%s..."
 
 #, fuzzy, c-format
 msgid "%s: socket closed for %s (%s: %s)"

@@ -1302,17 +1302,12 @@ relay_client_send (struct t_relay_client *client,
  * Timer callback, called each second.
  */
 
-int
-relay_client_timer_cb (const void *pointer, void *data, int remaining_calls)
+void
+relay_client_timer ()
 {
     struct t_relay_client *ptr_client, *ptr_next_client;
     int purge_delay, auth_timeout;
     time_t current_time;
-
-    /* make C compiler happy */
-    (void) pointer;
-    (void) data;
-    (void) remaining_calls;
 
     purge_delay = weechat_config_integer (relay_config_network_clients_purge_delay);
     auth_timeout = weechat_config_integer (relay_config_network_auth_timeout);
@@ -1352,8 +1347,6 @@ relay_client_timer_cb (const void *pointer, void *data, int remaining_calls)
 
         ptr_client = ptr_next_client;
     }
-
-    return WEECHAT_RC_OK;
 }
 
 /*

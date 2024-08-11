@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-08-09 18:24+0200\n"
+"POT-Creation-Date: 2024-08-11 12:15+0200\n"
 "PO-Revision-Date: 2024-07-10 11:29+0400\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -14894,6 +14894,11 @@ msgstr "%s%s: није пронађен релеј удаљених „%s” з�
 msgid "%s%s: no connection to remote relay \"%s\""
 msgstr "%s%s: не постоји веза са релејем удаљених „%s”"
 
+#, fuzzy, c-format
+#| msgid "%s: auto-reconnection is cancelled"
+msgid "remote[%s]: auto-reconnection is cancelled"
+msgstr "%s: отказано је аутоматско поновно успостављање везе"
+
 #, c-format
 msgid "%s%s: remote relay \"%s\" already exists for \"%s\" command"
 msgstr "%s%s: релеј удаљених „%s” већ постоји за команду „%s”"
@@ -15176,8 +15181,15 @@ msgstr ""
 "примери: https://example.com:9000 или http://example.com:9000 (веза "
 "коришћењем чистог текста, не препоручује се)"
 
-msgid "auto-connect to the remote relay"
+#, fuzzy
+#| msgid "auto-connect to the remote relay"
+msgid "automatically connect to the remote relay"
 msgstr "ауто-повезивање на релеј удаљених"
+
+msgid ""
+"automatically reconnect to the remote relay after this delay, in seconds (0 "
+"= disable automatic reconnection)"
+msgstr ""
 
 msgid ""
 "name of proxy used for this remote relay (optional, proxy must be defined "
@@ -15501,6 +15513,25 @@ msgstr ""
 "број линија који се преузима из сваког бафера када се успоставља веза са "
 "релејем удаљених"
 
+#, fuzzy
+#| msgid ""
+#| "growing factor for autoreconnect delay to server (1 = always same delay, "
+#| "2 = delay*2 for each retry, etc.)"
+msgid ""
+"growing factor for autoreconnect delay to remote relay (1 = always same "
+"delay, 2 = delay*2 for each retry, etc.)"
+msgstr ""
+"фактор увећавања паузе пре аутоматског поновног повезивања са сервером (1 = "
+"увек иста пауза, 2 = пауза*2 за сваки наредни покушај, итд.)"
+
+#, fuzzy
+#| msgid "maximum autoreconnect delay to server (in seconds, 0 = no maximum)"
+msgid ""
+"maximum autoreconnect delay to remote relay (in seconds, 0 = no maximum)"
+msgstr ""
+"максимална пауза пре аутоматског поновног повезивања са сервером (у "
+"секундама, 0 = нема ограничења)"
+
 #, c-format
 msgid "%s%s: invalid websocket handshake received for client %s%s%s"
 msgstr "%s%s: примљено је неважеће вебсокет руковање од клијента %s%s%s"
@@ -15576,6 +15607,16 @@ msgid ""
 msgstr ""
 "%s%s: грешка: не може да се повеже са релејем удаљених преко API (није "
 "укључена cJSON подршка)"
+
+#, fuzzy, c-format
+#| msgid "%s%s: reconnecting to server in %d %s, %d %s"
+msgid "remote[%s]: reconnecting to remote relay in %d %s, %d %s"
+msgstr "%s%s: поновно успостављање везе са сервером за %d %s, %d %s"
+
+#, fuzzy, c-format
+#| msgid "remote[%s]: connecting to remote relay %s/%d%s..."
+msgid "remote[%s]: reconnecting to remote relay in %d %s"
+msgstr "удаљени[%s]: успостављање везе са удаљеним релејем %s/%d%s..."
 
 #, c-format
 msgid "%s: socket closed for %s (%s: %s)"

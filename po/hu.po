@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-08-09 18:24+0200\n"
+"POT-Creation-Date: 2024-08-11 12:15+0200\n"
 "PO-Revision-Date: 2024-06-11 07:49+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -13651,6 +13651,10 @@ msgid "%s%s: no connection to remote relay \"%s\""
 msgstr "%s nincs csatlakozva a \"%s\" szerverhez!\n"
 
 #, fuzzy, c-format
+msgid "remote[%s]: auto-reconnection is cancelled"
+msgstr "automata újracsatlakozás megszakítva\n"
+
+#, fuzzy, c-format
 msgid "%s%s: remote relay \"%s\" already exists for \"%s\" command"
 msgstr "%s a \"%s\" szerver már létezik a(z) \"%s\" parancshoz\n"
 
@@ -13913,8 +13917,13 @@ msgstr ""
 
 #, fuzzy
 #| msgid "reconnect to server(s)"
-msgid "auto-connect to the remote relay"
+msgid "automatically connect to the remote relay"
 msgstr "újracsatlakozás a szerver(ek)hez"
+
+msgid ""
+"automatically reconnect to the remote relay after this delay, in seconds (0 "
+"= disable automatic reconnection)"
+msgstr ""
 
 msgid ""
 "name of proxy used for this remote relay (optional, proxy must be defined "
@@ -14162,6 +14171,15 @@ msgid ""
 "number of lines to retrieve on each buffer when connecting to a remote relay"
 msgstr ""
 
+msgid ""
+"growing factor for autoreconnect delay to remote relay (1 = always same "
+"delay, 2 = delay*2 for each retry, etc.)"
+msgstr ""
+
+msgid ""
+"maximum autoreconnect delay to remote relay (in seconds, 0 = no maximum)"
+msgstr ""
+
 #, fuzzy, c-format
 msgid "%s%s: invalid websocket handshake received for client %s%s%s"
 msgstr "%s gnutls kézfogás sikertelen\n"
@@ -14233,6 +14251,14 @@ msgid ""
 "%s%s: error: unable to connect to a remote relay via API (cJSON support is "
 "not enabled)"
 msgstr ""
+
+#, fuzzy, c-format
+msgid "remote[%s]: reconnecting to remote relay in %d %s, %d %s"
+msgstr "%s: Újracsatlakozás a szerverhez %d másodperc múlva\n"
+
+#, fuzzy, c-format
+msgid "remote[%s]: reconnecting to remote relay in %d %s"
+msgstr "%s: csatlakozás a(z) %s:%d%s%s szerverhez...\n"
 
 #, fuzzy, c-format
 msgid "%s: socket closed for %s (%s: %s)"

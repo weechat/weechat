@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-08-09 18:24+0200\n"
+"POT-Creation-Date: 2024-08-11 12:15+0200\n"
 "PO-Revision-Date: 2024-06-22 19:43+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -14918,6 +14918,11 @@ msgstr "%s%s: zdalny pośrednik „%s” nie został znaleziony dla komendy „%
 msgid "%s%s: no connection to remote relay \"%s\""
 msgstr "%s%s: brak połączenia ze zdalnym pośrednikiem „%s”"
 
+#, fuzzy, c-format
+#| msgid "%s: auto-reconnection is cancelled"
+msgid "remote[%s]: auto-reconnection is cancelled"
+msgstr "%s: automatyczne ponowne łączenie z serwerem anulowane"
+
 #, c-format
 msgid "%s%s: remote relay \"%s\" already exists for \"%s\" command"
 msgstr "%s%s: zdalny pośrednik „%s” już istnieje dla komendy „%s”"
@@ -15200,8 +15205,15 @@ msgstr ""
 "przykłady: https://example.com:9000 lub http://example.com:9000 (czysty "
 "tekst, nie zalecane)"
 
-msgid "auto-connect to the remote relay"
+#, fuzzy
+#| msgid "auto-connect to the remote relay"
+msgid "automatically connect to the remote relay"
 msgstr "automatycznie połącz się ze zdalnym pośrednikiem"
+
+msgid ""
+"automatically reconnect to the remote relay after this delay, in seconds (0 "
+"= disable automatic reconnection)"
+msgstr ""
 
 msgid ""
 "name of proxy used for this remote relay (optional, proxy must be defined "
@@ -15526,6 +15538,25 @@ msgstr ""
 "ilość otrzymywanych linii w każdym buforze podczas połączenia do zdalnego "
 "pośrednika"
 
+#, fuzzy
+#| msgid ""
+#| "growing factor for autoreconnect delay to server (1 = always same delay, "
+#| "2 = delay*2 for each retry, etc.)"
+msgid ""
+"growing factor for autoreconnect delay to remote relay (1 = always same "
+"delay, 2 = delay*2 for each retry, etc.)"
+msgstr ""
+"rosnący współczynnik opóźnienia ponownego połączenia z serwerem (1 = stała "
+"wartość, 2 = opóźnienie*2 dla każdej próby, etc.)"
+
+#, fuzzy
+#| msgid "maximum autoreconnect delay to server (in seconds, 0 = no maximum)"
+msgid ""
+"maximum autoreconnect delay to remote relay (in seconds, 0 = no maximum)"
+msgstr ""
+"maksymalne opóźnienie do ponownego połączenia z serwerem (w sekundach, 0 = "
+"brak maksimum)"
+
 #, c-format
 msgid "%s%s: invalid websocket handshake received for client %s%s%s"
 msgstr ""
@@ -15602,6 +15633,16 @@ msgid ""
 msgstr ""
 "%s%s: błąd: nie udało się połączyć ze zdalnym pośrednikiem używając API "
 "(wsparcie dla cJSON jest wyłączone)"
+
+#, fuzzy, c-format
+#| msgid "%s%s: reconnecting to server in %d %s, %d %s"
+msgid "remote[%s]: reconnecting to remote relay in %d %s, %d %s"
+msgstr "%s%s: ponowne połączenie z serwerem za %d %s, %d %s"
+
+#, fuzzy, c-format
+#| msgid "remote[%s]: connecting to remote relay %s/%d%s..."
+msgid "remote[%s]: reconnecting to remote relay in %d %s"
+msgstr "remote[%s]: łączenie ze zdalnym pośrednikiem %s/%d%s..."
 
 #, c-format
 msgid "%s: socket closed for %s (%s: %s)"
