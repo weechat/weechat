@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-08-11 12:15+0200\n"
-"PO-Revision-Date: 2024-06-11 07:49+0200\n"
+"POT-Creation-Date: 2024-08-12 21:29+0200\n"
+"PO-Revision-Date: 2024-08-12 21:36+0200\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: tr\n"
@@ -126,6 +126,7 @@ msgid ""
 "delete it on exit\n"
 "                           (incompatible with option \"-d\")\n"
 "  -h, --help               display this help and exit\n"
+"  -i, --build-info         display build information and exit\n"
 "  -l, --license            display WeeChat license and exit\n"
 "  -p, --no-plugin          don't load any plugin at startup\n"
 "  -P, --plugins <plugins>  load only these plugins at startup\n"
@@ -5937,6 +5938,16 @@ msgstr "%sUyarı: %s, %d. satır: Seçenek için geçersiz değer: %s"
 #, c-format
 msgid "Reloading configuration file %s"
 msgstr "%s yapılandırma dosyası yeniden yükleniyor"
+
+#. TRANSLATORS: "%s %s" after "compiled on" is date and time
+#, c-format
+msgid "WeeChat %s, compiled on %s %s\n"
+msgstr ""
+
+#, fuzzy
+#| msgid "(old options?)"
+msgid "Build options:\n"
+msgstr "(eski seçenekler?)"
 
 msgid "Windows tree:"
 msgstr "Pencereler ağacı:"
@@ -18245,10 +18256,3 @@ msgstr "%s%s: \"%s\" için %s ile zaman aşımı"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: Bağlanılamıyor: Beklenmedik hata (%d)"
-
-#~ msgid ""
-#~ "use IPv6 protocol for server communication (try IPv6 then fallback to "
-#~ "IPv4); if disabled, only IPv4 is used"
-#~ msgstr ""
-#~ "sunucu iletişimi için IPv6 protokolünü kullanın (önce IPv6 deneyin, "
-#~ "olmazsa IPv4'e dönün); devre dışı ise yalnızca IPv4 kullanılır"

@@ -260,7 +260,6 @@ add_subdirectory(icons)
 
 if(ENABLE_NLS)
   find_package(Gettext REQUIRED)
-  add_definitions(-DENABLE_NLS)
   find_package(Intl REQUIRED)
   list(APPEND EXTRA_LIBS "${Intl_LIBRARIES}")
   add_subdirectory(po)

@@ -30,6 +30,7 @@
 
 ### Added
 
+- core: add command line option `--build-info` / `-i` to display information about build options ([#449](https://github.com/weechat/weechat/issues/449))
 - irc: add option `-export` in command `/list`, add option irc.look.list_buffer_format_export
 - relay: add option relay.network.websocket_permessage_deflate ([#1549](https://github.com/weechat/weechat/issues/1549))
 - relay: add option relay.look.raw_messages_max_length ([#2122](https://github.com/weechat/weechat/issues/2122))

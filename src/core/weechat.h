@@ -32,7 +32,7 @@
 
 #include <locale.h>
 
-#if defined(ENABLE_NLS) && !defined(_)
+#if ENABLE_NLS == 1 && !defined(_)
     #include <libintl.h>
     #define _(string) gettext(string)
     #define NG_(single,plural,number) ngettext(single,plural,number)
@@ -41,7 +41,7 @@
     #else
         #define N_(string) (string)
     #endif /* gettext_noop */
-#endif /* defined(ENABLE_NLS) && !defined(_) */
+#endif /* ENABLE_NLS == 1 && !defined(_) */
 #if !defined(_)
     #define _(string) (string)
     #define NG_(single,plural,number) ((number == 1) ? single : plural)

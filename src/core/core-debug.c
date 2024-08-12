@@ -55,6 +55,7 @@
 #include "core-string.h"
 #include "core-utf8.h"
 #include "core-util.h"
+#include "core-version.h"
 #include "../gui/gui-bar.h"
 #include "../gui/gui-bar-item.h"
 #include "../gui/gui-buffer.h"
@@ -69,12 +70,77 @@
 #include "../gui/gui-window.h"
 #include "../plugins/plugin.h"
 
+#define DEBUG_DISPLAY_BUILD_OPTION_STR(OPTION)                  \
+    string_fprintf (stdout, "  %s: \"%s\"\n", #OPTION, OPTION);
+#define DEBUG_DISPLAY_BUILD_OPTION_BOOL(OPTION)                 \
+    string_fprintf (stdout,                                     \
+                    "  %s: %s\n",                               \
+                    #OPTION,                                    \
+                    (OPTION) ? "ON" : "OFF");
 
 int debug_dump_active = 0;
 
 long long debug_long_callbacks = 0;    /* callbacks taking more than        */
                                        /* N microseconds will be traced     */
 
+
+/*
+ * Displays build information on stdout.
+ */
+
+void
+debug_build_info ()
+{
+    /* display version and compilation date/time */
+    string_fprintf (
+        stdout,
+        /* TRANSLATORS: "%s %s" after "compiled on" is date and time */
+        _("WeeChat %s, compiled on %s %s\n"),
+        version_get_version_with_git (),
+        version_get_compilation_date (),
+        version_get_compilation_time ());
+
+    /* display build options */
+    string_fprintf (stdout, _("Build options:\n"));
+    DEBUG_DISPLAY_BUILD_OPTION_STR(CMAKE_BUILD_TYPE);
+    DEBUG_DISPLAY_BUILD_OPTION_STR(CMAKE_INSTALL_PREFIX);
+    DEBUG_DISPLAY_BUILD_OPTION_STR(WEECHAT_HOME);
+    DEBUG_DISPLAY_BUILD_OPTION_BOOL(ENABLE_ALIAS);
+    DEBUG_DISPLAY_BUILD_OPTION_BOOL(ENABLE_BUFLIST);
+    DEBUG_DISPLAY_BUILD_OPTION_BOOL(ENABLE_CHARSET);
+    DEBUG_DISPLAY_BUILD_OPTION_BOOL(ENABLE_CJSON);
+    DEBUG_DISPLAY_BUILD_OPTION_BOOL(ENABLE_CODE_COVERAGE);
+    DEBUG_DISPLAY_BUILD_OPTION_BOOL(ENABLE_DOC);
+    DEBUG_DISPLAY_BUILD_OPTION_BOOL(ENABLE_DOC_INCOMPLETE);
+    DEBUG_DISPLAY_BUILD_OPTION_BOOL(ENABLE_ENCHANT);
+    DEBUG_DISPLAY_BUILD_OPTION_BOOL(ENABLE_EXEC);
+    DEBUG_DISPLAY_BUILD_OPTION_BOOL(ENABLE_FIFO);
+    DEBUG_DISPLAY_BUILD_OPTION_BOOL(ENABLE_FSET);
+    DEBUG_DISPLAY_BUILD_OPTION_BOOL(ENABLE_GUILE);
+    DEBUG_DISPLAY_BUILD_OPTION_BOOL(ENABLE_HEADLESS);
+    DEBUG_DISPLAY_BUILD_OPTION_BOOL(ENABLE_IRC);
+    DEBUG_DISPLAY_BUILD_OPTION_BOOL(ENABLE_JAVASCRIPT);
+    DEBUG_DISPLAY_BUILD_OPTION_BOOL(ENABLE_LARGEFILE);
+    DEBUG_DISPLAY_BUILD_OPTION_BOOL(ENABLE_LOGGER);
+    DEBUG_DISPLAY_BUILD_OPTION_BOOL(ENABLE_LUA);
+    DEBUG_DISPLAY_BUILD_OPTION_BOOL(ENABLE_MAN);
+    DEBUG_DISPLAY_BUILD_OPTION_BOOL(ENABLE_NCURSES);
+    DEBUG_DISPLAY_BUILD_OPTION_BOOL(ENABLE_NLS);
+    DEBUG_DISPLAY_BUILD_OPTION_BOOL(ENABLE_PERL);
+    DEBUG_DISPLAY_BUILD_OPTION_BOOL(ENABLE_PHP);
+    DEBUG_DISPLAY_BUILD_OPTION_BOOL(ENABLE_PYTHON);
+    DEBUG_DISPLAY_BUILD_OPTION_BOOL(ENABLE_RELAY);
+    DEBUG_DISPLAY_BUILD_OPTION_BOOL(ENABLE_RUBY);
+    DEBUG_DISPLAY_BUILD_OPTION_BOOL(ENABLE_SCRIPT);
+    DEBUG_DISPLAY_BUILD_OPTION_BOOL(ENABLE_SCRIPTS);
+    DEBUG_DISPLAY_BUILD_OPTION_BOOL(ENABLE_SPELL);
+    DEBUG_DISPLAY_BUILD_OPTION_BOOL(ENABLE_TCL);
+    DEBUG_DISPLAY_BUILD_OPTION_BOOL(ENABLE_TESTS);
+    DEBUG_DISPLAY_BUILD_OPTION_BOOL(ENABLE_TRIGGER);
+    DEBUG_DISPLAY_BUILD_OPTION_BOOL(ENABLE_TYPING);
+    DEBUG_DISPLAY_BUILD_OPTION_BOOL(ENABLE_XFER);
+    DEBUG_DISPLAY_BUILD_OPTION_BOOL(ENABLE_ZSTD);
+}
 
 /*
  * Writes dump of data to WeeChat log file.

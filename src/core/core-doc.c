@@ -1701,9 +1701,9 @@ doc_generate (const char *path)
         NULL,
     };
     char lang[3];
-#ifdef ENABLE_NLS
+#if ENABLE_NLS == 1
     char *localedir;
-#endif
+#endif /* ENABLE_NLS == 1 */
 
     rc_doc_gen = 0;
     num_files = 0;
@@ -1733,11 +1733,11 @@ doc_generate (const char *path)
      * (this is used to generate documentation without installing WeeChat,
      * that means no need to run `make install`)
      */
-#ifdef ENABLE_NLS
+#if ENABLE_NLS == 1
     localedir = getenv ("WEECHAT_DOCGEN_LOCALEDIR");
     if (localedir && localedir[0])
         bindtextdomain (PACKAGE, localedir);
-#endif /* ENABLE_NLS */
+#endif /* ENABLE_NLS == 1 */
 
     for (i = 0; locales[i]; i++)
     {

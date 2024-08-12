@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-08-11 12:15+0200\n"
-"PO-Revision-Date: 2024-06-11 07:49+0200\n"
+"POT-Creation-Date: 2024-08-12 21:29+0200\n"
+"PO-Revision-Date: 2024-08-12 21:35+0200\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: cs\n"
@@ -102,6 +102,7 @@ msgid ""
 "delete it on exit\n"
 "                           (incompatible with option \"-d\")\n"
 "  -h, --help               display this help and exit\n"
+"  -i, --build-info         display build information and exit\n"
 "  -l, --license            display WeeChat license and exit\n"
 "  -p, --no-plugin          don't load any plugin at startup\n"
 "  -P, --plugins <plugins>  load only these plugins at startup\n"
@@ -5584,6 +5585,16 @@ msgstr "%sUpozornění: %s, řádek %d: nevalidní syntaxe, chybí \"]\""
 #, c-format
 msgid "Reloading configuration file %s"
 msgstr "Znovunačítám konfigurační soubor %s"
+
+#. TRANSLATORS: "%s %s" after "compiled on" is date and time
+#, c-format
+msgid "WeeChat %s, compiled on %s %s\n"
+msgstr ""
+
+#, fuzzy
+#| msgid "(old options?)"
+msgid "Build options:\n"
+msgstr "(staré volby?)"
 
 msgid "Windows tree:"
 msgstr "Strom oken:"
@@ -17083,11 +17094,3 @@ msgstr "%s%s: vypršel časový limit \"%s\" pro %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: nemohu se připojit\" neočekávaná chyba (%d)"
-
-#, fuzzy
-#~ msgid ""
-#~ "use IPv6 protocol for server communication (try IPv6 then fallback to "
-#~ "IPv4); if disabled, only IPv4 is used"
-#~ msgstr ""
-#~ "použije IPv6 pro komunikaci se serverem (vyzkouší IPv6 a pokud selže "
-#~ "použije IPv4); pokud je vypnuta použije pouze IPv4"

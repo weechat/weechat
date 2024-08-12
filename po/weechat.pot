@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-08-11 12:15+0200\n"
+"POT-Creation-Date: 2024-08-12 21:29+0200\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -93,6 +93,7 @@ msgid ""
 "delete it on exit\n"
 "                           (incompatible with option \"-d\")\n"
 "  -h, --help               display this help and exit\n"
+"  -i, --build-info         display build information and exit\n"
 "  -l, --license            display WeeChat license and exit\n"
 "  -p, --no-plugin          don't load any plugin at startup\n"
 "  -P, --plugins <plugins>  load only these plugins at startup\n"
@@ -4907,6 +4908,14 @@ msgstr ""
 
 #, c-format
 msgid "Reloading configuration file %s"
+msgstr ""
+
+#. TRANSLATORS: "%s %s" after "compiled on" is date and time
+#, c-format
+msgid "WeeChat %s, compiled on %s %s\n"
+msgstr ""
+
+msgid "Build options:\n"
 msgstr ""
 
 msgid "Windows tree:"
