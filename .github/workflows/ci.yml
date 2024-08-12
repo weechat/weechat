@@ -100,9 +100,10 @@ jobs:
       run: |
         weechat --help
         weechat-curses --help
+        weechat --version
+        weechat --build-info
         weechat --colors
         weechat --license
-        weechat --version
         weechat --run-command "/debug dirs;/debug libs" --run-command "/quit"
 
     - name: Test Relay OpenAPI
@@ -187,9 +188,10 @@ jobs:
       run: |
         weechat --help
         weechat-curses --help
+        weechat --version
+        weechat --build-info
         weechat --colors
         weechat --license
-        weechat --version
         weechat --run-command "/debug dirs;/debug libs" --run-command "/quit"
 
   build_debian:
@@ -227,6 +229,7 @@ jobs:
         weechat --help
         weechat-curses --help
         weechat --version
+        weechat --build-info
         weechat --run-command "/debug dirs;/debug libs" --run-command "/quit"
 
   codeql-analysis:
