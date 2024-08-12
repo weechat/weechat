@@ -1269,7 +1269,10 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     /* set interpreter name and version */
     weechat_hashtable_set (plugin->variables, "interpreter_name",
                            plugin->name);
-#ifdef LUA_VERSION
+#if defined(LUA_VERSION_MAJOR) && defined(LUA_VERSION_MINOR)
+    weechat_hashtable_set (plugin->variables, "interpreter_version",
+                           LUA_VERSION_MAJOR "." LUA_VERSION_MINOR);
+#elif LUA_VERSION
     weechat_hashtable_set (plugin->variables, "interpreter_version",
                            LUA_VERSION);
 #else

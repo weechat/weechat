@@ -80,6 +80,7 @@
 - relay: fix allocation and reinit of field "client_context_takeover" in websocket deflate structure ([#1549](https://github.com/weechat/weechat/issues/1549))
 - spell: improve error displayed when a word can not be added to the dictionary ([#2144](https://github.com/weechat/weechat/issues/2144))
 - core: fix completion of command `/item refresh`
+- lua: remote string "Lua" from Lua version in output of `/debug libs`
 - core: fix detection of libgcrypt ≥ 1.11 ([debian #1071960](https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1071960))
 - core, relay: fix include directory of libcjson and libzstd
 - tests: fix relay tests on s390x ([#2118](https://github.com/weechat/weechat/issues/2118))
