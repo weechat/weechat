@@ -37,6 +37,10 @@
 *-h*, *--help*::
     ヘルプを表示
 
+// TRANSLATION MISSING
+*-i*, *--build-info*::
+    Display build information and exit.
+
 *-l*, *--license*::
     WeeChat ライセンスを表示
 

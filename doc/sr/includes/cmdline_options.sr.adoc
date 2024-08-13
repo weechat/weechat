@@ -20,6 +20,10 @@
 *-h*, *--help*::
     Приказује помоћ.
 
+// TRANSLATION MISSING
+*-i*, *--build-info*::
+    Display build information and exit.
+
 *-l*, *--license*::
     Приказује лиценцу програма WeeChat.
 

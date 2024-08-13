@@ -35,6 +35,9 @@
 *-h*, *--help*::
     zeigt einen Hilfstext an.
 
+*-i*, *--build-info*::
+    Build-Informationen anzeigen und beenden.
+
 *-l*, *--license*::
     zeigt die Lizenz von WeeChat an.
 
