@@ -38,6 +38,10 @@
 #include "core-string.h"
 #include "../plugins/plugin.h"
 
+#ifdef htonll
+#define htobe64 htonll
+#endif
+
 char *weecrypto_hash_algo_string[] = {
     "crc32",
     "md5",
@@ -520,20 +524,7 @@ weecrypto_totp_generate_internal (const char *secret, int length_secret,
     int rc, offset, length;
     unsigned long bin_code;
 
-#if __BYTE_ORDER == __BIG_ENDIAN
-    /* Big endian does not need to swap bytes here! */
-    moving_factor_swapped = moving_factor;
-#else
-    moving_factor_swapped = (moving_factor >> 56)
-        | ((moving_factor << 40) & 0x00FF000000000000)
-        | ((moving_factor << 24) & 0x0000FF0000000000)
-        | ((moving_factor << 8) & 0x000000FF00000000)
-        | ((moving_factor >> 8) & 0x00000000FF000000)
-        | ((moving_factor >> 24) & 0x0000000000FF0000)
-        | ((moving_factor >> 40) & 0x000000000000FF00)
-        | (moving_factor << 56);
-#endif
-
+    moving_factor_swapped = htobe64 (moving_factor);
     rc = weecrypto_hmac (secret, length_secret,
                          &moving_factor_swapped, sizeof (moving_factor_swapped),
                          GCRY_MD_SHA1,
