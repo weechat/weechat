@@ -905,6 +905,7 @@ relay_remote_reconnect (struct t_relay_remote *remote)
         relay_remote_reconnect_schedule (remote);
     return rc;
 #else
+    (void) rc;
     weechat_printf (NULL,
                     _("%s%s: error: unable to connect to a remote relay via API "
                       "(cJSON support is not enabled)"),
@@ -967,6 +968,9 @@ relay_remote_buffer_input (struct t_gui_buffer *buffer, const char *input_data)
 {
 #ifdef HAVE_CJSON
     relay_remote_event_buffer_input (buffer, input_data);
+#else
+    (void) buffer;
+    (void) input_data;
 #endif
 }
 
