@@ -333,6 +333,10 @@ unterstützt (rxvt-unicode, konsole, gnome-terminal, ... um nur einige zu nennen
 Im Normalfall erfolgt die Markierung des Textes mittels der Tasten kbd:[Ctrl+Alt]
 in Verbindung mit der Auswahl durch die Maus.
 
+// TRANSLATION MISSING
+You can toggle nicklist and make it visible only when needed, with key
+kbd:[Alt+Shift+N].
+
 Eine weitere Möglichkeit besteht darin,
 die Benutzerliste am oberen oder unteren Rand des WeeChat-Bildschirmes zu positionieren:
 
@@ -347,6 +351,9 @@ die Benutzerliste am oberen oder unteren Rand des WeeChat-Bildschirmes zu positi
 Dazu kann man den vereinfachten Anzeigemodus nutzen (Standardtaste: kbd:[Alt+l] (`L`)).
 
 Um URLs einfacher zu öffnen, können alternativ folgende Optionen gesetzt werden:
+
+// TRANSLATION MISSING
+* toggle nicklist and make it visible only when needed, with key kbd:[Alt+Shift+N]
 
 * Die Benutzerliste am oberen Bildschirmbereich positionieren.
 

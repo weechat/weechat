@@ -350,6 +350,10 @@ just the contents of the currently selected window, without any formatting.
 rxvt-unicode, konsole, gnome-terminal, ...). La combinazione tasti in
 generale è kbd:[Ctrl] + kbd:[Alt] + selezione mouse.
 
+// TRANSLATION MISSING
+You can toggle nicklist and make it visible only when needed, with key
+kbd:[Alt+Shift+N].
+
 Un'altra soluzione è spostare la lista nick in alto o in basso, per esempio:
 
 ----
@@ -365,6 +369,9 @@ You can use the bare display (default key: kbd:[Alt+l] (`L`)).
 
 // TRANSLATION MISSING
 To make opening URLs easier, you can:
+
+// TRANSLATION MISSING
+* toggle nicklist and make it visible only when needed, with key kbd:[Alt+Shift+N]
 
 // TRANSLATION MISSING
 * move nicklist to top:

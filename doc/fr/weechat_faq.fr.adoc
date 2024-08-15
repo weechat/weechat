@@ -326,6 +326,9 @@ Vous pouvez utiliser un terminal qui propose la sélection rectangulaire (comme
 rxvt-unicode, konsole, gnome-terminal, etc.). La touche est habituellement
 kbd:[Ctrl] + kbd:[Alt] + sélection à la souris.
 
+Vous pouvez afficher/cacher la liste des pesudos et la rendre visible seulement
+lorsque c'est nécessaire, avec la touche kbd:[Alt+Shift+N].
+
 Une autre solution est de déplacer la liste des pseudos en haut ou en bas, par
 exemple :
 
@@ -340,6 +343,9 @@ exemple :
 Vous pouvez utiliser l'affichage dépouillé (touche par défaut : kbd:[Alt+l] (`L`)).
 
 Pour rendre le clic d'URL plus facile, vous pouvez :
+
+* afficher/cacher la liste des pseudos et la rendre visible seulement lorsque
+  c'est nécessaire, avec la touche kbd:[Alt+Shift+N]
 
 * déplacer la liste des pseudos en haut :
 

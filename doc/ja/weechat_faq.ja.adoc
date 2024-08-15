@@ -321,6 +321,10 @@ just the contents of the currently selected window, without any formatting.
 (rxvt-unicode、konsole、gnome-terminal、...)。通常、キーは
 kbd:[Ctrl] + kbd:[Alt] + マウス選択です。
 
+// TRANSLATION MISSING
+You can toggle nicklist and make it visible only when needed, with key
+kbd:[Alt+Shift+N].
+
 別の解決策はニックネームリストを上か下かに移動することです、例えば:
 
 ----
@@ -335,6 +339,9 @@ kbd:[Ctrl] + kbd:[Alt] + マウス選択です。
 You can use the bare display (default key: kbd:[Alt+l] (`L`)).
 
 URL を簡単にクリックできるようにするには、以下を試してみてください:
+
+// TRANSLATION MISSING
+* toggle nicklist and make it visible only when needed, with key kbd:[Alt+Shift+N]
 
 * ニックネームリストを上方に移動します:
 

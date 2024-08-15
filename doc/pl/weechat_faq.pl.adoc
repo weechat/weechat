@@ -313,6 +313,10 @@ samą zawartość obecnie wybranego okna, bez żadnego formatowania.
 Możesz użyć terminala z prostokątnym zaznaczaniem (jak rxvt-unicode,
 konsole, gnome-terminal, ...). Klawisze to zazwyczaj kbd:[Ctrl] + kbd:[Alt] + zaznaczenie myszką.
 
+// TRANSLATION MISSING
+You can toggle nicklist and make it visible only when needed, with key
+kbd:[Alt+Shift+N].
+
 Innym rozwiązaniem jest przesunięcie listy nicków na górę lub dół, na przykład:
 
 ----
@@ -326,6 +330,9 @@ Innym rozwiązaniem jest przesunięcie listy nicków na górę lub dół, na prz
 Możesz użyć prostego trybu wyświetlania (domyślnie: kbd:[Alt+l] (`L`)).
 
 Żeby operowanie na URLach było latwiejsze możesz:
+
+// TRANSLATION MISSING
+* toggle nicklist and make it visible only when needed, with key kbd:[Alt+Shift+N]
 
 * przenieść listę nicków na górę:
 

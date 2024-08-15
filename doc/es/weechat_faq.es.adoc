@@ -328,6 +328,10 @@ Puede utilizar una terminal con selección rectangualr (como rxvt-unicode,
 konsole, gnome-terminal, etc.). La tecla normalmente es kbd:[Ctrl] + kbd:[Alt] + la selección
 con el ratón.
 
+// TRANSLATION MISSING
+You can toggle nicklist and make it visible only when needed, with key
+kbd:[Alt+Shift+N].
+
 Otra solución es mover la lista de apodos a la parte superior o inferior, por ejemplo:
 
 ----
@@ -342,6 +346,9 @@ Otra solución es mover la lista de apodos a la parte superior o inferior, por e
 You can use the bare display (default key: kbd:[Alt+l] (`L`)).
 
 Para abrir direcciones URL más fácilmente, puede:
+
+// TRANSLATION MISSING
+* toggle nicklist and make it visible only when needed, with key kbd:[Alt+Shift+N]
 
 * mover la lista de apodos a la parte superior con este comando:
 

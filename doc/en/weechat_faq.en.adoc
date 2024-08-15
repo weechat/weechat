@@ -315,6 +315,9 @@ You can use a terminal with rectangular selection (like rxvt-unicode,
 konsole, gnome-terminal, etc.). Key is usually kbd:[Ctrl] + kbd:[Alt] + mouse
 selection.
 
+You can toggle nicklist and make it visible only when needed, with key
+kbd:[Alt+Shift+N].
+
 Another solution is to move nicklist to top or bottom, for example:
 
 ----
@@ -328,6 +331,8 @@ Another solution is to move nicklist to top or bottom, for example:
 You can use the bare display (default key: kbd:[Alt+l] (`L`)).
 
 To make opening URLs easier, you can:
+
+* toggle nicklist and make it visible only when needed, with key kbd:[Alt+Shift+N]
 
 * move nicklist to top:
 
