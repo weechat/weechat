@@ -9,7 +9,7 @@
 :breaking: pass:quotes[*[breaking]*]
 
 [[v4.3.6]]
-== Version 4.3.6 (under dev)
+== Version 4.3.6 (2024-08-15)
 
 [[v4.3.6_fixed]]
 === Fixed
