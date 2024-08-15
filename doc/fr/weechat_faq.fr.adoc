@@ -331,6 +331,7 @@ exemple :
 
 ----
 /set weechat.bar.nicklist.position top
+/set weechat.bar.nicklist.size_max 8
 ----
 
 [[urls]]
@@ -344,6 +345,7 @@ Pour rendre le clic d'URL plus facile, vous pouvez :
 
 ----
 /set weechat.bar.nicklist.position top
+/set weechat.bar.nicklist.size_max 8
 ----
 
 * désactiver l'alignement pour les mots sur plusieurs lignes :

@@ -338,6 +338,7 @@ die Benutzerliste am oberen oder unteren Rand des WeeChat-Bildschirmes zu positi
 
 ----
 /set weechat.bar.nicklist.position top
+/set weechat.bar.nicklist.size_max 8
 ----
 
 [[urls]]
@@ -351,6 +352,7 @@ Um URLs einfacher zu öffnen, können alternativ folgende Optionen gesetzt werde
 
 ----
 /set weechat.bar.nicklist.position top
+/set weechat.bar.nicklist.size_max 8
 ----
 
 * Die Ausrichtung bei einem Zeilenumbruch innerhalb eines Wortes deaktivieren.

@@ -354,6 +354,7 @@ Un'altra soluzione è spostare la lista nick in alto o in basso, per esempio:
 
 ----
 /set weechat.bar.nicklist.position top
+/set weechat.bar.nicklist.size_max 8
 ----
 
 [[urls]]
@@ -370,6 +371,7 @@ To make opening URLs easier, you can:
 
 ----
 /set weechat.bar.nicklist.position top
+/set weechat.bar.nicklist.size_max 8
 ----
 
 // TRANSLATION MISSING

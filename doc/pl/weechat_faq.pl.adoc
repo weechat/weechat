@@ -317,6 +317,7 @@ Innym rozwiązaniem jest przesunięcie listy nicków na górę lub dół, na prz
 
 ----
 /set weechat.bar.nicklist.position top
+/set weechat.bar.nicklist.size_max 8
 ----
 
 [[urls]]
@@ -330,6 +331,7 @@ Możesz użyć prostego trybu wyświetlania (domyślnie: kbd:[Alt+l] (`L`)).
 
 ----
 /set weechat.bar.nicklist.position top
+/set weechat.bar.nicklist.size_max 8
 ----
 
 * wyłączyć wyrównanie dla wieloliniowych słów:

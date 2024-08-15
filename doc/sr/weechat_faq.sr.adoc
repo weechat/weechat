@@ -268,6 +268,7 @@ _прозор_ је површина екрана која приказује б
 
 ----
 /set weechat.bar.nicklist.position top
+/set weechat.bar.nicklist.size_max 8
 ----
 
 [[urls]]
@@ -281,6 +282,7 @@ _прозор_ је површина екрана која приказује б
 
 ----
 /set weechat.bar.nicklist.position top
+/set weechat.bar.nicklist.size_max 8
 ----
 
 * искључите поравнање за речи које се простиру на више линија:

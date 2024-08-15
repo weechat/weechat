@@ -332,6 +332,7 @@ Otra solución es mover la lista de apodos a la parte superior o inferior, por e
 
 ----
 /set weechat.bar.nicklist.position top
+/set weechat.bar.nicklist.size_max 8
 ----
 
 [[urls]]
@@ -346,6 +347,7 @@ Para abrir direcciones URL más fácilmente, puede:
 
 ----
 /set weechat.bar.nicklist.position top
+/set weechat.bar.nicklist.size_max 8
 ----
 
 * inhabilitar la alineación de palabras multilínea:

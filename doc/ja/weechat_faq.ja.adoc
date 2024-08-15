@@ -325,6 +325,7 @@ kbd:[Ctrl] + kbd:[Alt] + マウス選択です。
 
 ----
 /set weechat.bar.nicklist.position top
+/set weechat.bar.nicklist.size_max 8
 ----
 
 [[urls]]
@@ -339,6 +340,7 @@ URL を簡単にクリックできるようにするには、以下を試して�
 
 ----
 /set weechat.bar.nicklist.position top
+/set weechat.bar.nicklist.size_max 8
 ----
 
 * 複数行に渡る単語の整列を無効化します:
