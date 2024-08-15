@@ -52,6 +52,7 @@
 - core: fix crash when deleting a bar that has no items ([#2138](https://github.com/weechat/weechat/issues/2138))
 - relay/api: fix crash when sending data to a remote buffer when the remote has been deleted ([#2157](https://github.com/weechat/weechat/issues/2157))
 - irc, xfer: fix display of input prompt in IRC private buffers and DCC chat buffers ([#2128](https://github.com/weechat/weechat/issues/2128))
+- irc: fix send of split messages when server option "anti_flood" set to 0 ([#2172](https://github.com/weechat/weechat/issues/2172))
 - core: fix generation of TOTP on FreeBSD ([#2171](https://github.com/weechat/weechat/issues/2171))
 - core: apply buffer properties (options weechat.buffer.*) when a buffer name is changed
 - irc: fix property "short_name" of channel buffer when the joined channel has a different case than the `/join` command
