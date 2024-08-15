@@ -90,6 +90,14 @@
 - tests: fix compilation of tests on Fedora 40 ([#2116](https://github.com/weechat/weechat/issues/2116))
 - tests: fix compilation of tests on Rocky 9.4
 
+## Version 4.3.6 (2024-08-15)
+
+### Fixed
+
+- core: fix generation of TOTP on FreeBSD ([#2171](https://github.com/weechat/weechat/issues/2171))
+- relay/api: fix crash when sending data to a remote buffer when the remote has been deleted ([#2157](https://github.com/weechat/weechat/issues/2157))
+- relay/api: fix timezone of dates sent to clients ([#2151](https://github.com/weechat/weechat/issues/2151))
+
 ## Version 4.3.5 (2024-07-16)
 
 ### Fixed
