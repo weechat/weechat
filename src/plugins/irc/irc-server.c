@@ -2988,8 +2988,14 @@ irc_server_outqueue_send (struct t_irc_server *server)
         if (!server->outqueue[priority])
             continue;
 
-        irc_server_outqueue_send_one_msg (server, server->outqueue[priority]);
-        irc_server_outqueue_free (server, priority, server->outqueue[priority]);
+        /* send all messages with anti_flood == 0, or just one */
+        while (server->outqueue[priority])
+        {
+            irc_server_outqueue_send_one_msg (server, server->outqueue[priority]);
+            irc_server_outqueue_free (server, priority, server->outqueue[priority]);
+            if (anti_flood > 0)
+                break;
+        }
 
         /*
          * continue to send for immediate priority (= 0),

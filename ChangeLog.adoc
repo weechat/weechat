@@ -8,6 +8,14 @@
 :see-release-notes: If you are upgrading: please see release notes.
 :breaking: pass:quotes[*[breaking]*]
 
+[[v4.3.7]]
+== Version 4.3.7 (under dev)
+
+[[v4.3.7_fixed]]
+=== Fixed
+
+* irc: fix send of split messages when server option "anti_flood" set to 0 (issue #2172)
+
 [[v4.3.6]]
 == Version 4.3.6 (2024-08-15)
 
