@@ -62,6 +62,7 @@
 - xfer: fix send of data on the DCC chat buffer after `/upgrade` if the buffer was opened before the upgrade ([#2092](https://github.com/weechat/weechat/issues/2092))
 - core: fix refresh of bar item "scroll" in root bar after `/buffer clear` ([#590](https://github.com/weechat/weechat/issues/590))
 - core, plugins: return "0x0" instead of "(nil)" for pointers formatted in strings
+- core: send signal "buffer_moved" for all buffers affected by merge/unmerge
 - ruby: fix builtin functions not available ([#2109](https://github.com/weechat/weechat/issues/2109))
 - php: fix return value of function hdata_longlong
 - tcl: fix return value of function hdata_longlong ([#2119](https://github.com/weechat/weechat/issues/2119))
