@@ -12286,6 +12286,14 @@ List of signals sent by WeeChat and plugins:
 | String: key combo.
 | Key combo in _cursor_ context.
 
+| weechat | [[hook_signal_layout_buffers_applied]] layout_buffers_applied | 4.4.0
+| String: layout name.
+| Layout applied for buffers.
+
+| weechat | [[hook_signal_layout_windows_applied]] layout_windows_applied | 4.4.0
+| String: layout name.
+| Layout applied for windows.
+
 | weechat | [[hook_signal_mouse_enabled]] mouse_enabled | 1.1
 | -
 | Mouse enabled.

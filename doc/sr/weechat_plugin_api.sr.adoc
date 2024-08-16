@@ -11967,6 +11967,16 @@ struct t_hook *weechat_hook_signal (const char *signal,
 | Стринг: комбинација тастера.
 | Комбинација тастера у _cursor_ контексту.
 
+// TRANSLATION MISSING
+| weechat | [[hook_signal_layout_buffers_applied]] layout_buffers_applied | 4.4.0
+| String: layout name.
+| Layout applied for buffers.
+
+// TRANSLATION MISSING
+| weechat | [[hook_signal_layout_windows_applied]] layout_windows_applied | 4.4.0
+| String: layout name.
+| Layout applied for windows.
+
 | weechat | [[hook_signal_mouse_enabled]] mouse_enabled | 1.1
 | - |
 Укључен је миш.

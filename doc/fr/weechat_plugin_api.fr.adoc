@@ -12539,6 +12539,14 @@ Liste des signaux envoyés par WeeChat et les extensions :
 | Chaîne : combinaison de touches.
 | Combinaison de touches dans le contexte _cursor_.
 
+| weechat | [[hook_signal_layout_buffers_applied]] layout_buffers_applied | 4.4.0
+| Chaîne : nom de la disposition.
+| Disposition appliquée pour les tampons.
+
+| weechat | [[hook_signal_layout_windows_applied]] layout_windows_applied | 4.4.0
+| Chaîne : nom de la disposition.
+| Disposition appliquée pour les fenêtres.
+
 | weechat | [[hook_signal_mouse_enabled]] mouse_enabled | 1.1
 | -
 | Souris activée.

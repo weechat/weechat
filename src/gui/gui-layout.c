@@ -30,6 +30,7 @@
 #include "../core/weechat.h"
 #include "../core/core-config.h"
 #include "../core/core-hdata.h"
+#include "../core/core-hook.h"
 #include "../core/core-infolist.h"
 #include "../core/core-log.h"
 #include "../core/core-string.h"
@@ -367,6 +368,9 @@ gui_layout_buffer_apply (struct t_gui_layout *layout)
             gui_buffer_set_active_buffer (ptr_buffer);
         }
     }
+
+    (void) hook_signal_send ("layout_buffers_applied",
+                             WEECHAT_HOOK_SIGNAL_STRING, layout->name);
 }
 
 /*
@@ -754,6 +758,9 @@ gui_layout_window_apply (struct t_gui_layout *layout,
     gui_layout_window_assign_all_buffers ();
 
     gui_window_switch ((ptr_current_window) ? ptr_current_window : old_window);
+
+    (void) hook_signal_send ("layout_windows_applied",
+                             WEECHAT_HOOK_SIGNAL_STRING, layout->name);
 }
 
 /*

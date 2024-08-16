@@ -12464,6 +12464,16 @@ WeeChat とプラグインが送信するシグナルのリスト:
 | String: キーの組み合わせ
 | _cursor_ コンテキスト内のキーの組み合わせ
 
+// TRANSLATION MISSING
+| weechat | [[hook_signal_layout_buffers_applied]] layout_buffers_applied | 4.4.0
+| String: layout name.
+| Layout applied for buffers.
+
+// TRANSLATION MISSING
+| weechat | [[hook_signal_layout_windows_applied]] layout_windows_applied | 4.4.0
+| String: layout name.
+| Layout applied for windows.
+
 | weechat | [[hook_signal_mouse_enabled]] mouse_enabled | 1.1
 | -
 | マウスが有効化された
