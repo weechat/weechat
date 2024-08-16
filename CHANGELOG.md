@@ -140,6 +140,8 @@
 
 ## Version 4.3.1 (2024-05-31)
 
+_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
+
 ### Fixed
 
 - irc: don't return pointer to irc server if the channel or nick is not found in info "irc_buffer"
