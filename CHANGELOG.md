@@ -1,5 +1,11 @@
 # WeeChat ChangeLog
 
+## Version 4.5.0 (under dev)
+
+### Fixed
+
+- lua: fix compilation on Fedora ([#2173](https://github.com/weechat/weechat/issues/2173))
+
 ## Version 4.4.0 (2024-08-17)
 
 ### Changed
