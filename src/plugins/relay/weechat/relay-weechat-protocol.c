@@ -537,6 +537,7 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(infolist)
     msg = relay_weechat_msg_new (id);
     if (msg)
     {
+        pointer = NULL;
         args = NULL;
         if (argc > 1)
         {
