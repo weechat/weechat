@@ -4,7 +4,7 @@
 
 ### Fixed
 
-- lua: fix compilation on Fedora with Lua < 5.2.0 ([#2173](https://github.com/weechat/weechat/issues/2173))
+- lua: fix compilation on Fedora with Lua < 5.2.0 ([#2173](https://github.com/weechat/weechat/issues/2173), [#2174](https://github.com/weechat/weechat/issues/2174))
 
 ## Version 4.4.0 (2024-08-17)
 
