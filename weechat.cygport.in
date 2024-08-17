@@ -48,6 +48,7 @@ RELEASE=1
 CATEGORY="Net"
 
 HOMEPAGE="https://weechat.org/"
+LICENSE="GPL-3.0-or-later"
 SRC_URI="weechat-${VERSION}.tar.xz"
 
 # Build dependencies only
