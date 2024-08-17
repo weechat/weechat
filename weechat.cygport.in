@@ -52,7 +52,7 @@ LICENSE="GPL-3.0-or-later"
 SRC_URI="weechat-${VERSION}.tar.xz"
 
 # Build dependencies only
-DEPEND="cmake gettext gettext-devel libgnutls-devel libaspell-devel \
+BUILD_REQUIRES="cmake gettext gettext-devel libgnutls-devel libaspell-devel \
 libcurl-devel libgcrypt-devel libncurses-devel lua perl pkg-config \
 python3-devel ruby tcl-devel libguile3.0-devel php-devel libzstd-devel \
 zlib-devel"
