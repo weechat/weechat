@@ -356,6 +356,7 @@ COMMAND_CALLBACK(bar)
                                  _("%sBar \"%s\" already exists"),
                                  gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                                  argv[2]);
+                free (str_type);
                 return WEECHAT_RC_ERROR;
             }
         }
