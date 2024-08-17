@@ -1,6 +1,6 @@
 # WeeChat ChangeLog
 
-## Version 4.4.0 (under dev)
+## Version 4.4.0 (2024-08-17)
 
 ### Changed
 
