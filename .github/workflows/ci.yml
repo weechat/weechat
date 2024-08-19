@@ -7,7 +7,7 @@ on:
     - cron: '22 9 * * 2'
 
 env:
-  WEECHAT_DEPENDENCIES: >-
+  WEECHAT_UBUNTU_DEPS: >-
     asciidoctor
     cmake
     curl
@@ -42,10 +42,35 @@ env:
     shellcheck
     tcl8.6-dev
     zlib1g-dev
+  WEECHAT_ROCKYLINUX_DEPS: >-
+    asciidoctor
+    aspell-devel
+    cjson-devel
+    clang
+    cmake
+    cpputest-devel
+    gcc
+    gettext
+    glibc-langpack-en
+    gnutls-devel
+    guile30-devel
+    libcurl-devel
+    libgcrypt-devel
+    libzstd-devel
+    lua-devel
+    ncurses-devel
+    perl-devel
+    php-devel
+    php-embedded
+    python-devel
+    ruby-devel
+    sudo
+    tcl-devel
+    zlib-devel
 
 jobs:
 
-  tests_linux:
+  tests_ubuntu:
 
     strategy:
       matrix:
@@ -70,7 +95,7 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update -qq
-        sudo apt-get --yes --no-install-recommends install ${{ env.WEECHAT_DEPENDENCIES }}
+        sudo apt-get --yes --no-install-recommends install ${{ env.WEECHAT_UBUNTU_DEPS }}
         # uninstall php imagick as is causes a crash when loading php plugin (see #2009)
         sudo apt-get --yes purge php8.1-imagick
         sudo -H pip3 install --ignore-installed msgcheck
@@ -132,6 +157,50 @@ jobs:
         lcov --remove coverage.info '/usr/*' --output-file coverage.info
         lcov --list coverage.info
         bash <(curl -s https://codecov.io/bash) -f coverage.info || echo 'Codecov error'
+
+  tests_rockylinux:
+
+    strategy:
+      matrix:
+        os:
+          - ubuntu-22.04
+        config:
+          - { name: "gcc", cc: "gcc", cxx: "g++", buildargs: "" }
+          - { name: "clang", cc: "clang", cxx: "clang++", buildargs: "" }
+
+    name: "rockylinux-9: ${{ matrix.config.name }}"
+    runs-on: ${{ matrix.os }}
+    container:
+      image: rockylinux:9
+
+    steps:
+
+    - uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: |
+        dnf install -y epel-release
+        dnf config-manager --set-enabled crb
+        dnf install -y ${{ env.WEECHAT_ROCKYLINUX_DEPS }}
+
+    - name: Build and run tests
+      env:
+        CC: ${{ matrix.config.cc }}
+        CXX: ${{ matrix.config.cxx }}
+        BUILDARGS: ${{ matrix.config.buildargs }}
+      run: ./tools/build_test.sh
+
+    - name: Run WeeChat
+      env:
+        TERM: xterm-256color
+      run: |
+        weechat --help
+        weechat-curses --help
+        weechat --version
+        weechat --build-info
+        weechat --colors
+        weechat --license
+        weechat --run-command "/debug dirs;/debug libs" --run-command "/quit"
 
   tests_macos:
 
@@ -211,7 +280,7 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update -qq
-        sudo apt-get --yes --no-install-recommends install ${{ env.WEECHAT_DEPENDENCIES }}
+        sudo apt-get --yes --no-install-recommends install ${{ env.WEECHAT_UBUNTU_DEPS }}
 
     - name: Test Debian patches
       run: ./tools/build_debian.sh test-patches
@@ -255,7 +324,7 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update -qq
-        sudo apt-get --yes --no-install-recommends install ${{ env.WEECHAT_DEPENDENCIES }}
+        sudo apt-get --yes --no-install-recommends install ${{ env.WEECHAT_UBUNTU_DEPS }}
         # uninstall php imagick as is causes a crash when loading php plugin (see #2009)
         sudo apt-get --yes purge php8.1-imagick
         sudo -H pip3 install --ignore-installed msgcheck
