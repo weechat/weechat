@@ -85,7 +85,7 @@ jobs:
           - { name: "gcc_coverage", cc: "gcc", cxx: "g++", buildargs: "-DENABLE_CODE_COVERAGE=ON" }
           - { name: "clang", cc: "clang", cxx: "clang++", buildargs: "" }
 
-    name: "${{ matrix.os }}: ${{ matrix.config.name }}"
+    name: "${{ matrix.os }} (${{ matrix.config.name }})"
     runs-on: ${{ matrix.os }}
 
     steps:
@@ -165,7 +165,7 @@ jobs:
         os:
           - ubuntu-22.04
 
-    name: "${{ matrix.os }}: build Debian"
+    name: "${{ matrix.os }} (build Debian)"
     runs-on: ${{ matrix.os }}
 
     steps:
@@ -203,7 +203,7 @@ jobs:
         os:
           - ubuntu-22.04
 
-    name: "${{ matrix.os }}: CodeQL"
+    name: "${{ matrix.os }} (CodeQL)"
     runs-on: ${{ matrix.os }}
 
     permissions:
@@ -247,7 +247,7 @@ jobs:
           - { name: "gcc", cc: "gcc", cxx: "g++", buildargs: "" }
           - { name: "clang", cc: "clang", cxx: "clang++", buildargs: "" }
 
-    name: "rockylinux-9: ${{ matrix.config.name }}"
+    name: "rockylinux-9 (${{ matrix.config.name }})"
     runs-on: ${{ matrix.os }}
     container:
       image: rockylinux:9
@@ -291,7 +291,7 @@ jobs:
           - { name: "gcc", cc: "gcc", cxx: "g++" }
           - { name: "clang", cc: "clang", cxx: "clang++" }
 
-    name: "${{ matrix.os }}: ${{ matrix.config.name }}"
+    name: "${{ matrix.os }} (${{ matrix.config.name }})"
     runs-on: ${{ matrix.os }}
 
     steps:
