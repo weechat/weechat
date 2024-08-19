@@ -60,7 +60,7 @@ jobs:
           - { name: "gcc_coverage", cc: "gcc", cxx: "g++", buildargs: "-DENABLE_CODE_COVERAGE=ON" }
           - { name: "clang", cc: "clang", cxx: "clang++", buildargs: "" }
 
-    name: "Tests: ${{ matrix.config.name }} on ${{ matrix.os }}"
+    name: "${{ matrix.os }}: ${{ matrix.config.name }}"
     runs-on: ${{ matrix.os }}
 
     steps:
@@ -143,7 +143,7 @@ jobs:
           - { name: "gcc", cc: "gcc", cxx: "g++" }
           - { name: "clang", cc: "clang", cxx: "clang++" }
 
-    name: "Tests: ${{ matrix.config.name }} on ${{ matrix.os }}"
+    name: "${{ matrix.os }}: ${{ matrix.config.name }}"
     runs-on: ${{ matrix.os }}
 
     steps:
@@ -201,7 +201,7 @@ jobs:
         os:
           - ubuntu-22.04
 
-    name: "Build Debian on ${{ matrix.os }}"
+    name: "${{ matrix.os }}: build Debian"
     runs-on: ${{ matrix.os }}
 
     steps:
@@ -234,8 +234,13 @@ jobs:
 
   codeql-analysis:
 
-    name: CodeQL
-    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        os:
+          - ubuntu-22.04
+
+    name: "${{ matrix.os }}: CodeQL"
+    runs-on: ${{ matrix.os }}
 
     permissions:
       actions: read
