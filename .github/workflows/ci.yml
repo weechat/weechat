@@ -235,7 +235,7 @@ jobs:
   codeql-analysis:
 
     name: CodeQL
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     permissions:
       actions: read
