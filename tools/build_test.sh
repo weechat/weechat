@@ -56,7 +56,7 @@ if [ -f "build.ninja" ]; then
     ninja -v
     sudo ninja install
 else
-    make VERBOSE=1 --jobs="$(nproc)"
+    make VERBOSE=1 -j "$(nproc)"
     sudo make install
 fi
 ctest -V
