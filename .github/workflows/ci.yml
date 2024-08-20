@@ -7,7 +7,7 @@ on:
     - cron: '22 9 * * 2'
 
 env:
-  WEECHAT_UBUNTU_DEPS: >-
+  WEECHAT_DEPS_UBUNTU: >-
     asciidoctor
     cmake
     curl
@@ -42,7 +42,7 @@ env:
     shellcheck
     tcl8.6-dev
     zlib1g-dev
-  WEECHAT_ROCKYLINUX_DEPS: >-
+  WEECHAT_DEPS_ROCKYLINUX: >-
     asciidoctor
     aspell-devel
     cjson-devel
@@ -95,7 +95,7 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update -qq
-        sudo apt-get --yes --no-install-recommends install ${{ env.WEECHAT_UBUNTU_DEPS }}
+        sudo apt-get --yes --no-install-recommends install ${{ env.WEECHAT_DEPS_UBUNTU }}
         # uninstall php imagick as is causes a crash when loading php plugin (see #2009)
         sudo apt-get --yes purge php8.1-imagick
         sudo -H pip3 install --ignore-installed msgcheck
@@ -175,7 +175,7 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update -qq
-        sudo apt-get --yes --no-install-recommends install ${{ env.WEECHAT_UBUNTU_DEPS }}
+        sudo apt-get --yes --no-install-recommends install ${{ env.WEECHAT_DEPS_UBUNTU }}
 
     - name: Test Debian patches
       run: ./tools/build_debian.sh test-patches
@@ -219,7 +219,7 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update -qq
-        sudo apt-get --yes --no-install-recommends install ${{ env.WEECHAT_UBUNTU_DEPS }}
+        sudo apt-get --yes --no-install-recommends install ${{ env.WEECHAT_DEPS_UBUNTU }}
         # uninstall php imagick as is causes a crash when loading php plugin (see #2009)
         sudo apt-get --yes purge php8.1-imagick
         sudo -H pip3 install --ignore-installed msgcheck
@@ -260,7 +260,7 @@ jobs:
       run: |
         dnf install -y epel-release
         dnf config-manager --set-enabled crb
-        dnf install -y ${{ env.WEECHAT_ROCKYLINUX_DEPS }}
+        dnf install -y ${{ env.WEECHAT_DEPS_ROCKYLINUX }}
 
     - name: Build and run tests
       env:
