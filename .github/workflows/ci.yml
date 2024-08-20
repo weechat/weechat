@@ -67,6 +67,32 @@ env:
     sudo
     tcl-devel
     zlib-devel
+  WEECHAT_DEPS_FREEBSD: >-
+    aspell
+    cmake
+    cpputest
+    curl
+    gcc
+    gettext
+    git
+    gnutls
+    guile3
+    libargon2
+    libcjson
+    libgcrypt
+    libiconv
+    llvm
+    lua54
+    ncurses
+    perl5
+    php83
+    pkgconf
+    python3
+    ruby
+    rubygem-asciidoctor
+    sudo
+    tcl87
+    zstd
 
 jobs:
 
@@ -280,6 +306,44 @@ jobs:
         weechat --colors
         weechat --license
         weechat --run-command "/debug dirs;/debug libs" --run-command "/quit"
+
+  tests_freebsd:
+
+    strategy:
+      matrix:
+        os:
+          - ubuntu-22.04
+        config:
+          # - { name: "gcc", cc: "gcc", cxx: "g++", buildargs: "" }
+          - { name: "clang", cc: "clang", cxx: "clang++", buildargs: "" }
+
+    name: "freebsd-14 (${{ matrix.config.name }})"
+    runs-on: ${{ matrix.os }}
+
+    steps:
+
+    - uses: actions/checkout@v4
+
+    - name: Install dependencies, build and run tests, run WeeChat
+      uses: vmactions/freebsd-vm@v1
+      env:
+        CC: ${{ matrix.config.cc }}
+        CXX: ${{ matrix.config.cxx }}
+        BUILDARGS: ${{ matrix.config.buildargs }}
+        TERM: xterm-256color
+      with:
+        envs: "CC CXX BUILDARGS TERM"
+        usesh: true
+        prepare: pkg install -y ${{ env.WEECHAT_DEPS_FREEBSD }}
+        run: |
+          ./tools/build_test.sh
+          weechat --help
+          weechat-curses --help
+          weechat --version
+          weechat --build-info
+          weechat --colors
+          weechat --license
+          weechat --run-command "/debug dirs;/debug libs" --run-command "/quit"
 
   tests_macos:
 
