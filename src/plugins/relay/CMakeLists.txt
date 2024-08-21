@@ -20,6 +20,7 @@
 set(RELAY_SRC
   relay.c relay.h
   relay-auth.c relay-auth.h
+  relay-bar-item.c relay-bar-item.h
   relay-buffer.c relay-buffer.h
   relay-client.c relay-client.h
   relay-command.c relay-command.h

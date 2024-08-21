@@ -24,6 +24,7 @@
 
 #include "../weechat-plugin.h"
 #include "relay.h"
+#include "relay-bar-item.h"
 #include "relay-buffer.h"
 #include "relay-client.h"
 #include "relay-command.h"
@@ -296,6 +297,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     /* hook completions */
     relay_completion_init ();
+
+    relay_bar_item_init ();
 
     weechat_hook_signal ("upgrade", &relay_signal_upgrade_cb, NULL, NULL);
     weechat_hook_signal ("debug_dump", &relay_debug_dump_cb, NULL, NULL);

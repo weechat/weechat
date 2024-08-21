@@ -347,6 +347,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |       relay.c                      | relay の主要関数
 // TRANSLATION MISSING
 |       relay-auth.c                 | Clients authentification.
+// TRANSLATION MISSING
+|       relay-bar-item.c             | Relay bar items.
 |       relay-buffer.c               | relay バッファ
 |       relay-client.c               | relay クライアント
 |       relay-command.c              | relay コマンド

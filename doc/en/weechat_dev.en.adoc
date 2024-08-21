@@ -326,6 +326,7 @@ WeeChat "core" is located in following directories:
 |    relay/                          | Relay plugin (IRC proxy and relay for remote interfaces).
 |       relay.c                      | Main relay functions.
 |       relay-auth.c                 | Clients authentication.
+|       relay-bar-item.c             | Relay bar items.
 |       relay-buffer.c               | Relay buffer.
 |       relay-client.c               | Clients of relay.
 |       relay-command.c              | Relay commands.

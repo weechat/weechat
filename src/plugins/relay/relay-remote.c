@@ -650,6 +650,7 @@ relay_remote_set_status (struct t_relay_remote *remote,
     remote->status = status;
 
     relay_remote_send_signal (remote);
+    weechat_bar_item_update ("input_prompt");
 }
 
 /*

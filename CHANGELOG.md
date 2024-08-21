@@ -2,6 +2,10 @@
 
 ## Version 4.5.0 (under dev)
 
+### Added
+
+- relay: redefine bar item "input_prompt" to display the connection status on remote buffers, if different from "connected"
+
 ### Fixed
 
 - lua: fix compilation on Fedora with Lua < 5.2.0 ([#2173](https://github.com/weechat/weechat/issues/2173), [#2174](https://github.com/weechat/weechat/issues/2174))

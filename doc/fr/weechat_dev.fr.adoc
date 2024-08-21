@@ -328,6 +328,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |    relay/                          | Extension Relay (proxy IRC et relai pour des interfaces distantes).
 |       relay.c                      | Fonctions principales de Relay.
 |       relay-auth.c                 | Authentification des clients.
+|       relay-bar-item.c             | Objets de barre Relay.
 |       relay-buffer.c               | Tampon Relay.
 |       relay-client.c               | Clients du relai.
 |       relay-command.c              | Commandes de Relay.

@@ -158,6 +158,7 @@ endif()
 if (ENABLE_RELAY)
   list(APPEND LIB_WEECHAT_UNIT_TESTS_PLUGINS_SRC
     unit/plugins/relay/test-relay-auth.cpp
+    unit/plugins/relay/test-relay-bar-item.cpp
     unit/plugins/relay/test-relay-http.cpp
     unit/plugins/relay/test-relay-raw.cpp
     unit/plugins/relay/test-relay-remote.cpp
