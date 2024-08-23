@@ -8107,7 +8107,7 @@ command_init ()
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("list"
            " || add [-free] [-switch] <name>"
-           " || clear [<number>|<name>|-merged|-all [<id>|<number>|<name>...]]"
+           " || clear [<id>|<number>|<name>|-merged|-all [<id>|<number>|<name>...]]"
            " || move <number>|-|+"
            " || swap <id1>|<number1>|<name1> [<id2>|<number2>|<name2>]"
            " || cycle <id>|<number>|<name> [<id>|<number>|<name>...]"
