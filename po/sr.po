@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-08-23 08:20+0200\n"
+"POT-Creation-Date: 2024-08-24 10:22+0200\n"
 "PO-Revision-Date: 2024-08-23 08:27+0200\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -30,255 +30,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-
-#, c-format
-msgid "%sAnother command \"%s\" already exists for plugin \"%s\""
-msgstr "%sВећ постоји друга команда \"%s\" за додатак \"%s\""
-
-#, c-format
-msgid ""
-"%sUnknown command \"%s\" (commands are case sensitive, type /help for help), "
-"commands with similar name: %s"
-msgstr ""
-"%sНепозната команда „%s” (команде разликују величину слова, за помоћ "
-"откуцајте /help), команде са сличним именом: %s"
-
-#, c-format
-msgid ""
-"%sUnknown command \"%s\" (type /help for help), commands with similar name: "
-"%s"
-msgstr ""
-"%sНепозната команда „%s” (за помоћ откуцајте /help), команде са сличним "
-"именом: %s"
-
-#, c-format
-msgid "%sBad file descriptor (%d) used in hook_fd"
-msgstr "%sУ hook_fd је употребљен лош дескриптор фајла (%d)"
-
-#, c-format
-msgid "End of command '%s', timeout reached (%.3fs)"
-msgstr "Крај команде ’%s’, достигнут је тајмаут (%.3fs)"
-
-#, c-format
-msgid "System clock skew detected (%+ld seconds), reinitializing all timers"
-msgstr ""
-"Откривена је раздешеност системског сата (за %+ld секунди), сви тајмери се "
-"поновно иницијализују"
-
-#, c-format
-msgid "%sURL transfer error: %s (URL: \"%s\")"
-msgstr "%sГрешка URL трансфера: %s (URL: „%s”)"
-
-#, c-format
-msgid "End of URL transfer '%s', timeout reached (%.3fs)"
-msgstr "Крај URL трансфера ’%s’, достигнут је тајмаут (%.3fs)"
-
-#, c-format
-msgid "%sError running thread in hook_url: %s (URL: \"%s\")"
-msgstr "%sГрешка покретања нити у hook_url: %s (URL: „%s”)"
-
-#. TRANSLATORS: "%s %s" after "compiled on" is date and time
-#, c-format
-msgid ""
-"WeeChat %s Copyright %s, compiled on %s %s\n"
-"Developed by Sébastien Helleu <flashcode@flashtux.org> - %s"
-msgstr ""
-"WeeChat %s ауторска права %s, компајлиран %s %s\n"
-"Написао Себастијен Елеу <flashcode@flashtux.org> - %s"
-
-#, c-format
-msgid "Usage: %s [option...] [plugin:option...]\n"
-msgstr "Употреба: %s [опција...] [додатак:опција...]\n"
-
-#, fuzzy
-#| msgid ""
-#| "  -a, --no-connect         disable auto-connect to servers at startup\n"
-#| "  -c, --colors             display default colors in terminal and exit\n"
-#| "  -d, --dir <path>         force a single WeeChat home directory\n"
-#| "                           or 5 different directories separated by colons "
-#| "(in this order: config, data, state, cache, runtime)\n"
-#| "                           (environment variable WEECHAT_HOME is read if "
-#| "this option is not given)\n"
-#| "  -t, --temp-dir           create a temporary WeeChat home directory and "
-#| "delete it on exit\n"
-#| "                           (incompatible with option \"-d\")\n"
-#| "  -h, --help               display this help and exit\n"
-#| "  -l, --license            display WeeChat license and exit\n"
-#| "  -p, --no-plugin          don't load any plugin at startup\n"
-#| "  -P, --plugins <plugins>  load only these plugins at startup\n"
-#| "                           (see /help weechat.plugin.autoload)\n"
-#| "  -r, --run-command <cmd>  run command(s) after startup;\n"
-#| "                           many commands can be separated by semicolons "
-#| "and are evaluated,\n"
-#| "                           this option can be given multiple times\n"
-#| "  -s, --no-script          don't load any script at startup\n"
-#| "      --upgrade            upgrade WeeChat using session files (see /help "
-#| "upgrade in WeeChat)\n"
-#| "  -v, --version            display WeeChat version and exit\n"
-#| "  plugin:option            option for plugin (see man weechat)\n"
-msgid ""
-"  -a, --no-connect         disable auto-connect to servers at startup\n"
-"  -c, --colors             display default colors in terminal and exit\n"
-"  -d, --dir <path>         force a single WeeChat home directory\n"
-"                           or 5 different directories separated by colons "
-"(in this order: config, data, state, cache, runtime)\n"
-"                           (environment variable WEECHAT_HOME is read if "
-"this option is not given)\n"
-"  -t, --temp-dir           create a temporary WeeChat home directory and "
-"delete it on exit\n"
-"                           (incompatible with option \"-d\")\n"
-"  -h, --help               display this help and exit\n"
-"  -i, --build-info         display build information and exit\n"
-"  -l, --license            display WeeChat license and exit\n"
-"  -p, --no-plugin          don't load any plugin at startup\n"
-"  -P, --plugins <plugins>  load only these plugins at startup\n"
-"                           (see /help weechat.plugin.autoload)\n"
-"  -r, --run-command <cmd>  run command(s) after startup;\n"
-"                           many commands can be separated by semicolons and "
-"are evaluated,\n"
-"                           this option can be given multiple times\n"
-"  -s, --no-script          don't load any script at startup\n"
-"      --upgrade            upgrade WeeChat using session files (see /help "
-"upgrade in WeeChat)\n"
-"  -v, --version            display WeeChat version and exit\n"
-"  plugin:option            option for plugin (see man weechat)\n"
-msgstr ""
-"  -a, --no-connect         спречава аутоматско повезивање са серверима "
-"приликом покретања\n"
-"  -c, --colors             приказује подразумеване боје у терминалу и "
-"прекида извршавање\n"
-"  -d, --dir <путања>       поставља WeeChat почетни директоријум\n"
-"                           или 5 различита директоријума раздвојена тачка "
-"зарезима (у следећем редоследу: конфиг, подаци, стање, кеш, дир за време "
-"извршавања)\n"
-"                           (ако се ова опција не зада, чита се WEECHAT_HOME "
-"променљива окружења)\n"
-"  -t, --temp-dir           креира привремени WeeChat почетни директоријум и "
-"брише га приликом напуштања програма\n"
-"                           (није компатибилно са опцијом „-d”)\n"
-"  -h, --help               приказује ову помоћ и прекида извршавање\n"
-"  -l, --license            приказује WeeChat лиценцу и прекида извршавање\n"
-"  -p, --no-plugin          приликом покретања се не учитавају додаци\n"
-"  -P, --plugins <додаци>   приликом покретања се учитавају само ови додаци\n"
-"                           (погледајте /help weechat.plugin.autoload)\n"
-"  -r, --run-command <ком>  покреће команд(у/е) након покретања;\n"
-"                           можете да раздвојите више команди са тачка запета "
-"и оне се израчунавају,\n"
-"                           ова опција може да се зада више пута\n"
-"  -s, --no-script          приликом учитавања се не учитавају никакве "
-"скрипте\n"
-"      --upgrade            ажурира WeeChat користећи фајлове сесије "
-"(погледајте /help upgrade у програму WeeChat)\n"
-"  -v, --version            приказује верзију програма WeeChat и прекида "
-"извршавање\n"
-"  додатак:опција           опција за додатак (погледајте man weechat)\n"
-
-msgid "Extra options in headless mode:\n"
-msgstr "Додатне опције у режиму без интерфејса:\n"
-
-msgid ""
-"      --doc-gen <path>     generate files to build documentation and exit\n"
-msgstr ""
-"      --doc-gen <путања>   генерише фајлове за изградњу документације и "
-"прекида извршавање\n"
-
-msgid ""
-"      --daemon             run WeeChat as a daemon (fork, new process group, "
-"file descriptors closed);\n"
-msgstr ""
-"      --daemon             покреће WeeChat као даемон (рачва, нова група "
-"процеса, затворени дескриптори фајла);\n"
-
-msgid ""
-"                           (by default in headless mode WeeChat is blocking "
-"and does not run in background)\n"
-msgstr ""
-"                           (у режиму без интерфејса, WeeChat је "
-"подразумевано блокирајући и не извршава се у позадини)\n"
-
-msgid ""
-"      --stdout             display log messages on standard output instead "
-"of writing them in log file\n"
-msgstr ""
-"      --stdout             уместо да се лог поруке уписују у лог фајл, "
-"исписују се на стандардни излаз\n"
-
-msgid ""
-"                           (option ignored if option \"--daemon\" is given)\n"
-msgstr ""
-"                           (игнорише се ако се зада опција „--daemon”)\n"
-
-msgid ""
-"Debug options (for tools like valgrind, DO NOT USE IN PRODUCTION):\n"
-"      --no-dlclose         do not call function dlclose after plugins are "
-"unloaded\n"
-"      --no-gnutls          disable init/deinit of gnutls\n"
-"      --no-gcrypt          disable init/deinit of gcrypt\n"
-msgstr ""
-"Дибаг опције (за алате као што је valgrind, НЕ КОРИСТИТЕ У ПРОДУКЦИЈИ):\n"
-"      --no-dlclose         након што се додаци уклоне из меморије, не позива "
-"се функција dlclose\n"
-"      --no-gnutls          искључује иниц/деиниц gnutls\n"
-"      --no-gcrypt          искључује иниц/деиниц gcrypt\n"
-
-#, c-format
-msgid "Error: missing argument for \"%s\" option\n"
-msgstr "Грешка: недостаје аргумент за опцију „%s”\n"
-
-msgid "WeeChat is running in headless mode (ctrl-c to quit)."
-msgstr "WeeChat се извршава у режиму без интерфејса (ctrl-c за излаз)."
-
-msgid ""
-"Welcome to WeeChat!\n"
-"\n"
-"If you are discovering WeeChat, it is recommended to read at least the "
-"quickstart guide, and the user's guide if you have some time; they explain "
-"main WeeChat concepts.\n"
-"All WeeChat docs are available at: https://weechat.org/doc/\n"
-"\n"
-"Moreover, there is inline help with /help on all commands and options (use "
-"Tab key to complete the name).\n"
-"The command /fset can help to customize WeeChat.\n"
-"\n"
-"You can add and connect to an IRC server with /server and /connect commands "
-"(see /help server)."
-msgstr ""
-"Добродошли у WeeChat!\n"
-"\n"
-"Ако се тек упознајете са програмом WeeChat, препоручује се да прочитате "
-"барем водич за брзи почетак, и корисничко упутство ако имате више времена; "
-"они објашњавају основне концепте програма WeeChat.\n"
-"Комплетна WeeChat документација је доступна на адреси: https://weechat.org/"
-"doc/\n"
-"\n"
-"Такође је доступна и активна помоћ са /help за све команде и опције "
-"(користите тастер Tab да довршите име).\n"
-"Команда /fset може да вам помогне за прилагођавање програма WeeChat.\n"
-"\n"
-"Командама /server и /connect додајете и повезујете се на IRC сервер "
-"(погледајте /help server)."
-
-#. TRANSLATORS: the "under %s" can be "under screen" or "under tmux"
-#, c-format
-msgid ""
-"%sWarning: WeeChat is running under %s and $TERM is \"%s\", which can cause "
-"display bugs; $TERM should be set to one of these values: %s"
-msgstr ""
-"%sУпозорење: WeeChat се извршава под %s а $TERM има вредност „%s”, што може "
-"да буде узрок проблема са приказом; $TERM би требало да се постави на једну "
-"од следећих вредности: %s"
-
-#, c-format
-msgid "%sYou should add this line in the file %s:  %s"
-msgstr "%sТребало би да у фајл %s додате следећу линију:  %s"
-
-#, c-format
-msgid ""
-"%sWarning: cannot set the locale; make sure $LANG and $LC_* variables are "
-"correct"
-msgstr ""
-"%sУпозорење: локале не може да се постави; проверите исправност променљивих "
-"$LANG и $LC_*"
 
 msgid "List of bars:"
 msgstr "Листа трака:"
@@ -4408,6 +4159,106 @@ msgstr "вредност променљиве окружења"
 msgid "variables that can be used in /eval command"
 msgstr "променљиве које могу да се користе у /eval команди"
 
+#, c-format
+msgid "Writing configuration file %s%s%s"
+msgstr "Уписивање конфигурационог фајла %s%s%s"
+
+msgid "(default options)"
+msgstr "(подразумеване опције)"
+
+#, c-format
+msgid "%sCannot create file \"%s\""
+msgstr "%sНе може да се креира фајл „%s”"
+
+#, c-format
+msgid "%sWARNING: failed to set permissions on configuration file \"%s\" (%s)"
+msgstr ""
+"%sУПОЗОРЕЊЕ: нису могле да се поставе дозволе за конфигурациони фајл „%s” "
+"(%s)"
+
+#, c-format
+msgid "%sError writing configuration file \"%s\""
+msgstr "%sГрешка при уписивању конфигурационог фајла „%s”"
+
+#, c-format
+msgid "%sFile %s has been backed up as %s"
+msgstr "%sФајл %s сада има резервну копију %s"
+
+#, c-format
+msgid "%sError: unable to backup file %s"
+msgstr "%sГрешка: не може да се направи резервна копија фајла %s"
+
+#, c-format
+msgid ""
+"%sImportant: file %s has been updated from version %d to %d, it is not "
+"compatible and can not be loaded any more with any older version"
+msgstr ""
+"%sВажно: фајл %s је ажуриран са верзије %d на %d, није компатибилан и више "
+"не може да се учита било којом старом верзијом"
+
+#, c-format
+msgid "%sWARNING: failed to read configuration file \"%s\" (%s)"
+msgstr "%sУПОЗОРЕЊЕ: није могао да се прочита конфигурациони фајл „%s” (%s)"
+
+#, c-format
+msgid ""
+"%sWARNING: file \"%s\" will be overwritten on exit with default values (it "
+"is HIGHLY recommended to backup this file now)"
+msgstr ""
+"%sУПОЗОРЕЊЕ: приликом напуштања програма, фајл „%s” ће се преписати "
+"подразумеваним опцијама (СНАЖНА препорука је одмах направите резервну копију "
+"овог фајла)"
+
+#, c-format
+msgid "Reading configuration file %s"
+msgstr "Читање конфигурационог фајла %s"
+
+#, c-format
+msgid "%sWarning: %s, line %d: invalid syntax, missing \"]\""
+msgstr "%sУпозорење: %s, линија %d: неважећа синтакса, недостаје „]”"
+
+#, c-format
+msgid "%sWarning: %s, line %d: ignoring unknown section identifier (\"%s\")"
+msgstr ""
+"%sУпозорење: %s, линија %d: игнорише се непознати идентификатор одељка („%s”)"
+
+#, c-format
+msgid ""
+"%sError: %s, line %d: invalid config version: \"%s\" => rest of file is "
+"IGNORED, default options are used"
+msgstr ""
+"%sГРЕШКА: %s, линија %d: неисправна конфиг верзија: „%s” => остатак фајла се "
+"ИГНОРИШЕ, користе се подразумеване вредности опција"
+
+#, c-format
+msgid ""
+"%sError: %s, version read (%d) is newer than supported version (%d) => rest "
+"of file is IGNORED, default options are used"
+msgstr ""
+"%sГрешка: %s, прочитана верзија (%d) је новија од подржане верзије (%d), => "
+"остатак фајла се ИГНОРИШЕ, користе се подразумеване вредности опција"
+
+#, c-format
+msgid "%sWarning: %s, line %d: ignoring option outside section: %s"
+msgstr "%sУпозорење: %s, линија %d: игнорише се опција ван одељка: %s"
+
+#, c-format
+msgid "%sWarning: %s, line %d: ignoring unknown option for section \"%s\": %s"
+msgstr ""
+"%sУпозорење: %s, линија %d: игнорише се непозната опција за одељак „%s”: %s"
+
+#, c-format
+msgid ""
+"%sWarning: %s, line %d: ignoring invalid value for option in section \"%s\": "
+"%s"
+msgstr ""
+"%sУпозорење: %s, линија %d: игнорише се неважећа вредност опције у одељку "
+"„%s”: %s"
+
+#, c-format
+msgid "Reloading configuration file %s"
+msgstr "Поновно учитавање конфигурационог фајла %s"
+
 msgid ""
 "Warning: option weechat.look.save_config_on_exit is disabled, so the option "
 "weechat.look.save_layout_on_exit is ignored"
@@ -5967,106 +5818,6 @@ msgstr ""
 msgid "FATAL: error initializing configuration options"
 msgstr "ФАТАЛНА ГРЕШКА: проблем при иницијализацији конфигурационих опција"
 
-#, c-format
-msgid "Writing configuration file %s%s%s"
-msgstr "Уписивање конфигурационог фајла %s%s%s"
-
-msgid "(default options)"
-msgstr "(подразумеване опције)"
-
-#, c-format
-msgid "%sCannot create file \"%s\""
-msgstr "%sНе може да се креира фајл „%s”"
-
-#, c-format
-msgid "%sWARNING: failed to set permissions on configuration file \"%s\" (%s)"
-msgstr ""
-"%sУПОЗОРЕЊЕ: нису могле да се поставе дозволе за конфигурациони фајл „%s” "
-"(%s)"
-
-#, c-format
-msgid "%sError writing configuration file \"%s\""
-msgstr "%sГрешка при уписивању конфигурационог фајла „%s”"
-
-#, c-format
-msgid "%sFile %s has been backed up as %s"
-msgstr "%sФајл %s сада има резервну копију %s"
-
-#, c-format
-msgid "%sError: unable to backup file %s"
-msgstr "%sГрешка: не може да се направи резервна копија фајла %s"
-
-#, c-format
-msgid ""
-"%sImportant: file %s has been updated from version %d to %d, it is not "
-"compatible and can not be loaded any more with any older version"
-msgstr ""
-"%sВажно: фајл %s је ажуриран са верзије %d на %d, није компатибилан и више "
-"не може да се учита било којом старом верзијом"
-
-#, c-format
-msgid "%sWARNING: failed to read configuration file \"%s\" (%s)"
-msgstr "%sУПОЗОРЕЊЕ: није могао да се прочита конфигурациони фајл „%s” (%s)"
-
-#, c-format
-msgid ""
-"%sWARNING: file \"%s\" will be overwritten on exit with default values (it "
-"is HIGHLY recommended to backup this file now)"
-msgstr ""
-"%sУПОЗОРЕЊЕ: приликом напуштања програма, фајл „%s” ће се преписати "
-"подразумеваним опцијама (СНАЖНА препорука је одмах направите резервну копију "
-"овог фајла)"
-
-#, c-format
-msgid "Reading configuration file %s"
-msgstr "Читање конфигурационог фајла %s"
-
-#, c-format
-msgid "%sWarning: %s, line %d: invalid syntax, missing \"]\""
-msgstr "%sУпозорење: %s, линија %d: неважећа синтакса, недостаје „]”"
-
-#, c-format
-msgid "%sWarning: %s, line %d: ignoring unknown section identifier (\"%s\")"
-msgstr ""
-"%sУпозорење: %s, линија %d: игнорише се непознати идентификатор одељка („%s”)"
-
-#, c-format
-msgid ""
-"%sError: %s, line %d: invalid config version: \"%s\" => rest of file is "
-"IGNORED, default options are used"
-msgstr ""
-"%sГРЕШКА: %s, линија %d: неисправна конфиг верзија: „%s” => остатак фајла се "
-"ИГНОРИШЕ, користе се подразумеване вредности опција"
-
-#, c-format
-msgid ""
-"%sError: %s, version read (%d) is newer than supported version (%d) => rest "
-"of file is IGNORED, default options are used"
-msgstr ""
-"%sГрешка: %s, прочитана верзија (%d) је новија од подржане верзије (%d), => "
-"остатак фајла се ИГНОРИШЕ, користе се подразумеване вредности опција"
-
-#, c-format
-msgid "%sWarning: %s, line %d: ignoring option outside section: %s"
-msgstr "%sУпозорење: %s, линија %d: игнорише се опција ван одељка: %s"
-
-#, c-format
-msgid "%sWarning: %s, line %d: ignoring unknown option for section \"%s\": %s"
-msgstr ""
-"%sУпозорење: %s, линија %d: игнорише се непозната опција за одељак „%s”: %s"
-
-#, c-format
-msgid ""
-"%sWarning: %s, line %d: ignoring invalid value for option in section \"%s\": "
-"%s"
-msgstr ""
-"%sУпозорење: %s, линија %d: игнорише се неважећа вредност опције у одељку "
-"„%s”: %s"
-
-#, c-format
-msgid "Reloading configuration file %s"
-msgstr "Поновно учитавање конфигурационог фајла %s"
-
 #. TRANSLATORS: "%s %s" after "compiled on" is date and time
 #, c-format
 msgid "WeeChat %s, compiled on %s %s\n"
@@ -6541,15 +6292,6 @@ msgid "Resource usage (see \"man getrusage\" for help):"
 msgstr "Употреба ресурса (за помоћ погледајте „man getrusage”):"
 
 #, c-format
-msgid "debug: removing file: %s"
-msgstr "дибаг: уклањање фајла: %s"
-
-#. TRANSLATORS: %.02fs is a float number + "s" ("seconds")
-#, c-format
-msgid "Upgrade done (%.02fs)"
-msgstr "Обављено је ажурирање (%.02fs)"
-
-#, c-format
 msgid "%sError upgrading WeeChat with file \"%s\":"
 msgstr "%sГрешка приликом ажурирања програма WeeChat фајлом „%s”:"
 
@@ -6617,6 +6359,15 @@ msgid ""
 msgstr ""
 "читање - лош потпис (можда је промењен формат фајла од последње верзије)"
 
+#, c-format
+msgid "debug: removing file: %s"
+msgstr "дибаг: уклањање фајла: %s"
+
+#. TRANSLATORS: %.02fs is a float number + "s" ("seconds")
+#, c-format
+msgid "Upgrade done (%.02fs)"
+msgstr "Обављено је ажурирање (%.02fs)"
+
 msgid "invalid URL"
 msgstr "неисправан URL"
 
@@ -6637,6 +6388,255 @@ msgstr "грешка преноса"
 #, c-format
 msgid "curl error %d (%s) (URL: \"%s\")\n"
 msgstr "curl грешка %d (%s) (URL: „%s”)\n"
+
+#, c-format
+msgid "%sAnother command \"%s\" already exists for plugin \"%s\""
+msgstr "%sВећ постоји друга команда \"%s\" за додатак \"%s\""
+
+#, c-format
+msgid ""
+"%sUnknown command \"%s\" (commands are case sensitive, type /help for help), "
+"commands with similar name: %s"
+msgstr ""
+"%sНепозната команда „%s” (команде разликују величину слова, за помоћ "
+"откуцајте /help), команде са сличним именом: %s"
+
+#, c-format
+msgid ""
+"%sUnknown command \"%s\" (type /help for help), commands with similar name: "
+"%s"
+msgstr ""
+"%sНепозната команда „%s” (за помоћ откуцајте /help), команде са сличним "
+"именом: %s"
+
+#, c-format
+msgid "%sBad file descriptor (%d) used in hook_fd"
+msgstr "%sУ hook_fd је употребљен лош дескриптор фајла (%d)"
+
+#, c-format
+msgid "End of command '%s', timeout reached (%.3fs)"
+msgstr "Крај команде ’%s’, достигнут је тајмаут (%.3fs)"
+
+#, c-format
+msgid "System clock skew detected (%+ld seconds), reinitializing all timers"
+msgstr ""
+"Откривена је раздешеност системског сата (за %+ld секунди), сви тајмери се "
+"поновно иницијализују"
+
+#, c-format
+msgid "%sURL transfer error: %s (URL: \"%s\")"
+msgstr "%sГрешка URL трансфера: %s (URL: „%s”)"
+
+#, c-format
+msgid "End of URL transfer '%s', timeout reached (%.3fs)"
+msgstr "Крај URL трансфера ’%s’, достигнут је тајмаут (%.3fs)"
+
+#, c-format
+msgid "%sError running thread in hook_url: %s (URL: \"%s\")"
+msgstr "%sГрешка покретања нити у hook_url: %s (URL: „%s”)"
+
+#. TRANSLATORS: "%s %s" after "compiled on" is date and time
+#, c-format
+msgid ""
+"WeeChat %s Copyright %s, compiled on %s %s\n"
+"Developed by Sébastien Helleu <flashcode@flashtux.org> - %s"
+msgstr ""
+"WeeChat %s ауторска права %s, компајлиран %s %s\n"
+"Написао Себастијен Елеу <flashcode@flashtux.org> - %s"
+
+#, c-format
+msgid "Usage: %s [option...] [plugin:option...]\n"
+msgstr "Употреба: %s [опција...] [додатак:опција...]\n"
+
+#, fuzzy
+#| msgid ""
+#| "  -a, --no-connect         disable auto-connect to servers at startup\n"
+#| "  -c, --colors             display default colors in terminal and exit\n"
+#| "  -d, --dir <path>         force a single WeeChat home directory\n"
+#| "                           or 5 different directories separated by colons "
+#| "(in this order: config, data, state, cache, runtime)\n"
+#| "                           (environment variable WEECHAT_HOME is read if "
+#| "this option is not given)\n"
+#| "  -t, --temp-dir           create a temporary WeeChat home directory and "
+#| "delete it on exit\n"
+#| "                           (incompatible with option \"-d\")\n"
+#| "  -h, --help               display this help and exit\n"
+#| "  -l, --license            display WeeChat license and exit\n"
+#| "  -p, --no-plugin          don't load any plugin at startup\n"
+#| "  -P, --plugins <plugins>  load only these plugins at startup\n"
+#| "                           (see /help weechat.plugin.autoload)\n"
+#| "  -r, --run-command <cmd>  run command(s) after startup;\n"
+#| "                           many commands can be separated by semicolons "
+#| "and are evaluated,\n"
+#| "                           this option can be given multiple times\n"
+#| "  -s, --no-script          don't load any script at startup\n"
+#| "      --upgrade            upgrade WeeChat using session files (see /help "
+#| "upgrade in WeeChat)\n"
+#| "  -v, --version            display WeeChat version and exit\n"
+#| "  plugin:option            option for plugin (see man weechat)\n"
+msgid ""
+"  -a, --no-connect         disable auto-connect to servers at startup\n"
+"  -c, --colors             display default colors in terminal and exit\n"
+"  -d, --dir <path>         force a single WeeChat home directory\n"
+"                           or 5 different directories separated by colons "
+"(in this order: config, data, state, cache, runtime)\n"
+"                           (environment variable WEECHAT_HOME is read if "
+"this option is not given)\n"
+"  -t, --temp-dir           create a temporary WeeChat home directory and "
+"delete it on exit\n"
+"                           (incompatible with option \"-d\")\n"
+"  -h, --help               display this help and exit\n"
+"  -i, --build-info         display build information and exit\n"
+"  -l, --license            display WeeChat license and exit\n"
+"  -p, --no-plugin          don't load any plugin at startup\n"
+"  -P, --plugins <plugins>  load only these plugins at startup\n"
+"                           (see /help weechat.plugin.autoload)\n"
+"  -r, --run-command <cmd>  run command(s) after startup;\n"
+"                           many commands can be separated by semicolons and "
+"are evaluated,\n"
+"                           this option can be given multiple times\n"
+"  -s, --no-script          don't load any script at startup\n"
+"      --upgrade            upgrade WeeChat using session files (see /help "
+"upgrade in WeeChat)\n"
+"  -v, --version            display WeeChat version and exit\n"
+"  plugin:option            option for plugin (see man weechat)\n"
+msgstr ""
+"  -a, --no-connect         спречава аутоматско повезивање са серверима "
+"приликом покретања\n"
+"  -c, --colors             приказује подразумеване боје у терминалу и "
+"прекида извршавање\n"
+"  -d, --dir <путања>       поставља WeeChat почетни директоријум\n"
+"                           или 5 различита директоријума раздвојена тачка "
+"зарезима (у следећем редоследу: конфиг, подаци, стање, кеш, дир за време "
+"извршавања)\n"
+"                           (ако се ова опција не зада, чита се WEECHAT_HOME "
+"променљива окружења)\n"
+"  -t, --temp-dir           креира привремени WeeChat почетни директоријум и "
+"брише га приликом напуштања програма\n"
+"                           (није компатибилно са опцијом „-d”)\n"
+"  -h, --help               приказује ову помоћ и прекида извршавање\n"
+"  -l, --license            приказује WeeChat лиценцу и прекида извршавање\n"
+"  -p, --no-plugin          приликом покретања се не учитавају додаци\n"
+"  -P, --plugins <додаци>   приликом покретања се учитавају само ови додаци\n"
+"                           (погледајте /help weechat.plugin.autoload)\n"
+"  -r, --run-command <ком>  покреће команд(у/е) након покретања;\n"
+"                           можете да раздвојите више команди са тачка запета "
+"и оне се израчунавају,\n"
+"                           ова опција може да се зада више пута\n"
+"  -s, --no-script          приликом учитавања се не учитавају никакве "
+"скрипте\n"
+"      --upgrade            ажурира WeeChat користећи фајлове сесије "
+"(погледајте /help upgrade у програму WeeChat)\n"
+"  -v, --version            приказује верзију програма WeeChat и прекида "
+"извршавање\n"
+"  додатак:опција           опција за додатак (погледајте man weechat)\n"
+
+msgid "Extra options in headless mode:\n"
+msgstr "Додатне опције у режиму без интерфејса:\n"
+
+msgid ""
+"      --doc-gen <path>     generate files to build documentation and exit\n"
+msgstr ""
+"      --doc-gen <путања>   генерише фајлове за изградњу документације и "
+"прекида извршавање\n"
+
+msgid ""
+"      --daemon             run WeeChat as a daemon (fork, new process group, "
+"file descriptors closed);\n"
+msgstr ""
+"      --daemon             покреће WeeChat као даемон (рачва, нова група "
+"процеса, затворени дескриптори фајла);\n"
+
+msgid ""
+"                           (by default in headless mode WeeChat is blocking "
+"and does not run in background)\n"
+msgstr ""
+"                           (у режиму без интерфејса, WeeChat је "
+"подразумевано блокирајући и не извршава се у позадини)\n"
+
+msgid ""
+"      --stdout             display log messages on standard output instead "
+"of writing them in log file\n"
+msgstr ""
+"      --stdout             уместо да се лог поруке уписују у лог фајл, "
+"исписују се на стандардни излаз\n"
+
+msgid ""
+"                           (option ignored if option \"--daemon\" is given)\n"
+msgstr ""
+"                           (игнорише се ако се зада опција „--daemon”)\n"
+
+msgid ""
+"Debug options (for tools like valgrind, DO NOT USE IN PRODUCTION):\n"
+"      --no-dlclose         do not call function dlclose after plugins are "
+"unloaded\n"
+"      --no-gnutls          disable init/deinit of gnutls\n"
+"      --no-gcrypt          disable init/deinit of gcrypt\n"
+msgstr ""
+"Дибаг опције (за алате као што је valgrind, НЕ КОРИСТИТЕ У ПРОДУКЦИЈИ):\n"
+"      --no-dlclose         након што се додаци уклоне из меморије, не позива "
+"се функција dlclose\n"
+"      --no-gnutls          искључује иниц/деиниц gnutls\n"
+"      --no-gcrypt          искључује иниц/деиниц gcrypt\n"
+
+#, c-format
+msgid "Error: missing argument for \"%s\" option\n"
+msgstr "Грешка: недостаје аргумент за опцију „%s”\n"
+
+msgid "WeeChat is running in headless mode (ctrl-c to quit)."
+msgstr "WeeChat се извршава у режиму без интерфејса (ctrl-c за излаз)."
+
+msgid ""
+"Welcome to WeeChat!\n"
+"\n"
+"If you are discovering WeeChat, it is recommended to read at least the "
+"quickstart guide, and the user's guide if you have some time; they explain "
+"main WeeChat concepts.\n"
+"All WeeChat docs are available at: https://weechat.org/doc/\n"
+"\n"
+"Moreover, there is inline help with /help on all commands and options (use "
+"Tab key to complete the name).\n"
+"The command /fset can help to customize WeeChat.\n"
+"\n"
+"You can add and connect to an IRC server with /server and /connect commands "
+"(see /help server)."
+msgstr ""
+"Добродошли у WeeChat!\n"
+"\n"
+"Ако се тек упознајете са програмом WeeChat, препоручује се да прочитате "
+"барем водич за брзи почетак, и корисничко упутство ако имате више времена; "
+"они објашњавају основне концепте програма WeeChat.\n"
+"Комплетна WeeChat документација је доступна на адреси: https://weechat.org/"
+"doc/\n"
+"\n"
+"Такође је доступна и активна помоћ са /help за све команде и опције "
+"(користите тастер Tab да довршите име).\n"
+"Команда /fset може да вам помогне за прилагођавање програма WeeChat.\n"
+"\n"
+"Командама /server и /connect додајете и повезујете се на IRC сервер "
+"(погледајте /help server)."
+
+#. TRANSLATORS: the "under %s" can be "under screen" or "under tmux"
+#, c-format
+msgid ""
+"%sWarning: WeeChat is running under %s and $TERM is \"%s\", which can cause "
+"display bugs; $TERM should be set to one of these values: %s"
+msgstr ""
+"%sУпозорење: WeeChat се извршава под %s а $TERM има вредност „%s”, што може "
+"да буде узрок проблема са приказом; $TERM би требало да се постави на једну "
+"од следећих вредности: %s"
+
+#, c-format
+msgid "%sYou should add this line in the file %s:  %s"
+msgstr "%sТребало би да у фајл %s додате следећу линију:  %s"
+
+#, c-format
+msgid ""
+"%sWarning: cannot set the locale; make sure $LANG and $LC_* variables are "
+"correct"
+msgstr ""
+"%sУпозорење: локале не може да се постави; проверите исправност променљивих "
+"$LANG и $LC_*"
 
 #, c-format
 msgid ""
@@ -6720,6 +6720,53 @@ msgstr "грешка при рачвању"
 #, c-format
 msgid "OK"
 msgstr "ОК"
+
+msgid "condition(s) to display the bar item (evaluated, see /help eval)"
+msgstr ""
+"услов(и) за приказивање ставке траке (израчунато, погледајте /help eval)"
+
+msgid "content of bar item (evaluated, see /help eval)"
+msgstr "садржај ставке траке (израчунато, погледајте /help eval)"
+
+#, c-format
+msgid "debug: long callback: bar: %s, item: %s, plugin: %s, time elapsed: %s"
+msgstr ""
+"debug: дуги повратни позив: трака: %s, ставка: %s, додатак: %s, протекло "
+"време: %s"
+
+#, c-format
+msgid "%sPaste %d line? [ctrl-y] Yes [ctrl-n] No"
+msgid_plural "%sPaste %d lines? [ctrl-y] Yes [ctrl-n] No"
+msgstr[0] "%sДа налепим %d линију? [ctrl-y] Да [ctrl-n] Не"
+msgstr[1] "%sДа налепим %d линије? [ctrl-y] Да [ctrl-n] Не"
+msgstr[2] "%sДа налепим %d линија? [ctrl-y] Да [ctrl-n] Не"
+
+#. TRANSLATORS: search in "local" history
+msgid "local"
+msgstr "локалној"
+
+#. TRANSLATORS: search in "global" history
+msgid "global"
+msgstr "глобалној"
+
+msgid "Search lines"
+msgstr "Претрага линија"
+
+msgid "Search command"
+msgstr "Претрага команде"
+
+msgid "keyboard and mouse debug ('q' to quit debug mode)"
+msgstr "дибаг тастатуре и миша (’q’ да напустите дибаг режим)"
+
+#, c-format
+msgid "%s-MORE(%d)-"
+msgstr "%s-ЈОШ(%d)-"
+
+msgid "Lag"
+msgstr "Кашњење"
+
+msgid "away"
+msgstr "одсутан"
 
 #, c-format
 msgid ""
@@ -6808,53 +6855,6 @@ msgstr ""
 "ставке траке, могу да се раздвоје запетом (размак између ставки) или "
 "„+”(слепљене ставке); може да да користи специјална синтакса „@бафер:ставка” "
 "да се форсира бафер када се приказује ставка траке"
-
-#, c-format
-msgid "debug: long callback: bar: %s, item: %s, plugin: %s, time elapsed: %s"
-msgstr ""
-"debug: дуги повратни позив: трака: %s, ставка: %s, додатак: %s, протекло "
-"време: %s"
-
-#, c-format
-msgid "%sPaste %d line? [ctrl-y] Yes [ctrl-n] No"
-msgid_plural "%sPaste %d lines? [ctrl-y] Yes [ctrl-n] No"
-msgstr[0] "%sДа налепим %d линију? [ctrl-y] Да [ctrl-n] Не"
-msgstr[1] "%sДа налепим %d линије? [ctrl-y] Да [ctrl-n] Не"
-msgstr[2] "%sДа налепим %d линија? [ctrl-y] Да [ctrl-n] Не"
-
-#. TRANSLATORS: search in "local" history
-msgid "local"
-msgstr "локалној"
-
-#. TRANSLATORS: search in "global" history
-msgid "global"
-msgstr "глобалној"
-
-msgid "Search lines"
-msgstr "Претрага линија"
-
-msgid "Search command"
-msgstr "Претрага команде"
-
-msgid "keyboard and mouse debug ('q' to quit debug mode)"
-msgstr "дибаг тастатуре и миша (’q’ да напустите дибаг режим)"
-
-#, c-format
-msgid "%s-MORE(%d)-"
-msgstr "%s-ЈОШ(%d)-"
-
-msgid "Lag"
-msgstr "Кашњење"
-
-msgid "away"
-msgstr "одсутан"
-
-msgid "condition(s) to display the bar item (evaluated, see /help eval)"
-msgstr ""
-"услов(и) за приказивање ставке траке (израчунато, погледајте /help eval)"
-
-msgid "content of bar item (evaluated, see /help eval)"
-msgstr "садржај ставке траке (израчунато, погледајте /help eval)"
 
 #, c-format
 msgid "Notify changed for \"%s%s%s\": \"%s%s%s\" to \"%s%s%s\""
@@ -6977,17 +6977,6 @@ msgstr "Укључен је дибаг за миша (%s)"
 
 msgid "Debug disabled for mouse"
 msgstr "Искључен је дибаг за миша"
-
-msgid "Alias commands"
-msgstr "Алијас команде"
-
-#, c-format
-msgid "%s%s: error, circular reference when calling alias \"%s\""
-msgstr "%s%s: грешка, кружна референца приликом позива алијаса „%s”"
-
-#, c-format
-msgid "%s%s: invalid alias name: \"%s\""
-msgstr "%s%s: неважеће име алијаса: „%s”"
 
 #, c-format
 msgid "%s%s: error creating alias \"%s\" => \"%s\""
@@ -7152,21 +7141,16 @@ msgstr "име алијаса (дозвољен је џокер „*”) (нео
 msgid "list of default aliases"
 msgstr "листа подразумеваних алијаса"
 
-msgid "Buffers list"
-msgstr "Листа бафера"
+msgid "Alias commands"
+msgstr "Алијас команде"
 
 #, c-format
-msgid ""
-"%sbuflist: warning: the script buffers.pl is loaded and provides a bar with "
-"list of buffers similar to the buflist plugin; you may want to uninstall the "
-"script buffers.pl (/script remove buffers.pl) or disable/unload the buflist "
-"plugin; see WeeChat release notes for more information"
-msgstr ""
-"%sbuflist: упозорење: учитана је скрипта buffers.pl која обезбеђује траку са "
-"листом бафера која је слична са додатком; требало би или да деинсталирате "
-"скрипту buffers.pl (/script remove buffers.pl) или да искључите/уклоните из "
-"меморије buflist додатак; за више информација, погледајте WeeChat напомене "
-"издања"
+msgid "%s%s: error, circular reference when calling alias \"%s\""
+msgstr "%s%s: грешка, кружна референца приликом позива алијаса „%s”"
+
+#, c-format
+msgid "%s%s: invalid alias name: \"%s\""
+msgstr "%s%s: неважеће име алијаса: „%s”"
 
 msgid "bar item with list of buffers"
 msgstr "ставка траке са листом бафера"
@@ -7645,6 +7629,22 @@ msgstr "листа бафера у buflist ставки траке"
 msgid "buflist bar item name (optional)"
 msgstr "име buflist ставке траке (необавезно)"
 
+msgid "Buffers list"
+msgstr "Листа бафера"
+
+#, c-format
+msgid ""
+"%sbuflist: warning: the script buffers.pl is loaded and provides a bar with "
+"list of buffers similar to the buflist plugin; you may want to uninstall the "
+"script buffers.pl (/script remove buffers.pl) or disable/unload the buflist "
+"plugin; see WeeChat release notes for more information"
+msgstr ""
+"%sbuflist: упозорење: учитана је скрипта buffers.pl која обезбеђује траку са "
+"листом бафера која је слична са додатком; требало би или да деинсталирате "
+"скрипту buffers.pl (/script remove buffers.pl) или да искључите/уклоните из "
+"меморије buflist додатак; за више информација, погледајте WeeChat напомене "
+"издања"
+
 msgid "Charset conversions"
 msgstr "Конверзије скупа карактера"
 
@@ -7715,17 +7715,6 @@ msgstr "raw[reset]: ресетовање скупова карактера за 
 
 msgid "Executed commands"
 msgstr "Извршене команде"
-
-msgid "Execution of external commands in WeeChat"
-msgstr "Извршавање спољних команди у програму WeeChat"
-
-#, c-format
-msgid "%s: end of command %ld (\"%s\"), return code: %d"
-msgstr "%s: крај команде %ld („%s”), враћени кôд: %d"
-
-#, c-format
-msgid "%s: unexpected end of command %ld (\"%s\")"
-msgstr "%s: неочекивани крај команде %ld („%s”)"
 
 msgid "No command is running"
 msgstr "Не извршава се ниједна команда"
@@ -8070,41 +8059,16 @@ msgid "text color for a running command flag in list of commands"
 msgstr ""
 "боја текста за заставицу команде у листи команди која се тренутно извршава"
 
-msgid "FIFO pipe for remote control"
-msgstr "FIFO пајп за даљинску контролу"
+msgid "Execution of external commands in WeeChat"
+msgstr "Извршавање спољних команди у програму WeeChat"
 
 #, c-format
-msgid "%s%s: not enough memory (%s)"
-msgstr "%s%s: нема довољно слободне меморије (%s)"
+msgid "%s: end of command %ld (\"%s\"), return code: %d"
+msgstr "%s: крај команде %ld („%s”), враћени кôд: %d"
 
 #, c-format
-msgid "%s: pipe opened (file: %s)"
-msgstr "%s: пајп је отворен (фајл: %s)"
-
-#, c-format
-msgid "%s%s: unable to open pipe (%s) for reading"
-msgstr "%s%s: пајп (%s) није могао да се отвори за читање"
-
-#, c-format
-msgid "%s%s: unable to create pipe for remote control (%s): error %d %s"
-msgstr ""
-"%s%s: пајп за удаљену контролу (%s) није могао да се отвори: грешка %d %s"
-
-#, c-format
-msgid "%s: pipe closed"
-msgstr "%s: пајп је затворен"
-
-#, c-format
-msgid "%s%s: invalid text received in pipe"
-msgstr "%s%s: са пајпа је примљен неважећи текст"
-
-#, c-format
-msgid "%s%s: buffer \"%s\" not found"
-msgstr "%s%s: није пронађен бафер „%s”"
-
-#, c-format
-msgid "%s%s: error reading pipe (%d %s), closing it"
-msgstr "%s%s: грешка при читању пајпа (%d %s), затвара се"
+msgid "%s: unexpected end of command %ld (\"%s\")"
+msgstr "%s: неочекивани крај команде %ld („%s”)"
 
 #, c-format
 msgid "%s: pipe is enabled (file: %s)"
@@ -8172,6 +8136,42 @@ msgstr ""
 msgid "name of FIFO pipe"
 msgstr "име FIFO пајпа"
 
+msgid "FIFO pipe for remote control"
+msgstr "FIFO пајп за даљинску контролу"
+
+#, c-format
+msgid "%s%s: not enough memory (%s)"
+msgstr "%s%s: нема довољно слободне меморије (%s)"
+
+#, c-format
+msgid "%s: pipe opened (file: %s)"
+msgstr "%s: пајп је отворен (фајл: %s)"
+
+#, c-format
+msgid "%s%s: unable to open pipe (%s) for reading"
+msgstr "%s%s: пајп (%s) није могао да се отвори за читање"
+
+#, c-format
+msgid "%s%s: unable to create pipe for remote control (%s): error %d %s"
+msgstr ""
+"%s%s: пајп за удаљену контролу (%s) није могао да се отвори: грешка %d %s"
+
+#, c-format
+msgid "%s: pipe closed"
+msgstr "%s: пајп је затворен"
+
+#, c-format
+msgid "%s%s: invalid text received in pipe"
+msgstr "%s%s: са пајпа је примљен неважећи текст"
+
+#, c-format
+msgid "%s%s: buffer \"%s\" not found"
+msgstr "%s%s: није пронађен бафер „%s”"
+
+#, c-format
+msgid "%s%s: error reading pipe (%d %s), closing it"
+msgstr "%s%s: грешка при читању пајпа (%d %s), затвара се"
+
 msgid "values:"
 msgstr "вредности:"
 
@@ -8204,9 +8204,6 @@ msgstr ""
 "подударају, (u)=уклања маркер са опција које се подударају, "
 "alt+p(p)=пребацивање видљивости описа додатака, alt+v(v)=пребацивање "
 "видљивости траке помоћи, ctrl+X(x)=измена формата, (q)=затвара бафер"
-
-msgid "Fast set of WeeChat and plugins options"
-msgstr "Брзо постављање WeeChat и опција додатака"
 
 #, c-format
 msgid "%s%s: there are no options displayed, unable to export."
@@ -8948,6 +8945,9 @@ msgstr "fset опције"
 msgid "any color"
 msgstr "било која боја"
 
+msgid "Fast set of WeeChat and plugins options"
+msgstr "Брзо постављање WeeChat и опција додатака"
+
 #, c-format
 msgid "%s%s: script \"%s\" already registered (register ignored)"
 msgstr "%s%s: скрипта „%s” је већ регистрована (регистрација се игнорише)"
@@ -9010,44 +9010,6 @@ msgstr "сервер"
 #. TRANSLATORS: this is displayed in a bar item and must be as short as possible
 msgid "cleartext"
 msgstr "чисттекст"
-
-msgid "IRC (Internet Relay Chat) protocol"
-msgstr "IRC (Internet Relay Chat) протокол"
-
-#, c-format
-msgid ""
-"%s%s: disconnecting from server because upgrade can't work for servers "
-"connected via TLS"
-msgstr ""
-"%s%s: веза са сервером се прекида јер ажурирање не функционише за сервере "
-"који су повезани преко TLS"
-
-#, c-format
-msgid ""
-"%s%s: disconnected from %d server (TLS connection not supported with upgrade)"
-msgid_plural ""
-"%s%s: disconnected from %d servers (TLS connection not supported with "
-"upgrade)"
-msgstr[0] ""
-"%s%s: прекинута је веза са %d сервером (ажурирање не подржава TLS везу)"
-msgstr[1] "%s%s: прекинута веза са %d сервера (ажурирање не подржава TLS везу)"
-msgstr[2] "%s%s: прекинута веза са %d сервера (ажурирање не подржава TLS везу)"
-
-#, c-format
-msgid ""
-"%s%s: unable to add temporary server \"%s\" (check if there is already a "
-"server with this name)"
-msgstr ""
-"%s%s: није успело додавање привременог сервера „%s” (проверите да ли већ "
-"постоји сервер под овим именом)"
-
-#, c-format
-msgid ""
-"%s%s: WARNING: some network connections may still be opened and not visible, "
-"you should restart WeeChat now (with /quit)."
-msgstr ""
-"%s%s: УПОЗОРЕЊЕ: неке мрежне везе још увек могу бити отворене, а невидљиве, "
-"сада би требало да поново покренете програм WeeChat (командом /quit)."
 
 #, c-format
 msgid "%s%s: cannot allocate new channel"
@@ -9136,6 +9098,14 @@ msgstr "%s: додат је сервер: %s%s%s%s%s"
 #. TRANSLATORS: "temporary IRC server"
 msgid " (temporary)"
 msgstr " (привремени)"
+
+#, c-format
+msgid ""
+"%s%s: unable to add temporary server \"%s\" (check if there is already a "
+"server with this name)"
+msgstr ""
+"%s%s: није успело додавање привременог сервера „%s” (проверите да ли већ "
+"постоји сервер под овим именом)"
 
 #, c-format
 msgid ""
@@ -13324,6 +13294,40 @@ msgstr "%s%s: поновно успостављање везе са сервер
 msgid "%s%s: disconnected from server"
 msgstr "%s%s: прекинута је веза са сервером"
 
+msgid "IRC (Internet Relay Chat) protocol"
+msgstr "IRC (Internet Relay Chat) протокол"
+
+#, c-format
+msgid ""
+"%s%s: disconnecting from server because upgrade can't work for servers "
+"connected via TLS"
+msgstr ""
+"%s%s: веза са сервером се прекида јер ажурирање не функционише за сервере "
+"који су повезани преко TLS"
+
+#, c-format
+msgid ""
+"%s%s: disconnected from %d server (TLS connection not supported with upgrade)"
+msgid_plural ""
+"%s%s: disconnected from %d servers (TLS connection not supported with "
+"upgrade)"
+msgstr[0] ""
+"%s%s: прекинута је веза са %d сервером (ажурирање не подржава TLS везу)"
+msgstr[1] "%s%s: прекинута веза са %d сервера (ажурирање не подржава TLS везу)"
+msgstr[2] "%s%s: прекинута веза са %d сервера (ажурирање не подржава TLS везу)"
+
+#, c-format
+msgid ""
+"%s%s: WARNING: some network connections may still be opened and not visible, "
+"you should restart WeeChat now (with /quit)."
+msgstr ""
+"%s%s: УПОЗОРЕЊЕ: неке мрежне везе још увек могу бити отворене, а невидљиве, "
+"сада би требало да поново покренете програм WeeChat (командом /quit)."
+
+#, c-format
+msgid "%s%s: exception: %s"
+msgstr "%s%s: изузетак: %s"
+
 msgid "Support of javascript scripts"
 msgstr "Подршка за javascript скрипте"
 
@@ -13346,10 +13350,6 @@ msgstr "%s%s: фајл „%s” не може да се изврши"
 #, c-format
 msgid "%sCommand \"/%s eval\" is not yet implemented"
 msgstr "%sКоманда „/%s eval” још увек није имплементирана"
-
-#, c-format
-msgid "%s%s: exception: %s"
-msgstr "%s%s: изузетак: %s"
 
 #, c-format
 msgid "%s===\t%s========== End of backlog (%d lines) =========="
@@ -13382,17 +13382,6 @@ msgstr "%s\t****  Почетак лога  ****"
 #, c-format
 msgid "%s\t****  End of log  ****"
 msgstr "%s\t****  Крај лога  ****"
-
-msgid "Log buffers to files"
-msgstr "Логовање бафера у фајл"
-
-#, c-format
-msgid ""
-"%s%s: unable to find filename mask for buffer \"%s\", logging is disabled "
-"for this buffer"
-msgstr ""
-"%s%s: маска имена фајлова за бафер „%s” не може да се пронађе, логовање је "
-"искључено за овај бафер"
 
 msgid "Logging on buffers:"
 msgstr "Логовање бафера:"
@@ -13683,6 +13672,17 @@ msgstr "листа логер бафера"
 msgid "logger pointer (optional)"
 msgstr "показивач на логер (није обавезан)"
 
+msgid "Log buffers to files"
+msgstr "Логовање бафера у фајл"
+
+#, c-format
+msgid ""
+"%s%s: unable to find filename mask for buffer \"%s\", logging is disabled "
+"for this buffer"
+msgstr ""
+"%s%s: маска имена фајлова за бафер „%s” не може да се пронађе, логовање је "
+"искључено за овај бафер"
+
 msgid "Support of lua scripts"
 msgstr "Подршка за lua скрипте"
 
@@ -13719,90 +13719,6 @@ msgstr "%s%s: не може да се иницијализује %s"
 
 msgid "Support of PHP scripts"
 msgstr "Подршка за PHP скрипте"
-
-msgid "bar"
-msgstr "трака"
-
-msgid "bar item"
-msgstr "ставка траке"
-
-msgid "bar window"
-msgstr "прозор траке"
-
-msgid "buffer"
-msgstr "бафер"
-
-msgid "visited buffer"
-msgstr "посећени бафер"
-
-msgid "structure with completion"
-msgstr "структура са довршавањем"
-
-msgid "structure with word found for a completion"
-msgstr "структура са речи која је пронађена код довршавања"
-
-msgid "config file"
-msgstr "конфигурациони фајл"
-
-msgid "config section"
-msgstr "одељак конфигурације"
-
-msgid "config option"
-msgstr "опција конфигурације"
-
-msgid "filter"
-msgstr "филтер"
-
-msgid "history of commands in buffer"
-msgstr "историја команди у баферу"
-
-msgid "hotlist"
-msgstr "врућа листа"
-
-msgid "structure with undo for input line"
-msgstr "структура са поништавањем за линију уноса"
-
-msgid "a key (keyboard shortcut)"
-msgstr "тастер (пречица на тастатури)"
-
-msgid "layout"
-msgstr "распоред"
-
-msgid "buffer layout"
-msgstr "распоред бафера"
-
-msgid "window layout"
-msgstr "распоред прозора"
-
-msgid "structure with lines"
-msgstr "структура са линијама"
-
-msgid "structure with one line"
-msgstr "структура са једном линијом"
-
-msgid "structure with one line data"
-msgstr "структура са подацима у једној линији"
-
-msgid "group in nicklist"
-msgstr "група у листи надимака"
-
-msgid "nick in nicklist"
-msgstr "надимак у листи надимака"
-
-msgid "plugin"
-msgstr "додатак"
-
-msgid "proxy"
-msgstr "прокси"
-
-msgid "window"
-msgstr "прозор"
-
-msgid "scroll info in window"
-msgstr "инфо о скроловању у прозору"
-
-msgid "tree of windows"
-msgstr "стабло прозора"
 
 msgid "WeeChat version"
 msgstr "верзија програма WeeChat"
@@ -14179,70 +14095,112 @@ msgstr "показивач на прозор (није обавезан)"
 msgid "\"current\" for current window or a window number (optional)"
 msgstr "„current” за текући прозор или број прозора (није обавезно)"
 
-#, c-format
-msgid "Initializing plugin \"%s\" (priority: %d)"
-msgstr "Додатак „%s” се иницијализује (приоритет: %d)"
+msgid "bar"
+msgstr "трака"
 
-#, c-format
-msgid "%sUnable to initialize plugin \"%s\""
-msgstr "%sНије успела иницијализација додатка „%s”"
+msgid "bar item"
+msgstr "ставка траке"
 
-#, c-format
-msgid "%sUnable to load plugin \"%s\": %s"
-msgstr "%sНије успело учитавање додатка „%s”: %s"
+msgid "bar window"
+msgstr "прозор траке"
 
-#, c-format
-msgid ""
-"%sIf you're trying to load a script and not a C plugin, try command to load "
-"scripts (/perl, /python, ...)"
-msgstr ""
-"%sАко покушавате да учитате скрипту, а не C додатак, покушајте да употребите "
-"команду за учитавање скрипте (/perl, /python, ...)"
+msgid "buffer"
+msgstr "бафер"
 
-#, c-format
-msgid "%sSymbol \"%s\" not found in plugin \"%s\", failed to load"
-msgstr ""
-"%sСимбол „%s” не може да се пронађе у додатку „%s”, учитавање није успело"
+msgid "visited buffer"
+msgstr "посећени бафер"
 
-#, c-format
-msgid "%sIf plugin \"%s\" is old/obsolete, you can delete this file."
-msgstr "%sАко је додатак „%s” стари/превазиђем, можете да обришете овај фајл."
+msgid "structure with completion"
+msgstr "структура са довршавањем"
 
-#, c-format
-msgid ""
-"%sAPI mismatch for plugin \"%s\" (current API: \"%s\", plugin API: \"%s\"), "
-"failed to load"
-msgstr ""
-"%sAPI размимоилажење за додатак „%s” (тренутни API: „%s”, API додатака: "
-"„%s”), учитавање није успело"
+msgid "structure with word found for a completion"
+msgstr "структура са речи која је пронађена код довршавања"
 
-#, c-format
-msgid "%sUnable to load plugin \"%s\": a plugin with same name already exists"
-msgstr ""
-"%sДодатак „%s” не може да се учита: већ постоји додатак под истим именом"
+msgid "config file"
+msgstr "конфигурациони фајл"
 
-#, c-format
-msgid "%sFunction \"%s\" not found in plugin \"%s\", failed to load"
-msgstr ""
-"%sФункција „%s” не може да се пронађе у додатку „%s”, учитавање није успело"
+msgid "config section"
+msgstr "одељак конфигурације"
 
-#, c-format
-msgid "%sUnable to load plugin \"%s\" (not enough memory)"
-msgstr "%sДодатак „%s” не може да се учита (нема довољно слободне меморије)"
+msgid "config option"
+msgstr "опција конфигурације"
 
-#, c-format
-msgid "Plugin \"%s\" loaded"
-msgstr "Учитан је додатак „%s”"
+msgid "filter"
+msgstr "филтер"
 
-#, c-format
-msgid "Plugin \"%s\" unloaded"
-msgstr "Додатак „%s” је уклоњен из меморије"
+msgid "history of commands in buffer"
+msgstr "историја команди у баферу"
 
-msgid "Plugins unloaded"
-msgstr "Додаци су уклоњени из меморије"
+msgid "hotlist"
+msgstr "врућа листа"
+
+msgid "structure with undo for input line"
+msgstr "структура са поништавањем за линију уноса"
+
+msgid "a key (keyboard shortcut)"
+msgstr "тастер (пречица на тастатури)"
+
+msgid "layout"
+msgstr "распоред"
+
+msgid "buffer layout"
+msgstr "распоред бафера"
+
+msgid "window layout"
+msgstr "распоред прозора"
+
+msgid "structure with lines"
+msgstr "структура са линијама"
+
+msgid "structure with one line"
+msgstr "структура са једном линијом"
+
+msgid "structure with one line data"
+msgstr "структура са подацима у једној линији"
+
+msgid "group in nicklist"
+msgstr "група у листи надимака"
+
+msgid "nick in nicklist"
+msgstr "надимак у листи надимака"
+
+msgid "plugin"
+msgstr "додатак"
+
+msgid "proxy"
+msgstr "прокси"
+
+msgid "window"
+msgstr "прозор"
+
+msgid "scroll info in window"
+msgstr "инфо о скроловању у прозору"
+
+msgid "tree of windows"
+msgstr "стабло прозора"
 
 msgid "description of plugin option"
 msgstr "опис опција додатка"
+
+msgid ""
+"check the license of scripts when they are loaded: if the license is "
+"different from the plugin license, a warning is displayed"
+msgstr ""
+"провера лиценце скрипти када се учитавају: ако се лиценца разликује од "
+"лиценце додатка, исписује се упозорење"
+
+#, c-format
+msgid ""
+"keep context between two calls to the source code evaluation (option "
+"\"eval\" of script command or info \"%s_eval\"); a hidden script is used to "
+"eval script code; if this option is disabled, this hidden script is unloaded "
+"after each eval: this uses less memory, but is slower"
+msgstr ""
+"задржава се контекст између два позива израчунавања изворног кода (опција "
+"„eval” команде script или info „%s_eval”); за израчунавање кода скрипте се "
+"користи скривена скрипта; ако је ова опција искључена, ова скривена скрипта "
+"се уклања из меморије након сваког израчунавања: ово троши мање меморије, "
+"али је спорије"
 
 msgid "list/load/unload scripts"
 msgstr "испис/учитавање/уклањање скрипти"
@@ -14389,26 +14347,6 @@ msgstr "  (ништа)"
 msgid "%s: scripts unloaded"
 msgstr "%s: скрипти уклоњено из меморије"
 
-msgid ""
-"check the license of scripts when they are loaded: if the license is "
-"different from the plugin license, a warning is displayed"
-msgstr ""
-"провера лиценце скрипти када се учитавају: ако се лиценца разликује од "
-"лиценце додатка, исписује се упозорење"
-
-#, c-format
-msgid ""
-"keep context between two calls to the source code evaluation (option "
-"\"eval\" of script command or info \"%s_eval\"); a hidden script is used to "
-"eval script code; if this option is disabled, this hidden script is unloaded "
-"after each eval: this uses less memory, but is slower"
-msgstr ""
-"задржава се контекст између два позива израчунавања изворног кода (опција "
-"„eval” команде script или info „%s_eval”); за израчунавање кода скрипте се "
-"користи скривена скрипта; ако је ова опција искључена, ова скривена скрипта "
-"се уклања из меморије након сваког израчунавања: ово троши мање меморије, "
-"али је спорије"
-
 #, c-format
 msgid ""
 "%s%s: unable to call function \"%s\", script is not initialized (script: %s)"
@@ -14419,6 +14357,68 @@ msgstr ""
 #, c-format
 msgid "%s%s: wrong arguments for function \"%s\" (script: %s)"
 msgstr "%s%s: погрешни аргументи за функцију „%s” (скрипта: %s)"
+
+#, c-format
+msgid "Initializing plugin \"%s\" (priority: %d)"
+msgstr "Додатак „%s” се иницијализује (приоритет: %d)"
+
+#, c-format
+msgid "%sUnable to initialize plugin \"%s\""
+msgstr "%sНије успела иницијализација додатка „%s”"
+
+#, c-format
+msgid "%sUnable to load plugin \"%s\": %s"
+msgstr "%sНије успело учитавање додатка „%s”: %s"
+
+#, c-format
+msgid ""
+"%sIf you're trying to load a script and not a C plugin, try command to load "
+"scripts (/perl, /python, ...)"
+msgstr ""
+"%sАко покушавате да учитате скрипту, а не C додатак, покушајте да употребите "
+"команду за учитавање скрипте (/perl, /python, ...)"
+
+#, c-format
+msgid "%sSymbol \"%s\" not found in plugin \"%s\", failed to load"
+msgstr ""
+"%sСимбол „%s” не може да се пронађе у додатку „%s”, учитавање није успело"
+
+#, c-format
+msgid "%sIf plugin \"%s\" is old/obsolete, you can delete this file."
+msgstr "%sАко је додатак „%s” стари/превазиђем, можете да обришете овај фајл."
+
+#, c-format
+msgid ""
+"%sAPI mismatch for plugin \"%s\" (current API: \"%s\", plugin API: \"%s\"), "
+"failed to load"
+msgstr ""
+"%sAPI размимоилажење за додатак „%s” (тренутни API: „%s”, API додатака: "
+"„%s”), учитавање није успело"
+
+#, c-format
+msgid "%sUnable to load plugin \"%s\": a plugin with same name already exists"
+msgstr ""
+"%sДодатак „%s” не може да се учита: већ постоји додатак под истим именом"
+
+#, c-format
+msgid "%sFunction \"%s\" not found in plugin \"%s\", failed to load"
+msgstr ""
+"%sФункција „%s” не може да се пронађе у додатку „%s”, учитавање није успело"
+
+#, c-format
+msgid "%sUnable to load plugin \"%s\" (not enough memory)"
+msgstr "%sДодатак „%s” не може да се учита (нема довољно слободне меморије)"
+
+#, c-format
+msgid "Plugin \"%s\" loaded"
+msgstr "Учитан је додатак „%s”"
+
+#, c-format
+msgid "Plugin \"%s\" unloaded"
+msgstr "Додатак „%s” је уклоњен из меморије"
+
+msgid "Plugins unloaded"
+msgstr "Додаци су уклоњени из меморије"
 
 msgid "Support of python scripts"
 msgstr "Подршка за python скрипте"
@@ -14715,42 +14715,6 @@ msgstr "%s%-26s почело у: %s, завршило се у: %s"
 
 msgid "List of clients for relay"
 msgstr "Листа клијената за релеј"
-
-msgid "Relay WeeChat data to remote application (irc/weechat protocols)"
-msgstr "Релеј WeeChat података удаљеној апликацији (irc/weechat протоколи)"
-
-msgid "connecting"
-msgstr "повезивање"
-
-msgid "authenticating"
-msgstr "потврда идентитета"
-
-msgid "authentication failed"
-msgstr "није успела потврда идентитета"
-
-msgid "disconnected"
-msgstr "веза је прекинута"
-
-#, c-format
-msgid ""
-"%s%s: disconnecting from client %s%s%s because upgrade can't work for "
-"clients connected via TLS"
-msgstr ""
-"%s%s: прекид везе са клијентом %s%s%s јер ажурирање не функционише за "
-"клијенте повезане преко TLS"
-
-#. TRANSLATORS: "%s" after "%d" is "client" or "clients"
-#, c-format
-msgid ""
-"%s%s: disconnected from %d %s (TLS connection not supported with upgrade)"
-msgstr ""
-"%s%s: прекид везе са %d %s (TLS веза се не подржава приликом ажурирања)"
-
-msgid "client"
-msgid_plural "clients"
-msgstr[0] "клијент"
-msgstr[1] "клијента"
-msgstr[2] "клијената"
 
 #, c-format
 msgid "%s%s: TLS handshake failed for client %s%s%s: error %d %s"
@@ -15770,6 +15734,42 @@ msgstr ""
 msgid "%s%s: not enough memory for listening on new port"
 msgstr "%s%s: нема довољно слободне меморије за слушање на новом порту"
 
+msgid "Relay WeeChat data to remote application (irc/weechat protocols)"
+msgstr "Релеј WeeChat података удаљеној апликацији (irc/weechat протоколи)"
+
+msgid "connecting"
+msgstr "повезивање"
+
+msgid "authenticating"
+msgstr "потврда идентитета"
+
+msgid "authentication failed"
+msgstr "није успела потврда идентитета"
+
+msgid "disconnected"
+msgstr "веза је прекинута"
+
+#, c-format
+msgid ""
+"%s%s: disconnecting from client %s%s%s because upgrade can't work for "
+"clients connected via TLS"
+msgstr ""
+"%s%s: прекид везе са клијентом %s%s%s јер ажурирање не функционише за "
+"клијенте повезане преко TLS"
+
+#. TRANSLATORS: "%s" after "%d" is "client" or "clients"
+#, c-format
+msgid ""
+"%s%s: disconnected from %d %s (TLS connection not supported with upgrade)"
+msgstr ""
+"%s%s: прекид везе са %d %s (TLS веза се не подржава приликом ажурирања)"
+
+msgid "client"
+msgid_plural "clients"
+msgstr[0] "клијент"
+msgstr[1] "клијента"
+msgstr[2] "клијената"
+
 #, c-format
 msgid "%s: invalid pointer in hdata path: \"%s\""
 msgstr "%s: неважећи показивач у hdata путањи: „%s”"
@@ -15980,17 +15980,6 @@ msgstr ""
 
 msgid "Scripts"
 msgstr "Скрипте"
-
-msgid "Script manager"
-msgstr "Менаџер скрипти"
-
-#, c-format
-msgid ""
-"%s%s: download of scripts is disabled by default; to enable it, type /script "
-"enable"
-msgstr ""
-"%s%s: преузимање скрипти је подразумевано искључено; ако желите да укључите, "
-"откуцајте /script enable"
 
 #, c-format
 msgid "%s: download of scripts enabled"
@@ -16421,20 +16410,16 @@ msgstr "%s%s: грешка при преузимању листе скрипти
 msgid "%s: downloading list of scripts..."
 msgstr "%s: преузимање листе скрипти..."
 
-msgid "Spell checker for input"
-msgstr "Провера правописа за унос"
+msgid "Script manager"
+msgstr "Менаџер скрипти"
 
 #, c-format
 msgid ""
-"%s%s: warning: the plugin \"aspell\" has been renamed to \"spell\" and the "
-"file %s still exists (but not %s); if you upgraded from an older version, "
-"you should check instructions in release notes (version 2.5) to recover your "
-"settings"
+"%s%s: download of scripts is disabled by default; to enable it, type /script "
+"enable"
 msgstr ""
-"%s%s: упозорење: додатак „aspell” је променио име у „spell” и фајл %s још "
-"увек постоји (али није %s); ако сте обавили ажурирање са старије верзије, "
-"требало би да проверите инструкције у напоменама о издању (верзија 2.5) како "
-"би могли да опоравите своја подешавања"
+"%s%s: преузимање скрипти је подразумевано искључено; ако желите да укључите, "
+"откуцајте /script enable"
 
 #. TRANSLATORS: "%s" is "spell" (name of plugin)
 #, c-format
@@ -16684,6 +16669,21 @@ msgstr "%s: упозорење: на вашем систему није дост
 msgid "%s%s: error: unable to create speller for lang \"%s\""
 msgstr "%s%s: грешка: није успело креирање проверивача за језик „%s”"
 
+msgid "Spell checker for input"
+msgstr "Провера правописа за унос"
+
+#, c-format
+msgid ""
+"%s%s: warning: the plugin \"aspell\" has been renamed to \"spell\" and the "
+"file %s still exists (but not %s); if you upgraded from an older version, "
+"you should check instructions in release notes (version 2.5) to recover your "
+"settings"
+msgstr ""
+"%s%s: упозорење: додатак „aspell” је променио име у „spell” и фајл %s још "
+"увек постоји (али није %s); ако сте обавили ажурирање са старије верзије, "
+"требало би да проверите инструкције у напоменама о издању (верзија 2.5) како "
+"би могли да опоравите своја подешавања"
+
 msgid "Support of tcl scripts"
 msgstr "Подршка за tcl скрипте"
 
@@ -16702,19 +16702,6 @@ msgstr "%s%s: дошло је до грешке током парсирања ф
 #, c-format
 msgid "Trigger monitor (filter: %s) | Input: q=close, words=filter"
 msgstr "Монитор окидача (филтер: %s) | Унос: q=затварање, речи=филтер"
-
-msgid ""
-"Text replacement and command execution on events triggered by WeeChat/plugins"
-msgstr ""
-"Замена текста и извршавање команде при догађајима које окида WeeChat/додаци"
-
-#, c-format
-msgid "%s%s: unable to create hook for trigger \"%s\" (bad arguments)"
-msgstr "%s%s: није успело креирање куке за окидач „%s” (лоши аргументи)"
-
-#, c-format
-msgid "%s%s: invalid regular expression in trigger: \"%s\""
-msgstr "%s%s: неважећи регуларни израз у окидачу: „%s”"
 
 msgid "no variable"
 msgstr "нема променљиве"
@@ -17347,12 +17334,22 @@ msgstr "боја текста за регуларне изразе"
 msgid "text color for replacement text (for regular expressions)"
 msgstr "боја текста за текст замене (у регуларним изразима)"
 
+msgid ""
+"Text replacement and command execution on events triggered by WeeChat/plugins"
+msgstr ""
+"Замена текста и извршавање команде при догађајима које окида WeeChat/додаци"
+
+#, c-format
+msgid "%s%s: unable to create hook for trigger \"%s\" (bad arguments)"
+msgstr "%s%s: није успело креирање куке за окидач „%s” (лоши аргументи)"
+
+#, c-format
+msgid "%s%s: invalid regular expression in trigger: \"%s\""
+msgstr "%s%s: неважећи регуларни израз у окидачу: „%s”"
+
 #. TRANSLATORS: this text is displayed before the list of nicks typing in the bar item "typing", it must be as short as possible
 msgid "Typing:"
 msgstr "Куцање:"
-
-msgid "Typing status of users"
-msgstr "Статус куцања корисника"
 
 msgid ""
 "number of seconds after paused status has been set: if reached, the typing "
@@ -17397,6 +17394,9 @@ msgstr ""
 "макс број карактера који се приказује у ставци траке \"typing\" (0 = садржај "
 "се не одсеца)"
 
+msgid "Typing status of users"
+msgstr "Статус куцања корисника"
+
 msgid "  [A] Accept"
 msgstr "  [A] Прихвати"
 
@@ -17411,146 +17411,6 @@ msgstr "ETA"
 
 msgid "Xfer list"
 msgstr "Xfer листа"
-
-msgid "DCC file transfer and direct chat"
-msgstr "DCC трансфер фајлова и директни разговор"
-
-msgid "waiting"
-msgstr "чекање"
-
-msgid "active"
-msgstr "активно"
-
-msgid "done"
-msgstr "завршено"
-
-msgid "failed"
-msgstr "неуспело"
-
-msgid "aborted"
-msgstr "прекинуто"
-
-msgid "hashing"
-msgstr "хеширање"
-
-msgid "CRC in progress"
-msgstr "CRC се израчунава"
-
-msgid "CRC OK"
-msgstr "CRC OK"
-
-msgid "wrong CRC"
-msgstr "погрешан CRC"
-
-msgid "CRC error"
-msgstr "CRC грешка"
-
-#, c-format
-msgid "%s%s: file %s %s %s (%s): %s"
-msgstr "%s%s: фајл %s %s %s (%s): %s"
-
-msgid "sent to"
-msgstr "је послат"
-
-msgid "received from"
-msgstr "примљен од"
-
-msgid "FAILED"
-msgstr "НИЈЕ УСПЕЛО"
-
-#, c-format
-msgid "%s%s: chat closed with %s (%s)"
-msgstr "%s%s: затворен је разговор са %s (%s)"
-
-#, c-format
-msgid "%s%s: aborting active xfer: \"%s\" from %s"
-msgstr "%s%s: прекидање активног xfer: „%s” од %s"
-
-#, c-format
-msgid "%s%s: not enough memory for new xfer"
-msgstr "%s%s: нема довољно слободне меморије за нови xfer"
-
-#, c-format
-msgid "%s%s: unable to interpret address: error %d %s"
-msgstr "%s%s: адреса не може да се интерпретира: грешка %d %s"
-
-#, c-format
-msgid "%s%s: hashing error"
-msgstr "%s%s: грешка у хеширању"
-
-#, c-format
-msgid ""
-"%s: incoming file from %s (%s, %s.%s), name: %s, %llu bytes (protocol: %s)"
-msgstr ""
-"%s: долазни фајл од %s (%s, %s.%s), име: %s, %llu бајтова (протокол: %s)"
-
-#, c-format
-msgid ""
-"%s: offering file to %s (%s.%s), name: %s (local filename: %s), %llu bytes "
-"(protocol: %s)"
-msgstr ""
-"%s: нуди се фајл %s (%s.%s), име: %s (локално име фајла: %s), %llu бајтова "
-"(протокол: %s)"
-
-#, c-format
-msgid "%s: incoming chat request from %s (%s, %s.%s)"
-msgstr "%s: долазни захтев за разговор од %s (%s, %s.%s)"
-
-#, c-format
-msgid "%s: sending chat request to %s (%s.%s)"
-msgstr "%s: слање захтева за разговор ка %s (%s.%s)"
-
-#, c-format
-msgid "%s: file %s (local filename: %s) will be resumed at position %llu"
-msgstr "%s: фајл %s (локално име фајла: %s) ће се наставити са позиције %llu"
-
-#, c-format
-msgid "%s%s: missing arguments (%s)"
-msgstr "%s%s: недостају аргументи (%s)"
-
-#, c-format
-msgid "%s%s: unknown xfer type \"%s\""
-msgstr "%s%s: непознати xfer тип „%s”"
-
-#, c-format
-msgid "%s%s: unknown xfer protocol \"%s\""
-msgstr "%s%s: непознати xfer протокол „%s”"
-
-#, c-format
-msgid "%s%s: cannot access file \"%s\""
-msgstr "%s%s: не може да се приступи фајлу „%s”"
-
-#, c-format
-msgid "%s%s: cannot create socket for xfer: error %d %s"
-msgstr "%s%s: не може да се креира сокет за xfer: грешка %d %s"
-
-#, c-format
-msgid "%s%s: cannot find available port for xfer"
-msgstr "%s%s: не може да се пронађе доступни порт за xfer"
-
-#, c-format
-msgid "%s%s: error creating xfer"
-msgstr "%s%s: грешка при креирању xfer"
-
-#, c-format
-msgid ""
-"%s%s: unable to resume file \"%s\" (port: %d, start position: %llu): xfer "
-"not found or not ready for transfer"
-msgstr ""
-"%s%s: фајл „%s” не може да се настави (порт: %d, почетна позиција: %llu): "
-"xfer није пронађен или није спреман за трансфер"
-
-#, c-format
-msgid "%s: file %s resumed at position %llu"
-msgstr "%s: фајл %s је настављен од позиције %llu"
-
-#, c-format
-msgid ""
-"%s%s: unable to accept resume file \"%s\" (port: %d, start position: %llu): "
-"xfer not found or not ready for transfer"
-msgstr ""
-"%s%s: не може да се прихвати настављање фајла „%s” (порт: %d, почетна "
-"позиција: %llu): xfer није пронађен или није спреман за трансфер"
 
 #, c-format
 msgid "%s%s: error sending data to \"%s\" via xfer chat"
@@ -17572,6 +17432,12 @@ msgid ""
 "%3d. %s (%s), file: \"%s\" (local: \"%s\"), %s %s, status: %s%s%s (%llu %%)"
 msgstr ""
 "%3d. %s (%s), фајл: „%s” (локални: „%s”), %s %s, статус: %s%s%s (%llu %%)"
+
+msgid "sent to"
+msgstr "је послат"
+
+msgid "received from"
+msgstr "примљен од"
 
 #. TRANSLATORS: "%s" after "started on" is a date
 #, c-format
@@ -17858,3 +17724,137 @@ msgstr "%s%s: тајмаут за „%s” са %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: повезивање није успело: неочекивана грешка (%d)"
+
+msgid "DCC file transfer and direct chat"
+msgstr "DCC трансфер фајлова и директни разговор"
+
+msgid "waiting"
+msgstr "чекање"
+
+msgid "active"
+msgstr "активно"
+
+msgid "done"
+msgstr "завршено"
+
+msgid "failed"
+msgstr "неуспело"
+
+msgid "aborted"
+msgstr "прекинуто"
+
+msgid "hashing"
+msgstr "хеширање"
+
+msgid "CRC in progress"
+msgstr "CRC се израчунава"
+
+msgid "CRC OK"
+msgstr "CRC OK"
+
+msgid "wrong CRC"
+msgstr "погрешан CRC"
+
+msgid "CRC error"
+msgstr "CRC грешка"
+
+#, c-format
+msgid "%s%s: file %s %s %s (%s): %s"
+msgstr "%s%s: фајл %s %s %s (%s): %s"
+
+msgid "FAILED"
+msgstr "НИЈЕ УСПЕЛО"
+
+#, c-format
+msgid "%s%s: chat closed with %s (%s)"
+msgstr "%s%s: затворен је разговор са %s (%s)"
+
+#, c-format
+msgid "%s%s: aborting active xfer: \"%s\" from %s"
+msgstr "%s%s: прекидање активног xfer: „%s” од %s"
+
+#, c-format
+msgid "%s%s: not enough memory for new xfer"
+msgstr "%s%s: нема довољно слободне меморије за нови xfer"
+
+#, c-format
+msgid "%s%s: unable to interpret address: error %d %s"
+msgstr "%s%s: адреса не може да се интерпретира: грешка %d %s"
+
+#, c-format
+msgid "%s%s: hashing error"
+msgstr "%s%s: грешка у хеширању"
+
+#, c-format
+msgid ""
+"%s: incoming file from %s (%s, %s.%s), name: %s, %llu bytes (protocol: %s)"
+msgstr ""
+"%s: долазни фајл од %s (%s, %s.%s), име: %s, %llu бајтова (протокол: %s)"
+
+#, c-format
+msgid ""
+"%s: offering file to %s (%s.%s), name: %s (local filename: %s), %llu bytes "
+"(protocol: %s)"
+msgstr ""
+"%s: нуди се фајл %s (%s.%s), име: %s (локално име фајла: %s), %llu бајтова "
+"(протокол: %s)"
+
+#, c-format
+msgid "%s: incoming chat request from %s (%s, %s.%s)"
+msgstr "%s: долазни захтев за разговор од %s (%s, %s.%s)"
+
+#, c-format
+msgid "%s: sending chat request to %s (%s.%s)"
+msgstr "%s: слање захтева за разговор ка %s (%s.%s)"
+
+#, c-format
+msgid "%s: file %s (local filename: %s) will be resumed at position %llu"
+msgstr "%s: фајл %s (локално име фајла: %s) ће се наставити са позиције %llu"
+
+#, c-format
+msgid "%s%s: missing arguments (%s)"
+msgstr "%s%s: недостају аргументи (%s)"
+
+#, c-format
+msgid "%s%s: unknown xfer type \"%s\""
+msgstr "%s%s: непознати xfer тип „%s”"
+
+#, c-format
+msgid "%s%s: unknown xfer protocol \"%s\""
+msgstr "%s%s: непознати xfer протокол „%s”"
+
+#, c-format
+msgid "%s%s: cannot access file \"%s\""
+msgstr "%s%s: не може да се приступи фајлу „%s”"
+
+#, c-format
+msgid "%s%s: cannot create socket for xfer: error %d %s"
+msgstr "%s%s: не може да се креира сокет за xfer: грешка %d %s"
+
+#, c-format
+msgid "%s%s: cannot find available port for xfer"
+msgstr "%s%s: не може да се пронађе доступни порт за xfer"
+
+#, c-format
+msgid "%s%s: error creating xfer"
+msgstr "%s%s: грешка при креирању xfer"
+
+#, c-format
+msgid ""
+"%s%s: unable to resume file \"%s\" (port: %d, start position: %llu): xfer "
+"not found or not ready for transfer"
+msgstr ""
+"%s%s: фајл „%s” не може да се настави (порт: %d, почетна позиција: %llu): "
+"xfer није пронађен или није спреман за трансфер"
+
+#, c-format
+msgid "%s: file %s resumed at position %llu"
+msgstr "%s: фајл %s је настављен од позиције %llu"
+
+#, c-format
+msgid ""
+"%s%s: unable to accept resume file \"%s\" (port: %d, start position: %llu): "
+"xfer not found or not ready for transfer"
+msgstr ""
+"%s%s: не може да се прихвати настављање фајла „%s” (порт: %d, почетна "
+"позиција: %llu): xfer није пронађен или није спреман за трансфер"

@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-08-23 08:20+0200\n"
+"POT-Creation-Date: 2024-08-24 10:22+0200\n"
 "PO-Revision-Date: 2024-08-12 21:35+0200\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -31,203 +31,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 "X-Generator: Poedit 2.0.1\n"
-
-#, fuzzy, c-format
-msgid "%sAnother command \"%s\" already exists for plugin \"%s\""
-msgstr "%sChyba: příkaz \"%s\" již existuje pro plugin \"%s\""
-
-#, fuzzy, c-format
-msgid ""
-"%sUnknown command \"%s\" (commands are case sensitive, type /help for help), "
-"commands with similar name: %s"
-msgstr "%sChyba: neznámý příkaz \"%s\" (napište /help pro nápovědu)"
-
-#, fuzzy, c-format
-msgid ""
-"%sUnknown command \"%s\" (type /help for help), commands with similar name: "
-"%s"
-msgstr "%sChyba: neznámý příkaz \"%s\" (napište /help pro nápovědu)"
-
-#, c-format
-msgid "%sBad file descriptor (%d) used in hook_fd"
-msgstr ""
-
-#, fuzzy, c-format
-#| msgid "End of command '%s', timeout reached (%.1fs)"
-msgid "End of command '%s', timeout reached (%.3fs)"
-msgstr "Konec příkazu '%s', vypršel časový limit (%.1fs)"
-
-#, c-format
-msgid "System clock skew detected (%+ld seconds), reinitializing all timers"
-msgstr ""
-"Detekován posun systémových hodin (%+ld sekund), znovu inicializuji časovače"
-
-#, fuzzy, c-format
-#| msgid "curl error %d (%s) (URL: \"%s\")\n"
-msgid "%sURL transfer error: %s (URL: \"%s\")"
-msgstr "chyba curlu %d (%s) (URL: \"%s\")\n"
-
-#, fuzzy, c-format
-#| msgid "End of command '%s', timeout reached (%.1fs)"
-msgid "End of URL transfer '%s', timeout reached (%.3fs)"
-msgstr "Konec příkazu '%s', vypršel časový limit (%.1fs)"
-
-#, c-format
-msgid "%sError running thread in hook_url: %s (URL: \"%s\")"
-msgstr ""
-
-#. TRANSLATORS: "%s %s" after "compiled on" is date and time
-#, c-format
-msgid ""
-"WeeChat %s Copyright %s, compiled on %s %s\n"
-"Developed by Sébastien Helleu <flashcode@flashtux.org> - %s"
-msgstr ""
-"WeeChat %s Copyright %s, zkompilováno %s %s\n"
-"Vyvinutý Sébastienem Helleu <flashcode@flashtux.org> - %s"
-
-#, c-format
-msgid "Usage: %s [option...] [plugin:option...]\n"
-msgstr "Použití: %s [volba...] [plugin:volba...]\n"
-
-#, fuzzy
-msgid ""
-"  -a, --no-connect         disable auto-connect to servers at startup\n"
-"  -c, --colors             display default colors in terminal and exit\n"
-"  -d, --dir <path>         force a single WeeChat home directory\n"
-"                           or 5 different directories separated by colons "
-"(in this order: config, data, state, cache, runtime)\n"
-"                           (environment variable WEECHAT_HOME is read if "
-"this option is not given)\n"
-"  -t, --temp-dir           create a temporary WeeChat home directory and "
-"delete it on exit\n"
-"                           (incompatible with option \"-d\")\n"
-"  -h, --help               display this help and exit\n"
-"  -i, --build-info         display build information and exit\n"
-"  -l, --license            display WeeChat license and exit\n"
-"  -p, --no-plugin          don't load any plugin at startup\n"
-"  -P, --plugins <plugins>  load only these plugins at startup\n"
-"                           (see /help weechat.plugin.autoload)\n"
-"  -r, --run-command <cmd>  run command(s) after startup;\n"
-"                           many commands can be separated by semicolons and "
-"are evaluated,\n"
-"                           this option can be given multiple times\n"
-"  -s, --no-script          don't load any script at startup\n"
-"      --upgrade            upgrade WeeChat using session files (see /help "
-"upgrade in WeeChat)\n"
-"  -v, --version            display WeeChat version and exit\n"
-"  plugin:option            option for plugin (see man weechat)\n"
-msgstr ""
-"  -a, --no-connect\t\t\tvypne automatické připojení k serverům při startu\n"
-"  -c, --colors\t\t\t\tzobrazí výchozí barvy v terminálu\n"
-"  -d, --dir <cesta>\t  \t\tnastaví domovský adresář WeeChat (výchozí: ~/."
-"weechat)\n"
-"\t\t\t\t\t\t\t(pokud není použita,  weechat zkusí načíst promněnou prostředí "
-"WEECHAT_HOME)\n"
-"  -h, --help\t\t\t\t\ttato nápověda\n"
-"  -l, --license\t\t\t\t\tlicence WeeChatu\n"
-"  -p, --no-plugin\t\t\t\tnenačítej při startu pluginy\n"
-"  -r, --run-command <cmd>\tspusť příkaz po startu\n"
-"\t\t\t\t\t\t\t(více příkazů jde oddělit středníkem)\n"
-"  -s, --no-script\t\t\t\tnenačítej skripty při startu\n"
-"      --upgrade\t\t\t\tupgraduj WeeChat za pomocí uloženní stavu (viz /help "
-"upgrade v WeeChatu)\n"
-"  -v, --version\t\t\t\tzobraz verzi WeeChatu\n"
-"  plugin:option\t\t\t\tvolba pro plugin (viz: man weechat)\n"
-
-msgid "Extra options in headless mode:\n"
-msgstr ""
-
-msgid ""
-"      --doc-gen <path>     generate files to build documentation and exit\n"
-msgstr ""
-
-msgid ""
-"      --daemon             run WeeChat as a daemon (fork, new process group, "
-"file descriptors closed);\n"
-msgstr ""
-
-msgid ""
-"                           (by default in headless mode WeeChat is blocking "
-"and does not run in background)\n"
-msgstr ""
-
-msgid ""
-"      --stdout             display log messages on standard output instead "
-"of writing them in log file\n"
-msgstr ""
-
-msgid ""
-"                           (option ignored if option \"--daemon\" is given)\n"
-msgstr ""
-
-msgid ""
-"Debug options (for tools like valgrind, DO NOT USE IN PRODUCTION):\n"
-"      --no-dlclose         do not call function dlclose after plugins are "
-"unloaded\n"
-"      --no-gnutls          disable init/deinit of gnutls\n"
-"      --no-gcrypt          disable init/deinit of gcrypt\n"
-msgstr ""
-
-#, c-format
-msgid "Error: missing argument for \"%s\" option\n"
-msgstr "Chyba: chybí argument pro volbu \"%s\"\n"
-
-#, fuzzy
-msgid "WeeChat is running in headless mode (ctrl-c to quit)."
-msgstr "1 pokud se WeeChat aktualizuje (příkaz `/upgrade`)"
-
-#, fuzzy
-msgid ""
-"Welcome to WeeChat!\n"
-"\n"
-"If you are discovering WeeChat, it is recommended to read at least the "
-"quickstart guide, and the user's guide if you have some time; they explain "
-"main WeeChat concepts.\n"
-"All WeeChat docs are available at: https://weechat.org/doc/\n"
-"\n"
-"Moreover, there is inline help with /help on all commands and options (use "
-"Tab key to complete the name).\n"
-"The command /fset can help to customize WeeChat.\n"
-"\n"
-"You can add and connect to an IRC server with /server and /connect commands "
-"(see /help server)."
-msgstr ""
-"Vítejte v WeeChatu!\n"
-"\n"
-"Pokud objevujete WeeChat je doporučeno si prečíst alespoň \"quickstart\" "
-"průvodce, a pokud máte trochu času tak uživatelskou příručku, oboje vám "
-"vyvětlí hlavní koncepty WeeChatu.\n"
-"Veškerá dokumentace WeeChatu je dostupná na adrese: https://weechat.org/"
-"doc/\n"
-"\n"
-"Navíc je zde dostupná integrovaná nápověda /help fungující na všech "
-"příkazech a nastaveních ( použijte Tab klávesu pro doplňování názvů).\n"
-"Příkaz /iset (script iset.pl) může pomoci upravit WeeChat\" /script install "
-"iset.pl\n"
-"\n"
-"Můžete přidat IRC server a připojit se k němu pomocí príkazů /server a /"
-"connect ( podívejte se na /help server)."
-
-#. TRANSLATORS: the "under %s" can be "under screen" or "under tmux"
-#, c-format
-msgid ""
-"%sWarning: WeeChat is running under %s and $TERM is \"%s\", which can cause "
-"display bugs; $TERM should be set to one of these values: %s"
-msgstr ""
-"%sVarování: WeeChat běží pod %s a $TERM je \"%s\", což může způsobovat chyby "
-"zobrazení; $TERM by měl obsahovat jednu z těchto hodnot %s"
-
-#, c-format
-msgid "%sYou should add this line in the file %s:  %s"
-msgstr "%sMůžete přidat tuto linku do souboru %s:  %s"
-
-#, c-format
-msgid ""
-"%sWarning: cannot set the locale; make sure $LANG and $LC_* variables are "
-"correct"
-msgstr ""
-"%sVarování: nemohu nastavit lokalizaci; zkontrolujte že $LANG a $LC_* "
-"promněné jsou nastaveny správně"
 
 msgid "List of bars:"
 msgstr "Seznam polí:"
@@ -4141,6 +3944,97 @@ msgstr "hodnota promněné prostředí"
 msgid "variables that can be used in /eval command"
 msgstr ""
 
+#, c-format
+msgid "Writing configuration file %s%s%s"
+msgstr "Zapisuji soubor s nastavením %s%s%s"
+
+msgid "(default options)"
+msgstr "(výchozí volby)"
+
+#, fuzzy, c-format
+msgid "%sCannot create file \"%s\""
+msgstr "%sChyba: nemohu vytvořit soubor \"%s\""
+
+#, fuzzy, c-format
+#| msgid "%sWARNING: failed to read configuration file \"%s\" (%s)"
+msgid "%sWARNING: failed to set permissions on configuration file \"%s\" (%s)"
+msgstr "%sVAROVÁNÍ: selhalo čtení konfiguračního souboru \"%s\" (%s)"
+
+#, c-format
+msgid "%sError writing configuration file \"%s\""
+msgstr "%sChyba při zápisu konfiguračního souboru \"%s\""
+
+#, fuzzy, c-format
+#| msgid "%s: server %s%s%s has been copied to %s%s%s"
+msgid "%sFile %s has been backed up as %s"
+msgstr "%s: server %s%s%s byl zkopírován do %s%s%s"
+
+#, fuzzy, c-format
+#| msgid "%s%s: unable to load file \"%s\""
+msgid "%sError: unable to backup file %s"
+msgstr "%s%s: nemůžu načíst soubor \"%s\""
+
+#, c-format
+msgid ""
+"%sImportant: file %s has been updated from version %d to %d, it is not "
+"compatible and can not be loaded any more with any older version"
+msgstr ""
+
+#, c-format
+msgid "%sWARNING: failed to read configuration file \"%s\" (%s)"
+msgstr "%sVAROVÁNÍ: selhalo čtení konfiguračního souboru \"%s\" (%s)"
+
+#, c-format
+msgid ""
+"%sWARNING: file \"%s\" will be overwritten on exit with default values (it "
+"is HIGHLY recommended to backup this file now)"
+msgstr ""
+"%sVAROVÁNÍ: soubor \"%s\" bude přepsán při vypnutí výchozími hodnotami (je "
+"VELMI doporučeno tento soubor nyní zálohovat)"
+
+#, c-format
+msgid "Reading configuration file %s"
+msgstr "Načítám konfigurační soubor %s"
+
+#, c-format
+msgid "%sWarning: %s, line %d: invalid syntax, missing \"]\""
+msgstr "%sUpozornění: %s, řádek %d: nevalidní syntaxe, chybí \"]\""
+
+#, fuzzy, c-format
+#| msgid "%sWarning: %s, line %d: unknown section identifier (\"%s\")"
+msgid "%sWarning: %s, line %d: ignoring unknown section identifier (\"%s\")"
+msgstr "%sUpozornění: %s, řádek %d: neznámý identifikátor sekce (\"%s\")"
+
+#, c-format
+msgid ""
+"%sError: %s, line %d: invalid config version: \"%s\" => rest of file is "
+"IGNORED, default options are used"
+msgstr ""
+
+#, c-format
+msgid ""
+"%sError: %s, version read (%d) is newer than supported version (%d) => rest "
+"of file is IGNORED, default options are used"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%sWarning: %s, line %d: ignoring option outside section: %s"
+msgstr "%sUpozornění: %s, řádek %d: neznámý identifikátor sekce (\"%s\")"
+
+#, fuzzy, c-format
+msgid "%sWarning: %s, line %d: ignoring unknown option for section \"%s\": %s"
+msgstr "%sUpozornění: %s, řádek %d: neznámý identifikátor sekce (\"%s\")"
+
+#, fuzzy, c-format
+msgid ""
+"%sWarning: %s, line %d: ignoring invalid value for option in section \"%s\": "
+"%s"
+msgstr "%sUpozornění: %s, řádek %d: nevalidní syntaxe, chybí \"]\""
+
+#, c-format
+msgid "Reloading configuration file %s"
+msgstr "Znovunačítám konfigurační soubor %s"
+
 msgid ""
 "Warning: option weechat.look.save_config_on_exit is disabled, so the option "
 "weechat.look.save_layout_on_exit is ignored"
@@ -5495,97 +5389,6 @@ msgstr "příkaz spuštěný při startu WeeChat, po načtení pluginů"
 msgid "FATAL: error initializing configuration options"
 msgstr "FATÁLNÍ: chyba při inicializaci konfiguračních nastavení"
 
-#, c-format
-msgid "Writing configuration file %s%s%s"
-msgstr "Zapisuji soubor s nastavením %s%s%s"
-
-msgid "(default options)"
-msgstr "(výchozí volby)"
-
-#, fuzzy, c-format
-msgid "%sCannot create file \"%s\""
-msgstr "%sChyba: nemohu vytvořit soubor \"%s\""
-
-#, fuzzy, c-format
-#| msgid "%sWARNING: failed to read configuration file \"%s\" (%s)"
-msgid "%sWARNING: failed to set permissions on configuration file \"%s\" (%s)"
-msgstr "%sVAROVÁNÍ: selhalo čtení konfiguračního souboru \"%s\" (%s)"
-
-#, c-format
-msgid "%sError writing configuration file \"%s\""
-msgstr "%sChyba při zápisu konfiguračního souboru \"%s\""
-
-#, fuzzy, c-format
-#| msgid "%s: server %s%s%s has been copied to %s%s%s"
-msgid "%sFile %s has been backed up as %s"
-msgstr "%s: server %s%s%s byl zkopírován do %s%s%s"
-
-#, fuzzy, c-format
-#| msgid "%s%s: unable to load file \"%s\""
-msgid "%sError: unable to backup file %s"
-msgstr "%s%s: nemůžu načíst soubor \"%s\""
-
-#, c-format
-msgid ""
-"%sImportant: file %s has been updated from version %d to %d, it is not "
-"compatible and can not be loaded any more with any older version"
-msgstr ""
-
-#, c-format
-msgid "%sWARNING: failed to read configuration file \"%s\" (%s)"
-msgstr "%sVAROVÁNÍ: selhalo čtení konfiguračního souboru \"%s\" (%s)"
-
-#, c-format
-msgid ""
-"%sWARNING: file \"%s\" will be overwritten on exit with default values (it "
-"is HIGHLY recommended to backup this file now)"
-msgstr ""
-"%sVAROVÁNÍ: soubor \"%s\" bude přepsán při vypnutí výchozími hodnotami (je "
-"VELMI doporučeno tento soubor nyní zálohovat)"
-
-#, c-format
-msgid "Reading configuration file %s"
-msgstr "Načítám konfigurační soubor %s"
-
-#, c-format
-msgid "%sWarning: %s, line %d: invalid syntax, missing \"]\""
-msgstr "%sUpozornění: %s, řádek %d: nevalidní syntaxe, chybí \"]\""
-
-#, fuzzy, c-format
-#| msgid "%sWarning: %s, line %d: unknown section identifier (\"%s\")"
-msgid "%sWarning: %s, line %d: ignoring unknown section identifier (\"%s\")"
-msgstr "%sUpozornění: %s, řádek %d: neznámý identifikátor sekce (\"%s\")"
-
-#, c-format
-msgid ""
-"%sError: %s, line %d: invalid config version: \"%s\" => rest of file is "
-"IGNORED, default options are used"
-msgstr ""
-
-#, c-format
-msgid ""
-"%sError: %s, version read (%d) is newer than supported version (%d) => rest "
-"of file is IGNORED, default options are used"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "%sWarning: %s, line %d: ignoring option outside section: %s"
-msgstr "%sUpozornění: %s, řádek %d: neznámý identifikátor sekce (\"%s\")"
-
-#, fuzzy, c-format
-msgid "%sWarning: %s, line %d: ignoring unknown option for section \"%s\": %s"
-msgstr "%sUpozornění: %s, řádek %d: neznámý identifikátor sekce (\"%s\")"
-
-#, fuzzy, c-format
-msgid ""
-"%sWarning: %s, line %d: ignoring invalid value for option in section \"%s\": "
-"%s"
-msgstr "%sUpozornění: %s, řádek %d: nevalidní syntaxe, chybí \"]\""
-
-#, c-format
-msgid "Reloading configuration file %s"
-msgstr "Znovunačítám konfigurační soubor %s"
-
 #. TRANSLATORS: "%s %s" after "compiled on" is date and time
 #, c-format
 msgid "WeeChat %s, compiled on %s %s\n"
@@ -6029,15 +5832,6 @@ msgid "Resource usage (see \"man getrusage\" for help):"
 msgstr "Využití paměti (viz \"man mallinfo\" pro nápovědu):"
 
 #, c-format
-msgid "debug: removing file: %s"
-msgstr "ladění: odstraňuji soubor: %s"
-
-#. TRANSLATORS: %.02fs is a float number + "s" ("seconds")
-#, c-format
-msgid "Upgrade done (%.02fs)"
-msgstr "Aktualizace dokončena (%.02fs)"
-
-#, c-format
 msgid "%sError upgrading WeeChat with file \"%s\":"
 msgstr "%sChyba aktualizace WeeChat se souborem \"%s\":"
 
@@ -6106,6 +5900,15 @@ msgstr ""
 "čtení - špatný podpis (formát aktualizačního souboru se mohl změnit od "
 "poslední verze)"
 
+#, c-format
+msgid "debug: removing file: %s"
+msgstr "ladění: odstraňuji soubor: %s"
+
+#. TRANSLATORS: %.02fs is a float number + "s" ("seconds")
+#, c-format
+msgid "Upgrade done (%.02fs)"
+msgstr "Aktualizace dokončena (%.02fs)"
+
 msgid "invalid URL"
 msgstr ""
 
@@ -6127,6 +5930,203 @@ msgstr "chyba"
 #, c-format
 msgid "curl error %d (%s) (URL: \"%s\")\n"
 msgstr "chyba curlu %d (%s) (URL: \"%s\")\n"
+
+#, fuzzy, c-format
+msgid "%sAnother command \"%s\" already exists for plugin \"%s\""
+msgstr "%sChyba: příkaz \"%s\" již existuje pro plugin \"%s\""
+
+#, fuzzy, c-format
+msgid ""
+"%sUnknown command \"%s\" (commands are case sensitive, type /help for help), "
+"commands with similar name: %s"
+msgstr "%sChyba: neznámý příkaz \"%s\" (napište /help pro nápovědu)"
+
+#, fuzzy, c-format
+msgid ""
+"%sUnknown command \"%s\" (type /help for help), commands with similar name: "
+"%s"
+msgstr "%sChyba: neznámý příkaz \"%s\" (napište /help pro nápovědu)"
+
+#, c-format
+msgid "%sBad file descriptor (%d) used in hook_fd"
+msgstr ""
+
+#, fuzzy, c-format
+#| msgid "End of command '%s', timeout reached (%.1fs)"
+msgid "End of command '%s', timeout reached (%.3fs)"
+msgstr "Konec příkazu '%s', vypršel časový limit (%.1fs)"
+
+#, c-format
+msgid "System clock skew detected (%+ld seconds), reinitializing all timers"
+msgstr ""
+"Detekován posun systémových hodin (%+ld sekund), znovu inicializuji časovače"
+
+#, fuzzy, c-format
+#| msgid "curl error %d (%s) (URL: \"%s\")\n"
+msgid "%sURL transfer error: %s (URL: \"%s\")"
+msgstr "chyba curlu %d (%s) (URL: \"%s\")\n"
+
+#, fuzzy, c-format
+#| msgid "End of command '%s', timeout reached (%.1fs)"
+msgid "End of URL transfer '%s', timeout reached (%.3fs)"
+msgstr "Konec příkazu '%s', vypršel časový limit (%.1fs)"
+
+#, c-format
+msgid "%sError running thread in hook_url: %s (URL: \"%s\")"
+msgstr ""
+
+#. TRANSLATORS: "%s %s" after "compiled on" is date and time
+#, c-format
+msgid ""
+"WeeChat %s Copyright %s, compiled on %s %s\n"
+"Developed by Sébastien Helleu <flashcode@flashtux.org> - %s"
+msgstr ""
+"WeeChat %s Copyright %s, zkompilováno %s %s\n"
+"Vyvinutý Sébastienem Helleu <flashcode@flashtux.org> - %s"
+
+#, c-format
+msgid "Usage: %s [option...] [plugin:option...]\n"
+msgstr "Použití: %s [volba...] [plugin:volba...]\n"
+
+#, fuzzy
+msgid ""
+"  -a, --no-connect         disable auto-connect to servers at startup\n"
+"  -c, --colors             display default colors in terminal and exit\n"
+"  -d, --dir <path>         force a single WeeChat home directory\n"
+"                           or 5 different directories separated by colons "
+"(in this order: config, data, state, cache, runtime)\n"
+"                           (environment variable WEECHAT_HOME is read if "
+"this option is not given)\n"
+"  -t, --temp-dir           create a temporary WeeChat home directory and "
+"delete it on exit\n"
+"                           (incompatible with option \"-d\")\n"
+"  -h, --help               display this help and exit\n"
+"  -i, --build-info         display build information and exit\n"
+"  -l, --license            display WeeChat license and exit\n"
+"  -p, --no-plugin          don't load any plugin at startup\n"
+"  -P, --plugins <plugins>  load only these plugins at startup\n"
+"                           (see /help weechat.plugin.autoload)\n"
+"  -r, --run-command <cmd>  run command(s) after startup;\n"
+"                           many commands can be separated by semicolons and "
+"are evaluated,\n"
+"                           this option can be given multiple times\n"
+"  -s, --no-script          don't load any script at startup\n"
+"      --upgrade            upgrade WeeChat using session files (see /help "
+"upgrade in WeeChat)\n"
+"  -v, --version            display WeeChat version and exit\n"
+"  plugin:option            option for plugin (see man weechat)\n"
+msgstr ""
+"  -a, --no-connect\t\t\tvypne automatické připojení k serverům při startu\n"
+"  -c, --colors\t\t\t\tzobrazí výchozí barvy v terminálu\n"
+"  -d, --dir <cesta>\t  \t\tnastaví domovský adresář WeeChat (výchozí: ~/."
+"weechat)\n"
+"\t\t\t\t\t\t\t(pokud není použita,  weechat zkusí načíst promněnou prostředí "
+"WEECHAT_HOME)\n"
+"  -h, --help\t\t\t\t\ttato nápověda\n"
+"  -l, --license\t\t\t\t\tlicence WeeChatu\n"
+"  -p, --no-plugin\t\t\t\tnenačítej při startu pluginy\n"
+"  -r, --run-command <cmd>\tspusť příkaz po startu\n"
+"\t\t\t\t\t\t\t(více příkazů jde oddělit středníkem)\n"
+"  -s, --no-script\t\t\t\tnenačítej skripty při startu\n"
+"      --upgrade\t\t\t\tupgraduj WeeChat za pomocí uloženní stavu (viz /help "
+"upgrade v WeeChatu)\n"
+"  -v, --version\t\t\t\tzobraz verzi WeeChatu\n"
+"  plugin:option\t\t\t\tvolba pro plugin (viz: man weechat)\n"
+
+msgid "Extra options in headless mode:\n"
+msgstr ""
+
+msgid ""
+"      --doc-gen <path>     generate files to build documentation and exit\n"
+msgstr ""
+
+msgid ""
+"      --daemon             run WeeChat as a daemon (fork, new process group, "
+"file descriptors closed);\n"
+msgstr ""
+
+msgid ""
+"                           (by default in headless mode WeeChat is blocking "
+"and does not run in background)\n"
+msgstr ""
+
+msgid ""
+"      --stdout             display log messages on standard output instead "
+"of writing them in log file\n"
+msgstr ""
+
+msgid ""
+"                           (option ignored if option \"--daemon\" is given)\n"
+msgstr ""
+
+msgid ""
+"Debug options (for tools like valgrind, DO NOT USE IN PRODUCTION):\n"
+"      --no-dlclose         do not call function dlclose after plugins are "
+"unloaded\n"
+"      --no-gnutls          disable init/deinit of gnutls\n"
+"      --no-gcrypt          disable init/deinit of gcrypt\n"
+msgstr ""
+
+#, c-format
+msgid "Error: missing argument for \"%s\" option\n"
+msgstr "Chyba: chybí argument pro volbu \"%s\"\n"
+
+#, fuzzy
+msgid "WeeChat is running in headless mode (ctrl-c to quit)."
+msgstr "1 pokud se WeeChat aktualizuje (příkaz `/upgrade`)"
+
+#, fuzzy
+msgid ""
+"Welcome to WeeChat!\n"
+"\n"
+"If you are discovering WeeChat, it is recommended to read at least the "
+"quickstart guide, and the user's guide if you have some time; they explain "
+"main WeeChat concepts.\n"
+"All WeeChat docs are available at: https://weechat.org/doc/\n"
+"\n"
+"Moreover, there is inline help with /help on all commands and options (use "
+"Tab key to complete the name).\n"
+"The command /fset can help to customize WeeChat.\n"
+"\n"
+"You can add and connect to an IRC server with /server and /connect commands "
+"(see /help server)."
+msgstr ""
+"Vítejte v WeeChatu!\n"
+"\n"
+"Pokud objevujete WeeChat je doporučeno si prečíst alespoň \"quickstart\" "
+"průvodce, a pokud máte trochu času tak uživatelskou příručku, oboje vám "
+"vyvětlí hlavní koncepty WeeChatu.\n"
+"Veškerá dokumentace WeeChatu je dostupná na adrese: https://weechat.org/"
+"doc/\n"
+"\n"
+"Navíc je zde dostupná integrovaná nápověda /help fungující na všech "
+"příkazech a nastaveních ( použijte Tab klávesu pro doplňování názvů).\n"
+"Příkaz /iset (script iset.pl) může pomoci upravit WeeChat\" /script install "
+"iset.pl\n"
+"\n"
+"Můžete přidat IRC server a připojit se k němu pomocí príkazů /server a /"
+"connect ( podívejte se na /help server)."
+
+#. TRANSLATORS: the "under %s" can be "under screen" or "under tmux"
+#, c-format
+msgid ""
+"%sWarning: WeeChat is running under %s and $TERM is \"%s\", which can cause "
+"display bugs; $TERM should be set to one of these values: %s"
+msgstr ""
+"%sVarování: WeeChat běží pod %s a $TERM je \"%s\", což může způsobovat chyby "
+"zobrazení; $TERM by měl obsahovat jednu z těchto hodnot %s"
+
+#, c-format
+msgid "%sYou should add this line in the file %s:  %s"
+msgstr "%sMůžete přidat tuto linku do souboru %s:  %s"
+
+#, c-format
+msgid ""
+"%sWarning: cannot set the locale; make sure $LANG and $LC_* variables are "
+"correct"
+msgstr ""
+"%sVarování: nemohu nastavit lokalizaci; zkontrolujte že $LANG a $LC_* "
+"promněné jsou nastaveny správně"
 
 #, c-format
 msgid ""
@@ -6211,6 +6211,58 @@ msgstr "chyba"
 msgid "OK"
 msgstr "OK"
 
+#, fuzzy
+msgid "condition(s) to display the bar item (evaluated, see /help eval)"
+msgstr ""
+"uživatelské jméno pro proxy server(pozn.: obsah je vykonán, viz /help eval)"
+
+#, fuzzy
+msgid "content of bar item (evaluated, see /help eval)"
+msgstr ""
+"uživatelské jméno pro proxy server(pozn.: obsah je vykonán, viz /help eval)"
+
+#, c-format
+msgid "debug: long callback: bar: %s, item: %s, plugin: %s, time elapsed: %s"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%sPaste %d line? [ctrl-y] Yes [ctrl-n] No"
+msgid_plural "%sPaste %d lines? [ctrl-y] Yes [ctrl-n] No"
+msgstr[0] "%sVložit %d řádek ? [ctrl-Y] Ano [ctrl-N] Ne"
+msgstr[1] "%sVložit %d řádky ? [ctrl-Y] Ano [ctrl-N] Ne"
+msgstr[2] "%sVložit %d řádků ? [ctrl-Y] Ano [ctrl-N] Ne"
+
+#. TRANSLATORS: search in "local" history
+msgid "local"
+msgstr ""
+
+#. TRANSLATORS: search in "global" history
+msgid "global"
+msgstr ""
+
+#, fuzzy
+#| msgid "Search"
+msgid "Search lines"
+msgstr "Hledej"
+
+#, fuzzy
+#| msgid "default command:"
+msgid "Search command"
+msgstr "výchozí příkaz:"
+
+msgid "keyboard and mouse debug ('q' to quit debug mode)"
+msgstr ""
+
+#, c-format
+msgid "%s-MORE(%d)-"
+msgstr "%s-VÍCE(%d)-"
+
+msgid "Lag"
+msgstr "Lag"
+
+msgid "away"
+msgstr "pryč"
+
 #, c-format
 msgid ""
 "%sUnable to change bar type: you must delete bar and create another to do "
@@ -6289,58 +6341,6 @@ msgid ""
 msgstr ""
 "položky pole, můžou být rozděleny čárkou (mezera mezi položkami) nebo \"+\" "
 "(slepené položky)"
-
-#, c-format
-msgid "debug: long callback: bar: %s, item: %s, plugin: %s, time elapsed: %s"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "%sPaste %d line? [ctrl-y] Yes [ctrl-n] No"
-msgid_plural "%sPaste %d lines? [ctrl-y] Yes [ctrl-n] No"
-msgstr[0] "%sVložit %d řádek ? [ctrl-Y] Ano [ctrl-N] Ne"
-msgstr[1] "%sVložit %d řádky ? [ctrl-Y] Ano [ctrl-N] Ne"
-msgstr[2] "%sVložit %d řádků ? [ctrl-Y] Ano [ctrl-N] Ne"
-
-#. TRANSLATORS: search in "local" history
-msgid "local"
-msgstr ""
-
-#. TRANSLATORS: search in "global" history
-msgid "global"
-msgstr ""
-
-#, fuzzy
-#| msgid "Search"
-msgid "Search lines"
-msgstr "Hledej"
-
-#, fuzzy
-#| msgid "default command:"
-msgid "Search command"
-msgstr "výchozí příkaz:"
-
-msgid "keyboard and mouse debug ('q' to quit debug mode)"
-msgstr ""
-
-#, c-format
-msgid "%s-MORE(%d)-"
-msgstr "%s-VÍCE(%d)-"
-
-msgid "Lag"
-msgstr "Lag"
-
-msgid "away"
-msgstr "pryč"
-
-#, fuzzy
-msgid "condition(s) to display the bar item (evaluated, see /help eval)"
-msgstr ""
-"uživatelské jméno pro proxy server(pozn.: obsah je vykonán, viz /help eval)"
-
-#, fuzzy
-msgid "content of bar item (evaluated, see /help eval)"
-msgstr ""
-"uživatelské jméno pro proxy server(pozn.: obsah je vykonán, viz /help eval)"
 
 #, fuzzy, c-format
 msgid "Notify changed for \"%s%s%s\": \"%s%s%s\" to \"%s%s%s\""
@@ -6463,18 +6463,6 @@ msgstr "Ladění zapnuto pro myš (%s)"
 
 msgid "Debug disabled for mouse"
 msgstr "Ladění myši vypnuto"
-
-#, fuzzy
-msgid "Alias commands"
-msgstr "alias pro barvu"
-
-#, c-format
-msgid "%s%s: error, circular reference when calling alias \"%s\""
-msgstr "%s%s: chyba, cyklický odkaz při volání aliasu \"%s\""
-
-#, fuzzy, c-format
-msgid "%s%s: invalid alias name: \"%s\""
-msgstr "%s%s: nekorektní znaková sada: \"%s\""
 
 #, c-format
 msgid "%s%s: error creating alias \"%s\" => \"%s\""
@@ -6639,16 +6627,17 @@ msgstr "jméno serveru (zástupný znak \"*\" je povolen) (volitelný)"
 msgid "list of default aliases"
 msgstr "seznam aliasů"
 
-msgid "Buffers list"
-msgstr "Seznam bufferů"
+#, fuzzy
+msgid "Alias commands"
+msgstr "alias pro barvu"
 
 #, c-format
-msgid ""
-"%sbuflist: warning: the script buffers.pl is loaded and provides a bar with "
-"list of buffers similar to the buflist plugin; you may want to uninstall the "
-"script buffers.pl (/script remove buffers.pl) or disable/unload the buflist "
-"plugin; see WeeChat release notes for more information"
-msgstr ""
+msgid "%s%s: error, circular reference when calling alias \"%s\""
+msgstr "%s%s: chyba, cyklický odkaz při volání aliasu \"%s\""
+
+#, fuzzy, c-format
+msgid "%s%s: invalid alias name: \"%s\""
+msgstr "%s%s: nekorektní znaková sada: \"%s\""
 
 #, fuzzy
 msgid "bar item with list of buffers"
@@ -7008,6 +6997,17 @@ msgstr "seznam bufferů v hotlistu"
 msgid "buflist bar item name (optional)"
 msgstr "ukazatel položky pole (volitelný)"
 
+msgid "Buffers list"
+msgstr "Seznam bufferů"
+
+#, c-format
+msgid ""
+"%sbuflist: warning: the script buffers.pl is loaded and provides a bar with "
+"list of buffers similar to the buflist plugin; you may want to uninstall the "
+"script buffers.pl (/script remove buffers.pl) or disable/unload the buflist "
+"plugin; see WeeChat release notes for more information"
+msgstr ""
+
 msgid "Charset conversions"
 msgstr "konverze znakové sady"
 
@@ -7073,17 +7073,6 @@ msgstr "změní znakovou sadu aktuálního bufferu"
 
 msgid "Executed commands"
 msgstr "Vykonané příkazy"
-
-msgid "Execution of external commands in WeeChat"
-msgstr "Spouštění externích příkazů v WeeChatu"
-
-#, fuzzy, c-format
-msgid "%s: end of command %ld (\"%s\"), return code: %d"
-msgstr "%s: konec příkazu %d (\"%s\"), návratový kód: %d"
-
-#, fuzzy, c-format
-msgid "%s: unexpected end of command %ld (\"%s\")"
-msgstr "%s: neočekávaný konec příkazu %d (\"%s\")"
 
 msgid "No command is running"
 msgstr "Neběží žádný příkaz"
@@ -7362,41 +7351,16 @@ msgstr "barva textu pro akce ve vstupní řádce"
 msgid "text color for a running command flag in list of commands"
 msgstr "barva textu pro akce ve vstupní řádce"
 
-#, fuzzy
-msgid "FIFO pipe for remote control"
-msgstr "jméno FIFO roury"
+msgid "Execution of external commands in WeeChat"
+msgstr "Spouštění externích příkazů v WeeChatu"
 
 #, fuzzy, c-format
-msgid "%s%s: not enough memory (%s)"
-msgstr "%s%s: nedostatek paměti"
+msgid "%s: end of command %ld (\"%s\"), return code: %d"
+msgstr "%s: konec příkazu %d (\"%s\"), návratový kód: %d"
 
 #, fuzzy, c-format
-msgid "%s: pipe opened (file: %s)"
-msgstr "Myš je zapnuta"
-
-#, c-format
-msgid "%s%s: unable to open pipe (%s) for reading"
-msgstr "%s%s: nemohu otevřít rouru (%s) pro čtení"
-
-#, fuzzy, c-format
-msgid "%s%s: unable to create pipe for remote control (%s): error %d %s"
-msgstr "%s%s: nemohu vytvořit rouru pro vzdálené ovládání (%s)"
-
-#, c-format
-msgid "%s: pipe closed"
-msgstr "%s: roura zavřena"
-
-#, fuzzy, c-format
-msgid "%s%s: invalid text received in pipe"
-msgstr "%s%s: chyba, přijat nekorektní text na rouře"
-
-#, fuzzy, c-format
-msgid "%s%s: buffer \"%s\" not found"
-msgstr "%s%s: chyba, nenalezen buffer pro data roury"
-
-#, fuzzy, c-format
-msgid "%s%s: error reading pipe (%d %s), closing it"
-msgstr "%s%s: čtu data ze soketu: chyba %d %s"
+msgid "%s: unexpected end of command %ld (\"%s\")"
+msgstr "%s: neočekávaný konec příkazu %d (\"%s\")"
 
 #, fuzzy, c-format
 msgid "%s: pipe is enabled (file: %s)"
@@ -7462,6 +7426,42 @@ msgid "name of FIFO pipe"
 msgstr "jméno FIFO roury"
 
 #, fuzzy
+msgid "FIFO pipe for remote control"
+msgstr "jméno FIFO roury"
+
+#, fuzzy, c-format
+msgid "%s%s: not enough memory (%s)"
+msgstr "%s%s: nedostatek paměti"
+
+#, fuzzy, c-format
+msgid "%s: pipe opened (file: %s)"
+msgstr "Myš je zapnuta"
+
+#, c-format
+msgid "%s%s: unable to open pipe (%s) for reading"
+msgstr "%s%s: nemohu otevřít rouru (%s) pro čtení"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to create pipe for remote control (%s): error %d %s"
+msgstr "%s%s: nemohu vytvořit rouru pro vzdálené ovládání (%s)"
+
+#, c-format
+msgid "%s: pipe closed"
+msgstr "%s: roura zavřena"
+
+#, fuzzy, c-format
+msgid "%s%s: invalid text received in pipe"
+msgstr "%s%s: chyba, přijat nekorektní text na rouře"
+
+#, fuzzy, c-format
+msgid "%s%s: buffer \"%s\" not found"
+msgstr "%s%s: chyba, nenalezen buffer pro data roury"
+
+#, fuzzy, c-format
+msgid "%s%s: error reading pipe (%d %s), closing it"
+msgstr "%s%s: čtu data ze soketu: chyba %d %s"
+
+#, fuzzy
 msgid "values:"
 msgstr "hodnoty"
 
@@ -7484,9 +7484,6 @@ msgid ""
 "$)=unmark/refresh, (m)=mark matching options, (u)=unmark matching options, "
 "alt+p(p)=toggle plugins desc, alt+v(v)=toggle help bar, ctrl+x(x)=switch "
 "format, (q)=close buffer"
-msgstr ""
-
-msgid "Fast set of WeeChat and plugins options"
 msgstr ""
 
 #, c-format
@@ -8180,6 +8177,9 @@ msgstr "seznam konfiguračních možností"
 msgid "any color"
 msgstr "barva"
 
+msgid "Fast set of WeeChat and plugins options"
+msgstr ""
+
 #, fuzzy, c-format
 msgid "%s%s: script \"%s\" already registered (register ignored)"
 msgstr "%s%s: server \"%s\" již existuje, nemohu jej vytvořít!"
@@ -8243,49 +8243,6 @@ msgstr "server"
 #. TRANSLATORS: this is displayed in a bar item and must be as short as possible
 msgid "cleartext"
 msgstr ""
-
-msgid "IRC (Internet Relay Chat) protocol"
-msgstr "IRC (Internet Relay Chat) protokol"
-
-#, fuzzy, c-format
-#| msgid ""
-#| "%s%s: disconnecting from server because upgrade can't work for servers "
-#| "connected via SSL"
-msgid ""
-"%s%s: disconnecting from server because upgrade can't work for servers "
-"connected via TLS"
-msgstr ""
-"%s%s: odpojuji se od serveru, protože aktualizace nefunguje pro servery "
-"připojené přes SSL"
-
-#, fuzzy, c-format
-msgid ""
-"%s%s: disconnected from %d server (TLS connection not supported with upgrade)"
-msgid_plural ""
-"%s%s: disconnected from %d servers (TLS connection not supported with "
-"upgrade)"
-msgstr[0] ""
-"%s%s: odpojuji se od %d %s (SSL připojení není podporováno pro aktualizaci)"
-msgstr[1] ""
-"%s%s: odpojuji se od %d %s (SSL připojení není podporováno pro aktualizaci)"
-msgstr[2] ""
-"%s%s: odpojuji se od %d %s (SSL připojení není podporováno pro aktualizaci)"
-
-#, fuzzy, c-format
-msgid ""
-"%s%s: unable to add temporary server \"%s\" (check if there is already a "
-"server with this name)"
-msgstr ""
-"%s%s: nemohu registrovat skript \"%s\" (jiný skript se stejným jménem již "
-"existuje)"
-
-#, c-format
-msgid ""
-"%s%s: WARNING: some network connections may still be opened and not visible, "
-"you should restart WeeChat now (with /quit)."
-msgstr ""
-"%s%s: UPOZORNĚNÍ: některé síťové spojení mohou být stále otevřené, ale "
-"neviditelné mel by jste nyní restartovat WeeChat (použitím /quit)."
 
 #, c-format
 msgid "%s%s: cannot allocate new channel"
@@ -8373,6 +8330,14 @@ msgstr "%s: server %s%s%s přidán"
 #. TRANSLATORS: "temporary IRC server"
 msgid " (temporary)"
 msgstr " (dočasný)"
+
+#, fuzzy, c-format
+msgid ""
+"%s%s: unable to add temporary server \"%s\" (check if there is already a "
+"server with this name)"
+msgstr ""
+"%s%s: nemohu registrovat skript \"%s\" (jiný skript se stejným jménem již "
+"existuje)"
 
 #, fuzzy, c-format
 msgid ""
@@ -12639,6 +12604,46 @@ msgstr "%s%s: připojuji se znovu k serveru..."
 msgid "%s%s: disconnected from server"
 msgstr "%s%s: odpojen od serveru"
 
+msgid "IRC (Internet Relay Chat) protocol"
+msgstr "IRC (Internet Relay Chat) protokol"
+
+#, fuzzy, c-format
+#| msgid ""
+#| "%s%s: disconnecting from server because upgrade can't work for servers "
+#| "connected via SSL"
+msgid ""
+"%s%s: disconnecting from server because upgrade can't work for servers "
+"connected via TLS"
+msgstr ""
+"%s%s: odpojuji se od serveru, protože aktualizace nefunguje pro servery "
+"připojené přes SSL"
+
+#, fuzzy, c-format
+msgid ""
+"%s%s: disconnected from %d server (TLS connection not supported with upgrade)"
+msgid_plural ""
+"%s%s: disconnected from %d servers (TLS connection not supported with "
+"upgrade)"
+msgstr[0] ""
+"%s%s: odpojuji se od %d %s (SSL připojení není podporováno pro aktualizaci)"
+msgstr[1] ""
+"%s%s: odpojuji se od %d %s (SSL připojení není podporováno pro aktualizaci)"
+msgstr[2] ""
+"%s%s: odpojuji se od %d %s (SSL připojení není podporováno pro aktualizaci)"
+
+#, c-format
+msgid ""
+"%s%s: WARNING: some network connections may still be opened and not visible, "
+"you should restart WeeChat now (with /quit)."
+msgstr ""
+"%s%s: UPOZORNĚNÍ: některé síťové spojení mohou být stále otevřené, ale "
+"neviditelné mel by jste nyní restartovat WeeChat (použitím /quit)."
+
+#, fuzzy, c-format
+#| msgid "%s%s: error: %s"
+msgid "%s%s: exception: %s"
+msgstr "%s%s: chyba: %s"
+
 #, fuzzy
 #| msgid "Support of lua scripts"
 msgid "Support of javascript scripts"
@@ -12663,11 +12668,6 @@ msgstr "%s%s: nemůžu spustit soubor \"%s\""
 #, fuzzy, c-format
 msgid "%sCommand \"/%s eval\" is not yet implemented"
 msgstr "%sBarva \"%s\" není definovávána v paletě"
-
-#, fuzzy, c-format
-#| msgid "%s%s: error: %s"
-msgid "%s%s: exception: %s"
-msgstr "%s%s: chyba: %s"
 
 #, c-format
 msgid "%s===\t%s========== End of backlog (%d lines) =========="
@@ -12700,18 +12700,6 @@ msgstr "%s\t****  Začátek logu  ****"
 #, c-format
 msgid "%s\t****  End of log  ****"
 msgstr "%s\t****  Konec logu  ****"
-
-#, fuzzy
-msgid "Log buffers to files"
-msgstr "konfigurační soubory"
-
-#, c-format
-msgid ""
-"%s%s: unable to find filename mask for buffer \"%s\", logging is disabled "
-"for this buffer"
-msgstr ""
-"%s%s: nemohu najít jméno souboru masky pro buffer \"%s\", logování pro tento "
-"buffer je vypnuto"
 
 msgid "Logging on buffers:"
 msgstr "Loguji buffery:"
@@ -12972,6 +12960,18 @@ msgstr "seznam logovacích bufferů"
 msgid "logger pointer (optional)"
 msgstr "ukazatel logeru (volitelné)"
 
+#, fuzzy
+msgid "Log buffers to files"
+msgstr "konfigurační soubory"
+
+#, c-format
+msgid ""
+"%s%s: unable to find filename mask for buffer \"%s\", logging is disabled "
+"for this buffer"
+msgstr ""
+"%s%s: nemohu najít jméno souboru masky pro buffer \"%s\", logování pro tento "
+"buffer je vypnuto"
+
 msgid "Support of lua scripts"
 msgstr "podpora skriptů v lua"
 
@@ -13009,96 +13009,6 @@ msgstr "%s%s: nemohu inicializovat %s"
 #, fuzzy
 msgid "Support of PHP scripts"
 msgstr "podpora skriptů v lua"
-
-msgid "bar"
-msgstr "bar"
-
-#, fuzzy
-msgid "bar item"
-msgstr "zobrazit počet každého částečného doplnění v položce pole"
-
-#, fuzzy
-msgid "bar window"
-msgstr "ukazatel pole okna (volitelný)"
-
-msgid "buffer"
-msgstr "bufer"
-
-msgid "visited buffer"
-msgstr "navštívený buffer"
-
-msgid "structure with completion"
-msgstr "struktura s dokončením"
-
-#, fuzzy
-msgid "structure with word found for a completion"
-msgstr "struktura s dokončením"
-
-msgid "config file"
-msgstr "konfigurační soubor"
-
-msgid "config section"
-msgstr "sekce konfigu"
-
-msgid "config option"
-msgstr "konfigurační možnost"
-
-msgid "filter"
-msgstr "filtr"
-
-#, fuzzy
-msgid "history of commands in buffer"
-msgstr "historie příkazů"
-
-#, fuzzy
-msgid "hotlist"
-msgstr "řetězec zobrazený mezi buffery v hotlistu"
-
-#, fuzzy
-msgid "structure with undo for input line"
-msgstr "struktura s jedním řádkem"
-
-msgid "a key (keyboard shortcut)"
-msgstr "klávesa (klávesová zkratka)"
-
-msgid "layout"
-msgstr "rozložení"
-
-msgid "buffer layout"
-msgstr "rozložení bufferů"
-
-msgid "window layout"
-msgstr "rozvržení oken"
-
-msgid "structure with lines"
-msgstr "struktura s řádky"
-
-msgid "structure with one line"
-msgstr "struktura s jedním řádkem"
-
-msgid "structure with one line data"
-msgstr "struktura s jednořádkovými daty"
-
-msgid "group in nicklist"
-msgstr "skupina v seznamu přezdívek"
-
-msgid "nick in nicklist"
-msgstr "přezdívka v seznamu přezdívek"
-
-msgid "plugin"
-msgstr "plugin"
-
-msgid "proxy"
-msgstr "proxy"
-
-msgid "window"
-msgstr "okno"
-
-msgid "scroll info in window"
-msgstr "posouvej info v okně"
-
-msgid "tree of windows"
-msgstr "strom oken"
 
 msgid "WeeChat version"
 msgstr "verze WeeChat"
@@ -13482,69 +13392,111 @@ msgstr "ukazatel okna (volitelné)"
 msgid "\"current\" for current window or a window number (optional)"
 msgstr "\"current\" pro současné okno nebo číslo okna (volitelné)"
 
-#, c-format
-msgid "Initializing plugin \"%s\" (priority: %d)"
-msgstr "Inicializuji plugin \"%s\" (priorita: %d)"
+msgid "bar"
+msgstr "bar"
 
-#, fuzzy, c-format
-msgid "%sUnable to initialize plugin \"%s\""
-msgstr "%sChyba: nemohu inicializovat plugin \"%s\""
+#, fuzzy
+msgid "bar item"
+msgstr "zobrazit počet každého částečného doplnění v položce pole"
 
-#, fuzzy, c-format
-msgid "%sUnable to load plugin \"%s\": %s"
-msgstr "%sChyba: nemůžu načist plugin \"%s\": %s"
+#, fuzzy
+msgid "bar window"
+msgstr "ukazatel pole okna (volitelný)"
 
-#, c-format
-msgid ""
-"%sIf you're trying to load a script and not a C plugin, try command to load "
-"scripts (/perl, /python, ...)"
-msgstr ""
-"%sZkuste příkaz pro načtení skriptu (/perl, /python, ...), pokud se snažíte "
-"načíst skript místo C pluginu"
+msgid "buffer"
+msgstr "bufer"
 
-#, fuzzy, c-format
-msgid "%sSymbol \"%s\" not found in plugin \"%s\", failed to load"
-msgstr "%sChyba: symbol \"%s\" nebyl v pluginu \"%s\" nalezen, načtení selhalo"
+msgid "visited buffer"
+msgstr "navštívený buffer"
 
-#, c-format
-msgid "%sIf plugin \"%s\" is old/obsolete, you can delete this file."
-msgstr "%sMůžete smazat tento soubor, pokud je plugin \"%s\" starý/neplatný."
+msgid "structure with completion"
+msgstr "struktura s dokončením"
 
-#, fuzzy, c-format
-msgid ""
-"%sAPI mismatch for plugin \"%s\" (current API: \"%s\", plugin API: \"%s\"), "
-"failed to load"
-msgstr ""
-"%sChyba: chyba API v pluginu \"%s\" (aktuální API: \"%s\", API pluginu: "
-"\"%s\"), načtení selhalo"
+#, fuzzy
+msgid "structure with word found for a completion"
+msgstr "struktura s dokončením"
 
-#, fuzzy, c-format
-msgid "%sUnable to load plugin \"%s\": a plugin with same name already exists"
-msgstr ""
-"%sChyba: nemohu načíst plugin \"%s\": plugin se stejným jménem již existuje"
+msgid "config file"
+msgstr "konfigurační soubor"
 
-#, fuzzy, c-format
-msgid "%sFunction \"%s\" not found in plugin \"%s\", failed to load"
-msgstr ""
-"%sChyba: funkce \"%s\" nebyla v pluginu \"%s\" nalezena, načtení selhalo"
+msgid "config section"
+msgstr "sekce konfigu"
 
-#, fuzzy, c-format
-msgid "%sUnable to load plugin \"%s\" (not enough memory)"
-msgstr "%sChyba: nemohu načíst plugin \"%s\" (nedostatek paměti)"
+msgid "config option"
+msgstr "konfigurační možnost"
 
-#, c-format
-msgid "Plugin \"%s\" loaded"
-msgstr "Plugin \"%s\" načten"
+msgid "filter"
+msgstr "filtr"
 
-#, c-format
-msgid "Plugin \"%s\" unloaded"
-msgstr "Plugin \"%s\" odebrán"
+#, fuzzy
+msgid "history of commands in buffer"
+msgstr "historie příkazů"
 
-msgid "Plugins unloaded"
-msgstr "Pluginy odebrány"
+#, fuzzy
+msgid "hotlist"
+msgstr "řetězec zobrazený mezi buffery v hotlistu"
+
+#, fuzzy
+msgid "structure with undo for input line"
+msgstr "struktura s jedním řádkem"
+
+msgid "a key (keyboard shortcut)"
+msgstr "klávesa (klávesová zkratka)"
+
+msgid "layout"
+msgstr "rozložení"
+
+msgid "buffer layout"
+msgstr "rozložení bufferů"
+
+msgid "window layout"
+msgstr "rozvržení oken"
+
+msgid "structure with lines"
+msgstr "struktura s řádky"
+
+msgid "structure with one line"
+msgstr "struktura s jedním řádkem"
+
+msgid "structure with one line data"
+msgstr "struktura s jednořádkovými daty"
+
+msgid "group in nicklist"
+msgstr "skupina v seznamu přezdívek"
+
+msgid "nick in nicklist"
+msgstr "přezdívka v seznamu přezdívek"
+
+msgid "plugin"
+msgstr "plugin"
+
+msgid "proxy"
+msgstr "proxy"
+
+msgid "window"
+msgstr "okno"
+
+msgid "scroll info in window"
+msgstr "posouvej info v okně"
+
+msgid "tree of windows"
+msgstr "strom oken"
 
 msgid "description of plugin option"
 msgstr "popis volby pluginu"
+
+msgid ""
+"check the license of scripts when they are loaded: if the license is "
+"different from the plugin license, a warning is displayed"
+msgstr ""
+
+#, c-format
+msgid ""
+"keep context between two calls to the source code evaluation (option "
+"\"eval\" of script command or info \"%s_eval\"); a hidden script is used to "
+"eval script code; if this option is disabled, this hidden script is unloaded "
+"after each eval: this uses less memory, but is slower"
+msgstr ""
 
 msgid "list/load/unload scripts"
 msgstr "seznam/načíst/odebrat skirpty"
@@ -13691,19 +13643,6 @@ msgstr "  (žádný)"
 msgid "%s: scripts unloaded"
 msgstr "%s: skripty odebrány"
 
-msgid ""
-"check the license of scripts when they are loaded: if the license is "
-"different from the plugin license, a warning is displayed"
-msgstr ""
-
-#, c-format
-msgid ""
-"keep context between two calls to the source code evaluation (option "
-"\"eval\" of script command or info \"%s_eval\"); a hidden script is used to "
-"eval script code; if this option is disabled, this hidden script is unloaded "
-"after each eval: this uses less memory, but is slower"
-msgstr ""
-
 #, c-format
 msgid ""
 "%s%s: unable to call function \"%s\", script is not initialized (script: %s)"
@@ -13713,6 +13652,67 @@ msgstr ""
 #, c-format
 msgid "%s%s: wrong arguments for function \"%s\" (script: %s)"
 msgstr "%s%s: špatné parametry pro funkci \"%s\" (skript: %s)"
+
+#, c-format
+msgid "Initializing plugin \"%s\" (priority: %d)"
+msgstr "Inicializuji plugin \"%s\" (priorita: %d)"
+
+#, fuzzy, c-format
+msgid "%sUnable to initialize plugin \"%s\""
+msgstr "%sChyba: nemohu inicializovat plugin \"%s\""
+
+#, fuzzy, c-format
+msgid "%sUnable to load plugin \"%s\": %s"
+msgstr "%sChyba: nemůžu načist plugin \"%s\": %s"
+
+#, c-format
+msgid ""
+"%sIf you're trying to load a script and not a C plugin, try command to load "
+"scripts (/perl, /python, ...)"
+msgstr ""
+"%sZkuste příkaz pro načtení skriptu (/perl, /python, ...), pokud se snažíte "
+"načíst skript místo C pluginu"
+
+#, fuzzy, c-format
+msgid "%sSymbol \"%s\" not found in plugin \"%s\", failed to load"
+msgstr "%sChyba: symbol \"%s\" nebyl v pluginu \"%s\" nalezen, načtení selhalo"
+
+#, c-format
+msgid "%sIf plugin \"%s\" is old/obsolete, you can delete this file."
+msgstr "%sMůžete smazat tento soubor, pokud je plugin \"%s\" starý/neplatný."
+
+#, fuzzy, c-format
+msgid ""
+"%sAPI mismatch for plugin \"%s\" (current API: \"%s\", plugin API: \"%s\"), "
+"failed to load"
+msgstr ""
+"%sChyba: chyba API v pluginu \"%s\" (aktuální API: \"%s\", API pluginu: "
+"\"%s\"), načtení selhalo"
+
+#, fuzzy, c-format
+msgid "%sUnable to load plugin \"%s\": a plugin with same name already exists"
+msgstr ""
+"%sChyba: nemohu načíst plugin \"%s\": plugin se stejným jménem již existuje"
+
+#, fuzzy, c-format
+msgid "%sFunction \"%s\" not found in plugin \"%s\", failed to load"
+msgstr ""
+"%sChyba: funkce \"%s\" nebyla v pluginu \"%s\" nalezena, načtení selhalo"
+
+#, fuzzy, c-format
+msgid "%sUnable to load plugin \"%s\" (not enough memory)"
+msgstr "%sChyba: nemohu načíst plugin \"%s\" (nedostatek paměti)"
+
+#, c-format
+msgid "Plugin \"%s\" loaded"
+msgstr "Plugin \"%s\" načten"
+
+#, c-format
+msgid "Plugin \"%s\" unloaded"
+msgstr "Plugin \"%s\" odebrán"
+
+msgid "Plugins unloaded"
+msgstr "Pluginy odebrány"
 
 msgid "Support of python scripts"
 msgstr "Podpora skriptů v pythonu"
@@ -14038,46 +14038,6 @@ msgstr "%s%-26s nastartován: %s, ukončen: %s"
 
 msgid "List of clients for relay"
 msgstr "Seznam klientů pro přenos"
-
-msgid "Relay WeeChat data to remote application (irc/weechat protocols)"
-msgstr "Předání dat WeeChatu do vzdálené aplikace (irc/weechat protokoly)"
-
-msgid "connecting"
-msgstr "připojuji"
-
-msgid "authenticating"
-msgstr ""
-
-#, fuzzy
-#| msgid "auth failed"
-msgid "authentication failed"
-msgstr "autorizace selhala"
-
-msgid "disconnected"
-msgstr "odpojen"
-
-#, fuzzy, c-format
-msgid ""
-"%s%s: disconnecting from client %s%s%s because upgrade can't work for "
-"clients connected via TLS"
-msgstr ""
-"%s%s: odpojuji se od serveru, protože aktualizace nefunguje pro servery "
-"připojené přes SSL"
-
-#. TRANSLATORS: "%s" after "%d" is "client" or "clients"
-#, fuzzy, c-format
-#| msgid ""
-#| "%s%s: disconnected from %d %s (SSL connection not supported with upgrade)"
-msgid ""
-"%s%s: disconnected from %d %s (TLS connection not supported with upgrade)"
-msgstr ""
-"%s%s: odpojuji se od %d %s (SSL připojení není podporováno pro aktualizaci)"
-
-msgid "client"
-msgid_plural "clients"
-msgstr[0] "klient"
-msgstr[1] "klienti"
-msgstr[2] "klientu"
 
 #, fuzzy, c-format
 msgid "%s%s: TLS handshake failed for client %s%s%s: error %d %s"
@@ -15062,6 +15022,46 @@ msgstr ""
 msgid "%s%s: not enough memory for listening on new port"
 msgstr "%s%s: nedostatek paměti pro poslouchání na portu"
 
+msgid "Relay WeeChat data to remote application (irc/weechat protocols)"
+msgstr "Předání dat WeeChatu do vzdálené aplikace (irc/weechat protokoly)"
+
+msgid "connecting"
+msgstr "připojuji"
+
+msgid "authenticating"
+msgstr ""
+
+#, fuzzy
+#| msgid "auth failed"
+msgid "authentication failed"
+msgstr "autorizace selhala"
+
+msgid "disconnected"
+msgstr "odpojen"
+
+#, fuzzy, c-format
+msgid ""
+"%s%s: disconnecting from client %s%s%s because upgrade can't work for "
+"clients connected via TLS"
+msgstr ""
+"%s%s: odpojuji se od serveru, protože aktualizace nefunguje pro servery "
+"připojené přes SSL"
+
+#. TRANSLATORS: "%s" after "%d" is "client" or "clients"
+#, fuzzy, c-format
+#| msgid ""
+#| "%s%s: disconnected from %d %s (SSL connection not supported with upgrade)"
+msgid ""
+"%s%s: disconnected from %d %s (TLS connection not supported with upgrade)"
+msgstr ""
+"%s%s: odpojuji se od %d %s (SSL připojení není podporováno pro aktualizaci)"
+
+msgid "client"
+msgid_plural "clients"
+msgstr[0] "klient"
+msgstr[1] "klienti"
+msgstr[2] "klientu"
+
 #, fuzzy, c-format
 msgid "%s: invalid pointer in hdata path: \"%s\""
 msgstr "%sChyba: nemohu odpojit klávesu \"%s\""
@@ -15273,16 +15273,6 @@ msgstr ""
 
 msgid "Scripts"
 msgstr "Skripty"
-
-#, fuzzy
-msgid "Script manager"
-msgstr "Správce skriptů"
-
-#, c-format
-msgid ""
-"%s%s: download of scripts is disabled by default; to enable it, type /script "
-"enable"
-msgstr ""
 
 #, fuzzy, c-format
 #| msgid "%s: downloading list of scripts..."
@@ -15707,15 +15697,13 @@ msgid "%s: downloading list of scripts..."
 msgstr "%s: stahuji seznam skriptů..."
 
 #, fuzzy
-msgid "Spell checker for input"
-msgstr "Kontrola pravopisu pro vstup (s Aspellem)"
+msgid "Script manager"
+msgstr "Správce skriptů"
 
 #, c-format
 msgid ""
-"%s%s: warning: the plugin \"aspell\" has been renamed to \"spell\" and the "
-"file %s still exists (but not %s); if you upgraded from an older version, "
-"you should check instructions in release notes (version 2.5) to recover your "
-"settings"
+"%s%s: download of scripts is disabled by default; to enable it, type /script "
+"enable"
 msgstr ""
 
 #. TRANSLATORS: "%s" is "spell" (name of plugin)
@@ -15968,6 +15956,18 @@ msgstr "%s: upozornění: slovník \"%s\" není dostupný ve vašem systému"
 msgid "%s%s: error: unable to create speller for lang \"%s\""
 msgstr "%s%s: nemohu vytvořit server \"%s\""
 
+#, fuzzy
+msgid "Spell checker for input"
+msgstr "Kontrola pravopisu pro vstup (s Aspellem)"
+
+#, c-format
+msgid ""
+"%s%s: warning: the plugin \"aspell\" has been renamed to \"spell\" and the "
+"file %s still exists (but not %s); if you upgraded from an older version, "
+"you should check instructions in release notes (version 2.5) to recover your "
+"settings"
+msgstr ""
+
 msgid "Support of tcl scripts"
 msgstr "Podpora skriptů v TCL"
 
@@ -15986,18 +15986,6 @@ msgstr "%s%s: nastala chyba během parsováni souboru \"%s\": %s"
 #, c-format
 msgid "Trigger monitor (filter: %s) | Input: q=close, words=filter"
 msgstr ""
-
-msgid ""
-"Text replacement and command execution on events triggered by WeeChat/plugins"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "%s%s: unable to create hook for trigger \"%s\" (bad arguments)"
-msgstr "%sChyba: nemohu přejmenovat filter \"%s\" na \"%s\""
-
-#, fuzzy, c-format
-msgid "%s%s: invalid regular expression in trigger: \"%s\""
-msgstr "%s%s: \"%s\" není validní regulární výraz (%s)"
 
 msgid "no variable"
 msgstr "není proměnná"
@@ -16580,11 +16568,20 @@ msgstr "barva textu pro nahrazující text (pro regulární výraz)"
 msgid "text color for replacement text (for regular expressions)"
 msgstr "barva textu pro nahrazující text (pro regulární výraz)"
 
-#. TRANSLATORS: this text is displayed before the list of nicks typing in the bar item "typing", it must be as short as possible
-msgid "Typing:"
+msgid ""
+"Text replacement and command execution on events triggered by WeeChat/plugins"
 msgstr ""
 
-msgid "Typing status of users"
+#, fuzzy, c-format
+msgid "%s%s: unable to create hook for trigger \"%s\" (bad arguments)"
+msgstr "%sChyba: nemohu přejmenovat filter \"%s\" na \"%s\""
+
+#, fuzzy, c-format
+msgid "%s%s: invalid regular expression in trigger: \"%s\""
+msgstr "%s%s: \"%s\" není validní regulární výraz (%s)"
+
+#. TRANSLATORS: this text is displayed before the list of nicks typing in the bar item "typing", it must be as short as possible
+msgid "Typing:"
 msgstr ""
 
 msgid ""
@@ -16618,6 +16615,9 @@ msgid ""
 "truncate content)"
 msgstr ""
 
+msgid "Typing status of users"
+msgstr ""
+
 msgid "  [A] Accept"
 msgstr "  [A] Akceptovat"
 
@@ -16632,146 +16632,6 @@ msgstr "ETA"
 
 msgid "Xfer list"
 msgstr "seznam Xfer"
-
-#, fuzzy
-msgid "DCC file transfer and direct chat"
-msgstr "spustit DCC (přenos souboru nebo rozhovor)"
-
-msgid "waiting"
-msgstr "čekám"
-
-msgid "active"
-msgstr "aktivní"
-
-msgid "done"
-msgstr "dokončeno"
-
-msgid "failed"
-msgstr "selhalo"
-
-msgid "aborted"
-msgstr "zrušeno"
-
-msgid "hashing"
-msgstr "hašování"
-
-msgid "CRC in progress"
-msgstr "probíhá CRC"
-
-msgid "CRC OK"
-msgstr "CRC OK"
-
-msgid "wrong CRC"
-msgstr "španté CRC"
-
-msgid "CRC error"
-msgstr "CRC chyba"
-
-#, c-format
-msgid "%s%s: file %s %s %s (%s): %s"
-msgstr "%s%s: soubor %s %s %s (%s): %s"
-
-msgid "sent to"
-msgstr "poslán"
-
-msgid "received from"
-msgstr "obdržen od"
-
-msgid "FAILED"
-msgstr "SELHALO"
-
-#, c-format
-msgid "%s%s: chat closed with %s (%s)"
-msgstr "%s%s: rozhovor ukončen s %s (%s)"
-
-#, c-format
-msgid "%s%s: aborting active xfer: \"%s\" from %s"
-msgstr "%s%s: ruším aktivní xfer: \"%s\" od %s"
-
-#, c-format
-msgid "%s%s: not enough memory for new xfer"
-msgstr "%s%s: nedostatek paměti pro nový xfer"
-
-#, fuzzy, c-format
-msgid "%s%s: unable to interpret address: error %d %s"
-msgstr "%s%s: nemohu se připojit\" neočekávaná chyba (%d)"
-
-#, c-format
-msgid "%s%s: hashing error"
-msgstr "%s%s: chyba hašování"
-
-#, fuzzy, c-format
-msgid ""
-"%s: incoming file from %s (%s, %s.%s), name: %s, %llu bytes (protocol: %s)"
-msgstr "%s: příchozí soubor od %s (%d.%d.%d.%d): %s, %llu bytů (protokol: %s)"
-
-#, fuzzy, c-format
-msgid ""
-"%s: offering file to %s (%s.%s), name: %s (local filename: %s), %llu bytes "
-"(protocol: %s)"
-msgstr ""
-"%s: posílám soubor k %s: %s (lokální jméno souboru: %s), %llu bytů "
-"(protokol: %s)"
-
-#, fuzzy, c-format
-msgid "%s: incoming chat request from %s (%s, %s.%s)"
-msgstr "%s: příchozí požadavek rozhovoru od %s (%d.%d.%d.%d)"
-
-#, fuzzy, c-format
-msgid "%s: sending chat request to %s (%s.%s)"
-msgstr "%s%s: chyba posílání dat k \"%s\" přes xfer chat"
-
-#, c-format
-msgid "%s: file %s (local filename: %s) will be resumed at position %llu"
-msgstr "%s: soubor %s (lokální jméno souboru: %s) bude obnoven na pozici %llu"
-
-#, c-format
-msgid "%s%s: missing arguments (%s)"
-msgstr "%s%s: chybí argumenty (%s)"
-
-#, c-format
-msgid "%s%s: unknown xfer type \"%s\""
-msgstr "%s%s: neznámý typ xfer \"%s\""
-
-#, c-format
-msgid "%s%s: unknown xfer protocol \"%s\""
-msgstr "%s%s: neznámá protokol xfer \"%s\""
-
-#, c-format
-msgid "%s%s: cannot access file \"%s\""
-msgstr "%s%s: nemohu přistupovat k souboru \"%s\""
-
-#, fuzzy, c-format
-msgid "%s%s: cannot create socket for xfer: error %d %s"
-msgstr "%s%s: nemohu vytvořit soket: chyba %d %s"
-
-#, c-format
-msgid "%s%s: cannot find available port for xfer"
-msgstr "%s%s: nemůžu najít dostupný port pro xfer"
-
-#, c-format
-msgid "%s%s: error creating xfer"
-msgstr "%s%s: chyba vytváření xfer"
-
-#, c-format
-msgid ""
-"%s%s: unable to resume file \"%s\" (port: %d, start position: %llu): xfer "
-"not found or not ready for transfer"
-msgstr ""
-"%s%s: nemohu obnovit soubor \"%s\" (port: %d, počáteční pozice: %llu): xfer "
-"nenalezen nebo není připraven pro přenos"
-
-#, c-format
-msgid "%s: file %s resumed at position %llu"
-msgstr "%s: soubor %s obnoven na pozici %llu"
-
-#, c-format
-msgid ""
-"%s%s: unable to accept resume file \"%s\" (port: %d, start position: %llu): "
-"xfer not found or not ready for transfer"
-msgstr ""
-"%s%s: nelze akceptovat obnovení souboru \"%s\" (port: %d, počáteční pozice: "
-"%llu): xfer nenalezen nebo není připraven pro přenos"
 
 #, c-format
 msgid "%s%s: error sending data to \"%s\" via xfer chat"
@@ -16794,6 +16654,12 @@ msgid ""
 msgstr ""
 "%3d. %s (%s), soubor: \"%s\" (lokální: \"%s\"), %s %s, status: %s%s%s (%llu "
 "%%)"
+
+msgid "sent to"
+msgstr "poslán"
+
+msgid "received from"
+msgstr "obdržen od"
 
 #. TRANSLATORS: "%s" after "started on" is a date
 #, c-format
@@ -17094,3 +16960,137 @@ msgstr "%s%s: vypršel časový limit \"%s\" pro %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: nemohu se připojit\" neočekávaná chyba (%d)"
+
+#, fuzzy
+msgid "DCC file transfer and direct chat"
+msgstr "spustit DCC (přenos souboru nebo rozhovor)"
+
+msgid "waiting"
+msgstr "čekám"
+
+msgid "active"
+msgstr "aktivní"
+
+msgid "done"
+msgstr "dokončeno"
+
+msgid "failed"
+msgstr "selhalo"
+
+msgid "aborted"
+msgstr "zrušeno"
+
+msgid "hashing"
+msgstr "hašování"
+
+msgid "CRC in progress"
+msgstr "probíhá CRC"
+
+msgid "CRC OK"
+msgstr "CRC OK"
+
+msgid "wrong CRC"
+msgstr "španté CRC"
+
+msgid "CRC error"
+msgstr "CRC chyba"
+
+#, c-format
+msgid "%s%s: file %s %s %s (%s): %s"
+msgstr "%s%s: soubor %s %s %s (%s): %s"
+
+msgid "FAILED"
+msgstr "SELHALO"
+
+#, c-format
+msgid "%s%s: chat closed with %s (%s)"
+msgstr "%s%s: rozhovor ukončen s %s (%s)"
+
+#, c-format
+msgid "%s%s: aborting active xfer: \"%s\" from %s"
+msgstr "%s%s: ruším aktivní xfer: \"%s\" od %s"
+
+#, c-format
+msgid "%s%s: not enough memory for new xfer"
+msgstr "%s%s: nedostatek paměti pro nový xfer"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to interpret address: error %d %s"
+msgstr "%s%s: nemohu se připojit\" neočekávaná chyba (%d)"
+
+#, c-format
+msgid "%s%s: hashing error"
+msgstr "%s%s: chyba hašování"
+
+#, fuzzy, c-format
+msgid ""
+"%s: incoming file from %s (%s, %s.%s), name: %s, %llu bytes (protocol: %s)"
+msgstr "%s: příchozí soubor od %s (%d.%d.%d.%d): %s, %llu bytů (protokol: %s)"
+
+#, fuzzy, c-format
+msgid ""
+"%s: offering file to %s (%s.%s), name: %s (local filename: %s), %llu bytes "
+"(protocol: %s)"
+msgstr ""
+"%s: posílám soubor k %s: %s (lokální jméno souboru: %s), %llu bytů "
+"(protokol: %s)"
+
+#, fuzzy, c-format
+msgid "%s: incoming chat request from %s (%s, %s.%s)"
+msgstr "%s: příchozí požadavek rozhovoru od %s (%d.%d.%d.%d)"
+
+#, fuzzy, c-format
+msgid "%s: sending chat request to %s (%s.%s)"
+msgstr "%s%s: chyba posílání dat k \"%s\" přes xfer chat"
+
+#, c-format
+msgid "%s: file %s (local filename: %s) will be resumed at position %llu"
+msgstr "%s: soubor %s (lokální jméno souboru: %s) bude obnoven na pozici %llu"
+
+#, c-format
+msgid "%s%s: missing arguments (%s)"
+msgstr "%s%s: chybí argumenty (%s)"
+
+#, c-format
+msgid "%s%s: unknown xfer type \"%s\""
+msgstr "%s%s: neznámý typ xfer \"%s\""
+
+#, c-format
+msgid "%s%s: unknown xfer protocol \"%s\""
+msgstr "%s%s: neznámá protokol xfer \"%s\""
+
+#, c-format
+msgid "%s%s: cannot access file \"%s\""
+msgstr "%s%s: nemohu přistupovat k souboru \"%s\""
+
+#, fuzzy, c-format
+msgid "%s%s: cannot create socket for xfer: error %d %s"
+msgstr "%s%s: nemohu vytvořit soket: chyba %d %s"
+
+#, c-format
+msgid "%s%s: cannot find available port for xfer"
+msgstr "%s%s: nemůžu najít dostupný port pro xfer"
+
+#, c-format
+msgid "%s%s: error creating xfer"
+msgstr "%s%s: chyba vytváření xfer"
+
+#, c-format
+msgid ""
+"%s%s: unable to resume file \"%s\" (port: %d, start position: %llu): xfer "
+"not found or not ready for transfer"
+msgstr ""
+"%s%s: nemohu obnovit soubor \"%s\" (port: %d, počáteční pozice: %llu): xfer "
+"nenalezen nebo není připraven pro přenos"
+
+#, c-format
+msgid "%s: file %s resumed at position %llu"
+msgstr "%s: soubor %s obnoven na pozici %llu"
+
+#, c-format
+msgid ""
+"%s%s: unable to accept resume file \"%s\" (port: %d, start position: %llu): "
+"xfer not found or not ready for transfer"
+msgstr ""
+"%s%s: nelze akceptovat obnovení souboru \"%s\" (port: %d, počáteční pozice: "
+"%llu): xfer nenalezen nebo není připraven pro přenos"

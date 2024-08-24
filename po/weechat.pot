@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-08-23 08:20+0200\n"
+"POT-Creation-Date: 2024-08-24 10:22+0200\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -29,159 +29,6 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-
-#, c-format
-msgid "%sAnother command \"%s\" already exists for plugin \"%s\""
-msgstr ""
-
-#, c-format
-msgid ""
-"%sUnknown command \"%s\" (commands are case sensitive, type /help for help), "
-"commands with similar name: %s"
-msgstr ""
-
-#, c-format
-msgid ""
-"%sUnknown command \"%s\" (type /help for help), commands with similar name: "
-"%s"
-msgstr ""
-
-#, c-format
-msgid "%sBad file descriptor (%d) used in hook_fd"
-msgstr ""
-
-#, c-format
-msgid "End of command '%s', timeout reached (%.3fs)"
-msgstr ""
-
-#, c-format
-msgid "System clock skew detected (%+ld seconds), reinitializing all timers"
-msgstr ""
-
-#, c-format
-msgid "%sURL transfer error: %s (URL: \"%s\")"
-msgstr ""
-
-#, c-format
-msgid "End of URL transfer '%s', timeout reached (%.3fs)"
-msgstr ""
-
-#, c-format
-msgid "%sError running thread in hook_url: %s (URL: \"%s\")"
-msgstr ""
-
-#. TRANSLATORS: "%s %s" after "compiled on" is date and time
-#, c-format
-msgid ""
-"WeeChat %s Copyright %s, compiled on %s %s\n"
-"Developed by Sébastien Helleu <flashcode@flashtux.org> - %s"
-msgstr ""
-
-#, c-format
-msgid "Usage: %s [option...] [plugin:option...]\n"
-msgstr ""
-
-msgid ""
-"  -a, --no-connect         disable auto-connect to servers at startup\n"
-"  -c, --colors             display default colors in terminal and exit\n"
-"  -d, --dir <path>         force a single WeeChat home directory\n"
-"                           or 5 different directories separated by colons "
-"(in this order: config, data, state, cache, runtime)\n"
-"                           (environment variable WEECHAT_HOME is read if "
-"this option is not given)\n"
-"  -t, --temp-dir           create a temporary WeeChat home directory and "
-"delete it on exit\n"
-"                           (incompatible with option \"-d\")\n"
-"  -h, --help               display this help and exit\n"
-"  -i, --build-info         display build information and exit\n"
-"  -l, --license            display WeeChat license and exit\n"
-"  -p, --no-plugin          don't load any plugin at startup\n"
-"  -P, --plugins <plugins>  load only these plugins at startup\n"
-"                           (see /help weechat.plugin.autoload)\n"
-"  -r, --run-command <cmd>  run command(s) after startup;\n"
-"                           many commands can be separated by semicolons and "
-"are evaluated,\n"
-"                           this option can be given multiple times\n"
-"  -s, --no-script          don't load any script at startup\n"
-"      --upgrade            upgrade WeeChat using session files (see /help "
-"upgrade in WeeChat)\n"
-"  -v, --version            display WeeChat version and exit\n"
-"  plugin:option            option for plugin (see man weechat)\n"
-msgstr ""
-
-msgid "Extra options in headless mode:\n"
-msgstr ""
-
-msgid ""
-"      --doc-gen <path>     generate files to build documentation and exit\n"
-msgstr ""
-
-msgid ""
-"      --daemon             run WeeChat as a daemon (fork, new process group, "
-"file descriptors closed);\n"
-msgstr ""
-
-msgid ""
-"                           (by default in headless mode WeeChat is blocking "
-"and does not run in background)\n"
-msgstr ""
-
-msgid ""
-"      --stdout             display log messages on standard output instead "
-"of writing them in log file\n"
-msgstr ""
-
-msgid ""
-"                           (option ignored if option \"--daemon\" is given)\n"
-msgstr ""
-
-msgid ""
-"Debug options (for tools like valgrind, DO NOT USE IN PRODUCTION):\n"
-"      --no-dlclose         do not call function dlclose after plugins are "
-"unloaded\n"
-"      --no-gnutls          disable init/deinit of gnutls\n"
-"      --no-gcrypt          disable init/deinit of gcrypt\n"
-msgstr ""
-
-#, c-format
-msgid "Error: missing argument for \"%s\" option\n"
-msgstr ""
-
-msgid "WeeChat is running in headless mode (ctrl-c to quit)."
-msgstr ""
-
-msgid ""
-"Welcome to WeeChat!\n"
-"\n"
-"If you are discovering WeeChat, it is recommended to read at least the "
-"quickstart guide, and the user's guide if you have some time; they explain "
-"main WeeChat concepts.\n"
-"All WeeChat docs are available at: https://weechat.org/doc/\n"
-"\n"
-"Moreover, there is inline help with /help on all commands and options (use "
-"Tab key to complete the name).\n"
-"The command /fset can help to customize WeeChat.\n"
-"\n"
-"You can add and connect to an IRC server with /server and /connect commands "
-"(see /help server)."
-msgstr ""
-
-#. TRANSLATORS: the "under %s" can be "under screen" or "under tmux"
-#, c-format
-msgid ""
-"%sWarning: WeeChat is running under %s and $TERM is \"%s\", which can cause "
-"display bugs; $TERM should be set to one of these values: %s"
-msgstr ""
-
-#, c-format
-msgid "%sYou should add this line in the file %s:  %s"
-msgstr ""
-
-#, c-format
-msgid ""
-"%sWarning: cannot set the locale; make sure $LANG and $LC_* variables are "
-"correct"
-msgstr ""
 
 msgid "List of bars:"
 msgstr ""
@@ -3703,6 +3550,91 @@ msgstr ""
 msgid "variables that can be used in /eval command"
 msgstr ""
 
+#, c-format
+msgid "Writing configuration file %s%s%s"
+msgstr ""
+
+msgid "(default options)"
+msgstr ""
+
+#, c-format
+msgid "%sCannot create file \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%sWARNING: failed to set permissions on configuration file \"%s\" (%s)"
+msgstr ""
+
+#, c-format
+msgid "%sError writing configuration file \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%sFile %s has been backed up as %s"
+msgstr ""
+
+#, c-format
+msgid "%sError: unable to backup file %s"
+msgstr ""
+
+#, c-format
+msgid ""
+"%sImportant: file %s has been updated from version %d to %d, it is not "
+"compatible and can not be loaded any more with any older version"
+msgstr ""
+
+#, c-format
+msgid "%sWARNING: failed to read configuration file \"%s\" (%s)"
+msgstr ""
+
+#, c-format
+msgid ""
+"%sWARNING: file \"%s\" will be overwritten on exit with default values (it "
+"is HIGHLY recommended to backup this file now)"
+msgstr ""
+
+#, c-format
+msgid "Reading configuration file %s"
+msgstr ""
+
+#, c-format
+msgid "%sWarning: %s, line %d: invalid syntax, missing \"]\""
+msgstr ""
+
+#, c-format
+msgid "%sWarning: %s, line %d: ignoring unknown section identifier (\"%s\")"
+msgstr ""
+
+#, c-format
+msgid ""
+"%sError: %s, line %d: invalid config version: \"%s\" => rest of file is "
+"IGNORED, default options are used"
+msgstr ""
+
+#, c-format
+msgid ""
+"%sError: %s, version read (%d) is newer than supported version (%d) => rest "
+"of file is IGNORED, default options are used"
+msgstr ""
+
+#, c-format
+msgid "%sWarning: %s, line %d: ignoring option outside section: %s"
+msgstr ""
+
+#, c-format
+msgid "%sWarning: %s, line %d: ignoring unknown option for section \"%s\": %s"
+msgstr ""
+
+#, c-format
+msgid ""
+"%sWarning: %s, line %d: ignoring invalid value for option in section \"%s\": "
+"%s"
+msgstr ""
+
+#, c-format
+msgid "Reloading configuration file %s"
+msgstr ""
+
 msgid ""
 "Warning: option weechat.look.save_config_on_exit is disabled, so the option "
 "weechat.look.save_layout_on_exit is ignored"
@@ -4825,91 +4757,6 @@ msgstr ""
 msgid "FATAL: error initializing configuration options"
 msgstr ""
 
-#, c-format
-msgid "Writing configuration file %s%s%s"
-msgstr ""
-
-msgid "(default options)"
-msgstr ""
-
-#, c-format
-msgid "%sCannot create file \"%s\""
-msgstr ""
-
-#, c-format
-msgid "%sWARNING: failed to set permissions on configuration file \"%s\" (%s)"
-msgstr ""
-
-#, c-format
-msgid "%sError writing configuration file \"%s\""
-msgstr ""
-
-#, c-format
-msgid "%sFile %s has been backed up as %s"
-msgstr ""
-
-#, c-format
-msgid "%sError: unable to backup file %s"
-msgstr ""
-
-#, c-format
-msgid ""
-"%sImportant: file %s has been updated from version %d to %d, it is not "
-"compatible and can not be loaded any more with any older version"
-msgstr ""
-
-#, c-format
-msgid "%sWARNING: failed to read configuration file \"%s\" (%s)"
-msgstr ""
-
-#, c-format
-msgid ""
-"%sWARNING: file \"%s\" will be overwritten on exit with default values (it "
-"is HIGHLY recommended to backup this file now)"
-msgstr ""
-
-#, c-format
-msgid "Reading configuration file %s"
-msgstr ""
-
-#, c-format
-msgid "%sWarning: %s, line %d: invalid syntax, missing \"]\""
-msgstr ""
-
-#, c-format
-msgid "%sWarning: %s, line %d: ignoring unknown section identifier (\"%s\")"
-msgstr ""
-
-#, c-format
-msgid ""
-"%sError: %s, line %d: invalid config version: \"%s\" => rest of file is "
-"IGNORED, default options are used"
-msgstr ""
-
-#, c-format
-msgid ""
-"%sError: %s, version read (%d) is newer than supported version (%d) => rest "
-"of file is IGNORED, default options are used"
-msgstr ""
-
-#, c-format
-msgid "%sWarning: %s, line %d: ignoring option outside section: %s"
-msgstr ""
-
-#, c-format
-msgid "%sWarning: %s, line %d: ignoring unknown option for section \"%s\": %s"
-msgstr ""
-
-#, c-format
-msgid ""
-"%sWarning: %s, line %d: ignoring invalid value for option in section \"%s\": "
-"%s"
-msgstr ""
-
-#, c-format
-msgid "Reloading configuration file %s"
-msgstr ""
-
 #. TRANSLATORS: "%s %s" after "compiled on" is date and time
 #, c-format
 msgid "WeeChat %s, compiled on %s %s\n"
@@ -5313,15 +5160,6 @@ msgid "Resource usage (see \"man getrusage\" for help):"
 msgstr ""
 
 #, c-format
-msgid "debug: removing file: %s"
-msgstr ""
-
-#. TRANSLATORS: %.02fs is a float number + "s" ("seconds")
-#, c-format
-msgid "Upgrade done (%.02fs)"
-msgstr ""
-
-#, c-format
 msgid "%sError upgrading WeeChat with file \"%s\":"
 msgstr ""
 
@@ -5388,6 +5226,15 @@ msgid ""
 "version)"
 msgstr ""
 
+#, c-format
+msgid "debug: removing file: %s"
+msgstr ""
+
+#. TRANSLATORS: %.02fs is a float number + "s" ("seconds")
+#, c-format
+msgid "Upgrade done (%.02fs)"
+msgstr ""
+
 msgid "invalid URL"
 msgstr ""
 
@@ -5407,6 +5254,159 @@ msgstr ""
 
 #, c-format
 msgid "curl error %d (%s) (URL: \"%s\")\n"
+msgstr ""
+
+#, c-format
+msgid "%sAnother command \"%s\" already exists for plugin \"%s\""
+msgstr ""
+
+#, c-format
+msgid ""
+"%sUnknown command \"%s\" (commands are case sensitive, type /help for help), "
+"commands with similar name: %s"
+msgstr ""
+
+#, c-format
+msgid ""
+"%sUnknown command \"%s\" (type /help for help), commands with similar name: "
+"%s"
+msgstr ""
+
+#, c-format
+msgid "%sBad file descriptor (%d) used in hook_fd"
+msgstr ""
+
+#, c-format
+msgid "End of command '%s', timeout reached (%.3fs)"
+msgstr ""
+
+#, c-format
+msgid "System clock skew detected (%+ld seconds), reinitializing all timers"
+msgstr ""
+
+#, c-format
+msgid "%sURL transfer error: %s (URL: \"%s\")"
+msgstr ""
+
+#, c-format
+msgid "End of URL transfer '%s', timeout reached (%.3fs)"
+msgstr ""
+
+#, c-format
+msgid "%sError running thread in hook_url: %s (URL: \"%s\")"
+msgstr ""
+
+#. TRANSLATORS: "%s %s" after "compiled on" is date and time
+#, c-format
+msgid ""
+"WeeChat %s Copyright %s, compiled on %s %s\n"
+"Developed by Sébastien Helleu <flashcode@flashtux.org> - %s"
+msgstr ""
+
+#, c-format
+msgid "Usage: %s [option...] [plugin:option...]\n"
+msgstr ""
+
+msgid ""
+"  -a, --no-connect         disable auto-connect to servers at startup\n"
+"  -c, --colors             display default colors in terminal and exit\n"
+"  -d, --dir <path>         force a single WeeChat home directory\n"
+"                           or 5 different directories separated by colons "
+"(in this order: config, data, state, cache, runtime)\n"
+"                           (environment variable WEECHAT_HOME is read if "
+"this option is not given)\n"
+"  -t, --temp-dir           create a temporary WeeChat home directory and "
+"delete it on exit\n"
+"                           (incompatible with option \"-d\")\n"
+"  -h, --help               display this help and exit\n"
+"  -i, --build-info         display build information and exit\n"
+"  -l, --license            display WeeChat license and exit\n"
+"  -p, --no-plugin          don't load any plugin at startup\n"
+"  -P, --plugins <plugins>  load only these plugins at startup\n"
+"                           (see /help weechat.plugin.autoload)\n"
+"  -r, --run-command <cmd>  run command(s) after startup;\n"
+"                           many commands can be separated by semicolons and "
+"are evaluated,\n"
+"                           this option can be given multiple times\n"
+"  -s, --no-script          don't load any script at startup\n"
+"      --upgrade            upgrade WeeChat using session files (see /help "
+"upgrade in WeeChat)\n"
+"  -v, --version            display WeeChat version and exit\n"
+"  plugin:option            option for plugin (see man weechat)\n"
+msgstr ""
+
+msgid "Extra options in headless mode:\n"
+msgstr ""
+
+msgid ""
+"      --doc-gen <path>     generate files to build documentation and exit\n"
+msgstr ""
+
+msgid ""
+"      --daemon             run WeeChat as a daemon (fork, new process group, "
+"file descriptors closed);\n"
+msgstr ""
+
+msgid ""
+"                           (by default in headless mode WeeChat is blocking "
+"and does not run in background)\n"
+msgstr ""
+
+msgid ""
+"      --stdout             display log messages on standard output instead "
+"of writing them in log file\n"
+msgstr ""
+
+msgid ""
+"                           (option ignored if option \"--daemon\" is given)\n"
+msgstr ""
+
+msgid ""
+"Debug options (for tools like valgrind, DO NOT USE IN PRODUCTION):\n"
+"      --no-dlclose         do not call function dlclose after plugins are "
+"unloaded\n"
+"      --no-gnutls          disable init/deinit of gnutls\n"
+"      --no-gcrypt          disable init/deinit of gcrypt\n"
+msgstr ""
+
+#, c-format
+msgid "Error: missing argument for \"%s\" option\n"
+msgstr ""
+
+msgid "WeeChat is running in headless mode (ctrl-c to quit)."
+msgstr ""
+
+msgid ""
+"Welcome to WeeChat!\n"
+"\n"
+"If you are discovering WeeChat, it is recommended to read at least the "
+"quickstart guide, and the user's guide if you have some time; they explain "
+"main WeeChat concepts.\n"
+"All WeeChat docs are available at: https://weechat.org/doc/\n"
+"\n"
+"Moreover, there is inline help with /help on all commands and options (use "
+"Tab key to complete the name).\n"
+"The command /fset can help to customize WeeChat.\n"
+"\n"
+"You can add and connect to an IRC server with /server and /connect commands "
+"(see /help server)."
+msgstr ""
+
+#. TRANSLATORS: the "under %s" can be "under screen" or "under tmux"
+#, c-format
+msgid ""
+"%sWarning: WeeChat is running under %s and $TERM is \"%s\", which can cause "
+"display bugs; $TERM should be set to one of these values: %s"
+msgstr ""
+
+#, c-format
+msgid "%sYou should add this line in the file %s:  %s"
+msgstr ""
+
+#, c-format
+msgid ""
+"%sWarning: cannot set the locale; make sure $LANG and $LC_* variables are "
+"correct"
 msgstr ""
 
 #, c-format
@@ -5487,6 +5487,49 @@ msgstr ""
 msgid "OK"
 msgstr ""
 
+msgid "condition(s) to display the bar item (evaluated, see /help eval)"
+msgstr ""
+
+msgid "content of bar item (evaluated, see /help eval)"
+msgstr ""
+
+#, c-format
+msgid "debug: long callback: bar: %s, item: %s, plugin: %s, time elapsed: %s"
+msgstr ""
+
+#, c-format
+msgid "%sPaste %d line? [ctrl-y] Yes [ctrl-n] No"
+msgid_plural "%sPaste %d lines? [ctrl-y] Yes [ctrl-n] No"
+msgstr[0] ""
+msgstr[1] ""
+
+#. TRANSLATORS: search in "local" history
+msgid "local"
+msgstr ""
+
+#. TRANSLATORS: search in "global" history
+msgid "global"
+msgstr ""
+
+msgid "Search lines"
+msgstr ""
+
+msgid "Search command"
+msgstr ""
+
+msgid "keyboard and mouse debug ('q' to quit debug mode)"
+msgstr ""
+
+#, c-format
+msgid "%s-MORE(%d)-"
+msgstr ""
+
+msgid "Lag"
+msgstr ""
+
+msgid "away"
+msgstr ""
+
 #, c-format
 msgid ""
 "%sUnable to change bar type: you must delete bar and create another to do "
@@ -5554,49 +5597,6 @@ msgid ""
 "items of bar, they can be separated by comma (space between items) or \"+\" "
 "(glued items); special syntax \"@buffer:item\" can be used to force buffer "
 "used when displaying the bar item"
-msgstr ""
-
-#, c-format
-msgid "debug: long callback: bar: %s, item: %s, plugin: %s, time elapsed: %s"
-msgstr ""
-
-#, c-format
-msgid "%sPaste %d line? [ctrl-y] Yes [ctrl-n] No"
-msgid_plural "%sPaste %d lines? [ctrl-y] Yes [ctrl-n] No"
-msgstr[0] ""
-msgstr[1] ""
-
-#. TRANSLATORS: search in "local" history
-msgid "local"
-msgstr ""
-
-#. TRANSLATORS: search in "global" history
-msgid "global"
-msgstr ""
-
-msgid "Search lines"
-msgstr ""
-
-msgid "Search command"
-msgstr ""
-
-msgid "keyboard and mouse debug ('q' to quit debug mode)"
-msgstr ""
-
-#, c-format
-msgid "%s-MORE(%d)-"
-msgstr ""
-
-msgid "Lag"
-msgstr ""
-
-msgid "away"
-msgstr ""
-
-msgid "condition(s) to display the bar item (evaluated, see /help eval)"
-msgstr ""
-
-msgid "content of bar item (evaluated, see /help eval)"
 msgstr ""
 
 #, c-format
@@ -5709,17 +5709,6 @@ msgid "Debug enabled for mouse (%s)"
 msgstr ""
 
 msgid "Debug disabled for mouse"
-msgstr ""
-
-msgid "Alias commands"
-msgstr ""
-
-#, c-format
-msgid "%s%s: error, circular reference when calling alias \"%s\""
-msgstr ""
-
-#, c-format
-msgid "%s%s: invalid alias name: \"%s\""
 msgstr ""
 
 #, c-format
@@ -5871,15 +5860,15 @@ msgstr ""
 msgid "list of default aliases"
 msgstr ""
 
-msgid "Buffers list"
+msgid "Alias commands"
 msgstr ""
 
 #, c-format
-msgid ""
-"%sbuflist: warning: the script buffers.pl is loaded and provides a bar with "
-"list of buffers similar to the buflist plugin; you may want to uninstall the "
-"script buffers.pl (/script remove buffers.pl) or disable/unload the buflist "
-"plugin; see WeeChat release notes for more information"
+msgid "%s%s: error, circular reference when calling alias \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%s%s: invalid alias name: \"%s\""
 msgstr ""
 
 msgid "bar item with list of buffers"
@@ -6219,6 +6208,17 @@ msgstr ""
 msgid "buflist bar item name (optional)"
 msgstr ""
 
+msgid "Buffers list"
+msgstr ""
+
+#, c-format
+msgid ""
+"%sbuflist: warning: the script buffers.pl is loaded and provides a bar with "
+"list of buffers similar to the buflist plugin; you may want to uninstall the "
+"script buffers.pl (/script remove buffers.pl) or disable/unload the buflist "
+"plugin; see WeeChat release notes for more information"
+msgstr ""
+
 msgid "Charset conversions"
 msgstr ""
 
@@ -6279,17 +6279,6 @@ msgid "raw[reset]: reset charsets for current buffer"
 msgstr ""
 
 msgid "Executed commands"
-msgstr ""
-
-msgid "Execution of external commands in WeeChat"
-msgstr ""
-
-#, c-format
-msgid "%s: end of command %ld (\"%s\"), return code: %d"
-msgstr ""
-
-#, c-format
-msgid "%s: unexpected end of command %ld (\"%s\")"
 msgstr ""
 
 msgid "No command is running"
@@ -6565,39 +6554,15 @@ msgstr ""
 msgid "text color for a running command flag in list of commands"
 msgstr ""
 
-msgid "FIFO pipe for remote control"
+msgid "Execution of external commands in WeeChat"
 msgstr ""
 
 #, c-format
-msgid "%s%s: not enough memory (%s)"
+msgid "%s: end of command %ld (\"%s\"), return code: %d"
 msgstr ""
 
 #, c-format
-msgid "%s: pipe opened (file: %s)"
-msgstr ""
-
-#, c-format
-msgid "%s%s: unable to open pipe (%s) for reading"
-msgstr ""
-
-#, c-format
-msgid "%s%s: unable to create pipe for remote control (%s): error %d %s"
-msgstr ""
-
-#, c-format
-msgid "%s: pipe closed"
-msgstr ""
-
-#, c-format
-msgid "%s%s: invalid text received in pipe"
-msgstr ""
-
-#, c-format
-msgid "%s%s: buffer \"%s\" not found"
-msgstr ""
-
-#, c-format
-msgid "%s%s: error reading pipe (%d %s), closing it"
+msgid "%s: unexpected end of command %ld (\"%s\")"
 msgstr ""
 
 #, c-format
@@ -6657,6 +6622,41 @@ msgstr ""
 msgid "name of FIFO pipe"
 msgstr ""
 
+msgid "FIFO pipe for remote control"
+msgstr ""
+
+#, c-format
+msgid "%s%s: not enough memory (%s)"
+msgstr ""
+
+#, c-format
+msgid "%s: pipe opened (file: %s)"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to open pipe (%s) for reading"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to create pipe for remote control (%s): error %d %s"
+msgstr ""
+
+#, c-format
+msgid "%s: pipe closed"
+msgstr ""
+
+#, c-format
+msgid "%s%s: invalid text received in pipe"
+msgstr ""
+
+#, c-format
+msgid "%s%s: buffer \"%s\" not found"
+msgstr ""
+
+#, c-format
+msgid "%s%s: error reading pipe (%d %s), closing it"
+msgstr ""
+
 msgid "values:"
 msgstr ""
 
@@ -6678,9 +6678,6 @@ msgid ""
 "$)=unmark/refresh, (m)=mark matching options, (u)=unmark matching options, "
 "alt+p(p)=toggle plugins desc, alt+v(v)=toggle help bar, ctrl+x(x)=switch "
 "format, (q)=close buffer"
-msgstr ""
-
-msgid "Fast set of WeeChat and plugins options"
 msgstr ""
 
 #, c-format
@@ -7306,6 +7303,9 @@ msgstr ""
 msgid "any color"
 msgstr ""
 
+msgid "Fast set of WeeChat and plugins options"
+msgstr ""
+
 #, c-format
 msgid "%s%s: script \"%s\" already registered (register ignored)"
 msgstr ""
@@ -7364,36 +7364,6 @@ msgstr ""
 
 #. TRANSLATORS: this is displayed in a bar item and must be as short as possible
 msgid "cleartext"
-msgstr ""
-
-msgid "IRC (Internet Relay Chat) protocol"
-msgstr ""
-
-#, c-format
-msgid ""
-"%s%s: disconnecting from server because upgrade can't work for servers "
-"connected via TLS"
-msgstr ""
-
-#, c-format
-msgid ""
-"%s%s: disconnected from %d server (TLS connection not supported with upgrade)"
-msgid_plural ""
-"%s%s: disconnected from %d servers (TLS connection not supported with "
-"upgrade)"
-msgstr[0] ""
-msgstr[1] ""
-
-#, c-format
-msgid ""
-"%s%s: unable to add temporary server \"%s\" (check if there is already a "
-"server with this name)"
-msgstr ""
-
-#, c-format
-msgid ""
-"%s%s: WARNING: some network connections may still be opened and not visible, "
-"you should restart WeeChat now (with /quit)."
 msgstr ""
 
 #, c-format
@@ -7475,6 +7445,12 @@ msgstr ""
 
 #. TRANSLATORS: "temporary IRC server"
 msgid " (temporary)"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: unable to add temporary server \"%s\" (check if there is already a "
+"server with this name)"
 msgstr ""
 
 #, c-format
@@ -11075,6 +11051,34 @@ msgstr ""
 msgid "%s%s: disconnected from server"
 msgstr ""
 
+msgid "IRC (Internet Relay Chat) protocol"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: disconnecting from server because upgrade can't work for servers "
+"connected via TLS"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: disconnected from %d server (TLS connection not supported with upgrade)"
+msgid_plural ""
+"%s%s: disconnected from %d servers (TLS connection not supported with "
+"upgrade)"
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid ""
+"%s%s: WARNING: some network connections may still be opened and not visible, "
+"you should restart WeeChat now (with /quit)."
+msgstr ""
+
+#, c-format
+msgid "%s%s: exception: %s"
+msgstr ""
+
 msgid "Support of javascript scripts"
 msgstr ""
 
@@ -11096,10 +11100,6 @@ msgstr ""
 
 #, c-format
 msgid "%sCommand \"/%s eval\" is not yet implemented"
-msgstr ""
-
-#, c-format
-msgid "%s%s: exception: %s"
 msgstr ""
 
 #, c-format
@@ -11130,15 +11130,6 @@ msgstr ""
 
 #, c-format
 msgid "%s\t****  End of log  ****"
-msgstr ""
-
-msgid "Log buffers to files"
-msgstr ""
-
-#, c-format
-msgid ""
-"%s%s: unable to find filename mask for buffer \"%s\", logging is disabled "
-"for this buffer"
 msgstr ""
 
 msgid "Logging on buffers:"
@@ -11358,6 +11349,15 @@ msgstr ""
 msgid "logger pointer (optional)"
 msgstr ""
 
+msgid "Log buffers to files"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: unable to find filename mask for buffer \"%s\", logging is disabled "
+"for this buffer"
+msgstr ""
+
 msgid "Support of lua scripts"
 msgstr ""
 
@@ -11393,90 +11393,6 @@ msgid "%s%s: unable to initialize %s"
 msgstr ""
 
 msgid "Support of PHP scripts"
-msgstr ""
-
-msgid "bar"
-msgstr ""
-
-msgid "bar item"
-msgstr ""
-
-msgid "bar window"
-msgstr ""
-
-msgid "buffer"
-msgstr ""
-
-msgid "visited buffer"
-msgstr ""
-
-msgid "structure with completion"
-msgstr ""
-
-msgid "structure with word found for a completion"
-msgstr ""
-
-msgid "config file"
-msgstr ""
-
-msgid "config section"
-msgstr ""
-
-msgid "config option"
-msgstr ""
-
-msgid "filter"
-msgstr ""
-
-msgid "history of commands in buffer"
-msgstr ""
-
-msgid "hotlist"
-msgstr ""
-
-msgid "structure with undo for input line"
-msgstr ""
-
-msgid "a key (keyboard shortcut)"
-msgstr ""
-
-msgid "layout"
-msgstr ""
-
-msgid "buffer layout"
-msgstr ""
-
-msgid "window layout"
-msgstr ""
-
-msgid "structure with lines"
-msgstr ""
-
-msgid "structure with one line"
-msgstr ""
-
-msgid "structure with one line data"
-msgstr ""
-
-msgid "group in nicklist"
-msgstr ""
-
-msgid "nick in nicklist"
-msgstr ""
-
-msgid "plugin"
-msgstr ""
-
-msgid "proxy"
-msgstr ""
-
-msgid "window"
-msgstr ""
-
-msgid "scroll info in window"
-msgstr ""
-
-msgid "tree of windows"
 msgstr ""
 
 msgid "WeeChat version"
@@ -11810,62 +11726,104 @@ msgstr ""
 msgid "\"current\" for current window or a window number (optional)"
 msgstr ""
 
-#, c-format
-msgid "Initializing plugin \"%s\" (priority: %d)"
+msgid "bar"
 msgstr ""
 
-#, c-format
-msgid "%sUnable to initialize plugin \"%s\""
+msgid "bar item"
 msgstr ""
 
-#, c-format
-msgid "%sUnable to load plugin \"%s\": %s"
+msgid "bar window"
 msgstr ""
 
-#, c-format
-msgid ""
-"%sIf you're trying to load a script and not a C plugin, try command to load "
-"scripts (/perl, /python, ...)"
+msgid "buffer"
 msgstr ""
 
-#, c-format
-msgid "%sSymbol \"%s\" not found in plugin \"%s\", failed to load"
+msgid "visited buffer"
 msgstr ""
 
-#, c-format
-msgid "%sIf plugin \"%s\" is old/obsolete, you can delete this file."
+msgid "structure with completion"
 msgstr ""
 
-#, c-format
-msgid ""
-"%sAPI mismatch for plugin \"%s\" (current API: \"%s\", plugin API: \"%s\"), "
-"failed to load"
+msgid "structure with word found for a completion"
 msgstr ""
 
-#, c-format
-msgid "%sUnable to load plugin \"%s\": a plugin with same name already exists"
+msgid "config file"
 msgstr ""
 
-#, c-format
-msgid "%sFunction \"%s\" not found in plugin \"%s\", failed to load"
+msgid "config section"
 msgstr ""
 
-#, c-format
-msgid "%sUnable to load plugin \"%s\" (not enough memory)"
+msgid "config option"
 msgstr ""
 
-#, c-format
-msgid "Plugin \"%s\" loaded"
+msgid "filter"
 msgstr ""
 
-#, c-format
-msgid "Plugin \"%s\" unloaded"
+msgid "history of commands in buffer"
 msgstr ""
 
-msgid "Plugins unloaded"
+msgid "hotlist"
+msgstr ""
+
+msgid "structure with undo for input line"
+msgstr ""
+
+msgid "a key (keyboard shortcut)"
+msgstr ""
+
+msgid "layout"
+msgstr ""
+
+msgid "buffer layout"
+msgstr ""
+
+msgid "window layout"
+msgstr ""
+
+msgid "structure with lines"
+msgstr ""
+
+msgid "structure with one line"
+msgstr ""
+
+msgid "structure with one line data"
+msgstr ""
+
+msgid "group in nicklist"
+msgstr ""
+
+msgid "nick in nicklist"
+msgstr ""
+
+msgid "plugin"
+msgstr ""
+
+msgid "proxy"
+msgstr ""
+
+msgid "window"
+msgstr ""
+
+msgid "scroll info in window"
+msgstr ""
+
+msgid "tree of windows"
 msgstr ""
 
 msgid "description of plugin option"
+msgstr ""
+
+msgid ""
+"check the license of scripts when they are loaded: if the license is "
+"different from the plugin license, a warning is displayed"
+msgstr ""
+
+#, c-format
+msgid ""
+"keep context between two calls to the source code evaluation (option "
+"\"eval\" of script command or info \"%s_eval\"); a hidden script is used to "
+"eval script code; if this option is disabled, this hidden script is unloaded "
+"after each eval: this uses less memory, but is slower"
 msgstr ""
 
 msgid "list/load/unload scripts"
@@ -12001,19 +11959,6 @@ msgstr ""
 msgid "%s: scripts unloaded"
 msgstr ""
 
-msgid ""
-"check the license of scripts when they are loaded: if the license is "
-"different from the plugin license, a warning is displayed"
-msgstr ""
-
-#, c-format
-msgid ""
-"keep context between two calls to the source code evaluation (option "
-"\"eval\" of script command or info \"%s_eval\"); a hidden script is used to "
-"eval script code; if this option is disabled, this hidden script is unloaded "
-"after each eval: this uses less memory, but is slower"
-msgstr ""
-
 #, c-format
 msgid ""
 "%s%s: unable to call function \"%s\", script is not initialized (script: %s)"
@@ -12021,6 +11966,61 @@ msgstr ""
 
 #, c-format
 msgid "%s%s: wrong arguments for function \"%s\" (script: %s)"
+msgstr ""
+
+#, c-format
+msgid "Initializing plugin \"%s\" (priority: %d)"
+msgstr ""
+
+#, c-format
+msgid "%sUnable to initialize plugin \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%sUnable to load plugin \"%s\": %s"
+msgstr ""
+
+#, c-format
+msgid ""
+"%sIf you're trying to load a script and not a C plugin, try command to load "
+"scripts (/perl, /python, ...)"
+msgstr ""
+
+#, c-format
+msgid "%sSymbol \"%s\" not found in plugin \"%s\", failed to load"
+msgstr ""
+
+#, c-format
+msgid "%sIf plugin \"%s\" is old/obsolete, you can delete this file."
+msgstr ""
+
+#, c-format
+msgid ""
+"%sAPI mismatch for plugin \"%s\" (current API: \"%s\", plugin API: \"%s\"), "
+"failed to load"
+msgstr ""
+
+#, c-format
+msgid "%sUnable to load plugin \"%s\": a plugin with same name already exists"
+msgstr ""
+
+#, c-format
+msgid "%sFunction \"%s\" not found in plugin \"%s\", failed to load"
+msgstr ""
+
+#, c-format
+msgid "%sUnable to load plugin \"%s\" (not enough memory)"
+msgstr ""
+
+#, c-format
+msgid "Plugin \"%s\" loaded"
+msgstr ""
+
+#, c-format
+msgid "Plugin \"%s\" unloaded"
+msgstr ""
+
+msgid "Plugins unloaded"
 msgstr ""
 
 msgid "Support of python scripts"
@@ -12300,38 +12300,6 @@ msgstr ""
 
 msgid "List of clients for relay"
 msgstr ""
-
-msgid "Relay WeeChat data to remote application (irc/weechat protocols)"
-msgstr ""
-
-msgid "connecting"
-msgstr ""
-
-msgid "authenticating"
-msgstr ""
-
-msgid "authentication failed"
-msgstr ""
-
-msgid "disconnected"
-msgstr ""
-
-#, c-format
-msgid ""
-"%s%s: disconnecting from client %s%s%s because upgrade can't work for "
-"clients connected via TLS"
-msgstr ""
-
-#. TRANSLATORS: "%s" after "%d" is "client" or "clients"
-#, c-format
-msgid ""
-"%s%s: disconnected from %d %s (TLS connection not supported with upgrade)"
-msgstr ""
-
-msgid "client"
-msgid_plural "clients"
-msgstr[0] ""
-msgstr[1] ""
 
 #, c-format
 msgid "%s%s: TLS handshake failed for client %s%s%s: error %d %s"
@@ -13161,6 +13129,38 @@ msgstr ""
 msgid "%s%s: not enough memory for listening on new port"
 msgstr ""
 
+msgid "Relay WeeChat data to remote application (irc/weechat protocols)"
+msgstr ""
+
+msgid "connecting"
+msgstr ""
+
+msgid "authenticating"
+msgstr ""
+
+msgid "authentication failed"
+msgstr ""
+
+msgid "disconnected"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: disconnecting from client %s%s%s because upgrade can't work for "
+"clients connected via TLS"
+msgstr ""
+
+#. TRANSLATORS: "%s" after "%d" is "client" or "clients"
+#, c-format
+msgid ""
+"%s%s: disconnected from %d %s (TLS connection not supported with upgrade)"
+msgstr ""
+
+msgid "client"
+msgid_plural "clients"
+msgstr[0] ""
+msgstr[1] ""
+
 #, c-format
 msgid "%s: invalid pointer in hdata path: \"%s\""
 msgstr ""
@@ -13362,15 +13362,6 @@ msgid ""
 msgstr ""
 
 msgid "Scripts"
-msgstr ""
-
-msgid "Script manager"
-msgstr ""
-
-#, c-format
-msgid ""
-"%s%s: download of scripts is disabled by default; to enable it, type /script "
-"enable"
 msgstr ""
 
 #, c-format
@@ -13736,15 +13727,13 @@ msgstr ""
 msgid "%s: downloading list of scripts..."
 msgstr ""
 
-msgid "Spell checker for input"
+msgid "Script manager"
 msgstr ""
 
 #, c-format
 msgid ""
-"%s%s: warning: the plugin \"aspell\" has been renamed to \"spell\" and the "
-"file %s still exists (but not %s); if you upgraded from an older version, "
-"you should check instructions in release notes (version 2.5) to recover your "
-"settings"
+"%s%s: download of scripts is disabled by default; to enable it, type /script "
+"enable"
 msgstr ""
 
 #. TRANSLATORS: "%s" is "spell" (name of plugin)
@@ -13956,6 +13945,17 @@ msgstr ""
 msgid "%s%s: error: unable to create speller for lang \"%s\""
 msgstr ""
 
+msgid "Spell checker for input"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: warning: the plugin \"aspell\" has been renamed to \"spell\" and the "
+"file %s still exists (but not %s); if you upgraded from an older version, "
+"you should check instructions in release notes (version 2.5) to recover your "
+"settings"
+msgstr ""
+
 msgid "Support of tcl scripts"
 msgstr ""
 
@@ -13973,18 +13973,6 @@ msgstr ""
 
 #, c-format
 msgid "Trigger monitor (filter: %s) | Input: q=close, words=filter"
-msgstr ""
-
-msgid ""
-"Text replacement and command execution on events triggered by WeeChat/plugins"
-msgstr ""
-
-#, c-format
-msgid "%s%s: unable to create hook for trigger \"%s\" (bad arguments)"
-msgstr ""
-
-#, c-format
-msgid "%s%s: invalid regular expression in trigger: \"%s\""
 msgstr ""
 
 msgid "no variable"
@@ -14524,11 +14512,20 @@ msgstr ""
 msgid "text color for replacement text (for regular expressions)"
 msgstr ""
 
-#. TRANSLATORS: this text is displayed before the list of nicks typing in the bar item "typing", it must be as short as possible
-msgid "Typing:"
+msgid ""
+"Text replacement and command execution on events triggered by WeeChat/plugins"
 msgstr ""
 
-msgid "Typing status of users"
+#, c-format
+msgid "%s%s: unable to create hook for trigger \"%s\" (bad arguments)"
+msgstr ""
+
+#, c-format
+msgid "%s%s: invalid regular expression in trigger: \"%s\""
+msgstr ""
+
+#. TRANSLATORS: this text is displayed before the list of nicks typing in the bar item "typing", it must be as short as possible
+msgid "Typing:"
 msgstr ""
 
 msgid ""
@@ -14562,6 +14559,9 @@ msgid ""
 "truncate content)"
 msgstr ""
 
+msgid "Typing status of users"
+msgstr ""
+
 msgid "  [A] Accept"
 msgstr ""
 
@@ -14575,139 +14575,6 @@ msgid "ETA"
 msgstr ""
 
 msgid "Xfer list"
-msgstr ""
-
-msgid "DCC file transfer and direct chat"
-msgstr ""
-
-msgid "waiting"
-msgstr ""
-
-msgid "active"
-msgstr ""
-
-msgid "done"
-msgstr ""
-
-msgid "failed"
-msgstr ""
-
-msgid "aborted"
-msgstr ""
-
-msgid "hashing"
-msgstr ""
-
-msgid "CRC in progress"
-msgstr ""
-
-msgid "CRC OK"
-msgstr ""
-
-msgid "wrong CRC"
-msgstr ""
-
-msgid "CRC error"
-msgstr ""
-
-#, c-format
-msgid "%s%s: file %s %s %s (%s): %s"
-msgstr ""
-
-msgid "sent to"
-msgstr ""
-
-msgid "received from"
-msgstr ""
-
-msgid "FAILED"
-msgstr ""
-
-#, c-format
-msgid "%s%s: chat closed with %s (%s)"
-msgstr ""
-
-#, c-format
-msgid "%s%s: aborting active xfer: \"%s\" from %s"
-msgstr ""
-
-#, c-format
-msgid "%s%s: not enough memory for new xfer"
-msgstr ""
-
-#, c-format
-msgid "%s%s: unable to interpret address: error %d %s"
-msgstr ""
-
-#, c-format
-msgid "%s%s: hashing error"
-msgstr ""
-
-#, c-format
-msgid ""
-"%s: incoming file from %s (%s, %s.%s), name: %s, %llu bytes (protocol: %s)"
-msgstr ""
-
-#, c-format
-msgid ""
-"%s: offering file to %s (%s.%s), name: %s (local filename: %s), %llu bytes "
-"(protocol: %s)"
-msgstr ""
-
-#, c-format
-msgid "%s: incoming chat request from %s (%s, %s.%s)"
-msgstr ""
-
-#, c-format
-msgid "%s: sending chat request to %s (%s.%s)"
-msgstr ""
-
-#, c-format
-msgid "%s: file %s (local filename: %s) will be resumed at position %llu"
-msgstr ""
-
-#, c-format
-msgid "%s%s: missing arguments (%s)"
-msgstr ""
-
-#, c-format
-msgid "%s%s: unknown xfer type \"%s\""
-msgstr ""
-
-#, c-format
-msgid "%s%s: unknown xfer protocol \"%s\""
-msgstr ""
-
-#, c-format
-msgid "%s%s: cannot access file \"%s\""
-msgstr ""
-
-#, c-format
-msgid "%s%s: cannot create socket for xfer: error %d %s"
-msgstr ""
-
-#, c-format
-msgid "%s%s: cannot find available port for xfer"
-msgstr ""
-
-#, c-format
-msgid "%s%s: error creating xfer"
-msgstr ""
-
-#, c-format
-msgid ""
-"%s%s: unable to resume file \"%s\" (port: %d, start position: %llu): xfer "
-"not found or not ready for transfer"
-msgstr ""
-
-#, c-format
-msgid "%s: file %s resumed at position %llu"
-msgstr ""
-
-#, c-format
-msgid ""
-"%s%s: unable to accept resume file \"%s\" (port: %d, start position: %llu): "
-"xfer not found or not ready for transfer"
 msgstr ""
 
 #, c-format
@@ -14728,6 +14595,12 @@ msgstr ""
 #, c-format
 msgid ""
 "%3d. %s (%s), file: \"%s\" (local: \"%s\"), %s %s, status: %s%s%s (%llu %%)"
+msgstr ""
+
+msgid "sent to"
+msgstr ""
+
+msgid "received from"
 msgstr ""
 
 #. TRANSLATORS: "%s" after "started on" is a date
@@ -14975,4 +14848,131 @@ msgstr ""
 
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
+msgstr ""
+
+msgid "DCC file transfer and direct chat"
+msgstr ""
+
+msgid "waiting"
+msgstr ""
+
+msgid "active"
+msgstr ""
+
+msgid "done"
+msgstr ""
+
+msgid "failed"
+msgstr ""
+
+msgid "aborted"
+msgstr ""
+
+msgid "hashing"
+msgstr ""
+
+msgid "CRC in progress"
+msgstr ""
+
+msgid "CRC OK"
+msgstr ""
+
+msgid "wrong CRC"
+msgstr ""
+
+msgid "CRC error"
+msgstr ""
+
+#, c-format
+msgid "%s%s: file %s %s %s (%s): %s"
+msgstr ""
+
+msgid "FAILED"
+msgstr ""
+
+#, c-format
+msgid "%s%s: chat closed with %s (%s)"
+msgstr ""
+
+#, c-format
+msgid "%s%s: aborting active xfer: \"%s\" from %s"
+msgstr ""
+
+#, c-format
+msgid "%s%s: not enough memory for new xfer"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to interpret address: error %d %s"
+msgstr ""
+
+#, c-format
+msgid "%s%s: hashing error"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s: incoming file from %s (%s, %s.%s), name: %s, %llu bytes (protocol: %s)"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s: offering file to %s (%s.%s), name: %s (local filename: %s), %llu bytes "
+"(protocol: %s)"
+msgstr ""
+
+#, c-format
+msgid "%s: incoming chat request from %s (%s, %s.%s)"
+msgstr ""
+
+#, c-format
+msgid "%s: sending chat request to %s (%s.%s)"
+msgstr ""
+
+#, c-format
+msgid "%s: file %s (local filename: %s) will be resumed at position %llu"
+msgstr ""
+
+#, c-format
+msgid "%s%s: missing arguments (%s)"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unknown xfer type \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%s%s: unknown xfer protocol \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%s%s: cannot access file \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%s%s: cannot create socket for xfer: error %d %s"
+msgstr ""
+
+#, c-format
+msgid "%s%s: cannot find available port for xfer"
+msgstr ""
+
+#, c-format
+msgid "%s%s: error creating xfer"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: unable to resume file \"%s\" (port: %d, start position: %llu): xfer "
+"not found or not ready for transfer"
+msgstr ""
+
+#, c-format
+msgid "%s: file %s resumed at position %llu"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: unable to accept resume file \"%s\" (port: %d, start position: %llu): "
+"xfer not found or not ready for transfer"
 msgstr ""

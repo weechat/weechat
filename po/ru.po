@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-08-23 08:20+0200\n"
+"POT-Creation-Date: 2024-08-24 10:22+0200\n"
 "PO-Revision-Date: 2024-06-11 07:49+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -32,175 +32,6 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Poedit-Bookmarks: -1,-1,608,-1,-1,-1,-1,-1,-1,-1\n"
-
-#, fuzzy, c-format
-msgid "%sAnother command \"%s\" already exists for plugin \"%s\""
-msgstr "%s игнорирование уже существует\n"
-
-#, fuzzy, c-format
-msgid ""
-"%sUnknown command \"%s\" (commands are case sensitive, type /help for help), "
-"commands with similar name: %s"
-msgstr "%s сокращение или команда \"%s\" не найдены\n"
-
-#, fuzzy, c-format
-msgid ""
-"%sUnknown command \"%s\" (type /help for help), commands with similar name: "
-"%s"
-msgstr "%s сокращение или команда \"%s\" не найдены\n"
-
-#, c-format
-msgid "%sBad file descriptor (%d) used in hook_fd"
-msgstr ""
-
-#, c-format
-msgid "End of command '%s', timeout reached (%.3fs)"
-msgstr ""
-
-#, c-format
-msgid "System clock skew detected (%+ld seconds), reinitializing all timers"
-msgstr ""
-
-#, c-format
-msgid "%sURL transfer error: %s (URL: \"%s\")"
-msgstr ""
-
-#, c-format
-msgid "End of URL transfer '%s', timeout reached (%.3fs)"
-msgstr ""
-
-#, c-format
-msgid "%sError running thread in hook_url: %s (URL: \"%s\")"
-msgstr ""
-
-#. TRANSLATORS: "%s %s" after "compiled on" is date and time
-#, fuzzy, c-format
-msgid ""
-"WeeChat %s Copyright %s, compiled on %s %s\n"
-"Developed by Sébastien Helleu <flashcode@flashtux.org> - %s"
-msgstr ""
-"%s Copyright (C) 2003-2010, собран %s %s\n"
-"Разработчик - Sébastien Helleu <flashcode@flashtux.org> - %s"
-
-#, c-format
-msgid "Usage: %s [option...] [plugin:option...]\n"
-msgstr "Использование: %s [опция...] [расширение:опция...]\n"
-
-#, fuzzy
-msgid ""
-"  -a, --no-connect         disable auto-connect to servers at startup\n"
-"  -c, --colors             display default colors in terminal and exit\n"
-"  -d, --dir <path>         force a single WeeChat home directory\n"
-"                           or 5 different directories separated by colons "
-"(in this order: config, data, state, cache, runtime)\n"
-"                           (environment variable WEECHAT_HOME is read if "
-"this option is not given)\n"
-"  -t, --temp-dir           create a temporary WeeChat home directory and "
-"delete it on exit\n"
-"                           (incompatible with option \"-d\")\n"
-"  -h, --help               display this help and exit\n"
-"  -i, --build-info         display build information and exit\n"
-"  -l, --license            display WeeChat license and exit\n"
-"  -p, --no-plugin          don't load any plugin at startup\n"
-"  -P, --plugins <plugins>  load only these plugins at startup\n"
-"                           (see /help weechat.plugin.autoload)\n"
-"  -r, --run-command <cmd>  run command(s) after startup;\n"
-"                           many commands can be separated by semicolons and "
-"are evaluated,\n"
-"                           this option can be given multiple times\n"
-"  -s, --no-script          don't load any script at startup\n"
-"      --upgrade            upgrade WeeChat using session files (see /help "
-"upgrade in WeeChat)\n"
-"  -v, --version            display WeeChat version and exit\n"
-"  plugin:option            option for plugin (see man weechat)\n"
-msgstr ""
-"  -a, --no-connect        не подключаться автоматически при запуске\n"
-"  -c, --config            отобразить параметры конфигурации\n"
-"  -d, --dir <path>        установить домашний каталог WeeChat (по умолчанию: "
-"~/.weechat)\n"
-"  -f, --key-functions     отобразить внутренние функции WeeChat для горячих "
-"клавиш\n"
-"  -h, --help              эта сравка\n"
-"  -i, --irc-commands      отобразить команды IRC\n"
-"  -k, --keys              отобразить клавиши по умолчанию\n"
-"  -l, --license           отобразить лицензию WeeChat\n"
-"  -p, --no-plugin         не загружать pluginы при запуске\n"
-"  -v, --version           отобразить версию WeeChat\n"
-"  -w, --weechat-commands  отобразить команды WeeChat\n"
-
-msgid "Extra options in headless mode:\n"
-msgstr ""
-
-msgid ""
-"      --doc-gen <path>     generate files to build documentation and exit\n"
-msgstr ""
-
-msgid ""
-"      --daemon             run WeeChat as a daemon (fork, new process group, "
-"file descriptors closed);\n"
-msgstr ""
-
-msgid ""
-"                           (by default in headless mode WeeChat is blocking "
-"and does not run in background)\n"
-msgstr ""
-
-msgid ""
-"      --stdout             display log messages on standard output instead "
-"of writing them in log file\n"
-msgstr ""
-
-msgid ""
-"                           (option ignored if option \"--daemon\" is given)\n"
-msgstr ""
-
-msgid ""
-"Debug options (for tools like valgrind, DO NOT USE IN PRODUCTION):\n"
-"      --no-dlclose         do not call function dlclose after plugins are "
-"unloaded\n"
-"      --no-gnutls          disable init/deinit of gnutls\n"
-"      --no-gcrypt          disable init/deinit of gcrypt\n"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "Error: missing argument for \"%s\" option\n"
-msgstr "%s нет аргумента для параметра \"%s\"\n"
-
-msgid "WeeChat is running in headless mode (ctrl-c to quit)."
-msgstr ""
-
-msgid ""
-"Welcome to WeeChat!\n"
-"\n"
-"If you are discovering WeeChat, it is recommended to read at least the "
-"quickstart guide, and the user's guide if you have some time; they explain "
-"main WeeChat concepts.\n"
-"All WeeChat docs are available at: https://weechat.org/doc/\n"
-"\n"
-"Moreover, there is inline help with /help on all commands and options (use "
-"Tab key to complete the name).\n"
-"The command /fset can help to customize WeeChat.\n"
-"\n"
-"You can add and connect to an IRC server with /server and /connect commands "
-"(see /help server)."
-msgstr ""
-
-#. TRANSLATORS: the "under %s" can be "under screen" or "under tmux"
-#, c-format
-msgid ""
-"%sWarning: WeeChat is running under %s and $TERM is \"%s\", which can cause "
-"display bugs; $TERM should be set to one of these values: %s"
-msgstr ""
-
-#, c-format
-msgid "%sYou should add this line in the file %s:  %s"
-msgstr ""
-
-#, c-format
-msgid ""
-"%sWarning: cannot set the locale; make sure $LANG and $LC_* variables are "
-"correct"
-msgstr ""
 
 #, fuzzy
 msgid "List of bars:"
@@ -3975,6 +3806,91 @@ msgstr "  . тип: целочисленный\n"
 msgid "variables that can be used in /eval command"
 msgstr ""
 
+#, fuzzy, c-format
+msgid "Writing configuration file %s%s%s"
+msgstr "сохранять конфигурационный файл при выходе"
+
+msgid "(default options)"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%sCannot create file \"%s\""
+msgstr "%s не могу создать файл \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%sWARNING: failed to set permissions on configuration file \"%s\" (%s)"
+msgstr "сохранять конфигурационный файл при выходе"
+
+#, fuzzy, c-format
+msgid "%sError writing configuration file \"%s\""
+msgstr "перезагрузить конфигурационный файл сервера"
+
+#, fuzzy, c-format
+msgid "%sFile %s has been backed up as %s"
+msgstr "Сервер %s%s%s скопирован в %s%s\n"
+
+#, fuzzy, c-format
+msgid "%sError: unable to backup file %s"
+msgstr "Не могу записать лог-файл \"%s\"\n"
+
+#, c-format
+msgid ""
+"%sImportant: file %s has been updated from version %d to %d, it is not "
+"compatible and can not be loaded any more with any older version"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%sWARNING: failed to read configuration file \"%s\" (%s)"
+msgstr "сохранять конфигурационный файл при выходе"
+
+#, c-format
+msgid ""
+"%sWARNING: file \"%s\" will be overwritten on exit with default values (it "
+"is HIGHLY recommended to backup this file now)"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Reading configuration file %s"
+msgstr "перезагрузить конфигурационный файл сервера"
+
+#, fuzzy, c-format
+msgid "%sWarning: %s, line %d: invalid syntax, missing \"]\""
+msgstr "%s %s, строка %d: некорректный синтаксис, не хватает \"]\"\n"
+
+#, fuzzy, c-format
+msgid "%sWarning: %s, line %d: ignoring unknown section identifier (\"%s\")"
+msgstr "%s %s, строка %d: неизвестный идентификатор секции (\"%s\")\n"
+
+#, c-format
+msgid ""
+"%sError: %s, line %d: invalid config version: \"%s\" => rest of file is "
+"IGNORED, default options are used"
+msgstr ""
+
+#, c-format
+msgid ""
+"%sError: %s, version read (%d) is newer than supported version (%d) => rest "
+"of file is IGNORED, default options are used"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%sWarning: %s, line %d: ignoring option outside section: %s"
+msgstr "%s %s, строка %d: неизвестный идентификатор секции (\"%s\")\n"
+
+#, fuzzy, c-format
+msgid "%sWarning: %s, line %d: ignoring unknown option for section \"%s\": %s"
+msgstr "%s %s, строка %d: неизвестный идентификатор секции (\"%s\")\n"
+
+#, fuzzy, c-format
+msgid ""
+"%sWarning: %s, line %d: ignoring invalid value for option in section \"%s\": "
+"%s"
+msgstr "%s %s, строка %d: некорректный параметр \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "Reloading configuration file %s"
+msgstr "Сохраняю конфигурацию\n"
+
 msgid ""
 "Warning: option weechat.look.save_config_on_exit is disabled, so the option "
 "weechat.look.save_layout_on_exit is ignored"
@@ -5226,91 +5142,6 @@ msgstr "ник, используемый на IRC сервере"
 msgid "FATAL: error initializing configuration options"
 msgstr "перезагрузить конфигурационный файл сервера"
 
-#, fuzzy, c-format
-msgid "Writing configuration file %s%s%s"
-msgstr "сохранять конфигурационный файл при выходе"
-
-msgid "(default options)"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "%sCannot create file \"%s\""
-msgstr "%s не могу создать файл \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%sWARNING: failed to set permissions on configuration file \"%s\" (%s)"
-msgstr "сохранять конфигурационный файл при выходе"
-
-#, fuzzy, c-format
-msgid "%sError writing configuration file \"%s\""
-msgstr "перезагрузить конфигурационный файл сервера"
-
-#, fuzzy, c-format
-msgid "%sFile %s has been backed up as %s"
-msgstr "Сервер %s%s%s скопирован в %s%s\n"
-
-#, fuzzy, c-format
-msgid "%sError: unable to backup file %s"
-msgstr "Не могу записать лог-файл \"%s\"\n"
-
-#, c-format
-msgid ""
-"%sImportant: file %s has been updated from version %d to %d, it is not "
-"compatible and can not be loaded any more with any older version"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "%sWARNING: failed to read configuration file \"%s\" (%s)"
-msgstr "сохранять конфигурационный файл при выходе"
-
-#, c-format
-msgid ""
-"%sWARNING: file \"%s\" will be overwritten on exit with default values (it "
-"is HIGHLY recommended to backup this file now)"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "Reading configuration file %s"
-msgstr "перезагрузить конфигурационный файл сервера"
-
-#, fuzzy, c-format
-msgid "%sWarning: %s, line %d: invalid syntax, missing \"]\""
-msgstr "%s %s, строка %d: некорректный синтаксис, не хватает \"]\"\n"
-
-#, fuzzy, c-format
-msgid "%sWarning: %s, line %d: ignoring unknown section identifier (\"%s\")"
-msgstr "%s %s, строка %d: неизвестный идентификатор секции (\"%s\")\n"
-
-#, c-format
-msgid ""
-"%sError: %s, line %d: invalid config version: \"%s\" => rest of file is "
-"IGNORED, default options are used"
-msgstr ""
-
-#, c-format
-msgid ""
-"%sError: %s, version read (%d) is newer than supported version (%d) => rest "
-"of file is IGNORED, default options are used"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "%sWarning: %s, line %d: ignoring option outside section: %s"
-msgstr "%s %s, строка %d: неизвестный идентификатор секции (\"%s\")\n"
-
-#, fuzzy, c-format
-msgid "%sWarning: %s, line %d: ignoring unknown option for section \"%s\": %s"
-msgstr "%s %s, строка %d: неизвестный идентификатор секции (\"%s\")\n"
-
-#, fuzzy, c-format
-msgid ""
-"%sWarning: %s, line %d: ignoring invalid value for option in section \"%s\": "
-"%s"
-msgstr "%s %s, строка %d: некорректный параметр \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "Reloading configuration file %s"
-msgstr "Сохраняю конфигурацию\n"
-
 #. TRANSLATORS: "%s %s" after "compiled on" is date and time
 #, c-format
 msgid "WeeChat %s, compiled on %s %s\n"
@@ -5745,15 +5576,6 @@ msgid "Resource usage (see \"man getrusage\" for help):"
 msgstr ""
 
 #, fuzzy, c-format
-msgid "debug: removing file: %s"
-msgstr "       IRC(%s)\n"
-
-#. TRANSLATORS: %.02fs is a float number + "s" ("seconds")
-#, c-format
-msgid "Upgrade done (%.02fs)"
-msgstr ""
-
-#, fuzzy, c-format
 msgid "%sError upgrading WeeChat with file \"%s\":"
 msgstr "Обновляю WeeChat...\n"
 
@@ -5825,6 +5647,15 @@ msgid ""
 "version)"
 msgstr ""
 
+#, fuzzy, c-format
+msgid "debug: removing file: %s"
+msgstr "       IRC(%s)\n"
+
+#. TRANSLATORS: %.02fs is a float number + "s" ("seconds")
+#, c-format
+msgid "Upgrade done (%.02fs)"
+msgstr ""
+
 msgid "invalid URL"
 msgstr ""
 
@@ -5846,6 +5677,175 @@ msgstr "%sСервер: %s%s\n"
 
 #, c-format
 msgid "curl error %d (%s) (URL: \"%s\")\n"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%sAnother command \"%s\" already exists for plugin \"%s\""
+msgstr "%s игнорирование уже существует\n"
+
+#, fuzzy, c-format
+msgid ""
+"%sUnknown command \"%s\" (commands are case sensitive, type /help for help), "
+"commands with similar name: %s"
+msgstr "%s сокращение или команда \"%s\" не найдены\n"
+
+#, fuzzy, c-format
+msgid ""
+"%sUnknown command \"%s\" (type /help for help), commands with similar name: "
+"%s"
+msgstr "%s сокращение или команда \"%s\" не найдены\n"
+
+#, c-format
+msgid "%sBad file descriptor (%d) used in hook_fd"
+msgstr ""
+
+#, c-format
+msgid "End of command '%s', timeout reached (%.3fs)"
+msgstr ""
+
+#, c-format
+msgid "System clock skew detected (%+ld seconds), reinitializing all timers"
+msgstr ""
+
+#, c-format
+msgid "%sURL transfer error: %s (URL: \"%s\")"
+msgstr ""
+
+#, c-format
+msgid "End of URL transfer '%s', timeout reached (%.3fs)"
+msgstr ""
+
+#, c-format
+msgid "%sError running thread in hook_url: %s (URL: \"%s\")"
+msgstr ""
+
+#. TRANSLATORS: "%s %s" after "compiled on" is date and time
+#, fuzzy, c-format
+msgid ""
+"WeeChat %s Copyright %s, compiled on %s %s\n"
+"Developed by Sébastien Helleu <flashcode@flashtux.org> - %s"
+msgstr ""
+"%s Copyright (C) 2003-2010, собран %s %s\n"
+"Разработчик - Sébastien Helleu <flashcode@flashtux.org> - %s"
+
+#, c-format
+msgid "Usage: %s [option...] [plugin:option...]\n"
+msgstr "Использование: %s [опция...] [расширение:опция...]\n"
+
+#, fuzzy
+msgid ""
+"  -a, --no-connect         disable auto-connect to servers at startup\n"
+"  -c, --colors             display default colors in terminal and exit\n"
+"  -d, --dir <path>         force a single WeeChat home directory\n"
+"                           or 5 different directories separated by colons "
+"(in this order: config, data, state, cache, runtime)\n"
+"                           (environment variable WEECHAT_HOME is read if "
+"this option is not given)\n"
+"  -t, --temp-dir           create a temporary WeeChat home directory and "
+"delete it on exit\n"
+"                           (incompatible with option \"-d\")\n"
+"  -h, --help               display this help and exit\n"
+"  -i, --build-info         display build information and exit\n"
+"  -l, --license            display WeeChat license and exit\n"
+"  -p, --no-plugin          don't load any plugin at startup\n"
+"  -P, --plugins <plugins>  load only these plugins at startup\n"
+"                           (see /help weechat.plugin.autoload)\n"
+"  -r, --run-command <cmd>  run command(s) after startup;\n"
+"                           many commands can be separated by semicolons and "
+"are evaluated,\n"
+"                           this option can be given multiple times\n"
+"  -s, --no-script          don't load any script at startup\n"
+"      --upgrade            upgrade WeeChat using session files (see /help "
+"upgrade in WeeChat)\n"
+"  -v, --version            display WeeChat version and exit\n"
+"  plugin:option            option for plugin (see man weechat)\n"
+msgstr ""
+"  -a, --no-connect        не подключаться автоматически при запуске\n"
+"  -c, --config            отобразить параметры конфигурации\n"
+"  -d, --dir <path>        установить домашний каталог WeeChat (по умолчанию: "
+"~/.weechat)\n"
+"  -f, --key-functions     отобразить внутренние функции WeeChat для горячих "
+"клавиш\n"
+"  -h, --help              эта сравка\n"
+"  -i, --irc-commands      отобразить команды IRC\n"
+"  -k, --keys              отобразить клавиши по умолчанию\n"
+"  -l, --license           отобразить лицензию WeeChat\n"
+"  -p, --no-plugin         не загружать pluginы при запуске\n"
+"  -v, --version           отобразить версию WeeChat\n"
+"  -w, --weechat-commands  отобразить команды WeeChat\n"
+
+msgid "Extra options in headless mode:\n"
+msgstr ""
+
+msgid ""
+"      --doc-gen <path>     generate files to build documentation and exit\n"
+msgstr ""
+
+msgid ""
+"      --daemon             run WeeChat as a daemon (fork, new process group, "
+"file descriptors closed);\n"
+msgstr ""
+
+msgid ""
+"                           (by default in headless mode WeeChat is blocking "
+"and does not run in background)\n"
+msgstr ""
+
+msgid ""
+"      --stdout             display log messages on standard output instead "
+"of writing them in log file\n"
+msgstr ""
+
+msgid ""
+"                           (option ignored if option \"--daemon\" is given)\n"
+msgstr ""
+
+msgid ""
+"Debug options (for tools like valgrind, DO NOT USE IN PRODUCTION):\n"
+"      --no-dlclose         do not call function dlclose after plugins are "
+"unloaded\n"
+"      --no-gnutls          disable init/deinit of gnutls\n"
+"      --no-gcrypt          disable init/deinit of gcrypt\n"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Error: missing argument for \"%s\" option\n"
+msgstr "%s нет аргумента для параметра \"%s\"\n"
+
+msgid "WeeChat is running in headless mode (ctrl-c to quit)."
+msgstr ""
+
+msgid ""
+"Welcome to WeeChat!\n"
+"\n"
+"If you are discovering WeeChat, it is recommended to read at least the "
+"quickstart guide, and the user's guide if you have some time; they explain "
+"main WeeChat concepts.\n"
+"All WeeChat docs are available at: https://weechat.org/doc/\n"
+"\n"
+"Moreover, there is inline help with /help on all commands and options (use "
+"Tab key to complete the name).\n"
+"The command /fset can help to customize WeeChat.\n"
+"\n"
+"You can add and connect to an IRC server with /server and /connect commands "
+"(see /help server)."
+msgstr ""
+
+#. TRANSLATORS: the "under %s" can be "under screen" or "under tmux"
+#, c-format
+msgid ""
+"%sWarning: WeeChat is running under %s and $TERM is \"%s\", which can cause "
+"display bugs; $TERM should be set to one of these values: %s"
+msgstr ""
+
+#, c-format
+msgid "%sYou should add this line in the file %s:  %s"
+msgstr ""
+
+#, c-format
+msgid ""
+"%sWarning: cannot set the locale; make sure $LANG and $LC_* variables are "
+"correct"
 msgstr ""
 
 #, c-format
@@ -5933,6 +5933,51 @@ msgstr "%sСервер: %s%s\n"
 msgid "OK"
 msgstr "OK"
 
+msgid "condition(s) to display the bar item (evaluated, see /help eval)"
+msgstr ""
+
+msgid "content of bar item (evaluated, see /help eval)"
+msgstr ""
+
+#, c-format
+msgid "debug: long callback: bar: %s, item: %s, plugin: %s, time elapsed: %s"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%sPaste %d line? [ctrl-y] Yes [ctrl-n] No"
+msgid_plural "%sPaste %d lines? [ctrl-y] Yes [ctrl-n] No"
+msgstr[0] "  Вставить %d строк ? [ctrl-Y] Да  [ctrl-N] Нет"
+msgstr[1] "  Вставить %d строк ? [ctrl-Y] Да  [ctrl-N] Нет"
+msgstr[2] "  Вставить %d строк ? [ctrl-Y] Да  [ctrl-N] Нет"
+
+#. TRANSLATORS: search in "local" history
+msgid "local"
+msgstr ""
+
+#. TRANSLATORS: search in "global" history
+msgid "global"
+msgstr ""
+
+msgid "Search lines"
+msgstr ""
+
+#, fuzzy
+msgid "Search command"
+msgstr "Внутренние команды %s:\n"
+
+msgid "keyboard and mouse debug ('q' to quit debug mode)"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s-MORE(%d)-"
+msgstr "-ДАЛЬШЕ-"
+
+msgid "Lag"
+msgstr ""
+
+msgid "away"
+msgstr ""
+
 #, c-format
 msgid ""
 "%sUnable to change bar type: you must delete bar and create another to do "
@@ -6007,51 +6052,6 @@ msgid ""
 "items of bar, they can be separated by comma (space between items) or \"+\" "
 "(glued items); special syntax \"@buffer:item\" can be used to force buffer "
 "used when displaying the bar item"
-msgstr ""
-
-#, c-format
-msgid "debug: long callback: bar: %s, item: %s, plugin: %s, time elapsed: %s"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "%sPaste %d line? [ctrl-y] Yes [ctrl-n] No"
-msgid_plural "%sPaste %d lines? [ctrl-y] Yes [ctrl-n] No"
-msgstr[0] "  Вставить %d строк ? [ctrl-Y] Да  [ctrl-N] Нет"
-msgstr[1] "  Вставить %d строк ? [ctrl-Y] Да  [ctrl-N] Нет"
-msgstr[2] "  Вставить %d строк ? [ctrl-Y] Да  [ctrl-N] Нет"
-
-#. TRANSLATORS: search in "local" history
-msgid "local"
-msgstr ""
-
-#. TRANSLATORS: search in "global" history
-msgid "global"
-msgstr ""
-
-msgid "Search lines"
-msgstr ""
-
-#, fuzzy
-msgid "Search command"
-msgstr "Внутренние команды %s:\n"
-
-msgid "keyboard and mouse debug ('q' to quit debug mode)"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "%s-MORE(%d)-"
-msgstr "-ДАЛЬШЕ-"
-
-msgid "Lag"
-msgstr ""
-
-msgid "away"
-msgstr ""
-
-msgid "condition(s) to display the bar item (evaluated, see /help eval)"
-msgstr ""
-
-msgid "content of bar item (evaluated, see /help eval)"
 msgstr ""
 
 #, fuzzy, c-format
@@ -6169,18 +6169,6 @@ msgstr ""
 
 msgid "Debug disabled for mouse"
 msgstr ""
-
-#, fuzzy
-msgid "Alias commands"
-msgstr "Внутренние команды %s:\n"
-
-#, fuzzy, c-format
-msgid "%s%s: error, circular reference when calling alias \"%s\""
-msgstr "%s рекурсия при вызове сокращения \"/%s\"\n"
-
-#, fuzzy, c-format
-msgid "%s%s: invalid alias name: \"%s\""
-msgstr "Не могу записать лог-файл \"%s\"\n"
 
 #, fuzzy, c-format
 msgid "%s%s: error creating alias \"%s\" => \"%s\""
@@ -6341,16 +6329,16 @@ msgid "list of default aliases"
 msgstr "Список сокращений:\n"
 
 #, fuzzy
-msgid "Buffers list"
-msgstr "Список буферов:"
+msgid "Alias commands"
+msgstr "Внутренние команды %s:\n"
 
-#, c-format
-msgid ""
-"%sbuflist: warning: the script buffers.pl is loaded and provides a bar with "
-"list of buffers similar to the buflist plugin; you may want to uninstall the "
-"script buffers.pl (/script remove buffers.pl) or disable/unload the buflist "
-"plugin; see WeeChat release notes for more information"
-msgstr ""
+#, fuzzy, c-format
+msgid "%s%s: error, circular reference when calling alias \"%s\""
+msgstr "%s рекурсия при вызове сокращения \"/%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: invalid alias name: \"%s\""
+msgstr "Не могу записать лог-файл \"%s\"\n"
 
 #, fuzzy
 msgid "bar item with list of buffers"
@@ -6708,6 +6696,18 @@ msgid "buflist bar item name (optional)"
 msgstr "настроить параметры конфигурации"
 
 #, fuzzy
+msgid "Buffers list"
+msgstr "Список буферов:"
+
+#, c-format
+msgid ""
+"%sbuflist: warning: the script buffers.pl is loaded and provides a bar with "
+"list of buffers similar to the buflist plugin; you may want to uninstall the "
+"script buffers.pl (/script remove buffers.pl) or disable/unload the buflist "
+"plugin; see WeeChat release notes for more information"
+msgstr ""
+
+#, fuzzy
 msgid "Charset conversions"
 msgstr "слоган WeeChat"
 
@@ -6773,17 +6773,6 @@ msgstr "не найдено имя канала для буфера"
 #, fuzzy
 msgid "Executed commands"
 msgstr "Внутренние команды %s:\n"
-
-msgid "Execution of external commands in WeeChat"
-msgstr ""
-
-#, c-format
-msgid "%s: end of command %ld (\"%s\"), return code: %d"
-msgstr ""
-
-#, c-format
-msgid "%s: unexpected end of command %ld (\"%s\")"
-msgstr ""
 
 msgid "No command is running"
 msgstr ""
@@ -7063,41 +7052,16 @@ msgstr "цвет действий в поле ввода"
 msgid "text color for a running command flag in list of commands"
 msgstr "цвет действий в поле ввода"
 
-#, fuzzy
-msgid "FIFO pipe for remote control"
-msgstr "%s не могу создать FIFO pipe для удалённого управления (%s)\n"
+msgid "Execution of external commands in WeeChat"
+msgstr ""
 
-#, fuzzy, c-format
-msgid "%s%s: not enough memory (%s)"
-msgstr "Недостаточно памяти для новой строчки\n"
+#, c-format
+msgid "%s: end of command %ld (\"%s\"), return code: %d"
+msgstr ""
 
-#, fuzzy, c-format
-msgid "%s: pipe opened (file: %s)"
-msgstr "команда users отключена"
-
-#, fuzzy, c-format
-msgid "%s%s: unable to open pipe (%s) for reading"
-msgstr "%s не могу открыть FIFO pipe (%s) для чтения\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unable to create pipe for remote control (%s): error %d %s"
-msgstr "%s не могу создать FIFO pipe для удалённого управления (%s)\n"
-
-#, fuzzy, c-format
-msgid "%s: pipe closed"
-msgstr "FIFO pipe закрыт\n"
-
-#, fuzzy, c-format
-msgid "%s%s: invalid text received in pipe"
-msgstr "%s некорректный текст получен на FIFO pipe\n"
-
-#, fuzzy, c-format
-msgid "%s%s: buffer \"%s\" not found"
-msgstr "%s сервер \"%s\" не найден\n"
-
-#, fuzzy, c-format
-msgid "%s%s: error reading pipe (%d %s), closing it"
-msgstr "%s ошибка чтения FIFO pipe, закрываю его\n"
+#, c-format
+msgid "%s: unexpected end of command %ld (\"%s\")"
+msgstr ""
 
 #, fuzzy, c-format
 msgid "%s: pipe is enabled (file: %s)"
@@ -7158,6 +7122,42 @@ msgid "name of FIFO pipe"
 msgstr ""
 
 #, fuzzy
+msgid "FIFO pipe for remote control"
+msgstr "%s не могу создать FIFO pipe для удалённого управления (%s)\n"
+
+#, fuzzy, c-format
+msgid "%s%s: not enough memory (%s)"
+msgstr "Недостаточно памяти для новой строчки\n"
+
+#, fuzzy, c-format
+msgid "%s: pipe opened (file: %s)"
+msgstr "команда users отключена"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to open pipe (%s) for reading"
+msgstr "%s не могу открыть FIFO pipe (%s) для чтения\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to create pipe for remote control (%s): error %d %s"
+msgstr "%s не могу создать FIFO pipe для удалённого управления (%s)\n"
+
+#, fuzzy, c-format
+msgid "%s: pipe closed"
+msgstr "FIFO pipe закрыт\n"
+
+#, fuzzy, c-format
+msgid "%s%s: invalid text received in pipe"
+msgstr "%s некорректный текст получен на FIFO pipe\n"
+
+#, fuzzy, c-format
+msgid "%s%s: buffer \"%s\" not found"
+msgstr "%s сервер \"%s\" не найден\n"
+
+#, fuzzy, c-format
+msgid "%s%s: error reading pipe (%d %s), closing it"
+msgstr "%s ошибка чтения FIFO pipe, закрываю его\n"
+
+#, fuzzy
 msgid "values:"
 msgstr "  . значения: "
 
@@ -7180,9 +7180,6 @@ msgid ""
 "$)=unmark/refresh, (m)=mark matching options, (u)=unmark matching options, "
 "alt+p(p)=toggle plugins desc, alt+v(v)=toggle help bar, ctrl+x(x)=switch "
 "format, (q)=close buffer"
-msgstr ""
-
-msgid "Fast set of WeeChat and plugins options"
 msgstr ""
 
 #, c-format
@@ -7870,6 +7867,9 @@ msgstr "настроить параметры конфигурации"
 msgid "any color"
 msgstr "цвет чата"
 
+msgid "Fast set of WeeChat and plugins options"
+msgstr ""
+
 #, fuzzy, c-format
 msgid "%s%s: script \"%s\" already registered (register ignored)"
 msgstr "%s сервер \"%s\" уже существует, не могу создать его!\n"
@@ -7931,37 +7931,6 @@ msgstr "сервер"
 
 #. TRANSLATORS: this is displayed in a bar item and must be as short as possible
 msgid "cleartext"
-msgstr ""
-
-msgid "IRC (Internet Relay Chat) protocol"
-msgstr ""
-
-#, c-format
-msgid ""
-"%s%s: disconnecting from server because upgrade can't work for servers "
-"connected via TLS"
-msgstr ""
-
-#, c-format
-msgid ""
-"%s%s: disconnected from %d server (TLS connection not supported with upgrade)"
-msgid_plural ""
-"%s%s: disconnected from %d servers (TLS connection not supported with "
-"upgrade)"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-
-#, c-format
-msgid ""
-"%s%s: unable to add temporary server \"%s\" (check if there is already a "
-"server with this name)"
-msgstr ""
-
-#, c-format
-msgid ""
-"%s%s: WARNING: some network connections may still be opened and not visible, "
-"you should restart WeeChat now (with /quit)."
 msgstr ""
 
 #, fuzzy, c-format
@@ -8045,6 +8014,12 @@ msgstr "Сервер %s%s%s создан\n"
 
 #. TRANSLATORS: "temporary IRC server"
 msgid " (temporary)"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: unable to add temporary server \"%s\" (check if there is already a "
+"server with this name)"
 msgstr ""
 
 #, c-format
@@ -12165,6 +12140,35 @@ msgstr "%s: Повторное соединение...\n"
 msgid "%s%s: disconnected from server"
 msgstr "Отключен от сервера!\n"
 
+msgid "IRC (Internet Relay Chat) protocol"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: disconnecting from server because upgrade can't work for servers "
+"connected via TLS"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: disconnected from %d server (TLS connection not supported with upgrade)"
+msgid_plural ""
+"%s%s: disconnected from %d servers (TLS connection not supported with "
+"upgrade)"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#, c-format
+msgid ""
+"%s%s: WARNING: some network connections may still be opened and not visible, "
+"you should restart WeeChat now (with /quit)."
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: exception: %s"
+msgstr "%sСервер: %s%s\n"
+
 #, fuzzy
 msgid "Support of javascript scripts"
 msgstr "Список сокращений:\n"
@@ -12188,10 +12192,6 @@ msgstr "Не могу записать лог-файл \"%s\"\n"
 #, fuzzy, c-format
 msgid "%sCommand \"/%s eval\" is not yet implemented"
 msgstr "%sЦвет \"%s\" не определён в палитре"
-
-#, fuzzy, c-format
-msgid "%s%s: exception: %s"
-msgstr "%sСервер: %s%s\n"
 
 #, c-format
 msgid "%s===\t%s========== End of backlog (%d lines) =========="
@@ -12222,16 +12222,6 @@ msgstr "**** Начало log-файла"
 #, fuzzy, c-format
 msgid "%s\t****  End of log  ****"
 msgstr "**** Конец log-файла"
-
-#, fuzzy
-msgid "Log buffers to files"
-msgstr "перезагрузить конфигурационный файл сервера"
-
-#, c-format
-msgid ""
-"%s%s: unable to find filename mask for buffer \"%s\", logging is disabled "
-"for this buffer"
-msgstr ""
 
 #, fuzzy
 msgid "Logging on buffers:"
@@ -12462,6 +12452,16 @@ msgid "logger pointer (optional)"
 msgstr "Сохраняю конфигурацию\n"
 
 #, fuzzy
+msgid "Log buffers to files"
+msgstr "перезагрузить конфигурационный файл сервера"
+
+#, c-format
+msgid ""
+"%s%s: unable to find filename mask for buffer \"%s\", logging is disabled "
+"for this buffer"
+msgstr ""
+
+#, fuzzy
 msgid "Support of lua scripts"
 msgstr "Список сокращений:\n"
 
@@ -12500,109 +12500,6 @@ msgstr "%s не могу инициализировать plugin \"%s\"\n"
 #, fuzzy
 msgid "Support of PHP scripts"
 msgstr "Список сокращений:\n"
-
-msgid "bar"
-msgstr ""
-
-#, fuzzy
-msgid "bar item"
-msgstr "Список сокращений:\n"
-
-#, fuzzy
-msgid "bar window"
-msgstr "управление окнами"
-
-#, fuzzy
-msgid "buffer"
-msgstr "управление буферами"
-
-#, fuzzy
-msgid "visited buffer"
-msgstr "Список сокращений:\n"
-
-#, fuzzy
-msgid "structure with completion"
-msgstr "вставить строку в поле ввода"
-
-#, fuzzy
-msgid "structure with word found for a completion"
-msgstr "вставить строку в поле ввода"
-
-#, fuzzy
-msgid "config file"
-msgstr "перезагрузить конфигурационный файл сервера"
-
-#, fuzzy
-msgid "config section"
-msgstr "настроить параметры конфигурации"
-
-#, fuzzy
-msgid "config option"
-msgstr "настроить параметры конфигурации"
-
-msgid "filter"
-msgstr ""
-
-#, fuzzy
-msgid "history of commands in buffer"
-msgstr "Внутренние команды %s:\n"
-
-msgid "hotlist"
-msgstr ""
-
-#, fuzzy
-msgid "structure with undo for input line"
-msgstr "вставить строку в поле ввода"
-
-msgid "a key (keyboard shortcut)"
-msgstr ""
-
-#, fuzzy
-msgid "layout"
-msgstr "время в буферах"
-
-#, fuzzy
-msgid "buffer layout"
-msgstr "поиск текста в истории буфера"
-
-#, fuzzy
-msgid "window layout"
-msgstr "управление окнами"
-
-msgid "structure with lines"
-msgstr ""
-
-msgid "structure with one line"
-msgstr ""
-
-msgid "structure with one line data"
-msgstr ""
-
-#, fuzzy
-msgid "group in nicklist"
-msgstr "цвет ника"
-
-#, fuzzy
-msgid "nick in nicklist"
-msgstr "%s игнорирования не найдены\n"
-
-#, fuzzy
-msgid "plugin"
-msgstr "  (нет pluginа)\n"
-
-msgid "proxy"
-msgstr ""
-
-#, fuzzy
-msgid "window"
-msgstr "управление окнами"
-
-msgid "scroll info in window"
-msgstr ""
-
-#, fuzzy
-msgid "tree of windows"
-msgstr "Список игнорирования:\n"
 
 #, fuzzy
 msgid "WeeChat version"
@@ -12983,68 +12880,123 @@ msgstr ""
 msgid "\"current\" for current window or a window number (optional)"
 msgstr ""
 
-#, c-format
-msgid "Initializing plugin \"%s\" (priority: %d)"
+msgid "bar"
 msgstr ""
-
-#, fuzzy, c-format
-msgid "%sUnable to initialize plugin \"%s\""
-msgstr "%s не могу инициализировать plugin \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%sUnable to load plugin \"%s\": %s"
-msgstr "%s не могу загрузить plugin \"%s\": %s\n"
-
-#, c-format
-msgid ""
-"%sIf you're trying to load a script and not a C plugin, try command to load "
-"scripts (/perl, /python, ...)"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "%sSymbol \"%s\" not found in plugin \"%s\", failed to load"
-msgstr ""
-"%s символ \"plugin_name\" не найден в plugin'е \"%s\", загрузка не удалась\n"
-
-#, c-format
-msgid "%sIf plugin \"%s\" is old/obsolete, you can delete this file."
-msgstr ""
-
-#, fuzzy, c-format
-msgid ""
-"%sAPI mismatch for plugin \"%s\" (current API: \"%s\", plugin API: \"%s\"), "
-"failed to load"
-msgstr ""
-"%s символ \"plugin_name\" не найден в plugin'е \"%s\", загрузка не удалась\n"
-
-#, fuzzy, c-format
-msgid "%sUnable to load plugin \"%s\": a plugin with same name already exists"
-msgstr ""
-"%s не могу загрузить plugin \"%s\": одноимённый plugin уже существует\n"
-
-#, fuzzy, c-format
-msgid "%sFunction \"%s\" not found in plugin \"%s\", failed to load"
-msgstr ""
-"%s функция \"weechat_plugin_init\" не найдена в plugin'е \"%s\", загрузка не "
-"удалась\n"
-
-#, fuzzy, c-format
-msgid "%sUnable to load plugin \"%s\" (not enough memory)"
-msgstr "%s не могу загрузить plugin \"%s\" (недостаточно памяти)\n"
-
-#, fuzzy, c-format
-msgid "Plugin \"%s\" loaded"
-msgstr "Plugin \"%s\" выгружен.\n"
-
-#, fuzzy, c-format
-msgid "Plugin \"%s\" unloaded"
-msgstr "Plugin \"%s\" выгружен.\n"
 
 #, fuzzy
-msgid "Plugins unloaded"
-msgstr "Загруженные plugin'ы\n"
+msgid "bar item"
+msgstr "Список сокращений:\n"
+
+#, fuzzy
+msgid "bar window"
+msgstr "управление окнами"
+
+#, fuzzy
+msgid "buffer"
+msgstr "управление буферами"
+
+#, fuzzy
+msgid "visited buffer"
+msgstr "Список сокращений:\n"
+
+#, fuzzy
+msgid "structure with completion"
+msgstr "вставить строку в поле ввода"
+
+#, fuzzy
+msgid "structure with word found for a completion"
+msgstr "вставить строку в поле ввода"
+
+#, fuzzy
+msgid "config file"
+msgstr "перезагрузить конфигурационный файл сервера"
+
+#, fuzzy
+msgid "config section"
+msgstr "настроить параметры конфигурации"
+
+#, fuzzy
+msgid "config option"
+msgstr "настроить параметры конфигурации"
+
+msgid "filter"
+msgstr ""
+
+#, fuzzy
+msgid "history of commands in buffer"
+msgstr "Внутренние команды %s:\n"
+
+msgid "hotlist"
+msgstr ""
+
+#, fuzzy
+msgid "structure with undo for input line"
+msgstr "вставить строку в поле ввода"
+
+msgid "a key (keyboard shortcut)"
+msgstr ""
+
+#, fuzzy
+msgid "layout"
+msgstr "время в буферах"
+
+#, fuzzy
+msgid "buffer layout"
+msgstr "поиск текста в истории буфера"
+
+#, fuzzy
+msgid "window layout"
+msgstr "управление окнами"
+
+msgid "structure with lines"
+msgstr ""
+
+msgid "structure with one line"
+msgstr ""
+
+msgid "structure with one line data"
+msgstr ""
+
+#, fuzzy
+msgid "group in nicklist"
+msgstr "цвет ника"
+
+#, fuzzy
+msgid "nick in nicklist"
+msgstr "%s игнорирования не найдены\n"
+
+#, fuzzy
+msgid "plugin"
+msgstr "  (нет pluginа)\n"
+
+msgid "proxy"
+msgstr ""
+
+#, fuzzy
+msgid "window"
+msgstr "управление окнами"
+
+msgid "scroll info in window"
+msgstr ""
+
+#, fuzzy
+msgid "tree of windows"
+msgstr "Список игнорирования:\n"
 
 msgid "description of plugin option"
+msgstr ""
+
+msgid ""
+"check the license of scripts when they are loaded: if the license is "
+"different from the plugin license, a warning is displayed"
+msgstr ""
+
+#, c-format
+msgid ""
+"keep context between two calls to the source code evaluation (option "
+"\"eval\" of script command or info \"%s_eval\"); a hidden script is used to "
+"eval script code; if this option is disabled, this hidden script is unloaded "
+"after each eval: this uses less memory, but is slower"
 msgstr ""
 
 #, fuzzy
@@ -13190,19 +13142,6 @@ msgstr "(неизвестен)"
 msgid "%s: scripts unloaded"
 msgstr "Plugin \"%s\" выгружен.\n"
 
-msgid ""
-"check the license of scripts when they are loaded: if the license is "
-"different from the plugin license, a warning is displayed"
-msgstr ""
-
-#, c-format
-msgid ""
-"keep context between two calls to the source code evaluation (option "
-"\"eval\" of script command or info \"%s_eval\"); a hidden script is used to "
-"eval script code; if this option is disabled, this hidden script is unloaded "
-"after each eval: this uses less memory, but is slower"
-msgstr ""
-
 #, fuzzy, c-format
 msgid ""
 "%s%s: unable to call function \"%s\", script is not initialized (script: %s)"
@@ -13211,6 +13150,67 @@ msgstr "Не могу записать лог-файл \"%s\"\n"
 #, fuzzy, c-format
 msgid "%s%s: wrong arguments for function \"%s\" (script: %s)"
 msgstr "%s некорректные аргументы команды \"%s\"\n"
+
+#, c-format
+msgid "Initializing plugin \"%s\" (priority: %d)"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%sUnable to initialize plugin \"%s\""
+msgstr "%s не могу инициализировать plugin \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%sUnable to load plugin \"%s\": %s"
+msgstr "%s не могу загрузить plugin \"%s\": %s\n"
+
+#, c-format
+msgid ""
+"%sIf you're trying to load a script and not a C plugin, try command to load "
+"scripts (/perl, /python, ...)"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%sSymbol \"%s\" not found in plugin \"%s\", failed to load"
+msgstr ""
+"%s символ \"plugin_name\" не найден в plugin'е \"%s\", загрузка не удалась\n"
+
+#, c-format
+msgid "%sIf plugin \"%s\" is old/obsolete, you can delete this file."
+msgstr ""
+
+#, fuzzy, c-format
+msgid ""
+"%sAPI mismatch for plugin \"%s\" (current API: \"%s\", plugin API: \"%s\"), "
+"failed to load"
+msgstr ""
+"%s символ \"plugin_name\" не найден в plugin'е \"%s\", загрузка не удалась\n"
+
+#, fuzzy, c-format
+msgid "%sUnable to load plugin \"%s\": a plugin with same name already exists"
+msgstr ""
+"%s не могу загрузить plugin \"%s\": одноимённый plugin уже существует\n"
+
+#, fuzzy, c-format
+msgid "%sFunction \"%s\" not found in plugin \"%s\", failed to load"
+msgstr ""
+"%s функция \"weechat_plugin_init\" не найдена в plugin'е \"%s\", загрузка не "
+"удалась\n"
+
+#, fuzzy, c-format
+msgid "%sUnable to load plugin \"%s\" (not enough memory)"
+msgstr "%s не могу загрузить plugin \"%s\" (недостаточно памяти)\n"
+
+#, fuzzy, c-format
+msgid "Plugin \"%s\" loaded"
+msgstr "Plugin \"%s\" выгружен.\n"
+
+#, fuzzy, c-format
+msgid "Plugin \"%s\" unloaded"
+msgstr "Plugin \"%s\" выгружен.\n"
+
+#, fuzzy
+msgid "Plugins unloaded"
+msgstr "Загруженные plugin'ы\n"
 
 #, fuzzy
 msgid "Support of python scripts"
@@ -13499,42 +13499,6 @@ msgstr ""
 
 msgid "List of clients for relay"
 msgstr ""
-
-msgid "Relay WeeChat data to remote application (irc/weechat protocols)"
-msgstr ""
-
-#, fuzzy
-msgid "connecting"
-msgstr "Подключение"
-
-msgid "authenticating"
-msgstr ""
-
-#, fuzzy
-msgid "authentication failed"
-msgstr "Неудача"
-
-#, fuzzy
-msgid "disconnected"
-msgstr "подключен"
-
-#, c-format
-msgid ""
-"%s%s: disconnecting from client %s%s%s because upgrade can't work for "
-"clients connected via TLS"
-msgstr ""
-
-#. TRANSLATORS: "%s" after "%d" is "client" or "clients"
-#, c-format
-msgid ""
-"%s%s: disconnected from %d %s (TLS connection not supported with upgrade)"
-msgstr ""
-
-msgid "client"
-msgid_plural "clients"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
 
 #, fuzzy, c-format
 msgid "%s%s: TLS handshake failed for client %s%s%s: error %d %s"
@@ -14428,6 +14392,42 @@ msgstr ""
 msgid "%s%s: not enough memory for listening on new port"
 msgstr "%s недостаточно памяти для нового DCC\n"
 
+msgid "Relay WeeChat data to remote application (irc/weechat protocols)"
+msgstr ""
+
+#, fuzzy
+msgid "connecting"
+msgstr "Подключение"
+
+msgid "authenticating"
+msgstr ""
+
+#, fuzzy
+msgid "authentication failed"
+msgstr "Неудача"
+
+#, fuzzy
+msgid "disconnected"
+msgstr "подключен"
+
+#, c-format
+msgid ""
+"%s%s: disconnecting from client %s%s%s because upgrade can't work for "
+"clients connected via TLS"
+msgstr ""
+
+#. TRANSLATORS: "%s" after "%d" is "client" or "clients"
+#, c-format
+msgid ""
+"%s%s: disconnected from %d %s (TLS connection not supported with upgrade)"
+msgstr ""
+
+msgid "client"
+msgid_plural "clients"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
 #, fuzzy, c-format
 msgid "%s: invalid pointer in hdata path: \"%s\""
 msgstr "%s не могу отвязать клавишу \"%s\"\n"
@@ -14644,16 +14644,6 @@ msgid ""
 msgstr ""
 
 msgid "Scripts"
-msgstr ""
-
-#, fuzzy
-msgid "Script manager"
-msgstr "слоган WeeChat"
-
-#, c-format
-msgid ""
-"%s%s: download of scripts is disabled by default; to enable it, type /script "
-"enable"
 msgstr ""
 
 #, fuzzy, c-format
@@ -15056,15 +15046,14 @@ msgstr "%s ошибка при отправке данных IRC серверу\
 msgid "%s: downloading list of scripts..."
 msgstr "сессия: загружаю сервер \"%s\"\n"
 
-msgid "Spell checker for input"
-msgstr ""
+#, fuzzy
+msgid "Script manager"
+msgstr "слоган WeeChat"
 
 #, c-format
 msgid ""
-"%s%s: warning: the plugin \"aspell\" has been renamed to \"spell\" and the "
-"file %s still exists (but not %s); if you upgraded from an older version, "
-"you should check instructions in release notes (version 2.5) to recover your "
-"settings"
+"%s%s: download of scripts is disabled by default; to enable it, type /script "
+"enable"
 msgstr ""
 
 #. TRANSLATORS: "%s" is "spell" (name of plugin)
@@ -15293,6 +15282,17 @@ msgstr ""
 msgid "%s%s: error: unable to create speller for lang \"%s\""
 msgstr "%s не могу создать сервер \"%s\"\n"
 
+msgid "Spell checker for input"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: warning: the plugin \"aspell\" has been renamed to \"spell\" and the "
+"file %s still exists (but not %s); if you upgraded from an older version, "
+"you should check instructions in release notes (version 2.5) to recover your "
+"settings"
+msgstr ""
+
 #, fuzzy
 msgid "Support of tcl scripts"
 msgstr "Список сокращений:\n"
@@ -15312,18 +15312,6 @@ msgstr "Не могу записать лог-файл \"%s\"\n"
 #, c-format
 msgid "Trigger monitor (filter: %s) | Input: q=close, words=filter"
 msgstr ""
-
-msgid ""
-"Text replacement and command execution on events triggered by WeeChat/plugins"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "%s%s: unable to create hook for trigger \"%s\" (bad arguments)"
-msgstr "%s неизвестный параметр для команды \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%s%s: invalid regular expression in trigger: \"%s\""
-msgstr "%s недостаточно памяти для сообщения в строке информации\n"
 
 #, fuzzy
 msgid "no variable"
@@ -15897,11 +15885,20 @@ msgstr "цвет стрелки захода на канал (префикс)"
 msgid "text color for replacement text (for regular expressions)"
 msgstr ""
 
-#. TRANSLATORS: this text is displayed before the list of nicks typing in the bar item "typing", it must be as short as possible
-msgid "Typing:"
+msgid ""
+"Text replacement and command execution on events triggered by WeeChat/plugins"
 msgstr ""
 
-msgid "Typing status of users"
+#, fuzzy, c-format
+msgid "%s%s: unable to create hook for trigger \"%s\" (bad arguments)"
+msgstr "%s неизвестный параметр для команды \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: invalid regular expression in trigger: \"%s\""
+msgstr "%s недостаточно памяти для сообщения в строке информации\n"
+
+#. TRANSLATORS: this text is displayed before the list of nicks typing in the bar item "typing", it must be as short as possible
+msgid "Typing:"
 msgstr ""
 
 msgid ""
@@ -15935,6 +15932,9 @@ msgid ""
 "truncate content)"
 msgstr ""
 
+msgid "Typing status of users"
+msgstr ""
+
 msgid "  [A] Accept"
 msgstr "  [A] Принять"
 
@@ -15950,152 +15950,6 @@ msgstr "осталось"
 #, fuzzy
 msgid "Xfer list"
 msgstr "очистить хотлист"
-
-#, fuzzy
-msgid "DCC file transfer and direct chat"
-msgstr "начинает DCC (передачу файла или чат) или закрывает чат"
-
-#, fuzzy
-msgid "waiting"
-msgstr "Ожидание"
-
-#, fuzzy
-msgid "active"
-msgstr "Активно"
-
-#, fuzzy
-msgid "done"
-msgstr "Завершено"
-
-#, fuzzy
-msgid "failed"
-msgstr "Неудача"
-
-#, fuzzy
-msgid "aborted"
-msgstr "Отменено"
-
-msgid "hashing"
-msgstr ""
-
-msgid "CRC in progress"
-msgstr ""
-
-msgid "CRC OK"
-msgstr ""
-
-msgid "wrong CRC"
-msgstr ""
-
-msgid "CRC error"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "%s%s: file %s %s %s (%s): %s"
-msgstr "DCC: файл %s%s%s"
-
-#, fuzzy
-msgid "sent to"
-msgstr " отправлен "
-
-#, fuzzy
-msgid "received from"
-msgstr " получен от "
-
-msgid "FAILED"
-msgstr "НЕУДАЧА"
-
-#, fuzzy, c-format
-msgid "%s%s: chat closed with %s (%s)"
-msgstr "DCC-чат закончен с %s%s %s(%s%d.%d.%d.%d%s)\n"
-
-#, fuzzy, c-format
-msgid "%s%s: aborting active xfer: \"%s\" from %s"
-msgstr "Отменяю активное DCC-сединение: \"%s\" от %s\n"
-
-#, fuzzy, c-format
-msgid "%s%s: not enough memory for new xfer"
-msgstr "%s недостаточно памяти для нового DCC\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unable to interpret address: error %d %s"
-msgstr "%s DCC: не могу создать pipe\n"
-
-#, fuzzy, c-format
-msgid "%s%s: hashing error"
-msgstr "%s ошибка инициализации gnutls\n"
-
-#, fuzzy, c-format
-msgid ""
-"%s: incoming file from %s (%s, %s.%s), name: %s, %llu bytes (protocol: %s)"
-msgstr "Входящий файл от %s%s%s (%s%d.%d.%d.%d%s)%s: %s%s%s, %s%lu%s байт\n"
-
-#, fuzzy, c-format
-msgid ""
-"%s: offering file to %s (%s.%s), name: %s (local filename: %s), %llu bytes "
-"(protocol: %s)"
-msgstr "Отправляю файл %s%s%s: %s%s%s (файл: %s%s%s), %s%lu%s байт\n"
-
-#, fuzzy, c-format
-msgid "%s: incoming chat request from %s (%s, %s.%s)"
-msgstr "Входящий запрос на DCC-чат от %s%s%s (%s%d.%d.%d.%d%s)\n"
-
-#, fuzzy, c-format
-msgid "%s: sending chat request to %s (%s.%s)"
-msgstr "Отправляю запрос на DCC-чат %s%s\n"
-
-#, fuzzy, c-format
-msgid "%s: file %s (local filename: %s) will be resumed at position %llu"
-msgstr ""
-"DCC: файл %s%s%s (локальное имя файла: %s%s%s) будет продолжен с позиции %u\n"
-
-#, fuzzy, c-format
-msgid "%s%s: missing arguments (%s)"
-msgstr "%s нет аргумента для параметра \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unknown xfer type \"%s\""
-msgstr "%s неизвестная функция клавиши \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unknown xfer protocol \"%s\""
-msgstr "%s неизвестная функция клавиши \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%s%s: cannot access file \"%s\""
-msgstr "%s нет доступа к файлу \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%s%s: cannot create socket for xfer: error %d %s"
-msgstr "%s невозможно создать сокет\n"
-
-#, fuzzy, c-format
-msgid "%s%s: cannot find available port for xfer"
-msgstr "%s не могу найти свободный порт для DCC\n"
-
-#, fuzzy, c-format
-msgid "%s%s: error creating xfer"
-msgstr "%s недостаточно памяти для сообщения в строке информации\n"
-
-#, fuzzy, c-format
-msgid ""
-"%s%s: unable to resume file \"%s\" (port: %d, start position: %llu): xfer "
-"not found or not ready for transfer"
-msgstr ""
-"%s не могу продолжить файл \"%s\" (порт: %d, начальная позиция: %u): DCC не "
-"найден или завершён\n"
-
-#, fuzzy, c-format
-msgid "%s: file %s resumed at position %llu"
-msgstr "DCC: файл %s%s%s продолжается с позиции %u\n"
-
-#, fuzzy, c-format
-msgid ""
-"%s%s: unable to accept resume file \"%s\" (port: %d, start position: %llu): "
-"xfer not found or not ready for transfer"
-msgstr ""
-"%s не могу продолжить файл \"%s\" (порт: %d, начальная позиция: %u): DCC не "
-"найден или завершён\n"
 
 #, fuzzy, c-format
 msgid "%s%s: error sending data to \"%s\" via xfer chat"
@@ -16117,6 +15971,14 @@ msgstr "очистить хотлист"
 msgid ""
 "%3d. %s (%s), file: \"%s\" (local: \"%s\"), %s %s, status: %s%s%s (%llu %%)"
 msgstr ""
+
+#, fuzzy
+msgid "sent to"
+msgstr " отправлен "
+
+#, fuzzy
+msgid "received from"
+msgstr " получен от "
 
 #. TRANSLATORS: "%s" after "started on" is a date
 #, c-format
@@ -16396,3 +16258,141 @@ msgstr "%s нет аргумента для параметра \"%s\"\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s DCC: не могу соединиться с отправителем\n"
+
+#, fuzzy
+msgid "DCC file transfer and direct chat"
+msgstr "начинает DCC (передачу файла или чат) или закрывает чат"
+
+#, fuzzy
+msgid "waiting"
+msgstr "Ожидание"
+
+#, fuzzy
+msgid "active"
+msgstr "Активно"
+
+#, fuzzy
+msgid "done"
+msgstr "Завершено"
+
+#, fuzzy
+msgid "failed"
+msgstr "Неудача"
+
+#, fuzzy
+msgid "aborted"
+msgstr "Отменено"
+
+msgid "hashing"
+msgstr ""
+
+msgid "CRC in progress"
+msgstr ""
+
+msgid "CRC OK"
+msgstr ""
+
+msgid "wrong CRC"
+msgstr ""
+
+msgid "CRC error"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: file %s %s %s (%s): %s"
+msgstr "DCC: файл %s%s%s"
+
+msgid "FAILED"
+msgstr "НЕУДАЧА"
+
+#, fuzzy, c-format
+msgid "%s%s: chat closed with %s (%s)"
+msgstr "DCC-чат закончен с %s%s %s(%s%d.%d.%d.%d%s)\n"
+
+#, fuzzy, c-format
+msgid "%s%s: aborting active xfer: \"%s\" from %s"
+msgstr "Отменяю активное DCC-сединение: \"%s\" от %s\n"
+
+#, fuzzy, c-format
+msgid "%s%s: not enough memory for new xfer"
+msgstr "%s недостаточно памяти для нового DCC\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to interpret address: error %d %s"
+msgstr "%s DCC: не могу создать pipe\n"
+
+#, fuzzy, c-format
+msgid "%s%s: hashing error"
+msgstr "%s ошибка инициализации gnutls\n"
+
+#, fuzzy, c-format
+msgid ""
+"%s: incoming file from %s (%s, %s.%s), name: %s, %llu bytes (protocol: %s)"
+msgstr "Входящий файл от %s%s%s (%s%d.%d.%d.%d%s)%s: %s%s%s, %s%lu%s байт\n"
+
+#, fuzzy, c-format
+msgid ""
+"%s: offering file to %s (%s.%s), name: %s (local filename: %s), %llu bytes "
+"(protocol: %s)"
+msgstr "Отправляю файл %s%s%s: %s%s%s (файл: %s%s%s), %s%lu%s байт\n"
+
+#, fuzzy, c-format
+msgid "%s: incoming chat request from %s (%s, %s.%s)"
+msgstr "Входящий запрос на DCC-чат от %s%s%s (%s%d.%d.%d.%d%s)\n"
+
+#, fuzzy, c-format
+msgid "%s: sending chat request to %s (%s.%s)"
+msgstr "Отправляю запрос на DCC-чат %s%s\n"
+
+#, fuzzy, c-format
+msgid "%s: file %s (local filename: %s) will be resumed at position %llu"
+msgstr ""
+"DCC: файл %s%s%s (локальное имя файла: %s%s%s) будет продолжен с позиции %u\n"
+
+#, fuzzy, c-format
+msgid "%s%s: missing arguments (%s)"
+msgstr "%s нет аргумента для параметра \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unknown xfer type \"%s\""
+msgstr "%s неизвестная функция клавиши \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unknown xfer protocol \"%s\""
+msgstr "%s неизвестная функция клавиши \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: cannot access file \"%s\""
+msgstr "%s нет доступа к файлу \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: cannot create socket for xfer: error %d %s"
+msgstr "%s невозможно создать сокет\n"
+
+#, fuzzy, c-format
+msgid "%s%s: cannot find available port for xfer"
+msgstr "%s не могу найти свободный порт для DCC\n"
+
+#, fuzzy, c-format
+msgid "%s%s: error creating xfer"
+msgstr "%s недостаточно памяти для сообщения в строке информации\n"
+
+#, fuzzy, c-format
+msgid ""
+"%s%s: unable to resume file \"%s\" (port: %d, start position: %llu): xfer "
+"not found or not ready for transfer"
+msgstr ""
+"%s не могу продолжить файл \"%s\" (порт: %d, начальная позиция: %u): DCC не "
+"найден или завершён\n"
+
+#, fuzzy, c-format
+msgid "%s: file %s resumed at position %llu"
+msgstr "DCC: файл %s%s%s продолжается с позиции %u\n"
+
+#, fuzzy, c-format
+msgid ""
+"%s%s: unable to accept resume file \"%s\" (port: %d, start position: %llu): "
+"xfer not found or not ready for transfer"
+msgstr ""
+"%s не могу продолжить файл \"%s\" (порт: %d, начальная позиция: %u): DCC не "
+"найден или завершён\n"

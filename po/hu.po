@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-08-23 08:20+0200\n"
+"POT-Creation-Date: 2024-08-24 10:22+0200\n"
 "PO-Revision-Date: 2024-06-11 07:49+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -29,174 +29,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-
-#, fuzzy, c-format
-msgid "%sAnother command \"%s\" already exists for plugin \"%s\""
-msgstr "%s az ignore már létezik\n"
-
-#, fuzzy, c-format
-msgid ""
-"%sUnknown command \"%s\" (commands are case sensitive, type /help for help), "
-"commands with similar name: %s"
-msgstr "%s a \"%s\" aliasz vagy parancs nem található\n"
-
-#, fuzzy, c-format
-msgid ""
-"%sUnknown command \"%s\" (type /help for help), commands with similar name: "
-"%s"
-msgstr "%s a \"%s\" aliasz vagy parancs nem található\n"
-
-#, c-format
-msgid "%sBad file descriptor (%d) used in hook_fd"
-msgstr ""
-
-#, c-format
-msgid "End of command '%s', timeout reached (%.3fs)"
-msgstr ""
-
-#, c-format
-msgid "System clock skew detected (%+ld seconds), reinitializing all timers"
-msgstr ""
-
-#, c-format
-msgid "%sURL transfer error: %s (URL: \"%s\")"
-msgstr ""
-
-#, c-format
-msgid "End of URL transfer '%s', timeout reached (%.3fs)"
-msgstr ""
-
-#, c-format
-msgid "%sError running thread in hook_url: %s (URL: \"%s\")"
-msgstr ""
-
-#. TRANSLATORS: "%s %s" after "compiled on" is date and time
-#, fuzzy, c-format
-msgid ""
-"WeeChat %s Copyright %s, compiled on %s %s\n"
-"Developed by Sébastien Helleu <flashcode@flashtux.org> - %s"
-msgstr ""
-"%s Copyright (C) 2003-2010, fordítva: %s %s\n"
-"Fejlesztő: Sébastien Helleu <flashcode@flashtux.org> - %s"
-
-#, c-format
-msgid "Usage: %s [option...] [plugin:option...]\n"
-msgstr ""
-
-#, fuzzy
-msgid ""
-"  -a, --no-connect         disable auto-connect to servers at startup\n"
-"  -c, --colors             display default colors in terminal and exit\n"
-"  -d, --dir <path>         force a single WeeChat home directory\n"
-"                           or 5 different directories separated by colons "
-"(in this order: config, data, state, cache, runtime)\n"
-"                           (environment variable WEECHAT_HOME is read if "
-"this option is not given)\n"
-"  -t, --temp-dir           create a temporary WeeChat home directory and "
-"delete it on exit\n"
-"                           (incompatible with option \"-d\")\n"
-"  -h, --help               display this help and exit\n"
-"  -i, --build-info         display build information and exit\n"
-"  -l, --license            display WeeChat license and exit\n"
-"  -p, --no-plugin          don't load any plugin at startup\n"
-"  -P, --plugins <plugins>  load only these plugins at startup\n"
-"                           (see /help weechat.plugin.autoload)\n"
-"  -r, --run-command <cmd>  run command(s) after startup;\n"
-"                           many commands can be separated by semicolons and "
-"are evaluated,\n"
-"                           this option can be given multiple times\n"
-"  -s, --no-script          don't load any script at startup\n"
-"      --upgrade            upgrade WeeChat using session files (see /help "
-"upgrade in WeeChat)\n"
-"  -v, --version            display WeeChat version and exit\n"
-"  plugin:option            option for plugin (see man weechat)\n"
-msgstr ""
-"  -a, --no-connect        automatikus csatlakozás a szerverekhez tiltása\n"
-"  -c, --config            beállítófájl opcióinak mutatása\n"
-"  -d, --dir <path>        a WeeChat saját könyvtára (alapértelmezett: ~/."
-"weechat)\n"
-"  -f, --key-functions     WeeChat billentyűparancsok mutatása\n"
-"  -h, --help              ez a segítség\n"
-"  -i, --irc-commands      IRC parancsok mutatása\n"
-"  -k, --keys              alapértelmezett WeeChat billentyűk\n"
-"  -l, --license           WeeChat licenc\n"
-"  -p, --no-plugin         nem tölt be modulokat induláskor\n"
-"  -v, --version           WeeChat verziójának mutatása\n"
-"  -w, --weechat-commands  WeeChat parancsok mutatása\n"
-
-msgid "Extra options in headless mode:\n"
-msgstr ""
-
-msgid ""
-"      --doc-gen <path>     generate files to build documentation and exit\n"
-msgstr ""
-
-msgid ""
-"      --daemon             run WeeChat as a daemon (fork, new process group, "
-"file descriptors closed);\n"
-msgstr ""
-
-msgid ""
-"                           (by default in headless mode WeeChat is blocking "
-"and does not run in background)\n"
-msgstr ""
-
-msgid ""
-"      --stdout             display log messages on standard output instead "
-"of writing them in log file\n"
-msgstr ""
-
-msgid ""
-"                           (option ignored if option \"--daemon\" is given)\n"
-msgstr ""
-
-msgid ""
-"Debug options (for tools like valgrind, DO NOT USE IN PRODUCTION):\n"
-"      --no-dlclose         do not call function dlclose after plugins are "
-"unloaded\n"
-"      --no-gnutls          disable init/deinit of gnutls\n"
-"      --no-gcrypt          disable init/deinit of gcrypt\n"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "Error: missing argument for \"%s\" option\n"
-msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
-
-msgid "WeeChat is running in headless mode (ctrl-c to quit)."
-msgstr ""
-
-msgid ""
-"Welcome to WeeChat!\n"
-"\n"
-"If you are discovering WeeChat, it is recommended to read at least the "
-"quickstart guide, and the user's guide if you have some time; they explain "
-"main WeeChat concepts.\n"
-"All WeeChat docs are available at: https://weechat.org/doc/\n"
-"\n"
-"Moreover, there is inline help with /help on all commands and options (use "
-"Tab key to complete the name).\n"
-"The command /fset can help to customize WeeChat.\n"
-"\n"
-"You can add and connect to an IRC server with /server and /connect commands "
-"(see /help server)."
-msgstr ""
-
-#. TRANSLATORS: the "under %s" can be "under screen" or "under tmux"
-#, c-format
-msgid ""
-"%sWarning: WeeChat is running under %s and $TERM is \"%s\", which can cause "
-"display bugs; $TERM should be set to one of these values: %s"
-msgstr ""
-
-#, c-format
-msgid "%sYou should add this line in the file %s:  %s"
-msgstr ""
-
-#, c-format
-msgid ""
-"%sWarning: cannot set the locale; make sure $LANG and $LC_* variables are "
-"correct"
-msgstr ""
 
 #, fuzzy
 msgid "List of bars:"
@@ -3950,6 +3782,91 @@ msgstr "  . típus: szám\n"
 msgid "variables that can be used in /eval command"
 msgstr ""
 
+#, fuzzy, c-format
+msgid "Writing configuration file %s%s%s"
+msgstr "beállítások mentése kilépéskor"
+
+msgid "(default options)"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%sCannot create file \"%s\""
+msgstr "%s nem sikerült a \"%s\" fájlt létrehozni\n"
+
+#, fuzzy, c-format
+msgid "%sWARNING: failed to set permissions on configuration file \"%s\" (%s)"
+msgstr "beállítások mentése kilépéskor"
+
+#, fuzzy, c-format
+msgid "%sError writing configuration file \"%s\""
+msgstr "szerver konfigurációs fájljának újraolvastatása"
+
+#, fuzzy, c-format
+msgid "%sFile %s has been backed up as %s"
+msgstr "A %s%s%s szerver másolva lett %s%s néven\n"
+
+#, fuzzy, c-format
+msgid "%sError: unable to backup file %s"
+msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
+
+#, c-format
+msgid ""
+"%sImportant: file %s has been updated from version %d to %d, it is not "
+"compatible and can not be loaded any more with any older version"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%sWARNING: failed to read configuration file \"%s\" (%s)"
+msgstr "beállítások mentése kilépéskor"
+
+#, c-format
+msgid ""
+"%sWARNING: file \"%s\" will be overwritten on exit with default values (it "
+"is HIGHLY recommended to backup this file now)"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Reading configuration file %s"
+msgstr "szerver konfigurációs fájljának újraolvastatása"
+
+#, fuzzy, c-format
+msgid "%sWarning: %s, line %d: invalid syntax, missing \"]\""
+msgstr "%s %s, %d. sor: érvénytelen szintaxis, hiányzó \"]\"\n"
+
+#, fuzzy, c-format
+msgid "%sWarning: %s, line %d: ignoring unknown section identifier (\"%s\")"
+msgstr "%s %s, %d. sor: ismeretlen csoportazonosító (\"%s\")\n"
+
+#, c-format
+msgid ""
+"%sError: %s, line %d: invalid config version: \"%s\" => rest of file is "
+"IGNORED, default options are used"
+msgstr ""
+
+#, c-format
+msgid ""
+"%sError: %s, version read (%d) is newer than supported version (%d) => rest "
+"of file is IGNORED, default options are used"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%sWarning: %s, line %d: ignoring option outside section: %s"
+msgstr "%s %s, %d. sor: ismeretlen csoportazonosító (\"%s\")\n"
+
+#, fuzzy, c-format
+msgid "%sWarning: %s, line %d: ignoring unknown option for section \"%s\": %s"
+msgstr "%s %s, %d. sor: ismeretlen csoportazonosító (\"%s\")\n"
+
+#, fuzzy, c-format
+msgid ""
+"%sWarning: %s, line %d: ignoring invalid value for option in section \"%s\": "
+"%s"
+msgstr "%s %s, %d. sor: érvénytelen opció: \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "Reloading configuration file %s"
+msgstr "Beállítások mentése a lemezre\n"
+
 msgid ""
 "Warning: option weechat.look.save_config_on_exit is disabled, so the option "
 "weechat.look.save_layout_on_exit is ignored"
@@ -5195,91 +5112,6 @@ msgstr "felhasználónév az IRC szerveren"
 msgid "FATAL: error initializing configuration options"
 msgstr "szerver konfigurációs fájljának újraolvastatása"
 
-#, fuzzy, c-format
-msgid "Writing configuration file %s%s%s"
-msgstr "beállítások mentése kilépéskor"
-
-msgid "(default options)"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "%sCannot create file \"%s\""
-msgstr "%s nem sikerült a \"%s\" fájlt létrehozni\n"
-
-#, fuzzy, c-format
-msgid "%sWARNING: failed to set permissions on configuration file \"%s\" (%s)"
-msgstr "beállítások mentése kilépéskor"
-
-#, fuzzy, c-format
-msgid "%sError writing configuration file \"%s\""
-msgstr "szerver konfigurációs fájljának újraolvastatása"
-
-#, fuzzy, c-format
-msgid "%sFile %s has been backed up as %s"
-msgstr "A %s%s%s szerver másolva lett %s%s néven\n"
-
-#, fuzzy, c-format
-msgid "%sError: unable to backup file %s"
-msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
-
-#, c-format
-msgid ""
-"%sImportant: file %s has been updated from version %d to %d, it is not "
-"compatible and can not be loaded any more with any older version"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "%sWARNING: failed to read configuration file \"%s\" (%s)"
-msgstr "beállítások mentése kilépéskor"
-
-#, c-format
-msgid ""
-"%sWARNING: file \"%s\" will be overwritten on exit with default values (it "
-"is HIGHLY recommended to backup this file now)"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "Reading configuration file %s"
-msgstr "szerver konfigurációs fájljának újraolvastatása"
-
-#, fuzzy, c-format
-msgid "%sWarning: %s, line %d: invalid syntax, missing \"]\""
-msgstr "%s %s, %d. sor: érvénytelen szintaxis, hiányzó \"]\"\n"
-
-#, fuzzy, c-format
-msgid "%sWarning: %s, line %d: ignoring unknown section identifier (\"%s\")"
-msgstr "%s %s, %d. sor: ismeretlen csoportazonosító (\"%s\")\n"
-
-#, c-format
-msgid ""
-"%sError: %s, line %d: invalid config version: \"%s\" => rest of file is "
-"IGNORED, default options are used"
-msgstr ""
-
-#, c-format
-msgid ""
-"%sError: %s, version read (%d) is newer than supported version (%d) => rest "
-"of file is IGNORED, default options are used"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "%sWarning: %s, line %d: ignoring option outside section: %s"
-msgstr "%s %s, %d. sor: ismeretlen csoportazonosító (\"%s\")\n"
-
-#, fuzzy, c-format
-msgid "%sWarning: %s, line %d: ignoring unknown option for section \"%s\": %s"
-msgstr "%s %s, %d. sor: ismeretlen csoportazonosító (\"%s\")\n"
-
-#, fuzzy, c-format
-msgid ""
-"%sWarning: %s, line %d: ignoring invalid value for option in section \"%s\": "
-"%s"
-msgstr "%s %s, %d. sor: érvénytelen opció: \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "Reloading configuration file %s"
-msgstr "Beállítások mentése a lemezre\n"
-
 #. TRANSLATORS: "%s %s" after "compiled on" is date and time
 #, c-format
 msgid "WeeChat %s, compiled on %s %s\n"
@@ -5707,15 +5539,6 @@ msgid "Resource usage (see \"man getrusage\" for help):"
 msgstr ""
 
 #, fuzzy, c-format
-msgid "debug: removing file: %s"
-msgstr "       IRC(%s)\n"
-
-#. TRANSLATORS: %.02fs is a float number + "s" ("seconds")
-#, c-format
-msgid "Upgrade done (%.02fs)"
-msgstr ""
-
-#, fuzzy, c-format
 msgid "%sError upgrading WeeChat with file \"%s\":"
 msgstr "WeeChat frissítése...\n"
 
@@ -5787,6 +5610,15 @@ msgid ""
 "version)"
 msgstr ""
 
+#, fuzzy, c-format
+msgid "debug: removing file: %s"
+msgstr "       IRC(%s)\n"
+
+#. TRANSLATORS: %.02fs is a float number + "s" ("seconds")
+#, c-format
+msgid "Upgrade done (%.02fs)"
+msgstr ""
+
 msgid "invalid URL"
 msgstr ""
 
@@ -5808,6 +5640,174 @@ msgstr "%sSzerver: %s%s\n"
 
 #, c-format
 msgid "curl error %d (%s) (URL: \"%s\")\n"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%sAnother command \"%s\" already exists for plugin \"%s\""
+msgstr "%s az ignore már létezik\n"
+
+#, fuzzy, c-format
+msgid ""
+"%sUnknown command \"%s\" (commands are case sensitive, type /help for help), "
+"commands with similar name: %s"
+msgstr "%s a \"%s\" aliasz vagy parancs nem található\n"
+
+#, fuzzy, c-format
+msgid ""
+"%sUnknown command \"%s\" (type /help for help), commands with similar name: "
+"%s"
+msgstr "%s a \"%s\" aliasz vagy parancs nem található\n"
+
+#, c-format
+msgid "%sBad file descriptor (%d) used in hook_fd"
+msgstr ""
+
+#, c-format
+msgid "End of command '%s', timeout reached (%.3fs)"
+msgstr ""
+
+#, c-format
+msgid "System clock skew detected (%+ld seconds), reinitializing all timers"
+msgstr ""
+
+#, c-format
+msgid "%sURL transfer error: %s (URL: \"%s\")"
+msgstr ""
+
+#, c-format
+msgid "End of URL transfer '%s', timeout reached (%.3fs)"
+msgstr ""
+
+#, c-format
+msgid "%sError running thread in hook_url: %s (URL: \"%s\")"
+msgstr ""
+
+#. TRANSLATORS: "%s %s" after "compiled on" is date and time
+#, fuzzy, c-format
+msgid ""
+"WeeChat %s Copyright %s, compiled on %s %s\n"
+"Developed by Sébastien Helleu <flashcode@flashtux.org> - %s"
+msgstr ""
+"%s Copyright (C) 2003-2010, fordítva: %s %s\n"
+"Fejlesztő: Sébastien Helleu <flashcode@flashtux.org> - %s"
+
+#, c-format
+msgid "Usage: %s [option...] [plugin:option...]\n"
+msgstr ""
+
+#, fuzzy
+msgid ""
+"  -a, --no-connect         disable auto-connect to servers at startup\n"
+"  -c, --colors             display default colors in terminal and exit\n"
+"  -d, --dir <path>         force a single WeeChat home directory\n"
+"                           or 5 different directories separated by colons "
+"(in this order: config, data, state, cache, runtime)\n"
+"                           (environment variable WEECHAT_HOME is read if "
+"this option is not given)\n"
+"  -t, --temp-dir           create a temporary WeeChat home directory and "
+"delete it on exit\n"
+"                           (incompatible with option \"-d\")\n"
+"  -h, --help               display this help and exit\n"
+"  -i, --build-info         display build information and exit\n"
+"  -l, --license            display WeeChat license and exit\n"
+"  -p, --no-plugin          don't load any plugin at startup\n"
+"  -P, --plugins <plugins>  load only these plugins at startup\n"
+"                           (see /help weechat.plugin.autoload)\n"
+"  -r, --run-command <cmd>  run command(s) after startup;\n"
+"                           many commands can be separated by semicolons and "
+"are evaluated,\n"
+"                           this option can be given multiple times\n"
+"  -s, --no-script          don't load any script at startup\n"
+"      --upgrade            upgrade WeeChat using session files (see /help "
+"upgrade in WeeChat)\n"
+"  -v, --version            display WeeChat version and exit\n"
+"  plugin:option            option for plugin (see man weechat)\n"
+msgstr ""
+"  -a, --no-connect        automatikus csatlakozás a szerverekhez tiltása\n"
+"  -c, --config            beállítófájl opcióinak mutatása\n"
+"  -d, --dir <path>        a WeeChat saját könyvtára (alapértelmezett: ~/."
+"weechat)\n"
+"  -f, --key-functions     WeeChat billentyűparancsok mutatása\n"
+"  -h, --help              ez a segítség\n"
+"  -i, --irc-commands      IRC parancsok mutatása\n"
+"  -k, --keys              alapértelmezett WeeChat billentyűk\n"
+"  -l, --license           WeeChat licenc\n"
+"  -p, --no-plugin         nem tölt be modulokat induláskor\n"
+"  -v, --version           WeeChat verziójának mutatása\n"
+"  -w, --weechat-commands  WeeChat parancsok mutatása\n"
+
+msgid "Extra options in headless mode:\n"
+msgstr ""
+
+msgid ""
+"      --doc-gen <path>     generate files to build documentation and exit\n"
+msgstr ""
+
+msgid ""
+"      --daemon             run WeeChat as a daemon (fork, new process group, "
+"file descriptors closed);\n"
+msgstr ""
+
+msgid ""
+"                           (by default in headless mode WeeChat is blocking "
+"and does not run in background)\n"
+msgstr ""
+
+msgid ""
+"      --stdout             display log messages on standard output instead "
+"of writing them in log file\n"
+msgstr ""
+
+msgid ""
+"                           (option ignored if option \"--daemon\" is given)\n"
+msgstr ""
+
+msgid ""
+"Debug options (for tools like valgrind, DO NOT USE IN PRODUCTION):\n"
+"      --no-dlclose         do not call function dlclose after plugins are "
+"unloaded\n"
+"      --no-gnutls          disable init/deinit of gnutls\n"
+"      --no-gcrypt          disable init/deinit of gcrypt\n"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Error: missing argument for \"%s\" option\n"
+msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
+
+msgid "WeeChat is running in headless mode (ctrl-c to quit)."
+msgstr ""
+
+msgid ""
+"Welcome to WeeChat!\n"
+"\n"
+"If you are discovering WeeChat, it is recommended to read at least the "
+"quickstart guide, and the user's guide if you have some time; they explain "
+"main WeeChat concepts.\n"
+"All WeeChat docs are available at: https://weechat.org/doc/\n"
+"\n"
+"Moreover, there is inline help with /help on all commands and options (use "
+"Tab key to complete the name).\n"
+"The command /fset can help to customize WeeChat.\n"
+"\n"
+"You can add and connect to an IRC server with /server and /connect commands "
+"(see /help server)."
+msgstr ""
+
+#. TRANSLATORS: the "under %s" can be "under screen" or "under tmux"
+#, c-format
+msgid ""
+"%sWarning: WeeChat is running under %s and $TERM is \"%s\", which can cause "
+"display bugs; $TERM should be set to one of these values: %s"
+msgstr ""
+
+#, c-format
+msgid "%sYou should add this line in the file %s:  %s"
+msgstr ""
+
+#, c-format
+msgid ""
+"%sWarning: cannot set the locale; make sure $LANG and $LC_* variables are "
+"correct"
 msgstr ""
 
 #, c-format
@@ -5895,6 +5895,50 @@ msgstr "%sSzerver: %s%s\n"
 msgid "OK"
 msgstr "Rendben"
 
+msgid "condition(s) to display the bar item (evaluated, see /help eval)"
+msgstr ""
+
+msgid "content of bar item (evaluated, see /help eval)"
+msgstr ""
+
+#, c-format
+msgid "debug: long callback: bar: %s, item: %s, plugin: %s, time elapsed: %s"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%sPaste %d line? [ctrl-y] Yes [ctrl-n] No"
+msgid_plural "%sPaste %d lines? [ctrl-y] Yes [ctrl-n] No"
+msgstr[0] "  Beszúrható %d sor? [ctrl-Y] Igen  [ctrl-N] Nem"
+msgstr[1] "  Beszúrható %d sor? [ctrl-Y] Igen  [ctrl-N] Nem"
+
+#. TRANSLATORS: search in "local" history
+msgid "local"
+msgstr ""
+
+#. TRANSLATORS: search in "global" history
+msgid "global"
+msgstr ""
+
+msgid "Search lines"
+msgstr ""
+
+#, fuzzy
+msgid "Search command"
+msgstr "%s belső parancsok:\n"
+
+msgid "keyboard and mouse debug ('q' to quit debug mode)"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s-MORE(%d)-"
+msgstr "-TOVÁBB-"
+
+msgid "Lag"
+msgstr ""
+
+msgid "away"
+msgstr ""
+
 #, c-format
 msgid ""
 "%sUnable to change bar type: you must delete bar and create another to do "
@@ -5967,50 +6011,6 @@ msgid ""
 "items of bar, they can be separated by comma (space between items) or \"+\" "
 "(glued items); special syntax \"@buffer:item\" can be used to force buffer "
 "used when displaying the bar item"
-msgstr ""
-
-#, c-format
-msgid "debug: long callback: bar: %s, item: %s, plugin: %s, time elapsed: %s"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "%sPaste %d line? [ctrl-y] Yes [ctrl-n] No"
-msgid_plural "%sPaste %d lines? [ctrl-y] Yes [ctrl-n] No"
-msgstr[0] "  Beszúrható %d sor? [ctrl-Y] Igen  [ctrl-N] Nem"
-msgstr[1] "  Beszúrható %d sor? [ctrl-Y] Igen  [ctrl-N] Nem"
-
-#. TRANSLATORS: search in "local" history
-msgid "local"
-msgstr ""
-
-#. TRANSLATORS: search in "global" history
-msgid "global"
-msgstr ""
-
-msgid "Search lines"
-msgstr ""
-
-#, fuzzy
-msgid "Search command"
-msgstr "%s belső parancsok:\n"
-
-msgid "keyboard and mouse debug ('q' to quit debug mode)"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "%s-MORE(%d)-"
-msgstr "-TOVÁBB-"
-
-msgid "Lag"
-msgstr ""
-
-msgid "away"
-msgstr ""
-
-msgid "condition(s) to display the bar item (evaluated, see /help eval)"
-msgstr ""
-
-msgid "content of bar item (evaluated, see /help eval)"
 msgstr ""
 
 #, fuzzy, c-format
@@ -6128,18 +6128,6 @@ msgstr ""
 
 msgid "Debug disabled for mouse"
 msgstr ""
-
-#, fuzzy
-msgid "Alias commands"
-msgstr "%s belső parancsok:\n"
-
-#, fuzzy, c-format
-msgid "%s%s: error, circular reference when calling alias \"%s\""
-msgstr "%s körreferencia a \"/%s\" aliasz hívásakor\n"
-
-#, fuzzy, c-format
-msgid "%s%s: invalid alias name: \"%s\""
-msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
 
 #, fuzzy, c-format
 msgid "%s%s: error creating alias \"%s\" => \"%s\""
@@ -6300,16 +6288,16 @@ msgid "list of default aliases"
 msgstr "Aliaszok listája:\n"
 
 #, fuzzy
-msgid "Buffers list"
-msgstr "hotlist törlése"
+msgid "Alias commands"
+msgstr "%s belső parancsok:\n"
 
-#, c-format
-msgid ""
-"%sbuflist: warning: the script buffers.pl is loaded and provides a bar with "
-"list of buffers similar to the buflist plugin; you may want to uninstall the "
-"script buffers.pl (/script remove buffers.pl) or disable/unload the buflist "
-"plugin; see WeeChat release notes for more information"
-msgstr ""
+#, fuzzy, c-format
+msgid "%s%s: error, circular reference when calling alias \"%s\""
+msgstr "%s körreferencia a \"/%s\" aliasz hívásakor\n"
+
+#, fuzzy, c-format
+msgid "%s%s: invalid alias name: \"%s\""
+msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
 
 #, fuzzy
 msgid "bar item with list of buffers"
@@ -6667,6 +6655,18 @@ msgid "buflist bar item name (optional)"
 msgstr "konfigurációs paraméterek beállítása"
 
 #, fuzzy
+msgid "Buffers list"
+msgstr "hotlist törlése"
+
+#, c-format
+msgid ""
+"%sbuflist: warning: the script buffers.pl is loaded and provides a bar with "
+"list of buffers similar to the buflist plugin; you may want to uninstall the "
+"script buffers.pl (/script remove buffers.pl) or disable/unload the buflist "
+"plugin; see WeeChat release notes for more information"
+msgstr ""
+
+#, fuzzy
 msgid "Charset conversions"
 msgstr "WeeChat szlogen"
 
@@ -6732,17 +6732,6 @@ msgstr "szobanév nem található a pufferhez"
 #, fuzzy
 msgid "Executed commands"
 msgstr "%s belső parancsok:\n"
-
-msgid "Execution of external commands in WeeChat"
-msgstr ""
-
-#, c-format
-msgid "%s: end of command %ld (\"%s\"), return code: %d"
-msgstr ""
-
-#, c-format
-msgid "%s: unexpected end of command %ld (\"%s\")"
-msgstr ""
 
 msgid "No command is running"
 msgstr ""
@@ -7022,41 +7011,16 @@ msgstr "kilépési nyíl színe"
 msgid "text color for a running command flag in list of commands"
 msgstr "kilépési nyíl színe"
 
-#, fuzzy
-msgid "FIFO pipe for remote control"
-msgstr "%s nem sikerült a FIFO csövet létrehozni a távoli felügyelethez (%s)\n"
+msgid "Execution of external commands in WeeChat"
+msgstr ""
 
-#, fuzzy, c-format
-msgid "%s%s: not enough memory (%s)"
-msgstr "Nincs elég memória az új sorhoz\n"
+#, c-format
+msgid "%s: end of command %ld (\"%s\"), return code: %d"
+msgstr ""
 
-#, fuzzy, c-format
-msgid "%s: pipe opened (file: %s)"
-msgstr "a felhasználók le lettek tiltva"
-
-#, fuzzy, c-format
-msgid "%s%s: unable to open pipe (%s) for reading"
-msgstr "%s nem sikerült a FIFO csövet (%s) olvasásra megnyitni\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unable to create pipe for remote control (%s): error %d %s"
-msgstr "%s nem sikerült a FIFO csövet létrehozni a távoli felügyelethez (%s)\n"
-
-#, fuzzy, c-format
-msgid "%s: pipe closed"
-msgstr "FIFO cső bezárva\n"
-
-#, fuzzy, c-format
-msgid "%s%s: invalid text received in pipe"
-msgstr "%s érvénytelen üzenet érkezett a FIFO csőben\n"
-
-#, fuzzy, c-format
-msgid "%s%s: buffer \"%s\" not found"
-msgstr "%s a \"%s\" szerver nem található\n"
-
-#, fuzzy, c-format
-msgid "%s%s: error reading pipe (%d %s), closing it"
-msgstr "%s hiba a FIFO cső olvasása közben, bezárás\n"
+#, c-format
+msgid "%s: unexpected end of command %ld (\"%s\")"
+msgstr ""
 
 #, fuzzy, c-format
 msgid "%s: pipe is enabled (file: %s)"
@@ -7117,6 +7081,42 @@ msgid "name of FIFO pipe"
 msgstr ""
 
 #, fuzzy
+msgid "FIFO pipe for remote control"
+msgstr "%s nem sikerült a FIFO csövet létrehozni a távoli felügyelethez (%s)\n"
+
+#, fuzzy, c-format
+msgid "%s%s: not enough memory (%s)"
+msgstr "Nincs elég memória az új sorhoz\n"
+
+#, fuzzy, c-format
+msgid "%s: pipe opened (file: %s)"
+msgstr "a felhasználók le lettek tiltva"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to open pipe (%s) for reading"
+msgstr "%s nem sikerült a FIFO csövet (%s) olvasásra megnyitni\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to create pipe for remote control (%s): error %d %s"
+msgstr "%s nem sikerült a FIFO csövet létrehozni a távoli felügyelethez (%s)\n"
+
+#, fuzzy, c-format
+msgid "%s: pipe closed"
+msgstr "FIFO cső bezárva\n"
+
+#, fuzzy, c-format
+msgid "%s%s: invalid text received in pipe"
+msgstr "%s érvénytelen üzenet érkezett a FIFO csőben\n"
+
+#, fuzzy, c-format
+msgid "%s%s: buffer \"%s\" not found"
+msgstr "%s a \"%s\" szerver nem található\n"
+
+#, fuzzy, c-format
+msgid "%s%s: error reading pipe (%d %s), closing it"
+msgstr "%s hiba a FIFO cső olvasása közben, bezárás\n"
+
+#, fuzzy
 msgid "values:"
 msgstr "  . értékek: "
 
@@ -7139,9 +7139,6 @@ msgid ""
 "$)=unmark/refresh, (m)=mark matching options, (u)=unmark matching options, "
 "alt+p(p)=toggle plugins desc, alt+v(v)=toggle help bar, ctrl+x(x)=switch "
 "format, (q)=close buffer"
-msgstr ""
-
-msgid "Fast set of WeeChat and plugins options"
 msgstr ""
 
 #, c-format
@@ -7828,6 +7825,9 @@ msgstr "konfigurációs paraméterek beállítása"
 msgid "any color"
 msgstr "üzenetek színe"
 
+msgid "Fast set of WeeChat and plugins options"
+msgstr ""
+
 #, fuzzy, c-format
 msgid "%s%s: script \"%s\" already registered (register ignored)"
 msgstr "%s a \"%s\" szerver már létezik, nem hozhatja létre!\n"
@@ -7889,36 +7889,6 @@ msgstr "szerver"
 
 #. TRANSLATORS: this is displayed in a bar item and must be as short as possible
 msgid "cleartext"
-msgstr ""
-
-msgid "IRC (Internet Relay Chat) protocol"
-msgstr ""
-
-#, c-format
-msgid ""
-"%s%s: disconnecting from server because upgrade can't work for servers "
-"connected via TLS"
-msgstr ""
-
-#, c-format
-msgid ""
-"%s%s: disconnected from %d server (TLS connection not supported with upgrade)"
-msgid_plural ""
-"%s%s: disconnected from %d servers (TLS connection not supported with "
-"upgrade)"
-msgstr[0] ""
-msgstr[1] ""
-
-#, c-format
-msgid ""
-"%s%s: unable to add temporary server \"%s\" (check if there is already a "
-"server with this name)"
-msgstr ""
-
-#, c-format
-msgid ""
-"%s%s: WARNING: some network connections may still be opened and not visible, "
-"you should restart WeeChat now (with /quit)."
 msgstr ""
 
 #, fuzzy, c-format
@@ -8002,6 +7972,12 @@ msgstr "A %s%s%s szerver létrehozva\n"
 
 #. TRANSLATORS: "temporary IRC server"
 msgid " (temporary)"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: unable to add temporary server \"%s\" (check if there is already a "
+"server with this name)"
 msgstr ""
 
 #, c-format
@@ -12111,6 +12087,34 @@ msgstr "%s: Újracsatlakozás a szerverhez...\n"
 msgid "%s%s: disconnected from server"
 msgstr "Lekapcsolódott a szerverről!\n"
 
+msgid "IRC (Internet Relay Chat) protocol"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: disconnecting from server because upgrade can't work for servers "
+"connected via TLS"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: disconnected from %d server (TLS connection not supported with upgrade)"
+msgid_plural ""
+"%s%s: disconnected from %d servers (TLS connection not supported with "
+"upgrade)"
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid ""
+"%s%s: WARNING: some network connections may still be opened and not visible, "
+"you should restart WeeChat now (with /quit)."
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: exception: %s"
+msgstr "%sSzerver: %s%s\n"
+
 #, fuzzy
 msgid "Support of javascript scripts"
 msgstr "Aliaszok listája:\n"
@@ -12134,10 +12138,6 @@ msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
 #, c-format
 msgid "%sCommand \"/%s eval\" is not yet implemented"
 msgstr ""
-
-#, fuzzy, c-format
-msgid "%s%s: exception: %s"
-msgstr "%sSzerver: %s%s\n"
 
 #, c-format
 msgid "%s===\t%s========== End of backlog (%d lines) =========="
@@ -12168,16 +12168,6 @@ msgstr "****  Naplófájl kezdete  "
 #, fuzzy, c-format
 msgid "%s\t****  End of log  ****"
 msgstr "****  Naplófájl vége  "
-
-#, fuzzy
-msgid "Log buffers to files"
-msgstr "szerver konfigurációs fájljának újraolvastatása"
-
-#, c-format
-msgid ""
-"%s%s: unable to find filename mask for buffer \"%s\", logging is disabled "
-"for this buffer"
-msgstr ""
 
 #, fuzzy
 msgid "Logging on buffers:"
@@ -12409,6 +12399,16 @@ msgid "logger pointer (optional)"
 msgstr "Beállítások mentése a lemezre\n"
 
 #, fuzzy
+msgid "Log buffers to files"
+msgstr "szerver konfigurációs fájljának újraolvastatása"
+
+#, c-format
+msgid ""
+"%s%s: unable to find filename mask for buffer \"%s\", logging is disabled "
+"for this buffer"
+msgstr ""
+
+#, fuzzy
 msgid "Support of lua scripts"
 msgstr "Aliaszok listája:\n"
 
@@ -12447,109 +12447,6 @@ msgstr "%s nem sikerült a modult betölteni \"%s\"\n"
 #, fuzzy
 msgid "Support of PHP scripts"
 msgstr "Aliaszok listája:\n"
-
-msgid "bar"
-msgstr ""
-
-#, fuzzy
-msgid "bar item"
-msgstr "Aliaszok listája:\n"
-
-#, fuzzy
-msgid "bar window"
-msgstr "ablakok kezelése"
-
-#, fuzzy
-msgid "buffer"
-msgstr "pufferek kezelése"
-
-#, fuzzy
-msgid "visited buffer"
-msgstr "Aliaszok listája:\n"
-
-#, fuzzy
-msgid "structure with completion"
-msgstr "szöveg beillesztése a parancssorba"
-
-#, fuzzy
-msgid "structure with word found for a completion"
-msgstr "szöveg beillesztése a parancssorba"
-
-#, fuzzy
-msgid "config file"
-msgstr "szerver konfigurációs fájljának újraolvastatása"
-
-#, fuzzy
-msgid "config section"
-msgstr "konfigurációs paraméterek beállítása"
-
-#, fuzzy
-msgid "config option"
-msgstr "konfigurációs paraméterek beállítása"
-
-msgid "filter"
-msgstr ""
-
-#, fuzzy
-msgid "history of commands in buffer"
-msgstr "%s belső parancsok:\n"
-
-msgid "hotlist"
-msgstr ""
-
-#, fuzzy
-msgid "structure with undo for input line"
-msgstr "szöveg beillesztése a parancssorba"
-
-msgid "a key (keyboard shortcut)"
-msgstr ""
-
-#, fuzzy
-msgid "layout"
-msgstr "a pufferek időbélyege"
-
-#, fuzzy
-msgid "buffer layout"
-msgstr "szöveg keresése a puffertörténetben"
-
-#, fuzzy
-msgid "window layout"
-msgstr "ablakok kezelése"
-
-msgid "structure with lines"
-msgstr ""
-
-msgid "structure with one line"
-msgstr ""
-
-msgid "structure with one line data"
-msgstr ""
-
-#, fuzzy
-msgid "group in nicklist"
-msgstr "név színe"
-
-#, fuzzy
-msgid "nick in nicklist"
-msgstr "%s nem található ilyen mellőzés\n"
-
-#, fuzzy
-msgid "plugin"
-msgstr "  (nem található bővítőmodul)\n"
-
-msgid "proxy"
-msgstr ""
-
-#, fuzzy
-msgid "window"
-msgstr "ablakok kezelése"
-
-msgid "scroll info in window"
-msgstr ""
-
-#, fuzzy
-msgid "tree of windows"
-msgstr "Mellőzések listája:\n"
 
 #, fuzzy
 msgid "WeeChat version"
@@ -12930,69 +12827,123 @@ msgstr ""
 msgid "\"current\" for current window or a window number (optional)"
 msgstr ""
 
-#, c-format
-msgid "Initializing plugin \"%s\" (priority: %d)"
+msgid "bar"
 msgstr ""
-
-#, fuzzy, c-format
-msgid "%sUnable to initialize plugin \"%s\""
-msgstr "%s nem sikerült a modult betölteni \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%sUnable to load plugin \"%s\": %s"
-msgstr "%s nem sikerült a modult betölteni \"%s\": %s\n"
-
-#, c-format
-msgid ""
-"%sIf you're trying to load a script and not a C plugin, try command to load "
-"scripts (/perl, /python, ...)"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "%sSymbol \"%s\" not found in plugin \"%s\", failed to load"
-msgstr ""
-"%s a \"plugin_name\" szimbólum nem található a \"%s\" modulban, betöltés "
-"sikertelen\n"
-
-#, c-format
-msgid "%sIf plugin \"%s\" is old/obsolete, you can delete this file."
-msgstr ""
-
-#, fuzzy, c-format
-msgid ""
-"%sAPI mismatch for plugin \"%s\" (current API: \"%s\", plugin API: \"%s\"), "
-"failed to load"
-msgstr ""
-"%s a \"plugin_name\" szimbólum nem található a \"%s\" modulban, betöltés "
-"sikertelen\n"
-
-#, fuzzy, c-format
-msgid "%sUnable to load plugin \"%s\": a plugin with same name already exists"
-msgstr "%s nem sikerült a \"%s\" modult betölteni: már van ilyen nevű modul\n"
-
-#, fuzzy, c-format
-msgid "%sFunction \"%s\" not found in plugin \"%s\", failed to load"
-msgstr ""
-"%s a \"weechat_plugin_init\" függvény nem található a \"%s\" modulban, "
-"betöltés sikertelen\n"
-
-#, fuzzy, c-format
-msgid "%sUnable to load plugin \"%s\" (not enough memory)"
-msgstr "%s nem sikerült a modult betölteni \"%s\" (nincs elég memória)\n"
-
-#, fuzzy, c-format
-msgid "Plugin \"%s\" loaded"
-msgstr "A \"%s\" modul eltávolítva.\n"
-
-#, fuzzy, c-format
-msgid "Plugin \"%s\" unloaded"
-msgstr "A \"%s\" modul eltávolítva.\n"
 
 #, fuzzy
-msgid "Plugins unloaded"
-msgstr "Betöltött modulok:\n"
+msgid "bar item"
+msgstr "Aliaszok listája:\n"
+
+#, fuzzy
+msgid "bar window"
+msgstr "ablakok kezelése"
+
+#, fuzzy
+msgid "buffer"
+msgstr "pufferek kezelése"
+
+#, fuzzy
+msgid "visited buffer"
+msgstr "Aliaszok listája:\n"
+
+#, fuzzy
+msgid "structure with completion"
+msgstr "szöveg beillesztése a parancssorba"
+
+#, fuzzy
+msgid "structure with word found for a completion"
+msgstr "szöveg beillesztése a parancssorba"
+
+#, fuzzy
+msgid "config file"
+msgstr "szerver konfigurációs fájljának újraolvastatása"
+
+#, fuzzy
+msgid "config section"
+msgstr "konfigurációs paraméterek beállítása"
+
+#, fuzzy
+msgid "config option"
+msgstr "konfigurációs paraméterek beállítása"
+
+msgid "filter"
+msgstr ""
+
+#, fuzzy
+msgid "history of commands in buffer"
+msgstr "%s belső parancsok:\n"
+
+msgid "hotlist"
+msgstr ""
+
+#, fuzzy
+msgid "structure with undo for input line"
+msgstr "szöveg beillesztése a parancssorba"
+
+msgid "a key (keyboard shortcut)"
+msgstr ""
+
+#, fuzzy
+msgid "layout"
+msgstr "a pufferek időbélyege"
+
+#, fuzzy
+msgid "buffer layout"
+msgstr "szöveg keresése a puffertörténetben"
+
+#, fuzzy
+msgid "window layout"
+msgstr "ablakok kezelése"
+
+msgid "structure with lines"
+msgstr ""
+
+msgid "structure with one line"
+msgstr ""
+
+msgid "structure with one line data"
+msgstr ""
+
+#, fuzzy
+msgid "group in nicklist"
+msgstr "név színe"
+
+#, fuzzy
+msgid "nick in nicklist"
+msgstr "%s nem található ilyen mellőzés\n"
+
+#, fuzzy
+msgid "plugin"
+msgstr "  (nem található bővítőmodul)\n"
+
+msgid "proxy"
+msgstr ""
+
+#, fuzzy
+msgid "window"
+msgstr "ablakok kezelése"
+
+msgid "scroll info in window"
+msgstr ""
+
+#, fuzzy
+msgid "tree of windows"
+msgstr "Mellőzések listája:\n"
 
 msgid "description of plugin option"
+msgstr ""
+
+msgid ""
+"check the license of scripts when they are loaded: if the license is "
+"different from the plugin license, a warning is displayed"
+msgstr ""
+
+#, c-format
+msgid ""
+"keep context between two calls to the source code evaluation (option "
+"\"eval\" of script command or info \"%s_eval\"); a hidden script is used to "
+"eval script code; if this option is disabled, this hidden script is unloaded "
+"after each eval: this uses less memory, but is slower"
 msgstr ""
 
 #, fuzzy
@@ -13138,19 +13089,6 @@ msgstr "(ismeretlen)"
 msgid "%s: scripts unloaded"
 msgstr "A \"%s\" modul eltávolítva.\n"
 
-msgid ""
-"check the license of scripts when they are loaded: if the license is "
-"different from the plugin license, a warning is displayed"
-msgstr ""
-
-#, c-format
-msgid ""
-"keep context between two calls to the source code evaluation (option "
-"\"eval\" of script command or info \"%s_eval\"); a hidden script is used to "
-"eval script code; if this option is disabled, this hidden script is unloaded "
-"after each eval: this uses less memory, but is slower"
-msgstr ""
-
 #, fuzzy, c-format
 msgid ""
 "%s%s: unable to call function \"%s\", script is not initialized (script: %s)"
@@ -13159,6 +13097,68 @@ msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
 #, fuzzy, c-format
 msgid "%s%s: wrong arguments for function \"%s\" (script: %s)"
 msgstr "%s rossz argumentum a \"%s\" parancsnak\n"
+
+#, c-format
+msgid "Initializing plugin \"%s\" (priority: %d)"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%sUnable to initialize plugin \"%s\""
+msgstr "%s nem sikerült a modult betölteni \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%sUnable to load plugin \"%s\": %s"
+msgstr "%s nem sikerült a modult betölteni \"%s\": %s\n"
+
+#, c-format
+msgid ""
+"%sIf you're trying to load a script and not a C plugin, try command to load "
+"scripts (/perl, /python, ...)"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%sSymbol \"%s\" not found in plugin \"%s\", failed to load"
+msgstr ""
+"%s a \"plugin_name\" szimbólum nem található a \"%s\" modulban, betöltés "
+"sikertelen\n"
+
+#, c-format
+msgid "%sIf plugin \"%s\" is old/obsolete, you can delete this file."
+msgstr ""
+
+#, fuzzy, c-format
+msgid ""
+"%sAPI mismatch for plugin \"%s\" (current API: \"%s\", plugin API: \"%s\"), "
+"failed to load"
+msgstr ""
+"%s a \"plugin_name\" szimbólum nem található a \"%s\" modulban, betöltés "
+"sikertelen\n"
+
+#, fuzzy, c-format
+msgid "%sUnable to load plugin \"%s\": a plugin with same name already exists"
+msgstr "%s nem sikerült a \"%s\" modult betölteni: már van ilyen nevű modul\n"
+
+#, fuzzy, c-format
+msgid "%sFunction \"%s\" not found in plugin \"%s\", failed to load"
+msgstr ""
+"%s a \"weechat_plugin_init\" függvény nem található a \"%s\" modulban, "
+"betöltés sikertelen\n"
+
+#, fuzzy, c-format
+msgid "%sUnable to load plugin \"%s\" (not enough memory)"
+msgstr "%s nem sikerült a modult betölteni \"%s\" (nincs elég memória)\n"
+
+#, fuzzy, c-format
+msgid "Plugin \"%s\" loaded"
+msgstr "A \"%s\" modul eltávolítva.\n"
+
+#, fuzzy, c-format
+msgid "Plugin \"%s\" unloaded"
+msgstr "A \"%s\" modul eltávolítva.\n"
+
+#, fuzzy
+msgid "Plugins unloaded"
+msgstr "Betöltött modulok:\n"
 
 #, fuzzy
 msgid "Support of python scripts"
@@ -13446,41 +13446,6 @@ msgstr ""
 
 msgid "List of clients for relay"
 msgstr ""
-
-msgid "Relay WeeChat data to remote application (irc/weechat protocols)"
-msgstr ""
-
-#, fuzzy
-msgid "connecting"
-msgstr "Kapcsolódás"
-
-msgid "authenticating"
-msgstr ""
-
-#, fuzzy
-msgid "authentication failed"
-msgstr "Sikertelen"
-
-#, fuzzy
-msgid "disconnected"
-msgstr "csatlakozva"
-
-#, c-format
-msgid ""
-"%s%s: disconnecting from client %s%s%s because upgrade can't work for "
-"clients connected via TLS"
-msgstr ""
-
-#. TRANSLATORS: "%s" after "%d" is "client" or "clients"
-#, c-format
-msgid ""
-"%s%s: disconnected from %d %s (TLS connection not supported with upgrade)"
-msgstr ""
-
-msgid "client"
-msgid_plural "clients"
-msgstr[0] ""
-msgstr[1] ""
 
 #, fuzzy, c-format
 msgid "%s%s: TLS handshake failed for client %s%s%s: error %d %s"
@@ -14374,6 +14339,41 @@ msgstr ""
 msgid "%s%s: not enough memory for listening on new port"
 msgstr "%s nincs elegendő memória új DCC számára\n"
 
+msgid "Relay WeeChat data to remote application (irc/weechat protocols)"
+msgstr ""
+
+#, fuzzy
+msgid "connecting"
+msgstr "Kapcsolódás"
+
+msgid "authenticating"
+msgstr ""
+
+#, fuzzy
+msgid "authentication failed"
+msgstr "Sikertelen"
+
+#, fuzzy
+msgid "disconnected"
+msgstr "csatlakozva"
+
+#, c-format
+msgid ""
+"%s%s: disconnecting from client %s%s%s because upgrade can't work for "
+"clients connected via TLS"
+msgstr ""
+
+#. TRANSLATORS: "%s" after "%d" is "client" or "clients"
+#, c-format
+msgid ""
+"%s%s: disconnected from %d %s (TLS connection not supported with upgrade)"
+msgstr ""
+
+msgid "client"
+msgid_plural "clients"
+msgstr[0] ""
+msgstr[1] ""
+
 #, fuzzy, c-format
 msgid "%s: invalid pointer in hdata path: \"%s\""
 msgstr "%s nem sikerült a(z) \"%s\" billentyűparancsot visszavonni\n"
@@ -14590,16 +14590,6 @@ msgid ""
 msgstr ""
 
 msgid "Scripts"
-msgstr ""
-
-#, fuzzy
-msgid "Script manager"
-msgstr "WeeChat szlogen"
-
-#, c-format
-msgid ""
-"%s%s: download of scripts is disabled by default; to enable it, type /script "
-"enable"
 msgstr ""
 
 #, fuzzy, c-format
@@ -15002,15 +14992,14 @@ msgstr "%s adatküldési hiba az IRC szerveren\n"
 msgid "%s: downloading list of scripts..."
 msgstr "folyamat: \"%s\" szerver betöltése\n"
 
-msgid "Spell checker for input"
-msgstr ""
+#, fuzzy
+msgid "Script manager"
+msgstr "WeeChat szlogen"
 
 #, c-format
 msgid ""
-"%s%s: warning: the plugin \"aspell\" has been renamed to \"spell\" and the "
-"file %s still exists (but not %s); if you upgraded from an older version, "
-"you should check instructions in release notes (version 2.5) to recover your "
-"settings"
+"%s%s: download of scripts is disabled by default; to enable it, type /script "
+"enable"
 msgstr ""
 
 #. TRANSLATORS: "%s" is "spell" (name of plugin)
@@ -15239,6 +15228,17 @@ msgstr ""
 msgid "%s%s: error: unable to create speller for lang \"%s\""
 msgstr "%s nem sikerült a szervert létrehozni\n"
 
+msgid "Spell checker for input"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: warning: the plugin \"aspell\" has been renamed to \"spell\" and the "
+"file %s still exists (but not %s); if you upgraded from an older version, "
+"you should check instructions in release notes (version 2.5) to recover your "
+"settings"
+msgstr ""
+
 #, fuzzy
 msgid "Support of tcl scripts"
 msgstr "Aliaszok listája:\n"
@@ -15258,18 +15258,6 @@ msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
 #, c-format
 msgid "Trigger monitor (filter: %s) | Input: q=close, words=filter"
 msgstr ""
-
-msgid ""
-"Text replacement and command execution on events triggered by WeeChat/plugins"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "%s%s: unable to create hook for trigger \"%s\" (bad arguments)"
-msgstr "%s ismeretlen opció a \"%s\" parancsnak\n"
-
-#, fuzzy, c-format
-msgid "%s%s: invalid regular expression in trigger: \"%s\""
-msgstr "%s nincs elég memória az információs pult üzenethez\n"
 
 #, fuzzy
 msgid "no variable"
@@ -15844,11 +15832,20 @@ msgstr "belépési nyíl színe"
 msgid "text color for replacement text (for regular expressions)"
 msgstr ""
 
-#. TRANSLATORS: this text is displayed before the list of nicks typing in the bar item "typing", it must be as short as possible
-msgid "Typing:"
+msgid ""
+"Text replacement and command execution on events triggered by WeeChat/plugins"
 msgstr ""
 
-msgid "Typing status of users"
+#, fuzzy, c-format
+msgid "%s%s: unable to create hook for trigger \"%s\" (bad arguments)"
+msgstr "%s ismeretlen opció a \"%s\" parancsnak\n"
+
+#, fuzzy, c-format
+msgid "%s%s: invalid regular expression in trigger: \"%s\""
+msgstr "%s nincs elég memória az információs pult üzenethez\n"
+
+#. TRANSLATORS: this text is displayed before the list of nicks typing in the bar item "typing", it must be as short as possible
+msgid "Typing:"
 msgstr ""
 
 msgid ""
@@ -15882,6 +15879,9 @@ msgid ""
 "truncate content)"
 msgstr ""
 
+msgid "Typing status of users"
+msgstr ""
+
 msgid "  [A] Accept"
 msgstr "  [A] Elfogadás"
 
@@ -15897,156 +15897,6 @@ msgstr "ETA"
 #, fuzzy
 msgid "Xfer list"
 msgstr "hotlist törlése"
-
-#, fuzzy
-msgid "DCC file transfer and direct chat"
-msgstr "DCC (fájl vagy beszélgetés) indítása vagy beszélgetés lezárása"
-
-#, fuzzy
-msgid "waiting"
-msgstr "Várakozás"
-
-#, fuzzy
-msgid "active"
-msgstr "Aktív"
-
-#, fuzzy
-msgid "done"
-msgstr "Kész"
-
-#, fuzzy
-msgid "failed"
-msgstr "Sikertelen"
-
-#, fuzzy
-msgid "aborted"
-msgstr "Megszakítva"
-
-msgid "hashing"
-msgstr ""
-
-msgid "CRC in progress"
-msgstr ""
-
-msgid "CRC OK"
-msgstr ""
-
-msgid "wrong CRC"
-msgstr ""
-
-msgid "CRC error"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "%s%s: file %s %s %s (%s): %s"
-msgstr "DCC: fájl %s%s%s"
-
-#, fuzzy
-msgid "sent to"
-msgstr " fogadó fél: "
-
-#, fuzzy
-msgid "received from"
-msgstr " küldő fél: "
-
-msgid "FAILED"
-msgstr "SIKERTELEN"
-
-#, fuzzy, c-format
-msgid "%s%s: chat closed with %s (%s)"
-msgstr "DCC beszélgetés vége: %s%s %s(%s%d.%d.%d.%d%s)\n"
-
-#, fuzzy, c-format
-msgid "%s%s: aborting active xfer: \"%s\" from %s"
-msgstr "\"%s\" aktív DCC megszakítása a következővel: %s\n"
-
-#, fuzzy, c-format
-msgid "%s%s: not enough memory for new xfer"
-msgstr "%s nincs elegendő memória új DCC számára\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unable to interpret address: error %d %s"
-msgstr "%s DCC: nem sikerült a csövet létrehozni\n"
-
-#, fuzzy, c-format
-msgid "%s%s: hashing error"
-msgstr "%s gnutls inicializációs hiba\n"
-
-#, fuzzy, c-format
-msgid ""
-"%s: incoming file from %s (%s, %s.%s), name: %s, %llu bytes (protocol: %s)"
-msgstr ""
-"Beérkező DCC fájl a következőtől: %s%s%s (%s%d.%d.%d.%d%s)%s: %s%s%s, "
-"%s%lu%s bájt\n"
-
-#, fuzzy, c-format
-msgid ""
-"%s: offering file to %s (%s.%s), name: %s (local filename: %s), %llu bytes "
-"(protocol: %s)"
-msgstr ""
-"DCC fájl küldése a következőnek: %s%s%s: %s%s%s (helyi fájlnév: %s%s%s), "
-"%s%lu%s bájt\n"
-
-#, fuzzy, c-format
-msgid "%s: incoming chat request from %s (%s, %s.%s)"
-msgstr "Beérkező DCC beszélgetés a következőtől: %s%s%s (%s%d.%d.%d.%d%s)\n"
-
-#, fuzzy, c-format
-msgid "%s: sending chat request to %s (%s.%s)"
-msgstr "DCC beszélgetésre felkérés küldése a következőnek: %s%s\n"
-
-#, fuzzy, c-format
-msgid "%s: file %s (local filename: %s) will be resumed at position %llu"
-msgstr ""
-"DCC: a %s%s%s fájl (helyi fájlnév: %s%s%s) a(z) %u pozíción fog visszatérni\n"
-
-#, fuzzy, c-format
-msgid "%s%s: missing arguments (%s)"
-msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unknown xfer type \"%s\""
-msgstr "%s ismeretlen billentyűparancs \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unknown xfer protocol \"%s\""
-msgstr "%s ismeretlen billentyűparancs \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%s%s: cannot access file \"%s\""
-msgstr "%s nem sikerült a(z) \"%s\" fájlt elérni\n"
-
-#, fuzzy, c-format
-msgid "%s%s: cannot create socket for xfer: error %d %s"
-msgstr "%s nem sikerült a csatornát létrehozni\n"
-
-#, fuzzy, c-format
-msgid "%s%s: cannot find available port for xfer"
-msgstr "%s nem sikerült elérhető portot találni a DCC-hez\n"
-
-#, fuzzy, c-format
-msgid "%s%s: error creating xfer"
-msgstr "%s nincs elég memória az információs pult üzenethez\n"
-
-#, fuzzy, c-format
-msgid ""
-"%s%s: unable to resume file \"%s\" (port: %d, start position: %llu): xfer "
-"not found or not ready for transfer"
-msgstr ""
-"%s nem sikerült a(z) \"%s\" fájlra visszatérni (port: %d, indulási pozíció: "
-"%u): DCC nem található vagy véget ért\n"
-
-#, fuzzy, c-format
-msgid "%s: file %s resumed at position %llu"
-msgstr "DCC: a(z) %s%s%s fájl visszatért a(z) %u pozíción\n"
-
-#, fuzzy, c-format
-msgid ""
-"%s%s: unable to accept resume file \"%s\" (port: %d, start position: %llu): "
-"xfer not found or not ready for transfer"
-msgstr ""
-"%s nem sikerült a(z) \"%s\" fájlra visszatérni (port: %d, indulási pozíció: "
-"%u): DCC nem található vagy véget ért\n"
 
 #, fuzzy, c-format
 msgid "%s%s: error sending data to \"%s\" via xfer chat"
@@ -16068,6 +15918,14 @@ msgstr "hotlist törlése"
 msgid ""
 "%3d. %s (%s), file: \"%s\" (local: \"%s\"), %s %s, status: %s%s%s (%llu %%)"
 msgstr ""
+
+#, fuzzy
+msgid "sent to"
+msgstr " fogadó fél: "
+
+#, fuzzy
+msgid "received from"
+msgstr " küldő fél: "
 
 #. TRANSLATORS: "%s" after "started on" is a date
 #, c-format
@@ -16346,3 +16204,145 @@ msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s DCC: nem sikerült kapcsolódni a küldőhöz\n"
+
+#, fuzzy
+msgid "DCC file transfer and direct chat"
+msgstr "DCC (fájl vagy beszélgetés) indítása vagy beszélgetés lezárása"
+
+#, fuzzy
+msgid "waiting"
+msgstr "Várakozás"
+
+#, fuzzy
+msgid "active"
+msgstr "Aktív"
+
+#, fuzzy
+msgid "done"
+msgstr "Kész"
+
+#, fuzzy
+msgid "failed"
+msgstr "Sikertelen"
+
+#, fuzzy
+msgid "aborted"
+msgstr "Megszakítva"
+
+msgid "hashing"
+msgstr ""
+
+msgid "CRC in progress"
+msgstr ""
+
+msgid "CRC OK"
+msgstr ""
+
+msgid "wrong CRC"
+msgstr ""
+
+msgid "CRC error"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: file %s %s %s (%s): %s"
+msgstr "DCC: fájl %s%s%s"
+
+msgid "FAILED"
+msgstr "SIKERTELEN"
+
+#, fuzzy, c-format
+msgid "%s%s: chat closed with %s (%s)"
+msgstr "DCC beszélgetés vége: %s%s %s(%s%d.%d.%d.%d%s)\n"
+
+#, fuzzy, c-format
+msgid "%s%s: aborting active xfer: \"%s\" from %s"
+msgstr "\"%s\" aktív DCC megszakítása a következővel: %s\n"
+
+#, fuzzy, c-format
+msgid "%s%s: not enough memory for new xfer"
+msgstr "%s nincs elegendő memória új DCC számára\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to interpret address: error %d %s"
+msgstr "%s DCC: nem sikerült a csövet létrehozni\n"
+
+#, fuzzy, c-format
+msgid "%s%s: hashing error"
+msgstr "%s gnutls inicializációs hiba\n"
+
+#, fuzzy, c-format
+msgid ""
+"%s: incoming file from %s (%s, %s.%s), name: %s, %llu bytes (protocol: %s)"
+msgstr ""
+"Beérkező DCC fájl a következőtől: %s%s%s (%s%d.%d.%d.%d%s)%s: %s%s%s, "
+"%s%lu%s bájt\n"
+
+#, fuzzy, c-format
+msgid ""
+"%s: offering file to %s (%s.%s), name: %s (local filename: %s), %llu bytes "
+"(protocol: %s)"
+msgstr ""
+"DCC fájl küldése a következőnek: %s%s%s: %s%s%s (helyi fájlnév: %s%s%s), "
+"%s%lu%s bájt\n"
+
+#, fuzzy, c-format
+msgid "%s: incoming chat request from %s (%s, %s.%s)"
+msgstr "Beérkező DCC beszélgetés a következőtől: %s%s%s (%s%d.%d.%d.%d%s)\n"
+
+#, fuzzy, c-format
+msgid "%s: sending chat request to %s (%s.%s)"
+msgstr "DCC beszélgetésre felkérés küldése a következőnek: %s%s\n"
+
+#, fuzzy, c-format
+msgid "%s: file %s (local filename: %s) will be resumed at position %llu"
+msgstr ""
+"DCC: a %s%s%s fájl (helyi fájlnév: %s%s%s) a(z) %u pozíción fog visszatérni\n"
+
+#, fuzzy, c-format
+msgid "%s%s: missing arguments (%s)"
+msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unknown xfer type \"%s\""
+msgstr "%s ismeretlen billentyűparancs \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unknown xfer protocol \"%s\""
+msgstr "%s ismeretlen billentyűparancs \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: cannot access file \"%s\""
+msgstr "%s nem sikerült a(z) \"%s\" fájlt elérni\n"
+
+#, fuzzy, c-format
+msgid "%s%s: cannot create socket for xfer: error %d %s"
+msgstr "%s nem sikerült a csatornát létrehozni\n"
+
+#, fuzzy, c-format
+msgid "%s%s: cannot find available port for xfer"
+msgstr "%s nem sikerült elérhető portot találni a DCC-hez\n"
+
+#, fuzzy, c-format
+msgid "%s%s: error creating xfer"
+msgstr "%s nincs elég memória az információs pult üzenethez\n"
+
+#, fuzzy, c-format
+msgid ""
+"%s%s: unable to resume file \"%s\" (port: %d, start position: %llu): xfer "
+"not found or not ready for transfer"
+msgstr ""
+"%s nem sikerült a(z) \"%s\" fájlra visszatérni (port: %d, indulási pozíció: "
+"%u): DCC nem található vagy véget ért\n"
+
+#, fuzzy, c-format
+msgid "%s: file %s resumed at position %llu"
+msgstr "DCC: a(z) %s%s%s fájl visszatért a(z) %u pozíción\n"
+
+#, fuzzy, c-format
+msgid ""
+"%s%s: unable to accept resume file \"%s\" (port: %d, start position: %llu): "
+"xfer not found or not ready for transfer"
+msgstr ""
+"%s nem sikerült a(z) \"%s\" fájlra visszatérni (port: %d, indulási pozíció: "
+"%u): DCC nem található vagy véget ért\n"

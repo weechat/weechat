@@ -42,7 +42,13 @@ set(BUGS_ADDRESS "flashcode@flashtux.org")
 set(POT_FILE "${PROJECT_NAME}.pot")
 set(POT_FILE_PATH "${CMAKE_CURRENT_BINARY_DIR}/${POT_FILE}")
 
-include(srcfiles.cmake)
+file(GLOB_RECURSE WEECHAT_SOURCES
+  RELATIVE "${CMAKE_SOURCE_DIR}"
+  "${CMAKE_SOURCE_DIR}/src/*.c"
+  "${CMAKE_SOURCE_DIR}/src/*.cpp"
+  "${CMAKE_SOURCE_DIR}/src/*.h"
+)
+list(SORT WEECHAT_SOURCES)
 
 # Create PO template file weechat.pot
 set(SRC_FILES)
