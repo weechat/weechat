@@ -8037,7 +8037,7 @@ command_init ()
            "<item1>[,<item2>...]"
            " || default [input|title|status|nicklist]"
            " || rename <name> <new_name>"
-           " || del <name>|<mask> [<name>|<mask>...]"
+           " || del <name>|<mask>..."
            " || set <name> <option> <value>"
            " || hide|show|toggle <name>"
            " || scroll <name> <window> <scroll_value>"),
@@ -8110,7 +8110,7 @@ command_init ()
            " || clear [<id>|<number>|<name>|-merged|-all [<id>|<number>|<name>...]]"
            " || move <number>|-|+"
            " || swap <id1>|<number1>|<name1> [<id2>|<number2>|<name2>]"
-           " || cycle <id>|<number>|<name> [<id>|<number>|<name>...]"
+           " || cycle <id>|<number>|<name>..."
            " || merge <id>|<number>|<name>"
            " || unmerge [<number>|-all]"
            " || hide [<id>|<number>|<name>|-all [<id>|<number>|<name>...]]"
@@ -8599,11 +8599,11 @@ command_init ()
            "regex"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("list"
-           " || enable|disable|toggle [<name>|<mask>|@ [<name>|<mask>|@...]]"
+           " || enable|disable|toggle [<name>|<mask>|@...]"
            " || add|addreplace <name> <buffer>[,<buffer>...] <tags> <regex>"
            " || rename <name> <new_name>"
            " || recreate <name>"
-           " || del <name>|<mask> [<name>|<mask>...]"),
+           " || del <name>|<mask>..."),
         CMD_ARGS_DESC(
             N_("raw[list]: list all filters"),
             N_("raw[enable]: enable filters (filters are enabled by default)"),
@@ -8684,7 +8684,7 @@ command_init ()
         NULL, "help",
         N_("display help about commands and options"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
-        N_("-list|-listfull [<plugin> [<plugin>...]] || <command> || <option>"),
+        N_("-list|-listfull [<plugin>...]] || <command> || <option>"),
         CMD_ARGS_DESC(
             N_("raw[-list]: list commands, by plugin (without argument, this list is "
                "displayed)"),
@@ -8835,9 +8835,9 @@ command_init ()
         N_("list"
            " || add|addreplace <name> \"<conditions>\" \"<content>\""
            " || rename <name> <new_name>"
-           " || refresh <name>|<mask> [<name>|<mask>...]"
+           " || refresh <name>|<mask>..."
            " || recreate <name>"
-           " || del <name>|<mask> [<name>|<mask>...]"),
+           " || del <name>|<mask>..."),
         CMD_ARGS_DESC(
             N_("raw[list]: list all custom bar items"),
             N_("raw[add]: add a custom bar item"),
@@ -8906,7 +8906,7 @@ command_init ()
            " || resetctxt <context> <key>"
            " || resetall -yes [<context>]"
            " || missing [<context>]"
-           " || legacy <key> [<key>...]"),
+           " || legacy <key>..."),
         CMD_ARGS_DESC(
             N_("raw[list]: list all current keys"),
             N_("raw[listdefault]: list default keys"),
@@ -9180,7 +9180,7 @@ command_init ()
         N_("list"
            " || add|addreplace <name> <type> <address> <port> "
            "[<username> [<password>]]"
-           " || del <name>|<mask> [<name>|<mask>...]"
+           " || del <name>|<mask>..."
            " || set <name> <option> <value>"),
         CMD_ARGS_DESC(
             N_("raw[list]: list all proxies"),
@@ -9235,7 +9235,7 @@ command_init ()
         NULL, "reload",
         N_("reload configuration files from disk"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
-        N_("[<file> [<file>...]]"),
+        N_("[<file>...]"),
         CMD_ARGS_DESC(
             N_("file: configuration file to reload (without extension \".conf\")"),
             "",
@@ -9300,7 +9300,7 @@ command_init ()
         NULL, "save",
         N_("save configuration files to disk"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
-        N_("[<file> [<file>...]]"),
+        N_("[<file>...]"),
         CMD_ARGS_DESC(
             N_("file: configuration file to save (without extension \".conf\")"),
             "",
@@ -9375,7 +9375,7 @@ command_init ()
         N_("set config options and environment variables"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("[<option> [<value>]]"
-           " || diff [<option> [<option>...]]"
+           " || diff [<option>...]"
            " || env [<variable> [<value>]]"),
         CMD_ARGS_DESC(
             N_("option: name of an option (wildcard \"*\" is allowed to list "
@@ -9436,7 +9436,7 @@ command_init ()
         NULL, "toggle",
         N_("toggle value of a config option"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
-        N_("<option> [<value> [<value>...]]"),
+        N_("<option> [<value>...]"),
         CMD_ARGS_DESC(
             N_("option: name of an option"),
             N_("value: possible values for the option (values are split like the "

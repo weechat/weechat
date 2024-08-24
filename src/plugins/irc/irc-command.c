@@ -7157,9 +7157,9 @@ irc_command_init ()
         "autojoin",
         N_("configure the \"autojoin\" server option"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
-        N_("add [<channel1> [<channel2>...]]"
+        N_("add [<channel>...]"
            " || addraw <channel1>[,<channel2>...] [<key1>[,<key2>...]]"
-           " || del [<channel1> [<channel2>...]]"
+           " || del [<channel>...]"
            " || apply"
            " || join"
            " || sort [buffer]"),
@@ -7202,7 +7202,7 @@ irc_command_init ()
         "ban",
         N_("ban nicks or hosts"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
-        N_("[<channel>] [<nick> [<nick>...]]"),
+        N_("[<channel>] [<nick>...]"),
         WEECHAT_CMD_ARGS_DESC(
             N_("channel: channel name"),
             N_("nick: nick or host"),
@@ -7216,7 +7216,7 @@ irc_command_init ()
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
         N_("ls"
            " || list"
-           " || req|ack [<capability> [<capability>...]]"
+           " || req|ack [<capability>...]"
            " || end"),
         WEECHAT_CMD_ARGS_DESC(
             N_("raw[ls]: list the capabilities supported by the server"),
@@ -7258,7 +7258,7 @@ irc_command_init ()
         "connect",
         N_("connect to IRC server(s)"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
-        N_("[<server> [<server>...]] [-<option>[=<value>]] [-no<option>] "
+        N_("[<server>...] [-<option>[=<value>]] [-no<option>] "
            "[-nojoin] [-switch]"
            " || -all|-auto|-open [-nojoin] [-switch]"),
         WEECHAT_CMD_ARGS_DESC(
@@ -7343,7 +7343,7 @@ irc_command_init ()
         "dehalfop",
         N_("remove channel half-operator status from nick(s)"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
-        N_("<nick> [<nick>...] || * -yes"),
+        N_("<nick>... || * -yes"),
         WEECHAT_CMD_ARGS_DESC(
             N_("nick: nick or mask (wildcard \"*\" is allowed)"),
             N_("*: remove channel half-operator status from everybody on channel "
@@ -7353,7 +7353,7 @@ irc_command_init ()
         "deop",
         N_("remove channel operator status from nick(s)"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
-        N_("<nick> [<nick>...] || * -yes"),
+        N_("<nick>... || * -yes"),
         WEECHAT_CMD_ARGS_DESC(
             N_("nick: nick or mask (wildcard \"*\" is allowed)"),
             N_("*: remove channel operator status from everybody on channel except yourself")),
@@ -7362,7 +7362,7 @@ irc_command_init ()
         "devoice",
         N_("remove voice from nick(s)"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
-        N_("<nick> [<nick>...] || * -yes"),
+        N_("<nick>... || * -yes"),
         WEECHAT_CMD_ARGS_DESC(
             N_("nick: nick or mask (wildcard \"*\" is allowed)"),
             N_("*: remove voice from everybody on channel")),
@@ -7391,7 +7391,7 @@ irc_command_init ()
         "halfop",
         N_("give channel half-operator status to nick(s)"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
-        N_("<nick> [<nick>...] || * -yes"),
+        N_("<nick>... || * -yes"),
         WEECHAT_CMD_ARGS_DESC(
             N_("nick: nick or mask (wildcard \"*\" is allowed)"),
             N_("*: give channel half-operator status to everybody on channel")),
@@ -7442,7 +7442,7 @@ irc_command_init ()
         "invite",
         N_("invite a nick on a channel"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
-        N_("<nick> [<nick>...] [<channel>]"),
+        N_("<nick>... [<channel>]"),
         WEECHAT_CMD_ARGS_DESC(
             N_("nick: nick"),
             N_("channel: channel name")),
@@ -7451,7 +7451,7 @@ irc_command_init ()
         "ison",
         N_("check if a nick is currently on IRC"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
-        N_("<nick> [<nick>...]"),
+        N_("<nick>..."),
         WEECHAT_CMD_ARGS_DESC(
             N_("nick: nick")),
         "%(nicks)|%*", &irc_command_ison, NULL, NULL);
@@ -7748,7 +7748,7 @@ irc_command_init ()
         "op",
         N_("give channel operator status to nick(s)"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
-        N_("<nick> [<nick>...] || * -yes"),
+        N_("<nick>... || * -yes"),
         WEECHAT_CMD_ARGS_DESC(
             N_("nick: nick or mask (wildcard \"*\" is allowed)"),
             N_("*: give channel operator status to everybody on channel")),
@@ -7806,7 +7806,7 @@ irc_command_init ()
         "quiet",
         N_("quiet nicks or hosts"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
-        N_("[<channel>] [<nick> [<nick>...]]"),
+        N_("[<channel>] [<nick>...]"),
         WEECHAT_CMD_ARGS_DESC(
             N_("channel: channel name"),
             N_("nick: nick or host"),
@@ -7827,7 +7827,7 @@ irc_command_init ()
         "reconnect",
         N_("reconnect to server(s)"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
-        N_("<server> [<server>...] [-nojoin] [-switch]"
+        N_("<server>... [-nojoin] [-switch]"
            " || -all [-nojoin] [-switch]"),
         WEECHAT_CMD_ARGS_DESC(
             N_("server: internal server name"),
@@ -7931,7 +7931,7 @@ irc_command_init ()
            " || add|addreplace <name> <hostname>[/<port>] [-temp] [-<option>[=<value>]] "
            "[-no<option>]"
            " || copy|rename <name> <new_name>"
-           " || reorder <name> [<name>...]"
+           " || reorder <name>..."
            " || open <name>|-all [<name>...]"
            " || del|keep <name>"
            " || deloutq|jump"
@@ -8091,7 +8091,7 @@ irc_command_init ()
         "unban",
         N_("unban nicks or hosts"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
-        N_("[<channel>] <nick>|<number>|<n1>-<n2> [<nick>|<number>|<n1>-<n2>...]"),
+        N_("[<channel>] <nick>|<number>|<n1>-<n2>..."),
         WEECHAT_CMD_ARGS_DESC(
             N_("channel: channel name"),
             N_("nick: nick or host"),
@@ -8104,7 +8104,7 @@ irc_command_init ()
         "unquiet",
         N_("unquiet nicks or hosts"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
-        N_("[<channel>] <nick>|<number>|<n1>-<n2> [<nick>|<number>|<n1>-<n2>...]"),
+        N_("[<channel>] <nick>|<number>|<n1>-<n2>..."),
         WEECHAT_CMD_ARGS_DESC(
             N_("channel: channel name"),
             N_("nick: nick or host"),
@@ -8117,7 +8117,7 @@ irc_command_init ()
         "userhost",
         N_("return a list of information about nicks"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
-        N_("<nick> [<nick>...]"),
+        N_("<nick>..."),
         WEECHAT_CMD_ARGS_DESC(
             N_("nick: nick")),
         "%(nicks)", &irc_command_userhost, NULL, NULL);
@@ -8142,7 +8142,7 @@ irc_command_init ()
         "voice",
         N_("give voice to nick(s)"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
-        N_("<nick> [<nick>...] || * -yes"),
+        N_("<nick>... || * -yes"),
         WEECHAT_CMD_ARGS_DESC(
             N_("nick: nick or mask (wildcard \"*\" is allowed)"),
             N_("*: give voice to everybody on channel")),

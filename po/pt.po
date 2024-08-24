@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-08-24 10:22+0200\n"
+"POT-Creation-Date: 2024-08-24 10:27+0200\n"
 "PO-Revision-Date: 2024-08-12 21:35+0200\n"
 "Last-Translator: Vasco Almeida <vascomalmeida@sapo.pt>\n"
 "Language-Team: Portuguese <>\n"
@@ -1018,9 +1018,9 @@ msgstr "gerir barras"
 msgid ""
 "list|listfull|listitems || add|addreplace <name> <type>[,<conditions>] "
 "<position> <size> <separator> <item1>[,<item2>...] || default [input|title|"
-"status|nicklist] || rename <name> <new_name> || del <name>|<mask> [<name>|"
-"<mask>...] || set <name> <option> <value> || hide|show|toggle <name> || "
-"scroll <name> <window> <scroll_value>"
+"status|nicklist] || rename <name> <new_name> || del <name>|<mask>... || set "
+"<name> <option> <value> || hide|show|toggle <name> || scroll <name> <window> "
+"<scroll_value>"
 msgstr ""
 "list|listfull|listitems || add <nome> <tipo>[,<condições>] <posição> "
 "<tamanho> <separador> <item1>[,<item2>...] || default [input|title|status|"
@@ -1161,15 +1161,15 @@ msgstr "gerir buffers"
 msgid ""
 "list || add [-free] [-switch] <name> || clear [<id>|<number>|<name>|-merged|-"
 "all [<id>|<number>|<name>...]] || move <number>|-|+ || swap <id1>|<number1>|"
-"<name1> [<id2>|<number2>|<name2>] || cycle <id>|<number>|<name> [<id>|"
-"<number>|<name>...] || merge <id>|<number>|<name> || unmerge [<number>|-all] "
-"|| hide [<id>|<number>|<name>|-all [<id>|<number>|<name>...]] || unhide "
-"[<id>|<number>|<name>|-all [<id>|<number>|<name>...]] || switch [-previous] "
-"|| zoom || renumber [<number1> [<number2> [<start>]]] || close [<n1>[-<n2>]|"
-"<name>...] || notify [<level>] || listvar [<id>|<number>|<name>] || setvar "
-"<name> [<value>] || delvar <name> || set <property> [<value>] || setauto "
-"<property> [<value>] || get <property> || jump smart|last_displayed|"
-"prev_visited|next_visited || <id>|<number>|-|+|<name>"
+"<name1> [<id2>|<number2>|<name2>] || cycle <id>|<number>|<name>... || merge "
+"<id>|<number>|<name> || unmerge [<number>|-all] || hide [<id>|<number>|"
+"<name>|-all [<id>|<number>|<name>...]] || unhide [<id>|<number>|<name>|-all "
+"[<id>|<number>|<name>...]] || switch [-previous] || zoom || renumber "
+"[<number1> [<number2> [<start>]]] || close [<n1>[-<n2>]|<name>...] || notify "
+"[<level>] || listvar [<id>|<number>|<name>] || setvar <name> [<value>] || "
+"delvar <name> || set <property> [<value>] || setauto <property> [<value>] || "
+"get <property> || jump smart|last_displayed|prev_visited|next_visited || "
+"<id>|<number>|-|+|<name>"
 msgstr ""
 "list || clear [<número>|<nome>|-merged|-all [<número>|<nome>...]] || move "
 "<número>|-|+ || swap <número1>|<nome1> [<número2>|<nome2>] || cycle <número>|"
@@ -2014,9 +2014,9 @@ msgstr ""
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 #, fuzzy
 msgid ""
-"list || enable|disable|toggle [<name>|<mask>|@ [<name>|<mask>|@...]] || add|"
-"addreplace <name> <buffer>[,<buffer>...] <tags> <regex> || rename <name> "
-"<new_name> || recreate <name> || del <name>|<mask> [<name>|<mask>...]"
+"list || enable|disable|toggle [<name>|<mask>|@...] || add|addreplace <name> "
+"<buffer>[,<buffer>...] <tags> <regex> || rename <name> <new_name> || "
+"recreate <name> || del <name>|<mask>..."
 msgstr ""
 "list || enable|disable|toggle [<nome>|@] || add <nome> <buffer>[,"
 "<buffer>...] <tags> <regex> || rename <nome> <novo_nome> || del <nome>|-all"
@@ -2174,7 +2174,9 @@ msgid "display help about commands and options"
 msgstr "mostrar ajuda sobre comandos e opções"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
-msgid "-list|-listfull [<plugin> [<plugin>...]] || <command> || <option>"
+#, fuzzy
+#| msgid "-list|-listfull [<plugin> [<plugin>...]] || <command> || <option>"
+msgid "-list|-listfull [<plugin>...]] || <command> || <option>"
 msgstr "-list|-listfull [<plugin> [<plugin>...]] || <comando> || <opção>"
 
 msgid ""
@@ -2447,8 +2449,8 @@ msgstr "lista de itens da barra"
 #, fuzzy
 msgid ""
 "list || add|addreplace <name> \"<conditions>\" \"<content>\" || rename "
-"<name> <new_name> || refresh <name>|<mask> [<name>|<mask>...] || recreate "
-"<name> || del <name>|<mask> [<name>|<mask>...]"
+"<name> <new_name> || refresh <name>|<mask>... || recreate <name> || del "
+"<name>|<mask>..."
 msgstr ""
 "list || enable|disable|toggle [<nome>|@] || add <nome> <buffer>[,"
 "<buffer>...] <tags> <regex> || rename <nome> <novo_nome> || del <nome>|-all"
@@ -2542,7 +2544,7 @@ msgid ""
 "[list|listdefault|listdiff] [<context>] || bind <key> [<command> [<args>]] "
 "|| bindctxt <context> <key> [<command> [<args>]] || unbind <key> || "
 "unbindctxt <context> <key> || reset <key> || resetctxt <context> <key> || "
-"resetall -yes [<context>] || missing [<context>] || legacy <key> [<key>...]"
+"resetall -yes [<context>] || missing [<context>] || legacy <key>..."
 msgstr ""
 "list|listdefault|listdiff [<contexto>] || bind <tecla> [<comando> "
 "[<argumentos>]] || bindctxt <contexto> <tecla> [<comando> [<argumentos>]] || "
@@ -2998,8 +3000,7 @@ msgstr "gerir os proxies"
 #| "del <name>|-all || set <name> <option> <value>"
 msgid ""
 "list || add|addreplace <name> <type> <address> <port> [<username> "
-"[<password>]] || del <name>|<mask> [<name>|<mask>...] || set <name> <option> "
-"<value>"
+"[<password>]] || del <name>|<mask>... || set <name> <option> <value>"
 msgstr ""
 "list || add <nome> <tipo> <endereço> <porta> [<utilizador> [<palavra-"
 "passe>]] || del <nome>|-all || set <nome> <opção> <valor>"
@@ -3109,7 +3110,9 @@ msgid "reload configuration files from disk"
 msgstr "recarregar os ficheiros de configuração do disco"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
-msgid "[<file> [<file>...]]"
+#, fuzzy
+#| msgid "[<file> [<file>...]]"
+msgid "[<file>...]"
 msgstr "[<ficheiro> [<ficheiro>...]]"
 
 #, fuzzy
@@ -3375,9 +3378,12 @@ msgid "set config options and environment variables"
 msgstr "definir opções de configuração e variáveis de ambiente"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#, fuzzy
+#| msgid ""
+#| "[<option> [<value>]] || diff [<option> [<option>...]] || env [<variable> "
+#| "[<value>]]"
 msgid ""
-"[<option> [<value>]] || diff [<option> [<option>...]] || env [<variable> "
-"[<value>]]"
+"[<option> [<value>]] || diff [<option>...] || env [<variable> [<value>]]"
 msgstr ""
 "[<opção> [<valor>]] || diff [<opção> [<opção>...]] || env [<variável> "
 "[<valor>]]"
@@ -3473,7 +3479,7 @@ msgstr "valores de uma opção de configuração"
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 #, fuzzy
 #| msgid "[<file> [<file>...]]"
-msgid "<option> [<value> [<value>...]]"
+msgid "<option> [<value>...]"
 msgstr "[<ficheiro> [<ficheiro>...]]"
 
 msgid ""
@@ -6893,8 +6899,7 @@ msgstr "listar, adicionar ou remover alias de comandos"
 msgid ""
 "list [<name>] || add|addreplace <name> [<command>[;<command>...]] || "
 "addcompletion|addreplacecompletion <completion> <name> [<command>[;"
-"<command>...]] || del <name>|<mask> [<name>|<mask>...] || rename <name> "
-"<new_name> || missing"
+"<command>...]] || del <name>|<mask>... || rename <name> <new_name> || missing"
 msgstr ""
 "list [<alias>] || add <alias> [<comando>[;<comando>...]] || addcompletion "
 "<completação> <alias> [<comando>[;<comando>...]] || del <alias> [<alias>...]"
@@ -9359,9 +9364,8 @@ msgstr "opções de configuração"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 msgid ""
-"add [<channel1> [<channel2>...]] || addraw <channel1>[,<channel2>...] "
-"[<key1>[,<key2>...]] || del [<channel1> [<channel2>...]] || apply || join || "
-"sort [buffer]"
+"add [<channel>...] || addraw <channel1>[,<channel2>...] [<key1>[,<key2>...]] "
+"|| del [<channel>...] || apply || join || sort [buffer]"
 msgstr ""
 
 msgid ""
@@ -9413,7 +9417,9 @@ msgid "ban nicks or hosts"
 msgstr "banir nicks ou hosts"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
-msgid "[<channel>] [<nick> [<nick>...]]"
+#, fuzzy
+#| msgid "[<channel>] [<nick> [<nick>...]]"
+msgid "[<channel>] [<nick>...]"
 msgstr "[<canal>] [<nick> [<nick>...]]"
 
 #, fuzzy
@@ -9439,7 +9445,9 @@ msgid "client capability negotiation"
 msgstr "negociação de capacidades do cliente"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
-msgid "ls || list || req|ack [<capability> [<capability>...]] || end"
+#, fuzzy
+#| msgid "ls || list || req|ack [<capability> [<capability>...]] || end"
+msgid "ls || list || req|ack [<capability>...] || end"
 msgstr "ls || list || req|ack [<capacidade> [<capacidade>...]] || end"
 
 #, fuzzy
@@ -9499,8 +9507,8 @@ msgstr "conectar a servidores IRC"
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 #, fuzzy
 msgid ""
-"[<server> [<server>...]] [-<option>[=<value>]] [-no<option>] [-nojoin] [-"
-"switch] || -all|-auto|-open [-nojoin] [-switch]"
+"[<server>...] [-<option>[=<value>]] [-no<option>] [-nojoin] [-switch] || -"
+"all|-auto|-open [-nojoin] [-switch]"
 msgstr ""
 "<servidor> [<servidor>...] [-<opção>[=<valor>]] [-no<opção>] [-nojoin] [-"
 "switch] || -all|-auto|-open [-nojoin] [-switch]"
@@ -9620,7 +9628,9 @@ msgid "remove channel half-operator status from nick(s)"
 msgstr "remover estatuto de semi-operador do canal a nicks"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
-msgid "<nick> [<nick>...] || * -yes"
+#, fuzzy
+#| msgid "<nick> [<nick>...] || * -yes"
+msgid "<nick>... || * -yes"
 msgstr "<nick> [<nick>...] || * -yes"
 
 #, fuzzy
@@ -9767,14 +9777,18 @@ msgid "invite a nick on a channel"
 msgstr "convidar um nick para um canal"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
-msgid "<nick> [<nick>...] [<channel>]"
+#, fuzzy
+#| msgid "<nick> [<nick>...] [<channel>]"
+msgid "<nick>... [<channel>]"
 msgstr "<nick> [<nick>...] [<canal>]"
 
 msgid "check if a nick is currently on IRC"
 msgstr "verificar se um nick está no IRC neste momento"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
-msgid "<nick> [<nick>...]"
+#, fuzzy
+#| msgid "<nick> [<nick>...]"
+msgid "<nick>..."
 msgstr "<nick> [<nick>...]"
 
 msgid "join a channel"
@@ -10313,7 +10327,10 @@ msgid "reconnect to server(s)"
 msgstr "reconectar-se a um servidor"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
-msgid "<server> [<server>...] [-nojoin] [-switch] || -all [-nojoin] [-switch]"
+#, fuzzy
+#| msgid ""
+#| "<server> [<server>...] [-nojoin] [-switch] || -all [-nojoin] [-switch]"
+msgid "<server>... [-nojoin] [-switch] || -all [-nojoin] [-switch]"
 msgstr ""
 "<servidor> [<servidor>...] [-nojoin] [-switch] || -all [-nojoin] [-switch]"
 
@@ -10425,8 +10442,8 @@ msgstr "listar, adicionar ou remover servidores IRC"
 msgid ""
 "list|listfull [<name>] || add|addreplace <name> <hostname>[/<port>] [-temp] "
 "[-<option>[=<value>]] [-no<option>] || copy|rename <name> <new_name> || "
-"reorder <name> [<name>...] || open <name>|-all [<name>...] || del|keep "
-"<name> || deloutq|jump || raw [<filter>]"
+"reorder <name>... || open <name>|-all [<name>...] || del|keep <name> || "
+"deloutq|jump || raw [<filter>]"
 msgstr ""
 "list|listfull [<servidor>] || add <servidor> <hostname>[/<porta>] [-temp] [-"
 "<opção>[=<valor>]] [-no<opção>] || copy|rename <servidor> <novo_nome> || "
@@ -10651,7 +10668,7 @@ msgstr "remover banimento de nicks ou hosts"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
 #, fuzzy
-msgid "[<channel>] <nick>|<number>|<n1>-<n2> [<nick>|<number>|<n1>-<n2>...]"
+msgid "[<channel>] <nick>|<number>|<n1>-<n2>..."
 msgstr "[<canal>] <nick> [<nick>...]"
 
 #, fuzzy
@@ -16031,9 +16048,9 @@ msgstr "Gestor de scripts do WeeChat"
 #, fuzzy
 msgid ""
 "enable || list [-o|-ol|-i|-il] || search <text> || show <script> || load|"
-"unload|reload <script> [<script>...] || autoload|noautoload|toggleautoload "
-"<script> [<script>...] || install|remove|installremove|hold [-q] <script> "
-"[<script>...] || upgrade || update || -up|-down [<number>] || -go <line>|end"
+"unload|reload <script>... || autoload|noautoload|toggleautoload <script>... "
+"|| install|remove|installremove|hold [-q] <script>... || upgrade || update "
+"|| -up|-down [<number>] || -go <line>|end"
 msgstr ""
 "list [-o|-i] || search <texto> || show <script> || load|unload|reload "
 "<script> [<script>...] || autoload|noautoload|toggleautoload <script> "
@@ -16969,10 +16986,9 @@ msgid ""
 "<name> <hook> [\"<arguments>\" [\"<conditions>\" [\"<regex>\" [\"<command>\" "
 "[\"<return_code>\" [\"<post_action>\"]]]]]] || addinput [<hook>] || input|"
 "output|recreate <name> || set <name> <option> <value> || rename|copy <name> "
-"<new_name> || enable|disable|toggle [<name>|<mask> [<name>|<mask>...]] || "
-"restart <name>|<mask> [<name>|<mask>...] || show <name> || del <name>|<mask> "
-"[<name>|<mask>...] || restore <name>|<mask> [<name>|<mask>...] || default -"
-"yes || monitor [<filter>]"
+"<new_name> || enable|disable|toggle [<name>|<mask>...] || restart <name>|"
+"<mask>... || show <name> || del <name>|<mask>... || restore <name>|<mask>... "
+"|| default -yes || monitor [<filter>]"
 msgstr ""
 "list|listfull|listdefault || add|addoff|addreplace <nome> <hook> "
 "[\"<argumentos>\" [\"<condições>\" [\"<regex>\" [\"<comando>\" "

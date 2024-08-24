@@ -2,6 +2,10 @@
 
 ## Version 4.5.0 (under dev)
 
+### Changed
+
+- core, plugins: simplify help on parameters that can be repeated in commands
+
 ### Added
 
 - relay: redefine bar item "input_prompt" to display the connection status on remote buffers, if different from "connected"

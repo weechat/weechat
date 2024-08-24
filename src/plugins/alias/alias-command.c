@@ -358,7 +358,7 @@ alias_command_init ()
            " || add|addreplace <name> [<command>[;<command>...]]"
            " || addcompletion|addreplacecompletion <completion> <name> "
            "[<command>[;<command>...]]"
-           " || del <name>|<mask> [<name>|<mask>...]"
+           " || del <name>|<mask>..."
            " || rename <name> <new_name>"
            " || missing"),
         /* xgettext:no-c-format */

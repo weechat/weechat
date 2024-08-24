@@ -1268,11 +1268,11 @@ trigger_command_init ()
            " || input|output|recreate <name>"
            " || set <name> <option> <value>"
            " || rename|copy <name> <new_name>"
-           " || enable|disable|toggle [<name>|<mask> [<name>|<mask>...]]"
-           " || restart <name>|<mask> [<name>|<mask>...]"
+           " || enable|disable|toggle [<name>|<mask>...]"
+           " || restart <name>|<mask>..."
            " || show <name>"
-           " || del <name>|<mask> [<name>|<mask>...]"
-           " || restore <name>|<mask> [<name>|<mask>...]"
+           " || del <name>|<mask>..."
+           " || restore <name>|<mask>..."
            " || default -yes"
            " || monitor [<filter>]"),
         WEECHAT_CMD_ARGS_DESC(
