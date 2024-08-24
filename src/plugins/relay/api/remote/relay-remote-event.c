@@ -1221,6 +1221,8 @@ relay_remote_event_sync_with_remote (struct t_relay_remote *remote)
 
     remote->synced = 1;
 
+    weechat_bar_item_update ("input_prompt");
+
 end:
     cJSON_Delete (json);
 }

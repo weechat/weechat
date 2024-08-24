@@ -8,7 +8,7 @@
 
 ### Added
 
-- relay: redefine bar item "input_prompt" to display the connection status on remote buffers, if different from "connected"
+- relay: display connection status in input prompt of remote buffers, if not connected or if synchronizing data with the remote
 
 ### Fixed
 

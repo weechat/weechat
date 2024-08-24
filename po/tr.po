@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-08-24 10:27+0200\n"
+"POT-Creation-Date: 2024-08-24 10:59+0200\n"
 "PO-Revision-Date: 2024-08-12 21:36+0200\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -14996,6 +14996,9 @@ msgstr "%s%s: Göndericiye bağlanılamıyor"
 #, c-format
 msgid "%s%s: not enough memory for parsing message"
 msgstr "%s%s: ayrıştırma iletisi için bellek yetersiz"
+
+msgid "data synchronization"
+msgstr ""
 
 msgid "Actions (letter+enter):"
 msgstr "Eylemler (harf+enter):"
