@@ -8,7 +8,7 @@
 
 ### Added
 
-- relay: display connection status in input prompt of remote buffers, if not connected or if synchronizing data with the remote
+- relay: display connection status in input prompt of remote buffers, if not connected or if fetching data from remote
 
 ### Fixed
 

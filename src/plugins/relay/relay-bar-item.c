@@ -41,6 +41,7 @@ relay_bar_item_input_prompt (const void *pointer, void *data,
                              struct t_hashtable *extra_info)
 {
     char str_status[512], *input_prompt;
+    int fetching_data;
     const char *ptr_input_prompt;
     struct t_relay_remote *ptr_remote;
 
@@ -58,18 +59,18 @@ relay_bar_item_input_prompt (const void *pointer, void *data,
     ptr_remote = relay_remote_search (weechat_buffer_get_string (buffer, "localvar_relay_remote"));
     if (ptr_remote)
     {
-        if ((ptr_remote->status == RELAY_STATUS_CONNECTED) && !ptr_remote->synced)
-        {
-            snprintf (str_status, sizeof (str_status),
-                      "<%s>", _("data synchronization"));
-        }
-        else if (ptr_remote->status != RELAY_STATUS_CONNECTED)
+        fetching_data = (ptr_remote->status == RELAY_STATUS_CONNECTED)
+            && !ptr_remote->synced;
+        if ((ptr_remote->status != RELAY_STATUS_CONNECTED) || fetching_data)
         {
             snprintf (
                 str_status, sizeof (str_status),
-                "%s<%s>",
+                "%s<%s%s%s%s>",
                 weechat_color (weechat_config_string (relay_config_color_status[ptr_remote->status])),
-                _(relay_status_string[ptr_remote->status]));
+                _(relay_status_string[ptr_remote->status]),
+                (fetching_data) ? " (" : "",
+                (fetching_data) ? _("fetching data") : "",
+                (fetching_data) ? ")" : "");
         }
     }
 
