@@ -4,6 +4,7 @@
 
 ### Changed
 
+- relay/api: allow array with multiple requests in websocket frame received from client
 - core, plugins: simplify help on parameters that can be repeated in commands
 
 ### Added

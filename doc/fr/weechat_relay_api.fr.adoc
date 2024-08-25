@@ -1406,6 +1406,10 @@ les champs suivants :
 * `body` (objet ou tableau) : le corps (facultatif, pour les méthodes `POST` et `PUT`)
 * `request_id` (chaîne) : identifiant renvoyé dans la réponse
 
+Plusieurs requêtes peuvent être envoyées simultanément avec un tableau d'objets,
+chaque objet étant une requête séparée. +
+Les requêtes sont exécutées dans l'ordre reçu (voir l'exemple ci-dessous).
+
 Les réponses vers le client sont faites avec un objet JSON qui contient
 les champs suivants :
 
@@ -1492,6 +1496,69 @@ Réponse :
     "request_body": {
         "buffer_name": "irc.libera.#weechat",
         "command": "hello!"
+    },
+    "request_id": null,
+    "body_type": null,
+    "body": null
+}
+----
+
+Exemple de requêtes : envoyer deux requêtes en même temps : obtenir la liste des
+tampons avec les lignes et les pseudos, puis se synchroniser avec le relay distant :
+
+[source,json]
+----
+[
+    {
+        "request": "GET /api/buffers?lines=-1000&nicks=true&colors=weechat",
+        "request_id": "initial_sync"
+    },
+    {
+        "request": "POST /api/sync",
+        "body": {
+            "colors": "weechat"
+        }
+    }
+]
+----
+
+[NOTE]
+Il est recommandé d'envoyer la requête de synchronisation en même temps que la
+première requête qui récupère les données, afin qu'aucun évènement ne soit manqué.
+
+Première réponse (le "body" avec les tampons est tronqué pour la lisibilité) :
+
+[source,json]
+----
+{
+    "code": 200,
+    "message": "OK",
+    "request": "GET /api/buffers?lines=-1000&nicks=true&colors=weechat",
+    "request_body": null,
+    "request_id": "initial_sync",
+    "body_type": "buffers",
+    "body": [
+        {
+            "id": 1709932823238637,
+            "name": "core.weechat",
+            "short_name": "weechat",
+            "number": 1,
+            "type": "formatted"
+        }
+    ]
+}
+----
+
+Seconde réponse :
+
+[source,json]
+----
+{
+    "code": 204,
+    "message": "No Content",
+    "request": "POST /api/sync",
+    "request_body": {
+        "colors": "weechat"
     },
     "request_id": null,
     "body_type": null,

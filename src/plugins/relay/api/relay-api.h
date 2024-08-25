@@ -24,7 +24,7 @@ struct t_relay_client;
 enum t_relay_status;
 
 #define RELAY_API_VERSION_MAJOR 0
-#define RELAY_API_VERSION_MINOR 2
+#define RELAY_API_VERSION_MINOR 3
 #define RELAY_API_VERSION_PATCH 0
 #define RELAY_API_VERSION_NUMBER                                        \
     ((RELAY_API_VERSION_MAJOR << 16)                                    \

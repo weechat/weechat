@@ -917,6 +917,71 @@ RELAY_API_PROTOCOL_CALLBACK(sync)
 }
 
 /*
+ * Reads one request from client.
+ */
+
+void
+relay_api_protocol_recv_json_request (struct t_relay_client *client,
+                                      cJSON *json)
+{
+    cJSON *json_request, *json_request_id, *json_body;
+    const char *ptr_request_id;
+    char *string_body;
+    int length;
+
+    relay_http_request_reinit (client->http_req);
+
+    json_request_id = cJSON_GetObjectItem (json, "request_id");
+    if (json_request_id
+        && !cJSON_IsString (json_request_id)
+        && !cJSON_IsNull (json_request_id))
+    {
+        goto error;
+    }
+    ptr_request_id = (json_request_id) ?
+        cJSON_GetStringValue (json_request_id) : NULL;
+    free (client->http_req->id);
+    client->http_req->id = NULL;
+    client->http_req->id = (ptr_request_id) ? strdup (ptr_request_id) : NULL;
+
+    json_request = cJSON_GetObjectItem (json, "request");
+    if (!json_request || !cJSON_IsString (json_request))
+        goto error;
+
+    if (!relay_http_parse_method_path (client->http_req,
+                                       cJSON_GetStringValue (json_request)))
+    {
+        goto error;
+    }
+
+    json_body = cJSON_GetObjectItem (json, "body");
+    if (json_body)
+    {
+        string_body = cJSON_PrintUnformatted (json_body);
+        if (string_body)
+        {
+            length = strlen (string_body);
+            client->http_req->body = malloc (length + 1);
+            if (client->http_req->body)
+            {
+                memcpy (client->http_req->body, string_body, length + 1);
+                client->http_req->content_length = length;
+                client->http_req->body_size = length;
+            }
+            free (string_body);
+        }
+    }
+
+    relay_api_protocol_recv_http (client);
+
+    return;
+
+error:
+    relay_api_msg_send_json (client, RELAY_HTTP_400_BAD_REQUEST,
+                             NULL, NULL, NULL);
+}
+
+/*
  * Reads JSON string from a client: when connected via websocket (persistent
  * connection), the client is sending JSON data as a request, which is
  * converted to HTTP request by this function, before calling the function
@@ -939,74 +1004,50 @@ RELAY_API_PROTOCOL_CALLBACK(sync)
  * Content-Type: application/json
  *
  * {"buffer": "irc.libera.#weechat","command": "hello!"}
+ *
+ * The JSON can also be an array of requests, for example to fetch all buffers
+ * data and synchronize at same time:
+ *
+ * [
+ *     {
+ *         "request": "GET /api/buffers?lines=-1000&nicks=true&colors=weechat",
+ *         "request_id": "initial_sync"
+ *     },
+ *     {
+ *         "request": "POST /api/sync",
+ *         "body": {
+ *             "colors":"weechat"
+ *         }
+ *     }
+ * ]
  */
 
 void
 relay_api_protocol_recv_json (struct t_relay_client *client, const char *json)
 {
-    cJSON *json_obj, *json_request, *json_body, *json_request_id;
-    const char *ptr_request_id;
-    char *string_body;
-    int length;
-
-    relay_http_request_reinit (client->http_req);
+    cJSON *json_obj, *json_request;
 
     json_obj = cJSON_Parse (json);
     if (!json_obj)
-        goto error;
-
-    json_request = cJSON_GetObjectItem (json_obj, "request");
-    if (!json_request)
-        goto error;
-
-    if (!cJSON_IsString (json_request))
-        goto error;
-
-    if (!relay_http_parse_method_path (client->http_req,
-                                       cJSON_GetStringValue (json_request)))
     {
-        goto error;
+        relay_api_msg_send_json (client, RELAY_HTTP_400_BAD_REQUEST,
+                                 NULL, NULL, NULL);
+        return;
     }
 
-    json_body = cJSON_GetObjectItem (json_obj, "body");
-    if (json_body)
+    if (cJSON_IsArray (json_obj))
     {
-        string_body = cJSON_PrintUnformatted (json_body);
-        if (string_body)
+        cJSON_ArrayForEach (json_request, json_obj)
         {
-            length = strlen (string_body);
-            client->http_req->body = malloc (length + 1);
-            if (client->http_req->body)
-            {
-                memcpy (client->http_req->body, string_body, length + 1);
-                client->http_req->content_length = length;
-                client->http_req->body_size = length;
-            }
-            free (string_body);
+            relay_api_protocol_recv_json_request (client, json_request);
         }
     }
-
-    free (client->http_req->id);
-    client->http_req->id = NULL;
-    json_request_id = cJSON_GetObjectItem (json_obj, "request_id");
-    if (json_request_id)
+    else
     {
-        if (!cJSON_IsString (json_request_id) && !cJSON_IsNull (json_request_id))
-            goto error;
-        ptr_request_id = cJSON_GetStringValue (json_request_id);
-        client->http_req->id = (ptr_request_id) ?
-            strdup (ptr_request_id) : NULL;
+        relay_api_protocol_recv_json_request (client, json_obj);
     }
 
-    relay_api_protocol_recv_http (client);
-    goto end;
-
-error:
-    relay_api_msg_send_json (client, RELAY_HTTP_400_BAD_REQUEST, NULL, NULL, NULL);
-
-end:
-    if (json_obj)
-        cJSON_Delete (json_obj);
+    cJSON_Delete (json_obj);
 }
 
 /*

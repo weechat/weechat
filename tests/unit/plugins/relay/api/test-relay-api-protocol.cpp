@@ -51,7 +51,7 @@ extern int relay_api_protocol_command_delay;
 
 #define WEE_CHECK_HTTP_CODE(__code, __message)                          \
     STRNCMP_EQUAL("HTTP/1.1 " #__code " " __message "\r\n",             \
-                  data_sent,                                            \
+                  data_sent[0],                                         \
                   strlen ("HTTP/1.1 " #__code " " __message "\r\n"));
 
 #define WEE_CHECK_TEXT(__code, __message, __request, __body)            \
@@ -63,7 +63,7 @@ extern int relay_api_protocol_command_delay;
                  "\"body_type\":null,"                                  \
                  "\"body\":null"                                        \
                  "}",                                                   \
-                 data_sent);
+                 data_sent[0]);
 
 #define WEE_CHECK_OBJ_STR(__expected, __json, __name)                   \
     json_obj = cJSON_GetObjectItem (__json, __name);                    \
@@ -92,9 +92,9 @@ extern int relay_api_protocol_command_delay;
 
 struct t_relay_server *ptr_relay_server = NULL;
 struct t_relay_client *ptr_relay_client = NULL;
-char *data_sent = NULL;
-int data_sent_size = 0;
-cJSON *json_body_sent = NULL;
+int data_sent_index = 0;
+char *data_sent[4] = { NULL, NULL, NULL, NULL };
+cJSON *json_body_sent[4] = { NULL, NULL, NULL, NULL };
 
 TEST_GROUP(RelayApiProtocol)
 {
@@ -104,17 +104,16 @@ TEST_GROUP(RelayApiProtocolWithClient)
 {
     void free_data_sent ()
     {
-        if (data_sent)
+        int i;
+
+        for (i = 0; i < 4; i++)
         {
-            free (data_sent);
-            data_sent = NULL;
+            free (data_sent[i]);
+            data_sent[i] = NULL;
+            cJSON_Delete (json_body_sent[i]);
+            json_body_sent[i] = NULL;
         }
-        data_sent_size = 0;
-        if (json_body_sent)
-        {
-            cJSON_Delete (json_body_sent);
-            json_body_sent = NULL;
-        }
+        data_sent_index = 0;
     }
 
     void test_client_recv_http_raw (const char *http_request)
@@ -172,30 +171,21 @@ TEST_GROUP(RelayApiProtocolWithClient)
 
         (void) client;
 
-        if (data_sent)
-        {
-            free (data_sent);
-            data_sent = NULL;
-        }
-        data_sent_size = 0;
-        if (json_body_sent)
-        {
-            cJSON_Delete (json_body_sent);
-            json_body_sent = NULL;
-        }
+        data_sent[data_sent_index] = (char *)malloc (data_size + 1);
+        memcpy (data_sent[data_sent_index], data, data_size);
+        data_sent[data_sent_index][data_size] = '\0';
 
-        data_sent = (char *)malloc (data_size + 1);
-        memcpy (data_sent, data, data_size);
-        data_sent[data_size] = '\0';
-        data_sent_size = data_size;
-
-        pos_body = strstr (data_sent, "\r\n\r\n");
+        pos_body = strstr (data_sent[data_sent_index], "\r\n\r\n");
         if (pos_body)
-            json_body_sent = cJSON_Parse(pos_body + 4);
+            json_body_sent[data_sent_index] = cJSON_Parse(pos_body + 4);
+
+        data_sent_index++;
     }
 
     void setup ()
     {
+        int i;
+
         /* disable auto-open of relay buffer */
         config_file_option_set (relay_config_look_auto_open_buffer, "off", 1);
 
@@ -218,9 +208,12 @@ TEST_GROUP(RelayApiProtocolWithClient)
         ptr_relay_client = relay_client_new (-1, "test", ptr_relay_server);
         ptr_relay_client->fake_send_func = &fake_send_func;
 
-        data_sent = NULL;
-        data_sent_size = 0;
-        json_body_sent = NULL;
+        for (i = 0; i < 4; i++)
+        {
+            data_sent[i] = NULL;
+            json_body_sent[i] = NULL;
+        }
+        data_sent_index = 0;
     }
 
     void teardown ()
@@ -288,7 +281,7 @@ TEST(RelayApiProtocolWithClient, CbOptions)
         "Content-Type: application/json; charset=utf-8\r\n"
         "Content-Length: 0\r\n"
         "\r\n",
-        data_sent);
+        data_sent[0]);
 }
 
 /*
@@ -308,7 +301,7 @@ TEST(RelayApiProtocolWithClient, CbHandshake)
                  "{\"password_hash_algo\":null,"
                  "\"password_hash_iterations\":100000,"
                  "\"totp\":false}",
-                 data_sent);
+                 data_sent[0]);
 
     /* empty body */
     test_client_recv_http ("POST /api/handshake", NULL, "{}");
@@ -320,7 +313,7 @@ TEST(RelayApiProtocolWithClient, CbHandshake)
                  "{\"password_hash_algo\":null,"
                  "\"password_hash_iterations\":100000,"
                  "\"totp\":false}",
-                 data_sent);
+                 data_sent[0]);
 
     /* unknown password hash algorithm */
     test_client_recv_http ("POST /api/handshake", NULL,
@@ -333,7 +326,7 @@ TEST(RelayApiProtocolWithClient, CbHandshake)
                  "{\"password_hash_algo\":null,"
                  "\"password_hash_iterations\":100000,"
                  "\"totp\":false}",
-                 data_sent);
+                 data_sent[0]);
 
     /* two supported hash algorithms */
     test_client_recv_http (
@@ -348,7 +341,7 @@ TEST(RelayApiProtocolWithClient, CbHandshake)
                  "{\"password_hash_algo\":\"pbkdf2+sha512\","
                  "\"password_hash_iterations\":100000,"
                  "\"totp\":false}",
-                 data_sent);
+                 data_sent[0]);
 }
 
 /*
@@ -362,7 +355,7 @@ TEST(RelayApiProtocolWithClient, CbVersion)
 
     test_client_recv_http ("GET /api/version", NULL, NULL);
     WEE_CHECK_HTTP_CODE(200, "OK");
-    json = json_body_sent;
+    json = json_body_sent[0];
     WEE_CHECK_OBJ_STR(version_get_version (), json, "weechat_version");
     WEE_CHECK_OBJ_STR(version_get_git (), json, "weechat_version_git");
     WEE_CHECK_OBJ_NUM(util_version_number (version_get_version ()),
@@ -389,7 +382,7 @@ TEST(RelayApiProtocolWithClient, CbBuffers)
                  "Content-Length: 41\r\n"
                  "\r\n"
                  "{\"error\": \"Buffer \\\"invalid\\\" not found\"}",
-                 data_sent);
+                 data_sent[0]);
 
     /* error: invalid buffer id */
     test_client_recv_http ("GET /api/buffers/123", NULL, NULL);
@@ -399,7 +392,7 @@ TEST(RelayApiProtocolWithClient, CbBuffers)
                  "Content-Length: 37\r\n"
                  "\r\n"
                  "{\"error\": \"Buffer \\\"123\\\" not found\"}",
-                 data_sent);
+                 data_sent[0]);
 
     /* error: invalid sub-resource */
     test_client_recv_http ("GET /api/buffers/core.weechat/invalid", NULL, NULL);
@@ -409,7 +402,7 @@ TEST(RelayApiProtocolWithClient, CbBuffers)
                  "Content-Length: 59\r\n"
                  "\r\n"
                  "{\"error\": \"Sub-resource of buffers not found: \\\"invalid\\\"\"}",
-                 data_sent);
+                 data_sent[0]);
 
     /* error: too many parameters in path */
     test_client_recv_http ("GET /api/buffers/core.weechat/too/many/parameters",
@@ -419,14 +412,14 @@ TEST(RelayApiProtocolWithClient, CbBuffers)
                  "Content-Type: application/json; charset=utf-8\r\n"
                  "Content-Length: 0\r\n"
                  "\r\n",
-                 data_sent);
+                 data_sent[0]);
 
     /* get all buffers */
     test_client_recv_http ("GET /api/buffers", NULL, NULL);
     WEE_CHECK_HTTP_CODE(200, "OK");
-    CHECK(json_body_sent);
-    CHECK(cJSON_IsArray (json_body_sent));
-    json = cJSON_GetArrayItem (json_body_sent, 0);
+    CHECK(json_body_sent[0]);
+    CHECK(cJSON_IsArray (json_body_sent[0]));
+    json = cJSON_GetArrayItem (json_body_sent[0], 0);
     CHECK(json);
     CHECK(cJSON_IsObject (json));
     WEE_CHECK_OBJ_NUM(gui_buffers->id, json, "id");
@@ -453,9 +446,9 @@ TEST(RelayApiProtocolWithClient, CbBuffers)
     gui_buffer_set (gui_buffers, "input_multiline", "1");
     test_client_recv_http ("GET /api/buffers/core.weechat", NULL, NULL);
     WEE_CHECK_HTTP_CODE(200, "OK");
-    CHECK(json_body_sent);
-    CHECK(cJSON_IsObject (json_body_sent));
-    json = json_body_sent;
+    CHECK(json_body_sent[0]);
+    CHECK(cJSON_IsObject (json_body_sent[0]));
+    json = json_body_sent[0];
     WEE_CHECK_OBJ_NUM(gui_buffers->id, json, "id");
     WEE_CHECK_OBJ_STR("core.weechat", json, "name");
     WEE_CHECK_OBJ_STR("weechat", json, "short_name");
@@ -481,9 +474,9 @@ TEST(RelayApiProtocolWithClient, CbBuffers)
               "GET /api/buffers/%lld", gui_buffers->id);
     test_client_recv_http (str_http, NULL, NULL);
     WEE_CHECK_HTTP_CODE(200, "OK");
-    CHECK(json_body_sent);
-    CHECK(cJSON_IsObject (json_body_sent));
-    json = json_body_sent;
+    CHECK(json_body_sent[0]);
+    CHECK(cJSON_IsObject (json_body_sent[0]));
+    json = json_body_sent[0];
     WEE_CHECK_OBJ_NUM(gui_buffers->id, json, "id");
     WEE_CHECK_OBJ_STR("core.weechat", json, "name");
     WEE_CHECK_OBJ_STR("weechat", json, "short_name");
@@ -506,9 +499,9 @@ TEST(RelayApiProtocolWithClient, CbBuffers)
     gui_chat_printf (NULL, "test line 2");
     test_client_recv_http ("GET /api/buffers/core.weechat/lines?lines=-2", NULL, NULL);
     WEE_CHECK_HTTP_CODE(200, "OK");
-    CHECK(json_body_sent);
-    CHECK(cJSON_IsArray (json_body_sent));
-    json = cJSON_GetArrayItem (json_body_sent, 0);
+    CHECK(json_body_sent[0]);
+    CHECK(cJSON_IsArray (json_body_sent[0]));
+    json = cJSON_GetArrayItem (json_body_sent[0], 0);
     CHECK(json);
     CHECK(cJSON_IsObject (json));
     WEE_CHECK_OBJ_NUM(gui_buffers->own_lines->last_line->prev_line->data->id, json, "id");
@@ -518,7 +511,7 @@ TEST(RelayApiProtocolWithClient, CbBuffers)
     WEE_CHECK_OBJ_BOOL(0, json, "highlight");
     WEE_CHECK_OBJ_STR("", json, "prefix");
     WEE_CHECK_OBJ_STR("test line 1", json, "message");
-    json = cJSON_GetArrayItem (json_body_sent, 1);
+    json = cJSON_GetArrayItem (json_body_sent[0], 1);
     CHECK(json);
     CHECK(cJSON_IsObject (json));
     WEE_CHECK_OBJ_NUM(gui_buffers->own_lines->last_line->data->id, json, "id");
@@ -532,9 +525,9 @@ TEST(RelayApiProtocolWithClient, CbBuffers)
     /* get nicks */
     test_client_recv_http ("GET /api/buffers/core.weechat/nicks", NULL, NULL);
     WEE_CHECK_HTTP_CODE(200, "OK");
-    CHECK(json_body_sent);
-    CHECK(cJSON_IsObject (json_body_sent));
-    json = json_body_sent;
+    CHECK(json_body_sent[0]);
+    CHECK(cJSON_IsObject (json_body_sent[0]));
+    json = json_body_sent[0];
     WEE_CHECK_OBJ_STR("root", json, "name");
     WEE_CHECK_OBJ_STR("", json, "color");
     json_groups = cJSON_GetObjectItem (json, "groups");
@@ -555,9 +548,9 @@ TEST(RelayApiProtocolWithClient, CbHotlist)
     /* get hotlist (empty) */
     test_client_recv_http ("GET /api/hotlist", NULL, NULL);
     WEE_CHECK_HTTP_CODE(200, "OK");
-    CHECK(json_body_sent);
-    CHECK(cJSON_IsArray (json_body_sent));
-    LONGS_EQUAL(0, cJSON_GetArraySize (json_body_sent));
+    CHECK(json_body_sent[0]);
+    CHECK(cJSON_IsArray (json_body_sent[0]));
+    LONGS_EQUAL(0, cJSON_GetArraySize (json_body_sent[0]));
 
     gui_hotlist_add (gui_buffers, GUI_HOTLIST_LOW, NULL, 0);
     gui_hotlist_add (gui_buffers, GUI_HOTLIST_MESSAGE, NULL, 0);
@@ -573,10 +566,10 @@ TEST(RelayApiProtocolWithClient, CbHotlist)
     /* get hotlist (one buffer) */
     test_client_recv_http ("GET /api/hotlist", NULL, NULL);
     WEE_CHECK_HTTP_CODE(200, "OK");
-    CHECK(json_body_sent);
-    CHECK(cJSON_IsArray (json_body_sent));
-    LONGS_EQUAL(1, cJSON_GetArraySize (json_body_sent));
-    json = cJSON_GetArrayItem (json_body_sent, 0);
+    CHECK(json_body_sent[0]);
+    CHECK(cJSON_IsArray (json_body_sent[0]));
+    LONGS_EQUAL(1, cJSON_GetArraySize (json_body_sent[0]));
+    json = cJSON_GetArrayItem (json_body_sent[0], 0);
     CHECK(json);
     CHECK(cJSON_IsObject (json));
     WEE_CHECK_OBJ_NUM(GUI_HOTLIST_HIGHLIGHT, json, "priority");
@@ -622,7 +615,7 @@ TEST(RelayApiProtocolWithClient, CbInput)
                  "Content-Type: application/json; charset=utf-8\r\n"
                  "Content-Length: 0\r\n"
                  "\r\n",
-                 data_sent);
+                 data_sent[0]);
 
     /* error: invalid buffer name */
     test_client_recv_http ("POST /api/input",
@@ -635,7 +628,7 @@ TEST(RelayApiProtocolWithClient, CbInput)
                  "Content-Length: 41\r\n"
                  "\r\n"
                  "{\"error\": \"Buffer \\\"invalid\\\" not found\"}",
-                 data_sent);
+                 data_sent[0]);
 
     /* on core buffer, without buffer name */
     record_start ();
@@ -693,12 +686,12 @@ TEST(RelayApiProtocolWithClient, CbPing)
                  "Content-Type: application/json; charset=utf-8\r\n"
                  "Content-Length: 0\r\n"
                  "\r\n",
-                 data_sent);
+                 data_sent[0]);
 
     /* ping with a body */
     test_client_recv_http ("POST /api/ping", NULL, "{\"data\": \"abcdef\"}");
     WEE_CHECK_HTTP_CODE(200, "OK");
-    json = json_body_sent;
+    json = json_body_sent[0];
     WEE_CHECK_OBJ_STR("abcdef", json, "data");
 }
 
@@ -717,7 +710,7 @@ TEST(RelayApiProtocolWithClient, CbSync)
                  "\r\n"
                  "{\"error\": \"Sync resource is available only with "
                  "a websocket connection\"}",
-                 data_sent);
+                 data_sent[0]);
 }
 
 /*
@@ -741,7 +734,7 @@ TEST(RelayApiProtocolWithClient, CbSyncWebsocket)
                  "Connection: Upgrade\r\n"
                  "Sec-WebSocket-Accept: Z5uTZwvwYNDm9w4HFGk26ijp/p0=\r\n"
                  "\r\n",
-                 data_sent);
+                 data_sent[0]);
 
     test_client_recv_text ("{\"request\": \"POST /api/sync\"}");
     WEE_CHECK_TEXT(204, "No Content", "POST /api/sync", "null");
@@ -785,6 +778,7 @@ TEST(RelayApiProtocolWithClient, CbSyncWebsocket)
 
 /*
  * Tests functions:
+ *   relay_api_protocol_recv_json_request
  *   relay_api_protocol_recv_json
  */
 
@@ -804,7 +798,7 @@ TEST(RelayApiProtocolWithClient, RecvJson)
                  "Connection: Upgrade\r\n"
                  "Sec-WebSocket-Accept: Z5uTZwvwYNDm9w4HFGk26ijp/p0=\r\n"
                  "\r\n",
-                 data_sent);
+                 data_sent[0]);
 
     /* error: empty string */
     test_client_recv_text ("");
@@ -833,6 +827,46 @@ TEST(RelayApiProtocolWithClient, RecvJson)
     /* error: invalid request (string, resource not found) */
     test_client_recv_text ("{\"request\": \"GET /api/unknown\", \"body\": {\"test\": 123}}");
     WEE_CHECK_TEXT(404, "Not Found", "GET /api/unknown", "{\"test\":123}");
+
+    /* ping */
+    test_client_recv_text ("{\"request\": \"POST /api/ping\", \"request_id\": \"ping\"}");
+    STRCMP_EQUAL("{\"code\":204,"
+                 "\"message\":\"No Content\","
+                 "\"request\":\"POST /api/ping\","
+                 "\"request_body\":null,"
+                 "\"request_id\":\"ping\","
+                 "\"body_type\":null,"
+                 "\"body\":null"
+                 "}",
+                 data_sent[0]);
+
+    /* 2 ping */
+    test_client_recv_text ("["
+                           "{\"request\": \"POST /api/ping\", "
+                           "\"request_id\": \"ping1\", "
+                           "\"body\": {\"data\": \"p1\"}}, "
+                           "{\"request\": \"POST /api/ping\", "
+                           "\"request_id\": \"ping2\", "
+                           "\"body\": {\"data\": \"p2\"}}"
+                           "]");
+    STRCMP_EQUAL("{\"code\":200,"
+                 "\"message\":\"OK\","
+                 "\"request\":\"POST /api/ping\","
+                 "\"request_body\":{\"data\":\"p1\"},"
+                 "\"request_id\":\"ping1\","
+                 "\"body_type\":\"ping\","
+                 "\"body\":{\"data\":\"p1\"}"
+                 "}",
+                 data_sent[0]);
+    STRCMP_EQUAL("{\"code\":200,"
+                 "\"message\":\"OK\","
+                 "\"request\":\"POST /api/ping\","
+                 "\"request_body\":{\"data\":\"p2\"},"
+                 "\"request_id\":\"ping2\","
+                 "\"body_type\":\"ping\","
+                 "\"body\":{\"data\":\"p2\"}"
+                 "}",
+                 data_sent[1]);
 }
 
 /*
@@ -849,7 +883,7 @@ TEST(RelayApiProtocolWithClient, RecvHttp404)
                  "Content-Type: application/json; charset=utf-8\r\n"
                  "Content-Length: 0\r\n"
                  "\r\n",
-                 data_sent);
+                 data_sent[0]);
 
     /* resource not found: error 404 */
     test_client_recv_http ("GET /unknown HTTP/1.1", NULL, NULL);
@@ -858,7 +892,7 @@ TEST(RelayApiProtocolWithClient, RecvHttp404)
                  "Content-Type: application/json; charset=utf-8\r\n"
                  "Content-Length: 0\r\n"
                  "\r\n",
-                 data_sent);
+                 data_sent[0]);
 
     /* resource not found: error 404 */
     test_client_recv_http ("GET /unknown/abc HTTP/1.1", NULL, NULL);
@@ -867,7 +901,7 @@ TEST(RelayApiProtocolWithClient, RecvHttp404)
                  "Content-Type: application/json; charset=utf-8\r\n"
                  "Content-Length: 0\r\n"
                  "\r\n",
-                 data_sent);
+                 data_sent[0]);
 
     /* resource not found: error 404 */
     test_client_recv_http ("GET /api HTTP/1.1", NULL, NULL);
@@ -876,7 +910,7 @@ TEST(RelayApiProtocolWithClient, RecvHttp404)
                  "Content-Type: application/json; charset=utf-8\r\n"
                  "Content-Length: 0\r\n"
                  "\r\n",
-                 data_sent);
+                 data_sent[0]);
 
     /* resource not found: error 404 */
     test_client_recv_http ("GET /api/unknown HTTP/1.1", NULL, NULL);
@@ -885,7 +919,7 @@ TEST(RelayApiProtocolWithClient, RecvHttp404)
                  "Content-Type: application/json; charset=utf-8\r\n"
                  "Content-Length: 0\r\n"
                  "\r\n",
-                 data_sent);
+                 data_sent[0]);
 }
 
 /*
@@ -904,7 +938,7 @@ TEST(RelayApiProtocolWithClient, RecvHttpMissingPassword)
                  "Content-Length: 29\r\n"
                  "\r\n"
                  "{\"error\": \"Missing password\"}",
-                 data_sent);
+                 data_sent[0]);
 }
 
 /*
@@ -924,5 +958,5 @@ TEST(RelayApiProtocolWithClient, RecvHttpInvalidPassword)
                  "Content-Length: 29\r\n"
                  "\r\n"
                  "{\"error\": \"Invalid password\"}",
-                 data_sent);
+                 data_sent[0]);
 }

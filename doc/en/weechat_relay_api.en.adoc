@@ -1389,6 +1389,10 @@ Requests to WeeChat are made with a JSON object containing these fields:
 * `body` (object or array): the body (optional, for `POST` and `PUT` methods)
 * `request_id` (string): identifier sent back in the response
 
+Multiple requests can be sent at once using an array of objects, each object
+being a separate request. +
+Requests are executed in the order received (see example below).
+
 Responses to client are made with a JSON object containing these fields:
 
 * `code` (integer): HTTP response code (example: `200`)
@@ -1471,6 +1475,69 @@ Response:
     "request_body": {
         "buffer_name": "irc.libera.#weechat",
         "command": "hello!"
+    },
+    "request_id": null,
+    "body_type": null,
+    "body": null
+}
+----
+
+Requests example: send two requests at once: get list of all buffers with lines
+and nicks, then synchronize with the remote:
+
+[source,json]
+----
+[
+    {
+        "request": "GET /api/buffers?lines=-1000&nicks=true&colors=weechat",
+        "request_id": "initial_sync"
+    },
+    {
+        "request": "POST /api/sync",
+        "body": {
+            "colors": "weechat"
+        }
+    }
+]
+----
+
+[NOTE]
+It is recommended to send the synchronization request together with the first
+request that is fetching data, so that no events are missed.
+
+First response (body with buffers is truncated for readability):
+
+[source,json]
+----
+{
+    "code": 200,
+    "message": "OK",
+    "request": "GET /api/buffers?lines=-1000&nicks=true&colors=weechat",
+    "request_body": null,
+    "request_id": "initial_sync",
+    "body_type": "buffers",
+    "body": [
+        {
+            "id": 1709932823238637,
+            "name": "core.weechat",
+            "short_name": "weechat",
+            "number": 1,
+            "type": "formatted"
+        }
+    ]
+}
+----
+
+Second response:
+
+[source,json]
+----
+{
+    "code": 204,
+    "message": "No Content",
+    "request": "POST /api/sync",
+    "request_body": {
+        "colors": "weechat"
     },
     "request_id": null,
     "body_type": null,
