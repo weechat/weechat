@@ -247,6 +247,16 @@ TEST(RelayRemoteEvent, ClearBuffers)
 
 /*
  * Tests functions:
+ *   relay_remote_event_sync_with_remote
+ */
+
+TEST(RelayRemoteEvent, SyncWithRemote)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
  *   relay_remote_event_cb_version
  */
 
@@ -271,16 +281,6 @@ TEST(RelayRemoteEvent, CbUpgrade)
  */
 
 TEST(RelayRemoteEvent, CbQuit)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
- *   relay_remote_event_sync_with_remote
- */
-
-TEST(RelayRemoteEvent, SyncWithRemote)
 {
     /* TODO: write tests */
 }

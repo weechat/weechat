@@ -1104,6 +1104,64 @@ relay_remote_event_clear_buffers (struct t_relay_remote *remote)
 }
 
 /*
+ * Synchronizes with remote by sending two requests:
+ *   - "GET /api/buffers": fetch buffers data
+ *   - "POST /api/sync": synchronize with remote to receive events
+ */
+
+void
+relay_remote_event_sync_with_remote (struct t_relay_remote *remote)
+{
+    cJSON *json, *json_req1, *json_req2, *json_body;
+    char url[1024];
+
+    if (!remote)
+        return;
+
+    json = cJSON_CreateArray ();
+    if (!json)
+        goto end;
+
+    /* first request: GET /api/buffers */
+    json_req1 = cJSON_CreateObject ();
+    if (json_req1)
+    {
+        snprintf (url, sizeof (url),
+                  "GET /api/buffers?lines=-%d&nicks=true&colors=weechat",
+                  weechat_config_integer (relay_config_api_remote_get_lines));
+        cJSON_AddItemToObject (json_req1, "request", cJSON_CreateString (url));
+        cJSON_AddItemToObject (
+            json_req1,
+            "request_id",
+            cJSON_CreateString (RELAY_REMOTE_EVENT_ID_INITIAL_SYNC));
+        cJSON_AddItemToArray (json, json_req1);
+    }
+
+    /* second request: POST /api/sync */
+    json_req2 = cJSON_CreateObject ();
+    if (json_req2)
+    {
+        cJSON_AddItemToObject (json_req2, "request",
+                               cJSON_CreateString ("POST /api/sync"));
+        json_body = cJSON_CreateObject ();
+        if (!json_body)
+        {
+            cJSON_Delete (json_req2);
+            goto end;
+        }
+        cJSON_AddItemToObject (json_body, "colors",
+                               cJSON_CreateString ("weechat"));
+        cJSON_AddItemToObject (json_req2, "body", json_body);
+        cJSON_AddItemToArray (json, json_req2);
+    }
+
+    relay_remote_network_send_json (remote, json);
+
+end:
+    cJSON_Delete (json);
+}
+
+/*
  * Callback for response to GET /api/version.
  */
 
@@ -1111,7 +1169,7 @@ RELAY_REMOTE_EVENT_CALLBACK(version)
 {
     cJSON *json_obj;
     const char *weechat_version, *weechat_version_git, *relay_api_version;
-    char *weechat_version_local, request[1024];
+    char *weechat_version_local;
 
     if (!event || !event->json)
         return WEECHAT_RC_OK;
@@ -1148,18 +1206,9 @@ RELAY_REMOTE_EVENT_CALLBACK(version)
                 relay_remote_network_disconnect (event->remote);
                 return WEECHAT_RC_OK;
         }
-        relay_remote_event_clear_buffers (event->remote);
         event->remote->version_ok = 1;
-        snprintf (
-            request, sizeof (request),
-            "{"
-            "\"request\": "
-            "\"GET /api/buffers?lines=-%d&nicks=true&colors=weechat\", "
-            "\"request_id\": \"" RELAY_REMOTE_EVENT_ID_INITIAL_SYNC "\""
-            "}",
-            weechat_config_integer (relay_config_api_remote_get_lines));
-        relay_remote_network_send (event->remote, RELAY_MSG_STANDARD,
-                                   request, strlen (request));
+        relay_remote_event_clear_buffers (event->remote);
+        relay_remote_event_sync_with_remote (event->remote);
     }
 
     return WEECHAT_RC_OK;
@@ -1192,42 +1241,6 @@ RELAY_REMOTE_EVENT_CALLBACK(quit)
 }
 
 /*
- * Synchronizes with remote.
- */
-
-void
-relay_remote_event_sync_with_remote (struct t_relay_remote *remote)
-{
-    cJSON *json, *json_body;
-
-    if (!remote)
-        return;
-
-    json = cJSON_CreateObject ();
-    if (!json)
-        goto end;
-
-    cJSON_AddItemToObject (json, "request",
-                           cJSON_CreateString ("POST /api/sync"));
-    json_body = cJSON_CreateObject ();
-    if (!json_body)
-        goto end;
-
-    cJSON_AddItemToObject (json_body, "colors",
-                           cJSON_CreateString ("weechat"));
-    cJSON_AddItemToObject (json, "body", json_body);
-
-    relay_remote_network_send_json (remote, json);
-
-    remote->synced = 1;
-
-    weechat_bar_item_update ("input_prompt");
-
-end:
-    cJSON_Delete (json);
-}
-
-/*
  * Reads an event from a remote.
  */
 
@@ -1237,7 +1250,7 @@ relay_remote_event_recv (struct t_relay_remote *remote, const char *data)
     cJSON *json, *json_body, *json_obj;
     const char *body_type, *event_name, *request_id;
     long long buffer_id;
-    int i, rc, code;
+    int i, rc, code, initial_sync;
     struct t_relay_remote_event_cb event_cb[] = {
         /* event (mask), callback (NULL = event ignored) */
         /* note: order is important */
@@ -1315,15 +1328,15 @@ relay_remote_event_recv (struct t_relay_remote *remote, const char *data)
         }
     }
 
+    initial_sync = (weechat_strcmp (request_id,
+                                    RELAY_REMOTE_EVENT_ID_INITIAL_SYNC) == 0) ?
+        1 : 0;
+
     if (callback)
     {
         event.json = json_body;
-        if ((weechat_strcmp (body_type, "buffers") == 0)
-            && (weechat_strcmp (request_id,
-                                RELAY_REMOTE_EVENT_ID_INITIAL_SYNC) == 0))
-        {
+        if ((weechat_strcmp (body_type, "buffers") == 0) && initial_sync)
             relay_remote_event_initial_sync_buffers (&event);
-        }
         rc = WEECHAT_RC_OK;
         if (cJSON_IsArray (json_body))
         {
@@ -1341,12 +1354,10 @@ relay_remote_event_recv (struct t_relay_remote *remote, const char *data)
             goto error_cb;
     }
 
-    if (!remote->synced
-        && (code == 200)
-        && ((weechat_strcmp (body_type, "buffers") == 0)
-            || (weechat_strcmp (body_type, "buffer") == 0)))
+    if (!remote->synced && initial_sync)
     {
-        relay_remote_event_sync_with_remote (remote);
+        remote->synced = 1;
+        weechat_bar_item_update ("input_prompt");
     }
 
     return;
