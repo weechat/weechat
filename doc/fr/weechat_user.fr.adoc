@@ -4888,7 +4888,7 @@ JavaScript :
 
 [source,javascript]
 ----
-websocket = new WebSocket("ws://server.com:9500/weechat");
+websocket = new WebSocket("ws://example.com:9500/weechat");
 ----
 
 Le port (9500 dans l'exemple) est le port défini dans l'extension Relay.

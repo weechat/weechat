@@ -4788,7 +4788,7 @@ WebSocket może zostać otworzony w HTML5 za pomocą jednej linii w JavaScript:
 
 [source,javascript]
 ----
-websocket = new WebSocket("ws://server.com:9500/weechat");
+websocket = new WebSocket("ws://example.com:9500/weechat");
 ----
 
 Port (9500 w przykładzie) to port zdefiniowany we wtyczce relay.

@@ -4513,7 +4513,7 @@ https://weechat.org/about/interfaces/[ову страницу ^↗^^].
 
 [source,javascript]
 ----
-websocket = new WebSocket("ws://server.com:9500/weechat");
+websocket = new WebSocket("ws://example.com:9500/weechat");
 ----
 
 Порт (9500 у примеру) је порт који је дефинисан у Релеј додатку.
