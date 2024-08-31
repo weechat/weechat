@@ -680,7 +680,7 @@ printf '\033[?1002l'
 Можете да покушате са другачијим стрингом приоритета, замените „xxx” са именом вашег сервера:
 
 ----
-/set irc.server.xxx.tls_priorities "NORMAL:-VERS-TLS-ALL:+VERS-TLS1.0:+VERS-SSL3.0:%COMPAT"
+/set irc.server.xxx.tls_priorities "NORMAL:%COMPAT"
 ----
 
 [[irc_tls_libera]]
