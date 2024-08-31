@@ -4836,6 +4836,14 @@ Pour vous connecter à un relai _api_ avec WeeChat :
 /remote connect weechat
 ----
 
+Pour vous connecter à un relai _api_ tournant ailleurs avec WeeChat
+(TLS est fortement recommandé) :
+
+----
+/remote add weechat https://example.com:9000 -password=mypassword
+/remote connect weechat
+----
+
 [NOTE]
 Le WeeChat distant doit exposer exactement la même version d'API que le WeeChat
 local, il est donc fortement recommandé d'utiliser exactement la même version

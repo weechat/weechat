@@ -4460,10 +4460,20 @@ https://weechat.org/about/interfaces/[ову страницу ^↗^^].
 Сада са WeeChat или са удаљеним интерфејсом можете да се повежете портом 9000 користећи
 лозинку „mypassword”.
 
-Ако желите да се повежете на _api_ рејел са WeeChat:
+// TRANSLATION MISSING
+To connect to an _api_ relay running locally with WeeChat:
 
 ----
 /remote add weechat http://localhost:9000 -password=mypassword
+/remote connect weechat
+----
+
+// TRANSLATION MISSING
+To connect to an _api_ relay running elsewhere with WeeChat
+(TLS is highly recommended):
+
+----
+/remote add weechat https://example.com:9000 -password=mypassword
 /remote connect weechat
 ----
 

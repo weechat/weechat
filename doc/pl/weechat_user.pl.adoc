@@ -4730,10 +4730,20 @@ używając hasła
 Now you can connect on port 9000 with a WeeChat or a remote interface using
 password "moje_hasło".
 
-Łączenie się z pośrednikiem _api_ z WeeChat:
+// TRANSLATION MISSING
+To connect to an _api_ relay running locally with WeeChat:
 
 ----
 /remote add weechat http://localhost:9000 -password=mypassword
+/remote connect weechat
+----
+
+// TRANSLATION MISSING
+To connect to an _api_ relay running elsewhere with WeeChat
+(TLS is highly recommended):
+
+----
+/remote add weechat https://example.com:9000 -password=mypassword
 /remote connect weechat
 ----
 

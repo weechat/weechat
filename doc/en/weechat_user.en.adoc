@@ -4690,10 +4690,18 @@ For example:
 Now you can connect on port 9000 with a WeeChat or a remote interface using
 password "mypassword".
 
-To connect to an _api_ relay with WeeChat:
+To connect to an _api_ relay running locally with WeeChat:
 
 ----
 /remote add weechat http://localhost:9000 -password=mypassword
+/remote connect weechat
+----
+
+To connect to an _api_ relay running elsewhere with WeeChat
+(TLS is highly recommended):
+
+----
+/remote add weechat https://example.com:9000 -password=mypassword
 /remote connect weechat
 ----
 
