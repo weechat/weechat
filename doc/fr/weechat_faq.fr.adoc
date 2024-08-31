@@ -785,7 +785,7 @@ Vous pouvez essayer une chaîne de priorité différente, remplacez "xxx" par
 le nom de votre serveur :
 
 ----
-/set irc.server.xxx.tls_priorities "NORMAL:-VERS-TLS-ALL:+VERS-TLS1.0:+VERS-SSL3.0:%COMPAT"
+/set irc.server.xxx.tls_priorities "NORMAL:%COMPAT"
 ----
 
 [[irc_tls_libera]]

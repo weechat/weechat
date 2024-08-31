@@ -832,7 +832,7 @@ should be, you can specify the fingerprint (SHA-512, SHA-256 or SHA-1):
 Provare una stringa di priorità diversa, sostituendo "xxx" con il nome del server:
 
 ----
-/set irc.server.xxx.tls_priorities "NORMAL:-VERS-TLS-ALL:+VERS-TLS1.0:+VERS-SSL3.0:%COMPAT"
+/set irc.server.xxx.tls_priorities "NORMAL:%COMPAT"
 ----
 
 [[irc_tls_libera]]
