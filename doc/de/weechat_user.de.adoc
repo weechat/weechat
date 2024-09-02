@@ -4773,17 +4773,15 @@ Zum Beispiel:
 Jetzt kann man sich über Port 9000 mit einem WeeChat oder einer Remote-Schnittstelle
 verbinden, indem das Passwort „mypassword“ verwendet wird.
 
-// TRANSLATION MISSING
-To connect to an _api_ relay running locally with WeeChat:
+Um eine lokale Verbindung via _api_ Relay mittels WeeChat herzustelen:
 
 ----
 /remote add weechat http://localhost:9000 -password=mypassword
 /remote connect weechat
 ----
 
-// TRANSLATION MISSING
-To connect to an _api_ relay running elsewhere with WeeChat
-(TLS is highly recommended):
+Um eine entfernte Verbindung via _api_Relay mittels WeeChat herzustelen
+(TLS wird dringend empfohlen):
 
 ----
 /remote add weechat https://example.com:9000 -password=mypassword
