@@ -32,6 +32,26 @@ TEST_GROUP(IrcConfig)
 
 /*
  * Tests functions:
+ *   irc_config_notice_nick_notify
+ */
+
+TEST(IrcConfig, NoticeNickNotify)
+{
+    LONGS_EQUAL(0, irc_config_notice_nick_notify (NULL));
+    LONGS_EQUAL(1, irc_config_notice_nick_notify (""));
+
+    LONGS_EQUAL(1, irc_config_notice_nick_notify ("test"));
+    LONGS_EQUAL(1, irc_config_notice_nick_notify ("memoserv"));
+
+    /* default list of nicks preventing notification */
+    LONGS_EQUAL(0, irc_config_notice_nick_notify ("chanserv"));
+    LONGS_EQUAL(0, irc_config_notice_nick_notify ("ChanServ"));
+    LONGS_EQUAL(0, irc_config_notice_nick_notify ("nickserv"));
+    LONGS_EQUAL(0, irc_config_notice_nick_notify ("NickServ"));
+}
+
+/*
+ * Tests functions:
  *   irc_config_check_autojoin
  */
 

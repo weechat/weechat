@@ -110,6 +110,7 @@ struct t_config_option *irc_config_look_nicks_hide_password = NULL;
 struct t_config_option *irc_config_look_notice_as_pv = NULL;
 struct t_config_option *irc_config_look_notice_welcome_redirect = NULL;
 struct t_config_option *irc_config_look_notice_welcome_tags = NULL;
+struct t_config_option *irc_config_look_notice_nicks_disable_notify = NULL;
 struct t_config_option *irc_config_look_notify_tags_ison = NULL;
 struct t_config_option *irc_config_look_notify_tags_whois = NULL;
 struct t_config_option *irc_config_look_open_pv_buffer_echo_msg = NULL;
@@ -642,6 +643,56 @@ irc_config_change_look_nicks_hide_password (const void *pointer, void *data,
             0,
             &irc_config_num_nicks_hide_password);
     }
+}
+
+/*
+ * Checks if we must notify for the notice message, according to the nick
+ * who sent it.
+ *
+ * Returns:
+ *   1: notification
+ *   0: no notification
+ */
+
+int
+irc_config_notice_nick_notify (const char *nick)
+{
+    const char *ptr_nicks;
+    char **nicks;
+    int rc, i, num_nicks;
+
+    if (!nick)
+        return 0;
+
+    ptr_nicks = weechat_config_string (irc_config_look_notice_nicks_disable_notify);
+    if (!ptr_nicks || !ptr_nicks[0])
+        return 1;
+
+    rc = 1;
+
+    nicks = weechat_string_split (
+        ptr_nicks,
+        ",",
+        NULL,
+        WEECHAT_STRING_SPLIT_STRIP_LEFT
+        | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+        | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+        0,
+        &num_nicks);
+    if (nicks)
+    {
+        for (i = 0; i < num_nicks; i++)
+        {
+            if (weechat_strcasecmp (nicks[i], nick) == 0)
+            {
+                rc = 0;
+                break;
+            }
+        }
+        weechat_string_free_split (nicks);
+    }
+
+    return rc;
 }
 
 /*
@@ -3584,6 +3635,15 @@ irc_config_init ()
                "buffer if found)"),
             "auto|never|always", 0, 0, "auto", NULL, 0,
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        irc_config_look_notice_nicks_disable_notify = weechat_config_new_option (
+            irc_config_file, irc_config_section_look,
+            "notice_nicks_disable_notify", "string",
+            N_("comma separated list of nicks for which notifications are "
+               "disabled in notice messages (comparison is case insensitive)"),
+            NULL, 0, 0, "chanserv,nickserv", NULL, 0,
+            NULL, NULL, NULL,
+            NULL, NULL, NULL,
+            NULL, NULL, NULL);
         irc_config_look_notice_welcome_redirect = weechat_config_new_option (
             irc_config_file, irc_config_section_look,
             "notice_welcome_redirect", "boolean",
