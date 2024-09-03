@@ -2684,12 +2684,12 @@ string_split_shell (const char *string, int *num_items)
 void
 string_free_split (char **split_string)
 {
-    int i;
+    char **ptr;
 
     if (split_string)
     {
-        for (i = 0; split_string[i]; i++)
-            free (split_string[i]);
+        for (ptr = split_string; *ptr; ptr++)
+            free (*ptr);
         free (split_string);
     }
 }
@@ -2701,12 +2701,12 @@ string_free_split (char **split_string)
 void
 string_free_split_shared (char **split_string)
 {
-    int i;
+    char **ptr;
 
     if (split_string)
     {
-        for (i = 0; split_string[i]; i++)
-            string_shared_free (split_string[i]);
+        for (ptr = split_string; *ptr; ptr++)
+            string_shared_free (*ptr);
         free (split_string);
     }
 }
@@ -2869,12 +2869,12 @@ string_split_command (const char *command, char separator)
 void
 string_free_split_command (char **split_command)
 {
-    int i;
+    char **ptr;
 
     if (split_command)
     {
-        for (i = 0; split_command[i]; i++)
-            free (split_command[i]);
+        for (ptr = split_command; *ptr; ptr++)
+            free (*ptr);
         free (split_command);
     }
 }
@@ -2939,14 +2939,12 @@ string_split_tags (const char *tags, int *num_tags)
 void
 string_free_split_tags (char ***split_tags)
 {
-    int i;
+    char ***ptr;
 
     if (split_tags)
     {
-        for (i = 0; split_tags[i]; i++)
-        {
-            string_free_split_shared (split_tags[i]);
-        }
+        for (ptr = split_tags; *ptr; ptr++)
+            string_free_split_shared (*ptr);
         free (split_tags);
     }
 }
