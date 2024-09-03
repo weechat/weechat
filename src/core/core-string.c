@@ -2849,12 +2849,10 @@ string_split_shell (const char *string, int *num_items)
 void
 string_free_split (char **split_string)
 {
-    int i;
-
     if (split_string)
     {
-        for (i = 0; split_string[i]; i++)
-            free (split_string[i]);
+        for (char **ptr=split_string; *ptr != NULL; ++ptr)
+            free (*ptr);
         free (split_string);
     }
 }
@@ -2866,12 +2864,11 @@ string_free_split (char **split_string)
 void
 string_free_split_shared (char **split_string)
 {
-    int i;
 
     if (split_string)
     {
-        for (i = 0; split_string[i]; i++)
-            string_shared_free (split_string[i]);
+        for (char **ptr = split_string; *ptr != NULL; ++ptr)
+            string_shared_free (*ptr);
         free (split_string);
     }
 }
@@ -3037,8 +3034,8 @@ string_free_split_command (char **split_command)
 
     if (split_command)
     {
-        for (i = 0; split_command[i]; i++)
-            free (split_command[i]);
+        for (char **ptr = split_command; *ptr != NULL; ++ptr)
+            free (*ptr);
         free (split_command);
     }
 }
@@ -3106,9 +3103,8 @@ string_free_split_tags (char ***split_tags)
 
     if (split_tags)
     {
-        for (i = 0; split_tags[i]; i++)
-        {
-            string_free_split_shared (split_tags[i]);
+        for (char **ptr = split_tags; *ptr != NULL; ++ptr){
+            string_free_split_shared (*ptr);
         }
         free (split_tags);
     }
