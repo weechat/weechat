@@ -813,8 +813,9 @@ int
 gui_line_match_tags (struct t_gui_line_data *line_data,
                      int tags_count, char ***tags_array)
 {
-    int i, j, k, match, tag_found, tag_negated;
+    int i, j, match, tag_found, tag_negated;
     const char *ptr_tag;
+    char **ptr;
 
     if (!line_data)
         return 0;
@@ -822,9 +823,9 @@ gui_line_match_tags (struct t_gui_line_data *line_data,
     for (i = 0; i < tags_count; i++)
     {
         match = 1;
-        for (j = 0; tags_array[i][j]; j++)
+        for (ptr = tags_array[i]; *ptr; ptr++)
         {
-            ptr_tag = tags_array[i][j];
+            ptr_tag = *ptr;
             tag_found = 0;
             tag_negated = 0;
 
@@ -841,9 +842,9 @@ gui_line_match_tags (struct t_gui_line_data *line_data,
             }
             else
             {
-                for (k = 0; k < line_data->tags_count; k++)
+                for (j = 0; j < line_data->tags_count; j++)
                 {
-                    if (string_match (line_data->tags_array[k], ptr_tag, 0))
+                    if (string_match (line_data->tags_array[j], ptr_tag, 0))
                     {
                         tag_found = 1;
                         break;

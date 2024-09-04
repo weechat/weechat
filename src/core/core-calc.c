@@ -334,8 +334,9 @@ char *
 calc_expression (const char *expr)
 {
     struct t_arraylist *list_values, *list_ops;
+    const char *ptr_expr, *ptr_expr2;
     char str_result[64], *ptr_operator, *operator;
-    int i, i2, index_op, decimals;
+    int index_op, decimals;
     enum t_calc_symbol last_symbol;
     double value, factor, *ptr_value;
 
@@ -363,21 +364,21 @@ calc_expression (const char *expr)
         goto end;
 
     last_symbol = CALC_SYMBOL_NONE;
-    for (i = 0; expr[i]; i++)
+    for (ptr_expr = expr; ptr_expr[0]; ptr_expr++)
     {
-        if (expr[i] == ' ')
+        if (ptr_expr[0] == ' ')
         {
             /* ignore spaces */
             continue;
         }
-        else if (expr[i] == '(')
+        else if (ptr_expr[0] == '(')
         {
-            ptr_operator = string_strndup (expr + i, 1);
+            ptr_operator = string_strndup (ptr_expr, 1);
             arraylist_add (list_ops, ptr_operator);
             last_symbol = CALC_SYMBOL_PARENTHESIS_OPEN;
         }
-        else if (isdigit ((unsigned char)expr[i]) || (expr[i] == '.')
-                 || ((expr[i] == '-')
+        else if (isdigit ((unsigned char)ptr_expr[0]) || (ptr_expr[0] == '.')
+                 || ((ptr_expr[0] == '-')
                      && ((last_symbol == CALC_SYMBOL_NONE)
                          || (last_symbol == CALC_SYMBOL_PARENTHESIS_OPEN)
                          || (last_symbol == CALC_SYMBOL_OPERATOR))))
@@ -385,15 +386,15 @@ calc_expression (const char *expr)
             value = 0;
             decimals = 0;
             factor = 1;
-            if (expr[i] == '-')
+            if (ptr_expr[0] == '-')
             {
                 factor = -1;
-                i++;
+                ptr_expr++;
             }
-            while (expr[i]
-                   && (isdigit ((unsigned char)expr[i]) || (expr[i] == '.')))
+            while (ptr_expr[0]
+                   && (isdigit ((unsigned char)ptr_expr[0]) || (ptr_expr[0] == '.')))
             {
-                if (expr[i] == '.')
+                if (ptr_expr[0] == '.')
                 {
                     if (decimals == 0)
                         decimals = 10;
@@ -402,24 +403,24 @@ calc_expression (const char *expr)
                 {
                     if (decimals)
                     {
-                        value = value + (((double)(expr[i] - '0')) / decimals);
+                        value = value + (((double)(ptr_expr[0] - '0')) / decimals);
                         decimals *= 10;
                     }
                     else
                     {
-                        value = (value * 10) + (expr[i] - '0');
+                        value = (value * 10) + (ptr_expr[0] - '0');
                     }
                 }
-                i++;
+                ptr_expr++;
             }
-            i--;
+            ptr_expr--;
             value *= factor;
             ptr_value = malloc (sizeof (value));
             *ptr_value = value;
             arraylist_add (list_values, ptr_value);
             last_symbol = CALC_SYMBOL_VALUE;
         }
-        else if (expr[i] == ')')
+        else if (ptr_expr[0] == ')')
         {
             index_op = arraylist_size (list_ops) - 1;
             while (index_op >= 0)
@@ -439,15 +440,15 @@ calc_expression (const char *expr)
         else
         {
             /* operator */
-            i2 = i + 1;
-            while (expr[i2] && (expr[i2] != ' ') && (expr[i2] != '(')
-                   && (expr[i2] != ')') && (expr[i2] != '.')
-                   && (expr[i2] != '-') && !isdigit ((unsigned char)expr[i2]))
+            ptr_expr2 = ptr_expr + 1;
+            while (ptr_expr2[0] && (ptr_expr2[0] != ' ') && (ptr_expr2[0] != '(')
+                   && (ptr_expr2[0] != ')') && (ptr_expr2[0] != '.')
+                   && (ptr_expr2[0] != '-') && !isdigit ((unsigned char)ptr_expr2[0]))
             {
-                i2++;
+                ptr_expr2++;
             }
-            operator = string_strndup (expr + i, i2 - i);
-            i = i2 - 1;
+            operator = string_strndup (ptr_expr, ptr_expr2 - ptr_expr);
+            ptr_expr = ptr_expr2 - 1;
             if (operator)
             {
                 index_op = arraylist_size (list_ops) - 1;

@@ -2041,8 +2041,8 @@ gui_key_focus_command (const char *key, int context,
                        struct t_hashtable **hashtable_focus)
 {
     struct t_gui_key *ptr_key;
-    int i, matching, debug, rc;
-    char *command, **commands;
+    int matching, debug, rc;
+    char *command, **commands, **ptr_command;
     const char *str_buffer;
     struct t_hashtable *hashtable;
     struct t_gui_buffer *ptr_buffer;
@@ -2123,25 +2123,25 @@ gui_key_focus_command (const char *key, int context,
             commands = string_split_command (ptr_key->command, ';');
             if (commands)
             {
-                for (i = 0; commands[i]; i++)
+                for (ptr_command = commands; *ptr_command; ptr_command++)
                 {
-                    if (string_strncasecmp (commands[i], "hsignal:", 8) == 0)
+                    if (string_strncasecmp (*ptr_command, "hsignal:", 8) == 0)
                     {
-                        if (commands[i][8])
+                        if ((*ptr_command)[8])
                         {
                             if (debug)
                             {
                                 gui_chat_printf (NULL,
                                                  _("Sending hsignal: \"%s\""),
-                                                 commands[i] + 8);
+                                                 *ptr_command + 8);
                             }
-                            (void) hook_hsignal_send (commands[i] + 8,
+                            (void) hook_hsignal_send (*ptr_command + 8,
                                                       hashtable);
                         }
                     }
                     else
                     {
-                        command = eval_expression (commands[i], NULL,
+                        command = eval_expression (*ptr_command, NULL,
                                                    hashtable, NULL);
                         if (command)
                         {
@@ -2340,11 +2340,11 @@ gui_key_debug_print_key (const char *combo, const char *key_name,
 int
 gui_key_pressed (const char *key_str)
 {
-    int i, insert_into_input, context, length, length_key, signal_sent;
+    int insert_into_input, context, length, length_key, signal_sent;
     int rc, rc_expand, exact_match, chunks1_count, chunks2_count, event_size;
     int buffer_key;
     struct t_gui_key *ptr_key;
-    char saved_char, signal_name[128], **commands;
+    char saved_char, signal_name[128], **commands, **ptr_command;
     char *key_name, *key_name_alias, **chunks1, **chunks2;
 
     signal_sent = 0;
@@ -2524,11 +2524,11 @@ gui_key_pressed (const char *key_str)
                     commands = string_split_command (ptr_key->command, ';');
                     if (commands)
                     {
-                        for (i = 0; commands[i]; i++)
+                        for (ptr_command = commands; *ptr_command; ptr_command++)
                         {
                             (void) input_data (
                                 gui_current_window->buffer,
-                                commands[i],
+                                *ptr_command,
                                 NULL,
                                 0,
                                 (buffer_key) ? 1 : 0);

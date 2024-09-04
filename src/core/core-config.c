@@ -976,8 +976,7 @@ void
 config_change_emphasized_attributes (const void *pointer, void *data,
                                      struct t_config_option *option)
 {
-    int i;
-    const char *ptr_attr;
+    const char *ptr_attributes, *ptr_attr;
 
     /* make C compiler happy */
     (void) pointer;
@@ -986,12 +985,12 @@ config_change_emphasized_attributes (const void *pointer, void *data,
 
     config_emphasized_attributes = 0;
 
-    ptr_attr = CONFIG_STRING(config_look_emphasized_attributes);
-    if (ptr_attr)
+    ptr_attributes = CONFIG_STRING(config_look_emphasized_attributes);
+    if (ptr_attributes)
     {
-        for (i = 0; ptr_attr[i]; i++)
+        for (ptr_attr = ptr_attributes; *ptr_attr; ptr_attr++)
         {
-            config_emphasized_attributes |= gui_color_attr_get_flag (ptr_attr[i]);
+            config_emphasized_attributes |= gui_color_attr_get_flag (*ptr_attr);
         }
     }
 
