@@ -506,8 +506,8 @@ char *
 eval_string_split (const char *text)
 {
     char *pos, *pos2, *pos3, *str_number, *separators, **items, *value, *error;
-    char str_value[32], *str_flags, **list_flags, *strip_items;
-    int i, num_items, count_items, random_item, flags;
+    char str_value[32], *str_flags, **list_flags, *strip_items, **ptr_flag;
+    int num_items, count_items, random_item, flags;
     long number, max_items;
 
     str_number = NULL;
@@ -563,25 +563,25 @@ eval_string_split (const char *text)
     list_flags = string_split (str_flags, "+", NULL, 0, 0, NULL);
     if (list_flags)
     {
-        for (i = 0; list_flags[i]; i++)
+        for (ptr_flag = list_flags; *ptr_flag; ptr_flag++)
         {
-            if (strcmp (list_flags[i], "strip_left") == 0)
+            if (strcmp (*ptr_flag, "strip_left") == 0)
                 flags |= WEECHAT_STRING_SPLIT_STRIP_LEFT;
-            else if (strcmp (list_flags[i], "strip_right") == 0)
+            else if (strcmp (*ptr_flag, "strip_right") == 0)
                 flags |= WEECHAT_STRING_SPLIT_STRIP_RIGHT;
-            else if (strcmp (list_flags[i], "collapse_seps") == 0)
+            else if (strcmp (*ptr_flag, "collapse_seps") == 0)
                 flags |= WEECHAT_STRING_SPLIT_COLLAPSE_SEPS;
-            else if (strcmp (list_flags[i], "keep_eol") == 0)
+            else if (strcmp (*ptr_flag, "keep_eol") == 0)
                 flags |= WEECHAT_STRING_SPLIT_KEEP_EOL;
-            else if (strncmp (list_flags[i], "strip_items=", 12) == 0)
+            else if (strncmp (*ptr_flag, "strip_items=", 12) == 0)
             {
                 if (strip_items)
                     free (strip_items);
-                strip_items = strdup (list_flags[i] + 12);
+                strip_items = strdup (*ptr_flag + 12);
             }
-            else if (strncmp (list_flags[i], "max_items=", 10) == 0)
+            else if (strncmp (*ptr_flag, "max_items=", 10) == 0)
             {
-                max_items = strtol (list_flags[i] + 10, &error, 10);
+                max_items = strtol (*ptr_flag + 10, &error, 10);
                 if (!error || error[0] || (max_items < 0))
                     goto end;
             }

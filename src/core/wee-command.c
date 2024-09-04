@@ -2147,7 +2147,7 @@ command_eval_print_debug (const char *debug)
 COMMAND_CALLBACK(eval)
 {
     int i, print_only, split_command, condition, debug, error;
-    char *result, *ptr_args, **commands, str_debug[32];
+    char *result, *ptr_args, **commands, **ptr_command, str_debug[32];
     const char *debug_output;
     struct t_hashtable *pointers, *options;
 
@@ -2264,9 +2264,9 @@ COMMAND_CALLBACK(eval)
                 commands = string_split_command (ptr_args, ';');
                 if (commands)
                 {
-                    for (i = 0; commands[i]; i++)
+                    for (ptr_command = commands; *ptr_command; ptr_command++)
                     {
-                        result = eval_expression (commands[i], pointers, NULL,
+                        result = eval_expression (*ptr_command, pointers, NULL,
                                                   options);
                         if (result)
                         {
@@ -6253,7 +6253,7 @@ command_set_display_option_lists (char **argv, int arg_start, int arg_end,
 
 COMMAND_CALLBACK(set)
 {
-    char *value;
+    char *value, **ptr_environ;
     const char *ptr_string;
     int i, number_found, rc, display_only_changed, arg_option_start;
     int arg_option_end, list_size;
@@ -6275,9 +6275,9 @@ COMMAND_CALLBACK(set)
             list = weelist_new ();
             if (!list)
                 COMMAND_ERROR;
-            for (i = 0; environ[i]; i++)
+            for (ptr_environ = environ; *ptr_environ; ptr_environ++)
             {
-                weelist_add (list, environ[i], WEECHAT_LIST_POS_SORT, NULL);
+                weelist_add (list, *ptr_environ, WEECHAT_LIST_POS_SORT, NULL);
             }
             list_size = weelist_size (list);
             for (i = 0; i < list_size; i++)

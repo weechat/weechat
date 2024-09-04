@@ -929,20 +929,20 @@ string_match (const char *string, const char *mask, int case_sensitive)
 int
 string_match_list (const char *string, const char **masks, int case_sensitive)
 {
-    int match, i;
-    const char *ptr_mask;
+    int match;
+    const char **ptr_mask, *ptr_mask2;
 
     if (!string || !masks)
         return 0;
 
     match = 0;
 
-    for (i = 0; masks[i]; i++)
+    for (ptr_mask = masks; *ptr_mask; ptr_mask++)
     {
-        ptr_mask = (masks[i][0] == '!') ? masks[i] + 1 : masks[i];
-        if (string_match (string, ptr_mask, case_sensitive))
+        ptr_mask2 = ((*ptr_mask)[0] == '!') ? *ptr_mask + 1 : *ptr_mask;
+        if (string_match (string, ptr_mask2, case_sensitive))
         {
-            if (masks[i][0] == '!')
+            if ((*ptr_mask)[0] == '!')
                 return 0;
             else
                 match = 1;
@@ -2726,8 +2726,9 @@ string_rebuild_split_string (const char **split_string,
                              const char *separator,
                              int index_start, int index_end)
 {
-    int i, length, length_separator;
-    char *result;
+    const char **ptr_string;
+    char **result;
+    int i;
 
     if (!split_string || (index_start < 0)
         || ((index_end >= 0) && (index_end < index_start)))
@@ -2735,39 +2736,23 @@ string_rebuild_split_string (const char **split_string,
         return NULL;
     }
 
-    length = 0;
-    length_separator = (separator) ? strlen (separator) : 0;
+    result = string_dyn_alloc (256);
 
-    for (i = 0; split_string[i]; i++)
+    for (ptr_string = split_string, i = 0; *ptr_string; ptr_string++, i++)
     {
         if ((index_end >= 0) && (i > index_end))
             break;
         if (i >= index_start)
-            length += strlen (split_string[i]) + length_separator;
-    }
-
-    if (length == 0)
-        return strdup ("");
-
-    result = malloc (length + 1);
-    if (!result)
-        return NULL;
-
-    result[0] = '\0';
-
-    for (i = index_start; split_string[i]; i++)
-    {
-        if ((index_end >= 0) && (i > index_end))
-            break;
-        strcat (result, split_string[i]);
-        if (separator && ((index_end < 0) || (i + 1 <= index_end))
-            && split_string[i + 1])
         {
-            strcat (result, separator);
+            if (i > index_start)
+                string_dyn_concat (result, separator, -1);
+            string_dyn_concat (result, *ptr_string, -1);
         }
+        if (i == INT_MAX)
+            break;
     }
 
-    return result;
+    return string_dyn_free (result, 0);
 }
 
 /*

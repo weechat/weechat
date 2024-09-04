@@ -705,7 +705,7 @@ gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window,
     char **content, str_reinit_color[32];
     char str_reinit_color_space[32], str_reinit_color_space_start_line[32];
     char str_start_item[32];
-    char *item_value, *item_value2, ****split_items, **linear_items;
+    char *item_value, *item_value2, ****split_items, **linear_items, **ptr_item;
     int i, j, k, sub, index;
     int at_least_one_item, first_sub_item;
     int length_reinit_color, length_reinit_color_space, length_start_item;
@@ -860,15 +860,15 @@ gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window,
                                 | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
                                 0,
                                 NULL);
-                            for (j = 0; split_items[i][sub][j]; j++)
+                            for (ptr_item = split_items[i][sub]; *ptr_item; ptr_item++)
                             {
                                 total_items++;
 
-                                length = strlen (split_items[i][sub][j]);
+                                length = strlen (*ptr_item);
                                 if (length > max_length)
                                     max_length = length;
 
-                                length = gui_chat_strlen_screen (split_items[i][sub][j]);
+                                length = gui_chat_strlen_screen (*ptr_item);
                                 if (length > max_length_screen)
                                     max_length_screen = length;
                             }
@@ -915,9 +915,10 @@ gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window,
                         {
                             if (split_items[i][sub])
                             {
-                                for (j = 0; split_items[i][sub][j]; j++)
+                                for (ptr_item = split_items[i][sub]; *ptr_item;
+                                     ptr_item++)
                                 {
-                                    linear_items[index++] = split_items[i][sub][j];
+                                    linear_items[index++] = *ptr_item;
                                 }
                             }
                         }

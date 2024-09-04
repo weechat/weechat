@@ -213,7 +213,7 @@ hook_process (struct t_weechat_plugin *plugin,
 void
 hook_process_child (struct t_hook *hook_process)
 {
-    char **exec_args, *arg0, str_arg[64];
+    char **exec_args, *arg0, str_arg[64], **ptr_exec_arg;
     const char *ptr_url, *ptr_arg;
     int rc, i, num_args;
     FILE *f;
@@ -353,9 +353,10 @@ hook_process_child (struct t_hook *hook_process)
             {
                 log_printf ("hook_process, command='%s'",
                             HOOK_PROCESS(hook_process, command));
-                for (i = 0; exec_args[i]; i++)
+                for (ptr_exec_arg = exec_args, i = 0; *ptr_exec_arg;
+                     ptr_exec_arg++, i++)
                 {
-                    log_printf ("  args[%02d] == '%s'", i, exec_args[i]);
+                    log_printf ("  args[%d] == '%s'", i, *ptr_exec_arg);
                 }
             }
             execvp (exec_args[0], exec_args);
