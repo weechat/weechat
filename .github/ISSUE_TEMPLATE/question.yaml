@@ -10,6 +10,8 @@ body:
         - please read the [FAQ](https://weechat.org/doc/weechat/faq) and [documentation](https://weechat.org/doc/weechat/)
         - please ask on #weechat channel (on server irc.libera.chat).
 
+        **IMPORTANT**: please do not report any security issue here, see [CONTRIBUTING.md](https://github.com/weechat/weechat/blob/master/CONTRIBUTING.md#security-reports).
+
   - type: textarea
     id: question
     attributes:
