@@ -1471,9 +1471,9 @@ completion_list_add_config_option_values_cb (const void *pointer, void *data,
                                              struct t_gui_completion *completion)
 {
     char *pos_space, *option_full_name, *pos_section, *pos_option;
-    char *file, *section, *value_string;
+    char *file, *section, *value_string, **ptr_value;
     const char *color_name;
-    int length, i;
+    int length;
     struct t_config_file *ptr_config;
     struct t_config_section *ptr_section, *section_found;
     struct t_config_option *option_found;
@@ -1631,10 +1631,11 @@ completion_list_add_config_option_values_cb (const void *pointer, void *data,
                             }
                             break;
                         case CONFIG_OPTION_TYPE_ENUM:
-                            for (i = 0; option_found->string_values[i]; i++)
+                            for (ptr_value = option_found->string_values;
+                                 *ptr_value; ptr_value++)
                             {
                                 gui_completion_list_add (completion,
-                                                         option_found->string_values[i],
+                                                         *ptr_value,
                                                          0, WEECHAT_LIST_POS_SORT);
                             }
                             gui_completion_list_add (completion, "++1",
@@ -2015,8 +2016,7 @@ completion_list_add_env_vars_cb (const void *pointer, void *data,
                                  struct t_gui_buffer *buffer,
                                  struct t_gui_completion *completion)
 {
-    int i;
-    char *pos, *name;
+    char *pos, *name, **ptr_environ;
 
     /* make C compiler happy */
     (void) pointer;
@@ -2024,12 +2024,12 @@ completion_list_add_env_vars_cb (const void *pointer, void *data,
     (void) completion_item;
     (void) buffer;
 
-    for (i = 0; environ[i]; i++)
+    for (ptr_environ = environ; *ptr_environ; ptr_environ++)
     {
-        pos = strchr (environ[i], '=');
+        pos = strchr (*ptr_environ, '=');
         if (pos)
         {
-            name = string_strndup (environ[i], pos - environ[i]);
+            name = string_strndup (*ptr_environ, pos - *ptr_environ);
             if (name)
             {
                 gui_completion_list_add (completion, name,

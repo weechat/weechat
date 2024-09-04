@@ -1841,8 +1841,8 @@ COMMAND_CALLBACK(color)
 
 COMMAND_CALLBACK(command)
 {
-    int i, length, index_args, any_plugin;
-    char *command, **commands;
+    int length, index_args, any_plugin;
+    char *command, **commands, **ptr_command;
     struct t_weechat_plugin *ptr_plugin;
     struct t_gui_buffer *ptr_buffer;
 
@@ -1862,10 +1862,10 @@ COMMAND_CALLBACK(command)
         commands = string_split_command (argv_eol[2], ';');
         if (commands)
         {
-            for (i = 0; commands[i]; i++)
+            for (ptr_command = commands; *ptr_command; ptr_command++)
             {
                 (void) input_data (buffer,
-                                   commands[i],
+                                   *ptr_command,
                                    NULL,
                                    0,  /* split_newline */
                                    0);  /* user_data */
@@ -2328,7 +2328,7 @@ command_eval_print_debug (const char *debug)
 COMMAND_CALLBACK(eval)
 {
     int i, rc, print_only, split_command, condition, debug, error;
-    char *result, *ptr_args, **commands, str_debug[32];
+    char *result, *ptr_args, **commands, **ptr_command, str_debug[32];
     const char *debug_output;
     struct t_hashtable *pointers, *options;
 
@@ -2446,9 +2446,9 @@ COMMAND_CALLBACK(eval)
                 commands = string_split_command (ptr_args, ';');
                 if (commands)
                 {
-                    for (i = 0; commands[i]; i++)
+                    for (ptr_command = commands; *ptr_command; ptr_command++)
                     {
-                        result = eval_expression (commands[i], pointers, NULL,
+                        result = eval_expression (*ptr_command, pointers, NULL,
                                                   options);
                         if (result)
                         {
@@ -6645,7 +6645,7 @@ command_set_display_option_lists (char **argv, int arg_start, int arg_end,
 
 COMMAND_CALLBACK(set)
 {
-    char *value;
+    char *value, **ptr_environ;
     const char *ptr_string;
     int i, number_found, rc, display_only_changed, arg_option_start;
     int arg_option_end, list_size;
@@ -6667,9 +6667,9 @@ COMMAND_CALLBACK(set)
             list = weelist_new ();
             if (!list)
                 COMMAND_ERROR;
-            for (i = 0; environ[i]; i++)
+            for (ptr_environ = environ; *ptr_environ; ptr_environ++)
             {
-                weelist_add (list, environ[i], WEECHAT_LIST_POS_SORT, NULL);
+                weelist_add (list, *ptr_environ, WEECHAT_LIST_POS_SORT, NULL);
             }
             list_size = weelist_size (list);
             for (i = 0; i < list_size; i++)
