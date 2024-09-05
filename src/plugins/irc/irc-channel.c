@@ -1291,14 +1291,14 @@ void
 irc_channel_join_smart_filtered_unmask (struct t_irc_channel *channel,
                                         const char *nick)
 {
-    int i, unmask_delay, length_tags, nick_found, join, account;
+    int unmask_delay, length_tags, nick_found, join, account;
     int chghost, setname, nick_changed, smart_filtered, remove_smart_filter;
     time_t *ptr_time, date_min;
     struct t_hdata *hdata_line, *hdata_line_data;
     struct t_gui_line *own_lines;
     struct t_gui_line *line;
     struct t_gui_line_data *line_data;
-    const char **tags, *irc_nick1, *irc_nick2;
+    const char **tags, *irc_nick1, *irc_nick2, **ptr_tag;
     char *new_tags, *nick_to_search;
     struct t_hashtable *hashtable;
 
@@ -1375,30 +1375,30 @@ irc_channel_join_smart_filtered_unmask (struct t_irc_channel *channel,
             irc_nick1 = NULL;
             irc_nick2 = NULL;
             smart_filtered = 0;
-            for (i = 0; tags[i]; i++)
+            for (ptr_tag = tags; *ptr_tag; ptr_tag++)
             {
-                if (strncmp (tags[i], "nick_", 5) == 0)
+                if (strncmp (*ptr_tag, "nick_", 5) == 0)
                 {
-                    if (strcmp (tags[i] + 5, nick_to_search) == 0)
+                    if (strcmp (*ptr_tag + 5, nick_to_search) == 0)
                         nick_found = 1;
                 }
-                else if (strcmp (tags[i], "irc_join") == 0)
+                else if (strcmp (*ptr_tag, "irc_join") == 0)
                     join = 1;
-                else if (strcmp (tags[i], "irc_account") == 0)
+                else if (strcmp (*ptr_tag, "irc_account") == 0)
                     account = 1;
-                else if (strcmp (tags[i], "irc_chghost") == 0)
+                else if (strcmp (*ptr_tag, "irc_chghost") == 0)
                     chghost = 1;
-                else if (strcmp (tags[i], "irc_setname") == 0)
+                else if (strcmp (*ptr_tag, "irc_setname") == 0)
                     setname = 1;
-                else if (strcmp (tags[i], "irc_nick") == 0)
+                else if (strcmp (*ptr_tag, "irc_nick") == 0)
                     nick_changed = 1;
-                else if (strncmp (tags[i], "irc_nick1_", 10) == 0)
-                    irc_nick1 = tags[i] + 10;
-                else if (strncmp (tags[i], "irc_nick2_", 10) == 0)
-                    irc_nick2 = tags[i] + 10;
-                else if (strcmp (tags[i], "irc_smart_filter") == 0)
+                else if (strncmp (*ptr_tag, "irc_nick1_", 10) == 0)
+                    irc_nick1 = *ptr_tag + 10;
+                else if (strncmp (*ptr_tag, "irc_nick2_", 10) == 0)
+                    irc_nick2 = *ptr_tag + 10;
+                else if (strcmp (*ptr_tag, "irc_smart_filter") == 0)
                     smart_filtered = 1;
-                length_tags += strlen (tags[i]) + 1;
+                length_tags += strlen (*ptr_tag) + 1;
             }
 
             /* check if we must remove tag "irc_smart_filter" in line */
@@ -1430,13 +1430,13 @@ irc_channel_join_smart_filtered_unmask (struct t_irc_channel *channel,
                 {
                     /* build a string with all tags, except "irc_smart_filter" */
                     new_tags[0] = '\0';
-                    for (i = 0; tags[i]; i++)
+                    for (ptr_tag = tags; *ptr_tag; ptr_tag++)
                     {
-                        if (strcmp (tags[i], "irc_smart_filter") != 0)
+                        if (strcmp (*ptr_tag, "irc_smart_filter") != 0)
                         {
                             if (new_tags[0])
                                 strcat (new_tags, ",");
-                            strcat (new_tags, tags[i]);
+                            strcat (new_tags, *ptr_tag);
                         }
                     }
                     hashtable = weechat_hashtable_new (4,

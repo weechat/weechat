@@ -422,8 +422,8 @@ char *
 irc_server_eval_fingerprint (struct t_irc_server *server)
 {
     const char *ptr_fingerprint;
-    char *fingerprint_eval, **fingerprints, *str_sizes;
-    int i, j, rc, algo, length;
+    char *fingerprint_eval, **fingerprints, *str_sizes, **ptr;
+    int i, rc, algo, length;
 
     if (!server)
         return NULL;
@@ -460,18 +460,18 @@ irc_server_eval_fingerprint (struct t_irc_server *server)
         return fingerprint_eval;
 
     rc = 0;
-    for (i = 0; fingerprints[i]; i++)
+    for (ptr = fingerprints; *ptr; ptr++)
     {
-        length = strlen (fingerprints[i]);
+        length = strlen (*ptr);
         algo = irc_server_fingerprint_search_algo_with_size (length * 4);
         if (algo < 0)
         {
             rc = -1;
             break;
         }
-        for (j = 0; j < length; j++)
+        for (i = 0; i < length; i++)
         {
-            if (!isxdigit ((unsigned char)fingerprints[i][j]))
+            if (!isxdigit ((unsigned char)((*ptr)[i])))
             {
                 rc = -2;
                 break;
@@ -4954,7 +4954,7 @@ irc_server_check_certificate_fingerprint (struct t_irc_server *server,
                                           const char *good_fingerprints)
 {
     unsigned char *fingerprint_server[IRC_FINGERPRINT_NUM_ALGOS];
-    char **fingerprints;
+    char **fingerprints, **ptr_fingerprint;
     int i, rc, algo;
     size_t size_bits, size_bytes;
 
@@ -4974,9 +4974,9 @@ irc_server_check_certificate_fingerprint (struct t_irc_server *server,
 
     rc = 0;
 
-    for (i = 0; fingerprints[i]; i++)
+    for (ptr_fingerprint = fingerprints; *ptr_fingerprint; ptr_fingerprint++)
     {
-        size_bits = strlen (fingerprints[i]) * 4;
+        size_bits = strlen (*ptr_fingerprint) * 4;
         size_bytes = size_bits / 8;
 
         algo = irc_server_fingerprint_search_algo_with_size (size_bits);
@@ -5018,7 +5018,7 @@ irc_server_check_certificate_fingerprint (struct t_irc_server *server,
         if (fingerprint_server[algo])
         {
             /* check if the fingerprint matches */
-            if (irc_server_compare_fingerprints (fingerprints[i],
+            if (irc_server_compare_fingerprints (*ptr_fingerprint,
                                                  fingerprint_server[algo],
                                                  size_bytes) == 0)
             {
