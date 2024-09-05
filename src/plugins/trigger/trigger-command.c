@@ -64,7 +64,7 @@ trigger_command_display_trigger_internal (const char *name,
                                           int verbose)
 {
     char str_conditions[64], str_regex[64], str_command[64], str_rc[64];
-    char str_post_action[64], spaces[256];
+    char str_post_action[64], spaces[256], **ptr_command;
     int i, length;
 
     if (verbose >= 1)
@@ -135,7 +135,7 @@ trigger_command_display_trigger_internal (const char *name,
         }
         if (commands)
         {
-            for (i = 0; commands[i]; i++)
+            for (ptr_command = commands, i = 0; *ptr_command; ptr_command++, i++)
             {
                 weechat_printf_date_tags (
                     NULL, 0, "no_trigger",
@@ -145,7 +145,7 @@ trigger_command_display_trigger_internal (const char *name,
                     i + 1,
                     weechat_color ("chat_delimiters"),
                     weechat_color ("reset"),
-                    commands[i],
+                    *ptr_command,
                     weechat_color ("chat_delimiters"));
             }
         }
