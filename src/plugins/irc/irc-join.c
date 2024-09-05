@@ -413,18 +413,18 @@ irc_join_build_string (struct t_arraylist *arraylist)
     {
         ptr_join_chan = (struct t_irc_join_channel *)weechat_arraylist_get (
             arraylist, i);
-        if (*channels[0])
+        if ((*channels)[0])
             weechat_string_dyn_concat (channels, ",", -1);
         weechat_string_dyn_concat (channels, ptr_join_chan->name, -1);
         if (ptr_join_chan->key)
         {
-            if (*keys[0])
+            if ((*keys)[0])
                 weechat_string_dyn_concat (keys, ",", -1);
             weechat_string_dyn_concat (keys, ptr_join_chan->key, -1);
         }
     }
 
-    if (*keys[0])
+    if ((*keys)[0])
     {
         weechat_string_dyn_concat (channels, " ", -1);
         weechat_string_dyn_concat (channels, *keys, -1);

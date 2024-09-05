@@ -1940,7 +1940,7 @@ gui_buffer_set_highlight_words_list (struct t_gui_buffer *buffer,
             ptr_string = weelist_string (ptr_list_item);
             if (ptr_string)
             {
-                if (*words[0])
+                if ((*words)[0])
                     string_dyn_concat (words, ",", -1);
                 string_dyn_concat (words, ptr_string, -1);
             }

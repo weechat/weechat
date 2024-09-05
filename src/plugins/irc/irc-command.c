@@ -265,7 +265,7 @@ irc_command_mode_masks_convert_ranges (char **argv, int arg_start)
             {
                 for (j = number1; j <= number2; j++)
                 {
-                    if (*str_masks[0])
+                    if ((*str_masks)[0])
                         weechat_string_dyn_concat (str_masks, " ", -1);
                     snprintf (str_number, sizeof (str_number),
                               "%ld", j);
@@ -278,7 +278,7 @@ irc_command_mode_masks_convert_ranges (char **argv, int arg_start)
 
         if (!added)
         {
-            if (*str_masks[0])
+            if ((*str_masks)[0])
                 weechat_string_dyn_concat (str_masks, " ", -1);
             weechat_string_dyn_concat (str_masks, argv[i], -1);
         }
@@ -392,7 +392,7 @@ irc_command_mode_masks (struct t_irc_server *server,
          * if we reached the max number of modes allowed, send the MODE
          * command now and flush the modes/masks strings
          */
-        if (*modes[0] && (modes_added == max_modes))
+        if ((*modes)[0] && (modes_added == max_modes))
         {
             irc_server_sendf (server, msg_priority, NULL,
                               "MODE %s %s%s %s",
@@ -408,7 +408,7 @@ irc_command_mode_masks (struct t_irc_server *server,
 
         /* add one mode letter (after +/-) and add the mask in masks */
         weechat_string_dyn_concat (modes, mode, -1);
-        if (*masks[0])
+        if ((*masks)[0])
             weechat_string_dyn_concat (masks, " ", -1);
         weechat_string_dyn_concat (masks, (mask) ? mask : argv[pos_masks], -1);
         modes_added++;
@@ -417,7 +417,7 @@ irc_command_mode_masks (struct t_irc_server *server,
     }
 
     /* send a final MODE command if some masks are remaining */
-    if (*modes[0] && *masks[0])
+    if ((*modes)[0] && (*masks)[0])
     {
         irc_server_sendf (server, msg_priority, NULL,
                           "MODE %s %s%s %s",

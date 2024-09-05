@@ -568,7 +568,7 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
                                                    str_hotlist_count);
                     if (count > 0)
                     {
-                        if (*hotlist[0])
+                        if ((*hotlist)[0])
                         {
                             weechat_string_dyn_concat (
                                 hotlist,
@@ -644,7 +644,7 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
 
         /* add newline between each buffer (if needed) */
         if (weechat_config_boolean (buflist_config_look_add_newline)
-            && *buflist[0])
+            && (*buflist)[0])
         {
             if (!weechat_string_dyn_concat (buflist, "\n", -1))
                 goto error;

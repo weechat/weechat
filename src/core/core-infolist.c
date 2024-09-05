@@ -410,7 +410,7 @@ infolist_fields (struct t_infolist *infolist)
 
     for (ptr_var = infolist->ptr_item->vars; ptr_var; ptr_var = ptr_var->next_var)
     {
-        if (*fields[0])
+        if ((*fields)[0])
             string_dyn_concat (fields, ",", -1);
         string_dyn_concat (fields, infolist_type_char_string[ptr_var->type], -1);
         string_dyn_concat (fields, ":", -1);

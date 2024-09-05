@@ -301,7 +301,7 @@ irc_tag_add_to_string_cb (void *data,
 
     string = (char **)data;
 
-    if (*string[0])
+    if ((*string)[0])
         weechat_string_dyn_concat (string, ";", -1);
 
     weechat_string_dyn_concat (string, key, -1);

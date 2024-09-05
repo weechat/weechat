@@ -292,7 +292,7 @@ weechat_python_output_flush ()
     char *temp_buffer, *command;
     int length;
 
-    if (!*python_buffer_output[0])
+    if (!(*python_buffer_output)[0])
         return;
 
     /* if there's no buffer, we catch the output, so there's no flush */

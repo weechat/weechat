@@ -229,7 +229,7 @@ weechat_perl_output_flush ()
     char *temp_buffer, *command;
     int length;
 
-    if (!*perl_buffer_output[0])
+    if (!(*perl_buffer_output)[0])
         return;
 
     /* if there's no buffer, we catch the output, so there's no flush */

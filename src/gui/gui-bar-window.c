@@ -976,7 +976,7 @@ gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window,
             break;
     }
 
-    if (!*content[0])
+    if (!(*content)[0])
     {
         string_dyn_free (content, 1);
         return NULL;
