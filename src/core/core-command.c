@@ -5059,7 +5059,7 @@ command_plugin_list_input (struct t_gui_buffer *buffer,
     for (ptr_item = list->items; ptr_item;
          ptr_item = ptr_item->next_item)
     {
-        if (*buf[0])
+        if ((*buf)[0])
         {
             string_dyn_concat (buf, ", ", -1);
         }
@@ -5074,7 +5074,7 @@ command_plugin_list_input (struct t_gui_buffer *buffer,
         string_dyn_concat (buf, ptr_item->data, -1);
     }
 
-    if (!*buf[0])
+    if (!(*buf)[0])
     {
         string_dyn_concat (
             buf,

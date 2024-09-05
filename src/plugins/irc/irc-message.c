@@ -82,7 +82,7 @@ irc_message_parse_params (const char *parameters,
         *params = malloc ((alloc_params + 1) * sizeof ((*params)[0]));
         if (!*params)
             return;
-        *params[0] = NULL;
+        (*params)[0] = NULL;
     }
 
     ptr_params = parameters;

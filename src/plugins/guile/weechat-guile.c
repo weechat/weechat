@@ -122,7 +122,7 @@ weechat_guile_output_flush ()
     char *temp_buffer, *command;
     int length;
 
-    if (!*guile_buffer_output[0])
+    if (!(*guile_buffer_output)[0])
         return;
 
     /* if there's no buffer, we catch the output, so there's no flush */

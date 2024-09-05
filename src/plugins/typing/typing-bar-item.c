@@ -54,7 +54,7 @@ typing_bar_item_nicks_map_cb (void *data,
     if ((ptr_typing_status->state == TYPING_STATUS_STATE_TYPING)
         || (ptr_typing_status->state == TYPING_STATUS_STATE_PAUSED))
     {
-        if (*str_nicks_typing[0])
+        if ((*str_nicks_typing)[0])
             weechat_string_dyn_concat (str_nicks_typing, ", ", -1);
         if (ptr_typing_status->state == TYPING_STATUS_STATE_PAUSED)
             weechat_string_dyn_concat (str_nicks_typing, "(", -1);

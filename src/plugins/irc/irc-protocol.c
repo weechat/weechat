@@ -181,7 +181,7 @@ irc_protocol_tags_add_cb (void *data,
 
     str_tags = (char **)data;
 
-    if (*str_tags[0])
+    if ((*str_tags)[0])
         weechat_string_dyn_concat (str_tags, ",", -1);
 
     weechat_string_dyn_concat (str_tags, "irc_tag_", -1);
@@ -274,7 +274,7 @@ irc_protocol_tags (struct t_irc_protocol_ctxt *ctxt, const char *extra_tags)
                 ptr_batch = irc_batch_search (ctxt->server, ptr_tag_batch);
                 if (ptr_batch)
                 {
-                    if (*str_irc_tags[0])
+                    if ((*str_irc_tags)[0])
                         weechat_string_dyn_concat (str_irc_tags, ",", -1);
                     weechat_string_dyn_concat (str_irc_tags,
                                                "irc_batch_type_", -1);
@@ -301,8 +301,8 @@ irc_protocol_tags (struct t_irc_protocol_ctxt *ctxt, const char *extra_tags)
               (ctxt->command && ctxt->command[0]) ? ctxt->command : "",
               (is_numeric) ? "," : "",
               (is_numeric) ? "irc_numeric" : "",
-              (str_irc_tags && *str_irc_tags[0]) ? "," : "",
-              (str_irc_tags && *str_irc_tags[0]) ? *str_irc_tags : "",
+              (str_irc_tags && (*str_irc_tags)[0]) ? "," : "",
+              (str_irc_tags && (*str_irc_tags)[0]) ? *str_irc_tags : "",
               (extra_tags && extra_tags[0]) ? "," : "",
               (extra_tags && extra_tags[0]) ? extra_tags : "",
               (ctxt->ignore_tag) ? ",irc_ignored" : "",
@@ -717,7 +717,7 @@ irc_protocol_cap_print_cb (void *data,
 
     str_caps = (char **)data;
 
-    if (*str_caps[0])
+    if ((*str_caps)[0])
         weechat_string_dyn_concat (str_caps, " ", -1);
     weechat_string_dyn_concat (str_caps, key, -1);
     if (value)
@@ -767,7 +767,7 @@ irc_protocol_cap_to_enable (const char *capabilities, int sasl_requested)
                         ",");
                     if (supported_caps)
                     {
-                        if (*str_caps[0])
+                        if ((*str_caps)[0])
                             weechat_string_dyn_concat (str_caps, ",", -1);
                         weechat_string_dyn_concat (str_caps, supported_caps, -1);
                         free (supported_caps);
@@ -775,7 +775,7 @@ irc_protocol_cap_to_enable (const char *capabilities, int sasl_requested)
                 }
                 else
                 {
-                    if (*str_caps[0])
+                    if ((*str_caps)[0])
                         weechat_string_dyn_concat (str_caps, ",", -1);
                     weechat_string_dyn_concat (str_caps, caps[i], -1);
                 }
@@ -786,7 +786,7 @@ irc_protocol_cap_to_enable (const char *capabilities, int sasl_requested)
 
     if (sasl_requested)
     {
-        if (*str_caps[0])
+        if ((*str_caps)[0])
             weechat_string_dyn_concat (str_caps, ",", -1);
         weechat_string_dyn_concat (str_caps, "sasl", -1);
     }
@@ -897,7 +897,7 @@ irc_protocol_cap_sync (struct t_irc_server *server, int sasl)
                 {
                     if (sasl && strcmp (caps_server[i], "sasl") == 0)
                         sasl_to_do = 1;
-                    if (*cap_req[0])
+                    if ((*cap_req)[0])
                         weechat_string_dyn_concat (cap_req, " ", -1);
                     weechat_string_dyn_concat (cap_req, caps_server[i], -1);
                 }
@@ -1165,7 +1165,7 @@ IRC_PROTOCOL_CALLBACK(cap)
             {
                 if (caps_supported[j][0] == '-')
                 {
-                    if (*str_caps_disabled[0])
+                    if ((*str_caps_disabled)[0])
                         weechat_string_dyn_concat (str_caps_disabled, " ", -1);
                     weechat_string_dyn_concat (str_caps_disabled,
                                                caps_supported[j] + 1,
@@ -1177,7 +1177,7 @@ IRC_PROTOCOL_CALLBACK(cap)
                 }
                 else
                 {
-                    if (*str_caps_enabled[0])
+                    if ((*str_caps_enabled)[0])
                         weechat_string_dyn_concat (str_caps_enabled, " ", -1);
                     weechat_string_dyn_concat (str_caps_enabled,
                                                caps_supported[j],
@@ -1192,7 +1192,7 @@ IRC_PROTOCOL_CALLBACK(cap)
             }
             weechat_string_free_split (caps_supported);
         }
-        if (*str_caps_enabled[0] && *str_caps_disabled[0])
+        if ((*str_caps_enabled)[0] && (*str_caps_disabled)[0])
         {
             weechat_printf_datetime_tags (
                 ctxt->server->buffer,
@@ -1203,7 +1203,7 @@ IRC_PROTOCOL_CALLBACK(cap)
                 weechat_prefix ("network"), IRC_PLUGIN_NAME,
                 *str_caps_enabled, *str_caps_disabled);
         }
-        else if (*str_caps_enabled[0])
+        else if ((*str_caps_enabled)[0])
         {
             weechat_printf_datetime_tags (
                 ctxt->server->buffer,
@@ -1214,7 +1214,7 @@ IRC_PROTOCOL_CALLBACK(cap)
                 weechat_prefix ("network"), IRC_PLUGIN_NAME,
                 *str_caps_enabled);
         }
-        else if (*str_caps_disabled[0])
+        else if ((*str_caps_disabled)[0])
         {
             weechat_printf_datetime_tags (
                 ctxt->server->buffer,
@@ -6206,7 +6206,7 @@ IRC_PROTOCOL_CALLBACK(353)
             }
             else if (!ptr_channel && str_nicks)
             {
-                if (*str_nicks[0])
+                if ((*str_nicks)[0])
                 {
                     weechat_string_dyn_concat (str_nicks, IRC_COLOR_RESET, -1);
                     weechat_string_dyn_concat (str_nicks, " ", -1);
@@ -6471,7 +6471,7 @@ irc_protocol_get_string_channel_nicks (struct t_irc_server *server,
             if (!filter_ok)
                 continue;
 
-            if (*str_nicks[0])
+            if ((*str_nicks)[0])
             {
                 weechat_string_dyn_concat (str_nicks,
                                            IRC_COLOR_RESET,
@@ -6606,7 +6606,7 @@ irc_protocol_get_string_channel_nicks_count (struct t_irc_server *server,
             snprintf (str_mode_name, sizeof (str_mode_name),
                       "+%c", ptr_prefix_modes[i]);
         }
-        if (*str_counts[0])
+        if ((*str_counts)[0])
             weechat_string_dyn_concat (str_counts, ", ", -1);
         weechat_string_dyn_concat (str_counts, str_count, -1);
         weechat_string_dyn_concat (str_counts, str_mode_name, -1);

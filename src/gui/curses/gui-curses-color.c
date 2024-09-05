@@ -369,10 +369,10 @@ gui_color_get_pairs_arrays (short **foregrounds, short **backgrounds)
     *foregrounds = NULL;
     *backgrounds = NULL;
 
-    *foregrounds = malloc (sizeof (*foregrounds[0]) * (gui_color_num_pairs + 1));
+    *foregrounds = malloc (sizeof ((*foregrounds)[0]) * (gui_color_num_pairs + 1));
     if (!*foregrounds)
         goto error;
-    *backgrounds = malloc (sizeof (*backgrounds[0]) * (gui_color_num_pairs + 1));
+    *backgrounds = malloc (sizeof ((*backgrounds)[0]) * (gui_color_num_pairs + 1));
     if (!*backgrounds)
         goto error;
 
@@ -609,7 +609,7 @@ gui_color_build (int number, int foreground, int background)
     /* allocate color */
     if (!gui_color[number])
     {
-        gui_color[number] = malloc (sizeof (*gui_color[number]));
+        gui_color[number] = malloc (sizeof ((*gui_color)[number]));
         if (!gui_color[number])
             return;
     }

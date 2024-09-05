@@ -1874,7 +1874,7 @@ gui_bar_item_buffer_nicklist_cb (const void *pointer, void *data,
                 && buffer->nicklist_display_groups
                 && ptr_group->visible))
         {
-            if (*nicklist[0])
+            if ((*nicklist)[0])
                 string_dyn_concat (nicklist, "\n", -1);
 
             if (ptr_nick)

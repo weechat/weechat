@@ -436,10 +436,10 @@ gui_key_expand (const char *key, char **key_name, char **key_name_alias)
         meta2 = 0;
         shift = 0;
 
-        if (*str_dyn_key[0])
+        if ((*str_dyn_key)[0])
             string_dyn_concat (str_dyn_key, ",", -1);
 
-        if (*str_dyn_key_alias[0])
+        if ((*str_dyn_key_alias)[0])
             string_dyn_concat (str_dyn_key_alias, ",", -1);
 
         str_raw[0] = '\0';

@@ -418,7 +418,7 @@ irc_batch_process_multiline (struct t_irc_server *server,
                 if (tags && tags[0])
                     irc_tag_parse (tags, hash_tags, NULL);
             }
-            if (*result[0])
+            if ((*result)[0])
             {
                 if (!hash_tags
                     || !weechat_hashtable_has_key (hash_tags,

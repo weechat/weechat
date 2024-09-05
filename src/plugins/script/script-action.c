@@ -123,7 +123,7 @@ script_action_run_list_input (struct t_gui_buffer *buffer,
         ptr_script = weechat_hdata_get_list (hdata, "scripts");
         while (ptr_script)
         {
-            if (*output[0])
+            if ((*output)[0])
             {
                 weechat_string_dyn_concat (output, ", ", -1);
             }
@@ -152,7 +152,7 @@ script_action_run_list_input (struct t_gui_buffer *buffer,
         }
     }
 
-    if (!*output[0])
+    if (!(*output)[0])
     {
         weechat_string_dyn_concat (
             output,
@@ -1257,7 +1257,7 @@ script_action_add (struct t_gui_buffer *buffer, const char *action)
             return;
     }
 
-    if (*script_actions[0])
+    if ((*script_actions)[0])
         weechat_string_dyn_concat (script_actions, "\n", -1);
 
     weechat_string_dyn_concat (

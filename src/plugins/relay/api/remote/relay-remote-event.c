@@ -156,7 +156,7 @@ relay_remote_build_string_tags (cJSON *json_tags, int line_id, int highlight)
             ptr_tag = cJSON_GetStringValue (json_tag);
             if (ptr_tag)
             {
-                if (*tags[0])
+                if ((*tags)[0])
                     weechat_string_dyn_concat (tags, ",", -1);
                 if (highlight && (strncmp (ptr_tag, "notify_", 7) == 0))
                 {
@@ -177,14 +177,14 @@ relay_remote_build_string_tags (cJSON *json_tags, int line_id, int highlight)
      */
     if (highlight && !tag_notify_highlight)
     {
-        if (*tags[0])
+        if ((*tags)[0])
             weechat_string_dyn_concat (tags, ",", -1);
         weechat_string_dyn_concat (tags, "notify_highlight", -1);
     }
 
     /* add tag with remote line id */
     snprintf (str_tag_id, sizeof (str_tag_id), "relay_remote_line_id_%d", line_id);
-    if (*tags[0])
+    if ((*tags)[0])
         weechat_string_dyn_concat (tags, ",", -1);
     weechat_string_dyn_concat (tags, str_tag_id, -1);
 

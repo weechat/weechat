@@ -602,7 +602,7 @@ irc_ctcp_get_supported_ctcp (struct t_irc_server *server)
                 (const char *)weechat_arraylist_get (list_ctcp, i));
             if (ctcp_upper)
             {
-                if (*result[0])
+                if ((*result)[0])
                     weechat_string_dyn_concat (result, " ", -1);
                 weechat_string_dyn_concat (result, ctcp_upper, -1);
                 free (ctcp_upper);
