@@ -267,9 +267,8 @@ relay_remote_event_search_line_by_id (struct t_gui_buffer *buffer, int id)
     struct t_gui_lines *ptr_lines;
     struct t_gui_line *ptr_line;
     struct t_gui_line_data *ptr_line_data;
-    const char **tags;
+    const char **tags, **ptr_tag;
     char str_tag_id[512];
-    int i;
 
     if (!buffer)
         return NULL;
@@ -292,9 +291,9 @@ relay_remote_event_search_line_by_id (struct t_gui_buffer *buffer, int id)
         tags = weechat_hdata_pointer (relay_hdata_line_data, ptr_line_data, "tags_array");
         if (tags)
         {
-            for (i = 0; tags[i]; i++)
+            for (ptr_tag = tags; *ptr_tag; ptr_tag++)
             {
-                if (weechat_strcmp (tags[i], str_tag_id) == 0)
+                if (weechat_strcmp (*ptr_tag, str_tag_id) == 0)
                     return ptr_line;
             }
         }

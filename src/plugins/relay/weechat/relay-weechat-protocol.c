@@ -219,8 +219,9 @@ relay_weechat_protocol_handshake_reply (struct t_relay_client *client,
 
 RELAY_WEECHAT_PROTOCOL_CALLBACK(handshake)
 {
-    char **options, **auths, **compressions, *pos;
-    int i, j, index_hash_algo, hash_algo_found, auth_allowed, compression;
+    char **options, **auths, **compressions, *pos, **ptr_option, **ptr_auth;
+    char **ptr_comp;
+    int index_hash_algo, hash_algo_found, auth_allowed, compression;
     int password_received, plain_text_password;
 
     RELAY_WEECHAT_PROTOCOL_MIN_ARGS(0);
@@ -242,14 +243,14 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(handshake)
         weechat_string_split_command (argv_eol[0], ',') : NULL;
     if (options)
     {
-        for (i = 0; options[i]; i++)
+        for (ptr_option = options; *ptr_option; ptr_option++)
         {
-            pos = strchr (options[i], '=');
+            pos = strchr (*ptr_option, '=');
             if (pos)
             {
                 pos[0] = '\0';
                 pos++;
-                if (strcmp (options[i], "password_hash_algo") == 0)
+                if (strcmp (*ptr_option, "password_hash_algo") == 0)
                 {
                     password_received = 1;
                     auths = weechat_string_split (
@@ -263,10 +264,9 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(handshake)
                         NULL);
                     if (auths)
                     {
-                        for (j = 0; auths[j]; j++)
+                        for (ptr_auth = auths; *ptr_auth; ptr_auth++)
                         {
-                            index_hash_algo = relay_auth_password_hash_algo_search (
-                                auths[j]);
+                            index_hash_algo = relay_auth_password_hash_algo_search (*ptr_auth);
                             if ((index_hash_algo >= 0) && (index_hash_algo > hash_algo_found))
                             {
                                 auth_allowed = weechat_string_match_list (
@@ -280,7 +280,7 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(handshake)
                         weechat_string_free_split (auths);
                     }
                 }
-                else if (strcmp (options[i], "compression") == 0)
+                else if (strcmp (*ptr_option, "compression") == 0)
                 {
                     compressions = weechat_string_split (
                         pos,
@@ -293,9 +293,9 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(handshake)
                         NULL);
                     if (compressions)
                     {
-                        for (j = 0; compressions[j]; j++)
+                        for (ptr_comp = compressions; *ptr_comp; ptr_comp++)
                         {
-                            compression = relay_weechat_compression_search (compressions[j]);
+                            compression = relay_weechat_compression_search (*ptr_comp);
                             if (compression >= 0)
                             {
                                 RELAY_WEECHAT_DATA(client, compression) = compression;
@@ -305,7 +305,7 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(handshake)
                         weechat_string_free_split (compressions);
                     }
                 }
-                else if (strcmp (options[i], "escape_commands") == 0)
+                else if (strcmp (*ptr_option, "escape_commands") == 0)
                 {
                     RELAY_WEECHAT_DATA(client, escape_commands) =
                         (weechat_strcmp (pos, "on") == 0) ?
@@ -361,8 +361,9 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(handshake)
 
 RELAY_WEECHAT_PROTOCOL_CALLBACK(init)
 {
-    char **options, *pos, *relay_password, *totp_secret, *info_totp_args, *info_totp;
-    int i, length, password_received, totp_received;
+    char **options, *pos, *relay_password, *totp_secret;
+    char *info_totp_args, *info_totp, **ptr_option;
+    int length, password_received, totp_received;
 
     RELAY_WEECHAT_PROTOCOL_MIN_ARGS(0);
 
@@ -380,14 +381,14 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(init)
         weechat_string_split_command (argv_eol[0], ',') : NULL;
     if (options)
     {
-        for (i = 0; options[i]; i++)
+        for (ptr_option = options; *ptr_option; ptr_option++)
         {
-            pos = strchr (options[i], '=');
+            pos = strchr (*ptr_option, '=');
             if (pos)
             {
                 pos[0] = '\0';
                 pos++;
-                if (strcmp (options[i], "password") == 0)
+                if (strcmp (*ptr_option, "password") == 0)
                 {
                     password_received = 1;
                     if ((client->password_hash_algo == RELAY_AUTH_PASSWORD_HASH_PLAIN)
@@ -396,13 +397,13 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(init)
                         RELAY_WEECHAT_DATA(client, password_ok) = 1;
                     }
                 }
-                else if (strcmp (options[i], "password_hash") == 0)
+                else if (strcmp (*ptr_option, "password_hash") == 0)
                 {
                     password_received = 1;
                     if (relay_auth_password_hash (client, pos, relay_password) == 0)
                         RELAY_WEECHAT_DATA(client, password_ok) = 1;
                 }
-                else if (strcmp (options[i], "totp") == 0)
+                else if (strcmp (*ptr_option, "totp") == 0)
                 {
                     totp_received = 1;
                     if (totp_secret)
