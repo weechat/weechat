@@ -7013,7 +7013,7 @@ irc_command_init ()
     weechat_hook_command (
         "action",
         N_("send a CTCP action to a nick or channel"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("[-server <server>] <target>[,<target>...] <text>"),
         WEECHAT_CMD_ARGS_DESC(
             N_("server: send to this server (internal name)"),
@@ -7025,7 +7025,7 @@ irc_command_init ()
     weechat_hook_command (
         "admin",
         N_("find information about the administrator of the server"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("[<target>]"),
         WEECHAT_CMD_ARGS_DESC(
             N_("target: server name")),
@@ -7033,7 +7033,7 @@ irc_command_init ()
     weechat_hook_command (
         "allchan",
         N_("execute a command on all channels of all connected servers"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("[-current] [-parted|-all] [-exclude=<channel>[,<channel>...]] <command>"
            " || [-current] [-parted|-all] -include=<channel>[,<channel>...] <command>"),
         WEECHAT_CMD_ARGS_DESC(
@@ -7070,7 +7070,7 @@ irc_command_init ()
     weechat_hook_command (
         "allpv",
         N_("execute a command on all private buffers of all connected servers"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("[-current] [-exclude=<nick>[,<nick>...]] <command>"
            " || [-current] -include=<nick>[,<nick>...] <command>"),
         WEECHAT_CMD_ARGS_DESC(
@@ -7105,7 +7105,7 @@ irc_command_init ()
     weechat_hook_command (
         "allserv",
         N_("execute a command on all connected servers"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("[-exclude=<server>[,<server>...]] <command>"
            " || -include=<server>[,<server>...] "
            "<command>"),
@@ -7130,7 +7130,7 @@ irc_command_init ()
     weechat_hook_command (
         "auth",
         N_("authenticate with SASL"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("[<username> <password>]"),
         WEECHAT_CMD_ARGS_DESC(
             N_("username: SASL username (content is evaluated, see /help eval; "
@@ -7156,7 +7156,7 @@ irc_command_init ()
     weechat_hook_command (
         "autojoin",
         N_("configure the \"autojoin\" server option"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("add [<channel>...]"
            " || addraw <channel1>[,<channel2>...] [<key1>[,<key2>...]]"
            " || del [<channel>...]"
@@ -7201,7 +7201,7 @@ irc_command_init ()
     weechat_hook_command (
         "ban",
         N_("ban nicks or hosts"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("[<channel>] [<nick>...]"),
         WEECHAT_CMD_ARGS_DESC(
             N_("channel: channel name"),
@@ -7213,7 +7213,7 @@ irc_command_init ()
     weechat_hook_command (
         "cap",
         N_("client capability negotiation"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("ls"
            " || list"
            " || req|ack [<capability>...]"
@@ -7257,7 +7257,7 @@ irc_command_init ()
     weechat_hook_command (
         "connect",
         N_("connect to IRC server(s)"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("[<server>...] [-<option>[=<value>]] [-no<option>] "
            "[-nojoin] [-switch]"
            " || -all|-auto|-open [-nojoin] [-switch]"),
@@ -7296,7 +7296,7 @@ irc_command_init ()
     weechat_hook_command (
         "ctcp",
         N_("send a CTCP message (Client-To-Client Protocol)"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("[-server <server>] <target>[,<target>...] <type> [<arguments>]"),
         WEECHAT_CMD_ARGS_DESC(
             N_("server: send to this server (internal name)"),
@@ -7316,7 +7316,7 @@ irc_command_init ()
     weechat_hook_command (
         "cycle",
         N_("leave and rejoin a channel"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("[<channel>[,<channel>...]] [<message>]"),
         WEECHAT_CMD_ARGS_DESC(
             N_("channel: channel name"),
@@ -7325,7 +7325,7 @@ irc_command_init ()
     weechat_hook_command (
         "dcc",
         N_("start a DCC (passive file transfer or direct chat)"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("chat <nick> || send <nick> <file>"),
         WEECHAT_CMD_ARGS_DESC(
             N_("nick: nick"),
@@ -7342,7 +7342,7 @@ irc_command_init ()
     weechat_hook_command (
         "dehalfop",
         N_("remove channel half-operator status from nick(s)"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("<nick>... || * -yes"),
         WEECHAT_CMD_ARGS_DESC(
             N_("nick: nick or mask (wildcard \"*\" is allowed)"),
@@ -7352,7 +7352,7 @@ irc_command_init ()
     weechat_hook_command (
         "deop",
         N_("remove channel operator status from nick(s)"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("<nick>... || * -yes"),
         WEECHAT_CMD_ARGS_DESC(
             N_("nick: nick or mask (wildcard \"*\" is allowed)"),
@@ -7361,7 +7361,7 @@ irc_command_init ()
     weechat_hook_command (
         "devoice",
         N_("remove voice from nick(s)"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("<nick>... || * -yes"),
         WEECHAT_CMD_ARGS_DESC(
             N_("nick: nick or mask (wildcard \"*\" is allowed)"),
@@ -7370,7 +7370,7 @@ irc_command_init ()
     weechat_hook_command (
         "die",
         N_("shutdown the server"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("[<target>]"),
         WEECHAT_CMD_ARGS_DESC(
             N_("target: server name")),
@@ -7378,7 +7378,7 @@ irc_command_init ()
     weechat_hook_command (
         "disconnect",
         N_("disconnect from one or all IRC servers"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("[<server>|-all|-pending [<reason>]]"),
         WEECHAT_CMD_ARGS_DESC(
             N_("server: internal server name"),
@@ -7390,7 +7390,7 @@ irc_command_init ()
     weechat_hook_command (
         "halfop",
         N_("give channel half-operator status to nick(s)"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("<nick>... || * -yes"),
         WEECHAT_CMD_ARGS_DESC(
             N_("nick: nick or mask (wildcard \"*\" is allowed)"),
@@ -7399,7 +7399,7 @@ irc_command_init ()
     weechat_hook_command (
         "ignore",
         N_("ignore nicks/hosts from servers or channels"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("list"
            " || add|addreplace [re:]<nick> [<server> [<channel>]]"
            " || del <number>|-all"),
@@ -7433,7 +7433,7 @@ irc_command_init ()
     weechat_hook_command (
         "info",
         N_("get information describing the server"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("[<target>]"),
         WEECHAT_CMD_ARGS_DESC(
             N_("target: server name")),
@@ -7441,7 +7441,7 @@ irc_command_init ()
     weechat_hook_command (
         "invite",
         N_("invite a nick on a channel"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("<nick>... [<channel>]"),
         WEECHAT_CMD_ARGS_DESC(
             N_("nick: nick"),
@@ -7450,7 +7450,7 @@ irc_command_init ()
     weechat_hook_command (
         "ison",
         N_("check if a nick is currently on IRC"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("<nick>..."),
         WEECHAT_CMD_ARGS_DESC(
             N_("nick: nick")),
@@ -7458,7 +7458,7 @@ irc_command_init ()
     weechat_hook_command (
         "join",
         N_("join a channel"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("[-noswitch] [-server <server>] "
            "[<channel1>[,<channel2>...]] [<key1>[,<key2>...]]"),
         WEECHAT_CMD_ARGS_DESC(
@@ -7478,7 +7478,7 @@ irc_command_init ()
     weechat_hook_command (
         "kick",
         N_("kick a user out of a channel"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("[<channel>] <nick> [<reason>]"),
         WEECHAT_CMD_ARGS_DESC(
             N_("channel: channel name"),
@@ -7490,7 +7490,7 @@ irc_command_init ()
     weechat_hook_command (
         "kickban",
         N_("kick a user out of a channel and ban the host"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("[<channel>] <nick> [<reason>]"),
         WEECHAT_CMD_ARGS_DESC(
             N_("channel: channel name"),
@@ -7509,7 +7509,7 @@ irc_command_init ()
     weechat_hook_command (
         "kill",
         N_("close client-server connection"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("<nick> [<reason>]"),
         WEECHAT_CMD_ARGS_DESC(
             N_("nick: nick"),
@@ -7518,7 +7518,7 @@ irc_command_init ()
     weechat_hook_command (
         "knock",
         N_("send a notice to an invitation-only channel, requesting an invite"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("<channel> [<message>]"),
         WEECHAT_CMD_ARGS_DESC(
             N_("channel: channel name"),
@@ -7529,7 +7529,7 @@ irc_command_init ()
         "links",
         N_("list all server names which are known by the server answering the "
            "query"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("[[<target>] <server_mask>]"),
         WEECHAT_CMD_ARGS_DESC(
             N_("target: this remote server should answer the query"),
@@ -7538,7 +7538,7 @@ irc_command_init ()
     weechat_hook_command (
         "list",
         N_("list channels and their topics"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("[-server <server>] [<channel>[,<channel>...]] [<target>]"
            " || [-server <server>] [-raw *|<regex>]"
            " || -up|-down [<number>]"
@@ -7607,7 +7607,7 @@ irc_command_init ()
     weechat_hook_command (
         "lusers",
         N_("get statistics about the size of the IRC network"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("[<mask> [<target>]]"),
         WEECHAT_CMD_ARGS_DESC(
             N_("mask: servers matching the mask only"),
@@ -7622,7 +7622,7 @@ irc_command_init ()
     weechat_hook_command (
         "me",
         N_("send a CTCP action to the current channel"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("<message>"),
         WEECHAT_CMD_ARGS_DESC(
             N_("message: message to send")),
@@ -7630,7 +7630,7 @@ irc_command_init ()
     weechat_hook_command (
         "mode",
         N_("change channel or user mode"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("[<channel>] [+|-]o|p|s|i|t|n|m|l|b|e|v|k [<arguments>]"
            " || <nick> [+|-]i|s|w|o"),
         WEECHAT_CMD_ARGS_DESC(
@@ -7667,7 +7667,7 @@ irc_command_init ()
     weechat_hook_command (
         "motd",
         N_("get the \"Message Of The Day\""),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("[<target>]"),
         WEECHAT_CMD_ARGS_DESC(
             N_("target: server name")),
@@ -7675,7 +7675,7 @@ irc_command_init ()
     weechat_hook_command (
         "msg",
         N_("send message to a nick or channel"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("[-server <server>] <target>[,<target>...] <text>"),
         WEECHAT_CMD_ARGS_DESC(
             N_("server: send to this server (internal name)"),
@@ -7687,7 +7687,7 @@ irc_command_init ()
     weechat_hook_command (
         "names",
         N_("list nicks on channels"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("[-count | -x] [<channel>[,<channel>...]]"),
         WEECHAT_CMD_ARGS_DESC(
             N_("raw[-count]: display only number of users"),
@@ -7699,7 +7699,7 @@ irc_command_init ()
     weechat_hook_command (
         "nick",
         N_("change current nick"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("[-all] <nick>"),
         WEECHAT_CMD_ARGS_DESC(
             N_("raw[-all]: set new nick for all connected servers"),
@@ -7710,7 +7710,7 @@ irc_command_init ()
     weechat_hook_command (
         "notice",
         N_("send notice message to user"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("[-server <server>] <target> <text>"),
         WEECHAT_CMD_ARGS_DESC(
             N_("server: send to this server (internal name)"),
@@ -7722,7 +7722,7 @@ irc_command_init ()
     weechat_hook_command (
         "notify",
         N_("add a notification for presence or away status of nicks on servers"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("add|addreplace <nick> [<server> [-away]]"
            " || del <nick>|-all [<server>]"),
         WEECHAT_CMD_ARGS_DESC(
@@ -7747,7 +7747,7 @@ irc_command_init ()
     weechat_hook_command (
         "op",
         N_("give channel operator status to nick(s)"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("<nick>... || * -yes"),
         WEECHAT_CMD_ARGS_DESC(
             N_("nick: nick or mask (wildcard \"*\" is allowed)"),
@@ -7756,7 +7756,7 @@ irc_command_init ()
     weechat_hook_command (
         "oper",
         N_("get operator privileges"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("<user> <password>"),
         WEECHAT_CMD_ARGS_DESC(
             N_("user: user"),
@@ -7765,7 +7765,7 @@ irc_command_init ()
     weechat_hook_command (
         "part",
         N_("leave a channel"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("[<channel>[,<channel>...]] [<message>]"),
         WEECHAT_CMD_ARGS_DESC(
             N_("channel: channel name"),
@@ -7774,7 +7774,7 @@ irc_command_init ()
     weechat_hook_command (
         "ping",
         N_("send a ping to server"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("<target1> [<target2>]"),
         WEECHAT_CMD_ARGS_DESC(
             N_("target1: server"),
@@ -7783,7 +7783,7 @@ irc_command_init ()
     weechat_hook_command (
         "pong",
         N_("answer to a ping message"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("<daemon> [<daemon2>]"),
         WEECHAT_CMD_ARGS_DESC(
             N_("daemon: daemon who has responded to Ping message"),
@@ -7792,7 +7792,7 @@ irc_command_init ()
     weechat_hook_command (
         "query",
         N_("send a private message to a nick"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("[-noswitch] [-server <server>] <nick>[,<nick>...] [<text>]"),
         WEECHAT_CMD_ARGS_DESC(
             N_("raw[-noswitch]: do not switch to new buffer"),
@@ -7805,7 +7805,7 @@ irc_command_init ()
     weechat_hook_command (
         "quiet",
         N_("quiet nicks or hosts"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("[<channel>] [<nick>...]"),
         WEECHAT_CMD_ARGS_DESC(
             N_("channel: channel name"),
@@ -7817,7 +7817,7 @@ irc_command_init ()
     weechat_hook_command (
         "quote",
         N_("send raw data to server without parsing"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("[-server <server>] <data>"),
         WEECHAT_CMD_ARGS_DESC(
             N_("server: send to this server (internal name)"),
@@ -7826,7 +7826,7 @@ irc_command_init ()
     weechat_hook_command (
         "reconnect",
         N_("reconnect to server(s)"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("<server>... [-nojoin] [-switch]"
            " || -all [-nojoin] [-switch]"),
         WEECHAT_CMD_ARGS_DESC(
@@ -7839,7 +7839,7 @@ irc_command_init ()
     weechat_hook_command (
         "rehash",
         N_("tell the server to reload its config file"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("[<option>]"),
         WEECHAT_CMD_ARGS_DESC(
             N_("option: extra option, for some servers")),
@@ -7847,7 +7847,7 @@ irc_command_init ()
     weechat_hook_command (
         "remove",
         N_("force a user to leave a channel"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("[<channel>] <nick> [<reason>]"),
         WEECHAT_CMD_ARGS_DESC(
             N_("channel: channel name"),
@@ -7858,7 +7858,7 @@ irc_command_init ()
     weechat_hook_command (
         "restart",
         N_("tell the server to restart itself"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("[<target>]"),
         WEECHAT_CMD_ARGS_DESC(
             N_("target: server name")),
@@ -7872,7 +7872,7 @@ irc_command_init ()
     weechat_hook_command (
         "sajoin",
         N_("force a user to join channel(s)"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("<nick> <channel>[,<channel>...]"),
         WEECHAT_CMD_ARGS_DESC(
             N_("nick: nick"),
@@ -7881,7 +7881,7 @@ irc_command_init ()
     weechat_hook_command (
         "samode",
         N_("change mode on channel, without having operator status"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("[<channel>] <mode>"),
         WEECHAT_CMD_ARGS_DESC(
             N_("channel: channel name"),
@@ -7890,7 +7890,7 @@ irc_command_init ()
     weechat_hook_command (
         "sanick",
         N_("force a user to use another nick"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("<nick> <new_nick>"),
         WEECHAT_CMD_ARGS_DESC(
             N_("nick: nick"),
@@ -7899,7 +7899,7 @@ irc_command_init ()
     weechat_hook_command (
         "sapart",
         N_("force a user to leave channel(s)"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("<nick> <channel>[,<channel>...]"),
         WEECHAT_CMD_ARGS_DESC(
             N_("nick: nick"),
@@ -7908,7 +7908,7 @@ irc_command_init ()
     weechat_hook_command (
         "saquit",
         N_("force a user to quit server with a reason"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("<nick> <reason>"),
         WEECHAT_CMD_ARGS_DESC(
             N_("nick: nick"),
@@ -7917,7 +7917,7 @@ irc_command_init ()
     weechat_hook_command (
         "service",
         N_("register a new service"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("<nick> <reserved> <distribution> <type> <reserved> <info>"),
         WEECHAT_CMD_ARGS_DESC(
             N_("distribution: visibility of service"),
@@ -7926,7 +7926,7 @@ irc_command_init ()
     weechat_hook_command (
         "server",
         N_("list, add or remove IRC servers"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("list|listfull [<name>]"
            " || add|addreplace <name> <hostname>[/<port>] [-temp] [-<option>[=<value>]] "
            "[-no<option>]"
@@ -8008,7 +8008,7 @@ irc_command_init ()
     weechat_hook_command (
         "servlist",
         N_("list services currently connected to the network"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("[<mask> [<type>]]"),
         WEECHAT_CMD_ARGS_DESC(
             N_("mask: list only services matching this mask"),
@@ -8017,7 +8017,7 @@ irc_command_init ()
     weechat_hook_command (
         "squery",
         N_("deliver a message to a service"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("<service> <text>"),
         WEECHAT_CMD_ARGS_DESC(
             N_("service: name of service"),
@@ -8026,7 +8026,7 @@ irc_command_init ()
     weechat_hook_command (
         "setname",
         N_("set real name"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("<realname>"),
         WEECHAT_CMD_ARGS_DESC(
             N_("realname: new real name")),
@@ -8034,7 +8034,7 @@ irc_command_init ()
     weechat_hook_command (
         "squit",
         N_("disconnect server links"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("<target> <comment>"),
         WEECHAT_CMD_ARGS_DESC(
             N_("target: server name"),
@@ -8043,7 +8043,7 @@ irc_command_init ()
     weechat_hook_command (
         "stats",
         N_("query statistics about server"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("[<query> [<target>]]"),
         WEECHAT_CMD_ARGS_DESC(
             N_("query: c/h/i/k/l/m/o/y/u (see RFC1459)"),
@@ -8054,7 +8054,7 @@ irc_command_init ()
         N_("give users who are on a host running an IRC "
            "server a message asking them to please join "
            "IRC"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("<user> [<target> [<channel>]]"),
         WEECHAT_CMD_ARGS_DESC(
             N_("user: username"),
@@ -8064,7 +8064,7 @@ irc_command_init ()
     weechat_hook_command (
         "time",
         N_("query local time from server"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("[<target>]"),
         WEECHAT_CMD_ARGS_DESC(
             N_("target: query time from specified server")),
@@ -8072,7 +8072,7 @@ irc_command_init ()
     weechat_hook_command (
         "topic",
         N_("get/set channel topic"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("[<channel>] [<topic>|-delete]"),
         WEECHAT_CMD_ARGS_DESC(
             N_("channel: channel name"),
@@ -8082,7 +8082,7 @@ irc_command_init ()
     weechat_hook_command (
         "trace",
         N_("find the route to specific server"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("[<target>]"),
         WEECHAT_CMD_ARGS_DESC(
             N_("target: server name")),
@@ -8090,7 +8090,7 @@ irc_command_init ()
     weechat_hook_command (
         "unban",
         N_("unban nicks or hosts"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("[<channel>] <nick>|<number>|<n1>-<n2>..."),
         WEECHAT_CMD_ARGS_DESC(
             N_("channel: channel name"),
@@ -8103,7 +8103,7 @@ irc_command_init ()
     weechat_hook_command (
         "unquiet",
         N_("unquiet nicks or hosts"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("[<channel>] <nick>|<number>|<n1>-<n2>..."),
         WEECHAT_CMD_ARGS_DESC(
             N_("channel: channel name"),
@@ -8116,7 +8116,7 @@ irc_command_init ()
     weechat_hook_command (
         "userhost",
         N_("return a list of information about nicks"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("<nick>..."),
         WEECHAT_CMD_ARGS_DESC(
             N_("nick: nick")),
@@ -8124,7 +8124,7 @@ irc_command_init ()
     weechat_hook_command (
         "users",
         N_("list of users logged into the server"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("[<target>]"),
         WEECHAT_CMD_ARGS_DESC(
             N_("target: server name")),
@@ -8132,7 +8132,7 @@ irc_command_init ()
     weechat_hook_command (
         "version",
         N_("give the version info of nick or server (current or specified)"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("[<target>|<nick>]"),
         WEECHAT_CMD_ARGS_DESC(
             N_("target: server name"),
@@ -8141,7 +8141,7 @@ irc_command_init ()
     weechat_hook_command (
         "voice",
         N_("give voice to nick(s)"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("<nick>... || * -yes"),
         WEECHAT_CMD_ARGS_DESC(
             N_("nick: nick or mask (wildcard \"*\" is allowed)"),
@@ -8150,7 +8150,7 @@ irc_command_init ()
     weechat_hook_command (
         "wallchops",
         N_("send a notice to channel ops"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("[<channel>] <text>"),
         WEECHAT_CMD_ARGS_DESC(
             N_("channel: channel name"),
@@ -8160,7 +8160,7 @@ irc_command_init ()
         "wallops",
         N_("send a message to all currently connected users who have set the "
            "\"w\" user mode for themselves"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("<text>"),
         WEECHAT_CMD_ARGS_DESC(
             N_("text: text to send")),
@@ -8168,7 +8168,7 @@ irc_command_init ()
     weechat_hook_command (
         "who",
         N_("generate a query which returns a list of information"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("[<mask> [o]]"),
         WEECHAT_CMD_ARGS_DESC(
             N_("mask: only information which match this mask"),
@@ -8177,7 +8177,7 @@ irc_command_init ()
     weechat_hook_command (
         "whois",
         N_("query information about user(s)"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("[<target>] [<nick>[,<nick>...]]"),
         WEECHAT_CMD_ARGS_DESC(
             N_("target: server name"),
@@ -8193,7 +8193,7 @@ irc_command_init ()
     weechat_hook_command (
         "whowas",
         N_("ask for information about a nick which no longer exists"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("<nick>[,<nick>...] [<count> [<target>]]"),
         WEECHAT_CMD_ARGS_DESC(
             N_("nick: nick"),

@@ -353,7 +353,7 @@ alias_command_init ()
     weechat_hook_command (
         "alias",
         N_("list, add or remove command aliases"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") should be translated */
         N_("list [<name>]"
            " || add|addreplace <name> [<command>[;<command>...]]"
            " || addcompletion|addreplacecompletion <completion> <name> "
