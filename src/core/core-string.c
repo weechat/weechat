@@ -4629,7 +4629,7 @@ string_shared_free (const char *string)
  * The string returned can be used with following restrictions:
  *   - changes are allowed in the string, between the first char and the final
  *     '\0', which must not be removed nor moved,
- *   - no other '\0' must be added in the string,
+ *   - no other '\0' may be added in the string,
  *   - content can be added in the string with function string_dyn_concat(),
  *   - string can be freed with function string_dyn_free() (do NEVER call
  *     directly free() on the string).
