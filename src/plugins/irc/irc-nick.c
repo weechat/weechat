@@ -255,10 +255,10 @@ irc_nick_set_host (struct t_irc_nick *nick, const char *host)
 }
 
 /*
- * Checks if nick is "op" or higher than "op", like channel admin/owner.
+ * Checks if nick is "op" or above "op", like channel admin/owner.
  *
  * Returns:
- *   1: nick is "op" or higher
+ *   1: nick is "op" or above
  *   0: nick is not op
  */
 
