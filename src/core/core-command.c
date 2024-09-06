@@ -8182,7 +8182,7 @@ command_init ()
             N_("raw[-]: jump to first buffer number"),
             N_("raw[+]: jump to last buffer number"),
             N_("name: jump to buffer by (partial) name; if the name starts with "
-               "\"(?i)\", the search is case insensitive (for example \"(?i)upper\" "
+               "\"(?i)\", the search is case-insensitive (for example \"(?i)upper\" "
                "will find buffer \"irc.libera.#UPPERCASE\")"),
             "",
             N_("Examples:"),
@@ -8526,12 +8526,12 @@ command_init ()
             N_("  !~   is NOT matching POSIX extended regex"),
             N_("  ==*  is matching mask, case sensitive (wildcard \"*\" is allowed)"),
             N_("  !!*  is NOT matching mask, case sensitive (wildcard \"*\" is allowed)"),
-            N_("  =*   is matching mask, case insensitive (wildcard \"*\" is allowed)"),
-            N_("  !*   is NOT matching mask, case insensitive (wildcard \"*\" is allowed)"),
+            N_("  =*   is matching mask, case-insensitive (wildcard \"*\" is allowed)"),
+            N_("  !*   is NOT matching mask, case-insensitive (wildcard \"*\" is allowed)"),
             N_("  ==-  is included, case sensitive"),
             N_("  !!-  is NOT included, case sensitive"),
-            N_("  =-   is included, case insensitive"),
-            N_("  !-   is NOT included, case insensitive"),
+            N_("  =-   is included, case-insensitive"),
+            N_("  !-   is NOT included, case-insensitive"),
             N_("  ==   equal"),
             N_("  !=   not equal"),
             N_("  <=   less or equal"),
@@ -8637,7 +8637,7 @@ command_init ()
                "reversed (use \"\\!\" to start with \"!\")"),
             N_("> - two regular expressions are created: "
                "one for prefix and one for message"),
-            N_("> - regex are case insensitive, they can start by "
+            N_("> - regex are case-insensitive, they can start by "
                "\"(?-i)\" to become case sensitive"),
             "",
             N_("The default key alt+\"=\" toggles filtering on/off globally and "

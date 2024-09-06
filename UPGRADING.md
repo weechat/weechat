@@ -219,8 +219,8 @@ version 1.5 are now used again, with a change in parameter: the server is now
 optional before the nick: "server,nick".\
 The nick is first converted to lower case, following the value of CASEMAPPING
 on the server, then hashed to compute the color.\
-That means the color for a nick is now case insensitive (in the way IRC servers
-are case insensitive, so with a limited range of chars only).
+That means the color for a nick is now case-insensitive (in the way IRC servers
+are case-insensitive, so with a limited range of chars only).
 
 If a script was using this info with a comma in nickname (which should not happen
 anyway), this is now interpreted as the server name, and the script must be
@@ -641,7 +641,7 @@ compared UTF-8 char in string2 from the last compared UTF-8 char in string1:
 
 In addition, the case conversion has been extended, now in addition to range
 A-Z, all chars that have a lower case version are handled.\
-That means for example the case insensitive comparison of "é" and "É" is 0
+That means for example the case-insensitive comparison of "é" and "É" is 0
 (chars are considered equal).
 
 Example with WeeChat 3.8:
@@ -2815,7 +2815,7 @@ Extended regex is used in filters and irc ignore, so some chars that needed
 escape in past do not need any more (for example `[0-9]\+` becomes `[0-9]+`),
 filters and ignore have to be manually fixed.
 
-Option weechat.look.highlight_regex becomes case insensitive by default, to
+Option weechat.look.highlight_regex becomes case-insensitive by default, to
 make it case sensitive, use "(?-i)" at beginning of string, for example:
 "(?-i)FlashCode|flashy".
 

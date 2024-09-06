@@ -946,7 +946,7 @@ Bar _input_ has following default items:
 There are two search modes:
 
 * search in lines, for example `[Search lines (~ str,msg)]`, with the following info:
-** `~`: case insensitive
+** `~`: case-insensitive
 ** `==`: case sensitive
 ** `str`: search string
 ** `regex`: search regular expression
@@ -955,7 +955,7 @@ There are two search modes:
 ** `pre\|msg`: search in prefixes and messages.
 * search in commands history, for example `[Search command (~ str,local)]`,
   with the following info:
-** `~`: case insensitive
+** `~`: case-insensitive
 ** `==`: case sensitive
 ** `str`: search string
 ** `regex`: search regular expression
@@ -1966,9 +1966,9 @@ These keys and actions are used on the IRC /list buffer (see command <<command_i
 | kbd:[F11]      | `pass:[<]`   | Scroll horizontally on the left. | `+/list -left+`
 | kbd:[F12]      | `pass:[>]`   | Scroll horizontally on the right. | `+/list -right+`
 | kbd:[Ctrl+j]   | `j`          | Join IRC channel on selected line. | `+/list -join+`
-|                | `xxx`        | Show only channels with "xxx" in name or topic (case insensitive). |
-|                | `n:xxx`      | Show only channels with "xxx" in name (case insensitive). |
-|                | `t:xxx`      | Show only channels with "xxx" in topic (case insensitive). |
+|                | `xxx`        | Show only channels with "xxx" in name or topic (case-insensitive). |
+|                | `n:xxx`      | Show only channels with "xxx" in name (case-insensitive). |
+|                | `t:xxx`      | Show only channels with "xxx" in topic (case-insensitive). |
 |                | `u:n`        | Show only channels with at least "n" users. |
 |                | `u:>n`       | Show only channels with more than "n" users. |
 |                | `u:<n`       | Show only channels with less than "n" users. |

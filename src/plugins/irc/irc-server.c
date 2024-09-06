@@ -289,7 +289,7 @@ irc_server_search_utf8mapping (const char *utf8mapping)
 }
 
 /*
- * Compares two strings on server (case insensitive, depends on casemapping).
+ * Compares two strings on server (case-insensitive, depends on casemapping).
  *
  * Returns:
  *   < 0: string1 < string2
@@ -313,7 +313,7 @@ irc_server_strcasecmp (struct t_irc_server *server,
 }
 
 /*
- * Compares two strings on server (case insensitive, depends on casemapping)
+ * Compares two strings on server (case-insensitive, depends on casemapping)
  * for max chars.
  *
  * Returns:

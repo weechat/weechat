@@ -1582,7 +1582,7 @@ relay_config_init ()
             relay_config_file, relay_config_section_network,
             "allowed_ips", "string",
             N_("POSIX extended regular expression with IPs allowed to use relay "
-               "(case insensitive, use \"(?-i)\" at beginning to make it case "
+               "(case-insensitive, use \"(?-i)\" at beginning to make it case "
                "sensitive), example: "
                "\"^(123\\.45\\.67\\.89|192\\.160\\..*)$\""),
             NULL, 0, 0, "", NULL, 0,
@@ -1759,7 +1759,7 @@ relay_config_init ()
             relay_config_file, relay_config_section_network,
             "websocket_allowed_origins", "string",
             N_("POSIX extended regular expression with origins allowed in "
-               "websockets (case insensitive, use \"(?-i)\" at beginning to "
+               "websockets (case-insensitive, use \"(?-i)\" at beginning to "
                "make it case sensitive), example: "
                "\"^https?://(www\\.)?example\\.(com|org)\""),
             NULL, 0, 0, "", NULL, 0,

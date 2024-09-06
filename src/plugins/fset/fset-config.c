@@ -466,8 +466,8 @@ fset_config_init ()
             "sort", "string",
             N_("comma-separated list of fields to sort options (see /help fset "
                "for a list of fields); char \"-\" can be used before field to "
-               "reverse order, char \"~\" can be used to do a case insensitive "
-               "comparison; example: \"-~name\" for case insensitive and "
+               "reverse order, char \"~\" can be used to do a case-insensitive "
+               "comparison; example: \"-~name\" for case-insensitive and "
                "reverse sort on option name"),
             NULL, 0, 0, "~name", NULL, 0,
             NULL, NULL, NULL,

@@ -3415,7 +3415,7 @@ irc_config_init ()
             irc_config_file, irc_config_section_look,
             "highlight_channel", "string",
             N_("comma separated list of words to highlight in channel buffers "
-               "(case insensitive, use \"(?-i)\" at beginning of words to "
+               "(case-insensitive, use \"(?-i)\" at beginning of words to "
                "make them case sensitive; special variables $nick, $channel and "
                "$server are replaced by their values), these words are added to "
                "buffer property \"highlight_words\" only when buffer is created "
@@ -3427,7 +3427,7 @@ irc_config_init ()
             irc_config_file, irc_config_section_look,
             "highlight_pv", "string",
             N_("comma separated list of words to highlight in private buffers "
-               "(case insensitive, use \"(?-i)\" at beginning of words to "
+               "(case-insensitive, use \"(?-i)\" at beginning of words to "
                "make them case sensitive; special variables $nick, $channel and "
                "$server are replaced by their values), these words are added to "
                "buffer property \"highlight_words\" only when buffer is created "
@@ -3439,7 +3439,7 @@ irc_config_init ()
             irc_config_file, irc_config_section_look,
             "highlight_server", "string",
             N_("comma separated list of words to highlight in server buffers "
-               "(case insensitive, use \"(?-i)\" at beginning of words to "
+               "(case-insensitive, use \"(?-i)\" at beginning of words to "
                "make them case sensitive; special variables $nick, $channel and "
                "$server are replaced by their values), these words are added to "
                "buffer property \"highlight_words\" only when buffer is created "
@@ -3543,9 +3543,9 @@ irc_config_init ()
             "list_buffer_sort", "string",
             N_("comma-separated list of fields to sort channels (see /help list "
                "for a list of fields); char \"-\" can be used before field to "
-               "reverse order, char \"~\" can be used to do a case insensitive "
+               "reverse order, char \"~\" can be used to do a case-insensitive "
                "comparison; example: \"-count,~name\" for biggest channels "
-               "first then case insensitive sort on name"),
+               "first then case-insensitive sort on name"),
             NULL, 0, 0, "~name2", NULL, 0,
             NULL, NULL, NULL,
             NULL, NULL, NULL,
@@ -3639,7 +3639,7 @@ irc_config_init ()
             irc_config_file, irc_config_section_look,
             "notice_nicks_disable_notify", "string",
             N_("comma separated list of nicks for which notifications are "
-               "disabled in notice messages (comparison is case insensitive)"),
+               "disabled in notice messages (comparison is case-insensitive)"),
             NULL, 0, 0, "chanserv,nickserv", NULL, 0,
             NULL, NULL, NULL,
             NULL, NULL, NULL,
