@@ -85,7 +85,7 @@ extern struct t_arraylist *relay_irc_get_list_caps ();
              && (arraylist_size (sent_messages_client) > 0))            \
     {                                                                   \
         char **msg = test_build_error (                                 \
-            "Unexpected message(s) sent to the relay cleint",           \
+            "Unexpected message(s) sent to the relay client",           \
             NULL,                                                       \
             NULL,                                                       \
             NULL,                                                       \
