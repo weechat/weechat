@@ -2482,7 +2482,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - irc: fix groups in channel nicklist when reconnecting to a server that supports more nick prefixes than the previously connected server
 - irc: fix auto-switch to channel buffer when doing `/join channel` (without "#")
 - logger: fix memory leaks in backlog
-- logger: replace backslashs in name by logger replacement char under Cygwin ([bug #41207](https://savannah.nongnu.org/bugs/?41207))
+- logger: replace backslashes in name by logger replacement char under Cygwin ([bug #41207](https://savannah.nongnu.org/bugs/?41207))
 - lua: fix crash on calls to callbacks during load of script
 - python: fix load of scripts with Python ≥ 3.3
 - relay: fix memory leak on unload of relay plugin
