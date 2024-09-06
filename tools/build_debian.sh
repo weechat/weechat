@@ -76,7 +76,7 @@ Syntax: $0 devel|stable|<version> distro
   test-patches  test that all Debian/Ubuntu patches apply fine (with git apply --check)
 
 IMPORTANT: the current OS must match the distro, and the WeeChat sources
-           must be checkouted in the appropriate version (this script
+           must be checked out in the appropriate version (this script
            does not checkout sources on a specific tag).
 
 Examples:
