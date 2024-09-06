@@ -60,16 +60,16 @@ enum t_gui_color_enum
      * following obsolete colors are kept here for compatibility
      * with WeeChat <= 0.3.3
      */
-    GUI_COLOR_CHAT_NICK1_OBSOLETE,  /* not used any more since WeeChat 0.3.4 */
-    GUI_COLOR_CHAT_NICK2_OBSOLETE,  /* not used any more since WeeChat 0.3.4 */
-    GUI_COLOR_CHAT_NICK3_OBSOLETE,  /* not used any more since WeeChat 0.3.4 */
-    GUI_COLOR_CHAT_NICK4_OBSOLETE,  /* not used any more since WeeChat 0.3.4 */
-    GUI_COLOR_CHAT_NICK5_OBSOLETE,  /* not used any more since WeeChat 0.3.4 */
-    GUI_COLOR_CHAT_NICK6_OBSOLETE,  /* not used any more since WeeChat 0.3.4 */
-    GUI_COLOR_CHAT_NICK7_OBSOLETE,  /* not used any more since WeeChat 0.3.4 */
-    GUI_COLOR_CHAT_NICK8_OBSOLETE,  /* not used any more since WeeChat 0.3.4 */
-    GUI_COLOR_CHAT_NICK9_OBSOLETE,  /* not used any more since WeeChat 0.3.4 */
-    GUI_COLOR_CHAT_NICK10_OBSOLETE, /* not used any more since WeeChat 0.3.4 */
+    GUI_COLOR_CHAT_NICK1_OBSOLETE,  /* not used anymore since WeeChat 0.3.4 */
+    GUI_COLOR_CHAT_NICK2_OBSOLETE,  /* not used anymore since WeeChat 0.3.4 */
+    GUI_COLOR_CHAT_NICK3_OBSOLETE,  /* not used anymore since WeeChat 0.3.4 */
+    GUI_COLOR_CHAT_NICK4_OBSOLETE,  /* not used anymore since WeeChat 0.3.4 */
+    GUI_COLOR_CHAT_NICK5_OBSOLETE,  /* not used anymore since WeeChat 0.3.4 */
+    GUI_COLOR_CHAT_NICK6_OBSOLETE,  /* not used anymore since WeeChat 0.3.4 */
+    GUI_COLOR_CHAT_NICK7_OBSOLETE,  /* not used anymore since WeeChat 0.3.4 */
+    GUI_COLOR_CHAT_NICK8_OBSOLETE,  /* not used anymore since WeeChat 0.3.4 */
+    GUI_COLOR_CHAT_NICK9_OBSOLETE,  /* not used anymore since WeeChat 0.3.4 */
+    GUI_COLOR_CHAT_NICK10_OBSOLETE, /* not used anymore since WeeChat 0.3.4 */
     GUI_COLOR_CHAT_HOST,
     GUI_COLOR_CHAT_DELIMITERS,
     GUI_COLOR_CHAT_HIGHLIGHT,

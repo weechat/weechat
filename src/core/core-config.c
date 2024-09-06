@@ -4571,7 +4571,7 @@ config_weechat_init_options ()
         config_color_chat_nick_offline = config_file_new_option (
             weechat_config_file, weechat_config_section_color,
             "chat_nick_offline", "color",
-            N_("text color for offline nick (not in nicklist any more); this "
+            N_("text color for offline nick (not in nicklist anymore); this "
                "color is used only if option weechat.look.color_nick_offline is "
                "enabled"),
             NULL, GUI_COLOR_CHAT_NICK_OFFLINE, 0, "242", NULL, 0,

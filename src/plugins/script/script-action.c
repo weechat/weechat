@@ -843,7 +843,7 @@ script_action_run_hold (const char *name, int quiet)
             {
                 weechat_printf (NULL,
                                 _("%s: script \"%s\" is not "
-                                  "held any more"),
+                                  "held anymore"),
                                 SCRIPT_PLUGIN_NAME, name);
             }
         }

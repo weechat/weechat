@@ -12366,7 +12366,7 @@ WeeChat とプラグインが送信するシグナルのリスト:
 | String: text sent to buffer.
 | Text sent to a user buffer as input (sent only for buffers created with `/buffer add`). +
   If the return code of a callback is _WEECHAT_RC_OK_EAT_, then the string "q"
-  can not be used any more to close the buffer.
+  can not be used anymore to close the buffer.
 
 // TRANSLATION MISSING
 | weechat | [[hook_signal_buffer_user_closing_xxx]] buffer_user_closing_xxx ^(2)^ | 3.8

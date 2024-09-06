@@ -489,7 +489,7 @@ irc_upgrade_read_cb (const void *pointer, void *data,
                     if (str)
                         irc_upgrade_current_server->isupport = strdup (str);
                     /*
-                     * "prefix" is not any more in this infolist (since
+                     * "prefix" is not anymore in this infolist (since
                      * WeeChat 0.3.4), but we read it to keep compatibility
                      * with old WeeChat versions, on /upgrade)
                      */
@@ -806,7 +806,7 @@ irc_upgrade_read_cb (const void *pointer, void *data,
                     if (ptr_nick)
                     {
                         /*
-                         * "flags" is not any more in this infolist (since
+                         * "flags" is not anymore in this infolist (since
                          * WeeChat 0.3.4), but we read it to keep compatibility
                          * with old WeeChat versions, on /upgrade)
                          * We try to restore prefixes with old flags, but

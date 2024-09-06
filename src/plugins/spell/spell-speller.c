@@ -265,7 +265,7 @@ spell_speller_remove_unused_cb (void *data,
 
     used_spellers = (struct t_hashtable *)data;
 
-    /* if speller is not in "used_spellers", remove it (not used any more) */
+    /* if speller is not in "used_spellers", remove it (not used anymore) */
     if (!weechat_hashtable_has_key (used_spellers, key))
         weechat_hashtable_remove (hashtable, key);
 }

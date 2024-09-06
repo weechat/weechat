@@ -10866,7 +10866,7 @@ Argomenti:
 * _flag_write_: 1 = cattura l'evento scrittura (write), 0 = ignora
 // TRANSLATION MISSING
 * _flag_exception_: 1 = cattura l'eccezione evento (event), 0 = ignora
-  (_WeeChat ≥ 1.3_: this argument is ignored and not used any more)
+  (_WeeChat ≥ 1.3_: this argument is ignored and not used anymore)
 * _callback_: funzione che chiama un evento selezionato che si verifica
   per un file (o un socket), argomenti e valore restituito:
 ** _const void *pointer_: puntatore
@@ -10934,7 +10934,7 @@ Hook su un processo (lanciato con un fork), e cattura l'output.
 
 [NOTE]
 // TRANSLATION MISSING
-Since version 0.3.9.2, the shell is not used any more to execute the command.
+Since version 0.3.9.2, the shell is not used anymore to execute the command.
 WeeChat makes an automatic split of command and arguments (like the shell does).
 If the split is not correct (according to quotes in your command), or if you
 want to use shell, you can use function
@@ -12705,7 +12705,7 @@ List of signals sent by WeeChat and plugins:
 | String: text sent to buffer.
 | Text sent to a user buffer as input (sent only for buffers created with `/buffer add`). +
   If the return code of a callback is _WEECHAT_RC_OK_EAT_, then the string "q"
-  can not be used any more to close the buffer.
+  can not be used anymore to close the buffer.
 
 // TRANSLATION MISSING
 | weechat | [[hook_signal_buffer_user_closing_xxx]] buffer_user_closing_xxx ^(2)^ | 3.8

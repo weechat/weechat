@@ -1479,7 +1479,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### Bug fixes
 
-- core: don't execute command scheduled by `/repeat` and `/wait` if the buffer does not exist any more
+- core: don't execute command scheduled by `/repeat` and `/wait` if the buffer does not exist anymore
 - core: set max length to 4096 for `/secure passphrase` ([#1323](https://github.com/weechat/weechat/issues/1323))
 - core: refilter only affected buffers on filter change ([#1309](https://github.com/weechat/weechat/issues/1309), [#1311](https://github.com/weechat/weechat/issues/1311))
 - fset: fix slow refresh of fset buffer during `/reload` ([#1313](https://github.com/weechat/weechat/issues/1313))
@@ -1985,7 +1985,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 - core: fix execution of empty command name ("/" and "/ " are not valid commands)
 - core: fix memory leak when using multiple `-d` or `-r` in command line arguments
-- core: don't complain any more about "tmux" and "tmux-256color" $TERM values when WeeChat is running under Tmux ([#519](https://github.com/weechat/weechat/issues/519))
+- core: don't complain anymore about "tmux" and "tmux-256color" $TERM values when WeeChat is running under Tmux ([#519](https://github.com/weechat/weechat/issues/519))
 - core: fix truncated messages after a word with a length of zero on screen (for example a zero width space: U+200B) ([bug #40985](https://savannah.nongnu.org/bugs/?40985), [#502](https://github.com/weechat/weechat/issues/502))
 - api: fix handle of invalid escape in function string_convert_escaped_chars
 - alias: do not allow slashes and spaces in alias name ([#646](https://github.com/weechat/weechat/issues/646))
@@ -3012,7 +3012,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 - core: add library "pthread" in CMake file for link on OpenBSD
 - core: add WEECHAT_HOME option in CMake and configure to setup default WeeChat home (default is "~/.weechat") ([task #11266](https://savannah.nongnu.org/task/?11266))
-- core: fix compilation under OpenBSD 5.0 (lib utf8 not needed any more) ([bug #34727](https://savannah.nongnu.org/bugs/?34727))
+- core: fix compilation under OpenBSD 5.0 (lib utf8 not needed anymore) ([bug #34727](https://savannah.nongnu.org/bugs/?34727))
 - core: fix compilation error with "pid_t" on macOS ([bug #34639](https://savannah.nongnu.org/bugs/?34639))
 
 ## Version 0.3.6 (2011-10-22)
@@ -3231,7 +3231,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - core: fix bug with message "day changed to", sometimes displayed several times wrongly
 - core: fix default value of bar items options ([bug #31422](https://savannah.nongnu.org/bugs/?31422))
 - core: fix bug with buffer name in `/bar scroll` command
-- core: optimize incremental search in buffer: do not search any more when chars are added to a text not found ([bug #31167](https://savannah.nongnu.org/bugs/?31167))
+- core: optimize incremental search in buffer: do not search anymore when chars are added to a text not found ([bug #31167](https://savannah.nongnu.org/bugs/?31167))
 - core: fix memory leaks when removing item in hashtable and when setting highlight words in buffer
 - core: use similar behavior for keys bound to local or global history ([bug #30759](https://savannah.nongnu.org/bugs/?30759))
 - alias: complete with alias value for second argument of command `/alias`
@@ -3553,7 +3553,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - fix bug with flock when home is on NFS filesystem ([bug #20913](https://savannah.nongnu.org/bugs/?20913))
 - fix user modes in nicklist when ban and nick mode are received in the same MODE message ([bug #20870](https://savannah.nongnu.org/bugs/?20870))
 - fix IRC message 333: silently ignore message if error when parsing it
-- fix server option "command_delay": does not freeze WeeChat any more
+- fix server option "command_delay": does not freeze WeeChat anymore
 - fix bug with highlight and UTF-8 chars around word ([bug #20753](https://savannah.nongnu.org/bugs/?20753))
 - fix nick prefix display on servers that doesn't support all prefixes ([bug #20025](https://savannah.nongnu.org/bugs/?20025))
 - fix terminal encoding detection when NLS is disabled ([bug #20646](https://savannah.nongnu.org/bugs/?20646))
@@ -3808,7 +3808,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - add hostname/IP option for connection to server
 - add `/setp` command (set plugin options)
 - aliases are executed before WeeChat/IRC commands, add `/builtin` command
-- add `/cycle` command, `/part` command does close buffer any more
+- add `/cycle` command, `/part` command does close buffer anymore
 
 ### Internationalization
 
@@ -3886,7 +3886,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - fix `/mode` command output
 - fix completion problem in private with nicks
 - script plugins now load scripts in WeeChat system share directory
-- `/msg` command does not open any buffer any more
+- `/msg` command does not open any buffer anymore
 - fix crash when using global history (when older entry is removed)
 - fix display bug with `/kill` command
 - fix bug with `/upgrade` and servers buffer

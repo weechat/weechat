@@ -1286,7 +1286,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     /*
      * prevent guile to use its own gmp allocator, because it can conflict
      * with other plugins using GnuTLS like relay, which can crash WeeChat
-     * on unload (or exit); this is not needed any more with Guile ≥ 3.0.8
+     * on unload (or exit); this is not needed anymore with Guile ≥ 3.0.8
      */
     scm_install_gmp_memory_functions = 0;
 #endif /* defined(HAVE_GUILE_GMP_MEMORY_FUNCTIONS) && (SCM_MAJOR_VERSION < 3 || (SCM_MAJOR_VERSION == 3 && SCM_MINOR_VERSION == 0 && SCM_MICRO_VERSION < 8)) */

@@ -828,7 +828,7 @@ gui_window_string_apply_color_fg_bg (unsigned char **string, WINDOW *window)
         }
     }
     /*
-     * note: the comma is an old separator not used any more
+     * note: the comma is an old separator not used anymore
      * (since WeeChat 2.6), but we still use it here so in case of /upgrade
      * this will not break colors in old messages
      */

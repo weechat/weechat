@@ -6095,7 +6095,7 @@ IRC_COMMAND_CALLBACK(server)
 
         weechat_printf (
             NULL,
-            _("%s: server %s%s%s is not temporary any more"),
+            _("%s: server %s%s%s is not temporary anymore"),
             IRC_PLUGIN_NAME,
             IRC_COLOR_CHAT_SERVER,
             argv[2],

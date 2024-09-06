@@ -1111,7 +1111,7 @@ end:
 }
 
 /*
- * Checks if nick of line is offline (not in nicklist any more).
+ * Checks if nick of line is offline (not in nicklist anymore).
  *
  * Returns:
  *   1: nick is offline

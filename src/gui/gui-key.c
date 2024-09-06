@@ -304,7 +304,7 @@ gui_key_grab_end_timer_cb (const void *pointer, void *data, int remaining_calls)
  * Gets internal code from user key name.
  *
  * Note: this function works with legacy keys (WeeChat < 4.0.0) and should not
- * be used any more.
+ * be used anymore.
  *
  * Examples:
  *   "ctrl-R" => "\x01" + "r" (lower case enforced for ctrl keys)

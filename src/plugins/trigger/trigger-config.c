@@ -366,7 +366,7 @@ trigger_config_create_trigger_option (const char *trigger_name, int index_option
                 trigger_config_file, trigger_config_section_trigger,
                 option_name, "boolean",
                 N_("if disabled, the hooks are removed from trigger, so it is "
-                   "not called any more"),
+                   "not called anymore"),
                 NULL, 0, 0, value, NULL, 0,
                 NULL, NULL, NULL,
                 &trigger_config_change_trigger_enabled, NULL, NULL,

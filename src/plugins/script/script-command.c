@@ -359,7 +359,7 @@ script_command_init ()
             N_("raw[installremove]: install or remove script(s), depending on current "
                "state"),
             N_("raw[hold]: hold/unhold script(s) (a script held will not be "
-               "upgraded any more and cannot be removed)"),
+               "upgraded anymore and cannot be removed)"),
             N_("raw[-q]: quiet mode: do not display messages"),
             N_("raw[upgrade]: upgrade all installed scripts which are obsolete "
                "(new version available)"),

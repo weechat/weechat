@@ -494,7 +494,7 @@ buflist_config_init ()
             N_("add newline between the buffers displayed, so each buffer is "
                "displayed on a separate line (recommended); if disabled, "
                "newlines must be manually added in the formats with \"${\\n}\", "
-               "and the mouse actions are not possible any more"),
+               "and the mouse actions are not possible anymore"),
             NULL, 0, 0, "on", NULL, 0,
             NULL, NULL, NULL,
             &buflist_config_change_buflist, NULL, NULL,
@@ -530,7 +530,7 @@ buflist_config_init ()
             "enabled", "boolean",
             N_("enable buflist; it is recommended to use this option instead of "
                "just hiding the bar because it also removes some internal hooks "
-               "that are not needed any more when the bar is hidden; you can "
+               "that are not needed anymore when the bar is hidden; you can "
                "also use the command \"/buflist toggle\" or use the default key "
                "alt+shift+b"),
             NULL, 0, 0, "on", NULL, 0,

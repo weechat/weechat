@@ -280,7 +280,7 @@ input_data (struct t_gui_buffer *buffer, const char *data,
     while (ptr_data)
     {
         /*
-         * if the buffer pointer is not valid any more (or if it's another
+         * if the buffer pointer is not valid anymore (or if it's another
          * buffer), use the current buffer for the next command
          */
         if (!first_command

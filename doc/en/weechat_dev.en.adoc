@@ -1048,16 +1048,16 @@ _src/gui/gui-color.h_):
 | 14   | weechat.color.chat_nick
 | 15   | weechat.color.chat_nick_self
 | 16   | weechat.color.chat_nick_other
-| 17   | _(not used any more since WeeChat 0.3.4)_
-| 18   | _(not used any more since WeeChat 0.3.4)_
-| 19   | _(not used any more since WeeChat 0.3.4)_
-| 20   | _(not used any more since WeeChat 0.3.4)_
-| 21   | _(not used any more since WeeChat 0.3.4)_
-| 22   | _(not used any more since WeeChat 0.3.4)_
-| 23   | _(not used any more since WeeChat 0.3.4)_
-| 24   | _(not used any more since WeeChat 0.3.4)_
-| 25   | _(not used any more since WeeChat 0.3.4)_
-| 26   | _(not used any more since WeeChat 0.3.4)_
+| 17   | _(not used anymore since WeeChat 0.3.4)_
+| 18   | _(not used anymore since WeeChat 0.3.4)_
+| 19   | _(not used anymore since WeeChat 0.3.4)_
+| 20   | _(not used anymore since WeeChat 0.3.4)_
+| 21   | _(not used anymore since WeeChat 0.3.4)_
+| 22   | _(not used anymore since WeeChat 0.3.4)_
+| 23   | _(not used anymore since WeeChat 0.3.4)_
+| 24   | _(not used anymore since WeeChat 0.3.4)_
+| 25   | _(not used anymore since WeeChat 0.3.4)_
+| 26   | _(not used anymore since WeeChat 0.3.4)_
 | 27   | weechat.color.chat_host
 | 28   | weechat.color.chat_delimiters
 | 29   | weechat.color.chat_highlight

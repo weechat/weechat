@@ -3522,7 +3522,7 @@ config_file_update_data_read (struct t_config_file *config_file,
         gui_chat_printf (
             NULL,
             _("%sImportant: file %s has been updated from version %d to %d, "
-              "it is not compatible and can not be loaded any more with any "
+              "it is not compatible and can not be loaded anymore with any "
               "older version"),
             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
             filename,

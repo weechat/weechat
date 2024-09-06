@@ -281,7 +281,7 @@ and can cause a crash of WeeChat).
 
 The functions [config_set_plugin](https://weechat.org/doc/weechat/plugin/#_config_set_plugin)
 and [config_set_desc_plugin](https://weechat.org/doc/weechat/plugin/#_config_set_desc_plugin)
-are not converting any more the option name to lower case because since version 4.0.0,
+are not converting anymore the option name to lower case because since version 4.0.0,
 the name of options is case sensitive.
 
 ### Grab raw key and command
@@ -343,7 +343,7 @@ automatically upgraded to a new version:
 files in any older WeeChat version < 4.0.0 once you have run any version ≥ 4.0.0
 at least one time.\
 For example the new key names make the input completely broken (you can not
-enter most chars in input any more and Enter key does not work).
+enter most chars in input anymore and Enter key does not work).
 
 ### Key bindings improvements
 
@@ -368,7 +368,7 @@ for more information.
 
 Aliases are now used for keys, like `f1`, `home`, `return`, etc.\
 In addition, a comma is now required between different keys, for example `ctrl-cb`
-is not valid any more and must be replaced by `ctrl-c,b`.
+is not valid anymore and must be replaced by `ctrl-c,b`.
 
 The keys in weechat.conf are automatically converted from legacy format on first
 run or upgrade with a legacy configuration file.
@@ -381,7 +381,7 @@ The following fixes are done on keys when they are defined:
 
 - transform upper case ctrl keys to lower case
 - replace space char by `space`
-- replace `meta2-` by `meta-[` (modifier `meta2-` doesn't exist any more)
+- replace `meta2-` by `meta-[` (modifier `meta2-` doesn't exist anymore)
 - mouse modifiers are now in this order: `alt-` then `ctrl-`.
 
 A warning is displayed when a raw key or invalid key is added.\
@@ -542,7 +542,7 @@ WeeChat must now be built with CMake.
 
 The auto-generated files for documentation are now built with `weechat-headless`,
 after compilation of WeeChat and the plugins (the files are not in repository
-any more).\
+anymore).\
 This implies all plugins must be compiled and loaded in order to have complete docs
 (User's guide and Plugin API reference).
 
@@ -561,7 +561,7 @@ cmake .. -DENABLE_PHP=OFF -DENABLE_DOC=ON -DENABLE_DOC_INCOMPLETE=ON
 #### Tarballs
 
 The command `make dist` now builds only `.gz` and `.xz` compressed tarballs.\
-Formats `.bz2` and `.zst` are not built any more.
+Formats `.bz2` and `.zst` are not built anymore.
 
 #### RPM packaging
 
@@ -693,7 +693,7 @@ _WeeChat User's guide_.
 ### Remove Python 2 support
 
 The CMake option `ENABLE_PYTHON2` and autotools option `--enable-python2`
-have been removed, and WeeChat can not be compiled with Python 2.x any more.
+have been removed, and WeeChat can not be compiled with Python 2.x anymore.
 
 ### Callbacks of function config_new_option
 
@@ -1322,9 +1322,9 @@ Motivations:
 - GnuTLS library should be available everywhere
 - reduce complexity of code and tests of builds.
 
-### The trigger "cmd_pass" does not hide any more values of /set command
+### The trigger "cmd_pass" does not hide anymore values of /set command
 
-The default trigger "cmd_pass" does not hide any more values of options in `/set`
+The default trigger "cmd_pass" does not hide anymore values of options in `/set`
 command which contain "password" in the name.
 
 The reason is that it was masking values of options that contains the word
@@ -1428,7 +1428,7 @@ The command line option `-a` (or `--no-connect`), which can also be used in the
 `/plugin` command, is now used to set a new info called `auto_connect`
 (see the function [info_get](https://weechat.org/doc/weechat/plugin/#_info_get) in the Plugin API reference).
 
-Therefore, the option is not sent any more to the function `weechat_plugin_init`
+Therefore, the option is not sent anymore to the function `weechat_plugin_init`
 of plugins.\
 The plugins using this option must now get the info `auto_connect` and check
 if the value is "1" (a string with just `1`).
@@ -1505,7 +1505,7 @@ For more information, see the WeeChat scripting guide: chapter about strings
 received in callbacks (see also issue [#1389](https://github.com/weechat/weechat/issues/1389)).
 
 Note: there are no changes for Python 2 (which is now deprecated and should not
-be used any more), the strings sent to callbacks are always of type `str`, and
+be used anymore), the strings sent to callbacks are always of type `str`, and
 may contain invalid UTF-8 data, in the cases mentioned in the WeeChat scripting
 guide.
 
@@ -1645,7 +1645,7 @@ This affects only C code, no changes are required in scripts.
 
 ### Nick completer
 
-A space is not added automatically any more when you complete a nick at the
+A space is not added automatically anymore when you complete a nick at the
 beginning of command line.\
 Purpose of this change is to be more flexible: you can choose whether the space
 is added or not (it was always added in previous releases).
@@ -1856,7 +1856,7 @@ sudo apt-get install weechat-devel-python weechat-devel-perl
 
 ### Evaluation in buflist
 
-The evaluation of expressions in buflist options is not recursive any more,
+The evaluation of expressions in buflist options is not recursive anymore,
 to prevent too many evaluations, for example in buffer variables
 (see issue [#1060](https://github.com/weechat/weechat/issues/1060) for more information).\
 If you are using custom variables/options containing evaluated expressions,
@@ -2190,7 +2190,7 @@ You can restore the default "beep" trigger with the following command:
 The API function [command](https://weechat.org/doc/weechat/plugin/#_command)
 now sends the value returned return by command callback.
 
-WeeChat does not display any more an error when a command returns
+WeeChat does not display anymore an error when a command returns
 `WEECHAT_RC_ERROR`. Consequently, all plugins/scripts should display an
 explicit error message before returning `WEECHAT_RC_ERROR`.
 
@@ -2254,7 +2254,7 @@ instead of milliseconds:
 
 ### Channel type not added by default on /join
 
-The channel type is not any more automatically added to a channel name on join
+The channel type is not anymore automatically added to a channel name on join
 (for example `/join weechat` will not send `/join #weechat`).
 
 If you are lazy and want to automatically add the channel type, you can turn on
@@ -2287,7 +2287,7 @@ You can rebind the key `Alt`+`j`, `Alt`+`l` (`L`):
 ```
 
 Note: the command `/input jump_last_buffer` still works for compatibility reasons,
-but it should not be used any more.
+but it should not be used anymore.
 
 Similarly, a new key has been added to jump to first buffer: `Alt`+`j`, `Alt`+`f`.
 You can add it with the following command:
@@ -2355,8 +2355,8 @@ if int(highlight):
 ### Colors in messages
 
 The color code for "reverse video" in IRC message has been fixed: now WeeChat
-uses 0x16 like other clients (and not 0x12 any more).\
-The code 0x12 is not decoded any more, so if it is received (for example from
+uses 0x16 like other clients (and not 0x12 anymore).\
+The code 0x12 is not decoded anymore, so if it is received (for example from
 an old WeeChat version), it is not displayed as reverse video.
 
 The color code for "underlined text" in input line has been fixed: now WeeChat
@@ -2407,7 +2407,7 @@ The default value for status bar items becomes:
 
 ### IRC messages on channel join
 
-The names are not displayed any more by default on channel join (they are in
+The names are not displayed anymore by default on channel join (they are in
 nicklist anyway).
 
 Names can be displayed with the value "353" in option
@@ -2435,7 +2435,7 @@ You should check the value of both options and fix them if needed.
 ### Day change message
 
 The day change message is now dynamically displayed, and therefore is not stored
-as a line in buffer any more.
+as a line in buffer anymore.
 
 Option weechat.look.day_change_time_format has been split into two options
 weechat.look.day_change_message_{1date|2dates} (color codes are allowed in
@@ -2525,7 +2525,7 @@ creating this link on make install).
 
 ### Man page / documentation
 
-Documentation is not built by default any more, you have to use option
+Documentation is not built by default anymore, you have to use option
 `-DENABLE_DOC=ON` in cmake command to enable it.
 
 The man page is now built with asciidoc and translated in several
@@ -2553,7 +2553,7 @@ For more info about content of message, see document _WeeChat Relay Protocol_.
 ### Dynamic nick prefix/suffix
 
 The nick prefix/suffix (for example: "<" and ">") are now dynamic and used on
-display (not stored any more in the line).
+display (not stored anymore in the line).
 
 Options moved from irc plugin (irc.conf) to core (weechat.conf):
 
@@ -2602,7 +2602,7 @@ FlashCo+ │ test       # 8, off
 After `/upgrade`, if you set new options to non-empty strings, and if old
 options were set to non-empty strings too, you will see double prefix/suffix
 on old messages, this is normal behavior (lines displayed before `/upgrade`
-have prefix/suffix saved in prefix, but new lines don't have them any more).
+have prefix/suffix saved in prefix, but new lines don't have them anymore).
 
 New options in logger plugin (logger.conf):
 
@@ -2812,7 +2812,7 @@ Cygwin).
 ### Extended regex
 
 Extended regex is used in filters and irc ignore, so some chars that needed
-escape in past do not need any more (for example `[0-9]\+` becomes `[0-9]+`),
+escape in past do not need anymore (for example `[0-9]\+` becomes `[0-9]+`),
 filters and ignore have to be manually fixed.
 
 Option weechat.look.highlight_regex becomes case insensitive by default, to
@@ -2829,7 +2829,7 @@ If you changed the value of this option, you must set it again after upgrade.
 
 ### Bold in colors
 
-Bold is not used any more for basic colors (used only if terminal has less than
+Bold is not used anymore for basic colors (used only if terminal has less than
 16 colors), a new option has been added to force bold if needed:
 weechat.look.color_basic_force_bold.
 
@@ -2838,7 +2838,7 @@ weechat.look.color_basic_force_bold.
 ### Colors
 
 If you have some colors defined in section "palette" with version 0.3.4, you
-should remove all colors defined, and add new aliases (it's not needed any more
+should remove all colors defined, and add new aliases (it's not needed anymore
 to add colors before using them).
 
 Colors for nick prefixes (char for op, voice, ..) are defined in a single

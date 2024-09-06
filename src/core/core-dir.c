@@ -358,7 +358,7 @@ dir_set_home_path (char *path)
     {
         /*
          * value of 4 is not mentioned in the message because it's kept only
-         * for compatibility with old releases, it should not be used any more
+         * for compatibility with old releases, it should not be used anymore
          */
         string_fprintf (stderr,
                         _("Error: wrong number of paths for home directories "

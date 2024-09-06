@@ -1183,7 +1183,7 @@ string_eval_path_home (const char *path,
 
     /*
      * replace "%h" by WeeChat home
-     * (deprecated: "%h" should not be used any more with WeeChat ≥ 3.2)
+     * (deprecated: "%h" should not be used anymore with WeeChat ≥ 3.2)
      */
     if (strncmp (path, "%h", 2) == 0)
     {

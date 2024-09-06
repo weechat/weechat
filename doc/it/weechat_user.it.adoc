@@ -5385,7 +5385,7 @@ A trigger has the following options (names are
 
 | enabled | `on`, `off`
 | When option is `off`, the trigger is disabled and actions are not executed
-  any more.
+  anymore.
 
 | hook | `+signal+`, `+hsignal+`, `+modifier+`, `+line+`, `+print+`, `+command+`,
   `+command_run+`, `+timer+`, `+config+`, `+focus+`, `+info+`, `+info_hashtable+`

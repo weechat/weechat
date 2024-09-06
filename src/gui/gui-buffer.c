@@ -4578,7 +4578,7 @@ gui_buffer_unmerge (struct t_gui_buffer *buffer, int number)
 
     if (num_merged == 2)
     {
-        /* only one buffer will remain, so it will not be merged any more */
+        /* only one buffer will remain, so it will not be merged anymore */
         gui_line_mixed_free_all (buffer);
         gui_line_lines_free (buffer->mixed_lines);
         for (ptr_buffer = gui_buffers; ptr_buffer;
