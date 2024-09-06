@@ -1125,9 +1125,9 @@ class UnparseGuile(UnparsePython):
         )
 
 
-class UnparseJavascript(UnparsePython):
+class UnparseJavaScript(UnparsePython):
     """
-    Unparse AST to generate Javascript script code.
+    Unparse AST to generate JavaScript script code.
 
     Note: only part of AST types are supported (just the types used by
     the script to test WeeChat scripting API).
