@@ -793,14 +793,14 @@ TEST(RelayIrcWithClient, RecvCommandCapab)
     LONGS_EQUAL(0, RELAY_IRC_DATA(ptr_relay_client, server_capabilities));
     LONGS_EQUAL(0, RELAY_IRC_DATA(ptr_relay_client, cap_end_received));
 
-    /* request with empty list: end of capability negociation */
+    /* request with empty list: end of capability negotiation */
     CLIENT_RECV(":alice!user@host CAP REQ :");
     CHECK_SENT_CLIENT(":weechat.relay.irc CAP nick NAK :");
     LONGS_EQUAL(1, RELAY_IRC_DATA(ptr_relay_client, cap_end_received));
 
     RELAY_IRC_DATA(ptr_relay_client, cap_end_received) = 0;
 
-    /* end capability negociation */
+    /* end capability negotiation */
     CLIENT_RECV(":alice!user@host CAP END");
     LONGS_EQUAL(1, RELAY_IRC_DATA(ptr_relay_client, cap_end_received));
 }
