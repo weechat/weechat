@@ -59,7 +59,7 @@ input_exec_data (struct t_gui_buffer *buffer, const char *data)
     else
     {
         gui_chat_printf (buffer,
-                         _("%sYou can not write text in this "
+                         _("%sYou cannot write text in this "
                            "buffer"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
     }

@@ -4245,7 +4245,7 @@ string_levenshtein (const char *string1, const char *string2,
  *
  * If allow_escape == 1, the prefix/suffix can be escaped with a backslash
  * (which is then omitted in the result).
- * If allow_escape == 0, the backslash is kept as-is and can not be
+ * If allow_escape == 0, the backslash is kept as-is and cannot be
  * used to escape the prefix/suffix.
  *
  * Argument "list_prefix_no_replace" is a list to prevent replacements in

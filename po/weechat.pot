@@ -3578,7 +3578,7 @@ msgstr ""
 #, c-format
 msgid ""
 "%sImportant: file %s has been updated from version %d to %d, it is not "
-"compatible and can not be loaded any more with any older version"
+"compatible and cannot be loaded any more with any older version"
 msgstr ""
 
 #, c-format
@@ -4902,7 +4902,7 @@ msgid "%sError sending signal %d to pid %d: %s"
 msgstr ""
 
 #, c-format
-msgid "%sYou can not write text in this buffer"
+msgid "%sYou cannot write text in this buffer"
 msgstr ""
 
 #, c-format
@@ -5035,7 +5035,7 @@ msgstr ""
 
 #, c-format
 msgid ""
-"%sOption %s.%s.%s can not be changed because there are still encrypted data"
+"%sOption %s.%s.%s cannot be changed because there are still encrypted data"
 msgstr ""
 
 #, c-format
@@ -5244,7 +5244,7 @@ msgid "file \"%s\" not found"
 msgstr ""
 
 #, c-format
-msgid "can not write file \"%s\""
+msgid "cannot write file \"%s\""
 msgstr ""
 
 msgid "transfer error"
@@ -7464,7 +7464,7 @@ msgid ""
 msgstr ""
 
 #, c-format
-msgid "%s%s: \"%s\" command can not be executed on a server buffer"
+msgid "%s%s: \"%s\" command cannot be executed on a server buffer"
 msgstr ""
 
 #, c-format
@@ -7611,7 +7611,7 @@ msgid "%s%s: notification not found"
 msgstr ""
 
 #, c-format
-msgid "%s%s: \"%s\" command can not be executed with a channel name (\"%s\")"
+msgid "%s%s: \"%s\" command cannot be executed with a channel name (\"%s\")"
 msgstr ""
 
 #, c-format
@@ -7712,7 +7712,7 @@ msgstr ""
 
 #, c-format
 msgid ""
-"%s%s: you can not delete server \"%s\" because you are connected to. Try \"/"
+"%s%s: you cannot delete server \"%s\" because you are connected to. Try \"/"
 "disconnect %s\" before."
 msgstr ""
 
@@ -12437,7 +12437,7 @@ msgstr ""
 
 #, c-format
 msgid ""
-"%s%s: you can not delete remote relay \"%s\" because you are connected to. "
+"%s%s: you cannot delete remote relay \"%s\" because you are connected to. "
 "Try \"/remote disconnect %s\" before."
 msgstr ""
 
@@ -13242,7 +13242,7 @@ msgstr ""
 
 #, c-format
 msgid ""
-"%s: script \"%s\" can not be installed because plugin \"%s\" is not loaded"
+"%s: script \"%s\" cannot be installed because plugin \"%s\" is not loaded"
 msgstr ""
 
 #, c-format
@@ -13259,7 +13259,7 @@ msgstr ""
 
 #, c-format
 msgid ""
-"%s: script \"%s\" can not be removed because plugin \"%s\" is not loaded"
+"%s: script \"%s\" cannot be removed because plugin \"%s\" is not loaded"
 msgstr ""
 
 #, c-format
@@ -13483,7 +13483,7 @@ msgstr ""
 msgid "In output of /script list, this additional status can be displayed:"
 msgstr ""
 
-msgid "  `?`: unknown script (can not be downloaded/updated)"
+msgid "  `?`: unknown script (cannot be downloaded/updated)"
 msgstr ""
 
 msgid ""
@@ -13656,7 +13656,7 @@ msgstr ""
 
 msgid ""
 "scripts to \"hold\": comma-separated list of scripts which will never been "
-"upgraded and can not be removed, for example: \"go.py,urlserver.py\""
+"upgraded and cannot be removed, for example: \"go.py,urlserver.py\""
 msgstr ""
 
 msgid ""
@@ -14029,7 +14029,7 @@ msgstr ""
 
 #, c-format
 msgid ""
-"%s%s: action \"%s\" can not be executed on trigger \"%s\" because it is "
+"%s%s: action \"%s\" cannot be executed on trigger \"%s\" because it is "
 "currently running"
 msgstr ""
 
@@ -14038,7 +14038,7 @@ msgid "Trigger \"%s\" restarted"
 msgstr ""
 
 #, c-format
-msgid "%s%s: a disabled trigger can not be restarted"
+msgid "%s%s: a disabled trigger cannot be restarted"
 msgstr ""
 
 #, c-format

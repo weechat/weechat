@@ -1101,7 +1101,7 @@ data).
 
 Examples of buffers:
 
-* core buffer (created by WeeChat on startup, can not be closed)
+* core buffer (created by WeeChat on startup, cannot be closed)
 * irc server (displays messages from server)
 * irc channel
 * irc private messages
@@ -1339,7 +1339,7 @@ Tags commonly used (non-exhaustive list):
 [width="100%",cols="1m,4",options="header"]
 |===
 | Tag              | Description
-| no_filter        | Line can not be filtered.
+| no_filter        | Line cannot be filtered.
 | no_highlight     | No highlight is possible on line.
 | no_log           | Line is not written in log file.
 | log0 … log9      | Level of log for line (see the <<command_logger_logger,/logger>> command).

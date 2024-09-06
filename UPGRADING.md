@@ -142,7 +142,7 @@ You can add this key with this command:
 Custom bar items must now have a different name than default bar items
 (for example the custom bar item name `time` is now forbidden).\
 If you have such names in your config, WeeChat will now fail to load them
-(this should not happen anyway, since such bar items can not be properly used
+(this should not happen anyway, since such bar items cannot be properly used
 or can cause a crash of WeeChat).
 
 ### Nick color infos
@@ -158,7 +158,7 @@ The server name has been removed from arguments.
 Custom bar items must now have a different name than default bar items
 (for example the custom bar item name `time` is now forbidden).\
 If you have such names in your config, WeeChat will now fail to load them
-(this should not happen anyway, since such bar items can not be properly used
+(this should not happen anyway, since such bar items cannot be properly used
 or can cause a crash of WeeChat).
 
 ## Version 4.1.0
@@ -272,7 +272,7 @@ Custom bar items must now have a different name than default bar items
 (for example the custom bar item name `time` is now forbidden).
 
 If you have such names in your config, WeeChat will now fail to load them
-(this should not happen anyway, since such bar items can not be properly used
+(this should not happen anyway, since such bar items cannot be properly used
 and can cause a crash of WeeChat).
 
 ## Version 4.0.1
@@ -342,7 +342,7 @@ automatically upgraded to a new version:
 > Because of this new format, you must **NOT** load the new configuration
 files in any older WeeChat version < 4.0.0 once you have run any version ≥ 4.0.0
 at least one time.\
-For example the new key names make the input completely broken (you can not
+For example the new key names make the input completely broken (you cannot
 enter most chars in input any more and Enter key does not work).
 
 ### Key bindings improvements
@@ -374,7 +374,7 @@ The keys in weechat.conf are automatically converted from legacy format on first
 run or upgrade with a legacy configuration file.
 
 For keys bound in external plugins or scripts, WeeChat tries to convert them
-on-the-fly to stay compatible, but this can not work in all cases (this is a
+on-the-fly to stay compatible, but this cannot work in all cases (this is a
 breaking change).
 
 The following fixes are done on keys when they are defined:
@@ -693,7 +693,7 @@ _WeeChat User's guide_.
 ### Remove Python 2 support
 
 The CMake option `ENABLE_PYTHON2` and autotools option `--enable-python2`
-have been removed, and WeeChat can not be compiled with Python 2.x anymore.
+have been removed, and WeeChat cannot be compiled with Python 2.x anymore.
 
 ### Callbacks of function config_new_option
 
@@ -1461,7 +1461,7 @@ now displayed on any missing dependency, if the optional feature was enabled
 (most features are automatically enabled, except documentation, man page and
 tests).
 
-Any error on a missing dependency is fatal, so WeeChat can not be compiled.
+Any error on a missing dependency is fatal, so WeeChat cannot be compiled.
 This is a new behavior compared to old versions, where any missing dependency
 was silently ignored and the compilation was possible anyway.
 

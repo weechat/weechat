@@ -784,7 +784,7 @@ script_config_init ()
             script_config_file, script_config_section_scripts,
             "hold", "string",
             N_("scripts to \"hold\": comma-separated list of scripts which "
-               "will never been upgraded and can not be removed, for example: "
+               "will never been upgraded and cannot be removed, for example: "
                "\"go.py,urlserver.py\""),
             NULL, 0, 0, "", NULL, 0,
             NULL, NULL, NULL,

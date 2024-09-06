@@ -447,7 +447,7 @@ void
 trigger_command_error_running (struct t_trigger *trigger, const char *action)
 {
     weechat_printf_date_tags (NULL, 0, "no_trigger",
-                              _("%s%s: action \"%s\" can not be executed on "
+                              _("%s%s: action \"%s\" cannot be executed on "
                                 "trigger \"%s\" because it is currently "
                                 "running"),
                               weechat_prefix ("error"), TRIGGER_PLUGIN_NAME,
@@ -487,7 +487,7 @@ trigger_command_set_enabled (struct t_trigger *trigger,
         else if (display_error)
         {
             weechat_printf_date_tags (NULL, 0, "no_trigger",
-                                      _("%s%s: a disabled trigger can not be "
+                                      _("%s%s: a disabled trigger cannot be "
                                         "restarted"),
                                       weechat_prefix ("error"),
                                       TRIGGER_PLUGIN_NAME);

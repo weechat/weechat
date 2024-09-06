@@ -177,7 +177,7 @@ secure_config_reload_cb (const void *pointer, void *data,
 }
 
 /*
- * Callback for changes on some options "weechat.crypt.*" (that can not be
+ * Callback for changes on some options "weechat.crypt.*" (that cannot be
  * changed if there are encrypted data.
  */
 
@@ -200,7 +200,7 @@ secure_config_check_crypt_option_cb (const void *pointer, void *data,
         return 1;
 
     gui_chat_printf (NULL,
-                     _("%sOption %s.%s.%s can not be changed because there "
+                     _("%sOption %s.%s.%s cannot be changed because there "
                        "are still encrypted data"),
                      gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                      option->config_file->name,
