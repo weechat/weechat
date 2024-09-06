@@ -528,7 +528,7 @@ weechat (0.3.6-1) unstable; urgency=low
   documentation when weechat-doc is installed (Closes: #632621)
   * Add a Suggest on weechat-doc for weechat and weechat-curses. Thanks to
   Jonathan Nieder for the proposal.
-  * Fix the cmake invokation from debian/rules (cflags and ldflags)
+  * Fix the cmake invocation from debian/rules (cflags and ldflags)
 
  -- Emmanuel Bouthenot <kolter@debian.org>  Wed, 26 Oct 2011 20:10:09 +0000
 
