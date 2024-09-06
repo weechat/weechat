@@ -7410,7 +7410,7 @@ irc_command_init ()
             N_("nick: nick or hostname; can be a POSIX extended regular expression "
                "if \"re:\" is given or a mask using \"*\" to replace zero or more "
                "chars (the regular expression can start with \"(?-i)\" to become "
-               "case sensitive)"),
+               "case-sensitive)"),
             N_("raw[del]: delete an ignore"),
             N_("number: number of ignore to delete (look at list to find it)"),
             N_("raw[-all]: delete all ignores"),

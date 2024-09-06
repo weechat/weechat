@@ -3344,7 +3344,7 @@ config_weechat_init_options ()
         config_look_buffer_search_case_sensitive = config_file_new_option (
             weechat_config_file, weechat_config_section_look,
             "buffer_search_case_sensitive", "boolean",
-            N_("default text search in buffer: case sensitive or not"),
+            N_("default text search in buffer: case-sensitive or not"),
             NULL, 0, 0, "off", NULL, 0,
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
         config_look_buffer_search_history = config_file_new_option (
@@ -3629,7 +3629,7 @@ config_weechat_init_options ()
             "highlight", "string",
             N_("comma separated list of words to highlight; case-insensitive "
                "comparison (use \"(?-i)\" at beginning of words to make them "
-               "case sensitive), words may begin or end with \"*\" for partial "
+               "case-sensitive), words may begin or end with \"*\" for partial "
                "match; example: \"test,(?-i)*toto*,flash*\""),
             NULL, 0, 0, "", NULL, 0,
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
@@ -3641,7 +3641,7 @@ config_weechat_init_options ()
                "highlight options (if the string is found in the message, the "
                "highlight is disabled and the other options are ignored), "
                "regular expression is case-insensitive (use \"(?-i)\" at "
-               "beginning to make it case sensitive), examples: "
+               "beginning to make it case-sensitive), examples: "
                "\"<flash.*>\", \"(?-i)<Flash.*>\""),
             NULL, 0, 0, "", NULL, 0,
             NULL, NULL, NULL,
@@ -3663,7 +3663,7 @@ config_weechat_init_options ()
                "has highlight or not, at least one match in string must be "
                "surrounded by delimiters (chars different from: alphanumeric, "
                "\"-\", \"_\" and \"|\"), regular expression is case-insensitive "
-               "(use \"(?-i)\" at beginning to make it case sensitive), "
+               "(use \"(?-i)\" at beginning to make it case-sensitive), "
                "examples: \"flashcode|flashy\", \"(?-i)FlashCode|flashy\""),
             NULL, 0, 0, "", NULL, 0,
             NULL, NULL, NULL,
@@ -5064,7 +5064,7 @@ config_weechat_init_options ()
         config_completion_case_sensitive = config_file_new_option (
             weechat_config_file, weechat_config_section_completion,
             "case_sensitive", "boolean",
-            N_("if enabled, the completion is case sensitive by default"),
+            N_("if enabled, the completion is case-sensitive by default"),
             NULL, 0, 0, "on", NULL, 0,
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
         config_completion_command_inline = config_file_new_option (
@@ -5095,7 +5095,7 @@ config_weechat_init_options ()
         config_completion_nick_case_sensitive = config_file_new_option (
             weechat_config_file, weechat_config_section_completion,
             "nick_case_sensitive", "boolean",
-            N_("case sensitive completion for nicks"),
+            N_("case-sensitive completion for nicks"),
             NULL, 0, 0, "off", NULL, 0,
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
         config_completion_nick_completer = config_file_new_option (

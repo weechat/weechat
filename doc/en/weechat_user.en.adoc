@@ -947,7 +947,7 @@ There are two search modes:
 
 * search in lines, for example `[Search lines (~ str,msg)]`, with the following info:
 ** `~`: case-insensitive
-** `==`: case sensitive
+** `==`: case-sensitive
 ** `str`: search string
 ** `regex`: search regular expression
 ** `msg`: search in messages
@@ -956,7 +956,7 @@ There are two search modes:
 * search in commands history, for example `[Search command (~ str,local)]`,
   with the following info:
 ** `~`: case-insensitive
-** `==`: case sensitive
+** `==`: case-sensitive
 ** `str`: search string
 ** `regex`: search regular expression
 ** `local`: search in buffer local history
@@ -3277,7 +3277,7 @@ Alias plugin lets you create alias for commands (from WeeChat or other
 plugins).
 
 Some aliases are created by default, with name in upper case (to make them
-different from standard commands); commands are not case sensitive in WeeChat,
+different from standard commands); commands are not case-sensitive in WeeChat,
 so for example `/close` runs the alias `/CLOSE`.
 
 List of default aliases:

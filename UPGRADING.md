@@ -148,7 +148,7 @@ or can cause a crash of WeeChat).
 ### Nick color infos
 
 The infos irc_nick_color and irc_nick_color_name are deprecated again, and the
-algorithm to compute IRC nick colors has been reverted to case sensitive.\
+algorithm to compute IRC nick colors has been reverted to case-sensitive.\
 The server name has been removed from arguments.
 
 ## Version 4.1.1
@@ -282,7 +282,7 @@ and can cause a crash of WeeChat).
 The functions [config_set_plugin](https://weechat.org/doc/weechat/plugin/#_config_set_plugin)
 and [config_set_desc_plugin](https://weechat.org/doc/weechat/plugin/#_config_set_desc_plugin)
 are not converting anymore the option name to lower case because since version 4.0.0,
-the name of options is case sensitive.
+the name of options is case-sensitive.
 
 ### Grab raw key and command
 
@@ -332,7 +332,7 @@ automatically upgraded to a new version:
 - weechat.conf: new key names
   (see <<v4.0.0_key_bindings_improvements,Key bindings improvements>>)
 - alias.conf: aliases converted to lower case
-  (see <<v4.0.0_case_sensitive_identifiers,Case sensitive identifiers>>)
+  (see <<v4.0.0_case_sensitive_identifiers,Case-sensitive identifiers>>)
 - irc.conf: options `ssl*` renamed to `tls*`
   (see <<v4.0.0_tls,TLS options and connections>>)
 - relay.conf: options and protocol `ssl*` renamed to `tls*`
@@ -427,9 +427,9 @@ New key binding (context "default"): ctrl-q => /print test
 With older releases, upper case was mandatory and lower case letter for control
 keys were not working at all.
 
-### Case sensitive identifiers
+### Case-sensitive identifiers
 
-Many identifiers are made case sensitive, including among others:
+Many identifiers are made case-sensitive, including among others:
 
 - configuration files, sections, options
 - commands, aliases
@@ -441,7 +441,7 @@ Many identifiers are made case sensitive, including among others:
 - scripts
 - triggers.
 
-See [Case sensitive identifiers specification](https://specs.weechat.org/specs/2023-001-case-sensitive-identifiers.html)
+See [Case-sensitive identifiers specification](https://specs.weechat.org/specs/2023-001-case-sensitive-identifiers.html)
 for more information.
 
 Accordingly, default aliases are now in lower case.\
@@ -2816,7 +2816,7 @@ escape in past do not need anymore (for example `[0-9]\+` becomes `[0-9]+`),
 filters and ignore have to be manually fixed.
 
 Option weechat.look.highlight_regex becomes case-insensitive by default, to
-make it case sensitive, use "(?-i)" at beginning of string, for example:
+make it case-sensitive, use "(?-i)" at beginning of string, for example:
 "(?-i)FlashCode|flashy".
 
 ## Version 0.3.6

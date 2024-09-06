@@ -998,7 +998,7 @@ hdata_hashtable (struct t_hdata *hdata, void *pointer, const char *name)
 /*
  * Compares a hdata variable of two objects.
  *
- * If case_sensitive == 1, the comparison of strings is case sensitive.
+ * If case_sensitive == 1, the comparison of strings is case-sensitive.
  *
  * Returns:
  *   -1: variable1 < variable2

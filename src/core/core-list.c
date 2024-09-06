@@ -164,7 +164,7 @@ weelist_add (struct t_weelist *weelist, const char *data, const char *where,
 }
 
 /*
- * Searches for data in a list (case sensitive).
+ * Searches for data in a list (case-sensitive).
  *
  * Returns pointer to item found, NULL if not found.
  */
@@ -188,7 +188,7 @@ weelist_search (struct t_weelist *weelist, const char *data)
 }
 
 /*
- * Searches for data in a list (case sensitive).
+ * Searches for data in a list (case-sensitive).
  *
  * Returns position of item found (>= 0), -1 if not found.
  */

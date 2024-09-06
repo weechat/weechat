@@ -959,7 +959,7 @@ TEST(GuiKey, IsSafe)
     LONGS_EQUAL(0, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "comma"));
     LONGS_EQUAL(0, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "space"));
 
-    /* NOT safe: starts with capital letter (keys are case sensitive) */
+    /* NOT safe: starts with capital letter (keys are case-sensitive) */
     LONGS_EQUAL(0, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "Ctrl-a"));
     LONGS_EQUAL(0, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "Meta-a"));
     LONGS_EQUAL(0, gui_key_is_safe (GUI_KEY_CONTEXT_DEFAULT, "Shift-home"));

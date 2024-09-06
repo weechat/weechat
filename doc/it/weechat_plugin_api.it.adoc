@@ -872,7 +872,7 @@ Questa funzione non è disponibile nelle API per lo scripting.
 _WeeChat ≥ 3.8._
 
 // TRANSLATION MISSING
-Case sensitive string comparison.
+Case-sensitive string comparison.
 
 Prototipo:
 
@@ -912,7 +912,7 @@ Questa funzione non è disponibile nelle API per lo scripting.
 _WeeChat ≥ 3.8._
 
 // TRANSLATION MISSING
-Case sensitive string comparison, for _max_ chars.
+Case-sensitive string comparison, for _max_ chars.
 
 Prototipo:
 
@@ -1369,7 +1369,7 @@ Argomenti:
 * _string_: string
 * _masks_: list of masks, with a NULL after the last mask in list; each mask
   is compared to the string with the function <<_string_match,string_match>>
-* _case_sensitive_: 1 for case sensitive comparison, otherwise 0
+* _case_sensitive_: 1 for case-sensitive comparison, otherwise 0
 
 // TRANSLATION MISSING
 [NOTE]
@@ -2947,7 +2947,7 @@ from first used to last):
   == `+1+`
 
 | `+==*+` | 2.9
-| Is matching mask where "*" is allowed, case sensitive (see function <<_string_match,string_match>>)
+| Is matching mask where "*" is allowed, case-sensitive (see function <<_string_match,string_match>>)
 | >> `+abc def ==* a*f+` +
   == `+1+` +
   +
@@ -2955,7 +2955,7 @@ from first used to last):
   == `+0+`
 
 | `+!!*+` | 2.9
-| Is NOT wildcard mask where "*" is allowed, case sensitive (see function <<_string_match,string_match>>)
+| Is NOT wildcard mask where "*" is allowed, case-sensitive (see function <<_string_match,string_match>>)
 | >> `+abc def !!* a*f+` +
   == `+0+` +
   +
@@ -2979,7 +2979,7 @@ from first used to last):
   == `+1+`
 
 | `+==-+` | 2.9
-| Is included, case sensitive
+| Is included, case-sensitive
 | >> `+abc def ==- bc+` +
   == `+1+` +
   +
@@ -2987,7 +2987,7 @@ from first used to last):
   == `+0+`
 
 | `+!!-+` | 2.9
-| Is NOT included, case sensitive
+| Is NOT included, case-sensitive
 | >> `+abc def !!- bc+` +
   == `+0+` +
   +
@@ -15949,7 +15949,7 @@ Argomenti:
 
 // TRANSLATION MISSING
 [NOTE]
-Since version 4.0.0, comparison of buffer names is case sensitive.
+Since version 4.0.0, comparison of buffer names is case-sensitive.
 
 Valore restituito:
 
@@ -20411,7 +20411,7 @@ Argomenti:
 * _pointer2_: pointer to second WeeChat/plugin object
 * _name_: variable name or path to a variable name; for arrays, the name can be
   "N|name" where N is the index in array (starting at 0), for example: "2|name"
-* _case_sensitive_: 1 for case sensitive comparison of strings, otherwise 0
+* _case_sensitive_: 1 for case-sensitive comparison of strings, otherwise 0
 
 Valore restituito:
 

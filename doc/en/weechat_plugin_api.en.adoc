@@ -817,7 +817,7 @@ This function is not available in scripting API.
 
 _WeeChat ≥ 3.8._
 
-Case sensitive string comparison.
+Case-sensitive string comparison.
 
 Prototype:
 
@@ -853,7 +853,7 @@ This function is not available in scripting API.
 
 _WeeChat ≥ 3.8._
 
-Case sensitive string comparison, for _max_ chars.
+Case-sensitive string comparison, for _max_ chars.
 
 Prototype:
 
@@ -1084,7 +1084,7 @@ Arguments:
 * _string1_: first string for comparison
 * _string2_: second string for comparison
 * _chars_ignored_: string with chars to ignored
-* _case_sensitive_: 1 for case sensitive comparison, otherwise 0
+* _case_sensitive_: 1 for case-sensitive comparison, otherwise 0
 
 [NOTE]
 Behavior has changed in version 3.8 when _case_sensitive_ is set to 0: now all
@@ -1210,7 +1210,7 @@ Arguments:
 * _string_: string
 * _mask_: mask with wildcards (`+*+`), each wildcard matches 0 or more chars in
   the string
-* _case_sensitive_: 1 for case sensitive comparison, otherwise 0
+* _case_sensitive_: 1 for case-sensitive comparison, otherwise 0
 
 [NOTE]
 Since version 1.0, wildcards are allowed inside the mask
@@ -1272,7 +1272,7 @@ Arguments:
 * _string_: string
 * _masks_: list of masks, with a NULL after the last mask in list; each mask
   is compared to the string with the function <<_string_match,string_match>>
-* _case_sensitive_: 1 for case sensitive comparison, otherwise 0
+* _case_sensitive_: 1 for case-sensitive comparison, otherwise 0
 
 [NOTE]
 Behavior has changed in version 3.8 when _case_sensitive_ is set to 0: now all
@@ -2791,7 +2791,7 @@ from first used to last):
   == `+1+`
 
 | `+==*+` | 2.9
-| Is matching mask where "*" is allowed, case sensitive (see function <<_string_match,string_match>>)
+| Is matching mask where "*" is allowed, case-sensitive (see function <<_string_match,string_match>>)
 | >> `+abc def ==* a*f+` +
   == `+1+` +
   +
@@ -2799,7 +2799,7 @@ from first used to last):
   == `+0+`
 
 | `+!!*+` | 2.9
-| Is NOT wildcard mask where "*" is allowed, case sensitive (see function <<_string_match,string_match>>)
+| Is NOT wildcard mask where "*" is allowed, case-sensitive (see function <<_string_match,string_match>>)
 | >> `+abc def !!* a*f+` +
   == `+0+` +
   +
@@ -2823,7 +2823,7 @@ from first used to last):
   == `+1+`
 
 | `+==-+` | 2.9
-| Is included, case sensitive
+| Is included, case-sensitive
 | >> `+abc def ==- bc+` +
   == `+1+` +
   +
@@ -2831,7 +2831,7 @@ from first used to last):
   == `+0+`
 
 | `+!!-+` | 2.9
-| Is NOT included, case sensitive
+| Is NOT included, case-sensitive
 | >> `+abc def !!- bc+` +
   == `+0+` +
   +
@@ -14658,7 +14658,7 @@ Arguments:
 ** _next_line_id_: next line id in buffer _(WeeChat ≥ 3.8)_
 ** _time_for_each_line_: 1 if time is displayed for each line in buffer (default), otherwise 0
 ** _nicklist_: 1 if nicklist is enabled, otherwise 0
-** _nicklist_case_sensitive_: 1 if nicks are case sensitive, otherwise 0
+** _nicklist_case_sensitive_: 1 if nicks are case-sensitive, otherwise 0
 ** _nicklist_max_length_: max length for a nick
 ** _nicklist_display_groups_: 1 if groups are displayed, otherwise 0
 ** _nicklist_count_: number of nicks and groups in nicklist
@@ -14684,7 +14684,7 @@ Arguments:
 ** _text_search_direction_: direction for search:
 *** 0: backward search (direction: oldest messages/commands)
 *** 1: forward search (direction: newest messages/commands)
-** _text_search_exact_: 1 if text search is case sensitive
+** _text_search_exact_: 1 if text search is case-sensitive
 ** _text_search_regex_: 1 if searching with a regular expression
 ** _text_search_where_:
 *** 0: no search at this moment
@@ -14932,7 +14932,7 @@ Properties:
 | "0" to remove nicklist for buffer, "1" to add nicklist for buffer.
 
 | nicklist_case_sensitive | | "0" or "1"
-| "0" to have case-insensitive nicklist, "1" to have case sensitive nicklist.
+| "0" to have case-insensitive nicklist, "1" to have case-sensitive nicklist.
 
 | nicklist_display_groups | | "0" or "1"
 | "0" to hide nicklist groups, "1" to display nicklist groups.
@@ -15189,7 +15189,7 @@ Arguments:
 ** wildcard `+*+` is allowed in name
 
 [NOTE]
-Since version 4.0.0, comparison of buffer names is case sensitive.
+Since version 4.0.0, comparison of buffer names is case-sensitive.
 
 Return value:
 
@@ -19489,7 +19489,7 @@ Arguments:
 * _pointer2_: pointer to second WeeChat/plugin object
 * _name_: variable name or path to a variable name; for arrays, the name can be
   "N|name" where N is the index in array (starting at 0), for example: "2|name"
-* _case_sensitive_: 1 for case sensitive comparison of strings, otherwise 0
+* _case_sensitive_: 1 for case-sensitive comparison of strings, otherwise 0
 
 Return value:
 

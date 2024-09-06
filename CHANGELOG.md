@@ -361,7 +361,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - irc: display messages 730/731 (monitored nicks online/offline) even if command `/notify` was not used ([#2049](https://github.com/weechat/weechat/issues/2049))
 - irc: remove trailing "\r\n" in signals "irc_out" and "irc_outtags" when messages are queued
 - irc: fix target buffer of IRC message 337 (whois reply: "is hiding their idle time")
-- irc: revert compute of nick colors to case sensitive way, deprecate again infos "irc_nick_color" and "irc_nick_color_name" ([#194](https://github.com/weechat/weechat/issues/194), [#2032](https://github.com/weechat/weechat/issues/2032))
+- irc: revert compute of nick colors to case-sensitive way, deprecate again infos "irc_nick_color" and "irc_nick_color_name" ([#194](https://github.com/weechat/weechat/issues/194), [#2032](https://github.com/weechat/weechat/issues/2032))
 - relay: close properly connection with the IRC client in case of server disconnection ([#2038](https://github.com/weechat/weechat/issues/2038))
 - ruby: fix use of NULL variable when displaying exception
 
@@ -407,7 +407,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 - core: fix crash when a custom bar item name is already used by a default bar item ([#2034](https://github.com/weechat/weechat/issues/2034))
 - core: fix random timeouts when a lot of concurrent processes are launched with hook_process ([#2033](https://github.com/weechat/weechat/issues/2033))
-- irc: revert compute of nick colors to case sensitive way, deprecate again infos "irc_nick_color" and "irc_nick_color_name" ([#194](https://github.com/weechat/weechat/issues/194), [#2032](https://github.com/weechat/weechat/issues/2032))
+- irc: revert compute of nick colors to case-sensitive way, deprecate again infos "irc_nick_color" and "irc_nick_color_name" ([#194](https://github.com/weechat/weechat/issues/194), [#2032](https://github.com/weechat/weechat/issues/2032))
 
 ### Build
 
@@ -640,7 +640,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - core: display similar command names when a command is unknown ([#1877](https://github.com/weechat/weechat/issues/1877))
 - core: rename option weechat.color.status_name_ssl to weechat.color.status_name_tls ([#1903](https://github.com/weechat/weechat/issues/1903))
 - core: add option weechat.color.status_name_insecure to display buffer name with a specific color when not connected with TLS to the server
-- core, plugins: make many identifiers case sensitive ([#1872](https://github.com/weechat/weechat/issues/1872), [#398](https://github.com/weechat/weechat/issues/398), [bug #32213](https://savannah.nongnu.org/bugs/?32213))
+- core, plugins: make many identifiers case-sensitive ([#1872](https://github.com/weechat/weechat/issues/1872), [#398](https://github.com/weechat/weechat/issues/398), [bug #32213](https://savannah.nongnu.org/bugs/?32213))
 - core: add item "mouse_status" in default status bar, change default color to lightgreen
 - core, trigger: add options weechat.color.chat_status_disabled and weechat.color.chat_status_enabled, remove options trigger.color.trigger and trigger.color.trigger_disabled, add enabled/disabled status color in output of `/filter list` ([#1820](https://github.com/weechat/weechat/issues/1820))
 - core: add completions "filters_names_disabled" and "filters_names_enabled", used in completion of `/filter disable` and `/filter enable`
@@ -782,7 +782,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - core: keep terminal title unchanged when option weechat.look.window_title is set to empty value ([#1835](https://github.com/weechat/weechat/issues/1835), [#1836](https://github.com/weechat/weechat/issues/1836))
 - core: fix crash when setting invalid color in option with null value ([#1844](https://github.com/weechat/weechat/issues/1844))
 - api: do not check conditions defined in option weechat.look.hotlist_add_conditions when adding buffer in hotlist with function buffer_set
-- api: fix function strcmp_ignore_chars with case sensitive comparison and wide chars starting with the same byte
+- api: fix function strcmp_ignore_chars with case-sensitive comparison and wide chars starting with the same byte
 - api: send NULL values to config section callbacks in scripting API ([#1843](https://github.com/weechat/weechat/issues/1843))
 - api: fix function string_cut when there are non printable chars in suffix
 - api: do not expect any return value in callbacks "callback_change" and "callback_delete" of function config_new_option (scripting API)
@@ -1217,7 +1217,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - core: add flag "input_multiline" in buffer ([#984](https://github.com/weechat/weechat/issues/984), [#1063](https://github.com/weechat/weechat/issues/1063))
 - core: add a scalable WeeChat logo (SVG) ([#1454](https://github.com/weechat/weechat/issues/1454), [#1456](https://github.com/weechat/weechat/issues/1456))
 - core: add base 16/32/64 encoding/decoding in evaluation of expressions with `base_encode:base,xxx` and `base_decode:base,xxx`
-- core: add case sensitive wildcard matching comparison operator (`+==*+` and `+!!*+`) and case sensitive/insensitive include comparison operators (`+==-+`, `+!!-+`, `+=-+`, `+!-+`) in evaluation of expressions
+- core: add case-sensitive wildcard matching comparison operator (`+==*+` and `+!!*+`) and case-sensitive/insensitive include comparison operators (`+==-+`, `+!!-+`, `+=-+`, `+!-+`) in evaluation of expressions
 - core: add default key `Alt`+`Shift`+`N` to toggle nicklist bar
 - core: add command line option `--stdout` in weechat-headless binary to log to stdout rather than ~/.weechat/weechat.log ([#1475](https://github.com/weechat/weechat/issues/1475), [#1477](https://github.com/weechat/weechat/issues/1477))
 - core: reload configuration files on SIGHUP ([#1476](https://github.com/weechat/weechat/issues/1476))

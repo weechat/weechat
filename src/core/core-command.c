@@ -8524,12 +8524,12 @@ command_init ()
             N_("Comparison operators (by order of priority):"),
             N_("  =~   is matching POSIX extended regex"),
             N_("  !~   is NOT matching POSIX extended regex"),
-            N_("  ==*  is matching mask, case sensitive (wildcard \"*\" is allowed)"),
-            N_("  !!*  is NOT matching mask, case sensitive (wildcard \"*\" is allowed)"),
+            N_("  ==*  is matching mask, case-sensitive (wildcard \"*\" is allowed)"),
+            N_("  !!*  is NOT matching mask, case-sensitive (wildcard \"*\" is allowed)"),
             N_("  =*   is matching mask, case-insensitive (wildcard \"*\" is allowed)"),
             N_("  !*   is NOT matching mask, case-insensitive (wildcard \"*\" is allowed)"),
-            N_("  ==-  is included, case sensitive"),
-            N_("  !!-  is NOT included, case sensitive"),
+            N_("  ==-  is included, case-sensitive"),
+            N_("  !!-  is NOT included, case-sensitive"),
             N_("  =-   is included, case-insensitive"),
             N_("  !-   is NOT included, case-insensitive"),
             N_("  ==   equal"),
@@ -8638,7 +8638,7 @@ command_init ()
             N_("> - two regular expressions are created: "
                "one for prefix and one for message"),
             N_("> - regex are case-insensitive, they can start by "
-               "\"(?-i)\" to become case sensitive"),
+               "\"(?-i)\" to become case-sensitive"),
             "",
             N_("The default key alt+\"=\" toggles filtering on/off globally and "
                "alt+\"-\" toggles filtering on/off in the current buffer."),

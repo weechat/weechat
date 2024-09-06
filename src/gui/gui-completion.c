@@ -411,7 +411,7 @@ gui_completion_nickncmp (const char *base_word, const char *nick, int max)
 }
 
 /*
- * Compares two strings (follows case sensitive flag in completion structure).
+ * Compares two strings (follows case-sensitive flag in completion structure).
  *
  * Returns:
  *   < 0: string1 < string2
@@ -431,7 +431,7 @@ gui_completion_strcmp (struct t_gui_completion *completion,
 }
 
 /*
- * Compares two strings with max length (follows case sensitive flag in
+ * Compares two strings with max length (follows case-sensitive flag in
  * completion structure).
  *
  * Returns:

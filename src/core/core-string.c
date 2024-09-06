@@ -516,7 +516,7 @@ string_toupper_range (const char *string, int range)
 }
 
 /*
- * Compares two chars (case sensitive).
+ * Compares two chars (case-sensitive).
  *
  * Returns: arithmetic result of subtracting the first UTF-8 char in string2
  * from the first UTF-8 char in string1:
@@ -607,7 +607,7 @@ string_charcasecmp_range (const char *string1, const char *string2, int range)
 }
 
 /*
- * Compares two strings (case sensitive).
+ * Compares two strings (case-sensitive).
  *
  * Returns: arithmetic result of subtracting the last compared UTF-8 char in
  * string2 from the last compared UTF-8 char in string1:
@@ -641,7 +641,7 @@ string_strcmp (const char *string1, const char *string2)
 }
 
 /*
- * Compares two strings with max length (case sensitive).
+ * Compares two strings with max length (case-sensitive).
  *
  * Returns: arithmetic result of subtracting the last compared UTF-8 char in
  * string2 from the last compared UTF-8 char in string1:
