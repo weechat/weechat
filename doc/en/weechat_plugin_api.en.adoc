@@ -1094,7 +1094,7 @@ uppercase letters are properly converted to lowercase (by calling function
 Return value:
 
 * arithmetic result of subtracting the last compared UTF-8 char in
-  _string2_ (converted to lowercase if _case_sentitive_ is set to 0) from the last
+  _string2_ (converted to lowercase if _case_sensitive_ is set to 0) from the last
   compared UTF-8 char in _string1_ (converted to lowercase if _case_sensitive_ is
   set to 0):
 ** < 0 if string1 < string2
