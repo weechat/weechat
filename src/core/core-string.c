@@ -2978,7 +2978,7 @@ string_split_command (const char *command, char separator)
             buffer[str_idx] = '\0';
             str_idx = -1;
             p = buffer;
-            /* strip white spaces a the beginning of the line */
+            /* strip white spaces at the beginning of the line */
             while (*p == ' ') p++;
             if (p  && p[0])
                 array[arr_idx++] = strdup (p);
