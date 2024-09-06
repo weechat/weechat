@@ -428,7 +428,7 @@ alias_hook_command (struct t_alias *alias)
 
     /*
      * build string with priority and name: the alias priority is 2000, which
-     * is higher than default one (1000), so the alias is executed before a
+     * is greater than default one (1000), so the alias is executed before a
      * command (if a command with same name exists in core or in another plugin)
      */
     length = strlen (alias->name) + 16 + 1;
