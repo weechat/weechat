@@ -39,7 +39,7 @@ enum t_relay_client_http_status
 #define RELAY_HTTP_403_FORBIDDEN              403, "Forbidden"
 #define RELAY_HTTP_404_NOT_FOUND              404, "Not Found"
 #define RELAY_HTTP_500_INTERNAL_SERVER_ERROR  500, "Internal Server Error"
-#define RELAY_HTTP_503_SERVICE_UNAVAILABLE    503, "Service Unvavailable"
+#define RELAY_HTTP_503_SERVICE_UNAVAILABLE    503, "Service Unavailable"
 
 #define RELAY_HTTP_ERROR_MISSING_PASSWORD     "Missing password"
 #define RELAY_HTTP_ERROR_INVALID_PASSWORD     "Invalid password"
