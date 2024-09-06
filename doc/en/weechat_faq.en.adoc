@@ -268,7 +268,7 @@ for more info about the hotlist.
 [[input_bar_size]]
 === How to use command line with more than one line?
 
-The option _size_ in input bar can be set to a value higher than 1 (for fixed
+The option _size_ in input bar can be set to a value greater than 1 (for fixed
 size, default size is 1) or 0 for dynamic size, and then option _size_max_ will
 set the max size (0 = no limit).
 
