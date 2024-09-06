@@ -1503,7 +1503,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - core: fix value of libdir in file weechat.pc ([#1341](https://github.com/weechat/weechat/issues/1341), [#1342](https://github.com/weechat/weechat/issues/1342))
 - core: fix generation of man page weechat-headless with autotools
 - core: add CMake option "ENABLE_CODE_COVERAGE" to compile with code coverage options (CMake ≥ 3.0 is now required)
-- core: fix compilation on Mac OS ([#1308](https://github.com/weechat/weechat/issues/1308))
+- core: fix compilation on macOS ([#1308](https://github.com/weechat/weechat/issues/1308))
 - lua: add detection of Lua 5.3 with autotools
 - ruby: add detection of Ruby 2.6 ([#1346](https://github.com/weechat/weechat/issues/1346))
 - tests: fix compilation of tests on FreeBSD

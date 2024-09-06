@@ -1115,7 +1115,7 @@ $ LD_PRELOAD=/lib/libpthread.so.0 gdb /путања/до/програма/weecha
 [[supported_os]]
 === Како изгледа листа платформи које подржава програм WeeChat? Да ли ће се портовати на друге оперативне системе?
 
-WeeChat се лепо извршава на већини Linux/BSD дистрибуција, GNU/Hurd, Mac OS и Windows (Cygwin и Windows Subsystem for Linux).
+WeeChat се лепо извршава на већини Linux/BSD дистрибуција, GNU/Hurd, macOS и Windows (Cygwin и Windows Subsystem for Linux).
 
 Чинимо што год можемо како би се извршавао на што више различитих платформи. Потребна нам је помоћ око неких ОС које не поседујемо, како би могли да тестирамо програм WeeChat.
 

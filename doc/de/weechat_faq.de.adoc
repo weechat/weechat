@@ -1306,7 +1306,7 @@ $ LD_PRELOAD=/lib/libpthread.so.0 gdb /Pfad/zu/weechat
 [[supported_os]]
 === Auf welchen Plattformen läuft WeeChat und wird es noch auf andere Betriebssysteme portiert?
 
-WeeChat läuft auf den meisten Linux/BSD-Distributionen, GNU/Hurd, Mac OS und
+WeeChat läuft auf den meisten Linux/BSD-Distributionen, GNU/Hurd, macOS und
 Windows (Cygwin und Windows Subsystem für Linux) einwandfrei.
 
 Wir geben unser Bestes, WeeChat auf möglichst viele Plattformen zu portieren.
