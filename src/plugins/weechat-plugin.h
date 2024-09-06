@@ -430,7 +430,7 @@ struct t_weechat_plugin
     /* crypto */
     int (*crypto_hash) (const void *data, int data_size,
                         const char *hash_algo, void *hash, int *hash_size);
-    int (*crypto_hash_file) (const char *fliename,
+    int (*crypto_hash_file) (const char *filename,
                              const char *hash_algo, void *hash, int *hash_size);
     int (*crypto_hash_pbkdf2) (const void *data, int data_size,
                                const char *hash_algo,
