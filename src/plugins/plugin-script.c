@@ -242,7 +242,7 @@ plugin_script_init (struct t_weechat_plugin *weechat_plugin,
     weechat_hook_command (
         weechat_plugin->name,
         N_("list/load/unload scripts"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated */
         N_("list|listfull [<name>]"
            " || load [-q] <filename>"
            " || autoload"

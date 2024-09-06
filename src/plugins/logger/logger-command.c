@@ -166,7 +166,7 @@ logger_command_init ()
     weechat_hook_command (
         "logger",
         N_("logger plugin configuration"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated */
         N_("list"
            " || set <level>"
            " || flush"

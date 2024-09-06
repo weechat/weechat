@@ -859,7 +859,7 @@ relay_command_init ()
     weechat_hook_command (
         "relay",
         N_("relay control"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated */
         N_("list|listfull|listrelay"
            " || add|addreplace <name> <port>|<path>"
            " || del|start|restart|stop <name>"
@@ -936,7 +936,7 @@ relay_command_init ()
     weechat_hook_command (
         "remote",
         N_("control of remote relay servers"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated */
         N_("list|listfull [<name>]"
            " || add|addreplace <name> <url> [-<option>[=<value>]]"
            " || connect|reconnect|disconnect|del <name>"

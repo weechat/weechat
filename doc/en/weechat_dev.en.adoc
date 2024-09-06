@@ -1362,5 +1362,5 @@ warnings, ... These words must be kept unchanged:
 When there is a name after `+<<link_name>>+`, then you must translate it:
 
 ----
-<<link_name,this text must be translated>>
+<<link_name,this text should be translated>>
 ----

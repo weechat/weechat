@@ -320,7 +320,7 @@ script_command_init ()
     weechat_hook_command (
         "script",
         N_("WeeChat script manager"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated */
         N_("enable"
            " || list [-o|-ol|-i|-il]"
            " || search <text>"
