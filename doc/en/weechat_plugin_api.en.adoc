@@ -890,7 +890,7 @@ This function is not available in scripting API.
 
 _Updated in 1.0, 3.8._
 
-Case insensitive string comparison.
+Case-insensitive string comparison.
 
 [NOTE]
 Behavior has changed in version 3.8: now all uppercase letters are properly
@@ -979,7 +979,7 @@ This function is not available in scripting API.
 
 _Updated in 1.0, 3.8._
 
-Case insensitive string comparison, for _max_ chars.
+Case-insensitive string comparison, for _max_ chars.
 
 [NOTE]
 Behavior has changed in version 3.8: now all uppercase letters are properly
@@ -1115,7 +1115,7 @@ This function is not available in scripting API.
 
 _Updated in 1.3, 3.8._
 
-Case insensitive string search.
+Case-insensitive string search.
 
 [NOTE]
 Behavior has changed in version 3.8: now all uppercase letters are properly
@@ -1598,7 +1598,7 @@ Flags must be at beginning of regular expression. Format is:
 Allowed flags are:
 
 * _e_: POSIX extended regular expression (_REG_EXTENDED_)
-* _i_: case insensitive (_REG_ICASE_)
+* _i_: case-insensitive (_REG_ICASE_)
 * _n_: match-any-character operators don't match a newline (_REG_NEWLINE_)
 * _s_: support for substring addressing of matches is not required (_REG_NOSUB_)
 
@@ -2807,7 +2807,7 @@ from first used to last):
   == `+1+`
 
 | `+=*+` | 1.8
-| Is matching mask where "*" is allowed, case insensitive (see function <<_string_match,string_match>>)
+| Is matching mask where "*" is allowed, case-insensitive (see function <<_string_match,string_match>>)
 | >> `+abc def =* A*F+` +
   == `+1+` +
   +
@@ -2815,7 +2815,7 @@ from first used to last):
   == `+0+`
 
 | `+!*+` | 1.8
-| Is NOT wildcard mask where "*" is allowed, case insensitive (see function <<_string_match,string_match>>)
+| Is NOT wildcard mask where "*" is allowed, case-insensitive (see function <<_string_match,string_match>>)
 | >> `+abc def !* A*F+` +
   == `+0+` +
   +
@@ -2839,7 +2839,7 @@ from first used to last):
   == `+1+`
 
 | `+=-+` | 2.9
-| Is included, case insensitive
+| Is included, case-insensitive
 | >> `+abc def =- BC+` +
   == `+1+` +
   +
@@ -2847,7 +2847,7 @@ from first used to last):
   == `+0+`
 
 | `+!-+` | 2.9
-| Is NOT included, case insensitive
+| Is NOT included, case-insensitive
 | >> `+abc def !- BC+` +
   == `+0+` +
   +
@@ -14407,7 +14407,7 @@ Arguments:
 ** `+==id+`: the name used is the buffer unique identifier (`id`) _(WeeChat ≥ 4.3.0)_
 * _name_: name of buffer, if it is NULL or empty string, the current buffer is
   returned (buffer displayed by current window); if the name starts with
-  `(?i)`, the search is case insensitive _(WeeChat ≥ 1.0)_
+  `(?i)`, the search is case-insensitive _(WeeChat ≥ 1.0)_
 
 Return value:
 
@@ -14932,7 +14932,7 @@ Properties:
 | "0" to remove nicklist for buffer, "1" to add nicklist for buffer.
 
 | nicklist_case_sensitive | | "0" or "1"
-| "0" to have case insensitive nicklist, "1" to have case sensitive nicklist.
+| "0" to have case-insensitive nicklist, "1" to have case sensitive nicklist.
 
 | nicklist_display_groups | | "0" or "1"
 | "0" to hide nicklist groups, "1" to display nicklist groups.

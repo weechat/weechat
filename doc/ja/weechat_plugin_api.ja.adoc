@@ -924,7 +924,7 @@ int diff = weechat_strncmp ("aabb", "aacc", 2);  /* == 0 */
 _WeeChat バージョン 1.0, 3.8 で更新。_
 
 // TRANSLATION MISSING
-Case insensitive string comparison.
+Case-insensitive string comparison.
 
 // TRANSLATION MISSING
 [NOTE]
@@ -1018,7 +1018,7 @@ int diff = weechat_strcasecmp_range ("nick{away}", "NICK[away]", 29);  /* == 0 *
 _WeeChat バージョン 1.0, 3.8 で更新。_
 
 // TRANSLATION MISSING
-Case insensitive string comparison, for _max_ chars.
+Case-insensitive string comparison, for _max_ chars.
 
 // TRANSLATION MISSING
 [NOTE]
@@ -1164,7 +1164,7 @@ int diff = weechat_strcmp_ignore_chars ("a-b", "--a-e", "-", 1);  /* == -3 */
 _WeeChat バージョン 1.3, 3.8 で更新。_
 
 // TRANSLATION MISSING
-Case insensitive string search.
+Case-insensitive string search.
 
 // TRANSLATION MISSING
 [NOTE]
@@ -2893,7 +2893,7 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
 
 // TRANSLATION MISSING
 | `+=*+` | 1.8
-| Is matching mask where "*" is allowed, case insensitive (see function <<_string_match,string_match>>)
+| Is matching mask where "*" is allowed, case-insensitive (see function <<_string_match,string_match>>)
 | >> `+abc def =* A*F+` +
   == `+1+` +
   +
@@ -2902,7 +2902,7 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
 
 // TRANSLATION MISSING
 | `+!*+` | 1.8
-| Is NOT wildcard mask where "*" is allowed, case insensitive (see function <<_string_match,string_match>>)
+| Is NOT wildcard mask where "*" is allowed, case-insensitive (see function <<_string_match,string_match>>)
 | >> `+abc def !* A*F+` +
   == `+0+` +
   +
@@ -2929,7 +2929,7 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
 
 // TRANSLATION MISSING
 | `+=-+` | 2.9
-| Is included, case insensitive
+| Is included, case-insensitive
 | >> `+abc def =- BC+` +
   == `+1+` +
   +
@@ -2938,7 +2938,7 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
 
 // TRANSLATION MISSING
 | `+!-+` | 2.9
-| Is NOT included, case insensitive
+| Is NOT included, case-insensitive
 | >> `+abc def !- BC+` +
   ==   `+0+` +
   +

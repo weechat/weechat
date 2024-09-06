@@ -442,7 +442,7 @@ end:
  * Checks if a channel is in a join string.
  *
  * Returns:
- *   1: channel found in join string (case insensitive comparison)
+ *   1: channel found in join string (case-insensitive comparison)
  *   0: channel NOT found in join string
  */
 

@@ -215,7 +215,7 @@ weelist_search_pos (struct t_weelist *weelist, const char *data)
 }
 
 /*
- * Searches for data in a list (case insensitive).
+ * Searches for data in a list (case-insensitive).
  *
  * Returns pointer to item found, NULL if not found.
  */
@@ -239,7 +239,7 @@ weelist_casesearch (struct t_weelist *weelist, const char *data)
 }
 
 /*
- * Searches for data in a list (case insensitive).
+ * Searches for data in a list (case-insensitive).
  *
  * Returns position of item found (>= 0), -1 if not found.
  */

@@ -3627,7 +3627,7 @@ config_weechat_init_options ()
         config_look_highlight = config_file_new_option (
             weechat_config_file, weechat_config_section_look,
             "highlight", "string",
-            N_("comma separated list of words to highlight; case insensitive "
+            N_("comma separated list of words to highlight; case-insensitive "
                "comparison (use \"(?-i)\" at beginning of words to make them "
                "case sensitive), words may begin or end with \"*\" for partial "
                "match; example: \"test,(?-i)*toto*,flash*\""),
@@ -3640,7 +3640,7 @@ config_weechat_init_options ()
                "from a message: this option has higher priority over other "
                "highlight options (if the string is found in the message, the "
                "highlight is disabled and the other options are ignored), "
-               "regular expression is case insensitive (use \"(?-i)\" at "
+               "regular expression is case-insensitive (use \"(?-i)\" at "
                "beginning to make it case sensitive), examples: "
                "\"<flash.*>\", \"(?-i)<Flash.*>\""),
             NULL, 0, 0, "", NULL, 0,
@@ -3662,7 +3662,7 @@ config_weechat_init_options ()
             N_("POSIX extended regular expression used to check if a message "
                "has highlight or not, at least one match in string must be "
                "surrounded by delimiters (chars different from: alphanumeric, "
-               "\"-\", \"_\" and \"|\"), regular expression is case insensitive "
+               "\"-\", \"_\" and \"|\"), regular expression is case-insensitive "
                "(use \"(?-i)\" at beginning to make it case sensitive), "
                "examples: \"flashcode|flashy\", \"(?-i)FlashCode|flashy\""),
             NULL, 0, 0, "", NULL, 0,
@@ -3672,7 +3672,7 @@ config_weechat_init_options ()
         config_look_highlight_tags = config_file_new_option (
             weechat_config_file, weechat_config_section_look,
             "highlight_tags", "string",
-            N_("comma separated list of tags to highlight; case insensitive "
+            N_("comma separated list of tags to highlight; case-insensitive "
                "comparison; wildcard \"*\" is allowed in each tag; many tags "
                "can be separated by \"+\" to make a logical \"and\" between "
                "tags; examples: \"nick_flashcode\" for messages from nick "
@@ -3794,11 +3794,11 @@ config_weechat_init_options ()
                "a hdata variable of hotlist (\"var\") or a hdata variable of "
                "buffer (\"buffer.var\"); "
                "char \"-\" can be used before field to reverse order, "
-               "char \"~\" can be used to do a case insensitive comparison; "
+               "char \"~\" can be used to do a case-insensitive comparison; "
                "examples: "
                "\"-priority,buffer.number\" for sort on hotlist priority then by "
                "buffer number, "
-               "\"-~buffer.full_name\" for case insensitive and reverse "
+               "\"-~buffer.full_name\" for case-insensitive and reverse "
                "sort on buffer full name"),
             NULL, 0, 0, "-priority,time,time_usec", NULL, 0,
             NULL, NULL, NULL,

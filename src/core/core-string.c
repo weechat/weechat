@@ -532,7 +532,7 @@ string_charcmp (const char *string1, const char *string2)
 }
 
 /*
- * Compares two chars (case insensitive).
+ * Compares two chars (case-insensitive).
  *
  * Returns: arithmetic result of subtracting the first UTF-8 char in string2
  * (converted to lowercase) from the first UTF-8 char in string1 (converted
@@ -571,7 +571,7 @@ string_charcasecmp (const char *string1, const char *string2)
 }
 
 /*
- * Compares two chars (case insensitive using a range).
+ * Compares two chars (case-insensitive using a range).
  *
  * The range is the number of chars which can be converted from upper to lower
  * case. For example 26 = all letters of alphabet, 29 = all letters + 3 chars.
@@ -680,7 +680,7 @@ string_strncmp (const char *string1, const char *string2, int max)
 }
 
 /*
- * Compares two strings (case insensitive).
+ * Compares two strings (case-insensitive).
  *
  * Returns: arithmetic result of subtracting the last compared UTF-8 char in
  * string2 (converted to lowercase) from the last compared UTF-8 char in
@@ -715,7 +715,7 @@ string_strcasecmp (const char *string1, const char *string2)
 }
 
 /*
- * Compares two strings (case insensitive using a range).
+ * Compares two strings (case-insensitive using a range).
  *
  * The range is the number of chars which can be converted from upper to lower
  * case. For example 26 = all letters of alphabet, 29 = all letters + 3 chars.
@@ -759,7 +759,7 @@ string_strcasecmp_range (const char *string1, const char *string2, int range)
 }
 
 /*
- * Compares two strings with max length (case insensitive).
+ * Compares two strings with max length (case-insensitive).
  *
  * Returns: arithmetic result of subtracting the last compared UTF-8 char in
  * string2 (converted to lowercase) from the last compared UTF-8 char in
@@ -799,7 +799,7 @@ string_strncasecmp (const char *string1, const char *string2, int max)
 }
 
 /*
- * Compares two strings with max length (case insensitive using a range).
+ * Compares two strings with max length (case-insensitive using a range).
  *
  * The range is the number of chars which can be converted from upper to lower
  * case. For example 26 = all letters of alphabet, 29 = all letters + 3 chars.
@@ -1638,7 +1638,7 @@ string_mask_to_regex (const char *mask)
  * Format of flags is: (?eins-eins)string
  * Flags are:
  *   e: POSIX extended regex (REG_EXTENDED)
- *   i: case insensitive (REG_ICASE)
+ *   i: case-insensitive (REG_ICASE)
  *   n: match-any-character operators don't match a newline (REG_NEWLINE)
  *   s: support for substring addressing of matches is not required (REG_NOSUB)
  *

@@ -7553,7 +7553,7 @@ irc_command_init ()
             N_("raw[-raw]: display result on server buffer instead of a "
                "dedicated buffer"),
             N_("regex: POSIX extended regular expression used to filter results "
-               "(case insensitive, can start by \"(?-i)\" to become case "
+               "(case-insensitive, can start by \"(?-i)\" to become case "
                "sensitive); the special value \"*\" doesn't filter results"),
             N_("raw[-up]: move the selected line up by \"number\" lines"),
             N_("raw[-down]: move the selected line down by \"number\" lines"),
@@ -7590,7 +7590,7 @@ irc_command_init ()
             AI("      n:weechat"),
             N_("    channels with at least 100 users:"),
             AI("      u:100"),
-            N_("    channels with \"freebsd\" (case insensitive) in topic and more than 10 users:"),
+            N_("    channels with \"freebsd\" (case-insensitive) in topic and more than 10 users:"),
             AI("      c:${topic} =- freebsd && ${users} > 10"),
             N_("    sort channels by users (big channels first), then name2 (name without prefix):"),
             AI("      s:-users,name2")),

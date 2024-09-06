@@ -2995,7 +2995,7 @@ gui_buffer_search_by_id (long long id)
  * Searches for a buffer by full name (example: "irc.libera.#weechat").
  *
  * If full_name starts with "(?i)", the search starts after this string
- * and the search is case insensitive.
+ * and the search is case-insensitive.
  */
 
 struct t_gui_buffer *
@@ -3111,7 +3111,7 @@ gui_buffer_search (const char *plugin, const char *name)
  * Searches for a buffer by plugin and partial name.
  *
  * If plugin or name starts with "(?i)", the search starts after this string
- * and the search is case insensitive.
+ * and the search is case-insensitive.
  */
 
 struct t_gui_buffer *

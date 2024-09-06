@@ -212,7 +212,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - core: display a specific message when the value of option is unchanged after `/set` command
 - core: add variable `${highlight}` in option weechat.look.buffer_time_format ([#2079](https://github.com/weechat/weechat/issues/2079))
 - core: reintroduce help on the variables and operators in `/help eval` ([#2005](https://github.com/weechat/weechat/issues/2005))
-- core: allow case insensitive search of partial buffer name with `(?i)name` in command `/buffer`
+- core: allow case-insensitive search of partial buffer name with `(?i)name` in command `/buffer`
 - core: use function util_strftimeval in evaluation of expression `date:xxx`
 - fset: allow filename starting with "~" in command `/fset -export`
 - irc: store lag in channel and private buffers (local variable "lag"), in addition to the server buffer
@@ -439,7 +439,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - fset: allow long type name in type filter
 - irc: add count for all nick modes in output of `/names` ([#97](https://github.com/weechat/weechat/issues/97), [#2020](https://github.com/weechat/weechat/issues/2020))
 - irc: add count and mode filter in command `/names` ([#98](https://github.com/weechat/weechat/issues/98))
-- irc: compute color in case insensitive way, reintroduce infos "irc_nick_color" and "irc_nick_color_name", add support of server name ([#194](https://github.com/weechat/weechat/issues/194))
+- irc: compute color in case-insensitive way, reintroduce infos "irc_nick_color" and "irc_nick_color_name", add support of server name ([#194](https://github.com/weechat/weechat/issues/194))
 - irc: add buffer for /list reply, add options irc.color.list_buffer_line_selected, irc.color.list_buffer_line_selected_bg, irc.look.list_buffer_sort, irc.look.list_buffer_scroll_horizontal, irc.look.new_list_position, irc.look.list_buffer_topic_strip_colors ([#1972](https://github.com/weechat/weechat/issues/1972))
 - irc: display commands 716/717 in private buffer (if present) ([#146](https://github.com/weechat/weechat/issues/146))
 - irc: create default options irc.ctcp.* when file irc.conf is created ([#1974](https://github.com/weechat/weechat/issues/1974))
@@ -1760,7 +1760,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - buflist: add option buflist.look.auto_scroll ([#332](https://github.com/weechat/weechat/issues/332))
 - buflist: add keys `F1` / `F2`, `Alt`+`F1` / `Alt`+`F2` to scroll the buflist bar
 - buflist: display a warning when the script "buffers.pl" is loaded
-- buflist: add support of char "~" in option buflist.look.sort for case insensitive comparison
+- buflist: add support of char "~" in option buflist.look.sort for case-insensitive comparison
 - buflist: add variable `${format_name}` in bar item evaluation and option buflist.format.name ([#1020](https://github.com/weechat/weechat/issues/1020))
 - buflist: add variables `${current_buffer}` and `${merged}` (booleans "0" / "1") in bar item evaluation
 - relay: add option `start` in command `/relay`
@@ -2268,7 +2268,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - core: mute all buffers by default in command `/mute` (replace option -all by -core)
 - api: allow value "-1" for property "hotlist" in function buffer_set (to remove a buffer from hotlist)
 - api: add option "buffer_flush" in function hook_process_hashtable
-- api: add support of case insensitive search and search by buffer full name in function buffer_search ([bug #34318](https://savannah.nongnu.org/bugs/?34318))
+- api: add support of case-insensitive search and search by buffer full name in function buffer_search ([bug #34318](https://savannah.nongnu.org/bugs/?34318))
 - api: add option "detached" in function hook_process_hashtable
 - api: add option "signal" in function hook_set to send a signal to the child process
 - api: add support of nested variables in function string_eval_expression and command `/eval` ([#35](https://github.com/weechat/weechat/issues/35))
@@ -2958,7 +2958,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - irc: add options irc.look.highlight_{server|channel|pv} to customize or disable default nick highlight ([task #11128](https://savannah.nongnu.org/task/?11128))
 - irc: use redirection to get channel modes after update of modes on channel, display output of `/mode #channel`, allow `/mode` without argument (display modes of current channel or user modes on server buffer)
 - irc: add optional server in info "irc_is_channel" (before channel name) ([bug #35124](https://savannah.nongnu.org/bugs/?35124)), add optional server in info_hashtable "irc_message_parse"
-- irc: add case insensitive string comparison based on casemapping of server (rfc1459, strict-rfc1459, ascii) ([bug #34239](https://savannah.nongnu.org/bugs/?34239))
+- irc: add case-insensitive string comparison based on casemapping of server (rfc1459, strict-rfc1459, ascii) ([bug #34239](https://savannah.nongnu.org/bugs/?34239))
 - irc: add option irc.color.mirc_remap to remap mirc colors in messages to WeeChat colors
 - irc: allow URL "irc://" in command `/connect`
 - irc: use extended regex in commands `/ignore` and `/list`
