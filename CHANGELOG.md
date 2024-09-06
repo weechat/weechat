@@ -1396,7 +1396,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - core: fix build on Alpine
 - core: remove file FindTCL.cmake
 - core: display an error on missing dependency in CMake ([#916](https://github.com/weechat/weechat/issues/916), [#956](https://github.com/weechat/weechat/issues/956))
-- debian: disable Javascript plugin on Debian Sid and Ubuntu Eoan
+- debian: disable JavaScript plugin on Debian Sid and Ubuntu Eoan
 - debian: build with Guile 2.2
 - guile: add support of Guile 2.2, disable `/guile eval` ([#1098](https://github.com/weechat/weechat/issues/1098))
 - python: add detection of Python 3.8
@@ -1446,7 +1446,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 ### Build
 
 - core: fix compilation with autotools on FreeBSD 12.0
-- debian: disable Javascript plugin on Debian Buster/Bullseye ([#1374](https://github.com/weechat/weechat/issues/1374))
+- debian: disable JavaScript plugin on Debian Buster/Bullseye ([#1374](https://github.com/weechat/weechat/issues/1374))
 - python: compile with Python 3 by default
 - python: use pkg-config to detect Python ([#1382](https://github.com/weechat/weechat/issues/1382))
 

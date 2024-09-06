@@ -57,7 +57,7 @@ from unparse import (  # noqa: E402
     UnparseLua,
     UnparseTcl,
     UnparseGuile,
-    UnparseJavascript,
+    UnparseJavaScript,
     UnparsePhp,
 )
 
@@ -279,12 +279,12 @@ class WeechatGuileScript(WeechatScript):
                      '(weechat_init)\n')
 
 
-class WeechatJavascriptScript(WeechatScript):
-    """A WeeChat script written in Javascript."""
+class WeechatJavaScriptScript(WeechatScript):
+    """A WeeChat script written in JavaScript."""
 
     def __init__(self, tree, source_script, output_dir):
-        super(WeechatJavascriptScript, self).__init__(
-            UnparseJavascript, tree, source_script, output_dir,
+        super(WeechatJavaScriptScript, self).__init__(
+            UnparseJavaScript, tree, source_script, output_dir,
             'javascript', 'js', comment_char='//')
 
     def write_footer(self, output):

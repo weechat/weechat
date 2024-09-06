@@ -304,7 +304,7 @@ weechat_js_load (const char *filename, const char *code)
     char *source;
 
     /* make C compiler happy */
-    /* TODO: implement load of code in Javascript */
+    /* TODO: implement load of code in JavaScript */
     (void) code;
 
     source = weechat_file_get_content (filename);
