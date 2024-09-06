@@ -691,7 +691,7 @@ gui_buffer_apply_properties_cb (void *data,
 }
 
 /*
- * Applies a buffer property defined in a an option "weechat.buffer.xxx".
+ * Applies a buffer property defined in an option "weechat.buffer.xxx".
  */
 
 void
