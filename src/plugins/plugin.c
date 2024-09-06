@@ -196,7 +196,7 @@ plugin_check_extension_allowed (const char *filename)
  *
  * Returns:
  *   1: plugin can be autoloaded
- *   0: plugin can not be autoloaded
+ *   0: plugin cannot be autoloaded
  */
 
 int

@@ -5114,7 +5114,7 @@ https://weechat.org/about/interfaces/[this page ^↗^^].
 
 [IMPORTANT]
 // TRANSLATION MISSING
-WeeChat itself can NOT connect to another WeeChat with this protocol.
+WeeChat itself cannot connect to another WeeChat with this protocol.
 
 Ad esempio:
 

@@ -7871,7 +7871,7 @@ COMMAND_CALLBACK(window)
             if (!gui_window_merge (ptr_win))
             {
                 gui_chat_printf (NULL,
-                                 _("%sCan not merge windows, there's no other "
+                                 _("%sCannot merge windows, there's no other "
                                    "window with same size near current one"),
                                  gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
                 return WEECHAT_RC_ERROR;
@@ -7886,7 +7886,7 @@ COMMAND_CALLBACK(window)
         if (!gui_window_close (ptr_win))
         {
             gui_chat_printf (NULL,
-                             _("%sCan not close window, there's no other "
+                             _("%sCannot close window, there's no other "
                                "window with same size near current one"),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
             return WEECHAT_RC_ERROR;

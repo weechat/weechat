@@ -738,7 +738,7 @@ dir_create_home_dir (char *path)
  * Creates WeeChat home directories.
  *
  * Any error in this function (or a sub function called) is fatal: WeeChat
- * can not run at all without the home directories.
+ * cannot run at all without the home directories.
  */
 
 void

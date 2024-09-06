@@ -116,7 +116,7 @@
 - relay/api: disconnect cleanly when the remote is quitting ([#2168](https://github.com/weechat/weechat/issues/2168))
 - relay: fix websocket permessage-deflate extension when the client doesn't send the max window bits parameters ([#1549](https://github.com/weechat/weechat/issues/1549))
 - relay: fix allocation and reinit of field "client_context_takeover" in websocket deflate structure ([#1549](https://github.com/weechat/weechat/issues/1549))
-- spell: improve error displayed when a word can not be added to the dictionary ([#2144](https://github.com/weechat/weechat/issues/2144))
+- spell: improve error displayed when a word cannot be added to the dictionary ([#2144](https://github.com/weechat/weechat/issues/2144))
 - core: fix completion of command `/item refresh`
 - lua: remote string "Lua" from Lua version in output of `/debug libs`
 - core: fix detection of libgcrypt ≥ 1.11 ([debian #1071960](https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1071960))
@@ -1976,7 +1976,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - irc: evaluate content of server option "addresses"
 - irc: move option irc.network.alternate_nick into servers (irc.server.xxx.nicks_alternate) ([#633](https://github.com/weechat/weechat/issues/633))
 - irc: use current channel and current server channels first in completions "irc_server_channels" and "irc_channels" ([task #12923](https://savannah.nongnu.org/task/?12923), [#260](https://github.com/weechat/weechat/issues/260), [#392](https://github.com/weechat/weechat/issues/392))
-- logger: display system error when the log file can not be written ([#541](https://github.com/weechat/weechat/issues/541))
+- logger: display system error when the log file cannot be written ([#541](https://github.com/weechat/weechat/issues/541))
 - relay: add option relay.irc.backlog_since_last_message ([#347](https://github.com/weechat/weechat/issues/347))
 - script: add option script.scripts.download_timeout
 - script: add completion with languages and extensions, support search by language/extension in `/script search`
@@ -2080,7 +2080,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - core: add a welcome message on first WeeChat run ([#318](https://github.com/weechat/weechat/issues/318))
 - core: add options weechat.look.word_chars_{highlight|input} ([#55](https://github.com/weechat/weechat/issues/55), [task #9459](https://savannah.nongnu.org/task/?9459))
 - core: remove WeeChat version from config files ([#407](https://github.com/weechat/weechat/issues/407))
-- core: display a warning on startup if the locale can not be set ([#373](https://github.com/weechat/weechat/issues/373))
+- core: display a warning on startup if the locale cannot be set ([#373](https://github.com/weechat/weechat/issues/373))
 - core: allow "*" as plugin name in command `/plugin reload` to reload all plugins with options
 - core: add option `-s` in command `/eval` to split expression before evaluating it (no more split by default) ([#324](https://github.com/weechat/weechat/issues/324))
 - core: add priority in plugins to initialize them in order

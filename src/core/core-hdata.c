@@ -880,7 +880,7 @@ hdata_string (struct t_hdata *hdata, void *pointer, const char *name)
                 return (*((char ***)(pointer + var->offset)))[index];
             else
             {
-                /* we can not index a static array of strings */
+                /* we cannot index a static array of strings */
                 return NULL;
             }
         }

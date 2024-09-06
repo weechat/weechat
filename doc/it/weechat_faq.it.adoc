@@ -1104,7 +1104,7 @@ Gli script non sono compatibili con altri client IRC.
 
 // TRANSLATION MISSING
 [[scripts_update]]
-=== The command "/script update" can not read scripts, how to fix that?
+=== The command "/script update" cannot read scripts, how to fix that?
 
 First check questions about TLS connection in this FAQ.
 

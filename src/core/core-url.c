@@ -1421,7 +1421,7 @@ weeurl_download (const char *url, struct t_hashtable *options,
                     snprintf (url_error, sizeof (url_error),
                               (i == 0) ?
                               _("file \"%s\" not found") :
-                              _("can not write file \"%s\""),
+                              _("cannot write file \"%s\""),
                               url_file[i].filename);
                     rc = 4;
                     goto end;

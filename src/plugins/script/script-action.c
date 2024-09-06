@@ -697,7 +697,7 @@ script_action_run_install (int quiet)
 
         /* plugin not loaded for language of script: display error */
         weechat_printf (NULL,
-                        _("%s: script \"%s\" can not be installed because "
+                        _("%s: script \"%s\" cannot be installed because "
                           "plugin \"%s\" is not loaded"),
                         SCRIPT_PLUGIN_NAME,
                         ptr_script_to_install->name_with_extension,
@@ -793,7 +793,7 @@ script_action_run_remove (const char *name, int quiet)
     if (!script_plugin_loaded[ptr_script->language])
     {
         weechat_printf (NULL,
-                        _("%s: script \"%s\" can not be removed "
+                        _("%s: script \"%s\" cannot be removed "
                           "because plugin \"%s\" is not loaded"),
                         SCRIPT_PLUGIN_NAME,
                         ptr_script->name_with_extension,

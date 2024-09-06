@@ -18,7 +18,7 @@
 
 """
 This script contains WeeChat scripting API tests
-(it can not be run directly and can not be loaded in WeeChat).
+(it cannot be run directly and cannot be loaded in WeeChat).
 
 It is parsed by testapigen.py, using Python AST (Abstract Syntax Trees),
 to generate scripts in all supported languages (Python, Perl, Ruby, ...).

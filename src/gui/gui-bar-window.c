@@ -395,7 +395,7 @@ gui_bar_window_calculate_pos_size (struct t_gui_bar_window *bar_window,
             break;
     }
 
-    /* bar window can not be displayed? (not enough space left) */
+    /* bar window cannot be displayed? (not enough space left) */
     if ((bar_window->x < x1) || (bar_window->x > x2)
         || (bar_window->y < y1) || (bar_window->y > y2)
         || (bar_window->width < 1) || (bar_window->height < 1))
@@ -992,7 +992,7 @@ gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window,
  *
  * Returns:
  *   1: spacers can be used
- *   0: spacers can not be used
+ *   0: spacers cannot be used
  */
 
 int

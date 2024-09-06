@@ -127,7 +127,7 @@ xfer_file_resume (struct t_xfer *xfer, const char *filename)
  * Checks if file can be downloaded with a given suffix index (if 0 the
  * filename is unchanged, otherwise .1, .2, etc. are added to the filename).
  *
- * Returns 1 if the file can be downloaded with this suffix, 0 if it can not.
+ * Returns 1 if the file can be downloaded with this suffix, 0 if it cannot.
  */
 
 int

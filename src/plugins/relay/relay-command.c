@@ -563,7 +563,7 @@ relay_command_remote (const void *pointer, void *data,
                 {
                     weechat_printf (
                         NULL,
-                        _("%s%s: you can not delete remote relay \"%s\" because "
+                        _("%s%s: you cannot delete remote relay \"%s\" because "
                           "you are connected to. Try \"/remote disconnect %s\" "
                           "before."),
                         weechat_prefix ("error"),
@@ -827,7 +827,7 @@ relay_command_remote (const void *pointer, void *data,
         {
             weechat_printf (
                 NULL,
-                _("%s%s: you can not delete remote relay \"%s\" because you are "
+                _("%s%s: you cannot delete remote relay \"%s\" because you are "
                   "connected to. Try \"/remote disconnect %s\" before."),
                 weechat_prefix ("error"),
                 RELAY_PLUGIN_NAME,

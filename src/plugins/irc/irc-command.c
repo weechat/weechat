@@ -2121,7 +2121,7 @@ IRC_COMMAND_CALLBACK(cycle)
             {
                 weechat_printf (
                     ptr_server->buffer,
-                    _("%s%s: \"%s\" command can not be executed on a server "
+                    _("%s%s: \"%s\" command cannot be executed on a server "
                       "buffer"),
                     weechat_prefix ("error"), IRC_PLUGIN_NAME, "cycle");
                 return WEECHAT_RC_ERROR;
@@ -2142,7 +2142,7 @@ IRC_COMMAND_CALLBACK(cycle)
         {
             weechat_printf (
                 ptr_server->buffer,
-                _("%s%s: \"%s\" command can not be executed on a server "
+                _("%s%s: \"%s\" command cannot be executed on a server "
                   "buffer"),
                 weechat_prefix ("error"), IRC_PLUGIN_NAME, "part");
             return WEECHAT_RC_ERROR;
@@ -3773,7 +3773,7 @@ IRC_COMMAND_CALLBACK(me)
     {
         weechat_printf (
             ptr_server->buffer,
-            _("%s%s: \"%s\" command can not be executed on a server buffer"),
+            _("%s%s: \"%s\" command cannot be executed on a server buffer"),
             weechat_prefix ("error"), IRC_PLUGIN_NAME, "me");
         return WEECHAT_RC_ERROR;
     }
@@ -4690,7 +4690,7 @@ IRC_COMMAND_CALLBACK(query)
         {
             weechat_printf (
                     ptr_server->buffer,
-                    _("%s%s: \"%s\" command can not be executed with a "
+                    _("%s%s: \"%s\" command cannot be executed with a "
                       "channel name (\"%s\")"),
                     weechat_prefix ("error"), IRC_PLUGIN_NAME, "query",
                     nicks[i]);
@@ -6123,7 +6123,7 @@ IRC_COMMAND_CALLBACK(server)
         {
             weechat_printf (
                 NULL,
-                _("%s%s: you can not delete server \"%s\" because you are "
+                _("%s%s: you cannot delete server \"%s\" because you are "
                   "connected to. Try \"/disconnect %s\" before."),
                 weechat_prefix ("error"), IRC_PLUGIN_NAME, argv[2], argv[2]);
             return WEECHAT_RC_ERROR;
