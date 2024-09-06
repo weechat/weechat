@@ -9502,7 +9502,7 @@ command_init ()
             N_("path_to_binary: path to WeeChat binary (default is current binary)"),
             N_("raw[-dummy]: do nothing (option used to prevent accidental "
                "completion with \"-quit\")"),
-            N_("raw[-save]: only save the session, do not quit nor reload "
+            N_("raw[-save]: only save the session, neither quit nor reload "
                "WeeChat; the configuration files are not saved (if needed you can "
                "use /save before this command)"),
             N_("raw[-quit]: close *ALL* connections, save session and quit "

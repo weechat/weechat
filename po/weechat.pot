@@ -3119,7 +3119,7 @@ msgid ""
 msgstr ""
 
 msgid ""
-"raw[-save]: only save the session, do not quit nor reload WeeChat; the "
+"raw[-save]: only save the session, neither quit nor reload WeeChat; the "
 "configuration files are not saved (if needed you can use /save before this "
 "command)"
 msgstr ""
