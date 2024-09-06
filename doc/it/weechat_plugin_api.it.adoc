@@ -12004,7 +12004,7 @@ Esempio in C:
 [source,c]
 ----
 int
-my_line_cb (const void *pointer, void *data, struct t_hasbtable *line)
+my_line_cb (const void *pointer, void *data, struct t_hashtable *line)
 {
     struct t_hashtable *hashtable;
 

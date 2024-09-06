@@ -469,7 +469,7 @@ WeeChat "core" は以下のディレクトリに配置されています:
 // TRANSLATION MISSING
 |          test-core-dir.cpp                 | Tests: directory/file functions.
 |          test-core-eval.cpp                | テスト: 式の評価
-|          test-core-hashtble.cpp            | テスト: ハッシュテーブル
+|          test-core-hashtable.cpp           | テスト: ハッシュテーブル
 |          test-core-hdata.cpp               | テスト: hdata
 |          test-core-hook.cpp                | テスト: フック
 |          test-core-infolist.cpp            | テスト: インフォリスト
