@@ -1731,10 +1731,10 @@ msgstr ""
 msgid "  !~   is NOT matching POSIX extended regex"
 msgstr ""
 
-msgid "  ==*  is matching mask, case sensitive (wildcard \"*\" is allowed)"
+msgid "  ==*  is matching mask, case-sensitive (wildcard \"*\" is allowed)"
 msgstr ""
 
-msgid "  !!*  is NOT matching mask, case sensitive (wildcard \"*\" is allowed)"
+msgid "  !!*  is NOT matching mask, case-sensitive (wildcard \"*\" is allowed)"
 msgstr ""
 
 msgid "  =*   is matching mask, case-insensitive (wildcard \"*\" is allowed)"
@@ -1744,10 +1744,10 @@ msgid ""
 "  !*   is NOT matching mask, case-insensitive (wildcard \"*\" is allowed)"
 msgstr ""
 
-msgid "  ==-  is included, case sensitive"
+msgid "  ==-  is included, case-sensitive"
 msgstr ""
 
-msgid "  !!-  is NOT included, case sensitive"
+msgid "  !!-  is NOT included, case-sensitive"
 msgstr ""
 
 msgid "  =-   is included, case-insensitive"
@@ -3784,7 +3784,7 @@ msgid ""
 "buffer has no layout number"
 msgstr ""
 
-msgid "default text search in buffer: case sensitive or not"
+msgid "default text search in buffer: case-sensitive or not"
 msgstr ""
 
 msgid ""
@@ -3953,7 +3953,7 @@ msgstr ""
 
 msgid ""
 "comma separated list of words to highlight; case-insensitive comparison (use "
-"\"(?-i)\" at beginning of words to make them case sensitive), words may "
+"\"(?-i)\" at beginning of words to make them case-sensitive), words may "
 "begin or end with \"*\" for partial match; example: \"test,(?-i)*toto*,"
 "flash*\""
 msgstr ""
@@ -3963,7 +3963,7 @@ msgid ""
 "message: this option has higher priority over other highlight options (if "
 "the string is found in the message, the highlight is disabled and the other "
 "options are ignored), regular expression is case-insensitive (use \"(?-i)\" "
-"at beginning to make it case sensitive), examples: \"<flash.*>\", \"(?-"
+"at beginning to make it case-sensitive), examples: \"<flash.*>\", \"(?-"
 "i)<Flash.*>\""
 msgstr ""
 
@@ -3976,7 +3976,7 @@ msgid ""
 "POSIX extended regular expression used to check if a message has highlight "
 "or not, at least one match in string must be surrounded by delimiters (chars "
 "different from: alphanumeric, \"-\", \"_\" and \"|\"), regular expression is "
-"case-insensitive (use \"(?-i)\" at beginning to make it case sensitive), "
+"case-insensitive (use \"(?-i)\" at beginning to make it case-sensitive), "
 "examples: \"flashcode|flashy\", \"(?-i)FlashCode|flashy\""
 msgstr ""
 
@@ -4619,7 +4619,7 @@ msgid ""
 "the base word ends at first space after cursor"
 msgstr ""
 
-msgid "if enabled, the completion is case sensitive by default"
+msgid "if enabled, the completion is case-sensitive by default"
 msgstr ""
 
 msgid ""
@@ -4638,7 +4638,7 @@ msgid ""
 "add space after nick completion (when nick is not first word on command line)"
 msgstr ""
 
-msgid "case sensitive completion for nicks"
+msgid "case-sensitive completion for nicks"
 msgstr ""
 
 msgid ""
@@ -5260,7 +5260,7 @@ msgstr ""
 
 #, c-format
 msgid ""
-"%sUnknown command \"%s\" (commands are case sensitive, type /help for help), "
+"%sUnknown command \"%s\" (commands are case-sensitive, type /help for help), "
 "commands with similar name: %s"
 msgstr ""
 
@@ -8221,7 +8221,7 @@ msgstr ""
 msgid ""
 "nick: nick or hostname; can be a POSIX extended regular expression if \"re:"
 "\" is given or a mask using \"*\" to replace zero or more chars (the regular "
-"expression can start with \"(?-i)\" to become case sensitive)"
+"expression can start with \"(?-i)\" to become case-sensitive)"
 msgstr ""
 
 msgid "raw[del]: delete an ignore"
@@ -8348,7 +8348,7 @@ msgstr ""
 
 msgid ""
 "regex: POSIX extended regular expression used to filter results (case "
-"insensitive, can start by \"(?-i)\" to become case sensitive); the special "
+"insensitive, can start by \"(?-i)\" to become case-sensitive); the special "
 "value \"*\" doesn't filter results"
 msgstr ""
 
@@ -12795,7 +12795,7 @@ msgstr ""
 
 msgid ""
 "POSIX extended regular expression with IPs allowed to use relay (case "
-"insensitive, use \"(?-i)\" at beginning to make it case sensitive), example: "
+"insensitive, use \"(?-i)\" at beginning to make it case-sensitive), example: "
 "\"^(123\\.45\\.67\\.89|192\\.160\\..*)$\""
 msgstr ""
 
@@ -12900,7 +12900,7 @@ msgstr ""
 
 msgid ""
 "POSIX extended regular expression with origins allowed in websockets (case "
-"insensitive, use \"(?-i)\" at beginning to make it case sensitive), example: "
+"insensitive, use \"(?-i)\" at beginning to make it case-sensitive), example: "
 "\"^https?://(www\\.)?example\\.(com|org)\""
 msgstr ""
 

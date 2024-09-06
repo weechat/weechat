@@ -942,7 +942,7 @@ hook_command_display_error_unknown (const char *command)
         NULL,
         0, GUI_FILTER_TAG_NO_FILTER,
         (found_diff_case_only > 0) ?
-        _("%sUnknown command \"%s\" (commands are case sensitive, "
+        _("%sUnknown command \"%s\" (commands are case-sensitive, "
           "type /help for help), "
           "commands with similar name: %s") :
         _("%sUnknown command \"%s\" (type /help for help), "

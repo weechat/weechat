@@ -627,7 +627,7 @@ components:
           example: true
         nicklist_case_sensitive:
           type: boolean
-          description: groups and nicks are case sensitive
+          description: groups and nicks are case-sensitive
           example: false
         nicklist_display_groups:
           type: boolean

@@ -162,7 +162,7 @@ struct t_gui_buffer
 
     /* nicklist */
     int nicklist;                      /* = 1 if nicklist is enabled        */
-    int nicklist_case_sensitive;       /* nicks are case sensitive ?        */
+    int nicklist_case_sensitive;       /* nicks are case-sensitive ?        */
     struct t_gui_nick_group *nicklist_root; /* pointer to groups root       */
     int nicklist_max_length;           /* max length for a nick             */
     int nicklist_display_groups;       /* display groups ?                  */
@@ -225,7 +225,7 @@ struct t_gui_buffer
     enum t_gui_buffer_search text_search; /* text search type               */
     enum t_gui_buffer_search_dir text_search_direction;
                                           /* search dir.: backward/forward  */
-    int text_search_exact;                /* case sensitive search?         */
+    int text_search_exact;                /* case-sensitive search?         */
     int text_search_regex;                /* search with a regex            */
     regex_t *text_search_regex_compiled;  /* regex used to search           */
     int text_search_where;                /* prefix and/or msg              */

@@ -45,7 +45,7 @@ struct t_gui_completion
     /* completion context */
     struct t_gui_buffer *buffer;  /* buffer where completion was asked       */
     int context;                  /* context: null, nick, command, cmd arg   */
-    int case_sensitive;           /* case sensitive completion?              */
+    int case_sensitive;           /* case-sensitive completion?              */
     char *base_command;           /* cmd with arg to complete (can be NULL)  */
     int base_command_arg_index;   /* # arg to complete (if context=cmd arg)  */
     char *base_word;              /* word to complete (when Tab was pressed) */

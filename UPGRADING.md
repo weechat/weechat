@@ -148,7 +148,7 @@ or can cause a crash of WeeChat).
 ### Nick color infos
 
 The infos irc_nick_color and irc_nick_color_name are deprecated again, and the
-algorithm to compute IRC nick colors has been reverted to case sensitive.\
+algorithm to compute IRC nick colors has been reverted to case-sensitive.\
 The server name has been removed from arguments.
 
 ## Version 4.1.1
@@ -282,7 +282,7 @@ and can cause a crash of WeeChat).
 The functions [config_set_plugin](https://weechat.org/doc/weechat/plugin/#_config_set_plugin)
 and [config_set_desc_plugin](https://weechat.org/doc/weechat/plugin/#_config_set_desc_plugin)
 are not converting any more the option name to lower case because since version 4.0.0,
-the name of options is case sensitive.
+the name of options is case-sensitive.
 
 ### Grab raw key and command
 
@@ -429,7 +429,7 @@ keys were not working at all.
 
 ### Case sensitive identifiers
 
-Many identifiers are made case sensitive, including among others:
+Many identifiers are made case-sensitive, including among others:
 
 - configuration files, sections, options
 - commands, aliases
@@ -2816,7 +2816,7 @@ escape in past do not need any more (for example `[0-9]\+` becomes `[0-9]+`),
 filters and ignore have to be manually fixed.
 
 Option weechat.look.highlight_regex becomes case-insensitive by default, to
-make it case sensitive, use "(?-i)" at beginning of string, for example:
+make it case-sensitive, use "(?-i)" at beginning of string, for example:
 "(?-i)FlashCode|flashy".
 
 ## Version 0.3.6

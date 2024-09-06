@@ -3416,7 +3416,7 @@ irc_config_init ()
             "highlight_channel", "string",
             N_("comma separated list of words to highlight in channel buffers "
                "(case-insensitive, use \"(?-i)\" at beginning of words to "
-               "make them case sensitive; special variables $nick, $channel and "
+               "make them case-sensitive; special variables $nick, $channel and "
                "$server are replaced by their values), these words are added to "
                "buffer property \"highlight_words\" only when buffer is created "
                "(it does not affect current buffers), an empty string disables "
@@ -3428,7 +3428,7 @@ irc_config_init ()
             "highlight_pv", "string",
             N_("comma separated list of words to highlight in private buffers "
                "(case-insensitive, use \"(?-i)\" at beginning of words to "
-               "make them case sensitive; special variables $nick, $channel and "
+               "make them case-sensitive; special variables $nick, $channel and "
                "$server are replaced by their values), these words are added to "
                "buffer property \"highlight_words\" only when buffer is created "
                "(it does not affect current buffers), an empty string disables "
@@ -3440,7 +3440,7 @@ irc_config_init ()
             "highlight_server", "string",
             N_("comma separated list of words to highlight in server buffers "
                "(case-insensitive, use \"(?-i)\" at beginning of words to "
-               "make them case sensitive; special variables $nick, $channel and "
+               "make them case-sensitive; special variables $nick, $channel and "
                "$server are replaced by their values), these words are added to "
                "buffer property \"highlight_words\" only when buffer is created "
                "(it does not affect current buffers), an empty string disables "

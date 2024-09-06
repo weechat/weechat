@@ -1320,7 +1320,7 @@ gui_buffer_string_replace_local_var (struct t_gui_buffer *buffer,
  * List is a comma-separated list of buffers, where exclusion is possible with
  * char '!', and "*" means all buffers.
  *
- * Comparison is case sensitive.
+ * Comparison is case-sensitive.
  *
  * Examples:
  *   "*"
