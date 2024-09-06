@@ -10143,7 +10143,7 @@ C examples:
 [source,c]
 ----
 /* hook modifier with priority = 2000 */
-/* high priority: called before other modifier calbacks */
+/* high priority: called before other modifier callbacks */
 weechat_hook_modifier ("2000|input_text_display", &modifier_cb, NULL, NULL);
 
 /* hook two signals with priority = 3000 */
