@@ -708,7 +708,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - irc: fix join of channels in "autojoin" server option on first connection to server if auto reconnection is performed ([#1873](https://github.com/weechat/weechat/issues/1873))
 - irc: update autojoin option with redirected channels when autojoin_dynamic is enabled ([#1898](https://github.com/weechat/weechat/issues/1898))
 - irc: update secure data when server autojoin option contains `${sec.data.xxx}` and option autojoin_dynamic is enabled ([#1934](https://github.com/weechat/weechat/issues/1934))
-- irc: don't switch to buffer of joined channel if it was not manually joined nor present in server autojoin option
+- irc: don't switch to buffer of joined channel if it was neither manually joined nor present in server autojoin option
 - irc: fix target buffer for commands 432/433 (erroneous nickname/nickname already in use) when the nickname looks like a channel
 - irc: display command 437 on server buffer when nickname cannot change while banned on channel ([#88](https://github.com/weechat/weechat/issues/88))
 - irc: add messages 415 (cannot send message to channel) and 742 (mode cannot be set)

@@ -635,8 +635,8 @@ alias_update_completion (struct t_alias *alias, const char *completion)
 }
 
 /*
- * Checks if an alias name is valid: it must not contain any slashes nor
- * any spaces.
+ * Checks if an alias name is valid: it must contain neither slashes nor
+ * spaces.
  *
  * Returns:
  *   1: name is valid
