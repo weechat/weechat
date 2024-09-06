@@ -9269,7 +9269,7 @@ command_init ()
             N_("> ${repeat_last}: \"1\" for the last execution, \"0\" for the others"),
             "",
             N_("Note: the command is executed on buffer where /repeat was executed "
-               "(if the buffer does not exist any more, the command is not "
+               "(if the buffer does not exist anymore, the command is not "
                "executed)."),
             "",
             N_("Examples:"),
@@ -9593,7 +9593,7 @@ command_init ()
                "does not start with \"/\")"),
             "",
             N_("Note: the command is executed on buffer where /wait was executed "
-               "(if the buffer does not exist any more, the command is not "
+               "(if the buffer does not exist anymore, the command is not "
                "executed)."),
             "",
             N_("Examples:"),

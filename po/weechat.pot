@@ -2812,7 +2812,7 @@ msgstr ""
 
 msgid ""
 "Note: the command is executed on buffer where /repeat was executed (if the "
-"buffer does not exist any more, the command is not executed)."
+"buffer does not exist anymore, the command is not executed)."
 msgstr ""
 
 msgid "  scroll 2 pages up:"
@@ -3252,7 +3252,7 @@ msgstr ""
 
 msgid ""
 "Note: the command is executed on buffer where /wait was executed (if the "
-"buffer does not exist any more, the command is not executed)."
+"buffer does not exist anymore, the command is not executed)."
 msgstr ""
 
 msgid "  join channel #test in 10 seconds:"

@@ -105,7 +105,7 @@ hook_url_run_callback (struct t_hook *hook)
 }
 
 /*
- * Thread cleanup function: mark thread as not running any more.
+ * Thread cleanup function: mark thread as not running anymore.
  */
 
 void

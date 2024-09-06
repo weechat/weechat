@@ -138,7 +138,7 @@ exec_command_list ()
 
 /*
  * Searches a running command by id, and displays an error if command is not
- * found or not running any more.
+ * found or not running anymore.
  *
  * Returns the command found, or NULL if not found or not running.
  */

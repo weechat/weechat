@@ -561,7 +561,7 @@ cmake .. -DENABLE_PHP=OFF -DENABLE_DOC=ON -DENABLE_DOC_INCOMPLETE=ON
 #### Tarballs
 
 The command `make dist` now builds only `.gz` and `.xz` compressed tarballs.\
-Formats `.bz2` and `.zst` are not built any more.
+Formats `.bz2` and `.zst` are not built anymore.
 
 #### RPM packaging
 
@@ -693,7 +693,7 @@ _WeeChat User's guide_.
 ### Remove Python 2 support
 
 The CMake option `ENABLE_PYTHON2` and autotools option `--enable-python2`
-have been removed, and WeeChat can not be compiled with Python 2.x any more.
+have been removed, and WeeChat can not be compiled with Python 2.x anymore.
 
 ### Callbacks of function config_new_option
 
@@ -1856,7 +1856,7 @@ sudo apt-get install weechat-devel-python weechat-devel-perl
 
 ### Evaluation in buflist
 
-The evaluation of expressions in buflist options is not recursive any more,
+The evaluation of expressions in buflist options is not recursive anymore,
 to prevent too many evaluations, for example in buffer variables
 (see issue [#1060](https://github.com/weechat/weechat/issues/1060) for more information).\
 If you are using custom variables/options containing evaluated expressions,
@@ -2287,7 +2287,7 @@ You can rebind the key `Alt`+`j`, `Alt`+`l` (`L`):
 ```
 
 Note: the command `/input jump_last_buffer` still works for compatibility reasons,
-but it should not be used any more.
+but it should not be used anymore.
 
 Similarly, a new key has been added to jump to first buffer: `Alt`+`j`, `Alt`+`f`.
 You can add it with the following command:
@@ -2356,7 +2356,7 @@ if int(highlight):
 
 The color code for "reverse video" in IRC message has been fixed: now WeeChat
 uses 0x16 like other clients (and not 0x12 any more).\
-The code 0x12 is not decoded any more, so if it is received (for example from
+The code 0x12 is not decoded anymore, so if it is received (for example from
 an old WeeChat version), it is not displayed as reverse video.
 
 The color code for "underlined text" in input line has been fixed: now WeeChat
@@ -2435,7 +2435,7 @@ You should check the value of both options and fix them if needed.
 ### Day change message
 
 The day change message is now dynamically displayed, and therefore is not stored
-as a line in buffer any more.
+as a line in buffer anymore.
 
 Option weechat.look.day_change_time_format has been split into two options
 weechat.look.day_change_message_{1date|2dates} (color codes are allowed in
@@ -2525,7 +2525,7 @@ creating this link on make install).
 
 ### Man page / documentation
 
-Documentation is not built by default any more, you have to use option
+Documentation is not built by default anymore, you have to use option
 `-DENABLE_DOC=ON` in cmake command to enable it.
 
 The man page is now built with asciidoc and translated in several
