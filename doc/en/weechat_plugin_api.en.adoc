@@ -4001,7 +4001,7 @@ Arguments:
 
 Return value:
 
-* real potision (in bytes)
+* real position (in bytes)
 
 C example:
 
