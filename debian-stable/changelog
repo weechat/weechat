@@ -903,7 +903,7 @@ weechat (0.1.1-2) unstable; urgency=low
 
   * debian/control:
     - Add myself to uploaders.
-    - Remove unecessary dependency on weechat-gtk (Closes: #308287).
+    - Remove unnecessary dependency on weechat-gtk (Closes: #308287).
 
  -- Julien Louis <ptitlouis@sysif.net>  Tue, 10 May 2005 22:38:52 +0200
 
