@@ -1,5 +1,11 @@
 # WeeChat ChangeLog
 
+## Version 4.4.2 (under dev)
+
+### Fixed
+
+- core, plugins: fix integer overflow in loops ([#2178](https://github.com/weechat/weechat/issues/2178))
+
 ## Version 4.4.1 (2024-08-19)
 
 ### Fixed
