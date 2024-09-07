@@ -2126,6 +2126,7 @@ TEST(CoreString, RebuildSplitString)
         | WEECHAT_STRING_SPLIT_STRIP_RIGHT
         | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS;
     argv = string_split (" abc de  fghi ", " ", NULL, flags, 0, &argc);
+    /* => ["abc", "de", "fghi"] */
 
     /* invalid index_end, which is < index_start */
     str = string_rebuild_split_string ((const char **)argv, NULL, 1, 0);
@@ -2215,6 +2216,48 @@ TEST(CoreString, RebuildSplitString)
 
     str = string_rebuild_split_string ((const char **)argv, ";;", 2, 3);
     STRCMP_EQUAL("fghi", str);
+    free (str);
+
+    string_free_split (argv);
+
+    /* test with empty items */
+    argv = string_split (",abc,de,,fghi,", ",", NULL, 0, 0, &argc);
+    /* => ["", "abc", "de", "", "fghi", ""] */
+
+    str = string_rebuild_split_string ((const char **)argv, "/", 0, -1);
+    STRCMP_EQUAL("/abc/de//fghi/", str);
+    free (str);
+
+    str = string_rebuild_split_string ((const char **)argv, "/", 0, 0);
+    STRCMP_EQUAL("", str);
+    free (str);
+
+    str = string_rebuild_split_string ((const char **)argv, "/", 0, 1);
+    STRCMP_EQUAL("/abc", str);
+    free (str);
+
+    str = string_rebuild_split_string ((const char **)argv, "/", 0, 2);
+    STRCMP_EQUAL("/abc/de", str);
+    free (str);
+
+    str = string_rebuild_split_string ((const char **)argv, "/", 0, 3);
+    STRCMP_EQUAL("/abc/de/", str);
+    free (str);
+
+    str = string_rebuild_split_string ((const char **)argv, "/", 0, 4);
+    STRCMP_EQUAL("/abc/de//fghi", str);
+    free (str);
+
+    str = string_rebuild_split_string ((const char **)argv, "/", 0, 5);
+    STRCMP_EQUAL("/abc/de//fghi/", str);
+    free (str);
+
+    str = string_rebuild_split_string ((const char **)argv, "/", 0, 6);
+    STRCMP_EQUAL("/abc/de//fghi/", str);
+    free (str);
+
+    str = string_rebuild_split_string ((const char **)argv, "/", 2, 4);
+    STRCMP_EQUAL("de//fghi", str);
     free (str);
 
     string_free_split (argv);
