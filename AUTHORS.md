@@ -153,6 +153,7 @@ Alphabetically:
 - Wojciech Kwolek
 - W. Trevor King
 - Yannick Palanque
+- Yiheng Cao
 - ZethJack
 - Ørjan Malde
 
