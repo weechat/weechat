@@ -18,6 +18,12 @@
 - relay/api: fix empty nicklist in remote buffers after connection or reconnection
 - lua: fix compilation on Fedora with Lua < 5.2.0 ([#2173](https://github.com/weechat/weechat/issues/2173), [#2174](https://github.com/weechat/weechat/issues/2174))
 
+## Version 4.4.2 (2024-09-08)
+
+### Fixed
+
+- core, plugins: fix integer overflow in loops ([#2178](https://github.com/weechat/weechat/issues/2178))
+
 ## Version 4.4.1 (2024-08-19)
 
 ### Fixed
