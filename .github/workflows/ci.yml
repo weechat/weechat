@@ -100,7 +100,7 @@ jobs:
     - name: Install dependencies
       run: |
         brew update
-        brew install asciidoctor lua ruby
+        brew install asciidoctor guile lua ruby
 
     - name: Build
       env:
