@@ -15,6 +15,13 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 (file _ReleaseNotes.adoc_ in sources).
 
 
+[[v3.8.1]]
+== Version 3.8.1 (under dev)
+
+Bug fixes::
+
+  * core, plugins: fix integer overflow in loops (issue #2178)
+
 [[v3.8]]
 == Version 3.8 (2023-01-08)
 
