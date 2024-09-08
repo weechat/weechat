@@ -110,11 +110,13 @@ test_patches ()
     PATCHES_OK=0
     PATCHES_ERROR=0
     for file in "${ROOT_DIR}"/tools/debian/patches/*.patch; do
-        echo "=== Testing patch ${file} ==="
-        if git apply --check "${file}"; then
-            PATCHES_OK=$((PATCHES_OK+1))
-        else
-            PATCHES_ERROR=$((PATCHES_ERROR+1))
+        if [ -f "${file}" ]; then
+            echo "=== Testing patch ${file} ==="
+            if git apply --check "${file}"; then
+                PATCHES_OK=$((PATCHES_OK+1))
+            else
+                PATCHES_ERROR=$((PATCHES_ERROR+1))
+            fi
         fi
     done
     echo "Patches: ${PATCHES_OK} OK, ${PATCHES_ERROR} in error."
