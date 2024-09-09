@@ -1784,7 +1784,7 @@ TEST(CoreString, Split)
     POINTERS_EQUAL(NULL, argv[2]);
     string_free_split (argv);
 
-    /* standard split with comma separtor and empty item (keep this item) */
+    /* standard split with comma separator and empty item (keep this item) */
     flags = 0;
     argc = -1;
     argv = string_split ("abc,,fghi", ",", NULL, flags, 0, &argc);
@@ -1796,7 +1796,7 @@ TEST(CoreString, Split)
     POINTERS_EQUAL(NULL, argv[3]);
     string_free_split (argv);
 
-    /* standard split with comma separtor and empty items (keep them) */
+    /* standard split with comma separator and empty items (keep them) */
     flags = 0;
     argc = -1;
     argv = string_split (",abc,,fghi,", ",", NULL, flags, 0, &argc);
@@ -1811,7 +1811,7 @@ TEST(CoreString, Split)
     string_free_split (argv);
 
     /*
-     * standard split with comma separtor and empty items (keep them),
+     * standard split with comma separator and empty items (keep them),
      * max 2 items
      */
     flags = 0;
@@ -1825,7 +1825,7 @@ TEST(CoreString, Split)
     string_free_split (argv);
 
     /*
-     * standard split with comma separtor and empty items (keep them),
+     * standard split with comma separator and empty items (keep them),
      * max 3 items
      */
     flags = 0;
@@ -1840,7 +1840,7 @@ TEST(CoreString, Split)
     string_free_split (argv);
 
     /*
-     * standard split with comma separtor and empty items (keep them),
+     * standard split with comma separator and empty items (keep them),
      * max 4 items
      */
     flags = 0;
