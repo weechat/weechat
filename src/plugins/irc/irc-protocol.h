@@ -69,7 +69,7 @@ struct t_irc_protocol_ctxt
     char *host;                        /* host of sender                    */
     char *command;                     /* IRC command (eg: PRIVMSG)         */
     int ignore_remove;                 /* msg ignored (not displayed)       */
-    int ignore_tag;                    /* mse ignored (displayed with tag)  */
+    int ignore_tag;                    /* msg ignored (displayed with tag)  */
     char **params;                     /* IRC command parameters            */
     int num_params;                    /* number of IRC command parameters  */
 };
