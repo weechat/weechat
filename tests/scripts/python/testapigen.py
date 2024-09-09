@@ -81,7 +81,7 @@ class WeechatScript(object):  # pylint: disable=too-many-instance-attributes
     """
     A generic WeeChat script.
 
-    This class must NOT be instanciated directly, use subclasses instead:
+    This class must NOT be instantiated directly, use subclasses instead:
     PythonScript, PerlScript, ...
     """
 
