@@ -1620,7 +1620,7 @@ eval_syntax_highlight (const char *text, struct t_eval_context *eval_context)
  *   - ${weechat_data_dir}: WeeChat data directory
  *   - ${weechat_state_dir}: WeeChat state directory
  *   - ${weechat_cache_dir}: WeeChat cache directory
- *   - ${weechat_runtmie_dir}: WeeChat runtime directory
+ *   - ${weechat_runtime_dir}: WeeChat runtime directory
  *   - ${eval:string}: the evaluated string
  *   - ${eval_cond:string}: the evaluated condition
  *   - ${esc:string} or ${\\string}: the string with escaped chars
