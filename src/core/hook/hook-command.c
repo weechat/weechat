@@ -788,7 +788,7 @@ hook_command_similar_get_relevance (const char *cmd1, int length_cmd1,
     }
     else
     {
-        /* malus if no chars in common between two words */
+        /* down-rank if no chars in common between two words */
         if (string_get_common_bytes_count (cmd1, cmd2) == 0)
             relevance *= 2;
     }
