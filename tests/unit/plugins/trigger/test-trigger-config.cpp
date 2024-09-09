@@ -188,13 +188,13 @@ TEST(TriggerConfig, DefaultTriggerCmdPass)
     WEE_CHECK_MODIFIER_INPUT("/quote pass ******",
                              "/quote pass secret");
 
-    /* /secure passphrase <pasphrase> */
+    /* /secure passphrase <passphrase> */
     WEE_CHECK_MODIFIER_INPUT("/secure passphrase",
                              "/secure passphrase");
     WEE_CHECK_MODIFIER_INPUT("/secure passphrase **********************",
                              "/secure passphrase this is the passphrase");
 
-    /* /secure decrypt <pasphrase> */
+    /* /secure decrypt <passphrase> */
     WEE_CHECK_MODIFIER_INPUT("/secure decrypt",
                              "/secure decrypt");
     WEE_CHECK_MODIFIER_INPUT("/secure decrypt **********************",
