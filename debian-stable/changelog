@@ -750,7 +750,7 @@ weechat (0.2.3-1) unstable; urgency=low
   * New upstream release
   * Bump lua build-dependency to liblua5.1-0-dev
   * Add pkg-config to Build-Depends
-  * Remove some duplited changelog entries.
+  * Remove some duplicated changelog entries.
   * Improve weechat-plugins description
 
  -- Julien Louis <ptitlouis@sysif.net>  Fri, 12 Jan 2007 09:01:46 +0100
