@@ -274,7 +274,7 @@ TEST(GuiKey, Expand)
     WEE_CHECK_EXP_KEY(1, "meta-meta-meta-z", "meta-meta-meta-z", "\001[\001[\001[z");
     WEE_CHECK_EXP_KEY(1, "meta-meta-meta-_", "meta-meta-meta-_", "\001[\001[\001[_");
 
-    /* sihft-tab */
+    /* shift-tab */
     WEE_CHECK_EXP_KEY(1, "meta-[Z", "shift-tab", "\001[[Z");
 
     /* arrows */
