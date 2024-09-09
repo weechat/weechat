@@ -978,7 +978,7 @@ Arguments:
 
 Examples:
 
-* Send command "/help filter" on WeeChat core bufer:
+* Send command "/help filter" on WeeChat core buffer:
 
 ----
 input core.weechat /help filter
