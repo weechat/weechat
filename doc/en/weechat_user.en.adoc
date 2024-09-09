@@ -3400,7 +3400,7 @@ By default no servers are defined. You can add as many servers as you want with
 the <<command_irc_server,/server>> command.
 
 For example to connect to https://libera.chat/[libera.chat ^↗^^]
-with TLS (encrypted trafic):
+with TLS (encrypted traffic):
 
 ----
 /server add libera irc.libera.chat/6697 -tls
