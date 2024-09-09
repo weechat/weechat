@@ -282,7 +282,7 @@ secure_config_data_read_cb (const void *pointer, void *data,
         gui_chat_printf (
             NULL,
             _("%sFailed to decrypt data \"%s\": hash algorithm \"%s\" is not "
-              "available (ligbcrypt version is too old?)"),
+              "available (libgcrypt version is too old?)"),
             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
             option_name,
             config_file_option_string (secure_config_crypt_hash_algo));
@@ -298,7 +298,7 @@ secure_config_data_read_cb (const void *pointer, void *data,
         gui_chat_printf (
             NULL,
             _("%sFailed to decrypt data \"%s\": cipher \"%s\" is not "
-              "available (ligbcrypt version is too old?)"),
+              "available (libgcrypt version is too old?)"),
             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
             option_name,
             config_file_option_string (secure_config_crypt_cipher));
@@ -393,7 +393,7 @@ secure_config_data_write_map_cb (void *data,
         gui_chat_printf (
             NULL,
             _("%sFailed to encrypt data \"%s\": hash algorithm \"%s\" is not "
-              "available (ligbcrypt version is too old?)"),
+              "available (libgcrypt version is too old?)"),
             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
             key,
             config_file_option_string (secure_config_crypt_hash_algo));
@@ -407,7 +407,7 @@ secure_config_data_write_map_cb (void *data,
         gui_chat_printf (
             NULL,
             _("%sFailed to encrypt data \"%s\": cipher \"%s\" is not "
-              "available (ligbcrypt version is too old?)"),
+              "available (libgcrypt version is too old?)"),
             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
             key,
             config_file_option_string (secure_config_crypt_cipher));
