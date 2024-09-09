@@ -8000,7 +8000,7 @@ irc_protocol_recv_command (struct t_irc_server *server,
         IRCB(411, generic_error),  /* no recipient                    */
         IRCB(412, generic_error),  /* no text to send                 */
         IRCB(413, generic_error),  /* no toplevel                     */
-        IRCB(414, generic_error),  /* wilcard in toplevel domain      */
+        IRCB(414, generic_error),  /* wildcard in toplevel domain     */
         IRCB(415, generic_error),  /* cannot send message to channel  */
         IRCB(421, generic_error),  /* unknown command                 */
         IRCB(422, generic_error),  /* MOTD is missing                 */
