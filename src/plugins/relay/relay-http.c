@@ -983,7 +983,7 @@ relay_http_recv (struct t_relay_client *client, const char *data)
 /*
  * Compresses body of HTTP request with gzip or zstd, if all conditions are met:
  *   - body is not empty
- *   - gzip or ztsd is allowed by client (header "Accept-Encoding")
+ *   - gzip or zstd is allowed by client (header "Accept-Encoding")
  *     (for zstd, WeeChat must be compiled with zstd support)
  *   - compression is enabled (option relay.network.compression > 0)
  *
