@@ -804,7 +804,7 @@ def config_boolean_inherited(option: str) -> int:
 
         # example
         option = weechat.config_get("irc.server.libera.autoconnect")
-        autoconect = weechat.config_boolean_inherited(option)
+        autoconnect = weechat.config_boolean_inherited(option)
     """
     ...
 
