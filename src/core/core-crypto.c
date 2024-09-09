@@ -31,6 +31,12 @@
 #include <math.h>
 #include <gcrypt.h>
 
+#ifdef __ANDROID__
+/* Bring in htobe64 */
+#define _BSD_SOURCE
+#include <endian.h>
+#endif
+
 #include "weechat.h"
 #include "core-crypto.h"
 #include "core-config-file.h"
