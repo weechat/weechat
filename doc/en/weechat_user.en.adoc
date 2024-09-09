@@ -3612,7 +3612,7 @@ Options in servers are:
 [[irc_sasl_ecdsa_nist256p_challenge]]
 ===== SASL ECDSA-NIST256P-CHALLENGE
 
-You must generate a private key in order to authentify with the
+You must generate a private key in order to authenticate with the
 ECDSA-NIST256P-CHALLENGE mechanism (no password is required on connection).
 
 You can generate the key with this command:
