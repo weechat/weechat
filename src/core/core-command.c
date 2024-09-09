@@ -6228,7 +6228,7 @@ COMMAND_CALLBACK(secure)
             gui_chat_printf (
                 NULL,
                 _("%sFailed to decrypt data: hash algorithm \"%s\" is not "
-                  "available (ligbcrypt version is too old?)"),
+                  "available (libgcrypt version is too old?)"),
                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                 config_file_option_string (secure_config_crypt_hash_algo));
             return WEECHAT_RC_ERROR;
@@ -6238,7 +6238,7 @@ COMMAND_CALLBACK(secure)
             gui_chat_printf (
                 NULL,
                 _("%sFailed to decrypt data: cipher \"%s\" is not "
-                  "available (ligbcrypt version is too old?)"),
+                  "available (libgcrypt version is too old?)"),
                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                 config_file_option_string (secure_config_crypt_cipher));
             return WEECHAT_RC_ERROR;
