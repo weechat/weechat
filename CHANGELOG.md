@@ -1,5 +1,11 @@
 # WeeChat ChangeLog
 
+## Version 4.4.3 (under dev)
+
+### Fixed
+
+- core: fix build on Android ([#2180](https://github.com/weechat/weechat/issues/2180))
+
 ## Version 4.4.2 (2024-09-08)
 
 ### Fixed
