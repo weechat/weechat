@@ -56,10 +56,12 @@ add_dependencies(${EXECUTABLE}
 )
 
 target_link_libraries(${EXECUTABLE}
+  weechat_core
+  weechat_plugins
+  weechat_gui_common
   weechat_gui_headless
   weechat_ncurses_fake
   ${EXTRA_LIBS}
-  ${STATIC_LIBS}
   coverage_config
 )
 

@@ -242,8 +242,6 @@ endif()
 # Check for CURL
 find_package(CURL REQUIRED)
 
-set(STATIC_LIBS weechat_plugins)
-
 find_library(DL_LIBRARY
   NAMES dl
   PATHS /lib /usr/lib /usr/libexec /usr/local/lib /usr/local/libexec

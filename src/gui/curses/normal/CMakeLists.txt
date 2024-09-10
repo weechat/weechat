@@ -59,9 +59,11 @@ add_dependencies(${EXECUTABLE} weechat_gui_curses_normal)
 list(APPEND EXTRA_LIBS ${NCURSES_LIBRARY})
 
 target_link_libraries(${EXECUTABLE}
+  weechat_core
+  weechat_plugins
+  weechat_gui_common
   weechat_gui_curses_normal
   ${EXTRA_LIBS}
-  ${STATIC_LIBS}
   coverage_config
 )
 
