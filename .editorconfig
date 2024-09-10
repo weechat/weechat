@@ -1,0 +1,25 @@
+# To use this config on you editor, follow the instructions at:
+# https://editorconfig.org
+
+root = true
+
+[*]
+charset = utf-8
+insert_final_newline = true
+indent_size = 4
+indent_style = space
+tab_width = 8
+trim_trailing_whitespace = true
+
+[{*.{c,cpp,h}}]
+max_line_length = 80
+
+[{CMakeLists.txt,*.cmake}]
+max_line_length = 80
+indent_size = 2
+
+[*.html]
+indent_size = 2
+
+[*.yml]
+indent_size = 2
