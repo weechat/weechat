@@ -1330,7 +1330,7 @@ fset_buffer_input_cb (const void *pointer, void *data,
                       struct t_gui_buffer *buffer,
                       const char *input_data)
 {
-    char *actions[][2] = {
+    static const char *const actions[][2] = {
         { "<<", "/fset -go 0"                                   },
         { ">>", "/fset -go end"                                 },
         { "<",  "/fset -left"                                   },
@@ -1504,7 +1504,7 @@ fset_buffer_set_callbacks ()
 void
 fset_buffer_set_keys (struct t_hashtable *hashtable)
 {
-    char *keys[][2] = {
+    static const char *const keys[][2] = {
         { "up",            "/fset -up"                                     },
         { "down",          "/fset -down"                                   },
         { "meta-home",     "/fset -go 0"                                   },

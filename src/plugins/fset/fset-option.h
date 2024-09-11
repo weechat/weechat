@@ -87,9 +87,9 @@ extern struct t_arraylist *fset_options;
 extern int fset_option_count_marked;
 extern struct t_fset_option_max_length *fset_option_max_length;
 extern char *fset_option_filter;
-extern char *fset_option_type_string[];
-extern char *fset_option_type_string_short[];
-extern char *fset_option_type_string_tiny[];
+extern const char *const fset_option_type_string[];
+extern const char *const fset_option_type_string_short[];
+extern const char *const fset_option_type_string_tiny[];
 
 extern int fset_option_valid (struct t_fset_option *option);
 extern struct t_fset_option *fset_option_search_by_name (const char *name,
