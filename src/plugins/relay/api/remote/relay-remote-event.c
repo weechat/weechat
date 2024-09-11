@@ -1250,7 +1250,7 @@ relay_remote_event_recv (struct t_relay_remote *remote, const char *data)
     const char *body_type, *event_name, *request_id;
     long long buffer_id;
     int i, rc, code, initial_sync;
-    struct t_relay_remote_event_cb event_cb[] = {
+    static const struct t_relay_remote_event_cb event_cb[] = {
         /* event (mask), callback (NULL = event ignored) */
         /* note: order is important */
         { "buffer_line_*", &relay_remote_event_cb_line },

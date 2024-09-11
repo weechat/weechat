@@ -33,7 +33,7 @@ enum t_relay_auth_password_hash_algo
     RELAY_NUM_PASSWORD_HASH_ALGOS,
 };
 
-extern char *relay_auth_password_hash_algo_name[];
+extern const char *const relay_auth_password_hash_algo_name[];
 
 extern int relay_auth_password_hash_algo_search (const char *name);
 extern char *relay_auth_generate_nonce (int size);

@@ -41,11 +41,11 @@
 
 
 /* strings for compression */
-char *relay_weechat_compression_string[RELAY_WEECHAT_NUM_COMPRESSIONS] = {
-    "off",
-    "zlib",
+const char *const relay_weechat_compression_string[RELAY_WEECHAT_NUM_COMPRESSIONS] = {
+    [RELAY_WEECHAT_COMPRESSION_OFF] = "off",
+    [RELAY_WEECHAT_COMPRESSION_ZLIB] = "zlib",
 #ifdef HAVE_ZSTD
-    "zstd",
+    [RELAY_WEECHAT_COMPRESSION_ZSTD] = "zstd",
 #endif
 };
 

@@ -84,10 +84,10 @@ enum t_relay_msg_type
 #define RELAY_COLOR_CHAT_BUFFER weechat_color("chat_buffer")
 #define RELAY_COLOR_CHAT_CLIENT weechat_color(weechat_config_string(relay_config_color_client))
 
-extern char *relay_protocol_string[];
-extern char *relay_status_string[];
-extern char *relay_status_name[];
-extern char *relay_msg_type_string[];
+extern const char *const relay_protocol_string[];
+extern const char *const relay_status_string[];
+extern const char *const relay_status_name[];
+extern const char *const relay_msg_type_string[];
 
 extern int relay_protocol_search (const char *name);
 extern int relay_status_search (const char *name);

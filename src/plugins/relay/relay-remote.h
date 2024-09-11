@@ -69,8 +69,8 @@ struct t_relay_remote
     struct t_relay_remote *next_remote;/* link to next remote               */
 };
 
-extern char *relay_remote_option_string[];
-extern char *relay_remote_option_default[];
+extern const char *const relay_remote_option_string[];
+extern const char *const relay_remote_option_default[];
 extern struct t_relay_remote *relay_remotes;
 extern struct t_relay_remote *last_relay_remote;
 extern int relay_remotes_count;
