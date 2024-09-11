@@ -28,7 +28,7 @@
 
 #define A_ALL_ATTR A_BLINK | A_DIM | A_BOLD | A_UNDERLINE | A_REVERSE | A_ITALIC
 
-extern struct t_gui_color *gui_weechat_colors;
+extern const struct t_gui_color *gui_weechat_colors;
 extern int gui_color_term_colors;
 extern int gui_color_num_pairs;
 extern int gui_color_pairs_auto_reset;

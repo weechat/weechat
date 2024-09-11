@@ -107,12 +107,11 @@ struct t_gui_bar
 
 /* variables */
 
-extern char *gui_bar_option_string[];
-extern char *gui_bar_type_string[];
-extern char *gui_bar_position_string[];
-extern char *gui_bar_filling_string[];
-extern char *gui_bar_default_name[];
-extern char *gui_bar_default_values[][GUI_BAR_NUM_OPTIONS];
+extern const char *const gui_bar_option_string[];
+extern const char *const gui_bar_type_string[];
+extern const char *const gui_bar_position_string[];
+extern const char *const gui_bar_filling_string[];
+extern const char *const gui_bar_default_name[];
 extern struct t_gui_bar *gui_bars;
 extern struct t_gui_bar *last_gui_bar;
 extern struct t_gui_bar *gui_temp_bars;

@@ -47,46 +47,139 @@
 #include "gui-window.h"
 
 
-char *gui_bar_option_string[GUI_BAR_NUM_OPTIONS] =
-{ "hidden", "priority", "type", "conditions", "position", "filling_top_bottom",
-  "filling_left_right", "size", "size_max", "color_fg", "color_delim",
-  "color_bg", "color_bg_inactive", "separator", "items" };
-char *gui_bar_option_default[GUI_BAR_NUM_OPTIONS] =
-{ "off", "0", "root", "", "top", "horizontal",
-  "vertical", "0", "0", "default", "default",
-  "default", "default", "off", "" };
-char *gui_bar_type_string[GUI_BAR_NUM_TYPES] =
-{ "root", "window" };
-char *gui_bar_position_string[GUI_BAR_NUM_POSITIONS] =
-{ "bottom", "top", "left", "right" };
-char *gui_bar_filling_string[GUI_BAR_NUM_FILLING] =
-{ "horizontal", "vertical", "columns_horizontal", "columns_vertical" };
+const char *const gui_bar_option_string[GUI_BAR_NUM_OPTIONS] = {
+    [GUI_BAR_OPTION_HIDDEN] = "hidden",
+    [GUI_BAR_OPTION_PRIORITY] = "priority",
+    [GUI_BAR_OPTION_TYPE] = "type",
+    [GUI_BAR_OPTION_CONDITIONS] = "conditions",
+    [GUI_BAR_OPTION_POSITION] = "position",
+    [GUI_BAR_OPTION_FILLING_TOP_BOTTOM] = "filling_top_bottom",
+    [GUI_BAR_OPTION_FILLING_LEFT_RIGHT] = "filling_left_right",
+    [GUI_BAR_OPTION_SIZE] = "size",
+    [GUI_BAR_OPTION_SIZE_MAX] = "size_max",
+    [GUI_BAR_OPTION_COLOR_FG] = "color_fg",
+    [GUI_BAR_OPTION_COLOR_DELIM] = "color_delim",
+    [GUI_BAR_OPTION_COLOR_BG] = "color_bg",
+    [GUI_BAR_OPTION_COLOR_BG_INACTIVE] = "color_bg_inactive",
+    [GUI_BAR_OPTION_SEPARATOR] = "separator",
+    [GUI_BAR_OPTION_ITEMS] = "items",
+};
+static const char *const gui_bar_option_default[GUI_BAR_NUM_OPTIONS] = {
+    [GUI_BAR_OPTION_HIDDEN] = "off",
+    [GUI_BAR_OPTION_PRIORITY] = "0",
+    [GUI_BAR_OPTION_TYPE] = "root",
+    [GUI_BAR_OPTION_CONDITIONS] = "",
+    [GUI_BAR_OPTION_POSITION] = "top",
+    [GUI_BAR_OPTION_FILLING_TOP_BOTTOM] = "horizontal",
+    [GUI_BAR_OPTION_FILLING_LEFT_RIGHT] = "vertical",
+    [GUI_BAR_OPTION_SIZE] = "0",
+    [GUI_BAR_OPTION_SIZE_MAX] = "0",
+    [GUI_BAR_OPTION_COLOR_FG] = "default",
+    [GUI_BAR_OPTION_COLOR_DELIM] = "default",
+    [GUI_BAR_OPTION_COLOR_BG] = "default",
+    [GUI_BAR_OPTION_COLOR_BG_INACTIVE] = "default",
+    [GUI_BAR_OPTION_SEPARATOR] = "off",
+    [GUI_BAR_OPTION_ITEMS] = "",
+};
+const char *const gui_bar_type_string[GUI_BAR_NUM_TYPES] = {
+    [GUI_BAR_TYPE_ROOT] = "root",
+    [GUI_BAR_TYPE_WINDOW] = "window",
+};
+const char *const gui_bar_position_string[GUI_BAR_NUM_POSITIONS] = {
+    [GUI_BAR_POSITION_BOTTOM] = "bottom",
+    [GUI_BAR_POSITION_TOP] = "top",
+    [GUI_BAR_POSITION_LEFT] = "left",
+    [GUI_BAR_POSITION_RIGHT] = "right",
+};
+const char *const gui_bar_filling_string[GUI_BAR_NUM_FILLING] = {
+    [GUI_BAR_FILLING_HORIZONTAL] = "horizontal",
+    [GUI_BAR_FILLING_VERTICAL] = "vertical",
+    [GUI_BAR_FILLING_COLUMNS_HORIZONTAL] = "columns_horizontal",
+    [GUI_BAR_FILLING_COLUMNS_VERTICAL] = "columns_vertical",
+};
 
 /* default bars */
-char *gui_bar_default_name[GUI_BAR_NUM_DEFAULT_BARS] =
-{ "input", "title", "status", "nicklist" };
-char *gui_bar_default_values[GUI_BAR_NUM_DEFAULT_BARS][GUI_BAR_NUM_OPTIONS] =
-{
-    /* input */
-    { "off", "1000", "window", "", "bottom", "horizontal", "vertical",
-      "0", "0", "default", "cyan", "default", "default", "off",
-      "[input_prompt]+(away),[input_search],[input_paste],input_text" },
-    /* title */
-    { "off", "500", "window", "", "top", "horizontal", "vertical",
-      "1", "0", "default", "cyan", "234", "232", "off",
-      "buffer_title" },
-    /* status */
-    { "off", "500", "window", "", "bottom", "horizontal", "vertical",
-      "1", "0", "default", "cyan", "234", "232", "off",
-      "[time],[buffer_last_number],[buffer_plugin],buffer_number+:+"
-      "buffer_name+(buffer_modes)+{buffer_nicklist_count}+buffer_zoom+"
-      "buffer_filter,mouse_status,scroll,[lag],[hotlist],[typing],"
-      "completion" },
-    /* nicklist */
-    { "off", "200", "window", "${nicklist}", "right",
-      "columns_vertical", "vertical",
-      "0", "0", "default", "cyan", "default", "default", "on",
-      "buffer_nicklist" },
+const char *const gui_bar_default_name[GUI_BAR_NUM_DEFAULT_BARS] = {
+    [GUI_BAR_DEFAULT_INPUT] = "input",
+    [GUI_BAR_DEFAULT_TITLE] = "title",
+    [GUI_BAR_DEFAULT_STATUS] = "status",
+    [GUI_BAR_DEFAULT_NICKLIST] = "nicklist",
+};
+static const char *const
+gui_bar_default_values[GUI_BAR_NUM_DEFAULT_BARS][GUI_BAR_NUM_OPTIONS] = {
+    [GUI_BAR_DEFAULT_INPUT] = {
+        [GUI_BAR_OPTION_HIDDEN] = "off",
+        [GUI_BAR_OPTION_PRIORITY] = "1000",
+        [GUI_BAR_OPTION_TYPE] = "window",
+        [GUI_BAR_OPTION_CONDITIONS] = "",
+        [GUI_BAR_OPTION_POSITION] = "bottom",
+        [GUI_BAR_OPTION_FILLING_TOP_BOTTOM] = "horizontal",
+        [GUI_BAR_OPTION_FILLING_LEFT_RIGHT] = "vertical",
+        [GUI_BAR_OPTION_SIZE] = "0",
+        [GUI_BAR_OPTION_SIZE_MAX] = "0",
+        [GUI_BAR_OPTION_COLOR_FG] = "default",
+        [GUI_BAR_OPTION_COLOR_DELIM] = "cyan",
+        [GUI_BAR_OPTION_COLOR_BG] = "default",
+        [GUI_BAR_OPTION_COLOR_BG_INACTIVE] = "default",
+        [GUI_BAR_OPTION_SEPARATOR] = "off",
+        [GUI_BAR_OPTION_ITEMS] =
+            "[input_prompt]+(away),[input_search],[input_paste],input_text",
+    },
+    [GUI_BAR_DEFAULT_TITLE] = {
+        [GUI_BAR_OPTION_HIDDEN] = "off",
+        [GUI_BAR_OPTION_PRIORITY] = "500",
+        [GUI_BAR_OPTION_TYPE] = "window",
+        [GUI_BAR_OPTION_CONDITIONS] = "",
+        [GUI_BAR_OPTION_POSITION] = "top",
+        [GUI_BAR_OPTION_FILLING_TOP_BOTTOM] = "horizontal",
+        [GUI_BAR_OPTION_FILLING_LEFT_RIGHT] = "vertical",
+        [GUI_BAR_OPTION_SIZE] = "1",
+        [GUI_BAR_OPTION_SIZE_MAX] = "0",
+        [GUI_BAR_OPTION_COLOR_FG] = "default",
+        [GUI_BAR_OPTION_COLOR_DELIM] = "cyan",
+        [GUI_BAR_OPTION_COLOR_BG] = "234",
+        [GUI_BAR_OPTION_COLOR_BG_INACTIVE] = "232",
+        [GUI_BAR_OPTION_SEPARATOR] = "off",
+        [GUI_BAR_OPTION_ITEMS] = "buffer_title",
+    },
+    [GUI_BAR_DEFAULT_STATUS] = {
+        [GUI_BAR_OPTION_HIDDEN] = "off",
+        [GUI_BAR_OPTION_PRIORITY] = "500",
+        [GUI_BAR_OPTION_TYPE] = "window",
+        [GUI_BAR_OPTION_CONDITIONS] = "",
+        [GUI_BAR_OPTION_POSITION] = "bottom",
+        [GUI_BAR_OPTION_FILLING_TOP_BOTTOM] = "horizontal",
+        [GUI_BAR_OPTION_FILLING_LEFT_RIGHT] = "vertical",
+        [GUI_BAR_OPTION_SIZE] = "1",
+        [GUI_BAR_OPTION_SIZE_MAX] = "0",
+        [GUI_BAR_OPTION_COLOR_FG] = "default",
+        [GUI_BAR_OPTION_COLOR_DELIM] = "cyan",
+        [GUI_BAR_OPTION_COLOR_BG] = "234",
+        [GUI_BAR_OPTION_COLOR_BG_INACTIVE] = "232",
+        [GUI_BAR_OPTION_SEPARATOR] = "off",
+        [GUI_BAR_OPTION_ITEMS] =
+            "[time],[buffer_last_number],[buffer_plugin],buffer_number+:+"
+            "buffer_name+(buffer_modes)+{buffer_nicklist_count}+buffer_zoom+"
+            "buffer_filter,mouse_status,scroll,[lag],[hotlist],[typing],"
+            "completion",
+    },
+    [GUI_BAR_DEFAULT_NICKLIST] = {
+        [GUI_BAR_OPTION_HIDDEN] = "off",
+        [GUI_BAR_OPTION_PRIORITY] = "200",
+        [GUI_BAR_OPTION_TYPE] = "window",
+        [GUI_BAR_OPTION_CONDITIONS] = "${nicklist}",
+        [GUI_BAR_OPTION_POSITION] = "right",
+        [GUI_BAR_OPTION_FILLING_TOP_BOTTOM] = "columns_vertical",
+        [GUI_BAR_OPTION_FILLING_LEFT_RIGHT] = "vertical",
+        [GUI_BAR_OPTION_SIZE] = "0",
+        [GUI_BAR_OPTION_SIZE_MAX] = "0",
+        [GUI_BAR_OPTION_COLOR_FG] = "default",
+        [GUI_BAR_OPTION_COLOR_DELIM] = "cyan",
+        [GUI_BAR_OPTION_COLOR_BG] = "default",
+        [GUI_BAR_OPTION_COLOR_BG_INACTIVE] = "default",
+        [GUI_BAR_OPTION_SEPARATOR] = "on",
+        [GUI_BAR_OPTION_ITEMS] = "buffer_nicklist",
+    },
 };
 
 

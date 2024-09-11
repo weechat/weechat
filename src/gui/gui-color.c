@@ -53,8 +53,7 @@ struct t_hashtable *gui_color_hash_palette_alias = NULL;
 struct t_weelist *gui_color_list_with_alias = NULL;
 
 /* terminal colors */
-int gui_color_term256[256] =
-{
+const int gui_color_term256[256] = {
     0x000000, 0x800000, 0x008000, 0x808000, 0x000080, 0x800080,  /*   0-5   */
     0x008080, 0xc0c0c0, 0x808080, 0xff0000, 0x00ff00, 0xffff00,  /*   6-11  */
     0x0000ff, 0xff00ff, 0x00ffff, 0xffffff, 0x000000, 0x00005f,  /*  12-17  */
@@ -102,8 +101,7 @@ int gui_color_term256[256] =
 
 /* ANSI colors */
 regex_t *gui_color_regex_ansi = NULL;
-char *gui_color_ansi[16] =
-{
+static const char *const gui_color_ansi[16] = {
     /* 0-7 */
     "black", "red", "green", "brown", "blue", "magenta", "cyan", "gray",
     /* 8-15 */

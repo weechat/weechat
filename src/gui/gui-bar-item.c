@@ -60,14 +60,34 @@
 
 struct t_gui_bar_item *gui_bar_items = NULL;     /* first bar item          */
 struct t_gui_bar_item *last_gui_bar_item = NULL; /* last bar item           */
-char *gui_bar_item_names[GUI_BAR_NUM_ITEMS] =
-{ "input_paste", "input_prompt", "input_search", "input_text", "time",
-  "buffer_count", "buffer_last_number", "buffer_plugin", "buffer_number",
-  "buffer_name", "buffer_short_name", "buffer_modes", "buffer_filter",
-  "buffer_zoom", "buffer_nicklist_count", "buffer_nicklist_count_groups",
-  "buffer_nicklist_count_all", "scroll", "hotlist", "completion",
-  "buffer_title", "buffer_nicklist", "window_number", "mouse_status", "lag",
-  "away", "spacer"
+const char *const gui_bar_item_names[GUI_BAR_NUM_ITEMS] = {
+    [GUI_BAR_ITEM_INPUT_PASTE] = "input_paste",
+    [GUI_BAR_ITEM_INPUT_PROMPT] = "input_prompt",
+    [GUI_BAR_ITEM_INPUT_SEARCH] = "input_search",
+    [GUI_BAR_ITEM_INPUT_TEXT] = "input_text",
+    [GUI_BAR_ITEM_TIME] = "time",
+    [GUI_BAR_ITEM_BUFFER_COUNT] = "buffer_count",
+    [GUI_BAR_ITEM_BUFFER_LAST_NUMBER] = "buffer_last_number",
+    [GUI_BAR_ITEM_BUFFER_PLUGIN] = "buffer_plugin",
+    [GUI_BAR_ITEM_BUFFER_NUMBER] = "buffer_number",
+    [GUI_BAR_ITEM_BUFFER_NAME] = "buffer_name",
+    [GUI_BAR_ITEM_BUFFER_SHORT_NAME] = "buffer_short_name",
+    [GUI_BAR_ITEM_BUFFER_MODES] = "buffer_modes",
+    [GUI_BAR_ITEM_BUFFER_FILTER] = "buffer_filter",
+    [GUI_BAR_ITEM_BUFFER_ZOOM] = "buffer_zoom",
+    [GUI_BAR_ITEM_BUFFER_NICKLIST_COUNT] = "buffer_nicklist_count",
+    [GUI_BAR_ITEM_BUFFER_NICKLIST_COUNT_GROUPS] = "buffer_nicklist_count_groups",
+    [GUI_BAR_ITEM_BUFFER_NICKLIST_COUNT_ALL] = "buffer_nicklist_count_all",
+    [GUI_BAR_ITEM_SCROLL] = "scroll",
+    [GUI_BAR_ITEM_HOTLIST] = "hotlist",
+    [GUI_BAR_ITEM_COMPLETION] = "completion",
+    [GUI_BAR_ITEM_BUFFER_TITLE] = "buffer_title",
+    [GUI_BAR_ITEM_BUFFER_NICKLIST] = "buffer_nicklist",
+    [GUI_BAR_ITEM_WINDOW_NUMBER] = "window_number",
+    [GUI_BAR_ITEM_MOUSE_STATUS] = "mouse_status",
+    [GUI_BAR_ITEM_LAG] = "lag",
+    [GUI_BAR_ITEM_AWAY] = "away",
+    [GUI_BAR_ITEM_SPACER] = "spacer",
 };
 struct t_gui_bar_item_hook *gui_bar_item_hooks = NULL;
 struct t_hook *gui_bar_item_timer = NULL;

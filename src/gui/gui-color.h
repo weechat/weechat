@@ -188,7 +188,7 @@ extern struct t_gui_color *gui_color[];
 extern struct t_hashtable *gui_color_hash_palette_color;
 extern struct t_hashtable *gui_color_hash_palette_alias;
 extern struct t_weelist *gui_color_list_with_alias;
-extern int gui_color_term256[];
+extern const int gui_color_term256[];
 
 /* color functions */
 

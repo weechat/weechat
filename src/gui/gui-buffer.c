@@ -80,7 +80,7 @@ struct t_gui_buffer *gui_buffer_last_displayed = NULL; /* last b. displayed */
 struct t_hashtable *gui_buffer_by_id = NULL;    /* buffers by id            */
 long long gui_buffer_last_id_assigned = -1;     /* last id assigned         */
 
-char *gui_buffer_reserved_names[] =
+static const char *const gui_buffer_reserved_names[] =
 { GUI_BUFFER_MAIN, SECURE_BUFFER_NAME, GUI_COLOR_BUFFER_NAME,
   NULL
 };
@@ -88,14 +88,20 @@ char *gui_buffer_reserved_names[] =
 int gui_buffer_set_signals = 1;        /* 0 to disable signals sent in      */
                                        /* function gui_buffer_set           */
 
-char *gui_buffer_type_string[GUI_BUFFER_NUM_TYPES] =
-{ "formatted", "free" };
+const char *const gui_buffer_type_string[GUI_BUFFER_NUM_TYPES] = {
+    [GUI_BUFFER_TYPE_FORMATTED] = "formatted",
+    [GUI_BUFFER_TYPE_FREE] = "free",
+};
 
-char *gui_buffer_notify_string[GUI_BUFFER_NUM_NOTIFY] =
-{ "none", "highlight", "message", "all" };
+const char *const gui_buffer_notify_string[GUI_BUFFER_NUM_NOTIFY] = {
+    [GUI_BUFFER_NOTIFY_NONE] = "none",
+    [GUI_BUFFER_NOTIFY_HIGHLIGHT] = "highlight",
+    [GUI_BUFFER_NOTIFY_MESSAGE] = "message",
+    [GUI_BUFFER_NOTIFY_ALL] = "all",
+};
 
-char *gui_buffer_properties_get_integer[] =
-{ "opening", "number", "layout_number", "layout_number_merge_order", "type",
+const char *const gui_buffer_properties_get_integer[] = {
+  "opening", "number", "layout_number", "layout_number_merge_order", "type",
   "notify", "num_displayed", "active", "hidden", "zoomed",
   "print_hooks_enabled", "day_change", "clear", "filter", "closing",
   "lines_hidden", "prefix_max_length", "next_line_id", "time_for_each_line",
@@ -108,23 +114,23 @@ char *gui_buffer_properties_get_integer[] =
   "input_pos", "input_1st_display", "num_history", "text_search",
   "text_search_direction", "text_search_exact", "text_search_regex",
   "text_search_where", "text_search_history", "text_search_found",
-  NULL
+  NULL,
 };
-char *gui_buffer_properties_get_string[] =
-{ "id", "plugin", "name", "full_name", "old_full_name", "short_name", "title",
+const char *const gui_buffer_properties_get_string[] = {
+  "id", "plugin", "name", "full_name", "old_full_name", "short_name", "title",
   "modes", "nicklist_last_id_assigned", "input_prompt", "input",
   "text_search_input", "highlight_words", "highlight_disable_regex",
   "highlight_regex", "highlight_tags_restrict", "highlight_tags",
   "hotlist_max_level_nicks",
-  NULL
+  NULL,
 };
-char *gui_buffer_properties_get_pointer[] =
-{ "plugin", "text_search_regex_compiled", "text_search_ptr_history",
+const char *const gui_buffer_properties_get_pointer[] = {
+  "plugin", "text_search_regex_compiled", "text_search_ptr_history",
   "highlight_disable_regex_compiled", "highlight_regex_compiled",
-  NULL
+  NULL,
 };
-char *gui_buffer_properties_set[] =
-{ "hotlist", "unread", "display", "hidden", "print_hooks_enabled", "day_change",
+const char *const gui_buffer_properties_set[] = {
+  "hotlist", "unread", "display", "hidden", "print_hooks_enabled", "day_change",
   "clear", "filter", "number", "name", "short_name", "type", "notify", "title",
   "modes", "time_for_each_line", "nicklist", "nicklist_case_sensitive",
   "nicklist_display_groups", "highlight_words", "highlight_words_add",
@@ -133,7 +139,7 @@ char *gui_buffer_properties_set[] =
   "hotlist_max_level_nicks_add", "hotlist_max_level_nicks_del",
   "input_prompt", "input", "input_pos", "input_get_any_user_data",
   "input_get_unknown_commands", "input_get_empty", "input_multiline",
-  NULL
+  NULL,
 };
 
 
@@ -1390,7 +1396,8 @@ gui_buffer_set_plugin_for_upgrade (char *name, struct t_weechat_plugin *plugin)
  */
 
 int
-gui_buffer_property_in_list (char *properties[], char *property)
+gui_buffer_property_in_list (const char *const properties[],
+                             const char *const property)
 {
     int i;
 

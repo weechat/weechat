@@ -268,7 +268,7 @@ gui_nick_find_color_name (const char *nickname, int case_range,
     int color, num_colors;
     char *nickname2, *nickname3, **list_colors, *result;
     const char *forced_color, *ptr_result;
-    static char *default_color = "default";
+    static const char *const default_color = "default";
 
     list_colors = NULL;
     num_colors = 0;
