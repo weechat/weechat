@@ -32,8 +32,8 @@ struct t_config_file *alias_config_file = NULL;
 struct t_config_section *alias_config_section_cmd = NULL;
 struct t_config_section *alias_config_section_completion = NULL;
 
-char *alias_default[][3] =
-{ { "aaway",   "allserv /away",        NULL            },
+const char *const alias_default[][3] = {
+  { "aaway",   "allserv /away",        NULL            },
   { "anick",   "allserv /nick",        NULL            },
   { "beep",    "print -beep",          NULL            },
   { "bye",     "quit",                 NULL            },
