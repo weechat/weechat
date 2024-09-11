@@ -325,17 +325,14 @@ enum t_irc_fingerprint_digest_algo
     IRC_FINGERPRINT_NUM_ALGOS,
 };
 
-extern int irc_server_casemapping_range[];
-extern char *irc_server_prefix_modes_default;
-extern char *irc_server_prefix_chars_default;
-extern char *irc_server_chanmodes_default;
+extern const char *const irc_server_prefix_chars_default;
 extern struct t_irc_server *irc_servers;
 extern const int gnutls_cert_type_prio[];
 extern const int gnutls_prot_prio[];
 extern struct t_irc_message *irc_recv_msgq, *irc_msgq_last_msg;
-extern char *irc_server_ipv6_string[];
-extern char *irc_server_sasl_fail_string[];
-extern char *irc_server_options[][2];
+extern const char *const irc_server_ipv6_string[];
+extern const char *const irc_server_sasl_fail_string[];
+extern const char *const irc_server_options[][2];
 
 extern int irc_server_valid (struct t_irc_server *server);
 extern struct t_irc_server *irc_server_search (const char *server_name);

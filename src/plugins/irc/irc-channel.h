@@ -91,8 +91,8 @@ struct t_irc_channel
     struct t_irc_channel *next_channel; /* link to next channel             */
 };
 
-extern char *irc_channel_typing_state_string[IRC_CHANNEL_NUM_TYPING_STATES];
-extern char *irc_channel_default_chantypes;
+extern const char *const irc_channel_typing_state_string[IRC_CHANNEL_NUM_TYPING_STATES];
+extern const char *const irc_channel_default_chantypes;
 
 extern int irc_channel_valid (struct t_irc_server *server,
                               struct t_irc_channel *channel);

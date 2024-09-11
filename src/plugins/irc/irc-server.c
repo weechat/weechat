@@ -76,14 +76,21 @@ struct t_irc_server *last_irc_server = NULL;
 struct t_irc_message *irc_recv_msgq = NULL;
 struct t_irc_message *irc_msgq_last_msg = NULL;
 
-char *irc_server_ipv6_string[IRC_SERVER_NUM_IPV6] =
-{ "disable", "auto", "force" };
+const char *const irc_server_ipv6_string[IRC_SERVER_NUM_IPV6] = {
+    [IRC_SERVER_IPV6_DISABLE] = "disable",
+    [IRC_SERVER_IPV6_AUTO] = "auto",
+    [IRC_SERVER_IPV6_FORCE] = "force",
+};
 
-char *irc_server_sasl_fail_string[IRC_SERVER_NUM_SASL_FAIL] =
-{ "continue", "reconnect", "disconnect" };
+const char *const
+irc_server_sasl_fail_string[IRC_SERVER_NUM_SASL_FAIL] = {
+    [IRC_SERVER_SASL_FAIL_CONTINUE] = "continue",
+    [IRC_SERVER_SASL_FAIL_RECONNECT] = "reconnect",
+    [IRC_SERVER_SASL_FAIL_DISCONNECT] ="disconnect",
+};
 
-char *irc_server_options[IRC_SERVER_NUM_OPTIONS][2] =
-{ { "addresses",            ""                        },
+const char *const irc_server_options[IRC_SERVER_NUM_OPTIONS][2] = {
+  { "addresses",            ""                        },
   { "proxy",                ""                        },
   { "ipv6",                 "auto"                    },
   { "tls",                  "on"                      },
@@ -133,33 +140,55 @@ char *irc_server_options[IRC_SERVER_NUM_OPTIONS][2] =
   { "registered_mode",      "r"                       },
 };
 
-char *irc_server_casemapping_string[IRC_SERVER_NUM_CASEMAPPING] =
-{ "rfc1459", "strict-rfc1459", "ascii" };
-int irc_server_casemapping_range[IRC_SERVER_NUM_CASEMAPPING] =
-{ 30, 29, 26 };
+static const char *const
+irc_server_casemapping_string[IRC_SERVER_NUM_CASEMAPPING] = {
+    [IRC_SERVER_CASEMAPPING_RFC1459] = "rfc1459",
+    [IRC_SERVER_CASEMAPPING_STRICT_RFC1459] = "strict-rfc1459",
+    [IRC_SERVER_CASEMAPPING_ASCII] = "ascii",
+};
+static const int irc_server_casemapping_range[IRC_SERVER_NUM_CASEMAPPING] = {
+    [IRC_SERVER_CASEMAPPING_RFC1459] = 30,
+    [IRC_SERVER_CASEMAPPING_STRICT_RFC1459] = 29,
+    [IRC_SERVER_CASEMAPPING_ASCII] = 26,
+};
 
-char *irc_server_utf8mapping_string[IRC_SERVER_NUM_UTF8MAPPING] =
-{ "none", "rfc8265" };
+static const  char *const
+irc_server_utf8mapping_string[IRC_SERVER_NUM_UTF8MAPPING] = {
+    [IRC_SERVER_UTF8MAPPING_NONE] = "none",
+    [IRC_SERVER_UTF8MAPPING_RFC8265] = "rfc8265",
+};
 
-char *irc_server_prefix_modes_default = "ov";
-char *irc_server_prefix_chars_default = "@+";
-char *irc_server_chanmodes_default    = "beI,k,l";
+static const char *const irc_server_prefix_modes_default = "ov";
+const char *const irc_server_prefix_chars_default = "@+";
+static const char *const irc_server_chanmodes_default = "beI,k,l";
 
-const char *irc_server_send_default_tags = NULL;  /* default tags when       */
-                                                  /* sending a message       */
+/* default tags when sending a message       */
+static const char *irc_server_send_default_tags = NULL;
 
-gnutls_digest_algorithm_t irc_fingerprint_digest_algos[IRC_FINGERPRINT_NUM_ALGOS] =
-{ GNUTLS_DIG_SHA1, GNUTLS_DIG_SHA256, GNUTLS_DIG_SHA512 };
-char *irc_fingerprint_digest_algos_name[IRC_FINGERPRINT_NUM_ALGOS] =
-{ "SHA-1", "SHA-256", "SHA-512" };
-int irc_fingerprint_digest_algos_size[IRC_FINGERPRINT_NUM_ALGOS] =
-{ 160, 256, 512 };
+static const gnutls_digest_algorithm_t
+irc_fingerprint_digest_algos[IRC_FINGERPRINT_NUM_ALGOS] = {
+    [IRC_FINGERPRINT_ALGO_SHA1] = GNUTLS_DIG_SHA1,
+    [IRC_FINGERPRINT_ALGO_SHA256] = GNUTLS_DIG_SHA256,
+    [IRC_FINGERPRINT_ALGO_SHA512] = GNUTLS_DIG_SHA512,
+};
+static const char *const
+irc_fingerprint_digest_algos_name[IRC_FINGERPRINT_NUM_ALGOS] = {
+    [IRC_FINGERPRINT_ALGO_SHA1] = "SHA-1",
+    [IRC_FINGERPRINT_ALGO_SHA256] = "SHA-256",
+    [IRC_FINGERPRINT_ALGO_SHA512] = "SHA-512",
+};
+static const int
+irc_fingerprint_digest_algos_size[IRC_FINGERPRINT_NUM_ALGOS] = {
+    [IRC_FINGERPRINT_ALGO_SHA1] = 160,
+    [IRC_FINGERPRINT_ALGO_SHA256] = 256,
+    [IRC_FINGERPRINT_ALGO_SHA512] = 512,
+};
 
 
-void irc_server_outqueue_send (struct t_irc_server *server);
-void irc_server_reconnect (struct t_irc_server *server);
-void irc_server_free_data (struct t_irc_server *server);
-void irc_server_autojoin_create_buffers (struct t_irc_server *server);
+static void irc_server_outqueue_send (struct t_irc_server *server);
+static void irc_server_reconnect (struct t_irc_server *server);
+static void irc_server_free_data (struct t_irc_server *server);
+static void irc_server_autojoin_create_buffers (struct t_irc_server *server);
 
 
 /*

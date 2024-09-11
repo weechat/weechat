@@ -39,7 +39,7 @@ enum t_irc_sasl_mechanism
     IRC_NUM_SASL_MECHANISMS,
 };
 
-extern char *irc_sasl_mechanism_string[];
+extern const char *const irc_sasl_mechanism_string[];
 
 extern char *irc_sasl_mechanism_plain (const char *sasl_username,
                                        const char *sasl_password);

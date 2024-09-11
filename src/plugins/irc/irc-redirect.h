@@ -28,6 +28,7 @@ struct t_irc_server;
 
 /* template for redirections (IRC plugin creates some templates at startup) */
 
+/* TODO: move the prev/next out of the struct into the C file, const FTW. */
 struct t_irc_redirect_pattern
 {
     char *name;                     /* name                                  */

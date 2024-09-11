@@ -31,8 +31,8 @@
 #include "irc-config.h"
 
 
-char *irc_color_to_weechat[IRC_NUM_COLORS] =
-{ /*     0 */ "white",
+static const char *const irc_color_to_weechat[IRC_NUM_COLORS] = {
+  /*     0 */ "white",
   /*     1 */ "black",
   /*     2 */ "blue",
   /*     3 */ "green",
@@ -61,8 +61,8 @@ char *irc_color_to_weechat[IRC_NUM_COLORS] =
   /* 96-98 */ "250", "254", "231",
   /*    99 */ "default",
 };
-char irc_color_term2irc[IRC_COLOR_TERM2IRC_NUM_COLORS] =
-{        /* term > IRC               */
+static const char irc_color_term2irc[IRC_COLOR_TERM2IRC_NUM_COLORS] = {
+         /* term > IRC               */
     1,   /*   0     1 (black)        */
     5,   /*   1     5 (red)          */
     3,   /*   2     3 (green)        */
@@ -80,7 +80,7 @@ char irc_color_term2irc[IRC_COLOR_TERM2IRC_NUM_COLORS] =
     11,  /*  14    11 (lightcyan)    */
     0,   /*  15     0 (white)        */
 };
-regex_t *irc_color_regex_ansi = NULL;
+static regex_t *irc_color_regex_ansi = NULL;
 
 
 /*

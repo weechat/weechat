@@ -383,9 +383,9 @@ char *
 irc_nick_get_color_for_nicklist (struct t_irc_server *server,
                                  struct t_irc_nick *nick)
 {
-    static char *nick_color_bar_fg = "bar_fg";
-    static char *nick_color_self = "weechat.color.chat_nick_self";
-    static char *nick_color_away = "weechat.color.nicklist_away";
+    static const char *const nick_color_bar_fg = "bar_fg";
+    static const char *const nick_color_self = "weechat.color.chat_nick_self";
+    static const char *const nick_color_away = "weechat.color.nicklist_away";
 
     if (nick->away)
         return strdup (nick_color_away);
