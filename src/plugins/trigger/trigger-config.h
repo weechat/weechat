@@ -42,7 +42,7 @@ extern struct t_config_option *trigger_config_color_identifier;
 extern struct t_config_option *trigger_config_color_regex;
 extern struct t_config_option *trigger_config_color_replace;
 
-extern char *trigger_config_default_list[][1 + TRIGGER_NUM_OPTIONS];
+extern const char *const trigger_config_default_list[][1 + TRIGGER_NUM_OPTIONS];
 
 extern struct t_config_option *trigger_config_create_trigger_option (const char *trigger_name,
                                                                      int index_option,

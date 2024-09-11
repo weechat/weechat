@@ -43,38 +43,108 @@ WEECHAT_PLUGIN_PRIORITY(TRIGGER_PLUGIN_PRIORITY);
 
 struct t_weechat_plugin *weechat_trigger_plugin = NULL;
 
-char *trigger_option_string[TRIGGER_NUM_OPTIONS] =
-{ "enabled", "hook", "arguments", "conditions", "regex", "command",
-  "return_code", "post_action" };
-char *trigger_option_default[TRIGGER_NUM_OPTIONS] =
-{ "on", "signal", "", "", "", "", "ok", "none" };
+const char *const trigger_option_string[TRIGGER_NUM_OPTIONS] = {
+    [TRIGGER_OPTION_ENABLED] = "enabled",
+    [TRIGGER_OPTION_HOOK] = "hook",
+    [TRIGGER_OPTION_ARGUMENTS] = "arguments",
+    [TRIGGER_OPTION_CONDITIONS] = "conditions",
+    [TRIGGER_OPTION_REGEX] = "regex",
+    [TRIGGER_OPTION_COMMAND] = "command",
+    [TRIGGER_OPTION_RETURN_CODE] = "return_code",
+    [TRIGGER_OPTION_POST_ACTION] = "post_action",
+};
+const char *const trigger_option_default[TRIGGER_NUM_OPTIONS] = {
+    [TRIGGER_OPTION_ENABLED] = "on",
+    [TRIGGER_OPTION_HOOK] = "signal",
+    [TRIGGER_OPTION_ARGUMENTS] = "",
+    [TRIGGER_OPTION_CONDITIONS] = "",
+    [TRIGGER_OPTION_REGEX] = "",
+    [TRIGGER_OPTION_COMMAND] = "",
+    [TRIGGER_OPTION_RETURN_CODE] = "ok",
+    [TRIGGER_OPTION_POST_ACTION] = "none",
+};
 
-char *trigger_hook_type_string[TRIGGER_NUM_HOOK_TYPES] =
-{ "signal", "hsignal", "modifier", "line", "print", "command", "command_run",
-  "timer", "config", "focus", "info", "info_hashtable" };
-char *trigger_hook_option_values =
+const char *const trigger_hook_type_string[TRIGGER_NUM_HOOK_TYPES] = {
+    [TRIGGER_HOOK_SIGNAL] = "signal",
+    [TRIGGER_HOOK_HSIGNAL] = "hsignal",
+    [TRIGGER_HOOK_MODIFIER] = "modifier",
+    [TRIGGER_HOOK_LINE] = "line",
+    [TRIGGER_HOOK_PRINT] = "print",
+    [TRIGGER_HOOK_COMMAND] = "command",
+    [TRIGGER_HOOK_COMMAND_RUN] = "command_run",
+    [TRIGGER_HOOK_TIMER] = "timer",
+    [TRIGGER_HOOK_CONFIG] = "config",
+    [TRIGGER_HOOK_FOCUS] = "focus",
+    [TRIGGER_HOOK_INFO] = "info",
+    [TRIGGER_HOOK_INFO_HASHTABLE] = "info_hashtable",
+};
+const char *const trigger_hook_option_values =
     "signal|hsignal|modifier|line|print|command|command_run|timer|config|"
     "focus|info|info_hashtable";
-char *trigger_hook_default_arguments[TRIGGER_NUM_HOOK_TYPES] =
-{ "xxx", "xxx", "xxx", "", "", "cmd;desc;args;args_desc;%(buffers_names)",
-  "/cmd", "60000;0;0", "xxx", "chat", "xxx", "xxx" };
-char *trigger_hook_default_rc[TRIGGER_NUM_HOOK_TYPES] =
-{ "ok,ok_eat,error", "ok,ok_eat,error", "", "", "ok,error", "ok,error",
-  "ok,ok_eat,error", "ok", "ok", "", "", "" };
+const char *const trigger_hook_default_arguments[TRIGGER_NUM_HOOK_TYPES] = {
+    [TRIGGER_HOOK_SIGNAL] = "xxx",
+    [TRIGGER_HOOK_HSIGNAL] = "xxx",
+    [TRIGGER_HOOK_MODIFIER] = "xxx",
+    [TRIGGER_HOOK_LINE] = "",
+    [TRIGGER_HOOK_PRINT] = "",
+    [TRIGGER_HOOK_COMMAND] = "cmd;desc;args;args_desc;%(buffers_names)",
+    [TRIGGER_HOOK_COMMAND_RUN] = "/cmd",
+    [TRIGGER_HOOK_TIMER] = "60000;0;0",
+    [TRIGGER_HOOK_CONFIG] = "xxx",
+    [TRIGGER_HOOK_FOCUS] = "chat",
+    [TRIGGER_HOOK_INFO] = "xxx",
+    [TRIGGER_HOOK_INFO_HASHTABLE] = "xxx",
+};
+const char *const trigger_hook_default_rc[TRIGGER_NUM_HOOK_TYPES] = {
+    [TRIGGER_HOOK_SIGNAL] = "ok,ok_eat,error",
+    [TRIGGER_HOOK_HSIGNAL] = "ok,ok_eat,error",
+    [TRIGGER_HOOK_MODIFIER] = "",
+    [TRIGGER_HOOK_LINE] = "",
+    [TRIGGER_HOOK_PRINT] = "ok,error",
+    [TRIGGER_HOOK_COMMAND] = "ok,error",
+    [TRIGGER_HOOK_COMMAND_RUN] = "ok,ok_eat,error",
+    [TRIGGER_HOOK_TIMER] = "ok",
+    [TRIGGER_HOOK_CONFIG] = "ok",
+    [TRIGGER_HOOK_FOCUS] = "",
+    [TRIGGER_HOOK_INFO] = "",
+    [TRIGGER_HOOK_INFO_HASHTABLE] = "",
+};
 
-char trigger_regex_command[TRIGGER_NUM_REGEX_COMMANDS] =
-{ 's', 'y' };
-char *trigger_hook_regex_default_var[TRIGGER_NUM_HOOK_TYPES] =
-{ "tg_signal_data", "", "tg_string", "message", "tg_message", "tg_argv_eol1",
-  "tg_command", "tg_remaining_calls", "tg_value", "", "tg_info", "" };
+const char trigger_regex_command[TRIGGER_NUM_REGEX_COMMANDS] = {
+    [TRIGGER_REGEX_COMMAND_REPLACE] = 's',
+    [TRIGGER_REGEX_COMMAND_TRANSLATE_CHARS] = 'y',
+};
+const char *const trigger_hook_regex_default_var[TRIGGER_NUM_HOOK_TYPES] ={
+    [TRIGGER_HOOK_SIGNAL] = "tg_signal_data",
+    [TRIGGER_HOOK_HSIGNAL] = "",
+    [TRIGGER_HOOK_MODIFIER] = "tg_string",
+    [TRIGGER_HOOK_LINE] = "message",
+    [TRIGGER_HOOK_PRINT] = "tg_message",
+    [TRIGGER_HOOK_COMMAND] = "tg_argv_eol1",
+    [TRIGGER_HOOK_COMMAND_RUN] = "tg_command",
+    [TRIGGER_HOOK_TIMER] = "tg_remaining_calls",
+    [TRIGGER_HOOK_CONFIG] = "tg_value",
+    [TRIGGER_HOOK_FOCUS] = "",
+    [TRIGGER_HOOK_INFO] = "tg_info",
+    [TRIGGER_HOOK_INFO_HASHTABLE] = "",
+};
 
-char *trigger_return_code_string[TRIGGER_NUM_RETURN_CODES] =
-{ "ok", "ok_eat", "error" };
-int trigger_return_code[TRIGGER_NUM_RETURN_CODES] =
-{ WEECHAT_RC_OK, WEECHAT_RC_OK_EAT, WEECHAT_RC_ERROR };
+const char *const trigger_return_code_string[TRIGGER_NUM_RETURN_CODES] = {
+    [TRIGGER_RC_OK] = "ok",
+    [TRIGGER_RC_OK_EAT] = "ok_eat",
+    [TRIGGER_RC_ERROR] = "error",
+};
+const int trigger_return_code[TRIGGER_NUM_RETURN_CODES] = {
+    [TRIGGER_RC_OK] = WEECHAT_RC_OK,
+    [TRIGGER_RC_OK_EAT] = WEECHAT_RC_OK_EAT,
+    [TRIGGER_RC_ERROR] = WEECHAT_RC_ERROR,
+};
 
-char *trigger_post_action_string[TRIGGER_NUM_POST_ACTIONS] =
-{ "none", "disable", "delete" };
+const char *const trigger_post_action_string[TRIGGER_NUM_POST_ACTIONS] = {
+    [TRIGGER_POST_ACTION_NONE] = "none",
+    [TRIGGER_POST_ACTION_DISABLE] = "disable",
+    [TRIGGER_POST_ACTION_DELETE] = "delete",
+};
 
 struct t_trigger *triggers = NULL;          /* first trigger                */
 struct t_trigger *last_trigger = NULL;      /* last trigger                 */
