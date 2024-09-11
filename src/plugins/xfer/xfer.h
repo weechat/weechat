@@ -202,10 +202,10 @@ struct t_xfer
 };
 
 extern struct t_weechat_plugin *weechat_xfer_plugin;
-extern char *xfer_type_string[];
-extern char *xfer_protocol_string[];
-extern char *xfer_status_string[];
-extern char *xfer_hash_status_string[];
+extern const char *const xfer_type_string[];
+extern const char *const xfer_protocol_string[];
+extern const char *const xfer_status_string[];
+extern const char *const xfer_hash_status_string[];
 extern struct t_xfer *xfer_list, *last_xfer;
 extern int xfer_count;
 
