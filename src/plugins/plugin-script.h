@@ -126,7 +126,7 @@ struct t_plugin_script_data
     void (*unload_all) ();
 };
 
-extern struct t_weechat_script_constant weechat_script_constants[];
+extern const struct t_weechat_script_constant weechat_script_constants[];
 
 extern void plugin_script_display_interpreter (struct t_weechat_plugin *plugin,
                                                int indent);
