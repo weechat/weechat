@@ -45,8 +45,13 @@ struct t_exec_cmd *exec_cmds = NULL;        /* first executed command       */
 struct t_exec_cmd *last_exec_cmd = NULL;    /* last executed command        */
 int exec_cmds_count = 0;                    /* number of executed commands  */
 
-char *exec_color_string[EXEC_NUM_COLORS] =
-{ "ansi", "auto", "irc", "weechat", "strip" };
+static const char *const exec_color_string[EXEC_NUM_COLORS] = {
+    [EXEC_COLOR_ANSI] = "ansi",
+    [EXEC_COLOR_AUTO] = "auto",
+    [EXEC_COLOR_IRC] = "irc",
+    [EXEC_COLOR_WEECHAT] = "weechat",
+    [EXEC_COLOR_STRIP] = "strip",
+};
 
 
 /*
