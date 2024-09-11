@@ -185,7 +185,7 @@ struct t_config_option
 extern struct t_config_file *config_files;
 extern struct t_config_file *last_config_file;
 
-extern char *config_option_type_string[];
+extern const char *const config_option_type_string[];
 
 extern int config_file_valid (struct t_config_file *config_file);
 extern struct t_config_file *config_file_search (const char *name);

@@ -46,8 +46,10 @@ struct t_hashtable *secure_hashtable_data = NULL;
 /* data still encrypted (if passphrase not set) */
 struct t_hashtable *secure_hashtable_data_encrypted = NULL;
 
-char *secure_decrypt_error[] = { "memory", "buffer", "key", "cipher", "setkey",
-                                 "decrypt", "hash", "hash mismatch" };
+// TODO: Enum the return value and index properly
+const char *const secure_decrypt_error[] = {
+    "memory", "buffer", "key", "cipher", "setkey", "decrypt", "hash", "hash mismatch",
+};
 
 /* used only when reading sec.conf: 1 if flag __passphrase__ is enabled */
 int secure_data_encrypted = 0;

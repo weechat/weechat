@@ -32,7 +32,7 @@ extern char *secure_passphrase;
 extern struct t_hashtable *secure_hashtable_data;
 extern struct t_hashtable *secure_hashtable_data_encrypted;
 extern int secure_data_encrypted;
-extern char *secure_decrypt_error[];
+extern const char *const secure_decrypt_error[];
 
 extern int secure_encrypt_data (const char *data, int length_data,
                                 int hash_algo, int cipher,

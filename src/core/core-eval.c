@@ -65,19 +65,31 @@
     }
 
 
-char *eval_logical_ops[EVAL_NUM_LOGICAL_OPS] =
-{ "||", "&&" };
-
-char *eval_comparisons[EVAL_NUM_COMPARISONS] =
-{ "=~", "!~",                /* regex */
-  "==*", "!!*", "=*", "!*",  /* string match */
-  "==-", "!!-", "=-", "!-",  /* includes */
-  "==", "!=",                /* equal, not equal */
-  "<=", "<", ">=", ">",      /* less than, greater than */
+static const char *const eval_logical_ops[EVAL_NUM_LOGICAL_OPS] = {
+    [EVAL_LOGICAL_OP_OR] = "||",
+    [EVAL_LOGICAL_OP_AND] = "&&",
 };
 
-char *eval_range_chars[][2] =
-{
+static const char *const eval_comparisons[EVAL_NUM_COMPARISONS] = {
+    [EVAL_COMPARE_REGEX_MATCHING] = "=~",
+    [EVAL_COMPARE_REGEX_NOT_MATCHING] = "!~",
+    [EVAL_COMPARE_STRING_MATCHING_CASE_SENSITIVE] = "==*",
+    [EVAL_COMPARE_STRING_NOT_MATCHING_CASE_SENSITIVE] = "!!*",
+    [EVAL_COMPARE_STRING_MATCHING] = "=*",
+    [EVAL_COMPARE_STRING_NOT_MATCHING] = "!*",
+    [EVAL_COMPARE_INCLUDE_CASE_SENSITIVE] = "==-",
+    [EVAL_COMPARE_NOT_INCLUDE_CASE_SENSITIVE] = "!!-",
+    [EVAL_COMPARE_INCLUDE] = "=-",
+    [EVAL_COMPARE_NOT_INCLUDE] = "!-",
+    [EVAL_COMPARE_EQUAL] = "==",
+    [EVAL_COMPARE_NOT_EQUAL] = "!=",
+    [EVAL_COMPARE_LESS_EQUAL] = "<=",
+    [EVAL_COMPARE_LESS] = "<",
+    [EVAL_COMPARE_GREATER_EQUAL] = ">=",
+    [EVAL_COMPARE_GREATER] = ">",
+};
+
+static const char *const eval_range_chars[][2] = {
     { "digit",  EVAL_RANGE_DIGIT },
     { "xdigit", EVAL_RANGE_XDIGIT },
     { "lower",  EVAL_RANGE_LOWER },

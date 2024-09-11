@@ -792,7 +792,7 @@ completion_list_add_filename_cb (const void *pointer, void *data,
                                  struct t_gui_buffer *buffer,
                                  struct t_gui_completion *completion)
 {
-    char home[3] = { '~', DIR_SEPARATOR_CHAR, '\0' };
+    static const char home[3] = { '~', DIR_SEPARATOR_CHAR, '\0' };
     char *ptr_home, *pos, buf[PATH_MAX], *real_prefix, *prefix, *path_dir;
     char *path_base, *dir_name;
     const char *pos_args;
@@ -2126,7 +2126,7 @@ completion_list_add_eval_variables_cb (const void *pointer, void *data,
                                        struct t_gui_buffer *buffer,
                                        struct t_gui_completion *completion)
 {
-    char *eval_variables[] = {
+    static const char *const eval_variables[] = {
         "${\\string}",
         "${base_decode:16,string}",
         "${base_decode:32,string}",

@@ -83,7 +83,7 @@ struct t_hdata
 
 extern struct t_hashtable *weechat_hdata;
 
-extern char *hdata_type_string[];
+extern const char *const hdata_type_string[];
 
 extern struct t_hdata *hdata_new (struct t_weechat_plugin *plugin,
                                   const char *hdata_name, const char *var_prev,

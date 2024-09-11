@@ -46,8 +46,7 @@
 
 
 #ifdef HAVE_SYS_RESOURCE_H
-struct t_rlimit_resource rlimit_resource[] =
-{
+static const struct t_rlimit_resource rlimit_resource[] = {
 #ifdef RLIMIT_AS
     { "as", RLIMIT_AS },
 #endif

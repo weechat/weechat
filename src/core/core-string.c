@@ -3331,7 +3331,8 @@ string_fprintf (FILE *file, const char *data, ...)
 char *
 string_format_size (unsigned long long size)
 {
-    char *unit_name[] = { "",
+    static const char *const unit_name[] = {
+                          "",
                           /* TRANSLATORS: file size unit "kilobyte" */
                           N_("KB"),
                           /* TRANSLATORS: file size unit "megabyte" */
@@ -3340,8 +3341,9 @@ string_format_size (unsigned long long size)
                           N_("GB"),
                           /* TRANSLATORS: file size unit "terabyte" */
                           N_("TB") };
-    char *unit_format[] = { "%.0f", "%.1f", "%.02f", "%.02f", "%.02f" };
-    float unit_divide[] = { 1.0,
+    static const char *const unit_format[] = { "%.0f", "%.1f", "%.02f", "%.02f", "%.02f" };
+    static const float unit_divide[] = {
+                            1.0,
                             1000.0,
                             1000.0 * 1000.0,
                             1000.0 * 1000.0 * 1000.0,
@@ -3577,7 +3579,7 @@ string_base16_decode (const char *from, char *to)
 int
 string_base32_encode (const char *from, int length, char *to)
 {
-    unsigned char base32_table[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
+    static const unsigned char base32_table[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
     int count, value, next, bits_left, pad, index;
     int length_padding[8] = { 0, 0, 6, 0, 4, 3, 0, 2 };
 
@@ -3710,9 +3712,9 @@ string_base32_decode (const char *from, char *to)
 void
 string_convbase64_8x3_to_6x4 (int url, const char *from, char *to)
 {
-    unsigned char base64_table[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    static const unsigned char base64_table[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
         "abcdefghijklmnopqrstuvwxyz0123456789+/";
-    unsigned char base64_table_url[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    static const unsigned char base64_table_url[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
         "abcdefghijklmnopqrstuvwxyz0123456789-_";
     const unsigned char *ptr_table;
 
@@ -3834,7 +3836,7 @@ string_base64_decode (int url, const char *from, char *to)
     int length, to_length, i;
     char *ptr_to;
     unsigned char c, in[4], out[3];
-    unsigned char base64_table[] = "|$$$}rstuvwxyz{$$$$$$$>?"
+    static const unsigned char base64_table[] = "|$$$}rstuvwxyz{$$$$$$$>?"
         "@ABCDEFGHIJKLMNOPQRSTUVW$$$$$$XYZ[\\]^_`abcdefghijklmnopq";
 
     if (!from || !to)

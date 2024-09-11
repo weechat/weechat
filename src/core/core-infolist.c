@@ -35,8 +35,12 @@
 struct t_infolist *weechat_infolists = NULL;
 struct t_infolist *last_weechat_infolist = NULL;
 
-char *infolist_type_char_string[INFOLIST_NUM_TYPES] = {
-    "i", "s", "p", "b", "t",
+static const char *const infolist_type_char_string[INFOLIST_NUM_TYPES] = {
+    [INFOLIST_INTEGER] = "i",
+    [INFOLIST_STRING] = "s",
+    [INFOLIST_POINTER] = "p",
+    [INFOLIST_BUFFER] = "b",
+    [INFOLIST_TIME] = "t",
 };
 
 

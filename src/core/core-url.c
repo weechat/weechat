@@ -45,15 +45,20 @@
 
 
 int url_debug = 0;
-char *url_type_string[] = { "string", "long", "long long", "mask", "list" };
+const char *const url_type_string[] = {
+    [URL_TYPE_STRING] = "string",
+    [URL_TYPE_LONG] = "long",
+    [URL_TYPE_LONGLONG] = "long long",
+    [URL_TYPE_MASK] = "mask",
+    [URL_TYPE_LIST] = "list",
+};
 
 /*
  * Constants/options for Curl 7.87.0
  * (this list of options must be updated on every new Curl release)
  */
 
-struct t_url_constant url_proxy_types[] =
-{
+const struct t_url_constant url_proxy_types[] = {
 #if LIBCURL_VERSION_NUM >= 0x070A00 /* 7.10.0 */
     URL_DEF_CONST(PROXY, HTTP),
     URL_DEF_CONST(PROXY, SOCKS4),
@@ -72,8 +77,7 @@ struct t_url_constant url_proxy_types[] =
     { NULL, 0 },
 };
 
-struct t_url_constant url_protocols[] =
-{
+const struct t_url_constant url_protocols[] = {
 #if LIBCURL_VERSION_NUM >= 0x071304 /* 7.19.4 */
     URL_DEF_CONST(PROTO, HTTP),
     URL_DEF_CONST(PROTO, HTTPS),
@@ -122,8 +126,7 @@ struct t_url_constant url_protocols[] =
     { NULL, 0 },
 };
 
-struct t_url_constant url_netrc[] =
-{
+static const struct t_url_constant url_netrc[] = {
 #if LIBCURL_VERSION_NUM >= 0x070908 /* 7.9.8 */
     URL_DEF_CONST(_NETRC, IGNORED),
     URL_DEF_CONST(_NETRC, OPTIONAL),
@@ -132,8 +135,7 @@ struct t_url_constant url_netrc[] =
     { NULL, 0 },
 };
 
-struct t_url_constant url_auth[] =
-{
+static const struct t_url_constant url_auth[] = {
 #if LIBCURL_VERSION_NUM >= 0x070A06 /* 7.10.6 */
     URL_DEF_CONST(AUTH, NONE),
     URL_DEF_CONST(AUTH, BASIC),
@@ -169,8 +171,7 @@ struct t_url_constant url_auth[] =
     { NULL, 0 },
 };
 
-struct t_url_constant url_authtype[] =
-{
+static const struct t_url_constant url_authtype[] = {
 #if LIBCURL_VERSION_NUM >= 0x071504 /* 7.21.4 */
     URL_DEF_CONST(_TLSAUTH, NONE),
     URL_DEF_CONST(_TLSAUTH, SRP),
@@ -178,8 +179,7 @@ struct t_url_constant url_authtype[] =
     { NULL, 0 },
 };
 
-struct t_url_constant url_postredir[] =
-{
+static const struct t_url_constant url_postredir[] = {
 #if LIBCURL_VERSION_NUM >= 0x071301 /* 7.19.1 */
     URL_DEF_CONST(_REDIR, POST_301),
     URL_DEF_CONST(_REDIR, POST_302),
@@ -187,8 +187,7 @@ struct t_url_constant url_postredir[] =
     { NULL, 0 },
 };
 
-struct t_url_constant url_http_version[] =
-{
+static const struct t_url_constant url_http_version[] = {
 #if LIBCURL_VERSION_NUM >= 0x070901 /* 7.9.1 */
     URL_DEF_CONST(_HTTP_VERSION, NONE),
     URL_DEF_CONST(_HTTP_VERSION, 1_0),
@@ -212,8 +211,7 @@ struct t_url_constant url_http_version[] =
     { NULL, 0 },
 };
 
-struct t_url_constant url_ftp_auth[] =
-{
+static const struct t_url_constant url_ftp_auth[] = {
 #if LIBCURL_VERSION_NUM >= 0x070C02 /* 7.12.2 */
     URL_DEF_CONST(FTPAUTH, DEFAULT),
     URL_DEF_CONST(FTPAUTH, SSL),
@@ -222,8 +220,7 @@ struct t_url_constant url_ftp_auth[] =
     { NULL, 0 },
 };
 
-struct t_url_constant url_ftp_ssl_ccc[] =
-{
+static const struct t_url_constant url_ftp_ssl_ccc[] = {
 #if LIBCURL_VERSION_NUM >= 0x071002 /* 7.16.2 */
     URL_DEF_CONST(FTPSSL, CCC_NONE),
     URL_DEF_CONST(FTPSSL, CCC_ACTIVE),
@@ -234,8 +231,7 @@ struct t_url_constant url_ftp_ssl_ccc[] =
     { NULL, 0 },
 };
 
-struct t_url_constant url_ftp_file_method[] =
-{
+static const struct t_url_constant url_ftp_file_method[] = {
 #if LIBCURL_VERSION_NUM >= 0x070F03 /* 7.15.3 */
     URL_DEF_CONST(FTPMETHOD, MULTICWD),
     URL_DEF_CONST(FTPMETHOD, NOCWD),
@@ -244,8 +240,7 @@ struct t_url_constant url_ftp_file_method[] =
     { NULL, 0 },
 };
 
-struct t_url_constant url_rtsp_request[] =
-{
+static const struct t_url_constant url_rtsp_request[] = {
 #if LIBCURL_VERSION_NUM >= 0x071400 /* 7.20.0 */
     URL_DEF_CONST(_RTSPREQ, OPTIONS),
     URL_DEF_CONST(_RTSPREQ, DESCRIBE),
@@ -262,8 +257,7 @@ struct t_url_constant url_rtsp_request[] =
     { NULL, 0 },
 };
 
-struct t_url_constant url_time_condition[] =
-{
+static const struct t_url_constant url_time_condition[] = {
 #if LIBCURL_VERSION_NUM >= 0x070907 /* 7.9.7 */
     URL_DEF_CONST(_TIMECOND, NONE),
     URL_DEF_CONST(_TIMECOND, IFMODSINCE),
@@ -273,8 +267,7 @@ struct t_url_constant url_time_condition[] =
     { NULL, 0 },
 };
 
-struct t_url_constant url_ip_resolve[] =
-{
+static const struct t_url_constant url_ip_resolve[] = {
 #if LIBCURL_VERSION_NUM >= 0x070A08 /* 7.10.8 */
     URL_DEF_CONST(_IPRESOLVE, WHATEVER),
     URL_DEF_CONST(_IPRESOLVE, V4),
@@ -283,8 +276,7 @@ struct t_url_constant url_ip_resolve[] =
     { NULL, 0 },
 };
 
-struct t_url_constant url_use_ssl[] =
-{
+static const struct t_url_constant url_use_ssl[] = {
 #if LIBCURL_VERSION_NUM >= 0x071100 /* 7.17.0 */
     URL_DEF_CONST(USESSL, NONE),
     URL_DEF_CONST(USESSL, TRY),
@@ -294,8 +286,7 @@ struct t_url_constant url_use_ssl[] =
     { NULL, 0 },
 };
 
-struct t_url_constant url_ssl_version[] =
-{
+static const struct t_url_constant url_ssl_version[] = {
 #if LIBCURL_VERSION_NUM >= 0x070902 /* 7.9.2 */
     URL_DEF_CONST(_SSLVERSION, DEFAULT),
     URL_DEF_CONST(_SSLVERSION, TLSv1),
@@ -321,8 +312,7 @@ struct t_url_constant url_ssl_version[] =
     { NULL, 0 },
 };
 
-struct t_url_constant url_ssl_options[] =
-{
+static const struct t_url_constant url_ssl_options[] = {
 #if LIBCURL_VERSION_NUM >= 0x071900 /* 7.25.0 */
     URL_DEF_CONST(SSLOPT, ALLOW_BEAST),
 #endif
@@ -350,8 +340,7 @@ struct t_url_constant url_ssl_options[] =
     { NULL, 0 },
 };
 
-struct t_url_constant url_gssapi_delegation[] =
-{
+static const struct t_url_constant url_gssapi_delegation[] = {
 #if LIBCURL_VERSION_NUM >= 0x071600 /* 7.22.0 */
     URL_DEF_CONST(GSSAPI_DELEGATION, NONE),
     URL_DEF_CONST(GSSAPI_DELEGATION, POLICY_FLAG),
@@ -360,8 +349,7 @@ struct t_url_constant url_gssapi_delegation[] =
     { NULL, 0 },
 };
 
-struct t_url_constant url_header[] =
-{
+const struct t_url_constant url_header[] = {
 #if LIBCURL_VERSION_NUM >= 0x072500 /* 7.37.0 */
     URL_DEF_CONST(HEADER, UNIFIED),
     URL_DEF_CONST(HEADER, SEPARATE),
@@ -369,8 +357,7 @@ struct t_url_constant url_header[] =
     { NULL, 0 },
 };
 
-struct t_url_constant url_hsts[] =
-{
+static const struct t_url_constant url_hsts[] = {
 #if LIBCURL_VERSION_NUM >= 0x074A00 /* 7.74.0 */
     URL_DEF_CONST(HSTS, ENABLE),
     URL_DEF_CONST(HSTS, READONLYFILE),
@@ -378,16 +365,14 @@ struct t_url_constant url_hsts[] =
     { NULL, 0 },
 };
 
-struct t_url_constant url_mime[] =
-{
+static const struct t_url_constant url_mime[] = {
 #if LIBCURL_VERSION_NUM >= 0x075100 /* 7.81.0 */
     URL_DEF_CONST(MIMEOPT, FORMESCAPE),
 #endif
     { NULL, 0 },
 };
 
-struct t_url_constant url_websocket[] =
-{
+static const struct t_url_constant url_websocket[] = {
 #if LIBCURL_VERSION_NUM >= 0x075600 /* 7.86.0 */
     URL_DEF_CONST(WS, BINARY),
     URL_DEF_CONST(WS, CLOSE),
@@ -401,8 +386,7 @@ struct t_url_constant url_websocket[] =
     { NULL, 0 },
 };
 
-struct t_url_option url_options[] =
-{
+const struct t_url_option url_options[] = {
     /*
      * behavior options
      */
@@ -1002,7 +986,8 @@ struct t_url_option url_options[] =
  */
 
 int
-weeurl_search_constant (struct t_url_constant *constants, const char *name)
+weeurl_search_constant (const struct t_url_constant *constants,
+                        const char *name)
 {
     int i;
 
@@ -1028,7 +1013,7 @@ weeurl_search_constant (struct t_url_constant *constants, const char *name)
  */
 
 long
-weeurl_get_mask_value (struct t_url_constant *constants,
+weeurl_get_mask_value (const struct t_url_constant *constants,
                        const char *string_mask)
 {
     char **items, *item;
@@ -1322,8 +1307,8 @@ weeurl_download (const char *url, struct t_hashtable *options,
 {
     CURL *curl;
     struct t_url_file url_file[2];
-    char *url_file_option[2] = { "file_in", "file_out" };
-    char *url_file_mode[2] = { "rb", "wb" };
+    static const char *const url_file_option[2] = { "file_in", "file_out" };
+    static const char *const url_file_mode[2] = { "rb", "wb" };
     char url_error[CURL_ERROR_SIZE + 1], url_error_code[12];
     char **string_headers, **string_output;
     char str_response_code[32];
@@ -1506,7 +1491,7 @@ end:
 
 int
 weeurl_option_add_to_infolist (struct t_infolist *infolist,
-                               struct t_url_option *option)
+                               const struct t_url_option *option)
 {
     struct t_infolist_item *ptr_item;
     char *constants;

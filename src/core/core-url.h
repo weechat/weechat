@@ -36,32 +36,32 @@ enum t_url_type
 
 struct t_url_constant
 {
-    char *name;                        /* string with name of constant      */
+    const char *name;                  /* string with name of constant      */
     long value;                        /* value of constant                 */
 };
 
 struct t_url_option
 {
-    char *name;                        /* name of option                    */
+    const char *name;                  /* name of option                    */
     int option;                        /* option (for curl_easy_setopt())   */
     enum t_url_type type;              /* type of argument expected         */
-    struct t_url_constant *constants;  /* constants allowed for this option */
+    const struct t_url_constant *constants;  /* constants allowed for this option */
 };
 
 struct t_url_file
 {
-    char *filename;                    /* filename                          */
+    const char *filename;              /* filename                          */
     FILE *stream;                      /* file stream                       */
 };
 
 extern int url_debug;
-extern char *url_type_string[];
-extern struct t_url_option url_options[];
+extern const char *const url_type_string[];
+extern const struct t_url_option url_options[];
 
 extern int weeurl_download (const char *url, struct t_hashtable *options,
                             struct t_hashtable *output);
 extern int weeurl_option_add_to_infolist (struct t_infolist *infolist,
-                                          struct t_url_option *option);
+                                          const struct t_url_option *option);
 extern void weeurl_init ();
 extern void weeurl_end ();
 

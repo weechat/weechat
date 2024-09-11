@@ -227,7 +227,7 @@ doc_gen_hook_command_cmp_cb (void *data, struct t_arraylist *arraylist,
  *   -1: error
  */
 
-int
+static int
 doc_gen_user_commands (const char *path, const char *lang)
 {
     FILE *file;
@@ -431,7 +431,7 @@ doc_gen_option_cmp_cb (void *data, struct t_arraylist *arraylist,
  *   -1: error
  */
 
-int
+static int
 doc_gen_user_options (const char *path, const char *lang)
 {
     FILE *file;
@@ -594,7 +594,7 @@ doc_gen_user_options (const char *path, const char *lang)
  *   -1: error
  */
 
-int
+static int
 doc_gen_user_default_aliases (const char *path, const char *lang)
 {
     FILE *file;
@@ -644,7 +644,7 @@ doc_gen_user_default_aliases (const char *path, const char *lang)
  *   -1: error
  */
 
-int
+static int
 doc_gen_user_irc_colors (const char *path, const char *lang)
 {
     FILE *file;
@@ -716,7 +716,7 @@ doc_gen_hook_info_cmp_cb (void *data, struct t_arraylist *arraylist,
  *   -1: error
  */
 
-int
+static int
 doc_gen_api_infos (const char *path, const char *lang)
 {
     FILE *file;
@@ -805,7 +805,7 @@ doc_gen_hook_info_hashtable_cmp_cb (void *data, struct t_arraylist *arraylist,
  *   -1: error
  */
 
-int
+static int
 doc_gen_api_infos_hashtable (const char *path, const char *lang)
 {
     FILE *file;
@@ -896,7 +896,7 @@ doc_gen_hook_infolist_cmp_cb (void *data, struct t_arraylist *arraylist,
  *   -1: error
  */
 
-int
+static int
 doc_gen_api_infolists (const char *path, const char *lang)
 {
     FILE *file;
@@ -1178,7 +1178,7 @@ doc_gen_api_hdata_content (FILE *file, struct t_hdata *hdata)
  *   -1: error
  */
 
-int
+static int
 doc_gen_api_hdata (const char *path, const char *lang)
 {
     FILE *file;
@@ -1282,7 +1282,7 @@ doc_gen_hook_completion_cmp_cb (void *data, struct t_arraylist *arraylist,
  *   -1: error
  */
 
-int
+static int
 doc_gen_api_completions (const char *path, const char *lang)
 {
     FILE *file;
@@ -1343,7 +1343,7 @@ doc_gen_api_completions (const char *path, const char *lang)
  *   -1: error
  */
 
-int
+static int
 doc_gen_api_url_options (const char *path, const char *lang)
 {
     FILE *file;
@@ -1427,7 +1427,7 @@ doc_gen_plugin_cmp_cb (void *data, struct t_arraylist *arraylist,
  *   -1: error
  */
 
-int
+static int
 doc_gen_api_plugins_priority (const char *path, const char *lang)
 {
     FILE *file;
@@ -1513,7 +1513,7 @@ doc_gen_config_cmp_cb (void *data, struct t_arraylist *arraylist,
  *   -1: error
  */
 
-int
+static int
 doc_gen_api_config_priority (const char *path, const char *lang)
 {
     FILE *file;
@@ -1575,7 +1575,7 @@ doc_gen_api_config_priority (const char *path, const char *lang)
  *   -1: error
  */
 
-int
+static int
 doc_gen_scripting_functions (const char *path, const char *lang)
 {
     FILE *file;
@@ -1608,7 +1608,7 @@ doc_gen_scripting_functions (const char *path, const char *lang)
  *   -1: error
  */
 
-int
+static int
 doc_gen_scripting_constants (const char *path, const char *lang)
 {
     FILE *file;
@@ -1673,7 +1673,7 @@ int
 doc_generate (const char *path)
 {
     int i, j, rc_doc_gen, rc, num_files;
-    char *locales[] = {
+    static const char *const locales[] = {
         "de_DE.UTF-8",
         "en_US.UTF-8",
         "fr_FR.UTF-8",
@@ -1683,7 +1683,7 @@ doc_generate (const char *path)
         "sr_RS.UTF-8",
         NULL,
     };
-    t_doc_gen_func *doc_gen_functions[] = {
+    static t_doc_gen_func *const doc_gen_functions[] = {
         doc_gen_user_commands,
         doc_gen_user_options,
         doc_gen_user_default_aliases,
