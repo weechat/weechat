@@ -360,26 +360,6 @@ struct t_url_constant url_gssapi_delegation[] =
     { NULL, 0 },
 };
 
-struct t_url_constant url_ssh_auth[] =
-{
-#if LIBCURL_VERSION_NUM >= 0x071001 /* 7.16.1 */
-    URL_DEF_CONST(SSH_AUTH, NONE),
-    URL_DEF_CONST(SSH_AUTH, PUBLICKEY),
-    URL_DEF_CONST(SSH_AUTH, PASSWORD),
-    URL_DEF_CONST(SSH_AUTH, HOST),
-    URL_DEF_CONST(SSH_AUTH, KEYBOARD),
-    URL_DEF_CONST(SSH_AUTH, DEFAULT),
-    URL_DEF_CONST(SSH_AUTH, ANY),
-#endif
-#if LIBCURL_VERSION_NUM >= 0x071C00 /* 7.28.0 */
-    URL_DEF_CONST(SSH_AUTH, AGENT),
-#endif
-#if LIBCURL_VERSION_NUM >= 0x073A00 /* 7.58.0 */
-    URL_DEF_CONST(SSH_AUTH, GSSAPI),
-#endif
-    { NULL, 0 },
-};
-
 struct t_url_constant url_header[] =
 {
 #if LIBCURL_VERSION_NUM >= 0x072500 /* 7.37.0 */
