@@ -424,7 +424,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     struct t_hashtable *keys;
     int i;
     char str_key[256];
-    char *default_keys[][2] = {
+    static const char *const default_keys[][2] = {
         { "meta-B",  "/buflist toggle"             },
         { "f1",      "/bar scroll buflist * -100%" },
         { "f2",      "/bar scroll buflist * +100%" },
