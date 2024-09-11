@@ -342,7 +342,7 @@ irc_nick_get_nicklist_group (struct t_irc_server *server,
 const char *
 irc_nick_get_prefix_color_name (struct t_irc_server *server, char prefix)
 {
-    static char *default_color = "";
+    static const char *const default_color = "";
     const char *prefix_modes, *color;
     char mode[2];
     int index;
