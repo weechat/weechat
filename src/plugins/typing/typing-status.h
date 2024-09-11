@@ -40,7 +40,7 @@ struct t_typing_status
     time_t last_typed;                    /* when was last char typed       */
 };
 
-extern char *typing_status_state_string[];
+extern const char *const typing_status_state_string[];
 extern struct t_hashtable *typing_status_self;
 extern struct t_hashtable *typing_status_nicks;
 

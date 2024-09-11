@@ -32,8 +32,12 @@
 #include "typing-status.h"
 
 
-char *typing_status_state_string[TYPING_STATUS_NUM_STATES] =
-{ "off", "typing", "paused", "cleared" };
+const char *const typing_status_state_string[TYPING_STATUS_NUM_STATES] = {
+    [TYPING_STATUS_STATE_OFF] = "off",
+    [TYPING_STATUS_STATE_TYPING] = "typing",
+    [TYPING_STATUS_STATE_PAUSED] = "paused",
+    [TYPING_STATUS_STATE_CLEARED] = "cleared",
+};
 
 /* hashtable[buffer -> t_typing_status] */
 struct t_hashtable *typing_status_self = NULL;
