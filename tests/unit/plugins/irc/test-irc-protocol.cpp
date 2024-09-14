@@ -81,15 +81,7 @@ extern char *irc_protocol_cap_to_enable (const char *capabilities,
     ctxt.server = __server;                                             \
     ctxt.command = (char *)__command;                                   \
     ctxt.tags = __tags;                                                 \
-    if (__result == NULL)                                               \
-    {                                                                   \
-        POINTERS_EQUAL(NULL, irc_protocol_tags (&ctxt, __extra_tags));  \
-    }                                                                   \
-    else                                                                \
-    {                                                                   \
-        STRCMP_EQUAL(__result, irc_protocol_tags (&ctxt,                \
-                                                      __extra_tags));   \
-    }
+    STRCMP_EQUAL(__result, irc_protocol_tags (&ctxt, __extra_tags));
 
 #define WEE_CHECK_CAP_TO_ENABLE(__result, __string, __sasl_requested)   \
     str = irc_protocol_cap_to_enable (__string, __sasl_requested);      \
@@ -1260,41 +1252,41 @@ TEST(IrcProtocolWithServer, account_without_account_notify_cap)
 
     ptr_nick = ptr_server->channels->last_nick;
 
-    POINTERS_EQUAL(NULL, ptr_nick->account);
+    STRCMP_EQUAL(NULL, ptr_nick->account);
 
     /* not enough parameters */
     RECV(":bob!user@host ACCOUNT");
     CHECK_ERROR_PARAMS("account", 0, 1);
 
-    POINTERS_EQUAL(NULL, ptr_nick->account);
+    STRCMP_EQUAL(NULL, ptr_nick->account);
 
     RECV(":bob!user@host ACCOUNT *");
     CHECK_CHAN("--", "bob has unidentified",
                "irc_account,irc_smart_filter,nick_bob,host_user@host,log3");
     CHECK_PV("bob", "--", "bob has unidentified",
              "irc_account,nick_bob,host_user@host,log3");
-    POINTERS_EQUAL(NULL, ptr_nick->account);
+    STRCMP_EQUAL(NULL, ptr_nick->account);
 
     RECV(":bob!user@host ACCOUNT :*");
     CHECK_CHAN("--", "bob has unidentified",
                "irc_account,irc_smart_filter,nick_bob,host_user@host,log3");
     CHECK_PV("bob", "--", "bob has unidentified",
              "irc_account,nick_bob,host_user@host,log3");
-    POINTERS_EQUAL(NULL, ptr_nick->account);
+    STRCMP_EQUAL(NULL, ptr_nick->account);
 
     RECV(":bob!user@host ACCOUNT new_account");
     CHECK_CHAN("--", "bob has identified as new_account",
                "irc_account,irc_smart_filter,nick_bob,host_user@host,log3");
     CHECK_PV("bob", "--", "bob has identified as new_account",
              "irc_account,nick_bob,host_user@host,log3");
-    POINTERS_EQUAL(NULL, ptr_nick->account);
+    STRCMP_EQUAL(NULL, ptr_nick->account);
 
     RECV(":bob!user@host ACCOUNT :new_account");
     CHECK_CHAN("--", "bob has identified as new_account",
                "irc_account,irc_smart_filter,nick_bob,host_user@host,log3");
     CHECK_PV("bob", "--", "bob has identified as new_account",
              "irc_account,nick_bob,host_user@host,log3");
-    POINTERS_EQUAL(NULL, ptr_nick->account);
+    STRCMP_EQUAL(NULL, ptr_nick->account);
 }
 
 /*
@@ -1313,7 +1305,7 @@ TEST(IrcProtocolWithServer, account_with_account_notify_cap)
 
     ptr_nick = ptr_server->channels->nicks;
 
-    POINTERS_EQUAL(NULL, ptr_nick->account);
+    STRCMP_EQUAL(NULL, ptr_nick->account);
 
     RECV(":alice!user@host ACCOUNT new_account");
     CHECK_CHAN("--", "alice has identified as new_account",
@@ -1328,7 +1320,7 @@ TEST(IrcProtocolWithServer, account_with_account_notify_cap)
     RECV(":alice!user@host ACCOUNT *");
     CHECK_CHAN("--", "alice has unidentified",
                "irc_account,nick_alice,host_user@host,log3");
-    POINTERS_EQUAL(NULL, ptr_nick->account);
+    STRCMP_EQUAL(NULL, ptr_nick->account);
 
     RECV(":alice!user@host ACCOUNT :new_account3");
     CHECK_CHAN("--", "alice has identified as new_account3",
@@ -1338,7 +1330,7 @@ TEST(IrcProtocolWithServer, account_with_account_notify_cap)
     RECV(":alice!user@host ACCOUNT :*");
     CHECK_CHAN("--", "alice has unidentified",
                "irc_account,nick_alice,host_user@host,log3");
-    POINTERS_EQUAL(NULL, ptr_nick->account);
+    STRCMP_EQUAL(NULL, ptr_nick->account);
 
     hashtable_remove (ptr_server->cap_list, "account-notify");
 }
@@ -1576,9 +1568,9 @@ TEST(IrcProtocolWithServer, batch_with_batch_cap)
     CHECK_NO_MSG;
     ptr_batch = irc_batch_search (ptr_server, "ref");
     CHECK(ptr_batch);
-    POINTERS_EQUAL(NULL, ptr_batch->parent_ref);
+    STRCMP_EQUAL(NULL, ptr_batch->parent_ref);
     STRCMP_EQUAL("example", ptr_batch->type);
-    POINTERS_EQUAL(NULL, ptr_batch->parameters);
+    STRCMP_EQUAL(NULL, ptr_batch->parameters);
     POINTERS_EQUAL(NULL, ptr_batch->messages);
     LONGS_EQUAL(0, ptr_batch->end_received);
     LONGS_EQUAL(0, ptr_batch->messages_processed);
@@ -1610,7 +1602,7 @@ TEST(IrcProtocolWithServer, batch_with_batch_cap)
     CHECK_NO_MSG;
     ptr_batch = irc_batch_search (ptr_server, "ref");
     CHECK(ptr_batch);
-    POINTERS_EQUAL(NULL, ptr_batch->parent_ref);
+    STRCMP_EQUAL(NULL, ptr_batch->parent_ref);
     STRCMP_EQUAL("example", ptr_batch->type);
     STRCMP_EQUAL("param1 param2 param3", ptr_batch->parameters);
     POINTERS_EQUAL(NULL, ptr_batch->messages);
@@ -2067,17 +2059,17 @@ TEST(IrcProtocolWithServer, join)
 
     LONGS_EQUAL(IRC_CHANNEL_TYPE_CHANNEL, ptr_channel->type);
     STRCMP_EQUAL("#test", ptr_channel->name);
-    POINTERS_EQUAL(NULL, ptr_channel->topic);
-    POINTERS_EQUAL(NULL, ptr_channel->modes);
+    STRCMP_EQUAL(NULL, ptr_channel->topic);
+    STRCMP_EQUAL(NULL, ptr_channel->modes);
     LONGS_EQUAL(0, ptr_channel->limit);
-    POINTERS_EQUAL(NULL, ptr_channel->key);
+    STRCMP_EQUAL(NULL, ptr_channel->key);
     LONGS_EQUAL(0, ptr_channel->checking_whox);
-    POINTERS_EQUAL(NULL, ptr_channel->away_message);
+    STRCMP_EQUAL(NULL, ptr_channel->away_message);
     LONGS_EQUAL(0, ptr_channel->has_quit_server);
     LONGS_EQUAL(0, ptr_channel->cycle);
     LONGS_EQUAL(0, ptr_channel->part);
     LONGS_EQUAL(0, ptr_channel->part);
-    POINTERS_EQUAL(NULL, ptr_channel->pv_remote_nick_color);
+    STRCMP_EQUAL(NULL, ptr_channel->pv_remote_nick_color);
     POINTERS_EQUAL(NULL, ptr_channel->hook_autorejoin);
 
     ptr_nick = ptr_channel->nicks;
@@ -2090,8 +2082,8 @@ TEST(IrcProtocolWithServer, join)
     STRCMP_EQUAL("  ", ptr_nick->prefixes);
     STRCMP_EQUAL(" ", ptr_nick->prefix);
     LONGS_EQUAL(0, ptr_nick->away);
-    POINTERS_EQUAL(NULL, ptr_nick->account);
-    POINTERS_EQUAL(NULL, ptr_nick->realname);
+    STRCMP_EQUAL(NULL, ptr_nick->account);
+    STRCMP_EQUAL(NULL, ptr_nick->realname);
     CHECK(ptr_nick->color);
 
     CHECK(ptr_channel->buffer);
@@ -2109,7 +2101,7 @@ TEST(IrcProtocolWithServer, join)
     STRCMP_EQUAL("  ", ptr_nick->prefixes);
     STRCMP_EQUAL(" ", ptr_nick->prefix);
     LONGS_EQUAL(0, ptr_nick->away);
-    POINTERS_EQUAL(NULL, ptr_nick->account);
+    STRCMP_EQUAL(NULL, ptr_nick->account);
     STRCMP_EQUAL("Bob Name", ptr_nick->realname);
     CHECK(ptr_nick->color);
 
@@ -2285,7 +2277,7 @@ TEST(IrcProtocolWithServer, mode)
 
     ptr_channel = ptr_server->channels;
     CHECK(ptr_channel);
-    POINTERS_EQUAL(NULL, ptr_channel->modes);
+    STRCMP_EQUAL(NULL, ptr_channel->modes);
     ptr_nick = ptr_channel->nicks;
     CHECK(ptr_nick);
     STRCMP_EQUAL("alice", ptr_nick->name);
@@ -2302,7 +2294,7 @@ TEST(IrcProtocolWithServer, mode)
     RECV("MODE #test +nt");
     CHECK_ERROR_NICK("mode");
 
-    POINTERS_EQUAL(NULL, ptr_channel->modes);
+    STRCMP_EQUAL(NULL, ptr_channel->modes);
 
     /* channel mode */
     RECV(":admin!user@host MODE #test +nt");
@@ -2320,7 +2312,7 @@ TEST(IrcProtocolWithServer, mode)
     RECV(":admin!user@host MODE #test -t");
     CHECK_CHAN("--", "Mode #test [-t] by admin",
                "irc_mode,nick_admin,host_user@host,log3");
-    POINTERS_EQUAL(NULL, ptr_channel->modes);
+    STRCMP_EQUAL(NULL, ptr_channel->modes);
 
     /* nick mode '@' on channel #test */
     RECV(":admin!user@host MODE #test +o alice");
@@ -2351,7 +2343,7 @@ TEST(IrcProtocolWithServer, mode)
     STRCMP_EQUAL(" ", ptr_nick->prefix);
 
     /* nick mode 'i' */
-    POINTERS_EQUAL(NULL, ptr_server->nick_modes);
+    STRCMP_EQUAL(NULL, ptr_server->nick_modes);
     RECV(":admin!user@host MODE alice +i");
     CHECK_SRV("--", "User mode [+i] by admin",
               "irc_mode,nick_admin,host_user@host,log3");
@@ -3462,7 +3454,7 @@ TEST(IrcProtocolWithServer, setname_without_setname_cap)
 
     ptr_nick = ptr_server->channels->nicks;
 
-    POINTERS_EQUAL(NULL, ptr_nick->realname);
+    STRCMP_EQUAL(NULL, ptr_nick->realname);
 
     /* not enough parameters */
     RECV(":alice!user@host SETNAME");
@@ -3472,19 +3464,19 @@ TEST(IrcProtocolWithServer, setname_without_setname_cap)
     RECV("SETNAME :new bob realname");
     CHECK_ERROR_NICK("setname");
 
-    POINTERS_EQUAL(NULL, ptr_nick->realname);
+    STRCMP_EQUAL(NULL, ptr_nick->realname);
 
     /* real name of "bob" has changed */
     RECV(":bob!user@host SETNAME :new bob realname ");
     CHECK_CHAN("--", "bob has changed real name to \"new bob realname \"",
                "irc_setname,irc_smart_filter,nick_bob,host_user@host,log3");
-    POINTERS_EQUAL(NULL, ptr_nick->realname);
+    STRCMP_EQUAL(NULL, ptr_nick->realname);
 
     /* self real name has changed */
     RECV(":alice!user@host SETNAME :new alice realname ");
     CHECK_SRV("--", "Your real name has been set to \"new alice realname \"",
               "irc_setname,nick_alice,host_user@host,log3");
-    POINTERS_EQUAL(NULL, ptr_nick->realname);
+    STRCMP_EQUAL(NULL, ptr_nick->realname);
 }
 
 /*
@@ -3504,7 +3496,7 @@ TEST(IrcProtocolWithServer, setname_with_setname_cap)
     ptr_nick = ptr_server->channels->nicks;
     ptr_nick2 = ptr_server->channels->last_nick;
 
-    POINTERS_EQUAL(NULL, ptr_nick->realname);
+    STRCMP_EQUAL(NULL, ptr_nick->realname);
 
     /* real name of "bob" has changed */
     RECV(":bob!user@host SETNAME :new bob realname ");
@@ -3592,7 +3584,7 @@ TEST(IrcProtocolWithServer, topic)
     SRV_INIT_JOIN;
 
     ptr_channel = ptr_server->channels;
-    POINTERS_EQUAL(NULL, ptr_channel->topic);
+    STRCMP_EQUAL(NULL, ptr_channel->topic);
 
     /* not enough parameters */
     RECV(":alice!user@host TOPIC");
@@ -3602,7 +3594,7 @@ TEST(IrcProtocolWithServer, topic)
     RECV("TOPIC #test :new topic");
     CHECK_ERROR_NICK("topic");
 
-    POINTERS_EQUAL(NULL, ptr_channel->topic);
+    STRCMP_EQUAL(NULL, ptr_channel->topic);
 
     /* not a channel */
     RECV(":alice!user@host TOPIC bob");
@@ -3612,13 +3604,13 @@ TEST(IrcProtocolWithServer, topic)
     RECV(":alice!user@host TOPIC #test");
     CHECK_CHAN("--", "alice has unset topic for #test",
                "irc_topic,nick_alice,host_user@host,log3");
-    POINTERS_EQUAL(NULL, ptr_channel->topic);
+    STRCMP_EQUAL(NULL, ptr_channel->topic);
 
     /* empty topic (with empty trailing parameter) */
     RECV(":alice!user@host TOPIC #test :");
     CHECK_CHAN("--", "alice has unset topic for #test",
                "irc_topic,nick_alice,host_user@host,log3");
-    POINTERS_EQUAL(NULL, ptr_channel->topic);
+    STRCMP_EQUAL(NULL, ptr_channel->topic);
 
     /* new topic */
     RECV(":alice!user@host TOPIC #test :new topic ");
@@ -3640,7 +3632,7 @@ TEST(IrcProtocolWithServer, topic)
                "alice has unset topic for #test (old topic: "
                "\"another new topic \")",
                "irc_topic,nick_alice,host_user@host,log3");
-    POINTERS_EQUAL(NULL, ptr_channel->topic);
+    STRCMP_EQUAL(NULL, ptr_channel->topic);
 }
 
 /*
@@ -3761,14 +3753,14 @@ TEST(IrcProtocolWithServer, 005_empty)
 {
     SRV_INIT;
 
-    POINTERS_EQUAL(NULL, ptr_server->prefix_modes);
-    POINTERS_EQUAL(NULL, ptr_server->prefix_chars);
+    STRCMP_EQUAL(NULL, ptr_server->prefix_modes);
+    STRCMP_EQUAL(NULL, ptr_server->prefix_chars);
 
     RECV(":server 005 alice TEST=A");
     CHECK_SRV("--", "TEST=A", "irc_005,irc_numeric,nick_server,log3");
 
-    POINTERS_EQUAL(NULL, ptr_server->prefix_modes);
-    POINTERS_EQUAL(NULL, ptr_server->prefix_chars);
+    STRCMP_EQUAL(NULL, ptr_server->prefix_modes);
+    STRCMP_EQUAL(NULL, ptr_server->prefix_chars);
 }
 
 /*
@@ -3780,19 +3772,19 @@ TEST(IrcProtocolWithServer, 005_full)
 {
     SRV_INIT;
 
-    POINTERS_EQUAL(NULL, ptr_server->prefix_modes);
-    POINTERS_EQUAL(NULL, ptr_server->prefix_chars);
+    STRCMP_EQUAL(NULL, ptr_server->prefix_modes);
+    STRCMP_EQUAL(NULL, ptr_server->prefix_chars);
     LONGS_EQUAL(0, ptr_server->msg_max_length);
     LONGS_EQUAL(0, ptr_server->nick_max_length);
     LONGS_EQUAL(0, ptr_server->user_max_length);
     LONGS_EQUAL(0, ptr_server->host_max_length);
     LONGS_EQUAL(0, ptr_server->casemapping);
-    POINTERS_EQUAL(NULL, ptr_server->chantypes);
-    POINTERS_EQUAL(NULL, ptr_server->chanmodes);
+    STRCMP_EQUAL(NULL, ptr_server->chantypes);
+    STRCMP_EQUAL(NULL, ptr_server->chanmodes);
     LONGS_EQUAL(0, ptr_server->monitor);
     LONGS_EQUAL(IRC_SERVER_UTF8MAPPING_NONE, ptr_server->utf8mapping);
     LONGS_EQUAL(0, ptr_server->utf8only);
-    POINTERS_EQUAL(NULL, ptr_server->isupport);
+    STRCMP_EQUAL(NULL, ptr_server->isupport);
 
     RECV(":server 005 alice " IRC_MSG_005 " :are supported");
     CHECK_SRV("--", IRC_MSG_005 " are supported",
@@ -3841,10 +3833,10 @@ TEST(IrcProtocolWithServer, 005_multiple_messages)
 {
     SRV_INIT;
 
-    POINTERS_EQUAL(NULL, ptr_server->prefix_modes);
-    POINTERS_EQUAL(NULL, ptr_server->prefix_chars);
+    STRCMP_EQUAL(NULL, ptr_server->prefix_modes);
+    STRCMP_EQUAL(NULL, ptr_server->prefix_chars);
     LONGS_EQUAL(0, ptr_server->host_max_length);
-    POINTERS_EQUAL(NULL, ptr_server->isupport);
+    STRCMP_EQUAL(NULL, ptr_server->isupport);
 
     RECV(":server 005 alice PREFIX=(ohv)@%+ :are supported");
     CHECK_SRV("--", "PREFIX=(ohv)@%+ are supported",
@@ -3896,7 +3888,7 @@ TEST(IrcProtocolWithServer, 221)
     RECV(":server 221 alice");
     CHECK_ERROR_PARAMS("221", 1, 2);
 
-    POINTERS_EQUAL(NULL, ptr_server->nick_modes);
+    STRCMP_EQUAL(NULL, ptr_server->nick_modes);
 
     RECV(":server 221 alice :+abc");
     CHECK_SRV("--", "User mode for alice is [+abc]",
@@ -3906,7 +3898,7 @@ TEST(IrcProtocolWithServer, 221)
     RECV(":server 221 alice :-abc");
     CHECK_SRV("--","User mode for alice is [-abc]",
               "irc_221,irc_numeric,nick_server,log3");
-    POINTERS_EQUAL(NULL, ptr_server->nick_modes);
+    STRCMP_EQUAL(NULL, ptr_server->nick_modes);
 }
 
 /*
@@ -4119,11 +4111,11 @@ TEST(IrcProtocolWithServer, 301)
     RECV(":server 301");
     CHECK_ERROR_PARAMS("301", 0, 1);
 
-    POINTERS_EQUAL(NULL, ptr_server->channels->away_message);
+    STRCMP_EQUAL(NULL, ptr_server->channels->away_message);
 
     RECV(":server 301 alice bob");
     CHECK_NO_MSG;
-    POINTERS_EQUAL(NULL, ptr_server->channels->away_message);
+    STRCMP_EQUAL(NULL, ptr_server->channels->away_message);
 
     RECV(":server 301 alice bob :I am away ");
     CHECK_PV("bob", "--", "[bob] is away: I am away ",
@@ -4172,7 +4164,7 @@ TEST(IrcProtocolWithServer, 305_306)
     RECV(":server 306");
     CHECK_ERROR_PARAMS("306", 0, 1);
 
-    POINTERS_EQUAL(NULL, ptr_server->channels->away_message);
+    STRCMP_EQUAL(NULL, ptr_server->channels->away_message);
 
     RECV(":server 306 alice");  /* now away */
     CHECK_NO_MSG;
@@ -4432,7 +4424,7 @@ TEST(IrcProtocolWithServer, 324)
 {
     SRV_INIT_JOIN;
 
-    POINTERS_EQUAL(NULL, ptr_server->channels->modes);
+    STRCMP_EQUAL(NULL, ptr_server->channels->modes);
 
     /* not enough parameters */
     RECV(":server 324");
@@ -4446,7 +4438,7 @@ TEST(IrcProtocolWithServer, 324)
 
     RECV(":server 324 alice #test");
     CHECK_CHAN("--", "Mode #test []", "irc_324,irc_numeric,nick_server,log3");
-    POINTERS_EQUAL(NULL, ptr_server->channels->modes);
+    STRCMP_EQUAL(NULL, ptr_server->channels->modes);
 }
 
 /*
@@ -4615,7 +4607,7 @@ TEST(IrcProtocolWithServer, 332)
     RECV(":server 332 alice");
     CHECK_ERROR_PARAMS("332", 1, 2);
 
-    POINTERS_EQUAL(NULL, ptr_server->channels->topic);
+    STRCMP_EQUAL(NULL, ptr_server->channels->topic);
 
     RECV(":server 332 alice #test");
     CHECK_CHAN("--", "Topic for #test is \"\"",
@@ -5054,22 +5046,22 @@ TEST(IrcProtocolWithServer, 352)
     STRCMP_EQUAL("user_b@host_b", ptr_nick2->host);
     LONGS_EQUAL(0, ptr_nick->away);
     LONGS_EQUAL(0, ptr_nick2->away);
-    POINTERS_EQUAL(NULL, ptr_nick->realname);
-    POINTERS_EQUAL(NULL, ptr_nick2->realname);
+    STRCMP_EQUAL(NULL, ptr_nick->realname);
+    STRCMP_EQUAL(NULL, ptr_nick2->realname);
 
     RECV(":server 352 alice #test user2 host2 server bob");
     CHECK_SRV("--", "[#test] bob (user2@host2) ()",
               "irc_352,irc_numeric,nick_server,log3");
     STRCMP_EQUAL("user2@host2", ptr_nick2->host);
     LONGS_EQUAL(0, ptr_nick2->away);
-    POINTERS_EQUAL(NULL, ptr_nick2->realname);
+    STRCMP_EQUAL(NULL, ptr_nick2->realname);
 
     RECV(":server 352 alice #test user3 host3 server bob *");
     CHECK_SRV("--", "[#test] bob (user3@host3) * ()",
               "irc_352,irc_numeric,nick_server,log3");
     STRCMP_EQUAL("user3@host3", ptr_nick2->host);
     LONGS_EQUAL(0, ptr_nick2->away);
-    POINTERS_EQUAL(NULL, ptr_nick2->realname);
+    STRCMP_EQUAL(NULL, ptr_nick2->realname);
 
     RECV(":server 352 alice #test user4 host4 server bob * :0 real name 1");
     CHECK_SRV("--", "[#test] bob (user4@host4) * 0 (real name 1)",
@@ -5116,7 +5108,7 @@ TEST(IrcProtocolWithServer, 352)
     /* nothing should have changed in the first nick */
     STRCMP_EQUAL("user_a@host_a", ptr_nick->host);
     LONGS_EQUAL(0, ptr_nick->away);
-    POINTERS_EQUAL(NULL, ptr_nick->realname);
+    STRCMP_EQUAL(NULL, ptr_nick->realname);
 
     /* channel not found */
     RECV(":server 352 alice #xyz user");
@@ -5271,71 +5263,71 @@ TEST(IrcProtocolWithServer, 354)
     STRCMP_EQUAL("user_b@host_b", ptr_nick2->host);
     LONGS_EQUAL(0, ptr_nick->away);
     LONGS_EQUAL(0, ptr_nick2->away);
-    POINTERS_EQUAL(NULL, ptr_nick->account);
-    POINTERS_EQUAL(NULL, ptr_nick2->account);
-    POINTERS_EQUAL(NULL, ptr_nick->realname);
-    POINTERS_EQUAL(NULL, ptr_nick2->realname);
+    STRCMP_EQUAL(NULL, ptr_nick->account);
+    STRCMP_EQUAL(NULL, ptr_nick2->account);
+    STRCMP_EQUAL(NULL, ptr_nick->realname);
+    STRCMP_EQUAL(NULL, ptr_nick2->realname);
 
     RECV(":server 354 alice #test");
     CHECK_SRV("--", "[#test]", "irc_354,irc_numeric,nick_server,log3");
     STRCMP_EQUAL("user_b@host_b", ptr_nick2->host);
     LONGS_EQUAL(0, ptr_nick2->away);
-    POINTERS_EQUAL(NULL, ptr_nick2->account);
-    POINTERS_EQUAL(NULL, ptr_nick2->realname);
+    STRCMP_EQUAL(NULL, ptr_nick2->account);
+    STRCMP_EQUAL(NULL, ptr_nick2->realname);
 
     RECV(":server 354 alice #test user2");
     CHECK_SRV("--", "[#test] user2", "irc_354,irc_numeric,nick_server,log3");
     STRCMP_EQUAL("user_b@host_b", ptr_nick2->host);
     LONGS_EQUAL(0, ptr_nick2->away);
-    POINTERS_EQUAL(NULL, ptr_nick2->account);
-    POINTERS_EQUAL(NULL, ptr_nick2->realname);
+    STRCMP_EQUAL(NULL, ptr_nick2->account);
+    STRCMP_EQUAL(NULL, ptr_nick2->realname);
 
     RECV(":server 354 alice #test user2 :trailing parameter");
     CHECK_SRV("--", "[#test] user2 trailing parameter",
               "irc_354,irc_numeric,nick_server,log3");
     STRCMP_EQUAL("user_b@host_b", ptr_nick2->host);
     LONGS_EQUAL(0, ptr_nick2->away);
-    POINTERS_EQUAL(NULL, ptr_nick2->account);
-    POINTERS_EQUAL(NULL, ptr_nick2->realname);
+    STRCMP_EQUAL(NULL, ptr_nick2->account);
+    STRCMP_EQUAL(NULL, ptr_nick2->realname);
 
     RECV(":server 354 alice #test user2 host2");
     CHECK_SRV("--", "[#test] user2 host2", "irc_354,irc_numeric,nick_server,log3");
     STRCMP_EQUAL("user_b@host_b", ptr_nick2->host);
     LONGS_EQUAL(0, ptr_nick2->away);
-    POINTERS_EQUAL(NULL, ptr_nick2->account);
-    POINTERS_EQUAL(NULL, ptr_nick2->realname);
+    STRCMP_EQUAL(NULL, ptr_nick2->account);
+    STRCMP_EQUAL(NULL, ptr_nick2->realname);
 
     RECV(":server 354 alice #test user2 host2 server");
     CHECK_SRV("--", "[#test] user2 host2 server",
               "irc_354,irc_numeric,nick_server,log3");
     STRCMP_EQUAL("user_b@host_b", ptr_nick2->host);
     LONGS_EQUAL(0, ptr_nick2->away);
-    POINTERS_EQUAL(NULL, ptr_nick2->account);
-    POINTERS_EQUAL(NULL, ptr_nick2->realname);
+    STRCMP_EQUAL(NULL, ptr_nick2->account);
+    STRCMP_EQUAL(NULL, ptr_nick2->realname);
 
     RECV(":server 354 alice #test user2 host2 server bob");
     CHECK_SRV("--", "[#test] user2 host2 server bob",
               "irc_354,irc_numeric,nick_server,log3");
     STRCMP_EQUAL("user_b@host_b", ptr_nick2->host);
     LONGS_EQUAL(0, ptr_nick2->away);
-    POINTERS_EQUAL(NULL, ptr_nick2->account);
-    POINTERS_EQUAL(NULL, ptr_nick2->realname);
+    STRCMP_EQUAL(NULL, ptr_nick2->account);
+    STRCMP_EQUAL(NULL, ptr_nick2->realname);
 
     RECV(":server 354 alice #test user2 host2 server bob *");
     CHECK_SRV("--", "[#test] user2 host2 server bob *",
               "irc_354,irc_numeric,nick_server,log3");
     STRCMP_EQUAL("user_b@host_b", ptr_nick2->host);
     LONGS_EQUAL(0, ptr_nick2->away);
-    POINTERS_EQUAL(NULL, ptr_nick2->account);
-    POINTERS_EQUAL(NULL, ptr_nick2->realname);
+    STRCMP_EQUAL(NULL, ptr_nick2->account);
+    STRCMP_EQUAL(NULL, ptr_nick2->realname);
 
     RECV(":server 354 alice #test user2 host2 server bob H@ 0");
     CHECK_SRV("--", "[#test] user2 host2 server bob H@ 0",
               "irc_354,irc_numeric,nick_server,log3");
     STRCMP_EQUAL("user_b@host_b", ptr_nick2->host);
     LONGS_EQUAL(0, ptr_nick2->away);
-    POINTERS_EQUAL(NULL, ptr_nick2->account);
-    POINTERS_EQUAL(NULL, ptr_nick2->realname);
+    STRCMP_EQUAL(NULL, ptr_nick2->account);
+    STRCMP_EQUAL(NULL, ptr_nick2->realname);
 
     RECV(":server 354 alice #test user2 host2 server bob * 0 account2");
     CHECK_SRV("--", "[#test] bob [account2] (user2@host2) * 0 ()",
@@ -5343,7 +5335,7 @@ TEST(IrcProtocolWithServer, 354)
     STRCMP_EQUAL("user2@host2", ptr_nick2->host);
     LONGS_EQUAL(0, ptr_nick2->away);
     STRCMP_EQUAL("account2", ptr_nick2->account);
-    POINTERS_EQUAL(NULL, ptr_nick2->realname);
+    STRCMP_EQUAL(NULL, ptr_nick2->realname);
 
     RECV(":server 354 alice #test user3 host3 server bob * 0 account3 "
          ":real name 2");
@@ -5397,8 +5389,8 @@ TEST(IrcProtocolWithServer, 354)
     /* nothing should have changed in the first nick */
     STRCMP_EQUAL("user_a@host_a", ptr_nick->host);
     LONGS_EQUAL(0, ptr_nick->away);
-    POINTERS_EQUAL(NULL, ptr_nick->account);
-    POINTERS_EQUAL(NULL, ptr_nick->realname);
+    STRCMP_EQUAL(NULL, ptr_nick->account);
+    STRCMP_EQUAL(NULL, ptr_nick->realname);
 
     /* channel not found */
     RECV(":server 354 alice #xyz");

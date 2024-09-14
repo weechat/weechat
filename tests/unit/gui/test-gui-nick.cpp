@@ -54,16 +54,8 @@ extern char *gui_nick_strdup_for_color (const char *nickname);
 
 #define WEE_NICK_STRDUP_FOR_COLOR(__result, __nickname)                 \
     nick = gui_nick_strdup_for_color (__nickname);                      \
-    if (__result)                                                       \
-    {                                                                   \
-        STRCMP_EQUAL(__result, nick);                                   \
-    }                                                                   \
-    else                                                                \
-    {                                                                   \
-        POINTERS_EQUAL(NULL, nick);                                     \
-    }                                                                   \
-    if (nick)                                                           \
-        free (nick);
+    STRCMP_EQUAL(__result, nick);                                       \
+    free (nick);
 
 #define WEE_FIND_COLOR(__result, __nickname, __range, __colors)         \
     color = gui_nick_find_color_name (__nickname, __range, __colors);   \
@@ -320,18 +312,18 @@ TEST(GuiNick, GetForcedColor)
     config_file_option_set (config_look_nick_color_force,
                             "alice:green;bob:cyan", 1);
 
-    POINTERS_EQUAL(NULL, gui_nick_get_forced_color (NULL));
-    POINTERS_EQUAL(NULL, gui_nick_get_forced_color (""));
+    STRCMP_EQUAL(NULL, gui_nick_get_forced_color (NULL));
+    STRCMP_EQUAL(NULL, gui_nick_get_forced_color (""));
 
-    POINTERS_EQUAL(NULL, gui_nick_get_forced_color ("unknown"));
+    STRCMP_EQUAL(NULL, gui_nick_get_forced_color ("unknown"));
 
     STRCMP_EQUAL("green", gui_nick_get_forced_color ("alice"));
     STRCMP_EQUAL("cyan", gui_nick_get_forced_color ("bob"));
 
-    POINTERS_EQUAL(NULL, gui_nick_get_forced_color ("alice2"));
-    POINTERS_EQUAL(NULL, gui_nick_get_forced_color ("alice_"));
-    POINTERS_EQUAL(NULL, gui_nick_get_forced_color ("bob2"));
-    POINTERS_EQUAL(NULL, gui_nick_get_forced_color ("bob_"));
+    STRCMP_EQUAL(NULL, gui_nick_get_forced_color ("alice2"));
+    STRCMP_EQUAL(NULL, gui_nick_get_forced_color ("alice_"));
+    STRCMP_EQUAL(NULL, gui_nick_get_forced_color ("bob2"));
+    STRCMP_EQUAL(NULL, gui_nick_get_forced_color ("bob_"));
 
     config_file_option_reset (config_look_nick_color_force, 1);
 }

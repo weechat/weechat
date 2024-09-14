@@ -158,17 +158,17 @@ TEST(CoreUtf8, Validity)
     LONGS_EQUAL(1, utf8_is_valid ("", 0, &error));
     LONGS_EQUAL(1, utf8_is_valid ("", 1, &error));
     LONGS_EQUAL(1, utf8_is_valid ("abc", -1, &error));
-    POINTERS_EQUAL(NULL, error);
+    STRCMP_EQUAL(NULL, error);
     LONGS_EQUAL(1, utf8_is_valid ("abc", 0, &error));
-    POINTERS_EQUAL(NULL, error);
+    STRCMP_EQUAL(NULL, error);
     LONGS_EQUAL(1, utf8_is_valid ("abc", 1, &error));
-    POINTERS_EQUAL(NULL, error);
+    STRCMP_EQUAL(NULL, error);
     LONGS_EQUAL(1, utf8_is_valid (noel_valid, -1, &error));
-    POINTERS_EQUAL(NULL, error);
+    STRCMP_EQUAL(NULL, error);
     LONGS_EQUAL(1, utf8_is_valid (noel_valid, 0, &error));
-    POINTERS_EQUAL(NULL, error);
+    STRCMP_EQUAL(NULL, error);
     LONGS_EQUAL(1, utf8_is_valid (noel_valid, 1, &error));
-    POINTERS_EQUAL(NULL, error);
+    STRCMP_EQUAL(NULL, error);
     LONGS_EQUAL(0, utf8_is_valid (utf8_4bytes_invalid, -1, &error));
     POINTERS_EQUAL(utf8_4bytes_invalid, error);
     LONGS_EQUAL(0, utf8_is_valid (utf8_4bytes_invalid, 0, &error));
@@ -186,9 +186,9 @@ TEST(CoreUtf8, Validity)
     LONGS_EQUAL(0, utf8_is_valid (noel_invalid, 0, &error));
     POINTERS_EQUAL(noel_invalid + 2, error);
     LONGS_EQUAL(1, utf8_is_valid (noel_invalid, 1, &error));
-    POINTERS_EQUAL(NULL, error);
+    STRCMP_EQUAL(NULL, error);
     LONGS_EQUAL(1, utf8_is_valid (noel_invalid, 2, &error));
-    POINTERS_EQUAL(NULL, error);
+    STRCMP_EQUAL(NULL, error);
     LONGS_EQUAL(0, utf8_is_valid (noel_invalid, 3, &error));
     POINTERS_EQUAL(noel_invalid + 2, error);
     LONGS_EQUAL(0, utf8_is_valid (noel_invalid, 4, &error));
@@ -346,11 +346,11 @@ TEST(CoreUtf8, Move)
     const char *han_char = UNICODE_HAN_CHAR;
 
     /* previous/next char */
-    POINTERS_EQUAL(NULL, utf8_prev_char (NULL, NULL));
-    POINTERS_EQUAL(NULL, utf8_next_char (NULL));
-    POINTERS_EQUAL(NULL, utf8_prev_char (empty_string, empty_string));
-    POINTERS_EQUAL(empty_string + 1, utf8_next_char (empty_string));
-    POINTERS_EQUAL(NULL, utf8_prev_char (noel_valid + 1, noel_valid));
+    STRCMP_EQUAL(NULL, utf8_prev_char (NULL, NULL));
+    STRCMP_EQUAL(NULL, utf8_next_char (NULL));
+    STRCMP_EQUAL(NULL, utf8_prev_char (empty_string, empty_string));
+    STRCMP_EQUAL(empty_string + 1, utf8_next_char (empty_string));
+    STRCMP_EQUAL(NULL, utf8_prev_char (noel_valid + 1, noel_valid));
     ptr = utf8_next_char (noel_valid);
     STRCMP_EQUAL("oël", ptr);
     ptr = utf8_next_char (ptr);
@@ -382,8 +382,8 @@ TEST(CoreUtf8, Move)
                    utf8_next_char (utf8_4bytes_truncated_3));
 
     /* beginning/end of line */
-    POINTERS_EQUAL(NULL, utf8_beginning_of_line (NULL, NULL));
-    POINTERS_EQUAL(NULL, utf8_end_of_line (NULL));
+    STRCMP_EQUAL(NULL, utf8_beginning_of_line (NULL, NULL));
+    STRCMP_EQUAL(NULL, utf8_end_of_line (NULL));
     ptr = utf8_end_of_line (noel_valid_multiline);
     STRCMP_EQUAL("\nnoël", ptr);
     ptr = utf8_end_of_line (ptr);
@@ -404,7 +404,7 @@ TEST(CoreUtf8, Move)
     STRCMP_EQUAL(noel_valid_multiline, ptr);
 
     /* add offset */
-    POINTERS_EQUAL(NULL, utf8_add_offset (NULL, 0));
+    STRCMP_EQUAL(NULL, utf8_add_offset (NULL, 0));
     ptr = utf8_add_offset (noel_valid, 0);
     STRCMP_EQUAL(noel_valid, ptr);
     ptr = utf8_add_offset (noel_valid, 1);

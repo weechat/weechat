@@ -90,13 +90,13 @@ TEST(RelayHttp, RequestAllocReinitFree)
     LONGS_EQUAL(RELAY_HTTP_METHOD, request->status);
     CHECK(request->raw);
     STRCMP_EQUAL("", *(request->raw));
-    POINTERS_EQUAL(NULL, request->method);
-    POINTERS_EQUAL(NULL, request->path);
+    STRCMP_EQUAL(NULL, request->method);
+    STRCMP_EQUAL(NULL, request->path);
     POINTERS_EQUAL(NULL, request->path_items);
     LONGS_EQUAL(0, request->num_path_items);
     CHECK(request->params);
     LONGS_EQUAL(0, request->params->items_count);
-    POINTERS_EQUAL(NULL, request->http_version);
+    STRCMP_EQUAL(NULL, request->http_version);
     CHECK(request->headers);
     LONGS_EQUAL(0, request->headers->items_count);
     CHECK(request->accept_encoding);
@@ -111,7 +111,7 @@ TEST(RelayHttp, RequestAllocReinitFree)
     POINTERS_EQUAL(NULL, request->ws_deflate->strm_inflate);
     LONGS_EQUAL(0, request->content_length);
     LONGS_EQUAL(0, request->body_size);
-    POINTERS_EQUAL(NULL, request->body);
+    STRCMP_EQUAL(NULL, request->body);
 
     request->status = RELAY_HTTP_HEADERS;
     string_dyn_concat (request->raw, "test", -1);
@@ -133,13 +133,13 @@ TEST(RelayHttp, RequestAllocReinitFree)
     LONGS_EQUAL(RELAY_HTTP_METHOD, request->status);
     CHECK(request->raw);
     STRCMP_EQUAL("", *(request->raw));
-    POINTERS_EQUAL(NULL, request->method);
-    POINTERS_EQUAL(NULL, request->path);
+    STRCMP_EQUAL(NULL, request->method);
+    STRCMP_EQUAL(NULL, request->path);
     POINTERS_EQUAL(NULL, request->path_items);
     LONGS_EQUAL(0, request->num_path_items);
     CHECK(request->params);
     LONGS_EQUAL(0, request->params->items_count);
-    POINTERS_EQUAL(NULL, request->http_version);
+    STRCMP_EQUAL(NULL, request->http_version);
     CHECK(request->headers);
     LONGS_EQUAL(0, request->headers->items_count);
     CHECK(request->accept_encoding);
@@ -154,7 +154,7 @@ TEST(RelayHttp, RequestAllocReinitFree)
     POINTERS_EQUAL(NULL, request->ws_deflate->strm_inflate);
     LONGS_EQUAL(0, request->content_length);
     LONGS_EQUAL(0, request->body_size);
-    POINTERS_EQUAL(NULL, request->body);
+    STRCMP_EQUAL(NULL, request->body);
 
     relay_http_request_free (request);
 }
@@ -168,7 +168,7 @@ TEST(RelayHttp, UrlDecode)
 {
     char *str;
 
-    POINTERS_EQUAL(NULL, relay_http_url_decode (NULL));
+    STRCMP_EQUAL(NULL, relay_http_url_decode (NULL));
     WEE_TEST_STR("", relay_http_url_decode (""));
     WEE_TEST_STR("test", relay_http_url_decode ("test"));
     WEE_TEST_STR("%", relay_http_url_decode ("%"));
@@ -256,21 +256,21 @@ TEST(RelayHttp, ParsePath)
     CHECK(paths);
     LONGS_EQUAL(1, num_paths);
     STRCMP_EQUAL("api", paths[0]);
-    POINTERS_EQUAL(NULL, paths[1]);
+    STRCMP_EQUAL(NULL, paths[1]);
     LONGS_EQUAL(0, params->items_count);
 
     WEE_PARSE_PATH("/api");
     CHECK(paths);
     LONGS_EQUAL(1, num_paths);
     STRCMP_EQUAL("api", paths[0]);
-    POINTERS_EQUAL(NULL, paths[1]);
+    STRCMP_EQUAL(NULL, paths[1]);
     LONGS_EQUAL(0, params->items_count);
 
     WEE_PARSE_PATH("/api/");
     CHECK(paths);
     LONGS_EQUAL(1, num_paths);
     STRCMP_EQUAL("api", paths[0]);
-    POINTERS_EQUAL(NULL, paths[1]);
+    STRCMP_EQUAL(NULL, paths[1]);
     LONGS_EQUAL(0, params->items_count);
 
     WEE_PARSE_PATH("/api/buffers");
@@ -278,7 +278,7 @@ TEST(RelayHttp, ParsePath)
     LONGS_EQUAL(2, num_paths);
     STRCMP_EQUAL("api", paths[0]);
     STRCMP_EQUAL("buffers", paths[1]);
-    POINTERS_EQUAL(NULL, paths[2]);
+    STRCMP_EQUAL(NULL, paths[2]);
     LONGS_EQUAL(0, params->items_count);
 
     WEE_PARSE_PATH("/api/buffers?");
@@ -286,7 +286,7 @@ TEST(RelayHttp, ParsePath)
     LONGS_EQUAL(2, num_paths);
     STRCMP_EQUAL("api", paths[0]);
     STRCMP_EQUAL("buffers", paths[1]);
-    POINTERS_EQUAL(NULL, paths[2]);
+    STRCMP_EQUAL(NULL, paths[2]);
     LONGS_EQUAL(0, params->items_count);
 
     WEE_PARSE_PATH("/api/buffers?param");
@@ -294,7 +294,7 @@ TEST(RelayHttp, ParsePath)
     LONGS_EQUAL(2, num_paths);
     STRCMP_EQUAL("api", paths[0]);
     STRCMP_EQUAL("buffers", paths[1]);
-    POINTERS_EQUAL(NULL, paths[2]);
+    STRCMP_EQUAL(NULL, paths[2]);
     LONGS_EQUAL(1, params->items_count);
     STRCMP_EQUAL("", (const char *)hashtable_get (params, "param"));
 
@@ -303,7 +303,7 @@ TEST(RelayHttp, ParsePath)
     LONGS_EQUAL(2, num_paths);
     STRCMP_EQUAL("api", paths[0]);
     STRCMP_EQUAL("buffers", paths[1]);
-    POINTERS_EQUAL(NULL, paths[2]);
+    STRCMP_EQUAL(NULL, paths[2]);
     LONGS_EQUAL(1, params->items_count);
     STRCMP_EQUAL("", (const char *)hashtable_get (params, "param"));
 
@@ -312,7 +312,7 @@ TEST(RelayHttp, ParsePath)
     LONGS_EQUAL(2, num_paths);
     STRCMP_EQUAL("api", paths[0]);
     STRCMP_EQUAL("buffers", paths[1]);
-    POINTERS_EQUAL(NULL, paths[2]);
+    STRCMP_EQUAL(NULL, paths[2]);
     LONGS_EQUAL(1, params->items_count);
     STRCMP_EQUAL("off", (const char *)hashtable_get (params, "param"));
 
@@ -321,7 +321,7 @@ TEST(RelayHttp, ParsePath)
     LONGS_EQUAL(2, num_paths);
     STRCMP_EQUAL("api", paths[0]);
     STRCMP_EQUAL("buffers", paths[1]);
-    POINTERS_EQUAL(NULL, paths[2]);
+    STRCMP_EQUAL(NULL, paths[2]);
     LONGS_EQUAL(2, params->items_count);
     STRCMP_EQUAL("off", (const char *)hashtable_get (params, "param"));
     STRCMP_EQUAL("value2", (const char *)hashtable_get (params, "test"));
@@ -332,7 +332,7 @@ TEST(RelayHttp, ParsePath)
     STRCMP_EQUAL("api", paths[0]);
     STRCMP_EQUAL("buffers", paths[1]);
     STRCMP_EQUAL("irc.libera.#weechat", paths[2]);
-    POINTERS_EQUAL(NULL, paths[3]);
+    STRCMP_EQUAL(NULL, paths[3]);
     LONGS_EQUAL(2, params->items_count);
     STRCMP_EQUAL("off", (const char *)hashtable_get (params, "param"));
     STRCMP_EQUAL("value 2", (const char *)hashtable_get (params, "test"));
@@ -355,16 +355,16 @@ TEST(RelayHttp, ParseMethodPath)
     relay_http_parse_method_path (request, NULL);
     LONGS_EQUAL(RELAY_HTTP_METHOD, request->status);
     STRCMP_EQUAL("", *(request->raw));
-    POINTERS_EQUAL(NULL, request->path);
+    STRCMP_EQUAL(NULL, request->path);
     POINTERS_EQUAL(NULL, request->path_items);
     LONGS_EQUAL(0, request->num_path_items);
     LONGS_EQUAL(0, request->params->items_count);
-    POINTERS_EQUAL(NULL, request->http_version);
+    STRCMP_EQUAL(NULL, request->http_version);
     LONGS_EQUAL(0, request->headers->items_count);
     LONGS_EQUAL(0, request->accept_encoding->items_count);
     LONGS_EQUAL(0, request->content_length);
     LONGS_EQUAL(0, request->body_size);
-    POINTERS_EQUAL(NULL, request->body);
+    STRCMP_EQUAL(NULL, request->body);
     relay_http_request_free (request);
 
     request = relay_http_request_alloc ();
@@ -372,16 +372,16 @@ TEST(RelayHttp, ParseMethodPath)
     relay_http_parse_method_path (request, "");
     LONGS_EQUAL(RELAY_HTTP_METHOD, request->status);
     STRCMP_EQUAL("", *(request->raw));
-    POINTERS_EQUAL(NULL, request->path);
+    STRCMP_EQUAL(NULL, request->path);
     POINTERS_EQUAL(NULL, request->path_items);
     LONGS_EQUAL(0, request->num_path_items);
     LONGS_EQUAL(0, request->params->items_count);
-    POINTERS_EQUAL(NULL, request->http_version);
+    STRCMP_EQUAL(NULL, request->http_version);
     LONGS_EQUAL(0, request->headers->items_count);
     LONGS_EQUAL(0, request->accept_encoding->items_count);
     LONGS_EQUAL(0, request->content_length);
     LONGS_EQUAL(0, request->body_size);
-    POINTERS_EQUAL(NULL, request->body);
+    STRCMP_EQUAL(NULL, request->body);
     relay_http_request_free (request);
 
     request = relay_http_request_alloc ();
@@ -389,16 +389,16 @@ TEST(RelayHttp, ParseMethodPath)
     relay_http_parse_method_path (request, "GET");
     LONGS_EQUAL(RELAY_HTTP_END, request->status);
     STRCMP_EQUAL("GET\n", *(request->raw));
-    POINTERS_EQUAL(NULL, request->path);
+    STRCMP_EQUAL(NULL, request->path);
     POINTERS_EQUAL(NULL, request->path_items);
     LONGS_EQUAL(0, request->num_path_items);
     LONGS_EQUAL(0, request->params->items_count);
-    POINTERS_EQUAL(NULL, request->http_version);
+    STRCMP_EQUAL(NULL, request->http_version);
     LONGS_EQUAL(0, request->headers->items_count);
     LONGS_EQUAL(0, request->accept_encoding->items_count);
     LONGS_EQUAL(0, request->content_length);
     LONGS_EQUAL(0, request->body_size);
-    POINTERS_EQUAL(NULL, request->body);
+    STRCMP_EQUAL(NULL, request->body);
     relay_http_request_free (request);
 
     request = relay_http_request_alloc ();
@@ -409,15 +409,15 @@ TEST(RelayHttp, ParseMethodPath)
     STRCMP_EQUAL("/api", request->path);
     CHECK(request->path_items);
     STRCMP_EQUAL("api", request->path_items[0]);
-    POINTERS_EQUAL(NULL, request->path_items[1]);
+    STRCMP_EQUAL(NULL, request->path_items[1]);
     LONGS_EQUAL(1, request->num_path_items);
     LONGS_EQUAL(0, request->params->items_count);
-    POINTERS_EQUAL(NULL, request->http_version);
+    STRCMP_EQUAL(NULL, request->http_version);
     LONGS_EQUAL(0, request->headers->items_count);
     LONGS_EQUAL(0, request->accept_encoding->items_count);
     LONGS_EQUAL(0, request->content_length);
     LONGS_EQUAL(0, request->body_size);
-    POINTERS_EQUAL(NULL, request->body);
+    STRCMP_EQUAL(NULL, request->body);
     relay_http_request_free (request);
 
     request = relay_http_request_alloc ();
@@ -429,7 +429,7 @@ TEST(RelayHttp, ParseMethodPath)
     CHECK(request->path_items);
     STRCMP_EQUAL("api", request->path_items[0]);
     STRCMP_EQUAL("buffers", request->path_items[1]);
-    POINTERS_EQUAL(NULL, request->path_items[2]);
+    STRCMP_EQUAL(NULL, request->path_items[2]);
     LONGS_EQUAL(2, request->num_path_items);
     LONGS_EQUAL(0, request->params->items_count);
     STRCMP_EQUAL("HTTP/1.1", request->http_version);
@@ -437,7 +437,7 @@ TEST(RelayHttp, ParseMethodPath)
     LONGS_EQUAL(0, request->accept_encoding->items_count);
     LONGS_EQUAL(0, request->content_length);
     LONGS_EQUAL(0, request->body_size);
-    POINTERS_EQUAL(NULL, request->body);
+    STRCMP_EQUAL(NULL, request->body);
     relay_http_request_free (request);
 
     request = relay_http_request_alloc ();
@@ -453,7 +453,7 @@ TEST(RelayHttp, ParseMethodPath)
     CHECK(request->path_items);
     STRCMP_EQUAL("api", request->path_items[0]);
     STRCMP_EQUAL("buffers", request->path_items[1]);
-    POINTERS_EQUAL(NULL, request->path_items[2]);
+    STRCMP_EQUAL(NULL, request->path_items[2]);
     LONGS_EQUAL(2, request->num_path_items);
     LONGS_EQUAL(2, request->params->items_count);
     STRCMP_EQUAL("1", (const char *)hashtable_get (request->params, "test"));
@@ -463,7 +463,7 @@ TEST(RelayHttp, ParseMethodPath)
     LONGS_EQUAL(0, request->accept_encoding->items_count);
     LONGS_EQUAL(0, request->content_length);
     LONGS_EQUAL(0, request->body_size);
-    POINTERS_EQUAL(NULL, request->body);
+    STRCMP_EQUAL(NULL, request->body);
     relay_http_request_free (request);
 }
 
@@ -602,14 +602,14 @@ TEST(RelayHttp, AddToBody)
     LONGS_EQUAL(RELAY_HTTP_BODY, request->status);
     LONGS_EQUAL(3, request->body_size);
     MEMCMP_EQUAL("abc", request->body, 3);
-    POINTERS_EQUAL(NULL, partial_message);
+    STRCMP_EQUAL(NULL, partial_message);
 
     partial_message = strdup (body_part2);
     relay_http_add_to_body (request, &partial_message);
     LONGS_EQUAL(RELAY_HTTP_END, request->status);
     LONGS_EQUAL(10, request->body_size);
     MEMCMP_EQUAL("abcdefghij", request->body, 10);
-    POINTERS_EQUAL(NULL, partial_message);
+    STRCMP_EQUAL(NULL, partial_message);
 
     relay_http_request_free (request);
 
@@ -629,7 +629,7 @@ TEST(RelayHttp, AddToBody)
     LONGS_EQUAL(RELAY_HTTP_BODY, request->status);
     LONGS_EQUAL(3, request->body_size);
     MEMCMP_EQUAL("abc", request->body, 3);
-    POINTERS_EQUAL(NULL, partial_message);
+    STRCMP_EQUAL(NULL, partial_message);
 
     partial_message = strdup (body_part2);
     relay_http_add_to_body (request, &partial_message);
@@ -934,7 +934,7 @@ TEST(RelayHttp, Compress)
     hashtable_remove_all (request->accept_encoding);
     size = -1;
     buffer = relay_http_compress (request, NULL, 0, &size, NULL, 0);
-    POINTERS_EQUAL(NULL, buffer);
+    STRCMP_EQUAL(NULL, buffer);
     LONGS_EQUAL(0, size);
 
     hashtable_remove_all (request->accept_encoding);
@@ -942,7 +942,7 @@ TEST(RelayHttp, Compress)
     snprintf (encoding, sizeof (encoding), "test");
     buffer = relay_http_compress (request, NULL, 0, &size,
                                   encoding, sizeof (encoding));
-    POINTERS_EQUAL(NULL, buffer);
+    STRCMP_EQUAL(NULL, buffer);
     LONGS_EQUAL(0, size);
     STRCMP_EQUAL("", encoding);
 
@@ -952,7 +952,7 @@ TEST(RelayHttp, Compress)
     snprintf (encoding, sizeof (encoding), "test");
     buffer = relay_http_compress (request, body, sizeof (body), &size,
                                   encoding, sizeof (encoding));
-    POINTERS_EQUAL(NULL, buffer);
+    STRCMP_EQUAL(NULL, buffer);
     LONGS_EQUAL(0, size);
     STRCMP_EQUAL("", encoding);
 
@@ -1028,14 +1028,14 @@ TEST(RelayHttp, ResponseAllocFree)
     CHECK(response);
 
     LONGS_EQUAL(RELAY_HTTP_METHOD, response->status);
-    POINTERS_EQUAL(NULL, response->http_version);
+    STRCMP_EQUAL(NULL, response->http_version);
     LONGS_EQUAL(0, response->return_code);
-    POINTERS_EQUAL(NULL, response->message);
+    STRCMP_EQUAL(NULL, response->message);
     CHECK(response->headers);
     LONGS_EQUAL(0, response->headers->items_count);
     LONGS_EQUAL(0, response->content_length);
     LONGS_EQUAL(0, response->body_size);
-    POINTERS_EQUAL(NULL, response->body);
+    STRCMP_EQUAL(NULL, response->body);
 
     relay_http_response_free (response);
 
@@ -1056,14 +1056,14 @@ TEST(RelayHttp, ParseResponseCode)
     CHECK(response);
     relay_http_parse_response_code (NULL, NULL);
     LONGS_EQUAL(RELAY_HTTP_METHOD, response->status);
-    POINTERS_EQUAL(NULL, response->http_version);
+    STRCMP_EQUAL(NULL, response->http_version);
     LONGS_EQUAL(0, response->return_code);
-    POINTERS_EQUAL(NULL, response->message);
+    STRCMP_EQUAL(NULL, response->message);
     CHECK(response->headers);
     LONGS_EQUAL(0, response->headers->items_count);
     LONGS_EQUAL(0, response->content_length);
     LONGS_EQUAL(0, response->body_size);
-    POINTERS_EQUAL(NULL, response->body);
+    STRCMP_EQUAL(NULL, response->body);
     relay_http_response_free (response);
 
     response = relay_http_response_alloc ();
@@ -1071,28 +1071,28 @@ TEST(RelayHttp, ParseResponseCode)
     relay_http_parse_response_code (response, NULL);
     relay_http_parse_response_code (response, "");
     LONGS_EQUAL(RELAY_HTTP_END, response->status);
-    POINTERS_EQUAL(NULL, response->http_version);
+    STRCMP_EQUAL(NULL, response->http_version);
     LONGS_EQUAL(0, response->return_code);
-    POINTERS_EQUAL(NULL, response->message);
+    STRCMP_EQUAL(NULL, response->message);
     CHECK(response->headers);
     LONGS_EQUAL(0, response->headers->items_count);
     LONGS_EQUAL(0, response->content_length);
     LONGS_EQUAL(0, response->body_size);
-    POINTERS_EQUAL(NULL, response->body);
+    STRCMP_EQUAL(NULL, response->body);
     relay_http_response_free (response);
 
     response = relay_http_response_alloc ();
     CHECK(response);
     relay_http_parse_response_code (response, "HTTP/1.1");
     LONGS_EQUAL(RELAY_HTTP_END, response->status);
-    POINTERS_EQUAL(NULL, response->http_version);
+    STRCMP_EQUAL(NULL, response->http_version);
     LONGS_EQUAL(0, response->return_code);
-    POINTERS_EQUAL(NULL, response->message);
+    STRCMP_EQUAL(NULL, response->message);
     CHECK(response->headers);
     LONGS_EQUAL(0, response->headers->items_count);
     LONGS_EQUAL(0, response->content_length);
     LONGS_EQUAL(0, response->body_size);
-    POINTERS_EQUAL(NULL, response->body);
+    STRCMP_EQUAL(NULL, response->body);
     relay_http_response_free (response);
 
     response = relay_http_response_alloc ();
@@ -1101,12 +1101,12 @@ TEST(RelayHttp, ParseResponseCode)
     LONGS_EQUAL(RELAY_HTTP_HEADERS, response->status);
     STRCMP_EQUAL("HTTP/1.1", response->http_version);
     LONGS_EQUAL(200, response->return_code);
-    POINTERS_EQUAL(NULL, response->message);
+    STRCMP_EQUAL(NULL, response->message);
     CHECK(response->headers);
     LONGS_EQUAL(0, response->headers->items_count);
     LONGS_EQUAL(0, response->content_length);
     LONGS_EQUAL(0, response->body_size);
-    POINTERS_EQUAL(NULL, response->body);
+    STRCMP_EQUAL(NULL, response->body);
     relay_http_response_free (response);
 
     response = relay_http_response_alloc ();
@@ -1120,7 +1120,7 @@ TEST(RelayHttp, ParseResponseCode)
     LONGS_EQUAL(0, response->headers->items_count);
     LONGS_EQUAL(0, response->content_length);
     LONGS_EQUAL(0, response->body_size);
-    POINTERS_EQUAL(NULL, response->body);
+    STRCMP_EQUAL(NULL, response->body);
     relay_http_response_free (response);
 
     response = relay_http_response_alloc ();
@@ -1134,7 +1134,7 @@ TEST(RelayHttp, ParseResponseCode)
     LONGS_EQUAL(0, response->headers->items_count);
     LONGS_EQUAL(0, response->content_length);
     LONGS_EQUAL(0, response->body_size);
-    POINTERS_EQUAL(NULL, response->body);
+    STRCMP_EQUAL(NULL, response->body);
     relay_http_response_free (response);
 
 
@@ -1149,7 +1149,7 @@ TEST(RelayHttp, ParseResponseCode)
     LONGS_EQUAL(0, response->headers->items_count);
     LONGS_EQUAL(0, response->content_length);
     LONGS_EQUAL(0, response->body_size);
-    POINTERS_EQUAL(NULL, response->body);
+    STRCMP_EQUAL(NULL, response->body);
     relay_http_response_free (response);
 }
 
@@ -1235,27 +1235,27 @@ TEST(RelayHttp, ParseResponse)
     response = relay_http_parse_response ("invalid");
     CHECK(response);
     LONGS_EQUAL(RELAY_HTTP_METHOD, response->status);
-    POINTERS_EQUAL(NULL, response->http_version);
+    STRCMP_EQUAL(NULL, response->http_version);
     LONGS_EQUAL(0, response->return_code);
-    POINTERS_EQUAL(NULL, response->message);
+    STRCMP_EQUAL(NULL, response->message);
     CHECK(response->headers);
     LONGS_EQUAL(0, response->headers->items_count);
     LONGS_EQUAL(0, response->content_length);
     LONGS_EQUAL(0, response->body_size);
-    POINTERS_EQUAL(NULL, response->body);
+    STRCMP_EQUAL(NULL, response->body);
     relay_http_response_free (response);
 
     response = relay_http_parse_response ("invalid\r\n");
     CHECK(response);
     LONGS_EQUAL(RELAY_HTTP_END, response->status);
-    POINTERS_EQUAL(NULL, response->http_version);
+    STRCMP_EQUAL(NULL, response->http_version);
     LONGS_EQUAL(0, response->return_code);
-    POINTERS_EQUAL(NULL, response->message);
+    STRCMP_EQUAL(NULL, response->message);
     CHECK(response->headers);
     LONGS_EQUAL(0, response->headers->items_count);
     LONGS_EQUAL(0, response->content_length);
     LONGS_EQUAL(0, response->body_size);
-    POINTERS_EQUAL(NULL, response->body);
+    STRCMP_EQUAL(NULL, response->body);
     relay_http_response_free (response);
 
     response = relay_http_parse_response ("HTTP/1.1 200 OK\r\n"

@@ -89,8 +89,8 @@ TEST(RelayAuth, GenerateNonce)
 {
     char *nonce;
 
-    POINTERS_EQUAL(NULL, relay_auth_generate_nonce (-1));
-    POINTERS_EQUAL(NULL, relay_auth_generate_nonce (0));
+    STRCMP_EQUAL(NULL, relay_auth_generate_nonce (-1));
+    STRCMP_EQUAL(NULL, relay_auth_generate_nonce (0));
 
     nonce = relay_auth_generate_nonce (1);
     LONGS_EQUAL(2, strlen (nonce));
@@ -152,24 +152,24 @@ TEST(RelayAuth, ParseSha)
 
     /* NULL string */
     WEE_CHECK_PARSE_SHA(NULL);
-    POINTERS_EQUAL(NULL, salt_hexa);
-    POINTERS_EQUAL(NULL, salt);
+    STRCMP_EQUAL(NULL, salt_hexa);
+    STRCMP_EQUAL(NULL, salt);
     LONGS_EQUAL(0, salt_size);
-    POINTERS_EQUAL(NULL, hash_sha);
+    STRCMP_EQUAL(NULL, hash_sha);
 
     /* not enough parameters: 0 (expected: 2) */
     WEE_CHECK_PARSE_SHA("");
-    POINTERS_EQUAL(NULL, salt_hexa);
-    POINTERS_EQUAL(NULL, salt);
+    STRCMP_EQUAL(NULL, salt_hexa);
+    STRCMP_EQUAL(NULL, salt);
     LONGS_EQUAL(0, salt_size);
-    POINTERS_EQUAL(NULL, hash_sha);
+    STRCMP_EQUAL(NULL, hash_sha);
 
     /* not enough parameters: 1 (expected: 2) */
     WEE_CHECK_PARSE_SHA("41424344");
-    POINTERS_EQUAL(NULL, salt_hexa);
-    POINTERS_EQUAL(NULL, salt);
+    STRCMP_EQUAL(NULL, salt_hexa);
+    STRCMP_EQUAL(NULL, salt);
     LONGS_EQUAL(0, salt_size);
-    POINTERS_EQUAL(NULL, hash_sha);
+    STRCMP_EQUAL(NULL, hash_sha);
 
     /* good parameters */
     WEE_CHECK_PARSE_SHA("41424344:5e884898da28047151d0e56f8dc6292773603d0d6aa"
@@ -187,8 +187,8 @@ TEST(RelayAuth, ParseSha)
     /* wrong salt */
     WEE_CHECK_PARSE_SHA("Z:5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a"
                         "11ef721d1542d8");
-    POINTERS_EQUAL(NULL, salt_hexa);
-    POINTERS_EQUAL(NULL, salt);
+    STRCMP_EQUAL(NULL, salt_hexa);
+    STRCMP_EQUAL(NULL, salt);
     LONGS_EQUAL(0, salt_size);
     STRCMP_EQUAL("5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1"
                  "542d8",
@@ -209,35 +209,35 @@ TEST(RelayAuth, ParsePbkdf2)
 
     /* NULL string */
     WEE_CHECK_PARSE_PBKDF2(NULL);
-    POINTERS_EQUAL(NULL, salt_hexa);
-    POINTERS_EQUAL(NULL, salt);
+    STRCMP_EQUAL(NULL, salt_hexa);
+    STRCMP_EQUAL(NULL, salt);
     LONGS_EQUAL(0, salt_size);
     LONGS_EQUAL(0, iterations);
-    POINTERS_EQUAL(NULL, hash_pbkdf2);
+    STRCMP_EQUAL(NULL, hash_pbkdf2);
 
     /* not enough parameters: 0 (expected: 3) */
     WEE_CHECK_PARSE_PBKDF2("");
-    POINTERS_EQUAL(NULL, salt_hexa);
-    POINTERS_EQUAL(NULL, salt);
+    STRCMP_EQUAL(NULL, salt_hexa);
+    STRCMP_EQUAL(NULL, salt);
     LONGS_EQUAL(0, salt_size);
     LONGS_EQUAL(0, iterations);
-    POINTERS_EQUAL(NULL, hash_pbkdf2);
+    STRCMP_EQUAL(NULL, hash_pbkdf2);
 
     /* not enough parameters: 1 (expected: 3) */
     WEE_CHECK_PARSE_PBKDF2("41424344");
-    POINTERS_EQUAL(NULL, salt_hexa);
-    POINTERS_EQUAL(NULL, salt);
+    STRCMP_EQUAL(NULL, salt_hexa);
+    STRCMP_EQUAL(NULL, salt);
     LONGS_EQUAL(0, salt_size);
     LONGS_EQUAL(0, iterations);
-    POINTERS_EQUAL(NULL, hash_pbkdf2);
+    STRCMP_EQUAL(NULL, hash_pbkdf2);
 
     /* not enough parameters: 2 (expected: 3) */
     WEE_CHECK_PARSE_PBKDF2("41424344:1000");
-    POINTERS_EQUAL(NULL, salt_hexa);
-    POINTERS_EQUAL(NULL, salt);
+    STRCMP_EQUAL(NULL, salt_hexa);
+    STRCMP_EQUAL(NULL, salt);
     LONGS_EQUAL(0, salt_size);
     LONGS_EQUAL(0, iterations);
-    POINTERS_EQUAL(NULL, hash_pbkdf2);
+    STRCMP_EQUAL(NULL, hash_pbkdf2);
 
     /* good parameters */
     WEE_CHECK_PARSE_PBKDF2("41424344:1000:8765936466387f2cfcc47d2617423386684"
@@ -256,8 +256,8 @@ TEST(RelayAuth, ParsePbkdf2)
     /* wrong salt */
     WEE_CHECK_PARSE_PBKDF2("Z:1000:8765936466387f2cfcc47d2617423386684a218d64"
                            "a57f8213e42b0fe60d8849");
-    POINTERS_EQUAL(NULL, salt_hexa);
-    POINTERS_EQUAL(NULL, salt);
+    STRCMP_EQUAL(NULL, salt_hexa);
+    STRCMP_EQUAL(NULL, salt);
     LONGS_EQUAL(0, salt_size);
     LONGS_EQUAL(1000, iterations);
     STRCMP_EQUAL("8765936466387f2cfcc47d2617423386684a218d64a57f8213e42b0fe60"

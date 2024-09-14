@@ -85,9 +85,9 @@ TEST(Alias, ReplaceArgs)
 {
     char *str;
 
-    POINTERS_EQUAL(NULL, alias_replace_args (NULL, NULL));
-    POINTERS_EQUAL(NULL, alias_replace_args (NULL, ""));
-    POINTERS_EQUAL(NULL, alias_replace_args ("", NULL));
+    STRCMP_EQUAL(NULL, alias_replace_args (NULL, NULL));
+    STRCMP_EQUAL(NULL, alias_replace_args (NULL, ""));
+    STRCMP_EQUAL(NULL, alias_replace_args ("", NULL));
 
     WEE_TEST_STR("", alias_replace_args ("", ""));
     WEE_TEST_STR("", alias_replace_args ("", "abc def"));

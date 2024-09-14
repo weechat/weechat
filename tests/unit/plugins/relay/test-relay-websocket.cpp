@@ -147,7 +147,7 @@ TEST(RelayWebsocket, ClientHandshakeValid)
     hashtable_set (request->headers, "sec-websocket-key", "CI1sXhf/u2o34BfWK7NeIg==");
     LONGS_EQUAL(0, relay_websocket_client_handshake_valid (request));
 
-    POINTERS_EQUAL(NULL, relay_websocket_build_handshake (NULL));
+    STRCMP_EQUAL(NULL, relay_websocket_build_handshake (NULL));
 
     WEE_TEST_STR(
         "HTTP/1.1 101 Switching Protocols\r\n"

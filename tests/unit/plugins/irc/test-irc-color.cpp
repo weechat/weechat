@@ -215,8 +215,8 @@ TEST(IrcColor, Decode)
     char string[1024], *decoded;
 
     /* NULL/empty string */
-    POINTERS_EQUAL(NULL, irc_color_decode (NULL, 0));
-    POINTERS_EQUAL(NULL, irc_color_decode (NULL, 1));
+    STRCMP_EQUAL(NULL, irc_color_decode (NULL, 0));
+    STRCMP_EQUAL(NULL, irc_color_decode (NULL, 1));
     WEE_CHECK_DECODE("", "", 0);
     WEE_CHECK_DECODE("", "", 1);
 
@@ -368,8 +368,8 @@ TEST(IrcColor, Encode)
     char string[1024], *encoded;
 
     /* NULL/empty string */
-    POINTERS_EQUAL(NULL, irc_color_encode (NULL, 0));
-    POINTERS_EQUAL(NULL, irc_color_encode (NULL, 1));
+    STRCMP_EQUAL(NULL, irc_color_encode (NULL, 0));
+    STRCMP_EQUAL(NULL, irc_color_encode (NULL, 1));
     WEE_CHECK_ENCODE("", "", 0);
     WEE_CHECK_ENCODE("", "", 1);
 
@@ -491,8 +491,8 @@ TEST(IrcColor, DecodeAnsi)
     char string[1024], *decoded;
 
     /* NULL/empty string */
-    POINTERS_EQUAL(NULL, irc_color_decode_ansi (NULL, 0));
-    POINTERS_EQUAL(NULL, irc_color_decode_ansi (NULL, 1));
+    STRCMP_EQUAL(NULL, irc_color_decode_ansi (NULL, 0));
+    STRCMP_EQUAL(NULL, irc_color_decode_ansi (NULL, 1));
     WEE_CHECK_DECODE_ANSI ("", "", 0);
     WEE_CHECK_DECODE_ANSI ("", "", 1);
 
@@ -642,7 +642,7 @@ TEST(IrcColor, DecodeAnsi)
 
 TEST(IrcColor, ForTags)
 {
-    POINTERS_EQUAL(NULL, irc_color_for_tags (NULL));
+    STRCMP_EQUAL(NULL, irc_color_for_tags (NULL));
 
     STRCMP_EQUAL("", irc_color_for_tags (""));
     STRCMP_EQUAL("test", irc_color_for_tags ("test"));

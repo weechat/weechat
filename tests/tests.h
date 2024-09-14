@@ -22,14 +22,7 @@
 
 #define WEE_TEST_STR(__result, __test)                                  \
     str = __test;                                                       \
-    if (__result == NULL)                                               \
-    {                                                                   \
-        POINTERS_EQUAL(NULL, str);                                      \
-    }                                                                   \
-    else                                                                \
-    {                                                                   \
-        STRCMP_EQUAL(__result, str);                                    \
-    }                                                                   \
+    STRCMP_EQUAL(__result, str);                                        \
     free (str);
 
 extern void run_cmd (const char *command);

@@ -208,16 +208,8 @@ extern "C"
 
 #define WEE_CHECK_TOTP_GENERATE(__result, __secret, __time, __digits)   \
     totp = weecrypto_totp_generate (__secret, __time, __digits);        \
-    if (__result == NULL)                                               \
-    {                                                                   \
-        POINTERS_EQUAL(NULL, totp);                                     \
-    }                                                                   \
-    else                                                                \
-    {                                                                   \
-        STRCMP_EQUAL(__result, totp);                                   \
-    }                                                                   \
-    if (totp)                                                           \
-        free (totp);
+    STRCMP_EQUAL(__result, totp);                                       \
+    free (totp);
 
 #define WEE_CHECK_TOTP_VALIDATE(__result, __secret, __time, __window,   \
                                 __otp)                                  \

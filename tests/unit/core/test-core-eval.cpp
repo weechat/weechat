@@ -98,7 +98,7 @@ TEST(CoreEval, EvalCondition)
     CHECK(options);
     hashtable_set (options, "type", "condition");
 
-    POINTERS_EQUAL(NULL, eval_expression (NULL, NULL, NULL, options));
+    STRCMP_EQUAL(NULL, eval_expression (NULL, NULL, NULL, options));
 
     /* conditions evaluated as false */
     WEE_CHECK_EVAL("0", "");
@@ -482,7 +482,7 @@ TEST(CoreEval, EvalExpression)
                              NULL, NULL);
     CHECK(options);
 
-    POINTERS_EQUAL(NULL, eval_expression (NULL, NULL, NULL, NULL));
+    STRCMP_EQUAL(NULL, eval_expression (NULL, NULL, NULL, NULL));
 
     /* test with simple strings */
     WEE_CHECK_EVAL("", "");

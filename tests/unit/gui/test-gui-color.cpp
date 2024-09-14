@@ -380,9 +380,9 @@ TEST(GuiColor, Decode)
     char string[256], *decoded;
 
     /* NULL/empty string */
-    POINTERS_EQUAL(NULL, gui_color_decode (NULL, NULL));
-    POINTERS_EQUAL(NULL, gui_color_decode (NULL, ""));
-    POINTERS_EQUAL(NULL, gui_color_decode (NULL, "?"));
+    STRCMP_EQUAL(NULL, gui_color_decode (NULL, NULL));
+    STRCMP_EQUAL(NULL, gui_color_decode (NULL, ""));
+    STRCMP_EQUAL(NULL, gui_color_decode (NULL, "?"));
     WEE_CHECK_DECODE("", "", NULL);
     WEE_CHECK_DECODE("", "", "");
     WEE_CHECK_DECODE("", "", "?");
@@ -569,8 +569,8 @@ TEST(GuiColor, DecodeAnsi)
     char string[256], *decoded;
 
     /* NULL/empty string */
-    POINTERS_EQUAL(NULL, gui_color_decode_ansi (NULL, 0));
-    POINTERS_EQUAL(NULL, gui_color_decode_ansi (NULL, 1));
+    STRCMP_EQUAL(NULL, gui_color_decode_ansi (NULL, 0));
+    STRCMP_EQUAL(NULL, gui_color_decode_ansi (NULL, 1));
     WEE_CHECK_DECODE_ANSI("", "", 0);
     WEE_CHECK_DECODE_ANSI("", "", 1);
 
@@ -741,7 +741,7 @@ TEST(GuiColor, EncodeAnsi)
     char string[256], *encoded;
 
     /* NULL/empty string */
-    POINTERS_EQUAL(NULL, gui_color_encode_ansi (NULL));
+    STRCMP_EQUAL(NULL, gui_color_encode_ansi (NULL));
     WEE_CHECK_ENCODE_ANSI("", "");
 
     /* reset */
@@ -918,9 +918,9 @@ TEST(GuiColor, Emphasize)
     regex_t regex;
 
     /* NULL/empty string, search or regex */
-    POINTERS_EQUAL(NULL, gui_color_emphasize (NULL, NULL, 0, NULL));
-    POINTERS_EQUAL(NULL, gui_color_emphasize ("test", NULL, 0, NULL));
-    POINTERS_EQUAL(NULL, gui_color_emphasize (NULL, "test", 0, NULL));
+    STRCMP_EQUAL(NULL, gui_color_emphasize (NULL, NULL, 0, NULL));
+    STRCMP_EQUAL(NULL, gui_color_emphasize ("test", NULL, 0, NULL));
+    STRCMP_EQUAL(NULL, gui_color_emphasize (NULL, "test", 0, NULL));
 
     /* build strings for tests */
     snprintf (string1, sizeof (string1),

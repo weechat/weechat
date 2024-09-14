@@ -287,8 +287,8 @@ TEST(IrcList, Alloc)
     POINTERS_EQUAL(NULL, list->channels);
     POINTERS_EQUAL(NULL, list->filter_channels);
     LONGS_EQUAL(0, list->name_max_length);
-    POINTERS_EQUAL(NULL, list->filter);
-    POINTERS_EQUAL(NULL, list->sort);
+    STRCMP_EQUAL(NULL, list->filter);
+    STRCMP_EQUAL(NULL, list->sort);
     POINTERS_EQUAL(NULL, list->sort_fields);
     LONGS_EQUAL(0, list->sort_fields_count);
     LONGS_EQUAL(0, list->selected_line);

@@ -892,10 +892,10 @@ TEST(CoreHdataWithList, GetVarType)
 
 TEST(CoreHdataWithList, GetVarTypeString)
 {
-    POINTERS_EQUAL(NULL, hdata_get_var_type_string (NULL, NULL));
-    POINTERS_EQUAL(NULL, hdata_get_var_type_string (ptr_hdata, NULL));
-    POINTERS_EQUAL(NULL, hdata_get_var_type_string (NULL, "test_char"));
-    POINTERS_EQUAL(NULL, hdata_get_var_type_string (ptr_hdata, "zzz"));
+    STRCMP_EQUAL(NULL, hdata_get_var_type_string (NULL, NULL));
+    STRCMP_EQUAL(NULL, hdata_get_var_type_string (ptr_hdata, NULL));
+    STRCMP_EQUAL(NULL, hdata_get_var_type_string (NULL, "test_char"));
+    STRCMP_EQUAL(NULL, hdata_get_var_type_string (ptr_hdata, "zzz"));
 
     STRCMP_EQUAL("char",
                  hdata_get_var_type_string (ptr_hdata, "test_char"));
@@ -1047,20 +1047,14 @@ TEST(CoreHdataWithList, GetVarArraySize)
 
 TEST(CoreHdataWithList, GetVarArraySizeString)
 {
-    POINTERS_EQUAL(NULL, hdata_get_var_array_size_string (NULL, NULL,
-                                                          NULL));
-    POINTERS_EQUAL(NULL, hdata_get_var_array_size_string (ptr_hdata, NULL,
-                                                          NULL));
-    POINTERS_EQUAL(NULL, hdata_get_var_array_size_string (NULL, NULL,
-                                                          "test_char"));
-    POINTERS_EQUAL(NULL, hdata_get_var_array_size_string (ptr_hdata, NULL,
-                                                          "zzz"));
-    POINTERS_EQUAL(NULL, hdata_get_var_array_size_string (ptr_hdata, ptr_item1,
-                                                          "zzz"));
+    STRCMP_EQUAL(NULL, hdata_get_var_array_size_string (NULL, NULL, NULL));
+    STRCMP_EQUAL(NULL, hdata_get_var_array_size_string (ptr_hdata, NULL, NULL));
+    STRCMP_EQUAL(NULL, hdata_get_var_array_size_string (NULL, NULL, "test_char"));
+    STRCMP_EQUAL(NULL, hdata_get_var_array_size_string (ptr_hdata, NULL, "zzz"));
+    STRCMP_EQUAL(NULL, hdata_get_var_array_size_string (ptr_hdata, ptr_item1, "zzz"));
 
     /* not an array */
-    POINTERS_EQUAL(NULL, hdata_get_var_array_size_string (ptr_hdata, ptr_item1,
-                                                          "test_char"));
+    STRCMP_EQUAL(NULL, hdata_get_var_array_size_string (ptr_hdata, ptr_item1, "test_char"));
 
     /* item 1 */
     STRCMP_EQUAL("2",
@@ -1210,13 +1204,13 @@ TEST(CoreHdataWithList, GetVarArraySizeString)
 
 TEST(CoreHdataWithList, GetVarHdata)
 {
-    POINTERS_EQUAL(NULL, hdata_get_var_hdata (NULL, NULL));
-    POINTERS_EQUAL(NULL, hdata_get_var_hdata (ptr_hdata, NULL));
-    POINTERS_EQUAL(NULL, hdata_get_var_hdata (NULL, "test_char"));
-    POINTERS_EQUAL(NULL, hdata_get_var_hdata (ptr_hdata, "zzz"));
+    STRCMP_EQUAL(NULL, hdata_get_var_hdata (NULL, NULL));
+    STRCMP_EQUAL(NULL, hdata_get_var_hdata (ptr_hdata, NULL));
+    STRCMP_EQUAL(NULL, hdata_get_var_hdata (NULL, "test_char"));
+    STRCMP_EQUAL(NULL, hdata_get_var_hdata (ptr_hdata, "zzz"));
 
     /* no reference to hdata */
-    POINTERS_EQUAL(NULL, hdata_get_var_hdata (ptr_hdata, "test_char"));
+    STRCMP_EQUAL(NULL, hdata_get_var_hdata (ptr_hdata, "test_char"));
 
     /* check prev/next item variables */
     STRCMP_EQUAL("test_item", hdata_get_var_hdata (ptr_hdata, "prev_item"));
@@ -1761,7 +1755,7 @@ TEST(CoreHdataWithList, GetIndexAndName)
     ptr_name = (const char *)0x1;
     hdata_get_index_and_name (NULL, &index, &ptr_name);
     LONGS_EQUAL(-1, index);
-    POINTERS_EQUAL(NULL, ptr_name);
+    STRCMP_EQUAL(NULL, ptr_name);
 
     index = -999;
     ptr_name = (const char *)0x1;
@@ -1957,17 +1951,17 @@ TEST(CoreHdataWithList, LongLong)
 
 TEST(CoreHdataWithList, String)
 {
-    POINTERS_EQUAL(NULL, hdata_string (NULL, NULL, NULL));
-    POINTERS_EQUAL(NULL, hdata_string (ptr_hdata, NULL, NULL));
-    POINTERS_EQUAL(NULL, hdata_string (NULL, ptr_item1, NULL));
-    POINTERS_EQUAL(NULL, hdata_string (NULL, NULL, "test_string"));
-    POINTERS_EQUAL(NULL, hdata_string (ptr_hdata, ptr_item1, NULL));
-    POINTERS_EQUAL(NULL, hdata_string (ptr_hdata, NULL, "test_string"));
-    POINTERS_EQUAL(NULL, hdata_string (NULL, ptr_item1, "test_string"));
+    STRCMP_EQUAL(NULL, hdata_string (NULL, NULL, NULL));
+    STRCMP_EQUAL(NULL, hdata_string (ptr_hdata, NULL, NULL));
+    STRCMP_EQUAL(NULL, hdata_string (NULL, ptr_item1, NULL));
+    STRCMP_EQUAL(NULL, hdata_string (NULL, NULL, "test_string"));
+    STRCMP_EQUAL(NULL, hdata_string (ptr_hdata, ptr_item1, NULL));
+    STRCMP_EQUAL(NULL, hdata_string (ptr_hdata, NULL, "test_string"));
+    STRCMP_EQUAL(NULL, hdata_string (NULL, ptr_item1, "test_string"));
 
     /* variable not found */
-    POINTERS_EQUAL(NULL, hdata_string (ptr_hdata, ptr_item1, "zzz"));
-    POINTERS_EQUAL(NULL, hdata_string (ptr_hdata, ptr_item1, "1|zzz"));
+    STRCMP_EQUAL(NULL, hdata_string (ptr_hdata, ptr_item1, "zzz"));
+    STRCMP_EQUAL(NULL, hdata_string (ptr_hdata, ptr_item1, "1|zzz"));
 
     /* item 1 */
     STRCMP_EQUAL("item1", hdata_string (ptr_hdata, ptr_item1, "test_string"));
@@ -2456,7 +2450,7 @@ TEST(CoreHdataWithList, Update)
     hashtable_remove_all (hashtable);
     hashtable_set (hashtable, "test_string", NULL);
     LONGS_EQUAL(1, hdata_update (ptr_hdata, ptr_item1, hashtable));
-    POINTERS_EQUAL(NULL, ptr_item1->test_string);
+    STRCMP_EQUAL(NULL, ptr_item1->test_string);
 
     /* set string to empty string */
     hashtable_remove_all (hashtable);
@@ -2474,7 +2468,7 @@ TEST(CoreHdataWithList, Update)
     hashtable_remove_all (hashtable);
     hashtable_set (hashtable, "test_shared_string", NULL);
     LONGS_EQUAL(1, hdata_update (ptr_hdata, ptr_item1, hashtable));
-    POINTERS_EQUAL(NULL, ptr_item1->test_shared_string);
+    STRCMP_EQUAL(NULL, ptr_item1->test_shared_string);
 
     /* set shared string to empty string */
     hashtable_remove_all (hashtable);
@@ -2610,11 +2604,11 @@ TEST(CoreHdataWithList, GetString)
     char **items;
     int num_items;
 
-    POINTERS_EQUAL(NULL, hdata_get_string (NULL, NULL));
-    POINTERS_EQUAL(NULL, hdata_get_string (ptr_hdata, NULL));
-    POINTERS_EQUAL(NULL, hdata_get_string (NULL, "var_keys"));
+    STRCMP_EQUAL(NULL, hdata_get_string (NULL, NULL));
+    STRCMP_EQUAL(NULL, hdata_get_string (ptr_hdata, NULL));
+    STRCMP_EQUAL(NULL, hdata_get_string (NULL, "var_keys"));
 
-    POINTERS_EQUAL(NULL, hdata_get_string (ptr_hdata, "zzz"));
+    STRCMP_EQUAL(NULL, hdata_get_string (ptr_hdata, "zzz"));
 
     STRCMP_EQUAL(
         "test_char,test_count_char,test_array_2_char_fixed_size,"

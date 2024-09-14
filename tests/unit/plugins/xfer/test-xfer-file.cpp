@@ -37,12 +37,12 @@ TEST_GROUP(XferFile)
 
 TEST(XferFile, SearchCrc32)
 {
-    POINTERS_EQUAL(NULL, xfer_file_search_crc32 (NULL));
-    POINTERS_EQUAL(NULL, xfer_file_search_crc32 (""));
-    POINTERS_EQUAL(NULL, xfer_file_search_crc32 ("a"));
-    POINTERS_EQUAL(NULL, xfer_file_search_crc32 ("z"));
-    POINTERS_EQUAL(NULL, xfer_file_search_crc32 ("123456781234abcd"));
-    POINTERS_EQUAL(NULL, xfer_file_search_crc32 ("test_filename"));
+    STRCMP_EQUAL(NULL, xfer_file_search_crc32 (NULL));
+    STRCMP_EQUAL(NULL, xfer_file_search_crc32 (""));
+    STRCMP_EQUAL(NULL, xfer_file_search_crc32 ("a"));
+    STRCMP_EQUAL(NULL, xfer_file_search_crc32 ("z"));
+    STRCMP_EQUAL(NULL, xfer_file_search_crc32 ("123456781234abcd"));
+    STRCMP_EQUAL(NULL, xfer_file_search_crc32 ("test_filename"));
 
     /* valid CRC32 */
     STRCMP_EQUAL("1234abcd", xfer_file_search_crc32 ("test_1234abcd"));

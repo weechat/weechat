@@ -28,16 +28,8 @@ extern "C"
 
 #define WEE_CHECK_GET_ARGS(__result, __arguments)                       \
     str = irc_mode_get_arguments (__arguments);                         \
-    if (__result == NULL)                                               \
-    {                                                                   \
-        POINTERS_EQUAL(NULL, str);                                      \
-    }                                                                   \
-    else                                                                \
-    {                                                                   \
-        STRCMP_EQUAL(__result, str);                                    \
-    }                                                                   \
-    if (str)                                                            \
-        free (str);
+    STRCMP_EQUAL(__result, str);                                        \
+    free (str);
 
 TEST_GROUP(IrcMode)
 {

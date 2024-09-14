@@ -531,7 +531,7 @@ TEST(CoreHashtable, SetGetRemove)
     value_time = 1718036808;
     hashtable_set (hashtable, &value_time, "test_1718036808");
     value_time = 1;
-    POINTERS_EQUAL(NULL, (const char *)hashtable_get (hashtable, &value_time));
+    STRCMP_EQUAL(NULL, (const char *)hashtable_get (hashtable, &value_time));
     value_time = 0;
     STRCMP_EQUAL("test_0", (const char *)hashtable_get (hashtable, &value_time));
     value_time = 1718036808;
@@ -549,7 +549,7 @@ TEST(CoreHashtable, SetGetRemove)
     value_longlong = 123;
     hashtable_set (hashtable, &value_longlong, "test_123");
     value_longlong = 0;
-    POINTERS_EQUAL(NULL, (const char *)hashtable_get (hashtable, &value_longlong));
+    STRCMP_EQUAL(NULL, (const char *)hashtable_get (hashtable, &value_longlong));
     value_longlong = -1;
     STRCMP_EQUAL("test_-1", (const char *)hashtable_get (hashtable, &value_longlong));
     value_longlong = 123;
@@ -729,10 +729,10 @@ TEST(CoreHashtable, GetString)
 
     hashtable = get_weechat_hashtable ();
 
-    POINTERS_EQUAL(NULL, hashtable_get_string (NULL, NULL));
-    POINTERS_EQUAL(NULL, hashtable_get_string (hashtable, NULL));
-    POINTERS_EQUAL(NULL, hashtable_get_string (hashtable, ""));
-    POINTERS_EQUAL(NULL, hashtable_get_string (hashtable, "unknown"));
+    STRCMP_EQUAL(NULL, hashtable_get_string (NULL, NULL));
+    STRCMP_EQUAL(NULL, hashtable_get_string (hashtable, NULL));
+    STRCMP_EQUAL(NULL, hashtable_get_string (hashtable, ""));
+    STRCMP_EQUAL(NULL, hashtable_get_string (hashtable, "unknown"));
 
     STRCMP_EQUAL("string", hashtable_get_string (hashtable, "type_keys"));
     STRCMP_EQUAL("string", hashtable_get_string (hashtable, "type_values"));

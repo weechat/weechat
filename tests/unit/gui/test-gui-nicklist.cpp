@@ -340,8 +340,8 @@ TEST(GuiNicklist, AddNick)
     POINTERS_EQUAL(group2, nick3->group);
     STRCMP_EQUAL("nick3", nick3->name);
     STRCMP_EQUAL("yellow", nick3->color);
-    POINTERS_EQUAL(NULL, nick3->prefix);
-    POINTERS_EQUAL(NULL, nick3->prefix_color);
+    STRCMP_EQUAL(NULL, nick3->prefix);
+    STRCMP_EQUAL(NULL, nick3->prefix_color);
     LONGS_EQUAL(0, nick3->visible);
     POINTERS_EQUAL(nick1, nick3->prev_nick);
     POINTERS_EQUAL(NULL, nick3->next_nick);
@@ -354,8 +354,8 @@ TEST(GuiNicklist, AddNick)
     POINTERS_EQUAL(group2, nick2->group);
     STRCMP_EQUAL("nick2", nick2->name);
     STRCMP_EQUAL("lightblue", nick2->color);
-    POINTERS_EQUAL(NULL, nick2->prefix);
-    POINTERS_EQUAL(NULL, nick2->prefix_color);
+    STRCMP_EQUAL(NULL, nick2->prefix);
+    STRCMP_EQUAL(NULL, nick2->prefix_color);
     LONGS_EQUAL(0, nick2->visible);
     POINTERS_EQUAL(nick1, nick2->prev_nick);
     POINTERS_EQUAL(nick3, nick2->next_nick);
@@ -513,7 +513,7 @@ TEST(GuiNicklist, GetGroupStart)
     const char *group1 = "group1";
     const char *group2 = "01|group2";
 
-    POINTERS_EQUAL(NULL, gui_nicklist_get_group_start (NULL));
+    STRCMP_EQUAL(NULL, gui_nicklist_get_group_start (NULL));
     STRCMP_EQUAL(group_empty, gui_nicklist_get_group_start (group_empty));
     STRCMP_EQUAL(group1, gui_nicklist_get_group_start (group1));
     STRCMP_EQUAL(group2 + 3, gui_nicklist_get_group_start (group2));
@@ -652,15 +652,15 @@ TEST(GuiNicklist, GroupGetString)
     group = gui_nicklist_add_group (buffer, NULL, "group", "blue", 1);
     CHECK(group);
 
-    POINTERS_EQUAL(NULL, gui_nicklist_group_get_string (buffer, NULL, NULL));
-    POINTERS_EQUAL(NULL, gui_nicklist_group_get_string (buffer, NULL, ""));
-    POINTERS_EQUAL(NULL, gui_nicklist_group_get_string (buffer, NULL, "zzz"));
-    POINTERS_EQUAL(NULL, gui_nicklist_group_get_string (buffer, buffer->nicklist_root, ""));
-    POINTERS_EQUAL(NULL, gui_nicklist_group_get_string (buffer, buffer->nicklist_root, "zzz"));
+    STRCMP_EQUAL(NULL, gui_nicklist_group_get_string (buffer, NULL, NULL));
+    STRCMP_EQUAL(NULL, gui_nicklist_group_get_string (buffer, NULL, ""));
+    STRCMP_EQUAL(NULL, gui_nicklist_group_get_string (buffer, NULL, "zzz"));
+    STRCMP_EQUAL(NULL, gui_nicklist_group_get_string (buffer, buffer->nicklist_root, ""));
+    STRCMP_EQUAL(NULL, gui_nicklist_group_get_string (buffer, buffer->nicklist_root, "zzz"));
 
     STRCMP_EQUAL("root", gui_nicklist_group_get_string (buffer, buffer->nicklist_root, "name"));
     STRCMP_EQUAL("group", gui_nicklist_group_get_string (buffer, group, "name"));
-    POINTERS_EQUAL(NULL, gui_nicklist_group_get_string (buffer, buffer->nicklist_root, "color"));
+    STRCMP_EQUAL(NULL, gui_nicklist_group_get_string (buffer, buffer->nicklist_root, "color"));
     STRCMP_EQUAL("blue", gui_nicklist_group_get_string (buffer, group, "color"));
 
     gui_buffer_close (buffer);

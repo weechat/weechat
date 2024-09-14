@@ -70,15 +70,8 @@ extern "C"
                                 REG_EXTENDED | REG_ICASE));             \
     result = string_replace_regex (__str, &regex, __replace,            \
                                    __ref_char, __callback, NULL);       \
-    if (__result_replace == NULL)                                       \
-    {                                                                   \
-        POINTERS_EQUAL(NULL, result);                                   \
-    }                                                                   \
-    else                                                                \
-    {                                                                   \
-        STRCMP_EQUAL(__result_replace, result);                         \
-        free (result);                                                  \
-    }                                                                   \
+    STRCMP_EQUAL(__result_replace, result);                             \
+    free (result);                                                      \
     if (__result_regex == 0)                                            \
         regfree(&regex);
 
@@ -91,15 +84,8 @@ extern "C"
         __str, __prefix, __suffix, __allow_escape,                      \
         __list_prefix_no_replace, __callback, __callback_data,          \
         __errors);                                                      \
-    if (__result_replace == NULL)                                       \
-    {                                                                   \
-        POINTERS_EQUAL(NULL, result);                                   \
-    }                                                                   \
-    else                                                                \
-    {                                                                   \
-        STRCMP_EQUAL(__result_replace, result);                         \
-        free (result);                                                  \
-    }                                                                   \
+    STRCMP_EQUAL(__result_replace, result);                             \
+    free (result);                                                      \
     if (__result_errors >= 0)                                           \
     {                                                                   \
         LONGS_EQUAL(__result_errors, errors);                           \
@@ -142,7 +128,7 @@ TEST(CoreString, Asprintf)
 
     test = (char *)0x1;
     LONGS_EQUAL(-1, string_asprintf (&test, NULL));
-    POINTERS_EQUAL(NULL, test);
+    STRCMP_EQUAL(NULL, test);
 
     test = (char *)0x1;
     LONGS_EQUAL(0, string_asprintf (&test, ""));
@@ -170,9 +156,9 @@ TEST(CoreString, Strndup)
     const char *str_test = "test";
     char *str;
 
-    POINTERS_EQUAL(NULL, string_strndup (NULL, 0));
+    STRCMP_EQUAL(NULL, string_strndup (NULL, 0));
 
-    POINTERS_EQUAL(NULL, string_strndup (str_test, -1));
+    STRCMP_EQUAL(NULL, string_strndup (str_test, -1));
 
     str = string_strndup (str_test, 0);
     CHECK(str);
@@ -304,7 +290,7 @@ TEST(CoreString, Cut)
 {
     char suffix[128], string[128];
 
-    POINTERS_EQUAL(NULL, string_cut (NULL, 0, 0, 0, NULL));
+    STRCMP_EQUAL(NULL, string_cut (NULL, 0, 0, 0, NULL));
     STRCMP_EQUAL("", string_cut ("", 0, 0, 0, NULL));
 
     /* cut with length == 0 */
@@ -429,7 +415,7 @@ TEST(CoreString, Reverse)
 {
     char string[128];
 
-    POINTERS_EQUAL(NULL, string_reverse (NULL));
+    STRCMP_EQUAL(NULL, string_reverse (NULL));
     STRCMP_EQUAL("", string_reverse (""));
 
     /* reverse of UTF-8 string */
@@ -471,7 +457,7 @@ TEST(CoreString, ReverseScreen)
 {
     char string[128], result[128];
 
-    POINTERS_EQUAL(NULL, string_reverse_screen (NULL));
+    STRCMP_EQUAL(NULL, string_reverse_screen (NULL));
     STRCMP_EQUAL("", string_reverse_screen (""));
 
     /* reverse of UTF-8 string */
@@ -520,8 +506,8 @@ TEST(CoreString, ReverseScreen)
 
 TEST(CoreString, Repeat)
 {
-    POINTERS_EQUAL(NULL, string_repeat (NULL, 1));
-    POINTERS_EQUAL(NULL, string_repeat ("----", INT_MAX / 4));
+    STRCMP_EQUAL(NULL, string_repeat (NULL, 1));
+    STRCMP_EQUAL(NULL, string_repeat ("----", INT_MAX / 4));
 
     STRCMP_EQUAL("", string_repeat ("", 1));
 
@@ -822,13 +808,13 @@ TEST(CoreString, Search)
     const char *str = "test";
 
     /* case-insensitive search of string in a string */
-    POINTERS_EQUAL(NULL, string_strcasestr (NULL, NULL));
-    POINTERS_EQUAL(NULL, string_strcasestr (NULL, str));
-    POINTERS_EQUAL(NULL, string_strcasestr (str, NULL));
-    POINTERS_EQUAL(NULL, string_strcasestr (str, ""));
-    POINTERS_EQUAL(NULL, string_strcasestr (str, "zz"));
-    POINTERS_EQUAL(str + 1, string_strcasestr (str, "est"));
-    POINTERS_EQUAL(str + 1, string_strcasestr (str, "EST"));
+    STRCMP_EQUAL(NULL, string_strcasestr (NULL, NULL));
+    STRCMP_EQUAL(NULL, string_strcasestr (NULL, str));
+    STRCMP_EQUAL(NULL, string_strcasestr (str, NULL));
+    STRCMP_EQUAL(NULL, string_strcasestr (str, ""));
+    STRCMP_EQUAL(NULL, string_strcasestr (str, "zz"));
+    STRCMP_EQUAL(str + 1, string_strcasestr (str, "est"));
+    STRCMP_EQUAL(str + 1, string_strcasestr (str, "EST"));
 }
 
 /*
@@ -972,7 +958,7 @@ TEST(CoreString, ExpandHome)
     CHECK(home);
     length_home = strlen (home);
 
-    POINTERS_EQUAL(NULL, string_expand_home (NULL));
+    STRCMP_EQUAL(NULL, string_expand_home (NULL));
 
     result = string_expand_home ("~/abc.txt");
     CHECK(strncmp (result, home, length_home) == 0);
@@ -1004,7 +990,7 @@ TEST(CoreString, EvalPathHome)
     length_weechat_cache_dir = strlen (weechat_cache_dir);
     length_weechat_runtime_dir = strlen (weechat_runtime_dir);
 
-    POINTERS_EQUAL(NULL, string_eval_path_home (NULL, NULL, NULL, NULL));
+    STRCMP_EQUAL(NULL, string_eval_path_home (NULL, NULL, NULL, NULL));
 
     result = string_eval_path_home ("/tmp/test", NULL, NULL, NULL);
     STRCMP_EQUAL(result, "/tmp/test");
@@ -1473,9 +1459,9 @@ TEST(CoreString, TranslateChars)
 {
     char *str;
 
-    POINTERS_EQUAL(NULL, string_translate_chars (NULL, NULL, NULL));
-    POINTERS_EQUAL(NULL, string_translate_chars (NULL, "abc", NULL));
-    POINTERS_EQUAL(NULL, string_translate_chars (NULL, "abc", "ABC"));
+    STRCMP_EQUAL(NULL, string_translate_chars (NULL, NULL, NULL));
+    STRCMP_EQUAL(NULL, string_translate_chars (NULL, "abc", NULL));
+    STRCMP_EQUAL(NULL, string_translate_chars (NULL, "abc", "ABC"));
     STRCMP_EQUAL("", string_translate_chars ("", "abc", "ABCDEF"));
     STRCMP_EQUAL("test", string_translate_chars ("test", "abc", "ABCDEF"));
     WEE_TEST_STR("", string_translate_chars ("", "abc", "ABC"));
@@ -1619,7 +1605,7 @@ TEST(CoreString, Split)
     STRCMP_EQUAL("abc", argv[0]);
     STRCMP_EQUAL("de", argv[1]);
     STRCMP_EQUAL("fghi", argv[2]);
-    POINTERS_EQUAL(NULL, argv[3]);
+    STRCMP_EQUAL(NULL, argv[3]);
     string_free_split (argv);
 
     /* standard split */
@@ -1633,7 +1619,7 @@ TEST(CoreString, Split)
     STRCMP_EQUAL("abc", argv[0]);
     STRCMP_EQUAL("de", argv[1]);
     STRCMP_EQUAL("fghi", argv[2]);
-    POINTERS_EQUAL(NULL, argv[3]);
+    STRCMP_EQUAL(NULL, argv[3]);
     string_free_split (argv);
 
     /* max 2 items */
@@ -1646,7 +1632,7 @@ TEST(CoreString, Split)
     CHECK(argv);
     STRCMP_EQUAL("abc", argv[0]);
     STRCMP_EQUAL("de", argv[1]);
-    POINTERS_EQUAL(NULL, argv[2]);
+    STRCMP_EQUAL(NULL, argv[2]);
     string_free_split (argv);
 
     /* strip left/right, keep eol for each value */
@@ -1661,7 +1647,7 @@ TEST(CoreString, Split)
     STRCMP_EQUAL("abc de  fghi", argv[0]);
     STRCMP_EQUAL("de  fghi", argv[1]);
     STRCMP_EQUAL("fghi", argv[2]);
-    POINTERS_EQUAL(NULL, argv[3]);
+    STRCMP_EQUAL(NULL, argv[3]);
     string_free_split (argv);
 
     /* strip left/right, keep eol for each value, max 2 items */
@@ -1675,7 +1661,7 @@ TEST(CoreString, Split)
     CHECK(argv);
     STRCMP_EQUAL("abc de  fghi", argv[0]);
     STRCMP_EQUAL("de  fghi", argv[1]);
-    POINTERS_EQUAL(NULL, argv[2]);
+    STRCMP_EQUAL(NULL, argv[2]);
     string_free_split (argv);
 
     /* strip left, keep eol for each value */
@@ -1689,7 +1675,7 @@ TEST(CoreString, Split)
     STRCMP_EQUAL("abc de  fghi ", argv[0]);
     STRCMP_EQUAL("de  fghi ", argv[1]);
     STRCMP_EQUAL("fghi ", argv[2]);
-    POINTERS_EQUAL(NULL, argv[3]);
+    STRCMP_EQUAL(NULL, argv[3]);
     string_free_split (argv);
 
     /* strip left, keep eol for each value, max 2 items */
@@ -1702,7 +1688,7 @@ TEST(CoreString, Split)
     CHECK(argv);
     STRCMP_EQUAL("abc de  fghi ", argv[0]);
     STRCMP_EQUAL("de  fghi ", argv[1]);
-    POINTERS_EQUAL(NULL, argv[2]);
+    STRCMP_EQUAL(NULL, argv[2]);
     string_free_split (argv);
 
     /* standard split with comma separator */
@@ -1716,7 +1702,7 @@ TEST(CoreString, Split)
     STRCMP_EQUAL("abc", argv[0]);
     STRCMP_EQUAL("de", argv[1]);
     STRCMP_EQUAL("fghi", argv[2]);
-    POINTERS_EQUAL(NULL, argv[3]);
+    STRCMP_EQUAL(NULL, argv[3]);
     string_free_split (argv);
 
     /*
@@ -1733,7 +1719,7 @@ TEST(CoreString, Split)
     STRCMP_EQUAL(" abc ", argv[0]);
     STRCMP_EQUAL(" de ", argv[1]);
     STRCMP_EQUAL("fghi ", argv[2]);
-    POINTERS_EQUAL(NULL, argv[3]);
+    STRCMP_EQUAL(NULL, argv[3]);
     string_free_split (argv);
 
     /*
@@ -1750,7 +1736,7 @@ TEST(CoreString, Split)
     STRCMP_EQUAL("abc", argv[0]);
     STRCMP_EQUAL("de", argv[1]);
     STRCMP_EQUAL("fghi", argv[2]);
-    POINTERS_EQUAL(NULL, argv[3]);
+    STRCMP_EQUAL(NULL, argv[3]);
     string_free_split (argv);
 
     /*
@@ -1768,7 +1754,7 @@ TEST(CoreString, Split)
     STRCMP_EQUAL("abc", argv[0]);
     STRCMP_EQUAL("de", argv[1]);
     STRCMP_EQUAL("f(g)hi", argv[2]);
-    POINTERS_EQUAL(NULL, argv[3]);
+    STRCMP_EQUAL(NULL, argv[3]);
     string_free_split (argv);
 
     /* standard split with comma separator and empty item (ignore this item) */
@@ -1781,7 +1767,7 @@ TEST(CoreString, Split)
     CHECK(argv);
     STRCMP_EQUAL("abc", argv[0]);
     STRCMP_EQUAL("fghi", argv[1]);
-    POINTERS_EQUAL(NULL, argv[2]);
+    STRCMP_EQUAL(NULL, argv[2]);
     string_free_split (argv);
 
     /* standard split with comma separtor and empty item (keep this item) */
@@ -1793,7 +1779,7 @@ TEST(CoreString, Split)
     STRCMP_EQUAL("abc", argv[0]);
     STRCMP_EQUAL("", argv[1]);
     STRCMP_EQUAL("fghi", argv[2]);
-    POINTERS_EQUAL(NULL, argv[3]);
+    STRCMP_EQUAL(NULL, argv[3]);
     string_free_split (argv);
 
     /* standard split with comma separtor and empty items (keep them) */
@@ -1807,7 +1793,7 @@ TEST(CoreString, Split)
     STRCMP_EQUAL("", argv[2]);
     STRCMP_EQUAL("fghi", argv[3]);
     STRCMP_EQUAL("", argv[4]);
-    POINTERS_EQUAL(NULL, argv[5]);
+    STRCMP_EQUAL(NULL, argv[5]);
     string_free_split (argv);
 
     /*
@@ -1821,7 +1807,7 @@ TEST(CoreString, Split)
     CHECK(argv);
     STRCMP_EQUAL("", argv[0]);
     STRCMP_EQUAL("abc", argv[1]);
-    POINTERS_EQUAL(NULL, argv[2]);
+    STRCMP_EQUAL(NULL, argv[2]);
     string_free_split (argv);
 
     /*
@@ -1836,7 +1822,7 @@ TEST(CoreString, Split)
     STRCMP_EQUAL("", argv[0]);
     STRCMP_EQUAL("abc", argv[1]);
     STRCMP_EQUAL("", argv[2]);
-    POINTERS_EQUAL(NULL, argv[3]);
+    STRCMP_EQUAL(NULL, argv[3]);
     string_free_split (argv);
 
     /*
@@ -1852,7 +1838,7 @@ TEST(CoreString, Split)
     STRCMP_EQUAL("abc", argv[1]);
     STRCMP_EQUAL("", argv[2]);
     STRCMP_EQUAL("fghi", argv[3]);
-    POINTERS_EQUAL(NULL, argv[4]);
+    STRCMP_EQUAL(NULL, argv[4]);
     string_free_split (argv);
 }
 
@@ -1889,7 +1875,7 @@ TEST(CoreString, SplitShared)
     STRCMP_EQUAL("abc", argv[0]);
     STRCMP_EQUAL("de", argv[1]);
     STRCMP_EQUAL("abc", argv[2]);
-    POINTERS_EQUAL(NULL, argv[3]);
+    STRCMP_EQUAL(NULL, argv[3]);
 
     /* same content == same pointer for shared strings */
     POINTERS_EQUAL(argv[0], argv[2]);
@@ -1918,7 +1904,7 @@ TEST(CoreString, SplitShell)
     argv = string_split_shell ("", &argc);
     LONGS_EQUAL(0, argc);
     CHECK(argv);
-    POINTERS_EQUAL(NULL, argv[0]);
+    STRCMP_EQUAL(NULL, argv[0]);
     string_free_split (argv);
 
     /* test with a real string (command + arguments) */
@@ -1930,7 +1916,7 @@ TEST(CoreString, SplitShell)
     STRCMP_EQUAL("arg1", argv[1]);
     STRCMP_EQUAL("arg2 here", argv[2]);
     STRCMP_EQUAL("arg3 here", argv[3]);
-    POINTERS_EQUAL(NULL, argv[4]);
+    STRCMP_EQUAL(NULL, argv[4]);
     string_free_split (argv);
 
     /* test with quote characters inside words: they are stripped */
@@ -1938,7 +1924,7 @@ TEST(CoreString, SplitShell)
     LONGS_EQUAL(1, argc);
     CHECK(argv);
     STRCMP_EQUAL("testsingleword", argv[0]);
-    POINTERS_EQUAL(NULL, argv[1]);
+    STRCMP_EQUAL(NULL, argv[1]);
     string_free_split (argv);
 
     /* test with enclosing characters in quotes */
@@ -1947,7 +1933,7 @@ TEST(CoreString, SplitShell)
     CHECK(argv);
     STRCMP_EQUAL("test", argv[0]);
     STRCMP_EQUAL("'", argv[1]);
-    POINTERS_EQUAL(NULL, argv[2]);
+    STRCMP_EQUAL(NULL, argv[2]);
     string_free_split (argv);
 
     /* test with quoted empty strings */
@@ -1957,7 +1943,7 @@ TEST(CoreString, SplitShell)
     STRCMP_EQUAL("test", argv[0]);
     STRCMP_EQUAL("", argv[1]);
     STRCMP_EQUAL("", argv[2]);
-    POINTERS_EQUAL(NULL, argv[3]);
+    STRCMP_EQUAL(NULL, argv[3]);
     string_free_split (argv);
 
     /* test with many quotes */
@@ -1967,7 +1953,7 @@ TEST(CoreString, SplitShell)
     STRCMP_EQUAL("test", argv[0]);
     STRCMP_EQUAL("", argv[1]);
     STRCMP_EQUAL("", argv[2]);
-    POINTERS_EQUAL(NULL, argv[3]);
+    STRCMP_EQUAL(NULL, argv[3]);
     string_free_split (argv);
 
     /* test with escaped chars in and outside quotes */
@@ -1978,7 +1964,7 @@ TEST(CoreString, SplitShell)
     STRCMP_EQUAL("n", argv[1]);
     STRCMP_EQUAL("\\n", argv[2]);
     STRCMP_EQUAL("\\n", argv[3]);
-    POINTERS_EQUAL(NULL, argv[4]);
+    STRCMP_EQUAL(NULL, argv[4]);
     string_free_split (argv);
 
     /* test with escaped quotes */
@@ -1989,7 +1975,7 @@ TEST(CoreString, SplitShell)
     STRCMP_EQUAL("\"", argv[1]);
     STRCMP_EQUAL("4", argv[2]);
     STRCMP_EQUAL("arguments\"", argv[3]);
-    POINTERS_EQUAL(NULL, argv[4]);
+    STRCMP_EQUAL(NULL, argv[4]);
     string_free_split (argv);
 
     /* free split with NULL */
@@ -2014,7 +2000,7 @@ TEST(CoreString, SplitCommand)
     argv = string_split_command ("abc", ';');
     CHECK(argv);
     STRCMP_EQUAL("abc", argv[0]);
-    POINTERS_EQUAL(NULL, argv[1]);
+    STRCMP_EQUAL(NULL, argv[1]);
     string_free_split_command (argv);
 
     /* string with 3 commands */
@@ -2023,7 +2009,7 @@ TEST(CoreString, SplitCommand)
     STRCMP_EQUAL("abc", argv[0]);
     STRCMP_EQUAL("de", argv[1]);
     STRCMP_EQUAL("fghi", argv[2]);
-    POINTERS_EQUAL(NULL, argv[3]);
+    STRCMP_EQUAL(NULL, argv[3]);
     string_free_split_command (argv);
 
     /* string with 3 commands (containing spaces) */
@@ -2032,7 +2018,7 @@ TEST(CoreString, SplitCommand)
     STRCMP_EQUAL("abc ", argv[0]);
     STRCMP_EQUAL("de ", argv[1]);
     STRCMP_EQUAL("fghi  ", argv[2]);
-    POINTERS_EQUAL(NULL, argv[3]);
+    STRCMP_EQUAL(NULL, argv[3]);
     string_free_split_command (argv);
 
     /* separator other than ';' */
@@ -2041,7 +2027,7 @@ TEST(CoreString, SplitCommand)
     STRCMP_EQUAL("abc", argv[0]);
     STRCMP_EQUAL("de", argv[1]);
     STRCMP_EQUAL("fghi", argv[2]);
-    POINTERS_EQUAL(NULL, argv[3]);
+    STRCMP_EQUAL(NULL, argv[3]);
     string_free_split_command (argv);
 
     /* free split with NULL */
@@ -2075,7 +2061,7 @@ TEST(CoreString, SplitTags)
     CHECK(tags);
     LONGS_EQUAL(1, num_tags);
     STRCMP_EQUAL("irc_join", tags[0][0]);
-    POINTERS_EQUAL(NULL, tags[0][1]);
+    STRCMP_EQUAL(NULL, tags[0][1]);
     string_free_split_tags (tags);
 
     /* string with OR on 2 tags */
@@ -2084,9 +2070,9 @@ TEST(CoreString, SplitTags)
     CHECK(tags);
     LONGS_EQUAL(2, num_tags);
     STRCMP_EQUAL("irc_join", tags[0][0]);
-    POINTERS_EQUAL(NULL, tags[0][1]);
+    STRCMP_EQUAL(NULL, tags[0][1]);
     STRCMP_EQUAL("irc_quit", tags[1][0]);
-    POINTERS_EQUAL(NULL, tags[1][1]);
+    STRCMP_EQUAL(NULL, tags[1][1]);
     string_free_split_tags (tags);
 
     /*
@@ -2099,10 +2085,10 @@ TEST(CoreString, SplitTags)
     CHECK(tags);
     LONGS_EQUAL(2, num_tags);
     STRCMP_EQUAL("irc_join", tags[0][0]);
-    POINTERS_EQUAL(NULL, tags[0][1]);
+    STRCMP_EQUAL(NULL, tags[0][1]);
     STRCMP_EQUAL("irc_quit", tags[1][0]);
     STRCMP_EQUAL("nick_test", tags[1][1]);
-    POINTERS_EQUAL(NULL, tags[1][2]);
+    STRCMP_EQUAL(NULL, tags[1][2]);
     string_free_split_tags (tags);
 
     /* free split with NULL */
@@ -2120,7 +2106,7 @@ TEST(CoreString, RebuildSplitString)
     int argc, flags;
 
     str = string_rebuild_split_string (NULL, NULL, 0, -1);
-    POINTERS_EQUAL(NULL, str);
+    STRCMP_EQUAL(NULL, str);
 
     flags = WEECHAT_STRING_SPLIT_STRIP_LEFT
         | WEECHAT_STRING_SPLIT_STRIP_RIGHT
@@ -2130,9 +2116,9 @@ TEST(CoreString, RebuildSplitString)
 
     /* invalid index_end, which is < index_start */
     str = string_rebuild_split_string ((const char **)argv, NULL, 1, 0);
-    POINTERS_EQUAL(NULL, str);
+    STRCMP_EQUAL(NULL, str);
     str = string_rebuild_split_string ((const char **)argv, NULL, 2, 1);
-    POINTERS_EQUAL(NULL, str);
+    STRCMP_EQUAL(NULL, str);
 
     str = string_rebuild_split_string ((const char **)argv, NULL, 0, -1);
     STRCMP_EQUAL("abcdefghi", str);
@@ -2699,10 +2685,10 @@ TEST(CoreString, Hex_dump)
     const char *noel_iso = "no\xebl";
     char *str;
 
-    POINTERS_EQUAL(NULL, string_hex_dump (NULL, 0, 0, NULL, NULL));
-    POINTERS_EQUAL(NULL, string_hex_dump ("abc", 0, 0, NULL, NULL));
-    POINTERS_EQUAL(NULL, string_hex_dump ("abc", 3, 0, NULL, NULL));
-    POINTERS_EQUAL(NULL, string_hex_dump ("abc", 0, 5, NULL, NULL));
+    STRCMP_EQUAL(NULL, string_hex_dump (NULL, 0, 0, NULL, NULL));
+    STRCMP_EQUAL(NULL, string_hex_dump ("abc", 0, 0, NULL, NULL));
+    STRCMP_EQUAL(NULL, string_hex_dump ("abc", 3, 0, NULL, NULL));
+    STRCMP_EQUAL(NULL, string_hex_dump ("abc", 0, 5, NULL, NULL));
 
     WEE_HEX_DUMP("61 62 63   a b c ", "abc", 3, 3, NULL, NULL);
     WEE_HEX_DUMP("61 62 63   a b c ", "abc", 3, 3, "", "");
@@ -2777,9 +2763,9 @@ TEST(CoreString, InputForBuffer)
 {
     char *str;
 
-    POINTERS_EQUAL(NULL, string_input_for_buffer (NULL));
-    POINTERS_EQUAL(NULL, string_input_for_buffer ("/"));
-    POINTERS_EQUAL(NULL, string_input_for_buffer ("/abc"));
+    STRCMP_EQUAL(NULL, string_input_for_buffer (NULL));
+    STRCMP_EQUAL(NULL, string_input_for_buffer ("/"));
+    STRCMP_EQUAL(NULL, string_input_for_buffer ("/abc"));
 
     /* not commands */
     str = strdup ("");
@@ -2811,18 +2797,18 @@ TEST(CoreString, InputForBuffer)
     free (str);
 
     /* commands */
-    POINTERS_EQUAL(NULL, string_input_for_buffer (NULL));
+    STRCMP_EQUAL(NULL, string_input_for_buffer (NULL));
     str = strdup ("/");
-    POINTERS_EQUAL(NULL, string_input_for_buffer (str));
+    STRCMP_EQUAL(NULL, string_input_for_buffer (str));
     free (str);
     str = strdup ("/abc");
-    POINTERS_EQUAL(NULL, string_input_for_buffer (str));
+    STRCMP_EQUAL(NULL, string_input_for_buffer (str));
     free (str);
     str = strdup ("/abc /def");
-    POINTERS_EQUAL(NULL, string_input_for_buffer (str));
+    STRCMP_EQUAL(NULL, string_input_for_buffer (str));
     free (str);
     str = strdup ("/abc\n/def");
-    POINTERS_EQUAL(NULL, string_input_for_buffer (str));
+    STRCMP_EQUAL(NULL, string_input_for_buffer (str));
     free (str);
 
     /* test with custom command chars */
@@ -2832,7 +2818,7 @@ TEST(CoreString, InputForBuffer)
     STRCMP_EQUAL(str, string_input_for_buffer (str));
     free (str);
     str = strdup ("ö_abc");
-    POINTERS_EQUAL(NULL, string_input_for_buffer (str));
+    STRCMP_EQUAL(NULL, string_input_for_buffer (str));
     free (str);
     str = strdup ("ö abc");
     STRCMP_EQUAL(str, string_input_for_buffer (str));
@@ -2841,7 +2827,7 @@ TEST(CoreString, InputForBuffer)
     STRCMP_EQUAL(str + 2, string_input_for_buffer (str));
     free (str);
     str = strdup ("ï_abc");
-    POINTERS_EQUAL(NULL, string_input_for_buffer (str));
+    STRCMP_EQUAL(NULL, string_input_for_buffer (str));
     free (str);
     str = strdup ("ï abc");
     STRCMP_EQUAL(str, string_input_for_buffer (str));
@@ -2952,7 +2938,7 @@ TEST(CoreString, GetPriorityAndName)
     ptr_name = NULL;
     string_get_priority_and_name (NULL, &priority, &ptr_name, 500);
     LONGS_EQUAL(500, priority);
-    POINTERS_EQUAL(NULL, ptr_name);
+    STRCMP_EQUAL(NULL, ptr_name);
 
     /* "" => (default_priority, "") */
     priority = -1;
@@ -3004,7 +2990,7 @@ TEST(CoreString, Shared)
     count = (string_hashtable_shared) ?
         string_hashtable_shared->items_count : 0;
 
-    POINTERS_EQUAL(NULL, string_shared_get (NULL));
+    STRCMP_EQUAL(NULL, string_shared_get (NULL));
 
     str1 = string_shared_get ("this is a test");
     CHECK(str1);

@@ -43,14 +43,14 @@ TEST(XferNetwork, ConvertIntegerToIpv4)
 {
     char *str;
 
-    POINTERS_EQUAL(NULL, xfer_network_convert_integer_to_ipv4 (NULL));
-    POINTERS_EQUAL(NULL, xfer_network_convert_integer_to_ipv4 (""));
-    POINTERS_EQUAL(NULL, xfer_network_convert_integer_to_ipv4 ("abc"));
-    POINTERS_EQUAL(NULL, xfer_network_convert_integer_to_ipv4 ("0"));
-    POINTERS_EQUAL(NULL, xfer_network_convert_integer_to_ipv4 ("-1"));
+    STRCMP_EQUAL(NULL, xfer_network_convert_integer_to_ipv4 (NULL));
+    STRCMP_EQUAL(NULL, xfer_network_convert_integer_to_ipv4 (""));
+    STRCMP_EQUAL(NULL, xfer_network_convert_integer_to_ipv4 ("abc"));
+    STRCMP_EQUAL(NULL, xfer_network_convert_integer_to_ipv4 ("0"));
+    STRCMP_EQUAL(NULL, xfer_network_convert_integer_to_ipv4 ("-1"));
 
     /* too big: UINT32_MAX + 1 = 4294967296 */
-    POINTERS_EQUAL(NULL, xfer_network_convert_integer_to_ipv4 ("4294967296"));
+    STRCMP_EQUAL(NULL, xfer_network_convert_integer_to_ipv4 ("4294967296"));
 
     WEE_TEST_STR("0.0.0.1", xfer_network_convert_integer_to_ipv4 ("1"));
     WEE_TEST_STR("0.0.1.0", xfer_network_convert_integer_to_ipv4 ("256"));

@@ -131,7 +131,7 @@ TEST(GuiLine, TagsAlloc)
     gui_line_tags_alloc (&line_data, "tag1");
     CHECK(line_data.tags_array);
     STRCMP_EQUAL("tag1", line_data.tags_array[0]);
-    POINTERS_EQUAL(NULL, line_data.tags_array[1]);
+    STRCMP_EQUAL(NULL, line_data.tags_array[1]);
     LONGS_EQUAL(1, line_data.tags_count);
     gui_line_tags_free (&line_data);
 
@@ -141,7 +141,7 @@ TEST(GuiLine, TagsAlloc)
     CHECK(line_data.tags_array);
     STRCMP_EQUAL("tag1", line_data.tags_array[0]);
     STRCMP_EQUAL("tag2", line_data.tags_array[1]);
-    POINTERS_EQUAL(NULL, line_data.tags_array[2]);
+    STRCMP_EQUAL(NULL, line_data.tags_array[2]);
     LONGS_EQUAL(2, line_data.tags_count);
     gui_line_tags_free (&line_data);
 
@@ -152,7 +152,7 @@ TEST(GuiLine, TagsAlloc)
     STRCMP_EQUAL("tag1", line_data.tags_array[0]);
     STRCMP_EQUAL("tag2", line_data.tags_array[1]);
     STRCMP_EQUAL("tag3", line_data.tags_array[2]);
-    POINTERS_EQUAL(NULL, line_data.tags_array[3]);
+    STRCMP_EQUAL(NULL, line_data.tags_array[3]);
     LONGS_EQUAL(3, line_data.tags_count);
     gui_line_tags_free (&line_data);
 
@@ -221,7 +221,7 @@ TEST(GuiLine, BuildStringMessageNickOffline)
 {
     char *str, str_msg_expected[256], str_msg[256];
 
-    POINTERS_EQUAL(NULL, gui_line_build_string_message_nick_offline (NULL));
+    STRCMP_EQUAL(NULL, gui_line_build_string_message_nick_offline (NULL));
     WEE_TEST_STR("", gui_line_build_string_message_nick_offline (""));
 
     snprintf (str_msg_expected, sizeof (str_msg_expected),
@@ -246,16 +246,16 @@ TEST(GuiLine, BuildStringMessageTags)
     char *str, str_message[256], str_result[256];
 
     line = gui_line_new (gui_buffers, -1, 0, 0, 0, 0, "tag1,tag2", NULL, "test");
-    POINTERS_EQUAL(NULL,
-                   gui_line_build_string_message_tags (line->data->message,
-                                                       -1,
-                                                       line->data->tags_array,
-                                                       1));
-    POINTERS_EQUAL(NULL,
-                   gui_line_build_string_message_tags (line->data->message,
-                                                       1,
-                                                       NULL,
-                                                       1));
+    STRCMP_EQUAL(NULL,
+                 gui_line_build_string_message_tags (line->data->message,
+                                                     -1,
+                                                     line->data->tags_array,
+                                                     1));
+    STRCMP_EQUAL(NULL,
+                 gui_line_build_string_message_tags (line->data->message,
+                                                     1,
+                                                     NULL,
+                                                     1));
     gui_line_free_data (line);
     free (line);
 
@@ -499,15 +499,15 @@ TEST(GuiLine, SearchTagStartingWith)
     line.data = (struct t_gui_line_data *)calloc (1, sizeof (struct t_gui_line_data));
     gui_line_tags_alloc (line.data, NULL);
 
-    POINTERS_EQUAL(NULL, gui_line_search_tag_starting_with (NULL, NULL));
-    POINTERS_EQUAL(NULL, gui_line_search_tag_starting_with (NULL, "abc"));
-    POINTERS_EQUAL(NULL, gui_line_search_tag_starting_with (&line, NULL));
+    STRCMP_EQUAL(NULL, gui_line_search_tag_starting_with (NULL, NULL));
+    STRCMP_EQUAL(NULL, gui_line_search_tag_starting_with (NULL, "abc"));
+    STRCMP_EQUAL(NULL, gui_line_search_tag_starting_with (&line, NULL));
 
-    POINTERS_EQUAL(NULL, gui_line_search_tag_starting_with (&line, "abc"));
+    STRCMP_EQUAL(NULL, gui_line_search_tag_starting_with (&line, "abc"));
 
     gui_line_tags_alloc (line.data, "tag1,word2,last3");
 
-    POINTERS_EQUAL(NULL, gui_line_search_tag_starting_with (&line, "abc"));
+    STRCMP_EQUAL(NULL, gui_line_search_tag_starting_with (&line, "abc"));
     STRCMP_EQUAL("tag1", gui_line_search_tag_starting_with (&line, "t"));
     STRCMP_EQUAL("tag1", gui_line_search_tag_starting_with (&line, "tag"));
     STRCMP_EQUAL("word2", gui_line_search_tag_starting_with (&line, "w"));
@@ -533,12 +533,12 @@ TEST(GuiLine, GetNickTag)
     line.data = (struct t_gui_line_data *)calloc (1, sizeof (struct t_gui_line_data));
     gui_line_tags_alloc (line.data, NULL);
 
-    POINTERS_EQUAL(NULL, gui_line_get_nick_tag (NULL));
+    STRCMP_EQUAL(NULL, gui_line_get_nick_tag (NULL));
 
-    POINTERS_EQUAL(NULL, gui_line_get_nick_tag (&line));
+    STRCMP_EQUAL(NULL, gui_line_get_nick_tag (&line));
 
     gui_line_tags_alloc (line.data, "tag1,tag2,tag3");
-    POINTERS_EQUAL(NULL, gui_line_get_nick_tag (&line));
+    STRCMP_EQUAL(NULL, gui_line_get_nick_tag (&line));
     gui_line_tags_free (line.data);
 
     gui_line_tags_alloc (line.data, "tag1,tag2,nick_jdoe,tag3");
@@ -1021,14 +1021,14 @@ TEST(GuiLine, New)
     LONGS_EQUAL(date.tv_usec, line1->data->date_usec);
     LONGS_EQUAL(date_printed.tv_sec, line1->data->date_printed);
     LONGS_EQUAL(date_printed.tv_usec, line1->data->date_usec_printed);
-    POINTERS_EQUAL(NULL, line1->data->str_time);
+    STRCMP_EQUAL(NULL, line1->data->str_time);
     LONGS_EQUAL(0, line1->data->tags_count);
     POINTERS_EQUAL(NULL, line1->data->tags_array);
     LONGS_EQUAL(1, line1->data->displayed);
     LONGS_EQUAL(GUI_HOTLIST_LOW, line1->data->notify_level);
     LONGS_EQUAL(0, line1->data->highlight);
     LONGS_EQUAL(1, line1->data->refresh_needed);
-    POINTERS_EQUAL(NULL, line1->data->prefix);
+    STRCMP_EQUAL(NULL, line1->data->prefix);
     LONGS_EQUAL(0, line1->data->prefix_length);
     STRCMP_EQUAL("", line1->data->message);
     gui_line_add (line1);
@@ -1052,7 +1052,7 @@ TEST(GuiLine, New)
     LONGS_EQUAL(date.tv_usec, line2->data->date_usec);
     LONGS_EQUAL(date_printed.tv_sec, line2->data->date_printed);
     LONGS_EQUAL(date_printed.tv_usec, line2->data->date_usec_printed);
-    POINTERS_EQUAL(NULL, line2->data->str_time);
+    STRCMP_EQUAL(NULL, line2->data->str_time);
     LONGS_EQUAL(3, line2->data->tags_count);
     CHECK(line2->data->tags_array);
     STRCMP_EQUAL("tag1", line2->data->tags_array[0]);
@@ -1062,7 +1062,7 @@ TEST(GuiLine, New)
     LONGS_EQUAL(GUI_HOTLIST_LOW, line2->data->notify_level);
     LONGS_EQUAL(0, line2->data->highlight);
     LONGS_EQUAL(1, line2->data->refresh_needed);
-    POINTERS_EQUAL(NULL, line2->data->prefix);
+    STRCMP_EQUAL(NULL, line2->data->prefix);
     LONGS_EQUAL(0, line2->data->prefix_length);
     STRCMP_EQUAL("message", line2->data->message);
     gui_line_add (line2);

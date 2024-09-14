@@ -185,78 +185,15 @@ extern "C"
                        &pos_command, &pos_arguments,                    \
                        &pos_channel, &pos_text);                        \
                                                                         \
-    if (__tags == NULL)                                                 \
-    {                                                                   \
-        POINTERS_EQUAL(NULL, tags);                                     \
-    }                                                                   \
-    else                                                                \
-    {                                                                   \
-        STRCMP_EQUAL(__tags, tags);                                     \
-    }                                                                   \
-    if (__message_without_tags == NULL)                                 \
-    {                                                                   \
-        POINTERS_EQUAL(NULL, message_without_tags);                     \
-    }                                                                   \
-    else                                                                \
-    {                                                                   \
-        STRCMP_EQUAL(__message_without_tags, message_without_tags);     \
-    }                                                                   \
-    if (__nick == NULL)                                                 \
-    {                                                                   \
-        POINTERS_EQUAL(NULL, nick);                                     \
-    }                                                                   \
-    else                                                                \
-    {                                                                   \
-        STRCMP_EQUAL(__nick, nick);                                     \
-    }                                                                   \
-    if (__user == NULL)                                                 \
-    {                                                                   \
-        POINTERS_EQUAL(NULL, user);                                     \
-    }                                                                   \
-    else                                                                \
-    {                                                                   \
-        STRCMP_EQUAL(__user, user);                                     \
-    }                                                                   \
-    if (__host == NULL)                                                 \
-    {                                                                   \
-        POINTERS_EQUAL(NULL, host);                                     \
-    }                                                                   \
-    else                                                                \
-    {                                                                   \
-        STRCMP_EQUAL(__host, host);                                     \
-    }                                                                   \
-    if (__command == NULL)                                              \
-    {                                                                   \
-        POINTERS_EQUAL(NULL, command);                                  \
-    }                                                                   \
-    else                                                                \
-    {                                                                   \
-        STRCMP_EQUAL(__command, command);                               \
-    }                                                                   \
-    if (__channel == NULL)                                              \
-    {                                                                   \
-        POINTERS_EQUAL(NULL, channel);                                  \
-    }                                                                   \
-    else                                                                \
-    {                                                                   \
-        STRCMP_EQUAL(__channel, channel);                               \
-    }                                                                   \
-    if (__arguments == NULL)                                            \
-    {                                                                   \
-        POINTERS_EQUAL(NULL, arguments);                                \
-    }                                                                   \
-    else                                                                \
-    {                                                                   \
-        STRCMP_EQUAL(__arguments, arguments);                           \
-    }                                                                   \
-    if (__text == NULL)                                                 \
-    {                                                                   \
-        POINTERS_EQUAL(NULL, text);                                     \
-    }                                                                   \
-    else                                                                \
-    {                                                                   \
-        STRCMP_EQUAL(__text, text);                                     \
-    }                                                                   \
+    STRCMP_EQUAL(__tags, tags);                                         \
+    STRCMP_EQUAL(__message_without_tags, message_without_tags);         \
+    STRCMP_EQUAL(__nick, nick);                                         \
+    STRCMP_EQUAL(__user, user);                                         \
+    STRCMP_EQUAL(__host, host);                                         \
+    STRCMP_EQUAL(__command, command);                                   \
+    STRCMP_EQUAL(__channel, channel);                                   \
+    STRCMP_EQUAL(__arguments, arguments);                               \
+    STRCMP_EQUAL(__text, text);                                         \
     if (__params == NULL)                                               \
     {                                                                   \
         POINTERS_EQUAL(NULL, params);                                   \
@@ -278,7 +215,7 @@ extern "C"
                 STRCMP_EQUAL(ptr_params[i], params[i]);                 \
             }                                                           \
         }                                                               \
-        POINTERS_EQUAL(NULL, params[i]);                                \
+        STRCMP_EQUAL(NULL, params[i]);                                  \
     }                                                                   \
     LONGS_EQUAL(__pos_command, pos_command);                            \
     LONGS_EQUAL(__pos_arguments, pos_arguments);                        \
@@ -332,7 +269,7 @@ TEST(IrcMessage, ParseParams)
     LONGS_EQUAL(1, num_params);
     CHECK(params);
     STRCMP_EQUAL("", params[0]);
-    POINTERS_EQUAL(NULL, params[1]);
+    STRCMP_EQUAL(NULL, params[1]);
     string_free_split (params);
 
     /* empty trailing parameter */
@@ -342,7 +279,7 @@ TEST(IrcMessage, ParseParams)
     LONGS_EQUAL(1, num_params);
     CHECK(params);
     STRCMP_EQUAL("", params[0]);
-    POINTERS_EQUAL(NULL, params[1]);
+    STRCMP_EQUAL(NULL, params[1]);
     string_free_split (params);
 
     /* single parameter */
@@ -352,7 +289,7 @@ TEST(IrcMessage, ParseParams)
     LONGS_EQUAL(1, num_params);
     CHECK(params);
     STRCMP_EQUAL("param1", params[0]);
-    POINTERS_EQUAL(NULL, params[1]);
+    STRCMP_EQUAL(NULL, params[1]);
     string_free_split (params);
 
     /* single parameter with trailing space */
@@ -362,7 +299,7 @@ TEST(IrcMessage, ParseParams)
     LONGS_EQUAL(1, num_params);
     CHECK(params);
     STRCMP_EQUAL("param1", params[0]);
-    POINTERS_EQUAL(NULL, params[1]);
+    STRCMP_EQUAL(NULL, params[1]);
     string_free_split (params);
 
     /* two parameters */
@@ -373,7 +310,7 @@ TEST(IrcMessage, ParseParams)
     CHECK(params);
     STRCMP_EQUAL("param1", params[0]);
     STRCMP_EQUAL("param2", params[1]);
-    POINTERS_EQUAL(NULL, params[2]);
+    STRCMP_EQUAL(NULL, params[2]);
     string_free_split (params);
 
     /* trailing spaces */
@@ -384,7 +321,7 @@ TEST(IrcMessage, ParseParams)
     CHECK(params);
     STRCMP_EQUAL("param1", params[0]);
     STRCMP_EQUAL("param2", params[1]);
-    POINTERS_EQUAL(NULL, params[2]);
+    STRCMP_EQUAL(NULL, params[2]);
     string_free_split (params);
 
     /* leading and trailing spaces */
@@ -395,7 +332,7 @@ TEST(IrcMessage, ParseParams)
     CHECK(params);
     STRCMP_EQUAL("param1", params[0]);
     STRCMP_EQUAL("param2", params[1]);
-    POINTERS_EQUAL(NULL, params[2]);
+    STRCMP_EQUAL(NULL, params[2]);
     string_free_split (params);
 
     /* empty trailing parameter */
@@ -406,7 +343,7 @@ TEST(IrcMessage, ParseParams)
     CHECK(params);
     STRCMP_EQUAL("param1", params[0]);
     STRCMP_EQUAL("", params[1]);
-    POINTERS_EQUAL(NULL, params[2]);
+    STRCMP_EQUAL(NULL, params[2]);
     string_free_split (params);
 
     /* trailing parameter */
@@ -417,7 +354,7 @@ TEST(IrcMessage, ParseParams)
     CHECK(params);
     STRCMP_EQUAL("param1", params[0]);
     STRCMP_EQUAL("trailing  params ", params[1]);
-    POINTERS_EQUAL(NULL, params[2]);
+    STRCMP_EQUAL(NULL, params[2]);
     string_free_split (params);
 
     /* trailing parameter with colon inside */
@@ -431,7 +368,7 @@ TEST(IrcMessage, ParseParams)
     STRCMP_EQUAL("param2", params[1]);
     STRCMP_EQUAL("param3", params[2]);
     STRCMP_EQUAL("trailing  params :here ", params[3]);
-    POINTERS_EQUAL(NULL, params[4]);
+    STRCMP_EQUAL(NULL, params[4]);
     string_free_split (params);
 
     /* with params set to NULL */
@@ -453,7 +390,7 @@ TEST(IrcMessage, ParseParams)
     STRCMP_EQUAL("param2", params[1]);
     STRCMP_EQUAL("param3", params[2]);
     STRCMP_EQUAL("trailing  params :here ", params[3]);
-    POINTERS_EQUAL(NULL, params[4]);
+    STRCMP_EQUAL(NULL, params[4]);
     string_free_split (params);
 }
 
@@ -773,10 +710,10 @@ TEST(IrcMessage, ParseToHashtable)
     CHECK(hashtable);
     STRCMP_EQUAL("",
                  (const char *)hashtable_get (hashtable, "tags"));
-    POINTERS_EQUAL(NULL,
-                   (const char *)hashtable_get (hashtable, "tag_time"));
-    POINTERS_EQUAL(NULL,
-                   (const char *)hashtable_get (hashtable, "tag_tag2"));
+    STRCMP_EQUAL(NULL,
+                 (const char *)hashtable_get (hashtable, "tag_time"));
+    STRCMP_EQUAL(NULL,
+                 (const char *)hashtable_get (hashtable, "tag_tag2"));
     STRCMP_EQUAL("PING :arguments here",
                  (const char *)hashtable_get (hashtable, "message_without_tags"));
     STRCMP_EQUAL("",
@@ -867,7 +804,7 @@ TEST(IrcMessage, ParseCapValue)
     CHECK(hashtable);
     LONGS_EQUAL(3, hashtable->items_count);
     STRCMP_EQUAL("value1", (const char *)hashtable_get (hashtable, "key1"));
-    POINTERS_EQUAL(NULL, (const char *)hashtable_get (hashtable, "key2"));
+    STRCMP_EQUAL(NULL, (const char *)hashtable_get (hashtable, "key2"));
     STRCMP_EQUAL("123", (const char *)hashtable_get (hashtable, "key3"));
     hashtable_free (hashtable);
 }
@@ -977,9 +914,9 @@ TEST(IrcMessage, ConvertCharset)
     hook = hook_modifier (NULL, "convert_irc_charset",
                           &convert_irc_charset_cb, NULL, NULL);
 
-    POINTERS_EQUAL(NULL,
-                   irc_message_convert_charset (NULL, 0,
-                                                "convert_irc_charset", NULL));
+    STRCMP_EQUAL(NULL,
+                 irc_message_convert_charset (NULL, 0,
+                                              "convert_irc_charset", NULL));
 
     str = irc_message_convert_charset ("PRIVMSG #channel :this is a test", 18,
                                        "convert_irc_charset", NULL);
@@ -996,7 +933,7 @@ TEST(IrcMessage, ConvertCharset)
 
 TEST(IrcMessage, GetNickFromHost)
 {
-    POINTERS_EQUAL(NULL, irc_message_get_nick_from_host (NULL));
+    STRCMP_EQUAL(NULL, irc_message_get_nick_from_host (NULL));
     STRCMP_EQUAL("", irc_message_get_nick_from_host (""));
     STRCMP_EQUAL("nick", irc_message_get_nick_from_host ("nick"));
     STRCMP_EQUAL("nick", irc_message_get_nick_from_host ("nick "));
@@ -1017,7 +954,7 @@ TEST(IrcMessage, GetNickFromHost)
 
 TEST(IrcMessage, GetAddressFromHost)
 {
-    POINTERS_EQUAL(NULL, irc_message_get_address_from_host (NULL));
+    STRCMP_EQUAL(NULL, irc_message_get_address_from_host (NULL));
     STRCMP_EQUAL("", irc_message_get_address_from_host (""));
     STRCMP_EQUAL("", irc_message_get_address_from_host ("host"));
     STRCMP_EQUAL("", irc_message_get_address_from_host ("host "));

@@ -58,7 +58,7 @@ TEST(IrcTag, EscapeValue)
     char *escaped;
 
     /* NULL/empty string */
-    POINTERS_EQUAL(NULL, irc_tag_escape_value (NULL));
+    STRCMP_EQUAL(NULL, irc_tag_escape_value (NULL));
     WEE_CHECK_ESCAPE_VALUE("", "");
 
     WEE_CHECK_ESCAPE_VALUE("test", "test");
@@ -82,7 +82,7 @@ TEST(IrcTag, UnescapeValue)
     char *unescaped;
 
     /* NULL/empty string */
-    POINTERS_EQUAL(NULL, irc_tag_unescape_value (NULL));
+    STRCMP_EQUAL(NULL, irc_tag_unescape_value (NULL));
     WEE_CHECK_UNESCAPE_VALUE("", "");
 
     WEE_CHECK_UNESCAPE_VALUE("test", "test");
@@ -138,7 +138,7 @@ TEST(IrcTag, Parse)
     hashtable_remove_all (hashtable);
     LONGS_EQUAL(1, irc_tag_parse ("abc", hashtable, NULL));
     LONGS_EQUAL(1, hashtable->items_count);
-    POINTERS_EQUAL(NULL, (const char *)hashtable_get (hashtable, "abc"));
+    STRCMP_EQUAL(NULL, (const char *)hashtable_get (hashtable, "abc"));
 
     hashtable_remove_all (hashtable);
     LONGS_EQUAL(1, irc_tag_parse ("abc=def", hashtable, NULL));
@@ -150,7 +150,7 @@ TEST(IrcTag, Parse)
                                   hashtable, NULL));
     LONGS_EQUAL(3, hashtable->items_count);
     STRCMP_EQUAL("bbb", (const char *)hashtable_get (hashtable, "aaa"));
-    POINTERS_EQUAL(NULL, (const char *)hashtable_get (hashtable, "ccc"));
+    STRCMP_EQUAL(NULL, (const char *)hashtable_get (hashtable, "ccc"));
     STRCMP_EQUAL("value space",
                  (const char *)hashtable_get (hashtable, "example.com/ddd"));
 
@@ -159,7 +159,7 @@ TEST(IrcTag, Parse)
                                   hashtable, "tag_"));
     LONGS_EQUAL(3, hashtable->items_count);
     STRCMP_EQUAL("bbb", (const char *)hashtable_get (hashtable, "tag_aaa"));
-    POINTERS_EQUAL(NULL, (const char *)hashtable_get (hashtable, "tag_ccc"));
+    STRCMP_EQUAL(NULL, (const char *)hashtable_get (hashtable, "tag_ccc"));
     STRCMP_EQUAL("value space",
                  (const char *)hashtable_get (hashtable, "tag_example.com/ddd"));
 
@@ -177,7 +177,7 @@ TEST(IrcTag, HashtableToString)
     char *str;
     struct t_hashtable *tags;
 
-    POINTERS_EQUAL(NULL, irc_tag_hashtable_to_string (NULL));
+    STRCMP_EQUAL(NULL, irc_tag_hashtable_to_string (NULL));
 
     tags = hashtable_new (32,
                           WEECHAT_HASHTABLE_STRING,
@@ -210,7 +210,7 @@ TEST(IrcTag, AddTagsToMessage)
     char *str;
     struct t_hashtable *tags;
 
-    POINTERS_EQUAL(NULL, irc_tag_add_tags_to_message (NULL, NULL));
+    STRCMP_EQUAL(NULL, irc_tag_add_tags_to_message (NULL, NULL));
 
     WEE_TEST_STR("", irc_tag_add_tags_to_message ("", NULL));
     WEE_TEST_STR(":nick!user@host PRIVMSG #test :hello",

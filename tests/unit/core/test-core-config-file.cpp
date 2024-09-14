@@ -346,7 +346,7 @@ TEST(CoreConfigFile, OptionFullName)
 {
     char *str;
 
-    POINTERS_EQUAL(NULL, config_file_option_full_name (NULL));
+    STRCMP_EQUAL(NULL, config_file_option_full_name (NULL));
 
     WEE_TEST_STR("weechat.look.buffer_time_format",
                  config_file_option_full_name (config_look_buffer_time_format));
@@ -1283,8 +1283,8 @@ TEST(CoreConfigFileWithNewOptions, OptionIntegerInherited)
 
 TEST(CoreConfigFileWithNewOptions, OptionString)
 {
-    POINTERS_EQUAL(0, config_file_option_string (NULL));
-    POINTERS_EQUAL(0, config_file_option_string_default (NULL));
+    STRCMP_EQUAL(NULL, config_file_option_string (NULL));
+    STRCMP_EQUAL(NULL, config_file_option_string_default (NULL));
 
     STRCMP_EQUAL("v2", config_file_option_string (ptr_option_int_str));
     STRCMP_EQUAL("v2", config_file_option_string_default (ptr_option_int_str));
@@ -1308,8 +1308,8 @@ TEST(CoreConfigFileWithNewOptions, OptionString)
 
     STRCMP_EQUAL("off", config_file_option_string (ptr_option_bool));
     STRCMP_EQUAL("off", config_file_option_string_default (ptr_option_bool));
-    POINTERS_EQUAL(NULL, config_file_option_string (ptr_option_int));
-    POINTERS_EQUAL(NULL, config_file_option_string_default (ptr_option_int));
+    STRCMP_EQUAL(NULL, config_file_option_string (ptr_option_int));
+    STRCMP_EQUAL(NULL, config_file_option_string_default (ptr_option_int));
     STRCMP_EQUAL("v2", config_file_option_string (ptr_option_int_str));
     STRCMP_EQUAL("v2", config_file_option_string_default (ptr_option_int_str));
     STRCMP_EQUAL("blue", config_file_option_string (ptr_option_col));
@@ -1325,7 +1325,7 @@ TEST(CoreConfigFileWithNewOptions, OptionString)
 
 TEST(CoreConfigFileWithNewOptions, OptionStringInherited)
 {
-    POINTERS_EQUAL(NULL, config_file_option_string_inherited (NULL));
+    STRCMP_EQUAL(NULL, config_file_option_string_inherited (NULL));
 
     STRCMP_EQUAL("v2", config_file_option_string_inherited (ptr_option_int_str_child));
     config_file_option_set (ptr_option_int_str, "v3", 1);
@@ -1348,8 +1348,8 @@ TEST(CoreConfigFileWithNewOptions, OptionStringInherited)
 
 TEST(CoreConfigFileWithNewOptions, OptionColor)
 {
-    POINTERS_EQUAL(0, config_file_option_color (NULL));
-    POINTERS_EQUAL(0, config_file_option_color_default (NULL));
+    STRCMP_EQUAL(NULL, config_file_option_color (NULL));
+    STRCMP_EQUAL(NULL, config_file_option_color_default (NULL));
 
     STRCMP_EQUAL("blue", config_file_option_color (ptr_option_col));
     STRCMP_EQUAL("blue", config_file_option_color_default (ptr_option_col));
@@ -1361,16 +1361,16 @@ TEST(CoreConfigFileWithNewOptions, OptionColor)
     STRCMP_EQUAL("blue", config_file_option_color (ptr_option_col));
     STRCMP_EQUAL("blue", config_file_option_color_default (ptr_option_col));
 
-    POINTERS_EQUAL(NULL, config_file_option_color (ptr_option_bool));
-    POINTERS_EQUAL(NULL, config_file_option_color_default (ptr_option_bool));
-    POINTERS_EQUAL(NULL, config_file_option_color (ptr_option_int));
-    POINTERS_EQUAL(NULL, config_file_option_color_default (ptr_option_int));
-    POINTERS_EQUAL(NULL, config_file_option_color (ptr_option_int_str));
-    POINTERS_EQUAL(NULL, config_file_option_color_default (ptr_option_int_str));
-    POINTERS_EQUAL(NULL, config_file_option_color (ptr_option_str));
-    POINTERS_EQUAL(NULL, config_file_option_color_default (ptr_option_str));
-    POINTERS_EQUAL(NULL, config_file_option_color (ptr_option_enum));
-    POINTERS_EQUAL(NULL, config_file_option_color_default (ptr_option_enum));
+    STRCMP_EQUAL(NULL, config_file_option_color (ptr_option_bool));
+    STRCMP_EQUAL(NULL, config_file_option_color_default (ptr_option_bool));
+    STRCMP_EQUAL(NULL, config_file_option_color (ptr_option_int));
+    STRCMP_EQUAL(NULL, config_file_option_color_default (ptr_option_int));
+    STRCMP_EQUAL(NULL, config_file_option_color (ptr_option_int_str));
+    STRCMP_EQUAL(NULL, config_file_option_color_default (ptr_option_int_str));
+    STRCMP_EQUAL(NULL, config_file_option_color (ptr_option_str));
+    STRCMP_EQUAL(NULL, config_file_option_color_default (ptr_option_str));
+    STRCMP_EQUAL(NULL, config_file_option_color (ptr_option_enum));
+    STRCMP_EQUAL(NULL, config_file_option_color_default (ptr_option_enum));
 }
 
 /*
@@ -1380,7 +1380,7 @@ TEST(CoreConfigFileWithNewOptions, OptionColor)
 
 TEST(CoreConfigFileWithNewOptions, OptionColorInherited)
 {
-    POINTERS_EQUAL(NULL, config_file_option_color_inherited (NULL));
+    STRCMP_EQUAL(NULL, config_file_option_color_inherited (NULL));
 
     STRCMP_EQUAL("blue", config_file_option_color_inherited (ptr_option_col_child));
     config_file_option_set (ptr_option_col, "red", 1);

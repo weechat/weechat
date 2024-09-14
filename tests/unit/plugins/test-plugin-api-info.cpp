@@ -152,9 +152,9 @@ TEST(PluginApiInfo, AbsolutePath)
 {
     char *str;
 
-    POINTERS_EQUAL(NULL, plugin_api_info_absolute_path (NULL));
-    POINTERS_EQUAL(NULL, plugin_api_info_absolute_path (""));
-    POINTERS_EQUAL(NULL, plugin_api_info_absolute_path ("/invalid/dir"));
+    STRCMP_EQUAL(NULL, plugin_api_info_absolute_path (NULL));
+    STRCMP_EQUAL(NULL, plugin_api_info_absolute_path (""));
+    STRCMP_EQUAL(NULL, plugin_api_info_absolute_path ("/invalid/dir"));
 
     WEE_TEST_STR("/", plugin_api_info_absolute_path ("/tmp/.."));
 }
@@ -340,10 +340,10 @@ TEST(PluginApiInfo, BufferCb)
 {
     char *str, str_buffer[64];
 
-    POINTERS_EQUAL(NULL, hook_info_get (NULL, "buffer", NULL));
-    POINTERS_EQUAL(NULL, hook_info_get (NULL, "buffer", ""));
+    STRCMP_EQUAL(NULL, hook_info_get (NULL, "buffer", NULL));
+    STRCMP_EQUAL(NULL, hook_info_get (NULL, "buffer", ""));
 
-    POINTERS_EQUAL(NULL, hook_info_get (NULL, "buffer", "zzz"));
+    STRCMP_EQUAL(NULL, hook_info_get (NULL, "buffer", "zzz"));
 
     snprintf (str_buffer, sizeof (str_buffer), "%p", gui_buffers);
     WEE_TEST_STR(str_buffer, hook_info_get (NULL, "buffer", "core.weechat"));
@@ -529,8 +529,8 @@ TEST(PluginApiInfo, ColorTerm2rgbCb)
 {
     char *str;
 
-    POINTERS_EQUAL(NULL, hook_info_get (NULL, "color_term2rgb", NULL));
-    POINTERS_EQUAL(NULL, hook_info_get (NULL, "color_term2rgb", ""));
+    STRCMP_EQUAL(NULL, hook_info_get (NULL, "color_term2rgb", NULL));
+    STRCMP_EQUAL(NULL, hook_info_get (NULL, "color_term2rgb", ""));
 
     WEE_TEST_STR("8421504", hook_info_get (NULL, "color_term2rgb", "8"));
     WEE_TEST_STR("11534080", hook_info_get (NULL, "color_term2rgb", "154"));
@@ -545,8 +545,8 @@ TEST(PluginApiInfo, ColorRgb2termCb)
 {
     char *str;
 
-    POINTERS_EQUAL(NULL, hook_info_get (NULL, "color_rgb2term", NULL));
-    POINTERS_EQUAL(NULL, hook_info_get (NULL, "color_rgb2term", ""));
+    STRCMP_EQUAL(NULL, hook_info_get (NULL, "color_rgb2term", NULL));
+    STRCMP_EQUAL(NULL, hook_info_get (NULL, "color_rgb2term", ""));
 
     WEE_TEST_STR("8", hook_info_get (NULL, "color_rgb2term", "8421504"));
     WEE_TEST_STR("154", hook_info_get (NULL, "color_rgb2term", "11534080"));
@@ -608,7 +608,7 @@ TEST(PluginApiInfo, Uptime)
     char *str, *error;
     long long seconds;
 
-    POINTERS_EQUAL(NULL, hook_info_get (NULL, "uptime", "invalid"));
+    STRCMP_EQUAL(NULL, hook_info_get (NULL, "uptime", "invalid"));
 
     str = hook_info_get (NULL, "uptime", NULL);
     STRNCMP_EQUAL("0:00:00:", str, 8);
@@ -640,21 +640,21 @@ TEST(PluginApiInfo, TotpGenerateCb)
 {
     char *str;
 
-    POINTERS_EQUAL(NULL, hook_info_get (NULL, "totp_generate", NULL));
-    POINTERS_EQUAL(NULL, hook_info_get (NULL, "totp_generate", ""));
+    STRCMP_EQUAL(NULL, hook_info_get (NULL, "totp_generate", NULL));
+    STRCMP_EQUAL(NULL, hook_info_get (NULL, "totp_generate", ""));
 
-    POINTERS_EQUAL(NULL, hook_info_get (NULL, "totp_validate", NULL));
-    POINTERS_EQUAL(NULL, hook_info_get (NULL, "totp_validate", ""));
+    STRCMP_EQUAL(NULL, hook_info_get (NULL, "totp_validate", NULL));
+    STRCMP_EQUAL(NULL, hook_info_get (NULL, "totp_validate", ""));
 
-    POINTERS_EQUAL(NULL, hook_info_get (NULL, "totp_generate",
-                                        "secretpasswordbase32,abc"));
-    POINTERS_EQUAL(NULL, hook_info_get (NULL, "totp_generate",
-                                        "secretpasswordbase32,1540624066,abc"));
+    STRCMP_EQUAL(NULL, hook_info_get (NULL, "totp_generate",
+                                      "secretpasswordbase32,abc"));
+    STRCMP_EQUAL(NULL, hook_info_get (NULL, "totp_generate",
+                                      "secretpasswordbase32,1540624066,abc"));
 
-    POINTERS_EQUAL(NULL, hook_info_get (NULL, "totp_validate",
-                                        "secretpasswordbase32,123456,abc"));
-    POINTERS_EQUAL(NULL, hook_info_get (NULL, "totp_validate",
-                                        "secretpasswordbase32,123456,1540624066,abc"));
+    STRCMP_EQUAL(NULL, hook_info_get (NULL, "totp_validate",
+                                      "secretpasswordbase32,123456,abc"));
+    STRCMP_EQUAL(NULL, hook_info_get (NULL, "totp_validate",
+                                      "secretpasswordbase32,123456,1540624066,abc"));
 
     WEE_TEST_STR("065486",
                  hook_info_get (NULL,
@@ -680,10 +680,10 @@ TEST(PluginApiInfo, PluginLoadedCb)
 {
     char *str;
 
-    POINTERS_EQUAL(NULL, hook_info_get (NULL, "plugin_loaded", NULL));
-    POINTERS_EQUAL(NULL, hook_info_get (NULL, "plugin_loaded", ""));
+    STRCMP_EQUAL(NULL, hook_info_get (NULL, "plugin_loaded", NULL));
+    STRCMP_EQUAL(NULL, hook_info_get (NULL, "plugin_loaded", ""));
 
-    POINTERS_EQUAL(NULL, hook_info_get (NULL, "plugin_loaded", "xxx"));
+    STRCMP_EQUAL(NULL, hook_info_get (NULL, "plugin_loaded", "xxx"));
 
     WEE_TEST_STR("1", hook_info_get (NULL, "plugin_loaded", "alias"));
     WEE_TEST_STR("1", hook_info_get (NULL, "plugin_loaded", "irc"));

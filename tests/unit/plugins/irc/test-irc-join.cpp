@@ -43,70 +43,30 @@ extern int irc_join_compare_join_channel (struct t_irc_server *server,
 
 #define WEE_CHECK_ADD_CHANNEL(__result, __join, __channel, __key)       \
     str = irc_join_add_channel (NULL, __join, __channel, __key);        \
-    if (__result == NULL)                                               \
-    {                                                                   \
-        POINTERS_EQUAL(NULL, str);                                      \
-    }                                                                   \
-    else                                                                \
-    {                                                                   \
-        STRCMP_EQUAL(__result, str);                                    \
-    }                                                                   \
-    if (str)                                                            \
-        free (str);
+    STRCMP_EQUAL(__result, str);                                        \
+    free (str);
 
 #define WEE_CHECK_ADD_CHANNELS(__result, __join, __join2)               \
     str = irc_join_add_channels (NULL, __join, __join2);                \
-    if (__result == NULL)                                               \
-    {                                                                   \
-        POINTERS_EQUAL(NULL, str);                                      \
-    }                                                                   \
-    else                                                                \
-    {                                                                   \
-        STRCMP_EQUAL(__result, str);                                    \
-    }                                                                   \
-    if (str)                                                            \
-        free (str);
+    STRCMP_EQUAL(__result, str);                                        \
+    free (str);
 
 #define WEE_CHECK_REMOVE_CHANNEL(__result, __join, __channel)           \
     str = irc_join_remove_channel (NULL, __join, __channel);            \
-    if (__result == NULL)                                               \
-    {                                                                   \
-        POINTERS_EQUAL(NULL, str);                                      \
-    }                                                                   \
-    else                                                                \
-    {                                                                   \
-        STRCMP_EQUAL(__result, str);                                    \
-    }                                                                   \
-    if (str)                                                            \
-        free (str);
+    STRCMP_EQUAL(__result, str);                                        \
+    free (str);
 
 #define WEE_CHECK_RENAME_CHANNEL(__result, __join, __channel,           \
                                  __new_channel)                         \
     str = irc_join_rename_channel (NULL, __join, __channel,             \
                                    __new_channel);                      \
-    if (__result == NULL)                                               \
-    {                                                                   \
-        POINTERS_EQUAL(NULL, str);                                      \
-    }                                                                   \
-    else                                                                \
-    {                                                                   \
-        STRCMP_EQUAL(__result, str);                                    \
-    }                                                                   \
-    if (str)                                                            \
-        free (str);
+    STRCMP_EQUAL(__result, str);                                        \
+    free (str);
 
 #define WEE_CHECK_SORT_CHANNELS(__result, __join)                       \
     str = irc_join_sort_channels (NULL, __join, IRC_JOIN_SORT_ALPHA);   \
-    if (__result == NULL)                                               \
-    {                                                                   \
-        POINTERS_EQUAL(NULL, str);                                      \
-    }                                                                   \
-    else                                                                \
-    {                                                                   \
-        STRCMP_EQUAL(__result, str);                                    \
-    }                                                                   \
-    if (str)                                                            \
-        free (str);
+    STRCMP_EQUAL(__result, str);                                        \
+    free (str);
 
 TEST_GROUP(IrcJoin)
 {
@@ -211,7 +171,7 @@ TEST(IrcJoin, SplitBuildString)
     channels = (struct t_irc_join_channel **)arraylist->data;
     CHECK(channels[0]);
     STRCMP_EQUAL("#xyz", channels[0]->name);
-    POINTERS_EQUAL(NULL, channels[0]->key);
+    STRCMP_EQUAL(NULL, channels[0]->key);
     autojoin = irc_join_build_string (arraylist);
     STRCMP_EQUAL("#xyz", autojoin);
     free (autojoin);
@@ -224,9 +184,9 @@ TEST(IrcJoin, SplitBuildString)
     channels = (struct t_irc_join_channel **)arraylist->data;
     CHECK(channels[0]);
     STRCMP_EQUAL("#xyz", channels[0]->name);
-    POINTERS_EQUAL(NULL, channels[0]->key);
+    STRCMP_EQUAL(NULL, channels[0]->key);
     STRCMP_EQUAL("#abc", channels[1]->name);
-    POINTERS_EQUAL(NULL, channels[1]->key);
+    STRCMP_EQUAL(NULL, channels[1]->key);
     autojoin = irc_join_build_string (arraylist);
     STRCMP_EQUAL("#xyz,#abc", autojoin);
     free (autojoin);
@@ -260,7 +220,7 @@ TEST(IrcJoin, SplitBuildString)
     STRCMP_EQUAL("#abc", channels[1]->name);
     STRCMP_EQUAL("key_abc", channels[1]->key);
     STRCMP_EQUAL("#def", channels[2]->name);
-    POINTERS_EQUAL(NULL, channels[2]->key);
+    STRCMP_EQUAL(NULL, channels[2]->key);
     autojoin = irc_join_build_string (arraylist);
     STRCMP_EQUAL("#xyz,#abc,#def key_xyz,key_abc", autojoin);
     free (autojoin);
@@ -273,7 +233,7 @@ TEST(IrcJoin, SplitBuildString)
     channels = (struct t_irc_join_channel **)arraylist->data;
     CHECK(channels[0]);
     STRCMP_EQUAL("#XYZ", channels[0]->name);
-    POINTERS_EQUAL(NULL, channels[0]->key);
+    STRCMP_EQUAL(NULL, channels[0]->key);
     autojoin = irc_join_build_string (arraylist);
     STRCMP_EQUAL("#XYZ", autojoin);
     free (autojoin);
@@ -286,10 +246,10 @@ TEST(IrcJoin, SplitBuildString)
     channels = (struct t_irc_join_channel **)arraylist->data;
     CHECK(channels[0]);
     STRCMP_EQUAL("#abc", channels[0]->name);
-    POINTERS_EQUAL(NULL, channels[0]->key);
+    STRCMP_EQUAL(NULL, channels[0]->key);
     CHECK(channels[1]);
     STRCMP_EQUAL("#def", channels[1]->name);
-    POINTERS_EQUAL(NULL, channels[1]->key);
+    STRCMP_EQUAL(NULL, channels[1]->key);
     autojoin = irc_join_build_string (arraylist);
     STRCMP_EQUAL("#abc,#def", autojoin);
     free (autojoin);
@@ -306,7 +266,7 @@ TEST(IrcJoin, SplitBuildString)
     channels = (struct t_irc_join_channel **)arraylist->data;
     CHECK(channels[0]);
     STRCMP_EQUAL("#CHAN{A}~", channels[0]->name);
-    POINTERS_EQUAL(NULL, channels[0]->key);
+    STRCMP_EQUAL(NULL, channels[0]->key);
     autojoin = irc_join_build_string (arraylist);
     STRCMP_EQUAL("#CHAN{A}~", autojoin);
     free (autojoin);
@@ -324,9 +284,9 @@ TEST(IrcJoin, SplitBuildString)
     channels = (struct t_irc_join_channel **)arraylist->data;
     CHECK(channels[0]);
     STRCMP_EQUAL("#chan[a]^", channels[0]->name);
-    POINTERS_EQUAL(NULL, channels[0]->key);
+    STRCMP_EQUAL(NULL, channels[0]->key);
     STRCMP_EQUAL("#CHAN{A}~", channels[1]->name);
-    POINTERS_EQUAL(NULL, channels[1]->key);
+    STRCMP_EQUAL(NULL, channels[1]->key);
     autojoin = irc_join_build_string (arraylist);
     STRCMP_EQUAL("#chan[a]^,#CHAN{A}~", autojoin);
     free (autojoin);
@@ -347,11 +307,11 @@ TEST(IrcJoin, SplitBuildString)
     STRCMP_EQUAL("#xyz", channels[0]->name);
     STRCMP_EQUAL("key_xyz", channels[0]->key);
     STRCMP_EQUAL("#abc", channels[1]->name);
-    POINTERS_EQUAL(NULL, channels[1]->key);
+    STRCMP_EQUAL(NULL, channels[1]->key);
     STRCMP_EQUAL("#CHAN{A}~", channels[2]->name);
-    POINTERS_EQUAL(NULL, channels[2]->key);
+    STRCMP_EQUAL(NULL, channels[2]->key);
     STRCMP_EQUAL("#def", channels[3]->name);
-    POINTERS_EQUAL(NULL, channels[3]->key);
+    STRCMP_EQUAL(NULL, channels[3]->key);
     autojoin = irc_join_build_string (arraylist);
     STRCMP_EQUAL("#xyz,#abc,#CHAN{A}~,#def key_xyz", autojoin);
     free (autojoin);
@@ -377,13 +337,13 @@ TEST(IrcJoin, SplitBuildString)
     STRCMP_EQUAL("#xyz", channels[0]->name);
     STRCMP_EQUAL("key_xyz", channels[0]->key);
     STRCMP_EQUAL("#CHAN{A}~", channels[1]->name);
-    POINTERS_EQUAL(NULL, channels[1]->key);
+    STRCMP_EQUAL(NULL, channels[1]->key);
     STRCMP_EQUAL("#def", channels[2]->name);
-    POINTERS_EQUAL(NULL, channels[2]->key);
+    STRCMP_EQUAL(NULL, channels[2]->key);
     STRCMP_EQUAL("#abc", channels[3]->name);
-    POINTERS_EQUAL(NULL, channels[3]->key);
+    STRCMP_EQUAL(NULL, channels[3]->key);
     STRCMP_EQUAL("#zzz", channels[4]->name);
-    POINTERS_EQUAL(NULL, channels[4]->key);
+    STRCMP_EQUAL(NULL, channels[4]->key);
     autojoin = irc_join_build_string (arraylist);
     STRCMP_EQUAL("#xyz,#CHAN{A}~,#def,#abc,#zzz key_xyz", autojoin);
     free (autojoin);

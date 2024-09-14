@@ -52,26 +52,10 @@ extern struct t_gui_key *gui_key_search_part (struct t_gui_buffer *buffer, int c
     key_name_alias = NULL;                                              \
     LONGS_EQUAL(__rc,                                                   \
                 gui_key_expand (__key, &key_name, &key_name_alias));    \
-    if (__key_name == NULL)                                             \
-    {                                                                   \
-        POINTERS_EQUAL(NULL, key_name);                                 \
-    }                                                                   \
-    else                                                                \
-    {                                                                   \
-        STRCMP_EQUAL(__key_name, key_name);                             \
-    }                                                                   \
-    if (__key_name_alias == NULL)                                       \
-    {                                                                   \
-        POINTERS_EQUAL(NULL, key_name_alias);                           \
-    }                                                                   \
-    else                                                                \
-    {                                                                   \
-        STRCMP_EQUAL(__key_name_alias, key_name_alias);                 \
-    }                                                                   \
-    if (key_name)                                                       \
-        free (key_name);                                                \
-    if (key_name_alias)                                                 \
-        free (key_name_alias);
+    STRCMP_EQUAL(__key_name, key_name);                                 \
+    STRCMP_EQUAL(__key_name_alias, key_name_alias);                     \
+    free (key_name);                                                    \
+    free (key_name_alias);
 
 TEST_GROUP(GuiKey)
 {
@@ -1164,7 +1148,7 @@ TEST(GuiKey, New)
     STRCMP_EQUAL("meta-c", ptr_key->chunks[2]);
     LONGS_EQUAL(GUI_KEY_FOCUS_ANY, ptr_key->area_type[0]);
     LONGS_EQUAL(GUI_KEY_FOCUS_ANY, ptr_key->area_type[1]);
-    POINTERS_EQUAL(NULL, ptr_key->area_key);
+    STRCMP_EQUAL(NULL, ptr_key->area_key);
     STRCMP_EQUAL("/mute", ptr_key->command);
     LONGS_EQUAL(0, ptr_key->score);
     gui_key_free (GUI_KEY_CONTEXT_DEFAULT,

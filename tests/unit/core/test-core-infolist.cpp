@@ -140,7 +140,7 @@ TEST(CoreInfolist, New)
     /* check initial item values */
     POINTERS_EQUAL(NULL, item->vars);
     POINTERS_EQUAL(NULL, item->last_var);
-    POINTERS_EQUAL(NULL, item->fields);
+    STRCMP_EQUAL(NULL, item->fields);
     POINTERS_EQUAL(NULL, item->prev_item);
     POINTERS_EQUAL(NULL, item->next_item);
 

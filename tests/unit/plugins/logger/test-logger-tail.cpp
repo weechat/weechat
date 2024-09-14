@@ -49,25 +49,25 @@ TEST(LoggerTail, LastEol)
 {
     const char *str = "abc\ndef\rghi";
 
-    POINTERS_EQUAL(NULL, logger_tail_last_eol (NULL, NULL));
-    POINTERS_EQUAL(NULL, logger_tail_last_eol (NULL, ""));
-    POINTERS_EQUAL(NULL, logger_tail_last_eol ("", NULL));
-    POINTERS_EQUAL(NULL, logger_tail_last_eol ("", ""));
-    POINTERS_EQUAL(NULL, logger_tail_last_eol (str + 9, str));
+    STRCMP_EQUAL(NULL, logger_tail_last_eol (NULL, NULL));
+    STRCMP_EQUAL(NULL, logger_tail_last_eol (NULL, ""));
+    STRCMP_EQUAL(NULL, logger_tail_last_eol ("", NULL));
+    STRCMP_EQUAL(NULL, logger_tail_last_eol ("", ""));
+    STRCMP_EQUAL(NULL, logger_tail_last_eol (str + 9, str));
 
-    POINTERS_EQUAL(NULL, logger_tail_last_eol (str, str));
-    POINTERS_EQUAL(NULL, logger_tail_last_eol (str, str + 1));
-    POINTERS_EQUAL(NULL, logger_tail_last_eol (str, str + 2));
+    STRCMP_EQUAL(NULL, logger_tail_last_eol (str, str));
+    STRCMP_EQUAL(NULL, logger_tail_last_eol (str, str + 1));
+    STRCMP_EQUAL(NULL, logger_tail_last_eol (str, str + 2));
 
-    POINTERS_EQUAL(str + 3, logger_tail_last_eol (str, str + 3));
-    POINTERS_EQUAL(str + 3, logger_tail_last_eol (str, str + 4));
-    POINTERS_EQUAL(str + 3, logger_tail_last_eol (str, str + 5));
-    POINTERS_EQUAL(str + 3, logger_tail_last_eol (str, str + 6));
+    STRCMP_EQUAL(str + 3, logger_tail_last_eol (str, str + 3));
+    STRCMP_EQUAL(str + 3, logger_tail_last_eol (str, str + 4));
+    STRCMP_EQUAL(str + 3, logger_tail_last_eol (str, str + 5));
+    STRCMP_EQUAL(str + 3, logger_tail_last_eol (str, str + 6));
 
-    POINTERS_EQUAL(str + 7, logger_tail_last_eol (str, str + 7));
-    POINTERS_EQUAL(str + 7, logger_tail_last_eol (str, str + 8));
-    POINTERS_EQUAL(str + 7, logger_tail_last_eol (str, str + 9));
-    POINTERS_EQUAL(str + 7, logger_tail_last_eol (str, str + 10));
+    STRCMP_EQUAL(str + 7, logger_tail_last_eol (str, str + 7));
+    STRCMP_EQUAL(str + 7, logger_tail_last_eol (str, str + 8));
+    STRCMP_EQUAL(str + 7, logger_tail_last_eol (str, str + 9));
+    STRCMP_EQUAL(str + 7, logger_tail_last_eol (str, str + 10));
 }
 
 /*

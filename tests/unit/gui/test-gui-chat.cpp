@@ -157,43 +157,43 @@ TEST(GuiChat, StringAddOffset)
     const char *str_soft_hyphen = "A" "\u00ad" "Z";
     const char *str_zero_width_space = "A" "\u200b" "Z";
 
-    POINTERS_EQUAL(NULL, gui_chat_string_add_offset (NULL, -1));
-    POINTERS_EQUAL(NULL, gui_chat_string_add_offset (NULL, 0));
-    POINTERS_EQUAL(NULL, gui_chat_string_add_offset (NULL, 1));
+    STRCMP_EQUAL(NULL, gui_chat_string_add_offset (NULL, -1));
+    STRCMP_EQUAL(NULL, gui_chat_string_add_offset (NULL, 0));
+    STRCMP_EQUAL(NULL, gui_chat_string_add_offset (NULL, 1));
 
-    POINTERS_EQUAL(str_empty, gui_chat_string_add_offset (str_empty, -1));
-    POINTERS_EQUAL(str_empty, gui_chat_string_add_offset (str_empty, 0));
-    POINTERS_EQUAL(str_empty, gui_chat_string_add_offset (str_empty, 1));
+    STRCMP_EQUAL(str_empty, gui_chat_string_add_offset (str_empty, -1));
+    STRCMP_EQUAL(str_empty, gui_chat_string_add_offset (str_empty, 0));
+    STRCMP_EQUAL(str_empty, gui_chat_string_add_offset (str_empty, 1));
 
-    POINTERS_EQUAL(str_noel, gui_chat_string_add_offset (str_noel, -1));
-    POINTERS_EQUAL(str_noel, gui_chat_string_add_offset (str_noel, 0));
-    POINTERS_EQUAL(str_noel + 1, gui_chat_string_add_offset (str_noel, 1));
-    POINTERS_EQUAL(str_noel + 2, gui_chat_string_add_offset (str_noel, 2));
-    POINTERS_EQUAL(str_noel + 4, gui_chat_string_add_offset (str_noel, 3));
-    POINTERS_EQUAL(str_noel + 5, gui_chat_string_add_offset (str_noel, 4));
-    POINTERS_EQUAL(str_noel + 5, gui_chat_string_add_offset (str_noel, 5));
+    STRCMP_EQUAL(str_noel, gui_chat_string_add_offset (str_noel, -1));
+    STRCMP_EQUAL(str_noel, gui_chat_string_add_offset (str_noel, 0));
+    STRCMP_EQUAL(str_noel + 1, gui_chat_string_add_offset (str_noel, 1));
+    STRCMP_EQUAL(str_noel + 2, gui_chat_string_add_offset (str_noel, 2));
+    STRCMP_EQUAL(str_noel + 4, gui_chat_string_add_offset (str_noel, 3));
+    STRCMP_EQUAL(str_noel + 5, gui_chat_string_add_offset (str_noel, 4));
+    STRCMP_EQUAL(str_noel + 5, gui_chat_string_add_offset (str_noel, 5));
 
-    POINTERS_EQUAL(str_other, gui_chat_string_add_offset (str_other, -1));
-    POINTERS_EQUAL(str_other, gui_chat_string_add_offset (str_other, 0));
-    POINTERS_EQUAL(str_other + 1, gui_chat_string_add_offset (str_other, 1));
-    POINTERS_EQUAL(str_other + 4, gui_chat_string_add_offset (str_other, 2));
-    POINTERS_EQUAL(str_other + 5, gui_chat_string_add_offset (str_other, 3));
-    POINTERS_EQUAL(str_other + 5, gui_chat_string_add_offset (str_other, 4));
-    POINTERS_EQUAL(str_other + 5, gui_chat_string_add_offset (str_other, 5));
+    STRCMP_EQUAL(str_other, gui_chat_string_add_offset (str_other, -1));
+    STRCMP_EQUAL(str_other, gui_chat_string_add_offset (str_other, 0));
+    STRCMP_EQUAL(str_other + 1, gui_chat_string_add_offset (str_other, 1));
+    STRCMP_EQUAL(str_other + 4, gui_chat_string_add_offset (str_other, 2));
+    STRCMP_EQUAL(str_other + 5, gui_chat_string_add_offset (str_other, 3));
+    STRCMP_EQUAL(str_other + 5, gui_chat_string_add_offset (str_other, 4));
+    STRCMP_EQUAL(str_other + 5, gui_chat_string_add_offset (str_other, 5));
 
-    POINTERS_EQUAL(str_soft_hyphen, gui_chat_string_add_offset (str_soft_hyphen, -1));
-    POINTERS_EQUAL(str_soft_hyphen, gui_chat_string_add_offset (str_soft_hyphen, 0));
-    POINTERS_EQUAL(str_soft_hyphen + 1, gui_chat_string_add_offset (str_soft_hyphen, 1));
-    POINTERS_EQUAL(str_soft_hyphen + 3, gui_chat_string_add_offset (str_soft_hyphen, 2));
-    POINTERS_EQUAL(str_soft_hyphen + 4, gui_chat_string_add_offset (str_soft_hyphen, 3));
-    POINTERS_EQUAL(str_soft_hyphen + 4, gui_chat_string_add_offset (str_soft_hyphen, 4));
+    STRCMP_EQUAL(str_soft_hyphen, gui_chat_string_add_offset (str_soft_hyphen, -1));
+    STRCMP_EQUAL(str_soft_hyphen, gui_chat_string_add_offset (str_soft_hyphen, 0));
+    STRCMP_EQUAL(str_soft_hyphen + 1, gui_chat_string_add_offset (str_soft_hyphen, 1));
+    STRCMP_EQUAL(str_soft_hyphen + 3, gui_chat_string_add_offset (str_soft_hyphen, 2));
+    STRCMP_EQUAL(str_soft_hyphen + 4, gui_chat_string_add_offset (str_soft_hyphen, 3));
+    STRCMP_EQUAL(str_soft_hyphen + 4, gui_chat_string_add_offset (str_soft_hyphen, 4));
 
-    POINTERS_EQUAL(str_zero_width_space, gui_chat_string_add_offset (str_zero_width_space, -1));
-    POINTERS_EQUAL(str_zero_width_space, gui_chat_string_add_offset (str_zero_width_space, 0));
-    POINTERS_EQUAL(str_zero_width_space + 1, gui_chat_string_add_offset (str_zero_width_space, 1));
-    POINTERS_EQUAL(str_zero_width_space + 4, gui_chat_string_add_offset (str_zero_width_space, 2));
-    POINTERS_EQUAL(str_zero_width_space + 5, gui_chat_string_add_offset (str_zero_width_space, 3));
-    POINTERS_EQUAL(str_zero_width_space + 5, gui_chat_string_add_offset (str_zero_width_space, 4));
+    STRCMP_EQUAL(str_zero_width_space, gui_chat_string_add_offset (str_zero_width_space, -1));
+    STRCMP_EQUAL(str_zero_width_space, gui_chat_string_add_offset (str_zero_width_space, 0));
+    STRCMP_EQUAL(str_zero_width_space + 1, gui_chat_string_add_offset (str_zero_width_space, 1));
+    STRCMP_EQUAL(str_zero_width_space + 4, gui_chat_string_add_offset (str_zero_width_space, 2));
+    STRCMP_EQUAL(str_zero_width_space + 5, gui_chat_string_add_offset (str_zero_width_space, 3));
+    STRCMP_EQUAL(str_zero_width_space + 5, gui_chat_string_add_offset (str_zero_width_space, 4));
 }
 
 /*
@@ -209,41 +209,41 @@ TEST(GuiChat, StringAddOffsetScreen)
     const char *str_soft_hyphen = "A" "\u00ad" "Z";
     const char *str_zero_width_space = "A" "\u200b" "Z";
 
-    POINTERS_EQUAL(NULL, gui_chat_string_add_offset_screen (NULL, -1));
-    POINTERS_EQUAL(NULL, gui_chat_string_add_offset_screen (NULL, 0));
-    POINTERS_EQUAL(NULL, gui_chat_string_add_offset_screen (NULL, 1));
+    STRCMP_EQUAL(NULL, gui_chat_string_add_offset_screen (NULL, -1));
+    STRCMP_EQUAL(NULL, gui_chat_string_add_offset_screen (NULL, 0));
+    STRCMP_EQUAL(NULL, gui_chat_string_add_offset_screen (NULL, 1));
 
-    POINTERS_EQUAL(str_empty, gui_chat_string_add_offset_screen (str_empty, -1));
-    POINTERS_EQUAL(str_empty, gui_chat_string_add_offset_screen (str_empty, 0));
-    POINTERS_EQUAL(str_empty, gui_chat_string_add_offset_screen (str_empty, 1));
+    STRCMP_EQUAL(str_empty, gui_chat_string_add_offset_screen (str_empty, -1));
+    STRCMP_EQUAL(str_empty, gui_chat_string_add_offset_screen (str_empty, 0));
+    STRCMP_EQUAL(str_empty, gui_chat_string_add_offset_screen (str_empty, 1));
 
-    POINTERS_EQUAL(str_noel, gui_chat_string_add_offset_screen (str_noel, -1));
-    POINTERS_EQUAL(str_noel, gui_chat_string_add_offset_screen (str_noel, 0));
-    POINTERS_EQUAL(str_noel + 1, gui_chat_string_add_offset_screen (str_noel, 1));
-    POINTERS_EQUAL(str_noel + 2, gui_chat_string_add_offset_screen (str_noel, 2));
-    POINTERS_EQUAL(str_noel + 4, gui_chat_string_add_offset_screen (str_noel, 3));
-    POINTERS_EQUAL(str_noel + 5, gui_chat_string_add_offset_screen (str_noel, 4));
-    POINTERS_EQUAL(str_noel + 5, gui_chat_string_add_offset_screen (str_noel, 5));
+    STRCMP_EQUAL(str_noel, gui_chat_string_add_offset_screen (str_noel, -1));
+    STRCMP_EQUAL(str_noel, gui_chat_string_add_offset_screen (str_noel, 0));
+    STRCMP_EQUAL(str_noel + 1, gui_chat_string_add_offset_screen (str_noel, 1));
+    STRCMP_EQUAL(str_noel + 2, gui_chat_string_add_offset_screen (str_noel, 2));
+    STRCMP_EQUAL(str_noel + 4, gui_chat_string_add_offset_screen (str_noel, 3));
+    STRCMP_EQUAL(str_noel + 5, gui_chat_string_add_offset_screen (str_noel, 4));
+    STRCMP_EQUAL(str_noel + 5, gui_chat_string_add_offset_screen (str_noel, 5));
 
-    POINTERS_EQUAL(str_other, gui_chat_string_add_offset_screen (str_other, -1));
-    POINTERS_EQUAL(str_other, gui_chat_string_add_offset_screen (str_other, 0));
-    POINTERS_EQUAL(str_other + 1, gui_chat_string_add_offset_screen (str_other, 1));
-    POINTERS_EQUAL(str_other + 1, gui_chat_string_add_offset_screen (str_other, 2));
-    POINTERS_EQUAL(str_other + 4, gui_chat_string_add_offset_screen (str_other, 3));
-    POINTERS_EQUAL(str_other + 5, gui_chat_string_add_offset_screen (str_other, 4));
-    POINTERS_EQUAL(str_other + 5, gui_chat_string_add_offset_screen (str_other, 5));
+    STRCMP_EQUAL(str_other, gui_chat_string_add_offset_screen (str_other, -1));
+    STRCMP_EQUAL(str_other, gui_chat_string_add_offset_screen (str_other, 0));
+    STRCMP_EQUAL(str_other + 1, gui_chat_string_add_offset_screen (str_other, 1));
+    STRCMP_EQUAL(str_other + 1, gui_chat_string_add_offset_screen (str_other, 2));
+    STRCMP_EQUAL(str_other + 4, gui_chat_string_add_offset_screen (str_other, 3));
+    STRCMP_EQUAL(str_other + 5, gui_chat_string_add_offset_screen (str_other, 4));
+    STRCMP_EQUAL(str_other + 5, gui_chat_string_add_offset_screen (str_other, 5));
 
-    POINTERS_EQUAL(str_soft_hyphen, gui_chat_string_add_offset_screen (str_soft_hyphen, -1));
-    POINTERS_EQUAL(str_soft_hyphen, gui_chat_string_add_offset_screen (str_soft_hyphen, 0));
-    POINTERS_EQUAL(str_soft_hyphen + 3, gui_chat_string_add_offset_screen (str_soft_hyphen, 1));
-    POINTERS_EQUAL(str_soft_hyphen + 4, gui_chat_string_add_offset_screen (str_soft_hyphen, 2));
-    POINTERS_EQUAL(str_soft_hyphen + 4, gui_chat_string_add_offset_screen (str_soft_hyphen, 3));
+    STRCMP_EQUAL(str_soft_hyphen, gui_chat_string_add_offset_screen (str_soft_hyphen, -1));
+    STRCMP_EQUAL(str_soft_hyphen, gui_chat_string_add_offset_screen (str_soft_hyphen, 0));
+    STRCMP_EQUAL(str_soft_hyphen + 3, gui_chat_string_add_offset_screen (str_soft_hyphen, 1));
+    STRCMP_EQUAL(str_soft_hyphen + 4, gui_chat_string_add_offset_screen (str_soft_hyphen, 2));
+    STRCMP_EQUAL(str_soft_hyphen + 4, gui_chat_string_add_offset_screen (str_soft_hyphen, 3));
 
-    POINTERS_EQUAL(str_zero_width_space, gui_chat_string_add_offset_screen (str_zero_width_space, -1));
-    POINTERS_EQUAL(str_zero_width_space, gui_chat_string_add_offset_screen (str_zero_width_space, 0));
-    POINTERS_EQUAL(str_zero_width_space + 4, gui_chat_string_add_offset_screen (str_zero_width_space, 1));
-    POINTERS_EQUAL(str_zero_width_space + 5, gui_chat_string_add_offset_screen (str_zero_width_space, 2));
-    POINTERS_EQUAL(str_zero_width_space + 5, gui_chat_string_add_offset_screen (str_zero_width_space, 3));
+    STRCMP_EQUAL(str_zero_width_space, gui_chat_string_add_offset_screen (str_zero_width_space, -1));
+    STRCMP_EQUAL(str_zero_width_space, gui_chat_string_add_offset_screen (str_zero_width_space, 0));
+    STRCMP_EQUAL(str_zero_width_space + 4, gui_chat_string_add_offset_screen (str_zero_width_space, 1));
+    STRCMP_EQUAL(str_zero_width_space + 5, gui_chat_string_add_offset_screen (str_zero_width_space, 2));
+    STRCMP_EQUAL(str_zero_width_space + 5, gui_chat_string_add_offset_screen (str_zero_width_space, 3));
 }
 
 /*
@@ -574,14 +574,14 @@ TEST(GuiChat, PrintDatetimeTags)
     LONGS_EQUAL(0, ptr_data->date_usec);
     CHECK(ptr_data->date_printed > 0);
     CHECK((ptr_data->date_usec_printed >= 0) && (ptr_data->date_usec_printed <= 999999));
-    POINTERS_EQUAL(NULL, ptr_data->str_time);
+    STRCMP_EQUAL(NULL, ptr_data->str_time);
     LONGS_EQUAL(0, ptr_data->tags_count);
     POINTERS_EQUAL(NULL, ptr_data->tags_array);
     LONGS_EQUAL(1, ptr_data->displayed);
     LONGS_EQUAL(0, ptr_data->notify_level);
     LONGS_EQUAL(0, ptr_data->highlight);
     LONGS_EQUAL(0, ptr_data->refresh_needed);
-    POINTERS_EQUAL(NULL, ptr_data->prefix);
+    STRCMP_EQUAL(NULL, ptr_data->prefix);
     LONGS_EQUAL(0, ptr_data->prefix_length);
     STRCMP_EQUAL("this is a test", ptr_data->message);
 
@@ -703,14 +703,14 @@ TEST(GuiChat, PrintYDatetimeTags)
     CHECK((ptr_data->date_usec >= 0) && (ptr_data->date_usec <= 999999));
     CHECK(ptr_data->date == ptr_data->date_printed);
     CHECK(ptr_data->date_usec == ptr_data->date_usec_printed);
-    POINTERS_EQUAL(NULL, ptr_data->str_time);
+    STRCMP_EQUAL(NULL, ptr_data->str_time);
     LONGS_EQUAL(0, ptr_data->tags_count);
     POINTERS_EQUAL(NULL, ptr_data->tags_array);
     LONGS_EQUAL(1, ptr_data->displayed);
     LONGS_EQUAL(0, ptr_data->notify_level);
     LONGS_EQUAL(0, ptr_data->highlight);
     LONGS_EQUAL(1, ptr_data->refresh_needed);
-    POINTERS_EQUAL(NULL, ptr_data->prefix);
+    STRCMP_EQUAL(NULL, ptr_data->prefix);
     LONGS_EQUAL(0, ptr_data->prefix_length);
     STRCMP_EQUAL("this is a test on line 1", ptr_data->message);
 
@@ -726,14 +726,14 @@ TEST(GuiChat, PrintYDatetimeTags)
     LONGS_EQUAL(123456, ptr_data->date_usec);
     CHECK(ptr_data->date < ptr_data->date_printed);
     CHECK((ptr_data->date_usec_printed >= 0) && (ptr_data->date_usec_printed <= 999999));
-    POINTERS_EQUAL(NULL, ptr_data->str_time);
+    STRCMP_EQUAL(NULL, ptr_data->str_time);
     LONGS_EQUAL(0, ptr_data->tags_count);
     POINTERS_EQUAL(NULL, ptr_data->tags_array);
     LONGS_EQUAL(1, ptr_data->displayed);
     LONGS_EQUAL(0, ptr_data->notify_level);
     LONGS_EQUAL(0, ptr_data->highlight);
     LONGS_EQUAL(1, ptr_data->refresh_needed);
-    POINTERS_EQUAL(NULL, ptr_data->prefix);
+    STRCMP_EQUAL(NULL, ptr_data->prefix);
     LONGS_EQUAL(0, ptr_data->prefix_length);
     STRCMP_EQUAL("this is a test on line 1", ptr_data->message);
 
@@ -749,14 +749,14 @@ TEST(GuiChat, PrintYDatetimeTags)
     CHECK((ptr_data->date_usec >= 0) && (ptr_data->date_usec <= 999999));
     CHECK(ptr_data->date == ptr_data->date_printed);
     CHECK(ptr_data->date_usec == ptr_data->date_usec_printed);
-    POINTERS_EQUAL(NULL, ptr_data->str_time);
+    STRCMP_EQUAL(NULL, ptr_data->str_time);
     LONGS_EQUAL(0, ptr_data->tags_count);
     POINTERS_EQUAL(NULL, ptr_data->tags_array);
     LONGS_EQUAL(1, ptr_data->displayed);
     LONGS_EQUAL(0, ptr_data->notify_level);
     LONGS_EQUAL(0, ptr_data->highlight);
     LONGS_EQUAL(1, ptr_data->refresh_needed);
-    POINTERS_EQUAL(NULL, ptr_data->prefix);
+    STRCMP_EQUAL(NULL, ptr_data->prefix);
     LONGS_EQUAL(0, ptr_data->prefix_length);
     STRCMP_EQUAL("this is a test on line 1", ptr_data->message);
 
@@ -772,7 +772,7 @@ TEST(GuiChat, PrintYDatetimeTags)
     CHECK((ptr_data->date_usec >= 0) && (ptr_data->date_usec <= 999999));
     CHECK(ptr_data->date == ptr_data->date_printed);
     CHECK(ptr_data->date_usec == ptr_data->date_usec_printed);
-    POINTERS_EQUAL(NULL, ptr_data->str_time);
+    STRCMP_EQUAL(NULL, ptr_data->str_time);
     LONGS_EQUAL(3, ptr_data->tags_count);
     CHECK(ptr_data->tags_array);
     STRCMP_EQUAL("tag1", ptr_data->tags_array[0]);
@@ -782,7 +782,7 @@ TEST(GuiChat, PrintYDatetimeTags)
     LONGS_EQUAL(0, ptr_data->notify_level);
     LONGS_EQUAL(0, ptr_data->highlight);
     LONGS_EQUAL(1, ptr_data->refresh_needed);
-    POINTERS_EQUAL(NULL, ptr_data->prefix);
+    STRCMP_EQUAL(NULL, ptr_data->prefix);
     LONGS_EQUAL(0, ptr_data->prefix_length);
     STRCMP_EQUAL("this is a test on line 1", ptr_data->message);
 
@@ -798,14 +798,14 @@ TEST(GuiChat, PrintYDatetimeTags)
     CHECK((ptr_data->date_usec >= 0) && (ptr_data->date_usec <= 999999));
     CHECK(ptr_data->date == ptr_data->date_printed);
     CHECK(ptr_data->date_usec == ptr_data->date_usec_printed);
-    POINTERS_EQUAL(NULL, ptr_data->str_time);
+    STRCMP_EQUAL(NULL, ptr_data->str_time);
     LONGS_EQUAL(0, ptr_data->tags_count);
     POINTERS_EQUAL(NULL, ptr_data->tags_array);
     LONGS_EQUAL(1, ptr_data->displayed);
     LONGS_EQUAL(0, ptr_data->notify_level);
     LONGS_EQUAL(0, ptr_data->highlight);
     LONGS_EQUAL(1, ptr_data->refresh_needed);
-    POINTERS_EQUAL(NULL, ptr_data->prefix);
+    STRCMP_EQUAL(NULL, ptr_data->prefix);
     LONGS_EQUAL(0, ptr_data->prefix_length);
     STRCMP_EQUAL("this is a test on line 3", ptr_data->message);
 
@@ -819,14 +819,14 @@ TEST(GuiChat, PrintYDatetimeTags)
     LONGS_EQUAL(0, ptr_data->date_usec);
     LONGS_EQUAL(0, ptr_data->date_printed);
     LONGS_EQUAL(0, ptr_data->date_usec_printed);
-    POINTERS_EQUAL(NULL, ptr_data->str_time);
+    STRCMP_EQUAL(NULL, ptr_data->str_time);
     LONGS_EQUAL(0, ptr_data->tags_count);
     POINTERS_EQUAL(NULL, ptr_data->tags_array);
     LONGS_EQUAL(1, ptr_data->displayed);
     LONGS_EQUAL(0, ptr_data->notify_level);
     LONGS_EQUAL(0, ptr_data->highlight);
     LONGS_EQUAL(1, ptr_data->refresh_needed);
-    POINTERS_EQUAL(NULL, ptr_data->prefix);
+    STRCMP_EQUAL(NULL, ptr_data->prefix);
     LONGS_EQUAL(0, ptr_data->prefix_length);
     STRCMP_EQUAL("", ptr_data->message);
 

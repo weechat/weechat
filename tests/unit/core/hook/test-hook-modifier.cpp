@@ -178,7 +178,7 @@ TEST(HookModifier, Modifier)
     /* check hook contents */
     CHECK(hook);
     POINTERS_EQUAL(NULL, hook->plugin);
-    POINTERS_EQUAL(NULL, hook->subplugin);
+    STRCMP_EQUAL(NULL, hook->subplugin);
     LONGS_EQUAL(HOOK_TYPE_MODIFIER, hook->type);
     LONGS_EQUAL(0, hook->deleted);
     LONGS_EQUAL(0, hook->running);
@@ -207,7 +207,7 @@ TEST(HookModifier, Modifier)
     gui_chat_printf_date_tags (test_buffer, 0, NULL, "\t\tmessage");
     ptr_line = test_buffer->own_lines->last_line;
     LONGS_EQUAL(0, ptr_line->data->date);
-    POINTERS_EQUAL(NULL, ptr_line->data->prefix);
+    STRCMP_EQUAL(NULL, ptr_line->data->prefix);
     STRCMP_EQUAL("message (modified)", ptr_line->data->message);
 
     /* message without date: add a date/prefix */
@@ -246,7 +246,7 @@ TEST(HookModifier, Modifier)
                                "prefix\tmessage");
     ptr_line = test_buffer->own_lines->last_line;
     LONGS_EQUAL(0, ptr_line->data->date);
-    POINTERS_EQUAL(NULL, ptr_line->data->prefix);
+    STRCMP_EQUAL(NULL, ptr_line->data->prefix);
     STRCMP_EQUAL("message (modified)", ptr_line->data->message);
 
     /* close the test buffer */

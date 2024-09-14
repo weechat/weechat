@@ -273,7 +273,7 @@ TEST(CoreList, Get)
 
     /* get string value of an element */
 
-    POINTERS_EQUAL(NULL, weelist_string (NULL));
+    STRCMP_EQUAL(NULL, weelist_string (NULL));
 
     ptr_item = weelist_get(list, 0);
     STRCMP_EQUAL(LIST_VALUE_TEST, weelist_string (ptr_item));

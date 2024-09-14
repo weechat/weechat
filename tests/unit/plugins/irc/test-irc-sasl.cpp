@@ -41,9 +41,9 @@ TEST_GROUP(IrcSasl)
 
 TEST(IrcSasl, MechanismPlain)
 {
-    POINTERS_EQUAL(NULL, irc_sasl_mechanism_plain (NULL, NULL));
-    POINTERS_EQUAL(NULL, irc_sasl_mechanism_plain (NULL, ""));
-    POINTERS_EQUAL(NULL, irc_sasl_mechanism_plain ("", NULL));
+    STRCMP_EQUAL(NULL, irc_sasl_mechanism_plain (NULL, NULL));
+    STRCMP_EQUAL(NULL, irc_sasl_mechanism_plain (NULL, ""));
+    STRCMP_EQUAL(NULL, irc_sasl_mechanism_plain ("", NULL));
 
     STRCMP_EQUAL("AAA=", irc_sasl_mechanism_plain ("", ""));
 
@@ -70,8 +70,8 @@ TEST(IrcSasl, MechanismScram)
     struct t_irc_server *server;
     char *str, str_decoded[1024], *error;
 
-    POINTERS_EQUAL(NULL, irc_sasl_mechanism_scram (NULL, NULL, NULL, NULL,
-                                                   NULL, NULL));
+    STRCMP_EQUAL(NULL, irc_sasl_mechanism_scram (NULL, NULL, NULL, NULL,
+                                                 NULL, NULL));
 
     server = irc_server_alloc ("my_ircd");
 
@@ -79,7 +79,7 @@ TEST(IrcSasl, MechanismScram)
     error = NULL;
     str = irc_sasl_mechanism_scram (server, "sha256", "+",
                                     "user1", "secret", &error);
-    POINTERS_EQUAL(NULL, error);
+    STRCMP_EQUAL(NULL, error);
     CHECK(string_base64_decode (0, str, str_decoded) > 0);
     CHECK(strncmp (str_decoded, "n,,n=user1,r=", 13) == 0);
     free (str);

@@ -230,7 +230,7 @@ TEST(Trigger, RegexSplit)
 
     /* simple regex (implicit command "s") */
     WEE_CHECK_REGEX_SPLIT(0, 1, "/a/b");
-    POINTERS_EQUAL(NULL, regex[0].variable);
+    STRCMP_EQUAL(NULL, regex[0].variable);
     STRCMP_EQUAL("a", regex[0].str_regex);
     CHECK(regex[0].regex);
     STRCMP_EQUAL("b", regex[0].replace);
@@ -238,7 +238,7 @@ TEST(Trigger, RegexSplit)
 
     /* simple regex replace (command "s") */
     WEE_CHECK_REGEX_SPLIT(0, 1, "s/a/b");
-    POINTERS_EQUAL(NULL, regex[0].variable);
+    STRCMP_EQUAL(NULL, regex[0].variable);
     STRCMP_EQUAL("a", regex[0].str_regex);
     CHECK(regex[0].regex);
     STRCMP_EQUAL("b", regex[0].replace);
@@ -246,11 +246,11 @@ TEST(Trigger, RegexSplit)
 
     /* simple translate chars (command "y") */
     WEE_CHECK_REGEX_SPLIT(0, 1, "y/${chars:a-h}/${chars:A-H}");
-    POINTERS_EQUAL(NULL, regex[0].variable);
+    STRCMP_EQUAL(NULL, regex[0].variable);
     STRCMP_EQUAL("${chars:a-h}", regex[0].str_regex);
     POINTERS_EQUAL(NULL, regex[0].regex);
     STRCMP_EQUAL("${chars:A-H}", regex[0].replace);
-    POINTERS_EQUAL(NULL, regex[0].replace_escaped);
+    STRCMP_EQUAL(NULL, regex[0].replace_escaped);
 
     /* simple regex replace with variable (implicit command "s") */
     WEE_CHECK_REGEX_SPLIT(0, 1, "/a/b/var");
@@ -274,16 +274,16 @@ TEST(Trigger, RegexSplit)
     STRCMP_EQUAL("${chars:a-h}", regex[0].str_regex);
     POINTERS_EQUAL(NULL, regex[0].regex);
     STRCMP_EQUAL("${chars:A-H}", regex[0].replace);
-    POINTERS_EQUAL(NULL, regex[0].replace_escaped);
+    STRCMP_EQUAL(NULL, regex[0].replace_escaped);
 
     /* 2 regex replace separated by 3 spaces, without variables, implicit command "s" */
     WEE_CHECK_REGEX_SPLIT(0, 2, "/abc/def/   /ghi/jkl/");
-    POINTERS_EQUAL(NULL, regex[0].variable);
+    STRCMP_EQUAL(NULL, regex[0].variable);
     STRCMP_EQUAL("abc", regex[0].str_regex);
     CHECK(regex[0].regex);
     STRCMP_EQUAL("def", regex[0].replace);
     STRCMP_EQUAL("def", regex[0].replace_escaped);
-    POINTERS_EQUAL(NULL, regex[1].variable);
+    STRCMP_EQUAL(NULL, regex[1].variable);
     STRCMP_EQUAL("ghi", regex[1].str_regex);
     CHECK(regex[1].regex);
     STRCMP_EQUAL("jkl", regex[1].replace);
@@ -291,12 +291,12 @@ TEST(Trigger, RegexSplit)
 
     /* 2 regex replace separated by 3 spaces, without variables, command "s" */
     WEE_CHECK_REGEX_SPLIT(0, 2, "s/abc/def/   s/ghi/jkl/");
-    POINTERS_EQUAL(NULL, regex[0].variable);
+    STRCMP_EQUAL(NULL, regex[0].variable);
     STRCMP_EQUAL("abc", regex[0].str_regex);
     CHECK(regex[0].regex);
     STRCMP_EQUAL("def", regex[0].replace);
     STRCMP_EQUAL("def", regex[0].replace_escaped);
-    POINTERS_EQUAL(NULL, regex[1].variable);
+    STRCMP_EQUAL(NULL, regex[1].variable);
     STRCMP_EQUAL("ghi", regex[1].str_regex);
     CHECK(regex[1].regex);
     STRCMP_EQUAL("jkl", regex[1].replace);
@@ -304,16 +304,16 @@ TEST(Trigger, RegexSplit)
 
     /* 2 translate chars separated by 3 spaces, without variables, command "y" */
     WEE_CHECK_REGEX_SPLIT(0, 2, "y/abc/ABC/   y/ghi/GHI/");
-    POINTERS_EQUAL(NULL, regex[0].variable);
+    STRCMP_EQUAL(NULL, regex[0].variable);
     STRCMP_EQUAL("abc", regex[0].str_regex);
     POINTERS_EQUAL(NULL, regex[0].regex);
     STRCMP_EQUAL("ABC", regex[0].replace);
-    POINTERS_EQUAL(NULL, regex[0].replace_escaped);
-    POINTERS_EQUAL(NULL, regex[1].variable);
+    STRCMP_EQUAL(NULL, regex[0].replace_escaped);
+    STRCMP_EQUAL(NULL, regex[1].variable);
     STRCMP_EQUAL("ghi", regex[1].str_regex);
     POINTERS_EQUAL(NULL, regex[1].regex);
     STRCMP_EQUAL("GHI", regex[1].replace);
-    POINTERS_EQUAL(NULL, regex[1].replace_escaped);
+    STRCMP_EQUAL(NULL, regex[1].replace_escaped);
 
     /* 3 regex replace with variables and escaped replace, implicit command "s" */
     WEE_CHECK_REGEX_SPLIT(0, 3,
@@ -360,17 +360,17 @@ TEST(Trigger, RegexSplit)
     STRCMP_EQUAL("abc", regex[0].str_regex);
     POINTERS_EQUAL(NULL, regex[0].regex);
     STRCMP_EQUAL("ABC", regex[0].replace);
-    POINTERS_EQUAL(NULL, regex[0].replace_escaped);
+    STRCMP_EQUAL(NULL, regex[0].replace_escaped);
     STRCMP_EQUAL("var2", regex[1].variable);
     STRCMP_EQUAL("ghi", regex[1].str_regex);
     POINTERS_EQUAL(NULL, regex[1].regex);
     STRCMP_EQUAL("GHI", regex[1].replace);
-    POINTERS_EQUAL(NULL, regex[1].replace_escaped);
+    STRCMP_EQUAL(NULL, regex[1].replace_escaped);
     STRCMP_EQUAL("var3", regex[2].variable);
     STRCMP_EQUAL("mno", regex[2].str_regex);
     POINTERS_EQUAL(NULL, regex[2].regex);
     STRCMP_EQUAL("MNO", regex[2].replace);
-    POINTERS_EQUAL(NULL, regex[2].replace_escaped);
+    STRCMP_EQUAL(NULL, regex[2].replace_escaped);
 
     /* mixed regex replace and translate chars */
     WEE_CHECK_REGEX_SPLIT(0, 2,
@@ -384,7 +384,7 @@ TEST(Trigger, RegexSplit)
     STRCMP_EQUAL("${chars:x-z}", regex[1].str_regex);
     POINTERS_EQUAL(NULL, regex[1].regex);
     STRCMP_EQUAL("${chars:X-Z}", regex[1].replace);
-    POINTERS_EQUAL(NULL, regex[1].replace_escaped);
+    STRCMP_EQUAL(NULL, regex[1].replace_escaped);
 
     trigger_regex_free (&regex_count, &regex);
 }
@@ -571,7 +571,7 @@ TEST(Trigger, New)
             }
             LONGS_EQUAL(1, trigger->regex_count);
             CHECK(trigger->regex);
-            POINTERS_EQUAL(NULL, trigger->regex[0].variable);
+            STRCMP_EQUAL(NULL, trigger->regex[0].variable);
             STRCMP_EQUAL("abc", trigger->regex[0].str_regex);
             CHECK(trigger->regex[0].regex);
             STRCMP_EQUAL("def", trigger->regex[0].replace);
