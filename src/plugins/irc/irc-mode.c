@@ -672,6 +672,10 @@ irc_mode_user_set (struct t_irc_server *server, const char *modes,
             server->nick_modes = NULL;
         }
     }
+    while (modes && (modes[0] == ' '))
+    {
+        modes++;
+    }
     set_flag = '+';
     end = 0;
     while (modes && modes[0])

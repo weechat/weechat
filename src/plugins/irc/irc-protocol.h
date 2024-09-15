@@ -27,11 +27,9 @@
     irc_protocol_cb_##__command (                                       \
         struct t_irc_protocol_ctxt *ctxt)
 
-#define IRCB(__message, __decode_color, __keep_trailing_spaces,         \
-             __func_cb)                                                 \
+#define IRCB(__message, __decode_color, __func_cb)                      \
     { #__message,                                                       \
       __decode_color,                                                   \
-      __keep_trailing_spaces,                                           \
       &irc_protocol_cb_##__func_cb }
 
 #define IRC_PROTOCOL_MIN_PARAMS(__min_params)                           \
@@ -83,7 +81,6 @@ struct t_irc_protocol_msg
 {
     char *name;                     /* IRC message name                      */
     int decode_color;               /* decode color before calling function  */
-    int keep_trailing_spaces;       /* keep trailing spaces in message       */
     t_irc_recv_func *recv_function; /* function called when msg is received  */
 };
 
