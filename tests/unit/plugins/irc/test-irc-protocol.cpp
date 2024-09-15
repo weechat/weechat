@@ -5684,6 +5684,28 @@ TEST(IrcProtocolWithServer, 402)
 
 /*
  * Tests functions:
+ *   irc_protocol_cb_403 (no such channel)
+ */
+
+TEST(IrcProtocolWithServer, 403)
+{
+    SRV_INIT_JOIN;
+
+    /* not enough parameters */
+    RECV(":server 403");
+    CHECK_ERROR_PARAMS("403", 0, 2);
+    RECV(":server 403 alice");
+    CHECK_ERROR_PARAMS("403", 1, 2);
+
+    RECV(":server 403 alice #test2");
+    CHECK_SRV("--", "#test2", "irc_403,irc_numeric,nick_server,log3");
+    RECV(":server 403 alice #test2 : No such channel ");
+    CHECK_SRV("--", "#test2:  No such channel ",
+              "irc_403,irc_numeric,nick_server,log3");
+}
+
+/*
+ * Tests functions:
  *   irc_protocol_cb_404 (cannot send to channel)
  */
 
@@ -5709,6 +5731,176 @@ TEST(IrcProtocolWithServer, 404)
 
 /*
  * Tests functions:
+ *   irc_protocol_cb_405 (too many channels)
+ */
+
+TEST(IrcProtocolWithServer, 405)
+{
+    SRV_INIT_JOIN;
+
+    /* not enough parameters */
+    RECV(":server 405");
+    CHECK_ERROR_PARAMS("405", 0, 2);
+    RECV(":server 405 alice");
+    CHECK_ERROR_PARAMS("405", 1, 2);
+
+    RECV(":server 405 alice #test2");
+    CHECK_SRV("--", "#test2", "irc_405,irc_numeric,nick_server,log3");
+    RECV(":server 405 alice #test2 : You have joined too many channels ");
+    CHECK_SRV("--", "#test2:  You have joined too many channels ",
+              "irc_405,irc_numeric,nick_server,log3");
+}
+
+/*
+ * Tests functions:
+ *   irc_protocol_cb_406 (was no such nick)
+ */
+
+TEST(IrcProtocolWithServer, 406)
+{
+    SRV_INIT_JOIN;
+
+    /* not enough parameters */
+    RECV(":server 406");
+    CHECK_ERROR_PARAMS("406", 0, 2);
+    RECV(":server 406 alice");
+    CHECK_ERROR_PARAMS("406", 1, 2);
+
+    RECV(":server 406 alice bob");
+    CHECK_SRV("--", "bob", "irc_406,irc_numeric,nick_server,log3");
+    RECV(":server 406 alice bob : There was no such nick ");
+    CHECK_SRV("--", "bob:  There was no such nick ",
+              "irc_406,irc_numeric,nick_server,log3");
+}
+
+/*
+ * Tests functions:
+ *   irc_protocol_cb_407 (too many targets)
+ */
+
+TEST(IrcProtocolWithServer, 407)
+{
+    SRV_INIT_JOIN;
+
+    /* not enough parameters */
+    RECV(":server 407");
+    CHECK_ERROR_PARAMS("407", 0, 2);
+    RECV(":server 407 alice");
+    CHECK_ERROR_PARAMS("407", 1, 2);
+
+    RECV(":server 407 alice bob@host");
+    CHECK_SRV("--", "bob@host", "irc_407,irc_numeric,nick_server,log3");
+    RECV(":server 407 alice bob@host : Duplicate recipients. No message delivered ");
+    CHECK_SRV("--", "bob@host:  Duplicate recipients. No message delivered ",
+              "irc_407,irc_numeric,nick_server,log3");
+}
+
+/*
+ * Tests functions:
+ *   irc_protocol_cb_409 (no origin)
+ */
+
+TEST(IrcProtocolWithServer, 409)
+{
+    SRV_INIT_JOIN;
+
+    /* not enough parameters */
+    RECV(":server 409");
+    CHECK_ERROR_PARAMS("409", 0, 2);
+    RECV(":server 409 alice");
+    CHECK_ERROR_PARAMS("409", 1, 2);
+
+    RECV(":server 409 alice : No origin specified ");
+    CHECK_SRV("--", " No origin specified ",
+              "irc_409,irc_numeric,nick_server,log3");
+}
+
+/*
+ * Tests functions:
+ *   irc_protocol_cb_411 (no recipient)
+ */
+
+TEST(IrcProtocolWithServer, 411)
+{
+    SRV_INIT_JOIN;
+
+    /* not enough parameters */
+    RECV(":server 411");
+    CHECK_ERROR_PARAMS("411", 0, 2);
+    RECV(":server 411 alice");
+    CHECK_ERROR_PARAMS("411", 1, 2);
+
+    RECV(":server 411 alice : No recipient given (PRIVMSG) ");
+    CHECK_SRV("--", " No recipient given (PRIVMSG) ",
+              "irc_411,irc_numeric,nick_server,log3");
+}
+
+/*
+ * Tests functions:
+ *   irc_protocol_cb_412 (no text to send)
+ */
+
+TEST(IrcProtocolWithServer, 412)
+{
+    SRV_INIT_JOIN;
+
+    /* not enough parameters */
+    RECV(":server 412");
+    CHECK_ERROR_PARAMS("412", 0, 2);
+    RECV(":server 412 alice");
+    CHECK_ERROR_PARAMS("412", 1, 2);
+
+    RECV(":server 412 alice : No text to send ");
+    CHECK_SRV("--", " No text to send ",
+              "irc_412,irc_numeric,nick_server,log3");
+}
+
+/*
+ * Tests functions:
+ *   irc_protocol_cb_413 (no toplevel)
+ */
+
+TEST(IrcProtocolWithServer, 413)
+{
+    SRV_INIT_JOIN;
+
+    /* not enough parameters */
+    RECV(":server 413");
+    CHECK_ERROR_PARAMS("413", 0, 2);
+    RECV(":server 413 alice");
+    CHECK_ERROR_PARAMS("413", 1, 2);
+
+    RECV(":server 413 alice mask");
+    CHECK_SRV("--", "mask", "irc_413,irc_numeric,nick_server,log3");
+    RECV(":server 413 alice mask : No toplevel domain specified ");
+    CHECK_SRV("--", "mask:  No toplevel domain specified ",
+              "irc_413,irc_numeric,nick_server,log3");
+}
+
+/*
+ * Tests functions:
+ *   irc_protocol_cb_414 (wildcard in toplevel domain)
+ */
+
+TEST(IrcProtocolWithServer, 414)
+{
+    SRV_INIT_JOIN;
+
+    /* not enough parameters */
+    RECV(":server 414");
+    CHECK_ERROR_PARAMS("414", 0, 2);
+    RECV(":server 414 alice");
+    CHECK_ERROR_PARAMS("414", 1, 2);
+
+    RECV(":server 414 alice mask");
+    CHECK_SRV("--", "mask", "irc_414,irc_numeric,nick_server,log3");
+    RECV(":server 414 alice mask : Wildcard in toplevel domain ");
+    CHECK_SRV("--", "mask:  Wildcard in toplevel domain ",
+              "irc_414,irc_numeric,nick_server,log3");
+}
+
+/*
+ * Tests functions:
  *   irc_protocol_cb_415 (cannot send to channel)
  */
 
@@ -5730,6 +5922,110 @@ TEST(IrcProtocolWithServer, 415)
     RECV(":server 415 alice #test2 :Cannot send message to channel (+R)");
     CHECK_SRV("--", "#test2: Cannot send message to channel (+R)",
               "irc_415,irc_numeric,nick_server,log3");
+}
+
+/*
+ * Tests functions:
+ *   irc_protocol_cb_421 (unknown command)
+ */
+
+TEST(IrcProtocolWithServer, 421)
+{
+    SRV_INIT_JOIN;
+
+    /* not enough parameters */
+    RECV(":server 421");
+    CHECK_ERROR_PARAMS("421", 0, 2);
+    RECV(":server 421 alice");
+    CHECK_ERROR_PARAMS("421", 1, 2);
+
+    RECV(":server 421 alice UNKNOWN");
+    CHECK_SRV("--", "UNKNOWN", "irc_421,irc_numeric,nick_server,log3");
+    RECV(":server 421 alice UNKNOWN : Unknown command ");
+    CHECK_SRV("--", "UNKNOWN:  Unknown command ",
+              "irc_421,irc_numeric,nick_server,log3");
+}
+
+/*
+ * Tests functions:
+ *   irc_protocol_cb_422 (MOTD is missing)
+ */
+
+TEST(IrcProtocolWithServer, 422)
+{
+    SRV_INIT_JOIN;
+
+    /* not enough parameters */
+    RECV(":server 422");
+    CHECK_ERROR_PARAMS("422", 0, 2);
+    RECV(":server 422 alice");
+    CHECK_ERROR_PARAMS("422", 1, 2);
+
+    RECV(":server 422 alice : MOTD file is missing ");
+    CHECK_SRV("--", " MOTD file is missing ",
+              "irc_422,irc_numeric,nick_server,log3");
+}
+
+/*
+ * Tests functions:
+ *   irc_protocol_cb_423 (no administrative info)
+ */
+
+TEST(IrcProtocolWithServer, 423)
+{
+    SRV_INIT_JOIN;
+
+    /* not enough parameters */
+    RECV(":server 423");
+    CHECK_ERROR_PARAMS("423", 0, 2);
+    RECV(":server 423 alice");
+    CHECK_ERROR_PARAMS("423", 1, 2);
+
+    RECV(":server 423 alice server");
+    CHECK_SRV("--", "server", "irc_423,irc_numeric,nick_server,log3");
+    RECV(":server 423 alice server : No administrative info available ");
+    CHECK_SRV("--", "server:  No administrative info available ",
+              "irc_423,irc_numeric,nick_server,log3");
+}
+
+/*
+ * Tests functions:
+ *   irc_protocol_cb_424 (file error)
+ */
+
+TEST(IrcProtocolWithServer, 424)
+{
+    SRV_INIT_JOIN;
+
+    /* not enough parameters */
+    RECV(":server 424");
+    CHECK_ERROR_PARAMS("424", 0, 2);
+    RECV(":server 424 alice");
+    CHECK_ERROR_PARAMS("424", 1, 2);
+
+    RECV(":server 424 alice : File error doing read on /path/to/file ");
+    CHECK_SRV("--", " File error doing read on /path/to/file ",
+              "irc_424,irc_numeric,nick_server,log3");
+}
+
+/*
+ * Tests functions:
+ *   irc_protocol_cb_431 (no nickname given)
+ */
+
+TEST(IrcProtocolWithServer, 431)
+{
+    SRV_INIT_JOIN;
+
+    /* not enough parameters */
+    RECV(":server 431");
+    CHECK_ERROR_PARAMS("431", 0, 2);
+    RECV(":server 431 alice");
+    CHECK_ERROR_PARAMS("431", 1, 2);
+
+    RECV(":server 431 alice : No nickname given ");
+    CHECK_SRV("--", " No nickname given ",
+              "irc_431,irc_numeric,nick_server,log3");
 }
 
 /*
@@ -5858,6 +6154,30 @@ TEST(IrcProtocolWithServer, 433_connected)
 
 /*
  * Tests functions:
+ *   irc_protocol_cb_436 (nickname collision)
+ */
+
+TEST(IrcProtocolWithServer, 436)
+{
+    SRV_INIT_JOIN;
+
+    /* not enough parameters */
+    RECV(":server 436");
+    CHECK_ERROR_PARAMS("436", 0, 2);
+    RECV(":server 436 alice");
+    CHECK_ERROR_PARAMS("436", 1, 2);
+
+    RECV(":server 436 alice bob");
+    CHECK_SRV("--", "bob", "irc_436,irc_numeric,nick_server,log3");
+    RECV(":server 436 alice bob error");
+    CHECK_SRV("--", "bob: error", "irc_436,irc_numeric,nick_server,log3");
+    RECV(":server 436 alice bob : Nickname collision KILL ");
+    CHECK_SRV("--", "bob:  Nickname collision KILL ",
+              "irc_436,irc_numeric,nick_server,log3");
+}
+
+/*
+ * Tests functions:
  *   irc_protocol_cb_437 (nick/channel temporarily unavailable, not connected)
  */
 
@@ -5929,6 +6249,284 @@ TEST(IrcProtocolWithServer, 438)
 
 /*
  * Tests functions:
+ *   irc_protocol_cb_441 (user not in channel)
+ */
+
+TEST(IrcProtocolWithServer, 441)
+{
+    SRV_INIT_JOIN;
+
+    /* not enough parameters */
+    RECV(":server 441");
+    CHECK_ERROR_PARAMS("441", 0, 2);
+    RECV(":server 441 alice");
+    CHECK_ERROR_PARAMS("441", 1, 2);
+
+    RECV(":server 441 alice bob");
+    CHECK_SRV("--", "bob", "irc_441,irc_numeric,nick_server,log3");
+    RECV(":server 441 alice bob #test2");
+    CHECK_SRV("--", "bob: #test2", "irc_441,irc_numeric,nick_server,log3");
+    RECV(":server 441 alice bob #test2 : They aren't on that channel ");
+    CHECK_SRV("--", "bob: #test2  They aren't on that channel ",
+              "irc_441,irc_numeric,nick_server,log3");
+}
+
+/*
+ * Tests functions:
+ *   irc_protocol_cb_442 (not on channel)
+ */
+
+TEST(IrcProtocolWithServer, 442)
+{
+    SRV_INIT_JOIN;
+
+    /* not enough parameters */
+    RECV(":server 442");
+    CHECK_ERROR_PARAMS("442", 0, 2);
+    RECV(":server 442 alice");
+    CHECK_ERROR_PARAMS("442", 1, 2);
+
+    RECV(":server 442 alice #test2");
+    CHECK_SRV("--", "#test2", "irc_442,irc_numeric,nick_server,log3");
+    RECV(":server 442 alice #test2 : You're not on that channel ");
+    CHECK_SRV("--", "#test2:  You're not on that channel ",
+              "irc_442,irc_numeric,nick_server,log3");
+}
+
+/*
+ * Tests functions:
+ *   irc_protocol_cb_443 (user already on channel)
+ */
+
+TEST(IrcProtocolWithServer, 443)
+{
+    SRV_INIT_JOIN;
+
+    /* not enough parameters */
+    RECV(":server 443");
+    CHECK_ERROR_PARAMS("443", 0, 2);
+    RECV(":server 443 alice");
+    CHECK_ERROR_PARAMS("443", 1, 2);
+
+    RECV(":server 443 alice bob");
+    CHECK_SRV("--", "bob", "irc_443,irc_numeric,nick_server,log3");
+    RECV(":server 443 alice bob #test2");
+    CHECK_SRV("--", "bob: #test2", "irc_443,irc_numeric,nick_server,log3");
+    RECV(":server 443 alice bob #test2 : is already on channel ");
+    CHECK_SRV("--", "bob: #test2  is already on channel ",
+              "irc_443,irc_numeric,nick_server,log3");
+}
+
+/*
+ * Tests functions:
+ *   irc_protocol_cb_444 (user not logged in)
+ */
+
+TEST(IrcProtocolWithServer, 444)
+{
+    SRV_INIT_JOIN;
+
+    /* not enough parameters */
+    RECV(":server 444");
+    CHECK_ERROR_PARAMS("444", 0, 2);
+    RECV(":server 444 alice");
+    CHECK_ERROR_PARAMS("444", 1, 2);
+
+    RECV(":server 444 alice bob");
+    CHECK_SRV("--", "bob", "irc_444,irc_numeric,nick_server,log3");
+    RECV(":server 444 alice bob error");
+    CHECK_SRV("--", "bob: error", "irc_444,irc_numeric,nick_server,log3");
+    RECV(":server 444 alice bob : User not logged in ");
+    CHECK_SRV("--", "bob:  User not logged in ",
+              "irc_444,irc_numeric,nick_server,log3");
+}
+
+/*
+ * Tests functions:
+ *   irc_protocol_cb_445 (SUMMON has been disabled)
+ */
+
+TEST(IrcProtocolWithServer, 445)
+{
+    SRV_INIT_JOIN;
+
+    /* not enough parameters */
+    RECV(":server 445");
+    CHECK_ERROR_PARAMS("445", 0, 2);
+    RECV(":server 445 alice");
+    CHECK_ERROR_PARAMS("445", 1, 2);
+
+    RECV(":server 445 alice : SUMMON has been disabled ");
+    CHECK_SRV("--", " SUMMON has been disabled ",
+              "irc_445,irc_numeric,nick_server,log3");
+}
+
+/*
+ * Tests functions:
+ *   irc_protocol_cb_446 (USERS has been disabled)
+ */
+
+TEST(IrcProtocolWithServer, 446)
+{
+    SRV_INIT_JOIN;
+
+    /* not enough parameters */
+    RECV(":server 446");
+    CHECK_ERROR_PARAMS("446", 0, 2);
+    RECV(":server 446 alice");
+    CHECK_ERROR_PARAMS("446", 1, 2);
+
+    RECV(":server 446 alice : USERS has been disabled ");
+    CHECK_SRV("--", " USERS has been disabled ",
+              "irc_446,irc_numeric,nick_server,log3");
+}
+
+/*
+ * Tests functions:
+ *   irc_protocol_cb_451 (you are not registered)
+ */
+
+TEST(IrcProtocolWithServer, 451)
+{
+    SRV_INIT_JOIN;
+
+    /* not enough parameters */
+    RECV(":server 451");
+    CHECK_ERROR_PARAMS("451", 0, 2);
+    RECV(":server 451 alice");
+    CHECK_ERROR_PARAMS("451", 1, 2);
+
+    RECV(":server 451 alice : You have not registered ");
+    CHECK_SRV("--", " You have not registered ",
+              "irc_451,irc_numeric,nick_server,log3");
+}
+
+/*
+ * Tests functions:
+ *   irc_protocol_cb_461 (not enough parameters)
+ */
+
+TEST(IrcProtocolWithServer, 461)
+{
+    SRV_INIT_JOIN;
+
+    /* not enough parameters */
+    RECV(":server 461");
+    CHECK_ERROR_PARAMS("461", 0, 2);
+    RECV(":server 461 alice");
+    CHECK_ERROR_PARAMS("461", 1, 2);
+
+    RECV(":server 461 alice PRIVMSG");
+    CHECK_SRV("--", "PRIVMSG", "irc_461,irc_numeric,nick_server,log3");
+    RECV(":server 461 alice PRIVMSG : Not enough parameters ");
+    CHECK_SRV("--", "PRIVMSG:  Not enough parameters ",
+              "irc_461,irc_numeric,nick_server,log3");
+}
+
+/*
+ * Tests functions:
+ *   irc_protocol_cb_462 (you may not register)
+ */
+
+TEST(IrcProtocolWithServer, 462)
+{
+    SRV_INIT_JOIN;
+
+    /* not enough parameters */
+    RECV(":server 462");
+    CHECK_ERROR_PARAMS("462", 0, 2);
+    RECV(":server 462 alice");
+    CHECK_ERROR_PARAMS("462", 1, 2);
+
+    RECV(":server 462 alice : You may not reregister ");
+    CHECK_SRV("--", " You may not reregister ",
+              "irc_462,irc_numeric,nick_server,log3");
+}
+
+/*
+ * Tests functions:
+ *   irc_protocol_cb_463 (host not privileged)
+ */
+
+TEST(IrcProtocolWithServer, 463)
+{
+    SRV_INIT_JOIN;
+
+    /* not enough parameters */
+    RECV(":server 463");
+    CHECK_ERROR_PARAMS("463", 0, 2);
+    RECV(":server 463 alice");
+    CHECK_ERROR_PARAMS("463", 1, 2);
+
+    RECV(":server 463 alice : Your host isn't among the privileged ");
+    CHECK_SRV("--", " Your host isn't among the privileged ",
+              "irc_463,irc_numeric,nick_server,log3");
+}
+
+/*
+ * Tests functions:
+ *   irc_protocol_cb_464 (password incorrect)
+ */
+
+TEST(IrcProtocolWithServer, 464)
+{
+    SRV_INIT_JOIN;
+
+    /* not enough parameters */
+    RECV(":server 464");
+    CHECK_ERROR_PARAMS("464", 0, 2);
+    RECV(":server 464 alice");
+    CHECK_ERROR_PARAMS("464", 1, 2);
+
+    RECV(":server 464 alice : Password incorrect ");
+    CHECK_SRV("--", " Password incorrect ",
+              "irc_464,irc_numeric,nick_server,log3");
+}
+
+/*
+ * Tests functions:
+ *   irc_protocol_cb_465 (banned from this server)
+ */
+
+TEST(IrcProtocolWithServer, 465)
+{
+    SRV_INIT_JOIN;
+
+    /* not enough parameters */
+    RECV(":server 465");
+    CHECK_ERROR_PARAMS("465", 0, 2);
+    RECV(":server 465 alice");
+    CHECK_ERROR_PARAMS("465", 1, 2);
+
+    RECV(":server 465 alice : You are banned from this server ");
+    CHECK_SRV("--", " You are banned from this server ",
+              "irc_465,irc_numeric,nick_server,log3");
+}
+
+/*
+ * Tests functions:
+ *   irc_protocol_cb_467 (channel key already set)
+ */
+
+TEST(IrcProtocolWithServer, 467)
+{
+    SRV_INIT_JOIN;
+
+    /* not enough parameters */
+    RECV(":server 467");
+    CHECK_ERROR_PARAMS("467", 0, 2);
+    RECV(":server 467 alice");
+    CHECK_ERROR_PARAMS("467", 1, 2);
+
+    RECV(":server 467 alice #test2");
+    CHECK_SRV("--", "#test2", "irc_467,irc_numeric,nick_server,log3");
+    RECV(":server 467 alice #test2 : Channel key already set ");
+    CHECK_SRV("--", "#test2:  Channel key already set ",
+              "irc_467,irc_numeric,nick_server,log3");
+}
+
+/*
+ * Tests functions:
  *   irc_protocol_cb_470 (forwarding to another channel)
  */
 
@@ -5952,6 +6550,322 @@ TEST(IrcProtocolWithServer, 470)
     RECV(":server 470 alice #test #test2 : Forwarding to another channel ");
     CHECK_SRV("--", "#test: #test2  Forwarding to another channel ",
               "irc_470,irc_numeric,nick_server,log3");
+}
+
+/*
+ * Tests functions:
+ *   irc_protocol_cb_471 (channel is already full)
+ */
+
+TEST(IrcProtocolWithServer, 471)
+{
+    SRV_INIT_JOIN;
+
+    /* not enough parameters */
+    RECV(":server 471");
+    CHECK_ERROR_PARAMS("471", 0, 2);
+    RECV(":server 471 alice");
+    CHECK_ERROR_PARAMS("471", 1, 2);
+
+    RECV(":server 471 alice #test2");
+    CHECK_SRV("--", "#test2", "irc_471,irc_numeric,nick_server,log3");
+    RECV(":server 471 alice #test2 : Cannot join channel (+l) ");
+    CHECK_SRV("--", "#test2:  Cannot join channel (+l) ",
+              "irc_471,irc_numeric,nick_server,log3");
+}
+
+/*
+ * Tests functions:
+ *   irc_protocol_cb_472 (unknown mode char to me)
+ */
+
+TEST(IrcProtocolWithServer, 472)
+{
+    SRV_INIT_JOIN;
+
+    /* not enough parameters */
+    RECV(":server 472");
+    CHECK_ERROR_PARAMS("472", 0, 2);
+    RECV(":server 472 alice");
+    CHECK_ERROR_PARAMS("472", 1, 2);
+
+    RECV(":server 472 alice x");
+    CHECK_SRV("--", "x", "irc_472,irc_numeric,nick_server,log3");
+    RECV(":server 472 alice x : is unknown mode char to me ");
+    CHECK_SRV("--", "x:  is unknown mode char to me ",
+              "irc_472,irc_numeric,nick_server,log3");
+}
+
+/*
+ * Tests functions:
+ *   irc_protocol_cb_473 (cannot join (invite only))
+ */
+
+TEST(IrcProtocolWithServer, 473)
+{
+    SRV_INIT_JOIN;
+
+    /* not enough parameters */
+    RECV(":server 473");
+    CHECK_ERROR_PARAMS("473", 0, 2);
+    RECV(":server 473 alice");
+    CHECK_ERROR_PARAMS("473", 1, 2);
+
+    RECV(":server 473 alice #test2");
+    CHECK_SRV("--", "#test2", "irc_473,irc_numeric,nick_server,log3");
+    RECV(":server 473 alice #test2 : Cannot join channel (+i) ");
+    CHECK_SRV("--", "#test2:  Cannot join channel (+i) ",
+              "irc_473,irc_numeric,nick_server,log3");
+}
+
+/*
+ * Tests functions:
+ *   irc_protocol_cb_474 (cannot join (banned))
+ */
+
+TEST(IrcProtocolWithServer, 474)
+{
+    SRV_INIT_JOIN;
+
+    /* not enough parameters */
+    RECV(":server 474");
+    CHECK_ERROR_PARAMS("474", 0, 2);
+    RECV(":server 474 alice");
+    CHECK_ERROR_PARAMS("474", 1, 2);
+
+    RECV(":server 474 alice #test2");
+    CHECK_SRV("--", "#test2", "irc_474,irc_numeric,nick_server,log3");
+    RECV(":server 474 alice #test2 : Cannot join channel (+b) ");
+    CHECK_SRV("--", "#test2:  Cannot join channel (+b) ",
+              "irc_474,irc_numeric,nick_server,log3");
+}
+
+/*
+ * Tests functions:
+ *   irc_protocol_cb_475 (cannot join (bad key))
+ */
+
+TEST(IrcProtocolWithServer, 475)
+{
+    SRV_INIT_JOIN;
+
+    /* not enough parameters */
+    RECV(":server 475");
+    CHECK_ERROR_PARAMS("475", 0, 2);
+    RECV(":server 475 alice");
+    CHECK_ERROR_PARAMS("475", 1, 2);
+
+    RECV(":server 475 alice #test2");
+    CHECK_SRV("--", "#test2", "irc_475,irc_numeric,nick_server,log3");
+    RECV(":server 475 alice #test2 : Cannot join channel (+k) ");
+    CHECK_SRV("--", "#test2:  Cannot join channel (+k) ",
+              "irc_475,irc_numeric,nick_server,log3");
+}
+
+/*
+ * Tests functions:
+ *   irc_protocol_cb_476 (bad channel mask)
+ */
+
+TEST(IrcProtocolWithServer, 476)
+{
+    SRV_INIT_JOIN;
+
+    /* not enough parameters */
+    RECV(":server 476");
+    CHECK_ERROR_PARAMS("476", 0, 2);
+    RECV(":server 476 alice");
+    CHECK_ERROR_PARAMS("476", 1, 2);
+
+    RECV(":server 476 alice #test2");
+    CHECK_SRV("--", "#test2", "irc_476,irc_numeric,nick_server,log3");
+    RECV(":server 476 alice #test2 : Bad Channel Mask ");
+    CHECK_SRV("--", "#test2:  Bad Channel Mask ",
+              "irc_476,irc_numeric,nick_server,log3");
+}
+
+/*
+ * Tests functions:
+ *   irc_protocol_cb_477 (channel doesn't support modes)
+ */
+
+TEST(IrcProtocolWithServer, 477)
+{
+    SRV_INIT_JOIN;
+
+    /* not enough parameters */
+    RECV(":server 477");
+    CHECK_ERROR_PARAMS("477", 0, 2);
+    RECV(":server 477 alice");
+    CHECK_ERROR_PARAMS("477", 1, 2);
+
+    RECV(":server 477 alice #test2");
+    CHECK_SRV("--", "#test2", "irc_477,irc_numeric,nick_server,log3");
+    RECV(":server 477 alice #test2 : Channel doesn't support modes ");
+    CHECK_SRV("--", "#test2:  Channel doesn't support modes ",
+              "irc_477,irc_numeric,nick_server,log3");
+}
+
+/*
+ * Tests functions:
+ *   irc_protocol_cb_481 (you're not an IRC operator)
+ */
+
+TEST(IrcProtocolWithServer, 481)
+{
+    SRV_INIT_JOIN;
+
+    /* not enough parameters */
+    RECV(":server 481");
+    CHECK_ERROR_PARAMS("481", 0, 2);
+    RECV(":server 481 alice");
+    CHECK_ERROR_PARAMS("481", 1, 2);
+
+    RECV(":server 481 alice : Permission Denied- You're not an IRC operator ");
+    CHECK_SRV("--", " Permission Denied- You're not an IRC operator ",
+              "irc_481,irc_numeric,nick_server,log3");
+}
+
+/*
+ * Tests functions:
+ *   irc_protocol_cb_482 (you're not channel operator)
+ */
+
+TEST(IrcProtocolWithServer, 482)
+{
+    SRV_INIT_JOIN;
+
+    /* not enough parameters */
+    RECV(":server 482");
+    CHECK_ERROR_PARAMS("482", 0, 2);
+    RECV(":server 482 alice");
+    CHECK_ERROR_PARAMS("482", 1, 2);
+
+    RECV(":server 482 alice #test2");
+    CHECK_SRV("--", "#test2", "irc_482,irc_numeric,nick_server,log3");
+    RECV(":server 482 alice #test2 : You're not channel operator ");
+    CHECK_SRV("--", "#test2:  You're not channel operator ",
+              "irc_482,irc_numeric,nick_server,log3");
+}
+
+/*
+ * Tests functions:
+ *   irc_protocol_cb_483 (you can't kill a server!)
+ */
+
+TEST(IrcProtocolWithServer, 483)
+{
+    SRV_INIT_JOIN;
+
+    /* not enough parameters */
+    RECV(":server 483");
+    CHECK_ERROR_PARAMS("483", 0, 2);
+    RECV(":server 483 alice");
+    CHECK_ERROR_PARAMS("483", 1, 2);
+
+    RECV(":server 483 alice : You cant kill a server! ");
+    CHECK_SRV("--", " You cant kill a server! ",
+              "irc_483,irc_numeric,nick_server,log3");
+}
+
+/*
+ * Tests functions:
+ *   irc_protocol_cb_484 (your connection is restricted!)
+ */
+
+TEST(IrcProtocolWithServer, 484)
+{
+    SRV_INIT_JOIN;
+
+    /* not enough parameters */
+    RECV(":server 484");
+    CHECK_ERROR_PARAMS("484", 0, 2);
+    RECV(":server 484 alice");
+    CHECK_ERROR_PARAMS("484", 1, 2);
+
+    RECV(":server 484 alice : Your connection is restricted! ");
+    CHECK_SRV("--", " Your connection is restricted! ",
+              "irc_484,irc_numeric,nick_server,log3");
+}
+
+/*
+ * Tests functions:
+ *   irc_protocol_cb_485 (not the original channel operator)
+ */
+
+TEST(IrcProtocolWithServer, 485)
+{
+    SRV_INIT_JOIN;
+
+    /* not enough parameters */
+    RECV(":server 485");
+    CHECK_ERROR_PARAMS("485", 0, 2);
+    RECV(":server 485 alice");
+    CHECK_ERROR_PARAMS("485", 1, 2);
+
+    RECV(":server 485 alice : You're not the original channel operator ");
+    CHECK_SRV("--", " You're not the original channel operator ",
+              "irc_485,irc_numeric,nick_server,log3");
+}
+
+/*
+ * Tests functions:
+ *   irc_protocol_cb_491 (no O-lines for your host)
+ */
+
+TEST(IrcProtocolWithServer, 491)
+{
+    SRV_INIT_JOIN;
+
+    /* not enough parameters */
+    RECV(":server 491");
+    CHECK_ERROR_PARAMS("491", 0, 2);
+    RECV(":server 491 alice");
+    CHECK_ERROR_PARAMS("491", 1, 2);
+
+    RECV(":server 491 alice : No O-lines for your host ");
+    CHECK_SRV("--", " No O-lines for your host ",
+              "irc_491,irc_numeric,nick_server,log3");
+}
+
+/*
+ * Tests functions:
+ *   irc_protocol_cb_501 (unknown mode flag)
+ */
+
+TEST(IrcProtocolWithServer, 501)
+{
+    SRV_INIT_JOIN;
+
+    /* not enough parameters */
+    RECV(":server 501");
+    CHECK_ERROR_PARAMS("501", 0, 2);
+    RECV(":server 501 alice");
+    CHECK_ERROR_PARAMS("501", 1, 2);
+
+    RECV(":server 501 alice : Unknown MODE flag ");
+    CHECK_SRV("--", " Unknown MODE flag ",
+              "irc_501,irc_numeric,nick_server,log3");
+}
+
+/*
+ * Tests functions:
+ *   irc_protocol_cb_502 (can't change mode for other users)
+ */
+
+TEST(IrcProtocolWithServer, 502)
+{
+    SRV_INIT_JOIN;
+
+    /* not enough parameters */
+    RECV(":server 502");
+    CHECK_ERROR_PARAMS("502", 0, 2);
+    RECV(":server 502 alice");
+    CHECK_ERROR_PARAMS("502", 1, 2);
+
+    RECV(":server 502 alice : Cant change mode for other users ");
+    CHECK_SRV("--", " Cant change mode for other users ",
+              "irc_502,irc_numeric,nick_server,log3");
 }
 
 /*
@@ -6665,6 +7579,31 @@ TEST(IrcProtocolWithServer, 902_904_905_906)
     RECV(":server 906 alice : SASL authentication failed ");
     CHECK_SRV("--", " SASL authentication failed ",
               "irc_906,irc_numeric,nick_server,log3");
+}
+
+/*
+ * Tests functions:
+ *   irc_protocol_cb_936 (censored word)
+ */
+
+TEST(IrcProtocolWithServer, 936)
+{
+    SRV_INIT_JOIN;
+
+    /* not enough parameters */
+    RECV(":server 936");
+    CHECK_ERROR_PARAMS("936", 0, 2);
+    RECV(":server 936 alice");
+    CHECK_ERROR_PARAMS("936", 1, 2);
+
+    RECV(":server 936 alice #test");
+    CHECK_SRV("--", "#test", "irc_936,irc_numeric,nick_server,log3");
+    RECV(":server 936 alice #test CENSORED_WORD "
+         ": Your message contained a censored word, and was blocked ");
+    CHECK_CHAN("--",
+               "#test: CENSORED_WORD  Your message contained a censored word, "
+               "and was blocked ",
+               "irc_936,irc_numeric,nick_server,log3");
 }
 
 /*
