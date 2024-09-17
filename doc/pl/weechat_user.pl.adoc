@@ -4726,21 +4726,17 @@ Na przykład:
 ----
 
 Możesz teraz połączyć się na porcie 9000 używając WeeChat lub zdalnym interfejsem
-używając hasła
-Now you can connect on port 9000 with a WeeChat or a remote interface using
-password "moje_hasło".
+używając hasła 'mypassword'.
 
-// TRANSLATION MISSING
-To connect to an _api_ relay running locally with WeeChat:
+Połączenie z pośrednikiem _api_ działającym lokalnie z WeeChat:
 
 ----
 /remote add weechat http://localhost:9000 -password=mypassword
 /remote connect weechat
 ----
 
-// TRANSLATION MISSING
-To connect to an _api_ relay running elsewhere with WeeChat
-(TLS is highly recommended):
+Połączenie z pośrednikiem _api_ działającym gdzieś z WeeChat
+(TLS jest baredzo zalecany):
 
 ----
 /remote add weechat https://example.com:9000 -password=mypassword
