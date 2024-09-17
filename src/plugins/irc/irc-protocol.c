@@ -2511,7 +2511,7 @@ IRC_PROTOCOL_CALLBACK(notice)
         pos_target++;
     }
 
-    if (ctxt->nick && (pos_args[0] == '\01'))
+    if (ctxt->nick && (pos_args[0] == '\001'))
     {
         cap_echo_message = weechat_hashtable_has_key (ctxt->server->cap_list,
                                                       "echo-message");
@@ -3017,8 +3017,8 @@ IRC_PROTOCOL_CALLBACK(pong)
  *
  * Parameter "arguments" is the message arguments, for example:
  *
- *   \01VERSION\01
- *   \01TEST some arguments\01
+ *   \001VERSION\001
+ *   \001TEST some arguments\001
  */
 
 void
@@ -3059,11 +3059,11 @@ irc_protocol_privmsg_display_ctcp_send (struct t_irc_protocol_ctxt *ctxt,
  *   PRIVMSG #channel :message for channel here
  *   PRIVMSG @#channel :message for channel ops here
  *   PRIVMSG mynick :message for private here
- *   PRIVMSG #channel :\01ACTION is testing action\01
- *   PRIVMSG mynick :\01ACTION is testing action\01
- *   PRIVMSG #channel :\01VERSION\01
- *   PRIVMSG mynick :\01VERSION\01
- *   PRIVMSG mynick :\01DCC SEND file.txt 1488915698 50612 128\01
+ *   PRIVMSG #channel :\001ACTION is testing action\001
+ *   PRIVMSG mynick :\001ACTION is testing action\001
+ *   PRIVMSG #channel :\001VERSION\001
+ *   PRIVMSG mynick :\001VERSION\001
+ *   PRIVMSG mynick :\001DCC SEND file.txt 1488915698 50612 128\001
  */
 
 IRC_PROTOCOL_CALLBACK(privmsg)
@@ -3114,7 +3114,7 @@ IRC_PROTOCOL_CALLBACK(privmsg)
             irc_channel_join_smart_filtered_unmask (ptr_channel, ctxt->nick);
 
             /* CTCP to channel */
-            if (msg_args[0] == '\01')
+            if (msg_args[0] == '\001')
             {
                 if (ctxt->nick_is_me)
                 {
@@ -3218,7 +3218,7 @@ IRC_PROTOCOL_CALLBACK(privmsg)
         ptr_channel = irc_channel_search (ctxt->server, remote_nick);
 
         /* CTCP to user */
-        if (msg_args[0] == '\01')
+        if (msg_args[0] == '\001')
         {
             msg_already_received = weechat_hashtable_has_key (
                 ctxt->server->echo_msg_recv, ctxt->irc_message);

@@ -785,140 +785,140 @@ TEST(IrcProtocolWithServer, SendMessagesWithoutEchoMessage)
 
     /* action on channel (with /me) */
     server_input_data (buffer_chan, "/me action chan 1");
-    CHECK_SENT("PRIVMSG #test :\01ACTION action chan 1\01");
+    CHECK_SENT("PRIVMSG #test :\001ACTION action chan 1\001");
     CHECK_CHAN(" *", "alice action chan 1",
                "irc_privmsg,irc_action,self_msg,notify_none,no_highlight,"
                "nick_alice,log1");
 
     /* action on channel (with /me), no message */
     server_input_data (buffer_chan, "/me");
-    CHECK_SENT("PRIVMSG #test :\01ACTION\01");
+    CHECK_SENT("PRIVMSG #test :\001ACTION\001");
     CHECK_CHAN(" *", "alice",
                "irc_privmsg,irc_action,self_msg,notify_none,no_highlight,"
                "nick_alice,log1");
 
-    /* action on channel (with raw code: "\01ACTION") */
-    server_input_data (buffer_chan, "\01ACTION is testing\01");
-    CHECK_SENT("PRIVMSG #test :\01ACTION is testing\01");
+    /* action on channel (with raw code: "\001ACTION") */
+    server_input_data (buffer_chan, "\001ACTION is testing\001");
+    CHECK_SENT("PRIVMSG #test :\001ACTION is testing\001");
     CHECK_CHAN(" *", "alice is testing",
                "irc_privmsg,irc_action,self_msg,notify_none,no_highlight,"
                "nick_alice,log1");
 
-    /* action on channel (with raw code: "\01ACTION"), no message */
-    server_input_data (buffer_chan, "\01ACTION\01");
-    CHECK_SENT("PRIVMSG #test :\01ACTION\01");
+    /* action on channel (with raw code: "\001ACTION"), no message */
+    server_input_data (buffer_chan, "\001ACTION\001");
+    CHECK_SENT("PRIVMSG #test :\001ACTION\001");
     CHECK_CHAN(" *", "alice",
                "irc_privmsg,irc_action,self_msg,notify_none,no_highlight,"
                "nick_alice,log1");
 
     /* action on channel (with /action *) */
     server_input_data (buffer_chan, "/action * action chan 2");
-    CHECK_SENT("PRIVMSG #test :\01ACTION action chan 2\01");
+    CHECK_SENT("PRIVMSG #test :\001ACTION action chan 2\001");
     CHECK_CHAN(" *", "alice action chan 2",
                "irc_privmsg,irc_action,self_msg,notify_none,no_highlight,"
                "nick_alice,log1");
 
     /* action on channel (with /action <channel>) */
     server_input_data (buffer_server, "/action #test action chan 3");
-    CHECK_SENT("PRIVMSG #test :\01ACTION action chan 3\01");
+    CHECK_SENT("PRIVMSG #test :\001ACTION action chan 3\001");
     CHECK_CHAN(" *", "alice action chan 3",
                "irc_privmsg,irc_action,self_msg,notify_none,no_highlight,"
                "nick_alice,log1");
 
     /* action on channel (with /action <channel>), no message */
     server_input_data (buffer_chan, "/action #test");
-    CHECK_SENT("PRIVMSG #test :\01ACTION\01");
+    CHECK_SENT("PRIVMSG #test :\001ACTION\001");
     CHECK_CHAN(" *", "alice",
                "irc_privmsg,irc_action,self_msg,notify_none,no_highlight,"
                "nick_alice,log1");
 
     /* STATUSMSG action on channel (with /action @<channel>) */
     server_input_data (buffer_server, "/action @#test action chan 4");
-    CHECK_SENT("PRIVMSG @#test :\01ACTION action chan 4\01");
+    CHECK_SENT("PRIVMSG @#test :\001ACTION action chan 4\001");
     CHECK_CHAN("--", "Action -> @#test: alice action chan 4",
                "irc_privmsg,irc_action,self_msg,notify_none,no_highlight,"
                "nick_alice,log1");
 
     /* STATUSMSG action on channel (with /action @<channel>), no message */
     server_input_data (buffer_server, "/action @#test");
-    CHECK_SENT("PRIVMSG @#test :\01ACTION\01");
+    CHECK_SENT("PRIVMSG @#test :\001ACTION\001");
     CHECK_CHAN("--", "Action -> @#test: alice",
                "irc_privmsg,irc_action,self_msg,notify_none,no_highlight,"
                "nick_alice,log1");
 
     /* action on channel (with /ctcp <channel> action) */
     server_input_data (buffer_server, "/ctcp #test action action chan 5");
-    CHECK_SENT("PRIVMSG #test :\01ACTION action chan 5\01");
+    CHECK_SENT("PRIVMSG #test :\001ACTION action chan 5\001");
     CHECK_CHAN(" *", "alice action chan 5",
                "irc_privmsg,irc_action,self_msg,notify_none,no_highlight,"
                "nick_alice,log1");
 
     /* action on channel (with /ctcp <channel> action), no message */
     server_input_data (buffer_server, "/ctcp #test action");
-    CHECK_SENT("PRIVMSG #test :\01ACTION\01");
+    CHECK_SENT("PRIVMSG #test :\001ACTION\001");
     CHECK_CHAN(" *", "alice",
                "irc_privmsg,irc_action,self_msg,notify_none,no_highlight,"
                "nick_alice,log1");
 
     /* STATUSMSG action on channel (with /ctcp @<channel> action) */
     server_input_data (buffer_server, "/ctcp @#test action action chan ops");
-    CHECK_SENT("PRIVMSG @#test :\01ACTION action chan ops\01");
+    CHECK_SENT("PRIVMSG @#test :\001ACTION action chan ops\001");
     CHECK_CHAN("--", "Action -> @#test: alice action chan ops",
                "irc_privmsg,irc_action,self_msg,notify_none,no_highlight,"
                "nick_alice,log1");
 
     /* action in private (with /me) */
     server_input_data (buffer_pv, "/me action pv 1");
-    CHECK_SENT("PRIVMSG bob :\01ACTION action pv 1\01");
+    CHECK_SENT("PRIVMSG bob :\001ACTION action pv 1\001");
     CHECK_PV("bob", " *", "alice action pv 1",
              "irc_privmsg,irc_action,self_msg,notify_none,no_highlight,"
              "nick_alice,log1");
 
     /* action in private (with /ctcp) */
     server_input_data (buffer_server, "/ctcp bob action action pv 2");
-    CHECK_SENT("PRIVMSG bob :\01ACTION action pv 2\01");
+    CHECK_SENT("PRIVMSG bob :\001ACTION action pv 2\001");
     CHECK_PV("bob", " *", "alice action pv 2",
              "irc_privmsg,irc_action,self_msg,notify_none,no_highlight,"
              "nick_alice,log1");
 
     /* action in private (with /ctcp), without private buffer */
     server_input_data (buffer_server, "/ctcp bob2 action action pv 3");
-    CHECK_SENT("PRIVMSG bob2 :\01ACTION action pv 3\01");
+    CHECK_SENT("PRIVMSG bob2 :\001ACTION action pv 3\001");
     CHECK_SRV("--", "Action -> bob2: alice action pv 3",
               "irc_privmsg,irc_action,self_msg,notify_none,no_highlight,"
               "nick_alice,log1");
 
     /* CTCP version to channel */
     server_input_data (buffer_server, "/ctcp #test version");
-    CHECK_SENT("PRIVMSG #test :\01VERSION\01");
+    CHECK_SENT("PRIVMSG #test :\001VERSION\001");
     CHECK_CHAN("--", "CTCP query to #test: VERSION",
                "irc_privmsg,irc_ctcp,self_msg,notify_none,no_highlight,"
                "nick_alice,log1");
 
     /* unknown CTCP to channel */
     server_input_data (buffer_server, "/ctcp #test unknown1 some args");
-    CHECK_SENT("PRIVMSG #test :\01UNKNOWN1 some args\01");
+    CHECK_SENT("PRIVMSG #test :\001UNKNOWN1 some args\001");
     CHECK_CHAN("--", "CTCP query to #test: UNKNOWN1 some args",
                "irc_privmsg,irc_ctcp,self_msg,notify_none,no_highlight,"
                "nick_alice,log1");
 
     /* CTCP version to nick */
     server_input_data (buffer_server, "/ctcp bob version");
-    CHECK_SENT("PRIVMSG bob :\01VERSION\01");
+    CHECK_SENT("PRIVMSG bob :\001VERSION\001");
     CHECK_PV("bob", "--", "CTCP query to bob: VERSION",
              "irc_privmsg,irc_ctcp,self_msg,notify_none,no_highlight,"
              "nick_alice,log1");
 
     /* CTCP version to other nick (no private buffer) */
     server_input_data (buffer_server, "/ctcp other_nick version");
-    CHECK_SENT("PRIVMSG other_nick :\01VERSION\01");
+    CHECK_SENT("PRIVMSG other_nick :\001VERSION\001");
     CHECK_SRV("--", "CTCP query to other_nick: VERSION",
               "irc_privmsg,irc_ctcp,self_msg,notify_none,no_highlight,"
               "nick_alice,log1");
 
     /* unknown CTCP to nick */
     server_input_data (buffer_server, "/ctcp bob unknown2 some args");
-    CHECK_SENT("PRIVMSG bob :\01UNKNOWN2 some args\01");
+    CHECK_SENT("PRIVMSG bob :\001UNKNOWN2 some args\001");
     CHECK_PV("bob", "--", "CTCP query to bob: UNKNOWN2 some args",
              "irc_privmsg,irc_ctcp,self_msg,notify_none,no_highlight,"
              "nick_alice,log1");
@@ -1014,97 +1014,97 @@ TEST(IrcProtocolWithServer, SendMessagesWithEchoMessage)
 
     /* action on channel (with /me) */
     server_input_data (buffer_chan, "/me action chan 1");
-    CHECK_SENT("PRIVMSG #test :\01ACTION action chan 1\01");
+    CHECK_SENT("PRIVMSG #test :\001ACTION action chan 1\001");
     CHECK_NO_MSG;
 
     /* action on channel (with /me), no message */
     server_input_data (buffer_chan, "/me");
-    CHECK_SENT("PRIVMSG #test :\01ACTION\01");
+    CHECK_SENT("PRIVMSG #test :\001ACTION\001");
     CHECK_NO_MSG;
 
-    /* action on channel (with raw code: "\01ACTION") */
-    server_input_data (buffer_chan, "\01ACTION is testing\01");
-    CHECK_SENT("PRIVMSG #test :\01ACTION is testing\01");
+    /* action on channel (with raw code: "\001ACTION") */
+    server_input_data (buffer_chan, "\001ACTION is testing\001");
+    CHECK_SENT("PRIVMSG #test :\001ACTION is testing\001");
     CHECK_NO_MSG;
 
-    /* action on channel (with raw code: "\01ACTION"), no message */
-    server_input_data (buffer_chan, "\01ACTION\01");
-    CHECK_SENT("PRIVMSG #test :\01ACTION\01");
+    /* action on channel (with raw code: "\001ACTION"), no message */
+    server_input_data (buffer_chan, "\001ACTION\001");
+    CHECK_SENT("PRIVMSG #test :\001ACTION\001");
     CHECK_NO_MSG;
 
     /* action on channel (with /action *) */
     server_input_data (buffer_chan, "/action * action chan 2");
-    CHECK_SENT("PRIVMSG #test :\01ACTION action chan 2\01");
+    CHECK_SENT("PRIVMSG #test :\001ACTION action chan 2\001");
     CHECK_NO_MSG;
 
     /* action on channel (with /action <channel>) */
     server_input_data (buffer_server, "/action #test action chan 3");
-    CHECK_SENT("PRIVMSG #test :\01ACTION action chan 3\01");
+    CHECK_SENT("PRIVMSG #test :\001ACTION action chan 3\001");
     CHECK_NO_MSG;
 
     /* action on channel (with /action <channel>), no message */
     server_input_data (buffer_chan, "/action #test");
-    CHECK_SENT("PRIVMSG #test :\01ACTION\01");
+    CHECK_SENT("PRIVMSG #test :\001ACTION\001");
     CHECK_NO_MSG;
 
     /* STATUSMSG action on channel (with /action @<channel>) */
     server_input_data (buffer_server, "/action @#test action chan 4");
-    CHECK_SENT("PRIVMSG @#test :\01ACTION action chan 4\01");
+    CHECK_SENT("PRIVMSG @#test :\001ACTION action chan 4\001");
     CHECK_NO_MSG;
 
     /* STATUSMSG action on channel (with /action @<channel>), no message */
     server_input_data (buffer_server, "/action @#test");
-    CHECK_SENT("PRIVMSG @#test :\01ACTION\01");
+    CHECK_SENT("PRIVMSG @#test :\001ACTION\001");
     CHECK_NO_MSG;
 
     /* action on channel (with /ctcp <channel> action) */
     server_input_data (buffer_server, "/ctcp #test action action chan 5");
-    CHECK_SENT("PRIVMSG #test :\01ACTION action chan 5\01");
+    CHECK_SENT("PRIVMSG #test :\001ACTION action chan 5\001");
     CHECK_NO_MSG;
 
     /* STATUSMSG action on channel (with /ctcp @<channel> action) */
     server_input_data (buffer_server, "/ctcp @#test action action chan ops");
-    CHECK_SENT("PRIVMSG @#test :\01ACTION action chan ops\01");
+    CHECK_SENT("PRIVMSG @#test :\001ACTION action chan ops\001");
     CHECK_NO_MSG;
 
     /* action in private (with /me) */
     server_input_data (buffer_pv, "/me action pv 1");
-    CHECK_SENT("PRIVMSG bob :\01ACTION action pv 1\01");
+    CHECK_SENT("PRIVMSG bob :\001ACTION action pv 1\001");
     CHECK_NO_MSG;
 
     /* action in private (with /ctcp) */
     server_input_data (buffer_server, "/ctcp bob action action pv 2");
-    CHECK_SENT("PRIVMSG bob :\01ACTION action pv 2\01");
+    CHECK_SENT("PRIVMSG bob :\001ACTION action pv 2\001");
     CHECK_NO_MSG;
 
     /* action in private (with /ctcp), without private buffer */
     server_input_data (buffer_server, "/ctcp bob2 action action pv 3");
-    CHECK_SENT("PRIVMSG bob2 :\01ACTION action pv 3\01");
+    CHECK_SENT("PRIVMSG bob2 :\001ACTION action pv 3\001");
     CHECK_NO_MSG;
 
     /* CTCP version to channel */
     server_input_data (buffer_server, "/ctcp #test version");
-    CHECK_SENT("PRIVMSG #test :\01VERSION\01");
+    CHECK_SENT("PRIVMSG #test :\001VERSION\001");
     CHECK_NO_MSG;
 
     /* unknown CTCP to channel */
     server_input_data (buffer_server, "/ctcp #test unknown1 some args");
-    CHECK_SENT("PRIVMSG #test :\01UNKNOWN1 some args\01");
+    CHECK_SENT("PRIVMSG #test :\001UNKNOWN1 some args\001");
     CHECK_NO_MSG;
 
     /* CTCP version to nick */
     server_input_data (buffer_server, "/ctcp bob version");
-    CHECK_SENT("PRIVMSG bob :\01VERSION\01");
+    CHECK_SENT("PRIVMSG bob :\001VERSION\001");
     CHECK_NO_MSG;
 
     /* CTCP version to other nick (no private buffer) */
     server_input_data (buffer_server, "/ctcp other_nick version");
-    CHECK_SENT("PRIVMSG other_nick :\01VERSION\01");
+    CHECK_SENT("PRIVMSG other_nick :\001VERSION\001");
     CHECK_NO_MSG;
 
     /* unknown CTCP to nick */
     server_input_data (buffer_server, "/ctcp bob unknown2 some args");
-    CHECK_SENT("PRIVMSG bob :\01UNKNOWN2 some args\01");
+    CHECK_SENT("PRIVMSG bob :\001UNKNOWN2 some args\001");
     CHECK_NO_MSG;
 
     hashtable_remove (ptr_server->cap_list, "echo-message");
@@ -1526,12 +1526,12 @@ TEST(IrcProtocolWithServer, batch_without_batch_cap)
     /* multiline with CTCP */
     RECV(":server BATCH +ref draft/multiline #test");
     CHECK_NO_MSG;
-    RECV("@batch=ref :bob!user_b@host_b PRIVMSG #test :\01ACTION is testing");
+    RECV("@batch=ref :bob!user_b@host_b PRIVMSG #test :\001ACTION is testing");
     CHECK_CHAN(" *", "bob is testing",
                "irc_privmsg,irc_tag_batch=ref,irc_action,notify_message,"
                "nick_bob,host_user_b@host_b,log1");
-    RECV("@batch=ref :bob!user_b@host_b PRIVMSG #test :again\01");
-    CHECK_CHAN("bob", "again\01",
+    RECV("@batch=ref :bob!user_b@host_b PRIVMSG #test :again\001");
+    CHECK_CHAN("bob", "again\001",
                "irc_privmsg,irc_tag_batch=ref,notify_message,"
                "prefix_nick_248,nick_bob,host_user_b@host_b,log1");
     RECV(":server BATCH -ref");
@@ -1727,20 +1727,20 @@ TEST(IrcProtocolWithServer, batch_with_batch_cap)
     /* multiline with CTCP */
     RECV(":server BATCH +ref draft/multiline #test");
     CHECK_NO_MSG;
-    RECV("@batch=ref :bob!user_b@host_b PRIVMSG #test :\01ACTION is testing");
+    RECV("@batch=ref :bob!user_b@host_b PRIVMSG #test :\001ACTION is testing");
     CHECK_NO_MSG;
-    RECV("@batch=ref :bob!user_b@host_b PRIVMSG #test :again\01");
+    RECV("@batch=ref :bob!user_b@host_b PRIVMSG #test :again\001");
     CHECK_NO_MSG;
     RECV(":server BATCH -ref");
     CHECK_CHAN(" *", "bob is testing",
                "irc_privmsg,irc_tag_batch=ref,irc_batch_type_draft/multiline,"
                "irc_action,notify_message,nick_bob,host_user_b@host_b,log1");
-    CHECK_CHAN("bob", "again\01",
+    CHECK_CHAN("bob", "again\001",
                "irc_privmsg,irc_tag_batch=ref,irc_batch_type_draft/multiline,"
                "notify_message,prefix_nick_248,nick_bob,"
                "host_user_b@host_b,log1");
-    RECV(":bob!user_b@host_b PRIVMSG #test :prout\01");
-    CHECK_CHAN("bob", "prout\01",
+    RECV(":bob!user_b@host_b PRIVMSG #test :prout\001");
+    CHECK_CHAN("bob", "prout\001",
                "irc_privmsg,notify_message,prefix_nick_248,nick_bob,"
                "host_user_b@host_b,log1");
 
@@ -1767,9 +1767,9 @@ TEST(IrcProtocolWithServer, batch_with_batch_cap)
     /* multiline with CTCP */
     RECV(":server BATCH +ref draft/multiline #test");
     CHECK_NO_MSG;
-    RECV("@batch=ref :bob!user_b@host_b PRIVMSG #test :\01ACTION is testing");
+    RECV("@batch=ref :bob!user_b@host_b PRIVMSG #test :\001ACTION is testing");
     CHECK_NO_MSG;
-    RECV("@batch=ref :bob!user_b@host_b PRIVMSG #test :again\01");
+    RECV("@batch=ref :bob!user_b@host_b PRIVMSG #test :again\001");
     CHECK_NO_MSG;
     RECV(":server BATCH -ref");
     CHECK_CHAN(" *", "bob is testing\n"
@@ -2619,94 +2619,94 @@ TEST(IrcProtocolWithServer, notice)
                    "irc_notice,notify_private,nick_alice,host_user@host,log1");
 
         /* broken CTCP to channel */
-        RECV(":bob!user@host NOTICE #test :\01");
+        RECV(":bob!user@host NOTICE #test :\001");
         CHECK_SRV("--", "CTCP reply from bob: ",
                   "irc_notice,nick_bob,host_user@host,log1");
-        RECV(":bob!user@host NOTICE #test :\01TEST");
+        RECV(":bob!user@host NOTICE #test :\001TEST");
         CHECK_SRV("--", "CTCP reply from bob: TEST",
                   "irc_notice,nick_bob,host_user@host,log1");
-        RECV(":bob!user@host NOTICE #test :\01ACTION");
+        RECV(":bob!user@host NOTICE #test :\001ACTION");
         CHECK_SRV("--", "CTCP reply from bob: ACTION",
                   "irc_notice,nick_bob,host_user@host,log1");
-        RECV(":bob!user@host NOTICE #test :\01ACTION is testing");
+        RECV(":bob!user@host NOTICE #test :\001ACTION is testing");
         CHECK_SRV("--", "CTCP reply from bob: ACTION is testing",
                   "irc_notice,irc_ctcp,nick_bob,host_user@host,log1");
-        RECV(":bob!user@host NOTICE #test :\01VERSION");
+        RECV(":bob!user@host NOTICE #test :\001VERSION");
         CHECK_SRV("--", "CTCP reply from bob: VERSION",
                   "irc_notice,nick_bob,host_user@host,log1");
-        RECV(":bob!user@host NOTICE #test :\01DCC");
+        RECV(":bob!user@host NOTICE #test :\001DCC");
         CHECK_SRV("--", "CTCP reply from bob: DCC",
                   "irc_notice,nick_bob,host_user@host,log1");
-        RECV(":bob!user@host NOTICE #test :\01DCC SEND");
+        RECV(":bob!user@host NOTICE #test :\001DCC SEND");
         CHECK_SRV("--", "CTCP reply from bob: DCC SEND",
                   "irc_notice,irc_ctcp,nick_bob,host_user@host,log1");
-        RECV(":bob!user@host NOTICE #test :\01DCC SEND file.txt");
+        RECV(":bob!user@host NOTICE #test :\001DCC SEND file.txt");
         CHECK_SRV("--", "CTCP reply from bob: DCC SEND file.txt",
                   "irc_notice,irc_ctcp,nick_bob,host_user@host,log1");
-        RECV(":bob!user@host NOTICE #test :\01DCC SEND file.txt 1 2 3");
+        RECV(":bob!user@host NOTICE #test :\001DCC SEND file.txt 1 2 3");
         CHECK_SRV("--", "CTCP reply from bob: DCC SEND file.txt 1 2 3",
                   "irc_notice,irc_ctcp,nick_bob,host_user@host,log1");
 
         /* broken CTCP to user */
-        RECV(":bob!user@host NOTICE alice :\01");
+        RECV(":bob!user@host NOTICE alice :\001");
         CHECK_SRV("--", "CTCP reply from bob: ",
                   "irc_notice,nick_bob,host_user@host,log1");
-        RECV(":bob!user@host NOTICE alice :\01TEST");
+        RECV(":bob!user@host NOTICE alice :\001TEST");
         CHECK_SRV("--", "CTCP reply from bob: TEST",
                   "irc_notice,nick_bob,host_user@host,log1");
-        RECV(":bob!user@host NOTICE alice :\01ACTION");
+        RECV(":bob!user@host NOTICE alice :\001ACTION");
         CHECK_SRV("--", "CTCP reply from bob: ACTION",
                   "irc_notice,nick_bob,host_user@host,log1");
-        RECV(":bob!user@host NOTICE alice :\01ACTION is testing");
+        RECV(":bob!user@host NOTICE alice :\001ACTION is testing");
         CHECK_SRV("--", "CTCP reply from bob: ACTION is testing",
                   "irc_notice,irc_ctcp,nick_bob,host_user@host,log1");
-        RECV(":bob!user@host NOTICE alice :\01VERSION");
+        RECV(":bob!user@host NOTICE alice :\001VERSION");
         CHECK_SRV("--", "CTCP reply from bob: VERSION",
                   "irc_notice,nick_bob,host_user@host,log1");
-        RECV(":bob!user@host NOTICE alice :\01DCC");
+        RECV(":bob!user@host NOTICE alice :\001DCC");
         CHECK_SRV("--", "CTCP reply from bob: DCC",
                   "irc_notice,nick_bob,host_user@host,log1");
-        RECV(":bob!user@host NOTICE alice :\01DCC SEND");
+        RECV(":bob!user@host NOTICE alice :\001DCC SEND");
         CHECK_SRV("--", "CTCP reply from bob: DCC SEND",
                   "irc_notice,irc_ctcp,nick_bob,host_user@host,log1");
-        RECV(":bob!user@host NOTICE alice :\01DCC SEND file.txt");
+        RECV(":bob!user@host NOTICE alice :\001DCC SEND file.txt");
         CHECK_SRV("--", "CTCP reply from bob: DCC SEND file.txt",
                   "irc_notice,irc_ctcp,nick_bob,host_user@host,log1");
-        RECV(":bob!user@host NOTICE alice :\01DCC SEND file.txt 1 2 3");
+        RECV(":bob!user@host NOTICE alice :\001DCC SEND file.txt 1 2 3");
         CHECK_SRV("--", "CTCP reply from bob: DCC SEND file.txt 1 2 3",
                   "irc_notice,irc_ctcp,nick_bob,host_user@host,log1");
 
         /* valid CTCP to channel */
-        RECV(":bob!user@host NOTICE #test :\01TEST\01");
+        RECV(":bob!user@host NOTICE #test :\001TEST\001");
         CHECK_SRV("--", "CTCP reply from bob: TEST",
                   "irc_notice,nick_bob,host_user@host,log1");
-        RECV(":bob!user@host NOTICE #test :\01ACTION\01");
+        RECV(":bob!user@host NOTICE #test :\001ACTION\001");
         CHECK_SRV("--", "CTCP reply from bob: ACTION",
                   "irc_notice,nick_bob,host_user@host,log1");
-        RECV(":bob!user@host NOTICE #test :\01ACTION is testing\01");
+        RECV(":bob!user@host NOTICE #test :\001ACTION is testing\001");
         CHECK_SRV("--", "CTCP reply from bob: ACTION is testing",
                   "irc_notice,irc_ctcp,nick_bob,host_user@host,log1");
-        RECV(":bob!user@host NOTICE #test :\01VERSION\01");
+        RECV(":bob!user@host NOTICE #test :\001VERSION\001");
         CHECK_SRV("--", "CTCP reply from bob: VERSION",
                   "irc_notice,nick_bob,host_user@host,log1");
-        RECV(":bob!user@host NOTICE #test :\01DCC SEND file.txt 1 2 3\01");
+        RECV(":bob!user@host NOTICE #test :\001DCC SEND file.txt 1 2 3\001");
         CHECK_SRV("--", "CTCP reply from bob: DCC SEND file.txt 1 2 3",
                   "irc_notice,irc_ctcp,nick_bob,host_user@host,log1");
 
         /* valid CTCP to user */
-        RECV(":bob!user@host NOTICE alice :\01TEST\01");
+        RECV(":bob!user@host NOTICE alice :\001TEST\001");
         CHECK_SRV("--", "CTCP reply from bob: TEST",
                   "irc_notice,nick_bob,host_user@host,log1");
-        RECV(":bob!user@host NOTICE alice :\01ACTION\01");
+        RECV(":bob!user@host NOTICE alice :\001ACTION\001");
         CHECK_SRV("--", "CTCP reply from bob: ACTION",
                   "irc_notice,nick_bob,host_user@host,log1");
-        RECV(":bob!user@host NOTICE alice :\01ACTION is testing\01");
+        RECV(":bob!user@host NOTICE alice :\001ACTION is testing\001");
         CHECK_SRV("--", "CTCP reply from bob: ACTION is testing",
                   "irc_notice,irc_ctcp,nick_bob,host_user@host,log1");
-        RECV(":bob!user@host NOTICE alice :\01VERSION\01");
+        RECV(":bob!user@host NOTICE alice :\001VERSION\001");
         CHECK_SRV("--", "CTCP reply from bob: VERSION",
                   "irc_notice,nick_bob,host_user@host,log1");
-        RECV(":bob!user@host NOTICE alice :\01DCC SEND file.txt 1 2 3\01");
+        RECV(":bob!user@host NOTICE alice :\001DCC SEND file.txt 1 2 3\001");
         CHECK_SRV("--", "CTCP reply from bob: DCC SEND file.txt 1 2 3",
                   "irc_notice,irc_ctcp,nick_bob,host_user@host,log1");
 
@@ -3005,29 +3005,29 @@ TEST(IrcProtocolWithServer, privmsg)
         }
 
         /* broken CTCP to channel */
-        RECV(":bob!user@host PRIVMSG #test :\01");
+        RECV(":bob!user@host PRIVMSG #test :\001");
         CHECK_SENT(NULL);
         CHECK_CHAN("--", "Unknown CTCP requested by bob: ",
                    "irc_privmsg,irc_ctcp,nick_bob,host_user@host,log1");
-        RECV(":bob!user@host PRIVMSG #test :\01TEST");
+        RECV(":bob!user@host PRIVMSG #test :\001TEST");
         CHECK_SENT(NULL);
         CHECK_CHAN("--", "Unknown CTCP requested by bob: TEST",
                    "irc_privmsg,irc_ctcp,nick_bob,host_user@host,log1");
-        RECV(":bob!user@host PRIVMSG #test :\01ACTION");
+        RECV(":bob!user@host PRIVMSG #test :\001ACTION");
         CHECK_SENT(NULL);
         CHECK_CHAN(" *", "bob",
                    "irc_privmsg,irc_action,notify_message,nick_bob,"
                    "host_user@host,log1");
-        RECV(":bob!user@host PRIVMSG #test :\01ACTION is testing");
+        RECV(":bob!user@host PRIVMSG #test :\001ACTION is testing");
         CHECK_SENT(NULL);
         CHECK_CHAN(" *", "bob is testing",
                    "irc_privmsg,irc_action,notify_message,nick_bob,"
                    "host_user@host,log1");
         info = irc_ctcp_eval_reply (ptr_server,
                                     irc_ctcp_get_reply (ptr_server, "VERSION"));
-        RECV(":bob!user@host PRIVMSG #test :\01VERSION");
+        RECV(":bob!user@host PRIVMSG #test :\001VERSION");
         snprintf (message, sizeof (message),
-                  "NOTICE bob :\01VERSION %s\01", info);
+                  "NOTICE bob :\001VERSION %s\001", info);
         CHECK_SENT(message);
         CHECK_CHAN("--", "CTCP requested by bob: VERSION",
                    "irc_privmsg,irc_ctcp,nick_bob,host_user@host,log1");
@@ -3041,48 +3041,48 @@ TEST(IrcProtocolWithServer, privmsg)
                       "no_highlight,nick_alice,log1");
         }
         snprintf (message, sizeof (message),
-                  "NOTICE bob :\01VERSION %s\01", info);
+                  "NOTICE bob :\001VERSION %s\001", info);
         CHECK_SENT(message);
         free (info);
-        RECV(":bob!user@host PRIVMSG #test :\01DCC");
+        RECV(":bob!user@host PRIVMSG #test :\001DCC");
         CHECK_SENT(NULL);
         CHECK_NO_MSG;
-        RECV(":bob!user@host PRIVMSG #test :\01DCC SEND");
+        RECV(":bob!user@host PRIVMSG #test :\001DCC SEND");
         CHECK_SENT(NULL);
         CHECK_NO_MSG;
-        RECV(":bob!user@host PRIVMSG #test :\01DCC SEND file.txt");
+        RECV(":bob!user@host PRIVMSG #test :\001DCC SEND file.txt");
         CHECK_SENT(NULL);
         CHECK_SRV("=!=", "irc: cannot parse \"privmsg\" command", "");
-        RECV(":bob!user@host PRIVMSG #test :\01DCC SEND file.txt 1 2 3");
+        RECV(":bob!user@host PRIVMSG #test :\001DCC SEND file.txt 1 2 3");
         CHECK_SENT(NULL);
         CHECK_CORE("",
                    "xfer: incoming file from bob (0.0.0.1, irc." IRC_FAKE_SERVER
                    "), name: file.txt, 3 bytes (protocol: dcc)");
 
         /* broken CTCP to user */
-        RECV(":bob!user@host PRIVMSG alice :\01");
+        RECV(":bob!user@host PRIVMSG alice :\001");
         CHECK_SENT(NULL);
         CHECK_SRV("--", "Unknown CTCP requested by bob: ",
                   "irc_privmsg,irc_ctcp,nick_bob,host_user@host,log1");
-        RECV(":bob!user@host PRIVMSG alice :\01TEST");
+        RECV(":bob!user@host PRIVMSG alice :\001TEST");
         CHECK_SENT(NULL);
         CHECK_SRV("--", "Unknown CTCP requested by bob: TEST",
                   "irc_privmsg,irc_ctcp,nick_bob,host_user@host,log1");
-        RECV(":bob!user@host PRIVMSG alice :\01ACTION");
+        RECV(":bob!user@host PRIVMSG alice :\001ACTION");
         CHECK_SENT(NULL);
         CHECK_PV_CLOSE("bob", " *", "bob",
                        "irc_privmsg,irc_action,notify_private,nick_bob,"
                        "host_user@host,log1");
-        RECV(":bob!user@host PRIVMSG alice :\01ACTION is testing");
+        RECV(":bob!user@host PRIVMSG alice :\001ACTION is testing");
         CHECK_SENT(NULL);
         CHECK_PV_CLOSE("bob", " *", "bob is testing",
                        "irc_privmsg,irc_action,notify_private,nick_bob,"
                        "host_user@host,log1");
         info = irc_ctcp_eval_reply (ptr_server,
                                     irc_ctcp_get_reply (ptr_server, "VERSION"));
-        RECV(":bob!user@host PRIVMSG alice :\01VERSION");
+        RECV(":bob!user@host PRIVMSG alice :\001VERSION");
         snprintf (message, sizeof (message),
-                  "NOTICE bob :\01VERSION %s\01", info);
+                  "NOTICE bob :\001VERSION %s\001", info);
         CHECK_SENT(message);
         snprintf (message, sizeof (message),
                   "CTCP reply to bob: VERSION %s", info);
@@ -3094,16 +3094,16 @@ TEST(IrcProtocolWithServer, privmsg)
                       "no_highlight,nick_alice,log1");
         }
         free (info);
-        RECV(":bob!user@host PRIVMSG alice :\01DCC");
+        RECV(":bob!user@host PRIVMSG alice :\001DCC");
         CHECK_SENT(NULL);
         CHECK_NO_MSG;
-        RECV(":bob!user@host PRIVMSG alice :\01DCC SEND");
+        RECV(":bob!user@host PRIVMSG alice :\001DCC SEND");
         CHECK_SENT(NULL);
         CHECK_NO_MSG;
-        RECV(":bob!user@host PRIVMSG alice :\01DCC SEND file.txt");
+        RECV(":bob!user@host PRIVMSG alice :\001DCC SEND file.txt");
         CHECK_SENT(NULL);
         CHECK_SRV("=!=", "irc: cannot parse \"privmsg\" command", "");
-        RECV(":bob!user@host PRIVMSG alice :\01DCC SEND file.txt 1 2 3");
+        RECV(":bob!user@host PRIVMSG alice :\001DCC SEND file.txt 1 2 3");
         CHECK_SENT(NULL);
         CHECK_CORE("",
                    "xfer: incoming file from bob (0.0.0.1, irc." IRC_FAKE_SERVER
@@ -3111,23 +3111,23 @@ TEST(IrcProtocolWithServer, privmsg)
 
         /* valid CTCP to channel */
         RECV("@time=2023-12-25T10:29:09.456789Z "
-             ":bob!user@host PRIVMSG #test :\01TEST\01");
+             ":bob!user@host PRIVMSG #test :\001TEST\001");
         CHECK_SENT(NULL);
         RECV("@time=2023-12-25T10:29:09.456789Z "
-             ":bob!user@host PRIVMSG #test :\01ACTION\01");
+             ":bob!user@host PRIVMSG #test :\001ACTION\001");
         CHECK_SENT(NULL);
         CHECK_CHAN(" *", "bob",
                    "irc_privmsg,irc_tag_time=2023-12-25T10:29:09.456789Z,"
                    "irc_action,notify_message,nick_bob,host_user@host,log1");
         RECV("@time=2023-12-25T10:29:09.456789Z "
-             ":bob!user@host PRIVMSG #test :\01ACTION is testing with \02bold\02\01");
+             ":bob!user@host PRIVMSG #test :\001ACTION is testing with \002bold\002\001");
         CHECK_SENT(NULL);
         CHECK_CHAN(" *", "bob is testing with bold",
                    "irc_privmsg,irc_tag_time=2023-12-25T10:29:09.456789Z,"
                    "irc_action,notify_message,nick_bob,host_user@host,log1");
         RECV("@time=2023-12-25T10:29:09.456789Z "
-             ":bob!user@host PRIVMSG #test :\01PING 1703496549 905284\01");
-        CHECK_SENT("NOTICE bob :\01PING 1703496549 905284\01");
+             ":bob!user@host PRIVMSG #test :\001PING 1703496549 905284\001");
+        CHECK_SENT("NOTICE bob :\001PING 1703496549 905284\001");
         CHECK_CHAN("--", "CTCP requested by bob: PING 1703496549 905284",
                    "irc_privmsg,irc_tag_time=2023-12-25T10:29:09.456789Z,"
                    "irc_ctcp,nick_bob,host_user@host,log1");
@@ -3140,7 +3140,7 @@ TEST(IrcProtocolWithServer, privmsg)
                       "no_highlight,nick_alice,log1");
         }
         RECV("@time=2023-12-25T10:29:09.456789Z "
-             ":bob!user@host PRIVMSG #test :\01UNKNOWN\01");
+             ":bob!user@host PRIVMSG #test :\001UNKNOWN\001");
         CHECK_SENT(NULL);
         CHECK_CHAN("--", "Unknown CTCP requested by bob: UNKNOWN",
                    "irc_privmsg,irc_tag_time=2023-12-25T10:29:09.456789Z,"
@@ -3148,20 +3148,20 @@ TEST(IrcProtocolWithServer, privmsg)
 
         /* valid CTCP to ops of channel */
         RECV("@time=2023-12-25T10:29:09.456789Z "
-             ":bob!user@host PRIVMSG @#test :\01ACTION\01");
+             ":bob!user@host PRIVMSG @#test :\001ACTION\001");
         CHECK_SENT(NULL);
         CHECK_CHAN("--", "Action -> @#test: bob",
                    "irc_privmsg,irc_tag_time=2023-12-25T10:29:09.456789Z,"
                    "irc_action,notify_message,nick_bob,host_user@host,log1");
         RECV("@time=2023-12-25T10:29:09.456789Z "
-             ":bob!user@host PRIVMSG @#test :\01ACTION is testing\01");
+             ":bob!user@host PRIVMSG @#test :\001ACTION is testing\001");
         CHECK_SENT(NULL);
         CHECK_CHAN("--", "Action -> @#test: bob is testing",
                    "irc_privmsg,irc_tag_time=2023-12-25T10:29:09.456789Z,"
                    "irc_action,notify_message,nick_bob,host_user@host,log1");
         RECV("@time=2023-12-25T10:29:09.456789Z "
-             ":bob!user@host PRIVMSG @#test :\01PING 1703496549 905284\01");
-        CHECK_SENT("NOTICE bob :\01PING 1703496549 905284\01");
+             ":bob!user@host PRIVMSG @#test :\001PING 1703496549 905284\001");
+        CHECK_SENT("NOTICE bob :\001PING 1703496549 905284\001");
         CHECK_CHAN("--", "CTCP requested by bob: PING 1703496549 905284",
                    "irc_privmsg,irc_tag_time=2023-12-25T10:29:09.456789Z,"
                    "irc_ctcp,nick_bob,host_user@host,log1");
@@ -3174,7 +3174,7 @@ TEST(IrcProtocolWithServer, privmsg)
                       "no_highlight,nick_alice,log1");
         }
         RECV("@time=2023-12-25T10:29:09.456789Z "
-             ":bob!user@host PRIVMSG @#test :\01UNKNOWN\01");
+             ":bob!user@host PRIVMSG @#test :\001UNKNOWN\001");
         CHECK_SENT(NULL);
         CHECK_CHAN("--", "Unknown CTCP requested by bob: UNKNOWN",
                    "irc_privmsg,irc_tag_time=2023-12-25T10:29:09.456789Z,"
@@ -3185,35 +3185,35 @@ TEST(IrcProtocolWithServer, privmsg)
          * (case of bouncer or if echo-message capability is enabled)
          */
         RECV("@time=2023-12-25T10:29:09.456789Z "
-             ":alice!user@host PRIVMSG #test :\01VERSION\01");
+             ":alice!user@host PRIVMSG #test :\001VERSION\001");
         CHECK_SENT(NULL);
         CHECK_CHAN("--", "CTCP query to #test: VERSION",
                    "irc_privmsg,irc_tag_time=2023-12-25T10:29:09.456789Z,"
                    "irc_ctcp,self_msg,notify_none,no_highlight,nick_alice,"
                    "host_user@host,log1");
         RECV("@time=2023-12-25T10:29:09.456789Z "
-             ":alice!user@host PRIVMSG #test :\01ACTION\01");
+             ":alice!user@host PRIVMSG #test :\001ACTION\001");
         CHECK_SENT(NULL);
         CHECK_CHAN(" *", "alice",
                    "irc_privmsg,irc_tag_time=2023-12-25T10:29:09.456789Z,"
                    "irc_action,self_msg,notify_none,no_highlight,nick_alice,"
                    "host_user@host,log1");
         RECV("@time=2023-12-25T10:29:09.456789Z "
-             ":alice!user@host PRIVMSG #test :\01ACTION is testing with \02bold\02\01");
+             ":alice!user@host PRIVMSG #test :\001ACTION is testing with \002bold\002\001");
         CHECK_SENT(NULL);
         CHECK_CHAN(" *", "alice is testing with bold",
                    "irc_privmsg,irc_tag_time=2023-12-25T10:29:09.456789Z,"
                    "irc_action,self_msg,notify_none,no_highlight,nick_alice,"
                    "host_user@host,log1");
         RECV("@time=2023-12-25T10:29:09.456789Z "
-             ":alice!user@host PRIVMSG #test :\01PING 1703496549 905284\01");
+             ":alice!user@host PRIVMSG #test :\001PING 1703496549 905284\001");
         CHECK_SENT(NULL);
         CHECK_CHAN("--", "CTCP query to #test: PING 1703496549 905284",
                    "irc_privmsg,irc_tag_time=2023-12-25T10:29:09.456789Z,"
                    "irc_ctcp,self_msg,notify_none,no_highlight,"
                    "nick_alice,host_user@host,log1");
         RECV("@time=2023-12-25T10:29:09.456789Z "
-             ":alice!user@host PRIVMSG #test :\01UNKNOWN\01");
+             ":alice!user@host PRIVMSG #test :\001UNKNOWN\001");
         CHECK_SENT(NULL);
         CHECK_CHAN("--", "CTCP query to #test: UNKNOWN",
                    "irc_privmsg,irc_tag_time=2023-12-25T10:29:09.456789Z,"
@@ -3225,28 +3225,28 @@ TEST(IrcProtocolWithServer, privmsg)
          * (case of bouncer or if echo-message capability is enabled)
          */
         RECV("@time=2023-12-25T10:29:09.456789Z "
-             ":alice!user@host PRIVMSG @#test :\01ACTION\01");
+             ":alice!user@host PRIVMSG @#test :\001ACTION\001");
         CHECK_SENT(NULL);
         CHECK_CHAN("--", "Action -> @#test: alice",
                    "irc_privmsg,irc_tag_time=2023-12-25T10:29:09.456789Z,"
                    "irc_action,self_msg,notify_none,no_highlight,nick_alice,"
                    "host_user@host,log1");
         RECV("@time=2023-12-25T10:29:09.456789Z "
-             ":alice!user@host PRIVMSG @#test :\01ACTION is testing\01");
+             ":alice!user@host PRIVMSG @#test :\001ACTION is testing\001");
         CHECK_SENT(NULL);
         CHECK_CHAN("--", "Action -> @#test: alice is testing",
                    "irc_privmsg,irc_tag_time=2023-12-25T10:29:09.456789Z,"
                    "irc_action,self_msg,notify_none,no_highlight,nick_alice,"
                    "host_user@host,log1");
         RECV("@time=2023-12-25T10:29:09.456789Z "
-             ":alice!user@host PRIVMSG @#test :\01PING 1703496549 905284\01");
+             ":alice!user@host PRIVMSG @#test :\001PING 1703496549 905284\001");
         CHECK_SENT(NULL);
         CHECK_CHAN("--", "CTCP query to @#test: PING 1703496549 905284",
                    "irc_privmsg,irc_tag_time=2023-12-25T10:29:09.456789Z,"
                    "irc_ctcp,self_msg,notify_none,no_highlight,"
                    "nick_alice,host_user@host,log1");
         RECV("@time=2023-12-25T10:29:09.456789Z "
-             ":alice!user@host PRIVMSG @#test :\01UNKNOWN\01");
+             ":alice!user@host PRIVMSG @#test :\001UNKNOWN\001");
         CHECK_SENT(NULL);
         CHECK_CHAN("--", "CTCP query to @#test: UNKNOWN",
                    "irc_privmsg,irc_tag_time=2023-12-25T10:29:09.456789Z,"
@@ -3255,17 +3255,17 @@ TEST(IrcProtocolWithServer, privmsg)
 
         /* valid CTCP to user */
         RECV("@time=2023-12-25T10:29:09.456789Z "
-             ":bob!user@host PRIVMSG alice :\01TEST\01");
+             ":bob!user@host PRIVMSG alice :\001TEST\001");
         CHECK_SENT(NULL);
         RECV("@time=2023-12-25T10:29:09.456789Z "
-             ":bob!user@host PRIVMSG alice :\01ACTION\01");
+             ":bob!user@host PRIVMSG alice :\001ACTION\001");
         CHECK_SENT(NULL);
         RECV("@time=2023-12-25T10:29:09.456789Z "
-             ":bob!user@host PRIVMSG alice :\01ACTION is testing\01");
+             ":bob!user@host PRIVMSG alice :\001ACTION is testing\001");
         CHECK_SENT(NULL);
         RECV("@time=2023-12-25T10:29:09.456789Z "
-             ":bob!user@host PRIVMSG alice :\01PING 1703496549 905284\01");
-        CHECK_SENT("NOTICE bob :\01PING 1703496549 905284\01");
+             ":bob!user@host PRIVMSG alice :\001PING 1703496549 905284\001");
+        CHECK_SENT("NOTICE bob :\001PING 1703496549 905284\001");
         CHECK_SRV("--", "CTCP requested by bob: PING 1703496549 905284",
                   "irc_privmsg,irc_tag_time=2023-12-25T10:29:09.456789Z,"
                   "irc_ctcp,nick_bob,host_user@host,log1");
@@ -3278,7 +3278,7 @@ TEST(IrcProtocolWithServer, privmsg)
                       "no_highlight,nick_alice,log1");
         }
         RECV("@time=2023-12-25T10:29:09.456789Z "
-             ":bob!user@host PRIVMSG alice :\01UNKNOWN\01");
+             ":bob!user@host PRIVMSG alice :\001UNKNOWN\001");
         CHECK_SENT(NULL);
         CHECK_SRV("--", "Unknown CTCP requested by bob: UNKNOWN",
                   "irc_privmsg,irc_tag_time=2023-12-25T10:29:09.456789Z,"
@@ -3286,9 +3286,9 @@ TEST(IrcProtocolWithServer, privmsg)
         info = irc_ctcp_eval_reply (ptr_server,
                                     irc_ctcp_get_reply (ptr_server, "VERSION"));
         RECV("@time=2023-12-25T10:29:09.456789Z "
-             ":bob!user@host PRIVMSG alice :\01VERSION\01");
+             ":bob!user@host PRIVMSG alice :\001VERSION\001");
         snprintf (message, sizeof (message),
-                  "NOTICE bob :\01VERSION %s\01", info);
+                  "NOTICE bob :\001VERSION %s\001", info);
         CHECK_SENT(message);
         CHECK_SRV("--", "CTCP requested by bob: VERSION",
                   "irc_privmsg,irc_tag_time=2023-12-25T10:29:09.456789Z,"
@@ -3304,18 +3304,18 @@ TEST(IrcProtocolWithServer, privmsg)
                       "nick_alice,log1");
         }
         snprintf (message, sizeof (message),
-                  "NOTICE bob :\01VERSION %s\01", info);
+                  "NOTICE bob :\001VERSION %s\001", info);
         CHECK_SENT(message);
         free (info);
         info = hook_info_get (NULL, "weechat_site_download", "");
         RECV("@time=2023-12-25T10:29:09.456789Z "
-             ":bob!user@host PRIVMSG alice :\01SOURCE\01");
+             ":bob!user@host PRIVMSG alice :\001SOURCE\001");
         snprintf (message, sizeof (message),
-                  "NOTICE bob :\01SOURCE %s\01", info);
+                  "NOTICE bob :\001SOURCE %s\001", info);
         CHECK_SENT(message);
         free (info);
         RECV("@time=2023-12-25T10:29:09.456789Z "
-             ":bob!user@host PRIVMSG alice :\01DCC SEND file.txt 1 2 3\01");
+             ":bob!user@host PRIVMSG alice :\001DCC SEND file.txt 1 2 3\001");
         CHECK_SENT(NULL);
         CHECK_CORE("",
                    "xfer: incoming file from bob (0.0.0.1, irc." IRC_FAKE_SERVER
@@ -3327,11 +3327,11 @@ TEST(IrcProtocolWithServer, privmsg)
          * (case of bouncer or if echo-message capability is enabled)
          */
         RECV("@time=2023-12-25T10:29:09.456789Z "
-             ":alice!user@host PRIVMSG alice :\01CLIENTINFO\01");
+             ":alice!user@host PRIVMSG alice :\001CLIENTINFO\001");
         if (echo_message == 0)
         {
-            CHECK_SENT("NOTICE alice :\01CLIENTINFO ACTION CLIENTINFO DCC "
-                       "PING SOURCE TIME VERSION\01");
+            CHECK_SENT("NOTICE alice :\001CLIENTINFO ACTION CLIENTINFO DCC "
+                       "PING SOURCE TIME VERSION\001");
             CHECK_SRV("--", "CTCP requested by alice: CLIENTINFO",
                       "irc_privmsg,irc_tag_time=2023-12-25T10:29:09.456789Z,"
                       "irc_ctcp,nick_alice,host_user@host,log1");
@@ -3349,15 +3349,15 @@ TEST(IrcProtocolWithServer, privmsg)
                       "irc_ctcp,self_msg,notify_none,no_highlight,nick_alice,"
                       "host_user@host,log1");
             RECV("@time=2023-12-25T10:29:09.456789Z "
-                 ":alice!user@host PRIVMSG alice :\01CLIENTINFO\01");
-            CHECK_SENT("NOTICE alice :\01CLIENTINFO ACTION CLIENTINFO DCC "
-                       "PING SOURCE TIME VERSION\01");
+                 ":alice!user@host PRIVMSG alice :\001CLIENTINFO\001");
+            CHECK_SENT("NOTICE alice :\001CLIENTINFO ACTION CLIENTINFO DCC "
+                       "PING SOURCE TIME VERSION\001");
             CHECK_SRV("--", "CTCP requested by alice: CLIENTINFO",
                       "irc_privmsg,irc_tag_time=2023-12-25T10:29:09.456789Z,"
                       "irc_ctcp,nick_alice,host_user@host,log1");
             RECV("@time=2023-12-25T10:29:09.456789Z "
-                 ":alice!user@host NOTICE alice :\01CLIENTINFO DCC PING "
-                 "SOURCE TIME VERSION\01");
+                 ":alice!user@host NOTICE alice :\001CLIENTINFO DCC PING "
+                 "SOURCE TIME VERSION\001");
             CHECK_SENT(NULL);
             CHECK_SRV("--", "CTCP reply to alice: CLIENTINFO DCC PING "
                       "SOURCE TIME VERSION",
@@ -3365,8 +3365,8 @@ TEST(IrcProtocolWithServer, privmsg)
                       "irc_ctcp,irc_ctcp_reply,self_msg,notify_none,"
                       "no_highlight,nick_alice,host_user@host,log1");
             RECV("@time=2023-12-25T10:29:09.456789Z "
-                 ":alice!user@host NOTICE alice :\01CLIENTINFO DCC PING "
-                 "SOURCE TIME VERSION\01");
+                 ":alice!user@host NOTICE alice :\001CLIENTINFO DCC PING "
+                 "SOURCE TIME VERSION\001");
             CHECK_SENT(NULL);
             CHECK_SRV("--", "CTCP reply from alice: CLIENTINFO DCC PING "
                       "SOURCE TIME VERSION",

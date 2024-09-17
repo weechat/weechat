@@ -315,8 +315,8 @@ irc_input_send_user_message (struct t_gui_buffer *buffer, int flags,
         /* display only if capability "echo-message" is NOT enabled */
         if (!weechat_hashtable_has_key (ptr_server->cap_list, "echo-message"))
         {
-            action = ((strncmp (message, "\01ACTION ", 8) == 0)
-                      || (strncmp (message, "\01ACTION\01", 8) == 0));
+            action = ((strncmp (message, "\001ACTION ", 8) == 0)
+                      || (strncmp (message, "\001ACTION\001", 8) == 0));
             list_size = weechat_arraylist_size (list_messages);
             for (i = 0; i < list_size; i++)
             {

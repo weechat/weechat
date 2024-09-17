@@ -446,7 +446,7 @@ irc_command_me_channel_message (struct t_irc_server *server,
         IRC_SERVER_SEND_OUTQ_PRIO_HIGH | IRC_SERVER_SEND_RETURN_LIST
         | IRC_SERVER_SEND_MULTILINE,
         NULL,
-        "PRIVMSG %s :\01ACTION%s%s\01",
+        "PRIVMSG %s :\001ACTION%s%s\001",
         channel_name,
         (message && message[0]) ? " " : "",
         (message && message[0]) ? message : "");
@@ -6707,7 +6707,7 @@ IRC_COMMAND_CALLBACK(version)
             && irc_nick_search (ptr_server, ptr_channel, argv[1]))
         {
             irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
-                              "PRIVMSG %s :\01VERSION\01", argv[1]);
+                              "PRIVMSG %s :\001VERSION\001", argv[1]);
         }
         else
         {

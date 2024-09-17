@@ -378,11 +378,11 @@ logger_get_mask_expanded (struct t_gui_buffer *buffer, const char *mask)
         mask2[0] = '\0';
 
     /*
-     * we first replace directory separator (commonly '/') by \01 because
+     * we first replace directory separator (commonly '/') by \001 because
      * buffer mask can contain this char, and will be replaced by replacement
      * char ('_' by default)
      */
-    mask3 = weechat_string_replace (mask2, dir_separator, "\01");
+    mask3 = weechat_string_replace (mask2, dir_separator, "\001");
     if (!mask3)
         goto end;
 
@@ -407,7 +407,7 @@ logger_get_mask_expanded (struct t_gui_buffer *buffer, const char *mask)
 
     /* restore directory separator */
     mask7 = weechat_string_replace (mask6,
-                                    "\01", dir_separator);
+                                    "\001", dir_separator);
     if (!mask7)
         goto end;
 

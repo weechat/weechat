@@ -170,7 +170,7 @@ irc_ctcp_get_reply (struct t_irc_server *server, const char *ctcp)
 
 /*
  * Extracts CTCP type and arguments from message, which format is:
- *   \01TYPE arguments...\01
+ *   \001TYPE arguments...\001
  *
  * Strings *type and *arguments are set with type and arguments parsed,
  * both are set to NULL in case of error.
@@ -188,10 +188,10 @@ irc_ctcp_parse_type_arguments (const char *message,
     *type = NULL;
     *arguments = NULL;
 
-    if (message[0] != '\01')
+    if (message[0] != '\001')
         return;
 
-    pos_end = strrchr (message + 1, '\01');
+    pos_end = strrchr (message + 1, '\001');
     if (!pos_end)
         return;
 
@@ -263,7 +263,7 @@ irc_ctcp_display_reply_from_nick (struct t_irc_protocol_ctxt *ctxt,
 
     while (ptr_args && ptr_args[0])
     {
-        pos_end = strrchr (ptr_args + 1, '\01');
+        pos_end = strrchr (ptr_args + 1, '\001');
         if (pos_end)
             pos_end[0] = '\0';
 
@@ -396,7 +396,7 @@ irc_ctcp_display_reply_to_nick (struct t_irc_protocol_ctxt *ctxt,
 {
     char *ctcp_type, *ctcp_args, *ctcp_args_no_colors;
 
-    if (!ctxt || !arguments || (arguments[0] != '\01'))
+    if (!ctxt || !arguments || (arguments[0] != '\001'))
         return;
 
     irc_ctcp_parse_type_arguments (arguments, &ctcp_type, &ctcp_args);
@@ -434,10 +434,10 @@ irc_ctcp_reply_to_nick (struct t_irc_protocol_ctxt *ctxt,
     list_messages = NULL;
 
     /*
-     * replace any "\01" by a space to prevent any firewall attack via
+     * replace any "\001" by a space to prevent any firewall attack via
      * nf_conntrack_irc (CVE-2022-2663)
      */
-    dup_ctcp = weechat_string_replace (ctcp, "\01", " ");
+    dup_ctcp = weechat_string_replace (ctcp, "\001", " ");
     if (!dup_ctcp)
         goto end;
 
@@ -448,10 +448,10 @@ irc_ctcp_reply_to_nick (struct t_irc_protocol_ctxt *ctxt,
     if (arguments)
     {
         /*
-         * replace any "\01" by a space to prevent any firewall attack via
+         * replace any "\001" by a space to prevent any firewall attack via
          * nf_conntrack_irc (CVE-2022-2663)
          */
-        dup_args = weechat_string_replace (arguments, "\01", " ");
+        dup_args = weechat_string_replace (arguments, "\001", " ");
         if (!dup_args)
             goto end;
     }
@@ -461,7 +461,7 @@ irc_ctcp_reply_to_nick (struct t_irc_protocol_ctxt *ctxt,
         IRC_SERVER_SEND_OUTQ_PRIO_LOW | IRC_SERVER_SEND_RETURN_LIST
         | IRC_SERVER_SEND_MULTILINE,
         NULL,
-        "NOTICE %s :\01%s%s%s\01",
+        "NOTICE %s :\001%s%s%s\001",
         ctxt->nick,
         dup_ctcp_upper,
         (dup_args) ? " " : "",
@@ -478,13 +478,13 @@ irc_ctcp_reply_to_nick (struct t_irc_protocol_ctxt *ctxt,
             ptr_message = (const char *)weechat_arraylist_get (list_messages, i);
             if (!ptr_message)
                 break;
-            /* build arguments: '\01' + CTCP + ' ' + message + '\01' */
+            /* build arguments: '\001' + CTCP + ' ' + message + '\001' */
             length = 1 + strlen (dup_ctcp_upper) + 1 + strlen (ptr_message) + 1 + 1;
             message = malloc (length);
             if (message)
             {
                 snprintf (message, length,
-                          "\01%s %s\01", dup_ctcp_upper, ptr_message);
+                          "\001%s %s\001", dup_ctcp_upper, ptr_message);
                 irc_ctcp_display_reply_to_nick (ctxt, ctxt->nick, message);
                 free (message);
             }
@@ -1419,7 +1419,7 @@ irc_ctcp_recv (struct t_irc_protocol_ctxt *ctxt,
 
     while (ptr_args && ptr_args[0])
     {
-        pos_end = strrchr (ptr_args + 1, '\01');
+        pos_end = strrchr (ptr_args + 1, '\001');
         if (pos_end)
             pos_end[0] = '\0';
 
@@ -1648,7 +1648,7 @@ irc_ctcp_send (struct t_irc_server *server,
                       IRC_SERVER_SEND_OUTQ_PRIO_HIGH
                       | IRC_SERVER_SEND_MULTILINE,
                       NULL,
-                      "PRIVMSG %s :\01%s%s%s\01",
+                      "PRIVMSG %s :\001%s%s%s\001",
                       target,
                       type,
                       (args) ? " " : "",

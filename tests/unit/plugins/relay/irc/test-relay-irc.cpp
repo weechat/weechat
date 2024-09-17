@@ -825,7 +825,7 @@ TEST(RelayIrcWithClient, ParseCtcp)
 
     ctcp_type = (char *)0x01;
     ctcp_params = (char *)0x01;
-    relay_irc_parse_ctcp ("\01ACTION is testing\01", &ctcp_type, &ctcp_params);
+    relay_irc_parse_ctcp ("\001ACTION is testing\001", &ctcp_type, &ctcp_params);
     STRCMP_EQUAL("ACTION", ctcp_type);
     STRCMP_EQUAL("is testing", ctcp_params);
     free (ctcp_type);
@@ -833,7 +833,7 @@ TEST(RelayIrcWithClient, ParseCtcp)
 
     ctcp_type = (char *)0x01;
     ctcp_params = (char *)0x01;
-    relay_irc_parse_ctcp ("\01ACTION   is testing  \01 extra", &ctcp_type, &ctcp_params);
+    relay_irc_parse_ctcp ("\001ACTION   is testing  \001 extra", &ctcp_type, &ctcp_params);
     STRCMP_EQUAL("ACTION", ctcp_type);
     STRCMP_EQUAL("  is testing  ", ctcp_params);
     free (ctcp_type);
@@ -841,20 +841,20 @@ TEST(RelayIrcWithClient, ParseCtcp)
 
     ctcp_type = (char *)0x01;
     ctcp_params = (char *)0x01;
-    relay_irc_parse_ctcp ("\01VERSION\01", &ctcp_type, &ctcp_params);
+    relay_irc_parse_ctcp ("\001VERSION\001", &ctcp_type, &ctcp_params);
     STRCMP_EQUAL("VERSION", ctcp_type);
     STRCMP_EQUAL(NULL, ctcp_params);
     free (ctcp_type);
 
     ctcp_type = (char *)0x01;
     ctcp_params = (char *)0x01;
-    relay_irc_parse_ctcp ("\01ACTION is testing", &ctcp_type, &ctcp_params);
+    relay_irc_parse_ctcp ("\001ACTION is testing", &ctcp_type, &ctcp_params);
     STRCMP_EQUAL(NULL, ctcp_type);
     STRCMP_EQUAL(NULL, ctcp_params);
 
     ctcp_type = (char *)0x01;
     ctcp_params = (char *)0x01;
-    relay_irc_parse_ctcp ("\01VERSION", &ctcp_type, &ctcp_params);
+    relay_irc_parse_ctcp ("\001VERSION", &ctcp_type, &ctcp_params);
     STRCMP_EQUAL(NULL, ctcp_type);
     STRCMP_EQUAL(NULL, ctcp_params);
 

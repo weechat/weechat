@@ -166,8 +166,8 @@ xfer_chat_recv_cb (const void *pointer, void *data, int fd)
                     length--;
                 }
 
-                if ((ptr_buf[0] == '\01')
-                    && (ptr_buf[length - 1] == '\01'))
+                if ((ptr_buf[0] == '\001')
+                    && (ptr_buf[length - 1] == '\001'))
                 {
                     ptr_buf[length - 1] = '\0';
                     ptr_buf++;

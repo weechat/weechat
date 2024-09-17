@@ -1039,9 +1039,9 @@ relay_irc_send_channel_backlog (struct t_relay_client *client,
                                          (ptr_host) ? "!" : "",
                                          (ptr_host) ? ptr_host : "",
                                          channel,
-                                         (irc_action) ? "\01ACTION " : "",
+                                         (irc_action) ? "\001ACTION " : "",
                                          message,
-                                         (irc_action) ? "\01": "");
+                                         (irc_action) ? "\001": "");
                     }
                     break;
                 case RELAY_IRC_NUM_CMD:
@@ -1568,12 +1568,12 @@ relay_irc_recv_command_capab (struct t_relay_client *client,
  *
  * Examples:
  *
- *   message                   | type      | params
- *   --------------------------|-----------|-----------
- *   "\01ACTION is testing\01" | "ACTION"  | "is testing"
- *   "\01VERSION\01"           | "VERSION" | NULL
- *   "\01VERSION"              | NULL      | NULL
- *   "test"                    | NULL      | NULL
+ *   message                     | type      | params
+ *   ----------------------------|-----------|-------------
+ *   "\001ACTION is testing\001" | "ACTION"  | "is testing"
+ *   "\001VERSION\001"           | "VERSION" | NULL
+ *   "\001VERSION"               | NULL      | NULL
+ *   "test"                      | NULL      | NULL
  */
 
 void
@@ -1590,10 +1590,10 @@ relay_irc_parse_ctcp (const char *message, char **ctcp_type, char **ctcp_params)
     if (!message)
         return;
 
-    if (message[0] != '\01')
+    if (message[0] != '\001')
         return;
 
-    pos_end = strrchr (message + 1, '\01');
+    pos_end = strrchr (message + 1, '\001');
     if (!pos_end)
         return;
 

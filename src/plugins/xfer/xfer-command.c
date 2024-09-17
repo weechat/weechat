@@ -60,7 +60,7 @@ xfer_command_me (const void *pointer, void *data,
 
     if (!XFER_HAS_ENDED(ptr_xfer->status))
     {
-        xfer_chat_sendf (ptr_xfer, "\01ACTION %s\01\r\n",
+        xfer_chat_sendf (ptr_xfer, "\001ACTION %s\001\r\n",
                          (argv_eol[1]) ? argv_eol[1] : "");
         weechat_printf_date_tags (buffer,
                                   0,
