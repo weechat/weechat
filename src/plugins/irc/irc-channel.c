@@ -42,11 +42,16 @@
 #include "irc-upgrade.h"
 
 
-char *irc_channel_typing_state_string[IRC_CHANNEL_NUM_TYPING_STATES] =
-{ "off", "active", "paused", "done" };
+const char *const
+irc_channel_typing_state_string[IRC_CHANNEL_NUM_TYPING_STATES] = {
+    [IRC_CHANNEL_TYPING_STATE_OFF] = "off",
+    [IRC_CHANNEL_TYPING_STATE_ACTIVE] = "active",
+    [IRC_CHANNEL_TYPING_STATE_PAUSED] = "paused",
+    [IRC_CHANNEL_TYPING_STATE_DONE] = "done",
+};
 
 /* default CHANTYPES */
-char *irc_channel_default_chantypes = "#&";
+const char *const irc_channel_default_chantypes = "#&";
 
 
 char *irc_channel_get_buffer_input_prompt (struct t_irc_server *server,

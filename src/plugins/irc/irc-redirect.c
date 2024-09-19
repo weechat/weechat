@@ -36,8 +36,8 @@ struct t_irc_redirect_pattern *irc_redirect_patterns = NULL;
 struct t_irc_redirect_pattern *last_irc_redirect_pattern = NULL;
 
 /* default redirect patterns */
-struct t_irc_redirect_pattern irc_redirect_patterns_default[] =
-{
+/* TODO: make this const as flesh out prev/next outside the struct. */
+static struct t_irc_redirect_pattern irc_redirect_patterns_default[] = {
     { "ison", 0, 0,
       /*
        * ison: start: -

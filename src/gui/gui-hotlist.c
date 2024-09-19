@@ -54,8 +54,13 @@ struct t_hashtable *gui_hotlist_hashtable_add_conditions_options = NULL;
 int gui_add_hotlist = 1;                    /* 0 is for temporarily disable */
                                             /* hotlist add for all buffers  */
 
-char *gui_hotlist_priority_string[GUI_HOTLIST_NUM_PRIORITIES] =
-{ "low", "message", "private", "highlight" };
+static const char *const
+gui_hotlist_priority_string[GUI_HOTLIST_NUM_PRIORITIES] = {
+    [GUI_HOTLIST_LOW] = "low",
+    [GUI_HOTLIST_MESSAGE] = "message",
+    [GUI_HOTLIST_PRIVATE] = "private",
+    [GUI_HOTLIST_HIGHLIGHT] = "highlight",
+};
 
 
 /*

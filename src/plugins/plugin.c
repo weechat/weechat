@@ -144,7 +144,7 @@ plugin_search (const char *name)
 const char *
 plugin_get_name (struct t_weechat_plugin *plugin)
 {
-    static char *plugin_core = PLUGIN_CORE;
+    static const char *const plugin_core = PLUGIN_CORE;
 
     return (plugin) ? plugin->name : plugin_core;
 }

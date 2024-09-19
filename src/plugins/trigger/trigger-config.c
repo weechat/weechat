@@ -54,7 +54,8 @@ struct t_config_option *trigger_config_color_replace = NULL;
 struct t_config_option *trigger_config_color_trigger = NULL;
 struct t_config_option *trigger_config_color_trigger_disabled = NULL;
 
-char *trigger_config_default_list[][1 + TRIGGER_NUM_OPTIONS] =
+// C00
+const char *const trigger_config_default_list[][1 + TRIGGER_NUM_OPTIONS] =
 {
     /*
      * beep on highlight/private message, on following conditions:

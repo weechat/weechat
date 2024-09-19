@@ -48,19 +48,29 @@ WEECHAT_PLUGIN_PRIORITY(RELAY_PLUGIN_PRIORITY);
 
 struct t_weechat_plugin *weechat_relay_plugin = NULL;
 
-char *relay_protocol_string[] =        /* strings for protocols             */
+const char *const relay_protocol_string[] =        /* strings for protocols             */
 { "weechat", "irc", "api" };
 
-char *relay_status_string[] =          /* status strings for display        */
-{ N_("connecting"), N_("authenticating"),
-  N_("connected"), N_("authentication failed"), N_("disconnected")
+const char *const relay_status_string[] = {
+    [RELAY_STATUS_CONNECTING] = N_("connecting"),
+    [RELAY_STATUS_AUTHENTICATING] = N_("authenticating"),
+    [RELAY_STATUS_CONNECTED] = N_("connected"),
+    [RELAY_STATUS_AUTH_FAILED] = N_("authentication failed"),
+    [RELAY_STATUS_DISCONNECTED] = N_("disconnected"),
 };
-char *relay_status_name[] =            /* name of status (for signal/info)  */
-{ "connecting", "waiting_auth",
-  "connected", "auth_failed", "disconnected"
+const char *const relay_status_name[] = {
+    [RELAY_STATUS_CONNECTING] = "connecting",
+    [RELAY_STATUS_AUTHENTICATING] = "waiting_auth",
+    [RELAY_STATUS_CONNECTED] = "connected",
+    [RELAY_STATUS_AUTH_FAILED] = "auth_failed",
+    [RELAY_STATUS_DISCONNECTED] = "disconnected",
 };
-char *relay_msg_type_string[] =        /* prefix in raw buffer for msg      */
-{ "", "[PING]\n", "[PONG]\n", "[CLOSE]\n" };
+const char *const relay_msg_type_string[] = {
+    [RELAY_MSG_STANDARD] = "",
+    [RELAY_MSG_PING] = "[PING]\n",
+    [RELAY_MSG_PONG] = "[PONG]\n",
+    [RELAY_MSG_CLOSE] = "[CLOSE]\n",
+};
 
 struct t_hdata *relay_hdata_buffer = NULL;
 struct t_hdata *relay_hdata_key = NULL;

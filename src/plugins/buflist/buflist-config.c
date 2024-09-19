@@ -411,7 +411,8 @@ buflist_config_change_buflist (const void *pointer, void *data,
 char *
 buflist_config_add_eval_for_formats (const char *string)
 {
-    char *formats[] = { "format_buffer", "format_number", "indent",
+    static const char *const formats[] = {
+                        "format_buffer", "format_number", "indent",
                         "format_nick_prefix", "format_name",
                         "format_hotlist", "hotlist", "format_lag",
                         "color_hotlist", "format_tls_version", NULL };

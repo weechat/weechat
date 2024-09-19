@@ -1059,7 +1059,7 @@ relay_api_protocol_recv_http (struct t_relay_client *client)
 {
     int i, num_args;
     enum t_relay_api_protocol_rc return_code;
-    struct t_relay_api_protocol_cb protocol_cb[] = {
+    static const struct t_relay_api_protocol_cb protocol_cb[] = {
         /* method, resource, auth, min args, max args, callback */
         { "OPTIONS", "*",         0, 0, -1, &relay_api_protocol_cb_options   },
         { "POST",    "handshake", 0, 0,  0, &relay_api_protocol_cb_handshake },

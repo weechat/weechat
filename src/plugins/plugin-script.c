@@ -36,7 +36,7 @@
 #include "plugin-script-config.h"
 
 
-struct t_weechat_script_constant weechat_script_constants[] = {
+const struct t_weechat_script_constant weechat_script_constants[] = {
     WEECHAT_SCRIPT_CONST_INT(WEECHAT_RC_OK),
     WEECHAT_SCRIPT_CONST_INT(WEECHAT_RC_OK_EAT),
     WEECHAT_SCRIPT_CONST_INT(WEECHAT_RC_ERROR),

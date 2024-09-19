@@ -38,9 +38,18 @@
 
 struct t_hashtable *weechat_hdata = NULL;
 
-char *hdata_type_string[WEECHAT_NUM_HDATA_TYPES] =
-{ "other", "char", "integer", "long", "longlong", "string", "pointer", "time",
-  "hashtable", "shared_string" };
+const char *const hdata_type_string[WEECHAT_NUM_HDATA_TYPES] = {
+    [WEECHAT_HDATA_OTHER] = "other",
+    [WEECHAT_HDATA_CHAR] = "char",
+    [WEECHAT_HDATA_INTEGER] = "integer",
+    [WEECHAT_HDATA_LONG] = "long",
+    [WEECHAT_HDATA_LONGLONG] = "longlong",
+    [WEECHAT_HDATA_STRING] = "string",
+    [WEECHAT_HDATA_POINTER] = "pointer",
+    [WEECHAT_HDATA_TIME] = "time",
+    [WEECHAT_HDATA_HASHTABLE] = "hashtable",
+    [WEECHAT_HDATA_SHARED_STRING] = "shared_string",
+};
 
 
 /*

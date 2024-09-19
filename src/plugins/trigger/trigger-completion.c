@@ -327,9 +327,10 @@ trigger_completion_add_quoted_word (struct t_gui_completion *completion,
  * and therefore many words can be added to completion list.
  */
 
-void
+static void
 trigger_completion_add_default_for_hook (struct t_gui_completion *completion,
-                                         char *default_strings[], char *split)
+                                         const char *const default_strings[],
+                                         const char *const split)
 {
     const char *args;
     char **argv, **items;

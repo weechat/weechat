@@ -37,14 +37,32 @@
 #include "../plugins/plugin.h"
 
 
-char *proxy_option_string[PROXY_NUM_OPTIONS] =
-{ "type", "ipv6", "address", "port", "username", "password" };
-char *proxy_option_default[PROXY_NUM_OPTIONS] =
-{ "http", "auto", "127.0.0.1", "3128", "", "" };
-char *proxy_type_string[PROXY_NUM_TYPES] =
-{ "http", "socks4", "socks5" };
-char *proxy_ipv6_string[PROXY_NUM_IPV6] =
-{ "disable", "auto", "force" };
+const char *const proxy_option_string[PROXY_NUM_OPTIONS] = {
+    [PROXY_OPTION_TYPE] = "type",
+    [PROXY_OPTION_IPV6] = "ipv6",
+    [PROXY_OPTION_ADDRESS] = "address",
+    [PROXY_OPTION_PORT] = "port",
+    [PROXY_OPTION_USERNAME] = "username",
+    [PROXY_OPTION_PASSWORD] = "password",
+};
+static const char *const proxy_option_default[PROXY_NUM_OPTIONS] = {
+    [PROXY_OPTION_TYPE] = "http",
+    [PROXY_OPTION_IPV6] = "auto",
+    [PROXY_OPTION_ADDRESS] = "127.0.0.1",
+    [PROXY_OPTION_PORT] = "3128",
+    [PROXY_OPTION_USERNAME] = "",
+    [PROXY_OPTION_PASSWORD] = "",
+};
+const char *const proxy_type_string[PROXY_NUM_TYPES] = {
+    [PROXY_TYPE_HTTP] = "http",
+    [PROXY_TYPE_SOCKS4] = "socks4",
+    [PROXY_TYPE_SOCKS5] = "socks5",
+};
+static const char *const proxy_ipv6_string[PROXY_NUM_IPV6] = {
+    [PROXY_IPV6_DISABLE] = "disable",
+    [PROXY_IPV6_AUTO] = "auto",
+    [PROXY_IPV6_FORCE] = "force",
+};
 
 struct t_proxy *weechat_proxies = NULL;    /* first proxy                   */
 struct t_proxy *last_weechat_proxy = NULL; /* last proxy                    */

@@ -47,12 +47,27 @@ struct t_hashtable *fset_option_timer_options_changed = NULL;
 struct t_hook *fset_option_timer_hook = NULL;
 
 /* types */
-char *fset_option_type_string[FSET_OPTION_NUM_TYPES] =
-{ N_("boolean"), N_("integer"), N_("string"), N_("color"), N_("enum") };
-char *fset_option_type_string_short[FSET_OPTION_NUM_TYPES] =
-{ "bool", "int", "str", "col", "enum" };
-char *fset_option_type_string_tiny[FSET_OPTION_NUM_TYPES] =
-{ "b", "i", "s", "c", "e" };
+const char *const fset_option_type_string[FSET_OPTION_NUM_TYPES] = {
+    [FSET_OPTION_TYPE_BOOLEAN] = N_("boolean"),
+    [FSET_OPTION_TYPE_INTEGER] = N_("integer"),
+    [FSET_OPTION_TYPE_STRING] = N_("string"),
+    [FSET_OPTION_TYPE_COLOR] = N_("color"),
+    [FSET_OPTION_TYPE_ENUM] = N_("enum"),
+};
+const char *const fset_option_type_string_short[FSET_OPTION_NUM_TYPES] = {
+    [FSET_OPTION_TYPE_BOOLEAN] = "bool",
+    [FSET_OPTION_TYPE_INTEGER] = "int",
+    [FSET_OPTION_TYPE_STRING] = "str",
+    [FSET_OPTION_TYPE_COLOR] = "col",
+    [FSET_OPTION_TYPE_ENUM] =  "enum",
+};
+const char *const fset_option_type_string_tiny[FSET_OPTION_NUM_TYPES] = {
+    [FSET_OPTION_TYPE_BOOLEAN] = "b",
+    [FSET_OPTION_TYPE_INTEGER] = "i",
+    [FSET_OPTION_TYPE_STRING] = "s",
+    [FSET_OPTION_TYPE_COLOR] = "c",
+    [FSET_OPTION_TYPE_ENUM] = "e",
+};
 
 
 /*

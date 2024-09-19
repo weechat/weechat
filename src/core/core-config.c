@@ -1622,7 +1622,7 @@ config_weechat_update_cb (const void *pointer, void *data,
                           struct t_hashtable *data_read)
 {
     const char *ptr_config, *ptr_section, *ptr_option, *ptr_value;
-    char *new_commands[][2] = {
+    static const char *const new_commands[][2] = {
         /* old command, new command */
         { "/input jump_smart", "/buffer jump smart" },
         { "/input jump_last_buffer", "/buffer +" },
@@ -1641,7 +1641,7 @@ config_weechat_update_cb (const void *pointer, void *data,
         { "/input zoom_merged_buffer", "/buffer zoom" },
         { NULL, NULL },
     };
-    char *new_hotlist_sort[][2] = {
+    static const char *const new_hotlist_sort[][2] = {
         /* old hotlist sort (enum), new sort with fields */
         { "group_time_asc", "-priority,time,time_usec" },
         { "group_time_desc", "-priority,-time,-time_usec" },

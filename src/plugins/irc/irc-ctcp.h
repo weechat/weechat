@@ -28,11 +28,11 @@ struct t_irc_protocol_ctxt;
 
 struct t_irc_ctcp_reply
 {
-    char *name;                     /* CTCP name                             */
-    char *reply;                    /* CTCP reply format                     */
+    const char *name;               /* CTCP name                             */
+    const char *reply;              /* CTCP reply format                     */
 };
 
-extern struct t_irc_ctcp_reply irc_ctcp_default_reply[];
+extern const struct t_irc_ctcp_reply irc_ctcp_default_reply[];
 
 extern char *irc_ctcp_convert_legacy_format (const char *format);
 extern const char *irc_ctcp_get_default_reply (const char *ctcp);

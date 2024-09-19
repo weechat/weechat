@@ -63,9 +63,8 @@ struct t_proxy
 
 /* variables */
 
-extern char *proxy_option_string[];
-extern char *proxy_type_string[];
-extern char *proxy_ipv6_string[];
+extern const char *const proxy_option_string[];
+extern const char *const proxy_type_string[];
 extern struct t_proxy *weechat_proxies;
 extern struct t_proxy *last_weechat_proxy;
 extern struct t_proxy *weechat_temp_proxies;

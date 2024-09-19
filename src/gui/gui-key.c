@@ -65,20 +65,31 @@ struct t_gui_key *last_gui_default_key[GUI_KEY_NUM_CONTEXTS];
 int gui_keys_count[GUI_KEY_NUM_CONTEXTS];            /* keys number         */
 int gui_default_keys_count[GUI_KEY_NUM_CONTEXTS];    /* default keys number */
 
-char *gui_key_context_string[GUI_KEY_NUM_CONTEXTS] =
-{ "default", "search", "histsearch", "cursor", "mouse" };
+const char *const gui_key_context_string[GUI_KEY_NUM_CONTEXTS] = {
+    [GUI_KEY_CONTEXT_DEFAULT] = "default",
+    [GUI_KEY_CONTEXT_SEARCH] = "search",
+    [GUI_KEY_CONTEXT_HISTSEARCH] = "histsearch",
+    [GUI_KEY_CONTEXT_CURSOR] = "cursor",
+    [GUI_KEY_CONTEXT_MOUSE] = "mouse",
+};
 
-char *gui_key_focus_string[GUI_KEY_NUM_FOCUS] =
-{ "*", "chat", "bar", "item" };
+static const char *const gui_key_focus_string[GUI_KEY_NUM_FOCUS] = {
+    [GUI_KEY_FOCUS_ANY] = "*",
+    [GUI_KEY_FOCUS_CHAT] = "chat",
+    [GUI_KEY_FOCUS_BAR] = "bar",
+    [GUI_KEY_FOCUS_ITEM] = "item",
+};
 
-char *gui_key_modifier_list[] =
-{ "meta-", "ctrl-", "shift-", NULL };
+static const char *const gui_key_modifier_list[] = {
+    "meta-", "ctrl-", "shift-", NULL,
+};
 
-char *gui_key_alias_list[] =
-{ "f10", "f11", "f12", "f13", "f14", "f15", "f16", "f17", "f18", "f19", "f20",
-  "f0", "f1", "f2", "f3", "f4", "f5", "f6", "f7", "f8", "f9",
-  "home", "insert", "delete", "end", "backspace", "pgup", "pgdn",
-  "up", "down", "right", "left", "tab", "return", "comma", "space", NULL };
+static const char *const gui_key_alias_list[] = {
+    "f10", "f11", "f12", "f13", "f14", "f15", "f16", "f17", "f18", "f19", "f20",
+    "f0", "f1", "f2", "f3", "f4", "f5", "f6", "f7", "f8", "f9",
+    "home", "insert", "delete", "end", "backspace", "pgup", "pgdn",
+    "up", "down", "right", "left", "tab", "return", "comma", "space", NULL,
+};
 
 int gui_key_debug = 0;              /* 1 for key debug: display raw codes,  */
                                     /* do not execute associated actions    */

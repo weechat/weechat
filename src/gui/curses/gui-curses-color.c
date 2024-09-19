@@ -46,8 +46,9 @@
 
 #define GUI_COLOR_TIMER_TERM_COLORS 10
 
-struct t_gui_color gui_weechat_colors_bold[GUI_CURSES_NUM_WEECHAT_COLORS + 1] =
-{ { -1,                -1,                0,      "default"      },
+static const struct t_gui_color
+gui_weechat_colors_bold[GUI_CURSES_NUM_WEECHAT_COLORS + 1] = {
+  { -1,                -1,                0,      "default"      },
   { COLOR_BLACK,       COLOR_BLACK,       0,      "black"        },
   { COLOR_BLACK,       COLOR_BLACK + 8,   A_BOLD, "darkgray"     },
   { COLOR_RED,         COLOR_RED,         0,      "red"          },
@@ -66,8 +67,9 @@ struct t_gui_color gui_weechat_colors_bold[GUI_CURSES_NUM_WEECHAT_COLORS + 1] =
   { COLOR_WHITE,       COLOR_WHITE + 8,   A_BOLD, "white"        },
   { 0,                 0,                 0,      NULL           }
 };
-struct t_gui_color gui_weechat_colors_no_bold[GUI_CURSES_NUM_WEECHAT_COLORS + 1] =
-{ { -1,                -1,                0,      "default"      },
+static const struct t_gui_color
+gui_weechat_colors_no_bold[GUI_CURSES_NUM_WEECHAT_COLORS + 1] = {
+  { -1,                -1,                0,      "default"      },
   { COLOR_BLACK,       COLOR_BLACK,       0,      "black"        },
   { COLOR_BLACK + 8,   COLOR_BLACK + 8,   0,      "darkgray"     },
   { COLOR_RED,         COLOR_RED,         0,      "red"          },
@@ -86,7 +88,7 @@ struct t_gui_color gui_weechat_colors_no_bold[GUI_CURSES_NUM_WEECHAT_COLORS + 1]
   { COLOR_WHITE + 8,   COLOR_WHITE + 8,   0,      "white"        },
   { 0,                 0,                 0,      NULL           }
 };
-struct t_gui_color *gui_weechat_colors = gui_weechat_colors_bold;
+const struct t_gui_color *gui_weechat_colors = gui_weechat_colors_bold;
 
 /* terminal colors */
 int gui_color_term_has_colors = 0;       /* terminal supports colors?       */

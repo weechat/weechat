@@ -120,7 +120,7 @@ struct t_hook_exec_cb
 
 /* hook variables */
 
-extern char *hook_type_string[];
+extern const char *const hook_type_string[];
 extern struct t_hook *weechat_hooks[];
 extern struct t_hook *last_weechat_hook[];
 extern int hooks_count[];

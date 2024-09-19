@@ -54,26 +54,37 @@ WEECHAT_PLUGIN_PRIORITY(XFER_PLUGIN_PRIORITY);
 
 struct t_weechat_plugin *weechat_xfer_plugin = NULL;
 
-char *xfer_type_string[] =             /* strings for types                 */
-{ "file_recv_active", "file_recv_passive",
-  "file_send_active", "file_send_passive",
-  "chat_recv", "chat_send"
+const char *const xfer_type_string[] = {
+    [XFER_TYPE_FILE_RECV_ACTIVE] = "file_recv_active",
+    [XFER_TYPE_FILE_RECV_PASSIVE] = "file_recv_passive",
+    [XFER_TYPE_FILE_SEND_ACTIVE] = "file_send_active",
+    [XFER_TYPE_FILE_SEND_PASSIVE] = "file_send_passive",
+    [XFER_TYPE_CHAT_RECV] = "chat_recv",
+    [XFER_TYPE_CHAT_SEND] = "chat_send",
 };
 
-char *xfer_protocol_string[] =         /* strings for protocols             */
-{ "none", "dcc"
+const char *const xfer_protocol_string[] = {
+    [XFER_NO_PROTOCOL] = "none",
+    [XFER_PROTOCOL_DCC] = "dcc",
 };
 
-char *xfer_status_string[] =           /* strings for status                */
-{ N_("waiting"), N_("connecting"),
-  N_("active"), N_("done"), N_("failed"),
-  N_("aborted"), N_("hashing")
+const char *const xfer_status_string[] = {
+    [XFER_STATUS_WAITING] = N_("waiting"),
+    [XFER_STATUS_CONNECTING] = N_("connecting"),
+    [XFER_STATUS_ACTIVE] = N_("active"),
+    [XFER_STATUS_DONE] = N_("done"),
+    [XFER_STATUS_FAILED] = N_("failed"),
+    [XFER_STATUS_ABORTED] = N_("aborted"),
+    [XFER_STATUS_HASHING] =  N_("hashing"),
+    [XFER_STATUS_HASHED] = N_("hashed"),
 };
 
-char *xfer_hash_status_string[] =      /* strings for hash status           */
-{ "?",
-  N_("CRC in progress"), N_("CRC OK"),
-  N_("wrong CRC"), N_("CRC error")
+const char *const xfer_hash_status_string[] = {
+    [XFER_HASH_STATUS_UNKNOWN] = "?",
+    [XFER_HASH_STATUS_IN_PROGRESS] = N_("CRC in progress"),
+    [XFER_HASH_STATUS_MATCH] = N_("CRC OK"),
+    [XFER_HASH_STATUS_MISMATCH] = N_("wrong CRC"),
+    [XFER_HASH_STATUS_RESUME_ERROR] = N_("CRC error"),
 };
 
 struct t_xfer *xfer_list = NULL;       /* list of files/chats               */

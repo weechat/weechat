@@ -208,7 +208,7 @@ script_completion_scripts_files_cb (const void *pointer, void *data,
         for (i = 0; i < SCRIPT_NUM_LANGUAGES; i++)
         {
             pointers[0] = completion;
-            pointers[1] = script_extension[i];
+            pointers[1] = (void *)script_extension[i];
 
             /* look for files in <weechat_data_dir>/<language> */
             snprintf (directory, length,

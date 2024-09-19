@@ -844,7 +844,7 @@ irc_list_buffer_input_data (struct t_gui_buffer *buffer, const char *input_data)
     struct t_irc_server *ptr_server;
     const char *ptr_server_name, *ptr_input;
     int i;
-    char *actions[][2] = {
+    static const char *const actions[][2] = {
         { "<<", "/list -go 0"   },
         { ">>", "/list -go end" },
         { "<",  "/list -left"   },

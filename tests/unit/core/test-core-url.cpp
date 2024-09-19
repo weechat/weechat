@@ -27,7 +27,7 @@ extern "C"
 
 extern struct t_url_constant url_proxy_types[];
 extern struct t_url_constant url_protocols[];
-extern int weeurl_search_constant (struct t_url_constant *constants,
+extern int weeurl_search_constant (const struct t_url_constant *constants,
                                    const char *name);
 extern int weeurl_search_option (const char *name);
 }

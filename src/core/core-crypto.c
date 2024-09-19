@@ -48,7 +48,7 @@
 #define htobe64 htonll
 #endif
 
-char *weecrypto_hash_algo_string[] = {
+static const char *const weecrypto_hash_algo_string[] = {
     "crc32",
     "md5",
     "sha1",
@@ -78,7 +78,7 @@ char *weecrypto_hash_algo_string[] = {
 #endif
     NULL,
 };
-int weecrypto_hash_algo[] = {
+static const int weecrypto_hash_algo[] = {
     GCRY_MD_CRC32,
     GCRY_MD_MD5,
     GCRY_MD_SHA1,
@@ -108,13 +108,13 @@ int weecrypto_hash_algo[] = {
 #endif
 };
 
-char *weecrypto_cipher_string[] = {
+static const char *const weecrypto_cipher_string[] = {
     "aes128",
     "aes192",
     "aes256",
     NULL,
 };
-int weecrypto_cipher[] = {
+static const int weecrypto_cipher[] = {
     GCRY_CIPHER_AES128,
     GCRY_CIPHER_AES192,
     GCRY_CIPHER_AES256,

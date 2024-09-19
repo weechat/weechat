@@ -37,6 +37,10 @@ if (CMAKE_C_COMPILER_ID STREQUAL "GNU")
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wformat-overflow=2 -Wformat-truncation=2")
 endif()
 
+# Enable poor-man's LTO aka linker garbage collection
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -ffunction-sections -fdata-sections")
+set(CMAKE_C_LINK_FLAGS "${CMAKE_C_LINK_FLAGS} -Wl,--gc-sections")
+
 # version
 execute_process(COMMAND "${CMAKE_SOURCE_DIR}/version.sh" devel-major OUTPUT_VARIABLE VERSION_MAJOR)
 execute_process(COMMAND "${CMAKE_SOURCE_DIR}/version.sh" devel-minor OUTPUT_VARIABLE VERSION_MINOR)

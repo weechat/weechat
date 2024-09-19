@@ -23,7 +23,7 @@
 #ifdef HAVE_SYS_RESOURCE_H
 struct t_rlimit_resource
 {
-    char *name;                        /* name of resource                  */
+    const char *name;                  /* name of resource                  */
     int resource;                      /* value of resource                 */
 };
 #endif /* HAVE_SYS_RESOURCE_H */

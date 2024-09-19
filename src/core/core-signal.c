@@ -42,8 +42,8 @@
 #include "../plugins/plugin.h"
 
 
-struct t_signal signal_list[] =
-{ { SIGHUP, "hup" },
+const struct t_signal signal_list[] = {
+  { SIGHUP, "hup" },
   { SIGINT, "int" },
   { SIGQUIT, "quit" },
   { SIGKILL, "kill" },

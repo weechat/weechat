@@ -23,10 +23,10 @@
 struct t_signal
 {
     int signal;                        /* signal number                     */
-    char *name;                        /* signal name, eg "hup" for SIGHUP  */
+    const char *name;                  /* signal name, eg "hup" for SIGHUP  */
 };
 
-extern struct t_signal signal_list[];
+extern const struct t_signal signal_list[];
 
 extern int signal_search_number (int signal_number);
 extern int signal_search_name (const char *name);

@@ -29,7 +29,7 @@ extern struct t_config_file *alias_config_file;
 extern struct t_config_section *alias_config_section_cmd;
 extern struct t_config_section *alias_config_section_completion;
 
-extern char *alias_default[][3];
+extern const char *const alias_default[][3];
 
 extern void alias_config_cmd_new_option (const char *name,
                                          const char *command);

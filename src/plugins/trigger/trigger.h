@@ -128,17 +128,17 @@ struct t_trigger
 };
 
 extern struct t_weechat_plugin *weechat_trigger_plugin;
-extern char *trigger_option_string[];
-extern char *trigger_option_default[];
-extern char *trigger_hook_type_string[];
-extern char *trigger_hook_option_values;
-extern char *trigger_hook_default_arguments[];
-extern char *trigger_hook_default_rc[];
-extern char trigger_regex_command[];
-extern char *trigger_hook_regex_default_var[];
-extern char *trigger_return_code_string[];
-extern int trigger_return_code[];
-extern char *trigger_post_action_string[];
+extern const char *const trigger_option_string[];
+extern const char *const trigger_option_default[];
+extern const char *const trigger_hook_type_string[];
+extern const char *const trigger_hook_option_values;
+extern const char *const trigger_hook_default_arguments[];
+extern const char *const trigger_hook_default_rc[];
+extern const char trigger_regex_command[];
+extern const char *const trigger_hook_regex_default_var[];
+extern const char *const trigger_return_code_string[];
+extern const int trigger_return_code[];
+extern const char *const trigger_post_action_string[];
 extern struct t_trigger *triggers;
 extern struct t_trigger *last_trigger;
 extern int triggers_count;

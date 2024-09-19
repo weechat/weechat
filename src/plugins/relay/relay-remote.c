@@ -42,11 +42,24 @@
 #endif
 
 
-char *relay_remote_option_string[RELAY_REMOTE_NUM_OPTIONS] =
-{ "url", "autoconnect", "autoreconnect_delay", "proxy", "tls_verify",
-  "password", "totp_secret" };
-char *relay_remote_option_default[RELAY_REMOTE_NUM_OPTIONS] =
-{ "", "off", "10", "", "on", "", "" };
+const char *const relay_remote_option_string[RELAY_REMOTE_NUM_OPTIONS] = {
+    [RELAY_REMOTE_OPTION_URL] = "url",
+    [RELAY_REMOTE_OPTION_AUTOCONNECT] = "autoconnect",
+    [RELAY_REMOTE_OPTION_AUTORECONNECT_DELAY] = "autoreconnect_delay",
+    [RELAY_REMOTE_OPTION_PROXY] = "proxy",
+    [RELAY_REMOTE_OPTION_TLS_VERIFY] = "tls_verify",
+    [RELAY_REMOTE_OPTION_PASSWORD] = "password",
+    [RELAY_REMOTE_OPTION_TOTP_SECRET] = "totp_secret",
+};
+const char *const relay_remote_option_default[RELAY_REMOTE_NUM_OPTIONS] = {
+    [RELAY_REMOTE_OPTION_URL] = "",
+    [RELAY_REMOTE_OPTION_AUTOCONNECT] = "off",
+    [RELAY_REMOTE_OPTION_AUTORECONNECT_DELAY] = "10",
+    [RELAY_REMOTE_OPTION_PROXY] = "",
+    [RELAY_REMOTE_OPTION_TLS_VERIFY] = "on",
+    [RELAY_REMOTE_OPTION_PASSWORD] = "",
+    [RELAY_REMOTE_OPTION_TOTP_SECRET] = "",
+};
 
 struct t_relay_remote *relay_remotes = NULL;
 struct t_relay_remote *last_relay_remote = NULL;

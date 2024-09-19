@@ -53,10 +53,19 @@
 struct t_config_file *config_files = NULL;
 struct t_config_file *last_config_file = NULL;
 
-char *config_option_type_string[CONFIG_NUM_OPTION_TYPES] =
-{ N_("boolean"), N_("integer"), N_("string"), N_("color"), N_("enum") };
-char *config_boolean_true[] = { "on", "yes", "y", "true", "t", "1", NULL };
-char *config_boolean_false[] = { "off", "no", "n", "false", "f", "0", NULL };
+const char *const config_option_type_string[CONFIG_NUM_OPTION_TYPES] = {
+    [CONFIG_OPTION_TYPE_BOOLEAN] = N_("boolean"),
+    [CONFIG_OPTION_TYPE_INTEGER] = N_("integer"),
+    [CONFIG_OPTION_TYPE_STRING] = N_("string"),
+    [CONFIG_OPTION_TYPE_COLOR] = N_("color"),
+    [CONFIG_OPTION_TYPE_ENUM] = N_("enum"),
+};
+static const char *const config_boolean_true[] = {
+    "on", "yes", "y", "true", "t", "1", NULL,
+};
+static const char *const config_boolean_false[] = {
+    "off", "no", "n", "false", "f", "0", NULL,
+};
 
 
 void config_file_option_free_data (struct t_config_option *option);
@@ -3055,7 +3064,8 @@ config_file_option_enum_inherited (struct t_config_option *option)
 const char *
 config_file_option_escape (const char *name)
 {
-    static char str_escaped[2] = "\\", str_not_escaped[1] = { '\0' };
+    static const char str_escaped[2] = "\\";
+    static const char str_not_escaped[1] = { '\0' };
 
     if (!name)
         return str_escaped;

@@ -41,9 +41,14 @@
  * these names are sent to the IRC server (as upper case), so they must be
  * valid values for the AUTHENTICATE command (example: "AUTHENTICATE PLAIN")
  */
-char *irc_sasl_mechanism_string[IRC_NUM_SASL_MECHANISMS] =
-{ "plain", "scram-sha-1", "scram-sha-256", "scram-sha-512",
-  "ecdsa-nist256p-challenge", "external" };
+const char *const irc_sasl_mechanism_string[IRC_NUM_SASL_MECHANISMS] = {
+    [IRC_SASL_MECHANISM_PLAIN] = "plain",
+    [IRC_SASL_MECHANISM_SCRAM_SHA_1] = "scram-sha-1",
+    [IRC_SASL_MECHANISM_SCRAM_SHA_256] = "scram-sha-256",
+    [IRC_SASL_MECHANISM_SCRAM_SHA_512] = "scram-sha-512",
+    [IRC_SASL_MECHANISM_ECDSA_NIST256P_CHALLENGE] = "ecdsa-nist256p-challenge",
+    [IRC_SASL_MECHANISM_EXTERNAL] = "external",
+};
 
 
 /*

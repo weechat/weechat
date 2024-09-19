@@ -49,8 +49,12 @@
 #include "weechat/relay-weechat.h"
 
 
-char *relay_client_data_type_string[] = /* strings for data types           */
-{ "text", "binary", "http" };
+static const char *const relay_client_data_type_string[] = {
+    [RELAY_CLIENT_DATA_TEXT_LINE] = "text",
+    [RELAY_CLIENT_DATA_BINARY] = "binary",
+    [RELAY_CLIENT_DATA_HTTP] = "http",
+    [RELAY_CLIENT_DATA_TEXT_MULTILINE] = "text-multiline",
+};
 
 struct t_relay_client *relay_clients = NULL;
 struct t_relay_client *last_relay_client = NULL;

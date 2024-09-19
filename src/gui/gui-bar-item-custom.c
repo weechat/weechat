@@ -38,10 +38,16 @@
 #include "gui-bar-item.h"
 
 
-char *gui_bar_item_custom_option_string[GUI_BAR_ITEM_CUSTOM_NUM_OPTIONS] =
-{ "conditions", "content" };
-char *gui_bar_item_custom_option_default[GUI_BAR_ITEM_CUSTOM_NUM_OPTIONS] =
-{ "", "" };
+static const char *const
+gui_bar_item_custom_option_string[GUI_BAR_ITEM_CUSTOM_NUM_OPTIONS] = {
+    [GUI_BAR_ITEM_CUSTOM_OPTION_CONDITIONS] = "conditions",
+    [GUI_BAR_ITEM_CUSTOM_OPTION_CONTENT] = "content",
+};
+static const char *const
+gui_bar_item_custom_option_default[GUI_BAR_ITEM_CUSTOM_NUM_OPTIONS] = {
+    [GUI_BAR_ITEM_CUSTOM_OPTION_CONDITIONS] = "",
+    [GUI_BAR_ITEM_CUSTOM_OPTION_CONTENT] = "",
+};
 
 
 struct t_gui_bar_item_custom *gui_custom_bar_items = NULL;

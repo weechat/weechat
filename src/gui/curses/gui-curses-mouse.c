@@ -48,8 +48,8 @@
 #include "gui-curses-mouse.h"
 
 
-char *gui_mouse_wheel_utf8_codes[][2] =
-{ { "`",  "wheelup"            },
+static const char *const gui_mouse_wheel_utf8_codes[][2] = {
+  { "`",  "wheelup"            },
   { "p",  "ctrl-wheelup"       },
   { "h",  "alt-wheelup"        },
   { "x",  "alt-ctrl-wheelup"   },
@@ -57,10 +57,11 @@ char *gui_mouse_wheel_utf8_codes[][2] =
   { "q",  "ctrl-wheeldown"     },
   { "i",  "alt-wheeldown"      },
   { "y",  "alt-ctrl-wheeldown" },
-  { NULL, NULL                 } };
+  { NULL, NULL                 },
+};
 
-char *gui_mouse_button_utf8_codes[][2] =
-{ { " ",  "button1"            },
+static const char *const gui_mouse_button_utf8_codes[][2] = {
+  { " ",  "button1"            },
   { "\"", "button2"            },
   { "!",  "button3"            },
   { "b",  "button4"            },
@@ -78,7 +79,8 @@ char *gui_mouse_button_utf8_codes[][2] =
   { "8",  "alt-ctrl-button1"   },
   { ":",  "alt-ctrl-button2"   },
   { "9",  "alt-ctrl-button3"   },
-  { NULL, NULL                 } };
+  { NULL, NULL                 },
+};
 
 
 /*

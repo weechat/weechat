@@ -41,7 +41,7 @@ typedef int (t_relay_remote_event_func)(struct t_relay_remote_event *event);
 
 struct t_relay_remote_event_cb
 {
-    char *event_mask;                   /* event name (mask)                */
+    const char *event_mask;             /* event name (mask)                */
     t_relay_remote_event_func *func;    /* callback (can be NULL)           */
 };
 

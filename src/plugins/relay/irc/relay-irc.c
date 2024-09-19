@@ -38,12 +38,19 @@
 #include "../relay-server.h"
 
 
-char *relay_irc_relay_commands[] = { "privmsg", "notice", NULL };
-char *relay_irc_ignore_commands[] = { "cap", "pong", "quit", NULL };
-char *relay_irc_backlog_commands_tags[RELAY_IRC_NUM_CMD] =
-{ "irc_join", "irc_part", "irc_quit", "irc_nick", "irc_privmsg" };
-char *relay_irc_server_capabilities[RELAY_IRC_NUM_CAPAB] =
-{ "server-time", "echo-message" };
+static const char *const relay_irc_relay_commands[] = { "privmsg", "notice", NULL };
+static const char *const relay_irc_ignore_commands[] = { "cap", "pong", "quit", NULL };
+static const char *const relay_irc_backlog_commands_tags[RELAY_IRC_NUM_CMD] = {
+  [RELAY_IRC_CMD_JOIN] = "irc_join",
+  [RELAY_IRC_CMD_PART] = "irc_part",
+  [RELAY_IRC_CMD_QUIT] = "irc_quit",
+  [RELAY_IRC_CMD_NICK] = "irc_nick",
+  [RELAY_IRC_CMD_PRIVMSG] = "irc_privmsg",
+};
+static const char *const relay_irc_server_capabilities[RELAY_IRC_NUM_CAPAB] = {
+  [RELAY_IRC_CAPAB_SERVER_TIME] = "server-time",
+  [RELAY_IRC_CAPAB_ECHO_MESSAGE] = "echo-message",
+};
 
 
 /*

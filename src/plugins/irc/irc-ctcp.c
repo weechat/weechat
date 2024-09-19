@@ -43,8 +43,8 @@
 #include "irc-server.h"
 
 
-struct t_irc_ctcp_reply irc_ctcp_default_reply[] =
-{ { "clientinfo", "${clientinfo}" },
+const struct t_irc_ctcp_reply irc_ctcp_default_reply[] = {
+  { "clientinfo", "${clientinfo}" },
   { "source",     "${download}" },
   { "time",       "${time}" },
   { "version",    "WeeChat ${version}" },
@@ -64,7 +64,7 @@ irc_ctcp_convert_legacy_format (const char *format)
 {
     int i;
     char *str, *str2, old_format[256], new_format[256];
-    char *ctcp_legacy_vars[] = {
+    static const char *const ctcp_legacy_vars[] = {
         "clientinfo",
         "versiongit",
         "version",

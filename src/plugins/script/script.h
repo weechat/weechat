@@ -28,8 +28,8 @@
 
 extern struct t_weechat_plugin *weechat_script_plugin;
 
-extern char *script_language[SCRIPT_NUM_LANGUAGES];
-extern char *script_extension[SCRIPT_NUM_LANGUAGES];
+extern const char *const script_language[SCRIPT_NUM_LANGUAGES];
+extern const char *const script_extension[SCRIPT_NUM_LANGUAGES];
 extern int script_plugin_loaded[SCRIPT_NUM_LANGUAGES];
 extern struct t_hashtable *script_loaded;
 

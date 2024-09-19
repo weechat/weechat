@@ -37,8 +37,12 @@
 #include "logger-config.h"
 
 
-char *logger_buffer_compression_extension[LOGGER_BUFFER_NUM_COMPRESSION_TYPES] =
-{ "", ".gz", ".zst" };
+static const char *const
+logger_buffer_compression_extension[LOGGER_BUFFER_NUM_COMPRESSION_TYPES] = {
+    [LOGGER_BUFFER_COMPRESSION_NONE] = "",
+    [LOGGER_BUFFER_COMPRESSION_GZIP] = ".gz",
+    [LOGGER_BUFFER_COMPRESSION_ZSTD] = ".zst",
+};
 
 struct t_logger_buffer *logger_buffers = NULL;
 struct t_logger_buffer *last_logger_buffer = NULL;
