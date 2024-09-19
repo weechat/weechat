@@ -193,7 +193,7 @@ irc_input_user_message_display (struct t_irc_server *server,
                 server->nick,
                 (ptr_text && ptr_text[0]) ? IRC_COLOR_RESET : "",
                 (ptr_text && ptr_text[0]) ? " " : "",
-                (ptr_text && ptr_text[0]) ? ptr_text : "");
+                IRC_COLOR_MSG(ptr_text));
         }
         else
         {
@@ -209,7 +209,7 @@ irc_input_user_message_display (struct t_irc_server *server,
                 server->nick,
                 IRC_COLOR_RESET,
                 (ptr_text && ptr_text[0]) ? " " : "",
-                (ptr_text && ptr_text[0]) ? ptr_text : "");
+                IRC_COLOR_MSG(ptr_text));
         }
     }
     else if (ctcp_type)
@@ -229,7 +229,7 @@ irc_input_user_message_display (struct t_irc_server *server,
             ctcp_type,
             IRC_COLOR_RESET,
             (ptr_text && ptr_text[0]) ? " " : "",
-            (ptr_text && ptr_text[0]) ? ptr_text : "");
+            IRC_COLOR_MSG(ptr_text));
     }
     else if (display_target)
     {
@@ -256,7 +256,7 @@ irc_input_user_message_display (struct t_irc_server *server,
             IRC_COLOR_CHAT_CHANNEL : irc_nick_color_for_msg (server, 0, NULL, target),
             target,
             IRC_COLOR_RESET,
-            (ptr_text) ? ptr_text : "");
+            IRC_COLOR_MSG(ptr_text));
     }
     else
     {

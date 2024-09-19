@@ -27,9 +27,8 @@
     irc_protocol_cb_##__command (                                       \
         struct t_irc_protocol_ctxt *ctxt)
 
-#define IRCB(__message, __decode_color, __func_cb)                      \
+#define IRCB(__message, __func_cb)                                      \
     { #__message,                                                       \
-      __decode_color,                                                   \
       &irc_protocol_cb_##__func_cb }
 
 #define IRC_PROTOCOL_MIN_PARAMS(__min_params)                           \
@@ -80,7 +79,6 @@ typedef int (t_irc_recv_func)(struct t_irc_protocol_ctxt *ctxt);
 struct t_irc_protocol_msg
 {
     char *name;                     /* IRC message name                      */
-    int decode_color;               /* decode color before calling function  */
     t_irc_recv_func *recv_function; /* function called when msg is received  */
 };
 

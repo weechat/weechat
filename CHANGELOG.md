@@ -15,6 +15,7 @@
 ### Fixed
 
 - core, plugins: fix integer overflow in loops ([#2178](https://github.com/weechat/weechat/issues/2178))
+- irc: decode IRC colors only when displaying messages in buffer, store nick info with IRC colors (host, account, real name)
 - irc: do not strip trailing spaces from incoming IRC messages
 - relay/api: fix empty nicklist in remote buffers after connection or reconnection
 - lua: fix compilation on Fedora with Lua < 5.2.0 ([#2173](https://github.com/weechat/weechat/issues/2173), [#2174](https://github.com/weechat/weechat/issues/2174))

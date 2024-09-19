@@ -81,6 +81,8 @@ char irc_color_term2irc[IRC_COLOR_TERM2IRC_NUM_COLORS] =
     0,   /*  15     0 (white)        */
 };
 regex_t *irc_color_regex_ansi = NULL;
+int irc_color_index_string_decoded = 0;
+char *irc_color_string_decoded[32];
 
 
 /*
@@ -482,6 +484,26 @@ irc_color_decode (const char *string, int keep_colors)
     }
 
     return weechat_string_dyn_free (out, 0);
+}
+
+/*
+ * Replaces IRC colors by WeeChat colors and returns a pointer to an allocated
+ * string that doesn't need to be freed by the caller.
+ *
+ * If keep_colors == 0: removes any color/style in message otherwise keeps
+ * colors.
+ */
+
+const char *
+irc_color_decode_const (const char *string, int keep_colors)
+{
+    irc_color_index_string_decoded = (irc_color_index_string_decoded + 1) % 32;
+    free (irc_color_string_decoded[irc_color_index_string_decoded]);
+    irc_color_string_decoded[irc_color_index_string_decoded] = irc_color_decode (
+        string, keep_colors);
+    if (!irc_color_string_decoded[irc_color_index_string_decoded])
+        irc_color_string_decoded[irc_color_index_string_decoded] = strdup ("");
+    return (const char *)irc_color_string_decoded[irc_color_index_string_decoded];
 }
 
 /*
@@ -1054,16 +1076,33 @@ irc_color_weechat_add_to_infolist (struct t_infolist *infolist)
 }
 
 /*
+ * Initializes IRC colors.
+ */
+
+void
+irc_color_init ()
+{
+    irc_color_index_string_decoded = 0;
+    memset (irc_color_string_decoded, 0, sizeof (irc_color_string_decoded));
+}
+
+/*
  * Ends IRC colors.
  */
 
 void
 irc_color_end ()
 {
+    int i;
+
     if (irc_color_regex_ansi)
     {
         regfree (irc_color_regex_ansi);
         free (irc_color_regex_ansi);
         irc_color_regex_ansi = NULL;
+    }
+    for (i = 0; i < 32; i++)
+    {
+        free (irc_color_string_decoded[i]);
     }
 }

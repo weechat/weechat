@@ -104,6 +104,11 @@
 #define IRC_COLOR_ITEM_TLS_VERSION_DEPRECATED weechat_color(weechat_config_string(irc_config_color_item_tls_version_deprecated))
 #define IRC_COLOR_ITEM_TLS_VERSION_INSECURE weechat_color(weechat_config_string(irc_config_color_item_tls_version_insecure))
 
+#define IRC_COLOR_MSG(__string)                                         \
+    irc_color_decode_const (                                            \
+        __string,                                                       \
+        weechat_config_boolean (irc_config_network_colors_receive))
+
 struct t_irc_color_ansi_state
 {
     char keep_colors;
@@ -113,6 +118,7 @@ struct t_irc_color_ansi_state
 };
 
 extern char *irc_color_decode (const char *string, int keep_colors);
+extern const char *irc_color_decode_const (const char *string, int keep_colors);
 extern char *irc_color_encode (const char *string, int keep_colors);
 extern char *irc_color_decode_ansi (const char *string, int keep_colors);
 extern char *irc_color_modifier_cb (const void *pointer, void *data,
@@ -121,6 +127,7 @@ extern char *irc_color_modifier_cb (const void *pointer, void *data,
                                     const char *string);
 extern char *irc_color_for_tags (const char *color);
 extern int irc_color_weechat_add_to_infolist (struct t_infolist *infolist);
+extern void irc_color_init ();
 extern void irc_color_end ();
 
 #endif /* WEECHAT_PLUGIN_IRC_COLOR_H */

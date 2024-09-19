@@ -196,6 +196,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     irc_signal_quit_received = 0;
     irc_signal_upgrade_received = 0;
 
+    irc_color_init ();
+
     if (!irc_config_init ())
         return WEECHAT_RC_ERROR;
 

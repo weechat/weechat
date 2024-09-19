@@ -238,8 +238,8 @@ irc_ctcp_display_request (struct t_irc_protocol_ctxt *ctxt,
         IRC_COLOR_CHAT_CHANNEL,
         ctcp,
         IRC_COLOR_RESET,
-        (arguments) ? " " : "",
-        (arguments) ? arguments : "",
+        (arguments && arguments[0]) ? " " : "",
+        (arguments && arguments[0]) ? arguments : "",
         (reply && !reply[0]) ? _(" (blocked)") : "");
 }
 
@@ -327,7 +327,7 @@ irc_ctcp_display_reply_from_nick (struct t_irc_protocol_ctxt *ctxt,
                     ptr_args + 1,
                     IRC_COLOR_RESET,
                     " ",
-                    pos_args);
+                    IRC_COLOR_MSG(pos_args));
             }
         }
         else
@@ -382,7 +382,7 @@ irc_ctcp_display_reply_to_nick_internal (struct t_irc_protocol_ctxt *ctxt,
         type,
         (args && args[0]) ? IRC_COLOR_RESET : "",
         (args && args[0]) ? " " : "",
-        (args) ? args : "");
+        (args && args[0]) ? IRC_COLOR_MSG(args) : "");
 }
 
 /*
@@ -1481,7 +1481,7 @@ irc_ctcp_recv (struct t_irc_protocol_ctxt *ctxt,
                         ctxt->nick,
                         (pos_args) ? IRC_COLOR_RESET : "",
                         (pos_args) ? " " : "",
-                        (pos_args) ? pos_args : "");
+                        (pos_args) ? IRC_COLOR_MSG(pos_args) : "");
                 }
                 else
                 {
@@ -1502,7 +1502,7 @@ irc_ctcp_recv (struct t_irc_protocol_ctxt *ctxt,
                         ctxt->nick,
                         (pos_args) ? IRC_COLOR_RESET : "",
                         (pos_args) ? " " : "",
-                        (pos_args) ? pos_args : "");
+                        (pos_args) ? IRC_COLOR_MSG(pos_args) : "");
                 }
                 free (nick_color);
             }
@@ -1545,7 +1545,7 @@ irc_ctcp_recv (struct t_irc_protocol_ctxt *ctxt,
                         ctxt->nick,
                         (pos_args) ? IRC_COLOR_RESET : "",
                         (pos_args) ? " " : "",
-                        (pos_args) ? pos_args : "");
+                        (pos_args) ? IRC_COLOR_MSG(pos_args) : "");
                     (void) weechat_hook_signal_send ("irc_pv",
                                                      WEECHAT_HOOK_SIGNAL_STRING,
                                                      (void *)ctxt->irc_message);
@@ -1558,7 +1558,7 @@ irc_ctcp_recv (struct t_irc_protocol_ctxt *ctxt,
             reply = irc_ctcp_get_reply (ctxt->server, ptr_args + 1);
             irc_ctcp_display_request (ctxt, channel,
                                       ptr_args + 1,
-                                      pos_args, reply);
+                                      IRC_COLOR_MSG(pos_args), reply);
             if (!reply || reply[0])
             {
                 if (reply)
@@ -1588,7 +1588,7 @@ irc_ctcp_recv (struct t_irc_protocol_ctxt *ctxt,
             if (reply)
             {
                 irc_ctcp_display_request (ctxt, channel,
-                                          ptr_args + 1, pos_args,
+                                          ptr_args + 1, IRC_COLOR_MSG(pos_args),
                                           reply);
 
                 if (reply[0])
@@ -1621,7 +1621,7 @@ irc_ctcp_recv (struct t_irc_protocol_ctxt *ctxt,
                         ptr_args + 1,
                         (pos_args) ? IRC_COLOR_RESET : "",
                         (pos_args) ? " " : "",
-                        (pos_args) ? pos_args : "");
+                        (pos_args) ? IRC_COLOR_MSG(pos_args) : "");
                 }
             }
         }

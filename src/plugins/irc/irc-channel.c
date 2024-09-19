@@ -1593,7 +1593,7 @@ irc_channel_display_nick_back_in_pv (struct t_irc_server *server,
                     (nick) ? nick->name : nickname,
                     IRC_COLOR_CHAT_DELIMITERS,
                     IRC_COLOR_CHAT_HOST,
-                    (nick && nick->host) ? nick->host : "",
+                    (nick && nick->host) ? IRC_COLOR_MSG(nick->host) : "",
                     IRC_COLOR_CHAT_DELIMITERS,
                     IRC_COLOR_MESSAGE_JOIN);
             }
