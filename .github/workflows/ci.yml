@@ -162,7 +162,7 @@ jobs:
       env:
         RELAY_PASSWORD: test
       run: |
-        sudo -H pip3 install --ignore-installed schemathesis
+        sudo -H pip3 install --ignore-installed schemathesis==3.35.5
         weechat-headless \
           --dir /tmp/weechat-test-api \
           --run-command '/set relay.network.password "${{ env.RELAY_PASSWORD }}"' \
