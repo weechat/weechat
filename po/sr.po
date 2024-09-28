@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-09-02 19:53+0200\n"
+"POT-Creation-Date: 2024-09-28 21:25+0200\n"
 "PO-Revision-Date: 2024-08-24 10:56+0200\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -659,17 +659,23 @@ msgstr "Нема шифрованих података"
 msgid "All encrypted data has been deleted"
 msgstr "Обрисани су сви шифровани подаци"
 
-#, c-format
+#, fuzzy, c-format
+#| msgid ""
+#| "%sFailed to decrypt data: hash algorithm \"%s\" is not available "
+#| "(ligbcrypt version is too old?)"
 msgid ""
-"%sFailed to decrypt data: hash algorithm \"%s\" is not available (ligbcrypt "
+"%sFailed to decrypt data: hash algorithm \"%s\" is not available (libgcrypt "
 "version is too old?)"
 msgstr ""
 "%sНије успело дешифровање података: није доступан хеш алгоритам „%s” "
 "(ligbcrypt верзија је сувише стара)"
 
-#, c-format
+#, fuzzy, c-format
+#| msgid ""
+#| "%sFailed to decrypt data: cipher \"%s\" is not available (ligbcrypt "
+#| "version is too old?)"
 msgid ""
-"%sFailed to decrypt data: cipher \"%s\" is not available (ligbcrypt version "
+"%sFailed to decrypt data: cipher \"%s\" is not available (libgcrypt version "
 "is too old?)"
 msgstr ""
 "%sНије успело дешифровање података: није доступно шифровање „%s” (ligbcrypt "
@@ -903,17 +909,23 @@ msgstr "Листа прозора:"
 msgid "%sInvalid window number: \"%s\""
 msgstr "%sНеважећи број прозора: „%s”"
 
-#, c-format
+#, fuzzy, c-format
+#| msgid ""
+#| "%sCan not merge windows, there's no other window with same size near "
+#| "current one"
 msgid ""
-"%sCan not merge windows, there's no other window with same size near current "
+"%sCannot merge windows, there's no other window with same size near current "
 "one"
 msgstr ""
 "%sПрозори не могу да се споје, у близини текућег прозора не постоји други "
 "исте величине"
 
-#, c-format
+#, fuzzy, c-format
+#| msgid ""
+#| "%sCan not close window, there's no other window with same size near "
+#| "current one"
 msgid ""
-"%sCan not close window, there's no other window with same size near current "
+"%sCannot close window, there's no other window with same size near current "
 "one"
 msgstr ""
 "%sПрозор не може да се затвори, у близини текућег прозора не постоји други "
@@ -922,7 +934,7 @@ msgstr ""
 msgid "execute a command on all buffers"
 msgstr "извршавање команде на свим баферима"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid "<command>"
 msgstr "<команда>"
 
@@ -942,7 +954,7 @@ msgstr "  поставља ознаку прочитано за све бафе�
 msgid "set or remove away status"
 msgstr "поставља или уклања статус одсутности"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid "[-all] [<message>]"
 msgstr "[-all] [<порука>]"
 
@@ -958,7 +970,7 @@ msgstr ""
 msgid "manage bars"
 msgstr "управљање тракама"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid ""
 "list|listfull|listitems || add|addreplace <name> <type>[,<conditions>] "
 "<position> <size> <separator> <item1>[,<item2>...] || default [input|title|"
@@ -1108,7 +1120,7 @@ msgstr "  скролује на крај листе надимака у теку
 msgid "manage buffers"
 msgstr "управљање баферима"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid ""
 "list || add [-free] [-switch] <name> || clear [<id>|<number>|<name>|-merged|-"
 "all [<id>|<number>|<name>...]] || move <number>|-|+ || swap <id1>|<number1>|"
@@ -1293,9 +1305,14 @@ msgstr "raw[-]: скок на први број бафера"
 msgid "raw[+]: jump to last buffer number"
 msgstr "raw[+]: скок на последњи број бафера"
 
+#, fuzzy
+#| msgid ""
+#| "name: jump to buffer by (partial) name; if the name starts with \"(?i)\", "
+#| "the search is case insensitive (for example \"(?i)upper\" will find "
+#| "buffer \"irc.libera.#UPPERCASE\")"
 msgid ""
 "name: jump to buffer by (partial) name; if the name starts with \"(?i)\", "
-"the search is case insensitive (for example \"(?i)upper\" will find buffer "
+"the search is case-insensitive (for example \"(?i)upper\" will find buffer "
 "\"irc.libera.#UPPERCASE\")"
 msgstr ""
 "име: скок на бафер према (делимичном) имену; ако име почиње са „(?i)”, "
@@ -1305,7 +1322,7 @@ msgstr ""
 msgid "define color aliases and display palette of colors"
 msgstr "дефинисање алијаса боја и приказивање палете боја"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid ""
 "alias <color> <name> || unalias <color> || reset || term2rgb <color> || "
 "rgb2term <rgb> [<limit>] || -o"
@@ -1360,7 +1377,7 @@ msgstr "Без аргумента, ова команда приказује бо
 msgid "launch explicit WeeChat or plugin command"
 msgstr "покреће експлицитну WeeChat или команду додатка"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid "[-buffer <name>] <plugin> <command> || -s <command>[;<command>...]"
 msgstr "[-buffer <име>] <додатак> <команда> || -s <команда>[;<команда>...]"
 
@@ -1396,7 +1413,7 @@ msgstr ""
 "слободни померај курсора по екрану у циљу извршавања акција над одређеним "
 "површинама екрана"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid ""
 "go chat|<bar> [top_left|top_right|bottom_left|bottom_right] || go <x>,<y> || "
 "move up|down|left|right|top_left|top_right|bottom_left|bottom_right|edge_top|"
@@ -1441,7 +1458,7 @@ msgstr ""
 msgid "debug functions"
 msgstr "дибаг функције"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid ""
 "list || set <plugin> <level> || dump|hooks [<plugin>] || buffer|certs|color|"
 "dirs|infolists|key|libs|memory|tags|term|url|windows || callbacks "
@@ -1576,7 +1593,7 @@ msgstr ""
 msgid "evaluate expression"
 msgstr "израчунавање израза"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid ""
 "[-n|-s] [-d] <expression> || [-n] [-d [-d]] -c <expression1> <operator> "
 "<expression2>"
@@ -1964,37 +1981,56 @@ msgstr "  =~   задовољава POSIX проширени регуларни 
 msgid "  !~   is NOT matching POSIX extended regex"
 msgstr "  !~   НЕ задовољава POSIX проширени регуларни израз"
 
-msgid "  ==*  is matching mask, case sensitive (wildcard \"*\" is allowed)"
+#, fuzzy
+#| msgid "  ==*  is matching mask, case sensitive (wildcard \"*\" is allowed)"
+msgid "  ==*  is matching mask, case-sensitive (wildcard \"*\" is allowed)"
 msgstr ""
 "  ==*  задовољава маску, уз разликовање величине слова (дозвољен је џокер "
 "„*”)"
 
-msgid "  !!*  is NOT matching mask, case sensitive (wildcard \"*\" is allowed)"
+#, fuzzy
+#| msgid ""
+#| "  !!*  is NOT matching mask, case sensitive (wildcard \"*\" is allowed)"
+msgid "  !!*  is NOT matching mask, case-sensitive (wildcard \"*\" is allowed)"
 msgstr ""
 "  !!*  НЕ задовољава маску, уз разликовање величине слова (дозвољен је џокер "
 "„*”)"
 
-msgid "  =*   is matching mask, case insensitive (wildcard \"*\" is allowed)"
+#, fuzzy
+#| msgid ""
+#| "  =*   is matching mask, case insensitive (wildcard \"*\" is allowed)"
+msgid "  =*   is matching mask, case-insensitive (wildcard \"*\" is allowed)"
 msgstr ""
 "  =*  задовољава маску, без разликовања величине слова (дозвољен је џокер "
 "„*”)"
 
+#, fuzzy
+#| msgid ""
+#| "  !*   is NOT matching mask, case insensitive (wildcard \"*\" is allowed)"
 msgid ""
-"  !*   is NOT matching mask, case insensitive (wildcard \"*\" is allowed)"
+"  !*   is NOT matching mask, case-insensitive (wildcard \"*\" is allowed)"
 msgstr ""
 "  !*  НЕ задовољава маску, без разликовања величине слова (дозвољен је џокер "
 "„*”)"
 
-msgid "  ==-  is included, case sensitive"
+#, fuzzy
+#| msgid "  ==-  is included, case sensitive"
+msgid "  ==-  is included, case-sensitive"
 msgstr "  ==-  укључено је, уз разликовање величине слова"
 
-msgid "  !!-  is NOT included, case sensitive"
+#, fuzzy
+#| msgid "  !!-  is NOT included, case sensitive"
+msgid "  !!-  is NOT included, case-sensitive"
 msgstr "  !!-  НИЈЕ укључено, уз разликовање величине слова"
 
-msgid "  =-   is included, case insensitive"
+#, fuzzy
+#| msgid "  =-   is included, case insensitive"
+msgid "  =-   is included, case-insensitive"
 msgstr "  =-   укључено је, без разликовања величине слова"
 
-msgid "  !-   is NOT included, case insensitive"
+#, fuzzy
+#| msgid "  !-   is NOT included, case insensitive"
+msgid "  !-   is NOT included, case-insensitive"
 msgstr "  !-   НИЈЕ укључено, без разликовања величине слова"
 
 msgid "  ==   equal"
@@ -2027,7 +2063,7 @@ msgstr ""
 "филтрира поруке у баферима, тако да се скривају/приказују зависно од ознака "
 "или регуларног израза"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid ""
 "list || enable|disable|toggle [<name>|<mask>|@...] || add|addreplace <name> "
 "<buffer>[,<buffer>...] <tags> <regex> || rename <name> <new_name> || "
@@ -2137,8 +2173,12 @@ msgid ""
 msgstr ""
 "> - креирају се два регуларна израза: један за префикс и један за поруку"
 
+#, fuzzy
+#| msgid ""
+#| "> - regex are case insensitive, they can start by \"(?-i)\" to become "
+#| "case sensitive"
 msgid ""
-"> - regex are case insensitive, they can start by \"(?-i)\" to become case "
+"> - regex are case-insensitive, they can start by \"(?-i)\" to become case-"
 "sensitive"
 msgstr ""
 "> - регуларни изрази не праве разлику у величини слова, могу да почну са „(?-"
@@ -2202,7 +2242,7 @@ msgstr "  филтрира линије које су тачно „WeeChat suck
 msgid "display help about commands and options"
 msgstr "приказивање помоћи за команде и опције"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid "-list|-listfull [<plugin>...]] || <command> || <option>"
 msgstr "-list|-listfull [<додатак>...] || <команда> || <опција>"
 
@@ -2228,7 +2268,7 @@ msgstr "опција: име опције (да видите списак, уп�
 msgid "show buffer command history"
 msgstr "приказивање историје команди у баферу"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid "clear || <value>"
 msgstr "clear || <вредност>"
 
@@ -2241,7 +2281,7 @@ msgstr "вредност: број ставки из историје које �
 msgid "manage hotlist"
 msgstr "управљање врућом листом"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid ""
 "add [low|message|private|highlight] || clear [<level>] || remove || restore "
 "[-all]"
@@ -2283,7 +2323,7 @@ msgstr ""
 msgid "functions for command line"
 msgstr "функције за командну линију"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid "<action> [<arguments>]"
 msgstr "<акција> [<аргументи>]"
 
@@ -2495,7 +2535,7 @@ msgstr "Ову команду користе тастерске пречице �
 msgid "manage custom bar items"
 msgstr "управљање прилагођеним ставкама траке"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid ""
 "list || add|addreplace <name> \"<conditions>\" \"<content>\" || rename "
 "<name> <new_name> || refresh <name>|<mask>... || recreate <name> || del "
@@ -2584,7 +2624,7 @@ msgstr "  брисање ставке „lines_count”:"
 msgid "bind/unbind keys"
 msgstr "везивање/развезивање тастера"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid ""
 "[list|listdefault|listdiff] [<context>] || bind <key> [<command> [<args>]] "
 "|| bindctxt <context> <key> [<command> [<args>]] || unbind <key> || "
@@ -2767,7 +2807,7 @@ msgstr ""
 msgid "manage buffers/windows layouts"
 msgstr "управљање распоредима бафера/прозора"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid ""
 "store [<name>] [buffers|windows] || apply [<name>] [buffers|windows] || "
 "leave || del [<name>] [buffers|windows] || rename <name> <new_name>"
@@ -2829,7 +2869,7 @@ msgstr ""
 msgid "mouse control"
 msgstr "контрола миша"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid "enable|disable|toggle [<delay>]"
 msgstr "enable|disable|toggle [<кашњење>]"
 
@@ -2855,7 +2895,7 @@ msgstr "Стање миша се чува у опцији „weechat.look.mouse�
 msgid "execute a command silently"
 msgstr "извршавање команде у тишини"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid "[-core | -current | -buffer <name>] <command>"
 msgstr "[-core | -current | -buffer <име>] <команда>"
 
@@ -2891,7 +2931,7 @@ msgstr ""
 msgid "list/load/unload plugins"
 msgstr "приказ/учитавање/уклањање додатака"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid ""
 "list [-o|-ol|-i|-il|<name>] || listfull [<name>] || load <filename> "
 "[<arguments>] || autoload [<arguments>] || reload [<name>|* [<arguments>]] "
@@ -2961,7 +3001,7 @@ msgstr "Без аргумента, ова команда исписује учи
 msgid "display text on a buffer"
 msgstr "исписује текст у бафер"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid ""
 "[-buffer <id>|<number>|<name>] [-newbuffer <name>] [-free] [-switch] [-core|-"
 "current] [-y <line>] [-escape] [-date <date>] [-tags <tags>] [-action|-"
@@ -3102,7 +3142,7 @@ msgstr "  шаље упозорење (BEL):"
 msgid "manage proxies"
 msgstr "управљање проксијима"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid ""
 "list || add|addreplace <name> <type> <address> <port> [<username> "
 "[<password>]] || del <name>|<mask>... || set <name> <option> <value>"
@@ -3167,7 +3207,7 @@ msgstr "  брише прокси:"
 msgid "quit WeeChat"
 msgstr "напуштање програма WeeChat"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid "[-yes] [<arguments>]"
 msgstr "[-yes] [<аргументи>]"
 
@@ -3195,7 +3235,7 @@ msgstr ""
 msgid "reload configuration files from disk"
 msgstr "поновно учитавање конфигурације са диска"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid "[<file>...]"
 msgstr "[<фајл>...]"
 
@@ -3209,7 +3249,7 @@ msgstr "Без аргумента, поново се учитавају сви �
 msgid "execute a command several times"
 msgstr "извршавање команде неколико пута"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid "[-interval <delay>[<unit>]] <count> <command>"
 msgstr "[-interval <кашњење>[<јединица>]] <број> <команда>"
 
@@ -3262,9 +3302,13 @@ msgstr "> ${repeat_first}: „1” за прво извршавање, „0” �
 msgid "> ${repeat_last}: \"1\" for the last execution, \"0\" for the others"
 msgstr "> ${repeat_last}: „1” за последње извршавање, „0” за остала"
 
+#, fuzzy
+#| msgid ""
+#| "Note: the command is executed on buffer where /repeat was executed (if "
+#| "the buffer does not exist any more, the command is not executed)."
 msgid ""
 "Note: the command is executed on buffer where /repeat was executed (if the "
-"buffer does not exist any more, the command is not executed)."
+"buffer does not exist anymore, the command is not executed)."
 msgstr ""
 "Напомена: команда се извршава у баферу у коме је извршена команда /repeat "
 "(ако тај бафер више не постоји, команда се не извршава)."
@@ -3278,7 +3322,7 @@ msgstr "  исписује одбројавање, са почетком од 5:
 msgid "reset config options"
 msgstr "ресетовање конфиг опција"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid "<option> || -mask <option>"
 msgstr "<опција> || -mask <опција>"
 
@@ -3315,7 +3359,7 @@ msgstr ""
 "управљање сигурним подацима (лозинке или приватни подаци шифровани у фајлу "
 "sec.conf)"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid ""
 "passphrase <passphrase>|-delete || decrypt <passphrase>|-discard || set "
 "<name> <value> || del <name>"
@@ -3434,7 +3478,7 @@ msgstr ""
 msgid "set config options and environment variables"
 msgstr "постављање конфиг опција и променљивих окружења"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid ""
 "[<option> [<value>]] || diff [<option>...] || env [<variable> [<value>]]"
 msgstr ""
@@ -3537,7 +3581,7 @@ msgstr "број: број процеса који треба да се очис
 msgid "toggle value of a config option"
 msgstr "пребацује вредност опције конфигурације"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid "<option> [<value>...]"
 msgstr "<опција> [<вредност>...]"
 
@@ -3627,7 +3671,7 @@ msgstr ""
 "чува WeeChat сесију и поновно учитава WeeChat бинарни фајл без прекидања "
 "прекидања конекције са серверима"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid "[-yes] [<path_to_binary>|-save|-quit] || -o|-ol"
 msgstr "[-yes] [<путања_до_бинарног>|-save|-quit] || -o|-ol"
 
@@ -3648,8 +3692,13 @@ msgstr ""
 "raw[-dummy]: не ради ништа (опција која се користи за спречавање нехотичног "
 "довршавања са „-quit”)"
 
+#, fuzzy
+#| msgid ""
+#| "raw[-save]: only save the session, do not quit nor reload WeeChat; the "
+#| "configuration files are not saved (if needed you can use /save before "
+#| "this command)"
 msgid ""
-"raw[-save]: only save the session, do not quit nor reload WeeChat; the "
+"raw[-save]: only save the session, neither quit nor reload WeeChat; the "
 "configuration files are not saved (if needed you can use /save before this "
 "command)"
 msgstr ""
@@ -3809,16 +3858,20 @@ msgstr ""
 msgid "schedule a command execution in future"
 msgstr "планирање извршавања команде у будућности"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid "<number>[<unit>] <command>"
 msgstr "<број>[<јединица>] <команда>"
 
 msgid "number: amount of time to wait (minimum: 1 millisecond)"
 msgstr "број: време чекања (минимално: 1 милисекунда)"
 
+#, fuzzy
+#| msgid ""
+#| "Note: the command is executed on buffer where /wait was executed (if the "
+#| "buffer does not exist any more, the command is not executed)."
 msgid ""
 "Note: the command is executed on buffer where /wait was executed (if the "
-"buffer does not exist any more, the command is not executed)."
+"buffer does not exist anymore, the command is not executed)."
 msgstr ""
 "Напомена: команда се извршава у баферу у коме је извршена команда /wait (ако "
 "тај бафер више не постоји, команда се не извршава)."
@@ -3841,7 +3894,7 @@ msgstr "    /wait 2m здраво"
 msgid "manage windows"
 msgstr "управљање прозорима"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 #, no-c-format
 msgid ""
 "list || -1|+1|b#|up|down|left|right [-window <number>] || <number> || splith|"
@@ -4186,10 +4239,13 @@ msgstr "%sФајл %s сада има резервну копију %s"
 msgid "%sError: unable to backup file %s"
 msgstr "%sГрешка: не може да се направи резервна копија фајла %s"
 
-#, c-format
+#, fuzzy, c-format
+#| msgid ""
+#| "%sImportant: file %s has been updated from version %d to %d, it is not "
+#| "compatible and can not be loaded any more with any older version"
 msgid ""
 "%sImportant: file %s has been updated from version %d to %d, it is not "
-"compatible and can not be loaded any more with any older version"
+"compatible and cannot be loaded anymore with any older version"
 msgstr ""
 "%sВажно: фајл %s је ажуриран са верзије %d на %d, није компатибилан и више "
 "не може да се учита било којом старом верзијом"
@@ -4459,7 +4515,9 @@ msgstr ""
 "листе, у случају да није доступан ниједан број); ова опција се користи само "
 "ако бафер нема броја распореда"
 
-msgid "default text search in buffer: case sensitive or not"
+#, fuzzy
+#| msgid "default text search in buffer: case sensitive or not"
+msgid "default text search in buffer: case-sensitive or not"
 msgstr ""
 "подразумевана текст претрага у баферу: прави се разлика у величини слова или "
 "не"
@@ -4715,9 +4773,15 @@ msgstr ""
 "курзив, „_” за подвучено); ако је стринг празан, користе се боје дефинисане "
 "са weechat.color.emphasized*"
 
+#, fuzzy
+#| msgid ""
+#| "comma separated list of words to highlight; case insensitive comparison "
+#| "(use \"(?-i)\" at beginning of words to make them case sensitive), words "
+#| "may begin or end with \"*\" for partial match; example: \"test,(?-"
+#| "i)*toto*,flash*\""
 msgid ""
-"comma separated list of words to highlight; case insensitive comparison (use "
-"\"(?-i)\" at beginning of words to make them case sensitive), words may "
+"comma separated list of words to highlight; case-insensitive comparison (use "
+"\"(?-i)\" at beginning of words to make them case-sensitive), words may "
 "begin or end with \"*\" for partial match; example: \"test,(?-i)*toto*,"
 "flash*\""
 msgstr ""
@@ -4726,12 +4790,20 @@ msgstr ""
 "слова узима у обзир), речи могу да почну или да се заврше са „*” чиме се "
 "добија делимично подударање; пример: „test,(?-i)*toto*,flash*”"
 
+#, fuzzy
+#| msgid ""
+#| "POSIX extended regular expression used to prevent any highlight from a "
+#| "message: this option has higher priority over other highlight options (if "
+#| "the string is found in the message, the highlight is disabled and the "
+#| "other options are ignored), regular expression is case insensitive (use "
+#| "\"(?-i)\" at beginning to make it case sensitive), examples: \"<flash."
+#| "*>\", \"(?-i)<Flash.*>\""
 msgid ""
 "POSIX extended regular expression used to prevent any highlight from a "
 "message: this option has higher priority over other highlight options (if "
 "the string is found in the message, the highlight is disabled and the other "
-"options are ignored), regular expression is case insensitive (use \"(?-i)\" "
-"at beginning to make it case sensitive), examples: \"<flash.*>\", \"(?-"
+"options are ignored), regular expression is case-insensitive (use \"(?-i)\" "
+"at beginning to make it case-sensitive), examples: \"<flash.*>\", \"(?-"
 "i)<Flash.*>\""
 msgstr ""
 "POSIX проширени регуларни израз који се користи за спречавање било каквог "
@@ -4748,11 +4820,19 @@ msgstr ""
 "у случају истицања, за префикс линије се користи одређена боја (погледајте "
 "такође и опцију weechat.look.buffer_time_format)"
 
+#, fuzzy
+#| msgid ""
+#| "POSIX extended regular expression used to check if a message has "
+#| "highlight or not, at least one match in string must be surrounded by "
+#| "delimiters (chars different from: alphanumeric, \"-\", \"_\" and \"|\"), "
+#| "regular expression is case insensitive (use \"(?-i)\" at beginning to "
+#| "make it case sensitive), examples: \"flashcode|flashy\", \"(?-i)FlashCode|"
+#| "flashy\""
 msgid ""
 "POSIX extended regular expression used to check if a message has highlight "
 "or not, at least one match in string must be surrounded by delimiters (chars "
 "different from: alphanumeric, \"-\", \"_\" and \"|\"), regular expression is "
-"case insensitive (use \"(?-i)\" at beginning to make it case sensitive), "
+"case-insensitive (use \"(?-i)\" at beginning to make it case-sensitive), "
 "examples: \"flashcode|flashy\", \"(?-i)FlashCode|flashy\""
 msgstr ""
 "POSIX проширени регуларни израз који се користи за проверу да ли порука "
@@ -4762,8 +4842,15 @@ msgstr ""
 "почетку ако желите да се величина слова узима у обзир), примери: „flashcode|"
 "flashy”, „(?-i)FlashCode|flashy”"
 
+#, fuzzy
+#| msgid ""
+#| "comma separated list of tags to highlight; case insensitive comparison; "
+#| "wildcard \"*\" is allowed in each tag; many tags can be separated by \"+"
+#| "\" to make a logical \"and\" between tags; examples: \"nick_flashcode\" "
+#| "for messages from nick \"FlashCode\", \"irc_notice+nick_toto*\" for "
+#| "notices from a nick starting with \"toto\""
 msgid ""
-"comma separated list of tags to highlight; case insensitive comparison; "
+"comma separated list of tags to highlight; case-insensitive comparison; "
 "wildcard \"*\" is allowed in each tag; many tags can be separated by \"+\" "
 "to make a logical \"and\" between tags; examples: \"nick_flashcode\" for "
 "messages from nick \"FlashCode\", \"irc_notice+nick_toto*\" for notices from "
@@ -4849,13 +4936,22 @@ msgstr ""
 "ако је постављено, користи кратка имена за приказ имена бафера у врућој "
 "листи (почињу након првог „.” у имену)"
 
+#, fuzzy
+#| msgid ""
+#| "comma-separated list of fields to sort hotlist; each field is a hdata "
+#| "variable of hotlist (\"var\") or a hdata variable of buffer (\"buffer."
+#| "var\"); char \"-\" can be used before field to reverse order, char \"~\" "
+#| "can be used to do a case insensitive comparison; examples: \"-priority,"
+#| "buffer.number\" for sort on hotlist priority then by buffer number, \"-"
+#| "~buffer.full_name\" for case insensitive and reverse sort on buffer full "
+#| "name"
 msgid ""
 "comma-separated list of fields to sort hotlist; each field is a hdata "
 "variable of hotlist (\"var\") or a hdata variable of buffer (\"buffer."
 "var\"); char \"-\" can be used before field to reverse order, char \"~\" can "
-"be used to do a case insensitive comparison; examples: \"-priority,buffer."
+"be used to do a case-insensitive comparison; examples: \"-priority,buffer."
 "number\" for sort on hotlist priority then by buffer number, \"-~buffer."
-"full_name\" for case insensitive and reverse sort on buffer full name"
+"full_name\" for case-insensitive and reverse sort on buffer full name"
 msgstr ""
 "листа поља за сортирање вруће листе раздвојених запетама; свако поље је "
 "hdata променљива вруће листе („var”) или hdata променљива бафера („buffer."
@@ -5397,8 +5493,12 @@ msgstr ""
 "боја текста за надимке (листа боја раздвојених зарезима, дозвољена је и "
 "позадина у формату: „пп:по”, for example: „lightred:blue”)"
 
+#, fuzzy
+#| msgid ""
+#| "text color for offline nick (not in nicklist any more); this color is "
+#| "used only if option weechat.look.color_nick_offline is enabled"
 msgid ""
-"text color for offline nick (not in nicklist any more); this color is used "
+"text color for offline nick (not in nicklist anymore); this color is used "
 "only if option weechat.look.color_nick_offline is enabled"
 msgstr ""
 "боја текста за надимак који није на мрежи (више није у листи надимака); ова "
@@ -5627,7 +5727,9 @@ msgstr ""
 "треба да се доврши; у супротном се базна реч завршава на првом размаку након "
 "курсора"
 
-msgid "if enabled, the completion is case sensitive by default"
+#, fuzzy
+#| msgid "if enabled, the completion is case sensitive by default"
+msgid "if enabled, the completion is case-sensitive by default"
 msgstr ""
 "ако је укључено, довршавање подразумевано прави разлику у величини слова"
 
@@ -5656,7 +5758,9 @@ msgstr ""
 "додавање размака након довршавања надимка (када надимак није прва реч на "
 "командној линији)"
 
-msgid "case sensitive completion for nicks"
+#, fuzzy
+#| msgid "case sensitive completion for nicks"
+msgid "case-sensitive completion for nicks"
 msgstr "довршавање надимака води рачуна о величини слова"
 
 msgid ""
@@ -5977,8 +6081,9 @@ msgstr ""
 msgid "%sError sending signal %d to pid %d: %s"
 msgstr "%sГрешка при слању сигнала %d процесу pid %d: %s"
 
-#, c-format
-msgid "%sYou can not write text in this buffer"
+#, fuzzy, c-format
+#| msgid "%sYou can not write text in this buffer"
+msgid "%sYou cannot write text in this buffer"
 msgstr "%sУ овај бафер не можете да упишете текст"
 
 #, c-format
@@ -6137,9 +6242,12 @@ msgstr ""
 "%sФајл sec.conf није могао поново да се учита јер још увек има шифрованих "
 "података (употребите /secure decrypt, погледајте /help secure)"
 
-#, c-format
+#, fuzzy, c-format
+#| msgid ""
+#| "%sOption %s.%s.%s can not be changed because there are still encrypted "
+#| "data"
 msgid ""
-"%sOption %s.%s.%s can not be changed because there are still encrypted data"
+"%sOption %s.%s.%s cannot be changed because there are still encrypted data"
 msgstr ""
 "%sОпција %s.%s.%s не може да се измени јер још увек има шифрованих података"
 
@@ -6148,17 +6256,23 @@ msgid "%sPassphrase is not set, unable to decrypt data \"%s\""
 msgstr ""
 "%sНије постављена тајна реченица, није могуће дешифровање података „%s”"
 
-#, c-format
+#, fuzzy, c-format
+#| msgid ""
+#| "%sFailed to decrypt data \"%s\": hash algorithm \"%s\" is not available "
+#| "(ligbcrypt version is too old?)"
 msgid ""
 "%sFailed to decrypt data \"%s\": hash algorithm \"%s\" is not available "
-"(ligbcrypt version is too old?)"
+"(libgcrypt version is too old?)"
 msgstr ""
 "%sНије успело дешифровање података „%s”: није доступан хеш алгоритам „%s” "
 "(ligbcrypt верзија је сувише стара?)"
 
-#, c-format
+#, fuzzy, c-format
+#| msgid ""
+#| "%sFailed to decrypt data \"%s\": cipher \"%s\" is not available "
+#| "(ligbcrypt version is too old?)"
 msgid ""
-"%sFailed to decrypt data \"%s\": cipher \"%s\" is not available (ligbcrypt "
+"%sFailed to decrypt data \"%s\": cipher \"%s\" is not available (libgcrypt "
 "version is too old?)"
 msgstr ""
 "%sНије успело дешифровање података „%s”: није доступна метода шифровања „%s” "
@@ -6172,17 +6286,23 @@ msgstr "%sПогрешна тајна реченица, није могуће д
 msgid "*** Wrong passphrase (decrypt error: %s) ***"
 msgstr "*** Погрешна тајна реченица (грешка дешифровања: %s) ***"
 
-#, c-format
+#, fuzzy, c-format
+#| msgid ""
+#| "%sFailed to encrypt data \"%s\": hash algorithm \"%s\" is not available "
+#| "(ligbcrypt version is too old?)"
 msgid ""
 "%sFailed to encrypt data \"%s\": hash algorithm \"%s\" is not available "
-"(ligbcrypt version is too old?)"
+"(libgcrypt version is too old?)"
 msgstr ""
 "%sНије успело шифровање података „%s”: није доступан хеш алгоритам „%s” "
 "(ligbcrypt верзија је сувише стара?)"
 
-#, c-format
+#, fuzzy, c-format
+#| msgid ""
+#| "%sFailed to encrypt data \"%s\": cipher \"%s\" is not available "
+#| "(ligbcrypt version is too old?)"
 msgid ""
-"%sFailed to encrypt data \"%s\": cipher \"%s\" is not available (ligbcrypt "
+"%sFailed to encrypt data \"%s\": cipher \"%s\" is not available (libgcrypt "
 "version is too old?)"
 msgstr ""
 "%sНије успело шифровање података „%s”: није доступна метода шифровања „%s” "
@@ -6376,8 +6496,9 @@ msgstr "нема довољно слободне меморије"
 msgid "file \"%s\" not found"
 msgstr "није пронађен фајл „%s”"
 
-#, c-format
-msgid "can not write file \"%s\""
+#, fuzzy, c-format
+#| msgid "can not write file \"%s\""
+msgid "cannot write file \"%s\""
 msgstr "не може да се упише фајл „%s”"
 
 msgid "transfer error"
@@ -6391,9 +6512,12 @@ msgstr "curl грешка %d (%s) (URL: „%s”)\n"
 msgid "%sAnother command \"%s\" already exists for plugin \"%s\""
 msgstr "%sВећ постоји друга команда \"%s\" за додатак \"%s\""
 
-#, c-format
+#, fuzzy, c-format
+#| msgid ""
+#| "%sUnknown command \"%s\" (commands are case sensitive, type /help for "
+#| "help), commands with similar name: %s"
 msgid ""
-"%sUnknown command \"%s\" (commands are case sensitive, type /help for help), "
+"%sUnknown command \"%s\" (commands are case-sensitive, type /help for help), "
 "commands with similar name: %s"
 msgstr ""
 "%sНепозната команда „%s” (команде разликују величину слова, за помоћ "
@@ -7024,7 +7148,7 @@ msgstr "Алијасу „%s” је промењено име на „%s”"
 msgid "list, add or remove command aliases"
 msgstr "исписује, додаје или уклања алијасе команди"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid ""
 "list [<name>] || add|addreplace <name> [<command>[;<command>...]] || "
 "addcompletion|addreplacecompletion <completion> <name> [<command>[;"
@@ -7385,10 +7509,16 @@ msgstr ""
 msgid "%s: %d signals hooked"
 msgstr "%s: прикачено је %d сигнала"
 
+#, fuzzy
+#| msgid ""
+#| "add newline between the buffers displayed, so each buffer is displayed on "
+#| "a separate line (recommended); if disabled, newlines must be manually "
+#| "added in the formats with \"${\\n}\", and the mouse actions are not "
+#| "possible any more"
 msgid ""
 "add newline between the buffers displayed, so each buffer is displayed on a "
 "separate line (recommended); if disabled, newlines must be manually added in "
-"the formats with \"${\\n}\", and the mouse actions are not possible any more"
+"the formats with \"${\\n}\", and the mouse actions are not possible anymore"
 msgstr ""
 "додаје прелом линије између приказаних бафера, тако да се сваки бафер "
 "приказује на одвојеној линији (препоручено); ако је искључено, преломи "
@@ -7421,10 +7551,16 @@ msgstr ""
 "((${type}!=server && ${buffer.full_name}!=core.weechat) || ${buffer.active}"
 "==1)”"
 
+#, fuzzy
+#| msgid ""
+#| "enable buflist; it is recommended to use this option instead of just "
+#| "hiding the bar because it also removes some internal hooks that are not "
+#| "needed any more when the bar is hidden; you can also use the command \"/"
+#| "buflist toggle\" or use the default key alt+shift+b"
 msgid ""
 "enable buflist; it is recommended to use this option instead of just hiding "
-"the bar because it also removes some internal hooks that are not needed any "
-"more when the bar is hidden; you can also use the command \"/buflist "
+"the bar because it also removes some internal hooks that are not needed "
+"anymore when the bar is hidden; you can also use the command \"/buflist "
 "toggle\" or use the default key alt+shift+b"
 msgstr ""
 "enable buflist; препроручује се да се уместо простог скривања траке употреби "
@@ -7475,12 +7611,26 @@ msgstr ""
 "листе бафера; ово може да буде корисно ако се у форматима употребљавају неке "
 "кориснички дефинисане променљиве којима је неоходно специфично освежавање"
 
+#, fuzzy
+#| msgid ""
+#| "comma-separated list of fields to sort buffers; each field is a hdata "
+#| "variable of buffer (\"var\"), a hdata variable of IRC server "
+#| "(\"irc_server.var\") or a hdata variable of IRC channel (\"irc_channel."
+#| "var\"); char \"-\" can be used before field to reverse order, char \"~\" "
+#| "can be used to do a case insensitive comparison; examples: \"-"
+#| "~short_name\" for case insensitive and reverse sort on buffer short name, "
+#| "\"-hotlist.priority,hotlist.time,hotlist.time_usec,number,-active\" for "
+#| "sort like the hotlist then by buffer number for buffers without activity "
+#| "(note: the content is evaluated, before being split into fields, but at "
+#| "that time \"bar_item\" is the only variable that can be used, to "
+#| "distinguish between different buflist items, for example \"${bar_item."
+#| "name}\")"
 msgid ""
 "comma-separated list of fields to sort buffers; each field is a hdata "
 "variable of buffer (\"var\"), a hdata variable of IRC server (\"irc_server."
 "var\") or a hdata variable of IRC channel (\"irc_channel.var\"); char \"-\" "
 "can be used before field to reverse order, char \"~\" can be used to do a "
-"case insensitive comparison; examples: \"-~short_name\" for case insensitive "
+"case-insensitive comparison; examples: \"-~short_name\" for case-insensitive "
 "and reverse sort on buffer short name, \"-hotlist.priority,hotlist.time,"
 "hotlist.time_usec,number,-active\" for sort like the hotlist then by buffer "
 "number for buffers without activity (note: the content is evaluated, before "
@@ -7693,7 +7843,7 @@ msgstr "%s%s: неважећи скуп карактера: „%s”"
 msgid "change charset for current buffer"
 msgstr "измена скупа карактера за текући бафер"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid "decode|encode <charset> || reset"
 msgstr "decode|encode <скуп_кар> || reset"
 
@@ -7769,7 +7919,7 @@ msgstr "Уклоњена је команда „%s”"
 msgid "execute external commands"
 msgstr "извршавање спољних команди"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid ""
 "-list || [-sh|-nosh] [-bg|-nobg] [-stdin|-nostdin] [-buffer <name>] [-l|-o|-"
 "oc|-n|-nf] [-oerr] [-cl|-nocl] [-sw|-nosw] [-ln|-noln] [-flush|-noflush] [-"
@@ -8223,7 +8373,7 @@ msgstr[2] "%d команди су извршене у фајлу „%s”"
 msgid "fast set WeeChat and plugins options"
 msgstr "брзо постављање опција за програм WeeChat и додатке"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid ""
 "-bar || -refresh || -up|-down [<number>] || -left|-right [<percent>] || -go "
 "<line>|end || -toggle || -add [<value>] || -reset || -unset || -set || -"
@@ -8632,11 +8782,17 @@ msgstr "скроловање у лево/десно у fset баферу (про
 msgid "show the plugin description options (plugins.desc.*)"
 msgstr "приказивање описа опција додатака (plugins.desc.*)"
 
+#, fuzzy
+#| msgid ""
+#| "comma-separated list of fields to sort options (see /help fset for a list "
+#| "of fields); char \"-\" can be used before field to reverse order, char "
+#| "\"~\" can be used to do a case insensitive comparison; example: \"-"
+#| "~name\" for case insensitive and reverse sort on option name"
 msgid ""
 "comma-separated list of fields to sort options (see /help fset for a list of "
 "fields); char \"-\" can be used before field to reverse order, char \"~\" "
-"can be used to do a case insensitive comparison; example: \"-~name\" for "
-"case insensitive and reverse sort on option name"
+"can be used to do a case-insensitive comparison; example: \"-~name\" for "
+"case-insensitive and reverse sort on option name"
 msgstr ""
 "листа поља за сортирање опција раздвојених запетама (погледајте /help fset "
 "за листу поља); карактер „-” може да се користи испред поља чиме се обрће "
@@ -9121,8 +9277,9 @@ msgstr ""
 "add” (погледајте /help server); ако заиста желите да додате привремени "
 "сервер (који се НЕ ЧУВА), укључите опцију irc.look.temporary_servers"
 
-#, c-format
-msgid "%s%s: \"%s\" command can not be executed on a server buffer"
+#, fuzzy, c-format
+#| msgid "%s%s: \"%s\" command can not be executed on a server buffer"
+msgid "%s%s: \"%s\" command cannot be executed on a server buffer"
 msgstr "%s%s: команда „%s” не може да се изврши у серверском баферу"
 
 #, c-format
@@ -9271,8 +9428,10 @@ msgstr "%s: обрисано је обавештење за %s%s%s"
 msgid "%s%s: notification not found"
 msgstr "%s%s: није пронађено обавештење"
 
-#, c-format
-msgid "%s%s: \"%s\" command can not be executed with a channel name (\"%s\")"
+#, fuzzy, c-format
+#| msgid ""
+#| "%s%s: \"%s\" command can not be executed with a channel name (\"%s\")"
+msgid "%s%s: \"%s\" command cannot be executed with a channel name (\"%s\")"
 msgstr "%s%s: команда „%s” не може да се изврши са именом канала („%s”)"
 
 #, c-format
@@ -9371,13 +9530,17 @@ msgstr[2] "померено је %d сервера"
 msgid "%s%s: server \"%s\" is not a temporary server"
 msgstr "%s%s: сервер „%s” није привремени сервер"
 
-#, c-format
-msgid "%s: server %s%s%s is not temporary any more"
+#, fuzzy, c-format
+#| msgid "%s: server %s%s%s is not temporary any more"
+msgid "%s: server %s%s%s is not temporary anymore"
 msgstr "%s: сервер %s%s%s више није привремени сервер"
 
-#, c-format
+#, fuzzy, c-format
+#| msgid ""
+#| "%s%s: you can not delete server \"%s\" because you are connected to. Try "
+#| "\"/disconnect %s\" before."
 msgid ""
-"%s%s: you can not delete server \"%s\" because you are connected to. Try \"/"
+"%s%s: you cannot delete server \"%s\" because you are connected to. Try \"/"
 "disconnect %s\" before."
 msgstr ""
 "%s%s: не можете да обришете сервер „%s” јер сте повеза ни са њим. Покушајте "
@@ -9406,7 +9569,7 @@ msgstr "Notice"
 msgid "send a CTCP action to a nick or channel"
 msgstr "слање CTCP акције надимку или каналу"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid "[-server <server>] <target>[,<target>...] <text>"
 msgstr "[-server <сервер>] <циљ>[,<циљ>...] <текст>"
 
@@ -9422,7 +9585,7 @@ msgstr "текст: текст који се шаље"
 msgid "find information about the administrator of the server"
 msgstr "проналажење информација о администратору сервера"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid "[<target>]"
 msgstr "[<циљ>]"
 
@@ -9432,7 +9595,7 @@ msgstr "циљ: име сервера"
 msgid "execute a command on all channels of all connected servers"
 msgstr "извршавање команде на свим каналима свих повезаних сервера"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid ""
 "[-current] [-parted|-all] [-exclude=<channel>[,<channel>...]] <command> || [-"
 "current] [-parted|-all] -include=<channel>[,<channel>...] <command>"
@@ -9516,7 +9679,7 @@ msgstr "  затвара све бафере са напуштеним кана�
 msgid "execute a command on all private buffers of all connected servers"
 msgstr "извршавање команде у свим приватним баферима свих повезаних сервера"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid ""
 "[-current] [-exclude=<nick>[,<nick>...]] <command> || [-current] -"
 "include=<nick>[,<nick>...] <command>"
@@ -9568,7 +9731,7 @@ msgstr "  затвара све приватне бафере:"
 msgid "execute a command on all connected servers"
 msgstr "извршавање команде на свим повезаним серверима"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid ""
 "[-exclude=<server>[,<server>...]] <command> || -include=<server>[,"
 "<server>...] <command>"
@@ -9593,7 +9756,7 @@ msgstr "  обавља whois за сопствени надимак на сви�
 msgid "authenticate with SASL"
 msgstr "аутентификација са SASL"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid "[<username> <password>]"
 msgstr "[<кор_име> <лозинка>]"
 
@@ -9637,7 +9800,7 @@ msgstr ""
 msgid "configure the \"autojoin\" server option"
 msgstr "конфигурисање „autojoin” (аутоприступ) серверске опције"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid ""
 "add [<channel>...] || addraw <channel1>[,<channel2>...] [<key1>[,<key2>...]] "
 "|| del [<channel>...] || apply || join || sort [buffer]"
@@ -9689,7 +9852,7 @@ msgstr ""
 msgid "ban nicks or hosts"
 msgstr "забрана надимака или хостова"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid "[<channel>] [<nick>...]"
 msgstr "[<канал>] [<надимак>...]"
 
@@ -9703,7 +9866,7 @@ msgstr "Без аргумента, ова команда приказује ли
 msgid "client capability negotiation"
 msgstr "преговарање могућности клијента"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid "ls || list || req|ack [<capability>...] || end"
 msgstr "ls || list || req|ack [<могућност>...] || end"
 
@@ -9766,7 +9929,7 @@ msgstr "  уклањање могућности away-notify:"
 msgid "connect to IRC server(s)"
 msgstr "повезивање са IRC сервер(ом/има)"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid ""
 "[<server>...] [-<option>[=<value>]] [-no<option>] [-nojoin] [-switch] || -"
 "all|-auto|-open [-nojoin] [-switch]"
@@ -9841,7 +10004,7 @@ msgstr ""
 msgid "send a CTCP message (Client-To-Client Protocol)"
 msgstr "слање CTCP поруке (Client-To-Client Protocol)"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid "[-server <server>] <target>[,<target>...] <type> [<arguments>]"
 msgstr "[-server <сервер>] <циљ>[,<циљ>...] <тип> [<аргументи>]"
 
@@ -9857,7 +10020,7 @@ msgstr "аргументи: аргументи за CTCP"
 msgid "leave and rejoin a channel"
 msgstr "напуштање и поновно приступање каналу"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid "[<channel>[,<channel>...]] [<message>]"
 msgstr "[<канал>[,<канал>...]] [<порука>]"
 
@@ -9867,7 +10030,7 @@ msgstr "порука: поздравна порука (приказује се �
 msgid "start a DCC (passive file transfer or direct chat)"
 msgstr "покретање DCC (пасивни трансфер фајла или директни разговор)"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid "chat <nick> || send <nick> <file>"
 msgstr "chat <надимак> || send <надимак> <фајл>"
 
@@ -9880,7 +10043,7 @@ msgstr "фајл: име фајла (на локалном хосту)"
 msgid "remove channel half-operator status from nick(s)"
 msgstr "уклањање статуса полу-оператора канала надим(ку/цима)"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid "<nick>... || * -yes"
 msgstr "<надимак>... || * -yes"
 
@@ -9911,7 +10074,7 @@ msgstr "искључивање сервера"
 msgid "disconnect from one or all IRC servers"
 msgstr "прекидање везе са једним или са свим IRC серверима"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid "[<server>|-all|-pending [<reason>]]"
 msgstr "[<сервер>|-all|-pending [<разлог>]]"
 
@@ -9939,7 +10102,7 @@ msgstr "*: давање статуса полу-оператора канала 
 msgid "ignore nicks/hosts from servers or channels"
 msgstr "игнорисање надимака/хостова са севера или канала"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid ""
 "list || add|addreplace [re:]<nick> [<server> [<channel>]] || del <number>|-"
 "all"
@@ -9955,10 +10118,15 @@ msgstr "raw[add]: додавање игнорисања"
 msgid "raw[addreplace]: add or replace an existing ignore"
 msgstr "raw[addreplace]: додавање или замена постојећег игнорисања"
 
+#, fuzzy
+#| msgid ""
+#| "nick: nick or hostname; can be a POSIX extended regular expression if "
+#| "\"re:\" is given or a mask using \"*\" to replace zero or more chars (the "
+#| "regular expression can start with \"(?-i)\" to become case sensitive)"
 msgid ""
 "nick: nick or hostname; can be a POSIX extended regular expression if \"re:"
 "\" is given or a mask using \"*\" to replace zero or more chars (the regular "
-"expression can start with \"(?-i)\" to become case sensitive)"
+"expression can start with \"(?-i)\" to become case-sensitive)"
 msgstr ""
 "надимак: надимак или име хоста (може да буде POSIX проширени регуларни израз "
 "ако се наведе „re:” или маска која користи „*” да замени нула или више "
@@ -9995,21 +10163,21 @@ msgstr "приказ информација које описују сервер
 msgid "invite a nick on a channel"
 msgstr "позив надимку да приступи каналу"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid "<nick>... [<channel>]"
 msgstr "<надимак>... [<канал>]"
 
 msgid "check if a nick is currently on IRC"
 msgstr "провера да ли се надимак тренутно налази на IRC"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid "<nick>..."
 msgstr "<надимак>..."
 
 msgid "join a channel"
 msgstr "приступ каналу"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid ""
 "[-noswitch] [-server <server>] [<channel1>[,<channel2>...]] [<key1>[,"
 "<key2>...]]"
@@ -10028,7 +10196,7 @@ msgstr ""
 msgid "kick a user out of a channel"
 msgstr "избацивање корисника са канала"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid "[<channel>] <nick> [<reason>]"
 msgstr "[<канал>] <надимак> [<разлог>]"
 
@@ -10054,7 +10222,7 @@ msgstr ""
 msgid "close client-server connection"
 msgstr "затварање клијент-сервер конекције"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid "<nick> [<reason>]"
 msgstr "<надимак> [<разлог>]"
 
@@ -10064,7 +10232,7 @@ msgstr "разлог: разлог"
 msgid "send a notice to an invitation-only channel, requesting an invite"
 msgstr "шаље обавештење на канал само-по-позиву, којим се захтева позивница"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid "<channel> [<message>]"
 msgstr "<канал> [<порука>]"
 
@@ -10074,7 +10242,7 @@ msgstr "порука: порука која се шаље"
 msgid "list all server names which are known by the server answering the query"
 msgstr "листа свих имена сервера који су познати серверу одговарајући на упит"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid "[[<target>] <server_mask>]"
 msgstr "[[<циљ>] <сервер_маска>]"
 
@@ -10087,7 +10255,7 @@ msgstr "сервер_маска: листа сервера мора да се п
 msgid "list channels and their topics"
 msgstr "листа канала и њихових тема"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid ""
 "[-server <server>] [<channel>[,<channel>...]] [<target>] || [-server "
 "<server>] [-raw *|<regex>] || -up|-down [<number>] || -left|-right "
@@ -10102,8 +10270,13 @@ msgid ""
 msgstr ""
 "raw[-raw]: приказује резултат на баферу сервера уместо на посебном баферу"
 
+#, fuzzy
+#| msgid ""
+#| "regex: POSIX extended regular expression used to filter results (case "
+#| "insensitive, can start by \"(?-i)\" to become case sensitive); the "
+#| "special value \"*\" doesn't filter results"
 msgid ""
-"regex: POSIX extended regular expression used to filter results (case "
+"regex: POSIX extended regular expression used to filter results (case-"
 "insensitive, can start by \"(?-i)\" to become case sensitive); the special "
 "value \"*\" doesn't filter results"
 msgstr ""
@@ -10164,8 +10337,12 @@ msgstr "    канали са „weechat” у имену:"
 msgid "    channels with at least 100 users:"
 msgstr "    канали са барем 100 корисника:"
 
+#, fuzzy
+#| msgid ""
+#| "    channels with \"freebsd\" (case insensitive) in topic and more than "
+#| "10 users:"
 msgid ""
-"    channels with \"freebsd\" (case insensitive) in topic and more than 10 "
+"    channels with \"freebsd\" (case-insensitive) in topic and more than 10 "
 "users:"
 msgstr ""
 "    канали са „freebsd” (без разликовања величине слова) у теми који имају "
@@ -10181,7 +10358,7 @@ msgstr ""
 msgid "get statistics about the size of the IRC network"
 msgstr "креирање статистике о величини IRC мреже"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid "[<mask> [<target>]]"
 msgstr "[<маска> [<циљ>]]"
 
@@ -10197,14 +10374,14 @@ msgstr "приказ графичке мапе IRC мреже"
 msgid "send a CTCP action to the current channel"
 msgstr "слање CTCP акције текућем каналу"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid "<message>"
 msgstr "<порука>"
 
 msgid "change channel or user mode"
 msgstr "измена режима канала или корисника"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid ""
 "[<channel>] [+|-]o|p|s|i|t|n|m|l|b|e|v|k [<arguments>] || <nick> [+|-]i|s|w|o"
 msgstr ""
@@ -10288,7 +10465,7 @@ msgstr "слање поруке надимку или каналу"
 msgid "list nicks on channels"
 msgstr "листа надимака на каналима"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid "[-count | -x] [<channel>[,<channel>...]]"
 msgstr "[-count | -x] [<канал>[,<канал>...]]"
 
@@ -10305,7 +10482,7 @@ msgstr ""
 msgid "change current nick"
 msgstr "измена текућег надимка"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid "[-all] <nick>"
 msgstr "[-all] <надимак>"
 
@@ -10318,7 +10495,7 @@ msgstr "надимак: нови надимак"
 msgid "send notice message to user"
 msgstr "слање поруке обавештења кориснику"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid "[-server <server>] <target> <text>"
 msgstr "[-server <сервер>] <циљ> <текст>"
 
@@ -10328,7 +10505,7 @@ msgstr "циљ: надимак или име канала"
 msgid "add a notification for presence or away status of nicks on servers"
 msgstr "додавање обавештења присуства или одсуства надимака на серверима"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid "add|addreplace <nick> [<server> [-away]] || del <nick>|-all [<server>]"
 msgstr ""
 "add|addreplace <надимак> [<сервер> [-away]] || del <надимак>|-all [<сервер>]"
@@ -10370,7 +10547,7 @@ msgstr "*: давање статуса оператора канала свим�
 msgid "get operator privileges"
 msgstr "узимање операторских привилегија"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid "<user> <password>"
 msgstr "<корисник> <лозинка>"
 
@@ -10386,7 +10563,7 @@ msgstr "напуштање канала"
 msgid "send a ping to server"
 msgstr "слање пинга серверу"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid "<target1> [<target2>]"
 msgstr "<циљ1> [<циљ2>]"
 
@@ -10399,7 +10576,7 @@ msgstr "циљ2: пинг се прослеђује овом серверу"
 msgid "answer to a ping message"
 msgstr "одговор на пинг поруку"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid "<daemon> [<daemon2>]"
 msgstr "<даемон> [<даемон2>]"
 
@@ -10412,7 +10589,7 @@ msgstr "даемон2: порука се прослеђује овом даем�
 msgid "send a private message to a nick"
 msgstr "слање приватне поруке надимку"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid "[-noswitch] [-server <server>] <nick>[,<nick>...] [<text>]"
 msgstr "[-noswitch] [-server <сервер>] <надимак>[,<надимак>...] [<текст>]"
 
@@ -10426,7 +10603,7 @@ msgstr "Без аргумента ова команда приказује ли�
 msgid "send raw data to server without parsing"
 msgstr "слање сирових података серверу, без парсирања"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid "[-server <server>] <data>"
 msgstr "[-server <сервер>] <подаци>"
 
@@ -10436,7 +10613,7 @@ msgstr "подаци: сирови подаци који се шаљу"
 msgid "reconnect to server(s)"
 msgstr "поновно повезивање са сервер(ом/има)"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid "<server>... [-nojoin] [-switch] || -all [-nojoin] [-switch]"
 msgstr "<сервер>... [-nojoin] [-switch] || -all [-nojoin] [-switch]"
 
@@ -10446,7 +10623,7 @@ msgstr "raw[-all]: поновно повезивање са свим серве�
 msgid "tell the server to reload its config file"
 msgstr "налог серверу да поново учита свој конфигурациони фајл"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid "[<option>]"
 msgstr "[<опција>]"
 
@@ -10472,14 +10649,14 @@ msgstr "захтев за правила сервера"
 msgid "force a user to join channel(s)"
 msgstr "форсирање да корисник приступи канал(у/има)"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid "<nick> <channel>[,<channel>...]"
 msgstr "<надимак> <канал>[,<канал>...]"
 
 msgid "change mode on channel, without having operator status"
 msgstr "измена режима на каналу, без поседовања статуса оператора"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid "[<channel>] <mode>"
 msgstr "[<канал>] <режим>"
 
@@ -10489,7 +10666,7 @@ msgstr "режим: режим за канал"
 msgid "force a user to use another nick"
 msgstr "форсирање да корисник употреби други надимак"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid "<nick> <new_nick>"
 msgstr "<надимак> <нови_надимак>"
 
@@ -10502,14 +10679,14 @@ msgstr "форсирање да корисник напусти канал(е)"
 msgid "force a user to quit server with a reason"
 msgstr "форсирање да корисник напусти сервер уз разлог"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid "<nick> <reason>"
 msgstr "<надимак> <разлог>"
 
 msgid "register a new service"
 msgstr "регистрација новог сервиса"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid "<nick> <reserved> <distribution> <type> <reserved> <info>"
 msgstr "<надимак> <резервисано> <дистрибуција> <тип> <резервисано> <инфо>"
 
@@ -10522,7 +10699,7 @@ msgstr "тип: резервисано за будућу употребу"
 msgid "list, add or remove IRC servers"
 msgstr "испис, додавање или уклањање IRC сервера"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid ""
 "list|listfull [<name>] || add|addreplace <name> <hostname>[/<port>] [-temp] "
 "[-<option>[=<value>]] [-no<option>] || copy|rename <name> <new_name> || "
@@ -10646,7 +10823,7 @@ msgstr ""
 msgid "list services currently connected to the network"
 msgstr "листа сервиса који су тренутно повезани на мрежу"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid "[<mask> [<type>]]"
 msgstr "[<маска> [<тип>]]"
 
@@ -10659,7 +10836,7 @@ msgstr "тип: приказују се само сервиси овог тип�
 msgid "deliver a message to a service"
 msgstr "достављање поруке сервису"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid "<service> <text>"
 msgstr "<сервис> <текст>"
 
@@ -10669,7 +10846,7 @@ msgstr "сервис: име сервиса"
 msgid "set real name"
 msgstr "постављање реалног имена"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid "<realname>"
 msgstr "<реално_име>"
 
@@ -10679,7 +10856,7 @@ msgstr "реално_име: ново реално име"
 msgid "disconnect server links"
 msgstr "прекид серверских веза"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid "<target> <comment>"
 msgstr "<циљ> <коментар>"
 
@@ -10689,7 +10866,7 @@ msgstr "коментар: коментар"
 msgid "query statistics about server"
 msgstr "упит статистике о серверу"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid "[<query> [<target>]]"
 msgstr "[<упит> [<циљ>]]"
 
@@ -10703,7 +10880,7 @@ msgstr ""
 "слање учтиве поруке корисницима који су на хосту на којем се извршава IRC "
 "сервер да се придруже IRC-у"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid "<user> [<target> [<channel>]]"
 msgstr "<коринсик> [<циљ> [<канал>]]"
 
@@ -10719,7 +10896,7 @@ msgstr "циљ: време се тражи од наведеног сервер�
 msgid "get/set channel topic"
 msgstr "преузимање/постављање теме канала"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid "[<channel>] [<topic>|-delete]"
 msgstr "[<канал>] [<тема>|-delete]"
 
@@ -10735,7 +10912,7 @@ msgstr "проналажење руте до одређеног сервера"
 msgid "unban nicks or hosts"
 msgstr "уклањање забране надимцима или хостовима"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid "[<channel>] <nick>|<number>|<n1>-<n2>..."
 msgstr "[<канал>] <надимак>|<број>|<n1>-<n2>..."
 
@@ -10763,7 +10940,7 @@ msgstr "листа корисника који су пријављени на с
 msgid "give the version info of nick or server (current or specified)"
 msgstr "враћање инфо о верзији за надимак или сервер (тренутни или наведен)"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid "[<target>|<nick>]"
 msgstr "[<циљ>|<надимак>]"
 
@@ -10776,7 +10953,7 @@ msgstr "*: давање гласа свима на каналу"
 msgid "send a notice to channel ops"
 msgstr "слање обавештења операторима канала"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid "[<channel>] <text>"
 msgstr "[<канал>] <текст>"
 
@@ -10787,14 +10964,14 @@ msgstr ""
 "слање поруке свим тренутно повезаним корисницима који имају за себе "
 "постављен кориснички режим „w”"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid "<text>"
 msgstr "<текст>"
 
 msgid "generate a query which returns a list of information"
 msgstr "генерисање упита који враћа листу информација"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid "[<mask> [o]]"
 msgstr "[<маска> [o]]"
 
@@ -10807,7 +10984,7 @@ msgstr "o: враћају се само оператори сагласно са
 msgid "query information about user(s)"
 msgstr "упит информација о корисни(ку/цима)"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid "[<target>] [<nick>[,<nick>...]]"
 msgstr "[<циљ>] [<надимак>[,<надимак>...]]"
 
@@ -10834,7 +11011,7 @@ msgstr ""
 msgid "ask for information about a nick which no longer exists"
 msgstr "упит информација о надимку који више не постоји"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid "<nick>[,<nick>...] [<count> [<target>]]"
 msgstr "<надимак>[,<надимак>...] [<број> [<циљ>]]"
 
@@ -11574,9 +11751,18 @@ msgstr ""
 "се ово упозорење прикаже и онда када се то не очекује (адреса удаљеног "
 "надимка се током пријављивања мења више пута)"
 
+#, fuzzy
+#| msgid ""
+#| "comma separated list of words to highlight in channel buffers (case "
+#| "insensitive, use \"(?-i)\" at beginning of words to make them case "
+#| "sensitive; special variables $nick, $channel and $server are replaced by "
+#| "their values), these words are added to buffer property "
+#| "\"highlight_words\" only when buffer is created (it does not affect "
+#| "current buffers), an empty string disables default highlight on nick, "
+#| "examples: \"$nick\", \"(?-i)$nick\""
 msgid ""
-"comma separated list of words to highlight in channel buffers (case "
-"insensitive, use \"(?-i)\" at beginning of words to make them case "
+"comma separated list of words to highlight in channel buffers (case-"
+"insensitive, use \"(?-i)\" at beginning of words to make them case-"
 "sensitive; special variables $nick, $channel and $server are replaced by "
 "their values), these words are added to buffer property \"highlight_words\" "
 "only when buffer is created (it does not affect current buffers), an empty "
@@ -11591,9 +11777,18 @@ msgstr ""
 "креира (не утичу на већ постојеће бафере), празан стринг искључује "
 "подразумевано истицање надимака, примери: „$nick”, „(?-i)$nick”"
 
+#, fuzzy
+#| msgid ""
+#| "comma separated list of words to highlight in private buffers (case "
+#| "insensitive, use \"(?-i)\" at beginning of words to make them case "
+#| "sensitive; special variables $nick, $channel and $server are replaced by "
+#| "their values), these words are added to buffer property "
+#| "\"highlight_words\" only when buffer is created (it does not affect "
+#| "current buffers), an empty string disables default highlight on nick, "
+#| "examples: \"$nick\", \"(?-i)$nick\""
 msgid ""
-"comma separated list of words to highlight in private buffers (case "
-"insensitive, use \"(?-i)\" at beginning of words to make them case "
+"comma separated list of words to highlight in private buffers (case-"
+"insensitive, use \"(?-i)\" at beginning of words to make them case-"
 "sensitive; special variables $nick, $channel and $server are replaced by "
 "their values), these words are added to buffer property \"highlight_words\" "
 "only when buffer is created (it does not affect current buffers), an empty "
@@ -11608,9 +11803,18 @@ msgstr ""
 "онда када се бафер креира (не утичу на већ постојеће бафере), празан стринг "
 "искључује подразумевано истицање надимака, примери: „$nick”, „(?-i)$nick”"
 
+#, fuzzy
+#| msgid ""
+#| "comma separated list of words to highlight in server buffers (case "
+#| "insensitive, use \"(?-i)\" at beginning of words to make them case "
+#| "sensitive; special variables $nick, $channel and $server are replaced by "
+#| "their values), these words are added to buffer property "
+#| "\"highlight_words\" only when buffer is created (it does not affect "
+#| "current buffers), an empty string disables default highlight on nick, "
+#| "examples: \"$nick\", \"(?-i)$nick\""
 msgid ""
-"comma separated list of words to highlight in server buffers (case "
-"insensitive, use \"(?-i)\" at beginning of words to make them case "
+"comma separated list of words to highlight in server buffers (case-"
+"insensitive, use \"(?-i)\" at beginning of words to make them case-"
 "sensitive; special variables $nick, $channel and $server are replaced by "
 "their values), these words are added to buffer property \"highlight_words\" "
 "only when buffer is created (it does not affect current buffers), an empty "
@@ -11686,11 +11890,18 @@ msgstr ""
 msgid "left/right scroll in /list buffer (percent of width)"
 msgstr "скроловање у лево/десно у /list баферу (проценат ширине)"
 
+#, fuzzy
+#| msgid ""
+#| "comma-separated list of fields to sort channels (see /help list for a "
+#| "list of fields); char \"-\" can be used before field to reverse order, "
+#| "char \"~\" can be used to do a case insensitive comparison; example: \"-"
+#| "count,~name\" for biggest channels first then case insensitive sort on "
+#| "name"
 msgid ""
 "comma-separated list of fields to sort channels (see /help list for a list "
 "of fields); char \"-\" can be used before field to reverse order, char \"~\" "
-"can be used to do a case insensitive comparison; example: \"-count,~name\" "
-"for biggest channels first then case insensitive sort on name"
+"can be used to do a case-insensitive comparison; example: \"-count,~name\" "
+"for biggest channels first then case-insensitive sort on name"
 msgstr ""
 "листа поља за сортирање канала раздвојених запетама (погледајте /help list "
 "за листу поља); карактер „-” може да се користи испред поља чиме се обрће "
@@ -11777,7 +11988,7 @@ msgstr ""
 
 msgid ""
 "comma separated list of nicks for which notifications are disabled in notice "
-"messages (comparison is case insensitive)"
+"messages (comparison is case-insensitive)"
 msgstr ""
 
 msgid ""
@@ -13402,7 +13613,7 @@ msgstr "%s: \"%s\" => ниво %d"
 msgid "logger plugin configuration"
 msgstr "логер конфигурације додатка"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid "list || set <level> || flush || disable"
 msgstr "list || set <ниво> || flush || disable"
 
@@ -14204,7 +14415,7 @@ msgstr ""
 msgid "list/load/unload scripts"
 msgstr "испис/учитавање/уклањање скрипти"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid ""
 "list|listfull [<name>] || load [-q] <filename> || autoload || reload|unload "
 "[-q] [<name>] || eval [-o|-oc] <code> || version"
@@ -14853,9 +15064,12 @@ msgstr "Сви прослеђени удаљени:"
 msgid "No relay remote"
 msgstr "Нема ниједног прослеђеног удаљеног"
 
-#, c-format
+#, fuzzy, c-format
+#| msgid ""
+#| "%s%s: you can not delete remote relay \"%s\" because you are connected "
+#| "to. Try \"/remote disconnect %s\" before."
 msgid ""
-"%s%s: you can not delete remote relay \"%s\" because you are connected to. "
+"%s%s: you cannot delete remote relay \"%s\" because you are connected to. "
 "Try \"/remote disconnect %s\" before."
 msgstr ""
 "%s%s: не можете да обришете релеј удаљених „%s” јер сте повезани са њим. "
@@ -14917,7 +15131,7 @@ msgstr "%s: релеј удаљених „%s” је обрисан"
 msgid "relay control"
 msgstr "контрола преко релеја"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid ""
 "list|listfull|listrelay || add|addreplace <name> <port>|<path> || del|start|"
 "restart|stop <name> || raw || tlscertkey"
@@ -15050,7 +15264,7 @@ msgstr "Без аргумента ова команда отвара бафер 
 msgid "control of remote relay servers"
 msgstr "контрола сервера релеја за удаљене"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 #, fuzzy
 #| msgid ""
 #| "list|listfull [<name>] || add|addreplace <name> <url> [-"
@@ -15280,8 +15494,13 @@ msgstr ""
 "у релеју се дозвољава празна лозинка (требало би да се укључи само током "
 "тестирања или у локалној мрежи)"
 
+#, fuzzy
+#| msgid ""
+#| "POSIX extended regular expression with IPs allowed to use relay (case "
+#| "insensitive, use \"(?-i)\" at beginning to make it case sensitive), "
+#| "example: \"^(123\\.45\\.67\\.89|192\\.160\\..*)$\""
 msgid ""
-"POSIX extended regular expression with IPs allowed to use relay (case "
+"POSIX extended regular expression with IPs allowed to use relay (case-"
 "insensitive, use \"(?-i)\" at beginning to make it case sensitive), example: "
 "\"^(123\\.45\\.67\\.89|192\\.160\\..*)$\""
 msgstr ""
@@ -15445,9 +15664,14 @@ msgstr ""
 "након, ...; велики број умањује ниво безбедности (препоручене вредности су 0 "
 "или 1)"
 
+#, fuzzy
+#| msgid ""
+#| "POSIX extended regular expression with origins allowed in websockets "
+#| "(case insensitive, use \"(?-i)\" at beginning to make it case sensitive), "
+#| "example: \"^https?://(www\\.)?example\\.(com|org)\""
 msgid ""
-"POSIX extended regular expression with origins allowed in websockets (case "
-"insensitive, use \"(?-i)\" at beginning to make it case sensitive), example: "
+"POSIX extended regular expression with origins allowed in websockets (case-"
+"insensitive, use \"(?-i)\" at beginning to make it case-sensitive), example: "
 "\"^https?://(www\\.)?example\\.(com|org)\""
 msgstr ""
 "POSIX проширени регуларни израз са пореклима која се дозвољавају у "
@@ -15849,9 +16073,11 @@ msgstr "%s: за скрипту „%s” је искључено аутомат�
 msgid "%s%s: error downloading script \"%s\": %s"
 msgstr "%s%s: грешка при преузимању скрипте „%s”: %s"
 
-#, c-format
+#, fuzzy, c-format
+#| msgid ""
+#| "%s: script \"%s\" can not be installed because plugin \"%s\" is not loaded"
 msgid ""
-"%s: script \"%s\" can not be installed because plugin \"%s\" is not loaded"
+"%s: script \"%s\" cannot be installed because plugin \"%s\" is not loaded"
 msgstr ""
 "%s: скрипта „%s” не може да се иницијализује јер није учитан додатак „%s”"
 
@@ -15867,13 +16093,15 @@ msgstr "%s: скрипта „%s” није инсталирана"
 msgid "%s: script \"%s\" is held"
 msgstr "%s: скрипта „%s” је задржана"
 
-#, c-format
-msgid ""
-"%s: script \"%s\" can not be removed because plugin \"%s\" is not loaded"
+#, fuzzy, c-format
+#| msgid ""
+#| "%s: script \"%s\" can not be removed because plugin \"%s\" is not loaded"
+msgid "%s: script \"%s\" cannot be removed because plugin \"%s\" is not loaded"
 msgstr "%s: скрипта „%s” не може да се уклони јер није учитан додатак „%s”"
 
-#, c-format
-msgid "%s: script \"%s\" is not held any more"
+#, fuzzy, c-format
+#| msgid "%s: script \"%s\" is not held any more"
+msgid "%s: script \"%s\" is not held anymore"
 msgstr "%s: скрипта „%s” нише није задржана"
 
 msgid "Error: file not found"
@@ -15990,7 +16218,7 @@ msgstr "%s: преузимање скрипти је укључено"
 msgid "WeeChat script manager"
 msgstr "Менаџер WeeChat скрипти"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid ""
 "enable || list [-o|-ol|-i|-il] || search <text> || show <script> || load|"
 "unload|reload <script>... || autoload|noautoload|toggleautoload <script>... "
@@ -16073,9 +16301,13 @@ msgstr ""
 "raw[installremove]: инсталација или уклањање скрипт(е/и), зависно од "
 "тренутног стања"
 
+#, fuzzy
+#| msgid ""
+#| "raw[hold]: hold/unhold script(s) (a script held will not be upgraded any "
+#| "more and cannot be removed)"
 msgid ""
-"raw[hold]: hold/unhold script(s) (a script held will not be upgraded any "
-"more and cannot be removed)"
+"raw[hold]: hold/unhold script(s) (a script held will not be upgraded anymore "
+"and cannot be removed)"
 msgstr ""
 "raw[hold]: задржавање/пуштање скрипт(е/и) (задржана скрипта се неће више "
 "ажурирати и не може да се обрише)"
@@ -16117,7 +16349,9 @@ msgstr "  `N`: застарела (доступна је новија верзи
 msgid "In output of /script list, this additional status can be displayed:"
 msgstr "У излазу команде /script list, могући статус сваке од скрипти је:"
 
-msgid "  `?`: unknown script (can not be downloaded/updated)"
+#, fuzzy
+#| msgid "  `?`: unknown script (can not be downloaded/updated)"
+msgid "  `?`: unknown script (cannot be downloaded/updated)"
 msgstr "  `?`: непозната скрипта (не може да се преузме/ажурира)"
 
 msgid ""
@@ -16324,9 +16558,13 @@ msgstr ""
 msgid "timeout (in seconds) for download of scripts and list of scripts"
 msgstr "тајмаут (у секундама) за преузимање скрипти и листе скрипти"
 
+#, fuzzy
+#| msgid ""
+#| "scripts to \"hold\": comma-separated list of scripts which will never "
+#| "been upgraded and can not be removed, for example: \"go.py,urlserver.py\""
 msgid ""
 "scripts to \"hold\": comma-separated list of scripts which will never been "
-"upgraded and can not be removed, for example: \"go.py,urlserver.py\""
+"upgraded and cannot be removed, for example: \"go.py,urlserver.py\""
 msgstr ""
 "скрипте које се „задржавају”: листа скрипти раздвојених запетама које се "
 "никада неће ажурирати и које не могу да се обришу, на пример: „go.py,"
@@ -16496,7 +16734,7 @@ msgstr "Искључен је програм за проверу правопи�
 msgid "spell plugin configuration"
 msgstr "конфигурација додатка spell"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid ""
 "enable|disable|toggle || listdict || setdict -|<dict>[,<dict>...] || deldict "
 "|| addword [<dict>] <word>"
@@ -16755,9 +16993,12 @@ msgstr "Није укључен ниједан окидач"
 msgid "List of default triggers:"
 msgstr "Листа подразумеваних окидача:"
 
-#, c-format
+#, fuzzy, c-format
+#| msgid ""
+#| "%s%s: action \"%s\" can not be executed on trigger \"%s\" because it is "
+#| "currently running"
 msgid ""
-"%s%s: action \"%s\" can not be executed on trigger \"%s\" because it is "
+"%s%s: action \"%s\" cannot be executed on trigger \"%s\" because it is "
 "currently running"
 msgstr ""
 "%s%s: акција „%s” не може да се изврши за окидач „%s” јер се тренутно "
@@ -16767,8 +17008,9 @@ msgstr ""
 msgid "Trigger \"%s\" restarted"
 msgstr "Окидач „%s” је поново покренут"
 
-#, c-format
-msgid "%s%s: a disabled trigger can not be restarted"
+#, fuzzy, c-format
+#| msgid "%s%s: a disabled trigger can not be restarted"
+msgid "%s%s: a disabled trigger cannot be restarted"
 msgstr "%s%s: искључени окидач не може поново да се покрене"
 
 #, c-format
@@ -16887,7 +17129,7 @@ msgstr ""
 msgid "manage triggers, the Swiss Army knife for WeeChat"
 msgstr "управљање окидачима, ножем швајцарске војске програма WeeChat"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") must be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid ""
 "list [-o|-ol|-i|-il] || listfull || listdefault || add|addoff|addreplace "
 "<name> <hook> [\"<arguments>\" [\"<conditions>\" [\"<regex>\" [\"<command>\" "
@@ -17244,8 +17486,12 @@ msgstr ""
 "%s%s: неважећи регуларни израз у опцији „regex”, погледајте /help trigger."
 "trigger.%s.regex"
 
+#, fuzzy
+#| msgid ""
+#| "if disabled, the hooks are removed from trigger, so it is not called any "
+#| "more"
 msgid ""
-"if disabled, the hooks are removed from trigger, so it is not called any more"
+"if disabled, the hooks are removed from trigger, so it is not called anymore"
 msgstr ""
 "ако је искључено, куке се уклањају из окидача, тако да се он више не позива"
 
