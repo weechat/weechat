@@ -67,6 +67,7 @@ Alphabetically:
 - Joram Schrijver
 - Jos Ahrens
 - Joseph Kichline
+- Josh Soref
 - Juan Francisco Cantero Hurtado
 - Julien Louis (ptitlouis)
 - Karthik K
