@@ -239,7 +239,9 @@ if(ICONV_FOUND)
 endif()
 
 # Check for CURL
-find_package(CURL REQUIRED)
+pkg_check_modules(LIBCURL REQUIRED libcurl)
+include_directories(${LIBCURL_INCLUDE_DIRS})
+list(APPEND EXTRA_LIBS ${LIBCURL_LDFLAGS})
 
 find_library(DL_LIBRARY
   NAMES dl
