@@ -39,6 +39,7 @@ Alphabetically:
 - Elizabeth Myers (Elizacat)
 - Elián Hanisch (m4v)
 - Emanuele Giaquinta
+- Emil Velikov
 - Emir Sarı
 - emk
 - Érico Nogueira
