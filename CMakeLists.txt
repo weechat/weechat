@@ -207,7 +207,6 @@ endif()
 
 # Check for libgcrypt
 pkg_check_modules(LIBGCRYPT REQUIRED libgcrypt)
-add_definitions(-DHAVE_GCRYPT)
 include_directories(${LIBGCRYPT_INCLUDE_DIRS})
 list(APPEND EXTRA_LIBS ${LIBGCRYPT_LDFLAGS})
 
