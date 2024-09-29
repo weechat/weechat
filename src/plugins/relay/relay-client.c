@@ -1447,13 +1447,8 @@ relay_client_new (int sock, const char *address, struct t_relay_server *server)
                 if (relay_gnutls_dh_params)
                 {
                     gnutls_dh_params_init (relay_gnutls_dh_params);
-#if LIBGNUTLS_VERSION_NUMBER >= 0x020c00 /* 2.12.0 */
                     bits = gnutls_sec_param_to_pk_bits (GNUTLS_PK_DH,
                                                         GNUTLS_SEC_PARAM_LOW);
-#else
-                    /* default for old gnutls */
-                    bits = 1024;
-#endif /* LIBGNUTLS_VERSION_NUMBER >= 0x020c00 */
                     gnutls_dh_params_generate2 (*relay_gnutls_dh_params, bits);
                     gnutls_certificate_set_dh_params (relay_gnutls_x509_cred,
                                                       *relay_gnutls_dh_params);

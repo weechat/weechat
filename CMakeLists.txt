@@ -212,7 +212,7 @@ include_directories(${LIBGCRYPT_INCLUDE_DIRS})
 list(APPEND EXTRA_LIBS ${LIBGCRYPT_LDFLAGS})
 
 # Check for GnuTLS
-pkg_check_modules(GNUTLS REQUIRED gnutls)
+pkg_check_modules(GNUTLS REQUIRED gnutls>=3.3.0)
 include_directories(${GNUTLS_INCLUDE_DIRS})
 list(APPEND EXTRA_LIBS ${GNUTLS_LDFLAGS})
 
