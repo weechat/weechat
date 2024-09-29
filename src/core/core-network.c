@@ -99,17 +99,10 @@ void
 network_allocate_credentials ()
 {
     gnutls_certificate_allocate_credentials (&gnutls_xcred);
-#if LIBGNUTLS_VERSION_NUMBER >= 0x02090a /* 2.9.10 */
     gnutls_certificate_set_verify_function (gnutls_xcred,
                                             &hook_connect_gnutls_verify_certificates);
-#endif /* LIBGNUTLS_VERSION_NUMBER >= 0x02090a */
-#if LIBGNUTLS_VERSION_NUMBER >= 0x020b00 /* 2.11.0 */
     gnutls_certificate_set_retrieve_function (gnutls_xcred,
                                               &hook_connect_gnutls_set_certificates);
-#else
-    gnutls_certificate_client_set_retrieve_function (gnutls_xcred,
-                                                     &hook_connect_gnutls_set_certificates);
-#endif /* LIBGNUTLS_VERSION_NUMBER >= 0x020b00 */
 }
 
 /*
@@ -1535,26 +1528,6 @@ network_connect_gnutls_handshake_fd_cb (const void *pointer, void *data,
     {
         fcntl (HOOK_CONNECT(hook_connect, sock), F_SETFL,
                HOOK_CONNECT(hook_connect, handshake_fd_flags));
-#if LIBGNUTLS_VERSION_NUMBER < 0x02090a /* 2.9.10 */
-        /*
-         * gnutls only has the gnutls_certificate_set_verify_function()
-         * function since version 2.9.10. We need to call our verify
-         * function manually after the handshake for old gnutls versions
-         */
-        if (hook_connect_gnutls_verify_certificates (*HOOK_CONNECT(hook_connect, gnutls_sess)) != 0)
-        {
-            unhook (HOOK_CONNECT(hook_connect, handshake_hook_fd));
-            (void) (HOOK_CONNECT(hook_connect, callback))
-                (hook_connect->callback_pointer,
-                 hook_connect->callback_data,
-                 WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR, rc,
-                 HOOK_CONNECT(hook_connect, sock),
-                 "Error in the certificate.",
-                 HOOK_CONNECT(hook_connect, handshake_ip_address));
-            unhook (hook_connect);
-            return WEECHAT_RC_OK;
-        }
-#endif /* LIBGNUTLS_VERSION_NUMBER < 0x02090a */
         unhook (HOOK_CONNECT(hook_connect, handshake_hook_fd));
         (void) (HOOK_CONNECT(hook_connect, callback))
             (hook_connect->callback_pointer,
@@ -1769,26 +1742,6 @@ network_connect_child_read_cb (const void *pointer, void *data, int fd)
                 }
                 fcntl (HOOK_CONNECT(hook_connect, sock), F_SETFL,
                        HOOK_CONNECT(hook_connect, handshake_fd_flags));
-#if LIBGNUTLS_VERSION_NUMBER < 0x02090a /* 2.9.10 */
-                /*
-                 * gnutls only has the gnutls_certificate_set_verify_function()
-                 * function since version 2.9.10. We need to call our verify
-                 * function manually after the handshake for old gnutls versions
-                 */
-                if (hook_connect_gnutls_verify_certificates (*HOOK_CONNECT(hook_connect, gnutls_sess)) != 0)
-                {
-                    (void) (HOOK_CONNECT(hook_connect, callback))
-                        (hook_connect->callback_pointer,
-                         hook_connect->callback_data,
-                         WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR,
-                         rc, sock,
-                         "Error in the certificate.",
-                         cb_ip_address);
-                    unhook (hook_connect);
-                    free (cb_ip_address);
-                    return WEECHAT_RC_OK;
-                }
-#endif /* LIBGNUTLS_VERSION_NUMBER < 0x02090a */
             }
         }
         else

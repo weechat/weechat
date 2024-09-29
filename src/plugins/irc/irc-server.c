@@ -5052,19 +5052,11 @@ irc_server_gnutls_callback (const void *pointer, void *data,
                             const gnutls_datum_t *req_ca, int nreq,
                             const gnutls_pk_algorithm_t *pk_algos,
                             int pk_algos_len,
-#if LIBGNUTLS_VERSION_NUMBER >= 0x020b00 /* 2.11.0 */
                             gnutls_retr2_st *answer,
-#else
-                            gnutls_retr_st *answer,
-#endif /* LIBGNUTLS_VERSION_NUMBER >= 0x020b00 */
                             int action)
 {
     struct t_irc_server *server;
-#if LIBGNUTLS_VERSION_NUMBER >= 0x020b00 /* 2.11.0 */
     gnutls_retr2_st tls_struct;
-#else
-    gnutls_retr_st tls_struct;
-#endif /* LIBGNUTLS_VERSION_NUMBER >= 0x020b00 */
     gnutls_x509_crt_t cert_temp;
     const gnutls_datum_t *cert_list;
     gnutls_datum_t filedatum;
@@ -5075,10 +5067,8 @@ irc_server_gnutls_callback (const void *pointer, void *data,
     const char *ptr_cert_path, *ptr_fingerprint;
     int rc, ret, fingerprint_match, hostname_match, cert_temp_init;
     struct t_hashtable *options;
-#if LIBGNUTLS_VERSION_NUMBER >= 0x010706 /* 1.7.6 */
     gnutls_datum_t cinfo;
     int rinfo;
-#endif /* LIBGNUTLS_VERSION_NUMBER >= 0x010706 */
 
     /* make C compiler happy */
     (void) data;
@@ -5170,15 +5160,9 @@ irc_server_gnutls_callback (const void *pointer, void *data,
                         hostname_match = 1;
                     }
                 }
-#if LIBGNUTLS_VERSION_NUMBER >= 0x010706 /* 1.7.6 */
                 /* display infos about certificate */
-#if LIBGNUTLS_VERSION_NUMBER < 0x020400 /* 2.4.0 */
-                rinfo = gnutls_x509_crt_print (cert_temp,
-                                               GNUTLS_X509_CRT_ONELINE, &cinfo);
-#else
                 rinfo = gnutls_x509_crt_print (cert_temp,
                                                GNUTLS_CRT_PRINT_ONELINE, &cinfo);
-#endif /*  LIBGNUTLS_VERSION_NUMBER < 0x020400 */
                 if (rinfo == 0)
                 {
                     weechat_printf (
@@ -5191,7 +5175,6 @@ irc_server_gnutls_callback (const void *pointer, void *data,
                         weechat_prefix ("network"), cinfo.data);
                     gnutls_free (cinfo.data);
                 }
-#endif /* LIBGNUTLS_VERSION_NUMBER >= 0x010706 */
                 /* check dates, only if fingerprint is not set */
                 if (!ptr_fingerprint || !ptr_fingerprint[0])
                 {
@@ -5347,23 +5330,11 @@ irc_server_gnutls_callback (const void *pointer, void *data,
                     /* key */
                     gnutls_x509_privkey_init (&server->tls_cert_key);
 
-/*
- * gnutls_x509_privkey_import2 has no "Since: ..." in GnuTLS manual but
- * GnuTLS NEWS file lists it being added in 3.1.0:
- * https://gitlab.com/gnutls/gnutls/blob/2b715b9564681acb3008a5574dcf25464de8b038/NEWS#L2552
- */
-#if LIBGNUTLS_VERSION_NUMBER >= 0x030100 /* 3.1.0 */
                     ret = gnutls_x509_privkey_import2 (server->tls_cert_key,
                                                        &filedatum,
                                                        GNUTLS_X509_FMT_PEM,
                                                        tls_password,
                                                        0);
-#else
-                    ret = gnutls_x509_privkey_import (server->tls_cert_key,
-                                                      &filedatum,
-                                                      GNUTLS_X509_FMT_PEM);
-#endif /* LIBGNUTLS_VERSION_NUMBER >= 0x0301000 */
-
                     if (ret < 0)
                     {
                         ret = gnutls_x509_privkey_import_pkcs8 (
@@ -5385,28 +5356,16 @@ irc_server_gnutls_callback (const void *pointer, void *data,
                     }
                     else
                     {
-
-#if LIBGNUTLS_VERSION_NUMBER >= 0x020b00 /* 2.11.0 */
                         tls_struct.cert_type = GNUTLS_CRT_X509;
                         tls_struct.key_type = GNUTLS_PRIVKEY_X509;
-#else
-                        tls_struct.type = GNUTLS_CRT_X509;
-#endif /* LIBGNUTLS_VERSION_NUMBER >= 0x020b00 */
                         tls_struct.ncerts = 1;
                         tls_struct.deinit_all = 0;
                         tls_struct.cert.x509 = &server->tls_cert;
                         tls_struct.key.x509 = server->tls_cert_key;
-#if LIBGNUTLS_VERSION_NUMBER >= 0x010706 /* 1.7.6 */
                         /* client certificate info */
-#if LIBGNUTLS_VERSION_NUMBER < 0x020400 /* 2.4.0 */
-                        rinfo = gnutls_x509_crt_print (server->tls_cert,
-                                                       GNUTLS_X509_CRT_ONELINE,
-                                                       &cinfo);
-#else
                         rinfo = gnutls_x509_crt_print (server->tls_cert,
                                                        GNUTLS_CRT_PRINT_ONELINE,
                                                        &cinfo);
-#endif /* LIBGNUTLS_VERSION_NUMBER < 0x020400 */
                         if (rinfo == 0)
                         {
                             weechat_printf (
@@ -5418,7 +5377,6 @@ irc_server_gnutls_callback (const void *pointer, void *data,
                                 weechat_prefix ("network"), cinfo.data);
                             gnutls_free (cinfo.data);
                         }
-#endif /* LIBGNUTLS_VERSION_NUMBER >= 0x010706 */
                         memcpy (answer, &tls_struct, sizeof (tls_struct));
                         free (cert_str);
                     }
