@@ -55,6 +55,11 @@ WEECHAT_CURL_MIN_VERSION_RE = (
     r"/\* (?P<str_min_version>[0-9][0-9.]+) \*/"
 )
 
+WEECHAT_CURL_MAX_VERSION_RE = (
+    r"#if LIBCURL_VERSION_NUM < (?P<hex_max_version>0x[0-9A-F]+) "
+    r"/\* < (?P<str_max_version>[0-9][0-9.]+) \*/"
+)
+
 WEECHAT_CURL_MIN_MAX_VERSION_RE = (
     r"#if LIBCURL_VERSION_NUM >= (?P<hex_min_version>0x[0-9A-F]+) "
     r"&& LIBCURL_VERSION_NUM < (?P<hex_max_version>0x[0-9A-F]+) "
@@ -148,6 +153,7 @@ def get_weechat_curl_symbols() -> Tuple[List[WeechatCurlSymbol], int]:
     """
     # pylint: disable=too-many-locals,too-many-statements
     min_version_pattern = re.compile(WEECHAT_CURL_MIN_VERSION_RE)
+    max_version_pattern = re.compile(WEECHAT_CURL_MAX_VERSION_RE)
     min_max_version_pattern = re.compile(WEECHAT_CURL_MIN_MAX_VERSION_RE)
     endif_pattern = re.compile(WEECHAT_ENDIF_RE)
     constant_pattern = re.compile(WEECHAT_CURL_CONSTANT_RE)
@@ -172,6 +178,21 @@ def get_weechat_curl_symbols() -> Tuple[List[WeechatCurlSymbol], int]:
                         f"{SRC_PATH}:{line_no}: min version not matching "
                         f"the comment: "
                         f"{hex_min_vers} != {str_min_vers}"
+                    )
+                    errors += 1
+                continue
+            # max Curl version
+            match = re.match(max_version_pattern, line)
+            if match:
+                hex_max_vers = match["hex_max_version"]
+                str_max_vers = match["str_max_version"]
+                v_min, v_max = 0, int(hex_max_vers, 0)
+                comment_max = curl_version_to_int(str_max_vers)
+                if v_max != comment_max:
+                    print(
+                        f"{SRC_PATH}:{line_no}: max version not matching "
+                        f"the comment: "
+                        f"{hex_max_vers} != {str_max_vers}"
                     )
                     errors += 1
                 continue
