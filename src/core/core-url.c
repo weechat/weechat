@@ -677,6 +677,9 @@ struct t_url_option url_options[] =
 #if LIBCURL_VERSION_NUM >= 0x074500 && LIBCURL_VERSION_NUM < 0x080200 /* 7.69.0 < 8.2.0 */
     URL_DEF_OPTION(MAIL_RCPT_ALLLOWFAILS, LONG, NULL),
 #endif
+#if LIBCURL_VERSION_NUM >= 0x080200 /* 8.2.0 */
+    URL_DEF_OPTION(MAIL_RCPT_ALLOWFAILS, LONG, NULL),
+#endif
 
     /*
      * TFTP options
