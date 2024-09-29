@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-09-28 21:25+0200\n"
+"POT-Creation-Date: 2024-09-29 11:59+0200\n"
 "PO-Revision-Date: 2024-08-24 10:56+0200\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4650,7 +4650,9 @@ msgstr ""
 "за линије у неактивном прозору се користи различита боја (када прозор није "
 "текући прозор)"
 
-msgid "use a different color for offline nicks (not in nicklist any more)"
+#, fuzzy
+#| msgid "use a different color for offline nicks (not in nicklist any more)"
+msgid "use a different color for offline nicks (not in nicklist anymore)"
 msgstr ""
 "за надимке који нису на мрежи се користи различита боја (више нису на листи "
 "надимака)"
@@ -7892,8 +7894,9 @@ msgstr "  %s%s%s %ld%s%s%s: %s„%s%s%s”%s (pid: %d, покренут пре %
 msgid "%s%s: command id \"%s\" not found"
 msgstr "%s%s: id команде „%s” није пронађен"
 
-#, c-format
-msgid "%s%s: command with id \"%s\" is not running any more"
+#, fuzzy, c-format
+#| msgid "%s%s: command with id \"%s\" is not running any more"
+msgid "%s%s: command with id \"%s\" is not running anymore"
 msgstr "%s%s: команда са id „%s” се више не извршава"
 
 #, c-format

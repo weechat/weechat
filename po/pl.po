@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-09-28 21:25+0200\n"
+"POT-Creation-Date: 2024-09-29 11:59+0200\n"
 "PO-Revision-Date: 2024-08-23 08:27+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4716,7 +4716,9 @@ msgstr ""
 "użycie rożnych kolorów dla linii w nieaktywnym oknie (kiedy okno nie jest "
 "obecnym oknem)"
 
-msgid "use a different color for offline nicks (not in nicklist any more)"
+#, fuzzy
+#| msgid "use a different color for offline nicks (not in nicklist any more)"
+msgid "use a different color for offline nicks (not in nicklist anymore)"
 msgstr ""
 "użyj innego koloru dla nieobecnych nicków (nie znajdujących się na liście "
 "nicków)"
@@ -7956,8 +7958,9 @@ msgstr "  %s%s%s %ld%s%s%s: %s\"%s%s%s\"%s (pid: %d, uruchomiono %s temu)"
 msgid "%s%s: command id \"%s\" not found"
 msgstr "%s%s: nie znaleziono komendy o id \"%s\""
 
-#, c-format
-msgid "%s%s: command with id \"%s\" is not running any more"
+#, fuzzy, c-format
+#| msgid "%s%s: command with id \"%s\" is not running any more"
+msgid "%s%s: command with id \"%s\" is not running anymore"
 msgstr "%s%s: komenda o id \"%s\" nie jest już wykonywana"
 
 #, c-format

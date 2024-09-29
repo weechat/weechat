@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-09-28 21:25+0200\n"
+"POT-Creation-Date: 2024-09-29 11:59+0200\n"
 "PO-Revision-Date: 2024-06-11 07:49+0200\n"
 "Last-Translator: Santiago Forero <santiago@forero.xyz>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4400,7 +4400,9 @@ msgstr ""
 "usar un diferente color para líneas en ventanas inactivas (cuando la ventana "
 "no es la ventana actual)"
 
-msgid "use a different color for offline nicks (not in nicklist any more)"
+#, fuzzy
+#| msgid "use a different color for offline nicks (not in nicklist any more)"
+msgid "use a different color for offline nicks (not in nicklist anymore)"
 msgstr ""
 "usar un color diferente para apodos desconectados (ya no están en la lista "
 "de apodos)"
@@ -7302,7 +7304,7 @@ msgid "%s%s: command id \"%s\" not found"
 msgstr "%s%s: comando \"%s\" no encontrado:"
 
 #, fuzzy, c-format
-msgid "%s%s: command with id \"%s\" is not running any more"
+msgid "%s%s: command with id \"%s\" is not running anymore"
 msgstr "%s: script \"%s\" ya no está retenido"
 
 #, c-format

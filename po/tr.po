@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-09-28 21:25+0200\n"
+"POT-Creation-Date: 2024-09-29 11:59+0200\n"
 "PO-Revision-Date: 2024-08-12 21:36+0200\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4504,7 +4504,9 @@ msgstr ""
 "etkin olmayan penceredeki satırlar için değişik bir renk kullan (pencere "
 "geçerli pencere değilken)"
 
-msgid "use a different color for offline nicks (not in nicklist any more)"
+#, fuzzy
+#| msgid "use a different color for offline nicks (not in nicklist any more)"
+msgid "use a different color for offline nicks (not in nicklist anymore)"
 msgstr ""
 "çevrimdışı takma adlar için değişik bir renk kullan (artık takma ad "
 "listesinde değil)"
@@ -7649,8 +7651,9 @@ msgstr "  %s%s%s %ld%s%s%s: %s\"%s%s%s\"%s (pid: %d, %s önce başladı)"
 msgid "%s%s: command id \"%s\" not found"
 msgstr "%s%s: Komut numarası \"%s\" bulunamadı"
 
-#, c-format
-msgid "%s%s: command with id \"%s\" is not running any more"
+#, fuzzy, c-format
+#| msgid "%s%s: command with id \"%s\" is not running any more"
+msgid "%s%s: command with id \"%s\" is not running anymore"
 msgstr "%s%s: \"%s\" numaralı komut artık çalışmıyor"
 
 #, c-format

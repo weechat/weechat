@@ -3490,8 +3490,7 @@ config_weechat_init_options ()
         config_look_color_nick_offline = config_file_new_option (
             weechat_config_file, weechat_config_section_look,
             "color_nick_offline", "boolean",
-            N_("use a different color for offline nicks (not in nicklist any "
-               "more)"),
+            N_("use a different color for offline nicks (not in nicklist anymore)"),
             NULL, 0, 0, "off", NULL, 0,
             NULL, NULL, NULL,
             &config_change_buffers, NULL, NULL,

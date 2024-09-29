@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-09-28 21:25+0200\n"
+"POT-Creation-Date: 2024-09-29 11:59+0200\n"
 "PO-Revision-Date: 2024-08-12 21:35+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -4486,7 +4486,9 @@ msgstr ""
 "アクティブでないウィンドウでは行に異なる色を使用 (ウィンドウにフォーカスが無"
 "い場合)"
 
-msgid "use a different color for offline nicks (not in nicklist any more)"
+#, fuzzy
+#| msgid "use a different color for offline nicks (not in nicklist any more)"
+msgid "use a different color for offline nicks (not in nicklist anymore)"
 msgstr ""
 "オフライン状態のニックネームに異なる色を使用 (ニックネームリストにも表示しな"
 "い)"
@@ -7548,8 +7550,9 @@ msgstr "  %s%s%s %d%s%s%s: %s\"%s%s%s\"%s (pid: %d、%s 前に開始)"
 msgid "%s%s: command id \"%s\" not found"
 msgstr "%s%s: コマンド id \"%s\" が見つかりません"
 
-#, c-format
-msgid "%s%s: command with id \"%s\" is not running any more"
+#, fuzzy, c-format
+#| msgid "%s%s: command with id \"%s\" is not running any more"
+msgid "%s%s: command with id \"%s\" is not running anymore"
 msgstr "%s%s: id \"%s\" のコマンドはもはや実行中ではありません"
 
 #, c-format

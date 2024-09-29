@@ -162,8 +162,7 @@ exec_command_search_running_id (const char *id)
     if (!ptr_exec_cmd->hook)
     {
         weechat_printf (NULL,
-                        _("%s%s: command with id \"%s\" is not running any "
-                          "more"),
+                        _("%s%s: command with id \"%s\" is not running anymore"),
                         weechat_prefix ("error"), EXEC_PLUGIN_NAME, id);
         return NULL;
     }
