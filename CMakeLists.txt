@@ -239,7 +239,8 @@ if(ICONV_FOUND)
 endif()
 
 # Check for CURL
-pkg_check_modules(LIBCURL REQUIRED libcurl)
+# NOTE: keep version in sync with tools/check_curl_symbols.py
+pkg_check_modules(LIBCURL REQUIRED libcurl>=7.47.0)
 include_directories(${LIBCURL_INCLUDE_DIRS})
 list(APPEND EXTRA_LIBS ${LIBCURL_LDFLAGS})
 
