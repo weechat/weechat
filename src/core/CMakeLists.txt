@@ -87,8 +87,6 @@ else()
   check_symbol_exists(backtrace "execinfo.h" HAVE_BACKTRACE)
 endif()
 
-include_directories(${GNUTLS_INCLUDE_PATH})
-
 if(ENABLE_ZSTD)
   include_directories(${LIBZSTD_INCLUDE_DIRS})
 endif()
