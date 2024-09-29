@@ -729,26 +729,10 @@ debug_libs_cb (const void *pointer, void *data,
                const char *signal, const char *type_data,
                void *signal_data)
 {
-#ifdef GCRYPT_VERSION
     const char *version_gcrypt = GCRYPT_VERSION;
-#else
-    const char *version_gcrypt = "(?)";
-#endif
-#ifdef GNUTLS_VERSION
     const char *version_gnutls = GNUTLS_VERSION;
-#else
-    const char *version_gnutls = "(?)";
-#endif
-#ifdef LIBCURL_VERSION
     const char *version_libcurl = LIBCURL_VERSION;
-#else
-    const char *version_libcurl = "(?)";
-#endif
-#ifdef ZLIB_VERSION
     const char *version_zlib = ZLIB_VERSION;
-#else
-    const char *version_zlib = "(?)";
-#endif
 
     /* make C compiler happy */
     (void) pointer;
