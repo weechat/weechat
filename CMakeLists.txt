@@ -212,11 +212,9 @@ include_directories(${LIBGCRYPT_INCLUDE_DIRS})
 list(APPEND EXTRA_LIBS ${LIBGCRYPT_LDFLAGS})
 
 # Check for GnuTLS
-find_package(GnuTLS REQUIRED)
-string(REGEX REPLACE "/[^/]*$" "" GNUTLS_LIBRARY_PATH "${GNUTLS_LIBRARY}")
-include_directories(${GNUTLS_INCLUDE_PATH})
-set(CMAKE_C_LINK_FLAGS "${CMAKE_C_LINK_FLAGS} -L${GNUTLS_LIBRARY_PATH}")
-list(APPEND EXTRA_LIBS gnutls)
+pkg_check_modules(GNUTLS REQUIRED gnutls)
+include_directories(${GNUTLS_INCLUDE_DIRS})
+list(APPEND EXTRA_LIBS ${GNUTLS_LDFLAGS})
 
 # Check for zlib
 find_package(ZLIB REQUIRED)

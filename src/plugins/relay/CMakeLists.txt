@@ -61,8 +61,7 @@ set_target_properties(relay PROPERTIES PREFIX "")
 
 set(LINK_LIBS)
 
-include_directories(${GNUTLS_INCLUDE_PATH})
-list(APPEND LINK_LIBS ${GNUTLS_LIBRARY})
+list(APPEND LINK_LIBS ${GNUTLS_LDFLAGS})
 
 list(APPEND LINK_LIBS ${LIBGCRYPT_LDFLAGS})
 
