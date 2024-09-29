@@ -7553,8 +7553,8 @@ irc_command_init ()
             N_("raw[-raw]: display result on server buffer instead of a "
                "dedicated buffer"),
             N_("regex: POSIX extended regular expression used to filter results "
-               "(case-insensitive, can start by \"(?-i)\" to become case "
-               "sensitive); the special value \"*\" doesn't filter results"),
+               "(case-insensitive, can start by \"(?-i)\" to become "
+               "case-sensitive); the special value \"*\" doesn't filter results"),
             N_("raw[-up]: move the selected line up by \"number\" lines"),
             N_("raw[-down]: move the selected line down by \"number\" lines"),
             N_("raw[-left]: scroll the buffer by \"percent\" of width on the left"),
