@@ -66,8 +66,7 @@ WEECHAT_CURL_CONSTANT_RE = (
     r"    URL_DEF_CONST\((?P<prefix>[A-Z0-9_]+), (?P<name>[A-Z0-9_]+)\),"
 )
 WEECHAT_CURL_OPTION_RE = (
-    r"    URL_DEF_OPTION\((?P<name>[A-Z0-9_]+), (?P<type>[A-Z]+)\), "
-    r"(?P<values>[A-Za-z0-9_]+)\),"
+    r"    URL_DEF_OPTION\((?P<name>[A-Z0-9_]+), .*\),"
 )
 CURL_SYMBOL_RE = r"[A-Z][A-Z0-9_]"
 
@@ -215,9 +214,8 @@ def get_weechat_curl_symbols() -> Tuple[List[WeechatCurlSymbol], int]:
             # Curl option
             match = re.match(option_pattern, line)
             if match:
-                symbols.append(
-                    WeechatCurlSymbol(match["name"], v_min, v_max, line_no)
-                )
+                name = f"CURLOPT_{match['name']}"
+                symbols.append(WeechatCurlSymbol(name, v_min, v_max, line_no))
                 continue
     return symbols, errors
 
