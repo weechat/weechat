@@ -881,7 +881,7 @@ Przykład terminala z WeeChat:
 │         │                                                                    │       │
 │         │                                                                    │       │
 │         │                                                                    │       │
-│         │[12:55] [5] [irc/libera] 2:#test(+n){4}* [H: 3:#abc(2,5), 5]                │
+│         │[12:55] [5] [irc/libera] 2:#test(+n){4}* M [H: 3:#abc(2,5), 5]              │
 │         │[@Flashy(i)] hi peter!█                                                     │
 └──────────────────────────────────────────────────────────────────────────────────────┘
             ▲ bars "status" and "input"                               bar "nicklist" ▲
@@ -920,32 +920,36 @@ Pasek _status_ posiada następujące domyślne elementy:
 
 [width="100%",cols="^3,^3,9",options="header"]
 |===
-| Element               | Przykład              | Opis
-| time                  | `[12:55]`             | Czas.
-| buffer_last_number    | `[5]`                 | Numer ostatniego buforu na liście.
-| buffer_plugin         | `[irc/libera]`        | Wtyczka dla obecnego bufora (wtyczka irc może dodać nazwę serwera IRC używanego przez bufor).
-| buffer_number         | `2`                   | Numer obecnego buforu.
-| buffer_name           | `#test`               | Nazwa obecnego buforu.
-| buffer_modes          | `+n`                  | Tryby kanału IRC.
-| buffer_nicklist_count | `{4}`                 | Ilość nicków wyświetlanych na liście nicków.
-| buffer_zoom           | !                     | `!` oznacza, że połączony bufor jest przybliżony (tylko ten jest wyświetlany), pusta wartość oznacza, że wszystkie połączone bufory są wyświetlane.
-| buffer_filter         | `+*+`                 | Wskaźnik filtrowania: `+*+` oznacza, że niektóre linie zostały odfiltrowywane (ukryte), pusta wartość oznacza, że wszystkie linie są wyświetlane.
-| scroll                | `-Więcej(50)-`        | Wskaźnik przewijania, z numerem linii poniżej ostatniej wyświetlanej.
-| lag                   | `[Lag: 2.5]`          | Wskaźnik opóźnienia, w sekundach (ukryty dla niskich opóźnień).
-| hotlist               | `[H: 3:#abc(2,5), 5]` | Lista buforów z aktywnością (nieprzeczytane wiadomości) (w przykładzie, 2 podświetlenia i 5 nieprzeczytanych wiadomości w _#abc_, jedna wiadomość w buforze #5).
-| completion            | `abc(2) def(5)`       | Lista słów do dopełnienia, z ilością możliwych dopełnień dla każdego słowa.
+| Element               | Przykład               | Opis
+| time                  | `12:55`                | Czas.
+| buffer_last_number    | `5`                    | Liczba najnowszych buforów (może się różnić od `buffer_count` jeśli opcja <<option_weechat.look.buffer_auto_renumber,weechat.look.buffer_auto_renumber>> jest ustawiona na `off`).
+| buffer_plugin         | `irc/libera`           | Wtyczka dla obecnego bufora (wtyczka irc może dodać nazwę serwera IRC używanego przez bufor).
+| buffer_number         | `2`                    | Numer obecnego buforu.
+| buffer_name           | `#test`                | Nazwa obecnego buforu.
+| buffer_modes          | `+n`                   | Tryby kanału IRC.
+| buffer_nicklist_count | `4`                    | Ilość nicków wyświetlanych na liście nicków.
+| buffer_zoom           | !                      | `!` oznacza, że połączony bufor jest przybliżony (tylko ten jest wyświetlany), pusta wartość oznacza, że wszystkie połączone bufory są wyświetlane.
+| buffer_filter         | `+*+`                  | Wskaźnik filtrowania: `+*+` oznacza, że niektóre linie zostały odfiltrowywane (ukryte), pusta wartość oznacza, że wszystkie linie są wyświetlane.
+// TRANSLATION MISSING
+| mouse_status          | `M`                    | Mouse status (empty if mouse is disabled), see command <<command_weechat_mouse,/mouse>> and <<key_bindings_toggle_keys,Włącz/wyłącz>>.
+| scroll                | `-Więcej(50)-`         | Wskaźnik przewijania, z numerem linii poniżej ostatniej wyświetlanej.
+| lag                   | `Lag: 2.5`             | Wskaźnik opóźnienia, w sekundach (ukryty dla niskich opóźnień).
+| hotlist               | `H: 3:#abc(2,5), 5`    | Lista buforów z aktywnością (nieprzeczytane wiadomości) (w przykładzie, 2 podświetlenia i 5 nieprzeczytanych wiadomości w _#abc_, jedna wiadomość w buforze #5).
+// TRANSLATION MISSING
+| typing                | `Typing: bob, (alice)` | Typing notification, see <<typing_notifications,Powiadomienia o pisaniu>>.
+| completion            | `abc(2) def(5)`        | Lista słów do dopełnienia, z ilością możliwych dopełnień dla każdego słowa.
 |===
 
 Pasek _input_ posiada następujące domyślne elementy:
 
 [width="100%",cols="^3,^3,9",options="header"]
 |===
-| Element      | Przykład                                       | Opis
-| input_prompt | `[@Flashy(i)]`                                 | Input prompt, dla irc: nick i tryby (tryb "+i" oznacza niewidzialny na libera).
-| away         | `(away)`                                       | Wskaźnik nieobecności.
-| input_search | `[Search lines (~ str,msg)]`                   | Wskaźnik wyszukiwania (zobacz poniżej).
-| input_paste  | `[Wkleić 7 linii ? [ctrl-y] Tak [ctrl-n] Nie]` | Pyta użytkownika podczas wklejania kilku linii tekstu.
-| input_text   | `hi peter!`                                    | Wprowadzony tekst.
+| Element      | Przykład                                     | Opis
+| input_prompt | `@Flashy(i)`                                 | Input prompt, dla irc: nick i tryby (tryb "+i" oznacza niewidzialny na libera).
+| away         | `away`                                       | Wskaźnik nieobecności.
+| input_search | `Search lines (~ str,msg)`                   | Wskaźnik wyszukiwania (zobacz poniżej).
+| input_paste  | `Wkleić 7 linii ? [ctrl-y] Tak [ctrl-n] Nie` | Pyta użytkownika podczas wklejania kilku linii tekstu.
+| input_text   | `hi peter!`                                  | Wprowadzony tekst.
 |===
 
 Dostępne są dwa tryby wyszukiwania:
@@ -980,8 +984,7 @@ Inne dostępne elementy (nie używane domyślnie w paskach):
 [width="100%",cols="^3,^3,9",options="header"]
 |===
 | Element                      | Przykład                 | Opis
-| buffer_count                 | `10`                     | Liczba otwartych buforów.
-| buffer_last_number           | `10`                     | Liczba najnowszych buforów (może się różnić od `buffer_count` jeśli opcja <<option_weechat.look.buffer_auto_renumber,weechat.look.buffer_auto_renumber>> jest ustawiona na `off`).
+| buffer_count                 | `5`                      | Liczba otwartych buforów.
 | buffer_nicklist_count_all    | `4`                      | Liczba widocznych grup i nicków na nickliście.
 | buffer_nicklist_count_groups | `0`                      | Liczba widocznych grup na nickliście.
 | buffer_short_name            | `#test`                  | Skrócona nazwa obecnego buforu.
@@ -996,7 +999,8 @@ Inne dostępne elementy (nie używane domyślnie w paskach):
 | irc_nick_host                | `+Flashy!user@host.com+` | Aktualny nick i host IRC.
 | irc_nick_modes               | `i`                      | Atrybuty IRC dla własnego nicka.
 | irc_nick_prefix              | `@`                      | Prefiks nicku na kanale IRC.
-| mouse_status                 | `M`                      | Status obsługi myszy (pusty jeśli obsługa myszy jest wyłączona).
+// TRANSLATION MISSING
+| spacer                       |                          | Special item used to align text in bars, see <<item_spacer,Odstęp>>.
 | spell_dict                   | `fr,en`                  | Słowniki używane w obecnym buforze.
 | spell_suggest                | `print,prone,prune`      | Sugestie dla słowa pod kursorem (jeśli zawiera błąd).
 | tls_version                  | `TLS1.3`                 | Wersja TLS używana przez obecny serwer IRC.

@@ -882,7 +882,7 @@ Beispiel des WeeChat-Terminals:
 │         │                                                                    │       │
 │         │                                                                    │       │
 │         │                                                                    │       │
-│         │[12:55] [5] [irc/libera] 2:#test(+n){4}* [H: 3:#abc(2,5), 5]                │
+│         │[12:55] [5] [irc/libera] 2:#test(+n){4}* M [H: 3:#abc(2,5), 5]              │
 │         │[@Flashy(i)] hi peter!█                                                     │
 └──────────────────────────────────────────────────────────────────────────────────────┘
             ▲ Bars "status" und "input"                               Bar "nicklist" ▲
@@ -921,32 +921,35 @@ Die _status_-Bar besitzt als Standardeinträge:
 
 [width="100%",cols="^3,^3,9",options="header"]
 |===
-| Item                  | Beispiel              | Beschreibung
-| time                  | `[12:55]`             | Uhrzeit.
-| buffer_last_number    | `[5]`                 | Nummer des letzten Buffers.
-| buffer_plugin         | `[irc/libera]`        | Erweiterung des aktuellen Buffers (IRC Erweiterung setzt den IRC Servername für den Buffer).
-| buffer_number         | `2`                   | Aktuelle Nummer des Buffers.
-| buffer_name           | `#test`               | Name des aktuellen Buffers.
-| buffer_modes          | `+n`                  | IRC Kanal-Modi.
-| buffer_nicklist_count | `{4}`                 | Anzahl der Nicks die in der Nickliste angezeigt werden.
-| buffer_zoom           | !                     | `!` bedeutet, dass ein zusammengefügter Buffer gezoomed (nur dieser Buffer wird angezeigt) wird.
-| buffer_filter         | `+*+`                 | Filteranzeige: `+*+` bedeutet das Zeilen gefiltert (unterdrückt) werden. Ein leerer Eintrag zeigt an, dass alle Zeilen dargestellt werden.
-| scroll                | `-MORE(50)-`          | Scroll Indikator, zeigt an wie viele Zeilen unterhalb der zur Zeit dargestellten Zeile vorhanden sind.
-| lag                   | `[Lag: 2.5]`          | Verzögerungsanzeige, in Sekunden (keine Anzeige falls Verzögerung gering).
-| hotlist               | `[H: 3:#abc(2,5), 5]` | Liste der Buffer mit Aktivität (ungelesene Nachrichten) (für das Beispiel: 2 Highlights und 5 ungelesene Nachrichten im Kanal _#abc_, eine ungelesene Nachricht in Buffer #5).
-| completion            | `abc(2) def(5)`       | Liste von Wörtern für Vervollständigung, die Zahl zeigt an wie viele Varianten möglich sind.
+| Item                  | Beispiel               | Beschreibung
+| time                  | `12:55`                | Uhrzeit.
+| buffer_last_number    | `5`                    | Nummer des letzten Buffers (kann sich unterscheiden von `buffer_count` wenn Option <<option_weechat.look.buffer_auto_renumber,weechat.look.buffer_auto_renumber>> deaktiviert (`off`) ist).
+| buffer_plugin         | `irc/libera`           | Erweiterung des aktuellen Buffers (IRC Erweiterung setzt den IRC Servername für den Buffer).
+| buffer_number         | `2`                    | Aktuelle Nummer des Buffers.
+| buffer_name           | `#test`                | Name des aktuellen Buffers.
+| buffer_modes          | `+n`                   | IRC Kanal-Modi.
+| buffer_nicklist_count | `4`                    | Anzahl der Nicks die in der Nickliste angezeigt werden.
+| buffer_zoom           | !                      | `!` bedeutet, dass ein zusammengefügter Buffer gezoomed (nur dieser Buffer wird angezeigt) wird.
+| buffer_filter         | `+*+`                  | Filteranzeige: `+*+` bedeutet das Zeilen gefiltert (unterdrückt) werden. Ein leerer Eintrag zeigt an, dass alle Zeilen dargestellt werden.
+| mouse_status          | `M`                    | Mouse status (empty if mouse is disabled), see command <<command_weechat_mouse,/mouse>> and <<key_bindings_toggle_keys,Tasten zum Umschalten von Funktionen>>.
+| scroll                | `-MORE(50)-`           | Scroll Indikator, zeigt an wie viele Zeilen unterhalb der zur Zeit dargestellten Zeile vorhanden sind.
+| lag                   | `Lag: 2.5`             | Verzögerungsanzeige, in Sekunden (keine Anzeige falls Verzögerung gering).
+| hotlist               | `H: 3:#abc(2,5), 5`    | Liste der Buffer mit Aktivität (ungelesene Nachrichten) (für das Beispiel: 2 Highlights und 5 ungelesene Nachrichten im Kanal _#abc_, eine ungelesene Nachricht in Buffer #5).
+// TRANSLATION MISSING
+| typing                | `Typing: bob, (alice)` | Typing notification, see <<typing_notifications,Schreibbenachrichtigung>>.
+| completion            | `abc(2) def(5)`        | Liste von Wörtern für Vervollständigung, die Zahl zeigt an wie viele Varianten möglich sind.
 |===
 
 In der _input_ Bar lautet die Standardeinstellung:
 
 [width="100%",cols="^3,^3,9",options="header"]
 |===
-| Item         | Beispiel                                      | Beschreibung
-| input_prompt | `[@Flashy(i)]`                                | Input prompt, für irc: Nick und Modi (Modus "+i" bedeutet auf libera, unsichtbar).
-| away         | `(away)`                                      | Abwesenheitsanzeige.
-| input_search | `[Search lines (~ str,msg)]`                  | Suchindikatoren ("`~`": Groß-und Kleinschreibung ignorieren, "`==`": Groß-und Kleinschreibung berücksichtigen, "`str`": einfache Textsuche, "`regex`": suche mit regulären Ausdrücken, "`msg`": Suche in Nachrichten, "`pre`": Suche in Präfix, "`pre\|msg`": Suche in Präfix und Nachrichten).
-| input_paste  | `[Paste 7 lines ? [ctrl-y] Ja [ctrl-n] Nein]` | Nachfrage, ob sieben Zeilen eingefügt werden sollen.
-| input_text   | `hi peter!`                                   | Text der eingegeben wird.
+| Item         | Beispiel                                    | Beschreibung
+| input_prompt | `@Flashy(i)`                                | Input prompt, für irc: Nick und Modi (Modus "+i" bedeutet auf libera, unsichtbar).
+| away         | `away`                                      | Abwesenheitsanzeige.
+| input_search | `Search lines (~ str,msg)`                  | Suchindikatoren ("`~`": Groß-und Kleinschreibung ignorieren, "`==`": Groß-und Kleinschreibung berücksichtigen, "`str`": einfache Textsuche, "`regex`": suche mit regulären Ausdrücken, "`msg`": Suche in Nachrichten, "`pre`": Suche in Präfix, "`pre\|msg`": Suche in Präfix und Nachrichten).
+| input_paste  | `Paste 7 lines ? [ctrl-y] Ja [ctrl-n] Nein` | Nachfrage, ob sieben Zeilen eingefügt werden sollen.
+| input_text   | `hi peter!`                                 | Text der eingegeben wird.
 |===
 
 Es existieren zwei Suchmodi:
@@ -981,8 +984,7 @@ andere Items die zur Verfügung stehen (die aber nicht standardmäßig in einer 
 [width="100%",cols="^3,^3,9",options="header"]
 |===
 | Item                         | Beispiel                 | Beschreibung
-| buffer_count                 | `10`                     | absolute Anzahl an geöffneten Buffern.
-| buffer_last_number           | `10`                     | Nummer des letzten Buffers (kann sich unterscheiden von `buffer_count` wenn Option <<option_weechat.look.buffer_auto_renumber,weechat.look.buffer_auto_renumber>> deaktiviert (`off`) ist).
+| buffer_count                 | `5`                      | absolute Anzahl an geöffneten Buffern.
 | buffer_nicklist_count_all    | `4`                      | Anzahl der sichtbaren Gruppen und Nicks in der Nickliste.
 | buffer_nicklist_count_groups | `0`                      | Anzahl der sichtbaren Gruppen in der Nickliste.
 | buffer_short_name            | `#test`                  | Kurzname des aktuellen Buffers.
@@ -997,7 +999,8 @@ andere Items die zur Verfügung stehen (die aber nicht standardmäßig in einer 
 | irc_nick_host                | `+Flashy!user@host.com+` | aktueller IRC Nick und Host.
 | irc_nick_modes               | `i`                      | IRC Modi für den eigenen Nick.
 | irc_nick_prefix              | `@`                      | IRC Nick-Präfix für den Kanal.
-| mouse_status                 | `M`                      | Status der Maus (keine Anzeige, falls Maus deaktiviert).
+// TRANSLATION MISSING
+| spacer                       |                          | Special item used to align text in bars, see <<item_spacer,Spacer item>>.
 | spell_dict                   | `de,en`                  | zeigt an welche Wörterbücher für die Rechtschreibung im aktuellen Buffer genutzt werden.
 | spell_suggest                | `Glück,Glocke,Block`     | Vorschläge für ein falsch geschriebenes Wort.
 | tls_version                  | `TLS1.3`                 | TLS Version die für den IRC Server genutzt wird.
@@ -4048,7 +4051,7 @@ Spezifikation: https://ircv3.net/specs/extensions/message-tags[message-tags ^�
 Diese Funktion ermöglicht das Hinzufügen von Metadaten zu Nachrichten. +
 Diese Tags können mit dem Befehl `/debug tags` angezeigt werden.
 
-Um diese Funktion zu verwenden, muss sie aktiviert werden: <<typing_notifications,typing notifications>>.
+Um diese Funktion zu verwenden, muss sie aktiviert werden: <<typing_notifications,Schreibbenachrichtigung>>.
 
 [[irc_ircv3_monitor]]
 ==== monitor
@@ -4119,7 +4122,7 @@ Mit dieser Funktion können Sie Ihren richtigen Namen ändern, indem Sie den
 
 Spezifikation: https://ircv3.net/specs/client-tags/typing[typing ^↗^^]
 
-Siehe das entsprechende Kapitel <<typing_notifications,Typing notifications>>.
+Siehe das entsprechende Kapitel <<typing_notifications,Schreibbenachrichtigung>>.
 
 [[irc_ircv3_userhost_in_names]]
 ==== userhost-in-names

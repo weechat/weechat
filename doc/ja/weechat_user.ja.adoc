@@ -936,7 +936,7 @@ WeeChat を起動した端末の例:
 │         │                                                                    │       │
 │         │                                                                    │       │
 │         │                                                                    │       │
-│         │[12:55] [5] [irc/libera] 2:#test(+n){4}* [H: 3:#abc(2,5), 5]                │
+│         │[12:55] [5] [irc/libera] 2:#test(+n){4}* M [H: 3:#abc(2,5), 5]              │
 │         │[@Flashy(i)] hi peter!█                                                     │
 └──────────────────────────────────────────────────────────────────────────────────────┘
             ▲ "status" と "input" バー                               "nicklist" バー ▲
@@ -976,34 +976,39 @@ By default, the screen is divided up into the following areas:
 
 [width="100%",cols="^3,^3,9",options="header"]
 |===
-| 要素                  | 例                    | 説明
-| time                  | `[12:55]`             | 時刻
-| buffer_last_number    | `[5]`                 | リスト中の最後のバッファ番号
-| buffer_plugin         | `[irc/libera]`        | 現在のバッファのプラグイン (irc プラグインではバッファで利用されている IRC サーバ名を追加できます)
-| buffer_number         | `2`                   | 現在のバッファの番号
-| buffer_name           | `#test`               | 現在のバッファの名前
-| buffer_modes          | `+n`                  | IRC チャンネルモード
+| 要素                  | 例                     | 説明
+| time                  | `12:55`                | 時刻
 // TRANSLATION MISSING
-| buffer_nicklist_count | `{4}`                 | Number of nicks displayed in nicklist.
-| buffer_zoom           | !                     | `!` はマージされたバッファがズームされている状態 (ズームされたものだけを表示する状態) を示します、空の場合はすべてのマージされたバッファが表示されていることを示します
-| buffer_filter         | `+*+`                 | フィルタ表示: `+*+` の場合いくつかの行がフィルタされ (隠され) ます、空の場合すべての行が表示されます。
-| scroll                | `-MORE(50)-`          | スクロール表示、最後の行が表示されてから追加された行数を含む。
-| lag                   | `[Lag: 2.5]`          | 遅延秒表示 (遅延が短い場合は非表示)
-| hotlist               | `[H: 3:#abc(2,5), 5]` | 変化のあったバッファのリスト (未読メッセージ) (例では、_#abc_ に 2 個のハイライトと 5 個の未読メッセージ、5 番目のバッファに 1 個の未読メッセージがあることを意味します。)
-| completion            | `abc(2) def(5)`       | 補完候補の単語リスト、各単語に対して適応される補完候補の数を含む。
+| buffer_last_number    | `5`                    | Number of the latest buffer (can be different from `buffer_count` if option <<option_weechat.look.buffer_auto_renumber,weechat.look.buffer_auto_renumber>> is `off`).
+| buffer_plugin         | `irc/libera`           | 現在のバッファのプラグイン (irc プラグインではバッファで利用されている IRC サーバ名を追加できます)
+| buffer_number         | `2`                    | 現在のバッファの番号
+| buffer_name           | `#test`                | 現在のバッファの名前
+| buffer_modes          | `+n`                   | IRC チャンネルモード
+// TRANSLATION MISSING
+| buffer_nicklist_count | `4`                    | Number of nicks displayed in nicklist.
+| buffer_zoom           | !                      | `!` はマージされたバッファがズームされている状態 (ズームされたものだけを表示する状態) を示します、空の場合はすべてのマージされたバッファが表示されていることを示します
+| buffer_filter         | `+*+`                  | フィルタ表示: `+*+` の場合いくつかの行がフィルタされ (隠され) ます、空の場合すべての行が表示されます。
+// TRANSLATION MISSING
+| mouse_status          | `M`                    | Mouse status (empty if mouse is disabled), see command <<command_weechat_mouse,/mouse>> and <<key_bindings_toggle_keys,toggle keys>>.
+| scroll                | `-MORE(50)-`           | スクロール表示、最後の行が表示されてから追加された行数を含む。
+| lag                   | `Lag: 2.5`             | 遅延秒表示 (遅延が短い場合は非表示)
+| hotlist               | `H: 3:#abc(2,5), 5`    | 変化のあったバッファのリスト (未読メッセージ) (例では、_#abc_ に 2 個のハイライトと 5 個の未読メッセージ、5 番目のバッファに 1 個の未読メッセージがあることを意味します。)
+// TRANSLATION MISSING
+| typing                | `Typing: bob, (alice)` | Typing notification, see <<typing_notifications,typing notifications>>.
+| completion            | `abc(2) def(5)`        | 補完候補の単語リスト、各単語に対して適応される補完候補の数を含む。
 |===
 
 入力 (_input_) バーは以下の初期要素を持っています:
 
 [width="100%",cols="^3,^3,9",options="header"]
 |===
-| 要素         | 例                                           | 説明
-| input_prompt | `[@Flashy]`                                  | 入力プロンプト、irc の場合: ニックネームとモード (libera では "+i" モードは不可視状態を意味します)
-| away         | `(away)`                                     | 離席状態表示
+| 要素         | 例                                         | 説明
+| input_prompt | `@Flashy`                                  | 入力プロンプト、irc の場合: ニックネームとモード (libera では "+i" モードは不可視状態を意味します)
+| away         | `away`                                     | 離席状態表示
 // TRANSLATION MISSING
-| input_search | `[Search lines (~ str,msg)]`                 | Search indicator (see below).
-| input_paste  | `[Paste 7 lines ? [ctrl-y] Yes [ctrl-n] No]` | 行をペーストする場合にユーザへ行われる質問
-| input_text   | `hi peter!`                                  | 入力テキスト
+| input_search | `Search lines (~ str,msg)`                 | Search indicator (see below).
+| input_paste  | `Paste 7 lines ? [ctrl-y] Yes [ctrl-n] No` | 行をペーストする場合にユーザへ行われる質問
+| input_text   | `hi peter!`                                | 入力テキスト
 |===
 
 // TRANSLATION MISSING
@@ -1043,9 +1048,7 @@ There are two search modes:
 [width="100%",cols="^3,^3,9",options="header"]
 |===
 | 要素                         | 例                       | 説明
-| buffer_count                 | `10`                     | 開いているバッファの総数
-// TRANSLATION MISSING
-| buffer_last_number           | `10`                     | Number of the latest buffer (can be different from `buffer_count` if option <<option_weechat.look.buffer_auto_renumber,weechat.look.buffer_auto_renumber>> is `off`).
+| buffer_count                 | `5`                      | 開いているバッファの総数
 // TRANSLATION MISSING
 | buffer_nicklist_count_all    | `4`                      | Number of visible groups and nicks in nicklist.
 // TRANSLATION MISSING
@@ -1071,7 +1074,8 @@ There are two search modes:
 | irc_nick_modes               | `i`                      | 自分のニックネームに対する IRC モード
 // TRANSLATION MISSING
 | irc_nick_prefix              | `@`                      | IRC nick prefix on channel.
-| mouse_status                 | `M`                      | マウスの状態 (マウスが無効化されている場合は空文字列)
+// TRANSLATION MISSING
+| spacer                       |                          | Special item used to align text in bars, see <<item_spacer,Spacer item>>.
 | spell_dict                   | `fr,en`                  | 現在のバッファにおけるスペリング辞書
 | spell_suggest                | `print,prone,prune`      | カーソル下の単語に対するスペリング候補 (スペルが間違っている場合)
 // TRANSLATION MISSING

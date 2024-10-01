@@ -876,7 +876,7 @@ Example of terminal with WeeChat:
 │         │                                                                    │       │
 │         │                                                                    │       │
 │         │                                                                    │       │
-│         │[12:55] [5] [irc/libera] 2:#test(+n){4}* [H: 3:#abc(2,5), 5]                │
+│         │[12:55] [5] [irc/libera] 2:#test(+n){4}* M [H: 3:#abc(2,5), 5]              │
 │         │[@Flashy(i)] hi peter!█                                                     │
 └──────────────────────────────────────────────────────────────────────────────────────┘
             ▲ bars "status" and "input"                               bar "nicklist" ▲
@@ -915,32 +915,34 @@ Bar _status_ has following default items:
 
 [width="100%",cols="^3,^3,9",options="header"]
 |===
-| Item                  | Example               | Description
-| time                  | `[12:55]`             | Time.
-| buffer_last_number    | `[5]`                 | Number of last buffer in list.
-| buffer_plugin         | `[irc/libera]`        | Plugin of current buffer (irc plugin can add IRC server name used by buffer).
-| buffer_number         | `2`                   | Current buffer number.
-| buffer_name           | `#test`               | Current buffer name.
-| buffer_modes          | `+n`                  | IRC channel modes.
-| buffer_nicklist_count | `{4}`                 | Number of nicks displayed in nicklist.
-| buffer_zoom           | !                     | `!` means the merged buffer is zoomed (only this one is displayed), empty value means all merged buffers are displayed.
-| buffer_filter         | `+*+`                 | Filtering indicator: `+*+` means some lines are filtered (hidden), empty value means all lines are displayed.
-| scroll                | `-MORE(50)-`          | Scroll indicator, with number of lines below last line displayed.
-| lag                   | `[Lag: 2.5]`          | Lag indicator, in seconds (hidden if lag is low).
-| hotlist               | `[H: 3:#abc(2,5), 5]` | List of buffers with activity (unread messages) (in example, 2 highlights and 5 unread messages on _#abc_, one unread message on buffer #5).
-| completion            | `abc(2) def(5)`       | List of words for completion, with number of possible completions for each word.
+| Item                  | Example                | Description
+| time                  | `12:55`                | Time.
+| buffer_last_number    | `5`                    | Number of the latest buffer (can be different from `buffer_count` if option <<option_weechat.look.buffer_auto_renumber,weechat.look.buffer_auto_renumber>> is `off`).
+| buffer_plugin         | `irc/libera`           | Plugin of current buffer (irc plugin can add IRC server name used by buffer).
+| buffer_number         | `2`                    | Current buffer number.
+| buffer_name           | `#test`                | Current buffer name.
+| buffer_modes          | `+n`                   | IRC channel modes.
+| buffer_nicklist_count | `4`                    | Number of nicks displayed in nicklist.
+| buffer_zoom           | !                      | `!` means the merged buffer is zoomed (only this one is displayed), empty value means all merged buffers are displayed.
+| buffer_filter         | `+*+`                  | Filtering indicator: `+*+` means some lines are filtered (hidden), empty value means all lines are displayed.
+| mouse_status          | `M`                    | Mouse status (empty if mouse is disabled), see command <<command_weechat_mouse,/mouse>> and <<key_bindings_toggle_keys,toggle keys>>.
+| scroll                | `-MORE(50)-`           | Scroll indicator, with number of lines below last line displayed.
+| lag                   | `Lag: 2.5`             | Lag indicator, in seconds (hidden if lag is low).
+| hotlist               | `H: 3:#abc(2,5), 5`    | List of buffers with activity (unread messages) (in example, 2 highlights and 5 unread messages on _#abc_, one unread message on buffer #5).
+| typing                | `Typing: bob, (alice)` | Typing notification, see <<typing_notifications,typing notifications>>.
+| completion            | `abc(2) def(5)`        | List of words for completion, with number of possible completions for each word.
 |===
 
 Bar _input_ has following default items:
 
 [width="100%",cols="^3,^3,9",options="header"]
 |===
-| Item         | Example                                      | Description
-| input_prompt | `[@Flashy(i)]`                               | Input prompt, for irc: nick and modes (mode "+i" means invisible on libera).
-| away         | `(away)`                                     | Away indicator.
-| input_search | `[Search lines (~ str,msg)]`                 | Search indicator (see below)
-| input_paste  | `[Paste 7 lines ? [ctrl-y] Yes [ctrl-n] No]` | Question to user for pasting lines.
-| input_text   | `hi peter!`                                  | Input text.
+| Item         | Example                                    | Description
+| input_prompt | `@Flashy(i)`                               | Input prompt, for irc: nick and modes (mode "+i" means invisible on libera).
+| away         | `away`                                     | Away indicator.
+| input_search | `Search lines (~ str,msg)`                 | Search indicator (see below)
+| input_paste  | `Paste 7 lines ? [ctrl-y] Yes [ctrl-n] No` | Question to user for pasting lines.
+| input_text   | `hi peter!`                                | Input text.
 |===
 
 There are two search modes:
@@ -975,8 +977,7 @@ Other items available (not used in bars by default):
 [width="100%",cols="^3,^3,9",options="header"]
 |===
 | Item                         | Example                  | Description
-| buffer_count                 | `10`                     | Total number of buffers opened.
-| buffer_last_number           | `10`                     | Number of the latest buffer (can be different from `buffer_count` if option <<option_weechat.look.buffer_auto_renumber,weechat.look.buffer_auto_renumber>> is `off`).
+| buffer_count                 | `5`                      | Total number of buffers opened.
 | buffer_nicklist_count_all    | `4`                      | Number of visible groups and nicks in nicklist.
 | buffer_nicklist_count_groups | `0`                      | Number of visible groups in nicklist.
 | buffer_short_name            | `#test`                  | Current buffer short name.
@@ -991,7 +992,7 @@ Other items available (not used in bars by default):
 | irc_nick_host                | `+Flashy!user@host.com+` | Current IRC nick and host.
 | irc_nick_modes               | `i`                      | IRC modes for self nick.
 | irc_nick_prefix              | `@`                      | IRC nick prefix on channel.
-| mouse_status                 | `M`                      | Mouse status (empty if mouse is disabled).
+| spacer                       |                          | Special item used to align text in bars, see <<item_spacer,Spacer item>>.
 | spell_dict                   | `fr,en`                  | Spelling dictionaries used on current buffer.
 | spell_suggest                | `print,prone,prune`      | Spelling suggestions for word under cursor (if misspelled).
 | tls_version                  | `TLS1.3`                 | TLS version in use for current IRC server.

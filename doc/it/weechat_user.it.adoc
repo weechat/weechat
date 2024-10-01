@@ -961,7 +961,7 @@ Esempio di terminale con WeeChat:
 │         │                                                                    │       │
 │         │                                                                    │       │
 │         │                                                                    │       │
-│         │[12:55] [5] [irc/libera] 2:#test(+n){4}* [H: 3:#abc(2,5), 5]                │
+│         │[12:55] [5] [irc/libera] 2:#test(+n){4}* M [H: 3:#abc(2,5), 5]              │
 │         │[@Flashy(i)] hi peter!█                                                     │
 └──────────────────────────────────────────────────────────────────────────────────────┘
             ▲ bars "status" and "input"                               bar "nicklist" ▲
@@ -1004,37 +1004,41 @@ La barra _status_ ha i seguenti elementi predefiniti:
 
 [width="100%",cols="^3,^3,9",options="header"]
 |===
-| Elemento              | Esempio               | Descrizione
-| time                  | `[12:55]`             | Ora.
+| Elemento              | Esempio                | Descrizione
+| time                  | `12:55`                | Ora.
 // TRANSLATION MISSING
-| buffer_last_number    | `[5]`                 | Number of last buffer in list.
-| buffer_plugin         | `[irc/libera]`        | Plugin del buffer attivo (il plugin irc può aggiungere il nome del server irc usato dal buffer).
-| buffer_number         | `2`                   | Numero del buffer corrente.
-| buffer_name           | `#test`               | Nome del buffer attivo.
-| buffer_modes          | `+n`                  | Modalità canale IRC.
+| buffer_last_number    | `5`                    | Number of the latest buffer (can be different from `buffer_count` if option <<option_weechat.look.buffer_auto_renumber,weechat.look.buffer_auto_renumber>> is `off`).
+| buffer_plugin         | `irc/libera`           | Plugin del buffer attivo (il plugin irc può aggiungere il nome del server irc usato dal buffer).
+| buffer_number         | `2`                    | Numero del buffer corrente.
+| buffer_name           | `#test`                | Nome del buffer attivo.
+| buffer_modes          | `+n`                   | Modalità canale IRC.
 // TRANSLATION MISSING
-| buffer_nicklist_count | `{4}`                 | Number of nicks displayed in nicklist.
+| buffer_nicklist_count | `4`                    | Number of nicks displayed in nicklist.
 // TRANSLATION MISSING
-| buffer_zoom           | !                     | `!` means the merged buffer is zoomed (only this one is displayed), empty value means all merged buffers are displayed.
-| buffer_filter         | `+*+`                 | Indicatore filtraggio: `+*+` significa che alcune righe sono filtrate (nascoste), valori vuoti indicano che tutte le righe sono visualizzate.
-| scroll                | `-ANCORA(50)-`        | Indicatore di scorrimento, con il numero di righe sotto l'ultima riga visualizzata.
-| lag                   | `[Ritardo: 2.5]`      | Indicatore ritardo, in secondi (nascosto se il ritardo è basso).
-| hotlist               | `[H: 3:#abc(2,5), 5]` | Elenco dei buffer con attività (messaggi non letti) (nell'esempio, 2 notifiche e 5 messaggi non letti su #abc, un messaggio non letto sul buffer #5).
-| completion            | `abc(2) def(5)`       | Elenco di parole per il completamento, con il numero di completamenti possibili per ogni parola.
+| buffer_zoom           | !                      | `!` means the merged buffer is zoomed (only this one is displayed), empty value means all merged buffers are displayed.
+| buffer_filter         | `+*+`                  | Indicatore filtraggio: `+*+` significa che alcune righe sono filtrate (nascoste), valori vuoti indicano che tutte le righe sono visualizzate.
+// TRANSLATION MISSING
+| mouse_status          | `M`                    | Mouse status (empty if mouse is disabled), see command <<command_weechat_mouse,/mouse>> and <<key_bindings_toggle_keys,Toggle keys>>.
+| scroll                | `-ANCORA(50)-`         | Indicatore di scorrimento, con il numero di righe sotto l'ultima riga visualizzata.
+| lag                   | `Ritardo: 2.5`         | Indicatore ritardo, in secondi (nascosto se il ritardo è basso).
+| hotlist               | `H: 3:#abc(2,5), 5`    | Elenco dei buffer con attività (messaggi non letti) (nell'esempio, 2 notifiche e 5 messaggi non letti su #abc, un messaggio non letto sul buffer #5).
+// TRANSLATION MISSING
+| typing                | `Typing: bob, (alice)` | Typing notification, see <<typing_notifications,typing notifications>>.
+| completion            | `abc(2) def(5)`        | Elenco di parole per il completamento, con il numero di completamenti possibili per ogni parola.
 |===
 
 La barra _input_ ha i seguenti elementi predefiniti:
 
 [width="100%",cols="^3,^3,9",options="header"]
 |===
-| Elemento     | Esempio                                         | Descrizione
+| Elemento     | Esempio                                       | Descrizione
 // TRANSLATION MISSING
-| input_prompt | `[@Flashy(i)]`                                  | Prompt per l'input, for irc: nick and modes (mode "+i" means invisible on libera).
-| away         | `(assente)`                                     | Indicatore di assenza.
+| input_prompt | `@Flashy(i)`                                  | Prompt per l'input, for irc: nick and modes (mode "+i" means invisible on libera).
+| away         | `assente`                                     | Indicatore di assenza.
 // TRANSLATION MISSING
-| input_search | `[Search lines (~ str,msg)]`                    | Search indicator (see below).
-| input_paste  | `[Incollare 7 righe ? [ctrl-y] Sì [ctrl-n] No]` | Chiede all'utente se incollare le righe.
-| input_text   | `ciao peter!`                                   | Testo in input.
+| input_search | `Search lines (~ str,msg)`                    | Search indicator (see below).
+| input_paste  | `Incollare 7 righe ? [ctrl-y] Sì [ctrl-n] No` | Chiede all'utente se incollare le righe.
+| input_text   | `ciao peter!`                                 | Testo in input.
 |===
 
 // TRANSLATION MISSING
@@ -1075,8 +1079,7 @@ Other items available (not used in bars by default):
 [width="100%",cols="^3,^3,9",options="header"]
 |===
 | Item                         | Example                  | Description
-| buffer_count                 | `10`                     | Total number of buffers opened.
-| buffer_last_number           | `10`                     | Number of the latest buffer (can be different from `buffer_count` if option <<option_weechat.look.buffer_auto_renumber,weechat.look.buffer_auto_renumber>> is `off`).
+| buffer_count                 | `5`                      | Total number of buffers opened.
 | buffer_nicklist_count_all    | `4`                      | Number of visible groups and nicks in nicklist.
 | buffer_nicklist_count_groups | `0`                      | Number of visible groups in nicklist.
 | buffer_short_name            | `#test`                  | Current buffer short name.
@@ -1093,7 +1096,8 @@ Other items available (not used in bars by default):
 | irc_nick_host                | `+Flashy!user@host.com+` | Current IRC nick and host.
 | irc_nick_modes               | `i`                      | IRC modes for self nick.
 | irc_nick_prefix              | `@`                      | IRC nick prefix on channel.
-| mouse_status                 | `M`                      | Mouse status (empty if mouse is disabled).
+// TRANSLATION MISSING
+| spacer                       |                          | Special item used to align text in bars, see <<item_spacer,Spacer item>>.
 | spell_dict                   | `fr,en`                  | Spelling dictionaries used on current buffer.
 | spell_suggest                | `print,prone,prune`      | Spelling suggestions for word under cursor (if misspelled).
 | tls_version                  | `TLS1.3`                 | TLS version in use for current IRC server.

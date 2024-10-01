@@ -890,7 +890,7 @@ Exemple de terminal avec WeeChat :
 │         │                                                                    │       │
 │         │                                                                    │       │
 │         │                                                                    │       │
-│         │[12:55] [5] [irc/libera] 2:#test(+n){4}* [H: 3:#abc(2,5), 5]                │
+│         │[12:55] [5] [irc/libera] 2:#test(+n){4}* M [H: 3:#abc(2,5), 5]              │
 │         │[@Flashy(i)] salut peter !█                                                 │
 └──────────────────────────────────────────────────────────────────────────────────────┘
             ▲ barres "status" et "input"                            barre "nicklist" ▲
@@ -930,32 +930,34 @@ La barre _status_ contient les objets (items) suivants par défaut :
 
 [width="100%",cols="^3,^3,9",options="header"]
 |===
-| Objet (item)          | Exemple               | Description
-| time                  | `[12:55]`             | Heure.
-| buffer_last_number    | `[5]`                 | Numéro du dernier tampon de la liste.
-| buffer_plugin         | `[irc/libera]`        | Extension du tampon courant (l'extension irc peut afficher le nom du serveur IRC auquel est rattaché ce tampon).
-| buffer_number         | `2`                   | Numéro du tampon courant.
-| buffer_name           | `#test`               | Nom du tampon courant.
-| buffer_modes          | `+n`                  | Modes du canal IRC.
-| buffer_nicklist_count | `{4}`                 | Nombre de pseudos affichés dans la liste des pseudos.
-| buffer_zoom           | !                     | `!` signifie que le tampon mélangé est zoomé, une valeur vide signifie que tous les tampons mélangés sont affichés.
-| buffer_filter         | `+*+`                 | Indicateur de filtrage : `+*+` signifie que des lignes sont filtrées (cachées), une valeur vide signifie que toutes les lignes sont affichées.
-| scroll                | `-PLUS(50)-`          | Indicateur de scroll, avec le nombre de lignes sous la dernière ligne affichée.
-| lag                   | `[Lag: 2.5]`          | Indicateur de "lag" (ralentissements réseau), en secondes (caché si le lag est faible).
-| hotlist               | `[H: 3:#abc(2,5), 5]` | Liste des tampons où il y a de l'activité (messages non lus) (dans cet exemple, 2 highlights et 5 messages non lus sur _#abc_, un message non lu sur le tampon numéro 5).
-| completion            | `abc(2) def(5)`       | Liste des mots pour la complétion, avec le nombre de complétions possibles pour chaque mot.
+| Objet (item)          | Exemple                | Description
+| time                  | `12:55`                | Heure.
+| buffer_last_number    | `5`                    | Numéro du dernier tampon (peut être différent de `buffer_count` si l'option <<option_weechat.look.buffer_auto_renumber,weechat.look.buffer_auto_renumber>> est `off`).
+| buffer_plugin         | `irc/libera`           | Extension du tampon courant (l'extension irc peut afficher le nom du serveur IRC auquel est rattaché ce tampon).
+| buffer_number         | `2`                    | Numéro du tampon courant.
+| buffer_name           | `#test`                | Nom du tampon courant.
+| buffer_modes          | `+n`                   | Modes du canal IRC.
+| buffer_nicklist_count | `4`                    | Nombre de pseudos affichés dans la liste des pseudos.
+| buffer_zoom           | !                      | `!` signifie que le tampon mélangé est zoomé, une valeur vide signifie que tous les tampons mélangés sont affichés.
+| buffer_filter         | `+*+`                  | Indicateur de filtrage : `+*+` signifie que des lignes sont filtrées (cachées), une valeur vide signifie que toutes les lignes sont affichées.
+| mouse_status          | `M`                    | Statut de la souris (vide si la souris est désactivée), voir la commande <<command_weechat_mouse,/mouse>> et <<key_bindings_toggle_keys,Touches de bascule>>.
+| scroll                | `-PLUS(50)-`           | Indicateur de scroll, avec le nombre de lignes sous la dernière ligne affichée.
+| lag                   | `Lag: 2.5`             | Indicateur de "lag" (ralentissements réseau), en secondes (caché si le lag est faible).
+| hotlist               | `H: 3:#abc(2,5), 5`    | Liste des tampons où il y a de l'activité (messages non lus) (dans cet exemple, 2 highlights et 5 messages non lus sur _#abc_, un message non lu sur le tampon numéro 5).
+| typing                | `Écrit : bob, (alice)` | Notification de saisie, voir <<typing_notifications,Notifications de saisie>>.
+| completion            | `abc(2) def(5)`        | Liste des mots pour la complétion, avec le nombre de complétions possibles pour chaque mot.
 |===
 
 La barre _input_ contient les objets (items) suivants par défaut :
 
 [width="100%",cols="^3,^3,9",options="header"]
 |===
-| Objet (item) | Exemple                                         | Description
-| input_prompt | `[@Flashy(i)]`                                  | Prompt, pour irc : pseudo et modes (le mode "+i" signifie invisible sur libera).
-| away         | `(absent)`                                      | Indicateur d'absence.
-| input_search | `[Recherche lignes (~ str,msg)]`                | Indicateur de recherche de texte (voir ci-dessous).
-| input_paste  | `[Coller 7 lignes ? [ctrl-y] Oui [ctrl-n] Non]` | Question à l'utilisateur pour coller des lignes.
-| input_text   | `salut peter !`                                 | Texte entré.
+| Objet (item) | Exemple                                       | Description
+| input_prompt | `@Flashy(i)`                                  | Prompt, pour irc : pseudo et modes (le mode "+i" signifie invisible sur libera).
+| away         | `absent`                                      | Indicateur d'absence.
+| input_search | `Recherche lignes (~ str,msg)`                | Indicateur de recherche de texte (voir ci-dessous).
+| input_paste  | `Coller 7 lignes ? [ctrl-y] Oui [ctrl-n] Non` | Question à l'utilisateur pour coller des lignes.
+| input_text   | `salut peter !`                               | Texte entré.
 |===
 
 Il y a deux modes de recherche :
@@ -991,8 +993,7 @@ Autres objets (non utilisés dans des barres par défaut) :
 [width="100%",cols="^3,^3,9",options="header"]
 |===
 | Objet (item)                 | Exemple                  | Description
-| buffer_count                 | `10`                     | Nombre total de tampons ouverts.
-| buffer_last_number           | `10`                     | Numéro du dernier tampon (peut être différent de `buffer_count` si l'option <<option_weechat.look.buffer_auto_renumber,weechat.look.buffer_auto_renumber>> est `off`).
+| buffer_count                 | `5`                      | Nombre total de tampons ouverts.
 | buffer_nicklist_count_all    | `4`                      | Nombre de groupes et pseudos visibles dans la liste de pseudos.
 | buffer_nicklist_count_groups | `0`                      | Nombre de groupes visibles dans la liste de pseudos.
 | buffer_short_name            | `#test`                  | Nom court du tampon courant.
@@ -1007,7 +1008,7 @@ Autres objets (non utilisés dans des barres par défaut) :
 | irc_nick_host                | `+Flashy!user@host.com+` | Pseudo et hôte IRC.
 | irc_nick_modes               | `i`                      | Modes IRC pour le pseudo.
 | irc_nick_prefix              | `@`                      | Préfixe de pseudo IRC sur le canal.
-| mouse_status                 | `M`                      | Statut de la souris (vide si la souris est désactivée).
+| spacer                       |                          | Objet spécial utilisé pour aligner le texte dans les barres, voir <<item_spacer,Objet d'espacement>>.
 | spell_dict                   | `fr,en`                  | Dictionnaires utilisés pour la vérification de l'orthographe sur le tampon courant.
 | spell_suggest                | `print,prone,prune`      | Suggestions pour le mot sous le curseur (si mal orthographié).
 | tls_version                  | `TLS1.3`                 | Version de TLS utilisée sur le serveur IRC courant.
