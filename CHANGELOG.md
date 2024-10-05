@@ -11,7 +11,7 @@
 
 ### Fixed
 
-- core, plugins: fix integer overflow in loops ([#2178](https://github.com/weechat/weechat/issues/2178)), [CVE-2024-46613](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2024-46613))
+- core, plugins: fix integer overflow in loops ([#2178](https://github.com/weechat/weechat/issues/2178), [CVE-2024-46613](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2024-46613))
 
 ## Version 4.4.1 (2024-08-19)
 
