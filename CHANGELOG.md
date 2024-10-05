@@ -4,6 +4,7 @@
 
 ### Fixed
 
+- irc: fix crash on /list buffer when a filter is set ([#2197](https://github.com/weechat/weechat/issues/2197))
 - core: fix build on Android ([#2180](https://github.com/weechat/weechat/issues/2180))
 
 ## Version 4.4.2 (2024-09-08)
