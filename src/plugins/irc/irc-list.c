@@ -506,6 +506,12 @@ irc_list_display_line (struct t_irc_server *server, int line)
     ptr_channel = (struct t_irc_list_channel *)weechat_arraylist_get (
         server->list->filter_channels, line);
 
+    if (!ptr_channel)
+    {
+        weechat_printf_y (server->list->buffer, line, "");
+        return;
+    }
+
     /* line color */
     if (line == server->list->selected_line)
     {
