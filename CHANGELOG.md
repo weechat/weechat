@@ -14,7 +14,7 @@
 
 ### Fixed
 
-- core, plugins: fix integer overflow in loops ([#2178](https://github.com/weechat/weechat/issues/2178)), [CVE-2024-46613](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2024-46613))
+- core, plugins: fix integer overflow in loops ([#2178](https://github.com/weechat/weechat/issues/2178), [CVE-2024-46613](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2024-46613))
 - irc: decode IRC colors only when displaying messages in buffer, store nick info with IRC colors (host, account, real name)
 - irc: do not strip trailing spaces from incoming IRC messages
 - irc: fix crash on /list buffer when a filter is set ([#2197](https://github.com/weechat/weechat/issues/2197))
@@ -26,7 +26,7 @@
 
 ### Fixed
 
-- core, plugins: fix integer overflow in loops ([#2178](https://github.com/weechat/weechat/issues/2178)), [CVE-2024-46613](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2024-46613))
+- core, plugins: fix integer overflow in loops ([#2178](https://github.com/weechat/weechat/issues/2178), [CVE-2024-46613](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2024-46613))
 
 ## Version 4.4.1 (2024-08-19)
 
