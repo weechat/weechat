@@ -184,7 +184,8 @@ gui_buffer_search_notify (const char *notify)
 }
 
 /*
- * Sends a buffer signal (only if the buffer is completely opened.
+ * Sends a buffer signal, only if the buffer is completely opened or if
+ * the signal is "buffer_switch".
  */
 
 int
@@ -192,8 +193,10 @@ gui_buffer_send_signal (struct t_gui_buffer *buffer,
                         const char *signal,
                         const char *type_data, void *signal_data)
 {
-    return (buffer->opening) ?
-        WEECHAT_RC_OK : hook_signal_send (signal, type_data, signal_data);
+    if (buffer->opening && (string_strcmp (signal, "buffer_switch") != 0))
+        return WEECHAT_RC_OK;
+
+    return hook_signal_send (signal, type_data, signal_data);
 }
 
 /*
