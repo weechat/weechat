@@ -19,6 +19,7 @@
 - irc: do not strip trailing spaces from incoming IRC messages
 - irc: fix crash on /list buffer when a filter is set ([#2197](https://github.com/weechat/weechat/issues/2197))
 - relay/api: fix empty nicklist in remote buffers after connection or reconnection
+- core: always send the signal "buffer_switch", even when the buffer is opening ([#2198](https://github.com/weechat/weechat/issues/2198))
 - lua: fix compilation on Fedora with Lua < 5.2.0 ([#2173](https://github.com/weechat/weechat/issues/2173), [#2174](https://github.com/weechat/weechat/issues/2174))
 - core: fix build on Android ([#2180](https://github.com/weechat/weechat/issues/2180))
 
