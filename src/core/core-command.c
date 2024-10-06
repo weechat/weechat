@@ -7499,34 +7499,17 @@ command_version_display (struct t_gui_buffer *buffer,
 
     if (send_to_buffer_as_input)
     {
-        if (translated_string)
-        {
-            snprintf (string, sizeof (string),
-                      "WeeChat %s [%s %s %s]",
-                      (display_git_version) ? version_get_version_with_git () : version_get_version (),
-                      _("compiled on"),
-                      version_get_compilation_date (),
-                      version_get_compilation_time ());
-            (void) input_data (buffer,
-                               string,
-                               NULL,
-                               0,  /* split_newline */
-                               0);  /* user_data */
-        }
-        else
-        {
-            snprintf (string, sizeof (string),
-                      "WeeChat %s [%s %s %s]",
-                      (display_git_version) ? version_get_version_with_git () : version_get_version (),
-                      "compiled on",
-                      version_get_compilation_date (),
-                      version_get_compilation_time ());
-            (void) input_data (buffer,
-                               string,
-                               NULL,
-                               0,  /* split_newline */
-                               0);  /* user_data */
-        }
+        snprintf (string, sizeof (string),
+                  "WeeChat %s [%s %s %s]",
+                  (display_git_version) ? version_get_version_with_git () : version_get_version (),
+                  (translated_string) ? _("compiled on") : "compiled on",
+                  version_get_compilation_date (),
+                  version_get_compilation_time ());
+        (void) input_data (buffer,
+                           string,
+                           NULL,
+                           0,  /* split_newline */
+                           0);  /* user_data */
     }
     else
     {
