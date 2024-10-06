@@ -260,7 +260,7 @@ if [ "${RETRY_BUILD}" != "0" ]; then
     cat <<EOF >> debian/rules
 
 override_dh_auto_build:
-	dh_auto_build || dh_auto_build || dh_auto_build || dh_auto_build
+	dh_auto_build || dh_auto_build || dh_auto_build || dh_auto_build || dh_auto_build || dh_auto_build
 EOF
 fi
 
