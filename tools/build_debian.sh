@@ -51,6 +51,10 @@
 #   PACKAGER_EMAIL  E-mail of packager (for debian/changelog)
 #   JOBS            Number of simultaneous jobs (for dpkg-buildpackage)
 #                   (numeric or "auto" for dpkg >= 1.17.10)
+#   RETRY_BUILD     Retry build with `make` multiple times in case of failure
+#                   (default is 0: do not retry and exit with error);
+#                   when set, this patches the file debian/rules to run
+#                   dh_auto_build multiple times in case of failure
 #
 
 set -o errexit
@@ -59,6 +63,7 @@ set -o errexit
 default_packager_name="Sébastien Helleu"
 default_packager_email="flashcode@flashtux.org"
 default_jobs=""
+default_retry_build="0"
 
 usage ()
 {
@@ -133,6 +138,9 @@ fi
 
 # simultaneous jobs for compilation (dpkg-buildpackage -jN)
 [ -z "${JOBS}" ] && JOBS="${default_jobs}"
+
+# retry build
+[ -z "${RETRY_BUILD}" ] && RETRY_BUILD="${default_retry_build}"
 
 # check git repository
 root_dir=$(git rev-parse --show-toplevel)
@@ -245,6 +253,16 @@ fi
 # create/update changelog
 echo " - Updating changelog: ${DEB_NAME} ${DEB_VERSION} (${DCH_DISTRO}, ${DCH_URGENCY}), ${PACKAGER_NAME} <${PACKAGER_EMAIL}>: ${DCH_CHANGELOG}"
 DEBFULLNAME="${PACKAGER_NAME}" DEBEMAIL="${PACKAGER_EMAIL}" dch "${DCH_CREATE}" --package "${DEB_NAME}" --newversion "${DEB_VERSION}" --distribution "${DCH_DISTRO}" --urgency "${DCH_URGENCY}" "${DCH_CHANGELOG}"
+
+# if retry build is enabled, patch debian/rules to run dh_auto_build
+# multiple times if needed
+if [ "${RETRY_BUILD}" != "0" ]; then
+    cat <<EOF >> debian/rules
+
+override_dh_auto_build:
+	dh_auto_build || dh_auto_build || dh_auto_build || dh_auto_build
+EOF
+fi
 
 # build packages (without debug symbols)
 DEB_BUILD_OPTIONS="noddebs" dpkg-buildpackage -us -uc --jobs="${JOBS}"
