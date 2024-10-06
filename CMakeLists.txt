@@ -239,7 +239,10 @@ if(ICONV_FOUND)
 endif()
 
 # Check for CURL
-find_package(CURL REQUIRED)
+# NOTE: keep version in sync with tools/check_curl_symbols.py
+pkg_check_modules(LIBCURL REQUIRED libcurl>=7.47.0)
+include_directories(${LIBCURL_INCLUDE_DIRS})
+list(APPEND EXTRA_LIBS ${LIBCURL_LDFLAGS})
 
 find_library(DL_LIBRARY
   NAMES dl
