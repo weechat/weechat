@@ -970,11 +970,7 @@ relay_remote_network_gnutls_callback (const void *pointer, void *data,
                                       const gnutls_datum_t *req_ca, int nreq,
                                       const gnutls_pk_algorithm_t *pk_algos,
                                       int pk_algos_len,
-#if LIBGNUTLS_VERSION_NUMBER >= 0x020b00 /* 2.11.0 */
                                       gnutls_retr2_st *answer,
-#else
-                                      gnutls_retr_st *answer,
-#endif /* LIBGNUTLS_VERSION_NUMBER >= 0x020b00 */
                                       int action)
 {
     struct t_relay_remote *remote;
@@ -983,10 +979,8 @@ relay_remote_network_gnutls_callback (const void *pointer, void *data,
     unsigned int i, cert_list_len, status;
     time_t cert_time;
     int rc, hostname_match, cert_temp_init;
-#if LIBGNUTLS_VERSION_NUMBER >= 0x010706 /* 1.7.6 */
     gnutls_datum_t cinfo;
     int rinfo;
-#endif /* LIBGNUTLS_VERSION_NUMBER >= 0x010706 */
 
     /* make C compiler happy */
     (void) data;
@@ -1061,15 +1055,9 @@ relay_remote_network_gnutls_callback (const void *pointer, void *data,
                         hostname_match = 1;
                     }
                 }
-#if LIBGNUTLS_VERSION_NUMBER >= 0x010706 /* 1.7.6 */
                 /* display infos about certificate */
-#if LIBGNUTLS_VERSION_NUMBER < 0x020400 /* 2.4.0 */
-                rinfo = gnutls_x509_crt_print (cert_temp,
-                                               GNUTLS_X509_CRT_ONELINE, &cinfo);
-#else
                 rinfo = gnutls_x509_crt_print (cert_temp,
                                                GNUTLS_CRT_PRINT_ONELINE, &cinfo);
-#endif /*  LIBGNUTLS_VERSION_NUMBER < 0x020400 */
                 if (rinfo == 0)
                 {
                     weechat_printf (
@@ -1082,7 +1070,6 @@ relay_remote_network_gnutls_callback (const void *pointer, void *data,
                         remote->name, cinfo.data);
                     gnutls_free (cinfo.data);
                 }
-#endif /* LIBGNUTLS_VERSION_NUMBER >= 0x010706 */
                 /* check expiration date */
                 cert_time = gnutls_x509_crt_get_expiration_time (cert_temp);
                 if (cert_time < time (NULL))
