@@ -2294,7 +2294,7 @@ def command_options(buffer: str, command: str, options: Dict[str, str]) -> int:
     ::
 
         # example: allow any command except /exec
-        rc = weechat.command_options("", "/some_command arguments", {"commands": "*,!exec"})
+        rc = weechat.command_options("", "/some_command arguments", {"commands": "*,!exec", "delay": "2000"})
     """
     ...
 

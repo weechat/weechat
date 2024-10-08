@@ -17190,7 +17190,7 @@ rc = weechat_command_options (NULL, "/some_command arguments", options);
 def command_options(buffer: str, command: str, options: Dict[str, str]) -> int: ...
 
 # 例: /exec 以外のコマンド実行を許可
-rc = weechat.command_options("", "/some_command arguments", {"commands": "*,!exec"})
+rc = weechat.command_options("", "/some_command arguments", {"commands": "*,!exec", "delay": "2000"})
 ----
 
 // TRANSLATION MISSING

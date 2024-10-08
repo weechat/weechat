@@ -16449,7 +16449,7 @@ rc = weechat_command_options (NULL, "/some_command arguments", options);
 def command_options(buffer: str, command: str, options: Dict[str, str]) -> int: ...
 
 # пример: дозвољава се било која команда осим /exec
-rc = weechat.command_options("", "/some_command arguments", {"commands": "*,!exec"})
+rc = weechat.command_options("", "/some_command arguments", {"commands": "*,!exec", "delay": "2000"})
 ----
 
 [[completion]]

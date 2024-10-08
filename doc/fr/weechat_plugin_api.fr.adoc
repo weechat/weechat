@@ -17266,7 +17266,7 @@ Script (Python) :
 def command_options(buffer: str, command: str, options: Dict[str, str]) -> int: ...
 
 # exemple : autoriser toute commande sauf /exec
-rc = weechat.command_options("", "/une_commande paramètres", {"commands": "*,!exec"})
+rc = weechat.command_options("", "/une_commande paramètres", {"commands": "*,!exec", "delay": "2000"})
 ----
 
 [[completion]]
