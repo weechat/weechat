@@ -430,6 +430,8 @@ WeeChat „језгро” се налази у следећим директо�
 |          test-core-hdata.cpp               | Тестови: hdata.
 |          test-core-hook.cpp                | Тестови: куке.
 |          test-core-infolist.cpp            | Тестови: infolists.
+// TRANSLATION MISSING
+|          test-core-input.cpp               | Tests: input functions.
 |          test-core-list.cpp                | Тестови: листе.
 |          test-core-network.cpp             | Тестови: мрежне функције.
 |          test-core-secure.cpp              | Тестови: обезбеђени подаци.

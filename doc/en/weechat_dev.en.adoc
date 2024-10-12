@@ -427,6 +427,7 @@ WeeChat "core" is located in following directories:
 |          test-core-hdata.cpp               | Tests: hdata.
 |          test-core-hook.cpp                | Tests: hooks.
 |          test-core-infolist.cpp            | Tests: infolists.
+|          test-core-input.cpp               | Tests: input functions.
 |          test-core-list.cpp                | Tests: lists.
 |          test-core-network.cpp             | Tests: network functions.
 |          test-core-secure.cpp              | Tests: secured data.

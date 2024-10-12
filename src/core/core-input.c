@@ -89,7 +89,7 @@ input_exec_command (struct t_gui_buffer *buffer,
     const char *ptr_command_name;
     int rc;
 
-    if ((!string) || (!string[0]))
+    if (!string || (!string[0]))
         return WEECHAT_RC_ERROR;
 
     rc = WEECHAT_RC_OK;

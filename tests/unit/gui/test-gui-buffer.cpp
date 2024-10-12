@@ -468,7 +468,6 @@ TEST(GuiBuffer, ApplyConfigProperties)
  * Test callback for buffer input.
  */
 
-
 int
 test_buffer_input_cb (const void *pointer, void *data,
                       struct t_gui_buffer *buffer, const char *input_data)
