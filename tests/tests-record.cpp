@@ -205,6 +205,16 @@ record_search (const char *buffer, const char *prefix, const char *message,
 }
 
 /*
+ * Returns the number of messages displayed during the recording.
+ */
+
+int
+record_count_messages ()
+{
+    return arraylist_size (recorded_messages);
+}
+
+/*
  * Adds all recorded messages to the dynamic string "msg".
  */
 
