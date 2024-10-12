@@ -4,6 +4,7 @@
 
 ### Changed
 
+- api: return the buffer input callback return code in functions command and command_options
 - relay/api: allow array with multiple requests in websocket frame received from client
 - core, plugins: simplify help on parameters that can be repeated in commands
 

@@ -44,17 +44,20 @@ char **input_commands_allowed = NULL;
 
 /*
  * Sends data to buffer input callback.
+ *
+ * Returns the return code of buffer callback, or WEECHAT_RC_ERROR if the
+ * buffer has no input callback.
  */
 
-void
+int
 input_exec_data (struct t_gui_buffer *buffer, const char *data)
 {
     if (buffer->input_callback)
     {
-        (void)(buffer->input_callback) (buffer->input_callback_pointer,
-                                        buffer->input_callback_data,
-                                        buffer,
-                                        data);
+        return (buffer->input_callback) (buffer->input_callback_pointer,
+                                         buffer->input_callback_data,
+                                         buffer,
+                                         data);
     }
     else
     {
@@ -62,6 +65,7 @@ input_exec_data (struct t_gui_buffer *buffer, const char *data)
                          _("%sYou cannot write text in this "
                            "buffer"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+        return WEECHAT_RC_ERROR;
     }
 }
 
@@ -175,7 +179,7 @@ input_exec_command (struct t_gui_buffer *buffer,
              */
             if (buffer->input_get_unknown_commands)
             {
-                input_exec_data (buffer, string);
+                rc = input_exec_data (buffer, string);
             }
             else
             {
@@ -318,12 +322,14 @@ input_data (struct t_gui_buffer *buffer, const char *data,
                     memcpy (buf, ptr_data_for_buffer, char_size);
                     snprintf (buf + char_size, length - char_size,
                               "%s", ptr_data_for_buffer);
-                    input_exec_data (buffer, buf);
+                    rc = input_exec_data (buffer, buf);
                     free (buf);
                 }
             }
             else
-                input_exec_data (buffer, ptr_data_for_buffer);
+            {
+                rc = input_exec_data (buffer, ptr_data_for_buffer);
+            }
         }
         else
         {
@@ -334,7 +340,7 @@ input_data (struct t_gui_buffer *buffer, const char *data,
                  * if data is sent from user and buffer catches any user data:
                  * send it to callback
                  */
-                input_exec_data (buffer, ptr_data);
+                rc = input_exec_data (buffer, ptr_data);
             }
             else
             {
