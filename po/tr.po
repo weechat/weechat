@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-09-29 12:29+0200\n"
-"PO-Revision-Date: 2024-08-12 21:36+0200\n"
+"POT-Creation-Date: 2024-10-13 16:56+0200\n"
+"PO-Revision-Date: 2024-10-13 16:57+0200\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: tr\n"
@@ -13315,12 +13315,6 @@ msgstr "özel anahtar içe aktarılamıyor: hata %d %s"
 #, c-format
 msgid "unable to sign the hashed data: error %d %s"
 msgstr "sağlaması yapılan veri imzalanamıyor: hata %d %s"
-
-#, c-format
-msgid ""
-"%sgnutls: version >= 3.0.21 is required for SASL \"ecdsa-nist256p-challenge\""
-msgstr ""
-"%sgnutls: SASL \"ecdsa-nist256p-challenge\" için sürüm >= 3.0.21 gerekiyor"
 
 #, c-format
 msgid "%s%s: the evaluated fingerprint for server \"%s\" must not be empty"

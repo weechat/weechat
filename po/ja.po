@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-09-29 12:29+0200\n"
-"PO-Revision-Date: 2024-08-12 21:35+0200\n"
+"POT-Creation-Date: 2024-10-13 16:56+0200\n"
+"PO-Revision-Date: 2024-10-13 16:57+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
 "translation/ja_JP>\n"
@@ -13134,13 +13134,6 @@ msgstr "%sgnutls: 秘密鍵をインポートできません: エラー %d %s"
 #, fuzzy, c-format
 msgid "unable to sign the hashed data: error %d %s"
 msgstr "%sgnutls: ハッシュ化されたデータを署名できません: エラー %d %s"
-
-#, c-format
-msgid ""
-"%sgnutls: version >= 3.0.21 is required for SASL \"ecdsa-nist256p-challenge\""
-msgstr ""
-"%sgnutls: SASL \"ecdsa-nist256p-challenge\" を使うには、バージョン 3.0.21 以"
-"上が必要です"
 
 #, c-format
 msgid "%s%s: the evaluated fingerprint for server \"%s\" must not be empty"

@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-09-29 12:29+0200\n"
+"POT-Creation-Date: 2024-10-13 16:56+0200\n"
 "PO-Revision-Date: 2024-06-11 07:49+0200\n"
 "Last-Translator: Santiago Forero <santiago@forero.xyz>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -12653,11 +12653,6 @@ msgstr "%s%s: no es posible crear la tubería"
 #, fuzzy, c-format
 msgid "unable to sign the hashed data: error %d %s"
 msgstr "%s%s: no es posible crear la tubería"
-
-#, c-format
-msgid ""
-"%sgnutls: version >= 3.0.21 is required for SASL \"ecdsa-nist256p-challenge\""
-msgstr ""
 
 #, fuzzy, c-format
 msgid "%s%s: the evaluated fingerprint for server \"%s\" must not be empty"

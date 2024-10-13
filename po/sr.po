@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-09-29 12:29+0200\n"
-"PO-Revision-Date: 2024-08-24 10:56+0200\n"
+"POT-Creation-Date: 2024-10-13 16:56+0200\n"
+"PO-Revision-Date: 2024-10-13 16:57+0200\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: sr\n"
@@ -13211,12 +13211,6 @@ msgstr "није могућ увоз повратног кључа: грешка
 #, c-format
 msgid "unable to sign the hashed data: error %d %s"
 msgstr "није могуће потписивање хешираних података: грешка %d %s"
-
-#, c-format
-msgid ""
-"%sgnutls: version >= 3.0.21 is required for SASL \"ecdsa-nist256p-challenge\""
-msgstr ""
-"%sgnutls: за SASL „ecdsa-nist256p-challenge” је потребна верзија >= 3.0.21"
 
 #, c-format
 msgid "%s%s: the evaluated fingerprint for server \"%s\" must not be empty"
