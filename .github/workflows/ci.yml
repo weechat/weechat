@@ -170,7 +170,7 @@ jobs:
           --daemon \
         ;
         sleep 5
-        ./tools/test_relay_api.sh http://localhost:9000
+        ./tools/test_relay_api.sh http://127.0.0.1:9000
         echo '*/quit' >/tmp/weechat-test-api/weechat_fifo_*
 
     - name: Code coverage
