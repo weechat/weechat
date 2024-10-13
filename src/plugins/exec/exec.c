@@ -242,8 +242,8 @@ void
 exec_display_line (struct t_exec_cmd *exec_cmd, struct t_gui_buffer *buffer,
                    int out, const char *line)
 {
-    char *line_color, *line_color2, *line2, str_number[32], str_tags[1024];
-    const char *ptr_line_color;
+    struct t_hashtable *options;
+    char *line_color, *line2, str_number[32], str_tags[1024];
     int length;
 
     if (!exec_cmd || !line)
@@ -268,6 +268,15 @@ exec_display_line (struct t_exec_cmd *exec_cmd, struct t_gui_buffer *buffer,
     if (!line_color)
         return;
 
+    options = weechat_hashtable_new (8,
+                                     WEECHAT_HASHTABLE_STRING,
+                                     WEECHAT_HASHTABLE_STRING,
+                                     NULL, NULL);
+    if (!options)
+        return;
+    if (!exec_cmd->output_to_buffer_exec_cmd)
+        weechat_hashtable_set (options, "commands", "-");
+
     exec_cmd->output_line_nb++;
 
     if (exec_cmd->pipe_command)
@@ -279,7 +288,7 @@ exec_display_line (struct t_exec_cmd *exec_cmd, struct t_gui_buffer *buffer,
                                             "$line", line_color);
             if (line2)
             {
-                weechat_command (buffer, line2);
+                weechat_command_options (buffer, line2, options);
                 free (line2);
             }
         }
@@ -292,7 +301,7 @@ exec_display_line (struct t_exec_cmd *exec_cmd, struct t_gui_buffer *buffer,
             {
                 snprintf (line2, length,
                           "%s %s", exec_cmd->pipe_command, line_color);
-                weechat_command (buffer, line2);
+                weechat_command_options (buffer, line2, options);
                 free (line2);
             }
         }
@@ -307,35 +316,15 @@ exec_display_line (struct t_exec_cmd *exec_cmd, struct t_gui_buffer *buffer,
             {
                 snprintf (line2, length,
                           "%d. %s", exec_cmd->output_line_nb, line_color);
-                weechat_command (buffer, line2);
+                weechat_command_options (buffer, line2, options);
                 free (line2);
             }
         }
         else
         {
-            if (exec_cmd->output_to_buffer_exec_cmd)
-                ptr_line_color = line_color;
-            else
-                ptr_line_color = weechat_string_input_for_buffer (line_color);
-
-            if (ptr_line_color)
-            {
-                weechat_command (buffer,
-                                 (ptr_line_color[0]) ? ptr_line_color : " ");
-            }
-            else
-            {
-                length = 1 + strlen (line_color) + 1;
-                line_color2 = malloc (length);
-                if (line_color2)
-                {
-                    snprintf (line_color2, length, "%c%s",
-                              line_color[0], line_color);
-                    weechat_command (buffer,
-                                     (line_color2[0]) ? line_color2 : " ");
-                    free (line_color2);
-                }
-            }
+            weechat_command_options (buffer,
+                                     (line_color[0]) ? line_color : " ",
+                                     options);
         }
     }
     else
@@ -367,6 +356,7 @@ exec_display_line (struct t_exec_cmd *exec_cmd, struct t_gui_buffer *buffer,
         }
     }
 
+    weechat_hashtable_free (options);
     free (line_color);
 }
 
