@@ -9,6 +9,7 @@
 - relay/api: allow array with multiple requests in websocket frame received from client
 - core, plugins: simplify help on parameters that can be repeated in commands
 - build: require Curl ≥ 7.47.0 ([#2195](https://github.com/weechat/weechat/issues/2195))
+- build: require GnuTLS ≥ 3.3.0 ([#2193](https://github.com/weechat/weechat/issues/2193))
 
 ### Added
 
