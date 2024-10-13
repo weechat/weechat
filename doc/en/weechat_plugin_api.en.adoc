@@ -16849,7 +16849,7 @@ rc = weechat.command(weechat.buffer_search("irc", "libera.#weechat"), "/whois Fl
 
 ==== command_options
 
-_WeeChat ≥ 2.5, updated in 4.0.0._
+_WeeChat ≥ 2.5, updated in 4.0.0, 4.5.0._
 
 Execute a command or send text to buffer with options.
 
@@ -16865,13 +16865,14 @@ Arguments:
 
 * _buffer_: buffer pointer (command is executed on this buffer, use NULL for
   current buffer)
-* _command_: command to execute (if beginning with a "/"), or text to send to
-  buffer
+* _command_: command to execute (if beginning with a `/` or a command char),
+  or text to send to buffer
 * _options_: a hashtable with some options (keys and values must be string)
   (can be NULL):
 ** _commands_: a comma-separated list of commands allowed to be executed during
-   this call; see function <<_string_match_list,string_match_list>> for the
-   format
+   this call (see function <<_string_match_list,string_match_list>> for the
+   format); the special value `-` (hyphen-minus) disables the execution of commands
+   and the string in _command_ is sent as-is to the buffer (_WeeChat ≥ 4.5.0_)
 ** _delay_: delay to execute command, in milliseconds
 ** _split_newline_: `1` to split commands on newline char (`\n`) (_WeeChat ≥ 4.0.0_)
 

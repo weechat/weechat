@@ -17210,7 +17210,7 @@ rc = weechat.command(weechat.buffer_search("irc", "libera.#weechat"), "/whois Fl
 
 ==== command_options
 
-_WeeChat ≥ 2.5, mis à jour dans la 4.0.0._
+_WeeChat ≥ 2.5, mis à jour dans la 4.0.0, 4.5.0._
 
 Exécuter une commande ou envoyer du texte au tampon avec des options.
 
@@ -17226,13 +17226,15 @@ Paramètres :
 
 * _buffer_ : pointeur vers le tampon (la commande est exécutée sur ce tampon,
   NULL pour le tampon courant)
-* _command_ : commande à exécuter (si elle commence par "/"), ou texte à
-  envoyer au tampon
+* _command_ : commande à exécuter (si elle commence par `/` ou un caractère de
+  commande), ou texte à envoyer au tampon
 * _options_ : table de hachage avec des options (les clés et valeurs doivent
   être des chaînes) (peut être NULL) :
 ** _commands_ : une liste de commandes autorisées pendant l'appel, séparées par
-   des virgules ; voir la fonction <<_string_match_list,string_match_list>>
-   pour le format
+   des virgules (voir la fonction <<_string_match_list,string_match_list>>
+   pour le format) ; la valeur spéciale `-` (moins) désactive l'exécution des
+   commandes et la chaîne dans _command_ est envoyée telle quelle au tampon
+   (_WeeChat ≥ 4.5.0_)
 ** _delay_ : délai pour exécuter la commande, en millisecondes
 ** _split_newline_ : `1` pour découper les commandes sur le caractère de retour
    à la ligne (`\n`) (_WeeChat ≥ 4.0.0_)

@@ -327,9 +327,20 @@ input_data (struct t_gui_buffer *buffer, const char *data,
             }
             else
             {
-                /* execute command on buffer */
-                rc = input_exec_command (buffer, 1, buffer->plugin, ptr_data,
-                                         commands_allowed);
+                /*
+                 * if commands_allowed has special value "-", send data as-is
+                 * to the buffer input callback, otherwise execute the command
+                 * on the buffer
+                 */
+                if (commands_allowed && (strcmp (commands_allowed, "-") == 0))
+                {
+                    rc = input_exec_data (buffer, ptr_data);
+                }
+                else
+                {
+                    rc = input_exec_command (buffer, 1, buffer->plugin,
+                                             ptr_data, commands_allowed);
+                }
             }
         }
 

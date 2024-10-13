@@ -17670,7 +17670,7 @@ rc = weechat.command(weechat.buffer_search("irc", "libera.#weechat"), "/whois Fl
 ==== command_options
 
 // TRANSLATION MISSING
-_WeeChat ≥ 2.5, updated in 4.0.0._
+_WeeChat ≥ 2.5, updated in 4.0.0, 4.5.0._
 
 // TRANSLATION MISSING
 Execute a command or send text to buffer with options.
@@ -17687,14 +17687,17 @@ Argomenti:
 
 * _buffer_: puntatore al buffer (il comando viene eseguito su questo buffer,
   utilizzare NULL per il buffer corrente)
-* _command_: comando da eseguire (se preceduto da "/"), oppure il testo
-  viene inviato sul buffer
+// TRANSLATION MISSING
+* _command_: comando da eseguire (if beginning with a `/` or a command char),
+   oppure il testo viene inviato sul buffer
 // TRANSLATION MISSING
 * _options_: a hashtable with some options (keys and values must be string)
   (can be NULL):
+// TRANSLATION MISSING
 ** _commands_: a comma-separated list of commands allowed to be executed during
-   this call; see function <<_string_match_list,string_match_list>> for the
-   format
+   this call (see function <<_string_match_list,string_match_list>> for the
+   format); the special value `-` (hyphen-minus) disables the execution of commands
+   and the string in _command_ is sent as-is to the buffer (_WeeChat ≥ 4.5.0_)
 ** _delay_: delay to execute command, in milliseconds
 // TRANSLATION MISSING
 ** _split_newline_: `1` to split commands on newline char (`\n`) (_WeeChat ≥ 4.0.0_)

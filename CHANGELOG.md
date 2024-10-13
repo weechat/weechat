@@ -5,6 +5,7 @@
 ### Changed
 
 - api: return the buffer input callback return code in functions command and command_options
+- api: add special value `-` (hyphen-minus) in options of function command_options to prevent execution of commands
 - relay/api: allow array with multiple requests in websocket frame received from client
 - core, plugins: simplify help on parameters that can be repeated in commands
 

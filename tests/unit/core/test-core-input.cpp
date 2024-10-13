@@ -182,6 +182,15 @@ TEST(CoreInput, Data)
     RECORD_CHECK_MSG("core.test", "", "line2", NULL);
     LONGS_EQUAL(2, record_count_messages ());
 
+    /* on core buffer: valid command but with commands disabled */
+    TEST_INPUT_DATA(WEECHAT_RC_ERROR, gui_buffers, "/print core\n/print line2", "-", 0, 0);
+    RECORD_CHECK_MSG("core.weechat", "=!=", "You cannot write text in this buffer", NULL);
+    LONGS_EQUAL(1, record_count_messages ());
+
+    /* on test buffer: valid command but with commands disabled */
+    TEST_INPUT_DATA(WEECHAT_RC_OK, buffer, "/print core\n/print line2", "-", 0, 0);
+    RECORD_CHECK_NO_MSG();
+
     gui_buffer_close (buffer);
 }
 

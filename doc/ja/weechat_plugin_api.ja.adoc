@@ -17133,7 +17133,7 @@ rc = weechat.command(weechat.buffer_search("irc", "libera.#weechat"), "/whois Fl
 ==== command_options
 
 // TRANSLATION MISSING
-_WeeChat ≥ 2.5, updated in 4.0.0._
+_WeeChat ≥ 2.5, updated in 4.0.0, 4.5.0._
 
 バッファにてオプション付きでコマンドを実行またはテキストを送信
 
@@ -17149,14 +17149,17 @@ int weechat_command_options (struct t_gui_buffer *buffer, const char *command,
 
 * _buffer_: バッファへのポインタ
   (コマンドは指定したバッファで実行されます、現在のバッファで実行するには NULL を指定してください)
-* _command_: 実行するコマンド ("/"
-  で始まっている場合)、またはバッファに送信するテキスト
+// TRANSLATION MISSING
+* _command_: 実行するコマンド (if beginning with a `/` or a command char)、またはバッファに送信するテキスト
 * _options_: オプションを含むハッシュテーブル (キーと値は文字列です)
   (NULL は使えません):
 * _options_: a hashtable with some options (keys and values must be string)
   (can be NULL):
+// TRANSLATION MISSING
 ** _commands_: 指定したコマンドの中で実行を許可するコマンドのカンマ区切りリスト、リストの書式は関数
-   <<_string_match_list,string_match_list>> を参考にしてください
+   <<_string_match_list,string_match_list>> を参考にしてください;
+   the special value `-` (hyphen-minus) disables the execution of commands
+   and the string in _command_ is sent as-is to the buffer (_WeeChat ≥ 4.5.0_)
 ** _delay_: コマンド実行までの遅延時間、ミリ秒単位
 // TRANSLATION MISSING
 ** _split_newline_: `1` to split commands on newline char (`\n`) (_WeeChat ≥ 4.0.0_)

@@ -16399,7 +16399,7 @@ rc = weechat.command(weechat.buffer_search("irc", "libera.#weechat"), "/whois Fl
 
 ==== command_options
 
-_WeeChat ≥ 2.5, ажурирано у верзији 4.0.0._
+_WeeChat ≥ 2.5, ажурирано у верзији 4.0.0, 4.5.0._
 
 Извршава команду или шаље текст у бафер са опцијама.
 
@@ -16414,9 +16414,14 @@ int weechat_command_options (struct t_gui_buffer *buffer, const char *command,
 Аргументи:
 
 * _buffer_: показивач на бафер (команда се извршава у овом баферу, употребите NULL за текући бафер)
-* _command_: команда која се извршава (ако почиње са „/”), или текст који се шаље у бафер
+// TRANSLATION MISSING
+* _command_: команда која се извршава (if beginning with a `/` or a command char), или текст који се шаље у бафер
 * _options_: хеш табела са неким опцијама (кључеви и вредности морају бити стринг) (може да буде NULL):
-** _commands_: листа команди које смеју да се изврше током овог позива раздвојене запетама; за формат, погледајте функцију <<_string_match_list,string_match_list>>
+// TRANSLATION MISSING
+** _commands_: листа команди које смеју да се изврше током овог позива раздвојене запетама
+   (за формат, погледајте функцију <<_string_match_list,string_match_list>>);
+   the special value `-` (hyphen-minus) disables the execution of commands
+   and the string in _command_ is sent as-is to the buffer (_WeeChat ≥ 4.5.0_)
 ** _delay_: пауза за извршавање команде, у милисекундама
 ** _split_newline_: `1` да се команде поделе на карактеру прелома линије (`\n`) (_WeeChat ≥ 4.0.0_)
 
