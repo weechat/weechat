@@ -9,6 +9,7 @@ on:
 env:
   WEECHAT_DEPS_UBUNTU: >-
     asciidoctor
+    build-essential
     cmake
     curl
     devscripts
@@ -33,11 +34,11 @@ env:
     libzstd-dev
     ninja-build
     php-dev
+    pipx
     pkgconf
     pylint
     python3-bandit
     python3-dev
-    python3-pip
     ruby-pygments.rb
     shellcheck
     tcl8.6-dev
@@ -101,7 +102,7 @@ jobs:
     strategy:
       matrix:
         os:
-          - ubuntu-22.04
+          - ubuntu-24.04
         config:
           - { name: "gcc", cc: "gcc", cxx: "g++", buildargs: "" }
           - { name: "gcc_ninja", cc: "gcc", cxx: "g++", buildargs: "-G Ninja" }
@@ -123,8 +124,8 @@ jobs:
         sudo apt-get update -qq
         sudo apt-get --yes --no-install-recommends install ${{ env.WEECHAT_DEPS_UBUNTU }}
         # uninstall php imagick as is causes a crash when loading php plugin (see #2009)
-        sudo apt-get --yes purge php8.1-imagick
-        sudo -H pip3 install --ignore-installed msgcheck
+        sudo apt-get --yes purge php8.3-imagick
+        pipx install msgcheck
 
     - name: Check gettext files
       run: msgcheck po/*.po
@@ -162,7 +163,7 @@ jobs:
       env:
         RELAY_PASSWORD: test
       run: |
-        sudo -H pip3 install --ignore-installed schemathesis
+        pipx install schemathesis
         weechat-headless \
           --dir /tmp/weechat-test-api \
           --run-command '/set relay.network.password "${{ env.RELAY_PASSWORD }}"' \
@@ -189,7 +190,7 @@ jobs:
     strategy:
       matrix:
         os:
-          - ubuntu-22.04
+          - ubuntu-24.04
 
     name: "${{ matrix.os }} (build Debian)"
     runs-on: ${{ matrix.os }}
@@ -207,7 +208,7 @@ jobs:
       run: ./tools/build_debian.sh test-patches
 
     - name: Build Debian packages
-      run: ./tools/build_debian.sh devel ubuntu/jammy
+      run: ./tools/build_debian.sh devel ubuntu/noble
 
     - name: Install Debian packages
       run: sudo dpkg -i ../weechat-devel*.deb
@@ -227,7 +228,7 @@ jobs:
     strategy:
       matrix:
         os:
-          - ubuntu-22.04
+          - ubuntu-24.04
 
     name: "${{ matrix.os }} (CodeQL)"
     runs-on: ${{ matrix.os }}
@@ -247,8 +248,8 @@ jobs:
         sudo apt-get update -qq
         sudo apt-get --yes --no-install-recommends install ${{ env.WEECHAT_DEPS_UBUNTU }}
         # uninstall php imagick as is causes a crash when loading php plugin (see #2009)
-        sudo apt-get --yes purge php8.1-imagick
-        sudo -H pip3 install --ignore-installed msgcheck
+        sudo apt-get --yes purge php8.3-imagick
+        pipx install msgcheck
 
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v3
@@ -268,7 +269,7 @@ jobs:
     strategy:
       matrix:
         os:
-          - ubuntu-22.04
+          - ubuntu-24.04
         config:
           - { name: "gcc", cc: "gcc", cxx: "g++", buildargs: "" }
           - { name: "clang", cc: "clang", cxx: "clang++", buildargs: "" }
@@ -312,7 +313,7 @@ jobs:
     strategy:
       matrix:
         os:
-          - ubuntu-22.04
+          - ubuntu-24.04
         config:
           # - { name: "gcc", cc: "gcc", cxx: "g++", buildargs: "" }
           - { name: "clang", cc: "clang", cxx: "clang++", buildargs: "" }
