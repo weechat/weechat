@@ -249,9 +249,9 @@ int
 input_data (struct t_gui_buffer *buffer, const char *data,
             const char *commands_allowed, int split_newline, int user_data)
 {
-    char *pos, *buf, str_buffer[128], *new_data, *buffer_full_name;
+    char *pos, str_buffer[128], *new_data, *buffer_full_name;
     const char *ptr_data, *ptr_data_for_buffer;
-    int length, char_size, first_command, rc;
+    int first_command, rc;
 
     if (!buffer || !gui_buffer_valid (buffer) || !data)
         return WEECHAT_RC_ERROR;
@@ -309,27 +309,10 @@ input_data (struct t_gui_buffer *buffer, const char *data,
         if (ptr_data_for_buffer)
         {
             /*
-             * input string is NOT a command, send it to buffer input
-             * callback
+             * input string is NOT a command, send it as-is to the buffer
+             * input callback
              */
-            if (string_is_command_char (ptr_data_for_buffer))
-            {
-                char_size = utf8_char_size (ptr_data_for_buffer);
-                length = strlen (ptr_data_for_buffer) + char_size + 1;
-                buf = malloc (length);
-                if (buf)
-                {
-                    memcpy (buf, ptr_data_for_buffer, char_size);
-                    snprintf (buf + char_size, length - char_size,
-                              "%s", ptr_data_for_buffer);
-                    rc = input_exec_data (buffer, buf);
-                    free (buf);
-                }
-            }
-            else
-            {
-                rc = input_exec_data (buffer, ptr_data_for_buffer);
-            }
+            rc = input_exec_data (buffer, ptr_data);
         }
         else
         {
