@@ -274,8 +274,6 @@ exec_display_line (struct t_exec_cmd *exec_cmd, struct t_gui_buffer *buffer,
                                      NULL, NULL);
     if (!options)
         return;
-    if (!exec_cmd->output_to_buffer_exec_cmd)
-        weechat_hashtable_set (options, "commands", "-");
 
     exec_cmd->output_line_nb++;
 
@@ -308,6 +306,8 @@ exec_display_line (struct t_exec_cmd *exec_cmd, struct t_gui_buffer *buffer,
     }
     else if (exec_cmd->output_to_buffer)
     {
+        if (!exec_cmd->output_to_buffer_exec_cmd)
+            weechat_hashtable_set (options, "commands", "-");
         if (exec_cmd->line_numbers)
         {
             length = 32 + strlen (line_color) + 1;
