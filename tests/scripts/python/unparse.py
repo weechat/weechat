@@ -42,8 +42,8 @@ class UnparsePython(object):
     """
     Unparse AST to generate Python script code.
 
-    This class is inspired from unparse.py in cpython:
-    https://github.com/python/cpython/blob/master/Tools/parser/unparse.py
+    This class is inspired from _Unparser class in cpython:
+    https://github.com/python/cpython/blob/main/Lib/ast.py
 
     Note: only part of AST types are supported (just the types used by
     the script to test WeeChat scripting API).
