@@ -821,7 +821,7 @@ weechat --upgrade
 ==== Informacje o aktualizacji
 
 Po aktualizacji *zaleca się* zapoznanie z plikiem
-https://github.com/weechat/weechat/blob/master/UPGRADING.md[UPGRADING.md ^↗^^],
+https://github.com/weechat/weechat/blob/main/UPGRADING.md[UPGRADING.md ^↗^^],
 który zawiera ważne informacje o niekompatybilnych zmianach i czynnościach,
 jakie mogą być wymagane.
 

@@ -77,7 +77,7 @@ link:weechat_plugin_api.it.html#_hook_process[WeeChat plugin API reference ^↗
 
 WeeChat defines a `weechat` module which must be imported with `import weechat`. +
 A Python stub for WeeChat API is available in the repository:
-https://raw.githubusercontent.com/weechat/weechat/master/src/plugins/python/weechat.pyi[weechat.pyi ^↗^^].
+https://raw.githubusercontent.com/weechat/weechat/main/src/plugins/python/weechat.pyi[weechat.pyi ^↗^^].
 
 // TRANSLATION MISSING
 [[python_functions]]
