@@ -899,7 +899,7 @@ weechat --upgrade
 
 // TRANSLATION MISSING
 After an upgrade, it is *strongly recommended* to read the file
-https://github.com/weechat/weechat/blob/master/UPGRADING.md[UPGRADING.md ^↗^^]
+https://github.com/weechat/weechat/blob/main/UPGRADING.md[UPGRADING.md ^↗^^]
 which contains important information about breaking changes and some
 manual actions that could be required.
 

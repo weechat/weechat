@@ -827,7 +827,7 @@ weechat --upgrade
 ==== Hinweise zum Upgrade
 
 Nach einem Upgrade, wird *dringend empfohlen* das Dokukment
-https://github.com/weechat/weechat/blob/master/UPGRADING.md[UPGRADING.md ^↗^^]
+https://github.com/weechat/weechat/blob/main/UPGRADING.md[UPGRADING.md ^↗^^]
 zu lesen. Dieses Dokument enthält wichtige Informationen zu wichtigen Änderungen und
 einige manuelle Aktionen, die erforderlich sein könnten.
 

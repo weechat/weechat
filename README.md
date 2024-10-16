@@ -12,7 +12,7 @@
 [![Donate](https://img.shields.io/badge/help-donate%20%E2%9D%A4-ff69b4.svg)](https://weechat.org/donate/)
 
 [![CI](https://github.com/weechat/weechat/workflows/CI/badge.svg)](https://github.com/weechat/weechat/actions)
-[![Code coverage](https://codecov.io/gh/weechat/weechat/branch/master/graph/badge.svg)](https://codecov.io/gh/weechat/weechat)
+[![Code coverage](https://codecov.io/gh/weechat/weechat/branch/main/graph/badge.svg)](https://codecov.io/gh/weechat/weechat)
 
 **WeeChat** (Wee Enhanced Environment for Chat) is a free chat client, fast and light, designed for many operating systems.\
 It is highly customizable and extensible with scripts.

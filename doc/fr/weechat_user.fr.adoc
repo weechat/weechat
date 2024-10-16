@@ -829,7 +829,7 @@ weechat --upgrade
 ==== Notes de mise à jour
 
 Après une mise à jour, il est *fortement recommandé* de lire le fichier
-https://github.com/weechat/weechat/blob/master/UPGRADING.md[UPGRADING.md ^↗^^]
+https://github.com/weechat/weechat/blob/main/UPGRADING.md[UPGRADING.md ^↗^^]
 qui contient des informations importantes sur les changements majeurs et
 quelques actions manuelles qui pourraient être nécessaires.
 

@@ -1192,7 +1192,7 @@ server->hook_timer_sasl = weechat_hook_timer (timeout * 1000,
 Le dépôt Git est sur https://github.com/weechat/weechat[GitHub ^↗^^].
 
 Tout patch pour un bug ou une nouvelle fonctionnalité doit être effectué sur la
-branche master, le format préféré étant une "pull request" sur GitHub. Un patch
+branche `main`, le format préféré étant une "pull request" sur GitHub. Un patch
 peut aussi être envoyé par e-mail (fait avec `git diff` ou `git format-patch`).
 
 Le format du message de commit est le suivant (avec fermeture automatique

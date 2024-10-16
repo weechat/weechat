@@ -61,7 +61,7 @@ Almost all examples in this doc are written in Python, but API is the same for o
 ===== Модул
 
 Програм WeeChat дефинише `weechat` модул који мора да се увезе командом `import weechat`. +
-Python стаб за WeeChat API је соступан у репозиторијуму: https://raw.githubusercontent.com/weechat/weechat/master/src/plugins/python/weechat.pyi[weechat.pyi ^↗^^].
+Python стаб за WeeChat API је соступан у репозиторијуму: https://raw.githubusercontent.com/weechat/weechat/main/src/plugins/python/weechat.pyi[weechat.pyi ^↗^^].
 
 [[python_functions]]
 ===== Функције

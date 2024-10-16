@@ -773,7 +773,7 @@ weechat --upgrade
 ==== Напомене у вези са ажурирањем
 
 Након ажурирања, *снажно се препоручује* да прочитате фајл
-https://github.com/weechat/weechat/blob/master/UPGRADING.md[UPGRADING.md ^↗^^]
+https://github.com/weechat/weechat/blob/main/UPGRADING.md[UPGRADING.md ^↗^^]
 који садржи важне информације у вези са изменама које могу да покваре понашање и
 неке ручне акције које могу да буду неопходне.
 

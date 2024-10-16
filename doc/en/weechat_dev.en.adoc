@@ -1172,7 +1172,7 @@ server->hook_timer_sasl = weechat_hook_timer (timeout * 1000,
 
 Git repository is on https://github.com/weechat/weechat[GitHub ^↗^^].
 
-Any patch for bug or new feature must be done on master branch, preferred way
+Any patch for bug or new feature must be done on branch `main`, preferred way
 is a GitHub pull request. A patch can also be sent by e-mail
 (made with `git diff` or `git format-patch`).
 
