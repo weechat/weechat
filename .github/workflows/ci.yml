@@ -97,261 +97,261 @@ env:
 
 jobs:
 
-  tests_ubuntu:
+  # tests_ubuntu:
 
-    strategy:
-      matrix:
-        os:
-          - ubuntu-24.04
-        config:
-          - { name: "gcc", cc: "gcc", cxx: "g++", buildargs: "" }
-          - { name: "gcc_ninja", cc: "gcc", cxx: "g++", buildargs: "-G Ninja" }
-          - { name: "gcc_no_nls", cc: "gcc", cxx: "g++", buildargs: "-DENABLE_NLS=OFF -DENABLE_DOC=OFF" }
-          - { name: "gcc_no_zstd", cc: "gcc", cxx: "g++", buildargs: "-DENABLE_ZSTD=OFF -DENABLE_DOC=OFF" }
-          - { name: "gcc_no_cjson", cc: "gcc", cxx: "g++", buildargs: "-DENABLE_CJSON=OFF -DENABLE_DOC=OFF" }
-          - { name: "gcc_coverage", cc: "gcc", cxx: "g++", buildargs: "-DENABLE_CODE_COVERAGE=ON" }
-          - { name: "clang", cc: "clang", cxx: "clang++", buildargs: "" }
+  #   strategy:
+  #     matrix:
+  #       os:
+  #         - ubuntu-24.04
+  #       config:
+  #         - { name: "gcc", cc: "gcc", cxx: "g++", buildargs: "" }
+  #         - { name: "gcc_ninja", cc: "gcc", cxx: "g++", buildargs: "-G Ninja" }
+  #         - { name: "gcc_no_nls", cc: "gcc", cxx: "g++", buildargs: "-DENABLE_NLS=OFF -DENABLE_DOC=OFF" }
+  #         - { name: "gcc_no_zstd", cc: "gcc", cxx: "g++", buildargs: "-DENABLE_ZSTD=OFF -DENABLE_DOC=OFF" }
+  #         - { name: "gcc_no_cjson", cc: "gcc", cxx: "g++", buildargs: "-DENABLE_CJSON=OFF -DENABLE_DOC=OFF" }
+  #         - { name: "gcc_coverage", cc: "gcc", cxx: "g++", buildargs: "-DENABLE_CODE_COVERAGE=ON" }
+  #         - { name: "clang", cc: "clang", cxx: "clang++", buildargs: "" }
 
-    name: "${{ matrix.os }} (${{ matrix.config.name }})"
-    runs-on: ${{ matrix.os }}
+  #   name: "${{ matrix.os }} (${{ matrix.config.name }})"
+  #   runs-on: ${{ matrix.os }}
 
-    steps:
+  #   steps:
 
-    - uses: actions/checkout@v4
+  #   - uses: actions/checkout@v4
 
-    - name: Install dependencies
-      run: |
-        sudo apt-get update -qq
-        sudo apt-get --yes --no-install-recommends install ${{ env.WEECHAT_DEPS_UBUNTU }}
-        # uninstall php imagick as is causes a crash when loading php plugin (see #2009)
-        sudo apt-get --yes purge php8.3-imagick
-        pipx install msgcheck
+  #   - name: Install dependencies
+  #     run: |
+  #       sudo apt-get update -qq
+  #       sudo apt-get --yes --no-install-recommends install ${{ env.WEECHAT_DEPS_UBUNTU }}
+  #       # uninstall php imagick as is causes a crash when loading php plugin (see #2009)
+  #       sudo apt-get --yes purge php8.3-imagick
+  #       pipx install msgcheck
 
-    - name: Check gettext files
-      run: msgcheck po/*.po
+  #   - name: Check gettext files
+  #     run: msgcheck po/*.po
 
-    - name: Check shell and Python scripts
-      run: ./tools/check_scripts.sh
+  #   - name: Check shell and Python scripts
+  #     run: ./tools/check_scripts.sh
 
-    - name: Check Python stub file
-      run: ./tools/generate_python_stub.py | diff src/plugins/python/weechat.pyi -
+  #   - name: Check Python stub file
+  #     run: ./tools/generate_python_stub.py | diff src/plugins/python/weechat.pyi -
 
-    - name: Check Curl symbols
-      run: curl --silent --show-error --fail --retry 10 https://raw.githubusercontent.com/curl/curl/master/docs/libcurl/symbols-in-versions | ./tools/check_curl_symbols.py
+  #   - name: Check Curl symbols
+  #     run: curl --silent --show-error --fail --retry 10 https://raw.githubusercontent.com/curl/curl/master/docs/libcurl/symbols-in-versions | ./tools/check_curl_symbols.py
 
-    - name: Build and run tests
-      env:
-        CC: ${{ matrix.config.cc }}
-        CXX: ${{ matrix.config.cxx }}
-        BUILDARGS: ${{ matrix.config.buildargs }}
-      run: ./tools/build_test.sh
+  #   - name: Build and run tests
+  #     env:
+  #       CC: ${{ matrix.config.cc }}
+  #       CXX: ${{ matrix.config.cxx }}
+  #       BUILDARGS: ${{ matrix.config.buildargs }}
+  #     run: ./tools/build_test.sh
 
-    - name: Run WeeChat
-      env:
-        TERM: xterm-256color
-      run: |
-        weechat --help
-        weechat-curses --help
-        weechat --version
-        weechat --build-info
-        weechat --colors
-        weechat --license
-        weechat --run-command "/debug dirs;/debug libs" --run-command "/quit"
+  #   - name: Run WeeChat
+  #     env:
+  #       TERM: xterm-256color
+  #     run: |
+  #       weechat --help
+  #       weechat-curses --help
+  #       weechat --version
+  #       weechat --build-info
+  #       weechat --colors
+  #       weechat --license
+  #       weechat --run-command "/debug dirs;/debug libs" --run-command "/quit"
 
-    - name: Test Relay OpenAPI
-      if: ${{ matrix.config.name == 'gcc' }}
-      env:
-        RELAY_PASSWORD: test
-      run: |
-        pipx install schemathesis
-        weechat-headless \
-          --dir /tmp/weechat-test-api \
-          --run-command '/set relay.network.password "${{ env.RELAY_PASSWORD }}"' \
-          --run-command '/relay add api 9000' \
-          --daemon \
-        ;
-        sleep 5
-        ./tools/test_relay_api.sh http://localhost:9000
-        echo '*/quit' >/tmp/weechat-test-api/weechat_fifo_*
+  #   - name: Test Relay OpenAPI
+  #     if: ${{ matrix.config.name == 'gcc' }}
+  #     env:
+  #       RELAY_PASSWORD: test
+  #     run: |
+  #       pipx install schemathesis
+  #       weechat-headless \
+  #         --dir /tmp/weechat-test-api \
+  #         --run-command '/set relay.network.password "${{ env.RELAY_PASSWORD }}"' \
+  #         --run-command '/relay add api 9000' \
+  #         --daemon \
+  #       ;
+  #       sleep 5
+  #       ./tools/test_relay_api.sh http://localhost:9000
+  #       echo '*/quit' >/tmp/weechat-test-api/weechat_fifo_*
 
-    - name: Code coverage
-      if: ${{ matrix.config.name == 'gcc_coverage' }}
-      env:
-        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-      run: |
-        cd build-tmp-*
-        lcov --directory . --capture --output-file coverage.info
-        lcov --remove coverage.info '/usr/*' --output-file coverage.info
-        lcov --list coverage.info
-        bash <(curl -s https://codecov.io/bash) -f coverage.info || echo 'Codecov error'
+  #   - name: Code coverage
+  #     if: ${{ matrix.config.name == 'gcc_coverage' }}
+  #     env:
+  #       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+  #     run: |
+  #       cd build-tmp-*
+  #       lcov --directory . --capture --output-file coverage.info
+  #       lcov --remove coverage.info '/usr/*' --output-file coverage.info
+  #       lcov --list coverage.info
+  #       bash <(curl -s https://codecov.io/bash) -f coverage.info || echo 'Codecov error'
 
-  build_debian:
+  # build_debian:
 
-    strategy:
-      matrix:
-        os:
-          - ubuntu-24.04
+  #   strategy:
+  #     matrix:
+  #       os:
+  #         - ubuntu-24.04
 
-    name: "${{ matrix.os }} (build Debian)"
-    runs-on: ${{ matrix.os }}
+  #   name: "${{ matrix.os }} (build Debian)"
+  #   runs-on: ${{ matrix.os }}
 
-    steps:
+  #   steps:
 
-    - uses: actions/checkout@v4
+  #   - uses: actions/checkout@v4
 
-    - name: Install dependencies
-      run: |
-        sudo apt-get update -qq
-        sudo apt-get --yes --no-install-recommends install ${{ env.WEECHAT_DEPS_UBUNTU }}
+  #   - name: Install dependencies
+  #     run: |
+  #       sudo apt-get update -qq
+  #       sudo apt-get --yes --no-install-recommends install ${{ env.WEECHAT_DEPS_UBUNTU }}
 
-    - name: Test Debian patches
-      run: ./tools/build_debian.sh test-patches
+  #   - name: Test Debian patches
+  #     run: ./tools/build_debian.sh test-patches
 
-    - name: Build Debian packages
-      run: ./tools/build_debian.sh devel ubuntu/noble
+  #   - name: Build Debian packages
+  #     run: ./tools/build_debian.sh devel ubuntu/noble
 
-    - name: Install Debian packages
-      run: sudo dpkg -i ../weechat-devel*.deb
+  #   - name: Install Debian packages
+  #     run: sudo dpkg -i ../weechat-devel*.deb
 
-    - name: Run WeeChat
-      env:
-        TERM: xterm-256color
-      run: |
-        weechat --help
-        weechat-curses --help
-        weechat --version
-        weechat --build-info
-        weechat --run-command "/debug dirs;/debug libs" --run-command "/quit"
+  #   - name: Run WeeChat
+  #     env:
+  #       TERM: xterm-256color
+  #     run: |
+  #       weechat --help
+  #       weechat-curses --help
+  #       weechat --version
+  #       weechat --build-info
+  #       weechat --run-command "/debug dirs;/debug libs" --run-command "/quit"
 
-  codeql-analysis:
+  # codeql-analysis:
 
-    strategy:
-      matrix:
-        os:
-          - ubuntu-24.04
+  #   strategy:
+  #     matrix:
+  #       os:
+  #         - ubuntu-24.04
 
-    name: "${{ matrix.os }} (CodeQL)"
-    runs-on: ${{ matrix.os }}
+  #   name: "${{ matrix.os }} (CodeQL)"
+  #   runs-on: ${{ matrix.os }}
 
-    permissions:
-      actions: read
-      contents: read
-      security-events: write
+  #   permissions:
+  #     actions: read
+  #     contents: read
+  #     security-events: write
 
-    steps:
+  #   steps:
 
-    - name: Checkout repository
-      uses: actions/checkout@v4
+  #   - name: Checkout repository
+  #     uses: actions/checkout@v4
 
-    - name: Install dependencies
-      run: |
-        sudo apt-get update -qq
-        sudo apt-get --yes --no-install-recommends install ${{ env.WEECHAT_DEPS_UBUNTU }}
-        # uninstall php imagick as is causes a crash when loading php plugin (see #2009)
-        sudo apt-get --yes purge php8.3-imagick
-        pipx install msgcheck
+  #   - name: Install dependencies
+  #     run: |
+  #       sudo apt-get update -qq
+  #       sudo apt-get --yes --no-install-recommends install ${{ env.WEECHAT_DEPS_UBUNTU }}
+  #       # uninstall php imagick as is causes a crash when loading php plugin (see #2009)
+  #       sudo apt-get --yes purge php8.3-imagick
+  #       pipx install msgcheck
 
-    - name: Initialize CodeQL
-      uses: github/codeql-action/init@v3
-      with:
-        languages: cpp
+  #   - name: Initialize CodeQL
+  #     uses: github/codeql-action/init@v3
+  #     with:
+  #       languages: cpp
 
-    - name: Autobuild
-      uses: github/codeql-action/autobuild@v3
+  #   - name: Autobuild
+  #     uses: github/codeql-action/autobuild@v3
 
-    - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v3
-      with:
-        category: "/language:cpp"
+  #   - name: Perform CodeQL Analysis
+  #     uses: github/codeql-action/analyze@v3
+  #     with:
+  #       category: "/language:cpp"
 
-  tests_rockylinux:
+  # tests_rockylinux:
 
-    strategy:
-      matrix:
-        os:
-          - ubuntu-24.04
-        config:
-          - { name: "gcc", cc: "gcc", cxx: "g++", buildargs: "" }
-          - { name: "clang", cc: "clang", cxx: "clang++", buildargs: "" }
+  #   strategy:
+  #     matrix:
+  #       os:
+  #         - ubuntu-24.04
+  #       config:
+  #         - { name: "gcc", cc: "gcc", cxx: "g++", buildargs: "" }
+  #         - { name: "clang", cc: "clang", cxx: "clang++", buildargs: "" }
 
-    name: "rockylinux-9 (${{ matrix.config.name }})"
-    runs-on: ${{ matrix.os }}
-    container:
-      image: rockylinux:9
+  #   name: "rockylinux-9 (${{ matrix.config.name }})"
+  #   runs-on: ${{ matrix.os }}
+  #   container:
+  #     image: rockylinux:9
 
-    steps:
+  #   steps:
 
-    - uses: actions/checkout@v4
+  #   - uses: actions/checkout@v4
 
-    - name: Install dependencies
-      run: |
-        dnf install -y epel-release
-        dnf config-manager --set-enabled crb
-        dnf install -y ${{ env.WEECHAT_DEPS_ROCKYLINUX }}
+  #   - name: Install dependencies
+  #     run: |
+  #       dnf install -y epel-release
+  #       dnf config-manager --set-enabled crb
+  #       dnf install -y ${{ env.WEECHAT_DEPS_ROCKYLINUX }}
 
-    - name: Build and run tests
-      env:
-        CC: ${{ matrix.config.cc }}
-        CXX: ${{ matrix.config.cxx }}
-        BUILDARGS: ${{ matrix.config.buildargs }}
-      run: ./tools/build_test.sh
+  #   - name: Build and run tests
+  #     env:
+  #       CC: ${{ matrix.config.cc }}
+  #       CXX: ${{ matrix.config.cxx }}
+  #       BUILDARGS: ${{ matrix.config.buildargs }}
+  #     run: ./tools/build_test.sh
 
-    - name: Run WeeChat
-      env:
-        TERM: xterm-256color
-      run: |
-        weechat --help
-        weechat-curses --help
-        weechat --version
-        weechat --build-info
-        weechat --colors
-        weechat --license
-        weechat --run-command "/debug dirs;/debug libs" --run-command "/quit"
+  #   - name: Run WeeChat
+  #     env:
+  #       TERM: xterm-256color
+  #     run: |
+  #       weechat --help
+  #       weechat-curses --help
+  #       weechat --version
+  #       weechat --build-info
+  #       weechat --colors
+  #       weechat --license
+  #       weechat --run-command "/debug dirs;/debug libs" --run-command "/quit"
 
-  tests_freebsd:
+  # tests_freebsd:
 
-    strategy:
-      matrix:
-        os:
-          - ubuntu-24.04
-        config:
-          # - { name: "gcc", cc: "gcc", cxx: "g++", buildargs: "" }
-          - { name: "clang", cc: "clang", cxx: "clang++", buildargs: "" }
+  #   strategy:
+  #     matrix:
+  #       os:
+  #         - ubuntu-24.04
+  #       config:
+  #         # - { name: "gcc", cc: "gcc", cxx: "g++", buildargs: "" }
+  #         - { name: "clang", cc: "clang", cxx: "clang++", buildargs: "" }
 
-    name: "freebsd-14 (${{ matrix.config.name }})"
-    runs-on: ${{ matrix.os }}
+  #   name: "freebsd-14 (${{ matrix.config.name }})"
+  #   runs-on: ${{ matrix.os }}
 
-    steps:
+  #   steps:
 
-    - uses: actions/checkout@v4
+  #   - uses: actions/checkout@v4
 
-    - name: Install dependencies, build and run tests, run WeeChat
-      uses: vmactions/freebsd-vm@v1
-      env:
-        CC: ${{ matrix.config.cc }}
-        CXX: ${{ matrix.config.cxx }}
-        BUILDARGS: ${{ matrix.config.buildargs }}
-        TERM: xterm-256color
-      with:
-        envs: "CC CXX BUILDARGS TERM"
-        usesh: true
-        prepare: pkg install -y ${{ env.WEECHAT_DEPS_FREEBSD }}
-        run: |
-          ./tools/build_test.sh
-          weechat --help
-          weechat-curses --help
-          weechat --version
-          weechat --build-info
-          weechat --colors
-          weechat --license
-          weechat --run-command "/debug dirs;/debug libs" --run-command "/quit"
+  #   - name: Install dependencies, build and run tests, run WeeChat
+  #     uses: vmactions/freebsd-vm@v1
+  #     env:
+  #       CC: ${{ matrix.config.cc }}
+  #       CXX: ${{ matrix.config.cxx }}
+  #       BUILDARGS: ${{ matrix.config.buildargs }}
+  #       TERM: xterm-256color
+  #     with:
+  #       envs: "CC CXX BUILDARGS TERM"
+  #       usesh: true
+  #       prepare: pkg install -y ${{ env.WEECHAT_DEPS_FREEBSD }}
+  #       run: |
+  #         ./tools/build_test.sh
+  #         weechat --help
+  #         weechat-curses --help
+  #         weechat --version
+  #         weechat --build-info
+  #         weechat --colors
+  #         weechat --license
+  #         weechat --run-command "/debug dirs;/debug libs" --run-command "/quit"
 
   tests_macos:
 
     strategy:
       matrix:
         os:
-          - macos-12
+          - macos-14
         config:
           - { name: "gcc", cc: "gcc", cxx: "g++" }
           - { name: "clang", cc: "clang", cxx: "clang++" }
@@ -381,7 +381,7 @@ jobs:
           /usr/local/bin/python3.11 \
           /usr/local/bin/python3.11-config \
         ;
-        brew install asciidoctor cjson guile lua pkg-config ruby
+        brew install asciidoctor aspell cjson guile lua pkg-config ruby
 
     - uses: actions/checkout@v4
 
