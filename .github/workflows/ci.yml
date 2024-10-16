@@ -138,7 +138,7 @@ jobs:
     strategy:
       matrix:
         os:
-          - macos-12
+          - macos-14
         config:
           - { name: "gcc", cc: "gcc", cxx: "g++" }
           - { name: "clang", cc: "clang", cxx: "clang++" }
@@ -168,7 +168,7 @@ jobs:
           /usr/local/bin/python3.11 \
           /usr/local/bin/python3.11-config \
         ;
-        brew install asciidoctor cjson guile lua pkg-config ruby
+        brew install asciidoctor aspell cjson guile lua pkg-config ruby
 
     - uses: actions/checkout@v2
 
