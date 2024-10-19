@@ -5189,30 +5189,27 @@ COMMAND_CALLBACK(plugin)
 
     if (string_strcmp (argv[1], "reload") == 0)
     {
-        if (argc > 2)
+        if (argc > 3)
         {
-            if (argc > 3)
-            {
-                plugin_argv = string_split (
+            plugin_argv = string_split (
                     argv_eol[3], " ", NULL,
                     WEECHAT_STRING_SPLIT_STRIP_LEFT
                     | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                     | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
                     0, &plugin_argc);
-                if (strcmp (argv[2], "*") == 0)
-                {
-                    plugin_unload_all ();
-                    plugin_auto_load (NULL, 1, 1, 1, plugin_argc, plugin_argv);
-                }
-                else
-                {
-                    plugin_reload_name (argv[2], plugin_argc, plugin_argv);
-                }
-                string_free_split (plugin_argv);
+            if (strcmp (argv[2], "*") == 0)
+            {
+                plugin_unload_all ();
+                plugin_auto_load (NULL, 1, 1, 1, plugin_argc, plugin_argv);
             }
             else
-                plugin_reload_name (argv[2], 0, NULL);
+            {
+                plugin_reload_name (argv[2], plugin_argc, plugin_argv);
+            }
+            string_free_split (plugin_argv);
         }
+        else if (argc == 3)
+            plugin_reload_name (argv[2], 0, NULL);
         else
         {
             plugin_unload_all ();
