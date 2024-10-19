@@ -8,6 +8,7 @@
 - api: add special value `-` (hyphen-minus) in options of function command_options to prevent execution of commands
 - relay/api: allow array with multiple requests in websocket frame received from client
 - core, plugins: simplify help on parameters that can be repeated in commands
+- build: fix detection of Ruby on macOS 14, require CMake ≥ 3.18 ([#1156](https://github.com/weechat/weechat/issues/1156))
 - build: require Curl ≥ 7.47.0 ([#2195](https://github.com/weechat/weechat/issues/2195))
 - build: require GnuTLS ≥ 3.3.0 ([#2193](https://github.com/weechat/weechat/issues/2193))
 
