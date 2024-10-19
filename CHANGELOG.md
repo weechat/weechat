@@ -6,6 +6,7 @@
 
 - core: fix too many sorts of hotlist when buffers are moved ([#2097](https://github.com/weechat/weechat/issues/2097))
 - relay, xfer: fix letters with actions displayed on top of buffer
+- build: fix detection of Ruby on macOS 14, require CMake ≥ 3.18 ([#1156](https://github.com/weechat/weechat/issues/1156))
 
 ## Version 4.4.3 (2024-10-30)
 

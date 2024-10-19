@@ -1,5 +1,18 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 5d15a3548..0786637b9 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -19,7 +19,7 @@
+ # along with WeeChat.  If not, see <https://www.gnu.org/licenses/>.
+ #
+ 
+-cmake_minimum_required(VERSION 3.18)
++cmake_minimum_required(VERSION 3.16)
+ 
+ project(weechat C)
+ 
 diff --git a/debian-devel/rules b/debian-devel/rules
-index cab713c93..d2756333b 100755
+index 086056f76..559ccfffb 100755
 --- a/debian-devel/rules
 +++ b/debian-devel/rules
 @@ -8,6 +8,7 @@ override_dh_auto_configure:
@@ -11,7 +24,7 @@ index cab713c93..d2756333b 100755
  		-DENABLE_MAN:BOOL=ON \
  		-DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
 diff --git a/debian-stable/rules b/debian-stable/rules
-index cab713c93..d2756333b 100755
+index 086056f76..559ccfffb 100755
 --- a/debian-stable/rules
 +++ b/debian-stable/rules
 @@ -8,6 +8,7 @@ override_dh_auto_configure:
@@ -22,3 +35,18 @@ index cab713c93..d2756333b 100755
  		-DENABLE_DOC:BOOL=ON \
  		-DENABLE_MAN:BOOL=ON \
  		-DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
+diff --git a/src/plugins/ruby/CMakeLists.txt b/src/plugins/ruby/CMakeLists.txt
+index 9f921fde8..2860f7d6d 100644
+--- a/src/plugins/ruby/CMakeLists.txt
++++ b/src/plugins/ruby/CMakeLists.txt
+@@ -28,8 +28,8 @@ if(RUBY_FOUND)
+   # caused by Ruby headers (with Ruby ≥ 3.1.0)
+   # see: https://github.com/ruby/ruby/pull/7085
+   add_definitions(-Wno-unused-parameter)
+-  include_directories(${Ruby_INCLUDE_DIRS})
+-  target_link_libraries(ruby ${Ruby_LIBRARIES} weechat_plugins_scripts coverage_config)
++  include_directories(${RUBY_INCLUDE_DIRS})
++  target_link_libraries(ruby ${RUBY_LIBRARY} weechat_plugins_scripts coverage_config)
+ endif(RUBY_FOUND)
+ 
+ install(TARGETS ruby LIBRARY DESTINATION "${WEECHAT_LIBDIR}/plugins")
