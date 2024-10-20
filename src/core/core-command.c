@@ -5189,7 +5189,7 @@ COMMAND_CALLBACK(plugin)
 
     if (string_strcmp (argv[1], "reload") == 0)
     {
-        if (argc < 3)
+        if ((argc < 3) || ((argc == 3) && (strcmp (argv[2], "*") == 0)))
         {
             plugin_unload_all ();
             plugin_auto_load (NULL, 1, 1, 1, 0, NULL);
