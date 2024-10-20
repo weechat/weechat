@@ -56,6 +56,7 @@ Alphabetically:
 - Ivan Pešić
 - Ivan Sichmann Freitas
 - Jakub Jirutka
+- James C. Morey
 - Jan Palus
 - Jason A. Donenfeld (zx2c4)
 - JD Horelick (jdhore)
