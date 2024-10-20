@@ -1588,6 +1588,9 @@ TEST(CoreString, Split)
     POINTERS_EQUAL(NULL, string_split ("", "", NULL, flags, 0, &argc));
     LONGS_EQUAL(0, argc);
     argc = -1;
+    POINTERS_EQUAL(NULL, string_split ("", ",", NULL, flags, 0, &argc));
+    LONGS_EQUAL(0, argc);
+    argc = -1;
     POINTERS_EQUAL(NULL, string_split ("   ", " ", NULL, flags, 0, &argc));
     LONGS_EQUAL(0, argc);
 
@@ -1840,6 +1843,25 @@ TEST(CoreString, Split)
     STRCMP_EQUAL("fghi", argv[3]);
     STRCMP_EQUAL(NULL, argv[4]);
     string_free_split (argv);
+
+    /* standard split with only separators in string */
+    flags = 0;
+    argc = -1;
+    argv = string_split (",,", ",", NULL, flags, 0, &argc);
+    LONGS_EQUAL(3, argc);
+    CHECK(argv);
+    STRCMP_EQUAL("", argv[0]);
+    STRCMP_EQUAL("", argv[1]);
+    STRCMP_EQUAL("", argv[2]);
+    STRCMP_EQUAL(NULL, argv[3]);
+    string_free_split (argv);
+
+    /* standard split with only separators in string and strip separators */
+    flags = WEECHAT_STRING_SPLIT_STRIP_LEFT
+        | WEECHAT_STRING_SPLIT_STRIP_RIGHT;
+    argc = -1;
+    POINTERS_EQUAL(NULL, string_split (",,", ",", NULL, flags, 0, &argc));
+    LONGS_EQUAL(0, argc);
 }
 
 /*
