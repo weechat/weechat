@@ -488,6 +488,10 @@ TEST(CoreUtil, ParseDelay)
 
 TEST(CoreUtil, VersionNumber)
 {
+    LONGS_EQUAL(0, util_version_number (NULL));
+    LONGS_EQUAL(0, util_version_number (""));
+    LONGS_EQUAL(0, util_version_number ("abc"));
+
     LONGS_EQUAL(0x00030200, util_version_number ("0.3.2-dev"));
     LONGS_EQUAL(0x00030200, util_version_number ("0.3.2-rc1"));
     LONGS_EQUAL(0x00030200, util_version_number ("0.3.2"));

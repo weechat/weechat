@@ -616,6 +616,9 @@ util_version_number (const char *version)
     int num_items, i, version_int[4], index_buf;
     long number;
 
+    if (!version || !version[0])
+        return 0;
+
     items = string_split (version, ".", NULL,
                           WEECHAT_STRING_SPLIT_STRIP_LEFT
                           | WEECHAT_STRING_SPLIT_STRIP_RIGHT
