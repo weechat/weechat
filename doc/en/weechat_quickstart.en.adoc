@@ -267,7 +267,7 @@ Close a server, channel or private buffer (`/close` is an alias for
 /close
 ----
 
-[WARNING]
+[CAUTION]
 Closing the server buffer will close all channel/private buffers.
 
 Disconnect from server, on the server buffer:

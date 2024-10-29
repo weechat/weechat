@@ -469,7 +469,7 @@ WeeChat w przypadku wystąpienia problemu:
 cmake .. -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_FLAGS=-fsanitize=address -DCMAKE_CXX_FLAGS=-fsanitize=address -DCMAKE_EXE_LINKER_FLAGS=-fsanitize=address
 ----
 
-[WARNING]
+[CAUTION]
 Powinieneś włączyć tą opcję tylko jeśli chcesz wymusić awarię aplikacji,
 nie powinno się tego używać do codziennej pracy.
 
@@ -606,7 +606,7 @@ include::includes/cmdline_options.pl.adoc[tag=standard]
 
 Kilka dodatkowych opcji jest dostępne tylko do celu debugowania:
 
-[WARNING]
+[CAUTION]
 *NIE* używaj żadnej z nich podczas codziennej pracy!
 
 include::includes/cmdline_options.pl.adoc[tag=debug]

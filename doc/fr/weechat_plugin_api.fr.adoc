@@ -9568,7 +9568,7 @@ _WeeChat ≥ 0.3.6, mis à jour dans la 2.0._
 
 Supprimer une/des association(s) de touche(s).
 
-[WARNING]
+[CAUTION]
 Lors de l'appel à cette fonction, assurez-vous que vous n'allez pas supprimer
 une touche définie par l'utilisateur.
 

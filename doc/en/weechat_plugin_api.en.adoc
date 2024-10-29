@@ -9423,7 +9423,7 @@ _WeeChat ≥ 0.3.6, updated in 2.0._
 
 Remove key binding(s).
 
-[WARNING]
+[CAUTION]
 When calling this function, ensure that you will not remove a user key binding.
 
 Prototype:

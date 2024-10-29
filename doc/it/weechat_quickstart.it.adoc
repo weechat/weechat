@@ -278,7 +278,7 @@ per `/buffer close`):
 /close
 ----
 
-[WARNING]
+[CAUTION]
 Chiudere il buffer del server chiuderà tutti i canali/buffer privati.
 
 Disconnette dal server:

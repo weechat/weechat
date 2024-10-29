@@ -471,7 +471,7 @@ zum Absturz von WeeChat führt:
 cmake .. -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_FLAGS=-fsanitize=address -DCMAKE_CXX_FLAGS=-fsanitize=address -DCMAKE_EXE_LINKER_FLAGS=-fsanitize=address
 ----
 
-[WARNING]
+[CAUTION]
 Sie sollten die Adressbereinigung nur aktivieren, wenn Sie versuchen, einen
 Absturz zu provozieren. Diese Funktion wird im produktiven Einsatz nicht empfohlen.
 
@@ -611,7 +611,7 @@ include::includes/cmdline_options.de.adoc[tag=standard]
 
 Einige zusätzliche Optionen sollten nur für Debug-Zwecke genutzt werden:
 
-[WARNING]
+[CAUTION]
 *KEINE* dieser Optionen sollte für ein Produktivsystem genutzt werden!
 
 include::includes/cmdline_options.de.adoc[tag=debug]

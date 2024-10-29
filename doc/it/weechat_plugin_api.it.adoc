@@ -9765,7 +9765,7 @@ _WeeChat ≥ 0.3.6, updated in 2.0._
 
 Rimuove una o più associazioni tasti.
 
-[WARNING]
+[CAUTION]
 Alla chiamata di questa funzione, assicurarsi che non venga rimossa una
 combinazione tasti definita dall'utente.
 

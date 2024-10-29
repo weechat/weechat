@@ -271,7 +271,7 @@ Zamknij serwer, kanał albo prywatny bufor (`/close` to alias dla
 /close
 ----
 
-[WARNING]
+[CAUTION]
 Zamknięcie buforu serwera poskutkuje zamknięciem wszystkich buforów prywatnych/kanałów.
 
 Rozłączanie się z serwerem, w buforze serwera:

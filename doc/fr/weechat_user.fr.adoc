@@ -466,7 +466,7 @@ ce qui provoquera immédiatement un plantage de WeeChat en cas de problème :
 cmake .. -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_FLAGS=-fsanitize=address -DCMAKE_CXX_FLAGS=-fsanitize=address -DCMAKE_EXE_LINKER_FLAGS=-fsanitize=address
 ----
 
-[WARNING]
+[CAUTION]
 Vous ne devriez activer la vérification des adresses que si vous essayez de
 provoquer un plantage, ce qui n'est pas recommandé en production.
 
@@ -607,7 +607,7 @@ include::includes/cmdline_options.fr.adoc[tag=standard]
 
 Quelques options supplémentaires sont disponibles pour du debug seulement :
 
-[WARNING]
+[CAUTION]
 N'utilisez *AUCUNE* de ces options in production !
 
 include::includes/cmdline_options.fr.adoc[tag=debug]

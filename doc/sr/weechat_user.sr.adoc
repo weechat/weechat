@@ -457,7 +457,7 @@ cmake .. -DCMAKE_BUILD_TYPE=Debug
 cmake .. -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_FLAGS=-fsanitize=address -DCMAKE_CXX_FLAGS=-fsanitize=address -DCMAKE_EXE_LINKER_FLAGS=-fsanitize=address
 ----
 
-[WARNING]
+[CAUTION]
 Чистач адресе би требало да укључите само ако покушавате да откријете узрок краха, то се не препоручује за програм који се нормално користи.
 
 Затим када се компајлира и инсталира, програм WeeChat морате покренути на следећи начин:
@@ -581,7 +581,7 @@ include::includes/cmdline_options.sr.adoc[tag=standard]
 
 Неке додатне опције су доступне само за потребе откањања грешака:
 
-[WARNING]
+[CAUTION]
 Ниједну од ових опција *НЕМОЈТЕ* користити у продукцији!
 
 include::includes/cmdline_options.sr.adoc[tag=debug]

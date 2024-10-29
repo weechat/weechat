@@ -467,7 +467,7 @@ crash immediately in case of problem:
 cmake .. -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_FLAGS=-fsanitize=address -DCMAKE_CXX_FLAGS=-fsanitize=address -DCMAKE_EXE_LINKER_FLAGS=-fsanitize=address
 ----
 
-[WARNING]
+[CAUTION]
 You should enable address sanitizer only if you're trying to cause a crash,
 this is not recommended in production.
 
@@ -604,7 +604,7 @@ include::includes/cmdline_options.en.adoc[tag=standard]
 
 Some extra options are available for debug purposes only:
 
-[WARNING]
+[CAUTION]
 Do *NOT* use any of these options in production!
 
 include::includes/cmdline_options.en.adoc[tag=debug]
