@@ -1,3 +1,12 @@
+weechat (4.4.2-1) unstable; urgency=medium
+
+  * New upstream release
+    - fix crash where exiting (Closes: #1076532)
+    - fix a minor security issue (Closes: #1081942)
+  * Bump Standards-Version to 4.7.0
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Sun, 22 Sep 2024 13:08:28 +0000
+
 weechat (4.3.1-1) unstable; urgency=medium
 
   * New upstream release (Closes: #1067608)
