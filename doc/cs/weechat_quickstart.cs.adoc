@@ -2,6 +2,7 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: cs
+include::includes/attributes-cs.adoc[]
 
 [[start]]
 == Spuštění WeeChatu

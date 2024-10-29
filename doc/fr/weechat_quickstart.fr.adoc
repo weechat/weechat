@@ -2,7 +2,7 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: fr
-:toc-title: Table des matières
+include::includes/attributes-fr.adoc[]
 
 [[start]]
 == Démarrer WeeChat

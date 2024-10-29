@@ -1,0 +1,23 @@
+// Serbian Cyrillic translation, courtesy of Bojan Stipic <bojan-7@live.com>
+:appendix-caption: Додатак
+:appendix-refsig: {appendix-caption}
+:caution-caption: Опрез
+:chapter-signifier: Поглавље
+:chapter-refsig: {chapter-signifier}
+:example-caption: Пример
+:figure-caption: Слика
+:important-caption: Важно
+:last-update-label: Последње ажурирано
+ifdef::listing-caption[:listing-caption: Листинг]
+ifdef::manname-title[:manname-title: Назив]
+:note-caption: Белешка
+:part-signifier: Део
+:part-refsig: {part-signifier}
+ifdef::preface-title[:preface-title: Предговор]
+:section-refsig: Секција
+:table-caption: Табела
+:tip-caption: Савет
+:toc-title: Садржај
+:untitled-label: Без назива
+:version-label: Верзија
+:warning-caption: Упозорење

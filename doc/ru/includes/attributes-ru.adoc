@@ -1,0 +1,23 @@
+// Russian translation, courtesy of Alexander Zobkov <alexander.zobkov@gmail.com>
+:appendix-caption: Приложение
+:appendix-refsig: {appendix-caption}
+:caution-caption: Внимание
+:chapter-signifier: Глава
+:chapter-refsig: {chapter-signifier}
+:example-caption: Пример
+:figure-caption: Рисунок
+:important-caption: Важно
+:last-update-label: Последнее обновление
+ifdef::listing-caption[:listing-caption: Листинг]
+ifdef::manname-title[:manname-title: Название]
+:note-caption: Примечание
+:part-signifier: Часть
+:part-refsig: {part-signifier}
+ifdef::preface-title[:preface-title: Предисловие]
+:section-refsig: Раздел
+:table-caption: Таблица
+:tip-caption: Подсказка
+:toc-title: Содержание
+:untitled-label: Без названия
+:version-label: Версия
+:warning-caption: Предупреждение
