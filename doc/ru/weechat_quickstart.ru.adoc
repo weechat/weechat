@@ -2,6 +2,7 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: ru
+include::includes/attributes-ru.adoc[]
 
 Переводчики:
 

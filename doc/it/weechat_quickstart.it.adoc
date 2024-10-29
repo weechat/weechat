@@ -2,7 +2,7 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: it
-:toc-title: Indice
+include::includes/attributes-it.adoc[]
 
 Traduttori:
 
