@@ -957,6 +957,8 @@ relay_api_protocol_recv_json_request (struct t_relay_client *client,
     json_body = cJSON_GetObjectItem (json, "body");
     if (json_body)
     {
+        if (!cJSON_IsObject (json_body))
+            goto error;
         string_body = cJSON_PrintUnformatted (json_body);
         if (string_body)
         {

@@ -25,6 +25,7 @@
 - irc: fix crash on /list buffer when a filter is set ([#2197](https://github.com/weechat/weechat/issues/2197))
 - exec: fix unexpected execution of command with `/exec -o` when the command starts with two command chars ([#2199](https://github.com/weechat/weechat/issues/2199))
 - relay/api: fix empty nicklist in remote buffers after connection or reconnection
+- relay/api: reply HTTP 400 (Bad Request) when the body received is not a dict in websocket data
 - core: always send the signal "buffer_switch", even when the buffer is opening ([#2198](https://github.com/weechat/weechat/issues/2198))
 - core: reload all plugins with command `/plugin reload *`
 - lua: fix compilation on Fedora with Lua < 5.2.0 ([#2173](https://github.com/weechat/weechat/issues/2173), [#2174](https://github.com/weechat/weechat/issues/2174))
