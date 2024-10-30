@@ -37,6 +37,8 @@
 #define WEBSOCKET_FRAME_OPCODE_PING         0x09
 #define WEBSOCKET_FRAME_OPCODE_PONG         0x0A
 
+#define WEBSOCKET_SUB_PROTOCOL_API_WEECHAT "api.weechat"
+
 struct t_relay_client;
 struct t_relay_http_request;
 
