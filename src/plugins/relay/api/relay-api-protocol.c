@@ -667,27 +667,92 @@ RELAY_API_PROTOCOL_CALLBACK(buffers)
  * Callback for resource "completion".
  *
  * Routes:
- *   GET /api/completion
+ *   POST /api/completion
  */
 
 RELAY_API_PROTOCOL_CALLBACK(completion)
 {
-    cJSON *json;
+    cJSON *json_response, *json_body, *json_buffer_id, *json_buffer_name;
+    const char *ptr_buffer_name, *ptr_command, *ptr_commands;
+    char str_id[64];
     struct t_gui_completion *ptr_completion;
+    struct t_gui_buffer *ptr_buffer;
 
-    json = cJSON_CreateArray();
-    if (!json)
+    json_body = cJSON_Parse(client->http_req->body);
+    if (!json_body)
+        return RELAY_API_PROTOCOL_RC_BAD_REQUEST;
+
+    /* Get buffer either bei ID or by name */
+    ptr_buffer = NULL;
+    json_buffer_id = cJSON_GetObjectItem(json_body, "buffer_id");
+    if (json_buffer_id)
+    {
+        if (cJSON_IsNumber(json_buffer_id))
+        {
+            snprintf(str_id, sizeof(str_id),
+                     "%lld", (long long)cJSON_GetNumberValue(json_buffer_id));
+            ptr_buffer = weechat_buffer_search("==id", str_id);
+            if (!ptr_buffer)
+            {
+                relay_api_msg_send_error_json(
+                    client,
+                    RELAY_HTTP_404_NOT_FOUND, NULL,
+                    "Buffer \"%lld\" not found",
+                    (long long)cJSON_GetNumberValue(json_buffer_id));
+                cJSON_Delete(json_body);
+                return RELAY_API_PROTOCOL_RC_OK;
+            }
+        }
+    }
+    else
+    {
+        json_buffer_name = cJSON_GetObjectItem(json_body, "buffer_name");
+        if (json_buffer_name)
+        {
+            if (cJSON_IsString(json_buffer_name))
+            {
+                ptr_buffer_name = cJSON_GetStringValue(json_buffer_name);
+                ptr_buffer = weechat_buffer_search("==", ptr_buffer_name);
+                if (!ptr_buffer)
+                {
+                    relay_api_msg_send_error_json(
+                        client,
+                        RELAY_HTTP_404_NOT_FOUND, NULL,
+                        "Buffer \"%s\" not found",
+                        ptr_buffer_name);
+                    cJSON_Delete(json_body);
+                    return RELAY_API_PROTOCOL_RC_OK;
+                }
+            }
+        }
+        else
+        {
+            ptr_buffer = weechat_buffer_search_main();
+        }
+    }
+    if (!ptr_buffer)
+    {
+        cJSON_Delete(json_body);
+        return RELAY_API_PROTOCOL_RC_BAD_REQUEST;
+    }
+
+    /* TODO: Get position and data from input json object*/
+
+
+    
+    json_response = cJSON_CreateArray();
+    if (!json_response)
         return RELAY_API_PROTOCOL_RC_MEMORY;
 
     // TODO: fill pointer, e.g. ptr_completion = weechat_hdata_get_...
     ptr_completion = NULL;
 
     cJSON_AddItemToArray(
-        json,
+        json_response,
         relay_api_msg_completion_to_json(ptr_completion));
 
-    relay_api_msg_send_json(client, RELAY_HTTP_200_OK, NULL, "completion", json);
-    cJSON_Delete(json);
+    relay_api_msg_send_json(client, RELAY_HTTP_200_OK, NULL, "completion", json_response);
+    cJSON_Delete(json_response);
     return RELAY_API_PROTOCOL_RC_OK;
 }
 

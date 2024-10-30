@@ -605,59 +605,46 @@ TEST(RelayApiProtocolWithClient, CbHotlist)
 
 TEST(RelayApiProtocolWithClient, CbCompletion)
 {
+    char str_body[1024];
+    int old_delay;
+
     cJSON *json, *json_obj, *json_count;
 
-    /* get hotlist (empty) */
-    test_client_recv_http("GET /api/completion", NULL, NULL);
+    /* error: no body */
+    test_client_recv_http("POST /api/completion", NULL, NULL);
+    STRCMP_EQUAL("HTTP/1.1 400 Bad Request\r\n"
+                 "Access-Control-Allow-Origin: *\r\n"
+                 "Content-Type: application/json; charset=utf-8\r\n"
+                 "Content-Length: 0\r\n"
+                 "\r\n",
+                 data_sent[0]);
+
+    /* error: invalid buffer name */
+    test_client_recv_http("POST /api/completion",
+                          NULL,
+                          "{\"buffer_name\": \"invalid\", "
+                          "\"data\": \"test\"}");
+    STRCMP_EQUAL("HTTP/1.1 404 Not Found\r\n"
+                 "Access-Control-Allow-Origin: *\r\n"
+                 "Content-Type: application/json; charset=utf-8\r\n"
+                 "Content-Length: 41\r\n"
+                 "\r\n"
+                 "{\"error\": \"Buffer \\\"invalid\\\" not found\"}",
+                 data_sent[0]);
+
+    /* on core buffer, with buffer name */
+    // record_start ();
+    // old_delay = relay_api_protocol_command_delay;
+    relay_api_protocol_command_delay = 0;
+    test_client_recv_http ("POST /api/completion",
+                           NULL,
+                           "{\"buffer_name\": \"core.weechat\", "
+                           "\"data\": \"/he\", "
+                           "\"position\": 3}");
+    // relay_api_protocol_command_delay = old_delay;
+    // record_stop ();
     WEE_CHECK_HTTP_CODE(200, "OK");
-    // CHECK(json_body_sent[0]);
-    // CHECK(cJSON_IsArray(json_body_sent[0]));
-    // LONGS_EQUAL(0, cJSON_GetArraySize(json_body_sent[0]));
-
-    // gui_hotlist_add(gui_buffers, GUI_HOTLIST_LOW, NULL, 0);
-    // gui_hotlist_add(gui_buffers, GUI_HOTLIST_MESSAGE, NULL, 0);
-    // gui_hotlist_add(gui_buffers, GUI_HOTLIST_MESSAGE, NULL, 0);
-    // gui_hotlist_add(gui_buffers, GUI_HOTLIST_PRIVATE, NULL, 0);
-    // gui_hotlist_add(gui_buffers, GUI_HOTLIST_PRIVATE, NULL, 0);
-    // gui_hotlist_add(gui_buffers, GUI_HOTLIST_PRIVATE, NULL, 0);
-    // gui_hotlist_add(gui_buffers, GUI_HOTLIST_HIGHLIGHT, NULL, 0);
-    // gui_hotlist_add(gui_buffers, GUI_HOTLIST_HIGHLIGHT, NULL, 0);
-    // gui_hotlist_add(gui_buffers, GUI_HOTLIST_HIGHLIGHT, NULL, 0);
-    // gui_hotlist_add(gui_buffers, GUI_HOTLIST_HIGHLIGHT, NULL, 0);
-
-    // /* get hotlist (one buffer) */
-    // test_client_recv_http("GET /api/hotlist", NULL, NULL);
-    // WEE_CHECK_HTTP_CODE(200, "OK");
-    // CHECK(json_body_sent[0]);
-    // CHECK(cJSON_IsArray(json_body_sent[0]));
-    // LONGS_EQUAL(1, cJSON_GetArraySize(json_body_sent[0]));
-    // json = cJSON_GetArrayItem(json_body_sent[0], 0);
-    // CHECK(json);
-    // CHECK(cJSON_IsObject(json));
-    // WEE_CHECK_OBJ_NUM(GUI_HOTLIST_HIGHLIGHT, json, "priority");
-    // CHECK(cJSON_IsString(cJSON_GetObjectItem(json, "date")));
-    // WEE_CHECK_OBJ_NUM(gui_buffers->id, json, "buffer_id");
-    // json_count = cJSON_GetObjectItem(json, "count");
-    // CHECK(json_count);
-    // CHECK(cJSON_IsArray(json_count));
-    // json_obj = cJSON_GetArrayItem(json_count, 0);
-    // CHECK(json_obj);
-    // CHECK(cJSON_IsNumber(json_obj));
-    // CHECK(1 == cJSON_GetNumberValue(json_obj));
-    // json_obj = cJSON_GetArrayItem(json_count, 1);
-    // CHECK(json_obj);
-    // CHECK(cJSON_IsNumber(json_obj));
-    // CHECK(2 == cJSON_GetNumberValue(json_obj));
-    // json_obj = cJSON_GetArrayItem(json_count, 2);
-    // CHECK(json_obj);
-    // CHECK(cJSON_IsNumber(json_obj));
-    // CHECK(3 == cJSON_GetNumberValue(json_obj));
-    // json_obj = cJSON_GetArrayItem(json_count, 3);
-    // CHECK(json_obj);
-    // CHECK(cJSON_IsNumber(json_obj));
-    // CHECK(4 == cJSON_GetNumberValue(json_obj));
-
-    // gui_hotlist_remove_buffer(gui_buffers, 1);
+    // CHECK(record_search ("core.weechat", "", "test from relay 2", NULL));
 }
 
 /*
