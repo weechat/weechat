@@ -147,7 +147,7 @@ class UnparsePython(object):
     @staticmethod
     def is_number(node):
         """Check if the node is a number."""
-        return (isinstance(node, ast.Num) or
+        return ((isinstance(node, ast.Constant) and isinstance(node.value, int)) or
                 (isinstance(node, ast.UnaryOp) and
                  isinstance(node.op, (ast.UAdd, ast.USub))))
 
@@ -201,7 +201,7 @@ class UnparsePython(object):
 
     def _ast_constant(self, node):
         """Add an AST Constant in output."""
-        self.add(repr(node.s))
+        self.add(repr(node.value))
 
     def _ast_dict(self, node):
         """Add an AST Dict in output."""
@@ -214,7 +214,7 @@ class UnparsePython(object):
 
     def _ast_expr(self, node):
         """Add an AST Expr in output."""
-        if not isinstance(node.value, ast.Str):  # ignore docstrings
+        if not isinstance(node.value, ast.Constant):  # ignore docstrings
             self.add(
                 self.fill,
                 node.value,
@@ -283,7 +283,6 @@ class UnparsePython(object):
 
     def _ast_num(self, node):
         """Add an AST Num in output."""
-        # note: deprecated since Python 3.8, replaced by ast.Constant
         self.add(repr(node.n))
 
     def _ast_pass(self, node):  # pylint: disable=unused-argument
@@ -298,7 +297,6 @@ class UnparsePython(object):
 
     def _ast_str(self, node):
         """Add an AST Str in output."""
-        # note: deprecated since Python 3.8, replaced by ast.Constant
         self._ast_constant(node)
 
     def _ast_subscript(self, node):
@@ -405,11 +403,11 @@ class UnparsePerl(UnparsePython):
     def _ast_constant(self, node):
         """Add an AST Constant in output."""
         if isinstance(node.value, str):
-            self.add('"%s"' % node.s.replace('$', '\\$').replace('@', '\\@'))
+            self.add('"%s"' % node.value.replace('$', '\\$').replace('@', '\\@'))
         elif node.value is None:
             self.add('undef')
         else:
-            self.add(repr(node.s))
+            self.add(repr(node.value))
 
     def _ast_dict(self, node):
         """Add an AST Dict in output."""
@@ -422,7 +420,7 @@ class UnparsePerl(UnparsePython):
 
     def _ast_expr(self, node):
         """Add an AST Expr in output."""
-        if not isinstance(node.value, ast.Str):  # ignore docstrings
+        if not isinstance(node.value, ast.Constant):  # ignore docstrings
             self.add(
                 self.fill,
                 node.value,
@@ -512,8 +510,7 @@ class UnparsePerl(UnparsePython):
 
     def _ast_str(self, node):
         """Add an AST Str in output."""
-        # note: deprecated since Python 3.8, replaced by ast.Constant
-        self.add('"%s"' % node.s.replace('$', '\\$').replace('@', '\\@'))
+        self._ast_constant(node)
 
     def _ast_subscript(self, node):
         """Add an AST Subscript in output."""
@@ -548,11 +545,11 @@ class UnparseRuby(UnparsePython):
     def _ast_constant(self, node):
         """Add an AST Constant in output."""
         if isinstance(node.value, str):
-            self.add('"%s"' % node.s.replace('#{', '\\#{'))
+            self.add('"%s"' % node.value.replace('#{', '\\#{'))
         elif node.value is None:
             self.add('nil')
         else:
-            self.add(repr(node.s))
+            self.add(repr(node.value))
 
     def _ast_dict(self, node):
         """Add an AST Dict in output."""
@@ -619,8 +616,7 @@ class UnparseRuby(UnparsePython):
 
     def _ast_str(self, node):
         """Add an AST Str in output."""
-        # note: deprecated since Python 3.8, replaced by ast.Constant
-        self.add('"%s"' % node.s)
+        self._ast_constant(node)
 
 
 class UnparseLua(UnparsePython):
@@ -663,7 +659,7 @@ class UnparseLua(UnparsePython):
         if node.value is None:
             self.add('nil')
         else:
-            self.add(repr(node.s))
+            self.add(repr(node.value))
 
     def _ast_dict(self, node):
         """Add an AST Dict in output."""
@@ -744,7 +740,7 @@ class UnparseTcl(UnparsePython):
 
     def _ast_assign(self, node):
         """Add an AST Assign in output."""
-        exclude_types = (ast.Dict, ast.List, ast.Str, ast.Subscript)
+        exclude_types = (ast.Dict, ast.List, ast.Constant, ast.Subscript)
         self.add(
             self.fill,
             'set ',
@@ -821,11 +817,11 @@ class UnparseTcl(UnparsePython):
     def _ast_constant(self, node):
         """Add an AST Constant in output."""
         if isinstance(node.value, str):
-            self.add('"%s"' % node.s.replace('$', '\\$'))
+            self.add('"%s"' % node.value.replace('$', '\\$'))
         elif node.value is None:
             self.add('$::weechat::WEECHAT_NULL')
         else:
-            self.add(repr(node.s))
+            self.add(repr(node.value))
 
     def _ast_dict(self, node):
         """Add an AST Dict in output."""
@@ -903,8 +899,7 @@ class UnparseTcl(UnparsePython):
 
     def _ast_str(self, node):
         """Add an AST Str in output."""
-        # note: deprecated since Python 3.8, replaced by ast.Constant
-        self.add('"%s"' % node.s.replace('$', '\\$'))
+        self._ast_constant(node)
 
     def _ast_subscript(self, node):
         """Add an AST Subscript in output."""
@@ -965,8 +960,8 @@ class UnparseGuile(UnparsePython):
     def _ast_binop(self, node):
         """Add an AST BinOp in output."""
         if isinstance(node.op, ast.Add) and \
-                (isinstance(node.left, (ast.Name, ast.Str)) or
-                 isinstance(node.right, (ast.Name, ast.Str))):
+                (isinstance(node.left, (ast.Name, ast.Constant)) or
+                 isinstance(node.right, (ast.Name, ast.Constant))):
             self.add(
                 '(string-append ',
                 node.left,
@@ -1014,12 +1009,12 @@ class UnparseGuile(UnparsePython):
 
     def _ast_constant(self, node):
         """Add an AST Constant in output."""
-        if isinstance(node.s, str):
-            self.add('"%s"' % node.s)
+        if isinstance(node.value, str):
+            self.add('"%s"' % node.value)
         elif node.value is None:
             self.add('#nil')
         else:
-            self.add(repr(node.s))
+            self.add(repr(node.value))
 
     def _ast_dict(self, node):
         """Add an AST Dict in output."""
@@ -1111,8 +1106,7 @@ class UnparseGuile(UnparsePython):
 
     def _ast_str(self, node):
         """Add an AST Str in output."""
-        # note: deprecated since Python 3.8, replaced by ast.Constant
-        self.add('"%s"' % node.s)
+        self._ast_constant(node)
 
     def _ast_subscript(self, node):
         """Add an AST Subscript in output."""
@@ -1149,7 +1143,7 @@ class UnparseJavaScript(UnparsePython):
         if node.value is None:
             self.add('null')
         else:
-            self.add(repr(node.s))
+            self.add(repr(node.value))
 
     def _ast_functiondef(self, node):
         """Add an AST FunctionDef in output."""
@@ -1227,8 +1221,8 @@ class UnparsePhp(UnparsePython):
     def _ast_binop(self, node):
         """Add an AST BinOp in output."""
         if isinstance(node.op, ast.Add) and \
-                (isinstance(node.left, (ast.Name, ast.Str)) or
-                 isinstance(node.right, (ast.Name, ast.Str))):
+                (isinstance(node.left, (ast.Name, ast.Constant)) or
+                 isinstance(node.right, (ast.Name, ast.Constant))):
             str_op = '.'
         else:
             str_op = self.binop[node.op.__class__.__name__]
@@ -1253,12 +1247,12 @@ class UnparsePhp(UnparsePython):
 
     def _ast_constant(self, node):
         """Add an AST Constant in output."""
-        if isinstance(node.s, str):
-            self.add('"%s"' % node.s.replace('$', '\\$'))
+        if isinstance(node.value, str):
+            self.add('"%s"' % node.value.replace('$', '\\$'))
         elif node.value is None:
             self.add('NULL')
         else:
-            self.add(repr(node.s))
+            self.add(repr(node.value))
 
     def _ast_dict(self, node):
         """Add an AST Dict in output."""
@@ -1271,7 +1265,7 @@ class UnparsePhp(UnparsePython):
 
     def _ast_expr(self, node):
         """Add an AST Expr in output."""
-        if not isinstance(node.value, ast.Str):  # ignore docstrings
+        if not isinstance(node.value, ast.Constant):  # ignore docstrings
             self.add(
                 self.fill,
                 node.value,
@@ -1353,8 +1347,7 @@ class UnparsePhp(UnparsePython):
 
     def _ast_str(self, node):
         """Add an AST Str in output."""
-        # note: deprecated since Python 3.8, replaced by ast.Constant
-        self.add('"%s"' % node.s.replace('$', '\\$'))
+        self._ast_constant(node)
 
     def _ast_subscript(self, node):
         """Add an AST Subscript in output."""

@@ -144,8 +144,8 @@ class WeechatScript(object):  # pylint: disable=too-many-instance-attributes
         }
         # replace variables
         for node in ast.walk(self.tree):
-            if isinstance(node, ast.Str) and node.s in variables:
-                node.s = variables[node.s]
+            if isinstance(node, ast.Constant) and node.value in variables:
+                node.value = variables[node.value]
 
     def write_header(self, output):
         """Generate script header (just comments by default)."""
@@ -336,8 +336,8 @@ def update_nodes(tree):
             output = StringIO()
             unparsed = UnparsePython(output=output)
             unparsed.add(node.args[0])
-            node.args.append(ast.Str(output.getvalue()))
-            node.args.append(ast.Str(str(node.func.lineno)))
+            node.args.append(ast.Constant(output.getvalue()))
+            node.args.append(ast.Constant(str(node.func.lineno)))
 
 
 def get_tests(path):
