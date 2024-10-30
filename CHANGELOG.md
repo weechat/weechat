@@ -31,6 +31,14 @@
 - lua: fix compilation on Fedora with Lua < 5.2.0 ([#2173](https://github.com/weechat/weechat/issues/2173), [#2174](https://github.com/weechat/weechat/issues/2174))
 - core: fix build on Android ([#2180](https://github.com/weechat/weechat/issues/2180))
 
+## Version 4.4.3 (2024-10-30)
+
+### Fixed
+
+- irc: fix crash on /list buffer when a filter is set ([#2197](https://github.com/weechat/weechat/issues/2197))
+- core: always send the signal "buffer_switch", even when the buffer is opening ([#2198](https://github.com/weechat/weechat/issues/2198))
+- core: fix build on Android ([#2180](https://github.com/weechat/weechat/issues/2180))
+
 ## Version 4.4.2 (2024-09-08)
 
 ### Fixed
