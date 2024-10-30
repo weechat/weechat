@@ -32,6 +32,7 @@ extern "C"
 #include "src/gui/gui-chat.h"
 #include "src/gui/gui-color.h"
 #include "src/gui/gui-hotlist.h"
+#include "src/gui/gui-input.h"
 #include "src/gui/gui-line.h"
 #include "src/gui/gui-nicklist.h"
 #include "src/plugins/relay/relay.h"
@@ -512,6 +513,77 @@ TEST(RelayApiMsg, LinesToJson)
                       json_line, "id");
     WEE_CHECK_OBJ_STR("this is the second line with green", json_line, "message");
     cJSON_Delete (json);
+}
+
+/*
+ * Tests functions:
+ *   relay_api_msg_completion_to_json
+ */
+
+TEST(RelayApiMsg, CompletionToJson)
+{
+    cJSON *json, *json_obj, *json_item;
+
+    // check empty json result
+    json = relay_api_msg_completion_to_json (NULL);
+    CHECK(json);
+    CHECK(cJSON_IsObject (json));
+    POINTERS_EQUAL(NULL, cJSON_GetObjectItem (json, "priority"));
+    cJSON_Delete (json);
+
+    // set example input
+    gui_buffer_set (gui_buffers, "input", "/co");
+    gui_buffer_set (gui_buffers, "input_pos", "3");
+
+    // perform completion
+    gui_input_complete_next (gui_buffers);
+    STRCMP_EQUAL("/color ", gui_buffers->input_buffer);
+
+    // convert to json
+    json = relay_api_msg_completion_to_json (gui_buffers->completion);
+    CHECK(json);
+    CHECK(cJSON_IsObject (json));
+
+    json_obj = cJSON_GetObjectItem (json, "context");
+    CHECK(json_obj);
+    CHECK(cJSON_IsString (json_obj));
+    STRCMP_EQUAL("command", cJSON_GetStringValue (json_obj));
+
+    json_obj = cJSON_GetObjectItem (json, "base_word");
+    CHECK(json_obj);
+    CHECK(cJSON_IsString (json_obj));
+    STRCMP_EQUAL("co", cJSON_GetStringValue (json_obj));
+
+    json_obj = cJSON_GetObjectItem (json, "position_replace");
+    CHECK(json_obj);
+    CHECK(cJSON_IsNumber (json_obj));
+    CHECK_EQUAL(1, cJSON_GetNumberValue (json_obj));
+
+    json_obj = cJSON_GetObjectItem (json, "add_space");
+    CHECK(json_obj);
+    CHECK(cJSON_IsBool (json_obj));
+    CHECK(cJSON_IsTrue (json_obj));
+
+    json_obj = cJSON_GetObjectItem (json, "list");
+    CHECK(json_obj);
+    CHECK(cJSON_IsArray (json_obj));
+    CHECK_EQUAL(3, cJSON_GetArraySize (json_obj));
+    json_item = cJSON_GetArrayItem (json_obj, 0);
+    CHECK(json_item);
+    CHECK(cJSON_IsString (json_item));
+    STRCMP_EQUAL("color", cJSON_GetStringValue (json_item));
+    json_item = cJSON_GetArrayItem (json_obj, 1);
+    CHECK(json_item);
+    CHECK(cJSON_IsString (json_item));
+    STRCMP_EQUAL("command", cJSON_GetStringValue (json_item));
+    json_item = cJSON_GetArrayItem (json_obj, 2);
+    CHECK(json_item);
+    CHECK(cJSON_IsString (json_item));
+    STRCMP_EQUAL("connect", cJSON_GetStringValue (json_item));
+
+    cJSON_Delete (json);
+
+    gui_buffer_set (gui_buffers, "input", "");
 }
 
 /*

@@ -600,6 +600,86 @@ TEST(RelayApiProtocolWithClient, CbHotlist)
 
 /*
  * Tests functions:
+ *   relay_api_protocol_cb_completion
+ */
+
+TEST(RelayApiProtocolWithClient, CbCompletion)
+{
+    cJSON *json, *json_obj, *json_array;
+
+    /* error: no body */
+    test_client_recv_http ("POST /api/completion", NULL, NULL);
+    WEE_CHECK_HTTP_CODE(400, "Bad Request");
+    STRCMP_EQUAL("HTTP/1.1 400 Bad Request\r\n"
+                 "Access-Control-Allow-Origin: *\r\n"
+                 "Content-Type: application/json; charset=utf-8\r\n"
+                 "Content-Length: 0\r\n"
+                 "\r\n",
+                 data_sent[0]);
+
+    /* error: invalid buffer name */
+    test_client_recv_http ("POST /api/completion",
+                           NULL,
+                           "{\"buffer_name\": \"invalid\", "
+                           "\"command\": \"test\"}");
+    WEE_CHECK_HTTP_CODE(400, "Bad Request");
+    STRCMP_EQUAL("HTTP/1.1 400 Bad Request\r\n"
+                 "Access-Control-Allow-Origin: *\r\n"
+                 "Content-Type: application/json; charset=utf-8\r\n"
+                 "Content-Length: 41\r\n"
+                 "\r\n"
+                 "{\"error\": \"Buffer \\\"invalid\\\" not found\"}",
+                 data_sent[0]);
+
+    /* on core buffer, with buffer name. examples from relay protocol examples:
+     * https://weechat.org/files/doc/weechat/stable/weechat_relay_weechat.en.html#command_completion
+     */
+
+    /* completion core.weechat -1 /help fi */
+    test_client_recv_http ("POST /api/completion",
+                           NULL,
+                           "{\"buffer_name\": \"core.weechat\", "
+                           "\"command\": \"/help fi\"}");
+    WEE_CHECK_HTTP_CODE(200, "OK");
+    json = json_body_sent[0];
+    CHECK(json);
+    CHECK(cJSON_IsObject (json));
+    WEE_CHECK_OBJ_STR("command_arg", json, "context");
+    WEE_CHECK_OBJ_STR("fi", json, "base_word");
+    WEE_CHECK_OBJ_NUM(6, json, "position_replace");
+    WEE_CHECK_OBJ_BOOL(0, json, "add_space");
+    json_array = cJSON_GetObjectItem (json, "list");
+    CHECK(json_array);
+    CHECK(cJSON_IsArray (json_array));
+    CHECK(cJSON_GetArraySize (json_array) == 4);
+    STRCMP_EQUAL("fifo", cJSON_GetStringValue (cJSON_GetArrayItem (json_array, 0)));
+    STRCMP_EQUAL("fifo.file.enabled", cJSON_GetStringValue (cJSON_GetArrayItem (json_array, 1)));
+    STRCMP_EQUAL("fifo.file.path", cJSON_GetStringValue (cJSON_GetArrayItem (json_array, 2)));
+    STRCMP_EQUAL("filter", cJSON_GetStringValue (cJSON_GetArrayItem (json_array, 3)));
+
+    /* completion core.weechat 5 /quernick */
+    test_client_recv_http ("POST /api/completion",
+                           NULL,
+                           "{\"buffer_name\": \"core.weechat\", "
+                           "\"command\": \"/quernick\", "
+                           "\"position\": 5}");
+    WEE_CHECK_HTTP_CODE(200, "OK");
+    json = json_body_sent[0];
+    CHECK(json);
+    CHECK(cJSON_IsObject (json));
+    WEE_CHECK_OBJ_STR("command", json, "context");
+    WEE_CHECK_OBJ_STR("quer", json, "base_word");
+    WEE_CHECK_OBJ_NUM(1, json, "position_replace");
+    WEE_CHECK_OBJ_BOOL(1, json, "add_space");
+    json_array = cJSON_GetObjectItem (json, "list");
+    CHECK(json_array);
+    CHECK(cJSON_IsArray (json_array));
+    CHECK(cJSON_GetArraySize (json_array) == 1);
+    STRCMP_EQUAL("query", cJSON_GetStringValue (cJSON_GetArrayItem (json_array, 0)));
+}
+
+/*
+ * Tests functions:
  *   relay_api_protocol_cb_input
  */
 
@@ -622,7 +702,7 @@ TEST(RelayApiProtocolWithClient, CbInput)
                            NULL,
                            "{\"buffer_name\": \"invalid\", "
                            "\"command\": \"/print test\"}");
-    STRCMP_EQUAL("HTTP/1.1 404 Not Found\r\n"
+    STRCMP_EQUAL("HTTP/1.1 400 Bad Request\r\n"
                  "Access-Control-Allow-Origin: *\r\n"
                  "Content-Type: application/json; charset=utf-8\r\n"
                  "Content-Length: 41\r\n"

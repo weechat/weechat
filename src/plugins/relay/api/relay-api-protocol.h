@@ -20,6 +20,7 @@
 #ifndef WEECHAT_PLUGIN_RELAY_API_PROTOCOL_H
 #define WEECHAT_PLUGIN_RELAY_API_PROTOCOL_H
 
+#define RELAY_API_CB(__command) &relay_api_protocol_cb_##__command
 #define RELAY_API_PROTOCOL_CALLBACK(__command)                          \
     enum t_relay_api_protocol_rc                                        \
     relay_api_protocol_cb_##__command (struct t_relay_client *client)
