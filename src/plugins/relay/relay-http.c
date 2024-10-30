@@ -385,7 +385,7 @@ relay_http_parse_header (struct t_relay_http_request *request,
                          int ws_deflate_allowed)
 {
     char *pos, *name, *name_lower, *error, **items;
-    const char *ptr_value;
+    const char *existing_value, *ptr_value;
     int i, num_items;
     long number;
 
@@ -422,6 +422,12 @@ relay_http_parse_header (struct t_relay_http_request *request,
     while (ptr_value[0] == ' ')
     {
         ptr_value++;
+    }
+
+    existing_value = weechat_hashtable_get (request->headers, name_lower);
+    if (existing_value)
+    {
+        ptr_value = weechat_string_concat(", ", existing_value, ptr_value, NULL);
     }
 
     /* add header in the hashtable */
