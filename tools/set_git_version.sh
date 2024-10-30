@@ -46,7 +46,7 @@ git_version=""
 case ${version} in
 *-*)
     # devel/rc version (like 0.4.0-dev or 0.4.0-rc1)
-    if [ -d "${root_dir}/.git" ]; then
+    if [ -e "${root_dir}/.git" ]; then
         git_version=$(cd "${root_dir}" && git describe 2>/dev/null)
     fi
     ;;
