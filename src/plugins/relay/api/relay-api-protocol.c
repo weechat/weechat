@@ -664,6 +664,34 @@ RELAY_API_PROTOCOL_CALLBACK(buffers)
 }
 
 /*
+ * Callback for resource "completion".
+ *
+ * Routes:
+ *   GET /api/completion
+ */
+
+RELAY_API_PROTOCOL_CALLBACK(completion)
+{
+    cJSON *json;
+    struct t_gui_completion *ptr_completion;
+
+    json = cJSON_CreateArray();
+    if (!json)
+        return RELAY_API_PROTOCOL_RC_MEMORY;
+
+    // TODO: fill pointer, e.g. ptr_completion = weechat_hdata_get_...
+    ptr_completion = NULL;
+
+    cJSON_AddItemToArray(
+        json,
+        relay_api_msg_completion_to_json(ptr_completion));
+
+    relay_api_msg_send_json(client, RELAY_HTTP_200_OK, NULL, "completion", json);
+    cJSON_Delete(json);
+    return RELAY_API_PROTOCOL_RC_OK;
+}
+
+/*
  * Callback for resource "hotlist".
  *
  * Routes:
@@ -1060,16 +1088,17 @@ relay_api_protocol_recv_http (struct t_relay_client *client)
     int i, num_args;
     enum t_relay_api_protocol_rc return_code;
     struct t_relay_api_protocol_cb protocol_cb[] = {
-        /* method, resource, auth, min args, max args, callback */
-        { "OPTIONS", "*",         0, 0, -1, &relay_api_protocol_cb_options   },
-        { "POST",    "handshake", 0, 0,  0, &relay_api_protocol_cb_handshake },
-        { "GET",     "version",   1, 0,  0, &relay_api_protocol_cb_version   },
-        { "GET",     "buffers",   1, 0,  3, &relay_api_protocol_cb_buffers   },
-        { "GET",     "hotlist",   1, 0,  3, &relay_api_protocol_cb_hotlist   },
-        { "POST",    "input",     1, 0,  0, &relay_api_protocol_cb_input     },
-        { "POST",    "ping",      1, 0,  0, &relay_api_protocol_cb_ping      },
-        { "POST",    "sync",      1, 0,  0, &relay_api_protocol_cb_sync      },
-        { NULL,      NULL,        0, 0,  0, NULL                             },
+        /* method,   resource,     auth, min args, max args, callback */
+        { "OPTIONS", "*",          0,    0,        -1,       &relay_api_protocol_cb_options    },
+        { "POST",    "handshake",  0,    0,         0,       &relay_api_protocol_cb_handshake  },
+        { "GET",     "version",    1,    0,         0,       &relay_api_protocol_cb_version    },
+        { "GET",     "buffers",    1,    0,         3,       &relay_api_protocol_cb_buffers    },
+        { "GET",     "hotlist",    1,    0,         3,       &relay_api_protocol_cb_hotlist    },
+        { "POST",    "input",      1,    0,         0,       &relay_api_protocol_cb_input      },
+        { "POST",    "ping",       1,    0,         0,       &relay_api_protocol_cb_ping       },
+        { "POST",    "sync",       1,    0,         0,       &relay_api_protocol_cb_sync       },
+        { "POST",    "completion", 1,    0,         0,       &relay_api_protocol_cb_completion },
+        { NULL,      NULL,         0,    0,         0,       NULL                              },
     };
 
     if (!client->http_req || RELAY_STATUS_HAS_ENDED(client->status))

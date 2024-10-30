@@ -772,3 +772,17 @@ relay_api_msg_hotlist_to_json (struct t_gui_hotlist *hotlist)
 
     return json;
 }
+
+/*
+ * Creates a JSON object with a completion entry.
+ */
+
+cJSON *
+relay_api_msg_completion_to_json(struct t_gui_completion *completion)
+{
+    // TODO: currently unused:
+    (void)completion;
+
+    cJSON *json = cJSON_CreateObject();
+    return json;
+}

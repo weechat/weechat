@@ -578,3 +578,20 @@ TEST(RelayApiMsg, HotlistToJson)
 
     gui_hotlist_remove_buffer (gui_buffers, 1);
 }
+
+/*
+ * Tests functions:
+ *   relay_api_msg_completion_to_json
+ */
+
+TEST(RelayApiMsg, CompletionToJson)
+{
+    cJSON *json; //, *json_obj, *json_count;
+
+    // check empty json result
+    json = relay_api_msg_completion_to_json(NULL);
+    CHECK(json);
+    CHECK(cJSON_IsObject(json));
+    POINTERS_EQUAL(NULL, cJSON_GetObjectItem(json, "priority"));
+    cJSON_Delete(json);
+}

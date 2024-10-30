@@ -595,7 +595,69 @@ TEST(RelayApiProtocolWithClient, CbHotlist)
     CHECK(cJSON_IsNumber (json_obj));
     CHECK(4 == cJSON_GetNumberValue (json_obj));
 
-    gui_hotlist_remove_buffer (gui_buffers, 1);
+    gui_hotlist_remove_buffer(gui_buffers, 1);
+}
+
+/*
+ * Tests functions:
+ *   relay_api_protocol_cb_completion
+ */
+
+TEST(RelayApiProtocolWithClient, CbCompletion)
+{
+    cJSON *json, *json_obj, *json_count;
+
+    /* get hotlist (empty) */
+    test_client_recv_http("GET /api/completion", NULL, NULL);
+    WEE_CHECK_HTTP_CODE(200, "OK");
+    // CHECK(json_body_sent[0]);
+    // CHECK(cJSON_IsArray(json_body_sent[0]));
+    // LONGS_EQUAL(0, cJSON_GetArraySize(json_body_sent[0]));
+
+    // gui_hotlist_add(gui_buffers, GUI_HOTLIST_LOW, NULL, 0);
+    // gui_hotlist_add(gui_buffers, GUI_HOTLIST_MESSAGE, NULL, 0);
+    // gui_hotlist_add(gui_buffers, GUI_HOTLIST_MESSAGE, NULL, 0);
+    // gui_hotlist_add(gui_buffers, GUI_HOTLIST_PRIVATE, NULL, 0);
+    // gui_hotlist_add(gui_buffers, GUI_HOTLIST_PRIVATE, NULL, 0);
+    // gui_hotlist_add(gui_buffers, GUI_HOTLIST_PRIVATE, NULL, 0);
+    // gui_hotlist_add(gui_buffers, GUI_HOTLIST_HIGHLIGHT, NULL, 0);
+    // gui_hotlist_add(gui_buffers, GUI_HOTLIST_HIGHLIGHT, NULL, 0);
+    // gui_hotlist_add(gui_buffers, GUI_HOTLIST_HIGHLIGHT, NULL, 0);
+    // gui_hotlist_add(gui_buffers, GUI_HOTLIST_HIGHLIGHT, NULL, 0);
+
+    // /* get hotlist (one buffer) */
+    // test_client_recv_http("GET /api/hotlist", NULL, NULL);
+    // WEE_CHECK_HTTP_CODE(200, "OK");
+    // CHECK(json_body_sent[0]);
+    // CHECK(cJSON_IsArray(json_body_sent[0]));
+    // LONGS_EQUAL(1, cJSON_GetArraySize(json_body_sent[0]));
+    // json = cJSON_GetArrayItem(json_body_sent[0], 0);
+    // CHECK(json);
+    // CHECK(cJSON_IsObject(json));
+    // WEE_CHECK_OBJ_NUM(GUI_HOTLIST_HIGHLIGHT, json, "priority");
+    // CHECK(cJSON_IsString(cJSON_GetObjectItem(json, "date")));
+    // WEE_CHECK_OBJ_NUM(gui_buffers->id, json, "buffer_id");
+    // json_count = cJSON_GetObjectItem(json, "count");
+    // CHECK(json_count);
+    // CHECK(cJSON_IsArray(json_count));
+    // json_obj = cJSON_GetArrayItem(json_count, 0);
+    // CHECK(json_obj);
+    // CHECK(cJSON_IsNumber(json_obj));
+    // CHECK(1 == cJSON_GetNumberValue(json_obj));
+    // json_obj = cJSON_GetArrayItem(json_count, 1);
+    // CHECK(json_obj);
+    // CHECK(cJSON_IsNumber(json_obj));
+    // CHECK(2 == cJSON_GetNumberValue(json_obj));
+    // json_obj = cJSON_GetArrayItem(json_count, 2);
+    // CHECK(json_obj);
+    // CHECK(cJSON_IsNumber(json_obj));
+    // CHECK(3 == cJSON_GetNumberValue(json_obj));
+    // json_obj = cJSON_GetArrayItem(json_count, 3);
+    // CHECK(json_obj);
+    // CHECK(cJSON_IsNumber(json_obj));
+    // CHECK(4 == cJSON_GetNumberValue(json_obj));
+
+    // gui_hotlist_remove_buffer(gui_buffers, 1);
 }
 
 /*
