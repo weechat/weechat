@@ -160,7 +160,7 @@ relay_buffer_refresh (const char *hotlist)
         line++;
     }
     if (hotlist)
-        weechat_buffer_set (relay_buffer, "hotlist", hotlist);
+        weechat_buffer_set (relay_buffer, "hotlist_conditions", hotlist);
 }
 
 /*

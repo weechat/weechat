@@ -247,7 +247,7 @@ xfer_buffer_refresh (const char *hotlist)
             }
             line++;
         }
-        weechat_buffer_set (xfer_buffer, "hotlist", hotlist);
+        weechat_buffer_set (xfer_buffer, "hotlist_conditions", hotlist);
     }
 }
 
