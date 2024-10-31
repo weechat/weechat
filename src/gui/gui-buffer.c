@@ -2603,7 +2603,27 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
         return;
 
     /* properties that need a buffer */
-    if (strcmp (property, "unread") == 0)
+    if (strcmp (property, "hotlist_conditions") == 0)
+    {
+        error = NULL;
+        number = strtol (value, &error, 10);
+        if (error && !error[0])
+        {
+            if (number < 0)
+            {
+                gui_hotlist_remove_buffer (buffer, 0);
+            }
+            else
+            {
+                (void) gui_hotlist_add (
+                    buffer,
+                    number,
+                    NULL,  /* creation_time */
+                    1);  /* check_conditions */
+            }
+        }
+    }
+    else if (strcmp (property, "unread") == 0)
     {
         gui_buffer_set_unread (buffer, value);
     }

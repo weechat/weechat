@@ -14862,6 +14862,12 @@ Properties:
   are *NOT* checked) +
   "-1": remove buffer from hotlist _(WeeChat ≥ 1.0)_.
 
+| hotlist_conditions | 4.5.0 | WEECHAT_HOTLIST_LOW, WEECHAT_HOTLIST_MESSAGE,
+  WEECHAT_HOTLIST_PRIVATE, WEECHAT_HOTLIST_HIGHLIGHT
+| priority: add buffer to hotlist with this priority
+  (conditions defined in option _weechat.look.hotlist_add_conditions_
+  are checked).
+
 | completion_freeze | | "0" or "1"
 | "0": no freeze of completion (default value)
   (global setting, buffer pointer is not used) +

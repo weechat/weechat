@@ -6,6 +6,7 @@
 
 - api: return the buffer input callback return code in functions command and command_options
 - api: add special value `-` (hyphen-minus) in options of function command_options to prevent execution of commands
+- api: add property `hotlist_conditions` in function buffer_set
 - relay/api: allow array with multiple requests in websocket frame received from client
 - core, plugins: simplify help on parameters that can be repeated in commands
 - build: fix detection of Ruby on macOS 14, require CMake ≥ 3.18 ([#1156](https://github.com/weechat/weechat/issues/1156))

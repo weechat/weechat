@@ -14446,6 +14446,13 @@ void weechat_buffer_set (struct t_gui_buffer *buffer, const char *property,
   се *НЕ* проверавају) +
   "-1": уклања бафер из вруће листе _(WeeChat ≥ 1.0)_.
 
+// TRANSLATION MISSING
+| hotlist_conditions | 4.5.0 | WEECHAT_HOTLIST_LOW, WEECHAT_HOTLIST_MESSAGE,
+  WEECHAT_HOTLIST_PRIVATE, WEECHAT_HOTLIST_HIGHLIGHT
+| priority: add buffer to hotlist with this priority
+  (conditions defined in option _weechat.look.hotlist_add_conditions_
+  are checked).
+
 | completion_freeze | | "0" или "1"
 | "0": нема замрзавања довршавања (подразумевана вредност)
   (глобално подешавање, не користи се показивач на бафер) +
