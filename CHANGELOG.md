@@ -1,5 +1,11 @@
 # WeeChat ChangeLog
 
+## Version 4.4.4 (under dev)
+
+### Fixed
+
+- relay, xfer: fix letters with actions displayed on top of buffer
+
 ## Version 4.4.3 (2024-10-30)
 
 ### Fixed

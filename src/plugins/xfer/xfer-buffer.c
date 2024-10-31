@@ -63,19 +63,19 @@ xfer_buffer_refresh (const char *hotlist)
                           /* accept */
                           (xfer_selected && XFER_IS_RECV(xfer_selected->type)
                            && (xfer_selected->status == XFER_STATUS_WAITING)) ?
-                          _("  [A] Accept") : "",
+                          _("  [a] Accept") : "",
                           /* cancel */
                           (xfer_selected
                            && !XFER_HAS_ENDED(xfer_selected->status)) ?
-                          _("  [C] Cancel") : "",
+                          _("  [c] Cancel") : "",
                           /* remove */
                           (xfer_selected
                            && XFER_HAS_ENDED(xfer_selected->status)) ?
-                          _("  [R] Remove") : "",
+                          _("  [r] Remove") : "",
                           /* purge old */
-                          _("  [P] Purge finished"),
+                          _("  [p] Purge finished"),
                           /* quit */
-                          _("  [Q] Close this buffer"));
+                          _("  [q] Close this buffer"));
         for (ptr_xfer = xfer_list; ptr_xfer; ptr_xfer = ptr_xfer->next_xfer)
         {
             suffix[0] = '\0';

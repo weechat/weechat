@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-08-12 21:29+0200\n"
-"PO-Revision-Date: 2024-08-12 21:36+0200\n"
+"POT-Creation-Date: 2024-10-31 20:22+0100\n"
+"PO-Revision-Date: 2024-10-31 20:35+0100\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: sr\n"
@@ -14693,17 +14693,17 @@ msgstr "%s%s: нема довољно слободне меморије за п�
 msgid "Actions (letter+enter):"
 msgstr "Акције (слово+ентер):"
 
-msgid "  [D] Disconnect"
-msgstr "  [D] Прекид везе"
+msgid "  [d] Disconnect"
+msgstr "  [d] Прекид везе"
 
-msgid "  [R] Remove"
-msgstr "  [R] Уклањање"
+msgid "  [r] Remove"
+msgstr "  [r] Уклањање"
 
-msgid "  [P] Purge finished"
-msgstr "  [P] Завршено чишћење"
+msgid "  [p] Purge finished"
+msgstr "  [p] Завршено чишћење"
 
-msgid "  [Q] Close this buffer"
-msgstr "  [Q] Затварање овог бафера"
+msgid "  [q] Close this buffer"
+msgstr "  [q] Затварање овог бафера"
 
 #, c-format
 msgid "%s%s[%s%s%s%s] %s, received: %s, sent: %s"
@@ -17397,11 +17397,11 @@ msgstr ""
 "макс број карактера који се приказује у ставци траке \"typing\" (0 = садржај "
 "се не одсеца)"
 
-msgid "  [A] Accept"
-msgstr "  [A] Прихвати"
+msgid "  [a] Accept"
+msgstr "  [a] Прихвати"
 
-msgid "  [C] Cancel"
-msgstr "  [C] Откажи"
+msgid "  [c] Cancel"
+msgstr "  [c] Откажи"
 
 msgid "xfer chat"
 msgstr "xfer разговор"

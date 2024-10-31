@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-08-12 21:29+0200\n"
-"PO-Revision-Date: 2024-06-11 07:49+0200\n"
+"POT-Creation-Date: 2024-10-31 20:22+0100\n"
+"PO-Revision-Date: 2024-10-31 20:35+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: ru\n"
@@ -13475,19 +13475,19 @@ msgstr "%s недостаточно памяти для полученного �
 msgid "Actions (letter+enter):"
 msgstr ""
 
-msgid "  [D] Disconnect"
+msgid "  [d] Disconnect"
 msgstr ""
 
-msgid "  [R] Remove"
-msgstr "  [R] Удалить"
+msgid "  [r] Remove"
+msgstr "  [r] Удалить"
 
 #, fuzzy
-msgid "  [P] Purge finished"
-msgstr "  [P] Очистить список"
+msgid "  [p] Purge finished"
+msgstr "  [p] Очистить список"
 
 #, fuzzy
-msgid "  [Q] Close this buffer"
-msgstr "  [Q] Закрыть окно"
+msgid "  [q] Close this buffer"
+msgstr "  [q] Закрыть окно"
 
 #, fuzzy, c-format
 msgid "%s%s[%s%s%s%s] %s, received: %s, sent: %s"
@@ -15935,11 +15935,11 @@ msgid ""
 "truncate content)"
 msgstr ""
 
-msgid "  [A] Accept"
-msgstr "  [A] Принять"
+msgid "  [a] Accept"
+msgstr "  [a] Принять"
 
-msgid "  [C] Cancel"
-msgstr "  [C] Отменить"
+msgid "  [c] Cancel"
+msgstr "  [c] Отменить"
 
 msgid "xfer chat"
 msgstr ""
