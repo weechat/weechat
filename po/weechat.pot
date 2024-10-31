@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-10-13 16:56+0200\n"
+"POT-Creation-Date: 2024-10-31 18:03+0100\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -12277,16 +12277,16 @@ msgstr ""
 msgid "Actions (letter+enter):"
 msgstr ""
 
-msgid "  [D] Disconnect"
+msgid "  [d] Disconnect"
 msgstr ""
 
-msgid "  [R] Remove"
+msgid "  [r] Remove"
 msgstr ""
 
-msgid "  [P] Purge finished"
+msgid "  [p] Purge finished"
 msgstr ""
 
-msgid "  [Q] Close this buffer"
+msgid "  [q] Close this buffer"
 msgstr ""
 
 #, c-format
@@ -14559,10 +14559,10 @@ msgstr ""
 msgid "Typing status of users"
 msgstr ""
 
-msgid "  [A] Accept"
+msgid "  [a] Accept"
 msgstr ""
 
-msgid "  [C] Cancel"
+msgid "  [c] Cancel"
 msgstr ""
 
 msgid "xfer chat"

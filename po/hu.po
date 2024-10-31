@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-10-13 16:56+0200\n"
-"PO-Revision-Date: 2024-06-11 07:49+0200\n"
+"POT-Creation-Date: 2024-10-31 18:03+0100\n"
+"PO-Revision-Date: 2024-10-31 18:09+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: hu\n"
@@ -13428,19 +13428,19 @@ msgstr ""
 msgid "Actions (letter+enter):"
 msgstr ""
 
-msgid "  [D] Disconnect"
+msgid "  [d] Disconnect"
 msgstr ""
 
-msgid "  [R] Remove"
-msgstr "  [R] Eltávolítás"
+msgid "  [r] Remove"
+msgstr "  [r] Eltávolítás"
 
 #, fuzzy
-msgid "  [P] Purge finished"
-msgstr "  [P] Régi DCC törlése"
+msgid "  [p] Purge finished"
+msgstr "  [p] Régi DCC törlése"
 
 #, fuzzy
-msgid "  [Q] Close this buffer"
-msgstr "  [Q] DCC nézet bezárása"
+msgid "  [q] Close this buffer"
+msgstr "  [q] DCC nézet bezárása"
 
 #, fuzzy, c-format
 msgid "%s%s[%s%s%s%s] %s, received: %s, sent: %s"
@@ -15886,11 +15886,11 @@ msgstr ""
 msgid "Typing status of users"
 msgstr ""
 
-msgid "  [A] Accept"
-msgstr "  [A] Elfogadás"
+msgid "  [a] Accept"
+msgstr "  [a] Elfogadás"
 
-msgid "  [C] Cancel"
-msgstr "  [C] Mégsem"
+msgid "  [c] Cancel"
+msgstr "  [c] Mégsem"
 
 msgid "xfer chat"
 msgstr ""

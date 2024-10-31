@@ -79,15 +79,15 @@ relay_buffer_refresh (const char *hotlist)
                       /* disconnect */
                       (client_selected
                        && !RELAY_STATUS_HAS_ENDED(client_selected->status)) ?
-                      _("  [D] Disconnect") : "",
+                      _("  [d] Disconnect") : "",
                       /* remove */
                       (client_selected
                        && RELAY_STATUS_HAS_ENDED(client_selected->status)) ?
-                      _("  [R] Remove") : "",
+                      _("  [r] Remove") : "",
                       /* purge old */
-                      _("  [P] Purge finished"),
+                      _("  [p] Purge finished"),
                       /* quit */
-                      _("  [Q] Close this buffer"));
+                      _("  [q] Close this buffer"));
     for (ptr_client = relay_clients; ptr_client;
          ptr_client = ptr_client->next_client)
     {
