@@ -605,13 +605,11 @@ TEST(RelayApiProtocolWithClient, CbHotlist)
 
 TEST(RelayApiProtocolWithClient, CbCompletion)
 {
-    char str_body[1024];
-    int old_delay;
-
-    cJSON *json, *json_obj, *json_count;
+    cJSON *json, *json_obj, *json_array;
 
     /* error: no body */
     test_client_recv_http("POST /api/completion", NULL, NULL);
+    WEE_CHECK_HTTP_CODE(400, "Bad Request");
     STRCMP_EQUAL("HTTP/1.1 400 Bad Request\r\n"
                  "Access-Control-Allow-Origin: *\r\n"
                  "Content-Type: application/json; charset=utf-8\r\n"
@@ -624,6 +622,7 @@ TEST(RelayApiProtocolWithClient, CbCompletion)
                           NULL,
                           "{\"buffer_name\": \"invalid\", "
                           "\"data\": \"test\"}");
+    WEE_CHECK_HTTP_CODE(404, "Not Found");
     STRCMP_EQUAL("HTTP/1.1 404 Not Found\r\n"
                  "Access-Control-Allow-Origin: *\r\n"
                  "Content-Type: application/json; charset=utf-8\r\n"
@@ -632,19 +631,74 @@ TEST(RelayApiProtocolWithClient, CbCompletion)
                  "{\"error\": \"Buffer \\\"invalid\\\" not found\"}",
                  data_sent[0]);
 
-    /* on core buffer, with buffer name */
-    // record_start ();
-    // old_delay = relay_api_protocol_command_delay;
-    relay_api_protocol_command_delay = 0;
-    test_client_recv_http ("POST /api/completion",
-                           NULL,
-                           "{\"buffer_name\": \"core.weechat\", "
-                           "\"data\": \"/he\", "
-                           "\"position\": 3}");
-    // relay_api_protocol_command_delay = old_delay;
-    // record_stop ();
+    /* on core buffer, with buffer name. examples from relay protocol examples:
+     * https://weechat.org/files/doc/weechat/stable/weechat_relay_weechat.en.html#command_completion
+     */
+
+    /* completion core.weechat -1 /help fi */
+    test_client_recv_http("POST /api/completion",
+                          NULL,
+                          "{\"buffer_name\": \"core.weechat\", "
+                          "\"data\": \"/help fi\", "
+                          "\"position\": -1}");
     WEE_CHECK_HTTP_CODE(200, "OK");
-    // CHECK(record_search ("core.weechat", "", "test from relay 2", NULL));
+    json = json_body_sent[0];
+    CHECK(json);
+    CHECK(cJSON_IsObject (json));
+    WEE_CHECK_OBJ_STR("command_arg", json, "context");
+    WEE_CHECK_OBJ_STR("fi", json, "base_word");
+    WEE_CHECK_OBJ_NUM(6, json, "pos_start");
+    WEE_CHECK_OBJ_NUM(7, json, "pos_end");
+    WEE_CHECK_OBJ_BOOL(0, json, "add_space");
+    json_array = cJSON_GetObjectItem(json, "list");
+    CHECK(json_array);
+    CHECK(cJSON_IsArray(json_array));
+    CHECK(cJSON_GetArraySize(json_array) == 4);
+    STRCMP_EQUAL("fifo", cJSON_GetStringValue(cJSON_GetArrayItem(json_array, 0)));
+    STRCMP_EQUAL("fifo.file.enabled", cJSON_GetStringValue(cJSON_GetArrayItem(json_array, 1)));
+    STRCMP_EQUAL("fifo.file.path", cJSON_GetStringValue(cJSON_GetArrayItem(json_array, 2)));
+    STRCMP_EQUAL("filter", cJSON_GetStringValue(cJSON_GetArrayItem(json_array, 3)));
+
+    WEE_CHECK_TEXT(200, "OK", "POST /api/completion",
+                   "{\"context\": \"command_arg\","
+                   "\"base_word\": \"fi\","
+                   "\"pos_start\": 6,"
+                   "\"pos_end\": 7,"
+                   "\"add_space\": false,"
+                   "\"list\": ["
+                   "\"fifo\","
+                   "\"fifo.file.enabled\","
+                   "\"fifo.file.path\","
+                   "\"filter\"]}");
+
+    /* completion core.weechat 5 /quernick */
+    test_client_recv_http("POST /api/completion",
+                          NULL,
+                          "{\"buffer_name\": \"core.weechat\", "
+                          "\"data\": \"/quernick\", "
+                          "\"position\": 5}");
+    WEE_CHECK_HTTP_CODE(200, "OK");
+    json = json_body_sent[0];
+    CHECK(json);
+    CHECK(cJSON_IsObject (json));
+    WEE_CHECK_OBJ_STR("command", json, "context");
+    WEE_CHECK_OBJ_STR("quer", json, "base_word");
+    WEE_CHECK_OBJ_NUM(1, json, "pos_start");
+    WEE_CHECK_OBJ_NUM(4, json, "pos_end");
+    WEE_CHECK_OBJ_BOOL(1, json, "add_space");
+    json_array = cJSON_GetObjectItem(json, "list");
+    CHECK(json_array);
+    CHECK(cJSON_IsArray(json_array));
+    CHECK(cJSON_GetArraySize(json_array) == 1);
+    STRCMP_EQUAL("query", cJSON_GetStringValue(cJSON_GetArrayItem(json_array, 0)));
+
+    WEE_CHECK_TEXT(200, "OK", "POST /api/completion",
+                   "{\"context\": \"command\","
+                   "\"base_word\": \"quer\","
+                   "\"pos_start\": 1,"
+                   "\"pos_end\": 4,"
+                   "\"add_space\": true,"
+                   "\"list\": [\"query\"]}");
 }
 
 /*
