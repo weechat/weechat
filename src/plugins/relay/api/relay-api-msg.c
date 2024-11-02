@@ -786,7 +786,7 @@ relay_api_msg_completion_to_json(struct t_gui_completion *completion)
     const char *ptr_string;
     struct t_arraylist *ptr_list;
     cJSON *json, *json_array;
-    int context, add_space, i, size;
+    int context, i, size;
 
     hdata = relay_hdata_completion;
     pointer = completion;
@@ -822,10 +822,7 @@ relay_api_msg_completion_to_json(struct t_gui_completion *completion)
 
     MSG_ADD_HDATA_STR("base_word", "base_word");
     MSG_ADD_HDATA_VAR(Number, "position_replace", integer, "position_replace");
-
-    add_space = weechat_hdata_integer(relay_hdata_completion,
-                                      completion, "add_space");
-    cJSON_AddItemToObject(json, "add_space", cJSON_CreateBool(add_space));
+    MSG_ADD_HDATA_VAR(Bool, "add_space", integer, "add_space");
 
     json_array = cJSON_CreateArray();
     size = weechat_arraylist_size(ptr_list);
