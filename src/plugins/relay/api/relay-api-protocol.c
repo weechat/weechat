@@ -672,8 +672,11 @@ RELAY_API_PROTOCOL_CALLBACK(buffers)
 
 RELAY_API_PROTOCOL_CALLBACK(completion)
 {
-    cJSON *json_response, *json_body, *json_buffer_id, *json_buffer_name;
-    const char *ptr_buffer_name, *ptr_command, *ptr_commands;
+    cJSON *json_response, *json_body;
+    cJSON *json_buffer_id, *json_buffer_name;
+    cJSON *json_data, *json_position;
+    const char *ptr_buffer_name, *ptr_data;
+    int position;
     char str_id[64];
     struct t_gui_completion *ptr_completion;
     struct t_gui_buffer *ptr_buffer;
@@ -736,23 +739,46 @@ RELAY_API_PROTOCOL_CALLBACK(completion)
         return RELAY_API_PROTOCOL_RC_BAD_REQUEST;
     }
 
-    /* TODO: Get position and data from input json object*/
+    /* Get position and data from input json object*/
+    json_data = cJSON_GetObjectItem(json_body, "data");
+    if (json_data && cJSON_IsString(json_data)) {
+        ptr_data = cJSON_GetStringValue(json_data);
+    } else {
+        cJSON_Delete(json_body);
+        return RELAY_API_PROTOCOL_RC_BAD_REQUEST;
+    }
+    json_position = cJSON_GetObjectItem(json_body, "position");
+    if (json_position)
+    {
+        if (cJSON_IsNumber(json_position)) {
+        position = cJSON_GetNumberValue(json_position);
+        } else {
+            cJSON_Delete(json_body);
+            return RELAY_API_PROTOCOL_RC_BAD_REQUEST;
+        }
+    } else {
+        position = strlen(ptr_data);
+    }
 
+    /* perform completion */
+    ptr_completion = weechat_completion_new(ptr_buffer);
+    if (!ptr_completion) {
+        cJSON_Delete(json_body);
+        return RELAY_API_PROTOCOL_RC_BAD_REQUEST;
+    }
 
-    
-    json_response = cJSON_CreateArray();
-    if (!json_response)
-        return RELAY_API_PROTOCOL_RC_MEMORY;
+    if (!weechat_completion_search(ptr_completion, ptr_data, position, 1)) {
+        weechat_completion_free(ptr_completion);
+        cJSON_Delete(json_body);
+        return RELAY_API_PROTOCOL_RC_BAD_REQUEST;
+    }
 
-    // TODO: fill pointer, e.g. ptr_completion = weechat_hdata_get_...
-    ptr_completion = NULL;
-
-    cJSON_AddItemToArray(
-        json_response,
-        relay_api_msg_completion_to_json(ptr_completion));
-
+    /* create response */
+    json_response = relay_api_msg_completion_to_json(ptr_completion);
     relay_api_msg_send_json(client, RELAY_HTTP_200_OK, NULL, "completion", json_response);
+
     cJSON_Delete(json_response);
+    cJSON_Delete(json_body);
     return RELAY_API_PROTOCOL_RC_OK;
 }
 

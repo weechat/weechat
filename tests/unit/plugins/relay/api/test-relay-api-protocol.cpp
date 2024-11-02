@@ -639,16 +639,14 @@ TEST(RelayApiProtocolWithClient, CbCompletion)
     test_client_recv_http("POST /api/completion",
                           NULL,
                           "{\"buffer_name\": \"core.weechat\", "
-                          "\"data\": \"/help fi\", "
-                          "\"position\": -1}");
+                          "\"data\": \"/help fi\"}");
     WEE_CHECK_HTTP_CODE(200, "OK");
     json = json_body_sent[0];
     CHECK(json);
     CHECK(cJSON_IsObject (json));
     WEE_CHECK_OBJ_STR("command_arg", json, "context");
     WEE_CHECK_OBJ_STR("fi", json, "base_word");
-    WEE_CHECK_OBJ_NUM(6, json, "pos_start");
-    WEE_CHECK_OBJ_NUM(7, json, "pos_end");
+    WEE_CHECK_OBJ_NUM(6, json, "position_replace");
     WEE_CHECK_OBJ_BOOL(0, json, "add_space");
     json_array = cJSON_GetObjectItem(json, "list");
     CHECK(json_array);
@@ -659,17 +657,6 @@ TEST(RelayApiProtocolWithClient, CbCompletion)
     STRCMP_EQUAL("fifo.file.path", cJSON_GetStringValue(cJSON_GetArrayItem(json_array, 2)));
     STRCMP_EQUAL("filter", cJSON_GetStringValue(cJSON_GetArrayItem(json_array, 3)));
 
-    WEE_CHECK_TEXT(200, "OK", "POST /api/completion",
-                   "{\"context\": \"command_arg\","
-                   "\"base_word\": \"fi\","
-                   "\"pos_start\": 6,"
-                   "\"pos_end\": 7,"
-                   "\"add_space\": false,"
-                   "\"list\": ["
-                   "\"fifo\","
-                   "\"fifo.file.enabled\","
-                   "\"fifo.file.path\","
-                   "\"filter\"]}");
 
     /* completion core.weechat 5 /quernick */
     test_client_recv_http("POST /api/completion",
@@ -683,22 +670,13 @@ TEST(RelayApiProtocolWithClient, CbCompletion)
     CHECK(cJSON_IsObject (json));
     WEE_CHECK_OBJ_STR("command", json, "context");
     WEE_CHECK_OBJ_STR("quer", json, "base_word");
-    WEE_CHECK_OBJ_NUM(1, json, "pos_start");
-    WEE_CHECK_OBJ_NUM(4, json, "pos_end");
+    WEE_CHECK_OBJ_NUM(1, json, "position_replace");
     WEE_CHECK_OBJ_BOOL(1, json, "add_space");
     json_array = cJSON_GetObjectItem(json, "list");
     CHECK(json_array);
     CHECK(cJSON_IsArray(json_array));
     CHECK(cJSON_GetArraySize(json_array) == 1);
     STRCMP_EQUAL("query", cJSON_GetStringValue(cJSON_GetArrayItem(json_array, 0)));
-
-    WEE_CHECK_TEXT(200, "OK", "POST /api/completion",
-                   "{\"context\": \"command\","
-                   "\"base_word\": \"quer\","
-                   "\"pos_start\": 1,"
-                   "\"pos_end\": 4,"
-                   "\"add_space\": true,"
-                   "\"list\": [\"query\"]}");
 }
 
 /*

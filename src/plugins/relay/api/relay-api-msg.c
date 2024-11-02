@@ -780,9 +780,63 @@ relay_api_msg_hotlist_to_json (struct t_gui_hotlist *hotlist)
 cJSON *
 relay_api_msg_completion_to_json(struct t_gui_completion *completion)
 {
-    // TODO: currently unused:
-    (void)completion;
+    struct t_hdata *hdata;
+    struct t_gui_completion *pointer;
+    struct t_gui_completion_word *word;
+    const char *ptr_string;
+    struct t_arraylist *ptr_list;
+    cJSON *json, *json_array;
+    int context, add_space, i, size;
 
-    cJSON *json = cJSON_CreateObject();
+    hdata = relay_hdata_completion;
+    pointer = completion;
+
+    json = cJSON_CreateObject();
+    if (!json)
+        return NULL;
+
+    if (!completion)
+        return json;
+
+    ptr_list = weechat_hdata_pointer (relay_hdata_completion, completion, "list");
+    if (!ptr_list)
+        return json;
+
+    /* context */
+    context = weechat_hdata_integer(relay_hdata_completion, completion,
+                                    "context");
+    switch (context)
+    {
+    case 1:
+        MSG_ADD_STR_PTR("context", "command");
+        break;
+    case 2:
+        MSG_ADD_STR_PTR("context", "command_arg");
+        break;
+    case 3:
+        MSG_ADD_STR_PTR("context", "auto");
+        break;
+    default:
+        break;
+    }
+
+    MSG_ADD_HDATA_STR("base_word", "base_word");
+    MSG_ADD_HDATA_VAR(Number, "position_replace", integer, "position_replace");
+
+    add_space = weechat_hdata_integer(relay_hdata_completion,
+                                      completion, "add_space");
+    cJSON_AddItemToObject(json, "add_space", cJSON_CreateBool(add_space));
+
+    json_array = cJSON_CreateArray();
+    size = weechat_arraylist_size(ptr_list);
+    for (i = 0; i < size; i++) {
+
+        word = (struct t_gui_completion_word *)weechat_arraylist_get(
+            ptr_list, i);
+        cJSON_AddItemToArray(json_array, cJSON_CreateString(
+            weechat_hdata_string(relay_hdata_completion_word, word, "word")));
+    }
+    cJSON_AddItemToObject(json, "list", json_array);
+
     return json;
 }
