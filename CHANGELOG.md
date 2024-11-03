@@ -4,6 +4,7 @@
 
 ### Fixed
 
+- core: fix too many sorts of hotlist when buffers are moved ([#2097](https://github.com/weechat/weechat/issues/2097))
 - relay, xfer: fix letters with actions displayed on top of buffer
 
 ## Version 4.4.3 (2024-10-30)
