@@ -685,7 +685,7 @@ RELAY_API_PROTOCOL_CALLBACK(completion)
     if (!json_body)
         return RELAY_API_PROTOCOL_RC_BAD_REQUEST;
 
-    /* Get buffer either bei ID or by name */
+    /* Get buffer either by ID or by name */
     ptr_buffer = NULL;
     json_buffer_id = cJSON_GetObjectItem(json_body, "buffer_id");
     if (json_buffer_id)
@@ -699,11 +699,11 @@ RELAY_API_PROTOCOL_CALLBACK(completion)
             {
                 relay_api_msg_send_error_json(
                     client,
-                    RELAY_HTTP_404_NOT_FOUND, NULL,
+                    RELAY_HTTP_400_BAD_REQUEST, NULL,
                     "Buffer \"%lld\" not found",
                     (long long)cJSON_GetNumberValue(json_buffer_id));
                 cJSON_Delete(json_body);
-                return RELAY_API_PROTOCOL_RC_OK;
+                return RELAY_API_PROTOCOL_RC_BAD_REQUEST;
             }
         }
     }
@@ -720,11 +720,11 @@ RELAY_API_PROTOCOL_CALLBACK(completion)
                 {
                     relay_api_msg_send_error_json(
                         client,
-                        RELAY_HTTP_404_NOT_FOUND, NULL,
+                        RELAY_HTTP_400_BAD_REQUEST, NULL,
                         "Buffer \"%s\" not found",
                         ptr_buffer_name);
                     cJSON_Delete(json_body);
-                    return RELAY_API_PROTOCOL_RC_OK;
+                    return RELAY_API_PROTOCOL_RC_BAD_REQUEST;
                 }
             }
         }
@@ -779,6 +779,7 @@ RELAY_API_PROTOCOL_CALLBACK(completion)
 
     cJSON_Delete(json_response);
     cJSON_Delete(json_body);
+    weechat_completion_free(ptr_completion);
     return RELAY_API_PROTOCOL_RC_OK;
 }
 

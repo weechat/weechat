@@ -595,7 +595,7 @@ TEST(RelayApiProtocolWithClient, CbHotlist)
     CHECK(cJSON_IsNumber (json_obj));
     CHECK(4 == cJSON_GetNumberValue (json_obj));
 
-    gui_hotlist_remove_buffer(gui_buffers, 1);
+    gui_hotlist_remove_buffer (gui_buffers, 1);
 }
 
 /*
@@ -622,8 +622,8 @@ TEST(RelayApiProtocolWithClient, CbCompletion)
                           NULL,
                           "{\"buffer_name\": \"invalid\", "
                           "\"data\": \"test\"}");
-    WEE_CHECK_HTTP_CODE(404, "Not Found");
-    STRCMP_EQUAL("HTTP/1.1 404 Not Found\r\n"
+    WEE_CHECK_HTTP_CODE(400, "Bad Request");
+    STRCMP_EQUAL("HTTP/1.1 400 Bad Request\r\n"
                  "Access-Control-Allow-Origin: *\r\n"
                  "Content-Type: application/json; charset=utf-8\r\n"
                  "Content-Length: 41\r\n"
