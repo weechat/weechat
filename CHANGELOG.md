@@ -27,6 +27,7 @@
 - exec: fix unexpected execution of command with `/exec -o` when the command starts with two command chars ([#2199](https://github.com/weechat/weechat/issues/2199))
 - relay/api: fix empty nicklist in remote buffers after connection or reconnection
 - relay/api: reply HTTP 400 (Bad Request) when the body received is not a dict in websocket data
+- core: fix too many sorts of hotlist when buffers are moved ([#2097](https://github.com/weechat/weechat/issues/2097))
 - core: always send the signal "buffer_switch", even when the buffer is opening ([#2198](https://github.com/weechat/weechat/issues/2198))
 - core: reload all plugins with command `/plugin reload *`
 - relay, xfer: fix letters with actions displayed on top of buffer
