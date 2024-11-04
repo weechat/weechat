@@ -36,7 +36,6 @@
 #include <ctype.h>
 
 #include "../core/weechat.h"
-#include "../core/core-arraylist.h"
 #include "../core/core-config.h"
 #include "../core/core-eval.h"
 #include "../core/core-hashtable.h"
@@ -4463,8 +4462,6 @@ gui_buffer_merge (struct t_gui_buffer *buffer,
                   struct t_gui_buffer *target_buffer)
 {
     struct t_gui_buffer *ptr_buffer, *ptr_first_buffer[2], *ptr_last_buffer[2];
-    struct t_arraylist *buffers_moved;
-    int i, list_size;
 
     if (!buffer || !target_buffer)
         return;
@@ -4509,9 +4506,15 @@ gui_buffer_merge (struct t_gui_buffer *buffer,
     if (!ptr_first_buffer[1] || !ptr_last_buffer[1])
         return;
 
-    buffers_moved = arraylist_new (32, 0, 1, NULL, NULL, NULL, NULL);
-    if (!buffers_moved)
-        return;
+    /*
+     * save old buffer numbers to send signal "buffer_moved" for each buffer
+     * really moved, after the merge operation
+     */
+    for (ptr_buffer = gui_buffers; ptr_buffer;
+         ptr_buffer = ptr_buffer->next_buffer)
+    {
+        ptr_buffer->old_number = ptr_buffer->number;
+    }
 
     /* remove buffer(s) to merge from list */
     if (ptr_first_buffer[0]->prev_buffer)
@@ -4529,7 +4532,6 @@ gui_buffer_merge (struct t_gui_buffer *buffer,
         for (ptr_buffer = ptr_last_buffer[0]->next_buffer; ptr_buffer;
              ptr_buffer = ptr_buffer->next_buffer)
         {
-            arraylist_add (buffers_moved, ptr_buffer);
             ptr_buffer->number--;
         }
     }
@@ -4548,7 +4550,6 @@ gui_buffer_merge (struct t_gui_buffer *buffer,
          ptr_buffer = ptr_buffer->next_buffer)
     {
         ptr_buffer->number = target_buffer->number;
-        arraylist_add (buffers_moved, ptr_buffer);
         if (ptr_buffer == ptr_last_buffer[0])
             break;
     }
@@ -4567,19 +4568,16 @@ gui_buffer_merge (struct t_gui_buffer *buffer,
                                    "buffer_merged",
                                    WEECHAT_HOOK_SIGNAL_POINTER, buffer);
 
-    list_size = arraylist_size (buffers_moved);
-    for (i = 0; i < list_size; i++)
+    for (ptr_buffer = gui_buffers; ptr_buffer;
+         ptr_buffer = ptr_buffer->next_buffer)
     {
-        ptr_buffer = (struct t_gui_buffer *)arraylist_get (buffers_moved, i);
-        if (ptr_buffer)
+        if (ptr_buffer->number != ptr_buffer->old_number)
         {
             (void) gui_buffer_send_signal (ptr_buffer,
                                            "buffer_moved",
                                            WEECHAT_HOOK_SIGNAL_POINTER, ptr_buffer);
         }
     }
-
-    arraylist_free (buffers_moved);
 }
 
 /*
