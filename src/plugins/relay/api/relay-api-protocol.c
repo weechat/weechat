@@ -846,7 +846,7 @@ RELAY_API_PROTOCOL_CALLBACK(input)
             {
                 relay_api_msg_send_error_json (
                     client,
-                    RELAY_HTTP_404_NOT_FOUND, NULL,
+                    RELAY_HTTP_400_BAD_REQUEST, NULL,
                     "Buffer \"%lld\" not found",
                     (long long)cJSON_GetNumberValue (json_buffer_id));
                 cJSON_Delete (json_body);
@@ -867,7 +867,7 @@ RELAY_API_PROTOCOL_CALLBACK(input)
                 {
                     relay_api_msg_send_error_json (
                         client,
-                        RELAY_HTTP_404_NOT_FOUND, NULL,
+                        RELAY_HTTP_400_BAD_REQUEST, NULL,
                         "Buffer \"%s\" not found",
                         ptr_buffer_name);
                     cJSON_Delete (json_body);
