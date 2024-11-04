@@ -95,8 +95,8 @@ char *gui_buffer_notify_string[GUI_BUFFER_NUM_NOTIFY] =
 { "none", "highlight", "message", "all" };
 
 char *gui_buffer_properties_get_integer[] =
-{ "opening", "number", "layout_number", "layout_number_merge_order", "type",
-  "notify", "num_displayed", "active", "hidden", "zoomed",
+{ "opening", "number", "old_number", "layout_number", "layout_number_merge_order",
+  "type", "notify", "num_displayed", "active", "hidden", "zoomed",
   "print_hooks_enabled", "day_change", "clear", "filter", "closing",
   "lines_hidden", "prefix_max_length", "next_line_id", "time_for_each_line",
   "nicklist", "nicklist_case_sensitive", "nicklist_max_length",
@@ -451,7 +451,8 @@ gui_buffer_find_pos (struct t_gui_buffer *buffer)
  */
 
 void
-gui_buffer_shift_numbers (struct t_gui_buffer *buffer)
+gui_buffer_shift_numbers (struct t_gui_buffer *buffer,
+                          int send_signal_buffer_moved)
 {
     struct t_gui_buffer *ptr_buffer;
 
@@ -463,10 +464,13 @@ gui_buffer_shift_numbers (struct t_gui_buffer *buffer)
             break;
         }
         ptr_buffer->number++;
-        (void) gui_buffer_send_signal (ptr_buffer,
-                                       "buffer_moved",
-                                       WEECHAT_HOOK_SIGNAL_POINTER,
-                                       ptr_buffer);
+        if (send_signal_buffer_moved)
+        {
+            (void) gui_buffer_send_signal (ptr_buffer,
+                                           "buffer_moved",
+                                           WEECHAT_HOOK_SIGNAL_POINTER,
+                                           ptr_buffer);
+        }
     }
 }
 
@@ -560,7 +564,11 @@ gui_buffer_insert (struct t_gui_buffer *buffer)
             gui_buffers = buffer;
         pos_buffer->prev_buffer = buffer;
         if (buffer->number == pos_buffer->number)
-            gui_buffer_shift_numbers (pos_buffer);
+        {
+            gui_buffer_shift_numbers (
+                pos_buffer,
+                1);  /* send_signal_buffer_moved */
+        }
     }
     else
     {
@@ -4228,6 +4236,16 @@ gui_buffer_move_to_number (struct t_gui_buffer *buffer, int number)
         return;
     }
 
+    /*
+     * save old buffer numbers to send signal "buffer_moved" for each buffer
+     * really moved, after the move operation
+     */
+    for (ptr_buffer = gui_buffers; ptr_buffer;
+         ptr_buffer = ptr_buffer->next_buffer)
+    {
+        ptr_buffer->old_number = ptr_buffer->number;
+    }
+
     /* remove buffer(s) from list */
     if (ptr_first_buffer->prev_buffer)
         (ptr_first_buffer->prev_buffer)->next_buffer = ptr_last_buffer->next_buffer;
@@ -4280,7 +4298,9 @@ gui_buffer_move_to_number (struct t_gui_buffer *buffer, int number)
         if (ptr_last_buffer->next_buffer
             && (ptr_last_buffer->next_buffer->number == number))
         {
-            gui_buffer_shift_numbers (ptr_last_buffer->next_buffer);
+            gui_buffer_shift_numbers (
+                ptr_last_buffer->next_buffer,
+                0);  /* send_signal_buffer_moved */
         }
     }
     else
@@ -4303,9 +4323,16 @@ gui_buffer_move_to_number (struct t_gui_buffer *buffer, int number)
         last_gui_buffer = ptr_last_buffer;
     }
 
-    (void) gui_buffer_send_signal (buffer,
-                                   "buffer_moved",
-                                   WEECHAT_HOOK_SIGNAL_POINTER, buffer);
+    for (ptr_buffer = gui_buffers; ptr_buffer;
+         ptr_buffer = ptr_buffer->next_buffer)
+    {
+        if (ptr_buffer->number != ptr_buffer->old_number)
+        {
+            (void) gui_buffer_send_signal (ptr_buffer,
+                                           "buffer_moved",
+                                           WEECHAT_HOOK_SIGNAL_POINTER, ptr_buffer);
+        }
+    }
 }
 
 /*
@@ -4651,7 +4678,9 @@ gui_buffer_unmerge (struct t_gui_buffer *buffer, int number)
     if (buffer->next_buffer
         && (buffer->next_buffer->number == number))
     {
-        gui_buffer_shift_numbers (buffer->next_buffer);
+        gui_buffer_shift_numbers (
+            buffer->next_buffer,
+            1);  /* send_signal_buffer_moved */
     }
 
     gui_buffer_compute_num_displayed ();
@@ -5246,6 +5275,7 @@ gui_buffer_hdata_buffer_cb (const void *pointer, void *data,
         HDATA_VAR(struct t_gui_buffer, plugin, POINTER, 0, NULL, "plugin");
         HDATA_VAR(struct t_gui_buffer, plugin_name_for_upgrade, STRING, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, number, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_buffer, old_number, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, layout_number, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, layout_number_merge_order, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, name, STRING, 0, NULL, NULL);
@@ -5443,6 +5473,8 @@ gui_buffer_add_to_infolist (struct t_infolist *infolist,
                                   gui_buffer_get_plugin_name (buffer)))
         return 0;
     if (!infolist_new_var_integer (ptr_item, "number", buffer->number))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "old_number", buffer->old_number))
         return 0;
     if (!infolist_new_var_integer (ptr_item, "layout_number", buffer->layout_number))
         return 0;
@@ -5706,6 +5738,7 @@ gui_buffer_print_log ()
                     ptr_buffer->plugin, gui_buffer_get_plugin_name (ptr_buffer));
         log_printf ("  plugin_name_for_upgrade : '%s'", ptr_buffer->plugin_name_for_upgrade);
         log_printf ("  number. . . . . . . . . : %d", ptr_buffer->number);
+        log_printf ("  old_number. . . . . . . : %d", ptr_buffer->old_number);
         log_printf ("  layout_number . . . . . : %d", ptr_buffer->layout_number);
         log_printf ("  layout_number_merge_order: %d", ptr_buffer->layout_number_merge_order);
         log_printf ("  name. . . . . . . . . . : '%s'", ptr_buffer->name);
