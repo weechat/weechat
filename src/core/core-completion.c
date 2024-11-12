@@ -1016,6 +1016,33 @@ completion_list_add_filters_enabled_cb (const void *pointer, void *data,
 }
 
 /*
+ * Adds command hook types to completion list.
+ */
+
+int
+completion_list_add_hook_types_cb (const void *pointer, void *data,
+                                   const char *completion_item,
+                                   struct t_gui_buffer *buffer,
+                                   struct t_gui_completion *completion)
+{
+    int i;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) completion_item;
+    (void) buffer;
+
+    for (i = 0; i < HOOK_NUM_TYPES; i++)
+    {
+        gui_completion_list_add (completion, hook_type_string[i],
+                                 0, WEECHAT_LIST_POS_SORT);
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Adds command hooks to completion list.
  */
 
@@ -2276,6 +2303,9 @@ completion_init ()
     hook_completion (NULL, "filters_names_enabled",
                      N_("names of enabled filters"),
                      &completion_list_add_filters_enabled_cb, NULL, NULL);
+    hook_completion (NULL, "hook_types",
+                     N_("hook types"),
+                     &completion_list_add_hook_types_cb, NULL, NULL);
     hook_completion (NULL, "commands", /* formerly "%h" */
                      N_("commands (weechat and plugins); "
                         "optional argument: prefix to add before the commands"),
