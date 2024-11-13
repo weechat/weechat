@@ -570,7 +570,7 @@ weechat_perl_load (const char *filename, const char *code)
                 perl_args_count, perl_args, NULL);
 #if PERL_REVISION >= 6 || (PERL_REVISION == 5 && PERL_VERSION >= 38)
     /* restore the locale that could be changed by Perl >= 5.38 */
-    Perl_setlocale (LC_CTYPE, "");
+    Perl_setlocale (LC_ALL, "");
 #endif
     length = strlen (perl_weechat_code) + strlen (str_warning) +
         strlen (str_error) - 2 + 4 + strlen ((code) ? code : filename) + 4 + 1;
@@ -1303,7 +1303,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
                 perl_args, NULL);
 #if PERL_REVISION >= 6 || (PERL_REVISION == 5 && PERL_VERSION >= 38)
     /* restore the locale that could be changed by Perl >= 5.38 */
-    Perl_setlocale (LC_CTYPE, "");
+    Perl_setlocale (LC_ALL, "");
 #endif
 #endif /* MULTIPLICITY */
 
