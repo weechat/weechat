@@ -2156,9 +2156,15 @@ COMMAND_CALLBACK(debug)
     if (string_strcmp (argv[1], "hooks") == 0)
     {
         if (argc > 2)
-            debug_hooks_plugin (argv[2]);
+        {
+            debug_hooks_plugin_types (
+                argv[2],
+                (argc > 3) ? (const char **)&argv[3] : NULL);
+        }
         else
+        {
             debug_hooks ();
+        }
         return WEECHAT_RC_OK;
     }
 
@@ -8311,7 +8317,8 @@ command_init ()
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated */
         N_("list"
            " || set <plugin> <level>"
-           " || dump|hooks [<plugin>]"
+           " || dump [<plugin>]"
+           " || hooks [<plugin_mask> [<hook_type>...]]"
            " || buffer|certs|color|dirs|infolists|key|libs|memory|tags|"
            "term|url|windows"
            " || callbacks <duration>[<unit>]"
@@ -8328,6 +8335,8 @@ command_init ()
                "written when WeeChat crashes)"),
             N_("raw[hooks]: display infos about hooks (with a plugin: display "
                "detailed info about hooks created by the plugin)"),
+            N_("plugin_mask: plugin mask, \"*\" for all plugins"),
+            N_("hook_type: hook type"),
             N_("raw[buffer]: dump buffer content with hexadecimal values in WeeChat "
                "log file"),
             N_("raw[callbacks]: write hook and bar item callbacks that took more than "
@@ -8363,6 +8372,7 @@ command_init ()
             AI("  /debug set irc 1"),
             AI("  /debug mouse verbose"),
             AI("  /debug time /filter toggle"),
+            AI("  /debug hooks * process connect url"),
             AI("  /debug unicode ${chars:${\\u26C0}-${\\u26CF}}")),
         "list"
         " || set %(plugins_names)|" PLUGIN_CORE
@@ -8374,7 +8384,7 @@ command_init ()
         " || cursor verbose"
         " || dirs"
         " || hdata free"
-        " || hooks %(plugins_names)|" PLUGIN_CORE
+        " || hooks %(plugins_names)|" PLUGIN_CORE " %(hook_types)|%*"
         " || infolists"
         " || key"
         " || libs"
