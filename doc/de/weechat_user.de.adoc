@@ -935,8 +935,7 @@ Die _status_-Bar besitzt als Standardeinträge:
 | scroll                | `-MORE(50)-`           | Scroll Indikator, zeigt an wie viele Zeilen unterhalb der zur Zeit dargestellten Zeile vorhanden sind.
 | lag                   | `Lag: 2.5`             | Verzögerungsanzeige, in Sekunden (keine Anzeige falls Verzögerung gering).
 | hotlist               | `H: 3:#abc(2,5), 5`    | Liste der Buffer mit Aktivität (ungelesene Nachrichten) (für das Beispiel: 2 Highlights und 5 ungelesene Nachrichten im Kanal _#abc_, eine ungelesene Nachricht in Buffer #5).
-// TRANSLATION MISSING
-| typing                | `Typing: bob, (alice)` | Typing notification, see <<typing_notifications,Schreibbenachrichtigung>>.
+| typing                | `Typing: bob, (alice)` | Schreibbenachrichtigung, siehe <<typing_notifications,Schreibbenachrichtigung>>.
 | completion            | `abc(2) def(5)`        | Liste von Wörtern für Vervollständigung, die Zahl zeigt an wie viele Varianten möglich sind.
 |===
 
@@ -999,8 +998,7 @@ andere Items die zur Verfügung stehen (die aber nicht standardmäßig in einer 
 | irc_nick_host                | `+Flashy!user@host.com+` | aktueller IRC Nick und Host.
 | irc_nick_modes               | `i`                      | IRC Modi für den eigenen Nick.
 | irc_nick_prefix              | `@`                      | IRC Nick-Präfix für den Kanal.
-// TRANSLATION MISSING
-| spacer                       |                          | Special item used to align text in bars, see <<item_spacer,Spacer item>>.
+| spacer                       |                          | spezielles Item um Text in einer Bar auszurichten, siehe <<item_spacer,Spacer item>>.
 | spell_dict                   | `de,en`                  | zeigt an welche Wörterbücher für die Rechtschreibung im aktuellen Buffer genutzt werden.
 | spell_suggest                | `Glück,Glocke,Block`     | Vorschläge für ein falsch geschriebenes Wort.
 | tls_version                  | `TLS1.3`                 | TLS Version die für den IRC Server genutzt wird.
