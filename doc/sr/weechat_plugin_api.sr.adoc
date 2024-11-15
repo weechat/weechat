@@ -10878,12 +10878,9 @@ struct t_hook *weechat_hook_connect (const char *proxy,
 * _address_: име или IP адреса са којом се повезује
 * _port_: број порта
 * _ipv6_:
-// TRANSLATION MISSING
-** `WEECHAT_HOOK_CONNECT_IPV6_DISABLE` ^(1)^: disable IPv6 (use only IPv4)
-// TRANSLATION MISSING
-** `WEECHAT_HOOK_CONNECT_IPV6_AUTO` ^(1)^: use IPv6 with fallback to IPv4
-// TRANSLATION MISSING
-** `WEECHAT_HOOK_CONNECT_IPV6_FORCE` ^(1)^: force IPv6 (do not use IPv4) _(WeeChat ≥ 4.4.0)_
+** `WEECHAT_HOOK_CONNECT_IPV6_DISABLE` ^(1)^: искључује IPv6 (користи се само IPv4)
+** `WEECHAT_HOOK_CONNECT_IPV6_AUTO` ^(1)^: користи се IPv6 са преласком на IPv4 по потреби
+** `WEECHAT_HOOK_CONNECT_IPV6_FORCE` ^(1)^: форсира се IPv6 (не користи се IPv4) _(WeeChat ≥ 4.4.0)_
 * _retry_: број поновних покушаја, користи се за прелаз на IPv4 хостове ако се IPv6 хостови успостављају везу али онда не прихватају клијента
 * _gnutls_sess_: GnuTLS сесија (није обавезна)
 * _gnutls_cb_: GnuTLS функција повратног позива (није обавезна)
@@ -10921,11 +10918,10 @@ struct t_hook *weechat_hook_connect (const char *proxy,
 * _callback_pointer_: показивач који се прослеђује функцији повратног позива када је позове програм WeeChat
 * _callback_data_: показивач који се прослеђује функцији повратног позива када је позове програм WeeChat; ако није NULL, алоцирала га је malloc (или нека слична функција) и аутоматски се ослобађа када се кука обрише
 
-// TRANSLATION MISSING
 [NOTE]
-^(1)^ Constants for parameter _ipv6_ are available since WeeChat 4.4.0. +
-For older releases, allowed values are `1` (use IPv6 with fallback to IPv4) and
-`0` (disable IPv6, use only IPv4). +
+^(1)^ Констате за параметар _ipv6_ су доступне почевши од WeeChat 4.4.0. +
+У старијим издањима су дозвољене вредности `1` (користи се IPv6 са преласком на IPv4 у случају потребе) и
+`0` (искључује се IPv6, користи се само IPv4). +
 ^(2)^ У скриптама и програмом WeeChat ≥ 2.0, аргументи функције повратног позива _status_, _gnutls_rc_ и _sock_ су цели бројеви (у програму WeeChat ≤ 1.9, били су стрингови). +
 Да би се одржала компатибилност са свим верзијама, препоручује се да аргумент пре употребе конвертујете у цео број, на пример у језику Python: `int(sock)`.
 
@@ -11854,8 +11850,7 @@ struct t_hook *weechat_hook_signal (const char *signal,
 
 | weechat | [[hook_signal_buffer_time_for_each_line_changed]] buffer_time_for_each_line_changed | 4.4.0
 | Показивач: бафер.
-// TRANSLATION MISSING
-| Display time for each line changed.
+| Време приказа за сваку измењену линију.
 
 | weechat | [[hook_signal_buffer_type_changed]] buffer_type_changed |
 | Показивач: бафер.
@@ -11967,15 +11962,13 @@ struct t_hook *weechat_hook_signal (const char *signal,
 | Стринг: комбинација тастера.
 | Комбинација тастера у _cursor_ контексту.
 
-// TRANSLATION MISSING
 | weechat | [[hook_signal_layout_buffers_applied]] layout_buffers_applied | 4.4.0
-| String: layout name.
-| Layout applied for buffers.
+| Стринг: име распореда.
+| Распоред који се примењује за бафере.
 
-// TRANSLATION MISSING
 | weechat | [[hook_signal_layout_windows_applied]] layout_windows_applied | 4.4.0
-| String: layout name.
-| Layout applied for windows.
+| Стринг: име распореда.
+| Распоред који се примењује за прозоре.
 
 | weechat | [[hook_signal_mouse_enabled]] mouse_enabled | 1.1
 | - |
@@ -14446,12 +14439,11 @@ void weechat_buffer_set (struct t_gui_buffer *buffer, const char *property,
   се *НЕ* проверавају) +
   "-1": уклања бафер из вруће листе _(WeeChat ≥ 1.0)_.
 
-// TRANSLATION MISSING
 | hotlist_conditions | 4.5.0 | WEECHAT_HOTLIST_LOW, WEECHAT_HOTLIST_MESSAGE,
   WEECHAT_HOTLIST_PRIVATE, WEECHAT_HOTLIST_HIGHLIGHT
-| priority: add buffer to hotlist with this priority
-  (conditions defined in option _weechat.look.hotlist_add_conditions_
-  are checked).
+| приоритет: бафер се на врућу листу додаје са овим приоритетом
+  (услови дефинисани у опцији _weechat.look.hotlist_add_conditions_
+  се проверавају).
 
 | completion_freeze | | "0" или "1"
 | "0": нема замрзавања довршавања (подразумевана вредност)
@@ -16421,14 +16413,12 @@ int weechat_command_options (struct t_gui_buffer *buffer, const char *command,
 Аргументи:
 
 * _buffer_: показивач на бафер (команда се извршава у овом баферу, употребите NULL за текући бафер)
-// TRANSLATION MISSING
-* _command_: команда која се извршава (if beginning with a `/` or a command char), или текст који се шаље у бафер
+* _command_: команда која се извршава (ако почиње са `/` или командним карактером), или текст који се шаље у бафер
 * _options_: хеш табела са неким опцијама (кључеви и вредности морају бити стринг) (може да буде NULL):
-// TRANSLATION MISSING
 ** _commands_: листа команди које смеју да се изврше током овог позива раздвојене запетама
    (за формат, погледајте функцију <<_string_match_list,string_match_list>>);
-   the special value `-` (hyphen-minus) disables the execution of commands
-   and the string in _command_ is sent as-is to the buffer (_WeeChat ≥ 4.5.0_)
+   специјална вредност `-` (цртица-минус) искључује извршавање команди
+   и стрингу _command_ се шаље у бафер онакав какав је (_WeeChat ≥ 4.5.0_)
 ** _delay_: пауза за извршавање команде, у милисекундама
 ** _split_newline_: `1` да се команде поделе на карактеру прелома линије (`\n`) (_WeeChat ≥ 4.0.0_)
 
