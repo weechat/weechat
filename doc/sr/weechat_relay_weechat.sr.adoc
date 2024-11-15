@@ -2004,8 +2004,7 @@ hda:
 
 Ова порука се шаље клијенту онда када WeeChat пошаље сигнал „buffer_line_data_changed”.
 
-// TRANSLATION MISSING
-Data sent as hdata: same data as <<message_buffer_line_added,_buffer_line_added>>.
+Подаци се шаљу као hdata: исти подаци као <<message_buffer_line_added,_buffer_line_added>>.
 
 Пример: порука _hello!_ од надимка _FlashCode_ у баферу _irc.libera.#weechat_ је ажурирана:
 
