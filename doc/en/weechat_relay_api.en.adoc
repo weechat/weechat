@@ -101,7 +101,9 @@ Examples:
 [[authentication]]
 == Authentication
 
-The password must be sent in the header `Authorization` with `Basic` authentication schema.
+The password must be sent in the header `Authorization` with `Basic`
+authentication schema or in the header `Sec-WebSocket-Protocol` (see details
+below).
 
 The password can be sent as plain text or hashed, with one of these formats
 for user and password:
@@ -135,8 +137,8 @@ Example:
   `hash:sha256:1706431066:dfa1db3f6bb6445d18d9ec7427c10f6421274e3a4751e6c1ffc7dd28c94eadf6`:
   `aGFzaDpzaGEyNTY6MTcwNjQzMTA2NjpkZmExZGIzZjZiYjY0NDVkMThkOWVjNzQyN2MxMGY2NDIxMjc0ZTNhNDc1MWU2YzFmZmM3ZGQyOGM5NGVhZGY2`.
 
-The header `Authorization` is allowed in the first request with websocket protocol
-or any HTTP request in the other cases.
+The headers `Authorization` and `Sec-WebSocket-Protocol` are allowed in the first
+request with the websocket protocol or any HTTP request in the other cases.
 
 Request example with plain text password:
 
@@ -260,6 +262,37 @@ HTTP/1.1 401 Unauthorized
 {
     "error": "Invalid TOTP"
 }
+----
+
+[[authentication_sec_websocket_protocol]]
+=== Sec-WebSocket-Protocol
+
+The JavaScript WebSocket API used in current web browsers does not support
+specifying the `Authorization` header. Therefore it's also supported to send
+the password in the `Sec-WebSocket-Protocol` header which is the only header
+possible to set with this API.
+
+To use this header, you must specify the sub-protocols `api.weechat` and
+`base64url.bearer.authorization.weechat.<auth>` where `<auth>` is the base64url
+encoded string of the password in the same format as explained above.
+
+Example with password `secret_password` encoded in plain text. This makes the
+string to base64url encode `plain:secret_password` which is
+`cGxhaW46c2VjcmV0X3Bhc3N3b3Jk`.
+
+[source,http]
+----
+Sec-WebSocket-Protocol: api.weechat, base64url.bearer.authorization.weechat.cGxhaW46c2VjcmV0X3Bhc3N3b3Jk
+----
+
+This can be set with the JavaScript WebSocket API like this:
+
+[source,javascript]
+----
+const ws = new WebSocket("wss://localhost:9000/api", [
+  "api.weechat",
+  "base64url.bearer.authorization.weechat.cGxhaW46c2VjcmV0X3Bhc3N3b3Jk",
+])
 ----
 
 [[compression]]
