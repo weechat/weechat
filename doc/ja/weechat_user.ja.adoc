@@ -6071,7 +6071,7 @@ For privacy considerations, the download of scripts is disabled by default. +
 To enable it, type this command:
 
 ----
-/set script.scripts.download_enabled on
+/script enable
 ----
 
 // TRANSLATION MISSING

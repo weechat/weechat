@@ -5848,7 +5848,7 @@ W trosce o prywatność pobieranie skryptów jest domyślnie wyłąćzone. +
 Żeby je włączyć, wpisz poniższe polecenie:
 
 ----
-/set script.scripts.download_enabled on
+/script enable
 ----
 
 Następnie możesz pobrać listę skryptów i wyświetlić je w nowym buforze

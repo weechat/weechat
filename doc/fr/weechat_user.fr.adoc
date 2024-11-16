@@ -5979,7 +5979,7 @@ désactivé par défaut. +
 Pour l'activer, tapez cette commande :
 
 ----
-/set script.scripts.download_enabled on
+/script enable
 ----
 
 Vous pouvez alors télécharger la liste des scripts et les afficher dans un tampon

@@ -5901,7 +5901,7 @@ Aus Datenschutzgründen ist das Herunterladen von Skripten standardmäßig deakt
 Um es zu aktivieren, geben Sie diesen Befehl ein:
 
 ----
-/set script.scripts.download_enabled on
+/script enable
 ----
 
 Dann können Sie die Liste der Skripte herunterladen und in einem separaten Buffer,
