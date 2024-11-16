@@ -2213,27 +2213,27 @@ Example of fset buffer displaying options starting with `weechat.look` :
 [subs="quotes"]
 ....
 ┌──────────────────────────────────────────────────────────────────────────────────────┐
-│1.weechat│1/121 | Filter: weechat.look.* | Sort: ~name | Key(input): alt+space=toggle │
-│2.fset   │weechat.look.bare_display_exit_on_input: exit the bare display mode on any c│
-│         │hanges in input [default: on]                                               │
+│1.weechat│7/125 | Filter: weechat.look.* | Sort: ~name | Key(input): alt+space=toggl>>│
+│2.fset   │weechat.look.bare_display_exit_on_input: 入力の変更に対する最小限表示モード │
+│         │を終了する [デフォルト: on]                                                 │
 │         │----------------------------------------------------------------------------│
-│         │  weechat.look.align_end_of_lines                   enum     message        │
-│         │  weechat.look.align_multiline_words                boolean  on             │
-│         │  weechat.look.bar_more_down                        string   "++"           │
-│         │  weechat.look.bar_more_left                        string   "<<"           │
-│         │  weechat.look.bar_more_right                       string   ">>"           │
-│         │  weechat.look.bar_more_up                          string   "--"           │
-│         │##  weechat.look.bare_display_exit_on_input           boolean  on             ##│
-│         │  weechat.look.bare_display_time_format             string   "%H:%M"        │
-│         │  weechat.look.buffer_auto_renumber                 boolean  on             │
-│         │  weechat.look.buffer_notify_default                enum     all            │
-│         │  weechat.look.buffer_position                      enum     end            │
-│         │  weechat.look.buffer_search_case_sensitive         boolean  off            │
-│         │  weechat.look.buffer_search_force_default          boolean  off            │
-│         │  weechat.look.buffer_search_regex                  boolean  off            │
-│         │  weechat.look.buffer_search_where                  enum     prefix_message │
-│         │  weechat.look.buffer_time_format                   string   "%H:%M:%S"     │
-│         │  weechat.look.buffer_time_same                     string   ""             │
+│         │  weechat.look.align_end_of_lines              enum    message              │
+│         │  weechat.look.align_multiline_words           ブール  on                   │
+│         │  weechat.look.bar_more_down                   文字列  "++"                 │
+│         │  weechat.look.bar_more_left                   文字列  "<<"                 │
+│         │  weechat.look.bar_more_right                  文字列  ">>"                 │
+│         │  weechat.look.bar_more_up                     文字列  "--"                 │
+│         │##  weechat.look.bare_display_exit_on_input      ブール  on                   ##│
+│         │  weechat.look.bare_display_time_format        文字列  "%H:%M"              │
+│         │  weechat.look.buffer_auto_renumber            ブール  on                   │
+│         │  weechat.look.buffer_notify_default           enum    all                  │
+│         │  weechat.look.buffer_position                 enum    end                  │
+│         │  weechat.look.buffer_search_case_sensitive    ブール  off                  │
+│         │  weechat.look.buffer_search_force_default     ブール  off                  │
+│         │  weechat.look.buffer_search_history           enum    local                │
+│         │  weechat.look.buffer_search_regex             ブール  off                  │
+│         │  weechat.look.buffer_search_where             enum    prefix_message       │
+│         │  weechat.look.buffer_time_format              文字列  "%H:%M:%S"           │
 │         │[12:55] [2] [fset] 2:fset                                                   │
 │         │█                                                                           │
 └──────────────────────────────────────────────────────────────────────────────────────┘
