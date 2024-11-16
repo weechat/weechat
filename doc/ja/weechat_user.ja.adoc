@@ -3609,12 +3609,14 @@ weechat irc://alice@irc.libera.chat/#weechat,#weechat-fr
 By default no servers are defined. You can add as many servers as you want with
 the <<command_irc_server,/server>> command.
 
-For example to connect to https://libera.chat/[libera.chat ^↗^^]
-with TLS (encrypted traffic):
+For example to connect to https://libera.chat/[libera.chat ^↗^^]:
 
 ----
-/server add libera irc.libera.chat/6697 -tls
+/server add libera irc.libera.chat
 ----
+
+[NOTE]
+Default port is 6697 and TLS (encrypted traffic) is enabled.
 
 You can tell WeeChat to auto-connect to this server on startup:
 

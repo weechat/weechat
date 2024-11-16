@@ -3502,8 +3502,11 @@ Par exemple pour vous connecter à https://libera.chat/[libera.chat ^↗^^] ave
 (communications chiffrées) :
 
 ----
-/server add libera irc.libera.chat/6697 -tls
+/server add libera irc.libera.chat
 ----
+
+[NOTE]
+Le port par défaut est 6697 et TLS (communications chiffrées) est activé.
 
 Vous pouvez demander à WeeChat de se connecter automatiquement à ce serveur
 au démarrage :

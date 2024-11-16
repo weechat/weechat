@@ -3457,12 +3457,16 @@ Standardmäßig sind keine Server angelegt. Es gibt keine Begrenzung für die
 Anzahl von Servern. Server können mit dem Befehl <<command_irc_server,/server>>
 angelegt werden.
 
-Um zum Beispiel eine TLS verschlüsselte Verbindung zu
-https://libera.chat/[libera.chat ^↗^^] herzustellen:
+// TRANSLATION MISSING
+For example to connect to https://libera.chat/[libera.chat ^↗^^]:
 
 ----
-/server add libera irc.libera.chat/6697 -tls
+/server add libera irc.libera.chat
 ----
+
+[NOTE]
+// TRANSLATION MISSING
+Default port is 6697 and TLS (encrypted traffic) is enabled.
 
 Um WeeChat beim Start direkt mit dem Server zu verbinden:
 
