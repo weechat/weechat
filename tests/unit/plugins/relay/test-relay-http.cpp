@@ -867,6 +867,27 @@ TEST(RelayHttp, GetAuthStatus)
     config_file_option_reset (relay_config_network_totp_secret, 1);
     config_file_option_reset (relay_config_network_totp_window, 1);
 
+    /* test invalid plain-text password ("test") via Sec-WebSocket-Protocol */
+    hashtable_remove (client->http_req->headers, "authorization");
+    hashtable_set (client->http_req->headers, "sec-websocket-protocol",
+                   WEBSOCKET_SUB_PROTOCOL_API_WEECHAT
+                   ", base64url.bearer.authorization.weechat.cGxhaW46dGVzdA");
+    LONGS_EQUAL(-2, relay_http_get_auth_status (client));
+
+    /* test valid plain-text password ("secret_password") via Sec-WebSocket-Protocol */
+    hashtable_set (client->http_req->headers, "sec-websocket-protocol",
+                   WEBSOCKET_SUB_PROTOCOL_API_WEECHAT
+                   ", base64url.bearer.authorization.weechat.cGxhaW46c2VjcmV0X3Bhc3N3b3Jk");
+    LONGS_EQUAL(0, relay_http_get_auth_status (client));
+
+    /* test auth via Sec-WebSocket-Protocol with base64url specific characters */
+    config_file_option_set (relay_config_network_password, "..>..?.", 1);
+    hashtable_set (client->http_req->headers, "sec-websocket-protocol",
+                   WEBSOCKET_SUB_PROTOCOL_API_WEECHAT
+                   ", base64url.bearer.authorization.weechat.cGxhaW46Li4-Li4_Lg");
+    LONGS_EQUAL(0, relay_http_get_auth_status (client));
+    config_file_option_set (relay_config_network_password, good_pwd, 1);
+
     config_file_option_reset (relay_config_network_password, 1);
 
     relay_http_request_free (client->http_req);

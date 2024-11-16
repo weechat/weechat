@@ -248,6 +248,19 @@ TEST(RelayWebsocket, ClientHandshakeValid)
         "\r\n",
         relay_websocket_build_handshake (request));
 
+    relay_websocket_deflate_reinit (request->ws_deflate);
+    hashtable_set (request->headers, "sec-websocket-protocol",
+                   WEBSOCKET_SUB_PROTOCOL_API_WEECHAT
+                   ", base64url.bearer.authorization.weechat.cGxhaW46c2VjcmV0X3Bhc3N3b3Jk");
+    WEE_TEST_STR(
+        "HTTP/1.1 101 Switching Protocols\r\n"
+        "Upgrade: websocket\r\n"
+        "Connection: Upgrade\r\n"
+        "Sec-WebSocket-Accept: fhLJYtv//ugX2vQXpifQgByRZ5Y=\r\n"
+        "Sec-WebSocket-Protocol: " WEBSOCKET_SUB_PROTOCOL_API_WEECHAT "\r\n"
+        "\r\n",
+        relay_websocket_build_handshake (request));
+
     relay_http_request_free (request);
 }
 
