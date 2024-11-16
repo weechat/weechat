@@ -5858,33 +5858,33 @@ za pomocą polecenia <<command_script_script,/script>>:
 :x: *
 ....
 ┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
-│1.weechat│368/368 scripts (filter: {x}) | Sort: i,p,n | Alt+key/input: i=install, r=remove, l=load, L=reload, u=│
-│2.scripts│{x}      autosort.py                 3.9     2020-10-11 | Automatically keep buffers grouped by server│
-│         │{x}      multiline.pl                0.6.3   2016-01-02 | Multi-line edit box, also supports editing o│
-│         │{x}      highmon.pl                  2.7     2020-06-21 | Adds a highlight monitor buffer.            │
-│         │##{x}ia r  grep.py               0.8.5 0.8.5   2021-05-11 | Search regular expression in buffers or log ##│
-│         │{x}      autojoin.py                 0.3.1   2019-10-06 | Configure autojoin for all servers according│
-│         │{x}      colorize_nicks.py           28      2021-03-06 | Use the weechat nick colors in the chat area│
-│         │{x}ia r  go.py                 2.7   2.7     2021-05-26 | Quick jump to buffers.                      │
-│         │{x}      text_item.py                0.9     2019-05-25 | Add bar items with plain text.              │
-│         │       aesthetic.py                1.0.6   2020-10-25 | Make messages more A E S T H E T I C A L L Y│
-│         │       aformat.py                  0.2     2018-06-21 | Alternate text formatting, useful for relays│
-│         │       alternatetz.py              0.3     2018-11-11 | Add an alternate timezone item.             │
-│         │       amarok2.pl                  0.7     2012-05-08 | Amarok 2 control and now playing script.    │
-│         │       amqp_notify.rb              0.1     2011-01-12 | Send private messages and highlights to an A│
-│         │       announce_url_title.py       19      2021-06-05 | Announce URL title to user or to channel.   │
-│         │       anotify.py                  1.0.2   2020-05-16 | Notifications of private messages, highlight│
-│         │       anti_password.py            1.2.1   2021-03-13 | Prevent a password from being accidentally s│
-│         │       apply_corrections.py        1.3     2018-06-21 | Display corrected text when user sends s/typ│
-│         │       arespond.py                 0.1.1   2020-10-11 | Simple autoresponder.                       │
-│         │       atcomplete.pl               0.001   2016-10-29 | Tab complete nicks when prefixed with "@".  │
-│         │       audacious.pl                0.3     2009-05-03 | Display which song Audacious is currently pl│
-│         │       auth.rb                     0.3     2014-05-30 | Automatically authenticate with NickServ usi│
-│         │       auto_away.py                0.4     2018-11-11 | A simple auto-away script.                  │
-│         │       autoauth.py                 1.3     2021-11-07 | Permits to auto-authenticate when changing n│
-│         │       autobump.py                 0.1.0   2019-06-14 | Bump buffers upon activity.                 │
-│         │       autoconf.py                 0.4     2021-05-11 | Auto save/load changed options in a .weerc f│
-│         │       autoconnect.py              0.3.3   2019-10-06 | Reopen servers and channels opened last time│
+│1.weechat│322/322 skrypty (filtr: {x}) | Sort: i,p,n | Alt+klawisz/wejście: i=instaluj r=usuń l=załaduj L=prze>>│
+│2.scripts│{x}      autosort.py                     3.10    2023-12-31 | Automatycznie grupowanie buforów wg serw│
+│         │{x}      highmon.pl                      2.7     2020-06-21 | Dodaje bufor monitorujący higlighty.    │
+│         │{x}ia r  grep.py                   0.8.6 0.8.6   2022-11-11 | Przeszukuje bufor lub plik z logami za p│
+│         │{x}      colorize_nicks.py               32      2023-10-30 | Używaj kolorów nicków weechat w oknie ro│
+│         │##{x}ia r  go.py                     3.0.1 3.0.1   2024-05-30 | Szybkie przemieszczanie się pomiędzy buf##│
+│         │       aesthetic.py                    1.0.6   2020-10-25 | Spraw, że wiadomości będą bardziej E S T│
+│         │       aformat.py                      0.2     2018-06-21 | Alternatywne formatowanie tekstu, przyda│
+│         │       alternatetz.py                  0.4     2022-01-25 | Dodaje alternatywny element strefy czaso│
+│         │       amarok2.pl                      0.7     2012-05-08 | Kontrola i wyświetlanie aktualnie odtwar│
+│         │       amqp_notify.rb                  0.1     2011-01-12 | Wysyła prywatne wiadomości i higlighty d│
+│         │       announce_url_title.py           19      2021-06-05 | Prezentuje tytuł URL'a użytkownikowi lub│
+│         │       anotify.py                      1.0.2   2020-05-16 | Powiadomienia na ekranie dla prywatnych │
+│         │       anti_password.py                1.2.1   2021-03-13 | Zapobiega przypadkowemu wysłaniu hasła d│
+│         │       apply_corrections.py            1.3     2018-06-21 | Wyświetla poprawiony tekst, kiedy użytko│
+│         │       arespond.py                     0.1.2   2022-01-25 | Prosty autoresponder.                   │
+│         │       atcomplete.pl                   0.001   2016-10-29 | Dopełnianie tabem dla nicków poprzedzony│
+│         │       audacious.pl                    0.3     2009-05-03 | Wyświetla aktualnie odtwarzany utwór prz│
+│         │       auth.rb                         0.3     2014-05-30 | Automatyczne uwierzytelnianie w NickServ│
+│         │       auto_away.py                    0.4     2018-11-11 | Prosty skrypt auto-away.                │
+│         │       autoauth.py                     1.3     2021-11-07 | Pozwala na automatyczną identyfikację po│
+│         │       autobump.py                     0.1.0   2019-06-14 | Ustawia bufory według aktywności.       │
+│         │       autoconf.py                     0.4     2021-05-11 | Automatyczne zapisywanie/ładowanie zapis│
+│         │       autoconnect.py                  0.3.3   2019-10-06 | Otwiera kanały i serwery otwarte przed o│
+│         │       autojoin_on_invite.py           0.9     2022-10-25 | Automatycznie wchodzi na kanał po otrzym│
+│         │       automarkbuffer.py               1.0     2015-03-31 | Oznacza bufor jako przeczytany jeśli nie│
+│         │       automerge.py                    0.2     2018-03-03 | Automatyczna łączenie nowych buforów zgo│
 │         │[12:55] [2] [script] 2:scripts                                                                      │
 │         │█                                                                                                   │
 └──────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
