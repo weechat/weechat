@@ -3263,51 +3263,52 @@ Default port is 6697 and TLS (encrypted traffic) is enabled.
 следећи списак када будете извршите команду `/fset libera`:
 
 ....
-irc.server.libera.addresses             string   "irc.libera.chat/6697"
-irc.server.libera.anti_flood_prio_high  integer  null -> 2
-irc.server.libera.anti_flood_prio_low   integer  null -> 2
-irc.server.libera.autoconnect           boolean  on
-irc.server.libera.autojoin              string   null -> ""
-irc.server.libera.autojoin_dynamic      boolean  null -> off
-irc.server.libera.autoreconnect         boolean  null -> on
-irc.server.libera.autoreconnect_delay   integer  null -> 10
-irc.server.libera.autorejoin            boolean  null -> off
-irc.server.libera.autorejoin_delay      integer  null -> 30
-irc.server.libera.away_check            integer  null -> 0
-irc.server.libera.away_check_max_nicks  integer  null -> 25
-irc.server.libera.capabilities          string   null -> "*"
-irc.server.libera.charset_message       enum     null -> message
-irc.server.libera.command               string   null -> ""
-irc.server.libera.command_delay         integer  null -> 0
-irc.server.libera.connection_timeout    integer  null -> 60
-irc.server.libera.default_chantypes     string   null -> "#&"
-irc.server.libera.ipv6                  boolean  null -> on
-irc.server.libera.local_hostname        string   null -> ""
-irc.server.libera.msg_kick              string   null -> ""
-irc.server.libera.msg_part              string   null -> "WeeChat ${info:version}"
-irc.server.libera.msg_quit              string   null -> "WeeChat ${info:version}"
-irc.server.libera.nicks                 string   null -> "alice,alice1,alice2,alice3,alice4"
-irc.server.libera.nicks_alternate       boolean  null -> on
-irc.server.libera.notify                string   null -> ""
-irc.server.libera.password              string   null -> ""
-irc.server.libera.proxy                 string   null -> ""
-irc.server.libera.realname              string   null -> ""
-irc.server.libera.sasl_fail             enum     null -> reconnect
-irc.server.libera.sasl_key              string   null -> ""
-irc.server.libera.sasl_mechanism        enum     null -> plain
-irc.server.libera.sasl_password         string   "${sec.data.libera}"
-irc.server.libera.sasl_timeout          integer  null -> 15
-irc.server.libera.sasl_username         string   "alice"
-irc.server.libera.split_msg_max_length  integer  null -> 512
-irc.server.libera.tls                   boolean  on
-irc.server.libera.tls_cert              string   null -> ""
-irc.server.libera.tls_dhkey_size        integer  null -> 2048
-irc.server.libera.tls_fingerprint       string   null -> ""
-irc.server.libera.tls_password          string   null -> ""
-irc.server.libera.tls_priorities        string   null -> "NORMAL:-VERS-SSL3.0"
-irc.server.libera.tls_verify            boolean  null -> on
-irc.server.libera.usermode              string   null -> ""
-irc.server.libera.username              string   null -> "alice"
+irc.server.libera.addresses             стринг      "irc.libera.chat"
+irc.server.libera.anti_flood            целобројна  null -> 2000
+irc.server.libera.autoconnect           логичка     on
+irc.server.libera.autojoin              стринг      null -> ""
+irc.server.libera.autojoin_delay        целобројна  null -> 0
+irc.server.libera.autojoin_dynamic      логичка     null -> off
+irc.server.libera.autoreconnect         логичка     null -> on
+irc.server.libera.autoreconnect_delay   целобројна  null -> 10
+irc.server.libera.autorejoin            логичка     null -> off
+irc.server.libera.autorejoin_delay      целобројна  null -> 30
+irc.server.libera.away_check            целобројна  null -> 0
+irc.server.libera.away_check_max_nicks  целобројна  null -> 25
+irc.server.libera.capabilities          стринг      null -> "*"
+irc.server.libera.charset_message       набрајање   null -> message
+irc.server.libera.command               стринг      null -> ""
+irc.server.libera.command_delay         целобројна  null -> 0
+irc.server.libera.connection_timeout    целобројна  null -> 60
+irc.server.libera.default_chantypes     стринг      null -> "#&"
+irc.server.libera.ipv6                  набрајање   null -> auto
+irc.server.libera.local_hostname        стринг      null -> ""
+irc.server.libera.msg_kick              стринг      null -> ""
+irc.server.libera.msg_part              стринг      null -> "WeeChat ${info:version}"
+irc.server.libera.msg_quit              стринг      null -> "WeeChat ${info:version}"
+irc.server.libera.nicks                 стринг      null -> "${username},${username}2,${username}3,${username}4,${username}5"
+irc.server.libera.nicks_alternate       логичка     null -> on
+irc.server.libera.notify                стринг      null -> ""
+irc.server.libera.password              стринг      null -> ""
+irc.server.libera.proxy                 стринг      null -> ""
+irc.server.libera.realname              стринг      null -> ""
+irc.server.libera.registered_mode       стринг      null -> "r"
+irc.server.libera.sasl_fail             набрајање   null -> reconnect
+irc.server.libera.sasl_key              стринг      null -> ""
+irc.server.libera.sasl_mechanism        набрајање   null -> plain
+irc.server.libera.sasl_password         стринг      "${sec.data.libera}"
+irc.server.libera.sasl_timeout          целобројна  null -> 15
+irc.server.libera.sasl_username         стринг      "alice"
+irc.server.libera.split_msg_max_length  целобројна  null -> 512
+irc.server.libera.tls                   логичка     null -> on
+irc.server.libera.tls_cert              стринг      null -> ""
+irc.server.libera.tls_dhkey_size        целобројна  null -> 2048
+irc.server.libera.tls_fingerprint       стринг      null -> ""
+irc.server.libera.tls_password          стринг      null -> ""
+irc.server.libera.tls_priorities        стринг      null -> "NORMAL"
+irc.server.libera.tls_verify            логичка     null -> on
+irc.server.libera.usermode              стринг      null -> ""
+irc.server.libera.username              стринг      null -> "${username}"
 ....
 
 На пример, ако желите да се аутоматски повежете са свим серверима које сте дефинисали, без

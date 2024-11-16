@@ -3509,51 +3509,52 @@ Wenn Sie beispielsweise den _libera_-Server mit den obigen Befehlen erstellt hab
 sehen Sie dies mit dem Befehl `/fset libera`:
 
 ....
-irc.server.libera.addresses             string   "irc.libera.chat/6697"
-irc.server.libera.anti_flood_prio_high  integer  null -> 2
-irc.server.libera.anti_flood_prio_low   integer  null -> 2
-irc.server.libera.autoconnect           boolean  on
-irc.server.libera.autojoin              string   null -> ""
-irc.server.libera.autojoin_dynamic      boolean  null -> off
-irc.server.libera.autoreconnect         boolean  null -> on
-irc.server.libera.autoreconnect_delay   integer  null -> 10
-irc.server.libera.autorejoin            boolean  null -> off
-irc.server.libera.autorejoin_delay      integer  null -> 30
-irc.server.libera.away_check            integer  null -> 0
-irc.server.libera.away_check_max_nicks  integer  null -> 25
-irc.server.libera.capabilities          string   null -> "*"
-irc.server.libera.charset_message       enum     null -> message
-irc.server.libera.command               string   null -> ""
-irc.server.libera.command_delay         integer  null -> 0
-irc.server.libera.connection_timeout    integer  null -> 60
-irc.server.libera.default_chantypes     string   null -> "#&"
-irc.server.libera.ipv6                  boolean  null -> on
-irc.server.libera.local_hostname        string   null -> ""
-irc.server.libera.msg_kick              string   null -> ""
-irc.server.libera.msg_part              string   null -> "WeeChat ${info:version}"
-irc.server.libera.msg_quit              string   null -> "WeeChat ${info:version}"
-irc.server.libera.nicks                 string   null -> "alice,alice1,alice2,alice3,alice4"
-irc.server.libera.nicks_alternate       boolean  null -> on
-irc.server.libera.notify                string   null -> ""
-irc.server.libera.password              string   null -> ""
-irc.server.libera.proxy                 string   null -> ""
-irc.server.libera.realname              string   null -> ""
-irc.server.libera.sasl_fail             enum     null -> reconnect
-irc.server.libera.sasl_key              string   null -> ""
-irc.server.libera.sasl_mechanism        enum     null -> plain
-irc.server.libera.sasl_password         string   "${sec.data.libera}"
-irc.server.libera.sasl_timeout          integer  null -> 15
-irc.server.libera.sasl_username         string   "alice"
-irc.server.libera.split_msg_max_length  integer  null -> 512
-irc.server.libera.tls                   boolean  on
-irc.server.libera.tls_cert              string   null -> ""
-irc.server.libera.tls_dhkey_size        integer  null -> 2048
-irc.server.libera.tls_fingerprint       string   null -> ""
-irc.server.libera.tls_password          string   null -> ""
-irc.server.libera.tls_priorities        string   null -> "NORMAL:-VERS-SSL3.0"
-irc.server.libera.tls_verify            boolean  null -> on
-irc.server.libera.usermode              string   null -> ""
-irc.server.libera.username              string   null -> "alice"
+irc.server.libera.addresses             Zeichenkette  "irc.libera.chat"
+irc.server.libera.anti_flood            integer       null -> 2000
+irc.server.libera.autoconnect           boolesch      on
+irc.server.libera.autojoin              Zeichenkette  null -> ""
+irc.server.libera.autojoin_delay        integer       null -> 0
+irc.server.libera.autojoin_dynamic      boolesch      null -> off
+irc.server.libera.autoreconnect         boolesch      null -> on
+irc.server.libera.autoreconnect_delay   integer       null -> 10
+irc.server.libera.autorejoin            boolesch      null -> off
+irc.server.libera.autorejoin_delay      integer       null -> 30
+irc.server.libera.away_check            integer       null -> 0
+irc.server.libera.away_check_max_nicks  integer       null -> 25
+irc.server.libera.capabilities          Zeichenkette  null -> "*"
+irc.server.libera.charset_message       Aufzählung    null -> message
+irc.server.libera.command               Zeichenkette  null -> ""
+irc.server.libera.command_delay         integer       null -> 0
+irc.server.libera.connection_timeout    integer       null -> 60
+irc.server.libera.default_chantypes     Zeichenkette  null -> "#&"
+irc.server.libera.ipv6                  Aufzählung    null -> auto
+irc.server.libera.local_hostname        Zeichenkette  null -> ""
+irc.server.libera.msg_kick              Zeichenkette  null -> ""
+irc.server.libera.msg_part              Zeichenkette  null -> "WeeChat ${info:version}"
+irc.server.libera.msg_quit              Zeichenkette  null -> "WeeChat ${info:version}"
+irc.server.libera.nicks                 Zeichenkette  null -> "${username},${username}2,${username}3,${username}4,${username}5"
+irc.server.libera.nicks_alternate       boolesch      null -> on
+irc.server.libera.notify                Zeichenkette  null -> ""
+irc.server.libera.password              Zeichenkette  null -> ""
+irc.server.libera.proxy                 Zeichenkette  null -> ""
+irc.server.libera.realname              Zeichenkette  null -> ""
+irc.server.libera.registered_mode       Zeichenkette  null -> "r"
+irc.server.libera.sasl_fail             Aufzählung    null -> reconnect
+irc.server.libera.sasl_key              Zeichenkette  null -> ""
+irc.server.libera.sasl_mechanism        Aufzählung    null -> plain
+irc.server.libera.sasl_password         Zeichenkette  "${sec.data.libera}"
+irc.server.libera.sasl_timeout          integer       null -> 15
+irc.server.libera.sasl_username         Zeichenkette  "alice"
+irc.server.libera.split_msg_max_length  integer       null -> 512
+irc.server.libera.tls                   boolesch      null -> on
+irc.server.libera.tls_cert              Zeichenkette  null -> ""
+irc.server.libera.tls_dhkey_size        integer       null -> 2048
+irc.server.libera.tls_fingerprint       Zeichenkette  null -> ""
+irc.server.libera.tls_password          Zeichenkette  null -> ""
+irc.server.libera.tls_priorities        Zeichenkette  null -> "NORMAL"
+irc.server.libera.tls_verify            boolesch      null -> on
+irc.server.libera.usermode              Zeichenkette  null -> ""
+irc.server.libera.username              Zeichenkette  null -> "${username}"
 ....
 
 Wenn Sie beispielsweise automatisch eine Verbindung zu allen von Ihnen
