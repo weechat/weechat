@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-11-20 16:48+0100\n"
+"POT-Creation-Date: 2024-11-20 21:48+0100\n"
 "PO-Revision-Date: 2024-11-20 18:17+0100\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -12592,6 +12592,31 @@ msgstr "1 eğer takma ad yok sayılıyorsa (ileti görüntülenmez)"
 
 msgid "server,message (message is the raw IRC message)"
 msgstr "server,message (message, ham IRC iletisidir)"
+
+#, fuzzy
+#| msgid "get buffer pointer for an IRC server/channel/nick"
+msgid "get pointer to an IRC server"
+msgstr "bir IRC sunucusu/kanalı/takma adı için arabellek işaretçisini al"
+
+#, fuzzy
+#| msgid "get buffer pointer for an IRC server/channel/nick"
+msgid "get pointer to an IRC channel"
+msgstr "bir IRC sunucusu/kanalı/takma adı için arabellek işaretçisini al"
+
+#, fuzzy
+#| msgid "leave a channel"
+msgid "server,channel"
+msgstr "bir kanaldan ayrıl"
+
+#, fuzzy
+#| msgid "get buffer pointer for an IRC server/channel/nick"
+msgid "get pointer to an IRC nick"
+msgstr "bir IRC sunucusu/kanalı/takma adı için arabellek işaretçisini al"
+
+#, fuzzy
+#| msgid "server,channel,nick (nick is optional)"
+msgid "server,channel,nick"
+msgstr "server,channel,nick (nick isteğe bağlıdır)"
 
 msgid "parse an IRC message"
 msgstr "bir IRC iletisi ayrıştır"

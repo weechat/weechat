@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-11-20 16:48+0100\n"
+"POT-Creation-Date: 2024-11-20 21:48+0100\n"
 "PO-Revision-Date: 2024-11-20 18:17+0100\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -11929,6 +11929,30 @@ msgstr ""
 
 msgid "server,message (message is the raw IRC message)"
 msgstr ""
+
+#, fuzzy
+#| msgid "get buffer pointer for an IRC server/channel/nick"
+msgid "get pointer to an IRC server"
+msgstr "ottiene puntatore al buffer per un server/canale/nick IRC"
+
+#, fuzzy
+#| msgid "get buffer pointer for an IRC server/channel/nick"
+msgid "get pointer to an IRC channel"
+msgstr "ottiene puntatore al buffer per un server/canale/nick IRC"
+
+#, fuzzy
+#| msgid "leave a channel"
+msgid "server,channel"
+msgstr "esce da un canale"
+
+#, fuzzy
+#| msgid "get buffer pointer for an IRC server/channel/nick"
+msgid "get pointer to an IRC nick"
+msgstr "ottiene puntatore al buffer per un server/canale/nick IRC"
+
+#, fuzzy
+msgid "server,channel,nick"
+msgstr "server,canale (canale è opzionale)"
 
 msgid "parse an IRC message"
 msgstr "controlla un messaggio IRC"

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-11-20 16:48+0100\n"
+"POT-Creation-Date: 2024-11-20 21:48+0100\n"
 "PO-Revision-Date: 2024-11-20 18:17+0100\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -12248,6 +12248,31 @@ msgstr "1 ако се надимак игнорише (порука се не п
 
 msgid "server,message (message is the raw IRC message)"
 msgstr "сервер,порука (порука представља сирову IRC message)"
+
+#, fuzzy
+#| msgid "get buffer pointer for an IRC server/channel/nick"
+msgid "get pointer to an IRC server"
+msgstr "враћа показивач на бафер за IRC сервер/канал/надимак"
+
+#, fuzzy
+#| msgid "get buffer pointer for an IRC server/channel/nick"
+msgid "get pointer to an IRC channel"
+msgstr "враћа показивач на бафер за IRC сервер/канал/надимак"
+
+#, fuzzy
+#| msgid "leave a channel"
+msgid "server,channel"
+msgstr "напуштање канала"
+
+#, fuzzy
+#| msgid "get buffer pointer for an IRC server/channel/nick"
+msgid "get pointer to an IRC nick"
+msgstr "враћа показивач на бафер за IRC сервер/канал/надимак"
+
+#, fuzzy
+#| msgid "server,channel,nick (nick is optional)"
+msgid "server,channel,nick"
+msgstr "сервер,канал,надимак (надимак није обавезан)"
 
 msgid "parse an IRC message"
 msgstr "парсирање IRC поруке"

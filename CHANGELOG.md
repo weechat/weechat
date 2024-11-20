@@ -18,6 +18,7 @@
 
 - relay: display connection status in input prompt of remote buffers, if not connected or if fetching data from remote
 - irc: add option irc.look.notice_nicks_disable_notify
+- irc: add infos "irc_ptr_server", "irc_ptr_channel" and "irc_ptr_nick"
 
 ### Fixed
 

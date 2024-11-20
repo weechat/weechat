@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-11-20 16:48+0100\n"
+"POT-Creation-Date: 2024-11-20 21:48+0100\n"
 "PO-Revision-Date: 2024-11-20 18:17+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -11100,6 +11100,27 @@ msgstr ""
 
 msgid "server,message (message is the raw IRC message)"
 msgstr ""
+
+#, fuzzy
+msgid "get pointer to an IRC server"
+msgstr "szobák listája ahová be akarunk lépni csatlakozás után"
+
+#, fuzzy
+msgid "get pointer to an IRC channel"
+msgstr "szobák listája ahová be akarunk lépni csatlakozás után"
+
+#, fuzzy
+#| msgid "leave a channel"
+msgid "server,channel"
+msgstr "kilépés a szobából"
+
+#, fuzzy
+msgid "get pointer to an IRC nick"
+msgstr "szobák listája ahová be akarunk lépni csatlakozás után"
+
+#, fuzzy
+msgid "server,channel,nick"
+msgstr "szoba: szoba neve"
 
 #, fuzzy
 msgid "parse an IRC message"

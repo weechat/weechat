@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-11-20 16:48+0100\n"
+"POT-Creation-Date: 2024-11-20 21:48+0100\n"
 "PO-Revision-Date: 2024-11-20 18:17+0100\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -11613,6 +11613,31 @@ msgstr ""
 
 msgid "server,message (message is the raw IRC message)"
 msgstr ""
+
+#, fuzzy
+#| msgid "get buffer pointer for an IRC server/channel/nick"
+msgid "get pointer to an IRC server"
+msgstr "získat ukazatel bufferu pro IRC server/kanál/přezdívku"
+
+#, fuzzy
+#| msgid "get buffer pointer for an IRC server/channel/nick"
+msgid "get pointer to an IRC channel"
+msgstr "získat ukazatel bufferu pro IRC server/kanál/přezdívku"
+
+#, fuzzy
+#| msgid "leave a channel"
+msgid "server,channel"
+msgstr "opustit kanál"
+
+#, fuzzy
+#| msgid "get buffer pointer for an IRC server/channel/nick"
+msgid "get pointer to an IRC nick"
+msgstr "získat ukazatel bufferu pro IRC server/kanál/přezdívku"
+
+#, fuzzy
+#| msgid "server,channel,nick (nick is optional)"
+msgid "server,channel,nick"
+msgstr "server,kanál,přezdívka (kanál je volitelný)"
 
 msgid "parse an IRC message"
 msgstr "rozdělit IRC zprávu"

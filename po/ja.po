@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-11-20 16:48+0100\n"
+"POT-Creation-Date: 2024-11-20 21:48+0100\n"
 "PO-Revision-Date: 2024-11-20 18:17+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -12399,6 +12399,31 @@ msgstr ""
 
 msgid "server,message (message is the raw IRC message)"
 msgstr ""
+
+#, fuzzy
+#| msgid "get buffer pointer for an IRC server/channel/nick"
+msgid "get pointer to an IRC server"
+msgstr "ある IRC サーバ/チャンネル/ニックネームのバッファポインタを取得"
+
+#, fuzzy
+#| msgid "get buffer pointer for an IRC server/channel/nick"
+msgid "get pointer to an IRC channel"
+msgstr "ある IRC サーバ/チャンネル/ニックネームのバッファポインタを取得"
+
+#, fuzzy
+#| msgid "leave a channel"
+msgid "server,channel"
+msgstr "チャンネルから退出"
+
+#, fuzzy
+#| msgid "get buffer pointer for an IRC server/channel/nick"
+msgid "get pointer to an IRC nick"
+msgstr "ある IRC サーバ/チャンネル/ニックネームのバッファポインタを取得"
+
+#, fuzzy
+#| msgid "server,channel,nick (nick is optional)"
+msgid "server,channel,nick"
+msgstr "サーバ、チャンネル、ニックネーム (ニックネームは任意)"
 
 msgid "parse an IRC message"
 msgstr "IRC メッセージを解析"

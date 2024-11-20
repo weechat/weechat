@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-11-20 16:48+0100\n"
-"PO-Revision-Date: 2024-11-20 18:17+0100\n"
+"POT-Creation-Date: 2024-11-20 21:48+0100\n"
+"PO-Revision-Date: 2024-11-20 21:51+0100\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -12646,6 +12646,21 @@ msgstr "1 si le pseudo est ignoré (le message n'est pas affiché)"
 
 msgid "server,message (message is the raw IRC message)"
 msgstr "serveur,message (message est le message brut IRC)"
+
+msgid "get pointer to an IRC server"
+msgstr "retourne le pointeur vers le serveur IRC"
+
+msgid "get pointer to an IRC channel"
+msgstr "retourne le pointeur vers le canal IRC"
+
+msgid "server,channel"
+msgstr "serveur,canal"
+
+msgid "get pointer to an IRC nick"
+msgstr "retourne le pointeur vers le pseudo IRC"
+
+msgid "server,channel,nick"
+msgstr "serveur,canal,pseudo"
 
 msgid "parse an IRC message"
 msgstr "analyse un message IRC"
