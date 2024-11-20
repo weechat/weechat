@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-11-12 22:18+0100\n"
+"POT-Creation-Date: 2024-11-20 16:48+0100\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5650,10 +5650,6 @@ msgstr ""
 #. TRANSLATORS: %s is the error returned by regerror
 #, c-format
 msgid "invalid regular expression (%s)"
-msgstr ""
-
-#, c-format
-msgid "key \"%s\" in context \"%s\""
 msgstr ""
 
 #, c-format

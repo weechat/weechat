@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-11-12 22:18+0100\n"
-"PO-Revision-Date: 2024-10-31 18:11+0100\n"
+"POT-Creation-Date: 2024-11-20 16:48+0100\n"
+"PO-Revision-Date: 2024-11-20 18:17+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
 "translation/ja_JP>\n"
@@ -6751,11 +6751,6 @@ msgstr ""
 #, c-format
 msgid "invalid regular expression (%s)"
 msgstr "不正な正規表現 (%s)"
-
-#, fuzzy, c-format
-#| msgid "Key \"%s\" unbound (context: \"%s\")"
-msgid "key \"%s\" in context \"%s\""
-msgstr "キー \"%s\" の割り当て解除 (コンテキスト: \"%s\")"
 
 #, c-format
 msgid ""

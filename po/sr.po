@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-11-12 22:18+0100\n"
-"PO-Revision-Date: 2024-11-15 14:34+0400\n"
+"POT-Creation-Date: 2024-11-20 16:48+0100\n"
+"PO-Revision-Date: 2024-11-20 18:17+0100\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: sr\n"
@@ -6495,8 +6495,8 @@ msgstr ""
 "  -P, --plugins <додаци>   приликом покретања се учитавају само ови додаци\n"
 "                           (погледајте /help weechat.plugin.autoload)\n"
 "  -r, --run-command <ком>  покреће команд(у/е) након покретања;\n"
-"                           можете да раздвојите више команди са тачка "
-"запета и оне се израчунавају,\n"
+"                           можете да раздвојите више команди са тачка запета "
+"и оне се израчунавају,\n"
 "                           ова опција може да се зада више пута\n"
 "  -s, --no-script          приликом учитавања се не учитавају никакве "
 "скрипте\n"
@@ -6878,10 +6878,6 @@ msgstr ""
 #, c-format
 msgid "invalid regular expression (%s)"
 msgstr "неважећи регуларни израз (%s)"
-
-#, c-format
-msgid "key \"%s\" in context \"%s\""
-msgstr "тастер „%s” у контексту „%s”"
 
 #, c-format
 msgid ""
@@ -10086,8 +10082,8 @@ msgid ""
 "value \"*\" doesn't filter results"
 msgstr ""
 "рег_изр: POSIX проширени регуларни израз који се користи за филтрирање "
-"резултата (без разликовања величине слова, може да почне са „(?-i)” па ће "
-"се онда правити разлика); специјална вредност „*” не филтрира резултате"
+"резултата (без разликовања величине слова, може да почне са „(?-i)” па ће се "
+"онда правити разлика); специјална вредност „*” не филтрира резултате"
 
 msgid "raw[-join]: join the channel on the selected line"
 msgstr "raw[-join]: приступа каналу на изабраној линији"
@@ -15569,7 +15565,8 @@ msgstr ""
 
 #, c-format
 msgid "remote[%s]: reconnecting to remote relay in %d %s, %d %s"
-msgstr "удаљени[%s]: поновно успостављање везе са удаљеним релејем за %d %s, %d %s"
+msgstr ""
+"удаљени[%s]: поновно успостављање везе са удаљеним релејем за %d %s, %d %s"
 
 #, c-format
 msgid "remote[%s]: reconnecting to remote relay in %d %s"
@@ -15806,8 +15803,7 @@ msgstr "%s%s: грешка при преузимању скрипте „%s”: 
 #, c-format
 msgid ""
 "%s: script \"%s\" cannot be installed because plugin \"%s\" is not loaded"
-msgstr ""
-"%s: скрипта „%s” не може да се инсталира јер није учитан додатак „%s”"
+msgstr "%s: скрипта „%s” не може да се инсталира јер није учитан додатак „%s”"
 
 #, c-format
 msgid "%s: downloading script \"%s\"..."

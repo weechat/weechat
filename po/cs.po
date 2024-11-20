@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-11-12 22:18+0100\n"
-"PO-Revision-Date: 2024-10-31 18:05+0100\n"
+"POT-Creation-Date: 2024-11-20 16:48+0100\n"
+"PO-Revision-Date: 2024-11-20 18:17+0100\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: cs\n"
@@ -6414,10 +6414,6 @@ msgstr ""
 #, fuzzy, c-format
 msgid "invalid regular expression (%s)"
 msgstr "%s%s: nedostatek paměti pro regulární výraz"
-
-#, fuzzy, c-format
-msgid "key \"%s\" in context \"%s\""
-msgstr "Žádné klávesové zkratky nejsou definovány pro prostředí \"%s\""
 
 #, c-format
 msgid ""

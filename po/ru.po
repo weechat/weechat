@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-11-12 22:18+0100\n"
-"PO-Revision-Date: 2024-10-31 18:14+0100\n"
+"POT-Creation-Date: 2024-11-20 16:48+0100\n"
+"PO-Revision-Date: 2024-11-20 18:17+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: ru\n"
@@ -6110,10 +6110,6 @@ msgstr ""
 #, fuzzy, c-format
 msgid "invalid regular expression (%s)"
 msgstr "%s \"%s\" не является регулярным выражением (%s)\n"
-
-#, fuzzy, c-format
-msgid "key \"%s\" in context \"%s\""
-msgstr "Клавиша \"%s\" не привязана\n"
 
 #, c-format
 msgid ""

@@ -26,8 +26,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-11-12 22:18+0100\n"
-"PO-Revision-Date: 2024-11-14 09:53+0100\n"
+"POT-Creation-Date: 2024-11-20 16:48+0100\n"
+"PO-Revision-Date: 2024-11-20 18:17+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de_DE\n"
@@ -1490,11 +1490,6 @@ msgid "debug functions"
 msgstr "Debug-Funktionen"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
-#| msgid ""
-#| "list || set <plugin> <level> || dump|hooks [<plugin>] || buffer|certs|"
-#| "color|dirs|infolists|key|libs|memory|tags|term|url|windows || callbacks "
-#| "<duration>[<unit>] || mouse|cursor [verbose] || hdata [free] || time "
-#| "<command> || unicode <string>"
 msgid ""
 "list || set <plugin> <level> || dump [<plugin>] || hooks [<plugin_mask> "
 "[<hook_type>...]] || buffer|certs|color|dirs|infolists|key|libs|memory|tags|"
@@ -7246,10 +7241,6 @@ msgstr ""
 #, c-format
 msgid "invalid regular expression (%s)"
 msgstr "ungültiger regulärer Ausdruck (%s)"
-
-#, c-format
-msgid "key \"%s\" in context \"%s\""
-msgstr "Tastenbelegung \"%s\" in Kontext: \"%s\""
 
 #, c-format
 msgid ""
