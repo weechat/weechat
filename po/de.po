@@ -27,7 +27,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2024-11-20 21:48+0100\n"
-"PO-Revision-Date: 2024-11-20 18:17+0100\n"
+"PO-Revision-Date: 2024-11-21 09:23+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de_DE\n"
@@ -12918,30 +12918,20 @@ msgstr "1, wenn der Nick ignoriert wird (Meldung wird nicht angezeigt)"
 msgid "server,message (message is the raw IRC message)"
 msgstr "Server,Nachricht (Nachricht ist die unverarbeitete IRC Nachricht)"
 
-#, fuzzy
-#| msgid "get buffer pointer for an IRC server/channel/nick"
 msgid "get pointer to an IRC server"
-msgstr "holt Buffer Pointer für einen IRC Server/Kanal/Nick"
+msgstr "erhalte Pointer für einen IRC Server"
 
-#, fuzzy
-#| msgid "get buffer pointer for an IRC server/channel/nick"
 msgid "get pointer to an IRC channel"
-msgstr "holt Buffer Pointer für einen IRC Server/Kanal/Nick"
+msgstr "erhalte Pointer für einen IRC Kanal"
 
-#, fuzzy
-#| msgid "leave a channel"
 msgid "server,channel"
-msgstr "Einen Kanal verlassen"
+msgstr "server,channel"
 
-#, fuzzy
-#| msgid "get buffer pointer for an IRC server/channel/nick"
 msgid "get pointer to an IRC nick"
-msgstr "holt Buffer Pointer für einen IRC Server/Kanal/Nick"
+msgstr "erhalte Pointer für einen Nick"
 
-#, fuzzy
-#| msgid "server,channel,nick (nick is optional)"
 msgid "server,channel,nick"
-msgstr "server,channel,nick (nick ist optional)"
+msgstr "server,channel,nick"
 
 msgid "parse an IRC message"
 msgstr "Parse eine IRC Nachricht"
