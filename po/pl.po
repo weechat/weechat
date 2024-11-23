@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-11-20 21:48+0100\n"
+"POT-Creation-Date: 2024-11-24 09:58+0100\n"
 "PO-Revision-Date: 2024-11-20 18:17+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -868,6 +868,10 @@ msgid ""
 msgstr ""
 "%sNie można uaktualnić: jeden lub więcej procesów/wątków działą w tle "
 "(uchwyt typu: process, connect lub url)"
+
+#, c-format
+msgid "Check running hooks with command: %s"
+msgstr ""
 
 #, c-format
 msgid "%sCan't upgrade: WeeChat binary \"%s\" does not exist"

@@ -7280,6 +7280,9 @@ COMMAND_CALLBACK(upgrade)
                            "process/thread running (hook type: process, "
                            "connect or url)"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+        gui_chat_printf (NULL,
+                         _("Check running hooks with command: %s"),
+                         "/debug hooks * process connect url");
         return WEECHAT_RC_ERROR;
     }
 

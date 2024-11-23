@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-11-20 21:48+0100\n"
+"POT-Creation-Date: 2024-11-24 09:58+0100\n"
 "PO-Revision-Date: 2024-11-20 18:17+0100\n"
 "Last-Translator: Érico Nogueira <ericonr@disroot.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -880,6 +880,10 @@ msgid ""
 msgstr ""
 "%sNão foi possível atualizar: existe um ou mais processos em segundo plano "
 "(tipo de hook 'process' ou 'connect')"
+
+#, c-format
+msgid "Check running hooks with command: %s"
+msgstr ""
 
 #, c-format
 msgid "%sCan't upgrade: WeeChat binary \"%s\" does not exist"

@@ -26,7 +26,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-11-20 21:48+0100\n"
+"POT-Creation-Date: 2024-11-24 09:58+0100\n"
 "PO-Revision-Date: 2024-11-21 09:23+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -869,6 +869,10 @@ msgid ""
 msgstr ""
 "%sAktualisierung nicht möglich: Es laufen ein oder mehrere "
 "Hintergrundprozesse/-threads(Hook-Typ: 'process', 'connect' oder 'url')"
+
+#, c-format
+msgid "Check running hooks with command: %s"
+msgstr ""
 
 #, c-format
 msgid "%sCan't upgrade: WeeChat binary \"%s\" does not exist"

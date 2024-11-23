@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-11-20 21:48+0100\n"
+"POT-Creation-Date: 2024-11-24 09:58+0100\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -815,6 +815,10 @@ msgstr ""
 msgid ""
 "%sCan't upgrade: there is one or more background process/thread running "
 "(hook type: process, connect or url)"
+msgstr ""
+
+#, c-format
+msgid "Check running hooks with command: %s"
 msgstr ""
 
 #, c-format

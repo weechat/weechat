@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-11-20 21:48+0100\n"
-"PO-Revision-Date: 2024-11-20 21:51+0100\n"
+"POT-Creation-Date: 2024-11-24 09:58+0100\n"
+"PO-Revision-Date: 2024-11-24 09:58+0100\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -859,6 +859,10 @@ msgid ""
 msgstr ""
 "%sImpossible de mettre à jour : il y a un ou plusieurs processus/thread en "
 "tâche de fond (type de hook : process, connect ou url)"
+
+#, c-format
+msgid "Check running hooks with command: %s"
+msgstr "Vérifiez les hooks qui tournent avec la commande : %s"
 
 #, c-format
 msgid "%sCan't upgrade: WeeChat binary \"%s\" does not exist"
