@@ -12740,7 +12740,7 @@ hook = weechat.hook_signal("quit;upgrade", "my_signal_cb", "")
 
 ==== hook_signal_send
 
-_Mis à jour dans la 1.0._
+_Mis à jour dans la 1.0, 4.5.0._
 
 Envoyer un signal.
 
@@ -12754,10 +12754,22 @@ int weechat_hook_signal_send (const char *signal, const char *type_data,
 
 Paramètres :
 
-* _signal_ : signal à envoyer
+* _signal_ : signal à envoyer ; des drapeaux sont autorisés avant le nom du signal
+  (voir ci-dessous) _(WeeChat ≥ 4.5.0)_
 * _type_data_ : type de données à envoyer avec le signal (voir
   <<_hook_signal,hook_signal>>)
 * _signal_data_ : données envoyées avec le signal
+
+Le nom du signal peut contenir des drapeaux avec le format suivant : `[flags:xxx,yyy]signal`
+où `xxx` et `yyy` sont des noms de drapeaux et `signal` le nom du signal. +
+Les drapeaux suivants sont supportés :
+
+* _stop_on_error_ : sortir immédiatement si une fonction de rappel retourne
+  WEECHAT_RC_ERROR (les autres fonctions de rappel ne sont donc PAS exécutées)
+  _(WeeChat ≥ 4.5.0)_
+* _ignore_eat_ : considérer que toute fonction de rappel renvoyant WEECHAT_RC_OK_EAT
+  est en fait WEECHAT_RC_OK et exécuter les fonctions de rappel restantes
+  _(WeeChat ≥ 4.5.0)_
 
 Valeur de retour _(WeeChat ≥ 1.0)_ :
 
@@ -12772,6 +12784,8 @@ Exemple en C :
 [source,c]
 ----
 int rc = weechat_hook_signal_send ("mon_signal", WEECHAT_HOOK_SIGNAL_STRING, ma_chaine);
+int rc2 = weechat_hook_signal_send ("[flags:stop_on_error,ignore_eat]my_signal2",
+                                    WEECHAT_HOOK_SIGNAL_STRING, my_string);
 ----
 
 Script (Python) :
@@ -12781,8 +12795,10 @@ Script (Python) :
 # prototype
 def hook_signal_send(signal: str, type_data: str, signal_data: str) -> int: ...
 
-# exemple
+# exemples
 rc = weechat.hook_signal_send("mon_signal", weechat.WEECHAT_HOOK_SIGNAL_STRING, ma_chaine)
+rc2 = weechat.hook_signal_send("[flags:stop_on_error,ignore_eat]my_signal2",
+                               weechat.WEECHAT_HOOK_SIGNAL_STRING, my_string)
 ----
 
 [[signal_logger_backlog]]
@@ -13076,7 +13092,7 @@ hook = weechat.hook_hsignal("test", "my_hsignal_cb", "")
 
 ==== hook_hsignal_send
 
-_WeeChat ≥ 0.3.4, mis à jour dans la 1.0._
+_WeeChat ≥ 0.3.4, mis à jour dans la 1.0, 4.5.0._
 
 Envoyer un hsignal (signal avec table de hachage).
 
@@ -13089,7 +13105,8 @@ int weechat_hook_hsignal_send (const char *signal, struct t_hashtable *hashtable
 
 Paramètres :
 
-* _signal_ : signal à envoyer
+* _signal_ : signal à envoyer ; des drapeaux sont autorisés avant le nom du signal
+  (voir la fonction <<_hook_signal_send,hook_signal_send>>) _(WeeChat ≥ 4.5.0)_
 * _hashtable_ : table de hachage
 
 Valeur de retour _(WeeChat ≥ 1.0)_ :
@@ -13104,7 +13121,7 @@ Exemple en C :
 
 [source,c]
 ----
-int rc;
+int rc, rc2;
 struct t_hashtable *hashtable = weechat_hashtable_new (8,
                                                        WEECHAT_HASHTABLE_STRING,
                                                        WEECHAT_HASHTABLE_STRING,
@@ -13114,6 +13131,7 @@ if (hashtable)
 {
     weechat_hashtable_set (hashtable, "clé", "valeur");
     rc = weechat_hook_hsignal_send ("my_hsignal", hashtable);
+    rc2 = weechat_hook_hsignal_send ("[flags:stop_on_error,ignore_eat]my_hsignal2", hashtable);
     weechat_hashtable_free (hashtable);
 }
 ----
@@ -13125,8 +13143,9 @@ Script (Python) :
 # prototype
 def hook_hsignal_send(signal: str, hashtable: Dict[str, str]) -> int: ...
 
-# exemple
+# exemples
 rc = weechat.hook_hsignal_send("my_hsignal", {"clé": "valeur"})
+rc2 = weechat.hook_hsignal_send("[flags:stop_on_error,ignore_eat]my_hsignal2", {"key": "value"})
 ----
 
 [[hsignal_irc_redirect_command]]

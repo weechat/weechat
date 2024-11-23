@@ -7,6 +7,7 @@
 - api: return the buffer input callback return code in functions command and command_options
 - api: add special value `-` (hyphen-minus) in options of function command_options to prevent execution of commands
 - api: add property `hotlist_conditions` in function buffer_set
+- api: add support of flags in functions hook_signal_send and hook_hsignal_send
 - relay/api: allow array with multiple requests in websocket frame received from client
 - core, plugins: simplify help on parameters that can be repeated in commands
 - core: add optional hook types in command `/debug hooks`

@@ -122,6 +122,57 @@ hook_signal_match (const char *signal, struct t_hook *hook)
 }
 
 /*
+ * Extracts flags from signal and returns flags and pointer to start of signal.
+ */
+
+void
+hook_signal_extract_flags (const char *signal, const char **ptr_signal,
+                           int *stop_on_error, int *ignore_eat)
+{
+    char *pos, *str_flags, **flags;
+    int i, num_flags;
+
+    if (!signal || !ptr_signal || !stop_on_error || !ignore_eat)
+        return;
+
+    *ptr_signal = signal;
+    *stop_on_error = 0;
+    *ignore_eat = 0;
+
+    if (strncmp (signal, "[flags:", 7) != 0)
+        return;
+
+    pos = strchr (signal + 7, ']');
+    if (!pos)
+        return;
+
+    str_flags = string_strndup (signal + 7, pos - signal - 7);
+    if (!str_flags)
+        return;
+
+    *ptr_signal = pos + 1;
+
+    flags = string_split (str_flags, ",", NULL,
+                          WEECHAT_STRING_SPLIT_STRIP_LEFT
+                          | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                          | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                          0, &num_flags);
+    if (flags)
+    {
+        for (i = 0; i < num_flags; i++)
+        {
+            if (string_strcmp (flags[i], "stop_on_error") == 0)
+                *stop_on_error = 1;
+            else if (string_strcmp (flags[i], "ignore_eat") == 0)
+                *ignore_eat = 1;
+        }
+    }
+
+    string_free_split (flags);
+    free (str_flags);
+}
+
+/*
  * Sends a signal.
  */
 
@@ -130,9 +181,18 @@ hook_signal_send (const char *signal, const char *type_data, void *signal_data)
 {
     struct t_hook *ptr_hook, *next_hook;
     struct t_hook_exec_cb hook_exec_cb;
-    int rc;
+    const char *ptr_signal;
+    int rc, stop_on_error, ignore_eat;
 
     rc = WEECHAT_RC_OK;
+
+    ptr_signal = signal;
+    stop_on_error = 0;
+    ignore_eat = 0;
+    hook_signal_extract_flags (signal, &ptr_signal,
+                               &stop_on_error, &ignore_eat);
+    if (!ptr_signal)
+        return rc;
 
     hook_exec_start ();
 
@@ -143,19 +203,25 @@ hook_signal_send (const char *signal, const char *type_data, void *signal_data)
 
         if (!ptr_hook->deleted
             && !ptr_hook->running
-            && hook_signal_match (signal, ptr_hook))
+            && hook_signal_match (ptr_signal, ptr_hook))
         {
             hook_callback_start (ptr_hook, &hook_exec_cb);
             rc = (HOOK_SIGNAL(ptr_hook, callback))
                 (ptr_hook->callback_pointer,
                  ptr_hook->callback_data,
-                 signal,
+                 ptr_signal,
                  type_data,
                  signal_data);
             hook_callback_end (ptr_hook, &hook_exec_cb);
 
-            if (rc == WEECHAT_RC_OK_EAT)
+            if (ignore_eat && (rc == WEECHAT_RC_OK_EAT))
+                rc = WEECHAT_RC_OK;
+
+            if ((rc == WEECHAT_RC_OK_EAT)
+                || (stop_on_error && (rc == WEECHAT_RC_ERROR)))
+            {
                 break;
+            }
         }
 
         ptr_hook = next_hook;

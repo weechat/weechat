@@ -13039,7 +13039,7 @@ hook = weechat.hook_signal("quit;upgrade", "my_signal_cb", "")
 ==== hook_signal_send
 
 // TRANSLATION MISSING
-_Updated in 1.0._
+_Updated in 1.0, 4.5.0._
 
 Invia un segnale.
 
@@ -13053,9 +13053,21 @@ int weechat_hook_signal_send (const char *signal, const char *type_data,
 
 Argomenti:
 
-* _signal_: segnale da inviare
+// TRANSLATION MISSING
+* _signal_: segnale da inviare; flags are allowed before the signal name (see below)
+  _(WeeChat ≥ 4.5.0)_
 * _type_data_: tipo di dati inviati con il segnale (consultare <<_hook_signal,hook_signal>>)
 * _signal_data_: dati inviati con il segnale
+
+// TRANSLATION MISSING
+The signal name can contain flags with the following format: `[flags:xxx,yyy]signal`
+where `xxx` and `yyy` are names of flags, and `signal` the signal name. +
+The following flags are supported:
+
+* _stop_on_error_: exit immediately if a callback returns WEECHAT_RC_ERROR
+  (remaining callbacks are then NOT executed) _(WeeChat ≥ 4.5.0)_
+* _ignore_eat_: consider any callback returning WEECHAT_RC_OK_EAT is in fact
+  WEECHAT_RC_OK and execute remaining callbacks _(WeeChat ≥ 4.5.0)_
 
 // TRANSLATION MISSING
 Return value _(WeeChat ≥ 1.0)_:
@@ -13072,6 +13084,8 @@ Esempio in C:
 [source,c]
 ----
 int rc = weechat_hook_signal_send ("my_signal", WEECHAT_HOOK_SIGNAL_STRING, my_string);
+int rc2 = weechat_hook_signal_send ("[flags:stop_on_error,ignore_eat]my_signal2",
+                                    WEECHAT_HOOK_SIGNAL_STRING, my_string);
 ----
 
 Script (Python):
@@ -13083,6 +13097,8 @@ def hook_signal_send(signal: str, type_data: str, signal_data: str) -> int: ...
 
 # esempio
 rc = weechat.hook_signal_send("my_signal", weechat.WEECHAT_HOOK_SIGNAL_STRING, my_string)
+rc2 = weechat.hook_signal_send("[flags:stop_on_error,ignore_eat]my_signal2",
+                               weechat.WEECHAT_HOOK_SIGNAL_STRING, my_string)
 ----
 
 [[signal_logger_backlog]]
@@ -13390,7 +13406,7 @@ hook = weechat.hook_hsignal("test", "my_hsignal_cb", "")
 ==== hook_hsignal_send
 
 // TRANSLATION MISSING
-_WeeChat ≥ 0.3.4, updated in 1.0._
+_WeeChat ≥ 0.3.4, updated in 1.0, 4.5.0._
 
 Invia un hsignal (segnale con tabella hash).
 
@@ -13403,7 +13419,9 @@ int weechat_hook_hsignal_send (const char *signal, struct t_hashtable *hashtable
 
 Argomenti:
 
-* _signal_: segnale da inviare
+// TRANSLATION MISSING
+* _signal_: segnale da inviare; flags are allowed before the signal name
+  (see function <<_hook_signal_send,hook_signal_send>>) _(WeeChat ≥ 4.5.0)_
 * _hashtable_: tabella hash
 
 // TRANSLATION MISSING
@@ -13420,7 +13438,7 @@ Esempio in C:
 
 [source,c]
 ----
-int rc;
+int rc, rc2;
 struct t_hashtable *hashtable = weechat_hashtable_new (8,
                                                        WEECHAT_HASHTABLE_STRING,
                                                        WEECHAT_HASHTABLE_STRING,
@@ -13430,6 +13448,7 @@ if (hashtable)
 {
     weechat_hashtable_set (hashtable, "key", "value");
     rc = weechat_hook_hsignal_send ("my_hsignal", hashtable);
+    rc2 = weechat_hook_hsignal_send ("[flags:stop_on_error,ignore_eat]my_hsignal2", hashtable);
     weechat_hashtable_free (hashtable);
 }
 ----
@@ -13443,6 +13462,7 @@ def hook_hsignal_send(signal: str, hashtable: Dict[str, str]) -> int: ...
 
 # esempio
 rc = weechat.hook_hsignal_send("my_hsignal", {"key": "value"})
+rc2 = weechat.hook_hsignal_send("[flags:stop_on_error,ignore_eat]my_hsignal2", {"key": "value"})
 ----
 
 [[hsignal_irc_redirect_command]]
