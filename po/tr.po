@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-11-24 09:58+0100\n"
+"POT-Creation-Date: 2024-11-24 10:07+0100\n"
 "PO-Revision-Date: 2024-11-20 18:17+0100\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -851,6 +851,11 @@ msgstr[1] "kez"
 msgid "WeeChat upgrades: none, started on %s"
 msgstr "WeeChat çalışma süresi: %d %s %02d:%02d:%02d, başlatma: %s"
 
+#, fuzzy, c-format
+#| msgid "%sUnable to save WeeChat session (files *.upgrade)"
+msgid "%sUnable to save some plugin sessions (files *.upgrade)"
+msgstr "%sWeeChat oturumu kaydedilemiyor (*.upgrade dosyalar)"
+
 #, c-format
 msgid "%sUnable to save WeeChat session (files *.upgrade)"
 msgstr "%sWeeChat oturumu kaydedilemiyor (*.upgrade dosyalar)"
@@ -889,6 +894,10 @@ msgstr "%sBir ikili belirtilmemiş"
 #, c-format
 msgid "Upgrading WeeChat with binary file: \"%s\"..."
 msgstr "WeeChat ikili dosya ile yükseltiliyor: \"%s\"..."
+
+#, c-format
+msgid "%sUpgrade aborted"
+msgstr ""
 
 #, c-format
 msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
@@ -13645,6 +13654,11 @@ msgstr "%s%s: Sunucu bağlantısı kesildi"
 
 msgid "IRC (Internet Relay Chat) protocol"
 msgstr "IRC (Internet Relay Chat) protokolü"
+
+#, fuzzy, c-format
+#| msgid "%s%s: failed to rename trigger \"%s\""
+msgid "%s%s: failed to save upgrade data"
+msgstr "%s%s: \"%s\" tetiği yeniden adlandırılamadı"
 
 #, fuzzy, c-format
 #| msgid ""

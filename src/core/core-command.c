@@ -7200,6 +7200,7 @@ command_upgrade_display (struct t_gui_buffer *buffer,
 
 COMMAND_CALLBACK(upgrade)
 {
+    struct t_weechat_plugin *ptr_plugin;
     char *ptr_binary;
     char *exec_args[7] = { NULL, "-a", "--dir", NULL, "--upgrade", NULL };
     struct stat stat_buf;
@@ -7253,7 +7254,16 @@ COMMAND_CALLBACK(upgrade)
         && (string_strcmp (argv[index_args], "-save") == 0))
     {
         /* send "upgrade" signal to plugins */
-        (void) hook_signal_send ("upgrade", WEECHAT_HOOK_SIGNAL_STRING, "save");
+        rc = hook_signal_send ("[flags:stop_on_error,ignore_eat]upgrade",
+                               WEECHAT_HOOK_SIGNAL_STRING, "save");
+        if (rc == WEECHAT_RC_ERROR)
+        {
+            gui_chat_printf (NULL,
+                             _("%sUnable to save some plugin sessions "
+                               "(files *.upgrade)"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+            return WEECHAT_RC_ERROR;
+        }
         /* save WeeChat session */
         if (!upgrade_weechat_save ())
         {
@@ -7353,17 +7363,40 @@ COMMAND_CALLBACK(upgrade)
     }
 
     /* send "upgrade" signal to plugins */
-    (void) hook_signal_send ("upgrade", WEECHAT_HOOK_SIGNAL_STRING,
-                             (quit) ? "quit" : NULL);
+    rc = hook_signal_send ("[flags:stop_on_error,ignore_eat]upgrade",
+                           WEECHAT_HOOK_SIGNAL_STRING,
+                           (quit) ? "quit" : NULL);
+    if (rc == WEECHAT_RC_ERROR)
+    {
+        gui_chat_printf (NULL,
+                         _("%sUnable to save some plugin sessions "
+                           "(files *.upgrade)"),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+        gui_chat_printf (NULL,
+                         _("%sUpgrade aborted"),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+        free (ptr_binary);
+        return WEECHAT_RC_ERROR;
+    }
 
+    /* save WeeChat session */
     if (!upgrade_weechat_save ())
     {
         gui_chat_printf (NULL,
                          _("%sUnable to save WeeChat session "
                            "(files *.upgrade)"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+        gui_chat_printf (NULL,
+                         _("%sUpgrade aborted"),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
         free (ptr_binary);
         return WEECHAT_RC_ERROR;
+    }
+
+    for (ptr_plugin = weechat_plugins; ptr_plugin;
+         ptr_plugin = ptr_plugin->next_plugin)
+    {
+        ptr_plugin->unload_with_upgrade = 1;
     }
 
     weechat_quit = 1;

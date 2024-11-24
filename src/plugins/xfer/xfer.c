@@ -80,8 +80,6 @@ struct t_xfer *xfer_list = NULL;       /* list of files/chats               */
 struct t_xfer *last_xfer = NULL;       /* last file/chat in list            */
 int xfer_count = 0;                    /* number of xfer                    */
 
-int xfer_signal_upgrade_received = 0;  /* signal "upgrade" received ?       */
-
 void xfer_disconnect_all ();
 
 
@@ -130,11 +128,16 @@ xfer_signal_upgrade_cb (const void *pointer, void *data,
     /* only save session and continue? */
     if (signal_data && (strcmp (signal_data, "save") == 0))
     {
-        xfer_upgrade_save ();
+        if (!xfer_upgrade_save ())
+        {
+            weechat_printf (
+                NULL,
+                _("%s%s: failed to save upgrade data"),
+                weechat_prefix ("error"), XFER_PLUGIN_NAME);
+            return WEECHAT_RC_ERROR;
+        }
         return WEECHAT_RC_OK;
     }
-
-    xfer_signal_upgrade_received = 1;
 
     /*
      * TODO: do not disconnect here in case of upgrade when the save of xfers
@@ -143,6 +146,15 @@ xfer_signal_upgrade_cb (const void *pointer, void *data,
      */
     /*if (signal_data && (strcmp (signal_data, "quit") == 0))*/
     xfer_disconnect_all ();
+
+    if (!xfer_upgrade_save ())
+    {
+        weechat_printf (
+            NULL,
+            _("%s%s: failed to save upgrade data"),
+            weechat_prefix ("error"), XFER_PLUGIN_NAME);
+        return WEECHAT_RC_ERROR;
+    }
 
     return WEECHAT_RC_OK;
 }
@@ -1808,8 +1820,6 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     weechat_plugin = plugin;
 
-    xfer_signal_upgrade_received = 0;
-
     if (!xfer_config_init ())
         return WEECHAT_RC_ERROR;
 
@@ -1860,9 +1870,6 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     xfer_buffer_selected_line = 0;
 
     xfer_config_write ();
-
-    if (xfer_signal_upgrade_received)
-        xfer_upgrade_save ();
 
     xfer_disconnect_all ();
 

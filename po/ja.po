@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-11-24 09:58+0100\n"
+"POT-Creation-Date: 2024-11-24 10:07+0100\n"
 "PO-Revision-Date: 2024-11-20 18:17+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -861,6 +861,10 @@ msgid "WeeChat upgrades: none, started on %s"
 msgstr "WeeChat 連続稼働時間: %d %s %02d:%02d:%02d、%s に開始"
 
 #, fuzzy, c-format
+msgid "%sUnable to save some plugin sessions (files *.upgrade)"
+msgstr "%sエラー: ファイルにセッションを保存できません"
+
+#, fuzzy, c-format
 msgid "%sUnable to save WeeChat session (files *.upgrade)"
 msgstr "%sエラー: ファイルにセッションを保存できません"
 
@@ -900,6 +904,10 @@ msgstr "%sバイナリが指定されていません"
 #, c-format
 msgid "Upgrading WeeChat with binary file: \"%s\"..."
 msgstr "バイナリファイル: \"%s\" で WeeChat のアップグレード中..."
+
+#, c-format
+msgid "%sUpgrade aborted"
+msgstr ""
 
 #, c-format
 msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
@@ -13466,6 +13474,11 @@ msgstr "%s%s: サーバから切断"
 
 msgid "IRC (Internet Relay Chat) protocol"
 msgstr "IRC (インターネットリレーチャット) プロトコル"
+
+#, fuzzy, c-format
+#| msgid "%s%s: failed to rename trigger \"%s\""
+msgid "%s%s: failed to save upgrade data"
+msgstr "%s%s: トリガ \"%s\" の名前変更に失敗しました"
 
 #, fuzzy, c-format
 #| msgid ""

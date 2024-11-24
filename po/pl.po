@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-11-24 09:58+0100\n"
+"POT-Creation-Date: 2024-11-24 10:07+0100\n"
 "PO-Revision-Date: 2024-11-20 18:17+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -854,6 +854,11 @@ msgstr[2] "razy"
 msgid "WeeChat upgrades: none, started on %s"
 msgstr "WeeChat aktualizacje: brak, uruchomiono %s"
 
+#, fuzzy, c-format
+#| msgid "%sUnable to save WeeChat session (files *.upgrade)"
+msgid "%sUnable to save some plugin sessions (files *.upgrade)"
+msgstr "%sNie można zapisać sesji WeeChat (pliki *.upgrade)"
+
 #, c-format
 msgid "%sUnable to save WeeChat session (files *.upgrade)"
 msgstr "%sNie można zapisać sesji WeeChat (pliki *.upgrade)"
@@ -891,6 +896,10 @@ msgstr "%sNie określono binarki"
 #, c-format
 msgid "Upgrading WeeChat with binary file: \"%s\"..."
 msgstr "Uaktualniam WeeChat z użyciem pliku: \"%s\"..."
+
+#, c-format
+msgid "%sUpgrade aborted"
+msgstr ""
 
 #, c-format
 msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
@@ -13651,6 +13660,11 @@ msgstr "%s%s: rozłączono z serwerem"
 
 msgid "IRC (Internet Relay Chat) protocol"
 msgstr "Protokół IRC (Internet Relay Chat)"
+
+#, fuzzy, c-format
+#| msgid "%s%s: failed to rename trigger \"%s\""
+msgid "%s%s: failed to save upgrade data"
+msgstr "%s%s: zmiana nazwy triggera \"%s\" nie powiodła się"
 
 #, c-format
 msgid ""

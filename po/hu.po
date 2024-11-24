@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-11-24 09:58+0100\n"
+"POT-Creation-Date: 2024-11-24 10:07+0100\n"
 "PO-Revision-Date: 2024-11-20 18:17+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -860,6 +860,10 @@ msgid "WeeChat upgrades: none, started on %s"
 msgstr "WeeChat futásidő: %d %s %02d:%02d:%02d, elindítva: %s"
 
 #, fuzzy, c-format
+msgid "%sUnable to save some plugin sessions (files *.upgrade)"
+msgstr "%s nem sikerült a folyamatot menteni\n"
+
+#, fuzzy, c-format
 msgid "%sUnable to save WeeChat session (files *.upgrade)"
 msgstr "%s nem sikerült a folyamatot menteni\n"
 
@@ -893,6 +897,10 @@ msgstr "Nincs aliasz definiálva.\n"
 #, fuzzy, c-format
 msgid "Upgrading WeeChat with binary file: \"%s\"..."
 msgstr "WeeChat frissítése...\n"
+
+#, c-format
+msgid "%sUpgrade aborted"
+msgstr ""
 
 #, fuzzy, c-format
 msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
@@ -12122,6 +12130,10 @@ msgstr "Lekapcsolódott a szerverről!\n"
 
 msgid "IRC (Internet Relay Chat) protocol"
 msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: failed to save upgrade data"
+msgstr "%s nem sikerült a modul opciókat elmenteni\n"
 
 #, c-format
 msgid ""

@@ -74,7 +74,7 @@ struct t_weelist_item;
  * please change the date with current one; for a second change at same
  * date, increment the 01, otherwise please keep 01.
  */
-#define WEECHAT_PLUGIN_API_VERSION "20240727-01"
+#define WEECHAT_PLUGIN_API_VERSION "20241124-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -307,6 +307,8 @@ struct t_weechat_plugin
     int upgrading;                     /* 1 if the plugin must load upgrade */
                                        /* info on startup (if weechat is    */
                                        /* run with --upgrade)               */
+    int unload_with_upgrade;           /* 1 if the plugin is unloaded after */
+                                       /* /upgrade command                  */
     struct t_hashtable *variables;     /* plugin custom variables           */
     struct t_weechat_plugin *prev_plugin; /* link to previous plugin        */
     struct t_weechat_plugin *next_plugin; /* link to next plugin            */

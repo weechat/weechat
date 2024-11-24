@@ -2411,7 +2411,7 @@ irc_server_free (struct t_irc_server *server)
      * (only if we are not in a /upgrade, because during upgrade we want to
      * keep connections and closing server buffer would disconnect from server)
      */
-    if (server->buffer && !irc_signal_upgrade_received)
+    if (server->buffer && !weechat_irc_plugin->unload_with_upgrade)
         weechat_buffer_close (server->buffer);
 
     /* remove server from queue */

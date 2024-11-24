@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-11-24 09:58+0100\n"
+"POT-Creation-Date: 2024-11-24 10:07+0100\n"
 "PO-Revision-Date: 2024-11-20 18:17+0100\n"
 "Last-Translator: Santiago Forero <santiago@forero.xyz>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -874,6 +874,11 @@ msgstr "Uptime de WeeChat: %d %s %02d:%02d:%02d, iniciado el %s"
 
 #, fuzzy, c-format
 #| msgid "%sUnable to save session in file"
+msgid "%sUnable to save some plugin sessions (files *.upgrade)"
+msgstr "%sError: no se pudo guardar la sesión"
+
+#, fuzzy, c-format
+#| msgid "%sUnable to save session in file"
 msgid "%sUnable to save WeeChat session (files *.upgrade)"
 msgstr "%sError: no se pudo guardar la sesión"
 
@@ -915,6 +920,10 @@ msgstr "%sNingún ejecutable especificado"
 #, c-format
 msgid "Upgrading WeeChat with binary file: \"%s\"..."
 msgstr "Actualizando WeeChat con el archivo binario: \"%s\"..."
+
+#, c-format
+msgid "%sUpgrade aborted"
+msgstr ""
 
 #, c-format
 msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
@@ -12977,6 +12986,10 @@ msgstr "%s%s: desconectado del servidor"
 
 msgid "IRC (Internet Relay Chat) protocol"
 msgstr "Protocolo IRC (Internet Relay Chat)"
+
+#, fuzzy, c-format
+msgid "%s%s: failed to save upgrade data"
+msgstr "%sError: no se pudo crear la barra \"%s\""
 
 #, fuzzy, c-format
 #| msgid ""

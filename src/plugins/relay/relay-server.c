@@ -251,7 +251,7 @@ relay_server_close_socket (struct t_relay_server *server)
         server->sock = -1;
         if (server->unix_socket)
             unlink (server->path);
-        if (!relay_signal_upgrade_received)
+        if (!weechat_relay_plugin->unload_with_upgrade)
         {
             weechat_printf (NULL,
                             _("%s: socket closed for %s (%s: %s)"),
