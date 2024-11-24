@@ -2156,9 +2156,15 @@ COMMAND_CALLBACK(debug)
     if (string_strcmp (argv[1], "hooks") == 0)
     {
         if (argc > 2)
-            debug_hooks_plugin (argv[2]);
+        {
+            debug_hooks_plugin_types (
+                argv[2],
+                (argc > 3) ? (const char **)&argv[3] : NULL);
+        }
         else
+        {
             debug_hooks ();
+        }
         return WEECHAT_RC_OK;
     }
 
@@ -7194,6 +7200,7 @@ command_upgrade_display (struct t_gui_buffer *buffer,
 
 COMMAND_CALLBACK(upgrade)
 {
+    struct t_weechat_plugin *ptr_plugin;
     char *ptr_binary;
     char *exec_args[7] = { NULL, "-a", "--dir", NULL, "--upgrade", NULL };
     struct stat stat_buf;
@@ -7247,7 +7254,16 @@ COMMAND_CALLBACK(upgrade)
         && (string_strcmp (argv[index_args], "-save") == 0))
     {
         /* send "upgrade" signal to plugins */
-        (void) hook_signal_send ("upgrade", WEECHAT_HOOK_SIGNAL_STRING, "save");
+        rc = hook_signal_send ("[flags:stop_on_error,ignore_eat]upgrade",
+                               WEECHAT_HOOK_SIGNAL_STRING, "save");
+        if (rc == WEECHAT_RC_ERROR)
+        {
+            gui_chat_printf (NULL,
+                             _("%sUnable to save some plugin sessions "
+                               "(files *.upgrade)"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+            return WEECHAT_RC_ERROR;
+        }
         /* save WeeChat session */
         if (!upgrade_weechat_save ())
         {
@@ -7274,6 +7290,9 @@ COMMAND_CALLBACK(upgrade)
                            "process/thread running (hook type: process, "
                            "connect or url)"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+        gui_chat_printf (NULL,
+                         _("Check running hooks with command: %s"),
+                         "/debug hooks * process connect url");
         return WEECHAT_RC_ERROR;
     }
 
@@ -7344,17 +7363,40 @@ COMMAND_CALLBACK(upgrade)
     }
 
     /* send "upgrade" signal to plugins */
-    (void) hook_signal_send ("upgrade", WEECHAT_HOOK_SIGNAL_STRING,
-                             (quit) ? "quit" : NULL);
+    rc = hook_signal_send ("[flags:stop_on_error,ignore_eat]upgrade",
+                           WEECHAT_HOOK_SIGNAL_STRING,
+                           (quit) ? "quit" : NULL);
+    if (rc == WEECHAT_RC_ERROR)
+    {
+        gui_chat_printf (NULL,
+                         _("%sUnable to save some plugin sessions "
+                           "(files *.upgrade)"),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+        gui_chat_printf (NULL,
+                         _("%sUpgrade aborted"),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+        free (ptr_binary);
+        return WEECHAT_RC_ERROR;
+    }
 
+    /* save WeeChat session */
     if (!upgrade_weechat_save ())
     {
         gui_chat_printf (NULL,
                          _("%sUnable to save WeeChat session "
                            "(files *.upgrade)"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+        gui_chat_printf (NULL,
+                         _("%sUpgrade aborted"),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
         free (ptr_binary);
         return WEECHAT_RC_ERROR;
+    }
+
+    for (ptr_plugin = weechat_plugins; ptr_plugin;
+         ptr_plugin = ptr_plugin->next_plugin)
+    {
+        ptr_plugin->unload_with_upgrade = 1;
     }
 
     weechat_quit = 1;
@@ -8311,7 +8353,8 @@ command_init ()
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated */
         N_("list"
            " || set <plugin> <level>"
-           " || dump|hooks [<plugin>]"
+           " || dump [<plugin>]"
+           " || hooks [<plugin_mask> [<hook_type>...]]"
            " || buffer|certs|color|dirs|infolists|key|libs|memory|tags|"
            "term|url|windows"
            " || callbacks <duration>[<unit>]"
@@ -8328,6 +8371,8 @@ command_init ()
                "written when WeeChat crashes)"),
             N_("raw[hooks]: display infos about hooks (with a plugin: display "
                "detailed info about hooks created by the plugin)"),
+            N_("plugin_mask: plugin mask, \"*\" for all plugins"),
+            N_("hook_type: hook type"),
             N_("raw[buffer]: dump buffer content with hexadecimal values in WeeChat "
                "log file"),
             N_("raw[callbacks]: write hook and bar item callbacks that took more than "
@@ -8363,6 +8408,7 @@ command_init ()
             AI("  /debug set irc 1"),
             AI("  /debug mouse verbose"),
             AI("  /debug time /filter toggle"),
+            AI("  /debug hooks * process connect url"),
             AI("  /debug unicode ${chars:${\\u26C0}-${\\u26CF}}")),
         "list"
         " || set %(plugins_names)|" PLUGIN_CORE
@@ -8374,7 +8420,7 @@ command_init ()
         " || cursor verbose"
         " || dirs"
         " || hdata free"
-        " || hooks %(plugins_names)|" PLUGIN_CORE
+        " || hooks %(plugins_names)|" PLUGIN_CORE " %(hook_types)|%*"
         " || infolists"
         " || key"
         " || libs"

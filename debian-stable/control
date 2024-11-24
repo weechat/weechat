@@ -24,7 +24,7 @@ Build-Depends:
     libzstd-dev,
     zlib1g-dev,
     libcjson-dev
-Standards-Version: 4.6.2
+Standards-Version: 4.7.0
 Homepage: https://weechat.org/
 Vcs-Git: https://salsa.debian.org/kolter/weechat.git
 Vcs-Browser: https://salsa.debian.org/kolter/weechat

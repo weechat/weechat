@@ -6,8 +6,13 @@
 
 - api: return the buffer input callback return code in functions command and command_options
 - api: add special value `-` (hyphen-minus) in options of function command_options to prevent execution of commands
+- api: add property `hotlist_conditions` in function buffer_set
+- api: add support of flags in functions hook_signal_send and hook_hsignal_send
 - relay/api: allow array with multiple requests in websocket frame received from client
+- relay/api: support passing authentication in sub protocol header ([#2205](https://github.com/weechat/weechat/issues/2205))
+- relay/api: combine request headers with the same name ([#2206](https://github.com/weechat/weechat/issues/2206))
 - core, plugins: simplify help on parameters that can be repeated in commands
+- core: add optional hook types in command `/debug hooks`
 - build: fix detection of Ruby on macOS 14, require CMake ≥ 3.18 ([#1156](https://github.com/weechat/weechat/issues/1156))
 - build: require Curl ≥ 7.47.0 ([#2195](https://github.com/weechat/weechat/issues/2195))
 - build: require GnuTLS ≥ 3.3.0 ([#2193](https://github.com/weechat/weechat/issues/2193))
@@ -16,6 +21,7 @@
 
 - relay: display connection status in input prompt of remote buffers, if not connected or if fetching data from remote
 - irc: add option irc.look.notice_nicks_disable_notify
+- irc: add infos "irc_ptr_server", "irc_ptr_channel" and "irc_ptr_nick"
 
 ### Fixed
 
@@ -25,9 +31,22 @@
 - irc: fix crash on /list buffer when a filter is set ([#2197](https://github.com/weechat/weechat/issues/2197))
 - exec: fix unexpected execution of command with `/exec -o` when the command starts with two command chars ([#2199](https://github.com/weechat/weechat/issues/2199))
 - relay/api: fix empty nicklist in remote buffers after connection or reconnection
+- relay/api: reply HTTP 400 (Bad Request) when the body received is not a dict in websocket data
+- core: fix too many sorts of hotlist when buffers are moved ([#2097](https://github.com/weechat/weechat/issues/2097))
 - core: always send the signal "buffer_switch", even when the buffer is opening ([#2198](https://github.com/weechat/weechat/issues/2198))
+- core, plugins: abort upgrade immediately if any upgrade file fails to be written
 - core: reload all plugins with command `/plugin reload *`
+- relay, xfer: fix letters with actions displayed on top of buffer
+- perl: fix crash when unloading Perl scripts with Perl 5.38 ([#2209](https://github.com/weechat/weechat/issues/2209))
 - lua: fix compilation on Fedora with Lua < 5.2.0 ([#2173](https://github.com/weechat/weechat/issues/2173), [#2174](https://github.com/weechat/weechat/issues/2174))
+- core: fix build on Android ([#2180](https://github.com/weechat/weechat/issues/2180))
+
+## Version 4.4.3 (2024-10-30)
+
+### Fixed
+
+- irc: fix crash on /list buffer when a filter is set ([#2197](https://github.com/weechat/weechat/issues/2197))
+- core: always send the signal "buffer_switch", even when the buffer is opening ([#2198](https://github.com/weechat/weechat/issues/2198))
 - core: fix build on Android ([#2180](https://github.com/weechat/weechat/issues/2180))
 
 ## Version 4.4.2 (2024-09-08)

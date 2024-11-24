@@ -32,7 +32,8 @@ extern void debug_windows_tree ();
 extern void debug_memory ();
 extern void debug_hdata ();
 extern void debug_hooks ();
-extern void debug_hooks_plugin (const char *plugin_name);
+extern void debug_hooks_plugin_types (const char *plugin_name,
+                                      const char **hook_types);
 extern void debug_infolists ();
 extern void debug_directories ();
 extern void debug_display_time_elapsed (struct timeval *time1,

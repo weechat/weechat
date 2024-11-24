@@ -2,7 +2,7 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: ja-jp
-:toc-title: 目次
+include::includes/attributes-ja.adoc[]
 
 翻訳者:
 
@@ -9541,7 +9541,7 @@ _WeeChat バージョン 0.3.6 以上で利用可、バージョン 2.0 で更�
 
 キー割り当てを削除。
 
-[WARNING]
+[CAUTION]
 この関数を呼び出す際には、ユーザのキー割り当てを削除しないように注意してください。
 
 プロトタイプ:
@@ -12669,7 +12669,7 @@ hook = weechat.hook_signal("quit;upgrade", "my_signal_cb", "")
 
 ==== hook_signal_send
 
-_WeeChat バージョン 1.0 で更新。_
+_WeeChat バージョン 1.0, 4.5.0 で更新。_
 
 シグナルを送信。
 
@@ -12683,10 +12683,22 @@ int weechat_hook_signal_send (const char *signal, const char *type_data,
 
 引数:
 
-* _signal_: 送信するシグナル
+// TRANSLATION MISSING
+* _signal_: 送信するシグナル; flags are allowed before the signal name (see below)
+  _(WeeChat ≥ 4.5.0)_
 * _type_data_: シグナルと一緒に送信するデータの型
   (<<_hook_signal,hook_signal>> を参照)
 * _signal_data_: シグナルと一緒に送信するデータ
+
+// TRANSLATION MISSING
+The signal name can contain flags with the following format: `[flags:xxx,yyy]signal`
+where `xxx` and `yyy` are names of flags, and `signal` the signal name. +
+The following flags are supported:
+
+* _stop_on_error_: exit immediately if a callback returns WEECHAT_RC_ERROR
+  (remaining callbacks are then NOT executed) _(WeeChat ≥ 4.5.0)_
+* _ignore_eat_: consider any callback returning WEECHAT_RC_OK_EAT is in fact
+  WEECHAT_RC_OK and execute remaining callbacks _(WeeChat ≥ 4.5.0)_
 
 戻り値 _(WeeChat バージョン 1.0 以上で利用可)_:
 
@@ -12701,6 +12713,8 @@ C 言語での使用例:
 [source,c]
 ----
 int rc = weechat_hook_signal_send ("my_signal", WEECHAT_HOOK_SIGNAL_STRING, my_string);
+int rc2 = weechat_hook_signal_send ("[flags:stop_on_error,ignore_eat]my_signal2",
+                                    WEECHAT_HOOK_SIGNAL_STRING, my_string);
 ----
 
 スクリプト (Python) での使用例:
@@ -12712,6 +12726,8 @@ def hook_signal_send(signal: str, type_data: str, signal_data: str) -> int: ...
 
 # 例
 rc = weechat.hook_signal_send("my_signal", weechat.WEECHAT_HOOK_SIGNAL_STRING, my_string)
+rc2 = weechat.hook_signal_send("[flags:stop_on_error,ignore_eat]my_signal2",
+                               weechat.WEECHAT_HOOK_SIGNAL_STRING, my_string)
 ----
 
 [[signal_logger_backlog]]
@@ -12998,7 +13014,7 @@ hook = weechat.hook_hsignal("test", "my_hsignal_cb", "")
 
 ==== hook_hsignal_send
 
-_WeeChat バージョン 0.3.4 以上で利用可、バージョン 1.0 で更新。_
+_WeeChat バージョン 0.3.4 以上で利用可、バージョン 1.0, 4.5.0 で更新。_
 
 hsignal (ハッシュテーブルを持つシグナル) を送信。
 
@@ -13011,7 +13027,9 @@ int weechat_hook_hsignal_send (const char *signal, struct t_hashtable *hashtable
 
 引数:
 
-* _signal_: 送信するシグナル
+// TRANSLATION MISSING
+* _signal_: 送信するシグナル; flags are allowed before the signal name
+  (see function <<_hook_signal_send,hook_signal_send>>) _(WeeChat ≥ 4.5.0)_
 * _hashtable_: ハッシュテーブル
 
 戻り値 _(WeeChat バージョン 1.0 以上で利用可)_:
@@ -13026,7 +13044,7 @@ C 言語での使用例:
 
 [source,c]
 ----
-int rc;
+int rc, rc2;
 struct t_hashtable *hashtable = weechat_hashtable_new (8,
                                                        WEECHAT_HASHTABLE_STRING,
                                                        WEECHAT_HASHTABLE_STRING,
@@ -13036,6 +13054,7 @@ if (hashtable)
 {
     weechat_hashtable_set (hashtable, "key", "value");
     rc = weechat_hook_hsignal_send ("my_hsignal", hashtable);
+    rc2 = weechat_hook_hsignal_send ("[flags:stop_on_error,ignore_eat]my_hsignal2", hashtable);
     weechat_hashtable_free (hashtable);
 }
 ----
@@ -13049,6 +13068,7 @@ def hook_hsignal_send(signal: str, hashtable: Dict[str, str]) -> int: ...
 
 # 例
 rc = weechat.hook_hsignal_send("my_hsignal", {"key": "value"})
+rc2 = weechat.hook_hsignal_send("[flags:stop_on_error,ignore_eat]my_hsignal2", {"key": "value"})
 ----
 
 [[hsignal_irc_redirect_command]]
@@ -15116,6 +15136,13 @@ void weechat_buffer_set (struct t_gui_buffer *buffer, const char *property,
   (conditions defined in option _weechat.look.hotlist_add_conditions_
   are *NOT* checked) +
   "-1": ホットリストからバッファを削除 _(WeeChat バージョン 1.0 以上で利用可)_
+
+// TRANSLATION MISSING
+| hotlist_conditions | 4.5.0 | WEECHAT_HOTLIST_LOW, WEECHAT_HOTLIST_MESSAGE,
+  WEECHAT_HOTLIST_PRIVATE, WEECHAT_HOTLIST_HIGHLIGHT
+| priority: add buffer to hotlist with this priority
+  (conditions defined in option _weechat.look.hotlist_add_conditions_
+  are checked).
 
 | completion_freeze | | "0" または "1"
 | "0": 補完を止める (デフォルト)

@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-10-13 16:56+0200\n"
-"PO-Revision-Date: 2024-10-13 16:57+0200\n"
+"POT-Creation-Date: 2024-11-24 10:07+0100\n"
+"PO-Revision-Date: 2024-11-20 18:17+0100\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: tr\n"
@@ -851,6 +851,11 @@ msgstr[1] "kez"
 msgid "WeeChat upgrades: none, started on %s"
 msgstr "WeeChat çalışma süresi: %d %s %02d:%02d:%02d, başlatma: %s"
 
+#, fuzzy, c-format
+#| msgid "%sUnable to save WeeChat session (files *.upgrade)"
+msgid "%sUnable to save some plugin sessions (files *.upgrade)"
+msgstr "%sWeeChat oturumu kaydedilemiyor (*.upgrade dosyalar)"
+
 #, c-format
 msgid "%sUnable to save WeeChat session (files *.upgrade)"
 msgstr "%sWeeChat oturumu kaydedilemiyor (*.upgrade dosyalar)"
@@ -870,6 +875,10 @@ msgstr ""
 "'process' veya 'connect')"
 
 #, c-format
+msgid "Check running hooks with command: %s"
+msgstr ""
+
+#, c-format
 msgid "%sCan't upgrade: WeeChat binary \"%s\" does not exist"
 msgstr "%sYükseltilemiyor: WeeChat ikilisi \"%s\" mevcut değil"
 
@@ -885,6 +894,10 @@ msgstr "%sBir ikili belirtilmemiş"
 #, c-format
 msgid "Upgrading WeeChat with binary file: \"%s\"..."
 msgstr "WeeChat ikili dosya ile yükseltiliyor: \"%s\"..."
+
+#, c-format
+msgid "%sUpgrade aborted"
+msgstr ""
 
 #, c-format
 msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
@@ -1483,10 +1496,10 @@ msgstr "hata ayıklama işlevleri"
 #| "color|dirs|infolists|libs|memory|tags|term|windows || mouse|cursor "
 #| "[verbose] || hdata [free] || time <command> || unicode <string>"
 msgid ""
-"list || set <plugin> <level> || dump|hooks [<plugin>] || buffer|certs|color|"
-"dirs|infolists|key|libs|memory|tags|term|url|windows || callbacks "
-"<duration>[<unit>] || mouse|cursor [verbose] || hdata [free] || time "
-"<command> || unicode <string>"
+"list || set <plugin> <level> || dump [<plugin>] || hooks [<plugin_mask> "
+"[<hook_type>...]] || buffer|certs|color|dirs|infolists|key|libs|memory|tags|"
+"term|url|windows || callbacks <duration>[<unit>] || mouse|cursor [verbose] "
+"|| hdata [free] || time <command> || unicode <string>"
 msgstr ""
 "list || set <eklenti> <düzey> || dump|hooks [<eklenti>] || buffer|certs|"
 "color|dirs|infolists|libs|memory|tags|term|windows || mouse|cursor [verbose] "
@@ -1516,6 +1529,12 @@ msgstr ""
 msgid ""
 "raw[hooks]: display infos about hooks (with a plugin: display detailed info "
 "about hooks created by the plugin)"
+msgstr ""
+
+msgid "plugin_mask: plugin mask, \"*\" for all plugins"
+msgstr ""
+
+msgid "hook_type: hook type"
 msgstr ""
 
 msgid ""
@@ -3979,6 +3998,9 @@ msgstr "süzgeçlerin adları"
 #| msgid "names of filters"
 msgid "names of enabled filters"
 msgstr "süzgeçlerin adları"
+
+msgid "hook types"
+msgstr ""
 
 msgid ""
 "commands (weechat and plugins); optional argument: prefix to add before the "
@@ -6828,11 +6850,6 @@ msgstr ""
 #, c-format
 msgid "invalid regular expression (%s)"
 msgstr "geçersiz düzenli ifade (%s)"
-
-#, fuzzy, c-format
-#| msgid "Key \"%s\" unbound (context: \"%s\")"
-msgid "key \"%s\" in context \"%s\""
-msgstr "\"%s\" düğmesi bağıntılı değil (bağlam: \"%s\")"
 
 #, c-format
 msgid ""
@@ -10114,7 +10131,7 @@ msgstr "kanalları ve konularını listele"
 msgid ""
 "[-server <server>] [<channel>[,<channel>...]] [<target>] || [-server "
 "<server>] [-raw *|<regex>] || -up|-down [<number>] || -left|-right "
-"[<percent>] || -go <line>|end || -join  || -export <filename>"
+"[<percent>] || -go <line>|end || -join || -export <filename>"
 msgstr "[-server <sunucu>] [-re <ifade>] [<kanal>[,<kanal>...]] [<hedef>]"
 
 msgid ""
@@ -12589,6 +12606,31 @@ msgstr "1 eğer takma ad yok sayılıyorsa (ileti görüntülenmez)"
 msgid "server,message (message is the raw IRC message)"
 msgstr "server,message (message, ham IRC iletisidir)"
 
+#, fuzzy
+#| msgid "get buffer pointer for an IRC server/channel/nick"
+msgid "get pointer to an IRC server"
+msgstr "bir IRC sunucusu/kanalı/takma adı için arabellek işaretçisini al"
+
+#, fuzzy
+#| msgid "get buffer pointer for an IRC server/channel/nick"
+msgid "get pointer to an IRC channel"
+msgstr "bir IRC sunucusu/kanalı/takma adı için arabellek işaretçisini al"
+
+#, fuzzy
+#| msgid "leave a channel"
+msgid "server,channel"
+msgstr "bir kanaldan ayrıl"
+
+#, fuzzy
+#| msgid "get buffer pointer for an IRC server/channel/nick"
+msgid "get pointer to an IRC nick"
+msgstr "bir IRC sunucusu/kanalı/takma adı için arabellek işaretçisini al"
+
+#, fuzzy
+#| msgid "server,channel,nick (nick is optional)"
+msgid "server,channel,nick"
+msgstr "server,channel,nick (nick isteğe bağlıdır)"
+
 msgid "parse an IRC message"
 msgstr "bir IRC iletisi ayrıştır"
 
@@ -13612,6 +13654,11 @@ msgstr "%s%s: Sunucu bağlantısı kesildi"
 
 msgid "IRC (Internet Relay Chat) protocol"
 msgstr "IRC (Internet Relay Chat) protokolü"
+
+#, fuzzy, c-format
+#| msgid "%s%s: failed to rename trigger \"%s\""
+msgid "%s%s: failed to save upgrade data"
+msgstr "%s%s: \"%s\" tetiği yeniden adlandırılamadı"
 
 #, fuzzy, c-format
 #| msgid ""
@@ -15096,17 +15143,17 @@ msgstr ""
 msgid "Actions (letter+enter):"
 msgstr "Eylemler (harf+enter):"
 
-msgid "  [D] Disconnect"
-msgstr "  [D] Bağlantıyı kes"
+msgid "  [d] Disconnect"
+msgstr "  [d] Bağlantıyı kes"
 
-msgid "  [R] Remove"
-msgstr "  [R] Kaldır"
+msgid "  [r] Remove"
+msgstr "  [r] Kaldır"
 
-msgid "  [P] Purge finished"
-msgstr "  [P] Biteni temizle"
+msgid "  [p] Purge finished"
+msgstr "  [p] Biteni temizle"
 
-msgid "  [Q] Close this buffer"
-msgstr "  [Q] Bu arabelleği kapat"
+msgid "  [q] Close this buffer"
+msgstr "  [q] Bu arabelleği kapat"
 
 #, c-format
 msgid "%s%s[%s%s%s%s] %s, received: %s, sent: %s"
@@ -17921,11 +17968,11 @@ msgstr ""
 msgid "Typing status of users"
 msgstr "Kullanıcıların metin yazma durumu"
 
-msgid "  [A] Accept"
-msgstr "  [A] Kabul et"
+msgid "  [a] Accept"
+msgstr "  [a] Kabul et"
 
-msgid "  [C] Cancel"
-msgstr "  [C] İptal"
+msgid "  [c] Cancel"
+msgstr "  [c] İptal"
 
 msgid "xfer chat"
 msgstr "xfer sohbeti"

@@ -26,6 +26,7 @@
 extern "C"
 {
 #include "src/core/weechat.h"
+#include "src/core/hook/hook-signal.h"
 }
 
 TEST_GROUP(HookSignal)
@@ -60,6 +61,83 @@ TEST(HookSignal, Signal)
 TEST(HookSignal, Match)
 {
     /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   hook_signal_extract_flags
+ */
+
+TEST(HookSignal, ExtractFlags)
+{
+    const char *ptr_signal;
+    char signal[128];
+    int stop_on_error, ignore_eat;
+
+    hook_signal_extract_flags (NULL, NULL, NULL, NULL);
+
+    /* no flags */
+    snprintf (signal, sizeof (signal), "test");
+    stop_on_error = -1;
+    ignore_eat = -1;
+    hook_signal_extract_flags (signal, &ptr_signal, &stop_on_error, &ignore_eat);
+    STRCMP_EQUAL("test", ptr_signal);
+    LONGS_EQUAL(0, stop_on_error);
+    LONGS_EQUAL(0, ignore_eat);
+
+    /* invalid flags (missing "]") */
+    snprintf (signal, sizeof (signal), "[flags:test");
+    stop_on_error = -1;
+    ignore_eat = -1;
+    hook_signal_extract_flags (signal, &ptr_signal, &stop_on_error, &ignore_eat);
+    STRCMP_EQUAL("[flags:test", ptr_signal);
+    LONGS_EQUAL(0, stop_on_error);
+    LONGS_EQUAL(0, ignore_eat);
+
+    /* unknown flag */
+    snprintf (signal, sizeof (signal), "[flags:flag1]test");
+    stop_on_error = -1;
+    ignore_eat = -1;
+    hook_signal_extract_flags (signal, &ptr_signal, &stop_on_error, &ignore_eat);
+    STRCMP_EQUAL("test", ptr_signal);
+    LONGS_EQUAL(0, stop_on_error);
+    LONGS_EQUAL(0, ignore_eat);
+
+    /* unknown flags */
+    snprintf (signal, sizeof (signal), "[flags:flag1,flag2]test");
+    stop_on_error = -1;
+    ignore_eat = -1;
+    hook_signal_extract_flags (signal, &ptr_signal, &stop_on_error, &ignore_eat);
+    STRCMP_EQUAL("test", ptr_signal);
+    LONGS_EQUAL(0, stop_on_error);
+    LONGS_EQUAL(0, ignore_eat);
+
+    /* flag "stop_on_error" */
+    snprintf (signal, sizeof (signal), "[flags:stop_on_error]test");
+    stop_on_error = -1;
+    ignore_eat = -1;
+    hook_signal_extract_flags (signal, &ptr_signal, &stop_on_error, &ignore_eat);
+    STRCMP_EQUAL("test", ptr_signal);
+    LONGS_EQUAL(1, stop_on_error);
+    LONGS_EQUAL(0, ignore_eat);
+
+    /* flag "ignore_eat" */
+    snprintf (signal, sizeof (signal), "[flags:ignore_eat]test");
+    stop_on_error = -1;
+    ignore_eat = -1;
+    hook_signal_extract_flags (signal, &ptr_signal, &stop_on_error, &ignore_eat);
+    STRCMP_EQUAL("test", ptr_signal);
+    LONGS_EQUAL(0, stop_on_error);
+    LONGS_EQUAL(1, ignore_eat);
+
+    /* flags "stop_on_error" and "ignore_eat" */
+    snprintf (signal, sizeof (signal), "[flags:stop_on_error,ignore_eat]test");
+    stop_on_error = -1;
+    ignore_eat = -1;
+    hook_signal_extract_flags (signal, &ptr_signal, &stop_on_error, &ignore_eat);
+    STRCMP_EQUAL("test", ptr_signal);
+    LONGS_EQUAL(1, stop_on_error);
+    LONGS_EQUAL(1, ignore_eat);
 }
 
 /*

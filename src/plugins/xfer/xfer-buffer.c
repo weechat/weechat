@@ -63,19 +63,19 @@ xfer_buffer_refresh (const char *hotlist)
                           /* accept */
                           (xfer_selected && XFER_IS_RECV(xfer_selected->type)
                            && (xfer_selected->status == XFER_STATUS_WAITING)) ?
-                          _("  [A] Accept") : "",
+                          _("  [a] Accept") : "",
                           /* cancel */
                           (xfer_selected
                            && !XFER_HAS_ENDED(xfer_selected->status)) ?
-                          _("  [C] Cancel") : "",
+                          _("  [c] Cancel") : "",
                           /* remove */
                           (xfer_selected
                            && XFER_HAS_ENDED(xfer_selected->status)) ?
-                          _("  [R] Remove") : "",
+                          _("  [r] Remove") : "",
                           /* purge old */
-                          _("  [P] Purge finished"),
+                          _("  [p] Purge finished"),
                           /* quit */
-                          _("  [Q] Close this buffer"));
+                          _("  [q] Close this buffer"));
         for (ptr_xfer = xfer_list; ptr_xfer; ptr_xfer = ptr_xfer->next_xfer)
         {
             suffix[0] = '\0';
@@ -247,7 +247,7 @@ xfer_buffer_refresh (const char *hotlist)
             }
             line++;
         }
-        weechat_buffer_set (xfer_buffer, "hotlist", hotlist);
+        weechat_buffer_set (xfer_buffer, "hotlist_conditions", hotlist);
     }
 }
 
@@ -261,6 +261,7 @@ xfer_buffer_input_cb (const void *pointer, void *data,
                       const char *input_data)
 {
     struct t_xfer *xfer, *ptr_xfer, *next_xfer;
+    int refresh;
 
     /* make C compiler happy */
     (void) pointer;
@@ -289,15 +290,20 @@ xfer_buffer_input_cb (const void *pointer, void *data,
     /* purge old xfer */
     else if (weechat_strcmp (input_data, "p") == 0)
     {
+        refresh = 0;
         ptr_xfer = xfer_list;
         while (ptr_xfer)
         {
             next_xfer = ptr_xfer->next_xfer;
             if (XFER_HAS_ENDED(ptr_xfer->status))
+            {
                 xfer_free (ptr_xfer);
+                refresh = 1;
+            }
             ptr_xfer = next_xfer;
         }
-        xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
+        if (refresh)
+            xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
     }
     /* quit xfer buffer (close it) */
     else if (weechat_strcmp (input_data, "q") == 0)

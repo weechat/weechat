@@ -2,7 +2,7 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: es
-:toc-title: Índice
+include::includes/attributes-es.adoc[]
 
 Traductores:
 
@@ -283,7 +283,7 @@ Cierra un servidor, canal o buffer privado (`/close` es un alias para
 /close
 ----
 
-[WARNING]
+[CAUTION]
 Al cerrar el buffer del servidor cerrará todos los buffer de canales/privados
 
 Para desconectar del servidor, en el buffer del servidor ejecute:

@@ -61,7 +61,6 @@ struct t_weechat_plugin *weechat_irc_plugin = NULL;
 struct t_hook *irc_hook_timer = NULL;
 
 int irc_signal_quit_received = 0;      /* signal "quit" received?           */
-int irc_signal_upgrade_received = 0;   /* signal "upgrade" received?        */
 
 
 /*
@@ -121,11 +120,16 @@ irc_signal_upgrade_cb (const void *pointer, void *data,
          * save session with a disconnected state in servers and a scheduled
          * reconnection
          */
-        irc_upgrade_save (1);
+        if (!irc_upgrade_save (1))
+        {
+            weechat_printf (
+                NULL,
+                _("%s%s: failed to save upgrade data"),
+                weechat_prefix ("error"), IRC_PLUGIN_NAME);
+            return WEECHAT_RC_ERROR;
+        }
         return WEECHAT_RC_OK;
     }
-
-    irc_signal_upgrade_received = 1;
 
     quit = (signal_data && (strcmp (signal_data, "quit") == 0));
 
@@ -178,6 +182,15 @@ irc_signal_upgrade_cb (const void *pointer, void *data,
             tls_disconnected);
     }
 
+    if (!irc_upgrade_save (0))
+    {
+        weechat_printf (
+            NULL,
+            _("%s%s: failed to save upgrade data"),
+            weechat_prefix ("error"), IRC_PLUGIN_NAME);
+        return WEECHAT_RC_ERROR;
+    }
+
     return WEECHAT_RC_OK;
 }
 
@@ -194,7 +207,6 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     weechat_plugin = plugin;
 
     irc_signal_quit_received = 0;
-    irc_signal_upgrade_received = 0;
 
     irc_color_init ();
 
@@ -323,10 +335,9 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
         irc_hook_timer = NULL;
     }
 
-    if (irc_signal_upgrade_received)
+    if (weechat_irc_plugin->unload_with_upgrade)
     {
         irc_config_write (1);
-        irc_upgrade_save (0);
     }
     else
     {

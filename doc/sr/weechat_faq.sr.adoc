@@ -2,7 +2,7 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: sr
-:toc-title: Садржај
+include::includes/attributes-sr.adoc[]
 
 Превод:
 
@@ -264,8 +264,7 @@ _прозор_ је површина екрана која приказује б
 
 Можете да користите терминал са правоугаоним избором (као rxvt-unicode, konsole, gnome-terminal, итд.). Тастер је обично kbd:[Ctrl] + kbd:[Alt] + избор мишем.
 
-// TRANSLATION MISSING
-You can toggle nicklist and make it visible only when needed, with key
+Листу надимака можете да укључите/искључите и да је прикажете само када је потребна, користећи пречицу
 kbd:[Alt+Shift+N].
 
 Друго решење је да листу надимака померите на врх или дно, на пример:
@@ -282,8 +281,7 @@ kbd:[Alt+Shift+N].
 
 Ако желите да олакшате отварање URL адреса, можете да:
 
-// TRANSLATION MISSING
-* toggle nicklist and make it visible only when needed, with key kbd:[Alt+Shift+N]
+* укључите/искључите листу надимака и да је прикажете само када је потребна, користећи пречицу kbd:[Alt+Shift+N]
 
 * померите листу надимака на врх:
 
@@ -534,7 +532,7 @@ UXTerm*metaSendsEscape: true
 
 Ако извршавате WeeChat < 4.0.0 са конфигурационим фајловима које је креирала било
 која верзија ≥ 4.0.0, имена тастера постану неисправна и многи тастери уопште неће радити. +
-Да бисте их поправили, напустите WeeChat, уклоните из weechat.conf све одељке `[key*]` 
+Да бисте их поправили, напустите WeeChat, уклоните из weechat.conf све одељке `[key*]`
 и поново покрените WeeChat: креираће се сви подразумевани тастери.
 
 [[key_f11]]

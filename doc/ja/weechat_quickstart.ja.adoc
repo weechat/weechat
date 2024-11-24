@@ -2,7 +2,7 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: ja-jp
-:toc-title: 目次
+include::includes/attributes-ja.adoc[]
 
 翻訳者:
 
@@ -275,7 +275,7 @@ channels configured in the "autojoin" server option.
 /close
 ----
 
-[WARNING]
+[CAUTION]
 `/close` を用いてサーバから切断した場合、すべてのチャンネルおよびプライベートバッファは閉じられます。
 
 サーババッファ上で実行することで、サーバから切断します:

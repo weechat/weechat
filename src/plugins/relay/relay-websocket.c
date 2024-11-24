@@ -400,10 +400,12 @@ relay_websocket_parse_extensions (const char *extensions,
 char *
 relay_websocket_build_handshake (struct t_relay_http_request *request)
 {
-    const char *sec_websocket_key;
+    const char *sec_websocket_key, *sec_websocket_protocol_request;
     char *key, sec_websocket_accept[128], handshake[4096], hash[160 / 8];
-    char **extensions, str_window_bits[128], sec_websocket_extensions[1024];
-    int length, hash_size;
+    char **extensions, **protocol_array, str_window_bits[128];
+    char sec_websocket_extensions[1024];
+    char sec_websocket_protocol[1024];
+    int i, length, hash_size, protocol_count;
 
     if (!request)
         return NULL;
@@ -481,6 +483,24 @@ relay_websocket_build_handshake (struct t_relay_http_request *request)
         sec_websocket_extensions[0] = '\0';
     }
 
+    sec_websocket_protocol_request = weechat_hashtable_get (
+        request->headers, "sec-websocket-protocol");
+    protocol_array = weechat_string_split (sec_websocket_protocol_request,
+                                           ",", " ", 0, 0, &protocol_count);
+
+    sec_websocket_protocol[0] = '\0';
+    for (i = 0; i < protocol_count; i++)
+    {
+        if (strcmp (protocol_array[i], WEBSOCKET_SUB_PROTOCOL_API_WEECHAT) == 0)
+        {
+            snprintf (
+                sec_websocket_protocol, sizeof (sec_websocket_protocol),
+                "Sec-WebSocket-Protocol: %s\r\n",
+                WEBSOCKET_SUB_PROTOCOL_API_WEECHAT);
+            break;
+        }
+    }
+
     /* build the handshake (it will be sent as-is to client) */
     snprintf (handshake, sizeof (handshake),
               "HTTP/1.1 101 Switching Protocols\r\n"
@@ -488,9 +508,11 @@ relay_websocket_build_handshake (struct t_relay_http_request *request)
               "Connection: Upgrade\r\n"
               "Sec-WebSocket-Accept: %s\r\n"
               "%s"
+              "%s"
               "\r\n",
               sec_websocket_accept,
-              sec_websocket_extensions);
+              sec_websocket_extensions,
+              sec_websocket_protocol);
 
     return strdup (handshake);
 }

@@ -2,6 +2,7 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: cs
+include::includes/attributes-cs.adoc[]
 
 [[start]]
 == Spuštění WeeChatu
@@ -286,7 +287,7 @@ Close a server, channel or private buffer (`/close` is an alias for
 ----
 
 // TRANSLATION MISSING
-[WARNING]
+[CAUTION]
 Closing the server buffer will close all channel/private buffers.
 
 // TRANSLATION MISSING

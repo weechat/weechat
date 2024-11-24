@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-10-13 16:56+0200\n"
-"PO-Revision-Date: 2024-08-12 21:35+0200\n"
+"POT-Creation-Date: 2024-11-24 10:07+0100\n"
+"PO-Revision-Date: 2024-11-20 18:17+0100\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: it\n"
@@ -858,6 +858,10 @@ msgid "WeeChat upgrades: none, started on %s"
 msgstr "Uptime di WeeChat: %d %s %02d:%02d:%02d, avviato il %s"
 
 #, fuzzy, c-format
+msgid "%sUnable to save some plugin sessions (files *.upgrade)"
+msgstr "%sErrore: impossibile salvare la sessione su file"
+
+#, fuzzy, c-format
 msgid "%sUnable to save WeeChat session (files *.upgrade)"
 msgstr "%sErrore: impossibile salvare la sessione su file"
 
@@ -877,6 +881,10 @@ msgstr ""
 "tipo 'process' o 'connect')"
 
 #, c-format
+msgid "Check running hooks with command: %s"
+msgstr ""
+
+#, c-format
 msgid "%sCan't upgrade: WeeChat binary \"%s\" does not exist"
 msgstr "%sImpossbile aggiornare: il binario di WeeChat \"%s\" non esiste"
 
@@ -894,6 +902,10 @@ msgstr "Nessuna barra definita"
 #, c-format
 msgid "Upgrading WeeChat with binary file: \"%s\"..."
 msgstr "Aggiornamento di WeeChat con il file binario: \"%s\"..."
+
+#, c-format
+msgid "%sUpgrade aborted"
+msgstr ""
 
 #, c-format
 msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
@@ -1437,10 +1449,10 @@ msgstr ""
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 #, fuzzy
 msgid ""
-"list || set <plugin> <level> || dump|hooks [<plugin>] || buffer|certs|color|"
-"dirs|infolists|key|libs|memory|tags|term|url|windows || callbacks "
-"<duration>[<unit>] || mouse|cursor [verbose] || hdata [free] || time "
-"<command> || unicode <string>"
+"list || set <plugin> <level> || dump [<plugin>] || hooks [<plugin_mask> "
+"[<hook_type>...]] || buffer|certs|color|dirs|infolists|key|libs|memory|tags|"
+"term|url|windows || callbacks <duration>[<unit>] || mouse|cursor [verbose] "
+"|| hdata [free] || time <command> || unicode <string>"
 msgstr ""
 "list || set <plugin> <livello> || dump [<plugin>] || buffer|color|infolists|"
 "memory|tags|term|windows || mouse|cursor [verbose] || hdata [free]"
@@ -1469,6 +1481,12 @@ msgstr ""
 msgid ""
 "raw[hooks]: display infos about hooks (with a plugin: display detailed info "
 "about hooks created by the plugin)"
+msgstr ""
+
+msgid "plugin_mask: plugin mask, \"*\" for all plugins"
+msgstr ""
+
+msgid "hook_type: hook type"
 msgstr ""
 
 msgid ""
@@ -3870,6 +3888,9 @@ msgstr "nomi dei filtri"
 #| msgid "names of filters"
 msgid "names of enabled filters"
 msgstr "nomi dei filtri"
+
+msgid "hook types"
+msgstr ""
 
 msgid ""
 "commands (weechat and plugins); optional argument: prefix to add before the "
@@ -6533,11 +6554,6 @@ msgstr ""
 #, fuzzy, c-format
 msgid "invalid regular expression (%s)"
 msgstr "%s%s: \"%s\" non è una espressione regolare valida (%s)"
-
-#, fuzzy, c-format
-#| msgid "Key \"%s\" unbound (context: \"%s\")"
-msgid "key \"%s\" in context \"%s\""
-msgstr "Tasto \"%s\" non associato (contesto: \"%s\")"
 
 #, c-format
 msgid ""
@@ -9630,7 +9646,7 @@ msgstr "elenca i canali ed i loro argomenti"
 msgid ""
 "[-server <server>] [<channel>[,<channel>...]] [<target>] || [-server "
 "<server>] [-raw *|<regex>] || -up|-down [<number>] || -left|-right "
-"[<percent>] || -go <line>|end || -join  || -export <filename>"
+"[<percent>] || -go <line>|end || -join || -export <filename>"
 msgstr ""
 "[-noswitch] [-server <server>] [<canale1>[,<canale2>...]] [<chiave1>[,"
 "<chiave2>...]]"
@@ -11926,6 +11942,30 @@ msgstr ""
 msgid "server,message (message is the raw IRC message)"
 msgstr ""
 
+#, fuzzy
+#| msgid "get buffer pointer for an IRC server/channel/nick"
+msgid "get pointer to an IRC server"
+msgstr "ottiene puntatore al buffer per un server/canale/nick IRC"
+
+#, fuzzy
+#| msgid "get buffer pointer for an IRC server/channel/nick"
+msgid "get pointer to an IRC channel"
+msgstr "ottiene puntatore al buffer per un server/canale/nick IRC"
+
+#, fuzzy
+#| msgid "leave a channel"
+msgid "server,channel"
+msgstr "esce da un canale"
+
+#, fuzzy
+#| msgid "get buffer pointer for an IRC server/channel/nick"
+msgid "get pointer to an IRC nick"
+msgstr "ottiene puntatore al buffer per un server/canale/nick IRC"
+
+#, fuzzy
+msgid "server,channel,nick"
+msgstr "server,canale (canale è opzionale)"
+
 msgid "parse an IRC message"
 msgstr "controlla un messaggio IRC"
 
@@ -12951,6 +12991,10 @@ msgstr "%s%s: disconnesso dal server"
 
 msgid "IRC (Internet Relay Chat) protocol"
 msgstr "Protocollo IRC (Internet Relay Chat)"
+
+#, fuzzy, c-format
+msgid "%s%s: failed to save upgrade data"
+msgstr "%sErrore: creazione della barra \"%s\" fallita"
 
 #, fuzzy, c-format
 #| msgid ""
@@ -14396,17 +14440,17 @@ msgstr ""
 msgid "Actions (letter+enter):"
 msgstr "Azioni (lettera+invio):"
 
-msgid "  [D] Disconnect"
-msgstr "  [D] Disconnetti"
+msgid "  [d] Disconnect"
+msgstr "  [d] Disconnetti"
 
-msgid "  [R] Remove"
-msgstr "  [R] Rimuovi"
+msgid "  [r] Remove"
+msgstr "  [r] Rimuovi"
 
-msgid "  [P] Purge finished"
-msgstr "  [P] Rimuovi completati"
+msgid "  [p] Purge finished"
+msgstr "  [p] Rimuovi completati"
 
-msgid "  [Q] Close this buffer"
-msgstr "  [Q] Chiudi questo buffer"
+msgid "  [q] Close this buffer"
+msgstr "  [q] Chiudi questo buffer"
 
 #, c-format
 msgid "%s%s[%s%s%s%s] %s, received: %s, sent: %s"
@@ -17034,11 +17078,11 @@ msgstr ""
 msgid "Typing status of users"
 msgstr ""
 
-msgid "  [A] Accept"
-msgstr "  [A] Accetta"
+msgid "  [a] Accept"
+msgstr "  [a] Accetta"
 
-msgid "  [C] Cancel"
-msgstr "  [C] Annulla"
+msgid "  [c] Cancel"
+msgstr "  [c] Annulla"
 
 msgid "xfer chat"
 msgstr "chat xfer"

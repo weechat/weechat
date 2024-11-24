@@ -595,6 +595,7 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
         ptr_option = config_weechat_debug_get (name);
         new_plugin->debug = (ptr_option) ? CONFIG_INTEGER(ptr_option) : 0;
         new_plugin->upgrading = weechat_upgrading;
+        new_plugin->unload_with_upgrade = 0;
         new_plugin->variables = hashtable_new (
             32,
             WEECHAT_HASHTABLE_STRING, WEECHAT_HASHTABLE_STRING,
@@ -1461,6 +1462,7 @@ plugin_hdata_plugin_cb (const void *pointer, void *data,
         HDATA_VAR(struct t_weechat_plugin, initialized, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_weechat_plugin, debug, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_weechat_plugin, upgrading, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_weechat_plugin, unload_with_upgrade, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_weechat_plugin, variables, HASHTABLE, 0, NULL, NULL);
         HDATA_VAR(struct t_weechat_plugin, prev_plugin, POINTER, 0, NULL, hdata_name);
         HDATA_VAR(struct t_weechat_plugin, next_plugin, POINTER, 0, NULL, hdata_name);
@@ -1521,6 +1523,8 @@ plugin_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!infolist_new_var_integer (ptr_item, "upgrading", plugin->upgrading))
         return 0;
+    if (!infolist_new_var_integer (ptr_item, "unload_with_upgrade", plugin->unload_with_upgrade))
+        return 0;
     if (!hashtable_add_to_infolist (plugin->variables, ptr_item, "var"))
         return 0;
 
@@ -1553,6 +1557,7 @@ plugin_print_log ()
         log_printf ("  initialized. . . . . . : %d", ptr_plugin->initialized);
         log_printf ("  debug. . . . . . . . . : %d", ptr_plugin->debug);
         log_printf ("  upgrading. . . . . . . : %d", ptr_plugin->upgrading);
+        log_printf ("  unload_with_upgrade. . : %d", ptr_plugin->unload_with_upgrade);
         hashtable_print_log (ptr_plugin->variables, "variables");
         log_printf ("  prev_plugin. . . . . . : %p", ptr_plugin->prev_plugin);
         log_printf ("  next_plugin. . . . . . : %p", ptr_plugin->next_plugin);

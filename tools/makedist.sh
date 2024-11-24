@@ -43,7 +43,7 @@ error ()
 
 # check git repository
 root_dir=$(git rev-parse --show-toplevel)
-if [ -z "${root_dir}" ] || [ ! -d "${root_dir}/.git" ]; then
+if [ -z "${root_dir}" ] || [ ! -e "${root_dir}/.git" ]; then
     error "this script must be run from WeeChat git repository."
 fi
 cd "${root_dir}"

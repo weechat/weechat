@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-10-13 16:56+0200\n"
-"PO-Revision-Date: 2024-10-13 16:57+0200\n"
+"POT-Creation-Date: 2024-11-24 10:07+0100\n"
+"PO-Revision-Date: 2024-11-24 10:08+0100\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -846,6 +846,11 @@ msgid "WeeChat upgrades: none, started on %s"
 msgstr "Mises à jour de WeeChat : aucune, démarré le %s"
 
 #, c-format
+msgid "%sUnable to save some plugin sessions (files *.upgrade)"
+msgstr ""
+"%sImpossible de sauvegarder les sessions des extensions (fichiers *.upgrade)"
+
+#, c-format
 msgid "%sUnable to save WeeChat session (files *.upgrade)"
 msgstr "%sImpossible de sauvegarder la session WeeChat (fichiers *.upgrade)"
 
@@ -859,6 +864,10 @@ msgid ""
 msgstr ""
 "%sImpossible de mettre à jour : il y a un ou plusieurs processus/thread en "
 "tâche de fond (type de hook : process, connect ou url)"
+
+#, c-format
+msgid "Check running hooks with command: %s"
+msgstr "Vérifiez les hooks qui tournent avec la commande : %s"
 
 #, c-format
 msgid "%sCan't upgrade: WeeChat binary \"%s\" does not exist"
@@ -878,6 +887,10 @@ msgstr "%sPas de binaire spécifié"
 #, c-format
 msgid "Upgrading WeeChat with binary file: \"%s\"..."
 msgstr "Mise à jour de WeeChat avec le fichier binaire : \"%s\"..."
+
+#, c-format
+msgid "%sUpgrade aborted"
+msgstr "%sMise à jour abandonnée"
 
 #, c-format
 msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
@@ -1475,15 +1488,15 @@ msgstr "fonctions de debug"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid ""
-"list || set <plugin> <level> || dump|hooks [<plugin>] || buffer|certs|color|"
-"dirs|infolists|key|libs|memory|tags|term|url|windows || callbacks "
-"<duration>[<unit>] || mouse|cursor [verbose] || hdata [free] || time "
-"<command> || unicode <string>"
+"list || set <plugin> <level> || dump [<plugin>] || hooks [<plugin_mask> "
+"[<hook_type>...]] || buffer|certs|color|dirs|infolists|key|libs|memory|tags|"
+"term|url|windows || callbacks <duration>[<unit>] || mouse|cursor [verbose] "
+"|| hdata [free] || time <command> || unicode <string>"
 msgstr ""
-"list || set <extension> <niveau> || dump|hooks [<extension>] || buffer|certs|"
-"color|dirs|infolists|libs|memory|tags|term|url|windows || cllbacks "
-"<durée>[<unité>] || mouse|cursor [verbose] || hdata [free] || time "
-"<commande> || unicode <chaîne>"
+"list || set <extension> <niveau> || dump [<extension>] || hooks "
+"[<masque_extension> [<type_hook>...]] || buffer|certs|color|dirs|infolists|"
+"libs|memory|tags|term|url|windows || cllbacks <durée>[<unité>] || mouse|"
+"cursor [verbose] || hdata [free] || time <commande> || unicode <chaîne>"
 
 msgid "raw[list]: list plugins with debug levels"
 msgstr "raw[list] : lister les extensions avec leur niveau de debug"
@@ -1510,6 +1523,13 @@ msgid ""
 msgstr ""
 "raw[hooks] : afficher des infos sur les hooks (avec une extension : afficher "
 "les infos détaillées sur les hooks créés par l'extension)"
+
+msgid "plugin_mask: plugin mask, \"*\" for all plugins"
+msgstr ""
+"masque_extension : masque d'extension, \"*\" pour toutes les extensions"
+
+msgid "hook_type: hook type"
+msgstr "type_hook : type de hook"
 
 msgid ""
 "raw[buffer]: dump buffer content with hexadecimal values in WeeChat log file"
@@ -4178,6 +4198,9 @@ msgstr "noms des filtres désactivés"
 
 msgid "names of enabled filters"
 msgstr "noms des filtres activés"
+
+msgid "hook types"
+msgstr "types de hook"
 
 msgid ""
 "commands (weechat and plugins); optional argument: prefix to add before the "
@@ -7088,10 +7111,6 @@ msgstr ""
 #, c-format
 msgid "invalid regular expression (%s)"
 msgstr "expression régulière invalide (%s)"
-
-#, c-format
-msgid "key \"%s\" in context \"%s\""
-msgstr "touche \"%s\" dans le contexte \"%s\""
 
 #, c-format
 msgid ""
@@ -10390,7 +10409,7 @@ msgstr "lister les canaux et leurs titres"
 msgid ""
 "[-server <server>] [<channel>[,<channel>...]] [<target>] || [-server "
 "<server>] [-raw *|<regex>] || -up|-down [<number>] || -left|-right "
-"[<percent>] || -go <line>|end || -join  || -export <filename>"
+"[<percent>] || -go <line>|end || -join || -export <filename>"
 msgstr ""
 "[-server <serveur>] [<canal>[,<canal>...]] [<cible>] || [-server <serveur>] "
 "[-raw *|<regex>] || -up|-down [<nombre>] || -left|-right [<pourcentage>] || -"
@@ -12641,6 +12660,21 @@ msgstr "1 si le pseudo est ignoré (le message n'est pas affiché)"
 msgid "server,message (message is the raw IRC message)"
 msgstr "serveur,message (message est le message brut IRC)"
 
+msgid "get pointer to an IRC server"
+msgstr "retourne le pointeur vers le serveur IRC"
+
+msgid "get pointer to an IRC channel"
+msgstr "retourne le pointeur vers le canal IRC"
+
+msgid "server,channel"
+msgstr "serveur,canal"
+
+msgid "get pointer to an IRC nick"
+msgstr "retourne le pointeur vers le pseudo IRC"
+
+msgid "server,channel,nick"
+msgstr "serveur,canal,pseudo"
+
 msgid "parse an IRC message"
 msgstr "analyse un message IRC"
 
@@ -13654,6 +13688,10 @@ msgstr "%s%s : déconnecté du serveur"
 
 msgid "IRC (Internet Relay Chat) protocol"
 msgstr "Protocole IRC (Internet Relay Chat)"
+
+#, c-format
+msgid "%s%s: failed to save upgrade data"
+msgstr "%s%s : impossible de sauvegarder les données de mise à jour"
 
 #, c-format
 msgid ""
@@ -15086,17 +15124,17 @@ msgstr "récupération des données"
 msgid "Actions (letter+enter):"
 msgstr "Actions (lettre+entrée) :"
 
-msgid "  [D] Disconnect"
-msgstr "  [D] Déconnecter"
+msgid "  [d] Disconnect"
+msgstr "  [d] Déconnecter"
 
-msgid "  [R] Remove"
-msgstr "  [R] Retirer"
+msgid "  [r] Remove"
+msgstr "  [r] Retirer"
 
-msgid "  [P] Purge finished"
-msgstr "  [P] Purger terminés"
+msgid "  [p] Purge finished"
+msgstr "  [p] Purger terminés"
 
-msgid "  [Q] Close this buffer"
-msgstr "  [Q] Fermer ce tampon"
+msgid "  [q] Close this buffer"
+msgstr "  [q] Fermer ce tampon"
 
 #, c-format
 msgid "%s%s[%s%s%s%s] %s, received: %s, sent: %s"
@@ -17855,11 +17893,11 @@ msgstr ""
 msgid "Typing status of users"
 msgstr "Statut d'écriture des utilisateurs"
 
-msgid "  [A] Accept"
-msgstr "  [A] Accepter"
+msgid "  [a] Accept"
+msgstr "  [a] Accepter"
 
-msgid "  [C] Cancel"
-msgstr "  [C] Annuler"
+msgid "  [c] Cancel"
+msgstr "  [c] Annuler"
 
 msgid "xfer chat"
 msgstr "discussion xfer"

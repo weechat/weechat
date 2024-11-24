@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-10-13 16:56+0200\n"
+"POT-Creation-Date: 2024-11-24 10:07+0100\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -805,6 +805,10 @@ msgid "WeeChat upgrades: none, started on %s"
 msgstr ""
 
 #, c-format
+msgid "%sUnable to save some plugin sessions (files *.upgrade)"
+msgstr ""
+
+#, c-format
 msgid "%sUnable to save WeeChat session (files *.upgrade)"
 msgstr ""
 
@@ -815,6 +819,10 @@ msgstr ""
 msgid ""
 "%sCan't upgrade: there is one or more background process/thread running "
 "(hook type: process, connect or url)"
+msgstr ""
+
+#, c-format
+msgid "Check running hooks with command: %s"
 msgstr ""
 
 #, c-format
@@ -832,6 +840,10 @@ msgstr ""
 
 #, c-format
 msgid "Upgrading WeeChat with binary file: \"%s\"..."
+msgstr ""
+
+#, c-format
+msgid "%sUpgrade aborted"
 msgstr ""
 
 #, c-format
@@ -1309,10 +1321,10 @@ msgstr ""
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid ""
-"list || set <plugin> <level> || dump|hooks [<plugin>] || buffer|certs|color|"
-"dirs|infolists|key|libs|memory|tags|term|url|windows || callbacks "
-"<duration>[<unit>] || mouse|cursor [verbose] || hdata [free] || time "
-"<command> || unicode <string>"
+"list || set <plugin> <level> || dump [<plugin>] || hooks [<plugin_mask> "
+"[<hook_type>...]] || buffer|certs|color|dirs|infolists|key|libs|memory|tags|"
+"term|url|windows || callbacks <duration>[<unit>] || mouse|cursor [verbose] "
+"|| hdata [free] || time <command> || unicode <string>"
 msgstr ""
 
 msgid "raw[list]: list plugins with debug levels"
@@ -1335,6 +1347,12 @@ msgstr ""
 msgid ""
 "raw[hooks]: display infos about hooks (with a plugin: display detailed info "
 "about hooks created by the plugin)"
+msgstr ""
+
+msgid "plugin_mask: plugin mask, \"*\" for all plugins"
+msgstr ""
+
+msgid "hook_type: hook type"
 msgstr ""
 
 msgid ""
@@ -3453,6 +3471,9 @@ msgid "names of disabled filters"
 msgstr ""
 
 msgid "names of enabled filters"
+msgstr ""
+
+msgid "hook types"
 msgstr ""
 
 msgid ""
@@ -5641,10 +5662,6 @@ msgstr ""
 #. TRANSLATORS: %s is the error returned by regerror
 #, c-format
 msgid "invalid regular expression (%s)"
-msgstr ""
-
-#, c-format
-msgid "key \"%s\" in context \"%s\""
 msgstr ""
 
 #, c-format
@@ -8339,7 +8356,7 @@ msgstr ""
 msgid ""
 "[-server <server>] [<channel>[,<channel>...]] [<target>] || [-server "
 "<server>] [-raw *|<regex>] || -up|-down [<number>] || -left|-right "
-"[<percent>] || -go <line>|end || -join  || -export <filename>"
+"[<percent>] || -go <line>|end || -join || -export <filename>"
 msgstr ""
 
 msgid ""
@@ -10090,6 +10107,21 @@ msgstr ""
 msgid "server,message (message is the raw IRC message)"
 msgstr ""
 
+msgid "get pointer to an IRC server"
+msgstr ""
+
+msgid "get pointer to an IRC channel"
+msgstr ""
+
+msgid "server,channel"
+msgstr ""
+
+msgid "get pointer to an IRC nick"
+msgstr ""
+
+msgid "server,channel,nick"
+msgstr ""
+
 msgid "parse an IRC message"
 msgstr ""
 
@@ -11048,6 +11080,10 @@ msgid "%s%s: disconnected from server"
 msgstr ""
 
 msgid "IRC (Internet Relay Chat) protocol"
+msgstr ""
+
+#, c-format
+msgid "%s%s: failed to save upgrade data"
 msgstr ""
 
 #, c-format
@@ -12277,16 +12313,16 @@ msgstr ""
 msgid "Actions (letter+enter):"
 msgstr ""
 
-msgid "  [D] Disconnect"
+msgid "  [d] Disconnect"
 msgstr ""
 
-msgid "  [R] Remove"
+msgid "  [r] Remove"
 msgstr ""
 
-msgid "  [P] Purge finished"
+msgid "  [p] Purge finished"
 msgstr ""
 
-msgid "  [Q] Close this buffer"
+msgid "  [q] Close this buffer"
 msgstr ""
 
 #, c-format
@@ -14559,10 +14595,10 @@ msgstr ""
 msgid "Typing status of users"
 msgstr ""
 
-msgid "  [A] Accept"
+msgid "  [a] Accept"
 msgstr ""
 
-msgid "  [C] Cancel"
+msgid "  [c] Cancel"
 msgstr ""
 
 msgid "xfer chat"

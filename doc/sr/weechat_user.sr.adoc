@@ -2,7 +2,7 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: sr
-:toc-title: Садржај
+include::includes/attributes-sr.adoc[]
 
 Превод:
 
@@ -457,7 +457,7 @@ cmake .. -DCMAKE_BUILD_TYPE=Debug
 cmake .. -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_FLAGS=-fsanitize=address -DCMAKE_CXX_FLAGS=-fsanitize=address -DCMAKE_EXE_LINKER_FLAGS=-fsanitize=address
 ----
 
-[WARNING]
+[CAUTION]
 Чистач адресе би требало да укључите само ако покушавате да откријете узрок краха, то се не препоручује за програм који се нормално користи.
 
 Затим када се компајлира и инсталира, програм WeeChat морате покренути на следећи начин:
@@ -581,7 +581,7 @@ include::includes/cmdline_options.sr.adoc[tag=standard]
 
 Неке додатне опције су доступне само за потребе откањања грешака:
 
-[WARNING]
+[CAUTION]
 Ниједну од ових опција *НЕМОЈТЕ* користити у продукцији!
 
 include::includes/cmdline_options.sr.adoc[tag=debug]
@@ -878,13 +878,11 @@ _status_ трака садржи следеће подразумеване ст�
 | buffer_nicklist_count | `4`                    | Број надимака у листи надимака.
 | buffer_zoom           | !                      | `!` значи да је спојени бафер зумиран (само он се приказује), празна вредност значи да се приказују сви спојени бафери.
 | buffer_filter         | `+*+`                  | Индикатор филтрирања: `+*+` значи да су неке линије филтриране (скривене), празна вредност значи да се приказују све линије.
-// TRANSLATION MISSING
-| mouse_status          | `M`                    | Mouse status (empty if mouse is disabled), see command <<command_weechat_mouse,/mouse>> and <<key_bindings_toggle_keys,тастери преклопници>>.
+| mouse_status          | `M`                    | Статус миша (празно ако је миш искључен), погледајте команду <<command_weechat_mouse,/mouse>> и <<key_bindings_toggle_keys,тастери преклопници>>.
 | scroll                | `-ЈОШ(50)-`            | Скрол индикатор, са бројем линија испод последње приказане линије.
 | lag                   | `Кашњење: 2.5`         | Индикатор кашњења, у секундама (скривен је ако је кашњење мало).
 | hotlist               | `H: 3:#abc(2,5), 5`    | Листа бафера који имају активност (непрочитане поруке) (у примеру, 2 истицања и 5 непрочитаних порука на _#abc_, једна непрочитана порука у баферу #5).
-// TRANSLATION MISSING
-| typing                | `Typing: bob, (alice)` | Typing notification, see <<typing_notifications,Обавештења о куцању>>.
+| typing                | `Куца: bob, (alice)`   | Обавештење о куцању, погледајте <<typing_notifications,Обавештења о куцању>>.
 | completion            | `abc(2) def(5)`        | Листа речи за довршавање, са бројем могућих довршавања за сваку реч.
 |===
 
@@ -947,8 +945,7 @@ _nicklist_ трака садржи следеће подразумеване с�
 | irc_nick_host                | `+Flashy!user@host.com+` | Тренутни IRC надимак и име хоста.
 | irc_nick_modes               | `i`                      | IRC режими са ваш надимак.
 | irc_nick_prefix              | `@`                      | IRC префикс надимка на каналу.
-// TRANSLATION MISSING
-| spacer                       |                          | Special item used to align text in bars, see <<item_spacer,Spacer ставка>>.
+| spacer                       |                          | Специјална ставка која се користи за поравнање текста у тракама, погледајте <<item_spacer,Spacer ставка>>.
 | spell_dict                   | `fr,en`                  | Речници за проверу правописа који се користе у текућем баферу.
 | spell_suggest                | `print,prone,prune`      | Правописни предлози за реч под курсором (у случају да је погрешно исписана).
 | tls_version                  | `TLS1.3`                 | TLS верзија која се користи за текући IRC сервер.
@@ -1947,27 +1944,27 @@ Fast Set додатак приказује листу опција у бафер
 [subs="quotes"]
 ....
 ┌──────────────────────────────────────────────────────────────────────────────────────┐
-│1.weechat│1/121 | Filter: weechat.look.* | Sort: ~name | Key(input): alt+space=toggle │
-│2.fset   │weechat.look.bare_display_exit_on_input: exit the bare display mode on any c│
-│         │hanges in input [default: on]                                               │
+│1.weechat│7/125 | Филтер: weechat.look.* | Сорт: ~name | Тастер(улаз): alt+space=пре>>│
+│2.fset   │weechat.look.bare_display_exit_on_input: режим огољеног приказа се напушта п│
+│         │ри било каквој промени уноса [подразумевано: on]                            │
 │         │----------------------------------------------------------------------------│
-│         │  weechat.look.align_end_of_lines                   enum     message        │
-│         │  weechat.look.align_multiline_words                boolean  on             │
-│         │  weechat.look.bar_more_down                        string   "++"           │
-│         │  weechat.look.bar_more_left                        string   "<<"           │
-│         │  weechat.look.bar_more_right                       string   ">>"           │
-│         │  weechat.look.bar_more_up                          string   "--"           │
-│         │##  weechat.look.bare_display_exit_on_input           boolean  on             ##│
-│         │  weechat.look.bare_display_time_format             string   "%H:%M"        │
-│         │  weechat.look.buffer_auto_renumber                 boolean  on             │
-│         │  weechat.look.buffer_notify_default                enum     all            │
-│         │  weechat.look.buffer_position                      enum     end            │
-│         │  weechat.look.buffer_search_case_sensitive         boolean  off            │
-│         │  weechat.look.buffer_search_force_default          boolean  off            │
-│         │  weechat.look.buffer_search_regex                  boolean  off            │
-│         │  weechat.look.buffer_search_where                  enum     prefix_message │
-│         │  weechat.look.buffer_time_format                   string   "%H:%M:%S"     │
-│         │  weechat.look.buffer_time_same                     string   ""             │
+│         │  weechat.look.align_end_of_lines              набрајање   message          │
+│         │  weechat.look.align_multiline_words           логичка     on               │
+│         │  weechat.look.bar_more_down                   стринг      "++"             │
+│         │  weechat.look.bar_more_left                   стринг      "<<"             │
+│         │  weechat.look.bar_more_right                  стринг      ">>"             │
+│         │  weechat.look.bar_more_up                     стринг      "--"             │
+│         │##  weechat.look.bare_display_exit_on_input      логичка     on               ##│
+│         │  weechat.look.bare_display_time_format        стринг      "%H:%M"          │
+│         │  weechat.look.buffer_auto_renumber            логичка     on               │
+│         │  weechat.look.buffer_notify_default           набрајање   all              │
+│         │  weechat.look.buffer_position                 набрајање   end              │
+│         │  weechat.look.buffer_search_case_sensitive    логичка     off              │
+│         │  weechat.look.buffer_search_force_default     логичка     off              │
+│         │  weechat.look.buffer_search_history           набрајање   local            │
+│         │  weechat.look.buffer_search_regex             логичка     off              │
+│         │  weechat.look.buffer_search_where             набрајање   prefix_message   │
+│         │  weechat.look.buffer_time_format              стринг      "%H:%M:%S"       │
 │         │[12:55] [2] [fset] 2:fset                                                   │
 │         │█                                                                           │
 └──────────────────────────────────────────────────────────────────────────────────────┘
@@ -3216,12 +3213,15 @@ weechat irc://alice@irc.libera.chat/#weechat,#weechat-fr
 Подразумевано није дефинисан ниједан сервер. Командом <<command_irc_server,/server>>
 можете додати произвољан број сервера.
 
-На пример, да бисте се повезали на https://libera.chat/[libera.chat ^↗^^]
-са TLS (шифровани саобраћај):
+На пример, да бисте се повезали на https://libera.chat/[libera.chat ^↗^^]:
 
 ----
-/server add libera irc.libera.chat/6697 -tls
+/server add libera irc.libera.chat
 ----
+
+[NOTE]
+// TRANSLATION MISSING
+Default port is 6697 and TLS (encrypted traffic) is enabled.
 
 Програму WeeChat можете наложити да се приликом покретања аутоматски повеже са овим сервером:
 
@@ -3263,51 +3263,52 @@ weechat irc://alice@irc.libera.chat/#weechat,#weechat-fr
 следећи списак када будете извршите команду `/fset libera`:
 
 ....
-irc.server.libera.addresses             string   "irc.libera.chat/6697"
-irc.server.libera.anti_flood_prio_high  integer  null -> 2
-irc.server.libera.anti_flood_prio_low   integer  null -> 2
-irc.server.libera.autoconnect           boolean  on
-irc.server.libera.autojoin              string   null -> ""
-irc.server.libera.autojoin_dynamic      boolean  null -> off
-irc.server.libera.autoreconnect         boolean  null -> on
-irc.server.libera.autoreconnect_delay   integer  null -> 10
-irc.server.libera.autorejoin            boolean  null -> off
-irc.server.libera.autorejoin_delay      integer  null -> 30
-irc.server.libera.away_check            integer  null -> 0
-irc.server.libera.away_check_max_nicks  integer  null -> 25
-irc.server.libera.capabilities          string   null -> "*"
-irc.server.libera.charset_message       enum     null -> message
-irc.server.libera.command               string   null -> ""
-irc.server.libera.command_delay         integer  null -> 0
-irc.server.libera.connection_timeout    integer  null -> 60
-irc.server.libera.default_chantypes     string   null -> "#&"
-irc.server.libera.ipv6                  boolean  null -> on
-irc.server.libera.local_hostname        string   null -> ""
-irc.server.libera.msg_kick              string   null -> ""
-irc.server.libera.msg_part              string   null -> "WeeChat ${info:version}"
-irc.server.libera.msg_quit              string   null -> "WeeChat ${info:version}"
-irc.server.libera.nicks                 string   null -> "alice,alice1,alice2,alice3,alice4"
-irc.server.libera.nicks_alternate       boolean  null -> on
-irc.server.libera.notify                string   null -> ""
-irc.server.libera.password              string   null -> ""
-irc.server.libera.proxy                 string   null -> ""
-irc.server.libera.realname              string   null -> ""
-irc.server.libera.sasl_fail             enum     null -> reconnect
-irc.server.libera.sasl_key              string   null -> ""
-irc.server.libera.sasl_mechanism        enum     null -> plain
-irc.server.libera.sasl_password         string   "${sec.data.libera}"
-irc.server.libera.sasl_timeout          integer  null -> 15
-irc.server.libera.sasl_username         string   "alice"
-irc.server.libera.split_msg_max_length  integer  null -> 512
-irc.server.libera.tls                   boolean  on
-irc.server.libera.tls_cert              string   null -> ""
-irc.server.libera.tls_dhkey_size        integer  null -> 2048
-irc.server.libera.tls_fingerprint       string   null -> ""
-irc.server.libera.tls_password          string   null -> ""
-irc.server.libera.tls_priorities        string   null -> "NORMAL:-VERS-SSL3.0"
-irc.server.libera.tls_verify            boolean  null -> on
-irc.server.libera.usermode              string   null -> ""
-irc.server.libera.username              string   null -> "alice"
+irc.server.libera.addresses             стринг      "irc.libera.chat"
+irc.server.libera.anti_flood            целобројна  null -> 2000
+irc.server.libera.autoconnect           логичка     on
+irc.server.libera.autojoin              стринг      null -> ""
+irc.server.libera.autojoin_delay        целобројна  null -> 0
+irc.server.libera.autojoin_dynamic      логичка     null -> off
+irc.server.libera.autoreconnect         логичка     null -> on
+irc.server.libera.autoreconnect_delay   целобројна  null -> 10
+irc.server.libera.autorejoin            логичка     null -> off
+irc.server.libera.autorejoin_delay      целобројна  null -> 30
+irc.server.libera.away_check            целобројна  null -> 0
+irc.server.libera.away_check_max_nicks  целобројна  null -> 25
+irc.server.libera.capabilities          стринг      null -> "*"
+irc.server.libera.charset_message       набрајање   null -> message
+irc.server.libera.command               стринг      null -> ""
+irc.server.libera.command_delay         целобројна  null -> 0
+irc.server.libera.connection_timeout    целобројна  null -> 60
+irc.server.libera.default_chantypes     стринг      null -> "#&"
+irc.server.libera.ipv6                  набрајање   null -> auto
+irc.server.libera.local_hostname        стринг      null -> ""
+irc.server.libera.msg_kick              стринг      null -> ""
+irc.server.libera.msg_part              стринг      null -> "WeeChat ${info:version}"
+irc.server.libera.msg_quit              стринг      null -> "WeeChat ${info:version}"
+irc.server.libera.nicks                 стринг      null -> "${username},${username}2,${username}3,${username}4,${username}5"
+irc.server.libera.nicks_alternate       логичка     null -> on
+irc.server.libera.notify                стринг      null -> ""
+irc.server.libera.password              стринг      null -> ""
+irc.server.libera.proxy                 стринг      null -> ""
+irc.server.libera.realname              стринг      null -> ""
+irc.server.libera.registered_mode       стринг      null -> "r"
+irc.server.libera.sasl_fail             набрајање   null -> reconnect
+irc.server.libera.sasl_key              стринг      null -> ""
+irc.server.libera.sasl_mechanism        набрајање   null -> plain
+irc.server.libera.sasl_password         стринг      "${sec.data.libera}"
+irc.server.libera.sasl_timeout          целобројна  null -> 15
+irc.server.libera.sasl_username         стринг      "alice"
+irc.server.libera.split_msg_max_length  целобројна  null -> 512
+irc.server.libera.tls                   логичка     null -> on
+irc.server.libera.tls_cert              стринг      null -> ""
+irc.server.libera.tls_dhkey_size        целобројна  null -> 2048
+irc.server.libera.tls_fingerprint       стринг      null -> ""
+irc.server.libera.tls_password          стринг      null -> ""
+irc.server.libera.tls_priorities        стринг      null -> "NORMAL"
+irc.server.libera.tls_verify            логичка     null -> on
+irc.server.libera.usermode              стринг      null -> ""
+irc.server.libera.username              стринг      null -> "${username}"
 ....
 
 На пример, ако желите да се аутоматски повежете са свим серверима које сте дефинисали, без
@@ -3858,7 +3859,7 @@ WeeChat приказује ове додатне информације у по�
 
 Спецификација: https://ircv3.net/specs/extensions/userhost-in-names[userhost-in-names ^↗^^]
 
-Ова могућност оспособљава сервер да шаље имена хостова у <<command_irc_names,/names>> одговорима. 
+Ова могућност оспособљава сервер да шаље имена хостова у <<command_irc_names,/names>> одговорима.
 
 [NOTE]
 WeeChat не приказује имена хостова у излазу команде `/names`.
@@ -4464,17 +4465,15 @@ https://weechat.org/about/interfaces/[ову страницу ^↗^^].
 Сада са WeeChat или са удаљеним интерфејсом можете да се повежете портом 9000 користећи
 лозинку „mypassword”.
 
-// TRANSLATION MISSING
-To connect to an _api_ relay running locally with WeeChat:
+Да се са WeeChat повежете на _api_ релеј који се извршава локално:
 
 ----
 /remote add weechat http://localhost:9000 -password=mypassword
 /remote connect weechat
 ----
 
-// TRANSLATION MISSING
-To connect to an _api_ relay running elsewhere with WeeChat
-(TLS is highly recommended):
+Да се са WeeChat повежете на _api_ релеј који се извршава на другом месту
+(TLS се снажно прпоручује):
 
 ----
 /remote add weechat https://example.com:9000 -password=mypassword
@@ -5504,7 +5503,7 @@ https://weechat.org/scripts/[овој страници ^↗^^].
 Ако желите да га укључите, откуцајте следећу команду:
 
 ----
-/set script.scripts.download_enabled on
+/script enable
 ----
 
 Сада можете да преузмете листу скрипти и да је прикажете у новом баферу командом
@@ -5514,33 +5513,33 @@ https://weechat.org/scripts/[овој страници ^↗^^].
 :x: *
 ....
 ┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
-│1.weechat│368/368 scripts (filter: {x}) | Sort: i,p,n | Alt+key/input: i=install, r=remove, l=load, L=reload, u=│
-│2.scripts│{x}      autosort.py                 3.9     2020-10-11 | Automatically keep buffers grouped by server│
-│         │{x}      multiline.pl                0.6.3   2016-01-02 | Multi-line edit box, also supports editing o│
-│         │{x}      highmon.pl                  2.7     2020-06-21 | Adds a highlight monitor buffer.            │
-│         │##{x}ia r  grep.py               0.8.5 0.8.5   2021-05-11 | Search regular expression in buffers or log ##│
-│         │{x}      autojoin.py                 0.3.1   2019-10-06 | Configure autojoin for all servers according│
-│         │{x}      colorize_nicks.py           28      2021-03-06 | Use the weechat nick colors in the chat area│
-│         │{x}ia r  go.py                 2.7   2.7     2021-05-26 | Quick jump to buffers.                      │
-│         │{x}      text_item.py                0.9     2019-05-25 | Add bar items with plain text.              │
-│         │       aesthetic.py                1.0.6   2020-10-25 | Make messages more A E S T H E T I C A L L Y│
-│         │       aformat.py                  0.2     2018-06-21 | Alternate text formatting, useful for relays│
-│         │       alternatetz.py              0.3     2018-11-11 | Add an alternate timezone item.             │
-│         │       amarok2.pl                  0.7     2012-05-08 | Amarok 2 control and now playing script.    │
-│         │       amqp_notify.rb              0.1     2011-01-12 | Send private messages and highlights to an A│
-│         │       announce_url_title.py       19      2021-06-05 | Announce URL title to user or to channel.   │
-│         │       anotify.py                  1.0.2   2020-05-16 | Notifications of private messages, highlight│
-│         │       anti_password.py            1.2.1   2021-03-13 | Prevent a password from being accidentally s│
-│         │       apply_corrections.py        1.3     2018-06-21 | Display corrected text when user sends s/typ│
-│         │       arespond.py                 0.1.1   2020-10-11 | Simple autoresponder.                       │
-│         │       atcomplete.pl               0.001   2016-10-29 | Tab complete nicks when prefixed with "@".  │
-│         │       audacious.pl                0.3     2009-05-03 | Display which song Audacious is currently pl│
-│         │       auth.rb                     0.3     2014-05-30 | Automatically authenticate with NickServ usi│
-│         │       auto_away.py                0.4     2018-11-11 | A simple auto-away script.                  │
-│         │       autoauth.py                 1.3     2021-11-07 | Permits to auto-authenticate when changing n│
-│         │       autobump.py                 0.1.0   2019-06-14 | Bump buffers upon activity.                 │
-│         │       autoconf.py                 0.4     2021-05-11 | Auto save/load changed options in a .weerc f│
-│         │       autoconnect.py              0.3.3   2019-10-06 | Reopen servers and channels opened last time│
+│1.weechat│322/322 скрипти (филтер: {x}) | Сортирање: i,p,n | Alt+тастер/унос: i=инсталација, r=уклањање, l=учи>>│
+│2.scripts│{x}      autosort.py                     3.10    2023-12-31 | Automatically keep buffers grouped by se│
+│         │{x}      highmon.pl                      2.7     2020-06-21 | Adds a highlight monitor buffer.        │
+│         │{x}ia r  grep.py                   0.8.6 0.8.6   2022-11-11 | Search regular expression in buffers or │
+│         │{x}      colorize_nicks.py               32      2023-10-30 | Use the weechat nick colors in the chat │
+│         │##{x}ia r  go.py                     3.0.1 3.0.1   2024-05-30 | Quick jump to buffers.                  ##│
+│         │       aesthetic.py                    1.0.6   2020-10-25 | Make messages more A E S T H E T I C A L│
+│         │       aformat.py                      0.2     2018-06-21 | Alternate text formatting, useful for re│
+│         │       alternatetz.py                  0.4     2022-01-25 | Add an alternate timezone item.         │
+│         │       amarok2.pl                      0.7     2012-05-08 | Amarok 2 control and now playing script.│
+│         │       amqp_notify.rb                  0.1     2011-01-12 | Send private messages and highlights to │
+│         │       announce_url_title.py           19      2021-06-05 | Announce URL title to user or to channel│
+│         │       anotify.py                      1.0.2   2020-05-16 | Notifications of private messages, highl│
+│         │       anti_password.py                1.2.1   2021-03-13 | Prevent a password from being accidental│
+│         │       apply_corrections.py            1.3     2018-06-21 | Display corrected text when user sends s│
+│         │       arespond.py                     0.1.2   2022-01-25 | Simple autoresponder.                   │
+│         │       atcomplete.pl                   0.001   2016-10-29 | Tab complete nicks when prefixed with "@│
+│         │       audacious.pl                    0.3     2009-05-03 | Display which song Audacious is currentl│
+│         │       auth.rb                         0.3     2014-05-30 | Automatically authenticate with NickServ│
+│         │       auto_away.py                    0.4     2018-11-11 | A simple auto-away script.              │
+│         │       autoauth.py                     1.3     2021-11-07 | Permits to auto-authenticate when changi│
+│         │       autobump.py                     0.1.0   2019-06-14 | Bump buffers upon activity.             │
+│         │       autoconf.py                     0.4     2021-05-11 | Auto save/load changed options in a .wee│
+│         │       autoconnect.py                  0.3.3   2019-10-06 | Reopen servers and channels opened last │
+│         │       autojoin_on_invite.py           0.9     2022-10-25 | Auto joins channels when invited.       │
+│         │       automarkbuffer.py               1.0     2015-03-31 | Mark buffers as read if there is no new │
+│         │       automerge.py                    0.2     2018-03-03 | Automatically merge new buffers accordin│
 │         │[12:55] [2] [script] 2:scripts                                                                      │
 │         │█                                                                                                   │
 └──────────────────────────────────────────────────────────────────────────────────────────────────────────────┘

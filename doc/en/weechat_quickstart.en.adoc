@@ -2,6 +2,7 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: en
+include::includes/attributes-en.adoc[]
 
 [[start]]
 == Start WeeChat
@@ -266,7 +267,7 @@ Close a server, channel or private buffer (`/close` is an alias for
 /close
 ----
 
-[WARNING]
+[CAUTION]
 Closing the server buffer will close all channel/private buffers.
 
 Disconnect from server, on the server buffer:

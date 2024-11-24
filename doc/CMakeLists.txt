@@ -40,7 +40,6 @@ if(ENABLE_MAN OR ENABLE_DOC)
       -a reproducible
       -a "prewrap!"
       -a "webfonts!"
-      -a icons=font
       -a revnumber="${VERSION}"
       -a sectanchors
       -a source-highlighter=pygments
@@ -205,6 +204,7 @@ if(ENABLE_MAN OR ENABLE_DOC)
           DEPENDS
           "${CMAKE_CURRENT_SOURCE_DIR}/docinfo.html"
           "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/weechat_user.${lang}.adoc"
+          "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/includes/attributes-${lang}.adoc"
           "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/includes/cmdline_options.${lang}.adoc"
           doc-autogen
           "${CMAKE_CURRENT_BINARY_DIR}/autogen/autogen_user_commands.${lang}.adoc"
@@ -225,6 +225,7 @@ if(ENABLE_MAN OR ENABLE_DOC)
           DEPENDS
           "${CMAKE_CURRENT_SOURCE_DIR}/docinfo.html"
           "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/weechat_plugin_api.${lang}.adoc"
+          "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/includes/attributes-${lang}.adoc"
           doc-autogen
           "${CMAKE_CURRENT_BINARY_DIR}/autogen/autogen_api_completions.${lang}.adoc"
           "${CMAKE_CURRENT_BINARY_DIR}/autogen/autogen_api_config_priority.${lang}.adoc"
@@ -248,6 +249,7 @@ if(ENABLE_MAN OR ENABLE_DOC)
           DEPENDS
           "${CMAKE_CURRENT_SOURCE_DIR}/docinfo.html"
           "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/weechat_scripting.${lang}.adoc"
+          "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/includes/attributes-${lang}.adoc"
           doc-autogen
           "${CMAKE_CURRENT_BINARY_DIR}/autogen/autogen_scripting_functions.${lang}.adoc"
           "${CMAKE_CURRENT_BINARY_DIR}/autogen/autogen_scripting_constants.${lang}.adoc"
@@ -265,6 +267,7 @@ if(ENABLE_MAN OR ENABLE_DOC)
           DEPENDS
           "${CMAKE_CURRENT_SOURCE_DIR}/docinfo.html"
           "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/weechat_faq.${lang}.adoc"
+          "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/includes/attributes-${lang}.adoc"
           WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
           COMMENT "Building weechat_faq.${lang}.html"
         )
@@ -279,6 +282,7 @@ if(ENABLE_MAN OR ENABLE_DOC)
           DEPENDS
           "${CMAKE_CURRENT_SOURCE_DIR}/docinfo.html"
           "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/weechat_quickstart.${lang}.adoc"
+          "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/includes/attributes-${lang}.adoc"
           WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
           COMMENT "Building weechat_quickstart.${lang}.html"
         )
@@ -293,6 +297,7 @@ if(ENABLE_MAN OR ENABLE_DOC)
           DEPENDS
           "${CMAKE_CURRENT_SOURCE_DIR}/docinfo.html"
           "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/weechat_relay_api.${lang}.adoc"
+          "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/includes/attributes-${lang}.adoc"
           "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/includes/relay.${lang}.adoc"
           WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
           COMMENT "Building weechat_relay_api.${lang}.html"
@@ -308,6 +313,7 @@ if(ENABLE_MAN OR ENABLE_DOC)
           DEPENDS
           "${CMAKE_CURRENT_SOURCE_DIR}/docinfo.html"
           "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/weechat_relay_weechat.${lang}.adoc"
+          "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/includes/attributes-${lang}.adoc"
           "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/includes/relay.${lang}.adoc"
           WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
           COMMENT "Building weechat_relay_weechat.${lang}.html"
@@ -323,6 +329,7 @@ if(ENABLE_MAN OR ENABLE_DOC)
           DEPENDS
           "${CMAKE_CURRENT_SOURCE_DIR}/docinfo.html"
           "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/weechat_dev.${lang}.adoc"
+          "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/includes/attributes-${lang}.adoc"
           WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
           COMMENT "Building weechat_dev.${lang}.html"
         )

@@ -1439,7 +1439,7 @@ gui_key_new_option (int context, const char *name, const char *value)
     else
     {
         snprintf (str_description, sizeof (str_description),
-                  _("key \"%s\" in context \"%s\""),
+                  "\"%s\" (%s)",
                   name,
                   gui_key_context_string[context]);
         ptr_key = gui_key_search (gui_default_keys[context], name);

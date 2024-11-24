@@ -32,6 +32,7 @@
 #include "../core-log.h"
 #include "../core-string.h"
 #include "../../plugins/plugin.h"
+#include "hook-signal.h"
 
 
 /*
@@ -130,9 +131,18 @@ hook_hsignal_send (const char *signal, struct t_hashtable *hashtable)
 {
     struct t_hook *ptr_hook, *next_hook;
     struct t_hook_exec_cb hook_exec_cb;
-    int rc;
+    const char *ptr_signal;
+    int rc, stop_on_error, ignore_eat;
 
     rc = WEECHAT_RC_OK;
+
+    ptr_signal = signal;
+    stop_on_error = 0;
+    ignore_eat = 0;
+    hook_signal_extract_flags (signal, &ptr_signal,
+                               &stop_on_error, &ignore_eat);
+    if (!ptr_signal)
+        return rc;
 
     hook_exec_start ();
 
@@ -153,8 +163,14 @@ hook_hsignal_send (const char *signal, struct t_hashtable *hashtable)
                  hashtable);
             hook_callback_end (ptr_hook, &hook_exec_cb);
 
-            if (rc == WEECHAT_RC_OK_EAT)
+            if (ignore_eat && (rc == WEECHAT_RC_OK_EAT))
+                rc = WEECHAT_RC_OK;
+
+            if ((rc == WEECHAT_RC_OK_EAT)
+                || (stop_on_error && (rc == WEECHAT_RC_ERROR)))
+            {
                 break;
+            }
         }
 
         ptr_hook = next_hook;

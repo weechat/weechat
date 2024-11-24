@@ -71,6 +71,7 @@ char *gui_bar_item_names[GUI_BAR_NUM_ITEMS] =
 };
 struct t_gui_bar_item_hook *gui_bar_item_hooks = NULL;
 struct t_hook *gui_bar_item_timer = NULL;
+struct t_hook *gui_bar_item_timer_hotlist_resort = NULL;
 
 
 /*
@@ -2276,6 +2277,25 @@ gui_bar_item_timer_cb (const void *pointer, void *data, int remaining_calls)
 }
 
 /*
+ * Timer callback for resorting hotlist.
+ */
+
+int
+gui_bar_item_timer_hotlist_resort_cb (const void *pointer, void *data,
+                                      int remaining_calls)
+{
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) remaining_calls;
+
+    gui_hotlist_resort ();
+
+    gui_bar_item_timer_hotlist_resort = NULL;
+
+    return WEECHAT_RC_OK;
+}
+/*
  * Callback when a signal is received: rebuilds an item.
  */
 
@@ -2298,7 +2318,13 @@ gui_bar_item_signal_cb (const void *pointer, void *data,
         if ((strcmp (item, "hotlist") == 0)
             && (strcmp (signal, "hotlist_changed") != 0))
         {
-            gui_hotlist_resort ();
+            if (!gui_bar_item_timer_hotlist_resort)
+            {
+                gui_bar_item_timer_hotlist_resort = hook_timer (
+                    NULL,
+                    1, 0, 1,
+                    &gui_bar_item_timer_hotlist_resort_cb, NULL, NULL);
+            }
         }
         gui_bar_item_update (item);
     }

@@ -73,8 +73,6 @@ struct t_hdata *relay_hdata_completion = NULL;
 struct t_hdata *relay_hdata_completion_word = NULL;
 struct t_hdata *relay_hdata_hotlist = NULL;
 
-int relay_signal_upgrade_received = 0; /* signal "upgrade" received ?       */
-
 struct t_hook *relay_hook_timer = NULL;
 
 
@@ -151,11 +149,16 @@ relay_signal_upgrade_cb (const void *pointer, void *data,
     if (signal_data && (strcmp (signal_data, "save") == 0))
     {
         /* save session with a disconnected state in clients */
-        relay_upgrade_save (1);
+        if (!relay_upgrade_save (1))
+        {
+            weechat_printf (
+                NULL,
+                _("%s%s: failed to save upgrade data"),
+                weechat_prefix ("error"), RELAY_PLUGIN_NAME);
+            return WEECHAT_RC_ERROR;
+        }
         return WEECHAT_RC_OK;
     }
-
-    relay_signal_upgrade_received = 1;
 
     /* close socket for relay servers */
     for (ptr_server = relay_servers; ptr_server;
@@ -201,6 +204,15 @@ relay_signal_upgrade_cb (const void *pointer, void *data,
                         weechat_prefix ("error"), RELAY_PLUGIN_NAME,
                         tls_disconnected,
                         NG_("client", "clients", tls_disconnected));
+    }
+
+    if (!relay_upgrade_save (0))
+    {
+        weechat_printf (
+            NULL,
+            _("%s%s: failed to save upgrade data"),
+            weechat_prefix ("error"), RELAY_PLUGIN_NAME);
+        return WEECHAT_RC_ERROR;
     }
 
     return WEECHAT_RC_OK;
@@ -284,8 +296,6 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     relay_hdata_completion_word = weechat_hdata_get ("completion_word");
     relay_hdata_hotlist = weechat_hdata_get ("hotlist");
 
-    relay_signal_upgrade_received = 0;
-
     if (!relay_config_init ())
         return WEECHAT_RC_ERROR;
 
@@ -341,9 +351,7 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
 
     relay_config_write ();
 
-    if (relay_signal_upgrade_received)
-        relay_upgrade_save (0);
-    else
+    if (!weechat_relay_plugin->unload_with_upgrade)
         relay_client_disconnect_all ();
 
     relay_raw_message_free_all ();

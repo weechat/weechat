@@ -452,7 +452,8 @@ irc_notify_free (struct t_irc_server *server, struct t_irc_notify *notify,
     if (notify->nick)
     {
         if ((server->monitor > 0) && remove_monitor
-            && (server->is_connected) && !irc_signal_upgrade_received)
+            && (server->is_connected)
+            && !weechat_irc_plugin->unload_with_upgrade)
         {
             /* remove one monitored nick */
             irc_server_sendf (notify->server,
@@ -491,7 +492,7 @@ irc_notify_free_all (struct t_irc_server *server)
 {
     /* remove all monitored nicks */
     if ((server->monitor > 0) && (server->is_connected)
-        && !irc_signal_upgrade_received)
+        && !weechat_irc_plugin->unload_with_upgrade)
     {
         irc_server_sendf (server, IRC_SERVER_SEND_OUTQ_PRIO_LOW, NULL,
                           "MONITOR C");

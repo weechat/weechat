@@ -2,7 +2,7 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: it
-:toc-title: Indice
+include::includes/attributes-it.adoc[]
 
 Traduttori:
 
@@ -278,7 +278,7 @@ per `/buffer close`):
 /close
 ----
 
-[WARNING]
+[CAUTION]
 Chiudere il buffer del server chiuderà tutti i canali/buffer privati.
 
 Disconnette dal server:

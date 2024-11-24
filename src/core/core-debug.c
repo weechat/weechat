@@ -529,35 +529,18 @@ debug_hooks ()
 }
 
 /*
- * Displays info about hooks for a specific plugin.
+ * Displays info about hooks for one or multiple plugins matching a mask.
  */
 
 void
-debug_hooks_plugin (const char *plugin_name)
+debug_hooks_plugin_types (const char *plugin_mask, const char **hook_types)
 {
-    struct t_weechat_plugin *ptr_plugin;
     struct t_hook *ptr_hook;
-    char *desc, **result, **result_type, str_type[128];
-    int i, count_total, count_type;
+    char *desc, **result, **result_type, str_type[1024];
+    int i, j, count_total, count_type, match_type, matches;
 
-    if (!plugin_name)
+    if (!plugin_mask)
         return;
-
-    if (strcmp (plugin_name, PLUGIN_CORE) == 0)
-    {
-        ptr_plugin = NULL;
-    }
-    else
-    {
-        ptr_plugin = plugin_search (plugin_name);
-        if (!ptr_plugin)
-        {
-            gui_chat_printf (NULL, "%sPlugin \"%s\" not found",
-                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                             plugin_name);
-            return;
-        }
-    }
 
     result = string_dyn_alloc (1024);
     if (!result)
@@ -571,55 +554,88 @@ debug_hooks_plugin (const char *plugin_name)
     }
 
     count_total = 0;
+    matches = 0;
 
     for (i = 0; i < HOOK_NUM_TYPES; i++)
     {
-        count_type = 0;
-        string_dyn_copy (result_type, NULL);
-
-        for (ptr_hook = weechat_hooks[i]; ptr_hook;
-             ptr_hook = ptr_hook->next_hook)
+        if (hook_types)
         {
-            if (ptr_hook->deleted || (ptr_hook->plugin != ptr_plugin))
-                continue;
-
-            desc = hook_get_description (ptr_hook);
-            if (desc)
+            match_type = 0;
+            for (j = 0; hook_types[j]; j++)
             {
-                string_dyn_concat (result_type, "    ", -1);
-                string_dyn_concat (result_type, desc, -1);
-                string_dyn_concat (result_type, "\n", -1);
-                free (desc);
+                if (strcmp (hook_types[j], hook_type_string[i]) == 0)
+                {
+                    matches = 1;
+                    match_type = 1;
+                    break;
+                }
             }
-            count_type++;
+        }
+        else
+        {
+            match_type = 1;
         }
 
-        snprintf (str_type, sizeof (str_type),
-                  "  %s (%d)%s\n",
-                  hook_type_string[i],
-                  count_type,
-                  (count_type > 0) ? ":" : "");
-        string_dyn_concat (result, str_type, -1);
+        if (match_type)
+        {
+            count_type = 0;
+            string_dyn_copy (result_type, NULL);
 
-        if (count_type > 0)
-            string_dyn_concat (result, *result_type, -1);
+            for (ptr_hook = weechat_hooks[i]; ptr_hook;
+                 ptr_hook = ptr_hook->next_hook)
+            {
+                if (ptr_hook->deleted)
+                    continue;
 
-        count_total += count_type;
+                if (!string_match (
+                        (ptr_hook->plugin) ? ptr_hook->plugin->name : PLUGIN_CORE,
+                        plugin_mask, 1))
+                    continue;
+
+                matches = 1;
+
+                desc = hook_get_description (ptr_hook);
+                if (desc)
+                {
+                    string_dyn_concat (result_type, "    ", -1);
+                    string_dyn_concat (result_type,
+                                       (ptr_hook->plugin) ?
+                                       ptr_hook->plugin->name : PLUGIN_CORE,
+                                       -1);
+                    string_dyn_concat (result_type, ": ", -1);
+                    string_dyn_concat (result_type, desc, -1);
+                    string_dyn_concat (result_type, "\n", -1);
+                    free (desc);
+                }
+                count_type++;
+            }
+
+            snprintf (str_type, sizeof (str_type),
+                      "  %s (%d)%s\n",
+                      hook_type_string[i],
+                      count_type,
+                      (count_type > 0) ? ":" : "");
+            string_dyn_concat (result, str_type, -1);
+
+            if (count_type > 0)
+                string_dyn_concat (result, *result_type, -1);
+
+            count_total += count_type;
+        }
     }
 
-    if (count_total > 0)
+    if (matches)
     {
         gui_chat_printf (NULL, "");
         gui_chat_printf (NULL,
-                         "hooks in plugin \"%s\" (%d)%s",
-                         plugin_name,
+                         "hooks (%d)%s",
                          count_total,
                          (count_total > 0) ? ":" : "");
         gui_chat_printf (NULL, *result);
     }
     else
     {
-        gui_chat_printf (NULL, "No hooks in plugin \"%s\"", plugin_name);
+        gui_chat_printf (NULL, "No hooks");
     }
     string_dyn_free (result, 1);
     string_dyn_free (result_type, 1);

@@ -37,8 +37,6 @@ extern struct t_hdata *relay_hdata_completion;
 extern struct t_hdata *relay_hdata_completion_word;
 extern struct t_hdata *relay_hdata_hotlist;
 
-extern int relay_signal_upgrade_received;
-
 /* relay protocol */
 
 enum t_relay_protocol

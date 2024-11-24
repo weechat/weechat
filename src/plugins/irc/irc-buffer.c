@@ -199,7 +199,7 @@ irc_buffer_close_cb (const void *pointer, void *data,
                                              IRC_SERVER_OPTION_AUTOJOIN_DYNAMIC)
                 && ptr_server->is_connected
                 && !irc_signal_quit_received
-                && !irc_signal_upgrade_received)
+                && !weechat_irc_plugin->unload_with_upgrade)
             {
                 irc_join_remove_channel_from_autojoin (ptr_server,
                                                        ptr_channel->name);

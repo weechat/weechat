@@ -26,8 +26,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-10-13 16:56+0200\n"
-"PO-Revision-Date: 2024-10-13 16:57+0200\n"
+"POT-Creation-Date: 2024-11-24 10:07+0100\n"
+"PO-Revision-Date: 2024-11-21 09:23+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de_DE\n"
@@ -35,7 +35,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.5\n"
 "X-Poedit-Bookmarks: -1,-1,180,-1,-1,-1,-1,-1,-1,-1\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
@@ -855,6 +855,11 @@ msgstr[1] "mal"
 msgid "WeeChat upgrades: none, started on %s"
 msgstr "WeeChat upgrades: keine, gestartet am %s"
 
+#, fuzzy, c-format
+#| msgid "%sUnable to save WeeChat session (files *.upgrade)"
+msgid "%sUnable to save some plugin sessions (files *.upgrade)"
+msgstr "%sWeechat-Sitzung kann nicht gespeichert werden (Dateien *.upgrade)"
+
 #, c-format
 msgid "%sUnable to save WeeChat session (files *.upgrade)"
 msgstr "%sWeechat-Sitzung kann nicht gespeichert werden (Dateien *.upgrade)"
@@ -869,6 +874,10 @@ msgid ""
 msgstr ""
 "%sAktualisierung nicht möglich: Es laufen ein oder mehrere "
 "Hintergrundprozesse/-threads(Hook-Typ: 'process', 'connect' oder 'url')"
+
+#, c-format
+msgid "Check running hooks with command: %s"
+msgstr ""
 
 #, c-format
 msgid "%sCan't upgrade: WeeChat binary \"%s\" does not exist"
@@ -888,6 +897,10 @@ msgstr "%skeine Binärdatei angegeben"
 #, c-format
 msgid "Upgrading WeeChat with binary file: \"%s\"..."
 msgstr "Aktualisiere WeeChat mit Binärdatei \"%s\"...."
+
+#, c-format
+msgid "%sUpgrade aborted"
+msgstr ""
 
 #, c-format
 msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
@@ -1491,15 +1504,15 @@ msgstr "Debug-Funktionen"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid ""
-"list || set <plugin> <level> || dump|hooks [<plugin>] || buffer|certs|color|"
-"dirs|infolists|key|libs|memory|tags|term|url|windows || callbacks "
-"<duration>[<unit>] || mouse|cursor [verbose] || hdata [free] || time "
-"<command> || unicode <string>"
+"list || set <plugin> <level> || dump [<plugin>] || hooks [<plugin_mask> "
+"[<hook_type>...]] || buffer|certs|color|dirs|infolists|key|libs|memory|tags|"
+"term|url|windows || callbacks <duration>[<unit>] || mouse|cursor [verbose] "
+"|| hdata [free] || time <command> || unicode <string>"
 msgstr ""
-"list || set <plugin> <level> || dump|hooks [<plugin>] || buffer|certs|color|"
-"dirs|infolists|key|libs|memory|tags|term|url|windows || callbacks "
-"<duration>[<unit>] || mouse|cursor [verbose] || hdata [free] || time "
-"<command> || unicode <string>"
+"list || set <plugin> <level> || dump [<plugin>] || hooks [<plugin_mask> "
+"[<hook_type>...]] || buffer|certs|color|dirs|infolists|key|libs|memory|tags|"
+"term|url|windows || callbacks <duration>[<unit>] || mouse|cursor [verbose] "
+"|| hdata [free] || time <command> || unicode <string>"
 
 msgid "raw[list]: list plugins with debug levels"
 msgstr "raw[list]: zeigt alle Erweiterungen mit Debuglevel an"
@@ -1527,6 +1540,12 @@ msgstr ""
 "raw[hooks]: zeigt die aktiven Hooks an (bei einer Erweiterung: detaillierte "
 "Informationen über Hooks werden angezeigt, die von der Erweiterung erstellt "
 "wurden)"
+
+msgid "plugin_mask: plugin mask, \"*\" for all plugins"
+msgstr "plugin_mask: Erweiterungsmaske, \"*\" für alle Erweiterungen"
+
+msgid "hook_type: hook type"
+msgstr "hook_type: Hook-Typen"
 
 msgid ""
 "raw[buffer]: dump buffer content with hexadecimal values in WeeChat log file"
@@ -4268,6 +4287,9 @@ msgstr "Namen der deaktivierten Filter"
 
 msgid "names of enabled filters"
 msgstr "Namen der aktivierten Filter"
+
+msgid "hook types"
+msgstr "Hook-Typen"
 
 msgid ""
 "commands (weechat and plugins); optional argument: prefix to add before the "
@@ -7232,10 +7254,6 @@ msgstr ""
 #, c-format
 msgid "invalid regular expression (%s)"
 msgstr "ungültiger regulärer Ausdruck (%s)"
-
-#, c-format
-msgid "key \"%s\" in context \"%s\""
-msgstr "Tastenbelegung \"%s\" in Kontext: \"%s\""
 
 #, c-format
 msgid ""
@@ -10585,11 +10603,11 @@ msgstr "Kanäle und deren Themen auflisten"
 msgid ""
 "[-server <server>] [<channel>[,<channel>...]] [<target>] || [-server "
 "<server>] [-raw *|<regex>] || -up|-down [<number>] || -left|-right "
-"[<percent>] || -go <line>|end || -join  || -export <filename>"
+"[<percent>] || -go <line>|end || -join || -export <filename>"
 msgstr ""
 "[-server <server>] [<channel>[,<channel>...]] [<target>] || [-server "
 "<server>] [-raw *|<regex>] || -up|-down [<number>] || -left|-right "
-"[<percent>] || -go <line>|end || -join  || -export <filename>"
+"[<percent>] || -go <line>|end || -join || -export <filename>"
 
 msgid ""
 "raw[-raw]: display result on server buffer instead of a dedicated buffer"
@@ -12913,6 +12931,21 @@ msgstr "1, wenn der Nick ignoriert wird (Meldung wird nicht angezeigt)"
 msgid "server,message (message is the raw IRC message)"
 msgstr "Server,Nachricht (Nachricht ist die unverarbeitete IRC Nachricht)"
 
+msgid "get pointer to an IRC server"
+msgstr "erhalte Pointer für einen IRC Server"
+
+msgid "get pointer to an IRC channel"
+msgstr "erhalte Pointer für einen IRC Kanal"
+
+msgid "server,channel"
+msgstr "server,channel"
+
+msgid "get pointer to an IRC nick"
+msgstr "erhalte Pointer für einen Nick"
+
+msgid "server,channel,nick"
+msgstr "server,channel,nick"
+
 msgid "parse an IRC message"
 msgstr "Parse eine IRC Nachricht"
 
@@ -13942,6 +13975,11 @@ msgstr "%s%s: vom Server getrennt"
 
 msgid "IRC (Internet Relay Chat) protocol"
 msgstr "IRC (Internet Relay Chat) Protokoll"
+
+#, fuzzy, c-format
+#| msgid "%s%s: failed to rename trigger \"%s\""
+msgid "%s%s: failed to save upgrade data"
+msgstr "%s%s: Trigger \"%s\" konnte nicht umbenannt werden"
 
 #, c-format
 msgid ""
@@ -15397,17 +15435,17 @@ msgstr "Daten abrufen"
 msgid "Actions (letter+enter):"
 msgstr "Aktion (Zeichen+Enter):"
 
-msgid "  [D] Disconnect"
-msgstr "  [D] Verbindung trennen"
+msgid "  [d] Disconnect"
+msgstr "  [d] Verbindung trennen"
 
-msgid "  [R] Remove"
-msgstr "  [R] Entfernen"
+msgid "  [r] Remove"
+msgstr "  [r] Entfernen"
 
-msgid "  [P] Purge finished"
-msgstr "  [P] beendete Aufträge aufräumen"
+msgid "  [p] Purge finished"
+msgstr "  [p] beendete Aufträge aufräumen"
 
-msgid "  [Q] Close this buffer"
-msgstr "  [Q] diesen Buffer schließen"
+msgid "  [q] Close this buffer"
+msgstr "  [q] diesen Buffer schließen"
 
 #, c-format
 msgid "%s%s[%s%s%s%s] %s, received: %s, sent: %s"
@@ -18210,11 +18248,11 @@ msgstr ""
 msgid "Typing status of users"
 msgstr "Tippstatus von Benutzern"
 
-msgid "  [A] Accept"
-msgstr "  [A] annehmen"
+msgid "  [a] Accept"
+msgstr "  [a] annehmen"
 
-msgid "  [C] Cancel"
-msgstr "  [C] abbrechen"
+msgid "  [c] Cancel"
+msgstr "  [c] abbrechen"
 
 msgid "xfer chat"
 msgstr "Transfer (xfer) Chat"

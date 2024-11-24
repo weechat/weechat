@@ -2,6 +2,7 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: ru
+include::includes/attributes-ru.adoc[]
 
 Переводчики:
 
@@ -291,7 +292,7 @@ channels configured in the "autojoin" server option.
 /close
 ----
 
-[WARNING]
+[CAUTION]
 Закрытие соединения с сервером закроет все каналы/частные буферы.
 
 Отключиться от сервера, на серверном буфере:

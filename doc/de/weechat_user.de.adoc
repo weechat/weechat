@@ -2,7 +2,7 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: de
-:toc-title: Inhaltsverzeichnis
+include::includes/attributes-de.adoc[]
 
 Übersetzer:
 
@@ -471,7 +471,7 @@ zum Absturz von WeeChat führt:
 cmake .. -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_FLAGS=-fsanitize=address -DCMAKE_CXX_FLAGS=-fsanitize=address -DCMAKE_EXE_LINKER_FLAGS=-fsanitize=address
 ----
 
-[WARNING]
+[CAUTION]
 Sie sollten die Adressbereinigung nur aktivieren, wenn Sie versuchen, einen
 Absturz zu provozieren. Diese Funktion wird im produktiven Einsatz nicht empfohlen.
 
@@ -611,7 +611,7 @@ include::includes/cmdline_options.de.adoc[tag=standard]
 
 Einige zusätzliche Optionen sollten nur für Debug-Zwecke genutzt werden:
 
-[WARNING]
+[CAUTION]
 *KEINE* dieser Optionen sollte für ein Produktivsystem genutzt werden!
 
 include::includes/cmdline_options.de.adoc[tag=debug]
@@ -935,8 +935,7 @@ Die _status_-Bar besitzt als Standardeinträge:
 | scroll                | `-MORE(50)-`           | Scroll Indikator, zeigt an wie viele Zeilen unterhalb der zur Zeit dargestellten Zeile vorhanden sind.
 | lag                   | `Lag: 2.5`             | Verzögerungsanzeige, in Sekunden (keine Anzeige falls Verzögerung gering).
 | hotlist               | `H: 3:#abc(2,5), 5`    | Liste der Buffer mit Aktivität (ungelesene Nachrichten) (für das Beispiel: 2 Highlights und 5 ungelesene Nachrichten im Kanal _#abc_, eine ungelesene Nachricht in Buffer #5).
-// TRANSLATION MISSING
-| typing                | `Typing: bob, (alice)` | Typing notification, see <<typing_notifications,Schreibbenachrichtigung>>.
+| typing                | `Typing: bob, (alice)` | Schreibbenachrichtigung, siehe <<typing_notifications,Schreibbenachrichtigung>>.
 | completion            | `abc(2) def(5)`        | Liste von Wörtern für Vervollständigung, die Zahl zeigt an wie viele Varianten möglich sind.
 |===
 
@@ -999,8 +998,7 @@ andere Items die zur Verfügung stehen (die aber nicht standardmäßig in einer 
 | irc_nick_host                | `+Flashy!user@host.com+` | aktueller IRC Nick und Host.
 | irc_nick_modes               | `i`                      | IRC Modi für den eigenen Nick.
 | irc_nick_prefix              | `@`                      | IRC Nick-Präfix für den Kanal.
-// TRANSLATION MISSING
-| spacer                       |                          | Special item used to align text in bars, see <<item_spacer,Spacer item>>.
+| spacer                       |                          | spezielles Item um Text in einer Bar auszurichten, siehe <<item_spacer,Spacer item>>.
 | spell_dict                   | `de,en`                  | zeigt an welche Wörterbücher für die Rechtschreibung im aktuellen Buffer genutzt werden.
 | spell_suggest                | `Glück,Glocke,Block`     | Vorschläge für ein falsch geschriebenes Wort.
 | tls_version                  | `TLS1.3`                 | TLS Version die für den IRC Server genutzt wird.
@@ -2040,27 +2038,27 @@ Beispiel des fset-Buffer, der Optionen anzeigt, die mit `weechat.look` beginnen
 [subs="quotes"]
 ....
 ┌──────────────────────────────────────────────────────────────────────────────────────┐
-│1.weechat│1/121 | Filter: weechat.look.* | Sort: ~name | Key(input): alt+space=toggle │
-│2.fset   │weechat.look.bare_display_exit_on_input: exit the bare display mode on any c│
-│         │hanges in input [default: on]                                               │
+│1.weechat│7/125 | Filter: weechat.look.* | Sortierung: ~name | Taste(input): alt+Lee>>│
+│2.fset   │weechat.look.bare_display_exit_on_input: beendet den einfachen Anzeigemodus │
+│         │durch Tastendruck [Standardwert: on]                                        │
 │         │----------------------------------------------------------------------------│
-│         │  weechat.look.align_end_of_lines                   enum     message        │
-│         │  weechat.look.align_multiline_words                boolean  on             │
-│         │  weechat.look.bar_more_down                        string   "++"           │
-│         │  weechat.look.bar_more_left                        string   "<<"           │
-│         │  weechat.look.bar_more_right                       string   ">>"           │
-│         │  weechat.look.bar_more_up                          string   "--"           │
-│         │##  weechat.look.bare_display_exit_on_input           boolean  on             ##│
-│         │  weechat.look.bare_display_time_format             string   "%H:%M"        │
-│         │  weechat.look.buffer_auto_renumber                 boolean  on             │
-│         │  weechat.look.buffer_notify_default                enum     all            │
-│         │  weechat.look.buffer_position                      enum     end            │
-│         │  weechat.look.buffer_search_case_sensitive         boolean  off            │
-│         │  weechat.look.buffer_search_force_default          boolean  off            │
-│         │  weechat.look.buffer_search_regex                  boolean  off            │
-│         │  weechat.look.buffer_search_where                  enum     prefix_message │
-│         │  weechat.look.buffer_time_format                   string   "%H:%M:%S"     │
-│         │  weechat.look.buffer_time_same                     string   ""             │
+│         │  weechat.look.align_end_of_lines              Aufzählung    message        │
+│         │  weechat.look.align_multiline_words           boolesch      on             │
+│         │  weechat.look.bar_more_down                   Zeichenkette  "++"           │
+│         │  weechat.look.bar_more_left                   Zeichenkette  "<<"           │
+│         │  weechat.look.bar_more_right                  Zeichenkette  ">>"           │
+│         │  weechat.look.bar_more_up                     Zeichenkette  "--"           │
+│         │##  weechat.look.bare_display_exit_on_input      boolesch      on             ##│
+│         │  weechat.look.bare_display_time_format        Zeichenkette  "%H:%M"        │
+│         │  weechat.look.buffer_auto_renumber            boolesch      on             │
+│         │  weechat.look.buffer_notify_default           Aufzählung    all            │
+│         │  weechat.look.buffer_position                 Aufzählung    end            │
+│         │  weechat.look.buffer_search_case_sensitive    boolesch      off            │
+│         │  weechat.look.buffer_search_force_default     boolesch      off            │
+│         │  weechat.look.buffer_search_history           Aufzählung    local          │
+│         │  weechat.look.buffer_search_regex             boolesch      off            │
+│         │  weechat.look.buffer_search_where             Aufzählung    prefix_message │
+│         │  weechat.look.buffer_time_format              Zeichenkette  "%H:%M:%S"     │
 │         │[12:55] [2] [fset] 2:fset                                                   │
 │         │█                                                                           │
 └──────────────────────────────────────────────────────────────────────────────────────┘
@@ -3459,14 +3457,16 @@ Standardmäßig sind keine Server angelegt. Es gibt keine Begrenzung für die
 Anzahl von Servern. Server können mit dem Befehl <<command_irc_server,/server>>
 angelegt werden.
 
-Um zum Beispiel eine TLS verschlüsselte Verbindung zu
-https://libera.chat/[libera.chat ^↗^^] herzustellen:
+Zum Beispiel für eine Verbindung zu https://libera.chat/[libera.chat ^↗^^]:
 
 ----
-/server add libera irc.libera.chat/6697 -tls
+/server add libera irc.libera.chat
 ----
 
-Um WeeChat beim Start direkt mit dem Server zu verbinden:
+[NOTE]
+Der Standardport ist 6697 und TLS (verschlüsselter Datenverkehr) ist aktiviert.
+
+Um WeeChat, beim Programmstart, direkt mit einem Server zu verbinden:
 
 ----
 /set irc.server.libera.autoconnect on
@@ -3483,7 +3483,7 @@ Kapitel über <<irc_sasl_authentication,SASL authentication>>):
 ----
 
 Wenn SASL nicht unterstützt wird, können Sie einen Befehl verwenden, um eine
-Nachricht an nickserv zu senden, um sich zu Authentifizieren:
+Nachricht an nickserv zu senden, um sich zu authentifizieren:
 
 ----
 /set irc.server.libera.command "/msg nickserv identify ${sec.data.libera}"
@@ -3507,51 +3507,52 @@ Wenn Sie beispielsweise den _libera_-Server mit den obigen Befehlen erstellt hab
 sehen Sie dies mit dem Befehl `/fset libera`:
 
 ....
-irc.server.libera.addresses             string   "irc.libera.chat/6697"
-irc.server.libera.anti_flood_prio_high  integer  null -> 2
-irc.server.libera.anti_flood_prio_low   integer  null -> 2
-irc.server.libera.autoconnect           boolean  on
-irc.server.libera.autojoin              string   null -> ""
-irc.server.libera.autojoin_dynamic      boolean  null -> off
-irc.server.libera.autoreconnect         boolean  null -> on
-irc.server.libera.autoreconnect_delay   integer  null -> 10
-irc.server.libera.autorejoin            boolean  null -> off
-irc.server.libera.autorejoin_delay      integer  null -> 30
-irc.server.libera.away_check            integer  null -> 0
-irc.server.libera.away_check_max_nicks  integer  null -> 25
-irc.server.libera.capabilities          string   null -> "*"
-irc.server.libera.charset_message       enum     null -> message
-irc.server.libera.command               string   null -> ""
-irc.server.libera.command_delay         integer  null -> 0
-irc.server.libera.connection_timeout    integer  null -> 60
-irc.server.libera.default_chantypes     string   null -> "#&"
-irc.server.libera.ipv6                  boolean  null -> on
-irc.server.libera.local_hostname        string   null -> ""
-irc.server.libera.msg_kick              string   null -> ""
-irc.server.libera.msg_part              string   null -> "WeeChat ${info:version}"
-irc.server.libera.msg_quit              string   null -> "WeeChat ${info:version}"
-irc.server.libera.nicks                 string   null -> "alice,alice1,alice2,alice3,alice4"
-irc.server.libera.nicks_alternate       boolean  null -> on
-irc.server.libera.notify                string   null -> ""
-irc.server.libera.password              string   null -> ""
-irc.server.libera.proxy                 string   null -> ""
-irc.server.libera.realname              string   null -> ""
-irc.server.libera.sasl_fail             enum     null -> reconnect
-irc.server.libera.sasl_key              string   null -> ""
-irc.server.libera.sasl_mechanism        enum     null -> plain
-irc.server.libera.sasl_password         string   "${sec.data.libera}"
-irc.server.libera.sasl_timeout          integer  null -> 15
-irc.server.libera.sasl_username         string   "alice"
-irc.server.libera.split_msg_max_length  integer  null -> 512
-irc.server.libera.tls                   boolean  on
-irc.server.libera.tls_cert              string   null -> ""
-irc.server.libera.tls_dhkey_size        integer  null -> 2048
-irc.server.libera.tls_fingerprint       string   null -> ""
-irc.server.libera.tls_password          string   null -> ""
-irc.server.libera.tls_priorities        string   null -> "NORMAL:-VERS-SSL3.0"
-irc.server.libera.tls_verify            boolean  null -> on
-irc.server.libera.usermode              string   null -> ""
-irc.server.libera.username              string   null -> "alice"
+irc.server.libera.addresses             Zeichenkette  "irc.libera.chat"
+irc.server.libera.anti_flood            integer       null -> 2000
+irc.server.libera.autoconnect           boolesch      on
+irc.server.libera.autojoin              Zeichenkette  null -> ""
+irc.server.libera.autojoin_delay        integer       null -> 0
+irc.server.libera.autojoin_dynamic      boolesch      null -> off
+irc.server.libera.autoreconnect         boolesch      null -> on
+irc.server.libera.autoreconnect_delay   integer       null -> 10
+irc.server.libera.autorejoin            boolesch      null -> off
+irc.server.libera.autorejoin_delay      integer       null -> 30
+irc.server.libera.away_check            integer       null -> 0
+irc.server.libera.away_check_max_nicks  integer       null -> 25
+irc.server.libera.capabilities          Zeichenkette  null -> "*"
+irc.server.libera.charset_message       Aufzählung    null -> message
+irc.server.libera.command               Zeichenkette  null -> ""
+irc.server.libera.command_delay         integer       null -> 0
+irc.server.libera.connection_timeout    integer       null -> 60
+irc.server.libera.default_chantypes     Zeichenkette  null -> "#&"
+irc.server.libera.ipv6                  Aufzählung    null -> auto
+irc.server.libera.local_hostname        Zeichenkette  null -> ""
+irc.server.libera.msg_kick              Zeichenkette  null -> ""
+irc.server.libera.msg_part              Zeichenkette  null -> "WeeChat ${info:version}"
+irc.server.libera.msg_quit              Zeichenkette  null -> "WeeChat ${info:version}"
+irc.server.libera.nicks                 Zeichenkette  null -> "${username},${username}2,${username}3,${username}4,${username}5"
+irc.server.libera.nicks_alternate       boolesch      null -> on
+irc.server.libera.notify                Zeichenkette  null -> ""
+irc.server.libera.password              Zeichenkette  null -> ""
+irc.server.libera.proxy                 Zeichenkette  null -> ""
+irc.server.libera.realname              Zeichenkette  null -> ""
+irc.server.libera.registered_mode       Zeichenkette  null -> "r"
+irc.server.libera.sasl_fail             Aufzählung    null -> reconnect
+irc.server.libera.sasl_key              Zeichenkette  null -> ""
+irc.server.libera.sasl_mechanism        Aufzählung    null -> plain
+irc.server.libera.sasl_password         Zeichenkette  "${sec.data.libera}"
+irc.server.libera.sasl_timeout          integer       null -> 15
+irc.server.libera.sasl_username         Zeichenkette  "alice"
+irc.server.libera.split_msg_max_length  integer       null -> 512
+irc.server.libera.tls                   boolesch      null -> on
+irc.server.libera.tls_cert              Zeichenkette  null -> ""
+irc.server.libera.tls_dhkey_size        integer       null -> 2048
+irc.server.libera.tls_fingerprint       Zeichenkette  null -> ""
+irc.server.libera.tls_password          Zeichenkette  null -> ""
+irc.server.libera.tls_priorities        Zeichenkette  null -> "NORMAL"
+irc.server.libera.tls_verify            boolesch      null -> on
+irc.server.libera.usermode              Zeichenkette  null -> ""
+irc.server.libera.username              Zeichenkette  null -> "${username}"
 ....
 
 Wenn Sie beispielsweise automatisch eine Verbindung zu allen von Ihnen
@@ -5898,7 +5899,7 @@ Aus Datenschutzgründen ist das Herunterladen von Skripten standardmäßig deakt
 Um es zu aktivieren, geben Sie diesen Befehl ein:
 
 ----
-/set script.scripts.download_enabled on
+/script enable
 ----
 
 Dann können Sie die Liste der Skripte herunterladen und in einem separaten Buffer,
@@ -5908,33 +5909,33 @@ mit dem Befehl <<command_script_script,/script>>, anzeigen lassen:
 :x: *
 ....
 ┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
-│1.weechat│368/368 scripts (filter: {x}) | Sort: i,p,n | Alt+key/input: i=install, r=remove, l=load, L=reload, u=│
-│2.scripts│{x}      autosort.py                 3.9     2020-10-11 | Automatically keep buffers grouped by server│
-│         │{x}      multiline.pl                0.6.3   2016-01-02 | Multi-line edit box, also supports editing o│
-│         │{x}      highmon.pl                  2.7     2020-06-21 | Adds a highlight monitor buffer.            │
-│         │##{x}ia r  grep.py               0.8.5 0.8.5   2021-05-11 | Search regular expression in buffers or log ##│
-│         │{x}      autojoin.py                 0.3.1   2019-10-06 | Configure autojoin for all servers according│
-│         │{x}      colorize_nicks.py           28      2021-03-06 | Use the weechat nick colors in the chat area│
-│         │{x}ia r  go.py                 2.7   2.7     2021-05-26 | Quick jump to buffers.                      │
-│         │{x}      text_item.py                0.9     2019-05-25 | Add bar items with plain text.              │
-│         │       aesthetic.py                1.0.6   2020-10-25 | Make messages more A E S T H E T I C A L L Y│
-│         │       aformat.py                  0.2     2018-06-21 | Alternate text formatting, useful for relays│
-│         │       alternatetz.py              0.3     2018-11-11 | Add an alternate timezone item.             │
-│         │       amarok2.pl                  0.7     2012-05-08 | Amarok 2 control and now playing script.    │
-│         │       amqp_notify.rb              0.1     2011-01-12 | Send private messages and highlights to an A│
-│         │       announce_url_title.py       19      2021-06-05 | Announce URL title to user or to channel.   │
-│         │       anotify.py                  1.0.2   2020-05-16 | Notifications of private messages, highlight│
-│         │       anti_password.py            1.2.1   2021-03-13 | Prevent a password from being accidentally s│
-│         │       apply_corrections.py        1.3     2018-06-21 | Display corrected text when user sends s/typ│
-│         │       arespond.py                 0.1.1   2020-10-11 | Simple autoresponder.                       │
-│         │       atcomplete.pl               0.001   2016-10-29 | Tab complete nicks when prefixed with "@".  │
-│         │       audacious.pl                0.3     2009-05-03 | Display which song Audacious is currently pl│
-│         │       auth.rb                     0.3     2014-05-30 | Automatically authenticate with NickServ usi│
-│         │       auto_away.py                0.4     2018-11-11 | A simple auto-away script.                  │
-│         │       autoauth.py                 1.3     2021-11-07 | Permits to auto-authenticate when changing n│
-│         │       autobump.py                 0.1.0   2019-06-14 | Bump buffers upon activity.                 │
-│         │       autoconf.py                 0.4     2021-05-11 | Auto save/load changed options in a .weerc f│
-│         │       autoconnect.py              0.3.3   2019-10-06 | Reopen servers and channels opened last time│
+│1.weechat│322/322 Skripten (Filter: {x}) | Sortierung: i,p,n | Alt+Taste/Eingabe: i=installieren, r=entfernen,>>│
+│2.scripts│{x}      autosort.py                     3.10    2023-12-31 | Behält die Gruppierung der Buffer nach S│
+│         │{x}      highmon.pl                      2.7     2020-06-21 | Startet einen Highlight Monitor Buffer. │
+│         │{x}ia r  grep.py                   0.8.6 0.8.6   2022-11-11 | Sucht nach regulären Ausdrücken in Buffe│
+│         │{x}      colorize_nicks.py               32      2023-10-30 | Im Textbereich oder der Eingabezeile wir│
+│         │##{x}ia r  go.py                     3.0.1 3.0.1   2024-05-30 | Schneller Wechsel zu Buffern.           ##│
+│         │       aesthetic.py                    1.0.6   2020-10-25 | Macht Nachrichten Ä S T H E T I S C H an│
+│         │       aformat.py                      0.2     2018-06-21 | Alternative Textformatierung, nützlich f│
+│         │       alternatetz.py                  0.4     2022-01-25 | Fügt der Bar-Item eine zusätzliche Zeitz│
+│         │       amarok2.pl                      0.7     2012-05-08 | Fernbedienung für Amarok2 und zum anzeig│
+│         │       amqp_notify.rb                  0.1     2011-01-12 | Schickt private Nachrichten und Highligh│
+│         │       announce_url_title.py           19      2021-06-05 | Schickt einen URL Titel an einen User od│
+│         │       anotify.py                      1.0.2   2020-05-16 | Benachrichtigung von privaten Nachrichte│
+│         │       anti_password.py                1.2.1   2021-03-13 | Verhindert, dass ein Kennwort versehentl│
+│         │       apply_corrections.py            1.3     2018-06-21 | Zeigt den korrigierten Text an wenn der │
+│         │       arespond.py                     0.1.2   2022-01-25 | Anfragen werden automatisch beantwortet.│
+│         │       atcomplete.pl                   0.001   2016-10-29 | Fügt "@" Präfix bei der Nick Tab-Vervoll│
+│         │       audacious.pl                    0.3     2009-05-03 | Zeigt an welche Musik gerade von Audacio│
+│         │       auth.rb                         0.3     2014-05-30 | Automatische Authentifizierung mittels S│
+│         │       auto_away.py                    0.4     2018-11-11 | Ein einfaches Abwesenheit-Skript.       │
+│         │       autoauth.py                     1.3     2021-11-07 | Erlaubt automatische Authentisierung, we│
+│         │       autobump.py                     0.1.0   2019-06-14 | Springt zu Buffern nach deren Aktivität.│
+│         │       autoconf.py                     0.4     2021-05-11 | Automatisches speichern/laden von Option│
+│         │       autoconnect.py                  0.3.3   2019-10-06 | Öffnet erneut die Server und Channel die│
+│         │       autojoin_on_invite.py           0.9     2022-10-25 | Betritt automatisch einen Kanal wenn man│
+│         │       automarkbuffer.py               1.0     2015-03-31 | Buffer werden als gelesen markiert falls│
+│         │       automerge.py                    0.2     2018-03-03 | Automatische Zusammenführung neuer Buffe│
 │         │[12:55] [2] [script] 2:scripts                                                                      │
 │         │█                                                                                                   │
 └──────────────────────────────────────────────────────────────────────────────────────────────────────────────┘

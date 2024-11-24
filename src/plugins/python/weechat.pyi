@@ -1558,8 +1558,10 @@ def hook_signal_send(signal: str, type_data: str, signal_data: str) -> int:
     """`hook_signal_send in WeeChat plugin API reference <https://weechat.org/doc/weechat/api/#_hook_signal_send>`_
     ::
 
-        # example
+        # examples
         rc = weechat.hook_signal_send("my_signal", weechat.WEECHAT_HOOK_SIGNAL_STRING, my_string)
+        rc2 = weechat.hook_signal_send("[flags:stop_on_error,ignore_eat]my_signal2",
+                                       weechat.WEECHAT_HOOK_SIGNAL_STRING, my_string)
     """
     ...
 
@@ -1582,8 +1584,9 @@ def hook_hsignal_send(signal: str, hashtable: Dict[str, str]) -> int:
     """`hook_hsignal_send in WeeChat plugin API reference <https://weechat.org/doc/weechat/api/#_hook_hsignal_send>`_
     ::
 
-        # example
+        # examples
         rc = weechat.hook_hsignal_send("my_hsignal", {"key": "value"})
+        rc2 = weechat.hook_hsignal_send("[flags:stop_on_error,ignore_eat]my_hsignal2", {"key": "value"})
     """
     ...
 

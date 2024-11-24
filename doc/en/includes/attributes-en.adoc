@@ -1,0 +1,23 @@
+// English translation, for reference only; matches the built-in behavior of core
+:appendix-caption: Appendix
+:appendix-refsig: {appendix-caption}
+:caution-caption: Caution
+:chapter-signifier: Chapter
+:chapter-refsig: {chapter-signifier}
+:example-caption: Example
+:figure-caption: Figure
+:important-caption: Important
+:last-update-label: Last updated
+ifdef::listing-caption[:listing-caption: Listing]
+ifdef::manname-title[:manname-title: Name]
+:note-caption: Note
+:part-signifier: Part
+:part-refsig: {part-signifier}
+ifdef::preface-title[:preface-title: Preface]
+:section-refsig: Section
+:table-caption: Table
+:tip-caption: Tip
+:toc-title: Table of Contents
+:untitled-label: Untitled
+:version-label: Version
+:warning-caption: Warning

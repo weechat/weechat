@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-10-13 16:56+0200\n"
-"PO-Revision-Date: 2024-06-11 07:49+0200\n"
+"POT-Creation-Date: 2024-11-24 10:07+0100\n"
+"PO-Revision-Date: 2024-11-20 18:17+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: ru\n"
@@ -882,6 +882,10 @@ msgid "WeeChat upgrades: none, started on %s"
 msgstr "WeeChat работает: %d %s %02d:%02d:%02d, запущен %s"
 
 #, fuzzy, c-format
+msgid "%sUnable to save some plugin sessions (files *.upgrade)"
+msgstr "%s не могу сохранить сессию в файл\n"
+
+#, fuzzy, c-format
 msgid "%sUnable to save WeeChat session (files *.upgrade)"
 msgstr "%s не могу сохранить сессию в файл\n"
 
@@ -893,6 +897,10 @@ msgstr "%s не могу сохранить сессию в файл\n"
 msgid ""
 "%sCan't upgrade: there is one or more background process/thread running "
 "(hook type: process, connect or url)"
+msgstr ""
+
+#, c-format
+msgid "Check running hooks with command: %s"
 msgstr ""
 
 #, c-format
@@ -911,6 +919,10 @@ msgstr "Сокращения не заданы.\n"
 #, fuzzy, c-format
 msgid "Upgrading WeeChat with binary file: \"%s\"..."
 msgstr "Обновляю WeeChat...\n"
+
+#, c-format
+msgid "%sUpgrade aborted"
+msgstr ""
 
 #, fuzzy, c-format
 msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
@@ -1420,10 +1432,10 @@ msgstr ""
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 #, fuzzy
 msgid ""
-"list || set <plugin> <level> || dump|hooks [<plugin>] || buffer|certs|color|"
-"dirs|infolists|key|libs|memory|tags|term|url|windows || callbacks "
-"<duration>[<unit>] || mouse|cursor [verbose] || hdata [free] || time "
-"<command> || unicode <string>"
+"list || set <plugin> <level> || dump [<plugin>] || hooks [<plugin_mask> "
+"[<hook_type>...]] || buffer|certs|color|dirs|infolists|key|libs|memory|tags|"
+"term|url|windows || callbacks <duration>[<unit>] || mouse|cursor [verbose] "
+"|| hdata [free] || time <command> || unicode <string>"
 msgstr "dump | buffer | windows"
 
 msgid "raw[list]: list plugins with debug levels"
@@ -1446,6 +1458,12 @@ msgstr ""
 msgid ""
 "raw[hooks]: display infos about hooks (with a plugin: display detailed info "
 "about hooks created by the plugin)"
+msgstr ""
+
+msgid "plugin_mask: plugin mask, \"*\" for all plugins"
+msgstr ""
+
+msgid "hook_type: hook type"
 msgstr ""
 
 msgid ""
@@ -3693,6 +3711,9 @@ msgstr "Список сокращений:\n"
 #, fuzzy
 msgid "names of enabled filters"
 msgstr "Список сокращений:\n"
+
+msgid "hook types"
+msgstr ""
 
 msgid ""
 "commands (weechat and plugins); optional argument: prefix to add before the "
@@ -6101,10 +6122,6 @@ msgstr ""
 #, fuzzy, c-format
 msgid "invalid regular expression (%s)"
 msgstr "%s \"%s\" не является регулярным выражением (%s)\n"
-
-#, fuzzy, c-format
-msgid "key \"%s\" in context \"%s\""
-msgstr "Клавиша \"%s\" не привязана\n"
 
 #, c-format
 msgid ""
@@ -9053,7 +9070,7 @@ msgstr "перечислить каналы и их темы"
 msgid ""
 "[-server <server>] [<channel>[,<channel>...]] [<target>] || [-server "
 "<server>] [-raw *|<regex>] || -up|-down [<number>] || -left|-right "
-"[<percent>] || -go <line>|end || -join  || -export <filename>"
+"[<percent>] || -go <line>|end || -join || -export <filename>"
 msgstr "канал[,канал] [ключ[,ключ]]"
 
 msgid ""
@@ -11144,6 +11161,27 @@ msgid "server,message (message is the raw IRC message)"
 msgstr ""
 
 #, fuzzy
+msgid "get pointer to an IRC server"
+msgstr "Список каналов, на которые заходить при соединении с сервером"
+
+#, fuzzy
+msgid "get pointer to an IRC channel"
+msgstr "Список каналов, на которые заходить при соединении с сервером"
+
+#, fuzzy
+#| msgid "leave a channel"
+msgid "server,channel"
+msgstr "покинуть канал"
+
+#, fuzzy
+msgid "get pointer to an IRC nick"
+msgstr "Список каналов, на которые заходить при соединении с сервером"
+
+#, fuzzy
+msgid "server,channel,nick"
+msgstr "канал: название канала"
+
+#, fuzzy
 msgid "parse an IRC message"
 msgstr "сообщение: отправляемое сообщение"
 
@@ -12145,6 +12183,10 @@ msgstr "Отключен от сервера!\n"
 
 msgid "IRC (Internet Relay Chat) protocol"
 msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: failed to save upgrade data"
+msgstr "%s не могу сохранить конфигурационный файл pluginов\n"
 
 #, c-format
 msgid ""
@@ -13481,19 +13523,19 @@ msgstr ""
 msgid "Actions (letter+enter):"
 msgstr ""
 
-msgid "  [D] Disconnect"
+msgid "  [d] Disconnect"
 msgstr ""
 
-msgid "  [R] Remove"
-msgstr "  [R] Удалить"
+msgid "  [r] Remove"
+msgstr "  [r] Удалить"
 
 #, fuzzy
-msgid "  [P] Purge finished"
-msgstr "  [P] Очистить список"
+msgid "  [p] Purge finished"
+msgstr "  [p] Очистить список"
 
 #, fuzzy
-msgid "  [Q] Close this buffer"
-msgstr "  [Q] Закрыть окно"
+msgid "  [q] Close this buffer"
+msgstr "  [q] Закрыть окно"
 
 #, fuzzy, c-format
 msgid "%s%s[%s%s%s%s] %s, received: %s, sent: %s"
@@ -15939,11 +15981,11 @@ msgstr ""
 msgid "Typing status of users"
 msgstr ""
 
-msgid "  [A] Accept"
-msgstr "  [A] Принять"
+msgid "  [a] Accept"
+msgstr "  [a] Принять"
 
-msgid "  [C] Cancel"
-msgstr "  [C] Отменить"
+msgid "  [c] Cancel"
+msgstr "  [c] Отменить"
 
 msgid "xfer chat"
 msgstr ""

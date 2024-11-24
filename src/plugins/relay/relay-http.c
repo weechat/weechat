@@ -385,7 +385,7 @@ relay_http_parse_header (struct t_relay_http_request *request,
                          int ws_deflate_allowed)
 {
     char *pos, *name, *name_lower, *error, **items;
-    const char *ptr_value;
+    const char *existing_value, *ptr_value;
     int i, num_items;
     long number;
 
@@ -423,6 +423,10 @@ relay_http_parse_header (struct t_relay_http_request *request,
     {
         ptr_value++;
     }
+
+    existing_value = weechat_hashtable_get (request->headers, name_lower);
+    if (existing_value)
+        ptr_value = WEECHAT_STR_CONCAT(", ", existing_value, ptr_value);
 
     /* add header in the hashtable */
     weechat_hashtable_set (request->headers, name_lower, ptr_value);
@@ -560,15 +564,18 @@ relay_http_add_to_body (struct t_relay_http_request *request,
 int
 relay_http_get_auth_status (struct t_relay_client *client)
 {
-    const char *auth, *client_totp, *pos;
+    const char *auth, *sec_websocket_protocol, *client_totp, *pos;
     char *relay_password, *totp_secret, *info_totp_args, *info_totp;
     char *user_pass;
-    int rc, length, totp_ok;
+    char **protocol_array;
+    int rc, i, length, protocol_count, use_base64url, totp_ok;
 
     rc = 0;
     relay_password = NULL;
+    protocol_array = NULL;
     totp_secret = NULL;
     user_pass = NULL;
+    use_base64url = 0;
 
     relay_password = weechat_string_eval_expression (
         weechat_config_string (relay_config_network_password),
@@ -589,13 +596,43 @@ relay_http_get_auth_status (struct t_relay_client *client)
     if (relay_password[0])
     {
         auth = weechat_hashtable_get (client->http_req->headers, "authorization");
-        if (!auth || (weechat_strncasecmp (auth, "basic ", 6) != 0))
+
+        if (auth)
         {
-            rc = -1;
-            goto end;
+            if (weechat_strncasecmp (auth, "basic ", 6) != 0)
+            {
+                rc = -1;
+                goto end;
+            }
+
+            pos = auth + 6;
+        }
+        else
+        {
+            sec_websocket_protocol = weechat_hashtable_get (
+                client->http_req->headers, "sec-websocket-protocol");
+            protocol_array = weechat_string_split (sec_websocket_protocol,
+                                                   ",", " ", 0, 0, &protocol_count);
+
+            pos = NULL;
+            for (i = 0; i < protocol_count; i++)
+            {
+                if (strncmp (protocol_array[i],
+                             "base64url.bearer.authorization.weechat.", 39) == 0)
+                {
+                    pos = protocol_array[i] + 39;
+                    use_base64url = 1;
+                    break;
+                }
+            }
+
+            if (!pos)
+            {
+                rc = -1;
+                goto end;
+            }
         }
 
-        pos = auth + 6;
         while (pos[0] == ' ')
         {
             pos++;
@@ -608,7 +645,8 @@ relay_http_get_auth_status (struct t_relay_client *client)
             rc = -8;
             goto end;
         }
-        length = weechat_string_base_decode ("64", pos, user_pass);
+        length = weechat_string_base_decode ((use_base64url) ? "64url" : "64",
+                                             pos, user_pass);
         if (length < 0)
         {
             rc = -2;
@@ -616,7 +654,9 @@ relay_http_get_auth_status (struct t_relay_client *client)
         }
         if (strncmp (user_pass, "plain:", 6) == 0)
         {
-            switch (relay_auth_check_password_plain (client, user_pass + 6, relay_password))
+            switch (relay_auth_check_password_plain (client,
+                                                     user_pass + 6,
+                                                     relay_password))
             {
                 case 0: /* password OK */
                     break;
@@ -631,7 +671,8 @@ relay_http_get_auth_status (struct t_relay_client *client)
         }
         else if (strncmp (user_pass, "hash:", 5) == 0)
         {
-            switch (relay_auth_password_hash (client, user_pass + 5, relay_password))
+            switch (relay_auth_password_hash (client, user_pass + 5,
+                                              relay_password))
             {
                 case 0: /* password OK */
                     break;
@@ -692,6 +733,7 @@ relay_http_get_auth_status (struct t_relay_client *client)
     }
 
 end:
+    weechat_string_free_split (protocol_array);
     free (relay_password);
     free (totp_secret);
     free (user_pass);

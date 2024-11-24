@@ -7544,7 +7544,7 @@ irc_command_init ()
            " || -up|-down [<number>]"
            " || -left|-right [<percent>]"
            " || -go <line>|end"
-           " || -join "
+           " || -join"
            " || -export <filename>"),
         WEECHAT_CMD_ARGS_DESC(
             N_("server: send to this server (internal name)"),

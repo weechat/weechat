@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-10-13 16:56+0200\n"
-"PO-Revision-Date: 2024-10-13 16:56+0200\n"
+"POT-Creation-Date: 2024-11-24 10:07+0100\n"
+"PO-Revision-Date: 2024-11-20 18:17+0100\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: cs\n"
@@ -868,6 +868,10 @@ msgid "WeeChat upgrades: none, started on %s"
 msgstr "Čas běhu WeeChat: %d %s %02d:%02d:%02d, spuštěn %s"
 
 #, fuzzy, c-format
+msgid "%sUnable to save some plugin sessions (files *.upgrade)"
+msgstr "%sChyba: nemohu uložit sezení do souboru"
+
+#, fuzzy, c-format
 msgid "%sUnable to save WeeChat session (files *.upgrade)"
 msgstr "%sChyba: nemohu uložit sezení do souboru"
 
@@ -887,6 +891,10 @@ msgstr ""
 "typu 'process' nebo 'connect')"
 
 #, c-format
+msgid "Check running hooks with command: %s"
+msgstr ""
+
+#, c-format
 msgid "%sCan't upgrade: WeeChat binary \"%s\" does not exist"
 msgstr "%sNemohu aktualizovat: binární soubor WeeChat \"%s\" neexistuje"
 
@@ -903,6 +911,10 @@ msgstr "%sNení specifikována binárka"
 #, c-format
 msgid "Upgrading WeeChat with binary file: \"%s\"..."
 msgstr "Aktualizuji WeeChat s použitím binárního souboru: \"%s\"..."
+
+#, c-format
+msgid "%sUpgrade aborted"
+msgstr ""
 
 #, c-format
 msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
@@ -1439,10 +1451,10 @@ msgstr "ladící funkce"
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 #, fuzzy
 msgid ""
-"list || set <plugin> <level> || dump|hooks [<plugin>] || buffer|certs|color|"
-"dirs|infolists|key|libs|memory|tags|term|url|windows || callbacks "
-"<duration>[<unit>] || mouse|cursor [verbose] || hdata [free] || time "
-"<command> || unicode <string>"
+"list || set <plugin> <level> || dump [<plugin>] || hooks [<plugin_mask> "
+"[<hook_type>...]] || buffer|certs|color|dirs|infolists|key|libs|memory|tags|"
+"term|url|windows || callbacks <duration>[<unit>] || mouse|cursor [verbose] "
+"|| hdata [free] || time <command> || unicode <string>"
 msgstr ""
 "list || set <plugin> <level> || dump [<plugin>] || buffer|color|memory|term|"
 "windows"
@@ -1471,6 +1483,12 @@ msgstr ""
 msgid ""
 "raw[hooks]: display infos about hooks (with a plugin: display detailed info "
 "about hooks created by the plugin)"
+msgstr ""
+
+msgid "plugin_mask: plugin mask, \"*\" for all plugins"
+msgstr ""
+
+msgid "hook_type: hook type"
 msgstr ""
 
 msgid ""
@@ -3841,6 +3859,9 @@ msgstr "jména filtrů"
 #| msgid "names of filters"
 msgid "names of enabled filters"
 msgstr "jména filtrů"
+
+msgid "hook types"
+msgstr ""
 
 msgid ""
 "commands (weechat and plugins); optional argument: prefix to add before the "
@@ -6405,10 +6426,6 @@ msgstr ""
 #, fuzzy, c-format
 msgid "invalid regular expression (%s)"
 msgstr "%s%s: nedostatek paměti pro regulární výraz"
-
-#, fuzzy, c-format
-msgid "key \"%s\" in context \"%s\""
-msgstr "Žádné klávesové zkratky nejsou definovány pro prostředí \"%s\""
 
 #, c-format
 msgid ""
@@ -9438,7 +9455,7 @@ msgstr "vypsat kanály a jejich témata"
 msgid ""
 "[-server <server>] [<channel>[,<channel>...]] [<target>] || [-server "
 "<server>] [-raw *|<regex>] || -up|-down [<number>] || -left|-right "
-"[<percent>] || -go <line>|end || -join  || -export <filename>"
+"[<percent>] || -go <line>|end || -join || -export <filename>"
 msgstr "[-server <server>] [<kanál1>[,<kanál2>...]] [<klíč1>[,<klíč2>...]]"
 
 msgid ""
@@ -11609,6 +11626,31 @@ msgstr ""
 msgid "server,message (message is the raw IRC message)"
 msgstr ""
 
+#, fuzzy
+#| msgid "get buffer pointer for an IRC server/channel/nick"
+msgid "get pointer to an IRC server"
+msgstr "získat ukazatel bufferu pro IRC server/kanál/přezdívku"
+
+#, fuzzy
+#| msgid "get buffer pointer for an IRC server/channel/nick"
+msgid "get pointer to an IRC channel"
+msgstr "získat ukazatel bufferu pro IRC server/kanál/přezdívku"
+
+#, fuzzy
+#| msgid "leave a channel"
+msgid "server,channel"
+msgstr "opustit kanál"
+
+#, fuzzy
+#| msgid "get buffer pointer for an IRC server/channel/nick"
+msgid "get pointer to an IRC nick"
+msgstr "získat ukazatel bufferu pro IRC server/kanál/přezdívku"
+
+#, fuzzy
+#| msgid "server,channel,nick (nick is optional)"
+msgid "server,channel,nick"
+msgstr "server,kanál,přezdívka (kanál je volitelný)"
+
 msgid "parse an IRC message"
 msgstr "rozdělit IRC zprávu"
 
@@ -12634,6 +12676,10 @@ msgstr "%s%s: odpojen od serveru"
 
 msgid "IRC (Internet Relay Chat) protocol"
 msgstr "IRC (Internet Relay Chat) protokol"
+
+#, fuzzy, c-format
+msgid "%s%s: failed to save upgrade data"
+msgstr "%sChyba: nemohu přejmenovat filter \"%s\" na \"%s\""
 
 #, fuzzy, c-format
 #| msgid ""
@@ -14047,17 +14093,17 @@ msgstr ""
 msgid "Actions (letter+enter):"
 msgstr "Akce (písmeno+enter):"
 
-msgid "  [D] Disconnect"
-msgstr "  [D] Odpojit"
+msgid "  [d] Disconnect"
+msgstr "  [d] Odpojit"
 
-msgid "  [R] Remove"
-msgstr "  [R] Odebrat"
+msgid "  [r] Remove"
+msgstr "  [r] Odebrat"
 
-msgid "  [P] Purge finished"
-msgstr "  [P] Pročistit ukončené"
+msgid "  [p] Purge finished"
+msgstr "  [p] Pročistit ukončené"
 
-msgid "  [Q] Close this buffer"
-msgstr "  [Q] Zavřít tento buffer"
+msgid "  [q] Close this buffer"
+msgstr "  [q] Zavřít tento buffer"
 
 #, fuzzy, c-format
 msgid "%s%s[%s%s%s%s] %s, received: %s, sent: %s"
@@ -16647,11 +16693,11 @@ msgstr ""
 msgid "Typing status of users"
 msgstr ""
 
-msgid "  [A] Accept"
-msgstr "  [A] Akceptovat"
+msgid "  [a] Accept"
+msgstr "  [a] Akceptovat"
 
-msgid "  [C] Cancel"
-msgstr "  [C] Storno"
+msgid "  [c] Cancel"
+msgstr "  [c] Storno"
 
 msgid "xfer chat"
 msgstr "xfer chat"

@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-10-13 16:56+0200\n"
-"PO-Revision-Date: 2024-10-13 16:57+0200\n"
+"POT-Creation-Date: 2024-11-24 10:07+0100\n"
+"PO-Revision-Date: 2024-11-20 18:17+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
 "translation/ja_JP>\n"
@@ -861,6 +861,10 @@ msgid "WeeChat upgrades: none, started on %s"
 msgstr "WeeChat 連続稼働時間: %d %s %02d:%02d:%02d、%s に開始"
 
 #, fuzzy, c-format
+msgid "%sUnable to save some plugin sessions (files *.upgrade)"
+msgstr "%sエラー: ファイルにセッションを保存できません"
+
+#, fuzzy, c-format
 msgid "%sUnable to save WeeChat session (files *.upgrade)"
 msgstr "%sエラー: ファイルにセッションを保存できません"
 
@@ -880,6 +884,10 @@ msgstr ""
 "(フックタイプ 'process' または 'connect')"
 
 #, c-format
+msgid "Check running hooks with command: %s"
+msgstr ""
+
+#, c-format
 msgid "%sCan't upgrade: WeeChat binary \"%s\" does not exist"
 msgstr "%sアップグレードできません: WeeChat バイナリ \"%s\" がありません"
 
@@ -896,6 +904,10 @@ msgstr "%sバイナリが指定されていません"
 #, c-format
 msgid "Upgrading WeeChat with binary file: \"%s\"..."
 msgstr "バイナリファイル: \"%s\" で WeeChat のアップグレード中..."
+
+#, c-format
+msgid "%sUpgrade aborted"
+msgstr ""
 
 #, c-format
 msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
@@ -1474,10 +1486,10 @@ msgstr "デバッグ関数"
 #| "memory|tags|term|windows || mouse|cursor [verbose] || hdata [free] || "
 #| "time <command>"
 msgid ""
-"list || set <plugin> <level> || dump|hooks [<plugin>] || buffer|certs|color|"
-"dirs|infolists|key|libs|memory|tags|term|url|windows || callbacks "
-"<duration>[<unit>] || mouse|cursor [verbose] || hdata [free] || time "
-"<command> || unicode <string>"
+"list || set <plugin> <level> || dump [<plugin>] || hooks [<plugin_mask> "
+"[<hook_type>...]] || buffer|certs|color|dirs|infolists|key|libs|memory|tags|"
+"term|url|windows || callbacks <duration>[<unit>] || mouse|cursor [verbose] "
+"|| hdata [free] || time <command> || unicode <string>"
 msgstr ""
 "list || set <plugin> <level> || dump [<plugin>] || buffer|color|infolists|"
 "memory|tags|term|windows || mouse|cursor [verbose] || hdata [free] || time "
@@ -1507,6 +1519,12 @@ msgstr ""
 msgid ""
 "raw[hooks]: display infos about hooks (with a plugin: display detailed info "
 "about hooks created by the plugin)"
+msgstr ""
+
+msgid "plugin_mask: plugin mask, \"*\" for all plugins"
+msgstr ""
+
+msgid "hook_type: hook type"
 msgstr ""
 
 msgid ""
@@ -3962,6 +3980,9 @@ msgstr "フィルタ名"
 #| msgid "names of filters"
 msgid "names of enabled filters"
 msgstr "フィルタ名"
+
+msgid "hook types"
+msgstr ""
 
 msgid ""
 "commands (weechat and plugins); optional argument: prefix to add before the "
@@ -6742,11 +6763,6 @@ msgstr ""
 #, c-format
 msgid "invalid regular expression (%s)"
 msgstr "不正な正規表現 (%s)"
-
-#, fuzzy, c-format
-#| msgid "Key \"%s\" unbound (context: \"%s\")"
-msgid "key \"%s\" in context \"%s\""
-msgstr "キー \"%s\" の割り当て解除 (コンテキスト: \"%s\")"
 
 #, c-format
 msgid ""
@@ -9981,7 +9997,7 @@ msgstr "チャンネルとトピックをリストアップ"
 msgid ""
 "[-server <server>] [<channel>[,<channel>...]] [<target>] || [-server "
 "<server>] [-raw *|<regex>] || -up|-down [<number>] || -left|-right "
-"[<percent>] || -go <line>|end || -join  || -export <filename>"
+"[<percent>] || -go <line>|end || -join || -export <filename>"
 msgstr "[-server <server>] [-re <regex>] [<channel>[,<channel>...]] [<target>]"
 
 msgid ""
@@ -12396,6 +12412,31 @@ msgstr ""
 msgid "server,message (message is the raw IRC message)"
 msgstr ""
 
+#, fuzzy
+#| msgid "get buffer pointer for an IRC server/channel/nick"
+msgid "get pointer to an IRC server"
+msgstr "ある IRC サーバ/チャンネル/ニックネームのバッファポインタを取得"
+
+#, fuzzy
+#| msgid "get buffer pointer for an IRC server/channel/nick"
+msgid "get pointer to an IRC channel"
+msgstr "ある IRC サーバ/チャンネル/ニックネームのバッファポインタを取得"
+
+#, fuzzy
+#| msgid "leave a channel"
+msgid "server,channel"
+msgstr "チャンネルから退出"
+
+#, fuzzy
+#| msgid "get buffer pointer for an IRC server/channel/nick"
+msgid "get pointer to an IRC nick"
+msgstr "ある IRC サーバ/チャンネル/ニックネームのバッファポインタを取得"
+
+#, fuzzy
+#| msgid "server,channel,nick (nick is optional)"
+msgid "server,channel,nick"
+msgstr "サーバ、チャンネル、ニックネーム (ニックネームは任意)"
+
 msgid "parse an IRC message"
 msgstr "IRC メッセージを解析"
 
@@ -13433,6 +13474,11 @@ msgstr "%s%s: サーバから切断"
 
 msgid "IRC (Internet Relay Chat) protocol"
 msgstr "IRC (インターネットリレーチャット) プロトコル"
+
+#, fuzzy, c-format
+#| msgid "%s%s: failed to rename trigger \"%s\""
+msgid "%s%s: failed to save upgrade data"
+msgstr "%s%s: トリガ \"%s\" の名前変更に失敗しました"
 
 #, fuzzy, c-format
 #| msgid ""
@@ -14879,17 +14925,17 @@ msgstr ""
 msgid "Actions (letter+enter):"
 msgstr "Actions (文字+enter):"
 
-msgid "  [D] Disconnect"
-msgstr "  [D] 切断"
+msgid "  [d] Disconnect"
+msgstr "  [d] 切断"
 
-msgid "  [R] Remove"
-msgstr "  [R] 削除"
+msgid "  [r] Remove"
+msgstr "  [r] 削除"
 
-msgid "  [P] Purge finished"
-msgstr "  [P] パージ完了"
+msgid "  [p] Purge finished"
+msgstr "  [p] パージ完了"
 
-msgid "  [Q] Close this buffer"
-msgstr "  [Q] バッファを閉じる"
+msgid "  [q] Close this buffer"
+msgstr "  [q] バッファを閉じる"
 
 #, c-format
 msgid "%s%s[%s%s%s%s] %s, received: %s, sent: %s"
@@ -17624,11 +17670,11 @@ msgstr ""
 msgid "Typing status of users"
 msgstr ""
 
-msgid "  [A] Accept"
-msgstr "  [A] 受け入れる"
+msgid "  [a] Accept"
+msgstr "  [a] 受け入れる"
 
-msgid "  [C] Cancel"
-msgstr "  [C] キャンセル"
+msgid "  [c] Cancel"
+msgstr "  [c] キャンセル"
 
 msgid "xfer chat"
 msgstr "xfer チャット"
