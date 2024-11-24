@@ -32,6 +32,7 @@
 - relay/api: reply HTTP 400 (Bad Request) when the body received is not a dict in websocket data
 - core: fix too many sorts of hotlist when buffers are moved ([#2097](https://github.com/weechat/weechat/issues/2097))
 - core: always send the signal "buffer_switch", even when the buffer is opening ([#2198](https://github.com/weechat/weechat/issues/2198))
+- core, plugins: abort upgrade immediately if any upgrade file fails to be written
 - core: reload all plugins with command `/plugin reload *`
 - relay, xfer: fix letters with actions displayed on top of buffer
 - lua: fix compilation on Fedora with Lua < 5.2.0 ([#2173](https://github.com/weechat/weechat/issues/2173), [#2174](https://github.com/weechat/weechat/issues/2174))
