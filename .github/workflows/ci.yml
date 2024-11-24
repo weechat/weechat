@@ -381,7 +381,8 @@ jobs:
           /usr/local/bin/python3.11 \
           /usr/local/bin/python3.11-config \
         ;
-        brew install asciidoctor aspell cjson guile lua pkg-config ruby
+        brew uninstall --ignore-dependencies --force pkg-config@0.29.2
+        brew install asciidoctor aspell cjson guile lua ruby
 
     - uses: actions/checkout@v4
 
