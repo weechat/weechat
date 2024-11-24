@@ -106,7 +106,8 @@ Exemples :
 == Authentification
 
 Le mot de passe doit être envoyé dans l'en-tête `Authorization` avec le schéma
-d'authentification `Basic`.
+d'authentification `Basic` ou l'en-tête `Sec-WebSocket-Protocol` (voir les
+détails ci-dessous).
 
 Le mot de passe peut être envoyé en clair ou haché, avec l'un des formats
 suivants pour l'utilisateur et le mot de passe :
@@ -140,8 +141,9 @@ Exemple :
   `hash:sha256:1706431066:dfa1db3f6bb6445d18d9ec7427c10f6421274e3a4751e6c1ffc7dd28c94eadf6` :
   `aGFzaDpzaGEyNTY6MTcwNjQzMTA2NjpkZmExZGIzZjZiYjY0NDVkMThkOWVjNzQyN2MxMGY2NDIxMjc0ZTNhNDc1MWU2YzFmZmM3ZGQyOGM5NGVhZGY2`.
 
-L'en-tête `Authorization` est autorisé dans la première requête avec le protocole
-websocket ou toute requête HTTP dans les autres cas.
+Les en-têtes `Authorization` et `Sec-WebSocket-Protocol` sont autorisés dans
+la première requête avec le protocole websocket ou toute requête HTTP dans
+les autres cas.
 
 Exemple de requête avec un mot de passe en clair :
 
@@ -265,6 +267,36 @@ HTTP/1.1 401 Unauthorized
 {
     "error": "Invalid TOTP"
 }
+----
+
+[[authentication_sec_websocket_protocol]]
+=== Sec-WebSocket-Protocol
+
+L'API WebSocket de JavaScript utilisée dans les navigateurs actuels ne supporte pas
+l'utilisation de l'en-tête `Authorization`. Il est donc aussi possible d'envoyer
+le mot de passe dans l'en-tête `Sec-WebSocket-Protocol`, qui est le seul en-tête
+utilisable avec cette API.
+
+Pour utiliser cet en-tête, vous devez spécifier les sous-protocoles `api.weechat`
+et `base64url.bearer.authorization.weechat.<auth>` où `<auth>` est la chaîne
+encodée en base64url avec le mot de passe, dans le même format que ci-dessus.
+
+Exemple avec un mot de passe `secret_password` en clair. Cela produit une chaîne
+encodée en base64url avec le contenu `plain:secret_password` qui est
+`cGxhaW46c2VjcmV0X3Bhc3N3b3Jk`.
+
+----
+Sec-WebSocket-Protocol: api.weechat, base64url.bearer.authorization.weechat.cGxhaW46c2VjcmV0X3Bhc3N3b3Jk
+----
+
+Cela peut être défini avec l'API WebSocket de JavaScript comme ceci :
+
+[source,javascript]
+----
+const ws = new WebSocket("wss://localhost:9000/api", [
+  "api.weechat",
+  "base64url.bearer.authorization.weechat.cGxhaW46c2VjcmV0X3Bhc3N3b3Jk",
+])
 ----
 
 [[compression]]
