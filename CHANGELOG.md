@@ -9,6 +9,7 @@
 - api: add property `hotlist_conditions` in function buffer_set
 - api: add support of flags in functions hook_signal_send and hook_hsignal_send
 - relay/api: allow array with multiple requests in websocket frame received from client
+- relay/api: support passing authentication in sub protocol header ([#2205](https://github.com/weechat/weechat/issues/2205))
 - core, plugins: simplify help on parameters that can be repeated in commands
 - core: add optional hook types in command `/debug hooks`
 - build: fix detection of Ruby on macOS 14, require CMake ≥ 3.18 ([#1156](https://github.com/weechat/weechat/issues/1156))
