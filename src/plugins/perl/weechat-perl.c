@@ -507,7 +507,9 @@ weechat_perl_load (const char *filename, const char *code)
     struct stat buf;
     char *perl_code;
     int length;
-#ifndef MULTIPLICITY
+#ifdef MULTIPLICITY
+    int wcwidth160;
+#else
     char pkgname[64];
 #endif /* MULTIPLICITY */
 
@@ -564,14 +566,22 @@ weechat_perl_load (const char *filename, const char *code)
               PERL_PLUGIN_NAME);
 
     PERL_SET_CONTEXT (perl_current_interpreter);
+    wcwidth160 = wcwidth (160);
     perl_construct (perl_current_interpreter);
+
+#if (PERL_REVISION == 5 && PERL_VERSION == 37 && PERL_SUBVERSION >= 5) || \
+    (PERL_REVISION == 5 && PERL_VERSION == 38) || \
+    (PERL_REVISION == 5 && PERL_VERSION == 39 && PERL_SUBVERSION < 2)
+    if (wcwidth (160) != wcwidth160)
+    {
+        /* restore the locale that's broken in some versions of Perl */
+        Perl_setlocale (LC_ALL, "");
+    }
+#endif
+
     temp_script.interpreter = (PerlInterpreter *) perl_current_interpreter;
     perl_parse (perl_current_interpreter, weechat_perl_api_init,
                 perl_args_count, perl_args, NULL);
-#if PERL_REVISION >= 6 || (PERL_REVISION == 5 && PERL_VERSION >= 38)
-    /* restore the locale that could be changed by Perl >= 5.38 */
-    Perl_setlocale (LC_ALL, "");
-#endif
     length = strlen (perl_weechat_code) + strlen (str_warning) +
         strlen (str_error) - 2 + 4 + strlen ((code) ? code : filename) + 4 + 1;
     perl_code = malloc (length);
@@ -1248,6 +1258,9 @@ int
 weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
     int old_perl_quiet;
+#ifndef MULTIPLICITY
+    int wcwidth160;
+#endif /* MULTIPLICITY */
 
 #ifdef PERL_SYS_INIT3
     int a;
@@ -1298,13 +1311,21 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
         return WEECHAT_RC_ERROR;
     }
 
+    wcwidth160 = wcwidth (160);
     perl_construct (perl_main);
+
+#if (PERL_REVISION == 5 && PERL_VERSION == 37 && PERL_SUBVERSION >= 5) || \
+    (PERL_REVISION == 5 && PERL_VERSION == 38) || \
+    (PERL_REVISION == 5 && PERL_VERSION == 39 && PERL_SUBVERSION < 2)
+    if (wcwidth (160) != wcwidth160)
+    {
+        /* restore the locale that's broken in some versions of Perl */
+        Perl_setlocale (LC_ALL, "");
+    }
+#endif
+
     perl_parse (perl_main, weechat_perl_api_init, perl_args_count,
                 perl_args, NULL);
-#if PERL_REVISION >= 6 || (PERL_REVISION == 5 && PERL_VERSION >= 38)
-    /* restore the locale that could be changed by Perl >= 5.38 */
-    Perl_setlocale (LC_ALL, "");
-#endif
 #endif /* MULTIPLICITY */
 
     perl_data.config_file = &perl_config_file;
