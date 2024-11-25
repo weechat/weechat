@@ -22,8 +22,17 @@
 
 #undef _
 
-#include <locale.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+
+/* for wcwidth in wchar.h */
+#ifndef __USE_XOPEN
+#define __USE_XOPEN
+#endif
 #include <wchar.h>
+
+#include <locale.h>
 #include <EXTERN.h>
 #include <perl.h>
 #include <XSUB.h>
