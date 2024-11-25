@@ -20,12 +20,6 @@
 #ifndef WEECHAT_UTF8_H
 #define WEECHAT_UTF8_H
 
-#ifndef __USE_XOPEN
-#define __USE_XOPEN
-#endif
-
-#include <wchar.h>
-
 extern int local_utf8;
 
 extern void utf8_init ();

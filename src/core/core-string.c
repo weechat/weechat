@@ -31,7 +31,6 @@
 #include <string.h>
 #include <ctype.h>
 #include <wctype.h>
-#include <wchar.h>
 #include <regex.h>
 #include <stdint.h>
 #include <gcrypt.h>

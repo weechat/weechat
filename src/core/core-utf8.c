@@ -20,12 +20,16 @@
  * along with WeeChat.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+/* for wcwidth in wchar.h */
+#define _XOPEN_SOURCE
+
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
 
 #include <stdlib.h>
 #include <string.h>
+#include <wchar.h>
 #include <wctype.h>
 
 #include "weechat.h"

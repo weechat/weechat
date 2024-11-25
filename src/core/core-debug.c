@@ -19,6 +19,9 @@
  * along with WeeChat.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+/* for wcwidth in wchar.h */
+#define _XOPEN_SOURCE
+
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
@@ -28,6 +31,7 @@
 #include <malloc.h>
 #endif
 #include <string.h>
+#include <wchar.h>
 #include <time.h>
 #include <sys/time.h>
 #include <gcrypt.h>
