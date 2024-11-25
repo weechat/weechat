@@ -4,6 +4,7 @@
 
 ### Fixed
 
+- script: fix crash on /script buffer when a filter is set ([#2214](https://github.com/weechat/weechat/issues/2214), [#2215](https://github.com/weechat/weechat/issues/2215))
 - core: fix too many sorts of hotlist when buffers are moved ([#2097](https://github.com/weechat/weechat/issues/2097))
 - relay, xfer: fix letters with actions displayed on top of buffer
 - build: fix detection of Ruby on macOS 14, require CMake ≥ 3.18 ([#1156](https://github.com/weechat/weechat/issues/1156))
