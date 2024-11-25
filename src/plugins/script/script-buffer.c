@@ -818,14 +818,19 @@ void
 script_buffer_set_current_line (int line)
 {
     int old_line;
+    struct t_script_repo *old_script;
 
     if ((line >= 0) && (line < script_repo_count_displayed))
     {
         old_line = script_buffer_selected_line;
         script_buffer_selected_line = line;
 
-        script_buffer_display_line_script (old_line,
-                                           script_repo_search_displayed_by_number (old_line));
+        old_script = script_repo_search_displayed_by_number (old_line);
+        if (old_script)
+        {
+            script_buffer_display_line_script (old_line, old_script);
+        }
+
         script_buffer_display_line_script (script_buffer_selected_line,
                                            script_repo_search_displayed_by_number (script_buffer_selected_line));
     }
