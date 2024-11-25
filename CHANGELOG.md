@@ -29,6 +29,7 @@
 - irc: decode IRC colors only when displaying messages in buffer, store nick info with IRC colors (host, account, real name)
 - irc: do not strip trailing spaces from incoming IRC messages
 - irc: fix crash on /list buffer when a filter is set ([#2197](https://github.com/weechat/weechat/issues/2197))
+- script: fix crash on /script buffer when a filter is set ([#2214](https://github.com/weechat/weechat/issues/2214), [#2215](https://github.com/weechat/weechat/issues/2215))
 - exec: fix unexpected execution of command with `/exec -o` when the command starts with two command chars ([#2199](https://github.com/weechat/weechat/issues/2199))
 - relay/api: fix empty nicklist in remote buffers after connection or reconnection
 - relay/api: reply HTTP 400 (Bad Request) when the body received is not a dict in websocket data
