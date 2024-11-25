@@ -37,7 +37,7 @@
 - core, plugins: abort upgrade immediately if any upgrade file fails to be written
 - core: reload all plugins with command `/plugin reload *`
 - relay, xfer: fix letters with actions displayed on top of buffer
-- perl: fix crash when unloading Perl scripts with Perl 5.38 ([#2209](https://github.com/weechat/weechat/issues/2209))
+- perl: fix crash when unloading Perl scripts with Perl 5.38 ([#2209](https://github.com/weechat/weechat/issues/2209), [#2213](https://github.com/weechat/weechat/issues/2213))
 - lua: fix compilation on Fedora with Lua < 5.2.0 ([#2173](https://github.com/weechat/weechat/issues/2173), [#2174](https://github.com/weechat/weechat/issues/2174))
 - core: fix build on Android ([#2180](https://github.com/weechat/weechat/issues/2180))
 
