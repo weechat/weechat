@@ -27,7 +27,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2024-11-24 10:07+0100\n"
-"PO-Revision-Date: 2024-11-21 09:23+0100\n"
+"PO-Revision-Date: 2024-11-26 10:42+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de_DE\n"
@@ -855,10 +855,11 @@ msgstr[1] "mal"
 msgid "WeeChat upgrades: none, started on %s"
 msgstr "WeeChat upgrades: keine, gestartet am %s"
 
-#, fuzzy, c-format
-#| msgid "%sUnable to save WeeChat session (files *.upgrade)"
+#, c-format
 msgid "%sUnable to save some plugin sessions (files *.upgrade)"
-msgstr "%sWeechat-Sitzung kann nicht gespeichert werden (Dateien *.upgrade)"
+msgstr ""
+"%sEinige Erweiterungssitzungen (Dateien *.upgrade) können nicht gespeichert "
+"werden"
 
 #, c-format
 msgid "%sUnable to save WeeChat session (files *.upgrade)"
@@ -877,7 +878,7 @@ msgstr ""
 
 #, c-format
 msgid "Check running hooks with command: %s"
-msgstr ""
+msgstr "Überprüfe laufende Hooks mit dem Befehl: %s"
 
 #, c-format
 msgid "%sCan't upgrade: WeeChat binary \"%s\" does not exist"
@@ -900,7 +901,7 @@ msgstr "Aktualisiere WeeChat mit Binärdatei \"%s\"...."
 
 #, c-format
 msgid "%sUpgrade aborted"
-msgstr ""
+msgstr "%sUpgrade abgebrochen"
 
 #, c-format
 msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
@@ -13976,10 +13977,9 @@ msgstr "%s%s: vom Server getrennt"
 msgid "IRC (Internet Relay Chat) protocol"
 msgstr "IRC (Internet Relay Chat) Protokoll"
 
-#, fuzzy, c-format
-#| msgid "%s%s: failed to rename trigger \"%s\""
+#, c-format
 msgid "%s%s: failed to save upgrade data"
-msgstr "%s%s: Trigger \"%s\" konnte nicht umbenannt werden"
+msgstr "%s%s: Fehler beim Speichern der Upgrade-Daten"
 
 #, c-format
 msgid ""
