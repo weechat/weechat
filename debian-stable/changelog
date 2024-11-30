@@ -1,3 +1,12 @@
+weechat (4.4.3-1) unstable; urgency=medium
+
+  * New upstream release
+  * Remove (fixed upstream) the fix for a possible privacy breach with html
+    documentation which includes stylesheets and fonts (font-awesome) hosted
+    on remote CDN (Cloudflare).
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Wed, 06 Nov 2024 21:27:08 +0000
+
 weechat (4.4.2-1) unstable; urgency=medium
 
   * New upstream release
