@@ -42,6 +42,16 @@
 - lua: fix compilation on Fedora with Lua < 5.2.0 ([#2173](https://github.com/weechat/weechat/issues/2173), [#2174](https://github.com/weechat/weechat/issues/2174))
 - core: fix build on Android ([#2180](https://github.com/weechat/weechat/issues/2180))
 
+## Version 4.4.4 (2024-11-30)
+
+### Fixed
+
+- script: fix crash on /script buffer when a filter is set ([#2214](https://github.com/weechat/weechat/issues/2214), [#2215](https://github.com/weechat/weechat/issues/2215))
+- core: fix too many sorts of hotlist when buffers are moved ([#2097](https://github.com/weechat/weechat/issues/2097))
+- relay, xfer: fix letters with actions displayed on top of buffer
+- build: fix detection of Ruby on macOS 14, require CMake ≥ 3.18 ([#1156](https://github.com/weechat/weechat/issues/1156))
+- perl: fix crash when unloading Perl scripts with Perl 5.38 ([#2209](https://github.com/weechat/weechat/issues/2209), [#2213](https://github.com/weechat/weechat/issues/2213))
+
 ## Version 4.4.3 (2024-10-30)
 
 ### Fixed
