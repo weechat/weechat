@@ -31,10 +31,13 @@
 #include <math.h>
 #include <gcrypt.h>
 
-#ifdef __ANDROID__
 /* Bring in htobe64 */
+#ifdef __ANDROID__
 #define _BSD_SOURCE
 #include <endian.h>
+#elif defined(__APPLE__)
+#include <libkern/OSByteOrder.h>
+#define htobe64 OSSwapHostToBigInt64
 #endif
 
 #include "weechat.h"
