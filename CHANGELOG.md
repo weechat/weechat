@@ -13,7 +13,8 @@
 - relay/api: combine request headers with the same name ([#2206](https://github.com/weechat/weechat/issues/2206))
 - core, plugins: simplify help on parameters that can be repeated in commands
 - core: add optional hook types in command `/debug hooks`
-- build: fix detection of Ruby on macOS 14, require CMake ≥ 3.18 ([#1156](https://github.com/weechat/weechat/issues/1156))
+- php: add detection of PHP 8.3 and 8.4
+- ruby: fix detection of Ruby on macOS 14, require CMake ≥ 3.18 ([#1156](https://github.com/weechat/weechat/issues/1156))
 - build: require Curl ≥ 7.47.0 ([#2195](https://github.com/weechat/weechat/issues/2195))
 - build: require GnuTLS ≥ 3.3.0 ([#2193](https://github.com/weechat/weechat/issues/2193))
 
