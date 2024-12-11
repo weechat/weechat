@@ -664,6 +664,126 @@ RELAY_API_PROTOCOL_CALLBACK(buffers)
 }
 
 /*
+ * Callback for resource "completion".
+ *
+ * Routes:
+ *   POST /api/completion
+ */
+
+RELAY_API_PROTOCOL_CALLBACK(completion)
+{
+    cJSON *json_response, *json_body;
+    cJSON *json_buffer_id, *json_buffer_name;
+    cJSON *json_data, *json_position;
+    const char *ptr_buffer_name, *ptr_data;
+    int position;
+    char str_id[64];
+    struct t_gui_completion *ptr_completion;
+    struct t_gui_buffer *ptr_buffer;
+
+    json_body = cJSON_Parse(client->http_req->body);
+    if (!json_body)
+        return RELAY_API_PROTOCOL_RC_BAD_REQUEST;
+
+    /* Get buffer either by ID or by name */
+    ptr_buffer = NULL;
+    json_buffer_id = cJSON_GetObjectItem(json_body, "buffer_id");
+    if (json_buffer_id)
+    {
+        if (cJSON_IsNumber(json_buffer_id))
+        {
+            snprintf(str_id, sizeof(str_id),
+                     "%lld", (long long)cJSON_GetNumberValue(json_buffer_id));
+            ptr_buffer = weechat_buffer_search("==id", str_id);
+            if (!ptr_buffer)
+            {
+                relay_api_msg_send_error_json(
+                    client,
+                    RELAY_HTTP_400_BAD_REQUEST, NULL,
+                    "Buffer \"%lld\" not found",
+                    (long long)cJSON_GetNumberValue(json_buffer_id));
+                cJSON_Delete(json_body);
+                return RELAY_API_PROTOCOL_RC_BAD_REQUEST;
+            }
+        }
+    }
+    else
+    {
+        json_buffer_name = cJSON_GetObjectItem(json_body, "buffer_name");
+        if (json_buffer_name)
+        {
+            if (cJSON_IsString(json_buffer_name))
+            {
+                ptr_buffer_name = cJSON_GetStringValue(json_buffer_name);
+                ptr_buffer = weechat_buffer_search("==", ptr_buffer_name);
+                if (!ptr_buffer)
+                {
+                    relay_api_msg_send_error_json(
+                        client,
+                        RELAY_HTTP_400_BAD_REQUEST, NULL,
+                        "Buffer \"%s\" not found",
+                        ptr_buffer_name);
+                    cJSON_Delete(json_body);
+                    return RELAY_API_PROTOCOL_RC_BAD_REQUEST;
+                }
+            }
+        }
+        else
+        {
+            ptr_buffer = weechat_buffer_search_main();
+        }
+    }
+    if (!ptr_buffer)
+    {
+        cJSON_Delete(json_body);
+        return RELAY_API_PROTOCOL_RC_BAD_REQUEST;
+    }
+
+    /* Get position and data from input json object*/
+    json_data = cJSON_GetObjectItem(json_body, "data");
+    if (json_data && cJSON_IsString(json_data)) {
+        ptr_data = cJSON_GetStringValue(json_data);
+    } else {
+        cJSON_Delete(json_body);
+        return RELAY_API_PROTOCOL_RC_BAD_REQUEST;
+    }
+    json_position = cJSON_GetObjectItem(json_body, "position");
+    if (json_position)
+    {
+        if (cJSON_IsNumber(json_position)) {
+        position = cJSON_GetNumberValue(json_position);
+        } else {
+            cJSON_Delete(json_body);
+            return RELAY_API_PROTOCOL_RC_BAD_REQUEST;
+        }
+    } else {
+        position = strlen(ptr_data);
+    }
+
+    /* perform completion */
+    ptr_completion = weechat_completion_new(ptr_buffer);
+    if (!ptr_completion) {
+        cJSON_Delete(json_body);
+        return RELAY_API_PROTOCOL_RC_BAD_REQUEST;
+    }
+
+    if (!weechat_completion_search(ptr_completion, ptr_data, position, 1)) {
+        weechat_completion_free(ptr_completion);
+        cJSON_Delete(json_body);
+        return RELAY_API_PROTOCOL_RC_BAD_REQUEST;
+    }
+
+    /* create response */
+    json_response = relay_api_msg_completion_to_json(ptr_completion);
+    relay_api_msg_send_json(client, RELAY_HTTP_200_OK, NULL, "completion", json_response);
+
+    cJSON_Delete(json_response);
+    cJSON_Delete(json_body);
+    weechat_completion_free(ptr_completion);
+    return RELAY_API_PROTOCOL_RC_OK;
+}
+
+/*
  * Callback for resource "hotlist".
  *
  * Routes:
@@ -726,7 +846,7 @@ RELAY_API_PROTOCOL_CALLBACK(input)
             {
                 relay_api_msg_send_error_json (
                     client,
-                    RELAY_HTTP_404_NOT_FOUND, NULL,
+                    RELAY_HTTP_400_BAD_REQUEST, NULL,
                     "Buffer \"%lld\" not found",
                     (long long)cJSON_GetNumberValue (json_buffer_id));
                 cJSON_Delete (json_body);
@@ -747,7 +867,7 @@ RELAY_API_PROTOCOL_CALLBACK(input)
                 {
                     relay_api_msg_send_error_json (
                         client,
-                        RELAY_HTTP_404_NOT_FOUND, NULL,
+                        RELAY_HTTP_400_BAD_REQUEST, NULL,
                         "Buffer \"%s\" not found",
                         ptr_buffer_name);
                     cJSON_Delete (json_body);
@@ -1062,16 +1182,17 @@ relay_api_protocol_recv_http (struct t_relay_client *client)
     int i, num_args;
     enum t_relay_api_protocol_rc return_code;
     struct t_relay_api_protocol_cb protocol_cb[] = {
-        /* method, resource, auth, min args, max args, callback */
-        { "OPTIONS", "*",         0, 0, -1, &relay_api_protocol_cb_options   },
-        { "POST",    "handshake", 0, 0,  0, &relay_api_protocol_cb_handshake },
-        { "GET",     "version",   1, 0,  0, &relay_api_protocol_cb_version   },
-        { "GET",     "buffers",   1, 0,  3, &relay_api_protocol_cb_buffers   },
-        { "GET",     "hotlist",   1, 0,  3, &relay_api_protocol_cb_hotlist   },
-        { "POST",    "input",     1, 0,  0, &relay_api_protocol_cb_input     },
-        { "POST",    "ping",      1, 0,  0, &relay_api_protocol_cb_ping      },
-        { "POST",    "sync",      1, 0,  0, &relay_api_protocol_cb_sync      },
-        { NULL,      NULL,        0, 0,  0, NULL                             },
+        /* method,   resource,     auth, min args, max args, callback */
+        { "OPTIONS", "*",          0,    0,        -1,       &relay_api_protocol_cb_options    },
+        { "POST",    "handshake",  0,    0,         0,       &relay_api_protocol_cb_handshake  },
+        { "GET",     "version",    1,    0,         0,       &relay_api_protocol_cb_version    },
+        { "GET",     "buffers",    1,    0,         3,       &relay_api_protocol_cb_buffers    },
+        { "GET",     "hotlist",    1,    0,         3,       &relay_api_protocol_cb_hotlist    },
+        { "POST",    "input",      1,    0,         0,       &relay_api_protocol_cb_input      },
+        { "POST",    "ping",       1,    0,         0,       &relay_api_protocol_cb_ping       },
+        { "POST",    "sync",       1,    0,         0,       &relay_api_protocol_cb_sync       },
+        { "POST",    "completion", 1,    0,         0,       &relay_api_protocol_cb_completion },
+        { NULL,      NULL,         0,    0,         0,       NULL                              },
     };
 
     if (!client->http_req || RELAY_STATUS_HAS_ENDED(client->status))
