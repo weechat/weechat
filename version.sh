@@ -39,8 +39,8 @@
 #     devel-number   the devel version as hex number ("0x04010000" for "4.1.0-dev")
 #
 
-weechat_stable="4.4.4"
-weechat_devel="4.5.0-dev"
+weechat_stable="4.5.0"
+weechat_devel="4.5.0"
 
 stable_major=$(echo "${weechat_stable}" | cut -d"." -f1)
 stable_minor=$(echo "${weechat_stable}" | cut -d"." -f2)
