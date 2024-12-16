@@ -1,5 +1,11 @@
 # WeeChat ChangeLog
 
+## Version 4.5.0 (under dev)
+
+### Added
+
+- core: add command `/pipe`
+
 ## Version 4.5.0 (2024-12-15)
 
 ### Changed

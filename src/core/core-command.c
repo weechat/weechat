@@ -4960,6 +4960,235 @@ COMMAND_CALLBACK(mute)
 }
 
 /*
+ * Opens a file in write mode to redirect messages.
+ *
+ * Returns a pointer to the file, NULL if error.
+ */
+
+FILE *
+command_pipe_open_file (const char *filename)
+{
+    char *filename2;
+    FILE *file;
+
+    filename2 = string_expand_home (filename);
+    if (!filename2)
+        return NULL;
+
+    file = fopen (filename2, "w");
+    if (!file)
+        return NULL;
+
+    fchmod (fileno (file), 0600);
+
+    free (filename2);
+
+    return file;
+}
+
+/*
+ * Callback for command "/pipe": redirect command output to a buffer or a file
+ */
+
+COMMAND_CALLBACK(pipe)
+{
+    const char *ptr_command, *ptr_filename, *ptr_hsignal;
+    const char *ptr_concat_separator, *ptr_strip_chars;
+    char *command, space[2] = " ", newline[2] = "\n";
+    int i, index_command, skip_empty_lines, send_to_buffer, no_locale, pipe_set;
+    struct t_gui_buffer *ptr_buffer;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+
+    if (argc < 2)
+    {
+        /* silently ignore missing arguments ("/pipe" does nothing) */
+        return WEECHAT_RC_OK;
+    }
+
+    index_command = 1;
+    send_to_buffer = 0;
+    no_locale = 0;
+    ptr_concat_separator = NULL;
+    ptr_strip_chars = NULL;
+    skip_empty_lines = 0;
+    ptr_buffer = NULL;
+    ptr_filename = NULL;
+    ptr_hsignal = NULL;
+    ptr_command = NULL;
+
+    for (i = 1; i < argc; i++)
+    {
+        if (string_strcmp (argv[i], "-concat") == 0)
+        {
+            COMMAND_MIN_ARGS(i + 2, argv[i]);
+            i++;
+            ptr_concat_separator = argv[i];
+            index_command = i + 1;
+        }
+        else if (string_strcmp (argv[i], "-strip") == 0)
+        {
+            COMMAND_MIN_ARGS(i + 2, argv[i]);
+            i++;
+            ptr_strip_chars = argv[i];
+            index_command = i + 1;
+        }
+        else if (string_strcmp (argv[i], "-skipempty") == 0)
+        {
+            skip_empty_lines = 1;
+            index_command = i + 1;
+        }
+        else if (string_strcmp (argv[i], "-c") == 0)
+        {
+            ptr_concat_separator = space;
+            ptr_strip_chars = space;
+            skip_empty_lines = 1;
+            index_command = i + 1;
+        }
+        else if (string_strcmp (argv[i], "-nl") == 0)
+        {
+            no_locale = 1;
+            index_command = i + 1;
+        }
+        else if (string_strcmp (argv[i], "-o") == 0)
+        {
+            send_to_buffer = 1;
+            index_command = i + 1;
+        }
+        else if (string_strcmp (argv[i], "-buffer") == 0)
+        {
+            COMMAND_MIN_ARGS(i + 2, argv[i]);
+            i++;
+            ptr_buffer = gui_buffer_search_by_full_name (argv[i]);
+            if (!ptr_buffer)
+            {
+                gui_chat_printf (NULL,
+                                 _("%sBuffer \"%s\" not found"),
+                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                 argv[i]);
+                return WEECHAT_RC_ERROR;
+            }
+            index_command = i + 1;
+        }
+        else if (string_strcmp (argv[i], "-file") == 0)
+        {
+            COMMAND_MIN_ARGS(i + 2, argv[i]);
+            i++;
+            ptr_filename = argv[i];
+            index_command = i + 1;
+        }
+        else if (string_strcmp (argv[i], "-hsignal") == 0)
+        {
+            COMMAND_MIN_ARGS(i + 2, argv[i]);
+            i++;
+            ptr_hsignal = argv[i];
+            index_command = i + 1;
+        }
+    }
+
+    if (index_command < argc)
+        ptr_command = argv_eol[index_command];
+
+    if (!ptr_command || !ptr_command[0])
+    {
+        /* silently ignore missing command */
+        return WEECHAT_RC_OK;
+    }
+
+    /* for hsignal, set default concat separator to newline if not set */
+    if (ptr_hsignal && !ptr_concat_separator)
+        ptr_concat_separator = newline;
+
+    /*
+     * when chaining /pipe command, only the first one (surrounding) wins;
+     * if buffer/file is already set, ignore it and just execute the command
+     * with the existing redirection
+     */
+    pipe_set = 0;
+    if (!gui_chat_pipe)
+    {
+        gui_chat_pipe_command = strdup (ptr_command);
+        if (ptr_filename)
+        {
+            gui_chat_pipe_file = command_pipe_open_file (ptr_filename);
+            if (!gui_chat_pipe_file)
+            {
+                gui_chat_printf (NULL,
+                                 _("%sUnable to open file \"%s\""),
+                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                 ptr_filename);
+                return WEECHAT_RC_ERROR;
+            }
+        }
+        else if (ptr_hsignal)
+        {
+            gui_chat_pipe_hsignal = strdup (ptr_hsignal);
+            if (!gui_chat_pipe_hsignal)
+                COMMAND_ERROR;
+        }
+        else
+        {
+            gui_chat_pipe_buffer = (ptr_buffer) ? ptr_buffer : buffer;
+            if (!gui_chat_pipe_buffer)
+                COMMAND_ERROR;
+            if (gui_chat_pipe_buffer->type != GUI_BUFFER_TYPE_FORMATTED)
+            {
+                gui_chat_printf (NULL,
+                                 _("%sCommand /pipe can only use buffers "
+                                   "with formatted content"),
+                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+                gui_chat_pipe_buffer = NULL;
+                return WEECHAT_RC_ERROR;
+            }
+        }
+        gui_chat_pipe_send_to_buffer = send_to_buffer;
+        if (ptr_concat_separator)
+        {
+            gui_chat_pipe_concat_lines = string_dyn_alloc (1024);
+            gui_chat_pipe_concat_sep = string_convert_escaped_chars (
+                ptr_concat_separator);
+        }
+        if (ptr_strip_chars)
+        {
+            gui_chat_pipe_strip_chars = string_convert_escaped_chars (
+                ptr_strip_chars);
+        }
+        gui_chat_pipe_skip_empty_lines = skip_empty_lines;
+        if (no_locale)
+            setlocale (LC_ALL, "C");
+        pipe_set = 1;
+        gui_chat_pipe = 1;
+    }
+
+    if (string_asprintf (
+            &command,
+            "%s%s",
+            (string_is_command_char (ptr_command)) ? "" : "/",
+            ptr_command) < 0)
+        COMMAND_ERROR;
+
+    (void) input_exec_command (
+        buffer,
+        1,  /* any_plugin */
+        NULL,  /* plugin */
+        command,
+        NULL);  /* commands_allowed */
+
+    free (command);
+
+    if (pipe_set)
+    {
+        gui_chat_pipe_end ();
+        if (no_locale)
+            setlocale (LC_ALL, "");
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Displays a list of loaded plugins.
  */
 
@@ -9074,7 +9303,7 @@ command_init ()
         NULL, "mute",
         N_("execute a command silently"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated */
-        N_("[-core | -current | -buffer <name>] <command>"),
+        N_("[-core|-current|-buffer <name>] <command>"),
         CMD_ARGS_DESC(
             N_("raw[-core]: no output on WeeChat core buffer"),
             N_("raw[-current]: no output on current buffer"),
@@ -9095,6 +9324,58 @@ command_init ()
         " || -buffer %(buffers_plugins_names) %(commands:/)|%*"
         " || %(commands:/)|%*",
         &command_mute, NULL, NULL);
+    hook_command (
+        NULL, "pipe",
+        N_("redirect command output to a buffer, a file or a hsignal"),
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated */
+        N_("[-buffer <name>|-file <filename>|-hsignal <name>] "
+           "[-concat <separator>] [-strip <chars>] [-skipempty] [-c] [-o] "
+           "[-g] [-nl] <command>"),
+        CMD_ARGS_DESC(
+            N_("raw[-buffer]: display command output on this buffer"),
+            N_("name: full buffer name (examples: \"core.weechat\", "
+               "\"irc.server.libera\", \"irc.libera.#weechat\")"),
+            N_("raw[-file]: write command output in this file"),
+            N_("raw[-hsignal]: send command output as hsignal "
+               "(keys: \"command\" and \"output\")"),
+            N_("raw[-o]: send command output to the buffer as input; "
+               "colors are stripped and commands are NOT executed "
+               "(used only with -buffer)"),
+            N_("raw[-concat]: concatenate all lines displayed using a separator; "
+               "chars can be escaped (example: \\x20 for space)"),
+            N_("raw[-strip]: strip chars from lines (beginning/end); "
+               "chars can be escaped (example: \\x20 for space)"),
+            N_("raw[-skipempty]: skip empty lines when lines are concatenated"),
+            N_("raw[-c]: alias for \"-concat \\x20 -strip \\x20 -skipempty\""),
+            N_("raw[-nl]: display messages in English during the command execution "
+               "(do not use the current locale)"),
+            N_("command: command to execute (a \"/\" is automatically added "
+               "if not found at beginning of command)"),
+            "",
+            N_("If no target is specified (\"-buffer\", \"-file\" or \"-hsignal\"), "
+               "then the command output is sent on the current buffer."),
+            "",
+            N_("Note: for commands that display messages in an asynchronous way "
+               "(like /exec and many IRC commands), the output will not be "
+               "caught by this command."),
+            N_("For example \"/pipe /whois nick\" will NOT redirect the answer "
+               "from IRC server to the current buffer."),
+            "",
+            N_("Examples:"),
+            N_("  write info about external libraries in a file:"),
+            AI("    /pipe -file /tmp/libs.txt /debug libs"),
+            N_("  send output of \"/debug libs\" as a single line on current channel:"),
+            AI("    /pipe -o -c /debug libs"),
+            N_("  display info about all buffers on current buffer:"),
+            AI("    /pipe /allbuf /eval /print ${buffer.full_name} -> "
+               "${buffer.number}. ${buffer.short_name} (${buffer})"),
+            N_("  send list of filters on current channel, in English:"),
+            AI("    /pipe -o -nl /filter")),
+        "-buffer %(buffers_plugins_names) %(commands:/)|%*"
+        " || -file %(filename) %(commands:/)|%*"
+        " || -hsignal %- %(commands:/)|%*"
+        " || -o %(commands:/)|%*",
+        &command_pipe, NULL, NULL);
     hook_command (
         NULL, "plugin",
         N_("list/load/unload plugins"),

@@ -331,6 +331,16 @@ TEST(CoreCommand, Mute)
 
 /*
  * Tests functions:
+ *   command_pipe
+ */
+
+TEST(CoreCommand, Pipe)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
  *   command_plugin
  */
 

@@ -21,6 +21,8 @@
 
 #include "CppUTest/TestHarness.h"
 
+#include "tests/tests.h"
+
 extern "C"
 {
 #include <string.h>
@@ -29,6 +31,8 @@ extern "C"
 #include "src/gui/gui-color.h"
 #include "src/gui/gui-line.h"
 #include "src/gui/gui-window.h"
+
+extern char *gui_chat_pipe_build_message (struct t_gui_line *line);
 }
 
 #define WEE_GET_WORD_INFO(__result_word_start_offset,                   \
@@ -402,6 +406,79 @@ TEST(GuiChat, ChangeTimeFormat)
  */
 
 TEST(GuiChat, BufferValid)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   gui_chat_pipe_build_message
+ */
+
+TEST(GuiChat, PipeBuildMessage)
+{
+    struct t_gui_line *line;
+    char *str;
+
+    WEE_TEST_STR(NULL, gui_chat_pipe_build_message (NULL));
+
+    line = gui_line_new (gui_buffers, -1, 0, 0, 0, 0, NULL, NULL, NULL);
+    WEE_TEST_STR("", gui_chat_pipe_build_message (line));
+    gui_line_free_data (line);
+    free (line);
+
+    line = gui_line_new (gui_buffers, -1, 0, 0, 0, 0, NULL, "nick", NULL);
+    WEE_TEST_STR("nick", gui_chat_pipe_build_message (line));
+    gui_line_free_data (line);
+    free (line);
+
+    line = gui_line_new (gui_buffers, -1, 0, 0, 0, 0, NULL, NULL, "the message");
+    WEE_TEST_STR("the message", gui_chat_pipe_build_message (line));
+    gui_line_free_data (line);
+    free (line);
+
+    line = gui_line_new (gui_buffers, -1, 0, 0, 0, 0, NULL, "prefix", "");
+    WEE_TEST_STR("prefix", gui_chat_pipe_build_message (line));
+    gui_line_free_data (line);
+    free (line);
+
+    line = gui_line_new (gui_buffers, -1, 0, 0, 0, 0, NULL, "", "the message");
+    WEE_TEST_STR("the message", gui_chat_pipe_build_message (line));
+    gui_line_free_data (line);
+    free (line);
+
+    line = gui_line_new (gui_buffers, -1, 0, 0, 0, 0, NULL, "prefix", "the message");
+    WEE_TEST_STR("prefix the message", gui_chat_pipe_build_message (line));
+    gui_line_free_data (line);
+    free (line);
+}
+
+/*
+ * Tests functions:
+ *   gui_chat_pipe_send_buffer_input
+ */
+
+TEST(GuiChat, PipeSendBufferInput)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   gui_chat_pipe_handle_line
+ */
+
+TEST(GuiChat, PipeHandleLine)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   gui_chat_pipe_end
+ */
+
+TEST(GuiChat, PipeEnd)
 {
     /* TODO: write tests */
 }

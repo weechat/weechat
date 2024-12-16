@@ -37,6 +37,7 @@
 #include "../core/core-eval.h"
 #include "../core/core-hashtable.h"
 #include "../core/core-hook.h"
+#include "../core/core-input.h"
 #include "../core/core-string.h"
 #include "../core/core-utf8.h"
 #include "../core/core-util.h"
@@ -59,6 +60,18 @@ struct t_gui_buffer *gui_chat_mute_buffer = NULL; /* mute buffer            */
 int gui_chat_display_tags = 0;                  /* display tags?            */
 char **gui_chat_lines_waiting_buffer = NULL;    /* lines waiting for core   */
                                                 /* buffer                   */
+
+/* command /pipe */
+int gui_chat_pipe = 0;                          /* pipe enabled             */
+char *gui_chat_pipe_command = NULL;             /* piped command            */
+struct t_gui_buffer *gui_chat_pipe_buffer = NULL;  /* pipe msgs to a buffer */
+int gui_chat_pipe_send_to_buffer = 0;           /* send as input to buffer  */
+FILE *gui_chat_pipe_file = NULL;                /* pipe msgs to a file      */
+char *gui_chat_pipe_hsignal = NULL;             /* pipe msgs to a hsignal   */
+char *gui_chat_pipe_concat_sep = NULL;          /* separator to concat lines*/
+char **gui_chat_pipe_concat_lines = NULL;       /* concatenated lines       */
+char *gui_chat_pipe_strip_chars = NULL;         /* chars to strip on lines  */
+int gui_chat_pipe_skip_empty_lines = 0;         /* skip empty lines         */
 
 
 /*
@@ -591,6 +604,205 @@ gui_chat_buffer_valid (struct t_gui_buffer *buffer,
 }
 
 /*
+ * Builds a message with a line: "<prefix> <message>" or "<message>" if there
+ * is no prefix. The colors are stripped from prefix and message.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+gui_chat_pipe_build_message (struct t_gui_line *line)
+{
+    char *prefix, *message, *data;
+
+    if (!line)
+        return NULL;
+
+    prefix = (line->data->prefix) ?
+        gui_color_decode (line->data->prefix, NULL) : strdup ("");
+    message = (line->data->message) ?
+        gui_color_decode (line->data->message, NULL) : strdup ("");
+
+    string_asprintf (&data,
+                     "%s%s%s",
+                     (prefix) ? prefix : "",
+                     (prefix && prefix[0] && message && message[0]) ? " " : "",
+                     (message) ? message : "");
+
+    free (prefix);
+    free (message);
+
+    return data;
+}
+
+/*
+ * Sends data to a buffer (command `/pipe -o`).
+ */
+
+void
+gui_chat_pipe_send_buffer_input (struct t_gui_buffer *buffer, const char *data)
+{
+    struct t_gui_buffer *buffer_saved;
+    int send_to_buffer_saved;
+
+    if (!buffer || !data)
+        return;
+
+    buffer_saved = gui_chat_pipe_buffer;
+    send_to_buffer_saved = gui_chat_pipe_send_to_buffer;
+
+    /* temporarily disable the pipe redirection, to prevent infinite loop */
+    gui_chat_pipe_buffer = NULL;
+    gui_chat_pipe_send_to_buffer = 0;
+
+    input_data (
+        buffer,
+        (data[0]) ? data : " ",
+        "-",  /* commands_allowed */
+        0,  /* split_newline */
+        0);  /* user_data */
+
+    /* restore pipe redirection */
+    gui_chat_pipe_buffer = buffer_saved;
+    gui_chat_pipe_send_to_buffer = send_to_buffer_saved;
+}
+
+/*
+ * Handles a redirection with /pipe command.
+ *
+ * Returns:
+ *   1: line has been handled and must NOT be displayed
+ *   0: line has NOT been handled and must be displayed
+ */
+
+int
+gui_chat_pipe_handle_line (struct t_gui_line *line)
+{
+    char *data, *data2;
+    int rc;
+
+    if (!line || !gui_chat_pipe)
+        return 0;
+
+    rc = 0;
+
+    data = gui_chat_pipe_build_message (line);
+    if (!data)
+        return 1;
+
+    if (gui_chat_pipe_concat_lines)
+    {
+        /*
+         * concatenate line with previous ones, it will be displayed, sent to
+         * buffer input or written to a file later
+         */
+        data2 = (gui_chat_pipe_strip_chars) ?
+            string_strip (data, 1, 1, gui_chat_pipe_strip_chars) : strdup (data);
+        if (data2 && (data2[0] || !gui_chat_pipe_skip_empty_lines))
+        {
+            if ((*gui_chat_pipe_concat_lines)[0])
+            {
+                string_dyn_concat (gui_chat_pipe_concat_lines,
+                                   gui_chat_pipe_concat_sep,
+                                   -1);
+            }
+            string_dyn_concat (gui_chat_pipe_concat_lines, data2, -1);
+        }
+        free (data2);
+        rc = 1;
+    }
+    else if (gui_chat_pipe_file)
+    {
+        /* pipe to a file */
+        fprintf (gui_chat_pipe_file, "%s\n", data);
+        rc = 1;
+    }
+    else if (gui_chat_pipe_buffer && gui_chat_pipe_send_to_buffer)
+    {
+        /* pipe to a buffer as input */
+        gui_chat_pipe_send_buffer_input (gui_chat_pipe_buffer, data);
+        rc = 1;
+    }
+
+    free (data);
+
+    return rc;
+}
+
+/*
+ * Ends pipe and flushes concatenated lines to a buffer or a file
+ * (if command `/pipe -g` was used).
+ */
+
+void
+gui_chat_pipe_end ()
+{
+    struct t_gui_buffer *pipe_buffer;
+    struct t_hashtable *hashtable;
+    int pipe_send_to_buffer;
+    FILE *pipe_file;
+
+    pipe_buffer = gui_chat_pipe_buffer;
+    pipe_send_to_buffer = gui_chat_pipe_send_to_buffer;
+    pipe_file = gui_chat_pipe_file;
+
+    gui_chat_pipe = 0;
+    gui_chat_pipe_buffer = NULL;
+    gui_chat_pipe_send_to_buffer = 0;
+    gui_chat_pipe_file = NULL;
+    free (gui_chat_pipe_concat_sep);
+    gui_chat_pipe_concat_sep = NULL;
+    free (gui_chat_pipe_strip_chars);
+    gui_chat_pipe_strip_chars = NULL;
+    gui_chat_pipe_skip_empty_lines = 0;
+
+    if (gui_chat_pipe_concat_lines)
+    {
+        if (pipe_file)
+        {
+            fprintf (pipe_file, "%s\n", *gui_chat_pipe_concat_lines);
+        }
+        else if (pipe_buffer)
+        {
+            if (pipe_send_to_buffer)
+            {
+                gui_chat_pipe_send_buffer_input (
+                    pipe_buffer,
+                    *gui_chat_pipe_concat_lines);
+            }
+            else
+            {
+                gui_chat_printf (pipe_buffer,
+                                 "%s", *gui_chat_pipe_concat_lines);
+            }
+        }
+        else if (gui_chat_pipe_hsignal)
+        {
+            hashtable = hashtable_new (32,
+                                       WEECHAT_HASHTABLE_STRING,
+                                       WEECHAT_HASHTABLE_STRING,
+                                       NULL, NULL);
+            if (hashtable)
+            {
+                hashtable_set (hashtable, "command", gui_chat_pipe_command);
+                hashtable_set (hashtable, "output", *gui_chat_pipe_concat_lines);
+                hook_hsignal_send (gui_chat_pipe_hsignal, hashtable);
+                hashtable_free (hashtable);
+            }
+        }
+        string_dyn_free (gui_chat_pipe_concat_lines, 1);
+        gui_chat_pipe_concat_lines = NULL;
+    }
+
+    if (pipe_file)
+        fclose (pipe_file);
+    free (gui_chat_pipe_command);
+    gui_chat_pipe_command = NULL;
+    free (gui_chat_pipe_hsignal);
+    gui_chat_pipe_hsignal = NULL;
+}
+
+/*
  * Displays a message in a buffer with optional date and tags.
  * This function is called internally by the function
  * gui_chat_printf_date_tags.
@@ -771,6 +983,12 @@ gui_chat_printf_datetime_tags_internal (struct t_gui_buffer *buffer,
         }
     }
 
+    if (gui_chat_pipe_handle_line (new_line))
+    {
+        /* line was handled with /pipe command, do NOT display it */
+        goto no_print;
+    }
+
     /* add line in the buffer */
     gui_line_add (new_line);
 
@@ -883,6 +1101,8 @@ gui_chat_printf_datetime_tags (struct t_gui_buffer *buffer,
 
     if (gui_init_ok)
     {
+        if (gui_chat_pipe_buffer)
+            buffer = gui_chat_pipe_buffer;
         if (!buffer)
             buffer = gui_buffer_search_main ();
         if (!gui_chat_buffer_valid (buffer, GUI_BUFFER_TYPE_FORMATTED))
