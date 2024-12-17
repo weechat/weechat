@@ -284,13 +284,7 @@ fifo_fd_cb (const void *pointer, void *data, int fd)
         ptr_buf = buffer;
         if (fifo_unterminated)
         {
-            buf2 = malloc (strlen (fifo_unterminated) +
-                           strlen (buffer) + 1);
-            if (buf2)
-            {
-                strcpy (buf2, fifo_unterminated);
-                strcat (buf2, buffer);
-            }
+            weechat_asprintf (&buf2, "%s%s", fifo_unterminated, buffer);
             ptr_buf = buf2;
             free (fifo_unterminated);
             fifo_unterminated = NULL;
