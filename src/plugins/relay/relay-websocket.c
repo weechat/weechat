@@ -405,7 +405,7 @@ relay_websocket_build_handshake (struct t_relay_http_request *request)
     char **extensions, **protocol_array, str_window_bits[128];
     char sec_websocket_extensions[1024];
     char sec_websocket_protocol[1024];
-    int i, length, hash_size, protocol_count;
+    int i, hash_size, protocol_count;
 
     if (!request)
         return NULL;
@@ -415,16 +415,12 @@ relay_websocket_build_handshake (struct t_relay_http_request *request)
     if (!sec_websocket_key || !sec_websocket_key[0])
         return NULL;
 
-    length = strlen (sec_websocket_key) + strlen (WEBSOCKET_GUID) + 1;
-    key = malloc (length);
-    if (!key)
-        return NULL;
-
     /*
      * concatenate header "Sec-WebSocket-Key" with the GUID
      * (globally unique identifier)
      */
-    snprintf (key, length, "%s%s", sec_websocket_key, WEBSOCKET_GUID);
+    if (weechat_asprintf (&key, "%s%s", sec_websocket_key, WEBSOCKET_GUID) < 0)
+        return NULL;
 
     /* compute 160-bit SHA1 on the key and encode it with base64 */
     if (!weechat_crypto_hash (key, strlen (key), "sha1", hash, &hash_size))

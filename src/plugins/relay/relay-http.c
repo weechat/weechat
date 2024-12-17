@@ -709,16 +709,14 @@ relay_http_get_auth_status (struct t_relay_client *client)
             rc = -3;
             goto end;
         }
-        length = strlen (totp_secret) + strlen (client_totp) + 16 + 1;
-        info_totp_args = malloc (length);
-        if (info_totp_args)
+        /* validate the TOTP received from the client */
+        if (weechat_asprintf (
+                &info_totp_args,
+                "%s,%s,0,%d",
+                totp_secret,  /* the shared secret */
+                client_totp,  /* the TOTP from client */
+                weechat_config_integer (relay_config_network_totp_window)) >= 0)
         {
-            /* validate the TOTP received from the client */
-            snprintf (info_totp_args, length,
-                      "%s,%s,0,%d",
-                      totp_secret,  /* the shared secret */
-                      client_totp,  /* the TOTP from client */
-                      weechat_config_integer (relay_config_network_totp_window));
             info_totp = weechat_info_get ("totp_validate", info_totp_args);
             totp_ok = (info_totp && (strcmp (info_totp, "1") == 0)) ?
                 1 : 0;
@@ -1324,7 +1322,7 @@ relay_http_send_error_json (struct t_relay_client *client,
                             const char *headers,
                             const char *format, ...)
 {
-    int num_bytes, length;
+    int num_bytes;
     char *error_msg, *json;
 
     if (!client || !message || !format)
@@ -1342,11 +1340,8 @@ relay_http_send_error_json (struct t_relay_client *client,
     if (!error_msg)
         goto end;
 
-    length = strlen (error_msg) + 64;
-    json = malloc (length);
-    if (!json)
+    if (weechat_asprintf (&json, "{\"error\": \"%s\"}", error_msg) < 0)
         goto end;
-    snprintf (json, length, "{\"error\": \"%s\"}", error_msg);
 
     num_bytes = relay_http_send_json (client, return_code, message, headers,
                                       json);

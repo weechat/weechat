@@ -363,7 +363,7 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(init)
 {
     char **options, *pos, *relay_password, *totp_secret;
     char *info_totp_args, *info_totp, **ptr_option;
-    int length, password_received, totp_received;
+    int password_received, totp_received;
 
     RELAY_WEECHAT_PROTOCOL_MIN_ARGS(0);
 
@@ -408,16 +408,14 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(init)
                     totp_received = 1;
                     if (totp_secret)
                     {
-                        length = strlen (totp_secret) + strlen (pos) + 16 + 1;
-                        info_totp_args = malloc (length);
-                        if (info_totp_args)
+                        /* validate the OTP received from the client */
+                        if (weechat_asprintf (
+                                &info_totp_args,
+                                "%s,%s,0,%d",
+                                totp_secret,  /* the shared secret */
+                                pos,          /* the OTP from client */
+                                weechat_config_integer (relay_config_network_totp_window)) >= 0)
                         {
-                            /* validate the OTP received from the client */
-                            snprintf (info_totp_args, length,
-                                      "%s,%s,0,%d",
-                                      totp_secret,  /* the shared secret */
-                                      pos,          /* the OTP from client */
-                                      weechat_config_integer (relay_config_network_totp_window));
                             info_totp = weechat_info_get ("totp_validate", info_totp_args);
                             if (info_totp && (strcmp (info_totp, "1") == 0))
                                 RELAY_WEECHAT_DATA(client, totp_ok) = 1;
