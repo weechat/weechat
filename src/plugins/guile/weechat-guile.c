@@ -120,7 +120,6 @@ weechat_guile_output_flush ()
 {
     const char *ptr_command;
     char *temp_buffer, *command;
-    int length;
 
     if (!(*guile_buffer_output)[0])
         return;
@@ -149,12 +148,11 @@ weechat_guile_output_flush ()
             }
             else
             {
-                length = 1 + strlen (temp_buffer) + 1;
-                command = malloc (length);
-                if (command)
+                if (weechat_asprintf (&command,
+                                      "%c%s",
+                                      temp_buffer[0],
+                                      temp_buffer) >= 0)
                 {
-                    snprintf (command, length, "%c%s",
-                              temp_buffer[0], temp_buffer);
                     weechat_command (guile_eval_buffer,
                                      (command[0]) ? command : " ");
                     free (command);
