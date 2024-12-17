@@ -290,7 +290,6 @@ weechat_python_output_flush ()
 {
     const char *ptr_command;
     char *temp_buffer, *command;
-    int length;
 
     if (!(*python_buffer_output)[0])
         return;
@@ -319,12 +318,11 @@ weechat_python_output_flush ()
             }
             else
             {
-                length = 1 + strlen (temp_buffer) + 1;
-                command = malloc (length);
-                if (command)
+                if (weechat_asprintf (&command,
+                                      "%c%s",
+                                      temp_buffer[0],
+                                      temp_buffer) >= 0)
                 {
-                    snprintf (command, length, "%c%s",
-                              temp_buffer[0], temp_buffer);
                     weechat_command (python_eval_buffer,
                                      (command[0]) ? command : " ");
                     free (command);
@@ -694,7 +692,6 @@ weechat_python_load (const char *filename, const char *code)
     PyObject *python_path, *path, *module_main, *globals, *rc;
     char *weechat_sharedir, *weechat_data_dir;
     char *str_sharedir, *str_home;
-    int len;
 
     fp = NULL;
 
@@ -742,11 +739,11 @@ weechat_python_load (const char *filename, const char *code)
     weechat_sharedir = weechat_info_get ("weechat_sharedir", "");
     if (weechat_sharedir)
     {
-        len = strlen (weechat_sharedir) + 1 + strlen (PYTHON_PLUGIN_NAME) + 1;
-        str_sharedir = malloc (len);
-        if (str_sharedir)
+        if (weechat_asprintf (&str_sharedir,
+                              "%s/%s",
+                              weechat_sharedir,
+                              PYTHON_PLUGIN_NAME) >= 0)
         {
-            snprintf (str_sharedir, len, "%s/python", weechat_sharedir);
             path = PyUnicode_FromString (str_sharedir);
             if (path != NULL)
             {
@@ -762,11 +759,11 @@ weechat_python_load (const char *filename, const char *code)
     weechat_data_dir = weechat_info_get ("weechat_data_dir", "");
     if (weechat_data_dir)
     {
-        len = strlen (weechat_data_dir) + 1 + strlen (PYTHON_PLUGIN_NAME) + 1;
-        str_home = malloc (len);
-        if (str_home)
+        if (weechat_asprintf (&str_home,
+                              "%s/%s",
+                              weechat_data_dir,
+                              PYTHON_PLUGIN_NAME) >= 0)
         {
-            snprintf (str_home, len, "%s/python", weechat_data_dir);
             path = PyUnicode_FromString (str_home);
             if (path != NULL)
             {
