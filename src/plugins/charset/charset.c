@@ -482,7 +482,6 @@ charset_command_cb (const void *pointer, void *data,
                     char **argv, char **argv_eol)
 {
     struct t_config_section *ptr_section;
-    int length;
     char *ptr_charset, *option_name;
     const char *plugin_name, *name, *charset_modifier;
 
@@ -504,15 +503,13 @@ charset_command_cb (const void *pointer, void *data,
     charset_modifier = weechat_buffer_get_string (buffer,
                                                   "localvar_charset_modifier");
     if (charset_modifier)
+    {
         option_name = strdup (charset_modifier);
+    }
     else
     {
-        length = strlen (plugin_name) + 1 + strlen (name) + 1;
-        option_name = malloc (length);
-        if (!option_name)
+        if (weechat_asprintf (&option_name, "%s.%s", plugin_name, name) < 0)
             WEECHAT_COMMAND_ERROR;
-
-        snprintf (option_name, length, "%s.%s", plugin_name, name);
     }
 
     if (weechat_strcmp (argv[1], "reset") == 0)
