@@ -5086,6 +5086,8 @@ COMMAND_CALLBACK(pipe)
             ptr_hsignal = argv[i];
             index_command = i + 1;
         }
+        else
+            break;
     }
 
     if (index_command < argc)
