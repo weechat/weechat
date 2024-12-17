@@ -202,7 +202,6 @@ logger_build_option_name (struct t_gui_buffer *buffer)
 {
     const char *plugin_name, *name;
     char *option_name;
-    int length;
 
     if (!buffer)
         return NULL;
@@ -210,12 +209,7 @@ logger_build_option_name (struct t_gui_buffer *buffer)
     plugin_name = weechat_buffer_get_string (buffer, "plugin");
     name = weechat_buffer_get_string (buffer, "name");
 
-    length = strlen (plugin_name) + 1 + strlen (name) + 1;
-    option_name = malloc (length);
-    if (!option_name)
-        return NULL;
-
-    snprintf (option_name, length, "%s.%s", plugin_name, name);
+    weechat_asprintf (&option_name, "%s.%s", plugin_name, name);
 
     return option_name;
 }
@@ -450,7 +444,6 @@ logger_get_filename (struct t_gui_buffer *buffer)
 {
     char *res, *mask_expanded, *file_path, *dir_separator;
     const char *mask;
-    int length;
 
     res = NULL;
     mask_expanded = NULL;
@@ -483,16 +476,12 @@ logger_get_filename (struct t_gui_buffer *buffer)
         goto end;
 
     /* build string with path + mask */
-    length = strlen (file_path) + strlen (dir_separator) +
-        strlen (mask_expanded) + 1;
-    res = malloc (length);
-    if (res)
-    {
-        snprintf (res, length, "%s%s%s",
-                  file_path,
-                  (file_path[strlen (file_path) - 1] == dir_separator[0]) ? "" : dir_separator,
-                  mask_expanded);
-    }
+    weechat_asprintf (
+        &res,
+        "%s%s%s",
+        file_path,
+        (file_path[strlen (file_path) - 1] == dir_separator[0]) ? "" : dir_separator,
+        mask_expanded);
 
 end:
     free (dir_separator);
