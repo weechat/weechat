@@ -442,7 +442,7 @@ script_action_run_autoload (const char *name, int quiet, int autoload)
 {
     struct t_script_repo *ptr_script;
     char *pos, str_signal[256], *weechat_data_dir, *filename;
-    int language, length, script_found, script_autoloaded;
+    int language, script_found, script_autoloaded;
     struct stat st;
 
     /* find script language */
@@ -465,27 +465,30 @@ script_action_run_autoload (const char *name, int quiet, int autoload)
     script_found = 0;
     script_autoloaded = 0;
     weechat_data_dir = weechat_info_get ("weechat_data_dir", NULL);
-    length = strlen (weechat_data_dir) + strlen (name) + 64;
-    filename = malloc (length);
-    if (filename)
+
+    if (weechat_asprintf (&filename,
+                          "%s/%s/%s",
+                          weechat_data_dir,
+                          script_language[language],
+                          name) >= 0)
     {
         /* check if script exists */
-        snprintf (filename, length, "%s/%s/%s",
-                  weechat_data_dir,
-                  script_language[language],
-                  name);
         if (stat (filename, &st) == 0)
             script_found = 1;
 
-        /* check if script is autoloaded */
-        snprintf (filename, length, "%s/%s/autoload/%s",
-                  weechat_data_dir,
-                  script_language[language],
-                  name);
-        if (stat (filename, &st) == 0)
-            script_autoloaded = 1;
-
         free (filename);
+
+        if (weechat_asprintf (&filename,
+                              "%s/%s/autoload/%s",
+                              weechat_data_dir,
+                              script_language[language],
+                              name) >= 0)
+        {
+            /* check if script is autoloaded */
+            if (stat (filename, &st) == 0)
+                script_autoloaded = 1;
+            free (filename);
+        }
     }
 
     free (weechat_data_dir);
@@ -506,15 +509,13 @@ script_action_run_autoload (const char *name, int quiet, int autoload)
         autoload = (script_autoloaded) ? 0 : 1;
 
     /* ask plugin to autoload (or not) script */
-    length = 16 + strlen (name) + 1;
-    filename = malloc (length);
-    if (filename)
+    if (weechat_asprintf (
+            &filename,
+            "%s%s%s",
+            (quiet && weechat_config_boolean (script_config_look_quiet_actions)) ? "-q " : "",
+            (autoload) ? "-a " : "",
+            name) >= 0)
     {
-        snprintf (filename, length,
-                  "%s%s%s",
-                  (quiet && weechat_config_boolean (script_config_look_quiet_actions)) ? "-q " : "",
-                  (autoload) ? "-a " : "",
-                  name);
         snprintf (str_signal, sizeof (str_signal),
                   "%s_script_autoload",
                   script_language[language]);
@@ -567,7 +568,7 @@ script_action_install_url_cb (const void *pointer, void *data,
 {
     const char *pos_name, *ptr_error;
     char *filename, *filename2, str_signal[256];
-    int quiet, auto_load, length;
+    int quiet, auto_load;
     struct t_script_repo *ptr_script;
 
     /* make C compiler happy */
@@ -606,23 +607,22 @@ script_action_install_url_cb (const void *pointer, void *data,
     if (!filename)
         return WEECHAT_RC_OK;
 
-    length = 16 + strlen (filename) + 1;
-    filename2 = malloc (length);
-    if (!filename2)
+    if (ptr_script->status & SCRIPT_STATUS_INSTALLED)
+        auto_load = (ptr_script->status & SCRIPT_STATUS_AUTOLOADED) ? 1 : 0;
+    else
+        auto_load = weechat_config_boolean (script_config_scripts_autoload);
+
+    if (weechat_asprintf (
+            &filename2,
+            "%s%s%s",
+            (quiet && weechat_config_boolean (script_config_look_quiet_actions)) ? "-q " : "",
+            (auto_load) ? "-a " : "",
+            filename) < 0)
     {
         free (filename);
         return WEECHAT_RC_OK;
     }
 
-    if (ptr_script->status & SCRIPT_STATUS_INSTALLED)
-        auto_load = (ptr_script->status & SCRIPT_STATUS_AUTOLOADED) ? 1 : 0;
-    else
-        auto_load = weechat_config_boolean (script_config_scripts_autoload);
-    snprintf (filename2, length,
-              "%s%s%s",
-              (quiet && weechat_config_boolean (script_config_look_quiet_actions)) ? "-q " : "",
-              (auto_load) ? "-a " : "",
-              filename);
     snprintf (str_signal, sizeof (str_signal),
               "%s_script_install",
               script_language[ptr_script->language]);
@@ -751,7 +751,6 @@ script_action_run_remove (const char *name, int quiet)
 {
     struct t_script_repo *ptr_script;
     char str_signal[256], *filename;
-    int length;
 
     ptr_script = script_repo_search_by_name_ext (name);
     if (!ptr_script)
@@ -802,14 +801,12 @@ script_action_run_remove (const char *name, int quiet)
     }
 
     /* ask plugin to remove script */
-    length = 3 + strlen (ptr_script->name_with_extension) + 1;
-    filename = malloc (length);
-    if (filename)
+    if (weechat_asprintf (
+            &filename,
+            "%s%s",
+            (quiet && weechat_config_boolean (script_config_look_quiet_actions)) ? "-q " : "",
+            ptr_script->name_with_extension) >= 0)
     {
-        snprintf (filename, length,
-                  "%s%s",
-                  (quiet && weechat_config_boolean (script_config_look_quiet_actions)) ? "-q " : "",
-                  ptr_script->name_with_extension);
         snprintf (str_signal, sizeof (str_signal),
                   "%s_script_remove",
                   script_language[ptr_script->language]);
@@ -1084,17 +1081,12 @@ script_action_show_source_url_cb (const void *pointer, void *data,
         filename_loaded = script_repo_get_filename_loaded (ptr_script);
         if (filename_loaded)
         {
-            length = strlen (ptr_diff_command) + 1
-                + strlen (filename_loaded) + 1
-                + strlen (filename) + 1;
-            diff_command = malloc (length);
-            if (diff_command)
+            if (weechat_asprintf (&diff_command,
+                                  "%s %s %s",
+                                  ptr_diff_command,
+                                  filename_loaded,
+                                  filename) >= 0)
             {
-                snprintf (diff_command, length,
-                          "%s %s %s",
-                          ptr_diff_command,
-                          filename_loaded,
-                          filename);
                 script_buffer_detail_script_last_line++;
                 script_buffer_detail_script_line_diff = script_buffer_detail_script_last_line;
                 weechat_printf_y (script_buffer,

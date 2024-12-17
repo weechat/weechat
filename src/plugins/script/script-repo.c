@@ -1107,7 +1107,7 @@ script_repo_file_read (int quiet)
     const char *ptr_desc;
     gzFile file;
     struct t_script_repo *script;
-    int version_number, version_ok, script_ok, length;
+    int version_number, version_ok, script_ok;
     struct tm tm_script;
     struct t_hashtable *descriptions;
 
@@ -1237,17 +1237,10 @@ script_repo_file_read (int quiet)
                             if (ptr_desc)
                             {
                                 script->description = strdup (ptr_desc);
-                                length = strlen (script->name) + 1 +
-                                    strlen (script_extension[script->language]) + 1;
-                                script->name_with_extension = malloc (length);
-                                if (script->name_with_extension)
-                                {
-                                    snprintf (script->name_with_extension,
-                                              length,
-                                              "%s.%s",
-                                              script->name,
-                                              script_extension[script->language]);
-                                }
+                                weechat_asprintf (&script->name_with_extension,
+                                                  "%s.%s",
+                                                  script->name,
+                                                  script_extension[script->language]);
                                 script_repo_update_status (script);
                                 script->displayed = (script_repo_match_filter (script));
                                 script_repo_add (script);

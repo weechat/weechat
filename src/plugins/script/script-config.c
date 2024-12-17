@@ -162,7 +162,6 @@ char *
 script_config_get_xml_filename ()
 {
     char *path, *filename;
-    int length;
     struct t_hashtable *options;
 
     options = weechat_hashtable_new (
@@ -175,10 +174,7 @@ script_config_get_xml_filename ()
     path = weechat_string_eval_path_home (
         weechat_config_string (script_config_scripts_path), NULL, NULL, options);
     weechat_hashtable_free (options);
-    length = strlen (path) + 64;
-    filename = malloc (length);
-    if (filename)
-        snprintf (filename, length, "%s/plugins.xml.gz", path);
+    weechat_asprintf (&filename, "%s/plugins.xml.gz", path);
     free (path);
     return filename;
 }
@@ -195,7 +191,6 @@ script_config_get_script_download_filename (struct t_script_repo *script,
                                             const char *suffix)
 {
     char *path, *filename;
-    int length;
     struct t_hashtable *options;
 
     options = weechat_hashtable_new (
@@ -208,17 +203,11 @@ script_config_get_script_download_filename (struct t_script_repo *script,
     path = weechat_string_eval_path_home (
         weechat_config_string (script_config_scripts_path), NULL, NULL, options);
     weechat_hashtable_free (options);
-    length = strlen (path) + 1 + strlen (script->name_with_extension)
-        + ((suffix) ? strlen (suffix) : 0) + 1;
-    filename = malloc (length);
-    if (filename)
-    {
-        snprintf (filename, length,
-                  "%s/%s%s",
-                  path,
-                  script->name_with_extension,
-                  (suffix) ? suffix : "");
-    }
+    weechat_asprintf (&filename,
+                      "%s/%s%s",
+                      path,
+                      script->name_with_extension,
+                      (suffix) ? suffix : "");
     free (path);
     return filename;
 }
@@ -307,45 +296,42 @@ script_config_change_hold_cb (const void *pointer, void *data,
 void
 script_config_hold (const char *name_with_extension)
 {
-    char **items, *hold;
-    int num_items, i, length;
+    char **items, **hold;
+    int num_items, i;
 
-    length = strlen (weechat_config_string (script_config_scripts_hold)) +
-        1 + strlen (name_with_extension) + 1;
-    hold = malloc (length);
-    if (hold)
+    hold = weechat_string_dyn_alloc (256);
+    if (!hold)
+        return;
+
+    items = weechat_string_split (
+        weechat_config_string (script_config_scripts_hold),
+        ",",
+        NULL,
+        WEECHAT_STRING_SPLIT_STRIP_LEFT
+        | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+        | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+        0,
+        &num_items);
+    if (items)
     {
-        hold[0] = '\0';
-        items = weechat_string_split (
-            weechat_config_string (script_config_scripts_hold),
-            ",",
-            NULL,
-            WEECHAT_STRING_SPLIT_STRIP_LEFT
-            | WEECHAT_STRING_SPLIT_STRIP_RIGHT
-            | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
-            0,
-            &num_items);
-        if (items)
+        for (i = 0; i < num_items; i++)
         {
-            for (i = 0; i < num_items; i++)
+            if (strcmp (items[i], name_with_extension) != 0)
             {
-                if (strcmp (items[i], name_with_extension) != 0)
-                {
-                    if (hold[0])
-                        strcat (hold, ",");
-                    strcat (hold, items[i]);
-                }
+                if ((*hold)[0])
+                    weechat_string_dyn_concat (hold, ",", -1);
+                weechat_string_dyn_concat (hold, items[i], -1);
             }
-            weechat_string_free_split (items);
         }
-        if (hold[0])
-            strcat (hold, ",");
-        strcat (hold, name_with_extension);
-
-        weechat_config_option_set (script_config_scripts_hold, hold, 0);
-
-        free (hold);
+        weechat_string_free_split (items);
     }
+    if ((*hold)[0])
+        weechat_string_dyn_concat (hold, ",", -1);
+    weechat_string_dyn_concat (hold, name_with_extension, -1);
+
+    weechat_config_option_set (script_config_scripts_hold, *hold, 0);
+
+    weechat_string_dyn_free (hold, 1);
 }
 
 /*
@@ -358,41 +344,39 @@ script_config_hold (const char *name_with_extension)
 void
 script_config_unhold (const char *name_with_extension)
 {
-    char **items, *hold;
-    int num_items, i, length;
+    char **items, **hold;
+    int num_items, i;
 
-    length = strlen (weechat_config_string (script_config_scripts_hold)) + 1;
-    hold = malloc (length);
-    if (hold)
+    hold = weechat_string_dyn_alloc (256);
+    if (!hold)
+        return;
+
+    items = weechat_string_split (
+        weechat_config_string (script_config_scripts_hold),
+        ",",
+        NULL,
+        WEECHAT_STRING_SPLIT_STRIP_LEFT
+        | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+        | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+        0,
+        &num_items);
+    if (items)
     {
-        hold[0] = '\0';
-        items = weechat_string_split (
-            weechat_config_string (script_config_scripts_hold),
-            ",",
-            NULL,
-            WEECHAT_STRING_SPLIT_STRIP_LEFT
-            | WEECHAT_STRING_SPLIT_STRIP_RIGHT
-            | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
-            0,
-            &num_items);
-        if (items)
+        for (i = 0; i < num_items; i++)
         {
-            for (i = 0; i < num_items; i++)
+            if (strcmp (items[i], name_with_extension) != 0)
             {
-                if (strcmp (items[i], name_with_extension) != 0)
-                {
-                    if (hold[0])
-                        strcat (hold, ",");
-                    strcat (hold, items[i]);
-                }
+                if ((*hold)[0])
+                    weechat_string_dyn_concat (hold, ",", -1);
+                weechat_string_dyn_concat (hold, items[i], -1);
             }
-            weechat_string_free_split (items);
         }
-
-        weechat_config_option_set (script_config_scripts_hold, hold, 0);
-
-        free (hold);
+        weechat_string_free_split (items);
     }
+
+    weechat_config_option_set (script_config_scripts_hold, *hold, 0);
+
+    weechat_string_dyn_free (hold, 1);
 }
 
 /*
