@@ -656,7 +656,7 @@ exec_command_exec (const void *pointer, void *data,
                    struct t_gui_buffer *buffer, int argc,
                    char **argv, char **argv_eol)
 {
-    int i, length, count;
+    int i, count;
     char *text;
     struct t_exec_cmd *ptr_exec_cmd, *ptr_next_exec_cmd;
 
@@ -680,11 +680,8 @@ exec_command_exec (const void *pointer, void *data,
         ptr_exec_cmd = exec_command_search_running_id (argv[2]);
         if (ptr_exec_cmd && ptr_exec_cmd->hook)
         {
-            length = strlen (argv_eol[3]) + 1 + 1;
-            text = malloc (length);
-            if (text)
+            if (weechat_asprintf (&text, "%s\n", argv_eol[3]) >= 0)
             {
-                snprintf (text, length, "%s\n", argv_eol[3]);
                 weechat_hook_set (ptr_exec_cmd->hook, "stdin", text);
                 free (text);
             }
@@ -701,11 +698,8 @@ exec_command_exec (const void *pointer, void *data,
         {
             if (argc > 3)
             {
-                length = strlen (argv_eol[3]) + 1 + 1;
-                text = malloc (length);
-                if (text)
+                if (weechat_asprintf (&text, "%s\n", argv_eol[3]) >= 0)
                 {
-                    snprintf (text, length, "%s\n", argv_eol[3]);
                     weechat_hook_set (ptr_exec_cmd->hook, "stdin", text);
                     free (text);
                 }

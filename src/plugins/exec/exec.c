@@ -244,7 +244,6 @@ exec_display_line (struct t_exec_cmd *exec_cmd, struct t_gui_buffer *buffer,
 {
     struct t_hashtable *options;
     char *line_color, *line2, str_number[32], str_tags[1024];
-    int length;
 
     if (!exec_cmd || !line)
         return;
@@ -293,12 +292,11 @@ exec_display_line (struct t_exec_cmd *exec_cmd, struct t_gui_buffer *buffer,
         else
         {
             /* add line at the end of command, after a space */
-            length = strlen (exec_cmd->pipe_command) + 1 + strlen (line_color) + 1;
-            line2 = malloc (length);
-            if (line2)
+            if (weechat_asprintf (&line2,
+                                  "%s %s",
+                                  exec_cmd->pipe_command,
+                                  line_color) >= 0)
             {
-                snprintf (line2, length,
-                          "%s %s", exec_cmd->pipe_command, line_color);
                 weechat_command_options (buffer, line2, options);
                 free (line2);
             }
@@ -310,12 +308,11 @@ exec_display_line (struct t_exec_cmd *exec_cmd, struct t_gui_buffer *buffer,
             weechat_hashtable_set (options, "commands", "-");
         if (exec_cmd->line_numbers)
         {
-            length = 32 + strlen (line_color) + 1;
-            line2 = malloc (length);
-            if (line2)
+            if (weechat_asprintf (&line2,
+                                  "%d. %s",
+                                  exec_cmd->output_line_nb,
+                                  line_color) >= 0)
             {
-                snprintf (line2, length,
-                          "%d. %s", exec_cmd->output_line_nb, line_color);
                 weechat_command_options (buffer, line2, options);
                 free (line2);
             }
