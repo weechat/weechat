@@ -201,8 +201,7 @@ config_file_new (struct t_weechat_plugin *plugin, const char *name,
 {
     struct t_config_file *new_config_file;
     const char *ptr_name;
-    char *filename;
-    int priority, length;
+    int priority;
 
     string_get_priority_and_name (name, &priority, &ptr_name,
                                   CONFIG_PRIORITY_DEFAULT);
@@ -225,16 +224,7 @@ config_file_new (struct t_weechat_plugin *plugin, const char *name,
             free (new_config_file);
             return NULL;
         }
-        new_config_file->filename = NULL;
-        length = strlen (ptr_name) + 8 + 1;
-        filename = malloc (length);
-        if (filename)
-        {
-            snprintf (filename, length, "%s.conf", ptr_name);
-            new_config_file->filename = strdup (filename);
-            free (filename);
-        }
-        if (!new_config_file->filename)
+        if (string_asprintf (&new_config_file->filename, "%s.conf", ptr_name) < 0)
         {
             free (new_config_file->name);
             free (new_config_file);
@@ -501,23 +491,16 @@ config_file_search_section (struct t_config_file *config_file,
 char *
 config_file_option_full_name (struct t_config_option *option)
 {
-    int length_option;
     char *option_full_name;
 
     if (!option)
         return NULL;
 
-    length_option = strlen (option->config_file->name) + 1 +
-        strlen (option->section->name) + 1 + strlen (option->name) + 1;
-    option_full_name = malloc (length_option);
-    if (option_full_name)
-    {
-        snprintf (option_full_name, length_option,
-                  "%s.%s.%s",
-                  option->config_file->name,
-                  option->section->name,
-                  option->name);
-    }
+    string_asprintf (&option_full_name,
+                     "%s.%s.%s",
+                     option->config_file->name,
+                     option->section->name,
+                     option->name);
 
     return option_full_name;
 }
@@ -2373,7 +2356,7 @@ config_file_option_value_to_string (struct t_config_option *option,
 {
     char *value;
     const char *ptr_value;
-    int enabled, length;
+    int enabled;
 
     if (!option)
         return NULL;
@@ -2381,14 +2364,11 @@ config_file_option_value_to_string (struct t_config_option *option,
     if ((default_value && !option->default_value)
         || (!default_value && !option->value))
     {
-        length = 7 + ((use_colors) ? 64 : 0) + 1;
-        value = malloc (length);
-        if (!value)
-            return NULL;
-        snprintf (value, length,
-                  "%s%s",
-                  (use_colors) ? GUI_COLOR(GUI_COLOR_CHAT_VALUE_NULL) : "",
-                  "null");
+        string_asprintf (
+            &value,
+            "%s%s",
+            (use_colors) ? GUI_COLOR(GUI_COLOR_CHAT_VALUE_NULL) : "",
+            "null");
         return value;
     }
 
@@ -2397,66 +2377,51 @@ config_file_option_value_to_string (struct t_config_option *option,
         case CONFIG_OPTION_TYPE_BOOLEAN:
             enabled = (default_value) ?
                 CONFIG_BOOLEAN_DEFAULT(option) : CONFIG_BOOLEAN(option);
-            length = 7 + ((use_colors) ? 64 : 0) + 1;
-            value = malloc (length);
-            if (!value)
-                return NULL;
-            snprintf (value, length,
-                      "%s%s",
-                      (use_colors) ? GUI_COLOR(GUI_COLOR_CHAT_VALUE) : "",
-                      (enabled) ? "on" : "off");
+            string_asprintf (
+                &value,
+                "%s%s",
+                (use_colors) ? GUI_COLOR(GUI_COLOR_CHAT_VALUE) : "",
+                (enabled) ? "on" : "off");
             return value;
         case CONFIG_OPTION_TYPE_INTEGER:
-            length = 31 + ((use_colors) ? 64 : 0) + 1;
-            value = malloc (length);
-            if (!value)
-                return NULL;
-            snprintf (value, length,
-                      "%s%d",
-                      (use_colors) ? GUI_COLOR(GUI_COLOR_CHAT_VALUE) : "",
-                      (default_value) ? CONFIG_INTEGER_DEFAULT(option) : CONFIG_INTEGER(option));
+            string_asprintf (
+                &value,
+                "%s%d",
+                (use_colors) ? GUI_COLOR(GUI_COLOR_CHAT_VALUE) : "",
+                (default_value) ? CONFIG_INTEGER_DEFAULT(option) : CONFIG_INTEGER(option));
             return value;
         case CONFIG_OPTION_TYPE_STRING:
             ptr_value = (default_value) ? CONFIG_STRING_DEFAULT(option) : CONFIG_STRING(option);
-            length = strlen (ptr_value) + ((use_colors) ? 64 : 0) + 1;
-            value = malloc (length);
-            if (!value)
-                return NULL;
-            snprintf (value, length,
-                      "%s%s%s%s%s%s",
-                      (use_colors && use_delimiters) ? GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS) : "",
-                      (use_delimiters) ? "\"" : "",
-                      (use_colors) ? GUI_COLOR(GUI_COLOR_CHAT_VALUE) : "",
-                      ptr_value,
-                      (use_colors && use_delimiters) ? GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS) : "",
-                      (use_delimiters) ? "\"" : "");
+            string_asprintf (
+                &value,
+                "%s%s%s%s%s%s",
+                (use_colors && use_delimiters) ? GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS) : "",
+                (use_delimiters) ? "\"" : "",
+                (use_colors) ? GUI_COLOR(GUI_COLOR_CHAT_VALUE) : "",
+                ptr_value,
+                (use_colors && use_delimiters) ? GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS) : "",
+                (use_delimiters) ? "\"" : "");
             return value;
         case CONFIG_OPTION_TYPE_COLOR:
             ptr_value = gui_color_get_name (
                 (default_value) ? CONFIG_COLOR_DEFAULT(option) : CONFIG_COLOR(option));
             if (!ptr_value)
                 return NULL;
-            length = strlen (ptr_value) + ((use_colors) ? 64 : 0) + 1;
-            value = malloc (length);
-            if (!value)
-                return NULL;
-            snprintf (value, length,
-                      "%s%s",
-                      (use_colors) ? GUI_COLOR(GUI_COLOR_CHAT_VALUE) : "",
-                      ptr_value);
+            string_asprintf (
+                &value,
+                "%s%s",
+                (use_colors) ? GUI_COLOR(GUI_COLOR_CHAT_VALUE) : "",
+                ptr_value);
             return value;
         case CONFIG_OPTION_TYPE_ENUM:
             ptr_value = (default_value) ?
                 option->string_values[CONFIG_ENUM_DEFAULT(option)] :
-            option->string_values[CONFIG_ENUM(option)];
-            length = strlen (ptr_value) + ((use_colors) ? 64 : 0) + 1;
-            value = malloc (length);
-            if (!value)
-                return NULL;
-            snprintf (value, length,
-                      "%s%s",
-                      (use_colors) ? GUI_COLOR(GUI_COLOR_CHAT_VALUE) : "",
-                      ptr_value);
+                option->string_values[CONFIG_ENUM(option)];
+            string_asprintf (
+                &value,
+                "%s%s",
+                (use_colors) ? GUI_COLOR(GUI_COLOR_CHAT_VALUE) : "",
+                ptr_value);
             return value;
         case CONFIG_NUM_OPTION_TYPES:
             /* make C compiler happy */
@@ -3187,7 +3152,7 @@ int
 config_file_write_internal (struct t_config_file *config_file,
                             int default_options)
 {
-    int filename_length, rc;
+    int rc;
     long file_perms;
     char *filename, *filename2, resolved_path[PATH_MAX], *error;
     struct t_config_section *ptr_section;
@@ -3197,25 +3162,24 @@ config_file_write_internal (struct t_config_file *config_file,
         return WEECHAT_CONFIG_WRITE_ERROR;
 
     /* build filename */
-    filename_length = strlen (weechat_config_dir) + strlen (DIR_SEPARATOR) +
-        strlen (config_file->filename) + 1;
-    filename = malloc (filename_length);
-    if (!filename)
+    if (string_asprintf (&filename,
+                         "%s%s%s",
+                         weechat_config_dir,
+                         DIR_SEPARATOR,
+                         config_file->filename) < 0)
+    {
         return WEECHAT_CONFIG_WRITE_MEMORY_ERROR;
-    snprintf (filename, filename_length, "%s%s%s",
-              weechat_config_dir, DIR_SEPARATOR, config_file->filename);
+    }
 
     /*
      * build temporary filename, this temp file will be renamed to filename
      * after write
      */
-    filename2 = malloc (filename_length + 32);
-    if (!filename2)
+    if (string_asprintf (&filename2, "%s.weechattmp", filename) < 0)
     {
         free (filename);
         return WEECHAT_CONFIG_WRITE_MEMORY_ERROR;
     }
-    snprintf (filename2, filename_length + 32, "%s.weechattmp", filename);
 
     /* if filename is a symbolic link, use target as filename */
     if (realpath (filename, resolved_path))
@@ -3624,8 +3588,7 @@ config_file_update_data_read (struct t_config_file *config_file,
 int
 config_file_read_internal (struct t_config_file *config_file, int reload)
 {
-    int filename_length, line_number, rc, length, version;
-    int warning_update_displayed;
+    int line_number, rc, length, version, warning_update_displayed;
     char *filename, *section, *option, *value;
     struct t_config_section *ptr_section;
     struct t_config_option *ptr_option;
@@ -3638,13 +3601,14 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
     warning_update_displayed = 0;
 
     /* build filename */
-    filename_length = strlen (weechat_config_dir) + strlen (DIR_SEPARATOR) +
-        strlen (config_file->filename) + 1;
-    filename = malloc (filename_length);
-    if (!filename)
+    if (string_asprintf (&filename,
+                         "%s%s%s",
+                         weechat_config_dir,
+                         DIR_SEPARATOR,
+                         config_file->filename) < 0)
+    {
         return WEECHAT_CONFIG_READ_MEMORY_ERROR;
-    snprintf (filename, filename_length, "%s%s%s",
-              weechat_config_dir, DIR_SEPARATOR, config_file->filename);
+    }
 
     /* create file with default options if it does not exist */
     if (access (filename, F_OK) != 0)

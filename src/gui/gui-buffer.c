@@ -226,20 +226,14 @@ gui_buffer_get_plugin_name (struct t_gui_buffer *buffer)
 void
 gui_buffer_build_full_name (struct t_gui_buffer *buffer)
 {
-    int length;
-
     if (!buffer)
         return;
 
     free (buffer->full_name);
-    length = strlen (gui_buffer_get_plugin_name (buffer)) + 1 +
-        strlen (buffer->name) + 1;
-    buffer->full_name = malloc (length);
-    if (buffer->full_name)
-    {
-        snprintf (buffer->full_name, length, "%s.%s",
-                  gui_buffer_get_plugin_name (buffer), buffer->name);
-    }
+    string_asprintf (&buffer->full_name,
+                     "%s.%s",
+                     gui_buffer_get_plugin_name (buffer),
+                     buffer->name);
 }
 
 /*

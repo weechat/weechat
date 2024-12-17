@@ -409,7 +409,7 @@ upgrade_weechat_read_buffer (struct t_infolist *infolist)
     const char *key, *var_name, *name, *plugin_name, *ptr_id;
     const char *str;
     char option_name[64], *option_key, *option_var, *error;
-    int index, length, main_buffer;
+    int index, main_buffer;
     long long id;
 
     /* "id" is new in WeeChat 4.3.0 */
@@ -612,11 +612,8 @@ upgrade_weechat_read_buffer (struct t_infolist *infolist)
         key = infolist_string (infolist, option_name);
         if (!key)
             break;
-        length = 16 + strlen (key) + 1;
-        option_key = malloc (length);
-        if (option_key)
+        if (string_asprintf (&option_key, "key_bind_%s", key) >= 0)
         {
-            snprintf (option_key, length, "key_bind_%s", key);
             snprintf (option_name, sizeof (option_name),
                       "key_command_%05d", index);
             gui_buffer_set (ptr_buffer, option_key,
@@ -635,11 +632,8 @@ upgrade_weechat_read_buffer (struct t_infolist *infolist)
         var_name = infolist_string (infolist, option_name);
         if (!var_name)
             break;
-        length = 32 + strlen (var_name) + 1;
-        option_var = malloc (length);
-        if (option_var)
+        if (string_asprintf (&option_var, "localvar_set_%s", var_name) >= 0)
         {
-            snprintf (option_var, length, "localvar_set_%s", var_name);
             snprintf (option_name, sizeof (option_name),
                       "localvar_value_%05d", index);
             gui_buffer_set (ptr_buffer, option_var,

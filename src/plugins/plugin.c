@@ -1053,7 +1053,7 @@ plugin_auto_load (char *force_plugin_autoload,
     struct t_plugin_args plugin_args;
     struct t_arraylist *arraylist;
     struct t_hashtable *options;
-    int length, i;
+    int i;
 
     plugin_args.argc = argc;
     plugin_args.argv = argv;
@@ -1106,23 +1106,20 @@ plugin_auto_load (char *force_plugin_autoload,
         extra_libdir = getenv (WEECHAT_EXTRA_LIBDIR);
         if (extra_libdir && extra_libdir[0])
         {
-            length = strlen (extra_libdir) + 16 + 1;
-            dir_name = malloc (length);
-            snprintf (dir_name, length, "%s/plugins", extra_libdir);
-            dir_exec_on_files (dir_name, 1, 0,
-                               &plugin_auto_load_file, &plugin_args);
-            free (dir_name);
+            if (string_asprintf (&dir_name, "%s/plugins", extra_libdir) >= 0)
+            {
+                dir_exec_on_files (dir_name, 1, 0,
+                                   &plugin_auto_load_file, &plugin_args);
+                free (dir_name);
+            }
         }
     }
 
     /* auto-load plugins in WeeChat global lib dir */
     if (load_from_lib_dir)
     {
-        length = strlen (WEECHAT_LIBDIR) + 16 + 1;
-        dir_name = malloc (length);
-        if (dir_name)
+        if (string_asprintf (&dir_name,"%s/plugins", WEECHAT_LIBDIR) >= 0)
         {
-            snprintf (dir_name, length, "%s/plugins", WEECHAT_LIBDIR);
             dir_exec_on_files (dir_name, 1, 0,
                                &plugin_auto_load_file, &plugin_args);
             free (dir_name);
@@ -1353,48 +1350,43 @@ plugin_reload_name (const char *name, int argc, char **argv)
 void
 plugin_display_short_list ()
 {
-    const char *plugins_loaded;
-    char *buf;
-    int length;
+    char **buf;
     struct t_weechat_plugin *ptr_plugin;
     struct t_weelist *list;
     struct t_weelist_item *ptr_item;
 
-    if (weechat_plugins)
+    if (!weechat_plugins)
+        return;
+
+    list = weelist_new ();
+    if (!list)
+        return;
+
+    for (ptr_plugin = weechat_plugins; ptr_plugin;
+         ptr_plugin = ptr_plugin->next_plugin)
     {
-        list = weelist_new ();
-        if (list)
-        {
-            plugins_loaded = _("Plugins loaded:");
-
-            length = strlen (plugins_loaded) + 1;
-
-            for (ptr_plugin = weechat_plugins; ptr_plugin;
-                 ptr_plugin = ptr_plugin->next_plugin)
-            {
-                length += strlen (ptr_plugin->name) + 2;
-                weelist_add (list, ptr_plugin->name, WEECHAT_LIST_POS_SORT, NULL);
-            }
-            length++;
-
-            buf = malloc (length);
-            if (buf)
-            {
-                strcpy (buf, plugins_loaded);
-                strcat (buf, " ");
-                for (ptr_item = list->items; ptr_item;
-                     ptr_item = ptr_item->next_item)
-                {
-                    strcat (buf, ptr_item->data);
-                    if (ptr_item->next_item)
-                        strcat (buf, ", ");
-                }
-                gui_chat_printf (NULL, "%s", buf);
-                free (buf);
-            }
-            weelist_free (list);
-        }
+        weelist_add (list, ptr_plugin->name, WEECHAT_LIST_POS_SORT, NULL);
     }
+
+    buf = string_dyn_alloc (256);
+    if (!buf)
+    {
+        weelist_free (list);
+        return;
+    }
+
+    string_dyn_concat (buf, _("Plugins loaded:"), -1);
+    string_dyn_concat (buf, " ", -1);
+    for (ptr_item = list->items; ptr_item; ptr_item = ptr_item->next_item)
+    {
+        string_dyn_concat (buf, ptr_item->data, -1);
+        if (ptr_item->next_item)
+            string_dyn_concat (buf, ", ", -1);
+    }
+    gui_chat_printf (NULL, "%s", *buf);
+
+    string_dyn_free (buf, 1);
+    weelist_free (list);
 }
 
 /*

@@ -109,7 +109,7 @@ int
 dir_mkdir_home (const char *directory, int mode)
 {
     char *dir, *dir1, *dir2, *dir3, *dir4, *dir5;
-    int rc, dir_length;
+    int rc;
 
     rc = 0;
     dir = NULL;
@@ -129,11 +129,8 @@ dir_mkdir_home (const char *directory, int mode)
     else
     {
         /* build directory in data dir by default */
-        dir_length = strlen (weechat_data_dir) + strlen (directory) + 2;
-        dir = malloc (dir_length);
-        if (!dir)
+        if (string_asprintf (&dir, "%s/%s", weechat_data_dir, directory) < 0)
             goto end;
-        snprintf (dir, dir_length, "%s/%s", weechat_data_dir, directory);
     }
 
     dir1 = string_replace (dir, "${weechat_config_dir}", weechat_config_dir);
@@ -386,7 +383,7 @@ int
 dir_create_home_temp_dir ()
 {
     char *temp_dir, *temp_home_template, *ptr_weechat_home;
-    int rc, length, add_separator;
+    int rc, add_separator;
 
     rc = 0;
     temp_dir = NULL;
@@ -396,16 +393,15 @@ dir_create_home_temp_dir ()
     if (!temp_dir || !temp_dir[0])
         goto memory_error;
 
-    length = strlen (temp_dir) + 32 + 1;
-    temp_home_template = malloc (length);
-    if (!temp_home_template)
-        goto memory_error;
-
     add_separator = (temp_dir[strlen (temp_dir) - 1] != DIR_SEPARATOR_CHAR);
-    snprintf (temp_home_template, length,
-              "%s%sweechat_temp_XXXXXX",
-              temp_dir,
-              add_separator ? DIR_SEPARATOR : "");
+
+    if (string_asprintf (&temp_home_template,
+                         "%s%sweechat_temp_XXXXXX",
+                         temp_dir,
+                         (add_separator) ? DIR_SEPARATOR : "") < 0)
+    {
+        goto memory_error;
+    }
     ptr_weechat_home = mkdtemp (temp_home_template);
     if (!ptr_weechat_home)
     {

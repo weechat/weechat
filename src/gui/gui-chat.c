@@ -817,7 +817,7 @@ gui_chat_printf_datetime_tags_internal (struct t_gui_buffer *buffer,
                                         const char *tags,
                                         char *message)
 {
-    int display_time, length_data, length_str;
+    int display_time;
     char *ptr_msg, *pos_prefix, *pos_tab;
     char *modifier_data, *string, *new_string, *pos_newline;
     struct t_gui_line *new_line;
@@ -879,107 +879,99 @@ gui_chat_printf_datetime_tags_internal (struct t_gui_buffer *buffer,
         goto no_print;
 
     /* call modifier for message printed ("weechat_print") */
-    length_data = 64 + 1 + ((tags) ? strlen (tags) : 0) + 1;
-    modifier_data = malloc (length_data);
-    length_str = ((new_line->data->prefix && new_line->data->prefix[0]) ? strlen (new_line->data->prefix) : 1) +
-        1 +
-        (new_line->data->message ? strlen (new_line->data->message) : 0) +
-        1;
-    string = malloc (length_str);
-    if (modifier_data && string)
+    string_asprintf (&modifier_data,
+                     "0x%lx;%s",
+                     (unsigned long)buffer,
+                     (tags) ? tags : "");
+    if (display_time)
     {
-        snprintf (modifier_data, length_data,
-                  "0x%lx;%s",
-                  (unsigned long)buffer,
-                  (tags) ? tags : "");
-        if (display_time)
+        string_asprintf (
+            &string,
+            "%s\t%s",
+            (new_line->data->prefix && new_line->data->prefix[0]) ?
+            new_line->data->prefix : " ",
+            (new_line->data->message) ? new_line->data->message : "");
+    }
+    else
+    {
+        string_asprintf (
+            &string,
+            "\t\t%s",
+            (new_line->data->message) ? new_line->data->message : "");
+    }
+    new_string = hook_modifier_exec (NULL,
+                                     "weechat_print",
+                                     modifier_data,
+                                     string);
+    if (new_string)
+    {
+        if (!new_string[0] && string[0])
         {
-            snprintf (string, length_str,
-                      "%s\t%s",
-                      (new_line->data->prefix && new_line->data->prefix[0]) ?
-                      new_line->data->prefix : " ",
-                      (new_line->data->message) ? new_line->data->message : "");
+            /*
+             * modifier returned empty message, then we'll not
+             * print anything
+             */
+            goto no_print;
         }
-        else
+        else if (strcmp (string, new_string) != 0)
         {
-            snprintf (string, length_str,
-                      "\t\t%s",
-                      (new_line->data->message) ? new_line->data->message : "");
-        }
-        new_string = hook_modifier_exec (NULL,
-                                         "weechat_print",
-                                         modifier_data,
-                                         string);
-        if (new_string)
-        {
-            if (!new_string[0] && string[0])
+            if (!buffer->input_multiline)
             {
-                /*
-                 * modifier returned empty message, then we'll not
-                 * print anything
-                 */
-                goto no_print;
+                /* if input_multiline is not set, keep only first line */
+                pos_newline = strchr (new_string, '\n');
+                if (pos_newline)
+                    pos_newline[0] = '\0';
             }
-            else if (strcmp (string, new_string) != 0)
-            {
-                if (!buffer->input_multiline)
-                {
-                    /* if input_multiline is not set, keep only first line */
-                    pos_newline = strchr (new_string, '\n');
-                    if (pos_newline)
-                        pos_newline[0] = '\0';
-                }
 
-                /* use new message if there are changes */
-                display_time = 1;
-                pos_prefix = NULL;
-                ptr_msg = new_string;
-                /* space followed by tab => prefix ignored */
-                if ((ptr_msg[0] == ' ') && (ptr_msg[1] == '\t'))
+            /* use new message if there are changes */
+            display_time = 1;
+            pos_prefix = NULL;
+            ptr_msg = new_string;
+            /* space followed by tab => prefix ignored */
+            if ((ptr_msg[0] == ' ') && (ptr_msg[1] == '\t'))
+            {
+                ptr_msg += 2;
+            }
+            else
+            {
+                /* if two first chars are tab, then do not display time */
+                if ((ptr_msg[0] == '\t') && (ptr_msg[1] == '\t'))
                 {
+                    display_time = 0;
+                    new_line->data->date = 0;
                     ptr_msg += 2;
                 }
                 else
                 {
-                    /* if two first chars are tab, then do not display time */
-                    if ((ptr_msg[0] == '\t') && (ptr_msg[1] == '\t'))
+                    /* if tab found, use prefix (before tab) */
+                    pos_tab = strchr (ptr_msg, '\t');
+                    if (pos_tab)
                     {
-                        display_time = 0;
-                        new_line->data->date = 0;
-                        ptr_msg += 2;
-                    }
-                    else
-                    {
-                        /* if tab found, use prefix (before tab) */
-                        pos_tab = strchr (ptr_msg, '\t');
-                        if (pos_tab)
-                        {
-                            pos_tab[0] = '\0';
-                            pos_prefix = ptr_msg;
-                            ptr_msg = pos_tab + 1;
-                        }
+                        pos_tab[0] = '\0';
+                        pos_prefix = ptr_msg;
+                        ptr_msg = pos_tab + 1;
                     }
                 }
-                if ((new_line->data->date == 0) && display_time)
-                {
-                    new_line->data->date = new_line->data->date_printed;
-                    new_line->data->date_usec = new_line->data->date_usec_printed;
-                }
-                string_shared_free (new_line->data->prefix);
-                if (pos_prefix)
-                {
-                    new_line->data->prefix = (char *)string_shared_get (pos_prefix);
-                }
-                else
-                {
-                    new_line->data->prefix = (new_line->data->date != 0) ?
-                        (char *)string_shared_get ("") : NULL;
-                }
-                new_line->data->prefix_length = gui_chat_strlen_screen (
-                    new_line->data->prefix);
-                free (new_line->data->message);
-                new_line->data->message = strdup (ptr_msg);
             }
+            if ((new_line->data->date == 0) && display_time)
+            {
+                new_line->data->date = new_line->data->date_printed;
+                new_line->data->date_usec = new_line->data->date_usec_printed;
+            }
+            string_shared_free (new_line->data->prefix);
+            if (pos_prefix)
+            {
+                new_line->data->prefix = (char *)string_shared_get (pos_prefix);
+            }
+            else
+            {
+                new_line->data->prefix = (new_line->data->date != 0) ?
+                    (char *)string_shared_get ("") : NULL;
+            }
+            new_line->data->prefix_length = gui_chat_strlen_screen (
+                new_line->data->prefix);
+            free (new_line->data->message);
+            new_line->data->message = strdup (ptr_msg);
         }
     }
 
@@ -1311,8 +1303,7 @@ gui_chat_hsignal_quote_line_cb (const void *pointer, void *data,
     long number;
     struct timeval tv;
     struct t_gui_line *ptr_line;
-    int is_nick, length_time, length_nick_prefix, length_prefix;
-    int length_nick_suffix, length_message, length, rc;
+    int is_nick, rc;
     char str_time[128], *str, *error;
 
     /* make C compiler happy */
@@ -1380,26 +1371,17 @@ gui_chat_hsignal_quote_line_cb (const void *pointer, void *data,
     if (!message)
         return WEECHAT_RC_OK;
 
-    length_time = strlen (str_time);
-    length_nick_prefix = strlen (CONFIG_STRING(config_look_quote_nick_prefix));
-    length_prefix = (ptr_prefix) ? strlen (ptr_prefix) : 0;
-    length_nick_suffix = strlen (CONFIG_STRING(config_look_quote_nick_suffix));
-    length_message = strlen (message);
-
-    length = length_time + 1 +
-        length_nick_prefix + length_prefix + length_nick_suffix + 1 +
-        length_message + 1 + 1;
-    str = malloc (length);
-    if (str)
+    if (string_asprintf (
+            &str,
+            "%s%s%s%s%s%s%s ",
+            str_time,
+            (str_time[0]) ? " " : "",
+            (ptr_prefix && ptr_prefix[0] && is_nick) ? CONFIG_STRING(config_look_quote_nick_prefix) : "",
+            (ptr_prefix) ? ptr_prefix : "",
+            (ptr_prefix && ptr_prefix[0] && is_nick) ? CONFIG_STRING(config_look_quote_nick_suffix) : "",
+            (ptr_prefix && ptr_prefix[0]) ? " " : "",
+            message) >= 0)
     {
-        snprintf (str, length, "%s%s%s%s%s%s%s ",
-                  str_time,
-                  (str_time[0]) ? " " : "",
-                  (ptr_prefix && ptr_prefix[0] && is_nick) ? CONFIG_STRING(config_look_quote_nick_prefix) : "",
-                  (ptr_prefix) ? ptr_prefix : "",
-                  (ptr_prefix && ptr_prefix[0] && is_nick) ? CONFIG_STRING(config_look_quote_nick_suffix) : "",
-                  (ptr_prefix && ptr_prefix[0]) ? " " : "",
-                  message);
         gui_input_insert_string (gui_current_window->buffer, str);
         gui_input_text_changed_modifier_and_signal (gui_current_window->buffer,
                                                     1, /* save undo */

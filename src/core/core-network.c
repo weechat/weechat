@@ -930,7 +930,7 @@ network_connect_child (struct t_hook *hook_connect)
     char remote_address[NI_MAXHOST + 1];
     char status_without_string[1 + 5 + 1];
     const char *error;
-    int rc, length, num_written;
+    int rc, num_written;
     int sock, set, flags, j;
     struct msghdr msg;
     struct cmsghdr *cmsg;
@@ -1042,14 +1042,11 @@ network_connect_child (struct t_hook *hook_connect)
         error = gai_strerror (rc);
         if (error)
         {
-            length = 1 + 5 + strlen (error) + 1;
-            status_with_string = malloc (length);
-            if (status_with_string)
-            {
-                snprintf (status_with_string, length, "%c%05d%s",
-                          '0' + WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND,
-                          (int)strlen (error), error);
-            }
+            string_asprintf (&status_with_string,
+                             "%c%05d%s",
+                             '0' + WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND,
+                             (int)strlen (error),
+                             error);
         }
         if (status_with_string)
         {
@@ -1097,14 +1094,11 @@ network_connect_child (struct t_hook *hook_connect)
             error = gai_strerror (rc);
             if (error)
             {
-                length = 1 + 5 + strlen (error) + 1;
-                status_with_string = malloc (length);
-                if (status_with_string)
-                {
-                    snprintf (status_with_string, length, "%c%05d%s",
-                              '0' + WEECHAT_HOOK_CONNECT_LOCAL_HOSTNAME_ERROR,
-                              (int)strlen (error), error);
-                }
+                string_asprintf (&status_with_string,
+                                 "%c%05d%s",
+                                 '0' + WEECHAT_HOOK_CONNECT_LOCAL_HOSTNAME_ERROR,
+                                 (int)strlen (error),
+                                 error);
             }
             if (status_with_string)
             {
@@ -1375,13 +1369,11 @@ network_connect_child (struct t_hook *hook_connect)
         status_with_string = NULL;
         if (ptr_address)
         {
-            length = strlen (status_str) + 5 + strlen (ptr_address) + 1;
-            status_with_string = malloc (length);
-            if (status_with_string)
-            {
-                snprintf (status_with_string, length, "%s%05d%s",
-                          status_str, (int)strlen (ptr_address), ptr_address);
-            }
+            string_asprintf (&status_with_string,
+                             "%s%05d%s",
+                             status_str,
+                             (int)strlen (ptr_address),
+                             ptr_address);
         }
 
         if (status_with_string)

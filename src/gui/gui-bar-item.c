@@ -914,7 +914,7 @@ gui_bar_item_input_text_cb (const void *pointer, void *data,
     char *ptr_input, *ptr_input2, str_buffer[128], str_start_input[16];
     char str_cursor[16], *buf, str_key_debug[1024], *str_lead_linebreak;
     const char *pos_cursor;
-    int length, length_cursor, length_start_input, length_lead_linebreak;
+    int length, length_cursor;
     int buf_pos, is_multiline;
 
     /* make C compiler happy */
@@ -936,7 +936,6 @@ gui_bar_item_input_text_cb (const void *pointer, void *data,
               GUI_COLOR_COLOR_CHAR,
               GUI_COLOR_BAR_CHAR,
               GUI_COLOR_BAR_START_INPUT_CHAR);
-    length_start_input = strlen (str_start_input);
 
     if (gui_key_debug)
     {
@@ -1016,17 +1015,12 @@ gui_bar_item_input_text_cb (const void *pointer, void *data,
     if ((buffer->text_search == GUI_BUFFER_SEARCH_HISTORY)
         && buffer->text_search_ptr_history)
     {
-        length = strlen (ptr_input) + 16
-            + ((buffer->text_search_ptr_history->text) ?
-               strlen (buffer->text_search_ptr_history->text) : 0);
-        buf = malloc (length);
-        if (buf)
+        if (string_asprintf (&buf,
+                             "%s  => %s",
+                             ptr_input,
+                             (buffer->text_search_ptr_history->text) ?
+                             buffer->text_search_ptr_history->text : "") >= 0)
         {
-            snprintf (buf, length,
-                      "%s  => %s",
-                      ptr_input,
-                      (buffer->text_search_ptr_history->text) ?
-                      buffer->text_search_ptr_history->text : "");
             free (ptr_input);
             ptr_input = buf;
         }
@@ -1050,29 +1044,23 @@ gui_bar_item_input_text_cb (const void *pointer, void *data,
 
     str_lead_linebreak = (is_multiline &&
         CONFIG_BOOLEAN(config_look_input_multiline_lead_linebreak)) ? "\r" : "";
-    length_lead_linebreak = strlen (str_lead_linebreak);
 
     /* insert "start input" at beginning of string */
     if (ptr_input)
     {
-        length = strlen (ptr_input) + length_start_input + length_lead_linebreak + 1;
-        buf = malloc (length);
-        if (buf)
+        if (string_asprintf (&buf,
+                             "%s%s%s",
+                             str_start_input,
+                             str_lead_linebreak,
+                             ptr_input) >= 0)
         {
-            snprintf (buf, length, "%s%s%s", str_start_input, str_lead_linebreak, ptr_input);
             free (ptr_input);
             ptr_input = buf;
         }
     }
     else
     {
-        length = length_start_input + length_cursor + 1;
-        ptr_input = malloc (length);
-        if (ptr_input)
-        {
-            strcpy (ptr_input, str_start_input);
-            strcat (ptr_input, str_cursor);
-        }
+        string_asprintf (&ptr_input, "%s%s", str_start_input, str_cursor);
     }
 
     return ptr_input;
@@ -2088,7 +2076,6 @@ gui_bar_item_away_cb (const void *pointer, void *data,
 {
     const char *away;
     char *buf, *message;
-    int length;
 
     /* make C compiler happy */
     (void) pointer;
@@ -2109,14 +2096,11 @@ gui_bar_item_away_cb (const void *pointer, void *data,
         strdup (away) : strdup (_("away"));
     if (message)
     {
-        length = strlen (message) + 64 + 1;
-        buf = malloc (length);
-        if (buf)
-        {
-            snprintf (buf, length, "%s%s",
-                      gui_color_get_custom (gui_color_get_name (CONFIG_COLOR(config_color_item_away))),
-                      message);
-        }
+        string_asprintf (
+            &buf,
+            "%s%s",
+            gui_color_get_custom (gui_color_get_name (CONFIG_COLOR(config_color_item_away))),
+            message);
         free (message);
     }
 

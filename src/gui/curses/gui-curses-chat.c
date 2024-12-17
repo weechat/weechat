@@ -1058,15 +1058,7 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
         {
             str_color = gui_color_get_custom (ptr_prefix_color);
             if (str_color && str_color[0])
-            {
-                length = strlen (str_color) + strlen (ptr_prefix) + 1;
-                ptr_prefix2 = malloc (length);
-                if (ptr_prefix2)
-                {
-                    snprintf (ptr_prefix2, length, "%s%s",
-                              str_color, ptr_prefix);
-                }
-            }
+                string_asprintf (&ptr_prefix2, "%s%s", str_color, ptr_prefix);
         }
         ptr_prefix = (ptr_prefix2) ? ptr_prefix2 : strdup (ptr_prefix);
     }
@@ -1156,14 +1148,10 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
             prefix_no_color = gui_color_decode (ptr_prefix, NULL);
             if (prefix_no_color)
             {
-                length = strlen (prefix_no_color) + 32;
-                prefix_highlighted = malloc (length);
-                if (prefix_highlighted)
-                {
-                    snprintf (prefix_highlighted, length, "%s%s",
-                              GUI_COLOR(GUI_COLOR_CHAT_HIGHLIGHT),
-                              prefix_no_color);
-                }
+                string_asprintf (&prefix_highlighted,
+                                 "%s%s",
+                                 GUI_COLOR(GUI_COLOR_CHAT_HIGHLIGHT),
+                                 prefix_no_color);
                 free (prefix_no_color);
             }
             if (!simulate)
@@ -2107,7 +2095,6 @@ gui_chat_get_bare_line (struct t_gui_line *line)
     char *prefix, *message, str_time[256], *str_line;
     const char *tag_prefix_nick;
     struct timeval tv;
-    int length;
 
     prefix = NULL;
     message = NULL;
@@ -2136,21 +2123,15 @@ gui_chat_get_bare_line (struct t_gui_line *line)
     }
     tag_prefix_nick = gui_line_search_tag_starting_with (line, "prefix_nick_");
 
-    length = strlen (str_time) + 1 + 1 + strlen (prefix) + 1 + 1
-        + strlen (message) + 1;
-    str_line = malloc (length);
-    if (str_line)
-    {
-        snprintf (str_line, length,
-                  "%s%s%s%s%s%s%s",
-                  str_time,
-                  (str_time[0]) ? " " : "",
-                  (prefix[0] && tag_prefix_nick) ? "<" : "",
-                  prefix,
-                  (prefix[0] && tag_prefix_nick) ? ">" : "",
-                  (prefix[0]) ? " " : "",
-                  message);
-    }
+    string_asprintf (&str_line,
+                     "%s%s%s%s%s%s%s",
+                     str_time,
+                     (str_time[0]) ? " " : "",
+                     (prefix[0] && tag_prefix_nick) ? "<" : "",
+                     prefix,
+                     (prefix[0] && tag_prefix_nick) ? ">" : "",
+                     (prefix[0]) ? " " : "",
+                     message);
 
 end:
     free (prefix);
