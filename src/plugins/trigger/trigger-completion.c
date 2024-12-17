@@ -307,17 +307,12 @@ trigger_completion_add_quoted_word (struct t_gui_completion *completion,
                                     const char *word)
 {
     char *temp;
-    int length;
 
-    length = 1 + strlen (word) + 1 + 1;
-    temp = malloc (length);
-    if (!temp)
-        return;
-
-    snprintf (temp, length, "\"%s\"", word);
-    weechat_completion_list_add (completion, temp, 0, WEECHAT_LIST_POS_END);
-
-    free (temp);
+    if (weechat_asprintf (&temp, "\"%s\"", word) >= 0)
+    {
+        weechat_completion_list_add (completion, temp, 0, WEECHAT_LIST_POS_END);
+        free (temp);
+    }
 }
 
 /*
