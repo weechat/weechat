@@ -135,7 +135,7 @@ xfer_file_check_suffix (struct t_xfer *xfer, int suffix)
 {
     char *new_filename, *new_temp_filename;
     const char *ptr_suffix;
-    int rc, length_suffix, length, filename_exists, temp_filename_exists;
+    int rc, length_suffix, filename_exists, temp_filename_exists;
     int same_files;
 
     rc = 0;
@@ -148,32 +148,20 @@ xfer_file_check_suffix (struct t_xfer *xfer, int suffix)
 
     /* build filename with suffix */
     if (suffix == 0)
-    {
         new_filename = strdup (xfer->local_filename);
-    }
     else
-    {
-        length = strlen (xfer->local_filename) + 16 + 1;
-        new_filename = malloc (length);
-        if (new_filename)
-        {
-            snprintf (new_filename, length, "%s.%d",
-                      xfer->local_filename,
-                      suffix);
-        }
-    }
+        weechat_asprintf (&new_filename, "%s.%d", xfer->local_filename, suffix);
     if (!new_filename)
         goto error;
 
     /* build temp filename with suffix */
-    length = strlen (new_filename) + length_suffix + 1;
-    new_temp_filename = malloc (length);
-    if (!new_temp_filename)
+    if (weechat_asprintf (&new_temp_filename,
+                          "%s%s",
+                          new_filename,
+                          (ptr_suffix) ? ptr_suffix : "") < 0)
+    {
         goto error;
-    snprintf (new_temp_filename, length,
-              "%s%s",
-              new_filename,
-              (ptr_suffix) ? ptr_suffix : "");
+    }
 
     filename_exists = (access (new_filename, F_OK) == 0);
     temp_filename_exists = (access (new_temp_filename, F_OK) == 0);
