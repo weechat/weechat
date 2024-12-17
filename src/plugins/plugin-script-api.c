@@ -1414,6 +1414,23 @@ plugin_script_api_command (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
+ * Builds full name of option: "script.option".
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+plugin_script_api_build_option_full_name (struct t_weechat_plugin *weechat_plugin,
+                                          struct t_plugin_script *script,
+                                          const char *option)
+{
+    char *option_full_name;
+
+    weechat_asprintf (&option_full_name, "%s.%s", script->name, option);
+    return option_full_name;
+}
+
+/*
  * Gets value of a script option (format in file is "plugin.script.option").
  */
 
@@ -1422,24 +1439,20 @@ plugin_script_api_config_get_plugin (struct t_weechat_plugin *weechat_plugin,
                                      struct t_plugin_script *script,
                                      const char *option)
 {
-    char *option_fullname;
+    char *option_full_name;
     const char *return_value;
 
     if (!script)
         return NULL;
 
-    option_fullname = malloc ((strlen (script->name) +
-                               strlen (option) + 2));
-    if (!option_fullname)
+    option_full_name = plugin_script_api_build_option_full_name (
+        weechat_plugin, script, option);
+    if (!option_full_name)
         return NULL;
 
-    strcpy (option_fullname, script->name);
-    strcat (option_fullname, ".");
-    strcat (option_fullname, option);
+    return_value = weechat_config_get_plugin (option_full_name);
 
-    return_value = weechat_config_get_plugin (option_fullname);
-
-    free (option_fullname);
+    free (option_full_name);
 
     return return_value;
 }
@@ -1457,24 +1470,20 @@ plugin_script_api_config_is_set_plugin (struct t_weechat_plugin *weechat_plugin,
                                         struct t_plugin_script *script,
                                         const char *option)
 {
-    char *option_fullname;
+    char *option_full_name;
     int return_code;
 
     if (!script)
         return 0;
 
-    option_fullname = malloc ((strlen (script->name) +
-                               strlen (option) + 2));
-    if (!option_fullname)
+    option_full_name = plugin_script_api_build_option_full_name (
+        weechat_plugin, script, option);
+    if (!option_full_name)
         return 0;
 
-    strcpy (option_fullname, script->name);
-    strcat (option_fullname, ".");
-    strcat (option_fullname, option);
+    return_code = weechat_config_is_set_plugin (option_full_name);
 
-    return_code = weechat_config_is_set_plugin (option_fullname);
-
-    free (option_fullname);
+    free (option_full_name);
 
     return return_code;
 }
@@ -1488,24 +1497,20 @@ plugin_script_api_config_set_plugin (struct t_weechat_plugin *weechat_plugin,
                                      struct t_plugin_script *script,
                                      const char *option, const char *value)
 {
-    char *option_fullname;
+    char *option_full_name;
     int return_code;
 
     if (!script)
         return 0;
 
-    option_fullname = malloc ((strlen (script->name) +
-                               strlen (option) + 2));
-    if (!option_fullname)
+    option_full_name = plugin_script_api_build_option_full_name (
+        weechat_plugin, script, option);
+    if (!option_full_name)
         return 0;
 
-    strcpy (option_fullname, script->name);
-    strcat (option_fullname, ".");
-    strcat (option_fullname, option);
+    return_code = weechat_config_set_plugin (option_full_name, value);
 
-    return_code = weechat_config_set_plugin (option_fullname, value);
-
-    free (option_fullname);
+    free (option_full_name);
 
     return return_code;
 }
@@ -1519,23 +1524,19 @@ plugin_script_api_config_set_desc_plugin (struct t_weechat_plugin *weechat_plugi
                                           struct t_plugin_script *script,
                                           const char *option, const char *description)
 {
-    char *option_fullname;
+    char *option_full_name;
 
     if (!script)
         return;
 
-    option_fullname = malloc ((strlen (script->name) +
-                               strlen (option) + 2));
-    if (!option_fullname)
+    option_full_name = plugin_script_api_build_option_full_name (
+        weechat_plugin, script, option);
+    if (!option_full_name)
         return;
 
-    strcpy (option_fullname, script->name);
-    strcat (option_fullname, ".");
-    strcat (option_fullname, option);
+    weechat_config_set_desc_plugin (option_full_name, description);
 
-    weechat_config_set_desc_plugin (option_fullname, description);
-
-    free (option_fullname);
+    free (option_full_name);
 }
 
 /*
@@ -1547,24 +1548,20 @@ plugin_script_api_config_unset_plugin (struct t_weechat_plugin *weechat_plugin,
                                        struct t_plugin_script *script,
                                        const char *option)
 {
-    char *option_fullname;
+    char *option_full_name;
     int return_code;
 
     if (!script)
         return 0;
 
-    option_fullname = malloc ((strlen (script->name) +
-                               strlen (option) + 2));
-    if (!option_fullname)
+    option_full_name = plugin_script_api_build_option_full_name (
+        weechat_plugin, script, option);
+    if (!option_full_name)
         return 0;
 
-    strcpy (option_fullname, script->name);
-    strcat (option_fullname, ".");
-    strcat (option_fullname, option);
+    return_code = weechat_config_unset_plugin (option_full_name);
 
-    return_code = weechat_config_unset_plugin (option_fullname);
-
-    free (option_fullname);
+    free (option_full_name);
 
     return return_code;
 }
