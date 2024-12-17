@@ -1482,26 +1482,15 @@ irc_channel_rejoin (struct t_irc_server *server, struct t_irc_channel *channel,
                     int manual_join, int noswitch)
 {
     char *join_string;
-    int length;
 
     if (channel->key)
     {
-        length = strlen (channel->name) + 1 + strlen (channel->key) + 1;
-        join_string = malloc (length);
-        if (join_string)
-        {
-            snprintf (join_string, length, "%s %s",
-                      channel->name,
-                      channel->key);
-            irc_command_join_server (server, join_string,
-                                     manual_join, noswitch);
-            free (join_string);
-        }
-        else
-        {
-            irc_command_join_server (server, channel->name,
-                                     manual_join, noswitch);
-        }
+        weechat_asprintf (&join_string, "%s %s", channel->name, channel->key);
+        irc_command_join_server (server,
+                                 (join_string) ? join_string : channel->name,
+                                 manual_join,
+                                 noswitch);
+        free (join_string);
     }
     else
     {

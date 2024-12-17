@@ -1707,8 +1707,8 @@ struct t_irc_server *
 irc_server_alloc (const char *name)
 {
     struct t_irc_server *new_server;
-    int i, length;
     char *option_name;
+    int i;
 
     /* check if another server exists with this name */
     if (irc_server_search (name))
@@ -1880,17 +1880,13 @@ irc_server_alloc (const char *name)
     }
     for (i = 0; i < IRC_SERVER_NUM_OPTIONS; i++)
     {
-        length = strlen (new_server->name) + 1 +
-            strlen (irc_server_options[i][0]) +
-            512 +  /* inherited option name (irc.server_default.xxx) */
-            1;
-        option_name = malloc (length);
-        if (option_name)
+        if (weechat_asprintf (
+                &option_name,
+                "%s.%s << irc.server_default.%s",
+                new_server->name,
+                irc_server_options[i][0],
+                irc_server_options[i][0]) >= 0)
         {
-            snprintf (option_name, length, "%s.%s << irc.server_default.%s",
-                      new_server->name,
-                      irc_server_options[i][0],
-                      irc_server_options[i][0]);
             new_server->options[i] = irc_config_server_new_option (
                 irc_config_file,
                 irc_config_section_server,
@@ -1940,7 +1936,7 @@ irc_server_alloc_with_url (const char *irc_url)
     char *pos_address, *pos_port, *pos_channel, *pos;
     char *server_address, *server_nicks, *server_autojoin;
     char default_port[16];
-    int ipv6, tls, length;
+    int ipv6, tls;
     struct t_irc_server *ptr_server;
 
     if (!irc_url || !irc_url[0])
@@ -2062,15 +2058,12 @@ irc_server_alloc_with_url (const char *irc_url)
         ptr_server->temp_server = 1;
         if (pos_address && pos_address[0])
         {
-            length = strlen (pos_address) + 1 +
-                ((pos_port) ? strlen (pos_port) : 16) + 1;
-            server_address = malloc (length);
-            if (server_address)
+            if (weechat_asprintf (
+                    &server_address,
+                    "%s/%s",
+                    pos_address,
+                    (pos_port && pos_port[0]) ? pos_port : default_port) >= 0)
             {
-                snprintf (server_address, length,
-                          "%s/%s",
-                          pos_address,
-                          (pos_port && pos_port[0]) ? pos_port : default_port);
                 weechat_config_option_set (
                     ptr_server->options[IRC_SERVER_OPTION_ADDRESSES],
                     server_address,
@@ -2086,13 +2079,11 @@ irc_server_alloc_with_url (const char *irc_url)
                                    1);
         if (pos_nick && pos_nick[0])
         {
-            length = ((strlen (pos_nick) + 2) * 5) + 1;
-            server_nicks = malloc (length);
-            if (server_nicks)
+            if (weechat_asprintf (
+                    &server_nicks,
+                    "%s,%s2,%s3,%s4,%s5",
+                    pos_nick, pos_nick, pos_nick, pos_nick, pos_nick) >= 0)
             {
-                snprintf (server_nicks, length,
-                          "%s,%s2,%s3,%s4,%s5",
-                          pos_nick, pos_nick, pos_nick, pos_nick, pos_nick);
                 weechat_config_option_set (
                     ptr_server->options[IRC_SERVER_OPTION_NICKS],
                     server_nicks,
@@ -2117,14 +2108,7 @@ irc_server_alloc_with_url (const char *irc_url)
             if (irc_channel_is_channel (ptr_server, pos_channel))
                 server_autojoin = strdup (pos_channel);
             else
-            {
-                server_autojoin = malloc (strlen (pos_channel) + 2);
-                if (server_autojoin)
-                {
-                    strcpy (server_autojoin, "#");
-                    strcat (server_autojoin, pos_channel);
-                }
-            }
+                weechat_asprintf (&server_autojoin, "#%s", pos_channel);
             if (server_autojoin)
             {
                 weechat_config_option_set (
@@ -2460,7 +2444,7 @@ irc_server_copy (struct t_irc_server *server, const char *new_name)
     struct t_infolist *infolist;
     char *mask, *pos;
     const char *option_name;
-    int length, index_option;
+    int index_option;
 
     /* check if another server exists with this name */
     if (irc_server_search (new_name))
@@ -2475,11 +2459,8 @@ irc_server_copy (struct t_irc_server *server, const char *new_name)
     new_server->fake_server = server->fake_server;
 
     /* duplicate options */
-    length = 32 + strlen (server->name) + 1;
-    mask = malloc (length);
-    if (!mask)
+    if (weechat_asprintf (&mask, "irc.server.%s.*", server->name) < 0)
         return 0;
-    snprintf (mask, length, "irc.server.%s.*", server->name);
     infolist = weechat_infolist_get ("option", NULL, mask);
     free (mask);
     if (infolist)
@@ -2521,7 +2502,6 @@ irc_server_copy (struct t_irc_server *server, const char *new_name)
 int
 irc_server_rename (struct t_irc_server *server, const char *new_name)
 {
-    int length;
     char *mask, *pos_option, *new_option_name, charset_modifier[1024];
     char *buffer_name;
     const char *option_name;
@@ -2534,11 +2514,8 @@ irc_server_rename (struct t_irc_server *server, const char *new_name)
         return 0;
 
     /* rename options */
-    length = 32 + strlen (server->name) + 1;
-    mask = malloc (length);
-    if (!mask)
+    if (weechat_asprintf (&mask, "irc.server.%s.*", server->name) < 0)
         return 0;
-    snprintf (mask, length, "irc.server.%s.*", server->name);
     infolist = weechat_infolist_get ("option", NULL, mask);
     free (mask);
     if (infolist)
@@ -2556,12 +2533,11 @@ irc_server_rename (struct t_irc_server *server, const char *new_name)
                     if (pos_option)
                     {
                         pos_option++;
-                        length = strlen (new_name) + 1 + strlen (pos_option) + 1;
-                        new_option_name = malloc (length);
-                        if (new_option_name)
+                        if (weechat_asprintf (&new_option_name,
+                                              "%s.%s",
+                                              new_name,
+                                              pos_option) >= 0)
                         {
-                            snprintf (new_option_name, length,
-                                      "%s.%s", new_name, pos_option);
                             weechat_config_option_rename (ptr_option, new_option_name);
                             free (new_option_name);
                         }
@@ -2677,40 +2653,37 @@ irc_server_send_signal (struct t_irc_server *server, const char *signal,
                         const char *command, const char *full_message,
                         const char *tags)
 {
-    int rc, length;
+    int rc;
     char *str_signal, *full_message_tags;
 
     rc = WEECHAT_RC_OK;
 
-    length = strlen (server->name) + 1 + strlen (signal) + 1
-        + strlen (command) + 1;
-    str_signal = malloc (length);
-    if (str_signal)
+    if (weechat_asprintf (&str_signal,
+                          "%s,%s_%s",
+                          server->name, signal, command) < 0)
     {
-        snprintf (str_signal, length,
-                  "%s,%s_%s", server->name, signal, command);
-        if (tags)
-        {
-            length = strlen (tags) + 1 + strlen (full_message) + 1;
-            full_message_tags = malloc (length);
-            if (full_message_tags)
-            {
-                snprintf (full_message_tags, length,
-                          "%s;%s", tags, full_message);
-                rc = weechat_hook_signal_send (str_signal,
-                                               WEECHAT_HOOK_SIGNAL_STRING,
-                                               (void *)full_message_tags);
-                free (full_message_tags);
-            }
-        }
-        else
+        return rc;
+    }
+
+    if (tags)
+    {
+        if (weechat_asprintf (&full_message_tags,
+                              "%s;%s", tags, full_message) >= 0)
         {
             rc = weechat_hook_signal_send (str_signal,
                                            WEECHAT_HOOK_SIGNAL_STRING,
-                                           (void *)full_message);
+                                           (void *)full_message_tags);
+            free (full_message_tags);
         }
-        free (str_signal);
     }
+    else
+    {
+        rc = weechat_hook_signal_send (str_signal,
+                                       WEECHAT_HOOK_SIGNAL_STRING,
+                                       (void *)full_message);
+    }
+
+    free (str_signal);
 
     return rc;
 }
@@ -2803,7 +2776,6 @@ irc_server_set_send_default_tags (const char *tags)
 char *
 irc_server_get_tags_to_send (const char *tags)
 {
-    int length;
     char *buf;
 
     if (!tags && !irc_server_send_default_tags)
@@ -2816,10 +2788,7 @@ irc_server_get_tags_to_send (const char *tags)
         return strdup (tags);
 
     /* concatenate tags and irc_server_send_default_tags */
-    length = strlen (tags) + 1 + strlen (irc_server_send_default_tags) + 1;
-    buf = malloc (length);
-    if (buf)
-        snprintf (buf, length, "%s,%s", tags, irc_server_send_default_tags);
+    weechat_asprintf (&buf, "%s,%s", tags, irc_server_send_default_tags);
     return buf;
 }
 
@@ -3396,18 +3365,14 @@ irc_server_msgq_add_msg (struct t_irc_server *server, const char *msg)
     message->server = server;
     if (server->unterminated_message)
     {
-        message->data = malloc (strlen (server->unterminated_message) +
-                                strlen (msg) + 1);
-        if (!message->data)
+        if (weechat_asprintf (&message->data,
+                              "%s%s",
+                              server->unterminated_message,
+                              msg) < 0)
         {
             weechat_printf (server->buffer,
                             _("%s%s: not enough memory for received message"),
                             weechat_prefix ("error"), IRC_PLUGIN_NAME);
-        }
-        else
-        {
-            strcpy (message->data, server->unterminated_message);
-            strcat (message->data, msg);
         }
         free (server->unterminated_message);
         server->unterminated_message = NULL;
@@ -4753,22 +4718,18 @@ void
 irc_server_set_buffer_title (struct t_irc_server *server)
 {
     char *title;
-    int length;
 
     if (server && server->buffer)
     {
         if (server->is_connected)
         {
-            length = 16 +
-                ((server->current_address) ? strlen (server->current_address) : 16) +
-                16 + ((server->current_ip) ? strlen (server->current_ip) : 16) + 1;
-            title = malloc (length);
-            if (title)
+            if (weechat_asprintf (
+                    &title,
+                    "IRC: %s/%d (%s)",
+                    server->current_address,
+                    server->current_port,
+                    (server->current_ip) ? server->current_ip : "") >= 0)
             {
-                snprintf (title, length, "IRC: %s/%d (%s)",
-                          server->current_address,
-                          server->current_port,
-                          (server->current_ip) ? server->current_ip : "");
                 weechat_buffer_set (server->buffer, "title", title);
                 free (title);
             }
@@ -5878,7 +5839,6 @@ irc_server_execute_command (struct t_irc_server *server)
 {
     char **commands, **ptr_command, *command2, *command3, *slash_command;
     const char *ptr_server_command;
-    int length;
 
     ptr_server_command = IRC_SERVER_OPTION_STRING(server,
                                                   IRC_SERVER_OPTION_COMMAND);
@@ -5904,11 +5864,8 @@ irc_server_execute_command (struct t_irc_server *server)
                 }
                 else
                 {
-                    length = 1 + strlen (command3) + 1;
-                    slash_command = malloc (length);
-                    if (slash_command)
+                    if (weechat_asprintf (&slash_command, "/%s", command3) >= 0)
                     {
-                        snprintf (slash_command, length, "/%s", command3);
                         weechat_command (server->buffer, slash_command);
                         free (slash_command);
                     }

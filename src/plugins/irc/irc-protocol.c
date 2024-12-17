@@ -5998,7 +5998,6 @@ IRC_PROTOCOL_CALLBACK(352)
 {
     char *str_host, *str_hopcount, *str_realname;
     const char *pos;
-    int length;
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
 
@@ -6037,11 +6036,11 @@ IRC_PROTOCOL_CALLBACK(352)
     /* update host in nick */
     if (ptr_nick)
     {
-        length = strlen (ctxt->params[2]) + 1 + strlen (ctxt->params[3]) + 1;
-        str_host = malloc (length);
-        if (str_host)
+        if (weechat_asprintf (&str_host,
+                              "%s@%s",
+                              ctxt->params[2],
+                              ctxt->params[3]) >= 0)
         {
-            snprintf (str_host, length, "%s@%s", ctxt->params[2], ctxt->params[3]);
             irc_nick_set_host (ptr_nick, str_host);
             free (str_host);
         }
@@ -6267,7 +6266,6 @@ IRC_PROTOCOL_CALLBACK(353)
 IRC_PROTOCOL_CALLBACK(354)
 {
     char *str_params, *str_host;
-    int length;
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
 
@@ -6311,11 +6309,11 @@ IRC_PROTOCOL_CALLBACK(354)
     /* update host in nick */
     if (ptr_nick)
     {
-        length = strlen (ctxt->params[2]) + 1 + strlen (ctxt->params[3]) + 1;
-        str_host = malloc (length);
-        if (str_host)
+        if (weechat_asprintf (&str_host,
+                              "%s@%s",
+                              ctxt->params[2],
+                              ctxt->params[3]) >= 0)
         {
-            snprintf (str_host, length, "%s@%s", ctxt->params[2], ctxt->params[3]);
             irc_nick_set_host (ptr_nick, str_host);
             free (str_host);
         }

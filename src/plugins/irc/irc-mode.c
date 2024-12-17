@@ -155,7 +155,7 @@ irc_mode_channel_update (struct t_irc_server *server,
 {
     char *pos_args, *str_modes, **argv, *pos, *ptr_arg;
     char *new_modes, *new_args, str_mode[2], *str_temp;
-    int argc, current_arg, chanmode_found, length;
+    int argc, current_arg, chanmode_found;
 
     if (!channel->modes)
         channel->modes = strdup ("+");
@@ -295,11 +295,8 @@ irc_mode_channel_update (struct t_irc_server *server,
         }
         if (new_args[0])
         {
-            length = strlen (new_modes) + 1 + strlen (new_args) + 1;
-            str_temp = malloc (length);
-            if (str_temp)
+            if (weechat_asprintf (&str_temp, "%s %s", new_modes, new_args) >= 0)
             {
-                snprintf (str_temp, length, "%s %s", new_modes, new_args);
                 free (channel->modes);
                 channel->modes = str_temp;
             }

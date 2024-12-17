@@ -2717,13 +2717,8 @@ IRC_COMMAND_CALLBACK(ignore)
         }
         else
         {
-            length = 1 + strlen (ptr_regex) + 1 + 1;
-            regex2 = malloc (length);
-            if (regex2)
-            {
-                snprintf (regex2, length, "^%s$", ptr_regex);
+            if (weechat_asprintf (&regex2, "^%s$", ptr_regex) >= 0)
                 ptr_regex = regex2;
-            }
         }
 
         ptr_ignore = irc_ignore_search (ptr_regex, server, channel);
@@ -3272,7 +3267,6 @@ IRC_COMMAND_CALLBACK(kick)
 IRC_COMMAND_CALLBACK(kickban)
 {
     char *pos_channel, *pos_nick, *nick_only, *pos_comment, *pos, *mask;
-    int length;
 
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
     IRC_COMMAND_CHECK_SERVER("kickban", 1, 1);
@@ -3331,13 +3325,11 @@ IRC_COMMAND_CALLBACK(kickban)
     /* set ban for nick(+host) on channel */
     if (strchr (pos_nick, '@'))
     {
-        length = strlen (pos_nick) + 16 + 1;
-        mask = malloc (length);
-        if (mask)
+        pos = strchr (pos_nick, '!');
+        if (weechat_asprintf (&mask,
+                              "*!%s",
+                              (pos) ? pos + 1 : pos_nick) >= 0)
         {
-            pos = strchr (pos_nick, '!');
-            snprintf (mask, length, "*!%s",
-                      (pos) ? pos + 1 : pos_nick);
             irc_server_sendf (ptr_server,
                               IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
                               "MODE %s +b %s",
@@ -6187,12 +6179,8 @@ IRC_COMMAND_CALLBACK(server)
         length = strlen (msg_no_quotes);
         if (length > 0)
         {
-            /* allocate length + 2 (CR-LF) + 1 (final '\0') */
-            message = malloc (length + 2 + 1);
-            if (message)
+            if (weechat_asprintf (&message, "%s\r\n", msg_no_quotes) >= 0)
             {
-                strcpy (message, msg_no_quotes);
-                strcat (message, "\r\n");
                 irc_server_msgq_add_buffer (ptr_server, message);
                 irc_server_msgq_flush ();
                 free (message);

@@ -943,23 +943,22 @@ irc_message_split_add (struct t_irc_message_split_context *context,
 
     if (message)
     {
-        length = ((tags) ? strlen (tags) : 0) + strlen (message) + 1;
-        buf = malloc (length);
-        if (buf)
+        snprintf (key, sizeof (key), "msg%d", context->number);
+        if (weechat_asprintf (&buf,
+                              "%s%s",
+                              (tags) ? tags : "",
+                              message) >= 0)
         {
-            snprintf (key, sizeof (key), "msg%d", context->number);
-            snprintf (buf, length, "%s%s",
-                      (tags) ? tags : "",
-                      message);
+            length = strlen (buf);
             weechat_hashtable_set (context->hashtable, key, buf);
             if (weechat_irc_plugin->debug >= 2)
             {
                 weechat_printf (NULL,
                                 "irc_message_split_add >> %s='%s' (%d bytes)",
-                                key, buf, length - 1);
+                                key, buf, length);
             }
             free (buf);
-            context->total_bytes += length;
+            context->total_bytes += length + 1;
         }
     }
     if (arguments)

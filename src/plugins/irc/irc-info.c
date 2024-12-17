@@ -53,13 +53,7 @@ irc_info_create_string_with_pointer (char **string, void *pointer)
         *string = NULL;
     }
     if (pointer)
-    {
-        *string = malloc (64);
-        if (*string)
-        {
-            snprintf (*string, 64, "0x%lx", (unsigned long)pointer);
-        }
-    }
+        weechat_asprintf (string, "0x%lx", (unsigned long)pointer);
 }
 
 /*

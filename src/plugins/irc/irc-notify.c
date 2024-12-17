@@ -274,42 +274,28 @@ irc_notify_build_message_with_nicks (struct t_irc_server *server,
                                      const char *separator,
                                      int *num_nicks)
 {
-    char *message, *message2;
-    int length, total_length, length_separator;
     struct t_irc_notify *ptr_notify;
+    char **message;
 
     *num_nicks = 0;
 
-    length = strlen (irc_message) + 1;
-    total_length = length;
-    length_separator = strlen (separator);
-
-    message = malloc (length);
+    message = weechat_string_dyn_alloc (256);
     if (!message)
         return NULL;
-    snprintf (message, length, "%s", irc_message);
+
+    weechat_string_dyn_concat (message, irc_message, -1);
 
     for (ptr_notify = server->notify_list; ptr_notify;
          ptr_notify = ptr_notify->next_notify)
     {
-        length = strlen (ptr_notify->nick);
-        total_length += length + length_separator;
-        message2 = realloc (message, total_length);
-        if (!message2)
-        {
-            free (message);
-            message = NULL;
-            break;
-        }
-        message = message2;
         if (*num_nicks > 0)
-            strcat (message, separator);
-        strcat (message, ptr_notify->nick);
+            weechat_string_dyn_concat (message, separator, -1);
+        weechat_string_dyn_concat (message, ptr_notify->nick, -1);
 
         (*num_nicks)++;
     }
 
-    return message;
+    return weechat_string_dyn_free (message, 0);
 }
 
 /*
@@ -646,21 +632,15 @@ irc_notify_send_signal (struct t_irc_notify *notify,
                         const char *away_message)
 {
     char signal[128], *data;
-    int length;
 
     snprintf (signal, sizeof (signal), "irc_notify_%s", type);
 
-    length = strlen (notify->server->name) + 1 + strlen (notify->nick) + 1
-        + ((away_message) ? strlen (away_message) : 0) + 1;
-    data = malloc (length);
-    if (data)
-    {
-        snprintf (data, length, "%s,%s%s%s",
-                  notify->server->name,
-                  notify->nick,
-                  (away_message && away_message[0]) ? "," : "",
-                  (away_message && away_message[0]) ? away_message : "");
-    }
+    weechat_asprintf (&data,
+                      "%s,%s%s%s",
+                      notify->server->name,
+                      notify->nick,
+                      (away_message && away_message[0]) ? "," : "",
+                      (away_message && away_message[0]) ? away_message : "");
 
     (void) weechat_hook_signal_send (signal, WEECHAT_HOOK_SIGNAL_STRING, data);
 
