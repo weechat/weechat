@@ -418,7 +418,6 @@ void
 alias_hook_command (struct t_alias *alias)
 {
     char *str_priority_name, *str_completion;
-    int length;
 
     if (alias->hook)
     {
@@ -431,10 +430,7 @@ alias_hook_command (struct t_alias *alias)
      * is greater than default one (1000), so the alias is executed before a
      * command (if a command with same name exists in core or in another plugin)
      */
-    length = strlen (alias->name) + 16 + 1;
-    str_priority_name = malloc (length);
-    if (str_priority_name)
-        snprintf (str_priority_name, length, "2000|%s", alias->name);
+    weechat_asprintf (&str_priority_name, "2000|%s", alias->name);
 
     /*
      * if alias has no custom completion, then default is to complete with
@@ -444,21 +440,19 @@ alias_hook_command (struct t_alias *alias)
     str_completion = NULL;
     if (!alias->completion)
     {
-        length = 2 + strlen (alias->command) + 1;
-        str_completion = malloc (length);
-        if (str_completion)
-        {
-            snprintf (str_completion, length, "%%%%%s",
-                      (weechat_string_is_command_char (alias->command)) ?
-                      weechat_utf8_next_char (alias->command) : alias->command);
-        }
+        weechat_asprintf (
+            &str_completion,
+            "%%%%%s",
+            (weechat_string_is_command_char (alias->command)) ?
+            weechat_utf8_next_char (alias->command) : alias->command);
     }
 
-    alias->hook = weechat_hook_command ((str_priority_name) ? str_priority_name : alias->name,
-                                        alias->command,
-                                        NULL, NULL,
-                                        (str_completion) ? str_completion : alias->completion,
-                                        &alias_cb, alias, NULL);
+    alias->hook = weechat_hook_command (
+        (str_priority_name) ? str_priority_name : alias->name,
+        alias->command,
+        NULL, NULL,
+        (str_completion) ? str_completion : alias->completion,
+        &alias_cb, alias, NULL);
 
     free (str_priority_name);
     free (str_completion);
