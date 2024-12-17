@@ -345,19 +345,17 @@ trigger_config_create_trigger_option (const char *trigger_name, int index_option
                                       const char *value)
 {
     struct t_config_option *ptr_option;
-    int length;
     char *option_name;
 
     ptr_option = NULL;
 
-    length = strlen (trigger_name) + 1 +
-        strlen (trigger_option_string[index_option]) + 1;
-    option_name = malloc (length);
-    if (!option_name)
+    if (weechat_asprintf (&option_name,
+                          "%s.%s",
+                          trigger_name,
+                          trigger_option_string[index_option]) < 0)
+    {
         return NULL;
-
-    snprintf (option_name, length, "%s.%s",
-              trigger_name, trigger_option_string[index_option]);
+    }
 
     switch (index_option)
     {

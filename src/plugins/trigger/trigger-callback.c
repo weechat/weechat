@@ -811,7 +811,7 @@ trigger_callback_modifier_cb (const void *pointer, void *data,
     const char *ptr_string;
     char *string_modified, *pos, *buffer_pointer;
     char *str_tags, **tags, *prefix, *string_no_color;
-    int length, num_tags, rc;
+    int num_tags, rc;
     void *ptr_irc_server, *ptr_irc_channel;
     struct t_gui_buffer *ptr_buffer;
 
@@ -950,11 +950,8 @@ trigger_callback_modifier_cb (const void *pointer, void *data,
                             | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
                             0,
                             &num_tags);
-                        length = 1 + strlen (pos) + 1 + 1;
-                        str_tags = malloc (length);
-                        if (str_tags)
+                        if (weechat_asprintf (&str_tags, ",%s,", pos) >= 0)
                         {
-                            snprintf (str_tags, length, ",%s,", pos);
                             weechat_hashtable_set (ctx.extra_vars, "tg_tags",
                                                    str_tags);
                             free (str_tags);
@@ -1003,7 +1000,7 @@ trigger_callback_line_cb (const void *pointer, void *data,
     void *ptr;
     const char *ptr_key, *ptr_value;
     char **tags, *str_tags, *string_no_color;
-    int rc, num_tags, length;
+    int rc, num_tags;
 
     TRIGGER_CALLBACK_CB_INIT(NULL);
 
@@ -1041,12 +1038,10 @@ trigger_callback_line_cb (const void *pointer, void *data,
                                  &num_tags);
 
     /* build string with tags and commas around: ",tag1,tag2,tag3," */
-    length = 1 + strlen ((ptr_value) ? ptr_value : "") + 1 + 1;
-    str_tags = malloc (length);
-    if (str_tags)
+    if (weechat_asprintf (&str_tags,
+                          ",%s,",
+                          (ptr_value) ? ptr_value : "") >= 0)
     {
-        snprintf (str_tags, length, ",%s,",
-                  (ptr_value) ? ptr_value : "");
         weechat_hashtable_set (ctx.extra_vars, "tags", str_tags);
         free (str_tags);
     }
@@ -1140,7 +1135,6 @@ trigger_callback_print_cb  (const void *pointer, void *data,
                             const char *message)
 {
     char *str_tags, *str_tags2, str_temp[128], *str_no_color;
-    int length;
     struct timeval tv;
 
     TRIGGER_CALLBACK_CB_INIT(WEECHAT_RC_OK);
@@ -1185,11 +1179,8 @@ trigger_callback_print_cb  (const void *pointer, void *data,
     if (str_tags)
     {
         /* build string with tags and commas around: ",tag1,tag2,tag3," */
-        length = 1 + strlen (str_tags) + 1 + 1;
-        str_tags2 = malloc (length);
-        if (str_tags2)
+        if (weechat_asprintf (&str_tags2, ",%s,", str_tags) >= 0)
         {
-            snprintf (str_tags2, length, ",%s,", str_tags);
             weechat_hashtable_set (ctx.extra_vars, "tg_tags", str_tags2);
             free (str_tags2);
         }
