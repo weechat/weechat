@@ -1127,7 +1127,6 @@ char *
 string_expand_home (const char *path)
 {
     char *ptr_home, *str;
-    int length;
 
     if (!path)
         return NULL;
@@ -1142,12 +1141,7 @@ string_expand_home (const char *path)
     if (!ptr_home)
         return NULL;
 
-    length = strlen (ptr_home) + strlen (path + 1) + 1;
-    str = malloc (length);
-    if (!str)
-        return strdup (path);
-
-    snprintf (str, length, "%s%s", ptr_home, path + 1);
+    string_asprintf (&str, "%s%s", ptr_home, path + 1);
 
     return str;
 }
@@ -1171,7 +1165,6 @@ string_eval_path_home (const char *path,
 {
     char *path1, *path2, *path3;
     const char *ptr_option_directory, *ptr_directory;
-    int length;
 
     if (!path)
         return NULL;
@@ -1201,13 +1194,12 @@ string_eval_path_home (const char *path,
             else if (strcmp (ptr_option_directory, "runtime") == 0)
                 ptr_directory = weechat_runtime_dir;
         }
-        length = strlen (ptr_directory) + strlen (path + 2) + 1;
-        path1 = malloc (length);
-        if (path1)
-            snprintf (path1, length, "%s%s", ptr_directory, path + 2);
+        string_asprintf (&path1, "%s%s", ptr_directory, path + 2);
     }
     else
+    {
         path1 = strdup (path);
+    }
     if (!path1)
         goto end;
 
@@ -2184,11 +2176,7 @@ string_replace_regex (const char *string, void *regex, const char *replace,
     if (!string || !regex)
         return NULL;
 
-    length = strlen (string) + 1;
-    result = malloc (length);
-    if (!result)
-        return NULL;
-    snprintf (result, length, "%s", string);
+    result = strdup (string);
 
     start_offset = 0;
     while (result && result[start_offset])

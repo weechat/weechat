@@ -1841,7 +1841,7 @@ COMMAND_CALLBACK(color)
 
 COMMAND_CALLBACK(command)
 {
-    int length, index_args, any_plugin;
+    int index_args, any_plugin;
     char *command, **commands, **ptr_command;
     struct t_weechat_plugin *ptr_plugin;
     struct t_gui_buffer *ptr_buffer;
@@ -1912,11 +1912,8 @@ COMMAND_CALLBACK(command)
     }
     else
     {
-        length = strlen (argv_eol[index_args + 1]) + 2;
-        command = malloc (length);
-        if (command)
+        if (string_asprintf (&command, "/%s", argv_eol[index_args + 1]) >= 0)
         {
-            snprintf (command, length, "/%s", argv_eol[index_args + 1]);
             (void) input_exec_command (ptr_buffer, any_plugin, ptr_plugin,
                                        command, NULL);
             free (command);
@@ -3079,8 +3076,8 @@ COMMAND_CALLBACK(help)
     struct t_weechat_plugin *ptr_plugin;
     struct t_config_option *ptr_option;
     int i, length, command_found, first_line_displayed, verbose;
-    char *string, *ptr_string, *pos_double_pipe, *pos_end, *args_desc;
-    char empty_string[1] = { '\0' }, str_format[64];
+    char *string, *ptr_string, **string_values, *pos_double_pipe, *pos_end;
+    char *args_desc, empty_string[1] = { '\0' }, str_format[64];
 
     /* make C compiler happy */
     (void) pointer;
@@ -3370,63 +3367,53 @@ COMMAND_CALLBACK(help)
                 }
                 break;
             case CONFIG_OPTION_TYPE_ENUM:
-                length = 0;
-                i = 0;
-                while (ptr_option->string_values[i])
+                string_values = string_dyn_alloc (256);
+                if (string_values)
                 {
-                    length += strlen (ptr_option->string_values[i]) + 5;
-                    i++;
-                }
-                if (length > 0)
-                {
-                    string = malloc (length);
-                    if (string)
+                    i = 0;
+                    while (ptr_option->string_values[i])
                     {
-                        string[0] = '\0';
-                        i = 0;
-                        while (ptr_option->string_values[i])
-                        {
-                            strcat (string, "\"");
-                            strcat (string, ptr_option->string_values[i]);
-                            strcat (string, "\"");
-                            if (ptr_option->string_values[i + 1])
-                                strcat (string, ", ");
-                            i++;
-                        }
-                        gui_chat_printf (NULL, "  %s: %s",
-                                         _("type"), _("enum"));
-                        gui_chat_printf (NULL, "  %s: %s",
-                                         _("values"), string);
-                        if (ptr_option->default_value)
-                        {
-                            gui_chat_printf (NULL, "  %s: \"%s\"",
-                                             _("default value"),
-                                             ptr_option->string_values[CONFIG_ENUM_DEFAULT(ptr_option)]);
-                        }
-                        else
-                        {
-                            gui_chat_printf (NULL, "  %s: %s",
-                                             _("default value"),
-                                             _("(undefined)"));
-                        }
-                        if (ptr_option->value)
-                        {
-                            gui_chat_printf (NULL,
-                                             "  %s: \"%s%s%s\"",
-                                             _("current value"),
-                                             GUI_COLOR(GUI_COLOR_CHAT_VALUE),
-                                             ptr_option->string_values[CONFIG_ENUM(ptr_option)],
-                                             GUI_COLOR(GUI_COLOR_CHAT));
-                        }
-                        else
-                        {
-                            gui_chat_printf (NULL,
-                                             "  %s: %s",
-                                             _("current value"),
-                                             _("(undefined)"));
-                        }
-                        free (string);
+                        string_dyn_concat (string_values, "\"", -1);
+                        string_dyn_concat (string_values,
+                                           ptr_option->string_values[i], -1);
+                        string_dyn_concat (string_values, "\"", -1);
+                        if (ptr_option->string_values[i + 1])
+                            string_dyn_concat (string_values, ", ", -1);
+                        i++;
                     }
+                    gui_chat_printf (NULL, "  %s: %s", _("type"), _("enum"));
+                    gui_chat_printf (NULL, "  %s: %s", _("values"), *string_values);
+                    if (ptr_option->default_value)
+                    {
+                        gui_chat_printf (
+                            NULL, "  %s: \"%s\"",
+                            _("default value"),
+                            ptr_option->string_values[CONFIG_ENUM_DEFAULT(ptr_option)]);
+                    }
+                    else
+                    {
+                        gui_chat_printf (NULL, "  %s: %s",
+                                         _("default value"),
+                                         _("(undefined)"));
+                    }
+                    if (ptr_option->value)
+                    {
+                        gui_chat_printf (
+                            NULL,
+                            "  %s: \"%s%s%s\"",
+                            _("current value"),
+                            GUI_COLOR(GUI_COLOR_CHAT_VALUE),
+                            ptr_option->string_values[CONFIG_ENUM(ptr_option)],
+                            GUI_COLOR(GUI_COLOR_CHAT));
+                    }
+                    else
+                    {
+                        gui_chat_printf (NULL,
+                                         "  %s: %s",
+                                         _("current value"),
+                                         _("(undefined)"));
+                    }
+                    string_dyn_free (string_values, 1);
                 }
                 break;
             case CONFIG_NUM_OPTION_TYPES:
@@ -4874,7 +4861,7 @@ COMMAND_CALLBACK(mouse)
 
 COMMAND_CALLBACK(mute)
 {
-    int length, mute_mode, gui_chat_mute_old;
+    int mute_mode, gui_chat_mute_old;
     char *command, *ptr_command;
     struct t_gui_buffer *mute_buffer, *ptr_buffer, *gui_chat_mute_buffer_old;
 
@@ -4939,11 +4926,8 @@ COMMAND_CALLBACK(mute)
         }
         else
         {
-            length = strlen (ptr_command) + 2;
-            command = malloc (length);
-            if (command)
+            if (string_asprintf (&command, "/%s", ptr_command) >= 0)
             {
-                snprintf (command, length, "/%s", ptr_command);
                 (void) input_exec_command (buffer, 1, NULL, command, NULL);
                 free (command);
             }
@@ -6722,7 +6706,7 @@ int
 command_set_display_option_list (const char *message, const char *search,
                                  int display_only_changed)
 {
-    int number_found, section_displayed, length;
+    int number_found, section_displayed;
     struct t_config_file *ptr_config;
     struct t_config_section *ptr_section;
     struct t_config_option *ptr_option;
@@ -6755,15 +6739,12 @@ command_set_display_option_list (const char *message, const char *search,
                     !config_file_option_has_changed (ptr_option))
                     continue;
 
-                length = strlen (ptr_config->name) + 1
-                    + strlen (ptr_section->name) + 1
-                    + strlen (ptr_option->name) + 1;
-                option_full_name = malloc (length);
-                if (option_full_name)
+                if (string_asprintf (&option_full_name,
+                                     "%s.%s.%s",
+                                     ptr_config->name,
+                                     ptr_section->name,
+                                     ptr_option->name) >= 0)
                 {
-                    snprintf (option_full_name, length, "%s.%s.%s",
-                              ptr_config->name, ptr_section->name,
-                              ptr_option->name);
                     if ((!search) ||
                         (search && search[0]
                          && (string_match (option_full_name, search, 1))))

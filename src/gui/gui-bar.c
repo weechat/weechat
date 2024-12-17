@@ -1911,7 +1911,6 @@ void
 gui_bar_create_default_input ()
 {
     struct t_gui_bar *ptr_bar;
-    int length;
     char *buf;
 
     /* search an input_text item */
@@ -1922,18 +1921,13 @@ gui_bar_create_default_input ()
         if (ptr_bar)
         {
             /* add item "input_text" to input bar */
-            length = 1;
-            if (CONFIG_STRING(ptr_bar->options[GUI_BAR_OPTION_ITEMS]))
-                length += strlen (CONFIG_STRING(ptr_bar->options[GUI_BAR_OPTION_ITEMS]));
-            length += 1; /* "," */
-            length += strlen (gui_bar_item_names[GUI_BAR_ITEM_INPUT_TEXT]);
-            buf = malloc (length);
-            if (buf)
+            if (string_asprintf (
+                    &buf,
+                    "%s,%s",
+                    (CONFIG_STRING(ptr_bar->options[GUI_BAR_OPTION_ITEMS])) ?
+                    CONFIG_STRING(ptr_bar->options[GUI_BAR_OPTION_ITEMS]) : "",
+                    gui_bar_item_names[GUI_BAR_ITEM_INPUT_TEXT]) >= 0)
             {
-                snprintf (buf, length, "%s,%s",
-                          (CONFIG_STRING(ptr_bar->options[GUI_BAR_OPTION_ITEMS])) ?
-                          CONFIG_STRING(ptr_bar->options[GUI_BAR_OPTION_ITEMS]) : "",
-                          gui_bar_item_names[GUI_BAR_ITEM_INPUT_TEXT]);
                 config_file_option_set (ptr_bar->options[GUI_BAR_OPTION_ITEMS], buf, 1);
                 gui_chat_printf (NULL, _("Bar \"%s\" updated"),
                                  gui_bar_default_name[GUI_BAR_DEFAULT_INPUT]);

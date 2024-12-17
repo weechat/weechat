@@ -122,7 +122,6 @@ hook_focus_hashtable_map2_cb (void *data,
                               const void *key, const void *value)
 {
     struct t_hashtable *hashtable1;
-    int length;
     char *key2;
 
     /* make C compiler happy */
@@ -130,13 +129,12 @@ hook_focus_hashtable_map2_cb (void *data,
 
     hashtable1 = (struct t_hashtable *)data;
 
-    length = strlen ((const char *)key) + 1 + 1;
-    key2 = malloc (length);
-    if (key2)
+    if (!hashtable1 || !key || !value)
+        return;
+
+    if (string_asprintf (&key2, "%s2", (const char *)key) >= 0)
     {
-        snprintf (key2, length, "%s2", (const char *)key);
-        if (hashtable1 && key && value)
-            hashtable_set (hashtable1, key2, (const char *)value);
+        hashtable_set (hashtable1, key2, (const char *)value);
         free (key2);
     }
 }
@@ -157,7 +155,7 @@ hook_focus_get_data (struct t_hashtable *hashtable_focus1,
     struct t_hashtable *hashtable1, *hashtable2, *hashtable_ret;
     const char *focus1_chat, *focus1_bar_item_name, *keys;
     char **list_keys, *new_key;
-    int num_keys, i, length, focus1_is_chat;
+    int num_keys, i, focus1_is_chat;
 
     if (!hashtable_focus1)
         return NULL;
@@ -256,11 +254,8 @@ hook_focus_get_data (struct t_hashtable *hashtable_focus1,
             {
                 for (i = 0; i < num_keys; i++)
                 {
-                    length = strlen (list_keys[i]) + 1 + 1;
-                    new_key = malloc (length);
-                    if (new_key)
+                    if (string_asprintf (&new_key, "%s2", list_keys[i]) >= 0)
                     {
-                        snprintf (new_key, length, "%s2", list_keys[i]);
                         hashtable_set (hashtable1, new_key,
                                        hashtable_get (hashtable1,
                                                       list_keys[i]));

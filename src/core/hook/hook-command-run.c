@@ -115,13 +115,8 @@ hook_command_run_exec (struct t_gui_buffer *buffer, const char *command)
     if (command[0] != '/')
     {
         ptr_string = utf8_next_char (command);
-        length = 1 + strlen (ptr_string) + 1;
-        command2 = malloc (length);
-        if (command2)
-        {
-            snprintf (command2, length, "/%s", ptr_string);
+        if (string_asprintf (&command2, "/%s", ptr_string) >= 0)
             ptr_command = command2;
-        }
     }
 
     ptr_hook = weechat_hooks[HOOK_TYPE_COMMAND_RUN];

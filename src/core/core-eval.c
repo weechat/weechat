@@ -2524,11 +2524,9 @@ eval_replace_regex (const char *string, regex_t *regex, const char *replace,
     if (!string || !regex || !replace)
         goto end;
 
-    length = strlen (string) + 1;
-    result = malloc (length);
+    result = strdup (string);
     if (!result)
         goto end;
-    snprintf (result, length, "%s", string);
 
     eval_context->regex = &eval_regex;
     eval_context->regex_replacement_index = 1;

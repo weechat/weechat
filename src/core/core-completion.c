@@ -71,17 +71,12 @@ completion_list_add_quoted_word (struct t_gui_completion *completion,
                                  const char *word)
 {
     char *temp;
-    int length;
 
-    length = 1 + strlen (word) + 1 + 1;
-    temp = malloc (length);
-    if (!temp)
-        return;
-
-    snprintf (temp, length, "\"%s\"", word);
-    gui_completion_list_add (completion, temp, 0, WEECHAT_LIST_POS_END);
-
-    free (temp);
+    if (string_asprintf (&temp, "\"%s\"", word) >= 0)
+    {
+        gui_completion_list_add (completion, temp, 0, WEECHAT_LIST_POS_END);
+        free (temp);
+    }
 }
 
 /*
@@ -1221,7 +1216,6 @@ completion_list_add_config_options_cb (const void *pointer, void *data,
     struct t_config_file *ptr_config;
     struct t_config_section *ptr_section;
     struct t_config_option *ptr_option;
-    int length;
     char *option_full_name;
 
     /* make C compiler happy */
@@ -1239,15 +1233,12 @@ completion_list_add_config_options_cb (const void *pointer, void *data,
             for (ptr_option = ptr_section->options; ptr_option;
                  ptr_option = ptr_option->next_option)
             {
-                length = strlen (ptr_config->name) + 1
-                    + strlen (ptr_section->name) + 1
-                    + strlen (ptr_option->name) + 1;
-                option_full_name = malloc (length);
-                if (option_full_name)
+                if (string_asprintf (&option_full_name,
+                                     "%s.%s.%s",
+                                     ptr_config->name,
+                                     ptr_section->name,
+                                     ptr_option->name) >= 0)
                 {
-                    snprintf (option_full_name, length, "%s.%s.%s",
-                              ptr_config->name, ptr_section->name,
-                              ptr_option->name);
                     gui_completion_list_add (completion,
                                              option_full_name,
                                              0, WEECHAT_LIST_POS_SORT);
@@ -1334,7 +1325,6 @@ completion_list_add_plugins_installed_cb (const void *pointer, void *data,
                                           struct t_gui_completion *completion)
 {
     char *plugin_path, *dir_name, *extra_libdir;
-    int length;
     struct t_hashtable *options;
 
     /* make C compiler happy */
@@ -1347,11 +1337,8 @@ completion_list_add_plugins_installed_cb (const void *pointer, void *data,
     extra_libdir = getenv (WEECHAT_EXTRA_LIBDIR);
     if (extra_libdir && extra_libdir[0])
     {
-        length = strlen (extra_libdir) + 16 + 1;
-        dir_name = malloc (length);
-        if (dir_name)
+        if (string_asprintf (&dir_name, "%s/plugins", extra_libdir) >= 0)
         {
-            snprintf (dir_name, length, "%s/plugins", extra_libdir);
             dir_exec_on_files (dir_name, 1, 0,
                                &completion_list_add_plugins_installed_exec_cb,
                                completion);
@@ -1383,11 +1370,8 @@ completion_list_add_plugins_installed_cb (const void *pointer, void *data,
     }
 
     /* plugins in WeeChat global lib dir */
-    length = strlen (WEECHAT_LIBDIR) + 16 + 1;
-    dir_name = malloc (length);
-    if (dir_name)
+    if (string_asprintf (&dir_name, "%s/plugins", WEECHAT_LIBDIR) >= 0)
     {
-        snprintf (dir_name, length, "%s/plugins", WEECHAT_LIBDIR);
         dir_exec_on_files (dir_name, 1, 0,
                            &completion_list_add_plugins_installed_exec_cb,
                            completion);
@@ -1500,7 +1484,6 @@ completion_list_add_config_option_values_cb (const void *pointer, void *data,
     char *pos_space, *option_full_name, *pos_section, *pos_option;
     char *file, *section, *value_string, **ptr_value;
     const char *color_name;
-    int length;
     struct t_config_file *ptr_config;
     struct t_config_section *ptr_section, *section_found;
     struct t_config_option *option_found;
@@ -1587,12 +1570,11 @@ completion_list_add_config_option_values_cb (const void *pointer, void *data,
                                                          0, WEECHAT_LIST_POS_BEGINNING);
                             if (option_found->value)
                             {
-                                length = 64;
-                                value_string = malloc (length);
-                                if (value_string)
+                                if (string_asprintf (
+                                        &value_string,
+                                        "%d",
+                                        CONFIG_INTEGER(option_found)) >= 0)
                                 {
-                                    snprintf (value_string, length,
-                                              "%d", CONFIG_INTEGER(option_found));
                                     gui_completion_list_add (completion,
                                                              value_string,
                                                              0, WEECHAT_LIST_POS_BEGINNING);
@@ -1612,13 +1594,11 @@ completion_list_add_config_option_values_cb (const void *pointer, void *data,
                                                      0, WEECHAT_LIST_POS_BEGINNING);
                             if (option_found->value)
                             {
-                                length = strlen (CONFIG_STRING(option_found)) + 2 + 1;
-                                value_string = malloc (length);
-                                if (value_string)
+                                if (string_asprintf (
+                                        &value_string,
+                                        "\"%s\"",
+                                        CONFIG_STRING(option_found)) >= 0)
                                 {
-                                    snprintf (value_string, length,
-                                              "\"%s\"",
-                                              CONFIG_STRING(option_found));
                                     gui_completion_list_add (completion,
                                                              value_string,
                                                              0, WEECHAT_LIST_POS_BEGINNING);
@@ -2126,17 +2106,13 @@ completion_list_map_eval_buffer_local_variable_cb (void *data,
                                                    const void *key, const void *value)
 {
     char *name;
-    int length;
 
     /* make C compiler happy */
     (void) hashtable;
     (void) value;
 
-    length = strlen (key) + 3 + 1;
-    name = malloc (length);
-    if (name)
+    if (string_asprintf (&name, "${%s}", (const char *)key) >= 0)
     {
-        snprintf (name, length, "${%s}", (const char *)key);
         gui_completion_list_add ((struct t_gui_completion *)data,
                                  name, 0, WEECHAT_LIST_POS_SORT);
         free (name);

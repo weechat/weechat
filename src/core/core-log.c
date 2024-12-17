@@ -62,8 +62,6 @@ int weechat_log_use_time = 1;      /* 0 to temporary disable time in log,   */
 int
 log_open (const char *filename, const char *mode)
 {
-    int filename_length;
-
     /* exit if log already opened */
     if (weechat_log_file)
         return 0;
@@ -75,16 +73,17 @@ log_open (const char *filename, const char *mode)
     else if (filename)
     {
         weechat_log_filename = strdup (filename);
-        weechat_log_file = fopen (weechat_log_filename, mode);
     }
     else
     {
-        filename_length = strlen (weechat_state_dir) + 64;
-        weechat_log_filename = malloc (filename_length);
-        snprintf (weechat_log_filename, filename_length,
-                  "%s/%s", weechat_state_dir, WEECHAT_LOG_NAME);
-        weechat_log_file = fopen (weechat_log_filename, mode);
+        string_asprintf (&weechat_log_filename,
+                         "%s/%s", weechat_state_dir, WEECHAT_LOG_NAME);
     }
+
+    if (!weechat_log_filename)
+        return 0;
+
+    weechat_log_file = fopen (weechat_log_filename, mode);
 
     if (!weechat_log_file)
     {
@@ -260,7 +259,6 @@ int
 log_crash_rename ()
 {
     char *old_name, *new_name;
-    int length;
     time_t time_now;
     struct tm *local_time;
 
@@ -273,32 +271,33 @@ log_crash_rename ()
 
     log_close ();
 
-    length = strlen (weechat_state_dir) + 128;
-    new_name = malloc (length);
-    if (new_name)
+    time_now = time (NULL);
+    local_time = localtime (&time_now);
+    if (string_asprintf (&new_name,
+                         "%s/weechat_crash_%04d%02d%02d_%d.log",
+                         weechat_state_dir,
+                         local_time->tm_year + 1900,
+                         local_time->tm_mon + 1,
+                         local_time->tm_mday,
+                         getpid ()) < 0)
     {
-        time_now = time (NULL);
-        local_time = localtime (&time_now);
-        snprintf (new_name, length,
-                  "%s/weechat_crash_%04d%02d%02d_%d.log",
-                  weechat_state_dir,
-                  local_time->tm_year + 1900,
-                  local_time->tm_mon + 1,
-                  local_time->tm_mday,
-                  getpid ());
-        if (rename (old_name, new_name) == 0)
-        {
-            string_fprintf (stderr, "*** Full crash dump was saved to %s file.\n",
-                            new_name);
-            log_open (new_name, "a");
-            free (old_name);
-            free (new_name);
-            return 1;
-        }
-        free (new_name);
+        return 0;
     }
 
+    if (rename (old_name, new_name) == 0)
+    {
+        string_fprintf (stderr, "*** Full crash dump was saved to %s file.\n",
+                        new_name);
+        log_open (new_name, "a");
+        free (old_name);
+        free (new_name);
+        return 1;
+    }
+
+    free (new_name);
     free (old_name);
+
     log_open (NULL, "a");
+
     return 0;
 }
