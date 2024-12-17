@@ -237,7 +237,6 @@ weechat_perl_output_flush ()
 {
     const char *ptr_command;
     char *temp_buffer, *command;
-    int length;
 
     if (!(*perl_buffer_output)[0])
         return;
@@ -266,12 +265,11 @@ weechat_perl_output_flush ()
             }
             else
             {
-                length = 1 + strlen (temp_buffer) + 1;
-                command = malloc (length);
-                if (command)
+                if (weechat_asprintf (&command,
+                                      "%c%s",
+                                      temp_buffer[0],
+                                      temp_buffer) >= 0)
                 {
-                    snprintf (command, length, "%c%s",
-                              temp_buffer[0], temp_buffer);
                     weechat_command (perl_eval_buffer,
                                      (command[0]) ? command : " ");
                     free (command);
@@ -334,7 +332,7 @@ weechat_perl_exec (struct t_plugin_script *script,
     char *func;
     unsigned int count;
     void *ret_value;
-    int *ret_i, mem_err, length, i, argc;
+    int *ret_i, mem_err, i, argc;
     SV *ret_s;
     HV *hash;
     struct t_plugin_script *old_perl_current_script;
@@ -346,20 +344,19 @@ weechat_perl_exec (struct t_plugin_script *script,
     perl_current_script = script;
 
 #ifdef MULTIPLICITY
-    (void) length;
     func = (char *) function;
     old_context = PERL_GET_CONTEXT;
     if (script->interpreter)
         PERL_SET_CONTEXT (script->interpreter);
 #else
-    length = strlen ((script->interpreter) ? script->interpreter : perl_main) +
-        strlen (function) + 3;
-    func = (char *) malloc (length);
-    if (!func)
+    if (weechat_asprintf (
+            &func,
+            "%s::%s",
+            (char *) ((script->interpreter) ? script->interpreter : perl_main)
+            function) < 0)
+    {
         return NULL;
-    snprintf (func, length, "%s::%s",
-              (char *) ((script->interpreter) ? script->interpreter : perl_main),
-              function);
+    }
 #endif /* MULTIPLICITY */
 
     dSP;
@@ -511,12 +508,9 @@ weechat_perl_exec (struct t_plugin_script *script,
 struct t_plugin_script *
 weechat_perl_load (const char *filename, const char *code)
 {
-    char str_warning[512], str_error[512];
-
+    char str_warning[512], str_error[512], *perl_code;
     struct t_plugin_script temp_script;
     struct stat buf;
-    char *perl_code;
-    int length;
 #ifdef MULTIPLICITY
     int wcwidth160;
 #else
@@ -592,34 +586,28 @@ weechat_perl_load (const char *filename, const char *code)
     temp_script.interpreter = (PerlInterpreter *) perl_current_interpreter;
     perl_parse (perl_current_interpreter, weechat_perl_api_init,
                 perl_args_count, perl_args, NULL);
-    length = strlen (perl_weechat_code) + strlen (str_warning) +
-        strlen (str_error) - 2 + 4 + strlen ((code) ? code : filename) + 4 + 1;
-    perl_code = malloc (length);
-    if (!perl_code)
-        return NULL;
-    snprintf (perl_code, length, perl_weechat_code,
-              str_warning,
-              str_error,
-              (code) ? "{\n" : "'",
-              (code) ? code : filename,
-              (code) ? "\n};\n" : "';");
+    weechat_asprintf (&perl_code,
+                      perl_weechat_code,
+                      str_warning,
+                      str_error,
+                      (code) ? "{\n" : "'",
+                      (code) ? code : filename,
+                      (code) ? "\n};\n" : "';");
 #else
     snprintf (pkgname, sizeof (pkgname), "%s%d", PKG_NAME_PREFIX, perl_num);
     perl_num++;
-    length = strlen (perl_weechat_code) + strlen (str_warning) +
-        strlen (str_error) - 4 + strlen (pkgname) + 4 +
-        strlen ((code) ? code : filename) + 4 + 1;
-    perl_code = malloc (length);
+    weechat_asprintf (&perl_code,
+                      perl_weechat_code,
+                      pkgname,
+                      str_warning,
+                      str_error,
+                      (code) ? "{\n" : "'",
+                      (code) ? code : filename,
+                      (code) ? "\n};\n" : "';");
+#endif /* MULTIPLICITY */
+
     if (!perl_code)
         return NULL;
-    snprintf (perl_code, length, perl_weechat_code,
-              pkgname,
-              str_warning,
-              str_error,
-              (code) ? "{\n" : "'",
-              (code) ? code : filename,
-              (code) ? "\n};\n" : "';");
-#endif /* MULTIPLICITY */
     eval_pv (perl_code, TRUE);
     free (perl_code);
 
