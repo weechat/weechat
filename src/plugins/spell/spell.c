@@ -231,7 +231,6 @@ spell_build_option_name (struct t_gui_buffer *buffer)
 {
     const char *plugin_name, *name;
     char *option_name;
-    int length;
 
     if (!buffer)
         return NULL;
@@ -239,12 +238,7 @@ spell_build_option_name (struct t_gui_buffer *buffer)
     plugin_name = weechat_buffer_get_string (buffer, "plugin");
     name = weechat_buffer_get_string (buffer, "name");
 
-    length = strlen (plugin_name) + 1 + strlen (name) + 1;
-    option_name = malloc (length);
-    if (!option_name)
-        return NULL;
-
-    snprintf (option_name, length, "%s.%s", plugin_name, name);
+    weechat_asprintf (&option_name, "%s.%s", plugin_name, name);
 
     return option_name;
 }
@@ -989,14 +983,13 @@ spell_modifier_cb (const void *pointer, void *data,
                                                  misspelled_word);
             if (suggestions)
             {
-                length = strlen (misspelled_word) + 1 /* ":" */
-                    + strlen (suggestions) + 1;
-                word_and_suggestions = malloc (length);
-                if (word_and_suggestions)
+                if (weechat_asprintf (&word_and_suggestions,
+                                      "%s:%s",
+                                      misspelled_word,
+                                      suggestions) >= 0)
                 {
-                    snprintf (word_and_suggestions, length, "%s:%s",
-                              misspelled_word, suggestions);
-                    weechat_buffer_set (buffer, "localvar_set_spell_suggest",
+                    weechat_buffer_set (buffer,
+                                        "localvar_set_spell_suggest",
                                         word_and_suggestions);
                     free (word_and_suggestions);
                 }
