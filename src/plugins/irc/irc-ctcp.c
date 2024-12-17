@@ -424,7 +424,7 @@ irc_ctcp_reply_to_nick (struct t_irc_protocol_ctxt *ctxt,
                         const char *arguments)
 {
     struct t_arraylist *list_messages;
-    int i, list_size, length;
+    int i, list_size;
     char *dup_ctcp, *dup_ctcp_upper, *dup_args, *message;
     const char *ptr_message;
 
@@ -479,12 +479,11 @@ irc_ctcp_reply_to_nick (struct t_irc_protocol_ctxt *ctxt,
             if (!ptr_message)
                 break;
             /* build arguments: '\001' + CTCP + ' ' + message + '\001' */
-            length = 1 + strlen (dup_ctcp_upper) + 1 + strlen (ptr_message) + 1 + 1;
-            message = malloc (length);
-            if (message)
+            if (weechat_asprintf (&message,
+                                  "\001%s %s\001",
+                                  dup_ctcp_upper,
+                                  ptr_message) >= 0)
             {
-                snprintf (message, length,
-                          "\001%s %s\001", dup_ctcp_upper, ptr_message);
                 irc_ctcp_display_reply_to_nick (ctxt, ctxt->nick, message);
                 free (message);
             }

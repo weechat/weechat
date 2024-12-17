@@ -543,7 +543,6 @@ irc_bar_item_nick_modes (const void *pointer, void *data,
 {
     struct t_irc_server *server;
     char *buf;
-    int length;
 
     /* make C compiler happy */
     (void) pointer;
@@ -559,14 +558,9 @@ irc_bar_item_nick_modes (const void *pointer, void *data,
     if (!server || !server->nick_modes || !server->nick_modes[0])
         return NULL;
 
-    length = 64 + strlen (server->nick_modes) + 1;
-    buf = malloc (length);
-    if (buf)
-    {
-        snprintf (buf, length, "%s%s",
-                  IRC_COLOR_ITEM_NICK_MODES,
-                  server->nick_modes);
-    }
+    weechat_asprintf (&buf,
+                      "%s%s",
+                      IRC_COLOR_ITEM_NICK_MODES, server->nick_modes);
 
     return buf;
 }

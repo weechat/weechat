@@ -414,7 +414,6 @@ irc_completion_channel_nicks_hosts_cb (const void *pointer, void *data,
 {
     struct t_irc_nick *ptr_nick;
     char *buf;
-    int length;
 
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
 
@@ -437,13 +436,11 @@ irc_completion_channel_nicks_hosts_cb (const void *pointer, void *data,
                                                  WEECHAT_LIST_POS_SORT);
                     if (ptr_nick->host)
                     {
-                        length = strlen (ptr_nick->name) + 1 +
-                            strlen (ptr_nick->host) + 1;
-                        buf = malloc (length);
-                        if (buf)
+                        if (weechat_asprintf (&buf,
+                                              "%s!%s",
+                                              ptr_nick->name,
+                                              ptr_nick->host) >= 0)
                         {
-                            snprintf (buf, length, "%s!%s",
-                                      ptr_nick->name, ptr_nick->host);
                             weechat_completion_list_add (
                                 completion, buf, 0, WEECHAT_LIST_POS_SORT);
                             free (buf);
@@ -558,7 +555,6 @@ irc_completion_channel_topic_cb (const void *pointer, void *data,
                                  struct t_gui_completion *completion)
 {
     char *topic;
-    int length;
 
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
 
@@ -580,16 +576,15 @@ irc_completion_channel_topic_cb (const void *pointer, void *data,
              * instead of
              *   /topic #test is a test channel
              */
-            length = strlen (ptr_channel->name) + strlen (ptr_channel->topic) + 16 + 1;
-            topic = malloc (length);
-            if (topic)
-            {
-                snprintf (topic, length, "%s %s",
-                          ptr_channel->name, ptr_channel->topic);
-            }
+            weechat_asprintf (&topic,
+                              "%s %s",
+                              ptr_channel->name,
+                              ptr_channel->topic);
         }
         else
+        {
             topic = strdup (ptr_channel->topic);
+        }
 
         weechat_completion_list_add (completion,
                                      (topic) ? topic : ptr_channel->topic,

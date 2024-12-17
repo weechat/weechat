@@ -59,30 +59,32 @@ irc_sasl_mechanism_plain (const char *sasl_username, const char *sasl_password)
     if (!sasl_username || !sasl_password)
         return NULL;
 
-    answer_base64 = NULL;
-    length_username = strlen (sasl_username);
-    length = ((length_username + 1) * 2) + strlen (sasl_password) + 1;
-    string = malloc (length);
-    if (string)
+    if (weechat_asprintf (&string,
+                          "%s|%s|%s",
+                          sasl_username,
+                          sasl_username,
+                          sasl_password) < 0)
     {
-        snprintf (string, length, "%s|%s|%s",
-                  sasl_username, sasl_username, sasl_password);
-        string[length_username] = '\0';
-        string[(length_username * 2) + 1] = '\0';
-
-        answer_base64 = malloc (length * 4);
-        if (answer_base64)
-        {
-            if (weechat_string_base_encode ("64", string, length - 1,
-                                            answer_base64) < 0)
-            {
-                free (answer_base64);
-                answer_base64 = NULL;
-            }
-        }
-
-        free (string);
+        return NULL;
     }
+
+    length = strlen (string);
+
+    length_username = strlen (sasl_username);
+    string[length_username] = '\0';
+    string[(length_username * 2) + 1] = '\0';
+
+    answer_base64 = malloc ((length * 4) + 1);
+    if (answer_base64)
+    {
+        if (weechat_string_base_encode ("64", string, length, answer_base64) < 0)
+        {
+            free (answer_base64);
+            answer_base64 = NULL;
+        }
+    }
+
+    free (string);
 
     return answer_base64;
 }
@@ -158,11 +160,11 @@ irc_sasl_mechanism_scram (struct t_irc_server *server,
         if (!username2)
             goto memory_error;
         length = 5 + strlen (username2) + 3 + sizeof (nonce_client_base64) - 1;
-        string = malloc (length + 1);
-        if (string)
+        if (weechat_asprintf (&string,
+                              "n,,n=%s,r=%s",
+                              username2,
+                              nonce_client_base64) >= 0)
         {
-            snprintf (string, length + 1, "n,,n=%s,r=%s",
-                      username2, nonce_client_base64);
             free (server->sasl_scram_client_first);
             server->sasl_scram_client_first = strdup (string + 3);
         }
@@ -366,12 +368,13 @@ irc_sasl_mechanism_scram (struct t_irc_server *server,
                 goto base64_encode_error;
             /* final message: auth_no_proof + "," + proof */
             length = strlen (auth_no_proof) + 3 + strlen (client_proof_base64);
-            string = malloc (length + 1);
-            rc = snprintf (string, length + 1, "%s,p=%s",
-                           auth_no_proof,
-                           client_proof_base64);
-            if ((rc < 0) || (rc >= length + 1))
+            if (weechat_asprintf (&string,
+                                  "%s,p=%s",
+                                  auth_no_proof,
+                                  client_proof_base64) < 0)
+            {
                 goto memory_error;
+            }
         }
     }
     goto end;
@@ -526,8 +529,13 @@ irc_sasl_mechanism_ecdsa_nist256p_challenge (struct t_irc_server *server,
         string = malloc (length + 1);
         if (string)
         {
-            snprintf (string, length + 1, "%s|%s", sasl_username, sasl_username);
-            string[length_username] = '\0';
+            if (weechat_asprintf (&string,
+                                  "%s|%s",
+                                  sasl_username,
+                                  sasl_username) >= 0)
+            {
+                string[length_username] = '\0';
+            }
         }
     }
     else
