@@ -230,7 +230,6 @@ void
 fset_option_add_option_in_hashtable (struct t_hashtable *hashtable,
                                      struct t_fset_option *fset_option)
 {
-    int length;
     char *value;
 
     weechat_hashtable_set (hashtable, "file", fset_option->file);
@@ -251,19 +250,10 @@ fset_option_add_option_in_hashtable (struct t_hashtable *hashtable,
     weechat_hashtable_set (hashtable, "value", fset_option->value);
     if (fset_option->value && (fset_option->type == FSET_OPTION_TYPE_STRING))
     {
-        length = 1 + strlen (fset_option->value) + 1 + 1;
-        value = malloc (length);
-        if (value)
-        {
-            snprintf (value, length, "\"%s\"", fset_option->value);
-            weechat_hashtable_set (hashtable, "quoted_value", value);
-            free (value);
-        }
-        else
-        {
-            weechat_hashtable_set (hashtable,
-                                   "quoted_value", fset_option->value);
-        }
+        weechat_asprintf (&value, "\"%s\"", fset_option->value);
+        weechat_hashtable_set (hashtable, "quoted_value",
+                               (value) ? value : fset_option->value);
+        free (value);
     }
     else
     {
@@ -435,7 +425,7 @@ fset_option_set_values (struct t_fset_option *fset_option,
     const char **ptr_string_values;
     void *ptr_default_value, *ptr_value;
     struct t_config_option *ptr_parent_option;
-    int length, *ptr_type, *ptr_min, *ptr_max;
+    int *ptr_type, *ptr_min, *ptr_max;
     char str_value[64], str_allowed_values[4096];
 
     /* file */
@@ -459,17 +449,11 @@ fset_option_set_values (struct t_fset_option *fset_option,
     /* name */
     free (fset_option->name);
     fset_option->name = NULL;
-    length = strlen (ptr_config_name) + 1 +
-        strlen (ptr_section_name) + 1 +
-        strlen (ptr_option_name) + 1;
-    fset_option->name = malloc (length);
-    if (fset_option->name)
-    {
-        snprintf (fset_option->name, length, "%s.%s.%s",
-                  ptr_config_name,
-                  ptr_section_name,
-                  ptr_option_name);
-    }
+    weechat_asprintf (&fset_option->name,
+                      "%s.%s.%s",
+                      ptr_config_name,
+                      ptr_section_name,
+                      ptr_option_name);
 
     /* parent name */
     free (fset_option->parent_name);
@@ -1184,7 +1168,7 @@ fset_option_set (struct t_fset_option *fset_option,
                  struct t_gui_buffer *buffer,
                  int set_mode)
 {
-    int use_mute, add_quotes, length_input, input_pos;
+    int use_mute, add_quotes, input_pos;
     char *ptr_value, *str_input, str_pos[32];
     char empty_value[1] = { '\0' };
 
@@ -1199,20 +1183,19 @@ fset_option_set (struct t_fset_option *fset_option,
     else
         ptr_value = (fset_option->value) ? fset_option->value : empty_value;
 
-    length_input = 64 + strlen (fset_option->name) + strlen (ptr_value) + 1;
-    str_input = malloc (length_input);
-    if (!str_input)
-        return;
-
     use_mute = weechat_config_boolean (fset_config_look_use_mute);
     add_quotes = (fset_option->type == FSET_OPTION_TYPE_STRING) ? 1 : 0;
-    snprintf (str_input, length_input,
-              "%s/set %s %s%s%s",
-              (use_mute) ? "/mute " : "",
-              fset_option->name,
-              (add_quotes) ? "\"" : "",
-              ptr_value,
-              (add_quotes) ? "\"" : "");
+    if (weechat_asprintf (
+            &str_input,
+            "%s/set %s %s%s%s",
+            (use_mute) ? "/mute " : "",
+            fset_option->name,
+            (add_quotes) ? "\"" : "",
+            ptr_value,
+            (add_quotes) ? "\"" : "") < 0)
+    {
+        return;
+    }
     weechat_buffer_set (buffer, "input", str_input);
     input_pos = ((use_mute) ? 6 : 0) +  /* "/mute " */
         5 +  /* "/set " */

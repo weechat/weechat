@@ -896,7 +896,7 @@ int
 fset_buffer_display_option_predefined_format (struct t_fset_option *fset_option)
 {
     int selected_line, value_undef, value_changed, format_number;
-    int add_quotes, add_quotes_parent, length_value;
+    int add_quotes, add_quotes_parent;
     char str_marked[128], str_name[4096], str_type[128], *str_value;
     char str_color_line[128], str_color_value[128], str_color_quotes[128];
     char str_color_name[512];
@@ -1011,43 +1011,39 @@ fset_buffer_display_option_predefined_format (struct t_fset_option *fset_option)
                   fset_option->value,
                   str_color_quotes);
     }
-    length_value = (fset_option->value) ?
-        strlen (fset_option->value) + 256 : 4096;
-    str_value = malloc (length_value);
-    if (str_value)
+    if (value_undef && fset_option->parent_value)
     {
-        if (value_undef && fset_option->parent_value)
-        {
-            add_quotes_parent = (fset_option->parent_value && (fset_option->type == FSET_OPTION_TYPE_STRING)) ? 1 : 0;
-            snprintf (str_value, length_value,
-                      "%s%s%s%s%s%s%s -> %s%s%s%s%s%s%s",
-                      (add_quotes) ? str_color_quotes : "",
-                      (add_quotes) ? "\"" : "",
-                      str_color_value,
-                      (fset_option->value) ? fset_option->value : FSET_OPTION_VALUE_NULL,
-                      (add_quotes) ? str_color_quotes : "",
-                      (add_quotes) ? "\"" : "",
-                      weechat_color ("default"),
-                      (add_quotes_parent) ? weechat_color (weechat_config_string (fset_config_color_quotes[selected_line])) : "",
-                      (add_quotes_parent) ? "\"" : "",
-                      weechat_color (weechat_config_string (fset_config_color_parent_value[selected_line])),
-                      (fset_option->parent_value) ? fset_option->parent_value : FSET_OPTION_VALUE_NULL,
-                      (add_quotes_parent) ? weechat_color (weechat_config_string (fset_config_color_quotes[selected_line])) : "",
-                      (add_quotes_parent) ? "\"" : "",
-                      str_color_name);
-        }
-        else
-        {
-            snprintf (str_value, length_value,
-                      "%s%s%s%s%s%s%s",
-                      (add_quotes) ? str_color_quotes : "",
-                      (add_quotes) ? "\"" : "",
-                      str_color_value,
-                      (fset_option->value) ? fset_option->value : FSET_OPTION_VALUE_NULL,
-                      (add_quotes) ? str_color_quotes : "",
-                      (add_quotes) ? "\"" : "",
-                      str_color_name);
-        }
+        add_quotes_parent = (fset_option->parent_value && (fset_option->type == FSET_OPTION_TYPE_STRING)) ? 1 : 0;
+        weechat_asprintf (
+            &str_value,
+            "%s%s%s%s%s%s%s -> %s%s%s%s%s%s%s",
+            (add_quotes) ? str_color_quotes : "",
+            (add_quotes) ? "\"" : "",
+            str_color_value,
+            (fset_option->value) ? fset_option->value : FSET_OPTION_VALUE_NULL,
+            (add_quotes) ? str_color_quotes : "",
+            (add_quotes) ? "\"" : "",
+            weechat_color ("default"),
+            (add_quotes_parent) ? weechat_color (weechat_config_string (fset_config_color_quotes[selected_line])) : "",
+            (add_quotes_parent) ? "\"" : "",
+            weechat_color (weechat_config_string (fset_config_color_parent_value[selected_line])),
+            (fset_option->parent_value) ? fset_option->parent_value : FSET_OPTION_VALUE_NULL,
+            (add_quotes_parent) ? weechat_color (weechat_config_string (fset_config_color_quotes[selected_line])) : "",
+            (add_quotes_parent) ? "\"" : "",
+            str_color_name);
+    }
+    else
+    {
+        weechat_asprintf (
+            &str_value,
+            "%s%s%s%s%s%s%s",
+            (add_quotes) ? str_color_quotes : "",
+            (add_quotes) ? "\"" : "",
+            str_color_value,
+            (fset_option->value) ? fset_option->value : FSET_OPTION_VALUE_NULL,
+            (add_quotes) ? str_color_quotes : "",
+            (add_quotes) ? "\"" : "",
+            str_color_name);
     }
 
     weechat_printf_y (
