@@ -579,11 +579,13 @@ weechat_perl_load (const char *filename, const char *code)
     wcwidth160 = wcwidth (160);
     perl_construct (perl_current_interpreter);
 
+#if PERL_REVISION >= 6 || (PERL_REVISION == 5 && PERL_VERSION >= 28) || (PERL_REVISION == 5 && PERL_VERSION == 27 && PERL_SUBVERSION >= 9)
     if (wcwidth (160) != wcwidth160)
     {
         /* restore the locale that's broken in some versions of Perl */
         Perl_setlocale (LC_ALL, "");
     }
+#endif
 
     temp_script.interpreter = (PerlInterpreter *) perl_current_interpreter;
     perl_parse (perl_current_interpreter, weechat_perl_api_init,
@@ -1320,11 +1322,13 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     wcwidth160 = wcwidth (160);
     perl_construct (perl_main);
 
+#if PERL_REVISION >= 6 || (PERL_REVISION == 5 && PERL_VERSION >= 28) || (PERL_REVISION == 5 && PERL_VERSION == 27 && PERL_SUBVERSION >= 9)
     if (wcwidth (160) != wcwidth160)
     {
         /* restore the locale that's broken in some versions of Perl */
         Perl_setlocale (LC_ALL, "");
     }
+#endif
 
     perl_parse (perl_main, weechat_perl_api_init, perl_args_count,
                 perl_args, NULL);
