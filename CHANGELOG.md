@@ -1,10 +1,14 @@
 # WeeChat ChangeLog
 
-## Version 4.5.0 (under dev)
+## Version 4.6.0 (under dev)
 
 ### Added
 
 - core: add command `/pipe`
+
+### Fixed
+
+- perl: fix build with Perl < 5.7.29 ([#2219](https://github.com/weechat/weechat/issues/2219), [#2220](https://github.com/weechat/weechat/issues/2220))
 
 ## Version 4.5.0 (2024-12-15)
 
