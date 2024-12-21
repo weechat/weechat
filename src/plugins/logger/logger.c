@@ -182,7 +182,15 @@ logger_create_directory ()
     if (file_path)
     {
         if (!weechat_mkdir_parents (file_path, 0700))
+        {
+            weechat_printf_date_tags (
+                NULL, 0, "no_log",
+                _("%s%s: unable to create directory for logs "
+                  "(\"%s\")"),
+                weechat_prefix ("error"), LOGGER_PLUGIN_NAME,
+                file_path);
             rc = 0;
+        }
         free (file_path);
     }
     else

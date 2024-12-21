@@ -8,6 +8,7 @@
 
 ### Fixed
 
+- logger: fix path displayed when the logs directory can not be created
 - perl: fix build with Perl < 5.7.29 ([#2219](https://github.com/weechat/weechat/issues/2219), [#2220](https://github.com/weechat/weechat/issues/2220))
 
 ## Version 4.5.0 (2024-12-15)
