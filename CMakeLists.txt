@@ -247,9 +247,7 @@ find_library(DL_LIBRARY
   PATHS /lib /usr/lib /usr/libexec /usr/local/lib /usr/local/libexec
 )
 if(DL_LIBRARY)
-  string(REGEX REPLACE "/[^/]*$" "" DL_LIBRARY_PATH "${DL_LIBRARY}")
-  set(CMAKE_C_LINK_FLAGS "${CMAKE_C_LINK_FLAGS} -L${DL_LIBRARY_PATH}")
-  list(APPEND EXTRA_LIBS dl)
+  list(APPEND EXTRA_LIBS ${DL_LIBRARY})
 endif()
 
 add_subdirectory(icons)
