@@ -265,15 +265,7 @@ logger_buffer_create_log_file (struct t_logger_buffer *logger_buffer)
 
     /* create directory */
     if (!logger_create_directory ())
-    {
-        weechat_printf_date_tags (
-            NULL, 0, "no_log",
-            _("%s%s: unable to create directory for logs "
-              "(\"%s\")"),
-            weechat_prefix ("error"), LOGGER_PLUGIN_NAME,
-            weechat_config_string (logger_config_file_path));
         return 0;
-    }
     if (!logger_buffer->log_filename)
         logger_buffer_set_log_filename (logger_buffer);
     if (!logger_buffer->log_filename)
