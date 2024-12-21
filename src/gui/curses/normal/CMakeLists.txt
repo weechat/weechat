@@ -72,6 +72,7 @@ target_link_libraries(${EXECUTABLE}
 # It may be removed in future.
 add_custom_command(
   TARGET ${EXECUTABLE}
+  POST_BUILD
   COMMAND ${CMAKE_COMMAND} -E remove -f "weechat-curses${CMAKE_EXECUTABLE_SUFFIX}"
   COMMAND ${CMAKE_COMMAND} -E create_symlink "weechat${CMAKE_EXECUTABLE_SUFFIX}" "weechat-curses${CMAKE_EXECUTABLE_SUFFIX}"
   WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
