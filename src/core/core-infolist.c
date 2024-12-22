@@ -247,17 +247,27 @@ infolist_new_var_buffer (struct t_infolist_item *item,
 {
     struct t_infolist_var *new_var;
 
-    if (!item || !name || !name[0] || (size <= 0))
+    if (!item || !name || !name[0])
         return NULL;
+
+    if (size < 0)
+        size = 0;
 
     new_var = malloc (sizeof (*new_var));
     if (new_var)
     {
         new_var->name = strdup (name);
         new_var->type = INFOLIST_BUFFER;
-        new_var->value = malloc (size);
-        if (new_var->value)
-            memcpy (new_var->value, pointer, size);
+        if (pointer && (size > 0))
+        {
+            new_var->value = malloc (size);
+            if (new_var->value)
+                memcpy (new_var->value, pointer, size);
+        }
+        else
+        {
+            new_var->value = NULL;
+        }
         new_var->size = size;
 
         new_var->prev_var = item->last_var;
