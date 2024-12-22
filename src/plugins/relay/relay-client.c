@@ -1696,6 +1696,11 @@ relay_client_new_with_infolist (struct t_infolist *infolist)
                 new_client->partial_ws_frame_size = ws_frame_size;
             }
         }
+        else
+        {
+            new_client->partial_ws_frame = NULL;
+            new_client->partial_ws_frame_size = 0;
+        }
         str = weechat_infolist_string (infolist, "partial_message");
         new_client->partial_message = (str) ? strdup (str) : NULL;
 
