@@ -1589,7 +1589,8 @@ relay_client_new_with_infolist (struct t_infolist *infolist)
     if (new_client)
     {
         new_client->id = weechat_infolist_integer (infolist, "id");
-        new_client->desc = NULL;
+        str = weechat_infolist_string (infolist, "desc");
+        new_client->desc = (str) ? strdup (str) : NULL;
         new_client->sock = weechat_infolist_integer (infolist, "sock");
         new_client->server_port = weechat_infolist_integer (infolist, "server_port");
         /* "tls" replaces "ssl" in WeeChat 4.0.0 */
