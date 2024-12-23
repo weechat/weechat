@@ -14,6 +14,16 @@
 - logger: fix path displayed when the logs directory can not be created
 - perl: fix build with Perl < 5.7.29 ([#2219](https://github.com/weechat/weechat/issues/2219), [#2220](https://github.com/weechat/weechat/issues/2220))
 
+## Version 4.5.1 (2024-12-23)
+
+### Fixed
+
+- relay: fix crash after `/upgrade` when relay clients are connected
+- api: fix creation of empty buffer in function infolist_new_var_buffer
+- core: fix detection of dl library ([#2218](https://github.com/weechat/weechat/issues/2218))
+- logger: fix path displayed when the logs directory can not be created
+- perl: fix build with Perl < 5.7.29 ([#2219](https://github.com/weechat/weechat/issues/2219), [#2220](https://github.com/weechat/weechat/issues/2220))
+
 ## Version 4.5.0 (2024-12-15)
 
 ### Changed
