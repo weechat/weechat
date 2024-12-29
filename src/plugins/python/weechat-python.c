@@ -604,7 +604,7 @@ end:
 
 static PyObject *weechat_python_init_module_weechat ()
 {
-    PyObject *weechat_module, *weechat_dict;
+    PyObject *weechat_module;
     int i;
 
     weechat_module = PyModule_Create (&moduleDef);
@@ -619,22 +619,21 @@ static PyObject *weechat_python_init_module_weechat ()
     }
 
     /* define some constants */
-    weechat_dict = PyModule_GetDict (weechat_module);
     for (i = 0; weechat_script_constants[i].name; i++)
     {
         if (weechat_script_constants[i].value_string)
         {
-            PyDict_SetItemString (
-                weechat_dict,
+            PyModule_AddStringConstant (
+                weechat_module,
                 weechat_script_constants[i].name,
-                PyUnicode_FromString (weechat_script_constants[i].value_string));
+                weechat_script_constants[i].value_string);
         }
         else
         {
-            PyDict_SetItemString (
-                weechat_dict,
+            PyModule_AddIntConstant (
+                weechat_module,
                 weechat_script_constants[i].name,
-                PyLong_FromLong ((long)weechat_script_constants[i].value_integer));
+                (long)weechat_script_constants[i].value_integer);
         }
     }
 
