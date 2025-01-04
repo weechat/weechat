@@ -7516,36 +7516,9 @@ COMMAND_CALLBACK(upgrade)
         if (string_strcmp (argv[index_args], "-quit") == 0)
             quit = 1;
         else
-        {
             ptr_binary = string_expand_home (argv_eol[index_args]);
-            if (ptr_binary)
-            {
-                /* check if weechat binary is here and executable by user */
-                rc = stat (ptr_binary, &stat_buf);
-                if ((rc != 0) || (!S_ISREG(stat_buf.st_mode)))
-                {
-                    gui_chat_printf (NULL,
-                                     _("%sCan't upgrade: WeeChat binary \"%s\" "
-                                       "does not exist"),
-                                     gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                     ptr_binary);
-                    free (ptr_binary);
-                    return WEECHAT_RC_ERROR;
-                }
-                if ((!(stat_buf.st_mode & S_IXUSR)) && (!(stat_buf.st_mode & S_IXGRP))
-                    && (!(stat_buf.st_mode & S_IXOTH)))
-                {
-                    gui_chat_printf (NULL,
-                                     _("%sCan't upgrade: WeeChat binary \"%s\" "
-                                       "does not have execute permissions"),
-                                     gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                     ptr_binary);
-                    free (ptr_binary);
-                    return WEECHAT_RC_ERROR;
-                }
-            }
-        }
     }
+
     if (!ptr_binary && !quit)
     {
         ptr_binary = (weechat_argv0) ? strdup (weechat_argv0) : NULL;
@@ -7569,6 +7542,29 @@ COMMAND_CALLBACK(upgrade)
 
     if (ptr_binary)
     {
+        /* check if weechat binary is here and executable by user */
+        rc = stat (ptr_binary, &stat_buf);
+        if ((rc != 0) || (!S_ISREG(stat_buf.st_mode)))
+        {
+            gui_chat_printf (NULL,
+                             _("%sCan't upgrade: WeeChat binary \"%s\" "
+                               "does not exist"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             ptr_binary);
+            free (ptr_binary);
+            return WEECHAT_RC_ERROR;
+        }
+        if ((!(stat_buf.st_mode & S_IXUSR)) && (!(stat_buf.st_mode & S_IXGRP))
+            && (!(stat_buf.st_mode & S_IXOTH)))
+        {
+            gui_chat_printf (NULL,
+                             _("%sCan't upgrade: WeeChat binary \"%s\" "
+                               "does not have execute permissions"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             ptr_binary);
+            free (ptr_binary);
+            return WEECHAT_RC_ERROR;
+        }
         gui_chat_printf (NULL,
                          _("Upgrading WeeChat with binary file: \"%s\"..."),
                          ptr_binary);

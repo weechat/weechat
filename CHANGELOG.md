@@ -8,6 +8,7 @@
 
 ### Fixed
 
+- core: always check that "weechat" binary exists and is executable with command `/upgrade`, even when the path to binary is not given
 - relay: fix crash after `/upgrade` when relay clients are connected
 - api: fix creation of empty buffer in function infolist_new_var_buffer
 - core: fix detection of dl library ([#2218](https://github.com/weechat/weechat/issues/2218))
