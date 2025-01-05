@@ -5,6 +5,7 @@
 ### Added
 
 - core: add command `/pipe`
+- relay: add resource `POST /api/completion` ([#2207](https://github.com/weechat/weechat/issues/2207))
 
 ### Fixed
 
