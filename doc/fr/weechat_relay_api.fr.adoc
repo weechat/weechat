@@ -1232,6 +1232,58 @@ Réponse :
 HTTP/1.1 204 No content
 ----
 
+[[resource_completion]]
+=== Complétion
+
+Compléter une commande ou du texte de l'utilisateur sur un tampon.
+
+Point de terminaison :
+
+----
+POST /api/completion
+----
+
+Paramètres du corps :
+
+* `buffer_id` (entier, facultatif) : identifiant unique du tampon (à ne pas
+  confondre avec le numéro du tampon, qui est différent)
+* `buffer_name` (chaîne, facultatif, par défaut : `core.weechat`) : nom de tampon
+* `command` (chaîne, **obligatoire**) : commande ou texte à compléter
+* `position` (entier, facultatif, par défaut : fin de la chaîne) : position
+  dans la commande (la première position est 0)
+
+Exemple de requête : compléter la commande `/qu` sur le canal #weechat :
+
+[source,shell]
+----
+curl -L -u 'plain:secret_password' -X POST \
+  -d '{"buffer_name": "irc.libera.#weechat", "command": "/qu"}' \
+  'https://localhost:9000/api/completion'
+----
+
+Réponse :
+
+[source,http]
+----
+HTTP/1.1 200 OK
+----
+
+[source,json]
+----
+{
+    "context": "command",
+    "base_word": "qu",
+    "position_replace": 1,
+    "add_space": true,
+    "list": [
+        "query",
+        "quiet",
+        "quit",
+        "quote"
+    ]
+}
+----
+
 [[resource_ping]]
 === Ping
 
