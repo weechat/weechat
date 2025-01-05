@@ -14,6 +14,7 @@
 - core: fix detection of dl library ([#2218](https://github.com/weechat/weechat/issues/2218))
 - logger: fix path displayed when the logs directory can not be created
 - perl: fix build with Perl < 5.7.29 ([#2219](https://github.com/weechat/weechat/issues/2219), [#2220](https://github.com/weechat/weechat/issues/2220))
+- python: enable subinterpreters ([#2222](https://github.com/weechat/weechat/issues/2222))
 
 ## Version 4.5.1 (2024-12-23)
 
