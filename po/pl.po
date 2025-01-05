@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-12-16 12:01+0100\n"
+"POT-Creation-Date: 2025-01-05 10:14+0100\n"
 "PO-Revision-Date: 2024-12-16 12:01+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -889,6 +889,10 @@ msgid "Check running hooks with command: %s"
 msgstr ""
 
 #, c-format
+msgid "%sNo binary specified"
+msgstr "%sNie określono binarki"
+
+#, c-format
 msgid "%sCan't upgrade: WeeChat binary \"%s\" does not exist"
 msgstr "%sNie można uaktualnić: plik binarny WeeChat  \"%s\" nie istnieje"
 
@@ -898,10 +902,6 @@ msgid ""
 msgstr ""
 "%sNie można uaktualnić: plik binarny WeeChat  \"%s\" nie posiada uprawnień "
 "do wykonania"
-
-#, c-format
-msgid "%sNo binary specified"
-msgstr "%sNie określono binarki"
 
 #, c-format
 msgid "Upgrading WeeChat with binary file: \"%s\"..."
@@ -1055,9 +1055,13 @@ msgstr "> raw[root]: poza oknami"
 msgid "> raw[window]: inside windows, with optional conditions (see below)"
 msgstr "> raw[window]: wewnątrz okien, z opcjonalnymi warunkami (patrz niżej)"
 
+#, fuzzy
+#| msgid ""
+#| "conditions: the conditions to display the bar (without conditions, the "
+#| "bar is always displayed:"
 msgid ""
 "conditions: the conditions to display the bar (without conditions, the bar "
-"is always displayed:"
+"is always displayed):"
 msgstr ""
 "warunki: warunki do wyświetlenia paska (bez podania warunków pasek zawsze "
 "jest wyświetlany):"
@@ -13849,10 +13853,6 @@ msgstr ""
 "użyty dla innego bufora (sprawdź ustawienia logów)"
 
 #, c-format
-msgid "%s%s: unable to create directory for logs (\"%s\")"
-msgstr "%s%s: nie można utworzyć katalogu dla logów (\"%s\")"
-
-#, c-format
 msgid "%s%s: unable to write log file \"%s\": %s"
 msgstr "%s%s: nie można zapisać pliku z logiem \"%s\": %s"
 
@@ -14158,6 +14158,10 @@ msgstr "wskaźnik logger (opcjonalny)"
 
 msgid "Log buffers to files"
 msgstr "Zapisuj bufory do plików"
+
+#, c-format
+msgid "%s%s: unable to create directory for logs (\"%s\")"
+msgstr "%s%s: nie można utworzyć katalogu dla logów (\"%s\")"
 
 #, c-format
 msgid ""

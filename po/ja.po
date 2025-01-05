@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-12-16 12:01+0100\n"
+"POT-Creation-Date: 2025-01-05 10:14+0100\n"
 "PO-Revision-Date: 2024-11-20 18:17+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -897,6 +897,10 @@ msgid "Check running hooks with command: %s"
 msgstr ""
 
 #, c-format
+msgid "%sNo binary specified"
+msgstr "%sバイナリが指定されていません"
+
+#, c-format
 msgid "%sCan't upgrade: WeeChat binary \"%s\" does not exist"
 msgstr "%sアップグレードできません: WeeChat バイナリ \"%s\" がありません"
 
@@ -905,10 +909,6 @@ msgid ""
 "%sCan't upgrade: WeeChat binary \"%s\" does not have execute permissions"
 msgstr ""
 "%sアップグレードできません: WeeChat バイナリ \"%s\" の実行許可がありません"
-
-#, c-format
-msgid "%sNo binary specified"
-msgstr "%sバイナリが指定されていません"
 
 #, c-format
 msgid "Upgrading WeeChat with binary file: \"%s\"..."
@@ -1066,7 +1066,7 @@ msgstr ""
 
 msgid ""
 "conditions: the conditions to display the bar (without conditions, the bar "
-"is always displayed:"
+"is always displayed):"
 msgstr ""
 
 msgid "> raw[active]: on active window"
@@ -13649,10 +13649,6 @@ msgstr ""
 "バッファで使われています (ログ設定を確認してください)"
 
 #, c-format
-msgid "%s%s: unable to create directory for logs (\"%s\")"
-msgstr "%s%s: ログ用のディレクトリを作成できません (\"%s\")"
-
-#, c-format
 msgid "%s%s: unable to write log file \"%s\": %s"
 msgstr "%s%s: ログファイル \"%s\" の書き込みに失敗: %s"
 
@@ -13945,6 +13941,10 @@ msgstr "logger ポインタ (任意)"
 
 msgid "Log buffers to files"
 msgstr "ファイルにバッファログを保存"
+
+#, c-format
+msgid "%s%s: unable to create directory for logs (\"%s\")"
+msgstr "%s%s: ログ用のディレクトリを作成できません (\"%s\")"
 
 #, c-format
 msgid ""

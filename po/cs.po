@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-12-16 12:01+0100\n"
+"POT-Creation-Date: 2025-01-05 10:14+0100\n"
 "PO-Revision-Date: 2024-11-20 18:17+0100\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -904,6 +904,10 @@ msgid "Check running hooks with command: %s"
 msgstr ""
 
 #, c-format
+msgid "%sNo binary specified"
+msgstr "%sNení specifikována binárka"
+
+#, c-format
 msgid "%sCan't upgrade: WeeChat binary \"%s\" does not exist"
 msgstr "%sNemohu aktualizovat: binární soubor WeeChat \"%s\" neexistuje"
 
@@ -912,10 +916,6 @@ msgid ""
 "%sCan't upgrade: WeeChat binary \"%s\" does not have execute permissions"
 msgstr ""
 "%sNemohu aktualizovat: binární soubor WeeChat \"%s\" nemá přáva pro spuštění"
-
-#, c-format
-msgid "%sNo binary specified"
-msgstr "%sNení specifikována binárka"
 
 #, c-format
 msgid "Upgrading WeeChat with binary file: \"%s\"..."
@@ -1061,7 +1061,7 @@ msgstr ""
 
 msgid ""
 "conditions: the conditions to display the bar (without conditions, the bar "
-"is always displayed:"
+"is always displayed):"
 msgstr ""
 
 msgid "> raw[active]: on active window"
@@ -12850,10 +12850,6 @@ msgstr ""
 "%s%s: nemohu spustit logování pro buffer \"%s\": jméno souboru \"%s\" je již "
 "použito jiným bufferem (zkontrolujte své nastavení logování)"
 
-#, c-format
-msgid "%s%s: unable to create directory for logs (\"%s\")"
-msgstr "%s%s: nemohu vytvořit adresář pro logy (\"%s\")"
-
 #, fuzzy, c-format
 msgid "%s%s: unable to write log file \"%s\": %s"
 msgstr "%s%s: nemůžu zapsat log soubor \"%s\""
@@ -13132,6 +13128,10 @@ msgstr "ukazatel logeru (volitelné)"
 #, fuzzy
 msgid "Log buffers to files"
 msgstr "konfigurační soubory"
+
+#, c-format
+msgid "%s%s: unable to create directory for logs (\"%s\")"
+msgstr "%s%s: nemohu vytvořit adresář pro logy (\"%s\")"
 
 #, c-format
 msgid ""

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-12-16 12:01+0100\n"
+"POT-Creation-Date: 2025-01-05 10:14+0100\n"
 "PO-Revision-Date: 2024-11-20 18:17+0100\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -893,6 +893,10 @@ msgstr ""
 msgid "Check running hooks with command: %s"
 msgstr ""
 
+#, fuzzy, c-format
+msgid "%sNo binary specified"
+msgstr "Nessuna barra definita"
+
 #, c-format
 msgid "%sCan't upgrade: WeeChat binary \"%s\" does not exist"
 msgstr "%sImpossbile aggiornare: il binario di WeeChat \"%s\" non esiste"
@@ -903,10 +907,6 @@ msgid ""
 msgstr ""
 "%sImpossibile aggiornare: il binario di WeeChat \"%s\" non ha i permessi di "
 "esecuzione"
-
-#, fuzzy, c-format
-msgid "%sNo binary specified"
-msgstr "Nessuna barra definita"
 
 #, c-format
 msgid "Upgrading WeeChat with binary file: \"%s\"..."
@@ -1054,7 +1054,7 @@ msgstr ""
 
 msgid ""
 "conditions: the conditions to display the bar (without conditions, the bar "
-"is always displayed:"
+"is always displayed):"
 msgstr ""
 
 msgid "> raw[active]: on active window"
@@ -13161,10 +13161,6 @@ msgstr ""
 "\"%s\" è già in uso per un altro buffer (verificare le impostazioni dei log)"
 
 #, c-format
-msgid "%s%s: unable to create directory for logs (\"%s\")"
-msgstr "%s%s: impossibile creare la directory per i log (\"%s\")"
-
-#, c-format
 msgid "%s%s: unable to write log file \"%s\": %s"
 msgstr "%s%s: impossibile scrivere il file di log \"%s\": %s"
 
@@ -13444,6 +13440,10 @@ msgstr "puntatore al logger (opzionale)"
 
 msgid "Log buffers to files"
 msgstr "Registra i buffer su file"
+
+#, c-format
+msgid "%s%s: unable to create directory for logs (\"%s\")"
+msgstr "%s%s: impossibile creare la directory per i log (\"%s\")"
 
 #, c-format
 msgid ""

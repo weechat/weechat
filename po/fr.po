@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-12-16 12:01+0100\n"
-"PO-Revision-Date: 2024-12-16 12:01+0100\n"
+"POT-Creation-Date: 2025-01-05 10:14+0100\n"
+"PO-Revision-Date: 2025-01-05 10:15+0100\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -879,6 +879,10 @@ msgid "Check running hooks with command: %s"
 msgstr "Vérifiez les hooks qui tournent avec la commande : %s"
 
 #, c-format
+msgid "%sNo binary specified"
+msgstr "%sPas de binaire spécifié"
+
+#, c-format
 msgid "%sCan't upgrade: WeeChat binary \"%s\" does not exist"
 msgstr "%sImpossible de mettre à jour : le binaire WeeChat \"%s\" n'existe pas"
 
@@ -888,10 +892,6 @@ msgid ""
 msgstr ""
 "%sImpossible de mettre à jour : le binaire WeeChat \"%s\" n'a pas les droits "
 "d'exécution"
-
-#, c-format
-msgid "%sNo binary specified"
-msgstr "%sPas de binaire spécifié"
 
 #, c-format
 msgid "Upgrading WeeChat with binary file: \"%s\"..."
@@ -1035,7 +1035,7 @@ msgstr ""
 
 msgid ""
 "conditions: the conditions to display the bar (without conditions, the bar "
-"is always displayed:"
+"is always displayed):"
 msgstr ""
 "conditions : les conditions pour afficher la barre (sans condition, la barre "
 "est toujours affichée) :"
@@ -13881,10 +13881,6 @@ msgstr ""
 "options d'enregistrement)"
 
 #, c-format
-msgid "%s%s: unable to create directory for logs (\"%s\")"
-msgstr "%s%s : impossible de créer le répertoire pour les logs (\"%s\")"
-
-#, c-format
 msgid "%s%s: unable to write log file \"%s\": %s"
 msgstr "%s%s : impossible d'écrire le fichier log \"%s\" : %s"
 
@@ -14204,6 +14200,10 @@ msgstr "pointeur vers le logger (optionnel)"
 
 msgid "Log buffers to files"
 msgstr "Enregistrement des tampons dans des fichiers"
+
+#, c-format
+msgid "%s%s: unable to create directory for logs (\"%s\")"
+msgstr "%s%s : impossible de créer le répertoire pour les logs (\"%s\")"
 
 #, c-format
 msgid ""

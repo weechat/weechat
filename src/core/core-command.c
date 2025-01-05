@@ -8284,7 +8284,7 @@ command_init ()
             N_("> raw[root]: outside windows"),
             N_("> raw[window]: inside windows, with optional conditions (see below)"),
             N_("conditions: the conditions to display the bar (without conditions, "
-               "the bar is always displayed:"),
+               "the bar is always displayed):"),
             N_("> raw[active]: on active window"),
             N_("> raw[inactive]: on inactive windows"),
             N_("> raw[nicklist]: on windows with nicklist"),

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-12-16 12:01+0100\n"
+"POT-Creation-Date: 2025-01-05 10:14+0100\n"
 "PO-Revision-Date: 2024-11-20 18:17+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -889,6 +889,10 @@ msgstr ""
 msgid "Check running hooks with command: %s"
 msgstr ""
 
+#, fuzzy, c-format
+msgid "%sNo binary specified"
+msgstr "Nincs aliasz definiálva.\n"
+
 #, c-format
 msgid "%sCan't upgrade: WeeChat binary \"%s\" does not exist"
 msgstr ""
@@ -897,10 +901,6 @@ msgstr ""
 msgid ""
 "%sCan't upgrade: WeeChat binary \"%s\" does not have execute permissions"
 msgstr ""
-
-#, fuzzy, c-format
-msgid "%sNo binary specified"
-msgstr "Nincs aliasz definiálva.\n"
 
 #, fuzzy, c-format
 msgid "Upgrading WeeChat with binary file: \"%s\"..."
@@ -1042,7 +1042,7 @@ msgstr ""
 
 msgid ""
 "conditions: the conditions to display the bar (without conditions, the bar "
-"is always displayed:"
+"is always displayed):"
 msgstr ""
 
 msgid "> raw[active]: on active window"
@@ -12284,10 +12284,6 @@ msgid ""
 msgstr ""
 
 #, fuzzy, c-format
-msgid "%s%s: unable to create directory for logs (\"%s\")"
-msgstr "%s nem sikerült a szervert létrehozni\n"
-
-#, fuzzy, c-format
 msgid "%s%s: unable to write log file \"%s\": %s"
 msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
 
@@ -12535,6 +12531,10 @@ msgstr "Beállítások mentése a lemezre\n"
 #, fuzzy
 msgid "Log buffers to files"
 msgstr "szerver konfigurációs fájljának újraolvastatása"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to create directory for logs (\"%s\")"
+msgstr "%s nem sikerült a szervert létrehozni\n"
 
 #, c-format
 msgid ""

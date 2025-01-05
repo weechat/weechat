@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2024-12-16 12:01+0100\n"
+"POT-Creation-Date: 2025-01-05 10:14+0100\n"
 "PO-Revision-Date: 2025-01-04 18:21+0100\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -863,6 +863,10 @@ msgid "Check running hooks with command: %s"
 msgstr "Şu komutla çalışan kancaları denetle: %s"
 
 #, c-format
+msgid "%sNo binary specified"
+msgstr "%sBir ikili belirtilmemiş"
+
+#, c-format
 msgid "%sCan't upgrade: WeeChat binary \"%s\" does not exist"
 msgstr "%sYükseltilemiyor: WeeChat ikilisi \"%s\" yok"
 
@@ -870,10 +874,6 @@ msgstr "%sYükseltilemiyor: WeeChat ikilisi \"%s\" yok"
 msgid ""
 "%sCan't upgrade: WeeChat binary \"%s\" does not have execute permissions"
 msgstr "%sYükseltilemiyor: WeeChat ikilisi \"%s\" yürütme izinlerine iye değil"
-
-#, c-format
-msgid "%sNo binary specified"
-msgstr "%sBir ikili belirtilmemiş"
 
 #, c-format
 msgid "Upgrading WeeChat with binary file: \"%s\"..."
@@ -1011,9 +1011,13 @@ msgid "> raw[window]: inside windows, with optional conditions (see below)"
 msgstr ""
 "> raw[window]: pencereler içeride, isteğe bağlı koşullarla (aşağıya bakın)"
 
+#, fuzzy
+#| msgid ""
+#| "conditions: the conditions to display the bar (without conditions, the "
+#| "bar is always displayed:"
 msgid ""
 "conditions: the conditions to display the bar (without conditions, the bar "
-"is always displayed:"
+"is always displayed):"
 msgstr ""
 "koşullar: çubuğu görüntüleme koşulları (koşulsuz çubuk her zaman "
 "görüntülenir):"
@@ -13790,10 +13794,6 @@ msgstr ""
 "denetleyin)"
 
 #, c-format
-msgid "%s%s: unable to create directory for logs (\"%s\")"
-msgstr "%s%s: Günlükler için dizin oluşturulamıyor (\"%s\""
-
-#, c-format
 msgid "%s%s: unable to write log file \"%s\": %s"
 msgstr "%s%s: \"%s\" günlük dosyası yazılamıyor: %s"
 
@@ -14101,6 +14101,10 @@ msgstr "günlükleyici işaretçisi (isteğe bağlı)"
 
 msgid "Log buffers to files"
 msgstr "Arabellekleri dosyalara günlükle"
+
+#, c-format
+msgid "%s%s: unable to create directory for logs (\"%s\")"
+msgstr "%s%s: Günlükler için dizin oluşturulamıyor (\"%s\""
 
 #, c-format
 msgid ""
