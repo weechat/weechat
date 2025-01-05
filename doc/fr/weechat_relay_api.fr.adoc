@@ -1196,7 +1196,7 @@ Paramètres du corps :
 
 * `buffer_id` (entier, facultatif) : identifiant unique du tampon (à ne pas
   confondre avec le numéro du tampon, qui est différent)
-* `buffer_name` (chaîne, facultatif) : nom de tampon
+* `buffer_name` (chaîne, facultatif, par défaut : `core.weechat`) : nom de tampon
 * `command` (chaîne, **obligatoire**) : commande ou texte à envoyer au tampon
 
 Exemple de requête : dire "hello!" sur le canal #weechat :
@@ -1204,7 +1204,7 @@ Exemple de requête : dire "hello!" sur le canal #weechat :
 [source,shell]
 ----
 curl -L -u 'plain:secret_password' -X POST \
-  -d '{"buffer": "irc.libera.#weechat", "command": "hello!"}' \
+  -d '{"buffer_name": "irc.libera.#weechat", "command": "hello!"}' \
   'https://localhost:9000/api/input'
 ----
 

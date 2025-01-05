@@ -1184,7 +1184,7 @@ Body parameters:
 
 * `buffer_id` (integer, optional): buffer unique identifier (not to be confused
   with the buffer number, which is different)
-* `buffer` (string, optional, default: `core.weechat`): buffer name
+* `buffer_name` (string, optional, default: `core.weechat`): buffer name
 * `command` (string, **required**): command or text to send to the buffer
 
 Request example: say "hello!" on channel #weechat:
@@ -1192,7 +1192,7 @@ Request example: say "hello!" on channel #weechat:
 [source,shell]
 ----
 curl -L -u 'plain:secret_password' -X POST \
-  -d '{"buffer": "irc.libera.#weechat", "command": "hello!"}' \
+  -d '{"buffer_name": "irc.libera.#weechat", "command": "hello!"}' \
   'https://localhost:9000/api/input'
 ----
 
