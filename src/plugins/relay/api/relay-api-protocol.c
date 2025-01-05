@@ -994,7 +994,7 @@ error:
  * {
  *     "request": "POST /api/input",
  *     "body": {
- *         "buffer": "irc.libera.#weechat",
+ *         "buffer_name": "irc.libera.#weechat",
  *         "command": "hello!"
  *     }
  * }
@@ -1002,10 +1002,10 @@ error:
  * It is converted to an HTTP request which could have been:
  *
  * POST /api/input HTTP/1.1
- * Content-Length: 53
+ * Content-Length: 58
  * Content-Type: application/json
  *
- * {"buffer": "irc.libera.#weechat","command": "hello!"}
+ * {"buffer_name": "irc.libera.#weechat","command": "hello!"}
  *
  * The JSON can also be an array of requests, for example to fetch all buffers
  * data and synchronize at same time:

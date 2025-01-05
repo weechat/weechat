@@ -991,7 +991,7 @@ components:
                 format: int64
                 description: Buffer identifier (≥ 0)
                 example: 1709932823238637
-              buffer:
+              buffer_name:
                 type: string
                 description: >-
                   Buffer full name
