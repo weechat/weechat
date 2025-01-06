@@ -56,6 +56,10 @@ paths:
                 $ref: '#/components/schemas/Handshake'
         '503':
           description: Out of memory
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
   /version:
     get:
       tags:
@@ -73,8 +77,16 @@ paths:
                 $ref: '#/components/schemas/Version'
         '401':
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '503':
           description: Out of memory
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
       security:
         - password: []
   /buffers:
@@ -101,8 +113,16 @@ paths:
                   $ref: '#/components/schemas/Buffer'
         '401':
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '503':
           description: Out of memory
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
       security:
         - password: []
   /buffers/{buffer_id}:
@@ -127,10 +147,22 @@ paths:
                 $ref: '#/components/schemas/Buffer'
         '401':
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '404':
           description: Buffer not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '503':
           description: Out of memory
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
       security:
         - password: []
   /buffers/{buffer_name}:
@@ -155,10 +187,22 @@ paths:
                 $ref: '#/components/schemas/Buffer'
         '401':
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '404':
           description: Buffer not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '503':
           description: Out of memory
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
       security:
         - password: []
   /buffers/{buffer_id}/lines:
@@ -184,10 +228,22 @@ paths:
                   $ref: '#/components/schemas/Line'
         '401':
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '404':
           description: Buffer not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '503':
           description: Out of memory
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
       security:
         - password: []
   /buffers/{buffer_id}/lines/{line_id}:
@@ -212,10 +268,22 @@ paths:
                 $ref: '#/components/schemas/Line'
         '401':
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '404':
           description: Buffer or line not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '503':
           description: Out of memory
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
       security:
         - password: []
   /buffers/{buffer_name}/lines:
@@ -241,10 +309,22 @@ paths:
                   $ref: '#/components/schemas/Line'
         '401':
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '404':
           description: Buffer not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '503':
           description: Out of memory
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
       security:
         - password: []
   /buffers/{buffer_name}/lines/{line_id}:
@@ -269,10 +349,22 @@ paths:
                 $ref: '#/components/schemas/Line'
         '401':
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '404':
           description: Buffer or line not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '503':
           description: Out of memory
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
       security:
         - password: []
   /buffers/{buffer_id}/nicks:
@@ -294,10 +386,22 @@ paths:
                 $ref: '#/components/schemas/NickGroup'
         '401':
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '404':
           description: Buffer not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '503':
           description: Out of memory
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
       security:
         - password: []
   /buffers/{buffer_name}/nicks:
@@ -319,10 +423,22 @@ paths:
                 $ref: '#/components/schemas/NickGroup'
         '401':
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '404':
           description: Buffer not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '503':
           description: Out of memory
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
       security:
         - password: []
   /hotlist:
@@ -344,10 +460,22 @@ paths:
                   $ref: '#/components/schemas/Hotlist'
         '401':
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '400':
           description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '503':
           description: Out of memory
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
       security:
         - password: []
   /input:
@@ -366,8 +494,16 @@ paths:
           description: Successful operation
         '400':
           description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '401':
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
       security:
         - password: []
   /completion:
@@ -390,8 +526,16 @@ paths:
                 $ref: '#/components/schemas/Completion'
         '400':
           description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '401':
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
       security:
         - password: []
   /ping:
@@ -416,8 +560,16 @@ paths:
           description: Successful operation
         '401':
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '503':
           description: Out of memory
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
       security:
         - password: []
   /sync:
@@ -439,8 +591,16 @@ paths:
           description: Successful operation
         '401':
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '403':
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
       security:
         - password: []
 
@@ -539,6 +699,11 @@ components:
         * `strip`: strip colors
 
   schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
     Handshake:
       type: object
       properties:
