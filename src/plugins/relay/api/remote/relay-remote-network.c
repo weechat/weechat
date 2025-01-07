@@ -1385,26 +1385,35 @@ relay_remote_network_url_handshake_cb (const void *pointer,
 char *
 relay_remote_network_get_handshake_request ()
 {
-    char **body;
+    cJSON *json, *json_algos;
+    char *result;
     int i;
 
-    body = weechat_string_dyn_alloc (256);
-    if (!body)
+    json = cJSON_CreateObject ();
+    if (!json)
         return NULL;
 
-    weechat_string_dyn_concat (body, "{\"password_hash_algo\": [", -1);
+    json_algos = cJSON_CreateArray ();
+    if (!json_algos)
+    {
+        cJSON_Delete (json);
+        return NULL;
+    }
+
     /* all password hash algorithms are supported */
     for (i = 0; i < RELAY_NUM_PASSWORD_HASH_ALGOS; i++)
     {
-        if (i > 0)
-            weechat_string_dyn_concat (body, ", ", -1);
-        weechat_string_dyn_concat (body, "\"", -1);
-        weechat_string_dyn_concat (body,
-                                   relay_auth_password_hash_algo_name[i], -1);
-        weechat_string_dyn_concat (body, "\"", -1);
+        cJSON_AddItemToArray (
+            json_algos,
+            cJSON_CreateString (relay_auth_password_hash_algo_name[i]));
     }
-    weechat_string_dyn_concat (body, "]}", -1);
-    return weechat_string_dyn_free (body, 0);
+
+    cJSON_AddItemToObject (json, "password_hash_algo", json_algos);
+    result = cJSON_PrintUnformatted (json);
+
+    cJSON_Delete (json);
+
+    return result;
 }
 
 /*

@@ -232,17 +232,16 @@ TEST(RelayRemoteNetwork, UrlHandshakeCb)
 
 TEST(RelayRemoteNetwork, GetHandshakeRequest)
 {
-    const char *str_start = "{\"password_hash_algo\": [\"";
     char *str;
-    int i;
 
-    str = relay_remote_network_get_handshake_request ();
-    CHECK(str);
-    STRNCMP_EQUAL(str_start, str, strlen (str_start));
-    for (i = 0; i < RELAY_NUM_PASSWORD_HASH_ALGOS; i++)
-    {
-        CHECK(strstr (str, relay_auth_password_hash_algo_name[i]));
-    }
+    WEE_TEST_STR("{\"password_hash_algo\":["
+                 "\"plain\","
+                 "\"sha256\","
+                 "\"sha512\","
+                 "\"pbkdf2+sha256\","
+                 "\"pbkdf2+sha512\""
+                 "]}",
+                 relay_remote_network_get_handshake_request ());
 }
 
 /*
