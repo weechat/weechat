@@ -1015,9 +1015,9 @@ TEST(RelayApiProtocolWithClient, RecvHttpMissingPassword)
     STRCMP_EQUAL("HTTP/1.1 401 Unauthorized\r\n"
                  "Access-Control-Allow-Origin: *\r\n"
                  "Content-Type: application/json; charset=utf-8\r\n"
-                 "Content-Length: 29\r\n"
+                 "Content-Length: 28\r\n"
                  "\r\n"
-                 "{\"error\": \"Missing password\"}",
+                 "{\"error\":\"Missing password\"}",
                  data_sent[0]);
 }
 
@@ -1035,8 +1035,8 @@ TEST(RelayApiProtocolWithClient, RecvHttpInvalidPassword)
     STRCMP_EQUAL("HTTP/1.1 401 Unauthorized\r\n"
                  "Access-Control-Allow-Origin: *\r\n"
                  "Content-Type: application/json; charset=utf-8\r\n"
-                 "Content-Length: 29\r\n"
+                 "Content-Length: 28\r\n"
                  "\r\n"
-                 "{\"error\": \"Invalid password\"}",
+                 "{\"error\":\"Invalid password\"}",
                  data_sent[0]);
 }

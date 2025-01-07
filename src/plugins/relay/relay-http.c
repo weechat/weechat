@@ -1340,7 +1340,7 @@ relay_http_send_error_json (struct t_relay_client *client,
     if (!error_msg)
         goto end;
 
-    if (weechat_asprintf (&json, "{\"error\": \"%s\"}", error_msg) < 0)
+    if (weechat_asprintf (&json, "{\"error\":\"%s\"}", error_msg) < 0)
         goto end;
 
     num_bytes = relay_http_send_json (client, return_code, message, headers,
