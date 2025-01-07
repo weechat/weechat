@@ -248,7 +248,7 @@ relay_api_msg_send_error_json (struct t_relay_client *client,
 {
     cJSON *json;
     int num_bytes;
-    char *error_msg, *str_json;
+    char *str_json;
 
     if (!client || !message || !format)
         return -1;
@@ -259,43 +259,37 @@ relay_api_msg_send_error_json (struct t_relay_client *client,
 
     num_bytes = -1;
 
+    json = cJSON_CreateObject ();
+    if (!json)
+        return -1;
+
+    cJSON_AddItemToObject (json, "error", cJSON_CreateString (vbuffer));
+
     if (client->websocket == RELAY_CLIENT_WEBSOCKET_READY)
     {
         /*
          * with established websocket, we return JSON string instead of
          * an HTTP response
          */
-        json = cJSON_CreateObject ();
-        if (json)
-        {
-            cJSON_AddItemToObject (json, "error", cJSON_CreateString (vbuffer));
-            num_bytes = relay_api_msg_send_json_internal (
-                client,
-                return_code,
-                message,
-                NULL,  /* event_name */
-                -1,    /* event_buffer_id */
-                headers,
-                NULL,  /* body_type */
-                json);
-            cJSON_Delete (json);
-        }
+        num_bytes = relay_api_msg_send_json_internal (
+            client,
+            return_code,
+            message,
+            NULL,  /* event_name */
+            -1,    /* event_buffer_id */
+            headers,
+            NULL,  /* body_type */
+            json);
     }
     else
     {
-        error_msg = weechat_string_replace (vbuffer, "\"", "\\\"");
-        if (error_msg)
-        {
-            if (weechat_asprintf (&str_json, "{\"error\": \"%s\"}", error_msg) >= 0)
-            {
-                num_bytes = relay_http_send_json (client, return_code, message,
-                                                  headers, str_json);
-                free (str_json);
-            }
-            free (error_msg);
-        }
+        str_json = cJSON_PrintUnformatted (json);
+        num_bytes = relay_http_send_json (client, return_code, message,
+                                          headers, str_json);
+        free (str_json);
     }
 
+    cJSON_Delete (json);
     free (vbuffer);
     return num_bytes;
 }

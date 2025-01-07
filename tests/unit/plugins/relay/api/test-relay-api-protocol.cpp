@@ -379,9 +379,9 @@ TEST(RelayApiProtocolWithClient, CbBuffers)
     STRCMP_EQUAL("HTTP/1.1 404 Not Found\r\n"
                  "Access-Control-Allow-Origin: *\r\n"
                  "Content-Type: application/json; charset=utf-8\r\n"
-                 "Content-Length: 41\r\n"
+                 "Content-Length: 40\r\n"
                  "\r\n"
-                 "{\"error\": \"Buffer \\\"invalid\\\" not found\"}",
+                 "{\"error\":\"Buffer \\\"invalid\\\" not found\"}",
                  data_sent[0]);
 
     /* error: invalid buffer id */
@@ -389,9 +389,9 @@ TEST(RelayApiProtocolWithClient, CbBuffers)
     STRCMP_EQUAL("HTTP/1.1 404 Not Found\r\n"
                  "Access-Control-Allow-Origin: *\r\n"
                  "Content-Type: application/json; charset=utf-8\r\n"
-                 "Content-Length: 37\r\n"
+                 "Content-Length: 36\r\n"
                  "\r\n"
-                 "{\"error\": \"Buffer \\\"123\\\" not found\"}",
+                 "{\"error\":\"Buffer \\\"123\\\" not found\"}",
                  data_sent[0]);
 
     /* error: invalid sub-resource */
@@ -399,9 +399,9 @@ TEST(RelayApiProtocolWithClient, CbBuffers)
     STRCMP_EQUAL("HTTP/1.1 404 Not Found\r\n"
                  "Access-Control-Allow-Origin: *\r\n"
                  "Content-Type: application/json; charset=utf-8\r\n"
-                 "Content-Length: 59\r\n"
+                 "Content-Length: 58\r\n"
                  "\r\n"
-                 "{\"error\": \"Sub-resource of buffers not found: \\\"invalid\\\"\"}",
+                 "{\"error\":\"Sub-resource of buffers not found: \\\"invalid\\\"\"}",
                  data_sent[0]);
 
     /* error: too many parameters in path */
@@ -626,9 +626,9 @@ TEST(RelayApiProtocolWithClient, CbCompletion)
     STRCMP_EQUAL("HTTP/1.1 400 Bad Request\r\n"
                  "Access-Control-Allow-Origin: *\r\n"
                  "Content-Type: application/json; charset=utf-8\r\n"
-                 "Content-Length: 41\r\n"
+                 "Content-Length: 40\r\n"
                  "\r\n"
-                 "{\"error\": \"Buffer \\\"invalid\\\" not found\"}",
+                 "{\"error\":\"Buffer \\\"invalid\\\" not found\"}",
                  data_sent[0]);
 
     /* on core buffer, with buffer name. examples from relay protocol examples:
@@ -705,9 +705,9 @@ TEST(RelayApiProtocolWithClient, CbInput)
     STRCMP_EQUAL("HTTP/1.1 400 Bad Request\r\n"
                  "Access-Control-Allow-Origin: *\r\n"
                  "Content-Type: application/json; charset=utf-8\r\n"
-                 "Content-Length: 41\r\n"
+                 "Content-Length: 40\r\n"
                  "\r\n"
-                 "{\"error\": \"Buffer \\\"invalid\\\" not found\"}",
+                 "{\"error\":\"Buffer \\\"invalid\\\" not found\"}",
                  data_sent[0]);
 
     /* on core buffer, without buffer name */
@@ -786,9 +786,9 @@ TEST(RelayApiProtocolWithClient, CbSync)
     STRCMP_EQUAL("HTTP/1.1 403 Forbidden\r\n"
                  "Access-Control-Allow-Origin: *\r\n"
                  "Content-Type: application/json; charset=utf-8\r\n"
-                 "Content-Length: 72\r\n"
+                 "Content-Length: 71\r\n"
                  "\r\n"
-                 "{\"error\": \"Sync resource is available only with "
+                 "{\"error\":\"Sync resource is available only with "
                  "a websocket connection\"}",
                  data_sent[0]);
 }
