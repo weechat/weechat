@@ -98,7 +98,8 @@ extern const char *command_help_option_color_values ();
 extern void command_version_display (struct t_gui_buffer *buffer,
                                      int send_to_buffer_as_input,
                                      int translated_string,
-                                     int display_git_version);
+                                     int display_git_version,
+                                     int display_upgrades);
 extern void command_init ();
 extern void command_startup (int plugins_loaded);
 

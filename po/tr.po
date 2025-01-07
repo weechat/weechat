@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2025-01-05 10:14+0100\n"
+"POT-Creation-Date: 2025-01-07 20:32+0100\n"
 "PO-Revision-Date: 2025-01-04 18:21+0100\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -863,10 +863,6 @@ msgid "Check running hooks with command: %s"
 msgstr "Şu komutla çalışan kancaları denetle: %s"
 
 #, c-format
-msgid "%sNo binary specified"
-msgstr "%sBir ikili belirtilmemiş"
-
-#, c-format
 msgid "%sCan't upgrade: WeeChat binary \"%s\" does not exist"
 msgstr "%sYükseltilemiyor: WeeChat ikilisi \"%s\" yok"
 
@@ -874,6 +870,10 @@ msgstr "%sYükseltilemiyor: WeeChat ikilisi \"%s\" yok"
 msgid ""
 "%sCan't upgrade: WeeChat binary \"%s\" does not have execute permissions"
 msgstr "%sYükseltilemiyor: WeeChat ikilisi \"%s\" yürütme izinlerine iye değil"
+
+#, c-format
+msgid "%sNo binary specified"
+msgstr "%sBir ikili belirtilmemiş"
 
 #, c-format
 msgid "Upgrading WeeChat with binary file: \"%s\"..."
@@ -3800,6 +3800,11 @@ msgid "raw[-ol]: send version to current buffer as input (translated string)"
 msgstr ""
 " -o: açık kalma süresini geçerli arabelleğe girdi olarak gönder (İngilizce)\n"
 "-ol: açık kalma süresini geçerli arabelleğe girdi olarak gönder (çevrilmiş)"
+
+msgid ""
+"raw[-v]: verbose mode: display information about upgrades of WeeChat with /"
+"upgrade"
+msgstr ""
 
 #, fuzzy
 #| msgid ""

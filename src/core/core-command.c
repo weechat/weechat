@@ -7338,6 +7338,7 @@ COMMAND_CALLBACK(unset)
 
 void
 command_upgrade_display (struct t_gui_buffer *buffer,
+                         int send_to_buffer_as_input,
                          int translated_string)
 {
     char string[1024], str_first_start[128], str_last_start[128];
@@ -7399,11 +7400,18 @@ command_upgrade_display (struct t_gui_buffer *buffer,
         }
     }
 
-    (void) input_data (buffer,
-                       string,
-                       NULL,
-                       0,  /* split_newline */
-                       0);  /* user_data */
+    if (send_to_buffer_as_input)
+    {
+        (void) input_data (buffer,
+                           string,
+                           NULL,
+                           0,  /* split_newline */
+                           0);  /* user_data */
+    }
+    else
+    {
+        gui_chat_printf (NULL, "%s", string);
+    }
 }
 
 /*
@@ -7430,12 +7438,12 @@ COMMAND_CALLBACK(upgrade)
     {
         if (string_strcmp (argv[1], "-o") == 0)
         {
-            command_upgrade_display (buffer, 0);
+            command_upgrade_display (buffer, 1, 0);
             return WEECHAT_RC_OK;
         }
         if (string_strcmp (argv[1], "-ol") == 0)
         {
-            command_upgrade_display (buffer, 1);
+            command_upgrade_display (buffer, 1, 1);
             return WEECHAT_RC_OK;
         }
         if (string_strcmp (argv[1], "-yes") == 0)
@@ -7746,7 +7754,8 @@ void
 command_version_display (struct t_gui_buffer *buffer,
                          int send_to_buffer_as_input,
                          int translated_string,
-                         int display_git_version)
+                         int display_git_version,
+                         int display_upgrades)
 {
     char string[1024];
 
@@ -7776,6 +7785,9 @@ command_version_display (struct t_gui_buffer *buffer,
                          version_get_compilation_time (),
                          GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
     }
+
+    if (display_upgrades)
+        command_upgrade_display (buffer, send_to_buffer_as_input, translated_string);
 }
 
 /*
@@ -7784,7 +7796,7 @@ command_version_display (struct t_gui_buffer *buffer,
 
 COMMAND_CALLBACK(version)
 {
-    int send_to_buffer_as_input, translated_string;
+    int i, send_to_buffer_as_input, translated_string, display_upgrades;
 
     /* make C compiler happy */
     (void) pointer;
@@ -7793,20 +7805,32 @@ COMMAND_CALLBACK(version)
 
     send_to_buffer_as_input = 0;
     translated_string = 0;
+    display_upgrades = 0;
 
-    if (argc >= 2)
+    for (i = 1; i < argc; i++)
     {
-        if (string_strcmp (argv[1], "-o") == 0)
+        if (string_strcmp (argv[i], "-o") == 0)
+        {
             send_to_buffer_as_input = 1;
-        else if (string_strcmp (argv[1], "-ol") == 0)
+            translated_string = 0;
+        }
+        else if (string_strcmp (argv[i], "-ol") == 0)
         {
             send_to_buffer_as_input = 1;
             translated_string = 1;
         }
+        else if (string_strcmp (argv[i], "-v") == 0)
+        {
+            display_upgrades = 1;
+        }
     }
 
-    command_version_display (buffer, send_to_buffer_as_input,
-                             translated_string, 1);
+    command_version_display (
+        buffer,
+        send_to_buffer_as_input,
+        translated_string,
+        1,  /* display_git_version */
+        display_upgrades);
 
     return WEECHAT_RC_OK;
 }
@@ -9858,15 +9882,16 @@ command_init ()
     hook_command (
         NULL, "version",
         N_("show WeeChat version and compilation date"),
-        "[-o|-ol]",
+        "[-o|-ol] [-v]",
         CMD_ARGS_DESC(
             N_("raw[-o]: send version to current buffer as input (English string)"),
             N_("raw[-ol]: send version to current buffer as input (translated string)"),
+            N_("raw[-v]: verbose mode: display information about upgrades of WeeChat with /upgrade"),
             "",
             N_("The default alias /v can be used to execute this command on "
                "all buffers (otherwise the irc command /version is used on irc "
                "buffers).")),
-        "-o|-ol",
+        "-o|-ol|-v|%*",
         &command_version, NULL, NULL);
     hook_command (
         NULL, "wait",

@@ -2,6 +2,10 @@
 
 ## Version 4.6.0 (under dev)
 
+### Changed
+
+- core: add option `-v` to display upgrades in command `/version`
+
 ### Added
 
 - core: add command `/pipe`

@@ -437,7 +437,12 @@ weechat_startup_message ()
     }
     if (CONFIG_BOOLEAN(config_startup_display_version))
     {
-        command_version_display (NULL, 0, 0, 0);
+        command_version_display (
+            NULL,  /* buffer */
+            0,  /* send_to_buffer_as_input */
+            0,  /* translated_string */
+            0,  /* display_git_version */
+            (weechat_upgrade_count > 0) ? 1 : 0);  /* display_upgrades */
     }
     if (CONFIG_BOOLEAN(config_startup_display_logo) ||
         CONFIG_BOOLEAN(config_startup_display_version))

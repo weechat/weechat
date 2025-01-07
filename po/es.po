@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2025-01-05 10:14+0100\n"
+"POT-Creation-Date: 2025-01-07 20:32+0100\n"
 "PO-Revision-Date: 2024-11-20 18:17+0100\n"
 "Last-Translator: Santiago Forero <santiago@forero.xyz>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -913,10 +913,6 @@ msgid "Check running hooks with command: %s"
 msgstr ""
 
 #, c-format
-msgid "%sNo binary specified"
-msgstr "%sNingún ejecutable especificado"
-
-#, c-format
 msgid "%sCan't upgrade: WeeChat binary \"%s\" does not exist"
 msgstr "%sNo se puede actualizar: el ejecutable de WeeChat \"%s\" no existe"
 
@@ -926,6 +922,10 @@ msgid ""
 msgstr ""
 "%sNo se puede actualizar: el ejecutable de WeeChat \"%s\" no tiene permisos "
 "de ejecución"
+
+#, c-format
+msgid "%sNo binary specified"
+msgstr "%sNingún ejecutable especificado"
 
 #, c-format
 msgid "Upgrading WeeChat with binary file: \"%s\"..."
@@ -3783,6 +3783,11 @@ msgid "raw[-ol]: send version to current buffer as input (translated string)"
 msgstr ""
 " -o: enviar uptime al buffer actual como entrada (en inglés)\n"
 "-ol: enviar uptime al buffer actual como entrada (en español)"
+
+msgid ""
+"raw[-v]: verbose mode: display information about upgrades of WeeChat with /"
+"upgrade"
+msgstr ""
 
 #, fuzzy
 msgid ""

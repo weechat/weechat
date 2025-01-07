@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2025-01-05 10:14+0100\n"
-"PO-Revision-Date: 2025-01-05 10:15+0100\n"
+"POT-Creation-Date: 2025-01-07 20:32+0100\n"
+"PO-Revision-Date: 2025-01-07 20:32+0100\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -879,10 +879,6 @@ msgid "Check running hooks with command: %s"
 msgstr "Vérifiez les hooks qui tournent avec la commande : %s"
 
 #, c-format
-msgid "%sNo binary specified"
-msgstr "%sPas de binaire spécifié"
-
-#, c-format
 msgid "%sCan't upgrade: WeeChat binary \"%s\" does not exist"
 msgstr "%sImpossible de mettre à jour : le binaire WeeChat \"%s\" n'existe pas"
 
@@ -892,6 +888,10 @@ msgid ""
 msgstr ""
 "%sImpossible de mettre à jour : le binaire WeeChat \"%s\" n'a pas les droits "
 "d'exécution"
+
+#, c-format
+msgid "%sNo binary specified"
+msgstr "%sPas de binaire spécifié"
 
 #, c-format
 msgid "Upgrading WeeChat with binary file: \"%s\"..."
@@ -4050,6 +4050,13 @@ msgid "raw[-ol]: send version to current buffer as input (translated string)"
 msgstr ""
 "raw[-ol] : envoyer la version sur le tampon courant comme entrée (chaîne "
 "traduite)"
+
+msgid ""
+"raw[-v]: verbose mode: display information about upgrades of WeeChat with /"
+"upgrade"
+msgstr ""
+"raw[-v] : mode verbeux : afficher des informations sur les mises à jour de "
+"WeeChat avec /upgrade"
 
 msgid ""
 "The default alias /v can be used to execute this command on all buffers "

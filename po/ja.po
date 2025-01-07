@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2025-01-05 10:14+0100\n"
+"POT-Creation-Date: 2025-01-07 20:32+0100\n"
 "PO-Revision-Date: 2024-11-20 18:17+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -897,10 +897,6 @@ msgid "Check running hooks with command: %s"
 msgstr ""
 
 #, c-format
-msgid "%sNo binary specified"
-msgstr "%sバイナリが指定されていません"
-
-#, c-format
 msgid "%sCan't upgrade: WeeChat binary \"%s\" does not exist"
 msgstr "%sアップグレードできません: WeeChat バイナリ \"%s\" がありません"
 
@@ -909,6 +905,10 @@ msgid ""
 "%sCan't upgrade: WeeChat binary \"%s\" does not have execute permissions"
 msgstr ""
 "%sアップグレードできません: WeeChat バイナリ \"%s\" の実行許可がありません"
+
+#, c-format
+msgid "%sNo binary specified"
+msgstr "%sバイナリが指定されていません"
 
 #, c-format
 msgid "Upgrading WeeChat with binary file: \"%s\"..."
@@ -3820,6 +3820,11 @@ msgid "raw[-ol]: send version to current buffer as input (translated string)"
 msgstr ""
 " -o: 連続稼働時間を現在のバッファの入力に送る (英語で)\n"
 "-ol: 連続稼働時間を現在のバッファの入力に送る (翻訳済み)"
+
+msgid ""
+"raw[-v]: verbose mode: display information about upgrades of WeeChat with /"
+"upgrade"
+msgstr ""
 
 #, fuzzy
 #| msgid ""
