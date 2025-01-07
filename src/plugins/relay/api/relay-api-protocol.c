@@ -1112,8 +1112,8 @@ relay_api_protocol_recv_json_request (struct t_relay_client *client,
     return;
 
 error:
-    relay_api_msg_send_json (client, RELAY_HTTP_400_BAD_REQUEST,
-                             NULL, NULL, NULL);
+    relay_api_msg_send_error_json (client, RELAY_HTTP_400_BAD_REQUEST,
+                                   NULL, RELAY_HTTP_ERROR_BAD_REQUEST);
 }
 
 /*
@@ -1165,8 +1165,11 @@ relay_api_protocol_recv_json (struct t_relay_client *client, const char *json)
     json_obj = cJSON_Parse (json);
     if (!json_obj)
     {
-        relay_api_msg_send_json (client, RELAY_HTTP_400_BAD_REQUEST,
-                                 NULL, NULL, NULL);
+        relay_api_msg_send_error_json (
+            client,
+            RELAY_HTTP_400_BAD_REQUEST,
+            NULL,
+            RELAY_HTTP_ERROR_BAD_REQUEST ": invalid JSON");
         return;
     }
 
@@ -1193,6 +1196,7 @@ void
 relay_api_protocol_recv_http (struct t_relay_client *client)
 {
     int i, num_args;
+    char str_error[1024];
     enum t_relay_api_protocol_rc return_code;
     struct t_relay_api_protocol_cb protocol_cb[] = {
         /* method,   resource,     auth, args,   callback                */
@@ -1226,14 +1230,14 @@ relay_api_protocol_recv_http (struct t_relay_client *client)
                         client->http_req->body);
     }
 
-    if ((client->http_req->num_path_items < 2) || !client->http_req->path_items
-        || !client->http_req->path_items[0] || !client->http_req->path_items[1])
+    if ((client->http_req->num_path_items < 2)
+        || !client->http_req->path_items
+        || !client->http_req->path_items[0]
+        || !client->http_req->path_items[1]
+        || (strcmp (client->http_req->path_items[0], "api") != 0))
     {
         goto error_not_found;
     }
-
-    if (strcmp (client->http_req->path_items[0], "api") != 0)
-        goto error_not_found;
 
     num_args = client->http_req->num_path_items - 2;
 
@@ -1272,7 +1276,13 @@ relay_api_protocol_recv_http (struct t_relay_client *client)
                     num_args,
                     protocol_cb[i].min_args);
             }
-            goto error_not_found;
+            snprintf (str_error, sizeof (str_error),
+                      "%s: not enough path parameters (min: %d)",
+                      RELAY_HTTP_ERROR_BAD_REQUEST,
+                      protocol_cb[i].min_args);
+            relay_api_msg_send_error_json (client, RELAY_HTTP_400_BAD_REQUEST,
+                                           NULL, str_error);
+            goto error;
         }
 
         if ((protocol_cb[i].max_args >= 0)
@@ -1294,7 +1304,13 @@ relay_api_protocol_recv_http (struct t_relay_client *client)
                     num_args,
                     protocol_cb[i].max_args);
             }
-            goto error_not_found;
+            snprintf (str_error, sizeof (str_error),
+                      "%s: too many path parameters (max: %d)",
+                      RELAY_HTTP_ERROR_BAD_REQUEST,
+                      protocol_cb[i].max_args);
+            relay_api_msg_send_error_json (client, RELAY_HTTP_400_BAD_REQUEST,
+                                           NULL, str_error);
+            goto error;
         }
 
         return_code = (protocol_cb[i].cmd_function) (client);
@@ -1316,11 +1332,13 @@ relay_api_protocol_recv_http (struct t_relay_client *client)
     goto error_not_found;
 
 error_bad_request:
-    relay_api_msg_send_json (client, RELAY_HTTP_400_BAD_REQUEST, NULL, NULL, NULL);
+    relay_api_msg_send_error_json (client, RELAY_HTTP_400_BAD_REQUEST,
+                                   NULL, RELAY_HTTP_ERROR_BAD_REQUEST);
     goto error;
 
 error_not_found:
-    relay_api_msg_send_json (client, RELAY_HTTP_404_NOT_FOUND, NULL, NULL, NULL);
+    relay_api_msg_send_error_json (client, RELAY_HTTP_404_NOT_FOUND,
+                                   NULL, RELAY_HTTP_ERROR_NOT_FOUND);
     goto error;
 
 error_memory:
