@@ -860,7 +860,7 @@ RELAY_API_PROTOCOL_CALLBACK(completion)
                     "Buffer \"%lld\" not found",
                     (long long)cJSON_GetNumberValue (json_buffer_id));
                 cJSON_Delete (json_body);
-                return RELAY_API_PROTOCOL_RC_BAD_REQUEST;
+                return RELAY_API_PROTOCOL_RC_OK;
             }
         }
     }
@@ -881,7 +881,7 @@ RELAY_API_PROTOCOL_CALLBACK(completion)
                         "Buffer \"%s\" not found",
                         ptr_buffer_name);
                     cJSON_Delete (json_body);
-                    return RELAY_API_PROTOCOL_RC_BAD_REQUEST;
+                    return RELAY_API_PROTOCOL_RC_OK;
                 }
             }
         }
