@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2025-01-07 20:32+0100\n"
-"PO-Revision-Date: 2024-12-16 12:01+0100\n"
+"PO-Revision-Date: 2025-01-21 12:27+0400\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: sr\n"
@@ -531,15 +531,13 @@ msgstr "Миш је укључен"
 msgid "Mouse disabled"
 msgstr "Миш је искључен"
 
-#, fuzzy, c-format
-#| msgid "%s%s: unable to parse file \"%s\""
+#, c-format
 msgid "%sUnable to open file \"%s\""
-msgstr "%s%s: није успело парсирање фајла „%s”"
+msgstr "%sНије успело отварање фајла „%s”"
 
-#, fuzzy, c-format
-#| msgid "%sIt is only possible to merge buffers with formatted content"
+#, c-format
 msgid "%sCommand /pipe can only use buffers with formatted content"
-msgstr "%sСпајање је могуће само за бафере са форматираним садржајем"
+msgstr "%sКоманда /pipe може да користи само бафере са форматираним садржајем"
 
 msgid "Plugins loaded:"
 msgstr "Учитани додаци:"
@@ -845,10 +843,9 @@ msgstr[2] "пута"
 msgid "WeeChat upgrades: none, started on %s"
 msgstr "WeeChat ажурирања: ниједно, покренут је %s"
 
-#, fuzzy, c-format
-#| msgid "%sUnable to save WeeChat session (files *.upgrade)"
+#, c-format
 msgid "%sUnable to save some plugin sessions (files *.upgrade)"
-msgstr "%sНије могуће чување WeeChat сесије (*.upgrade фајлови)"
+msgstr "%sНије могуће чување неких сесија додатака (*.upgrade фајлови)"
 
 #, c-format
 msgid "%sUnable to save WeeChat session (files *.upgrade)"
@@ -867,7 +864,7 @@ msgstr ""
 
 #, c-format
 msgid "Check running hooks with command: %s"
-msgstr ""
+msgstr "Провера кука које се извршавају са командом: %s"
 
 #, c-format
 msgid "%sCan't upgrade: WeeChat binary \"%s\" does not exist"
@@ -889,7 +886,7 @@ msgstr "WeeChat се ажурира са бинарним фајлом: „%s”
 
 #, c-format
 msgid "%sUpgrade aborted"
-msgstr ""
+msgstr "%sАжурирање је прекинуто"
 
 #, c-format
 msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
@@ -1021,10 +1018,6 @@ msgid "> raw[window]: inside windows, with optional conditions (see below)"
 msgstr ""
 "> raw[window]: унутар прозора, са необавезним условима (погледајте испод)"
 
-#, fuzzy
-#| msgid ""
-#| "conditions: the conditions to display the bar (without conditions, the "
-#| "bar is always displayed:"
 msgid ""
 "conditions: the conditions to display the bar (without conditions, the bar "
 "is always displayed):"
@@ -2887,10 +2880,8 @@ msgid "execute a command silently"
 msgstr "извршавање команде у тишини"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
-#, fuzzy
-#| msgid "[-core | -current | -buffer <name>] <command>"
 msgid "[-core|-current|-buffer <name>] <command>"
-msgstr "[-core | -current | -buffer <име>] <команда>"
+msgstr "[-core |-current |-buffer <име>] <команда>"
 
 msgid "raw[-core]: no output on WeeChat core buffer"
 msgstr "raw[-core]: нема излаза за WeeChat основни бафер"
@@ -2922,103 +2913,102 @@ msgstr ""
 "утишати сви бафери."
 
 msgid "redirect command output to a buffer, a file or a hsignal"
-msgstr ""
+msgstr "преусмерава излаз команде у бафер, фајл или hsignal"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid ""
 "[-buffer <name>|-file <filename>|-hsignal <name>] [-concat <separator>] [-"
 "strip <chars>] [-skipempty] [-c] [-o] [-g] [-nl] <command>"
 msgstr ""
+"[-buffer <име>|-file <имефајла>|-hsignal <име>] [-concat <граничник>] [-"
+"strip <кар>] [-skipempty] [-c] [-o] [-g] [-nl] <команда>"
 
-#, fuzzy
-#| msgid "raw[-buffer]: execute the command on this buffer"
 msgid "raw[-buffer]: display command output on this buffer"
-msgstr "raw[-buffer]: извршава команду у овом баферу"
+msgstr "raw[-buffer]: исписује излаз команде у овом баферу"
 
-#, fuzzy
-#| msgid ""
-#| "name: full buffer name (examples: \"irc.server.libera\", "
-#| "\"irc.libera.#weechat\")"
 msgid ""
 "name: full buffer name (examples: \"core.weechat\", \"irc.server.libera\", "
 "\"irc.libera.#weechat\")"
 msgstr ""
-"име: пуно име бафера (примери: „irc.server.libera”, „irc.libera.#weechat”)"
+"име: пуно име бафера (примери: „core.weechat”, „irc.server.libera”, "
+"„irc.libera.#weechat”)"
 
-#, fuzzy
-#| msgid "raw[-buffer]: execute the command on this buffer"
 msgid "raw[-file]: write command output in this file"
-msgstr "raw[-buffer]: извршава команду у овом баферу"
+msgstr "raw[-file]: уписује излаз команде у овај фајл"
 
 msgid ""
 "raw[-hsignal]: send command output as hsignal (keys: \"command\" and "
 "\"output\")"
 msgstr ""
+"raw[-hsignal]: шаље излаз команде као hsignal (кључеви: „command” и "
+"„output”)"
 
 msgid ""
 "raw[-o]: send command output to the buffer as input; colors are stripped and "
 "commands are NOT executed (used only with -buffer)"
 msgstr ""
+"raw[-o]: шаље излаз команде у бафер као улаз; боје се уклањају и команде се "
+"НЕ извршавају (користи се само уз -buffer)"
 
 msgid ""
 "raw[-concat]: concatenate all lines displayed using a separator; chars can "
 "be escaped (example: \\x20 for space)"
 msgstr ""
+"raw[-concat]: спаја све приказане линије користећи граничник; карактери "
+"могу да се означе (пример: \\x20 за размак)"
 
 msgid ""
 "raw[-strip]: strip chars from lines (beginning/end); chars can be escaped "
 "(example: \\x20 for space)"
 msgstr ""
+"raw[-strip]: уклања карактере из линија (са почетка/краја); карактери могу "
+"да се означе (пример: \\x20 за размак)"
 
 msgid "raw[-skipempty]: skip empty lines when lines are concatenated"
-msgstr ""
+msgstr "raw[-skipempty]: прескаче празне линије приликом спајања"
 
 msgid "raw[-c]: alias for \"-concat \\x20 -strip \\x20 -skipempty\""
-msgstr ""
+msgstr "raw[-c]: алијас за „-concat \\x20 -strip \\x20 -skipempty”"
 
 msgid ""
 "raw[-nl]: display messages in English during the command execution (do not "
 "use the current locale)"
 msgstr ""
+"raw[-nl]: током извршавања команде, поруке се приказују на енглеском (не "
+"користи се текући локалитет)"
 
-#, fuzzy
-#| msgid ""
-#| "If no target is specified (\"-core\", \"-current\" or \"-buffer\"), then "
-#| "default is to mute all buffers."
 msgid ""
 "If no target is specified (\"-buffer\", \"-file\" or \"-hsignal\"), then the "
 "command output is sent on the current buffer."
 msgstr ""
-"Ако се не наведе циљ (-core, -current или -buffer), онда ће се подразумевано "
-"утишати сви бафери."
+"Ако се не наведе циљ („-buffer”, „-file” или „-hsignal”), онда се излаз "
+"команде шаље у текући бафер."
 
 msgid ""
 "Note: for commands that display messages in an asynchronous way (like /exec "
 "and many IRC commands), the output will not be caught by this command."
 msgstr ""
+"Напомена: у случају команди које поруке приказују на асинхрони начин (као "
+"/exec и многе IRC команде), ова команда неће ухватити излаз."
 
 msgid ""
 "For example \"/pipe /whois nick\" will NOT redirect the answer from IRC "
 "server to the current buffer."
 msgstr ""
+"На пример „/pipe /whois nick” НЕЋЕ преусмерити одговор са IRC сервера у "
+"текући бафер."
 
-#, fuzzy
-#| msgid "raw[libs]: display infos about external libraries used"
 msgid "  write info about external libraries in a file:"
-msgstr "raw[libs]: исписује инфо о коришћеним спољним библиотекама"
+msgstr "  уписује инфо о спољним библиотекама у фајл:"
 
 msgid "  send output of \"/debug libs\" as a single line on current channel:"
-msgstr ""
+msgstr "  шаље излаз „/debug libs” као једну линију у текући канал:"
 
-#, fuzzy
-#| msgid "  display an error on core buffer:"
 msgid "  display info about all buffers on current buffer:"
-msgstr "  приказује грешку у основном баферу:"
+msgstr "  приказује у текућем баферу инфо о свим баферима:"
 
-#, fuzzy
-#| msgid "list of items in a channel mode list"
 msgid "  send list of filters on current channel, in English:"
-msgstr "листа ставки у листи режима канала"
+msgstr "  шаље у текући канал листу филтера, на енглеском:"
 
 msgid "list/load/unload plugins"
 msgstr "приказ/учитавање/уклањање додатака"
@@ -3933,6 +3923,8 @@ msgid ""
 "raw[-v]: verbose mode: display information about upgrades of WeeChat with /"
 "upgrade"
 msgstr ""
+"raw[-v]: детаљни режим: приказује информације о ажурирањима програма "
+"WeeChat са /upgrade"
 
 msgid ""
 "The default alias /v can be used to execute this command on all buffers "
@@ -12383,30 +12375,20 @@ msgstr "1 ако се надимак игнорише (порука се не п
 msgid "server,message (message is the raw IRC message)"
 msgstr "сервер,порука (порука представља сирову IRC message)"
 
-#, fuzzy
-#| msgid "get buffer pointer for an IRC server/channel/nick"
 msgid "get pointer to an IRC server"
-msgstr "враћа показивач на бафер за IRC сервер/канал/надимак"
+msgstr "враћа показивач IRC сервер"
 
-#, fuzzy
-#| msgid "get buffer pointer for an IRC server/channel/nick"
 msgid "get pointer to an IRC channel"
-msgstr "враћа показивач на бафер за IRC сервер/канал/надимак"
+msgstr "враћа показивач на IRC канал"
 
-#, fuzzy
-#| msgid "leave a channel"
 msgid "server,channel"
-msgstr "напуштање канала"
+msgstr "сервер,канал"
 
-#, fuzzy
-#| msgid "get buffer pointer for an IRC server/channel/nick"
 msgid "get pointer to an IRC nick"
-msgstr "враћа показивач на бафер за IRC сервер/канал/надимак"
+msgstr "враћа показивач на IRC надимак"
 
-#, fuzzy
-#| msgid "server,channel,nick (nick is optional)"
 msgid "server,channel,nick"
-msgstr "сервер,канал,надимак (надимак није обавезан)"
+msgstr "сервер,канал,надимак"
 
 msgid "parse an IRC message"
 msgstr "парсирање IRC поруке"
@@ -13423,10 +13405,9 @@ msgstr "%s%s: прекинута је веза са сервером"
 msgid "IRC (Internet Relay Chat) protocol"
 msgstr "IRC (Internet Relay Chat) протокол"
 
-#, fuzzy, c-format
-#| msgid "%s%s: failed to rename trigger \"%s\""
+#, c-format
 msgid "%s%s: failed to save upgrade data"
-msgstr "%s%s: промена имена окидача „%s” није успела"
+msgstr "%s%s: није успело чување података о ажурирању"
 
 #, c-format
 msgid ""
