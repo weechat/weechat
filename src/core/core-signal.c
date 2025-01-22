@@ -65,7 +65,7 @@ volatile sig_atomic_t signal_sigusr2_count = 0;
  */
 
 void
-signal_sighup_cb ()
+signal_sighup_cb (int)
 {
     signal_sighup_count++;
 }
@@ -75,7 +75,7 @@ signal_sighup_cb ()
  */
 
 void
-signal_sigquit_cb ()
+signal_sigquit_cb (int)
 {
     signal_sigquit_count++;
 }
@@ -85,7 +85,7 @@ signal_sigquit_cb ()
  */
 
 void
-signal_sigterm_cb ()
+signal_sigterm_cb (int)
 {
     signal_sigterm_count++;
 }
@@ -95,7 +95,7 @@ signal_sigterm_cb ()
  */
 
 void
-signal_sigusr1_cb ()
+signal_sigusr1_cb (int)
 {
     signal_sigusr1_count++;
 }
@@ -105,7 +105,7 @@ signal_sigusr1_cb ()
  */
 
 void
-signal_sigusr2_cb ()
+signal_sigusr2_cb (int)
 {
     signal_sigusr2_count++;
 }
