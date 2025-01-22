@@ -150,7 +150,7 @@ gui_main_get_password (const char **prompt, char *password, int size)
  */
 
 void
-gui_main_signal_sigint ()
+gui_main_signal_sigint (int)
 {
     weechat_quit = 1;
 }
@@ -253,7 +253,7 @@ gui_main_init ()
  */
 
 void
-gui_main_signal_sigwinch ()
+gui_main_signal_sigwinch (int)
 {
     gui_signal_sigwinch_received = 1;
 }

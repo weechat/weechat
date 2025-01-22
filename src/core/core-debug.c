@@ -228,7 +228,7 @@ debug_dump_cb (const void *pointer, void *data,
  */
 
 void
-debug_sigsegv_cb ()
+debug_sigsegv_cb (int)
 {
     debug_dump (1);
     unhook_all ();
