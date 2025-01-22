@@ -20,6 +20,7 @@
 #ifndef WEECHAT_NCURSES_FAKE_H
 #define WEECHAT_NCURSES_FAKE_H
 
+#include <stdbool.h>
 #include <stddef.h>
 
 #define ERR (-1)
@@ -71,7 +72,6 @@ struct _window
 };
 typedef struct _window WINDOW;
 
-typedef unsigned char bool;
 typedef int attr_t;
 typedef unsigned chtype;
 
