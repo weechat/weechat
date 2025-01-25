@@ -5113,6 +5113,7 @@ COMMAND_CALLBACK(pipe)
             gui_chat_pipe_hsignal = strdup (ptr_hsignal);
             if (!gui_chat_pipe_hsignal)
                 COMMAND_ERROR;
+            gui_chat_pipe_concat_tags = string_dyn_alloc (1024);
         }
         else
         {
@@ -9343,8 +9344,9 @@ command_init ()
             N_("name: full buffer name (examples: \"core.weechat\", "
                "\"irc.server.libera\", \"irc.libera.#weechat\")"),
             N_("raw[-file]: write command output in this file"),
-            N_("raw[-hsignal]: send command output as hsignal "
-               "(keys: \"command\" and \"output\")"),
+            N_("raw[-hsignal]: send command output as hsignal; "
+               "keys: \"command\", \"output\" (lines separated by separator) "
+               "and \"tags\" (tags of each line separated by newline)"),
             N_("raw[-o]: send command output to the buffer as input; "
                "colors are stripped and commands are NOT executed "
                "(used only with -buffer)"),

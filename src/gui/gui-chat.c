@@ -70,6 +70,7 @@ FILE *gui_chat_pipe_file = NULL;                /* pipe msgs to a file      */
 char *gui_chat_pipe_hsignal = NULL;             /* pipe msgs to a hsignal   */
 char *gui_chat_pipe_concat_sep = NULL;          /* separator to concat lines*/
 char **gui_chat_pipe_concat_lines = NULL;       /* concatenated lines       */
+char **gui_chat_pipe_concat_tags = NULL;        /* concatenated tags        */
 char *gui_chat_pipe_strip_chars = NULL;         /* chars to strip on lines  */
 int gui_chat_pipe_skip_empty_lines = 0;         /* skip empty lines         */
 
@@ -678,7 +679,7 @@ gui_chat_pipe_send_buffer_input (struct t_gui_buffer *buffer, const char *data)
 int
 gui_chat_pipe_handle_line (struct t_gui_line *line)
 {
-    char *data, *data2;
+    char *data, *data2, *tags;
     int rc;
 
     if (!line || !gui_chat_pipe)
@@ -709,6 +710,17 @@ gui_chat_pipe_handle_line (struct t_gui_line *line)
             string_dyn_concat (gui_chat_pipe_concat_lines, data2, -1);
         }
         free (data2);
+        /* concatenate tags */
+        if (gui_chat_pipe_concat_tags)
+        {
+            tags = string_rebuild_split_string (
+                (const char **)line->data->tags_array,
+                ",", 0, -1);
+            if ((*gui_chat_pipe_concat_tags)[0])
+                string_dyn_concat (gui_chat_pipe_concat_tags, "\n", -1);
+            string_dyn_concat (gui_chat_pipe_concat_tags, (tags) ? tags : "", -1);
+            free (tags);
+        }
         rc = 1;
     }
     else if (gui_chat_pipe_file)
@@ -786,6 +798,8 @@ gui_chat_pipe_end ()
             {
                 hashtable_set (hashtable, "command", gui_chat_pipe_command);
                 hashtable_set (hashtable, "output", *gui_chat_pipe_concat_lines);
+                if (gui_chat_pipe_concat_tags)
+                    hashtable_set (hashtable, "tags", *gui_chat_pipe_concat_tags);
                 hook_hsignal_send (gui_chat_pipe_hsignal, hashtable);
                 hashtable_free (hashtable);
             }
@@ -800,6 +814,11 @@ gui_chat_pipe_end ()
     gui_chat_pipe_command = NULL;
     free (gui_chat_pipe_hsignal);
     gui_chat_pipe_hsignal = NULL;
+    if (gui_chat_pipe_concat_tags)
+    {
+        string_dyn_free (gui_chat_pipe_concat_tags, 1);
+        gui_chat_pipe_concat_tags = NULL;
+    }
 }
 
 /*

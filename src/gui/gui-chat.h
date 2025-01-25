@@ -79,6 +79,7 @@ extern FILE *gui_chat_pipe_file;
 extern char *gui_chat_pipe_hsignal;
 extern char *gui_chat_pipe_concat_sep;
 extern char **gui_chat_pipe_concat_lines;
+extern char **gui_chat_pipe_concat_tags;
 extern char *gui_chat_pipe_strip_chars;
 extern int gui_chat_pipe_skip_empty_lines;
 
