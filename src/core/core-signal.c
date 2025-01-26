@@ -65,8 +65,11 @@ volatile sig_atomic_t signal_sigusr2_count = 0;
  */
 
 void
-signal_sighup_cb (int)
+signal_sighup_cb (int signo)
 {
+    /* make C compiler happy */
+    (void) signo;
+
     signal_sighup_count++;
 }
 
@@ -75,8 +78,11 @@ signal_sighup_cb (int)
  */
 
 void
-signal_sigquit_cb (int)
+signal_sigquit_cb (int signo)
 {
+    /* make C compiler happy */
+    (void) signo;
+
     signal_sigquit_count++;
 }
 
@@ -85,8 +91,11 @@ signal_sigquit_cb (int)
  */
 
 void
-signal_sigterm_cb (int)
+signal_sigterm_cb (int signo)
 {
+    /* make C compiler happy */
+    (void) signo;
+
     signal_sigterm_count++;
 }
 
@@ -95,8 +104,11 @@ signal_sigterm_cb (int)
  */
 
 void
-signal_sigusr1_cb (int)
+signal_sigusr1_cb (int signo)
 {
+    /* make C compiler happy */
+    (void) signo;
+
     signal_sigusr1_count++;
 }
 
@@ -105,8 +117,11 @@ signal_sigusr1_cb (int)
  */
 
 void
-signal_sigusr2_cb (int)
+signal_sigusr2_cb (int signo)
 {
+    /* make C compiler happy */
+    (void) signo;
+
     signal_sigusr2_count++;
 }
 

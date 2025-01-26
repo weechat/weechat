@@ -228,8 +228,11 @@ debug_dump_cb (const void *pointer, void *data,
  */
 
 void
-debug_sigsegv_cb (int)
+debug_sigsegv_cb (int signo)
 {
+    /* make C compiler happy */
+    (void) signo;
+
     debug_dump (1);
     unhook_all ();
     gui_main_end (0);

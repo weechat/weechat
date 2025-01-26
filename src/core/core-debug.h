@@ -27,7 +27,7 @@ struct t_gui_window_tree;
 extern long long debug_long_callbacks;
 
 extern void debug_build_info ();
-extern void debug_sigsegv_cb (int);
+extern void debug_sigsegv_cb (int signo);
 extern void debug_windows_tree ();
 extern void debug_memory ();
 extern void debug_hdata ();
