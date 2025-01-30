@@ -4979,8 +4979,10 @@ COMMAND_CALLBACK(pipe)
     const char *ptr_command, *ptr_filename, *ptr_hsignal;
     const char *ptr_concat_separator, *ptr_strip_chars;
     char *command, space[2] = " ", newline[2] = "\n";
-    int i, index_command, skip_empty_lines, send_to_buffer, no_locale, pipe_set;
+    int i, index_command, skip_empty_lines, send_to_buffer, no_locale;
+    int pipe_set, color_set;
     struct t_gui_buffer *ptr_buffer;
+    enum t_gui_chat_pipe_color color;
 
     /* make C compiler happy */
     (void) pointer;
@@ -5002,6 +5004,8 @@ COMMAND_CALLBACK(pipe)
     ptr_filename = NULL;
     ptr_hsignal = NULL;
     ptr_command = NULL;
+    color = GUI_CHAT_PIPE_COLOR_STRIP;
+    color_set = 0;
 
     for (i = 1; i < argc; i++)
     {
@@ -5070,6 +5074,40 @@ COMMAND_CALLBACK(pipe)
             ptr_hsignal = argv[i];
             index_command = i + 1;
         }
+        else if (string_strcmp (argv[i], "-color") == 0)
+        {
+            COMMAND_MIN_ARGS(i + 2, argv[i]);
+            i++;
+            if (string_strcmp (argv[i], "strip") == 0)
+            {
+                color_set = 1;
+                color = GUI_CHAT_PIPE_COLOR_STRIP;
+            }
+            else if (string_strcmp (argv[i], "keep") == 0)
+            {
+                color_set = 1;
+                color = GUI_CHAT_PIPE_COLOR_KEEP;
+            }
+            else if (string_strcmp (argv[i], "ansi") == 0)
+            {
+                color_set = 1;
+                color = GUI_CHAT_PIPE_COLOR_ANSI;
+            }
+            else if (string_strcmp (argv[i], "irc") == 0)
+            {
+                color_set = 1;
+                color = GUI_CHAT_PIPE_COLOR_IRC;
+            }
+            else
+            {
+                gui_chat_printf (NULL,
+                                 _("%sInvalid color: \"%s\""),
+                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                 argv[i]);
+                return WEECHAT_RC_ERROR;
+            }
+            index_command = i + 1;
+        }
         else
             break;
     }
@@ -5120,6 +5158,8 @@ COMMAND_CALLBACK(pipe)
             gui_chat_pipe_buffer = (ptr_buffer) ? ptr_buffer : buffer;
             if (!gui_chat_pipe_buffer)
                 COMMAND_ERROR;
+            if (!color_set && !send_to_buffer)
+                color = GUI_CHAT_PIPE_COLOR_KEEP;
             if (gui_chat_pipe_buffer->type != GUI_BUFFER_TYPE_FORMATTED)
             {
                 gui_chat_printf (NULL,
@@ -5145,6 +5185,7 @@ COMMAND_CALLBACK(pipe)
         gui_chat_pipe_skip_empty_lines = skip_empty_lines;
         if (no_locale)
             setlocale (LC_ALL, "C");
+        gui_chat_pipe_color = color;
         pipe_set = 1;
         gui_chat_pipe = 1;
     }
@@ -9338,7 +9379,7 @@ command_init ()
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated */
         N_("[-buffer <name>|-file <filename>|-hsignal <name>] "
            "[-concat <separator>] [-strip <chars>] [-skipempty] [-c] [-o] "
-           "[-g] [-nl] <command>"),
+           "[-g] [-nl] [-color strip|keep|ansi|irc] <command>"),
         CMD_ARGS_DESC(
             N_("raw[-buffer]: display command output on this buffer"),
             N_("name: full buffer name (examples: \"core.weechat\", "
@@ -9358,6 +9399,7 @@ command_init ()
             N_("raw[-c]: alias for \"-concat \\x20 -strip \\x20 -skipempty\""),
             N_("raw[-nl]: display messages in English during the command execution "
                "(do not use the current locale)"),
+            N_("raw[-color]: convert colors"),
             N_("command: command to execute (a \"/\" is automatically added "
                "if not found at beginning of command)"),
             "",
@@ -9383,7 +9425,8 @@ command_init ()
         "-buffer %(buffers_plugins_names) %(commands:/)|%*"
         " || -file %(filename) %(commands:/)|%*"
         " || -hsignal %- %(commands:/)|%*"
-        " || -o %(commands:/)|%*",
+        " || -o %(commands:/)|%*"
+        " || %(commands:/)|%*",
         &command_pipe, NULL, NULL);
     hook_command (
         NULL, "plugin",
