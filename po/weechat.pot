@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2025-01-25 17:03+0100\n"
+"POT-Creation-Date: 2025-02-01 09:35+0100\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -516,6 +516,10 @@ msgid "Mouse enabled"
 msgstr ""
 
 msgid "Mouse disabled"
+msgstr ""
+
+#, c-format
+msgid "%sInvalid color: \"%s\""
 msgstr ""
 
 #, c-format
@@ -2521,8 +2525,9 @@ msgstr ""
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid ""
-"[-buffer <name>|-file <filename>|-hsignal <name>] [-concat <separator>] [-"
-"strip <chars>] [-skipempty] [-c] [-o] [-g] [-nl] <command>"
+"[-buffer <name>|-file <filename>|-hsignal <name>] [-color strip|keep|ansi] [-"
+"concat <separator>] [-strip <chars>] [-skipempty] [-c] [-o] [-g] [-nl] "
+"<command>"
 msgstr ""
 
 msgid "raw[-buffer]: display command output on this buffer"
@@ -2566,6 +2571,9 @@ msgstr ""
 msgid ""
 "raw[-nl]: display messages in English during the command execution (do not "
 "use the current locale)"
+msgstr ""
+
+msgid "raw[-color]: convert colors"
 msgstr ""
 
 msgid ""

@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2025-01-25 17:03+0100\n"
+"POT-Creation-Date: 2025-02-01 09:35+0100\n"
 "PO-Revision-Date: 2024-11-20 18:17+0100\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -560,6 +560,10 @@ msgstr "Myš povolena"
 
 msgid "Mouse disabled"
 msgstr "Myš vypnuta"
+
+#, fuzzy, c-format
+msgid "%sInvalid color: \"%s\""
+msgstr "%s%s: nekorektní znaková sada: \"%s\""
 
 #, fuzzy, c-format
 #| msgid "%s%s: unable to parse file \"%s\""
@@ -2757,8 +2761,9 @@ msgstr ""
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid ""
-"[-buffer <name>|-file <filename>|-hsignal <name>] [-concat <separator>] [-"
-"strip <chars>] [-skipempty] [-c] [-o] [-g] [-nl] <command>"
+"[-buffer <name>|-file <filename>|-hsignal <name>] [-color strip|keep|ansi] [-"
+"concat <separator>] [-strip <chars>] [-skipempty] [-c] [-o] [-g] [-nl] "
+"<command>"
 msgstr ""
 
 #, fuzzy
@@ -2807,6 +2812,11 @@ msgid ""
 "raw[-nl]: display messages in English during the command execution (do not "
 "use the current locale)"
 msgstr ""
+
+#, fuzzy
+#| msgid "reconnect to server(s)"
+msgid "raw[-color]: convert colors"
+msgstr "znovu připojit k serveru(ům)"
 
 msgid ""
 "If no target is specified (\"-buffer\", \"-file\" or \"-hsignal\"), then the "

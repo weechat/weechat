@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2025-01-25 17:03+0100\n"
-"PO-Revision-Date: 2025-01-25 17:05+0100\n"
+"POT-Creation-Date: 2025-02-01 09:35+0100\n"
+"PO-Revision-Date: 2025-02-01 09:36+0100\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -541,6 +541,10 @@ msgstr "Souris activée"
 
 msgid "Mouse disabled"
 msgstr "Souris désactivée"
+
+#, c-format
+msgid "%sInvalid color: \"%s\""
+msgstr "%sCouleur invalide : \"%s\""
 
 #, c-format
 msgid "%sUnable to open file \"%s\""
@@ -3016,11 +3020,13 @@ msgstr ""
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid ""
-"[-buffer <name>|-file <filename>|-hsignal <name>] [-concat <separator>] [-"
-"strip <chars>] [-skipempty] [-c] [-o] [-g] [-nl] <command>"
+"[-buffer <name>|-file <filename>|-hsignal <name>] [-color strip|keep|ansi] [-"
+"concat <separator>] [-strip <chars>] [-skipempty] [-c] [-o] [-g] [-nl] "
+"<command>"
 msgstr ""
-"[-buffer <nom>|-file <fichier>|-hsignal <nom>] [-concat <séparateur>] [-"
-"strip <caractères>] [-skipempty] [-c] [-o] [-g] [-nl] <commande>"
+"[-buffer <nom>|-file <fichier>|-hsignal <nom>] [-color strip|keep|ansi] [-"
+"concat <séparateur>] [-strip <caractères>] [-skipempty] [-c] [-o] [-g] [-nl] "
+"<commande>"
 
 msgid "raw[-buffer]: display command output on this buffer"
 msgstr "raw[-buffer] : afficher la sortie de la commande sur ce tampon"
@@ -3079,6 +3085,9 @@ msgid ""
 msgstr ""
 "raw[-nl] : afficher les messages en anglais pendant l'exécution de la "
 "commande (ne pas utiliser la locale courante)"
+
+msgid "raw[-color]: convert colors"
+msgstr "raw[-color] : convertir les couleurs"
 
 msgid ""
 "If no target is specified (\"-buffer\", \"-file\" or \"-hsignal\"), then the "

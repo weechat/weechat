@@ -73,6 +73,10 @@ char **gui_chat_pipe_concat_lines = NULL;       /* concatenated lines       */
 char **gui_chat_pipe_concat_tags = NULL;        /* concatenated tags        */
 char *gui_chat_pipe_strip_chars = NULL;         /* chars to strip on lines  */
 int gui_chat_pipe_skip_empty_lines = 0;         /* skip empty lines         */
+                                                /* colors in pipe output    */
+enum t_gui_chat_pipe_color gui_chat_pipe_color = GUI_CHAT_PIPE_COLOR_STRIP;
+char *gui_chat_pipe_color_string[GUI_CHAT_PIPE_NUM_COLORS] =
+{ "strip", "keep", "ansi" };
 
 
 /*
@@ -605,8 +609,59 @@ gui_chat_buffer_valid (struct t_gui_buffer *buffer,
 }
 
 /*
+ * Searches for a pipe color name.
+ *
+ * Returns index of color in enum t_gui_chat_pipe_color, -1 if not found.
+ */
+
+int
+gui_chat_pipe_search_color (const char *color)
+{
+    int i;
+
+    if (!color)
+        return -1;
+
+    for (i = 0; i < GUI_CHAT_PIPE_NUM_COLORS; i++)
+    {
+        if (strcmp (gui_chat_pipe_color_string[i], color) == 0)
+            return i;
+    }
+
+    /* color not found */
+    return -1;
+}
+
+/*
+ * Converts color in a message, according to variable gui_chat_pipe_color.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+gui_chat_pipe_convert_color (const char *data)
+{
+    if (!data)
+        return NULL;
+
+    switch (gui_chat_pipe_color)
+    {
+        case GUI_CHAT_PIPE_COLOR_STRIP:
+            return gui_color_decode (data, NULL);
+        case GUI_CHAT_PIPE_COLOR_KEEP:
+            return strdup (data);
+        case GUI_CHAT_PIPE_COLOR_ANSI:
+            return gui_color_encode_ansi (data);
+        case GUI_CHAT_PIPE_NUM_COLORS:
+            break;
+    }
+
+    return strdup (data);
+}
+
+/*
  * Builds a message with a line: "<prefix> <message>" or "<message>" if there
- * is no prefix. The colors are stripped from prefix and message.
+ * is no prefix.
  *
  * Note: result must be freed after use.
  */
@@ -619,10 +674,8 @@ gui_chat_pipe_build_message (struct t_gui_line *line)
     if (!line)
         return NULL;
 
-    prefix = (line->data->prefix) ?
-        gui_color_decode (line->data->prefix, NULL) : strdup ("");
-    message = (line->data->message) ?
-        gui_color_decode (line->data->message, NULL) : strdup ("");
+    prefix = gui_chat_pipe_convert_color (line->data->prefix);
+    message = gui_chat_pipe_convert_color (line->data->message);
 
     string_asprintf (&data,
                      "%s%s%s",
@@ -645,8 +698,13 @@ gui_chat_pipe_send_buffer_input (struct t_gui_buffer *buffer, const char *data)
 {
     struct t_gui_buffer *buffer_saved;
     int send_to_buffer_saved;
+    char *data_color;
 
     if (!buffer || !data)
+        return;
+
+    data_color = gui_chat_pipe_convert_color (data);
+    if (!data_color)
         return;
 
     buffer_saved = gui_chat_pipe_buffer;
@@ -658,7 +716,7 @@ gui_chat_pipe_send_buffer_input (struct t_gui_buffer *buffer, const char *data)
 
     input_data (
         buffer,
-        (data[0]) ? data : " ",
+        (data_color[0]) ? data_color : " ",
         "-",  /* commands_allowed */
         0,  /* split_newline */
         0);  /* user_data */
@@ -666,6 +724,8 @@ gui_chat_pipe_send_buffer_input (struct t_gui_buffer *buffer, const char *data)
     /* restore pipe redirection */
     gui_chat_pipe_buffer = buffer_saved;
     gui_chat_pipe_send_to_buffer = send_to_buffer_saved;
+
+    free (data_color);
 }
 
 /*
@@ -819,6 +879,7 @@ gui_chat_pipe_end ()
         string_dyn_free (gui_chat_pipe_concat_tags, 1);
         gui_chat_pipe_concat_tags = NULL;
     }
+    gui_chat_pipe_color = GUI_CHAT_PIPE_COLOR_STRIP;
 }
 
 /*
@@ -839,6 +900,7 @@ gui_chat_printf_datetime_tags_internal (struct t_gui_buffer *buffer,
     int display_time;
     char *ptr_msg, *pos_prefix, *pos_tab;
     char *modifier_data, *string, *new_string, *pos_newline;
+    char *prefix_color, *message_color;
     struct t_gui_line *new_line;
 
     if (!buffer)
@@ -998,6 +1060,19 @@ gui_chat_printf_datetime_tags_internal (struct t_gui_buffer *buffer,
     {
         /* line was handled with /pipe command, do NOT display it */
         goto no_print;
+    }
+    else if (gui_chat_pipe_buffer)
+    {
+        prefix_color = gui_chat_pipe_convert_color (new_line->data->prefix);
+        string_shared_free (new_line->data->prefix);
+        new_line->data->prefix = (prefix_color) ?
+            (char *)string_shared_get (prefix_color) : NULL;
+        new_line->data->prefix_length = (prefix_color) ?
+            gui_chat_strlen_screen (prefix_color) : 0;
+
+        message_color = gui_chat_pipe_convert_color (new_line->data->message);
+        free (new_line->data->message);
+        new_line->data->message = message_color;
     }
 
     /* add line in the buffer */

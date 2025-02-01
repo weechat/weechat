@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2025-01-25 17:03+0100\n"
+"POT-Creation-Date: 2025-02-01 09:35+0100\n"
 "PO-Revision-Date: 2025-01-21 12:27+0400\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -530,6 +530,11 @@ msgstr "Миш је укључен"
 
 msgid "Mouse disabled"
 msgstr "Миш је искључен"
+
+#, fuzzy, c-format
+#| msgid "%sInvalid number: \"%s\""
+msgid "%sInvalid color: \"%s\""
+msgstr "%sНеважећи број: „%s”"
 
 #, c-format
 msgid "%sUnable to open file \"%s\""
@@ -2916,9 +2921,14 @@ msgid "redirect command output to a buffer, a file or a hsignal"
 msgstr "преусмерава излаз команде у бафер, фајл или hsignal"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#, fuzzy
+#| msgid ""
+#| "[-buffer <name>|-file <filename>|-hsignal <name>] [-concat <separator>] [-"
+#| "strip <chars>] [-skipempty] [-c] [-o] [-g] [-nl] <command>"
 msgid ""
-"[-buffer <name>|-file <filename>|-hsignal <name>] [-concat <separator>] [-"
-"strip <chars>] [-skipempty] [-c] [-o] [-g] [-nl] <command>"
+"[-buffer <name>|-file <filename>|-hsignal <name>] [-color strip|keep|ansi] [-"
+"concat <separator>] [-strip <chars>] [-skipempty] [-c] [-o] [-g] [-nl] "
+"<command>"
 msgstr ""
 "[-buffer <име>|-file <имефајла>|-hsignal <име>] [-concat <граничник>] [-"
 "strip <кар>] [-skipempty] [-c] [-o] [-g] [-nl] <команда>"
@@ -2980,6 +2990,11 @@ msgid ""
 msgstr ""
 "raw[-nl]: током извршавања команде, поруке се приказују на енглеском (не "
 "користи се текући локалитет)"
+
+#, fuzzy
+#| msgid "raw[clear]: clear hotlist"
+msgid "raw[-color]: convert colors"
+msgstr "raw[clear]: брише врућу листу"
 
 msgid ""
 "If no target is specified (\"-buffer\", \"-file\" or \"-hsignal\"), then the "

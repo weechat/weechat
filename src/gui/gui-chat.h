@@ -66,6 +66,15 @@ enum t_gui_chat_mute
     GUI_CHAT_MUTE_ALL_BUFFERS,
 };
 
+enum t_gui_chat_pipe_color
+{
+    GUI_CHAT_PIPE_COLOR_STRIP = 0,
+    GUI_CHAT_PIPE_COLOR_KEEP,
+    GUI_CHAT_PIPE_COLOR_ANSI,
+    /* number of color actions */
+    GUI_CHAT_PIPE_NUM_COLORS,
+};
+
 extern char *gui_chat_prefix[GUI_CHAT_NUM_PREFIXES];
 extern char gui_chat_prefix_empty[];
 extern int gui_chat_time_length;
@@ -82,6 +91,7 @@ extern char **gui_chat_pipe_concat_lines;
 extern char **gui_chat_pipe_concat_tags;
 extern char *gui_chat_pipe_strip_chars;
 extern int gui_chat_pipe_skip_empty_lines;
+extern enum t_gui_chat_pipe_color gui_chat_pipe_color;
 
 extern int gui_chat_display_tags;
 
@@ -108,6 +118,7 @@ extern int gui_chat_get_time_length ();
 extern void gui_chat_change_time_format ();
 extern int gui_chat_buffer_valid (struct t_gui_buffer *buffer,
                                   int buffer_type);
+extern int gui_chat_pipe_search_color (const char *color);
 extern void gui_chat_pipe_end ();
 extern void gui_chat_printf_datetime_tags (struct t_gui_buffer *buffer,
                                            time_t date, int date_usec,
