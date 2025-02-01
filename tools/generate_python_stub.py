@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #
 # Copyright (C) 2019 Simmo Saan <simmo.saan@gmail.com>
-# Copyright (C) 2021-2024 Sébastien Helleu <flashcode@flashtux.org>
+# Copyright (C) 2021-2025 Sébastien Helleu <flashcode@flashtux.org>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by

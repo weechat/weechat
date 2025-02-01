@@ -2,7 +2,7 @@
  * irc-modelist.c - channel mode list management for IRC plugin
  *
  * Copyright (C) 2015 Simmo Saan <simmo.saan@gmail.com>
- * Copyright (C) 2018-2024 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2018-2025 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *

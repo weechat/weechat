@@ -1,7 +1,7 @@
 /*
  * test-hook-process.cpp - test hook process functions
  *
- * Copyright (C) 2024 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2024-2025 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *

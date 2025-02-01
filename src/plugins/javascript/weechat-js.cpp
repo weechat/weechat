@@ -2,7 +2,7 @@
  * weechat-js.cpp - javascript plugin for WeeChat
  *
  * Copyright (C) 2013 Koka El Kiwi <kokakiwi@kokakiwi.net>
- * Copyright (C) 2015-2024 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2015-2025 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *

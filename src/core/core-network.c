@@ -1,7 +1,7 @@
 /*
  * core-network.c - network functions
  *
- * Copyright (C) 2003-2024 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
  * Copyright (C) 2005-2010 Emmanuel Bouthenot <kolter@openics.org>
  * Copyright (C) 2010 Gu1ll4um3r0m41n <aeroxteam@gmail.com>
  * Copyright (C) 2012 Simon Arlott

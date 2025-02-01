@@ -1,7 +1,7 @@
 /*
  * test-logger-backlog.cpp - test logger backlog functions
  *
- * Copyright (C) 2022-2024 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2022-2025 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
