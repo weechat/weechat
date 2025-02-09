@@ -1753,11 +1753,12 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
 
 [width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
-| Key         | Description | Command
-| kbd:[Alt+m] | Toggle mouse. | `+/mouse toggle+`
-| kbd:[Alt+s] | Toggle spell checker. | `+/mute spell toggle+`
-| kbd:[Alt+=] | Toggle filters. | `+/filter toggle+`
-| kbd:[Alt+-] | Toggle filters in current buffer. | `+/filter toggle @+`
+| Key                    | Description | Command
+| kbd:[Alt+m]            | Toggle mouse. | `+/mouse toggle+`
+| kbd:[Alt+s]            | Toggle spell checker. | `+/mute spell toggle+`
+| kbd:[Alt+=]            | Toggle filters. | `+/filter toggle+`
+| kbd:[Alt+-]            | Toggle filters in current buffer. | `+/filter toggle @+`
+| kbd:[Alt+Ctrl+l] (`L`) | Toggle between remote and local commands on a remote buffer (relay "api"). | `+/remote togglecmd+`
 |===
 
 [[key_bindings_search_context]]

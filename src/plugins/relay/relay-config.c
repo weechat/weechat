@@ -105,9 +105,11 @@ struct t_config_option *relay_config_irc_backlog_time_format = NULL;
 
 /* relay config, api section */
 
-struct t_config_option *relay_config_api_remote_get_lines = NULL;
 struct t_config_option *relay_config_api_remote_autoreconnect_delay_growing = NULL;
 struct t_config_option *relay_config_api_remote_autoreconnect_delay_max = NULL;
+struct t_config_option *relay_config_api_remote_get_lines = NULL;
+struct t_config_option *relay_config_api_remote_input_cmd_local = NULL;
+struct t_config_option *relay_config_api_remote_input_cmd_remote = NULL;
 
 /* other */
 
@@ -1851,13 +1853,6 @@ relay_config_init ()
         NULL, NULL, NULL);
     if (relay_config_section_api)
     {
-        relay_config_api_remote_get_lines = weechat_config_new_option (
-            relay_config_file, relay_config_section_api,
-            "remote_get_lines", "integer",
-            N_("number of lines to retrieve on each buffer when connecting "
-               "to a remote relay"),
-            NULL, 0, INT_MAX, "1000", NULL, 0,
-            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
         relay_config_api_remote_autoreconnect_delay_growing = weechat_config_new_option (
             relay_config_file, relay_config_section_api,
             "remote_autoreconnect_delay_growing", "integer",
@@ -1871,6 +1866,29 @@ relay_config_init ()
             N_("maximum autoreconnect delay to remote relay (in seconds, 0 = no "
                "maximum)"),
             NULL, 0, 3600 * 24 * 7, "600", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        relay_config_api_remote_get_lines = weechat_config_new_option (
+            relay_config_file, relay_config_section_api,
+            "remote_get_lines", "integer",
+            N_("number of lines to retrieve on each buffer when connecting "
+               "to a remote relay"),
+            NULL, 0, INT_MAX, "1000", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        relay_config_api_remote_input_cmd_local = weechat_config_new_option (
+            relay_config_file, relay_config_section_api,
+            "remote_input_cmd_local", "string",
+            N_("text displayed after user input when the command would be "
+               "executed locally (NOT sent to the remote WeeChat) "
+               "(note: content is evaluated, see /help eval)"),
+            NULL, 0, 0, "   ${color:green}<local cmd>", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        relay_config_api_remote_input_cmd_remote = weechat_config_new_option (
+            relay_config_file, relay_config_section_api,
+            "remote_input_cmd_remote", "string",
+            N_("text displayed after user input when the command would be "
+               "executed on the remote WeeChat (NOT executed locally) "
+               "(note: content is evaluated, see /help eval)"),
+            NULL, 0, 0, "   ${color:red}<remote cmd>", NULL, 0,
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     }
 

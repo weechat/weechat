@@ -1894,11 +1894,13 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
 
 [width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
-| キー         | 説明 | コマンド
-| kbd:[Alt+m] | マウスの有効無効を切り替え | `+/mouse toggle+`
-| kbd:[Alt+s] | スペルチェッカの有効無効を切り替え | `+/mute spell toggle+`
-| kbd:[Alt+=] | フィルタの有効無効を切り替え | `+/filter toggle+`
-| kbd:[Alt+-] | 現在のバッファのフィルタの有効無効を切り替え | `+/filter toggle @+`
+| キー                   | 説明 | コマンド
+| kbd:[Alt+m]            | マウスの有効無効を切り替え | `+/mouse toggle+`
+| kbd:[Alt+s]            | スペルチェッカの有効無効を切り替え | `+/mute spell toggle+`
+| kbd:[Alt+=]            | フィルタの有効無効を切り替え | `+/filter toggle+`
+| kbd:[Alt+-]            | 現在のバッファのフィルタの有効無効を切り替え | `+/filter toggle @+`
+// TRANSLATION MISSING
+| kbd:[Alt+Ctrl+l] (`L`) | Toggle between remote and local commands on a remote buffer (relay "api"). | `+/remote togglecmd+`
 |===
 
 // TRANSLATION MISSING

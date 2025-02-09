@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2025-02-01 09:35+0100\n"
+"POT-Creation-Date: 2025-02-09 18:02+0100\n"
 "PO-Revision-Date: 2024-11-20 18:17+0100\n"
 "Last-Translator: Vasco Almeida <vascomalmeida@sapo.pt>\n"
 "Language-Team: Portuguese <>\n"
@@ -2858,6 +2858,11 @@ msgid ""
 "newline)"
 msgstr ""
 
+#, fuzzy
+#| msgid "reconnect to server(s)"
+msgid "raw[-color]: convert colors"
+msgstr "reconectar-se a um servidor"
+
 msgid ""
 "raw[-o]: send command output to the buffer as input; colors are stripped and "
 "commands are NOT executed (used only with -buffer)"
@@ -2883,11 +2888,6 @@ msgid ""
 "raw[-nl]: display messages in English during the command execution (do not "
 "use the current locale)"
 msgstr ""
-
-#, fuzzy
-#| msgid "reconnect to server(s)"
-msgid "raw[-color]: convert colors"
-msgstr "reconectar-se a um servidor"
 
 msgid ""
 "If no target is specified (\"-buffer\", \"-file\" or \"-hsignal\"), then the "
@@ -15315,7 +15315,7 @@ msgstr "desconectar de um ou todos os servidores IRC"
 msgid ""
 "list|listfull [<name>] || add|addreplace <name> <url> [-<option>[=<value>]] "
 "|| connect|reconnect|disconnect|del <name> || send <name> <json> || rename "
-"<name> <new_name>"
+"<name> <new_name> || togglecmd"
 msgstr ""
 "list|listfull [<servidor>] || add <servidor> <hostname>[/<porta>] [-temp] [-"
 "<opção>[=<valor>]] [-no<opção>] || copy|rename <servidor> <novo_nome> || "
@@ -15386,6 +15386,11 @@ msgstr "lista de itens da barra"
 #| msgid "names of filters"
 msgid "raw[rename]: rename a remote relay server"
 msgstr "nomes dos filtros"
+
+msgid ""
+"raw[togglecmd]: toggle execution of commands on a remote buffer: on the "
+"remote WeeChat or locally (default key: alt+ctrl+l)"
+msgstr ""
 
 msgid "all possible protocol.name for relay plugin"
 msgstr "todos os protocolo.nome possíveis para o plugin relay"
@@ -15739,10 +15744,6 @@ msgstr ""
 "pelo cliente, porque o tempo é enviado como tag de irc); cadeia vazia = "
 "desativar hora nas mensagens do registo recente"
 
-msgid ""
-"number of lines to retrieve on each buffer when connecting to a remote relay"
-msgstr ""
-
 #, fuzzy
 msgid ""
 "growing factor for autoreconnect delay to remote relay (1 = always same "
@@ -15758,6 +15759,25 @@ msgid ""
 msgstr ""
 "atraso máximo (em segundos) para reconectar automaticamente ao servidor (0 = "
 "sem limite)"
+
+msgid ""
+"number of lines to retrieve on each buffer when connecting to a remote relay"
+msgstr ""
+
+#, fuzzy
+msgid ""
+"text displayed after user input when the command would be executed locally "
+"(NOT sent to the remote WeeChat) (note: content is evaluated, see /help eval)"
+msgstr ""
+"nome real a usar no servidor (nota: o conteúdo é avaliado, ver /help eval)"
+
+#, fuzzy
+msgid ""
+"text displayed after user input when the command would be executed on the "
+"remote WeeChat (NOT executed locally) (note: content is evaluated, see /help "
+"eval)"
+msgstr ""
+"nome real a usar no servidor (nota: o conteúdo é avaliado, ver /help eval)"
 
 #, c-format
 msgid "%s%s: invalid websocket handshake received for client %s%s%s"

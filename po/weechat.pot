@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2025-02-01 09:35+0100\n"
+"POT-Creation-Date: 2025-02-09 18:02+0100\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2547,6 +2547,9 @@ msgid ""
 "newline)"
 msgstr ""
 
+msgid "raw[-color]: convert colors"
+msgstr ""
+
 msgid ""
 "raw[-o]: send command output to the buffer as input; colors are stripped and "
 "commands are NOT executed (used only with -buffer)"
@@ -2571,9 +2574,6 @@ msgstr ""
 msgid ""
 "raw[-nl]: display messages in English during the command execution (do not "
 "use the current locale)"
-msgstr ""
-
-msgid "raw[-color]: convert colors"
 msgstr ""
 
 msgid ""
@@ -12741,7 +12741,7 @@ msgstr ""
 msgid ""
 "list|listfull [<name>] || add|addreplace <name> <url> [-<option>[=<value>]] "
 "|| connect|reconnect|disconnect|del <name> || send <name> <json> || rename "
-"<name> <new_name>"
+"<name> <new_name> || togglecmd"
 msgstr ""
 
 msgid ""
@@ -12788,6 +12788,11 @@ msgid "raw[send]: send JSON data to a remote relay server"
 msgstr ""
 
 msgid "raw[rename]: rename a remote relay server"
+msgstr ""
+
+msgid ""
+"raw[togglecmd]: toggle execution of commands on a remote buffer: on the "
+"remote WeeChat or locally (default key: alt+ctrl+l)"
 msgstr ""
 
 msgid "all possible protocol.name for relay plugin"
@@ -13072,16 +13077,27 @@ msgid ""
 msgstr ""
 
 msgid ""
-"number of lines to retrieve on each buffer when connecting to a remote relay"
-msgstr ""
-
-msgid ""
 "growing factor for autoreconnect delay to remote relay (1 = always same "
 "delay, 2 = delay*2 for each retry, etc.)"
 msgstr ""
 
 msgid ""
 "maximum autoreconnect delay to remote relay (in seconds, 0 = no maximum)"
+msgstr ""
+
+msgid ""
+"number of lines to retrieve on each buffer when connecting to a remote relay"
+msgstr ""
+
+msgid ""
+"text displayed after user input when the command would be executed locally "
+"(NOT sent to the remote WeeChat) (note: content is evaluated, see /help eval)"
+msgstr ""
+
+msgid ""
+"text displayed after user input when the command would be executed on the "
+"remote WeeChat (NOT executed locally) (note: content is evaluated, see /help "
+"eval)"
 msgstr ""
 
 #, c-format

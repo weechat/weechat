@@ -1671,11 +1671,13 @@ WeeChat нуди доста подразумеваних тастерских п
 
 [width="100%", cols="^.^3,.^8,.^5", options="header"]
 |===
-| Тастер      | Опис | Команда
-| kbd:[Alt+m] | Пребацивање активности миша. | `+/mouse toggle+`
-| kbd:[Alt+s] | Пребацује стање активности модула за проверу правописа. | `+/mute spell toggle+`
-| kbd:[Alt+=] | Пребацивање активности филтера. | `+/filter toggle+`
-| kbd:[Alt+-] | Пребацивање активности филтера у текућем баферу. | `+/filter toggle @+`
+| Тастер                 | Опис | Команда
+| kbd:[Alt+m]            | Пребацивање активности миша. | `+/mouse toggle+`
+| kbd:[Alt+s]            | Пребацује стање активности модула за проверу правописа. | `+/mute spell toggle+`
+| kbd:[Alt+=]            | Пребацивање активности филтера. | `+/filter toggle+`
+| kbd:[Alt+-]            | Пребацивање активности филтера у текућем баферу. | `+/filter toggle @+`
+// TRANSLATION MISSING
+| kbd:[Alt+Ctrl+l] (`L`) | Toggle between remote and local commands on a remote buffer (relay "api"). | `+/remote togglecmd+`
 |===
 
 [[key_bindings_search_context]]

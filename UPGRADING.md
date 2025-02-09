@@ -7,6 +7,19 @@ When upgrading from version X to Y, please read and apply all instructions from 
 
 For a list of all changes in each version, please see [CHANGELOG.md](CHANGELOG.md).
 
+## Version 4.6.0
+
+### Relay remote commands
+
+Commands on remote buffers can now be toggled: execution on remote WeeChat or
+locally, with a new default key: `Alt`+`Ctrl`+`l` (L).
+
+You can add this key with this command:
+
+```text
+/key missing
+```
+
 ## Version 4.3.1
 
 ### Detection of libgcrypt

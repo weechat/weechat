@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2025-02-01 09:35+0100\n"
+"POT-Creation-Date: 2025-02-09 18:02+0100\n"
 "PO-Revision-Date: 2025-01-21 12:27+0400\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2957,6 +2957,11 @@ msgid ""
 msgstr ""
 "raw[-hsignal]: шаље излаз команде као hsignal (кључеви: „command” и „output”)"
 
+#, fuzzy
+#| msgid "raw[clear]: clear hotlist"
+msgid "raw[-color]: convert colors"
+msgstr "raw[clear]: брише врућу листу"
+
 msgid ""
 "raw[-o]: send command output to the buffer as input; colors are stripped and "
 "commands are NOT executed (used only with -buffer)"
@@ -2990,11 +2995,6 @@ msgid ""
 msgstr ""
 "raw[-nl]: током извршавања команде, поруке се приказују на енглеском (не "
 "користи се текући локалитет)"
-
-#, fuzzy
-#| msgid "raw[clear]: clear hotlist"
-msgid "raw[-color]: convert colors"
-msgstr "raw[clear]: брише врућу листу"
 
 msgid ""
 "If no target is specified (\"-buffer\", \"-file\" or \"-hsignal\"), then the "
@@ -15180,10 +15180,15 @@ msgid "control of remote relay servers"
 msgstr "контрола сервера релеја за удаљене"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#, fuzzy
+#| msgid ""
+#| "list|listfull [<name>] || add|addreplace <name> <url> [-"
+#| "<option>[=<value>]] || connect|reconnect|disconnect|del <name> || send "
+#| "<name> <json> || rename <name> <new_name>"
 msgid ""
 "list|listfull [<name>] || add|addreplace <name> <url> [-<option>[=<value>]] "
 "|| connect|reconnect|disconnect|del <name> || send <name> <json> || rename "
-"<name> <new_name>"
+"<name> <new_name> || togglecmd"
 msgstr ""
 "list|listfull [<име>] || add|addreplace <име> <url> [-<опција>[=<вредност>]] "
 "|| connect|reconnect|disconnect|del <име> || send <име> <json> || rename "
@@ -15242,6 +15247,11 @@ msgstr "raw[send]: шаље JSON податке серверу релеја уд
 
 msgid "raw[rename]: rename a remote relay server"
 msgstr "raw[rename]: промена имена сервера релеја удаљених"
+
+msgid ""
+"raw[togglecmd]: toggle execution of commands on a remote buffer: on the "
+"remote WeeChat or locally (default key: alt+ctrl+l)"
+msgstr ""
 
 msgid "all possible protocol.name for relay plugin"
 msgstr "сви могући протокол.име за relay додатак"
@@ -15633,12 +15643,6 @@ msgstr ""
 "искључено у линијама старијих порука"
 
 msgid ""
-"number of lines to retrieve on each buffer when connecting to a remote relay"
-msgstr ""
-"број линија који се преузима из сваког бафера када се успоставља веза са "
-"релејем удаљених"
-
-msgid ""
 "growing factor for autoreconnect delay to remote relay (1 = always same "
 "delay, 2 = delay*2 for each retry, etc.)"
 msgstr ""
@@ -15650,6 +15654,35 @@ msgid ""
 msgstr ""
 "максимална пауза пре аутоматског поновног повезивања са удаљеним релејем (у "
 "секундама, 0 = нема ограничења)"
+
+msgid ""
+"number of lines to retrieve on each buffer when connecting to a remote relay"
+msgstr ""
+"број линија који се преузима из сваког бафера када се успоставља веза са "
+"релејем удаљених"
+
+#, fuzzy
+#| msgid ""
+#| "string displayed to indent channel, private and list buffers (note: "
+#| "content is evaluated, see /help buflist)"
+msgid ""
+"text displayed after user input when the command would be executed locally "
+"(NOT sent to the remote WeeChat) (note: content is evaluated, see /help eval)"
+msgstr ""
+"стринг који се приказује за увлачење канала, приватних бафера и листе бафера "
+"(напомена: садржај се израчунава, погледајте /help buflist)"
+
+#, fuzzy
+#| msgid ""
+#| "string displayed to indent channel, private and list buffers (note: "
+#| "content is evaluated, see /help buflist)"
+msgid ""
+"text displayed after user input when the command would be executed on the "
+"remote WeeChat (NOT executed locally) (note: content is evaluated, see /help "
+"eval)"
+msgstr ""
+"стринг који се приказује за увлачење канала, приватних бафера и листе бафера "
+"(напомена: садржај се израчунава, погледајте /help buflist)"
 
 #, c-format
 msgid "%s%s: invalid websocket handshake received for client %s%s%s"

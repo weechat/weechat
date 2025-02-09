@@ -1788,11 +1788,12 @@ Ils peuvent être modifiés et de nouveaux peuvent être ajoutés avec la comman
 
 [width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
-| Touche      | Description | Commande
-| kbd:[Alt+m] | Activer/désactiver la souris. | `+/mouse toggle+`
-| kbd:[Alt+s] | Activer/désactiver la vérification de l'orthographe. | `+/mute spell toggle+`
-| kbd:[Alt+=] | Activer/désactiver les filtres. | `+/filter toggle+`
-| kbd:[Alt+-] | Activer/désactiver les filtres dans le tampon courant. | `+/filter toggle @+`
+| Touche                 | Description | Commande
+| kbd:[Alt+m]            | Activer/désactiver la souris. | `+/mouse toggle+`
+| kbd:[Alt+s]            | Activer/désactiver la vérification de l'orthographe. | `+/mute spell toggle+`
+| kbd:[Alt+=]            | Activer/désactiver les filtres. | `+/filter toggle+`
+| kbd:[Alt+-]            | Activer/désactiver les filtres dans le tampon courant. | `+/filter toggle @+`
+| kbd:[Alt+Ctrl+l] (`L`) | Basculer entre les commandes distantes et locales sur un tampon distant (relay "api"). | `+/remote togglecmd+`
 |===
 
 [[key_bindings_search_context]]

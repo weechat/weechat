@@ -20,6 +20,7 @@
  */
 
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 
 #include "../weechat-plugin.h"
@@ -252,6 +253,76 @@ relay_debug_dump_cb (const void *pointer, void *data,
 }
 
 /*
+ * Updates input text by adding local/remote command indicator, only on
+ * buffers with remote (relay api).
+ */
+
+char *
+relay_modifier_input_text_display_cb (const void *pointer,
+                                      void *data,
+                                      const char *modifier,
+                                      const char *modifier_data,
+                                      const char *string)
+{
+    struct t_gui_buffer *ptr_buffer;
+    struct t_relay_remote *ptr_remote;
+    const char *ptr_input, *ptr_text_local, *ptr_text_remote;
+    char *text, *new_input;
+    int rc, input_get_any_user_data;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) modifier;
+
+    if (!string)
+        return NULL;
+
+    if (!relay_remotes)
+        return NULL;
+
+    rc = sscanf (modifier_data, "%p", &ptr_buffer);
+    if ((rc == EOF) || (rc == 0))
+        return NULL;
+
+    if (weechat_buffer_get_pointer (ptr_buffer, "plugin") != weechat_plugin)
+        return NULL;
+
+    ptr_text_local = weechat_config_string (relay_config_api_remote_input_cmd_local);
+    ptr_text_remote = weechat_config_string (relay_config_api_remote_input_cmd_remote);
+
+    if ((!ptr_text_local || !ptr_text_local[0])
+        && (!ptr_text_remote || !ptr_text_remote[0]))
+        return NULL;
+
+    ptr_remote = relay_remote_search (
+        weechat_buffer_get_string (ptr_buffer, "localvar_relay_remote"));
+    if (!ptr_remote)
+        return NULL;
+
+    ptr_input = weechat_string_input_for_buffer (
+        weechat_buffer_get_string (ptr_buffer, "input"));
+
+    /* if input is not a command, we don't change the input */
+    if (ptr_input)
+        return NULL;
+
+    input_get_any_user_data = weechat_buffer_get_integer (
+        ptr_buffer, "input_get_any_user_data");
+
+    text = weechat_string_eval_expression (
+        (input_get_any_user_data) ? ptr_text_remote : ptr_text_local,
+        NULL, NULL, NULL);
+
+    weechat_asprintf (&new_input, "%s%s%s",
+                      string, weechat_color ("reset"), text);
+
+    free (text);
+
+    return new_input;
+}
+
+/*
  * Timer callback, called each second.
  */
 
@@ -314,6 +385,14 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     weechat_hook_signal ("debug_dump", &relay_debug_dump_cb, NULL, NULL);
 
     relay_info_init ();
+
+    /*
+     * callback for adding local/remote command status (buffer api remote),
+     * we use a low priority here, so that other modifiers "input_text_display"
+     * (from other plugins) will be called before this one
+     */
+    weechat_hook_modifier ("100|input_text_display",
+                           &relay_modifier_input_text_display_cb, NULL, NULL);
 
     if (weechat_relay_plugin->upgrading)
         relay_upgrade_load ();

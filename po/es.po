@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2025-02-01 09:35+0100\n"
+"POT-Creation-Date: 2025-02-09 18:02+0100\n"
 "PO-Revision-Date: 2024-11-20 18:17+0100\n"
 "Last-Translator: Santiago Forero <santiago@forero.xyz>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2850,6 +2850,11 @@ msgid ""
 "newline)"
 msgstr ""
 
+#, fuzzy
+#| msgid "reconnect to server(s)"
+msgid "raw[-color]: convert colors"
+msgstr "reconectar al servidor(es)"
+
 msgid ""
 "raw[-o]: send command output to the buffer as input; colors are stripped and "
 "commands are NOT executed (used only with -buffer)"
@@ -2875,11 +2880,6 @@ msgid ""
 "raw[-nl]: display messages in English during the command execution (do not "
 "use the current locale)"
 msgstr ""
-
-#, fuzzy
-#| msgid "reconnect to server(s)"
-msgid "raw[-color]: convert colors"
-msgstr "reconectar al servidor(es)"
 
 msgid ""
 "If no target is specified (\"-buffer\", \"-file\" or \"-hsignal\"), then the "
@@ -14919,7 +14919,7 @@ msgstr "desconectarse de un o todos los servidores IRC"
 msgid ""
 "list|listfull [<name>] || add|addreplace <name> <url> [-<option>[=<value>]] "
 "|| connect|reconnect|disconnect|del <name> || send <name> <json> || rename "
-"<name> <new_name>"
+"<name> <new_name> || togglecmd"
 msgstr ""
 "list|listfull [<servidor>] || add <servidor> <hostname>[/<puerto>] [-temp] [-"
 "<opción>[=<valor>]] [-no<opción>] || copy|rename <servidor> <nuevo_nombre> "
@@ -14989,6 +14989,11 @@ msgstr "lista de elementos de barra"
 #| msgid "names of filters"
 msgid "raw[rename]: rename a remote relay server"
 msgstr "nombre de los filtros"
+
+msgid ""
+"raw[togglecmd]: toggle execution of commands on a remote buffer: on the "
+"remote WeeChat or locally (default key: alt+ctrl+l)"
+msgstr ""
 
 msgid "all possible protocol.name for relay plugin"
 msgstr "todos los posibles protocolo.nombre para el plugin relay"
@@ -15317,10 +15322,6 @@ msgid ""
 "sent as irc tag); empty string = disable time in backlog messages"
 msgstr ""
 
-msgid ""
-"number of lines to retrieve on each buffer when connecting to a remote relay"
-msgstr ""
-
 #, fuzzy
 msgid ""
 "growing factor for autoreconnect delay to remote relay (1 = always same "
@@ -15334,6 +15335,23 @@ msgstr ""
 msgid ""
 "maximum autoreconnect delay to remote relay (in seconds, 0 = no maximum)"
 msgstr "retraso máximo para la autoreconexión (en segundos, 0 = sin máximo)"
+
+msgid ""
+"number of lines to retrieve on each buffer when connecting to a remote relay"
+msgstr ""
+
+#, fuzzy
+msgid ""
+"text displayed after user input when the command would be executed locally "
+"(NOT sent to the remote WeeChat) (note: content is evaluated, see /help eval)"
+msgstr "comando ejecutado cuando WeeChat inicia, antes de cargar los plugins"
+
+#, fuzzy
+msgid ""
+"text displayed after user input when the command would be executed on the "
+"remote WeeChat (NOT executed locally) (note: content is evaluated, see /help "
+"eval)"
+msgstr "comando ejecutado cuando WeeChat inicia, antes de cargar los plugins"
 
 #, fuzzy, c-format
 msgid "%s%s: invalid websocket handshake received for client %s%s%s"

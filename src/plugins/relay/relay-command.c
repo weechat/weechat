@@ -475,7 +475,7 @@ relay_command_remote (const void *pointer, void *data,
                       char **argv, char **argv_eol)
 {
     struct t_relay_remote *ptr_remote, *ptr_remote2;
-    int i, detailed_list, one_remote_found, update;
+    int i, detailed_list, one_remote_found, update, input_get_any_user_data;
     const char *ptr_autoconnect, *ptr_autoreconnect_delay, *ptr_proxy;
     const char *ptr_tls_verify, *ptr_password;
     const char *ptr_totp_secret;
@@ -846,6 +846,20 @@ relay_command_remote (const void *pointer, void *data,
         return WEECHAT_RC_OK;
     }
 
+    if (weechat_strcmp (argv[1], "togglecmd") == 0)
+    {
+        if (relay_remote_search (
+                weechat_buffer_get_string (buffer, "localvar_relay_remote")))
+        {
+            input_get_any_user_data = weechat_buffer_get_integer (
+                buffer, "input_get_any_user_data");
+            weechat_buffer_set (buffer, "input_get_any_user_data",
+                                (input_get_any_user_data) ? "0" : "1");
+            weechat_bar_item_update ("input_text");
+        }
+        return WEECHAT_RC_OK;
+    }
+
     WEECHAT_COMMAND_ERROR;
 }
 
@@ -941,7 +955,8 @@ relay_command_init ()
            " || add|addreplace <name> <url> [-<option>[=<value>]]"
            " || connect|reconnect|disconnect|del <name>"
            " || send <name> <json>"
-           " || rename <name> <new_name>"),
+           " || rename <name> <new_name>"
+           " || togglecmd"),
         WEECHAT_CMD_ARGS_DESC(
             N_("raw[list]: list remote relay servers "
                "(without argument, this list is displayed)"),
@@ -960,6 +975,8 @@ relay_command_init ()
             N_("raw[del]: delete a remote relay server"),
             N_("raw[send]: send JSON data to a remote relay server"),
             N_("raw[rename]: rename a remote relay server"),
+            N_("raw[togglecmd]: toggle execution of commands on a remote buffer: "
+               "on the remote WeeChat or locally (default key: alt+ctrl+l)"),
             "",
             N_("Examples:"),
             AI("  /remote add example https://localhost:9000 "
@@ -974,6 +991,7 @@ relay_command_init ()
         "-totp_secret=${xxx}|%*"
         " || connect|reconnect|disconnect|del %(relay_remotes)"
         " || send %(relay_remotes) {\"request\":\"\"}"
-        " || rename %(relay_remotes) %(relay_remotes)",
+        " || rename %(relay_remotes) %(relay_remotes)"
+        " || togglecmd",
         &relay_command_remote, NULL, NULL);
 }
