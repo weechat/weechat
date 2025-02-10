@@ -1769,8 +1769,7 @@ Sie können mit dem Befehl <<command_weechat_key,/key>> geändert und neue hinzu
 | kbd:[Alt+s]            | Umschalten der Rechtschreibprüfung. | `+/mute spell toggle+`
 | kbd:[Alt+=]            | schaltet Filterfunktion an/aus. | `+/filter toggle+`
 | kbd:[Alt+-]            | schaltet, für den aktuellen Buffer, Filterfunktion an/aus. | `+/filter toggle @+`
-// TRANSLATION MISSING
-| kbd:[Alt+Ctrl+l] (`L`) | Toggle between remote and local commands on a remote buffer (relay "api"). | `+/remote togglecmd+`
+| kbd:[Alt+Ctrl+l] (`L`) | Umschalten zwischen Remote- und lokalen Befehlen in einem Remote-Buffer (relay "api"). | `+/remote togglecmd+`
 |===
 
 [[key_bindings_search_context]]
