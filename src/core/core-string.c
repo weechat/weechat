@@ -2966,8 +2966,8 @@ string_split_command (const char *command, char separator)
             str_idx = -1;
             p = buffer;
             /* strip white spaces at the beginning of the line */
-            while (*p == ' ') p++;
-            if (p  && p[0])
+            while (p[0] == ' ') p++;
+            if (p[0])
                 array[arr_idx++] = strdup (p);
         }
         else if (type == 2)
@@ -2980,8 +2980,8 @@ string_split_command (const char *command, char separator)
 
     buffer[str_idx] = '\0';
     p = buffer;
-    while (*p == ' ') p++;
-    if (p  && p[0])
+    while (p[0] == ' ') p++;
+    if (p[0])
         array[arr_idx++] = strdup (p);
 
     array[arr_idx] = NULL;
