@@ -6,7 +6,7 @@ include::includes/attributes-sr.adoc[]
 
 Превод:
 
-* Иван Пешић (<ivan.pesic@gmail.com>), 2021.
+* Иван Пешић (<ivan.pesic@gmail.com>), 2025.
 
 Ово упутство описује WeeChat чет клијент и део је програма WeeChat.
 
