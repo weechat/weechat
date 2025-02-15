@@ -1532,7 +1532,6 @@ irc_command_run_away (const void *pointer, void *data,
                                  0, &argc);
     argv_eol = weechat_string_split (command, " ", NULL,
                                      WEECHAT_STRING_SPLIT_STRIP_LEFT
-                                     | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                                      | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS
                                      | WEECHAT_STRING_SPLIT_KEEP_EOL,
                                      0, NULL);
@@ -6998,7 +6997,9 @@ IRC_COMMAND_CALLBACK(whowas)
 void
 irc_command_init ()
 {
-    weechat_hook_command (
+    struct t_hook *ptr_hook;
+
+    ptr_hook = weechat_hook_command (
         "action",
         N_("send a CTCP action to a nick or channel"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated */
@@ -7010,6 +7011,7 @@ irc_command_init ()
         "-server %(irc_servers) %(nicks)|*"
         " || %(nicks)|*",
         &irc_command_action, NULL, NULL);
+    IRC_COMMAND_KEEP_SPACES;
     weechat_hook_command (
         "admin",
         N_("find information about the administrator of the server"),
@@ -7018,7 +7020,7 @@ irc_command_init ()
         WEECHAT_CMD_ARGS_DESC(
             N_("target: server name")),
         NULL, &irc_command_admin, NULL, NULL);
-    weechat_hook_command (
+    ptr_hook = weechat_hook_command (
         "allchan",
         N_("execute a command on all channels of all connected servers"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated */
@@ -7055,7 +7057,8 @@ irc_command_init ()
             N_("  close all buffers with parted channels:"),
             AI("    /allchan -parted /close")),
         "-current|-parted|-all", &irc_command_allchan, NULL, NULL);
-    weechat_hook_command (
+    IRC_COMMAND_KEEP_SPACES;
+    ptr_hook = weechat_hook_command (
         "allpv",
         N_("execute a command on all private buffers of all connected servers"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated */
@@ -7090,7 +7093,8 @@ irc_command_init ()
             N_("  close all private buffers:"),
             AI("    /allpv /close")),
         "-current", &irc_command_allpv, NULL, NULL);
-    weechat_hook_command (
+    IRC_COMMAND_KEEP_SPACES;
+    ptr_hook = weechat_hook_command (
         "allserv",
         N_("execute a command on all connected servers"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated */
@@ -7115,6 +7119,7 @@ irc_command_init ()
             N_("  do a whois on my nick on all servers:"),
             AI("    /allserv /whois $nick")),
         NULL, &irc_command_allserv, NULL, NULL);
+    IRC_COMMAND_KEEP_SPACES;
     weechat_hook_command (
         "auth",
         N_("authenticate with SASL"),
@@ -7185,7 +7190,8 @@ irc_command_init ()
         " || join"
         " || sort buffer",
         &irc_command_autojoin, NULL, NULL);
-    weechat_hook_command_run ("/away", &irc_command_run_away, NULL, NULL);
+    ptr_hook = weechat_hook_command_run ("/away", &irc_command_run_away, NULL, NULL);
+    IRC_COMMAND_KEEP_SPACES;
     weechat_hook_command (
         "ban",
         N_("ban nicks or hosts"),
@@ -7281,7 +7287,7 @@ irc_command_init ()
             AI("  /connect -switch")),
         "%(irc_servers)|-all|-auto|-open|-nojoin|-switch|%*",
         &irc_command_connect, NULL, NULL);
-    weechat_hook_command (
+    ptr_hook = weechat_hook_command (
         "ctcp",
         N_("send a CTCP message (Client-To-Client Protocol)"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated */
@@ -7301,6 +7307,7 @@ irc_command_init ()
         " || %(irc_channel)|%(nicks)|* "
         IRC_COMMAND_CTCP_SUPPORTED_COMPLETION,
         &irc_command_ctcp, NULL, NULL);
+    IRC_COMMAND_KEEP_SPACES;
     weechat_hook_command (
         "cycle",
         N_("leave and rejoin a channel"),
@@ -7607,7 +7614,7 @@ irc_command_init ()
         "",
         "",
         NULL, &irc_command_map, NULL, NULL);
-    weechat_hook_command (
+    ptr_hook = weechat_hook_command (
         "me",
         N_("send a CTCP action to the current channel"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated */
@@ -7615,6 +7622,7 @@ irc_command_init ()
         WEECHAT_CMD_ARGS_DESC(
             N_("message: message to send")),
         NULL, &irc_command_me, NULL, NULL);
+    IRC_COMMAND_KEEP_SPACES;
     weechat_hook_command (
         "mode",
         N_("change channel or user mode"),
@@ -7660,7 +7668,7 @@ irc_command_init ()
         WEECHAT_CMD_ARGS_DESC(
             N_("target: server name")),
         NULL, &irc_command_motd, NULL, NULL);
-    weechat_hook_command (
+    ptr_hook = weechat_hook_command (
         "msg",
         N_("send message to a nick or channel"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated */
@@ -7672,6 +7680,7 @@ irc_command_init ()
         "-server %(irc_servers) %(nicks)|*"
         " || %(nicks)|*",
         &irc_command_msg, NULL, NULL);
+    IRC_COMMAND_KEEP_SPACES;
     weechat_hook_command (
         "names",
         N_("list nicks on channels"),
@@ -7695,7 +7704,7 @@ irc_command_init ()
         "-all %(irc_server_nick)"
         " || %(irc_server_nick)",
         &irc_command_nick, NULL, NULL);
-    weechat_hook_command (
+    ptr_hook = weechat_hook_command (
         "notice",
         N_("send notice message to user"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated */
@@ -7707,6 +7716,7 @@ irc_command_init ()
         "-server %(irc_servers) %(nicks)"
         " || %(nicks)",
         &irc_command_notice, NULL, NULL);
+    IRC_COMMAND_KEEP_SPACES;
     weechat_hook_command (
         "notify",
         N_("add a notification for presence or away status of nicks on servers"),
@@ -7777,7 +7787,7 @@ irc_command_init ()
             N_("daemon: daemon who has responded to Ping message"),
             N_("daemon2: forward message to this daemon")),
         NULL, &irc_command_pong, NULL, NULL);
-    weechat_hook_command (
+    ptr_hook = weechat_hook_command (
         "query",
         N_("send a private message to a nick"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated */
@@ -7790,6 +7800,7 @@ irc_command_init ()
         "-noswitch|-server %(irc_servers) %(nicks)"
         " || %(nicks)",
         &irc_command_query, NULL, NULL);
+    IRC_COMMAND_KEEP_SPACES;
     weechat_hook_command (
         "quiet",
         N_("quiet nicks or hosts"),
@@ -7802,7 +7813,7 @@ irc_command_init ()
             N_("Without argument, this command displays the quiet list for "
                "current channel.")),
         "%(irc_channel_nicks_hosts)", &irc_command_quiet, NULL, NULL);
-    weechat_hook_command (
+    ptr_hook = weechat_hook_command (
         "quote",
         N_("send raw data to server without parsing"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated */
@@ -7811,6 +7822,7 @@ irc_command_init ()
             N_("server: send to this server (internal name)"),
             N_("data: raw data to send")),
         "-server %(irc_servers)", &irc_command_quote, NULL, NULL);
+    IRC_COMMAND_KEEP_SPACES;
     weechat_hook_command (
         "reconnect",
         N_("reconnect to server(s)"),
@@ -7893,7 +7905,7 @@ irc_command_init ()
             N_("nick: nick"),
             N_("channel: channel name")),
         "%(nicks) %(irc_server_channels)", &irc_command_sapart, NULL, NULL);
-    weechat_hook_command (
+    ptr_hook = weechat_hook_command (
         "saquit",
         N_("force a user to quit server with a reason"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated */
@@ -7902,6 +7914,7 @@ irc_command_init ()
             N_("nick: nick"),
             N_("reason: reason")),
         "%(nicks)", &irc_command_saquit, NULL, NULL);
+    IRC_COMMAND_KEEP_SPACES;
     weechat_hook_command (
         "service",
         N_("register a new service"),
@@ -8002,7 +8015,7 @@ irc_command_init ()
             N_("mask: list only services matching this mask"),
             N_("type: list only services of this type")),
         NULL, &irc_command_servlist, NULL, NULL);
-    weechat_hook_command (
+    ptr_hook = weechat_hook_command (
         "squery",
         N_("deliver a message to a service"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated */
@@ -8011,6 +8024,7 @@ irc_command_init ()
             N_("service: name of service"),
             N_("text: text to send")),
         NULL, &irc_command_squery, NULL, NULL);
+    IRC_COMMAND_KEEP_SPACES;
     weechat_hook_command (
         "setname",
         N_("set real name"),
@@ -8135,7 +8149,7 @@ irc_command_init ()
             N_("nick: nick or mask (wildcard \"*\" is allowed)"),
             N_("*: give voice to everybody on channel")),
         "%(nicks)|%*", &irc_command_voice, NULL, NULL);
-    weechat_hook_command (
+    ptr_hook = weechat_hook_command (
         "wallchops",
         N_("send a notice to channel ops"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated */
@@ -8144,7 +8158,8 @@ irc_command_init ()
             N_("channel: channel name"),
             N_("text: text to send")),
         NULL, &irc_command_wallchops, NULL, NULL);
-    weechat_hook_command (
+    IRC_COMMAND_KEEP_SPACES;
+    ptr_hook = weechat_hook_command (
         "wallops",
         N_("send a message to all currently connected users who have set the "
            "\"w\" user mode for themselves"),
@@ -8153,6 +8168,7 @@ irc_command_init ()
         WEECHAT_CMD_ARGS_DESC(
             N_("text: text to send")),
         NULL, &irc_command_wallops, NULL, NULL);
+    IRC_COMMAND_KEEP_SPACES;
     weechat_hook_command (
         "who",
         N_("generate a query which returns a list of information"),

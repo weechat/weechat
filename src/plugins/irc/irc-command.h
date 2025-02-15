@@ -53,6 +53,9 @@ struct t_irc_channel;
         return WEECHAT_RC_OK;                                           \
     }
 
+
+#define IRC_COMMAND_KEEP_SPACES weechat_hook_set (ptr_hook, "keep_spaces_right", "1")
+
 /*
  * list of supported capabilities
  * (enabled if supported by the server + completion in command /cap)
