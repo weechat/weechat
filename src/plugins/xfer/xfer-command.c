@@ -27,6 +27,7 @@
 #include "xfer.h"
 #include "xfer-buffer.h"
 #include "xfer-chat.h"
+#include "xfer-command.h"
 #include "xfer-config.h"
 
 
@@ -253,7 +254,9 @@ xfer_command_xfer (const void *pointer, void *data,
 void
 xfer_command_init ()
 {
-    weechat_hook_command (
+    struct t_hook *ptr_hook;
+
+    ptr_hook = weechat_hook_command (
         "me",
         N_("send a CTCP action to remote host"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated */
@@ -262,6 +265,7 @@ xfer_command_init ()
             N_("message: message to send")),
         NULL,
         &xfer_command_me, NULL, NULL);
+    XFER_COMMAND_KEEP_SPACES;
     weechat_hook_command (
         "xfer",
         N_("xfer control"),
