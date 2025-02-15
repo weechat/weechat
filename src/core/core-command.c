@@ -8294,7 +8294,9 @@ COMMAND_CALLBACK(window)
 void
 command_init ()
 {
-    hook_command (
+    struct t_hook *ptr_hook;
+
+    ptr_hook = hook_command (
         NULL, "allbuf",
         N_("execute a command on all buffers"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated */
@@ -8307,6 +8309,7 @@ command_init ()
             N_("  set read marker on all buffers:"),
             AI("    /allbuf /buffer set unread")),
         "%(commands:/)", &command_allbuf, NULL, NULL);
+    COMMAND_KEEP_SPACES;
     hook_command (
         NULL, "away",
         N_("set or remove away status"),
@@ -8556,7 +8559,7 @@ command_init ()
      * give high priority (50000) so that an alias will not take precedence
      * over this command
      */
-    hook_command (
+    ptr_hook = hook_command (
         NULL, "50000|command",
         N_("launch explicit WeeChat or plugin command"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated */
@@ -8576,6 +8579,7 @@ command_init ()
         " || -s"
         " || %(plugins_names)|" PLUGIN_CORE " %(plugins_commands:/)",
         &command_command, NULL, NULL);
+    COMMAND_KEEP_SPACES;
     hook_command (
         NULL, "cursor",
         N_("free movement of cursor on screen to execute actions on specific "
@@ -8704,7 +8708,7 @@ command_init ()
         " || unicode"
         " || whitespace",
         &command_debug, NULL, NULL);
-    hook_command (
+    ptr_hook = hook_command (
         NULL, "eval",
         N_("evaluate expression"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated */
@@ -8892,6 +8896,7 @@ command_init ()
             AI("  /eval -n -c abcd =- bc                  ==> 1")),
         "-n|-s|-c|%(eval_variables)|%*",
         &command_eval, NULL, NULL);
+    COMMAND_KEEP_SPACES;
     hook_command (
         NULL, "filter",
         N_("filter messages in buffers, to hide/show them according to tags or "
@@ -9341,7 +9346,7 @@ command_init ()
             AI("  /mouse toggle 5")),
         "enable|disable|toggle",
         &command_mouse, NULL, NULL);
-    hook_command (
+    ptr_hook = hook_command (
         NULL, "mute",
         N_("execute a command silently"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated */
@@ -9366,7 +9371,8 @@ command_init ()
         " || -buffer %(buffers_plugins_names) %(commands:/)|%*"
         " || %(commands:/)|%*",
         &command_mute, NULL, NULL);
-    hook_command (
+    COMMAND_KEEP_SPACES;
+    ptr_hook = hook_command (
         NULL, "pipe",
         N_("redirect command output to a buffer, a file or a hsignal"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated */
@@ -9421,6 +9427,7 @@ command_init ()
         " || -o %(commands:/)|%*"
         " || %(commands:/)|%*",
         &command_pipe, NULL, NULL);
+    COMMAND_KEEP_SPACES;
     hook_command (
         NULL, "plugin",
         N_("list/load/unload plugins"),
@@ -9459,7 +9466,7 @@ command_init ()
         " || reload %(plugins_names)|* -a|-s"
         " || unload %(plugins_names)",
         &command_plugin, NULL, NULL);
-    hook_command (
+    ptr_hook = hook_command (
         NULL, "print",
         N_("display text on a buffer"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated */
@@ -9527,6 +9534,7 @@ command_init ()
         " || -stderr"
         " || -beep",
         &command_print, NULL, NULL);
+    COMMAND_KEEP_SPACES;
     hook_command (
         NULL, "proxy",
         N_("manage proxies"),
@@ -9568,7 +9576,7 @@ command_init ()
         " || del %(proxies_names)|%*"
         " || set %(proxies_names) %(proxies_options)",
         &command_proxy, NULL, NULL);
-    hook_command (
+    ptr_hook = hook_command (
         NULL, "quit",
         N_("quit WeeChat"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated */
@@ -9585,6 +9593,7 @@ command_init ()
                "\"weechat.look.save_layout_on_exit\").")),
         "",
         &command_quit, NULL, NULL);
+    COMMAND_KEEP_SPACES;
     hook_command (
         NULL, "reload",
         N_("reload configuration files from disk"),
@@ -9596,7 +9605,7 @@ command_init ()
             N_("Without argument, all files (WeeChat and plugins) are reloaded.")),
         "%(config_files)|%*",
         &command_reload, NULL, NULL);
-    hook_command (
+    ptr_hook = hook_command (
         NULL, "repeat",
         N_("execute a command several times"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated */
@@ -9633,6 +9642,7 @@ command_init ()
             AI("    /repeat -interval 1 6 /print ${if:${repeat_last}?Boom!:${repeat_revindex0}}")),
         "%- %(commands:/)",
         &command_repeat, NULL, NULL);
+    COMMAND_KEEP_SPACES;
     hook_command (
         NULL, "reset",
         N_("reset config options"),
@@ -9931,7 +9941,7 @@ command_init ()
                "buffers).")),
         "-o|-ol|-v|%*",
         &command_version, NULL, NULL);
-    hook_command (
+    ptr_hook = hook_command (
         NULL, "wait",
         N_("schedule a command execution in future"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated */
@@ -9960,6 +9970,7 @@ command_init ()
             N_("    /wait 2m hello")),
         "%- %(commands:/)",
         &command_wait, NULL, NULL);
+    COMMAND_KEEP_SPACES;
     hook_command (
         NULL, "window",
         N_("manage windows"),

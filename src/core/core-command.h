@@ -85,6 +85,8 @@ struct t_gui_buffer;
 #define CMD_ARGS_DESC(args...)                                          \
     STR_CONCAT("\n", WEECHAT_HOOK_COMMAND_STR_FORMATTED, ##args)
 
+#define COMMAND_KEEP_SPACES hook_set (ptr_hook, "keep_spaces_right", "1")
+
 struct t_command_repeat
 {
     char *buffer_name;                 /* full buffer name                  */
