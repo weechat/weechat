@@ -60,6 +60,7 @@ struct t_gui_buffer *gui_chat_mute_buffer = NULL; /* mute buffer            */
 int gui_chat_display_tags = 0;                  /* display tags?            */
 char **gui_chat_lines_waiting_buffer = NULL;    /* lines waiting for core   */
                                                 /* buffer                   */
+int gui_chat_whitespace_mode = 0;               /* make whitespaces visible */
 
 /* command /pipe */
 int gui_chat_pipe = 0;                          /* pipe enabled             */

@@ -2291,6 +2291,13 @@ COMMAND_CALLBACK(debug)
         return WEECHAT_RC_OK;
     }
 
+    if (string_strcmp (argv[1], "whitespace") == 0)
+    {
+        gui_chat_whitespace_mode ^= 1;
+        gui_window_ask_refresh (1);
+        return WEECHAT_RC_OK;
+    }
+
     COMMAND_ERROR;
 }
 
@@ -8620,7 +8627,8 @@ command_init ()
            " || mouse|cursor [verbose]"
            " || hdata [free]"
            " || time <command>"
-           " || unicode <string>"),
+           " || unicode <string>"
+           " || whitespace"),
         CMD_ARGS_DESC(
             N_("raw[list]: list plugins with debug levels"),
             N_("raw[set]: set debug level for plugin"),
@@ -8662,6 +8670,9 @@ command_init ()
                "the current buffer"),
             N_("raw[unicode]: display information about string and unicode chars "
                "(evaluated, see /help eval)"),
+            N_("raw[whitespace]: toggle whitespace mode: make spaces and tabulations "
+               "visible in buffers and bars (see options weechat.look.whitespace_char "
+               "and weechat.look.tab_whitespace_char)"),
             "",
             N_("Examples:"),
             AI("  /debug set irc 1"),
@@ -8690,7 +8701,8 @@ command_init ()
         " || url"
         " || windows"
         " || time %(commands:/)"
-        " || unicode",
+        " || unicode"
+        " || whitespace",
         &command_debug, NULL, NULL);
     hook_command (
         NULL, "eval",

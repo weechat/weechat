@@ -351,7 +351,14 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
                 if (utf_char[0] == '\t')
                 {
                     /* expand tabulation with spaces */
-                    ptr_char = config_tab_spaces;
+                    ptr_char = (gui_chat_whitespace_mode) ?
+                        config_tab_spaces_whitespace : config_tab_spaces;
+                }
+                else if ((utf_char[0] == ' ') && gui_chat_whitespace_mode)
+                {
+                    /* replace space in whitespace mode */
+                    snprintf (utf_char, sizeof (utf_char),
+                              "%s", CONFIG_STRING(config_look_whitespace_char));
                 }
                 else if (((unsigned char)utf_char[0]) < 32)
                 {

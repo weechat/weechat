@@ -80,6 +80,7 @@ extern char gui_chat_prefix_empty[];
 extern int gui_chat_time_length;
 extern int gui_chat_mute;
 extern struct t_gui_buffer *gui_chat_mute_buffer;
+extern int gui_chat_whitespace_mode;
 extern int gui_chat_pipe;
 extern char *gui_chat_pipe_command;
 extern struct t_gui_buffer *gui_chat_pipe_buffer;

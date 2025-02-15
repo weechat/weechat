@@ -411,7 +411,14 @@ gui_chat_display_word_raw (struct t_gui_window *window, struct t_gui_line *line,
             if (utf_char[0] == '\t')
             {
                 /* expand tabulation with spaces */
-                ptr_char = config_tab_spaces;
+                ptr_char = (gui_chat_whitespace_mode) ?
+                    config_tab_spaces_whitespace : config_tab_spaces;
+            }
+            else if ((utf_char[0] == ' ') && gui_chat_whitespace_mode)
+            {
+                /* replace space in whitespace mode */
+                snprintf (utf_char, sizeof (utf_char),
+                          "%s", CONFIG_STRING(config_look_whitespace_char));
             }
             else if (((unsigned char)utf_char[0]) < 32)
             {

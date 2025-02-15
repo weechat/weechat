@@ -9,6 +9,7 @@
 ### Added
 
 - core: add command `/pipe`
+- core: add option `whitespace` in command `/debug`, add options weechat.look.whitespace_char and weechat.look.tab_whitespace_char ([#947](https://github.com/weechat/weechat/issues/947))
 - relay/api: add resource `POST /api/completion` ([#2207](https://github.com/weechat/weechat/issues/2207))
 - relay/api: add default key `Alt`+`Ctrl`+`l` (L) to toggle between remote and local commands on remote buffers, add option `togglecmd` in command `/remote`, add options relay.api.remote_input_cmd_local and relay.api.remote_input_cmd_remote ([#2148](https://github.com/weechat/weechat/issues/2148))
 

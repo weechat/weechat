@@ -217,8 +217,10 @@ struct t_config_option *config_look_scroll_page_percent = NULL;
 struct t_config_option *config_look_search_text_not_found_alert = NULL;
 struct t_config_option *config_look_separator_horizontal = NULL;
 struct t_config_option *config_look_separator_vertical = NULL;
+struct t_config_option *config_look_tab_whitespace_char = NULL;
 struct t_config_option *config_look_tab_width = NULL;
 struct t_config_option *config_look_time_format = NULL;
+struct t_config_option *config_look_whitespace_char = NULL;
 struct t_config_option *config_look_window_auto_zoom = NULL;
 struct t_config_option *config_look_window_separator_horizontal = NULL;
 struct t_config_option *config_look_window_separator_vertical = NULL;
@@ -361,6 +363,7 @@ int config_num_highlight_tags = 0;
 char **config_plugin_extensions = NULL;
 int config_num_plugin_extensions = 0;
 char config_tab_spaces[TAB_MAX_WIDTH + 1];
+char config_tab_spaces_whitespace[(TAB_MAX_WIDTH * 4) + 1];
 struct t_config_look_word_char_item *config_word_chars_highlight = NULL;
 int config_word_chars_highlight_count = 0;
 struct t_config_look_word_char_item *config_word_chars_input = NULL;
@@ -1311,20 +1314,54 @@ config_check_separator (const void *pointer, void *data,
 }
 
 /*
- * Callback for changes on option "weechat.look.tab_width".
+ * Checks options "weechat.look.whitespace_char" and
+ * "weechat.look.tab_whitespace_char".
  */
 
-void
-config_change_tab_width (const void *pointer, void *data,
-                         struct t_config_option *option)
+int
+config_check_whitespace_char (const void *pointer, void *data,
+                              struct t_config_option *option,
+                              const char *value)
 {
     /* make C compiler happy */
     (void) pointer;
     (void) data;
     (void) option;
 
-    memset (config_tab_spaces, ' ', CONFIG_INTEGER(config_look_tab_width));
-    config_tab_spaces[CONFIG_INTEGER(config_look_tab_width)] = '\0';
+    return (utf8_strlen_screen (value) == 1) ? 1 : 0;
+}
+
+/*
+ * Callback for changes on options "weechat.look.tab_width" and
+ * "weechat.look.tab_whitespace_char".
+ */
+
+void
+config_change_tab (const void *pointer, void *data,
+                   struct t_config_option *option)
+{
+    int tab_width, i;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) option;
+
+    tab_width = CONFIG_INTEGER(config_look_tab_width);
+
+    /* build a string with spaces that replace Tab char */
+    memset (config_tab_spaces, ' ', tab_width);
+    config_tab_spaces[tab_width] = '\0';
+
+    /* replaces spaces in whitespace mode */
+    config_tab_spaces_whitespace[0] = '\0';
+    strcat (config_tab_spaces_whitespace,
+            CONFIG_STRING(config_look_tab_whitespace_char));
+    for (i = 1; i < tab_width; i++)
+    {
+        strcat (config_tab_spaces_whitespace,
+                CONFIG_STRING(config_look_whitespace_char));
+    }
 
     gui_window_ask_refresh (1);
 }
@@ -4336,13 +4373,24 @@ config_weechat_init_options ()
             &config_check_separator, NULL, NULL,
             &config_change_buffers, NULL, NULL,
             NULL, NULL, NULL);
+        config_look_tab_whitespace_char = config_file_new_option (
+            weechat_config_file, weechat_config_section_look,
+            "tab_whitespace_char", "string",
+            N_("first char to display for tabulations when whitespace mode is "
+               "enabled with command `/debug whitespace`; width on screen must "
+               "be exactly one char; subsequent chars are set by option "
+               "weechat.look.whitespace_char"),
+            NULL, 0, 0, "→", NULL, 0,
+            &config_check_whitespace_char, NULL, NULL,
+            &config_change_tab, NULL, NULL,
+            NULL, NULL, NULL);
         config_look_tab_width = config_file_new_option (
             weechat_config_file, weechat_config_section_look,
             "tab_width", "integer",
             N_("number of spaces used to display tabs in messages"),
             NULL, 1, TAB_MAX_WIDTH, "1", NULL, 0,
             NULL, NULL, NULL,
-            &config_change_tab_width, NULL, NULL,
+            &config_change_tab, NULL, NULL,
             NULL, NULL, NULL);
         config_look_time_format = config_file_new_option (
             weechat_config_file, weechat_config_section_look,
@@ -4351,6 +4399,16 @@ config_weechat_init_options ()
                "messages (see man strftime for date/time specifiers)"),
             NULL, 0, 0, "%a, %d %b %Y %T", NULL, 0,
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        config_look_whitespace_char = config_file_new_option (
+            weechat_config_file, weechat_config_section_look,
+            "whitespace_char", "string",
+            N_("char to display for spaces when whitespace mode is enabled with "
+               "command `/debug whitespace`; width on screen must be exactly "
+               "one char; see also option weechat.look.tab_whitespace_char"),
+            NULL, 0, 0, "·", NULL, 0,
+            &config_check_whitespace_char, NULL, NULL,
+            &config_change_buffers, NULL, NULL,
+            NULL, NULL, NULL);
         config_look_window_auto_zoom = config_file_new_option (
             weechat_config_file, weechat_config_section_look,
             "window_auto_zoom", "boolean",
@@ -5477,6 +5535,8 @@ config_weechat_init ()
     time_t seconds;
 
     snprintf (config_tab_spaces, sizeof (config_tab_spaces), " ");
+    snprintf (config_tab_spaces_whitespace, sizeof (config_tab_spaces_whitespace),
+              "\u2192");
 
     rc = config_weechat_init_options ();
 
