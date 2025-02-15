@@ -636,11 +636,13 @@ def test_hooks():
                                      'command_cb', 'command_data')
     weechat.command('', '/input insert /cmd1' + '{SCRIPT_NAME}' + ' w')
     weechat.command('', '/input complete_next')
-    check(weechat.buffer_get_string(buffer, 'input') == '/cmd1' + '{SCRIPT_NAME}' + ' word_completed')
+    buffer_input = weechat.buffer_get_string(buffer, 'input')
+    check(buffer_input == '/cmd1' + '{SCRIPT_NAME}' + ' word_completed')
     weechat.command('', '/input delete_line')
     weechat.command('', '/input insert /cmd2' + '{SCRIPT_NAME}' + ' w')
     weechat.command('', '/input complete_next')
-    check(weechat.buffer_get_string(buffer, 'input') == '/cmd2' + '{SCRIPT_NAME}' + ' word_completed ')
+    buffer_input = weechat.buffer_get_string(buffer, 'input')
+    check(buffer_input == '/cmd2' + '{SCRIPT_NAME}' + ' word_completed ')
     # hook_command_run
     hook_cmd_run = weechat.hook_command_run('/cmd2' + '{SCRIPT_NAME}' + '*',
                                             'command_run_cb', 'command_run_data')
