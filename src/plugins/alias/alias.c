@@ -453,6 +453,7 @@ alias_hook_command (struct t_alias *alias)
         NULL, NULL,
         (str_completion) ? str_completion : alias->completion,
         &alias_cb, alias, NULL);
+    weechat_hook_set (alias->hook, "keep_spaces_right", "1");
 
     free (str_priority_name);
     free (str_completion);
