@@ -4831,6 +4831,23 @@ API_FUNC(completion_get_string)
     API_RETURN_STRING(result);
 }
 
+API_FUNC(completion_set)
+{
+    const char *completion, *property, *value;
+
+    API_INIT_FUNC(1, "completion_set", API_RETURN_ERROR);
+    if (lua_gettop (L) < 3)
+        API_WRONG_ARGS(API_RETURN_ERROR);
+
+    completion = lua_tostring (L, -3);
+    property = lua_tostring (L, -2);
+    value = lua_tostring (L, -1);
+
+    weechat_completion_set (API_STR2PTR(completion), property, value);
+
+    API_RETURN_OK;
+}
+
 API_FUNC(completion_list_add)
 {
     const char *completion, *word, *where;
@@ -5932,6 +5949,7 @@ const struct luaL_Reg weechat_lua_api_funcs[] = {
     API_DEF_FUNC(completion_new),
     API_DEF_FUNC(completion_search),
     API_DEF_FUNC(completion_get_string),
+    API_DEF_FUNC(completion_set),
     API_DEF_FUNC(completion_list_add),
     API_DEF_FUNC(completion_free),
     API_DEF_FUNC(info_get),

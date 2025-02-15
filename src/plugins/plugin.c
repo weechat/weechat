@@ -888,6 +888,7 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
         new_plugin->completion_new = &gui_completion_new;
         new_plugin->completion_search = &gui_completion_search;
         new_plugin->completion_get_string = &gui_completion_get_string;
+        new_plugin->completion_set = &gui_completion_set;
         new_plugin->completion_list_add = &gui_completion_list_add;
         new_plugin->completion_free = &gui_completion_free;
 

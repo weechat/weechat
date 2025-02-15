@@ -4718,6 +4718,24 @@ API_FUNC(completion_get_string)
     API_RETURN_STRING(result);
 }
 
+API_FUNC(completion_set)
+{
+    char *completion, *property, *value;
+
+    API_INIT_FUNC(1, "completion_set", API_RETURN_ERROR);
+    completion = NULL;
+    property = NULL;
+    value = NULL;
+    if (!PyArg_ParseTuple (args, "sss", &completion, &property, &value))
+        API_WRONG_ARGS(API_RETURN_ERROR);
+
+    weechat_completion_set (API_STR2PTR(completion),
+                            property,
+                            value);
+
+    API_RETURN_OK;
+}
+
 API_FUNC(completion_list_add)
 {
     char *completion, *word, *where;
@@ -5798,6 +5816,7 @@ PyMethodDef weechat_python_funcs[] =
     API_DEF_FUNC(completion_new),
     API_DEF_FUNC(completion_search),
     API_DEF_FUNC(completion_get_string),
+    API_DEF_FUNC(completion_set),
     API_DEF_FUNC(completion_list_add),
     API_DEF_FUNC(completion_free),
     API_DEF_FUNC(info_get),

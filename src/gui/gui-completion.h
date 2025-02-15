@@ -94,6 +94,8 @@ extern int gui_completion_search (struct t_gui_completion *completion,
                                   int direction);
 extern const char *gui_completion_get_string (struct t_gui_completion *completion,
                                               const char *property);
+extern void gui_completion_set (struct t_gui_completion *completion,
+                                const char *property, const char *value);
 extern struct t_hdata *gui_completion_hdata_completion_cb (const void *pointer,
                                                            void *data,
                                                            const char *hdata_name);

@@ -1562,6 +1562,23 @@ gui_completion_get_string (struct t_gui_completion *completion,
 }
 
 /*
+ * Sets a completion property.
+ */
+
+void
+gui_completion_set (struct t_gui_completion *completion,
+                    const char *property, const char *value)
+{
+    if (!completion || !property || !value)
+        return;
+
+    if (strcmp (property, "add_space") == 0)
+    {
+        completion->add_space = (strcmp (value, "1") == 0) ? 1 : 0;
+    }
+}
+
+/*
  * Returns hdata for completion.
  */
 

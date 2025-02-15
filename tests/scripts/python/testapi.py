@@ -578,10 +578,21 @@ def test_display():
     weechat.buffer_close(buffer)
 
 
-def completion_cb(data, completion_item, buf, completion):
+def completion1_cb(data, completion_item, buf, completion):
     """Completion callback."""
     check(data == 'completion_data')
-    check(completion_item == '{SCRIPT_NAME}')
+    check(completion_item == '{SCRIPT_NAME}1')
+    check(weechat.completion_get_string(completion, 'args') == 'w')
+    weechat.completion_set(completion, 'add_space', '0')
+    weechat.completion_list_add(completion, 'word_completed',
+                                0, weechat.WEECHAT_LIST_POS_END)
+    return weechat.WEECHAT_RC_OK
+
+
+def completion2_cb(data, completion_item, buf, completion):
+    """Completion callback."""
+    check(data == 'completion_data')
+    check(completion_item == '{SCRIPT_NAME}2')
     check(weechat.completion_get_string(completion, 'args') == 'w')
     weechat.completion_list_add(completion, 'word_completed',
                                 0, weechat.WEECHAT_LIST_POS_END)
@@ -598,7 +609,7 @@ def command_cb(data, buf, args):
 def command_run_cb(data, buf, command):
     """Command_run callback."""
     check(data == 'command_run_data')
-    check(command == '/cmd' + '{SCRIPT_NAME}' + ' word_completed')
+    check(command == '/cmd2' + '{SCRIPT_NAME}' + ' word_completed')
     return weechat.WEECHAT_RC_OK
 
 
@@ -609,22 +620,37 @@ def timer_cb(data, remaining_calls):
 
 def test_hooks():
     """Test hook functions."""
+    buffer = weechat.buffer_search_main()
     # hook_completion / hook_completion_args / and hook_command
-    hook_cmplt = weechat.hook_completion('{SCRIPT_NAME}', 'description',
-                                         'completion_cb', 'completion_data')
-    hook_cmd = weechat.hook_command('cmd' + '{SCRIPT_NAME}', 'description',
-                                    'arguments', 'description arguments',
-                                    '%(' + '{SCRIPT_NAME}' + ')',
-                                    'command_cb', 'command_data')
-    weechat.command('', '/input insert /cmd' + '{SCRIPT_NAME}' + ' w')
+    hook_cmplt1 = weechat.hook_completion('{SCRIPT_NAME}1', 'description',
+                                         'completion1_cb', 'completion_data')
+    hook_cmd1 = weechat.hook_command('cmd1' + '{SCRIPT_NAME}', 'description',
+                                     'arguments', 'description arguments',
+                                     '%(' + '{SCRIPT_NAME}1' + ')',
+                                     'command_cb', 'command_data')
+    hook_cmplt2 = weechat.hook_completion('{SCRIPT_NAME}2', 'description',
+                                          'completion2_cb', 'completion_data')
+    hook_cmd2 = weechat.hook_command('cmd2' + '{SCRIPT_NAME}', 'description',
+                                     'arguments', 'description arguments',
+                                     '%(' + '{SCRIPT_NAME}2' + ')',
+                                     'command_cb', 'command_data')
+    weechat.command('', '/input insert /cmd1' + '{SCRIPT_NAME}' + ' w')
     weechat.command('', '/input complete_next')
+    check(weechat.buffer_get_string(buffer, 'input') == '/cmd1' + '{SCRIPT_NAME}' + ' word_completed')
+    weechat.command('', '/input delete_line')
+    weechat.command('', '/input insert /cmd2' + '{SCRIPT_NAME}' + ' w')
+    weechat.command('', '/input complete_next')
+    check(weechat.buffer_get_string(buffer, 'input') == '/cmd2' + '{SCRIPT_NAME}' + ' word_completed ')
     # hook_command_run
-    hook_cmd_run = weechat.hook_command_run('/cmd' + '{SCRIPT_NAME}' + '*',
+    hook_cmd_run = weechat.hook_command_run('/cmd2' + '{SCRIPT_NAME}' + '*',
                                             'command_run_cb', 'command_run_data')
     weechat.command('', '/input return')
     weechat.unhook(hook_cmd_run)
-    weechat.unhook(hook_cmd)
-    weechat.unhook(hook_cmplt)
+    weechat.unhook(hook_cmd1)
+    weechat.unhook(hook_cmplt1)
+    weechat.unhook(hook_cmd2)
+    weechat.unhook(hook_cmplt2)
+    # weechat.unhook(hook_cmplt2)
     # hook_timer
     hook_timer = weechat.hook_timer(2000111000, 0, 1,
                                     'timer_cb', 'timer_cb_data')

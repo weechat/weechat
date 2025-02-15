@@ -5786,6 +5786,31 @@ weechat_ruby_api_completion_get_string (VALUE class, VALUE completion,
 }
 
 static VALUE
+weechat_ruby_api_completion_set (VALUE class, VALUE completion, VALUE property,
+                                 VALUE value)
+{
+    char *c_completion, *c_property, *c_value;
+
+    API_INIT_FUNC(1, "completion_set", API_RETURN_ERROR);
+    if (NIL_P (completion) || NIL_P (property) || NIL_P (value))
+        API_WRONG_ARGS(API_RETURN_ERROR);
+
+    Check_Type (completion, T_STRING);
+    Check_Type (property, T_STRING);
+    Check_Type (value, T_STRING);
+
+    c_completion = StringValuePtr (completion);
+    c_property = StringValuePtr (property);
+    c_value = StringValuePtr (value);
+
+    weechat_completion_set (API_STR2PTR(c_completion),
+                            c_property,
+                            c_value);
+
+    API_RETURN_OK;
+}
+
+static VALUE
 weechat_ruby_api_completion_list_add (VALUE class, VALUE completion,
                                       VALUE word, VALUE nick_completion,
                                       VALUE where)
@@ -7140,6 +7165,7 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     API_DEF_FUNC(completion_new, 1);
     API_DEF_FUNC(completion_search, 4);
     API_DEF_FUNC(completion_get_string, 2);
+    API_DEF_FUNC(completion_set, 3);
     API_DEF_FUNC(completion_list_add, 4);
     API_DEF_FUNC(completion_free, 1);
     API_DEF_FUNC(info_get, 2);

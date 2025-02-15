@@ -4814,6 +4814,26 @@ API_FUNC(completion_get_string)
     API_RETURN_STRING(result);
 }
 
+API_FUNC(completion_set)
+{
+    zend_string *z_completion, *z_property, *z_value;
+    struct t_gui_completion *completion;
+    char *property, *value;
+
+    API_INIT_FUNC(1, "completion_set", API_RETURN_ERROR);
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SSS", &z_completion,
+                               &z_property, &z_value) == FAILURE)
+        API_WRONG_ARGS(API_RETURN_ERROR);
+
+    completion = (struct t_gui_completion *)API_STR2PTR(ZSTR_VAL(z_completion));
+    property = ZSTR_VAL(z_property);
+    value = ZSTR_VAL(z_value);
+
+    weechat_completion_set (completion, (const char *)property, (const char *)value);
+
+    API_RETURN_OK;
+}
+
 API_FUNC(completion_list_add)
 {
     zend_string *z_completion, *z_word, *z_where;

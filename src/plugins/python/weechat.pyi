@@ -2339,6 +2339,20 @@ def completion_get_string(completion: str, property: str) -> str:
     ...
 
 
+def completion_set(completion: str, property: str, value: str) -> int:
+    """`completion_set in WeeChat plugin API reference <https://weechat.org/doc/weechat/api/#_completion_set>`_
+    ::
+
+        # example
+        def my_completion_cb(data: str, completion_item: str, buffer: str, completion: str) -> int:
+            # do not add space after completion
+            weechat.completion_set(completion, "add_space", "0")
+            # ...
+            return weechat.WEECHAT_RC_OK
+    """
+    ...
+
+
 def completion_list_add(completion: str, word: str, nick_completion: int, where: str) -> int:
     """`completion_list_add in WeeChat plugin API reference <https://weechat.org/doc/weechat/api/#_completion_list_add>`_
     ::

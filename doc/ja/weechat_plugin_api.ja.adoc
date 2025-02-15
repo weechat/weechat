@@ -17382,6 +17382,74 @@ def my_completion_cb(data: str, completion_item: str, buffer: str, completion: s
     return weechat.WEECHAT_RC_OK
 ----
 
+==== completion_set
+
+_WeeChat バージョン 4.6.0 以上で利用可。_
+
+// TRANSLATION MISSING
+Set a completion property.
+
+プロトタイプ:
+
+[source,c]
+----
+void weechat_completion_get_string (struct t_gui_completion *completion,
+                                    const char *property,
+                                    const char *value);
+----
+
+引数:
+
+* _completion_: 補完へのポインタ
+* _property_: プロパティ名 (以下の表を参照)
+* _value_: プロパティの新しい値
+
+プロパティ:
+
+[width="100%",cols="^2,^1,4,8",options="header"]
+|===
+// TRANSLATION MISSING
+| Name | Min WeeChat | Value | Description
+
+// TRANSLATION MISSING
+| add_space | 4.6.0 | "0" or "1"
+| "0": do not add space after completion +
+  "1": add space after completion (default).
+|===
+
+C 言語での使用例:
+
+[source,c]
+----
+int
+my_completion_cb (const void *pointer, void *data, const char *completion_item,
+                  struct t_gui_buffer *buffer,
+                  struct t_gui_completion *completion)
+{
+    /* do not add space after completion */
+    weechat_completion_set (completion, "add_space", "0");
+
+    /* ... */
+
+    return WEECHAT_RC_OK;
+}
+----
+
+スクリプト (Python) での使用例:
+
+[source,python]
+----
+# prototype
+def completion_set(completion: str, property: str, value: str) -> int: ...
+
+# example
+def my_completion_cb(data: str, completion_item: str, buffer: str, completion: str) -> int:
+    # do not add space after completion
+    weechat.completion_set(completion, "add_space", "0")
+    # ...
+    return weechat.WEECHAT_RC_OK
+----
+
 ==== completion_list_add
 
 _WeeChat バージョン 2.9 以上で利用可。_

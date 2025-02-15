@@ -4780,6 +4780,23 @@ API_FUNC(completion_get_string)
     API_RETURN_STRING(result);
 }
 
+API_FUNC(completion_set)
+{
+    char *completion, *property, *value;
+
+    API_INIT_FUNC(1, "completion_set", API_RETURN_ERROR);
+    if (objc < 4)
+        API_WRONG_ARGS(API_RETURN_ERROR);
+
+    completion = Tcl_GetString (objv[1]);
+    property = Tcl_GetString (objv[2]);
+    value = Tcl_GetString (objv[3]);
+
+    weechat_completion_set (API_STR2PTR(completion), property, value);
+
+    API_RETURN_OK;
+}
+
 API_FUNC(completion_list_add)
 {
     char *completion, *word, *where;
@@ -5876,6 +5893,7 @@ void weechat_tcl_api_init (Tcl_Interp *interp)
     API_DEF_FUNC(completion_new);
     API_DEF_FUNC(completion_search);
     API_DEF_FUNC(completion_get_string);
+    API_DEF_FUNC(completion_set);
     API_DEF_FUNC(completion_list_add);
     API_DEF_FUNC(info_get);
     API_DEF_FUNC(info_get_hashtable);

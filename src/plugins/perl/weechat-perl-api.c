@@ -4733,6 +4733,24 @@ API_FUNC(completion_get_string)
     API_RETURN_STRING(result);
 }
 
+API_FUNC(completion_set)
+{
+    char *completion, *property, *value;
+    dXSARGS;
+
+    API_INIT_FUNC(1, "completion_set", API_RETURN_ERROR);
+    if (items < 3)
+        API_WRONG_ARGS(API_RETURN_ERROR);
+
+    completion = SvPV_nolen (ST (0));
+    property = SvPV_nolen (ST (1));
+    value = SvPV_nolen (ST (2));
+
+    weechat_completion_set (API_STR2PTR(completion), property, value);
+
+    API_RETURN_OK;
+}
+
 API_FUNC(completion_list_add)
 {
     char *completion, *word, *where;
@@ -5870,6 +5888,7 @@ weechat_perl_api_init (pTHX)
     API_DEF_FUNC(completion_new);
     API_DEF_FUNC(completion_search);
     API_DEF_FUNC(completion_get_string);
+    API_DEF_FUNC(completion_set);
     API_DEF_FUNC(completion_list_add);
     API_DEF_FUNC(completion_free);
     API_DEF_FUNC(info_get);

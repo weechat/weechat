@@ -219,6 +219,7 @@ PHP_FUNCTION(weechat_command_options);
 PHP_FUNCTION(weechat_completion_new);
 PHP_FUNCTION(weechat_completion_search);
 PHP_FUNCTION(weechat_completion_get_string);
+PHP_FUNCTION(weechat_completion_set);
 PHP_FUNCTION(weechat_completion_list_add);
 PHP_FUNCTION(weechat_completion_free);
 PHP_FUNCTION(weechat_info_get);

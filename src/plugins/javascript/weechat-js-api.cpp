@@ -4482,6 +4482,22 @@ API_FUNC(completion_get_string)
     API_RETURN_STRING(result);
 }
 
+API_FUNC(completion_set)
+{
+    API_INIT_FUNC(1, "completion_set", "sss", API_RETURN_ERROR);
+
+    v8::String::Utf8Value completion(args[0]);
+    v8::String::Utf8Value property(args[1]);
+    v8::String::Utf8Value value(args[2]);
+
+    weechat_completion_set (
+        (struct t_gui_completion *)API_STR2PTR(*completion),
+        *property,
+        *value);
+
+    API_RETURN_OK;
+}
+
 API_FUNC(completion_list_add)
 {
     int nick_completion;
@@ -5539,6 +5555,7 @@ WeechatJsV8::loadLibs()
     API_DEF_FUNC(completion_new);
     API_DEF_FUNC(completion_search);
     API_DEF_FUNC(completion_get_string);
+    API_DEF_FUNC(completion_set);
     API_DEF_FUNC(completion_list_add);
     API_DEF_FUNC(completion_free);
     API_DEF_FUNC(info_get);

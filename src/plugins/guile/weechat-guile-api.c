@@ -4567,6 +4567,21 @@ weechat_guile_api_completion_get_string (SCM completion, SCM property)
 }
 
 SCM
+weechat_guile_api_completion_set (SCM completion, SCM property, SCM value)
+{
+    API_INIT_FUNC(1, "completion_set", API_RETURN_ERROR);
+    if (!scm_is_string (completion) || !scm_is_string (property)
+        || !scm_is_string (value))
+        API_WRONG_ARGS(API_RETURN_ERROR);
+
+    weechat_completion_set (API_STR2PTR(API_SCM_TO_STRING(completion)),
+                            API_SCM_TO_STRING(property),
+                            API_SCM_TO_STRING(value));
+
+    API_RETURN_OK;
+}
+
+SCM
 weechat_guile_api_completion_list_add (SCM completion, SCM word,
                                        SCM nick_completion, SCM where)
 {
@@ -5609,6 +5624,7 @@ weechat_guile_api_module_init (void *data)
     API_DEF_FUNC(completion_new, 1);
     API_DEF_FUNC(completion_search, 4);
     API_DEF_FUNC(completion_get_string, 2);
+    API_DEF_FUNC(completion_set, 3);
     API_DEF_FUNC(completion_list_add, 4);
     API_DEF_FUNC(completion_free, 1);
     API_DEF_FUNC(info_get, 2);
