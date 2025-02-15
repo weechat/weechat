@@ -623,7 +623,7 @@ def test_hooks():
     buffer = weechat.buffer_search_main()
     # hook_completion / hook_completion_args / and hook_command
     hook_cmplt1 = weechat.hook_completion('{SCRIPT_NAME}1', 'description',
-                                         'completion1_cb', 'completion_data')
+                                          'completion1_cb', 'completion_data')
     hook_cmd1 = weechat.hook_command('cmd1' + '{SCRIPT_NAME}', 'description',
                                      'arguments', 'description arguments',
                                      '%(' + '{SCRIPT_NAME}1' + ')',
