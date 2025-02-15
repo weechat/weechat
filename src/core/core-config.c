@@ -1328,7 +1328,7 @@ config_check_whitespace_char (const void *pointer, void *data,
     (void) data;
     (void) option;
 
-    return (utf8_strlen_screen (value) == 1) ? 1 : 0;
+    return ((strlen (value) <= 4) && (utf8_strlen_screen (value) == 1)) ? 1 : 0;
 }
 
 /*
