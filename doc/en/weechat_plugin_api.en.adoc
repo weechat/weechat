@@ -14014,6 +14014,10 @@ Properties:
 | Name of sub plugin (commonly script name, which is displayed in
   `/help command` for a hook of type _command_).
 
+| keep_spaces_right | 4.6.0 | _command_, _command_run_
+| "0" or "1"
+| Keep trailing spaces in command arguments when it is executed.
+
 | stdin | 0.4.3 | _process_, _process_hashtable_
 | any string
 | Send data on standard input (_stdin_) of child process.

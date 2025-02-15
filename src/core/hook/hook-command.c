@@ -565,6 +565,8 @@ hook_command (struct t_weechat_plugin *plugin, const char *command,
     new_hook_command->cplt_template_args_concat = NULL;
     hook_command_build_completion (new_hook_command);
 
+    new_hook_command->keep_spaces_right = 0;
+
     hook_add_to_list (new_hook);
 
     return new_hook;
@@ -592,10 +594,10 @@ hook_command_exec (struct t_gui_buffer *buffer, int any_plugin,
     struct t_hook *hook_plugin, *hook_other_plugin, *hook_other_plugin2;
     struct t_hook *hook_incomplete_command;
     struct t_hook_exec_cb hook_exec_cb;
-    char **argv, **argv_eol;
-    const char *ptr_command_name;
+    char **argv, **argv_eol, *command_name, *pos;
+    const char *ptr_string;
     int argc, rc, length_command_name, allow_incomplete_commands;
-    int count_other_plugin, count_incomplete_commands;
+    int count_other_plugin, count_incomplete_commands, flags;
 
     if (!buffer || !string || !string[0])
         return HOOK_COMMAND_EXEC_NOT_FOUND;
@@ -603,25 +605,13 @@ hook_command_exec (struct t_gui_buffer *buffer, int any_plugin,
     if (hook_command_run_exec (buffer, string) == WEECHAT_RC_OK_EAT)
         return HOOK_COMMAND_EXEC_OK;
 
-    argv = string_split (string, " ", NULL,
-                         WEECHAT_STRING_SPLIT_STRIP_LEFT
-                         | WEECHAT_STRING_SPLIT_STRIP_RIGHT
-                         | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
-                         0, &argc);
-    if (argc == 0)
-    {
-        string_free_split (argv);
+    ptr_string = utf8_next_char (string);
+    pos = strchr (ptr_string, ' ');
+    command_name = (pos) ?
+        string_strndup (ptr_string, pos - ptr_string) : strdup (ptr_string);
+    if (!command_name)
         return HOOK_COMMAND_EXEC_NOT_FOUND;
-    }
-    argv_eol = string_split (string, " ", NULL,
-                             WEECHAT_STRING_SPLIT_STRIP_LEFT
-                             | WEECHAT_STRING_SPLIT_STRIP_RIGHT
-                             | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS
-                             | WEECHAT_STRING_SPLIT_KEEP_EOL,
-                             0, NULL);
-
-    ptr_command_name = utf8_next_char (argv[0]);
-    length_command_name = utf8_strlen (ptr_command_name);
+    length_command_name = utf8_strlen (command_name);
 
     hook_exec_start ();
 
@@ -639,7 +629,7 @@ hook_command_exec (struct t_gui_buffer *buffer, int any_plugin,
 
         if (!ptr_hook->deleted)
         {
-            if (strcmp (ptr_command_name, HOOK_COMMAND(ptr_hook, command)) == 0)
+            if (strcmp (command_name, HOOK_COMMAND(ptr_hook, command)) == 0)
             {
                 if (ptr_hook->plugin == plugin)
                 {
@@ -659,7 +649,7 @@ hook_command_exec (struct t_gui_buffer *buffer, int any_plugin,
                 }
             }
             else if (allow_incomplete_commands
-                     && (string_strncmp (ptr_command_name,
+                     && (string_strncmp (command_name,
                                          HOOK_COMMAND(ptr_hook, command),
                                          length_command_name) == 0))
             {
@@ -727,6 +717,25 @@ hook_command_exec (struct t_gui_buffer *buffer, int any_plugin,
         }
         else
         {
+            /* split arguments */
+            argv = string_split (string, " ", NULL,
+                                 WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                 | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                 | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                 0, &argc);
+            if (argc == 0)
+            {
+                string_free_split (argv);
+                rc = HOOK_COMMAND_EXEC_NOT_FOUND;
+                goto end;
+            }
+            flags = WEECHAT_STRING_SPLIT_STRIP_LEFT
+                | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS
+                | WEECHAT_STRING_SPLIT_KEEP_EOL;
+            if (!HOOK_COMMAND(ptr_hook, keep_spaces_right))
+                flags |= WEECHAT_STRING_SPLIT_STRIP_RIGHT;
+            argv_eol = string_split (string, " ", NULL, flags, 0, NULL);
+
             /* execute the command! */
             hook_callback_start (ptr_hook, &hook_exec_cb);
             rc = (int) (HOOK_COMMAND(ptr_hook, callback))
@@ -741,11 +750,14 @@ hook_command_exec (struct t_gui_buffer *buffer, int any_plugin,
                 rc = HOOK_COMMAND_EXEC_ERROR;
             else
                 rc = HOOK_COMMAND_EXEC_OK;
+
+            string_free_split (argv);
+            string_free_split (argv_eol);
         }
     }
 
-    string_free_split (argv);
-    string_free_split (argv_eol);
+end:
+    free (command_name);
 
     hook_exec_end ();
 
@@ -1084,6 +1096,8 @@ hook_command_add_to_infolist (struct t_infolist_item *item,
     free (args_desc_nls);
     if (!infolist_new_var_string (item, "completion", HOOK_COMMAND(hook, completion)))
         return 0;
+    if (!infolist_new_var_integer (item, "keep_spaces_right", HOOK_COMMAND(hook, keep_spaces_right)))
+        return 0;
 
     return 1;
 }
@@ -1128,4 +1142,5 @@ hook_command_print_log (struct t_hook *hook)
         log_printf ("    args_concat[%04d] . . : '%s'",
                     i, HOOK_COMMAND(hook, cplt_template_args_concat)[i]);
     }
+    log_printf ("    keep_spaces_right . . : %d", HOOK_COMMAND(hook, keep_spaces_right));
 }

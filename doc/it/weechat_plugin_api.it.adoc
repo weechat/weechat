@@ -14667,10 +14667,16 @@ Properties:
 
 // TRANSLATION MISSING
 | subplugin | | any type
+
 | qualsiasi stringa |
 // TRANSLATION MISSING
   Name of sub plugin (commonly script name, which is displayed in
   `/help command` for a hook of type _command_).
+
+// TRANSLATION MISSING
+| keep_spaces_right | 4.6.0 | _command_, _command_run_
+| "0" or "1"
+| Keep trailing spaces in command arguments when it is executed.
 
 | stdin | 0.4.3 | _process_, _process_hashtable_ | qualsiasi stringa |
 // TRANSLATION MISSING

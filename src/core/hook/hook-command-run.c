@@ -87,6 +87,7 @@ hook_command_run (struct t_weechat_plugin *plugin,
     new_hook_command_run->callback = callback;
     new_hook_command_run->command = strdup ((ptr_command) ? ptr_command :
                                             ((command) ? command : ""));
+    new_hook_command_run->keep_spaces_right = 0;
 
     hook_add_to_list (new_hook);
 
@@ -102,21 +103,22 @@ hook_command_run_exec (struct t_gui_buffer *buffer, const char *command)
 {
     struct t_hook *ptr_hook, *next_hook;
     struct t_hook_exec_cb hook_exec_cb;
-    int rc, hook_matching, length;
+    int rc, hook_matching, i, length;
     char *command2;
-    const char *ptr_string, *ptr_command;
+    const char *ptr_string;
 
     if (!weechat_hooks[HOOK_TYPE_COMMAND_RUN])
         return WEECHAT_RC_OK;
 
-    ptr_command = command;
-    command2 = NULL;
-
     if (command[0] != '/')
     {
         ptr_string = utf8_next_char (command);
-        if (string_asprintf (&command2, "/%s", ptr_string) >= 0)
-            ptr_command = command2;
+        if (string_asprintf (&command2, "/%s", ptr_string) < 0)
+            return WEECHAT_RC_ERROR;
+    }
+    else
+    {
+        command2 = strdup (command);
     }
 
     ptr_hook = weechat_hooks[HOOK_TYPE_COMMAND_RUN];
@@ -128,7 +130,7 @@ hook_command_run_exec (struct t_gui_buffer *buffer, const char *command)
             && !ptr_hook->running
             && HOOK_COMMAND_RUN(ptr_hook, command))
         {
-            hook_matching = string_match (ptr_command,
+            hook_matching = string_match (command2,
                                           HOOK_COMMAND_RUN(ptr_hook, command),
                                           1);
 
@@ -136,21 +138,32 @@ hook_command_run_exec (struct t_gui_buffer *buffer, const char *command)
                 && !strchr (HOOK_COMMAND_RUN(ptr_hook, command), ' '))
             {
                 length = strlen (HOOK_COMMAND_RUN(ptr_hook, command));
-                hook_matching = ((string_strncmp (ptr_command,
+                hook_matching = ((string_strncmp (command2,
                                                   HOOK_COMMAND_RUN(ptr_hook, command),
                                                   utf8_strlen (HOOK_COMMAND_RUN(ptr_hook, command))) == 0)
-                                 && ((ptr_command[length] == ' ')
-                                     || (ptr_command[length] == '\0')));
+                                 && ((command2[length] == ' ')
+                                     || (command2[length] == '\0')));
             }
 
             if (hook_matching)
             {
+                /* remove trailing spaces */
+                if (!HOOK_COMMAND_RUN(ptr_hook, keep_spaces_right))
+                {
+                    i = strlen (command2) - 1;
+                    while ((i >= 0) && (command2[i] == ' '))
+                    {
+                        command2[i] = '\0';
+                        i--;
+                    }
+                }
+                /* execute the command_run hook */
                 hook_callback_start (ptr_hook, &hook_exec_cb);
                 rc = (HOOK_COMMAND_RUN(ptr_hook, callback)) (
                     ptr_hook->callback_pointer,
                     ptr_hook->callback_data,
                     buffer,
-                    ptr_command);
+                    command2);
                 hook_callback_end (ptr_hook, &hook_exec_cb);
                 if (rc == WEECHAT_RC_OK_EAT)
                 {
@@ -207,6 +220,8 @@ hook_command_run_add_to_infolist (struct t_infolist_item *item,
         return 0;
     if (!infolist_new_var_string (item, "command", HOOK_COMMAND_RUN(hook, command)))
         return 0;
+    if (!infolist_new_var_integer (item, "keep_spaces_right", HOOK_COMMAND_RUN(hook, keep_spaces_right)))
+        return 0;
 
     return 1;
 }
@@ -224,4 +239,5 @@ hook_command_run_print_log (struct t_hook *hook)
     log_printf ("  command_run data:");
     log_printf ("    callback. . . . . . . : %p", HOOK_COMMAND_RUN(hook, callback));
     log_printf ("    command . . . . . . . : '%s'", HOOK_COMMAND_RUN(hook, command));
+    log_printf ("    keep_spaces_right . . : %d", HOOK_COMMAND_RUN(hook, keep_spaces_right));
 }

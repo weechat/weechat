@@ -13621,6 +13621,11 @@ void weechat_hook_set (struct t_hook *hook, const char *property,
 | Име под додатка (обично је то име скрипте које се приказује у
   `/help команда` за куку типа _command_).
 
+// TRANSLATION MISSING
+| keep_spaces_right | 4.6.0 | _command_, _command_run_
+| "0" or "1"
+| Keep trailing spaces in command arguments when it is executed.
+
 | stdin | 0.4.3 | _process_, _process_hashtable_ | било који стринг
 | Шаље податке на стандардни улаз (_stdin_) дете процеса.
 

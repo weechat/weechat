@@ -121,15 +121,6 @@ input_exec_command (struct t_gui_buffer *buffer,
         input_commands_allowed = new_commands_allowed;
     }
 
-    /* ignore spaces at the end of command */
-    pos = &command[strlen (command) - 1];
-    if (pos[0] == ' ')
-    {
-        while ((pos > command) && (pos[0] == ' '))
-            pos--;
-        pos[1] = '\0';
-    }
-
     /* extract command name */
     pos = strchr (command, ' ');
     command_name = (pos) ?

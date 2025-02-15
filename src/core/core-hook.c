@@ -624,6 +624,30 @@ hook_set (struct t_hook *hook, const char *property, const char *value)
             }
         }
     }
+    else if (strcmp (property, "keep_spaces_right") == 0)
+    {
+        if (!hook->deleted
+            && ((hook->type == HOOK_TYPE_COMMAND)
+                || (hook->type == HOOK_TYPE_COMMAND_RUN)))
+        {
+            error = NULL;
+            number = strtol (value, &error, 10);
+            if (error && !error[0])
+            {
+                switch (hook->type)
+                {
+                    case HOOK_TYPE_COMMAND:
+                        HOOK_COMMAND(hook, keep_spaces_right) = (number) ? 1 : 0;
+                        break;
+                    case HOOK_TYPE_COMMAND_RUN:
+                        HOOK_COMMAND_RUN(hook, keep_spaces_right) = (number) ? 1 : 0;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+    }
 }
 
 /*
