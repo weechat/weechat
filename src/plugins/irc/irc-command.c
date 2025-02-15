@@ -8071,7 +8071,7 @@ irc_command_init ()
         WEECHAT_CMD_ARGS_DESC(
             N_("target: query time from specified server")),
         NULL, &irc_command_time, NULL, NULL);
-    weechat_hook_command (
+    ptr_hook = weechat_hook_command (
         "topic",
         N_("get/set channel topic"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated */
@@ -8081,6 +8081,7 @@ irc_command_init ()
             N_("topic: new topic"),
             N_("raw[-delete]: delete channel topic")),
         "%(irc_channel_topic)|-delete", &irc_command_topic, NULL, NULL);
+    IRC_COMMAND_KEEP_SPACES;
     weechat_hook_command (
         "trace",
         N_("find the route to specific server"),

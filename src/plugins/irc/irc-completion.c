@@ -563,6 +563,8 @@ irc_completion_channel_topic_cb (const void *pointer, void *data,
     (void) data;
     (void) completion_item;
 
+    weechat_completion_set (completion, "add_space", "0");
+
     if (ptr_channel && ptr_channel->topic && ptr_channel->topic[0])
     {
         if (irc_server_strncasecmp (ptr_server, ptr_channel->topic,
