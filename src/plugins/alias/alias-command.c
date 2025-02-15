@@ -25,7 +25,9 @@
 
 #include "../weechat-plugin.h"
 #include "alias.h"
+#include "alias-command.h"
 #include "alias-config.h"
+
 
 /*
  * Adds a new alias.
@@ -350,7 +352,9 @@ alias_command_cb (const void *pointer, void *data,
 void
 alias_command_init ()
 {
-    weechat_hook_command (
+    struct t_hook *ptr_hook;
+
+    ptr_hook = weechat_hook_command (
         "alias",
         N_("list, add or remove command aliases"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated */
@@ -406,4 +410,5 @@ alias_command_init ()
         " || rename %(alias) %(alias)"
         " || missing",
         &alias_command_cb, NULL, NULL);
+    ALIAS_COMMAND_KEEP_SPACES;
 }
