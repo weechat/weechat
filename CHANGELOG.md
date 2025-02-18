@@ -6,6 +6,7 @@
 
 - core: add option `-v` to display upgrades in command `/version`
 - api: add property `keep_spaces_right` in function hook_set to keep trailing spaces in command arguments
+- irc: add option `-connected` in command `/server list|listfull`
 
 ### Added
 
