@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2025-02-15 20:00+0100\n"
+"POT-Creation-Date: 2025-02-18 22:07+0100\n"
 "PO-Revision-Date: 2024-11-20 18:17+0100\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8715,15 +8715,35 @@ msgstr[0] "kanál"
 msgstr[1] "kanály"
 msgstr[2] "kanálů"
 
+#, fuzzy
+#| msgid "All servers:"
+msgid "All connected servers:"
+msgstr "Všechny servery:"
+
 msgid "All servers:"
 msgstr "Všechny servery:"
+
+#, fuzzy
+#| msgid "%s%s: disconnected from server"
+msgid "No connected server"
+msgstr "%s%s: odpojen od serveru"
 
 msgid "No server"
 msgstr "Žádný server"
 
+#, fuzzy, c-format
+#| msgid "Servers with \"%s\":"
+msgid "Connected servers with \"%s\":"
+msgstr "Servery s \"%s\":"
+
 #, c-format
 msgid "Servers with \"%s\":"
 msgstr "Servery s \"%s\":"
+
+#, fuzzy, c-format
+#| msgid "No server found with \"%s\""
+msgid "No connected server found with \"%s\""
+msgstr "Žádný server s \"%s\" nenalezen"
 
 #, c-format
 msgid "No server found with \"%s\""
@@ -10111,10 +10131,10 @@ msgstr "vypíše, přídá nebo odebere IRC servery"
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 #, fuzzy
 msgid ""
-"list|listfull [<name>] || add|addreplace <name> <hostname>[/<port>] [-temp] "
-"[-<option>[=<value>]] [-no<option>] || copy|rename <name> <new_name> || "
-"reorder <name>... || open <name>|-all [<name>...] || del|keep <name> || "
-"deloutq|jump || raw [<filter>]"
+"list|listfull [-connected] [<name>] || add|addreplace <name> <hostname>[/"
+"<port>] [-temp] [-<option>[=<value>]] [-no<option>] || copy|rename <name> "
+"<new_name> || reorder <name>... || open <name>|-all [<name>...] || del|keep "
+"<name> || deloutq|jump || raw [<filter>]"
 msgstr ""
 "list|listfull [<server>] || add <server> <hostname>[/<port>] [-temp] [-"
 "<option>[=<value>]] [-no<option>] || copy|rename <server> <new_name> || del|"
@@ -10125,6 +10145,15 @@ msgstr ""
 
 msgid "raw[listfull]: list servers with detailed info for each server"
 msgstr ""
+
+#, fuzzy
+#| msgid ""
+#| "-all: set new nick for all connected servers\n"
+#| "nick: new nick"
+msgid "raw[-connected]: list only connected servers"
+msgstr ""
+"     -all: nastavit novou přezdívku přo všechny připojené servery\n"
+"přezdívka: nová přezdívka"
 
 msgid "raw[add]: add a new server"
 msgstr ""

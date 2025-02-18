@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2025-02-15 20:00+0100\n"
+"POT-Creation-Date: 2025-02-18 22:07+0100\n"
 "PO-Revision-Date: 2025-01-04 18:21+0100\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -9285,15 +9285,35 @@ msgid_plural "channels"
 msgstr[0] "kanal"
 msgstr[1] "kanal"
 
+#, fuzzy
+#| msgid "All servers:"
+msgid "All connected servers:"
+msgstr "Tüm sunucular:"
+
 msgid "All servers:"
 msgstr "Tüm sunucular:"
+
+#, fuzzy
+#| msgid "%s%s: disconnected from server"
+msgid "No connected server"
+msgstr "%s%s: Sunucu bağlantısı kesildi"
 
 msgid "No server"
 msgstr "Sunucu yok"
 
+#, fuzzy, c-format
+#| msgid "Servers with \"%s\":"
+msgid "Connected servers with \"%s\":"
+msgstr "\"%s\" içeren sunucular:"
+
 #, c-format
 msgid "Servers with \"%s\":"
 msgstr "\"%s\" içeren sunucular:"
+
+#, fuzzy, c-format
+#| msgid "No server found with \"%s\""
+msgid "No connected server found with \"%s\""
+msgstr "\"%s\" içeren sunucu bulunamadı"
 
 #, c-format
 msgid "No server found with \"%s\""
@@ -10778,10 +10798,10 @@ msgstr "İRC sunucularını listele, ekle veya kaldır"
 #| "reorder <name> [<name>...] || open <name>|-all [<name>...] || del|keep "
 #| "<name> || deloutq|jump || raw [<filter>]"
 msgid ""
-"list|listfull [<name>] || add|addreplace <name> <hostname>[/<port>] [-temp] "
-"[-<option>[=<value>]] [-no<option>] || copy|rename <name> <new_name> || "
-"reorder <name>... || open <name>|-all [<name>...] || del|keep <name> || "
-"deloutq|jump || raw [<filter>]"
+"list|listfull [-connected] [<name>] || add|addreplace <name> <hostname>[/"
+"<port>] [-temp] [-<option>[=<value>]] [-no<option>] || copy|rename <name> "
+"<new_name> || reorder <name>... || open <name>|-all [<name>...] || del|keep "
+"<name> || deloutq|jump || raw [<filter>]"
 msgstr ""
 "list|listfull [<ad>] || add <ad> <makine>[/<kapı>] [-temp] [-"
 "<seçenek>[=<değer>]] [-no<seçenek>] || copy|rename <ad> <yeni_ad> || reorder "
@@ -10793,6 +10813,15 @@ msgstr ""
 
 msgid "raw[listfull]: list servers with detailed info for each server"
 msgstr ""
+
+#, fuzzy
+#| msgid ""
+#| "-all: set new nick for all connected servers\n"
+#| "nick: new nick"
+msgid "raw[-connected]: list only connected servers"
+msgstr ""
+"-all: tüm bağlı sunucular için yeni bir takma ad ayarla\n"
+"nick: yeni takma ad"
 
 msgid "raw[add]: add a new server"
 msgstr ""

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2025-02-15 20:00+0100\n"
+"POT-Creation-Date: 2025-02-18 22:07+0100\n"
 "PO-Revision-Date: 2024-11-20 18:17+0100\n"
 "Last-Translator: Vasco Almeida <vascomalmeida@sapo.pt>\n"
 "Language-Team: Portuguese <>\n"
@@ -9172,15 +9172,35 @@ msgid_plural "channels"
 msgstr[0] "canal"
 msgstr[1] "canais"
 
+#, fuzzy
+#| msgid "All servers:"
+msgid "All connected servers:"
+msgstr "Todos os servidores:"
+
 msgid "All servers:"
 msgstr "Todos os servidores:"
+
+#, fuzzy
+#| msgid "%s%s: disconnected from server"
+msgid "No connected server"
+msgstr "%s%s: desconectado do servidor"
 
 msgid "No server"
 msgstr "Nenhum servidor"
 
+#, fuzzy, c-format
+#| msgid "Servers with \"%s\":"
+msgid "Connected servers with \"%s\":"
+msgstr "Servidores com \"%s\":"
+
 #, c-format
 msgid "Servers with \"%s\":"
 msgstr "Servidores com \"%s\":"
+
+#, fuzzy, c-format
+#| msgid "No server found with \"%s\""
+msgid "No connected server found with \"%s\""
+msgstr "Nenhum servidor encontrado com \"%s\""
 
 #, c-format
 msgid "No server found with \"%s\""
@@ -10623,10 +10643,10 @@ msgstr "listar, adicionar ou remover servidores IRC"
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 #, fuzzy
 msgid ""
-"list|listfull [<name>] || add|addreplace <name> <hostname>[/<port>] [-temp] "
-"[-<option>[=<value>]] [-no<option>] || copy|rename <name> <new_name> || "
-"reorder <name>... || open <name>|-all [<name>...] || del|keep <name> || "
-"deloutq|jump || raw [<filter>]"
+"list|listfull [-connected] [<name>] || add|addreplace <name> <hostname>[/"
+"<port>] [-temp] [-<option>[=<value>]] [-no<option>] || copy|rename <name> "
+"<new_name> || reorder <name>... || open <name>|-all [<name>...] || del|keep "
+"<name> || deloutq|jump || raw [<filter>]"
 msgstr ""
 "list|listfull [<servidor>] || add <servidor> <hostname>[/<porta>] [-temp] [-"
 "<opção>[=<valor>]] [-no<opção>] || copy|rename <servidor> <novo_nome> || "
@@ -10637,6 +10657,15 @@ msgstr ""
 
 msgid "raw[listfull]: list servers with detailed info for each server"
 msgstr ""
+
+#, fuzzy
+#| msgid ""
+#| "-all: set new nick for all connected servers\n"
+#| "nick: new nick"
+msgid "raw[-connected]: list only connected servers"
+msgstr ""
+"-all: definir novo nick em todos os servidores conectados\n"
+"nick: novo nick"
 
 msgid "raw[add]: add a new server"
 msgstr ""

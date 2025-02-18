@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2025-02-15 20:00+0100\n"
+"POT-Creation-Date: 2025-02-18 22:07+0100\n"
 "PO-Revision-Date: 2025-02-12 11:16+0400\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -9447,15 +9447,35 @@ msgstr[0] "канал"
 msgstr[1] "канала"
 msgstr[2] "канала"
 
+#, fuzzy
+#| msgid "All servers:"
+msgid "All connected servers:"
+msgstr "Сви сервери:"
+
 msgid "All servers:"
 msgstr "Сви сервери:"
+
+#, fuzzy
+#| msgid "%s%s: disconnected from server"
+msgid "No connected server"
+msgstr "%s%s: прекинута је веза са сервером"
 
 msgid "No server"
 msgstr "Нема сервера"
 
+#, fuzzy, c-format
+#| msgid "Servers with \"%s\":"
+msgid "Connected servers with \"%s\":"
+msgstr "Сервери са „%s”:"
+
 #, c-format
 msgid "Servers with \"%s\":"
 msgstr "Сервери са „%s”:"
+
+#, fuzzy, c-format
+#| msgid "No server found with \"%s\""
+msgid "No connected server found with \"%s\""
+msgstr "Није пронађен ниједан сервер са „%s”"
 
 #, c-format
 msgid "No server found with \"%s\""
@@ -10657,11 +10677,17 @@ msgid "list, add or remove IRC servers"
 msgstr "испис, додавање или уклањање IRC сервера"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#, fuzzy
+#| msgid ""
+#| "list|listfull [<name>] || add|addreplace <name> <hostname>[/<port>] [-"
+#| "temp] [-<option>[=<value>]] [-no<option>] || copy|rename <name> "
+#| "<new_name> || reorder <name>... || open <name>|-all [<name>...] || del|"
+#| "keep <name> || deloutq|jump || raw [<filter>]"
 msgid ""
-"list|listfull [<name>] || add|addreplace <name> <hostname>[/<port>] [-temp] "
-"[-<option>[=<value>]] [-no<option>] || copy|rename <name> <new_name> || "
-"reorder <name>... || open <name>|-all [<name>...] || del|keep <name> || "
-"deloutq|jump || raw [<filter>]"
+"list|listfull [-connected] [<name>] || add|addreplace <name> <hostname>[/"
+"<port>] [-temp] [-<option>[=<value>]] [-no<option>] || copy|rename <name> "
+"<new_name> || reorder <name>... || open <name>|-all [<name>...] || del|keep "
+"<name> || deloutq|jump || raw [<filter>]"
 msgstr ""
 "list|listfull [<име>] || add|addreplace <име> <имехоста>[/<порт>] [-temp] [-"
 "<опција>[=<вредност>]] [-no<опција>] || copy|rename <име> <ново_име> || "
@@ -10673,6 +10699,11 @@ msgstr "raw[list]: листа сервера (без аргумента се п�
 
 msgid "raw[listfull]: list servers with detailed info for each server"
 msgstr "raw[listfull]: листа сервера са детаљним инфо за сваки сервер"
+
+#, fuzzy
+#| msgid "raw[-all]: set new nick for all connected servers"
+msgid "raw[-connected]: list only connected servers"
+msgstr "raw[-all]: нови надимак се поставља на све повезане сервере"
 
 msgid "raw[add]: add a new server"
 msgstr "raw[add]: додавање новог сервера"

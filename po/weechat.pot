@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2025-02-15 20:00+0100\n"
+"POT-Creation-Date: 2025-02-18 22:07+0100\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7784,14 +7784,28 @@ msgid_plural "channels"
 msgstr[0] ""
 msgstr[1] ""
 
+msgid "All connected servers:"
+msgstr ""
+
 msgid "All servers:"
+msgstr ""
+
+msgid "No connected server"
 msgstr ""
 
 msgid "No server"
 msgstr ""
 
 #, c-format
+msgid "Connected servers with \"%s\":"
+msgstr ""
+
+#, c-format
 msgid "Servers with \"%s\":"
+msgstr ""
+
+#, c-format
+msgid "No connected server found with \"%s\""
 msgstr ""
 
 #, c-format
@@ -8875,16 +8889,19 @@ msgstr ""
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid ""
-"list|listfull [<name>] || add|addreplace <name> <hostname>[/<port>] [-temp] "
-"[-<option>[=<value>]] [-no<option>] || copy|rename <name> <new_name> || "
-"reorder <name>... || open <name>|-all [<name>...] || del|keep <name> || "
-"deloutq|jump || raw [<filter>]"
+"list|listfull [-connected] [<name>] || add|addreplace <name> <hostname>[/"
+"<port>] [-temp] [-<option>[=<value>]] [-no<option>] || copy|rename <name> "
+"<new_name> || reorder <name>... || open <name>|-all [<name>...] || del|keep "
+"<name> || deloutq|jump || raw [<filter>]"
 msgstr ""
 
 msgid "raw[list]: list servers (without argument, this list is displayed)"
 msgstr ""
 
 msgid "raw[listfull]: list servers with detailed info for each server"
+msgstr ""
+
+msgid "raw[-connected]: list only connected servers"
 msgstr ""
 
 msgid "raw[add]: add a new server"

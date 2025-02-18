@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2025-02-15 20:00+0100\n"
+"POT-Creation-Date: 2025-02-18 22:07+0100\n"
 "PO-Revision-Date: 2024-11-20 18:17+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8329,16 +8329,32 @@ msgstr[0] "%d szoba"
 msgstr[1] "%d szoba"
 
 #, fuzzy
+msgid "All connected servers:"
+msgstr "Minden szerver:\n"
+
+#, fuzzy
 msgid "All servers:"
 msgstr "Minden szerver:\n"
+
+#, fuzzy
+msgid "No connected server"
+msgstr "Lekapcsolódott a szerverről!\n"
 
 #, fuzzy
 msgid "No server"
 msgstr "Nincs szerver.\n"
 
 #, fuzzy, c-format
+msgid "Connected servers with \"%s\":"
+msgstr "A(z) '%s' szerverek listája:\n"
+
+#, fuzzy, c-format
 msgid "Servers with \"%s\":"
 msgstr "A(z) '%s' szerverek listája:\n"
+
+#, fuzzy, c-format
+msgid "No connected server found with \"%s\""
+msgstr "Nem található '%s' szerver.\n"
 
 #, fuzzy, c-format
 msgid "No server found with \"%s\""
@@ -9666,10 +9682,10 @@ msgstr "szerverek listázása, hozzáadása vagy eltávolítása"
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 #, fuzzy
 msgid ""
-"list|listfull [<name>] || add|addreplace <name> <hostname>[/<port>] [-temp] "
-"[-<option>[=<value>]] [-no<option>] || copy|rename <name> <new_name> || "
-"reorder <name>... || open <name>|-all [<name>...] || del|keep <name> || "
-"deloutq|jump || raw [<filter>]"
+"list|listfull [-connected] [<name>] || add|addreplace <name> <hostname>[/"
+"<port>] [-temp] [-<option>[=<value>]] [-no<option>] || copy|rename <name> "
+"<new_name> || reorder <name>... || open <name>|-all [<name>...] || del|keep "
+"<name> || deloutq|jump || raw [<filter>]"
 msgstr ""
 "[list [szervernév]] | [listfull [szervernév]] | [add szervernév gépnév [-"
 "port port] [-temp] [-auto | -noauto] [-ipv6] [-ssl] [-pwd jelszó] [-nicks "
@@ -9682,6 +9698,12 @@ msgstr ""
 
 msgid "raw[listfull]: list servers with detailed info for each server"
 msgstr ""
+
+#, fuzzy
+msgid "raw[-connected]: list only connected servers"
+msgstr ""
+"-all: új név beállítása minden csatlakozott szerveren\n"
+" név: új név"
 
 msgid "raw[add]: add a new server"
 msgstr ""

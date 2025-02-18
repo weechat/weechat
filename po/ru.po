@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2025-02-15 20:00+0100\n"
+"POT-Creation-Date: 2025-02-18 22:07+0100\n"
 "PO-Revision-Date: 2024-11-20 18:17+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8374,16 +8374,32 @@ msgstr[1] "%d каналов"
 msgstr[2] "%d каналов"
 
 #, fuzzy
+msgid "All connected servers:"
+msgstr "Все серверы:\n"
+
+#, fuzzy
 msgid "All servers:"
 msgstr "Все серверы:\n"
+
+#, fuzzy
+msgid "No connected server"
+msgstr "Отключен от сервера!\n"
 
 #, fuzzy
 msgid "No server"
 msgstr "Нет сервера.\n"
 
 #, fuzzy, c-format
+msgid "Connected servers with \"%s\":"
+msgstr "Серверы с '%s':\n"
+
+#, fuzzy, c-format
 msgid "Servers with \"%s\":"
 msgstr "Серверы с '%s':\n"
+
+#, fuzzy, c-format
+msgid "No connected server found with \"%s\""
+msgstr "Серверы с '%s' не найдены.\n"
 
 #, fuzzy, c-format
 msgid "No server found with \"%s\""
@@ -9710,10 +9726,10 @@ msgstr "перечислить, добавить или удалить серв�
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 #, fuzzy
 msgid ""
-"list|listfull [<name>] || add|addreplace <name> <hostname>[/<port>] [-temp] "
-"[-<option>[=<value>]] [-no<option>] || copy|rename <name> <new_name> || "
-"reorder <name>... || open <name>|-all [<name>...] || del|keep <name> || "
-"deloutq|jump || raw [<filter>]"
+"list|listfull [-connected] [<name>] || add|addreplace <name> <hostname>[/"
+"<port>] [-temp] [-<option>[=<value>]] [-no<option>] || copy|rename <name> "
+"<new_name> || reorder <name>... || open <name>|-all [<name>...] || del|keep "
+"<name> || deloutq|jump || raw [<filter>]"
 msgstr ""
 "[list [сервер]] | [listfull [сервер]] | [add сервер адрес [-port порт] [-"
 "temp] [-auto | -noauto] [-ipv6] [-ssl] [-pwd пароль] [-nicks ник1 ник2 ник3] "
@@ -9726,6 +9742,12 @@ msgstr ""
 
 msgid "raw[listfull]: list servers with detailed info for each server"
 msgstr ""
+
+#, fuzzy
+msgid "raw[-connected]: list only connected servers"
+msgstr ""
+"-all: установить новый ник для всех подключенных серверов\n"
+" ник: новый ник"
 
 msgid "raw[add]: add a new server"
 msgstr ""

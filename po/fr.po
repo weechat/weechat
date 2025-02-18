@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2025-02-15 20:00+0100\n"
-"PO-Revision-Date: 2025-02-15 20:01+0100\n"
+"POT-Creation-Date: 2025-02-18 22:07+0100\n"
+"PO-Revision-Date: 2025-02-18 22:08+0100\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -9761,15 +9761,29 @@ msgid_plural "channels"
 msgstr[0] "canal"
 msgstr[1] "canaux"
 
+msgid "All connected servers:"
+msgstr "Tous les serveurs connectés :"
+
 msgid "All servers:"
 msgstr "Tous les serveurs :"
+
+msgid "No connected server"
+msgstr "Pas de serveur connecté"
 
 msgid "No server"
 msgstr "Pas de serveur"
 
 #, c-format
+msgid "Connected servers with \"%s\":"
+msgstr "Serveurs connectés avec \"%s\" :"
+
+#, c-format
 msgid "Servers with \"%s\":"
 msgstr "Serveurs avec \"%s\" :"
+
+#, c-format
+msgid "No connected server found with \"%s\""
+msgstr "Pas de serveur connecté trouvé avec \"%s\""
 
 #, c-format
 msgid "No server found with \"%s\""
@@ -11015,15 +11029,15 @@ msgstr "lister, ajouter ou retirer des serveurs IRC"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid ""
-"list|listfull [<name>] || add|addreplace <name> <hostname>[/<port>] [-temp] "
-"[-<option>[=<value>]] [-no<option>] || copy|rename <name> <new_name> || "
-"reorder <name>... || open <name>|-all [<name>...] || del|keep <name> || "
-"deloutq|jump || raw [<filter>]"
+"list|listfull [-connected] [<name>] || add|addreplace <name> <hostname>[/"
+"<port>] [-temp] [-<option>[=<value>]] [-no<option>] || copy|rename <name> "
+"<new_name> || reorder <name>... || open <name>|-all [<name>...] || del|keep "
+"<name> || deloutq|jump || raw [<filter>]"
 msgstr ""
-"list|listfull [<nom>] || add|addreplace <nom> <nom_machine>[/<port>] [-temp] "
-"[-<option>[=<valeur>]] [-no<option>] || copy|rename <nom> <nouveau_nom> || "
-"reorder <nom>... || open <nom>|-all [<nom>...] || del|keep <nom> || deloutq|"
-"jump || raw [<filtre>]"
+"list|listfull [-connected] [<nom>] || add|addreplace <nom> <nom_machine>[/"
+"<port>] [-temp] [-<option>[=<valeur>]] [-no<option>] || copy|rename <nom> "
+"<nouveau_nom> || reorder <nom>... || open <nom>|-all [<nom>...] || del|keep "
+"<nom> || deloutq|jump || raw [<filtre>]"
 
 msgid "raw[list]: list servers (without argument, this list is displayed)"
 msgstr ""
@@ -11032,6 +11046,9 @@ msgstr ""
 msgid "raw[listfull]: list servers with detailed info for each server"
 msgstr ""
 "raw[listfull] : afficher les serveurs avec de l'info détaillée pour chaque"
+
+msgid "raw[-connected]: list only connected servers"
+msgstr "raw[-connected] : afficher seulement les serveurs connectés"
 
 msgid "raw[add]: add a new server"
 msgstr "raw[add] : ajouter un nouveau serveur"

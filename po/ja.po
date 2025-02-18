@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2025-02-15 20:00+0100\n"
+"POT-Creation-Date: 2025-02-18 22:07+0100\n"
 "PO-Revision-Date: 2024-11-20 18:17+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -9203,15 +9203,35 @@ msgid "channel"
 msgid_plural "channels"
 msgstr[0] "チャンネル"
 
+#, fuzzy
+#| msgid "All servers:"
+msgid "All connected servers:"
+msgstr "全てのサーバ:"
+
 msgid "All servers:"
 msgstr "全てのサーバ:"
+
+#, fuzzy
+#| msgid "%s%s: disconnected from server"
+msgid "No connected server"
+msgstr "%s%s: サーバから切断"
 
 msgid "No server"
 msgstr "サーバ無し"
 
+#, fuzzy, c-format
+#| msgid "Servers with \"%s\":"
+msgid "Connected servers with \"%s\":"
+msgstr "\"%s\" にマッチするサーバ:"
+
 #, c-format
 msgid "Servers with \"%s\":"
 msgstr "\"%s\" にマッチするサーバ:"
+
+#, fuzzy, c-format
+#| msgid "No server found with \"%s\""
+msgid "No connected server found with \"%s\""
+msgstr "\"%s\" にマッチするサーバが見つかりません"
 
 #, c-format
 msgid "No server found with \"%s\""
@@ -10675,10 +10695,10 @@ msgstr "IRC サーバのリストアップ、追加、削除"
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 #, fuzzy
 msgid ""
-"list|listfull [<name>] || add|addreplace <name> <hostname>[/<port>] [-temp] "
-"[-<option>[=<value>]] [-no<option>] || copy|rename <name> <new_name> || "
-"reorder <name>... || open <name>|-all [<name>...] || del|keep <name> || "
-"deloutq|jump || raw [<filter>]"
+"list|listfull [-connected] [<name>] || add|addreplace <name> <hostname>[/"
+"<port>] [-temp] [-<option>[=<value>]] [-no<option>] || copy|rename <name> "
+"<new_name> || reorder <name>... || open <name>|-all [<name>...] || del|keep "
+"<name> || deloutq|jump || raw [<filter>]"
 msgstr ""
 "list|listfull [<name>] || add <name> <hostname>[/<port>] [-temp] [-"
 "<option>[=<value>]] [-no<option>] || copy|rename <name> <new_name> || "
@@ -10690,6 +10710,15 @@ msgstr ""
 
 msgid "raw[listfull]: list servers with detailed info for each server"
 msgstr ""
+
+#, fuzzy
+#| msgid ""
+#| "-all: set new nick for all connected servers\n"
+#| "nick: new nick"
+msgid "raw[-connected]: list only connected servers"
+msgstr ""
+"-all: 全ての接続済みサーバで新しいニックネームを設定\n"
+"nick: 新しいニックネーム"
 
 msgid "raw[add]: add a new server"
 msgstr ""
