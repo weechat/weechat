@@ -5763,7 +5763,7 @@ irc_command_display_server (struct t_irc_server *server, int with_detail)
 
 IRC_COMMAND_CALLBACK(server)
 {
-    int i, detailed_list, one_server_found, length, count, refresh, update;
+    int i, detailed_list, only_connected, one_server_found, length, count, refresh, update;
     struct t_irc_server *ptr_server2, *server_found, *new_server;
     char *server_name, *msg_no_quotes, *message, *description;
 
@@ -5781,6 +5781,7 @@ IRC_COMMAND_CALLBACK(server)
         /* list servers */
         server_name = NULL;
         detailed_list = 0;
+        only_connected = 0;
         for (i = 1; i < argc; i++)
         {
             if (weechat_strcmp (argv[i], "list") == 0)
@@ -5788,6 +5789,11 @@ IRC_COMMAND_CALLBACK(server)
             if (weechat_strcmp (argv[i], "listfull") == 0)
             {
                 detailed_list = 1;
+                continue;
+            }
+            if (weechat_strcmp (argv[i], "-connected") == 0)
+            {
+                only_connected = 1;
                 continue;
             }
             if (!server_name)
@@ -5798,15 +5804,25 @@ IRC_COMMAND_CALLBACK(server)
             if (irc_servers)
             {
                 weechat_printf (NULL, "");
-                weechat_printf (NULL, _("All servers:"));
+                if (!only_connected)
+                    weechat_printf (NULL, _("All servers:"));
+                else
+                    weechat_printf (NULL, _("All connected servers:"));
                 for (ptr_server2 = irc_servers; ptr_server2;
                      ptr_server2 = ptr_server2->next_server)
                 {
-                    irc_command_display_server (ptr_server2, detailed_list);
+                    if (!only_connected || ptr_server2->is_connected) {
+                        irc_command_display_server (ptr_server2, detailed_list);
+                    }
                 }
             }
             else
-                weechat_printf (NULL, _("No server"));
+            {
+                if (!only_connected)
+                    weechat_printf (NULL, _("No server"));
+                else
+                    weechat_printf (NULL, _("No connected server"));
+            }
         }
         else
         {
@@ -5814,23 +5830,37 @@ IRC_COMMAND_CALLBACK(server)
             for (ptr_server2 = irc_servers; ptr_server2;
                  ptr_server2 = ptr_server2->next_server)
             {
+                if (only_connected && (!(ptr_server2->is_connected)))
+                    continue;
                 if (strstr (ptr_server2->name, server_name))
                 {
                     if (!one_server_found)
                     {
                         weechat_printf (NULL, "");
-                        weechat_printf (NULL,
-                                        _("Servers with \"%s\":"),
-                                        server_name);
+                        if (!only_connected)
+                            weechat_printf (NULL,
+                                            _("Servers with \"%s\":"),
+                                            server_name);
+                        else
+                            weechat_printf (NULL,
+                                            _("Connected servers with \"%s\":"),
+                                            server_name);
                     }
                     one_server_found = 1;
                     irc_command_display_server (ptr_server2, detailed_list);
                 }
             }
             if (!one_server_found)
-                weechat_printf (NULL,
-                                _("No server found with \"%s\""),
-                                server_name);
+            {
+                if (!only_connected)
+                    weechat_printf (NULL,
+                                    _("No server found with \"%s\""),
+                                    server_name);
+                else
+                    weechat_printf (NULL,
+                                    _("No connected server found with \"%s\""),
+                                    server_name);
+            }
         }
         return WEECHAT_RC_OK;
     }
@@ -7928,7 +7958,7 @@ irc_command_init ()
         "server",
         N_("list, add or remove IRC servers"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated */
-        N_("list|listfull [<name>]"
+        N_("list|listfull [-connected] [<name>]"
            " || add|addreplace <name> <hostname>[/<port>] [-temp] [-<option>[=<value>]] "
            "[-no<option>]"
            " || copy|rename <name> <new_name>"
@@ -7940,6 +7970,7 @@ irc_command_init ()
         WEECHAT_CMD_ARGS_DESC(
             N_("raw[list]: list servers (without argument, this list is displayed)"),
             N_("raw[listfull]: list servers with detailed info for each server"),
+            N_("raw[-connected]: list only connected servers"),
             N_("raw[add]: add a new server"),
             N_("raw[addreplace]: add or replace an existing server"),
             N_("name: server name, for internal and display use; this name "
@@ -7981,6 +8012,7 @@ irc_command_init ()
             "",
             N_("Examples:"),
             AI("  /server listfull"),
+            AI("  /server list -connected"),
             AI("  /server add libera irc.libera.chat"),
             AI("  /server add libera irc.libera.chat/6667 -notls -autoconnect"),
             AI("  /server add chatspike irc.chatspike.net/6667,"
@@ -7993,8 +8025,8 @@ irc_command_init ()
             AI("  /server raw"),
             AI("  /server raw s:libera"),
             AI("  /server raw c:${recv} && ${command}==PRIVMSG && ${nick}==foo")),
-        "list %(irc_servers)"
-        " || listfull %(irc_servers)"
+        "list %(irc_servers)|-connected %(irc_servers)"
+        " || listfull %(irc_servers)|-connected  %(irc_servers)"
         " || add|addreplace %(irc_servers)"
         " || copy %(irc_servers) %(irc_servers)"
         " || rename %(irc_servers) %(irc_servers)"
