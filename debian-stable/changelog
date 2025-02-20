@@ -1,3 +1,10 @@
+weechat (4.5.1-1) unstable; urgency=medium
+
+  * New upstream release
+  * Update copyright file (new year)
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Mon, 20 Jan 2025 14:39:42 +0000
+
 weechat (4.4.3-1) unstable; urgency=medium
 
   * New upstream release
