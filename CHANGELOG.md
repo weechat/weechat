@@ -26,6 +26,12 @@
 - perl: fix build with Perl < 5.7.29 ([#2219](https://github.com/weechat/weechat/issues/2219), [#2220](https://github.com/weechat/weechat/issues/2220))
 - python: enable subinterpreters ([#2222](https://github.com/weechat/weechat/issues/2222))
 
+## Version 4.5.2 (2025-02-20)
+
+### Fixed
+
+- core: fix build with gcc 15 ([#2229](https://github.com/weechat/weechat/issues/2229), [#2230](https://github.com/weechat/weechat/issues/2230))
+
 ## Version 4.5.1 (2024-12-23)
 
 ### Fixed
