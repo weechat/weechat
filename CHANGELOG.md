@@ -1,5 +1,11 @@
 # WeeChat ChangeLog
 
+## Version 4.5.2 (under dev)
+
+### Fixed
+
+- core: fix build with gcc 15 ([#2229](https://github.com/weechat/weechat/issues/2229), [#2230](https://github.com/weechat/weechat/issues/2230))
+
 ## Version 4.5.1 (2024-12-23)
 
 ### Fixed
