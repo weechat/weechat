@@ -19,6 +19,7 @@
 ### Fixed
 
 - relay: fix crash after `/upgrade` when relay clients are connected
+- core: save configuration files as UTF-8 when the locale is wrong
 - api: fix creation of empty buffer in function infolist_new_var_buffer
 - core: fix build with gcc 15 ([#2229](https://github.com/weechat/weechat/issues/2229), [#2230](https://github.com/weechat/weechat/issues/2230))
 - core: fix detection of dl library ([#2218](https://github.com/weechat/weechat/issues/2218))
