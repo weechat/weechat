@@ -118,6 +118,7 @@ extern char *weechat_data_dir;
 extern char *weechat_state_dir;
 extern char *weechat_cache_dir;
 extern char *weechat_runtime_dir;
+extern int weechat_locale_ok;
 extern char *weechat_local_charset;
 extern int weechat_plugin_no_dlclose;
 extern int weechat_no_gnutls;

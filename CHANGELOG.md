@@ -1,5 +1,11 @@
 # WeeChat ChangeLog
 
+## Version 4.5.3 (under dev)
+
+### Fixed
+
+- core: save configuration files as UTF-8 when the locale is wrong
+
 ## Version 4.5.2 (2025-02-20)
 
 ### Fixed

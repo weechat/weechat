@@ -3253,7 +3253,8 @@ string_iconv_to_internal (const char *charset, const char *string)
 }
 
 /*
- * Converts internal string to terminal charset, for display.
+ * Converts internal string to terminal charset, for display or write of
+ * configuration files.
  *
  * Note: result must be freed after use.
  */
@@ -3269,6 +3270,10 @@ string_iconv_from_internal (const char *charset, const char *string)
     input = strdup (string);
     if (!input)
         return NULL;
+
+    /* if the locale is wrong, we keep UTF-8 */
+    if (!weechat_locale_ok)
+        return input;
 
     /*
      * optimized for UTF-8: if charset is NULL => we use term charset => if
