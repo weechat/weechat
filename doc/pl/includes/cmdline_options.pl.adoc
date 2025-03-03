@@ -33,9 +33,8 @@
 *-h*, *--help*::
     Wyświetla pomoc.
 
-// TRANSLATION MISSING
 *-i*, *--build-info*::
-    Display build information and exit.
+    Wyświetla informację o kompilacji.
 
 *-l*, *--license*::
     Wyświetla licencję.

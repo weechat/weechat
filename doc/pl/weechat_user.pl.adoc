@@ -930,13 +930,11 @@ Pasek _status_ posiada następujące domyślne elementy:
 | buffer_nicklist_count | `4`                    | Ilość nicków wyświetlanych na liście nicków.
 | buffer_zoom           | !                      | `!` oznacza, że połączony bufor jest przybliżony (tylko ten jest wyświetlany), pusta wartość oznacza, że wszystkie połączone bufory są wyświetlane.
 | buffer_filter         | `+*+`                  | Wskaźnik filtrowania: `+*+` oznacza, że niektóre linie zostały odfiltrowywane (ukryte), pusta wartość oznacza, że wszystkie linie są wyświetlane.
-// TRANSLATION MISSING
-| mouse_status          | `M`                    | Mouse status (empty if mouse is disabled), see command <<command_weechat_mouse,/mouse>> and <<key_bindings_toggle_keys,Włącz/wyłącz>>.
+| mouse_status          | `M`                    | Status obsługi myszy (pusty jeśli obsługa myszy jest wyłączona), zobacz <<command_weechat_mouse,/mouse>> i <<key_bindings_toggle_keys,Włącz/wyłącz>>.
 | scroll                | `-Więcej(50)-`         | Wskaźnik przewijania, z numerem linii poniżej ostatniej wyświetlanej.
 | lag                   | `Lag: 2.5`             | Wskaźnik opóźnienia, w sekundach (ukryty dla niskich opóźnień).
 | hotlist               | `H: 3:#abc(2,5), 5`    | Lista buforów z aktywnością (nieprzeczytane wiadomości) (w przykładzie, 2 podświetlenia i 5 nieprzeczytanych wiadomości w _#abc_, jedna wiadomość w buforze #5).
-// TRANSLATION MISSING
-| typing                | `Typing: bob, (alice)` | Typing notification, see <<typing_notifications,Powiadomienia o pisaniu>>.
+| typing                | `Typing: bob, (alice)` | Powiadomienia o pisaniu, zobacz <<typing_notifications,Powiadomienia o pisaniu>>.
 | completion            | `abc(2) def(5)`        | Lista słów do dopełnienia, z ilością możliwych dopełnień dla każdego słowa.
 |===
 
@@ -999,8 +997,7 @@ Inne dostępne elementy (nie używane domyślnie w paskach):
 | irc_nick_host                | `+Flashy!user@host.com+` | Aktualny nick i host IRC.
 | irc_nick_modes               | `i`                      | Atrybuty IRC dla własnego nicka.
 | irc_nick_prefix              | `@`                      | Prefiks nicku na kanale IRC.
-// TRANSLATION MISSING
-| spacer                       |                          | Special item used to align text in bars, see <<item_spacer,Odstęp>>.
+| spacer                       |                          | Specjalny element używany do wyrównania tekstu na paskach, zobacz <<item_spacer,Odstęp>>.
 | spell_dict                   | `fr,en`                  | Słowniki używane w obecnym buforze.
 | spell_suggest                | `print,prone,prune`      | Sugestie dla słowa pod kursorem (jeśli zawiera błąd).
 | tls_version                  | `TLS1.3`                 | Wersja TLS używana przez obecny serwer IRC.
@@ -1769,8 +1766,7 @@ Można je zmienić oraz dodać nowe za pomocą komendy <<command_weechat_key,/ke
 | kbd:[Alt+s]            | Włącz/wyłącz sprawdzenie pisowni. | `+/mute spell toggle+`
 | kbd:[Alt+=]            | Włącz/wyłącz filtry. | `+/filter toggle+`
 | kbd:[Alt+-]            | Włącz/wyłącz filtry w bieżącym buforze. | `+/filter toggle @+`
-// TRANSLATION MISSING
-| kbd:[Alt+Ctrl+l] (`L`) | Toggle between remote and local commands on a remote buffer (relay "api"). | `+/remote togglecmd+`
+| kbd:[Alt+Ctrl+l] (`L`) | Przełącz między lokalnymi komendami a zdalnym buforem (relay "api"). | `+/remote togglecmd+`
 |===
 
 [[key_bindings_search_context]]
@@ -3436,8 +3432,7 @@ Na przykład w celu połączenia się do https://libera.chat/[libera.chat ^↗^
 ----
 
 [NOTE]
-// TRANSLATION MISSING
-Default port is 6697 and TLS (encrypted traffic) is enabled.
+Domyślny port to 6697 i TLS (szyfrowanie ruchu) jest włączone.
 
 Możesz powiedzieć WeeChat, aby automatycznie łączył się z tym serwerem po
 uruchomieniu:
