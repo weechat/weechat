@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2025-02-18 22:07+0100\n"
+"POT-Creation-Date: 2025-03-03 08:19+0100\n"
 "PO-Revision-Date: 2024-11-20 18:17+0100\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5545,6 +5545,13 @@ msgstr "completa solo con il primo nick trovato"
 
 msgid "chars ignored for nick completion"
 msgstr "caratteri ignorati per il completamento dei nick"
+
+msgid ""
+"comma-separated list of nicks to ignore (not completed); each nick in list "
+"must include ignored chars (by option weechat.completion.nick_ignore_chars); "
+"look up for nicks is with exact case then lower case, so it's possible to "
+"use only lower case for nicks in this option"
+msgstr ""
 
 #, fuzzy
 msgid "send alert (BEL) when a partial completion occurs"

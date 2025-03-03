@@ -453,6 +453,44 @@ gui_completion_strncmp (struct t_gui_completion *completion,
 }
 
 /*
+ * Checks if a nick is ignored from completion (no completion with this nick).
+ *
+ * Returns:
+ *   1: nick ignored
+ *   0: nick NOT ignored (can be used in completion)
+ */
+
+int
+gui_completion_nick_ignored (const char *nick)
+{
+    char *nick_lower;
+    int rc;
+
+    if (!config_hashtable_completion_nick_ignore_words
+        || (config_hashtable_completion_nick_ignore_words->items_count == 0))
+    {
+        return 0;
+    }
+
+    if (hashtable_has_key (config_hashtable_completion_nick_ignore_words, nick))
+        return 1;
+
+    rc = 0;
+    nick_lower = string_tolower (nick);
+    if (nick_lower)
+    {
+        if (hashtable_has_key (config_hashtable_completion_nick_ignore_words,
+                               nick_lower))
+        {
+            rc = 1;
+        }
+        free (nick_lower);
+    }
+
+    return rc;
+}
+
+/*
  * Adds a word to completion list.
  */
 
@@ -470,7 +508,8 @@ gui_completion_list_add (struct t_gui_completion *completion, const char *word,
     if (!completion->base_word || !completion->base_word[0]
         || (nick_completion
             && (gui_completion_nickncmp (completion->base_word, word,
-                                         utf8_strlen (completion->base_word)) == 0))
+                                         utf8_strlen (completion->base_word)) == 0)
+            && !gui_completion_nick_ignored (word))
         || (!nick_completion
             && (gui_completion_strncmp (completion,
                                         completion->base_word, word,

@@ -309,6 +309,7 @@ struct t_config_option *config_completion_nick_case_sensitive = NULL;
 struct t_config_option *config_completion_nick_completer = NULL;
 struct t_config_option *config_completion_nick_first_only = NULL;
 struct t_config_option *config_completion_nick_ignore_chars = NULL;
+struct t_config_option *config_completion_nick_ignore_words = NULL;
 struct t_config_option *config_completion_partial_completion_alert = NULL;
 struct t_config_option *config_completion_partial_completion_command = NULL;
 struct t_config_option *config_completion_partial_completion_command_arg = NULL;
@@ -375,6 +376,7 @@ char **config_eval_syntax_colors = NULL;
 int config_num_eval_syntax_colors = 0;
 char *config_item_time_evaluated = NULL;
 char *config_buffer_time_same_evaluated = NULL;
+struct t_hashtable *config_hashtable_completion_nick_ignore_words = NULL;
 struct t_hashtable *config_hashtable_completion_partial_templates = NULL;
 char **config_hotlist_sort_fields = NULL;
 int config_num_hotlist_sort_fields = 0;
@@ -1418,6 +1420,56 @@ config_change_eval_syntax_colors (const void *pointer, void *data,
 
     config_set_eval_syntax_colors ();
     gui_color_buffer_display ();
+}
+
+/*
+ * Callback for changes on option "weechat.completion.nick_ignore_words".
+ */
+
+void
+config_change_completion_nick_ignore_words (const void *pointer,
+                                            void *data,
+                                            struct t_config_option *option)
+{
+    char **words;
+    int num_words, i;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) option;
+
+    if (!config_hashtable_completion_nick_ignore_words)
+    {
+        config_hashtable_completion_nick_ignore_words = hashtable_new (
+            32,
+            WEECHAT_HASHTABLE_STRING,
+            WEECHAT_HASHTABLE_POINTER,
+            NULL, NULL);
+    }
+    else
+    {
+        hashtable_remove_all (config_hashtable_completion_nick_ignore_words);
+    }
+
+    words = string_split (
+        CONFIG_STRING(config_completion_nick_ignore_words),
+        ",",
+        NULL,
+        WEECHAT_STRING_SPLIT_STRIP_LEFT
+        | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+        | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+        0,
+        &num_words);
+    if (words)
+    {
+        for (i = 0; i < num_words; i++)
+        {
+            hashtable_set (config_hashtable_completion_nick_ignore_words,
+                           words[i], NULL);
+        }
+        string_free_split (words);
+    }
 }
 
 /*
@@ -5174,6 +5226,18 @@ config_weechat_init_options ()
             N_("chars ignored for nick completion"),
             NULL, 0, 0, "[]`_-^", NULL, 0,
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        config_completion_nick_ignore_words = config_file_new_option (
+            weechat_config_file, weechat_config_section_completion,
+            "nick_ignore_words", "string",
+            N_("comma-separated list of nicks to ignore (not completed); "
+               "each nick in list must include ignored chars (by option "
+               "weechat.completion.nick_ignore_chars); look up for nicks is with "
+               "exact case then lower case, so it's possible to use only lower "
+               "case for nicks in this option"),
+            NULL, 0, 0, "", NULL, 0,
+            NULL, NULL, NULL,
+            &config_change_completion_nick_ignore_words, NULL, NULL,
+            NULL, NULL, NULL);
         config_completion_partial_completion_alert = config_file_new_option (
             weechat_config_file, weechat_config_section_completion,
             "partial_completion_alert", "boolean",
@@ -5572,6 +5636,8 @@ config_weechat_init ()
         config_change_word_chars_highlight (NULL, NULL, NULL);
     if (!config_word_chars_input)
         config_change_word_chars_input (NULL, NULL, NULL);
+    if (!config_hashtable_completion_nick_ignore_words)
+        config_change_completion_nick_ignore_words (NULL, NULL, NULL);
     if (!config_hashtable_completion_partial_templates)
         config_change_completion_partial_completion_templates (NULL, NULL, NULL);
 
@@ -5697,6 +5763,12 @@ config_weechat_free ()
     {
         free (config_buffer_time_same_evaluated);
         config_buffer_time_same_evaluated = NULL;
+    }
+
+    if (config_hashtable_completion_nick_ignore_words)
+    {
+        hashtable_free (config_hashtable_completion_nick_ignore_words);
+        config_hashtable_completion_nick_ignore_words = NULL;
     }
 
     if (config_hashtable_completion_partial_templates)
