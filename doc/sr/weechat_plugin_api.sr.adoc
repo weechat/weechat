@@ -10703,9 +10703,10 @@ _WeeChat ≥ 4.1.0._
 URL трансфер.
 
 // TRANSLATION MISSING
-This function is similar to <<_hook_process_hashtable,hook_process_hashtable>>
-with command "url:..." but it uses a thread instead of new process, making it
-more lightweight and thus recommended for this usage.
+This function is similar to <<_hook_process,hook_process>> and
+<<_hook_process_hashtable,hook_process_hashtable>> with command "url:..."
+but it uses a thread instead of new process, making it more lightweight
+and thus recommended for this usage.
 
 Прототип:
 

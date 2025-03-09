@@ -11185,9 +11185,10 @@ _WeeChat ≥ 4.1.0._
 
 Transfert d'URL.
 
-Cette fonction est similaire à <<_hook_process_hashtable,hook_process_hashtable>>
-avec la commande "url:..." mais elle utilise un thread au lieu d'un nouveau
-processus, la rendant plus légère et donc recommandée pour cet usage.
+Cette fonction est similaire à <<_hook_process,hook_process>> et
+<<_hook_process_hashtable,hook_process_hashtable>> avec la commande "url:..."
+mais elle utilise un thread au lieu d'un nouveau processus, la rendant plus
+légère et donc recommandée pour cet usage.
 
 Prototype :
 
