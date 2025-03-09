@@ -348,7 +348,7 @@ weechat_ruby_output_flush_ruby (VALUE self)
  */
 
 void
-weechat_ruby_output_flush ()
+weechat_ruby_output_flush (void)
 {
     const char *ptr_command;
     char *temp_buffer, *command;
@@ -847,7 +847,7 @@ weechat_ruby_reload_name (const char *name)
  */
 
 void
-weechat_ruby_unload_all ()
+weechat_ruby_unload_all (void)
 {
     while (ruby_scripts)
     {

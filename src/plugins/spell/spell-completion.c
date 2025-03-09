@@ -131,7 +131,7 @@ spell_completion_dicts_cb (const void *pointer, void *data,
  */
 
 void
-spell_completion_init ()
+spell_completion_init (void)
 {
     weechat_hook_completion ("spell_langs",
                              N_("list of all languages supported"),

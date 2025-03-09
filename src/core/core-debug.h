@@ -26,22 +26,22 @@ struct t_gui_window_tree;
 
 extern long long debug_long_callbacks;
 
-extern void debug_build_info ();
+extern void debug_build_info (void);
 extern void debug_sigsegv_cb (int signo);
-extern void debug_windows_tree ();
-extern void debug_memory ();
-extern void debug_hdata ();
-extern void debug_hooks ();
+extern void debug_windows_tree (void);
+extern void debug_memory (void);
+extern void debug_hdata (void);
+extern void debug_hooks (void);
 extern void debug_hooks_plugin_types (const char *plugin_name,
                                       const char **hook_types);
-extern void debug_infolists ();
-extern void debug_directories ();
+extern void debug_infolists (void);
+extern void debug_directories (void);
 extern void debug_display_time_elapsed (struct timeval *time1,
                                         struct timeval *time2,
                                         const char *message,
                                         int display);
 extern void debug_unicode (const char *string);
-extern void debug_init ();
-extern void debug_end ();
+extern void debug_init (void);
+extern void debug_end (void);
 
 #endif /* WEECHAT_DEBUG_H */

@@ -315,7 +315,7 @@ irc_raw_message_print (struct t_irc_raw_message *raw_message)
  */
 
 void
-irc_raw_set_localvar_filter ()
+irc_raw_set_localvar_filter (void)
 {
     if (!irc_raw_buffer)
         return;
@@ -329,7 +329,7 @@ irc_raw_set_localvar_filter ()
  */
 
 void
-irc_raw_set_title ()
+irc_raw_set_title (void)
 {
     char str_title[1024];
 
@@ -490,7 +490,7 @@ irc_raw_message_free (struct t_irc_raw_message *raw_message)
  */
 
 void
-irc_raw_message_free_all ()
+irc_raw_message_free_all (void)
 {
     while (irc_raw_messages)
     {
@@ -503,7 +503,7 @@ irc_raw_message_free_all ()
  */
 
 void
-irc_raw_message_remove_old ()
+irc_raw_message_remove_old (void)
 {
     int max_messages;
 
@@ -643,7 +643,7 @@ irc_raw_add_to_infolist (struct t_infolist *infolist,
  */
 
 void
-irc_raw_init ()
+irc_raw_init (void)
 {
     irc_raw_filter_hashtable_options = weechat_hashtable_new (
         8,
@@ -662,7 +662,7 @@ irc_raw_init ()
  */
 
 void
-irc_raw_end ()
+irc_raw_end (void)
 {
     irc_raw_message_free_all ();
 

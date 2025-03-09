@@ -7036,7 +7036,7 @@ IRC_COMMAND_CALLBACK(whowas)
  */
 
 void
-irc_command_init ()
+irc_command_init (void)
 {
     struct t_hook *ptr_hook;
 

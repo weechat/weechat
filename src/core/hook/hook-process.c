@@ -787,7 +787,7 @@ error:
  */
 
 void
-hook_process_exec ()
+hook_process_exec (void)
 {
     struct t_hook *ptr_hook, *next_hook;
     struct t_hook_exec_cb hook_exec_cb;

@@ -127,10 +127,10 @@ extern struct t_weelist *weechat_startup_commands;
 extern int weechat_auto_connect;
 extern int weechat_auto_load_scripts;
 
-extern void weechat_term_check ();
+extern void weechat_term_check (void);
 extern void weechat_shutdown (int return_code, int crash);
-extern void weechat_init_gettext ();
-extern void weechat_init (int argc, char *argv[], void (*gui_init_cb)());
+extern void weechat_init_gettext (void);
+extern void weechat_init (int argc, char *argv[], void (*gui_init_cb)(void));
 extern void weechat_end (void (*gui_end_cb)(int clean_exit));
 
 #endif /* WEECHAT_H */

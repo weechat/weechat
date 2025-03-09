@@ -42,7 +42,7 @@
  */
 
 void
-daemonize ()
+daemonize (void)
 {
     pid_t pid;
     int fd, i;

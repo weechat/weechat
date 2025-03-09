@@ -52,7 +52,7 @@ int gui_cursor_y = 0;                  /* position of cursor in cursor mode */
  */
 
 void
-gui_cursor_mode_toggle ()
+gui_cursor_mode_toggle (void)
 {
     gui_cursor_mode ^= 1;
 
@@ -86,7 +86,7 @@ gui_cursor_mode_toggle ()
  */
 
 void
-gui_cursor_mode_stop ()
+gui_cursor_mode_stop (void)
 {
     if (gui_cursor_mode)
         gui_cursor_mode_toggle ();
@@ -115,7 +115,7 @@ gui_cursor_debug_set (int debug)
  */
 
 void
-gui_cursor_display_debug_info ()
+gui_cursor_display_debug_info (void)
 {
     struct t_gui_focus_info *focus_info;
     char str_info[1024];

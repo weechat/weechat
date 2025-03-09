@@ -68,7 +68,7 @@ xfer_completion_nick_cb (const void *pointer, void *data,
  */
 
 void
-xfer_completion_init ()
+xfer_completion_init (void)
 {
     weechat_hook_completion ("nick",
                              N_("nicks of DCC chat"),

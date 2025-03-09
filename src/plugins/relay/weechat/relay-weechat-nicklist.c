@@ -35,7 +35,7 @@
  */
 
 struct t_relay_weechat_nicklist *
-relay_weechat_nicklist_new ()
+relay_weechat_nicklist_new (void)
 {
     struct t_relay_weechat_nicklist *new_nicklist;
 

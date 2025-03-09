@@ -20,13 +20,13 @@
 #ifndef WEECHAT_VERSION_H
 #define WEECHAT_VERSION_H
 
-extern const char *version_get_name ();
-extern const char *version_get_version ();
-extern const char *version_get_name_version ();
-extern const char *version_get_git ();
-extern const char *version_get_version_with_git ();
-extern const char *version_get_compilation_date ();
-extern const char *version_get_compilation_time ();
-extern const char *version_get_compilation_date_time ();
+extern const char *version_get_name (void);
+extern const char *version_get_version (void);
+extern const char *version_get_name_version (void);
+extern const char *version_get_git (void);
+extern const char *version_get_version_with_git (void);
+extern const char *version_get_compilation_date (void);
+extern const char *version_get_compilation_time (void);
+extern const char *version_get_compilation_date_time (void);
 
 #endif /* WEECHAT_VERSION_H */

@@ -30,7 +30,7 @@ extern char *gui_input_clipboard;
 
 extern void gui_input_replace_input (struct t_gui_buffer *buffer,
                                      const char *new_input);
-extern void gui_input_paste_pending_signal ();
+extern void gui_input_paste_pending_signal (void);
 extern void gui_input_text_changed_modifier_and_signal (struct t_gui_buffer *buffer,
                                                         int save_undo,
                                                         int stop_completion);

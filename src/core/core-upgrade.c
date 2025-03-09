@@ -376,7 +376,7 @@ upgrade_weechat_save_layout_window (struct t_upgrade_file *upgrade_file)
  */
 
 int
-upgrade_weechat_save ()
+upgrade_weechat_save (void)
 {
     int rc;
     struct t_upgrade_file *upgrade_file;
@@ -904,7 +904,7 @@ upgrade_weechat_read_cb (const void *pointer, void *data,
  */
 
 int
-upgrade_weechat_load ()
+upgrade_weechat_load (void)
 {
     int rc;
     struct t_upgrade_file *upgrade_file;
@@ -977,7 +977,7 @@ upgrade_weechat_remove_file_cb (void *data, const char *filename)
  */
 
 void
-upgrade_weechat_end ()
+upgrade_weechat_end (void)
 {
     struct timeval tv_now;
     long long time_diff;

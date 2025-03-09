@@ -542,7 +542,7 @@ secure_config_data_write_cb (const void *pointer, void *data,
  */
 
 int
-secure_config_init_options ()
+secure_config_init_options (void)
 {
     secure_config_file = config_file_new (NULL, SECURE_CONFIG_PRIO_NAME,
                                           &secure_config_reload_cb, NULL, NULL);
@@ -638,7 +638,7 @@ secure_config_init_options ()
  */
 
 int
-secure_config_read ()
+secure_config_read (void)
 {
     int rc;
 
@@ -661,7 +661,7 @@ secure_config_read ()
  */
 
 int
-secure_config_write ()
+secure_config_write (void)
 {
     return config_file_write (secure_config_file);
 }
@@ -675,7 +675,7 @@ secure_config_write ()
  */
 
 int
-secure_config_init ()
+secure_config_init (void)
 {
     int rc;
 
@@ -695,7 +695,7 @@ secure_config_init ()
  */
 
 void
-secure_config_free ()
+secure_config_free (void)
 {
     config_file_free (secure_config_file);
     secure_config_file = NULL;

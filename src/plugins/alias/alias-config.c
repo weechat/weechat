@@ -427,7 +427,7 @@ alias_config_update_cb (const void *pointer, void *data,
  */
 
 int
-alias_config_init ()
+alias_config_init (void)
 {
     alias_config_file = weechat_config_new (ALIAS_CONFIG_PRIO_NAME,
                                             &alias_config_reload, NULL, NULL);
@@ -470,7 +470,7 @@ alias_config_init ()
  */
 
 int
-alias_config_read ()
+alias_config_read (void)
 {
     return weechat_config_read (alias_config_file);
 }
@@ -480,7 +480,7 @@ alias_config_read ()
  */
 
 int
-alias_config_write ()
+alias_config_write (void)
 {
     return weechat_config_write (alias_config_file);
 }

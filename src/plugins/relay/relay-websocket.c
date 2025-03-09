@@ -39,7 +39,7 @@
  */
 
 struct t_relay_websocket_deflate *
-relay_websocket_deflate_alloc ()
+relay_websocket_deflate_alloc (void)
 {
     struct t_relay_websocket_deflate *new_ws_deflate;
 

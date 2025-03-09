@@ -186,7 +186,7 @@ weechat_lua_tohashtable (lua_State *interpreter, int index, int size,
  */
 
 void
-weechat_lua_output_flush ()
+weechat_lua_output_flush (void)
 {
     const char *ptr_command;
     char *temp_buffer, *command;
@@ -838,7 +838,7 @@ weechat_lua_reload_name (const char *name)
  */
 
 void
-weechat_lua_unload_all ()
+weechat_lua_unload_all (void)
 {
     while (lua_scripts)
     {

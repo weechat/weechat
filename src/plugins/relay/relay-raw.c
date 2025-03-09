@@ -164,7 +164,7 @@ relay_raw_message_free (struct t_relay_raw_message *raw_message)
  */
 
 void
-relay_raw_message_free_all ()
+relay_raw_message_free_all (void)
 {
     while (relay_raw_messages)
     {
@@ -177,7 +177,7 @@ relay_raw_message_free_all ()
  */
 
 void
-relay_raw_message_remove_old ()
+relay_raw_message_remove_old (void)
 {
     int max_messages;
 

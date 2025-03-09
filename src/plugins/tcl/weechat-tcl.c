@@ -500,7 +500,7 @@ weechat_tcl_unload_name (const char *name)
  */
 
 void
-weechat_tcl_unload_all ()
+weechat_tcl_unload_all (void)
 {
     while (tcl_scripts)
     {

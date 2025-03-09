@@ -286,7 +286,7 @@ weechat_python_dict_to_hashtable (PyObject *dict, int size,
  */
 
 void
-weechat_python_output_flush ()
+weechat_python_output_flush (void)
 {
     const char *ptr_command;
     char *temp_buffer, *command;
@@ -602,7 +602,7 @@ end:
  * Initializes the "weechat" module.
  */
 
-static PyObject *weechat_python_init_module_weechat ()
+static PyObject *weechat_python_init_module_weechat (void)
 {
     PyObject *weechat_module;
     int i;
@@ -645,7 +645,7 @@ static PyObject *weechat_python_init_module_weechat ()
  */
 
 void
-weechat_python_set_output ()
+weechat_python_set_output (void)
 {
     PyObject *weechat_outputs;
 
@@ -981,7 +981,7 @@ weechat_python_unload_name (const char *name)
  */
 
 void
-weechat_python_unload_all ()
+weechat_python_unload_all (void)
 {
     while (python_scripts)
     {
@@ -1089,7 +1089,7 @@ weechat_python_eval (struct t_gui_buffer *buffer, int send_to_buffer_as_input,
  */
 
 void
-weechat_python_init_before_autoload ()
+weechat_python_init_before_autoload (void)
 {
 #if PY_VERSION_HEX >= 0x030C0000 && PY_VERSION_HEX < 0x030D0000
     /*
@@ -1308,7 +1308,7 @@ weechat_python_info_eval_cb (const void *pointer, void *data,
  */
 
 struct t_infolist *
-weechat_python_infolist_functions ()
+weechat_python_infolist_functions (void)
 {
     struct t_infolist *infolist;
     struct t_infolist_item *item;
@@ -1340,7 +1340,7 @@ weechat_python_infolist_functions ()
  */
 
 struct t_infolist *
-weechat_python_infolist_constants ()
+weechat_python_infolist_constants (void)
 {
     struct t_infolist *infolist;
     struct t_infolist_item *item;

@@ -80,7 +80,7 @@ struct t_xfer *xfer_list = NULL;       /* list of files/chats               */
 struct t_xfer *last_xfer = NULL;       /* last file/chat in list            */
 int xfer_count = 0;                    /* number of xfer                    */
 
-void xfer_disconnect_all ();
+void xfer_disconnect_all (void);
 
 
 /*
@@ -165,7 +165,7 @@ xfer_signal_upgrade_cb (const void *pointer, void *data,
  */
 
 void
-xfer_create_directories ()
+xfer_create_directories (void)
 {
     char *path;
     struct t_hashtable *options;
@@ -430,7 +430,7 @@ xfer_close (struct t_xfer *xfer, enum t_xfer_status status)
  */
 
 void
-xfer_disconnect_all ()
+xfer_disconnect_all (void)
 {
     struct t_xfer *ptr_xfer;
 
@@ -509,7 +509,7 @@ xfer_send_signal (struct t_xfer *xfer, const char *signal)
  */
 
 struct t_xfer *
-xfer_alloc ()
+xfer_alloc (void)
 {
     struct t_xfer *new_xfer;
     time_t time_now;
@@ -977,7 +977,7 @@ xfer_free (struct t_xfer *xfer)
  */
 
 void
-xfer_free_all ()
+xfer_free_all (void)
 {
     while (xfer_list)
     {
@@ -1707,7 +1707,7 @@ xfer_add_to_infolist (struct t_infolist *infolist, struct t_xfer *xfer)
  */
 
 void
-xfer_print_log ()
+xfer_print_log (void)
 {
     struct t_xfer *ptr_xfer;
 

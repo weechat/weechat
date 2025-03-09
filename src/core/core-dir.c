@@ -64,7 +64,7 @@
  */
 
 char *
-dir_get_temp_dir ()
+dir_get_temp_dir (void)
 {
     char *tmpdir;
     struct stat buf;
@@ -380,7 +380,7 @@ end:
  */
 
 int
-dir_create_home_temp_dir ()
+dir_create_home_temp_dir (void)
 {
     char *temp_dir, *temp_home_template, *ptr_weechat_home;
     int rc, add_separator;
@@ -599,7 +599,7 @@ error:
  */
 
 int
-dir_find_home_dirs ()
+dir_find_home_dirs (void)
 {
     char *ptr_home, *ptr_weechat_home, *config_weechat_home;
     char *config_dir, *data_dir, *state_dir, *cache_dir, *runtime_dir;
@@ -738,7 +738,7 @@ dir_create_home_dir (char *path)
  */
 
 void
-dir_create_home_dirs ()
+dir_create_home_dirs (void)
 {
     int rc;
 
@@ -772,7 +772,7 @@ error:
  */
 
 void
-dir_remove_home_dirs ()
+dir_remove_home_dirs (void)
 {
     dir_rmtree (weechat_config_dir);
     if (strcmp (weechat_config_dir, weechat_data_dir) != 0)
@@ -798,7 +798,7 @@ dir_remove_home_dirs ()
  */
 
 char *
-dir_get_string_home_dirs ()
+dir_get_string_home_dirs (void)
 {
     char *dirs[6];
 

@@ -214,7 +214,7 @@ gui_filter_all_buffers (struct t_gui_filter *filter)
  */
 
 void
-gui_filter_global_enable ()
+gui_filter_global_enable (void)
 {
     if (!gui_filters_enabled)
     {
@@ -230,7 +230,7 @@ gui_filter_global_enable ()
  */
 
 void
-gui_filter_global_disable ()
+gui_filter_global_disable (void)
 {
     if (gui_filters_enabled)
     {
@@ -567,7 +567,7 @@ gui_filter_free (struct t_gui_filter *filter)
  */
 
 void
-gui_filter_free_all ()
+gui_filter_free_all (void)
 {
     while (gui_filters)
     {
@@ -672,7 +672,7 @@ gui_filter_add_to_infolist (struct t_infolist *infolist,
  */
 
 void
-gui_filter_print_log ()
+gui_filter_print_log (void)
 {
     struct t_gui_filter *ptr_filter;
     int i;

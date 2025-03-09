@@ -39,7 +39,7 @@ struct t_gui_bar_item *fset_bar_item_fset = NULL;
  */
 
 void
-fset_bar_item_update ()
+fset_bar_item_update (void)
 {
     weechat_bar_item_update (FSET_BAR_ITEM_NAME);
 }
@@ -231,7 +231,7 @@ fset_bar_item_fset_cb (const void *pointer, void *data,
  */
 
 int
-fset_bar_item_init ()
+fset_bar_item_init (void)
 {
     fset_bar_item_fset = weechat_bar_item_new (
         FSET_BAR_ITEM_NAME,
@@ -245,7 +245,7 @@ fset_bar_item_init ()
  */
 
 void
-fset_bar_item_end ()
+fset_bar_item_end (void)
 {
     weechat_bar_item_remove (fset_bar_item_fset);
     fset_bar_item_fset = NULL;

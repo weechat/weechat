@@ -3057,7 +3057,7 @@ command_help_list_commands (int verbose)
  */
 
 const char *
-command_help_option_color_values ()
+command_help_option_color_values (void)
 {
     return _("a WeeChat color name (default, black, "
              "(dark)gray, white, (light)red, (light)green, "
@@ -5740,7 +5740,7 @@ COMMAND_CALLBACK(print)
  */
 
 void
-command_proxy_list ()
+command_proxy_list (void)
 {
     struct t_proxy *ptr_proxy;
     const char *ipv6_status;
@@ -8292,7 +8292,7 @@ COMMAND_CALLBACK(window)
  */
 
 void
-command_init ()
+command_init (void)
 {
     struct t_hook *ptr_hook;
 

@@ -82,7 +82,7 @@ relay_http_request_reinit (struct t_relay_http_request *request)
  */
 
 struct t_relay_http_request *
-relay_http_request_alloc ()
+relay_http_request_alloc (void)
 {
     struct t_relay_http_request *new_request;
 
@@ -1380,7 +1380,7 @@ relay_http_request_free (struct t_relay_http_request *request)
  */
 
 struct t_relay_http_response *
-relay_http_response_alloc ()
+relay_http_response_alloc (void)
 {
     struct t_relay_http_response *new_response;
 

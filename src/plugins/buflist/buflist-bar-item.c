@@ -699,7 +699,7 @@ end:
  */
 
 int
-buflist_bar_item_init ()
+buflist_bar_item_init (void)
 {
     int i;
 
@@ -758,7 +758,7 @@ buflist_bar_item_init ()
  */
 
 void
-buflist_bar_item_end ()
+buflist_bar_item_end (void)
 {
     int i;
 

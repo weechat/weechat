@@ -146,7 +146,7 @@ relay_upgrade_save (int force_disconnected_state)
  */
 
 void
-relay_upgrade_set_buffer_callbacks ()
+relay_upgrade_set_buffer_callbacks (void)
 {
     struct t_infolist *infolist;
     struct t_gui_buffer *ptr_buffer;
@@ -238,7 +238,7 @@ relay_upgrade_read_cb (const void *pointer, void *data,
  */
 
 int
-relay_upgrade_load ()
+relay_upgrade_load (void)
 {
     int rc;
     struct t_upgrade_file *upgrade_file;

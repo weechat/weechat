@@ -80,7 +80,7 @@ spell_info_info_spell_dict_cb (const void *pointer, void *data,
  */
 
 void
-spell_info_init ()
+spell_info_init (void)
 {
     /* info hooks */
     weechat_hook_info (

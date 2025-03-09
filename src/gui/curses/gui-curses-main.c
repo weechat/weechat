@@ -163,7 +163,7 @@ gui_main_signal_sigint (int signo)
  */
 
 void
-gui_main_init ()
+gui_main_init (void)
 {
     struct t_gui_buffer *ptr_buffer;
     char title[256];
@@ -269,7 +269,7 @@ gui_main_signal_sigwinch (int signo)
  */
 
 void
-gui_main_debug_libs ()
+gui_main_debug_libs (void)
 {
 #if defined(NCURSES_VERSION) && defined(NCURSES_VERSION_PATCH)
     gui_chat_printf (NULL, "    ncurses: %s (patch %d)",
@@ -284,7 +284,7 @@ gui_main_debug_libs ()
  */
 
 void
-gui_main_refreshes ()
+gui_main_refreshes (void)
 {
     struct t_gui_window *ptr_win;
     struct t_gui_buffer *ptr_buffer;
@@ -391,7 +391,7 @@ gui_main_refreshes ()
  */
 
 void
-gui_main_loop ()
+gui_main_loop (void)
 {
     struct t_hook *hook_fd_keyboard;
     int send_signal_sigwinch;

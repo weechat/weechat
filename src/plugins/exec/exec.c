@@ -115,7 +115,7 @@ exec_search_by_id (const char *id)
  */
 
 struct t_exec_cmd *
-exec_add ()
+exec_add (void)
 {
     struct t_exec_cmd *new_exec_cmd;
     int i;
@@ -642,7 +642,7 @@ exec_free (struct t_exec_cmd *exec_cmd)
  */
 
 void
-exec_free_all ()
+exec_free_all (void)
 {
     while (exec_cmds)
     {
@@ -655,7 +655,7 @@ exec_free_all ()
  */
 
 void
-exec_print_log ()
+exec_print_log (void)
 {
     struct t_exec_cmd *ptr_exec_cmd;
 

@@ -22,6 +22,6 @@
 
 #define BACKTRACE_MAX 128
 
-extern void weechat_backtrace ();
+extern void weechat_backtrace (void);
 
 #endif /* WEECHAT_BACKTRACE_H */

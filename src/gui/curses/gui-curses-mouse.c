@@ -86,7 +86,7 @@ char *gui_mouse_button_utf8_codes[][2] =
  */
 
 void
-gui_mouse_enable ()
+gui_mouse_enable (void)
 {
     gui_mouse_enabled = 1;
     fprintf (stderr, "\033[?1005h\033[?1006h\033[?1000h\033[?1002h");
@@ -101,7 +101,7 @@ gui_mouse_enable ()
  */
 
 void
-gui_mouse_disable ()
+gui_mouse_disable (void)
 {
     gui_mouse_enabled = 0;
     fprintf (stderr, "\033[?1002l\033[?1000l\033[?1006l\033[?1005l");
@@ -116,7 +116,7 @@ gui_mouse_disable ()
  */
 
 void
-gui_mouse_display_state ()
+gui_mouse_display_state (void)
 {
     gui_chat_printf (NULL,
                      gui_mouse_enabled ?
@@ -143,7 +143,7 @@ gui_mouse_grab_init (int area)
  */
 
 const char *
-gui_mouse_grab_event2input ()
+gui_mouse_grab_event2input (void)
 {
     struct t_gui_focus_info *focus_info;
     static char area[256];

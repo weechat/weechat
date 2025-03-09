@@ -488,7 +488,7 @@ error:
  */
 
 void
-gui_bar_item_custom_use_temp_items ()
+gui_bar_item_custom_use_temp_items (void)
 {
     struct t_gui_bar_item_custom *ptr_temp_item, *ptr_next_temp_item;
     int i;
@@ -653,7 +653,7 @@ gui_bar_item_custom_free (struct t_gui_bar_item_custom *item)
  */
 
 void
-gui_bar_item_custom_free_all ()
+gui_bar_item_custom_free_all (void)
 {
     while (gui_custom_bar_items)
     {

@@ -69,9 +69,9 @@ extern char *buflist_config_format_hotlist_eval;
 
 extern void buflist_config_change_sort (const void *pointer, void *data,
                                         struct t_config_option *option);
-extern int buflist_config_init ();
-extern int buflist_config_read ();
-extern int buflist_config_write ();
-extern void buflist_config_free ();
+extern int buflist_config_init (void);
+extern int buflist_config_read (void);
+extern int buflist_config_write (void);
+extern void buflist_config_free (void);
 
 #endif /* WEECHAT_PLUGIN_BUFLIST_CONFIG_H */

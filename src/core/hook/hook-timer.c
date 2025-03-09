@@ -182,7 +182,7 @@ hook_timer (struct t_weechat_plugin *plugin, long interval, int align_second,
  */
 
 void
-hook_timer_check_system_clock ()
+hook_timer_check_system_clock (void)
 {
     time_t now;
     long diff_time;
@@ -222,7 +222,7 @@ hook_timer_check_system_clock ()
  */
 
 int
-hook_timer_get_time_to_next ()
+hook_timer_get_time_to_next (void)
 {
     struct t_hook *ptr_hook;
     int found, timeout;
@@ -300,7 +300,7 @@ end:
  */
 
 void
-hook_timer_exec ()
+hook_timer_exec (void)
 {
     struct t_hook *ptr_hook, *next_hook;
     struct t_hook_exec_cb hook_exec_cb;

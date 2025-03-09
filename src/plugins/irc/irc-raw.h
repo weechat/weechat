@@ -68,7 +68,7 @@ extern void irc_raw_print (struct t_irc_server *server, int flags,
                            const char *message);
 extern int irc_raw_add_to_infolist (struct t_infolist *infolist,
                                     struct t_irc_raw_message *raw_message);
-extern void irc_raw_init ();
-extern void irc_raw_end ();
+extern void irc_raw_init (void);
+extern void irc_raw_end (void);
 
 #endif /* WEECHAT_PLUGIN_IRC_RAW_H */

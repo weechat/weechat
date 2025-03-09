@@ -56,7 +56,7 @@ struct t_hdata *buflist_hdata_bar_window = NULL;
  */
 
 void
-buflist_add_bar ()
+buflist_add_bar (void)
 {
     weechat_bar_new (
         BUFLIST_BAR_NAME,

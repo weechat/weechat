@@ -311,7 +311,7 @@ config_file_arraylist_cmp_config_cb (void *data,
  */
 
 struct t_arraylist *
-config_file_get_configs_by_priority ()
+config_file_get_configs_by_priority (void)
 {
     struct t_arraylist *list;
     struct t_config_file *ptr_config;
@@ -633,7 +633,7 @@ config_file_option_insert_in_section (struct t_config_option *option)
  */
 
 struct t_config_option *
-config_file_option_malloc ()
+config_file_option_malloc (void)
 {
     struct t_config_option *new_option;
 
@@ -4150,7 +4150,7 @@ config_file_free (struct t_config_file *config_file)
  */
 
 void
-config_file_free_all ()
+config_file_free_all (void)
 {
     while (config_files)
     {
@@ -4497,7 +4497,7 @@ config_file_add_to_infolist (struct t_infolist *infolist,
  */
 
 void
-config_file_print_log ()
+config_file_print_log (void)
 {
     struct t_config_file *ptr_config_file;
     struct t_config_section *ptr_section;

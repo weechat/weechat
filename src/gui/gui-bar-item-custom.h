@@ -66,11 +66,11 @@ extern struct t_gui_bar_item_custom *gui_bar_item_custom_alloc (const char *name
 extern struct t_gui_bar_item_custom *gui_bar_item_custom_new (const char *name,
                                                               const char *conditions,
                                                               const char *content);
-extern void gui_bar_item_custom_use_temp_items ();
+extern void gui_bar_item_custom_use_temp_items (void);
 extern int gui_bar_item_custom_rename (struct t_gui_bar_item_custom *item,
                                        const char *new_name);
 extern void gui_bar_item_custom_free_data (struct t_gui_bar_item_custom *item);
 extern void gui_bar_item_custom_free (struct t_gui_bar_item_custom *item);
-extern void gui_bar_item_custom_free_all ();
+extern void gui_bar_item_custom_free_all (void);
 
 #endif /* WEECHAT_GUI_BAR_ITEM_CUSTOM_H */

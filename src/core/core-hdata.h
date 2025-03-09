@@ -151,9 +151,9 @@ extern int hdata_update (struct t_hdata *hdata, void *pointer,
 extern const char *hdata_get_string (struct t_hdata *hdata,
                                      const char *property);
 extern void hdata_free_all_plugin (struct t_weechat_plugin *plugin);
-extern void hdata_free_all ();
-extern void hdata_print_log ();
-extern void hdata_init ();
-extern void hdata_end ();
+extern void hdata_free_all (void);
+extern void hdata_print_log (void);
+extern void hdata_init (void);
+extern void hdata_end (void);
 
 #endif /* WEECHAT_HDATA_H */

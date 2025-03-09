@@ -276,7 +276,7 @@ relay_buffer_close_cb (const void *pointer, void *data,
  */
 
 void
-relay_buffer_open ()
+relay_buffer_open (void)
 {
     struct t_hashtable *buffer_props;
 

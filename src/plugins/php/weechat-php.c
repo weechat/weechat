@@ -798,7 +798,7 @@ weechat_php_unload_name (const char *name)
  */
 
 void
-weechat_php_unload_all ()
+weechat_php_unload_all (void)
 {
     while (php_scripts)
     {

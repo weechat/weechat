@@ -287,7 +287,7 @@ script_completion_tags_cb (const void *pointer, void *data,
  */
 
 void
-script_completion_init ()
+script_completion_init (void)
 {
     weechat_hook_completion ("script_languages",
                              N_("list of script languages"),

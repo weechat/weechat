@@ -57,8 +57,8 @@ extern int gui_filter_check_line (struct t_gui_line_data *line_data);
 extern void gui_filter_buffer (struct t_gui_buffer *buffer,
                                struct t_gui_line_data *line_data);
 extern void gui_filter_all_buffers (struct t_gui_filter *filter);
-extern void gui_filter_global_enable ();
-extern void gui_filter_global_disable ();
+extern void gui_filter_global_enable (void);
+extern void gui_filter_global_disable (void);
 extern struct t_gui_filter *gui_filter_search_by_name (const char *name);
 extern struct t_gui_filter *gui_filter_new (int enabled,
                                             const char *name,
@@ -68,12 +68,12 @@ extern struct t_gui_filter *gui_filter_new (int enabled,
 extern int gui_filter_rename (struct t_gui_filter *filter,
                               const char *new_name);
 extern void gui_filter_free (struct t_gui_filter *filter);
-extern void gui_filter_free_all ();
+extern void gui_filter_free_all (void);
 extern struct t_hdata *gui_filter_hdata_filter_cb (const void *pointer,
                                                    void *data,
                                                    const char *hdata_name);
 extern int gui_filter_add_to_infolist (struct t_infolist *infolist,
                                        struct t_gui_filter *filter);
-extern void gui_filter_print_log ();
+extern void gui_filter_print_log (void);
 
 #endif /* WEECHAT_GUI_FILTER_H */

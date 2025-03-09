@@ -2422,7 +2422,7 @@ irc_server_free (struct t_irc_server *server)
  */
 
 void
-irc_server_free_all ()
+irc_server_free_all (void)
 {
     /* for each server in memory, remove it */
     while (irc_servers)
@@ -3480,7 +3480,7 @@ irc_server_msgq_add_buffer (struct t_irc_server *server, const char *buffer)
  */
 
 void
-irc_server_msgq_flush ()
+irc_server_msgq_flush (void)
 {
     struct t_irc_message *next;
     char *ptr_data, *new_msg, *new_msg2, *ptr_msg, *ptr_msg2, *pos;
@@ -4849,7 +4849,7 @@ irc_server_create_buffer (struct t_irc_server *server)
  */
 
 char *
-irc_server_fingerprint_str_sizes ()
+irc_server_fingerprint_str_sizes (void)
 {
     char str_sizes[1024], str_one_size[128];
     int i;
@@ -5819,7 +5819,7 @@ irc_server_disconnect (struct t_irc_server *server, int switch_address,
  */
 
 void
-irc_server_disconnect_all ()
+irc_server_disconnect_all (void)
 {
     struct t_irc_server *ptr_server;
 
@@ -6948,7 +6948,7 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
  */
 
 void
-irc_server_print_log ()
+irc_server_print_log (void)
 {
     struct t_irc_server *ptr_server;
     struct t_irc_channel *ptr_channel;

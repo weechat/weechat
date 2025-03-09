@@ -114,7 +114,7 @@ logger_check_conditions (struct t_gui_buffer *buffer, const char *conditions)
  */
 
 char *
-logger_get_file_path ()
+logger_get_file_path (void)
 {
     char *path, *path2;
     int length;
@@ -171,7 +171,7 @@ end:
  */
 
 int
-logger_create_directory ()
+logger_create_directory (void)
 {
     int rc;
     char *file_path;

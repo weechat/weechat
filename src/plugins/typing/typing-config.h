@@ -31,9 +31,9 @@ extern struct t_config_option *typing_config_look_enabled_self;
 extern struct t_config_option *typing_config_look_input_min_chars;
 extern struct t_config_option *typing_config_look_item_max_length;
 
-extern int typing_config_init ();
-extern int typing_config_read ();
-extern int typing_config_write ();
-extern void typing_config_free ();
+extern int typing_config_init (void);
+extern int typing_config_read (void);
+extern int typing_config_write (void);
+extern void typing_config_free (void);
 
 #endif /* WEECHAT_PLUGIN_TYPING_CONFIG_H */
