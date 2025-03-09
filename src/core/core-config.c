@@ -5230,8 +5230,9 @@ config_weechat_init_options ()
             weechat_config_file, weechat_config_section_completion,
             "nick_ignore_words", "string",
             N_("comma-separated list of nicks to ignore (not completed); "
-               "each nick in list must include ignored chars (by option "
-               "weechat.completion.nick_ignore_chars); look up for nicks is with "
+               "the whole nick must be set in this option even if chars are "
+               "ignored in completion with option "
+               "weechat.completion.nick_ignore_chars; look up for nicks is with "
                "exact case then lower case, so it's possible to use only lower "
                "case for nicks in this option"),
             NULL, 0, 0, "", NULL, 0,
