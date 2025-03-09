@@ -96,13 +96,13 @@ struct t_command_repeat
     int index;                         /* current index (starts at 1)       */
 };
 
-extern const char *command_help_option_color_values ();
+extern const char *command_help_option_color_values (void);
 extern void command_version_display (struct t_gui_buffer *buffer,
                                      int send_to_buffer_as_input,
                                      int translated_string,
                                      int display_git_version,
                                      int display_upgrades);
-extern void command_init ();
+extern void command_init (void);
 extern void command_startup (int plugins_loaded);
 
 #endif /* WEECHAT_COMMAND_H */

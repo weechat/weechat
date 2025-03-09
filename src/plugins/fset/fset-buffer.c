@@ -42,7 +42,7 @@ struct t_hashtable *fset_buffer_hashtable_extra_vars = NULL;
  */
 
 void
-fset_buffer_set_title ()
+fset_buffer_set_title (void)
 {
     int num_options;
     char str_marked[32], str_title[8192];
@@ -1237,7 +1237,7 @@ fset_buffer_get_window_info (struct t_gui_window *window,
  */
 
 void
-fset_buffer_check_line_outside_window ()
+fset_buffer_check_line_outside_window (void)
 {
     struct t_gui_window *window;
     int start_line_y, chat_height, format_number, lines_per_option;
@@ -1477,7 +1477,7 @@ fset_buffer_close_cb (const void *pointer, void *data,
  */
 
 void
-fset_buffer_set_callbacks ()
+fset_buffer_set_callbacks (void)
 {
     struct t_gui_buffer *ptr_buffer;
 
@@ -1553,7 +1553,7 @@ fset_buffer_set_keys (struct t_hashtable *hashtable)
  */
 
 void
-fset_buffer_set_localvar_filter ()
+fset_buffer_set_localvar_filter (void)
 {
     if (!fset_buffer)
         return;
@@ -1567,7 +1567,7 @@ fset_buffer_set_localvar_filter ()
  */
 
 void
-fset_buffer_open ()
+fset_buffer_open (void)
 {
     struct t_hashtable *buffer_props;
 
@@ -1612,7 +1612,7 @@ fset_buffer_open ()
  */
 
 int
-fset_buffer_init ()
+fset_buffer_init (void)
 {
     fset_buffer_set_callbacks ();
 
@@ -1646,7 +1646,7 @@ fset_buffer_init ()
  */
 
 void
-fset_buffer_end ()
+fset_buffer_end (void)
 {
     if (fset_buffer)
     {

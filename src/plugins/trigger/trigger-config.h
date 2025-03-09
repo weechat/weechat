@@ -47,9 +47,9 @@ extern char *trigger_config_default_list[][1 + TRIGGER_NUM_OPTIONS];
 extern struct t_config_option *trigger_config_create_trigger_option (const char *trigger_name,
                                                                      int index_option,
                                                                      const char *value);
-extern int trigger_config_init ();
-extern int trigger_config_read ();
-extern int trigger_config_write ();
-extern void trigger_config_free ();
+extern int trigger_config_init (void);
+extern int trigger_config_read (void);
+extern int trigger_config_write (void);
+extern void trigger_config_free (void);
 
 #endif /* WEECHAT_PLUGIN_TRIGGER_CONFIG_H */

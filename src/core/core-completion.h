@@ -28,6 +28,6 @@ extern int completion_list_add_filename_cb (const void *pointer,
                                             const char *completion_item,
                                             struct t_gui_buffer *buffer,
                                             struct t_gui_completion *completion);
-extern void completion_init ();
+extern void completion_init (void);
 
 #endif /* WEECHAT_COMPLETION_H */

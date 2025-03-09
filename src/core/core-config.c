@@ -433,7 +433,7 @@ config_check_config_permissions (const void *pointer, void *data,
  */
 
 void
-config_change_save_config_layout_on_exit ()
+config_change_save_config_layout_on_exit (void)
 {
     if (gui_init_ok && !CONFIG_BOOLEAN(config_look_save_config_on_exit)
         && (CONFIG_ENUM(config_look_save_layout_on_exit) != CONFIG_LOOK_SAVE_LAYOUT_ON_EXIT_NONE))
@@ -766,7 +766,7 @@ config_change_buffer_time_same (const void *pointer, void *data,
  */
 
 void
-config_compute_prefix_max_length_all_buffers ()
+config_compute_prefix_max_length_all_buffers (void)
 {
     struct t_gui_buffer *ptr_buffer;
 
@@ -785,7 +785,7 @@ config_compute_prefix_max_length_all_buffers ()
  */
 
 void
-config_set_nick_colors ()
+config_set_nick_colors (void)
 {
     if (config_nick_colors)
     {
@@ -864,7 +864,7 @@ config_change_look_nick_color_force (const void *pointer, void *data,
  */
 
 void
-config_set_eval_syntax_colors ()
+config_set_eval_syntax_colors (void)
 {
     if (config_eval_syntax_colors)
     {
@@ -1656,7 +1656,7 @@ config_day_change_timer_cb (const void *pointer, void *data,
  */
 
 void
-config_weechat_init_after_read ()
+config_weechat_init_after_read (void)
 {
     int context;
 
@@ -2011,7 +2011,7 @@ config_weechat_debug_get (const char *plugin_name)
  */
 
 void
-config_weechat_debug_set_all ()
+config_weechat_debug_set_all (void)
 {
     struct t_config_option *ptr_option;
     struct t_weechat_plugin *ptr_plugin;
@@ -3231,7 +3231,7 @@ config_weechat_key_delete_option_cb (const void *pointer, void *data,
  */
 
 int
-config_weechat_init_options ()
+config_weechat_init_options (void)
 {
     int context;
     char section_name[128];
@@ -5592,7 +5592,7 @@ config_weechat_init_options ()
  */
 
 int
-config_weechat_init ()
+config_weechat_init (void)
 {
     int rc;
     struct timeval tv_time;
@@ -5655,7 +5655,7 @@ config_weechat_init ()
  */
 
 int
-config_weechat_read ()
+config_weechat_read (void)
 {
     int rc;
 
@@ -5678,7 +5678,7 @@ config_weechat_read ()
  */
 
 int
-config_weechat_write ()
+config_weechat_write (void)
 {
     return config_file_write (weechat_config_file);
 }
@@ -5688,7 +5688,7 @@ config_weechat_write ()
  */
 
 void
-config_weechat_free ()
+config_weechat_free (void)
 {
     config_file_free (weechat_config_file);
 

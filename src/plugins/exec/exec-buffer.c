@@ -111,7 +111,7 @@ exec_buffer_close_cb (const void *pointer, void *data,
  */
 
 void
-exec_buffer_set_callbacks ()
+exec_buffer_set_callbacks (void)
 {
     struct t_infolist *ptr_infolist;
     struct t_gui_buffer *ptr_buffer;

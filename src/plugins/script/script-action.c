@@ -46,7 +46,7 @@ void script_action_run_install (int quiet);
  */
 
 void
-script_action_run_list ()
+script_action_run_list (void)
 {
     int i, scripts_loaded;
     char hdata_name[128];
@@ -646,7 +646,7 @@ script_action_install_url_cb (const void *pointer, void *data,
  */
 
 struct t_script_repo *
-script_action_get_next_script_to_install ()
+script_action_get_next_script_to_install (void)
 {
     struct t_script_repo *ptr_script, *ptr_script_to_install;
 
@@ -1200,7 +1200,7 @@ script_action_run_show (const char *name, int quiet)
  */
 
 void
-script_action_run_showdiff ()
+script_action_run_showdiff (void)
 {
     char str_command[64];
     struct t_gui_window *window;
@@ -1263,7 +1263,7 @@ script_action_add (struct t_gui_buffer *buffer, const char *action)
  */
 
 void
-script_action_clear ()
+script_action_clear (void)
 {
     if (script_actions)
         weechat_string_dyn_copy (script_actions, NULL);
@@ -1278,7 +1278,7 @@ script_action_clear ()
  */
 
 int
-script_action_run_all ()
+script_action_run_all (void)
 {
     char **actions, **argv, **argv_eol, *ptr_action;
     int num_actions, argc, i, j, quiet, script_found;
@@ -1623,7 +1623,7 @@ script_action_schedule (struct t_gui_buffer *buffer,
  */
 
 void
-script_action_end ()
+script_action_end (void)
 {
     if (script_actions)
     {

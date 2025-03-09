@@ -1392,7 +1392,7 @@ relay_irc_get_supported_caps (struct t_relay_client *client)
  */
 
 struct t_arraylist *
-relay_irc_get_list_caps ()
+relay_irc_get_list_caps (void)
 {
     struct t_arraylist *list_capab;
     int i;

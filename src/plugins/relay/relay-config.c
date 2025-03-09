@@ -1156,7 +1156,7 @@ relay_config_create_option_temp (struct t_relay_remote *temp_remote,
  */
 
 void
-relay_config_use_temp_remotes ()
+relay_config_use_temp_remotes (void)
 {
     struct t_relay_remote *ptr_temp_remote, *next_temp_remote;
     int i, num_options_ok;
@@ -1414,7 +1414,7 @@ relay_config_update_cb (const void *pointer, void *data,
  */
 
 int
-relay_config_init ()
+relay_config_init (void)
 {
     relay_config_file = weechat_config_new (RELAY_CONFIG_PRIO_NAME,
                                             &relay_config_reload, NULL, NULL);
@@ -1931,7 +1931,7 @@ relay_config_init ()
  */
 
 int
-relay_config_read ()
+relay_config_read (void)
 {
     int rc;
 
@@ -1953,7 +1953,7 @@ relay_config_read ()
  */
 
 int
-relay_config_write ()
+relay_config_write (void)
 {
     return weechat_config_write (relay_config_file);
 }
@@ -1963,7 +1963,7 @@ relay_config_write ()
  */
 
 void
-relay_config_free ()
+relay_config_free (void)
 {
     weechat_config_free (relay_config_file);
     relay_config_file = NULL;

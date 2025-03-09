@@ -20,6 +20,6 @@
 #ifndef WEECHAT_PLUGIN_SPELL_COMPLETION_H
 #define WEECHAT_PLUGIN_SPELL_COMPLETION_H
 
-extern void spell_completion_init ();
+extern void spell_completion_init (void);
 
 #endif /* WEECHAT_PLUGIN_SPELL_COMPLETION_H */

@@ -1484,7 +1484,7 @@ end:
  */
 
 void
-trigger_callback_init ()
+trigger_callback_init (void)
 {
     trigger_callback_hashtable_options_conditions = weechat_hashtable_new (
         32,
@@ -1503,7 +1503,7 @@ trigger_callback_init ()
  */
 
 void
-trigger_callback_end ()
+trigger_callback_end (void)
 {
     if (trigger_callback_hashtable_options_conditions)
     {

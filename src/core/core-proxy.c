@@ -472,7 +472,7 @@ proxy_new (const char *name, const char *type, const char *ipv6,
  */
 
 void
-proxy_use_temp_proxies ()
+proxy_use_temp_proxies (void)
 {
     struct t_proxy *ptr_temp_proxy, *next_temp_proxy;
     int i, num_options_ok;
@@ -566,7 +566,7 @@ proxy_free (struct t_proxy *proxy)
  */
 
 void
-proxy_free_all ()
+proxy_free_all (void)
 {
     while (weechat_proxies)
     {
@@ -647,7 +647,7 @@ proxy_add_to_infolist (struct t_infolist *infolist, struct t_proxy *proxy)
  */
 
 void
-proxy_print_log ()
+proxy_print_log (void)
 {
     struct t_proxy *ptr_proxy;
 

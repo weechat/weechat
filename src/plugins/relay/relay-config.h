@@ -97,9 +97,9 @@ extern int relay_config_check_path_available (const char *path);
 extern struct t_config_option *relay_config_create_remote_option (const char *remote_name,
                                                                   int index_option,
                                                                   const char *value);
-extern int relay_config_init ();
-extern int relay_config_read ();
-extern int relay_config_write ();
-extern void relay_config_free ();
+extern int relay_config_init (void);
+extern int relay_config_read (void);
+extern int relay_config_write (void);
+extern void relay_config_free (void);
 
 #endif /* WEECHAT_PLUGIN_RELAY_CONFIG_H */

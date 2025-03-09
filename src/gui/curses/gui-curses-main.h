@@ -22,7 +22,7 @@
 
 extern int gui_term_cols, gui_term_lines;
 
-extern void gui_main_init ();
-extern void gui_main_loop ();
+extern void gui_main_init (void);
+extern void gui_main_loop (void);
 
 #endif /* WEECHAT_GUI_CURSES_MAIN_H */

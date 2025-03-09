@@ -143,7 +143,7 @@ logger_info_infolist_logger_buffer_cb (const void *pointer, void *data,
  */
 
 void
-logger_info_init ()
+logger_info_init (void)
 {
     /* info hooks */
     weechat_hook_info (

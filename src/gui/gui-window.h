@@ -206,12 +206,12 @@ extern struct t_hdata *gui_window_hdata_window_tree_cb (const void *pointer,
                                                         const char *hdata_name);
 extern int gui_window_add_to_infolist (struct t_infolist *infolist,
                                        struct t_gui_window *window);
-extern void gui_window_print_log ();
+extern void gui_window_print_log (void);
 
 /* window functions (GUI dependent) */
 
-extern int gui_window_get_width ();
-extern int gui_window_get_height ();
+extern int gui_window_get_width (void);
+extern int gui_window_get_height (void);
 extern int gui_window_objects_init (struct t_gui_window *window);
 extern void gui_window_objects_free (struct t_gui_window *window,
                                      int free_separators);
@@ -249,8 +249,8 @@ extern void gui_window_set_title (const char *title);
 extern void gui_window_send_clipboard (const char *storage_unit,
                                        const char *text);
 extern void gui_window_set_bracketed_paste_mode (int enable);
-extern void gui_window_move_cursor ();
-extern void gui_window_term_display_infos ();
+extern void gui_window_move_cursor (void);
+extern void gui_window_term_display_infos (void);
 extern void gui_window_objects_print_log (struct t_gui_window *window);
 
 #endif /* WEECHAT_GUI_WINDOW_H */

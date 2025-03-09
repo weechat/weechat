@@ -119,7 +119,7 @@ xfer_config_reload (const void *pointer, void *data,
  */
 
 int
-xfer_config_init ()
+xfer_config_init (void)
 {
     xfer_config_file = weechat_config_new (XFER_CONFIG_PRIO_NAME,
                                            &xfer_config_reload, NULL, NULL);
@@ -418,7 +418,7 @@ xfer_config_init ()
  */
 
 int
-xfer_config_read ()
+xfer_config_read (void)
 {
     return weechat_config_read (xfer_config_file);
 }
@@ -428,7 +428,7 @@ xfer_config_read ()
  */
 
 int
-xfer_config_write ()
+xfer_config_write (void)
 {
     return weechat_config_write (xfer_config_file);
 }

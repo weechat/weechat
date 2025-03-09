@@ -20,6 +20,6 @@
 #ifndef WEECHAT_PLUGIN_XFER_COMPLETION_H
 #define WEECHAT_PLUGIN_XFER_COMPLETION_H
 
-extern void xfer_completion_init ();
+extern void xfer_completion_init (void);
 
 #endif /* WEECHAT_PLUGIN_XFER_COMPLETION_H */

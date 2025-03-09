@@ -2099,7 +2099,7 @@ gui_window_add_to_infolist (struct t_infolist *infolist,
  */
 
 void
-gui_window_print_log ()
+gui_window_print_log (void)
 {
     struct t_gui_window *ptr_window;
     struct t_gui_window_scroll *ptr_scroll;

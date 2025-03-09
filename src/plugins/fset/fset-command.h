@@ -20,6 +20,6 @@
 #ifndef WEECHAT_PLUGIN_FSET_COMMAND_H
 #define WEECHAT_PLUGIN_FSET_COMMAND_H
 
-extern void fset_command_init ();
+extern void fset_command_init (void);
 
 #endif /* WEECHAT_PLUGIN_FSET_COMMAND_H */

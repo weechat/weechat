@@ -123,7 +123,7 @@ gui_input_replace_input (struct t_gui_buffer *buffer, const char *new_input)
  */
 
 void
-gui_input_paste_pending_signal ()
+gui_input_paste_pending_signal (void)
 {
     if (CONFIG_BOOLEAN(config_look_bare_display_exit_on_input)
         && gui_window_bare_display)

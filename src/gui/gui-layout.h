@@ -79,7 +79,7 @@ extern struct t_gui_layout *gui_layout_alloc (const char *name);
 extern int gui_layout_add (struct t_gui_layout *layout);
 extern void gui_layout_rename (struct t_gui_layout *layout, const char *new_name);
 extern void gui_layout_buffer_remove_all (struct t_gui_layout *layout);
-extern void gui_layout_buffer_reset ();
+extern void gui_layout_buffer_reset (void);
 extern struct t_gui_layout_buffer *gui_layout_buffer_add (struct t_gui_layout *layout,
                                                           const char *plugin_name,
                                                           const char *buffer_name,
@@ -94,7 +94,7 @@ extern void gui_layout_buffer_store (struct t_gui_layout *layout);
 extern void gui_layout_buffer_apply (struct t_gui_layout *layout);
 
 extern void gui_layout_window_remove_all (struct t_gui_layout *layout);
-extern void gui_layout_window_reset ();
+extern void gui_layout_window_reset (void);
 extern struct t_gui_layout_window *gui_layout_window_search_by_id (struct t_gui_layout_window *layout_window,
                                                                    int id);
 extern struct t_gui_layout_window *gui_layout_window_add (struct t_gui_layout_window **layout_window,
@@ -109,10 +109,10 @@ extern int gui_layout_window_check_buffer (struct t_gui_window *window);
 extern void gui_layout_window_assign_buffer (struct t_gui_buffer *buffer);
 extern void gui_layout_window_apply (struct t_gui_layout *layout,
                                      int internal_id_current_window);
-extern void gui_layout_store_on_exit ();
+extern void gui_layout_store_on_exit (void);
 extern void gui_layout_free (struct t_gui_layout *layout);
 extern void gui_layout_remove (struct t_gui_layout *layout);
-extern void gui_layout_remove_all ();
+extern void gui_layout_remove_all (void);
 extern struct t_hdata *gui_layout_hdata_layout_buffer_cb (const void *pointer,
                                                           void *data,
                                                           const char *hdata_name);
@@ -128,6 +128,6 @@ extern int gui_layout_window_add_to_infolist (struct t_infolist *infolist,
                                               struct t_gui_layout_window *layout_window);
 extern int gui_layout_add_to_infolist (struct t_infolist *infolist,
                                        struct t_gui_layout *layout);
-extern void gui_layout_print_log ();
+extern void gui_layout_print_log (void);
 
 #endif /* WEECHAT_GUI_LAYOUT_H */

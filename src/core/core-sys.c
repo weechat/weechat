@@ -176,7 +176,7 @@ sys_setrlimit_resource (const char *resource_name, long long limit)
  */
 
 void
-sys_setrlimit ()
+sys_setrlimit (void)
 {
 #ifdef HAVE_SYS_RESOURCE_H
     char **items, *pos, *error;
@@ -222,7 +222,7 @@ sys_setrlimit ()
  */
 
 void
-sys_display_rlimit ()
+sys_display_rlimit (void)
 {
 #ifdef HAVE_SYS_RESOURCE_H
     struct rlimit rlim;
@@ -280,7 +280,7 @@ sys_display_rlimit ()
  */
 
 void
-sys_display_rusage ()
+sys_display_rusage (void)
 {
 #ifdef HAVE_SYS_RESOURCE_H
     struct rusage usage;

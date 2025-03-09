@@ -149,7 +149,7 @@ weechat_backtrace_addr2line (int number, void *address, const char *symbol)
  */
 
 void
-weechat_backtrace ()
+weechat_backtrace (void)
 {
 #ifdef HAVE_BACKTRACE
     void *trace[BACKTRACE_MAX];

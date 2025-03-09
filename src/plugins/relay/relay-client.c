@@ -1303,7 +1303,7 @@ relay_client_send (struct t_relay_client *client,
  */
 
 void
-relay_client_timer ()
+relay_client_timer (void)
 {
     struct t_relay_client *ptr_client, *ptr_next_client;
     int purge_delay, auth_timeout;
@@ -1947,7 +1947,7 @@ relay_client_free (struct t_relay_client *client)
  */
 
 void
-relay_client_free_all ()
+relay_client_free_all (void)
 {
     while (relay_clients)
     {
@@ -1973,7 +1973,7 @@ relay_client_disconnect (struct t_relay_client *client)
  */
 
 void
-relay_client_disconnect_all ()
+relay_client_disconnect_all (void)
 {
     struct t_relay_client *ptr_client;
 
@@ -2171,7 +2171,7 @@ relay_client_add_to_infolist (struct t_infolist *infolist,
  */
 
 void
-relay_client_print_log ()
+relay_client_print_log (void)
 {
     struct t_relay_client *ptr_client;
 

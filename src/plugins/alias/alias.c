@@ -606,7 +606,7 @@ alias_free (struct t_alias *alias)
  */
 
 void
-alias_free_all ()
+alias_free_all (void)
 {
     while (alias_list)
     {

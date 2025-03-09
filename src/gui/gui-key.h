@@ -90,7 +90,7 @@ extern time_t gui_key_last_activity_time;
 
 /* key functions */
 
-extern void gui_key_init ();
+extern void gui_key_init (void);
 extern int gui_key_search_context (const char *context);
 extern void gui_key_grab_init (int grab_command, const char *delay);
 extern int gui_key_expand (const char *key,
@@ -128,24 +128,24 @@ extern void gui_key_free_all (int context,
                               struct t_gui_key **last_key,
                               int *keys_count,
                               int delete_option);
-extern void gui_key_buffer_reset ();
+extern void gui_key_buffer_reset (void);
 extern void gui_key_buffer_add (unsigned char key);
 extern int gui_key_buffer_search (int start_index, int max_index,
                                   const char *string);
 extern void gui_key_buffer_remove (int index, int number);
-extern void gui_key_paste_remove_newline ();
-extern void gui_key_paste_replace_tabs ();
-extern void gui_key_paste_start ();
-extern void gui_key_paste_finish ();
-extern int gui_key_get_paste_lines ();
+extern void gui_key_paste_remove_newline (void);
+extern void gui_key_paste_replace_tabs (void);
+extern void gui_key_paste_start (void);
+extern void gui_key_paste_finish (void);
+extern int gui_key_get_paste_lines (void);
 extern int gui_key_paste_check (int bracketed_paste);
-extern void gui_key_paste_bracketed_timer_remove ();
-extern void gui_key_paste_bracketed_timer_add ();
-extern void gui_key_paste_bracketed_start ();
-extern void gui_key_paste_bracketed_stop ();
-extern void gui_key_paste_accept ();
-extern void gui_key_paste_cancel ();
-extern void gui_key_end ();
+extern void gui_key_paste_bracketed_timer_remove (void);
+extern void gui_key_paste_bracketed_timer_add (void);
+extern void gui_key_paste_bracketed_start (void);
+extern void gui_key_paste_bracketed_stop (void);
+extern void gui_key_paste_accept (void);
+extern void gui_key_paste_cancel (void);
+extern void gui_key_end (void);
 extern struct t_hdata *gui_key_hdata_key_cb (const void *pointer,
                                              void *data,
                                              const char *hdata_name);

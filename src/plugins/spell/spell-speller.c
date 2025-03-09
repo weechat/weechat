@@ -275,7 +275,7 @@ spell_speller_remove_unused_cb (void *data,
  */
 
 void
-spell_speller_remove_unused ()
+spell_speller_remove_unused (void)
 {
     struct t_hashtable *used_spellers;
     struct t_infolist *infolist;
@@ -461,7 +461,7 @@ spell_speller_buffer_free_value_cb (struct t_hashtable *hashtable,
  */
 
 int
-spell_speller_init ()
+spell_speller_init (void)
 {
     spell_spellers = weechat_hashtable_new (32,
                                             WEECHAT_HASHTABLE_STRING,
@@ -494,7 +494,7 @@ spell_speller_init ()
  */
 
 void
-spell_speller_end ()
+spell_speller_end (void)
 {
     weechat_hashtable_free (spell_spellers);
     spell_spellers = NULL;

@@ -416,20 +416,20 @@ extern struct t_hashtable *config_hashtable_completion_partial_templates;
 extern char **config_hotlist_sort_fields;
 extern int config_num_hotlist_sort_fields;
 
-extern void config_set_nick_colors ();
+extern void config_set_nick_colors (void);
 extern struct t_config_option *config_weechat_debug_get (const char *plugin_name);
 extern int config_weechat_debug_set (const char *plugin_name,
                                      const char *value);
-extern void config_weechat_debug_set_all ();
+extern void config_weechat_debug_set_all (void);
 extern int config_weechat_buffer_set (struct t_gui_buffer *buffer,
                                       const char *property, const char *value);
 extern int config_weechat_notify_set (struct t_gui_buffer *buffer,
                                       const char *notify);
 extern void config_get_item_time (char *text_time, int max_length);
 extern int config_weechat_get_key_context (struct t_config_section *section);
-extern int config_weechat_init ();
-extern int config_weechat_read ();
-extern int config_weechat_write ();
-extern void config_weechat_free ();
+extern int config_weechat_init (void);
+extern int config_weechat_read (void);
+extern int config_weechat_write (void);
+extern void config_weechat_free (void);
 
 #endif /* WEECHAT_CONFIG_H */

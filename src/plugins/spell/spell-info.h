@@ -20,6 +20,6 @@
 #ifndef WEECHAT_PLUGIN_SPELL_INFO_H
 #define WEECHAT_PLUGIN_SPELL_INFO_H
 
-extern void spell_info_init ();
+extern void spell_info_init (void);
 
 #endif /* WEECHAT_PLUGIN_SPELL_INFO_H */

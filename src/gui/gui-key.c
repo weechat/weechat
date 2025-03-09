@@ -111,7 +111,7 @@ time_t gui_key_last_activity_time = 0; /* last activity time (key)          */
  */
 
 void
-gui_key_init ()
+gui_key_init (void)
 {
     int context;
 
@@ -168,7 +168,7 @@ gui_key_search_context (const char *context)
  */
 
 int
-gui_key_get_current_context ()
+gui_key_get_current_context (void)
 {
     if (gui_cursor_mode)
         return GUI_KEY_CONTEXT_CURSOR;
@@ -2680,7 +2680,7 @@ gui_key_free_all (int context, struct t_gui_key **keys,
  */
 
 void
-gui_key_buffer_optimize ()
+gui_key_buffer_optimize (void)
 {
     int optimal_size, *gui_key_buffer2;
 
@@ -2711,7 +2711,7 @@ gui_key_buffer_optimize ()
  */
 
 void
-gui_key_buffer_reset ()
+gui_key_buffer_reset (void)
 {
     if (!gui_key_buffer)
     {
@@ -2827,7 +2827,7 @@ gui_key_buffer_remove (int index, int number)
  */
 
 void
-gui_key_paste_remove_newline ()
+gui_key_paste_remove_newline (void)
 {
     if ((gui_key_buffer_size > 0)
         && ((gui_key_buffer[gui_key_buffer_size - 1] == '\r')
@@ -2843,7 +2843,7 @@ gui_key_paste_remove_newline ()
  */
 
 void
-gui_key_paste_replace_tabs ()
+gui_key_paste_replace_tabs (void)
 {
     int i;
 
@@ -2859,7 +2859,7 @@ gui_key_paste_replace_tabs ()
  */
 
 void
-gui_key_paste_start ()
+gui_key_paste_start (void)
 {
     gui_key_paste_pending = 1;
     gui_input_paste_pending_signal ();
@@ -2870,7 +2870,7 @@ gui_key_paste_start ()
  */
 
 void
-gui_key_paste_finish ()
+gui_key_paste_finish (void)
 {
     gui_key_paste_remove_newline ();
     gui_key_paste_replace_tabs ();
@@ -2883,7 +2883,7 @@ gui_key_paste_finish ()
  */
 
 int
-gui_key_get_paste_lines ()
+gui_key_get_paste_lines (void)
 {
     int length;
 
@@ -2968,7 +2968,7 @@ gui_key_paste_bracketed_timer_cb (const void *pointer, void *data,
  */
 
 void
-gui_key_paste_bracketed_timer_remove ()
+gui_key_paste_bracketed_timer_remove (void)
 {
     if (gui_key_paste_bracketed_timer)
     {
@@ -2982,7 +2982,7 @@ gui_key_paste_bracketed_timer_remove ()
  */
 
 void
-gui_key_paste_bracketed_timer_add ()
+gui_key_paste_bracketed_timer_add (void)
 {
     gui_key_paste_bracketed_timer_remove ();
     gui_key_paste_bracketed_timer = hook_timer (
@@ -2997,7 +2997,7 @@ gui_key_paste_bracketed_timer_add ()
  */
 
 void
-gui_key_paste_bracketed_start ()
+gui_key_paste_bracketed_start (void)
 {
     gui_key_paste_bracketed = 1;
     gui_key_paste_bracketed_timer_add ();
@@ -3009,7 +3009,7 @@ gui_key_paste_bracketed_start ()
  */
 
 void
-gui_key_paste_bracketed_stop ()
+gui_key_paste_bracketed_stop (void)
 {
     gui_key_paste_check (1);
     gui_key_paste_bracketed = 0;
@@ -3020,7 +3020,7 @@ gui_key_paste_bracketed_stop ()
  */
 
 void
-gui_key_paste_accept ()
+gui_key_paste_accept (void)
 {
     gui_key_paste_pending = 0;
     gui_input_paste_pending_signal ();
@@ -3032,7 +3032,7 @@ gui_key_paste_accept ()
  */
 
 void
-gui_key_paste_cancel ()
+gui_key_paste_cancel (void)
 {
     gui_key_buffer_reset ();
     gui_key_paste_pending = 0;
@@ -3044,7 +3044,7 @@ gui_key_paste_cancel ()
  */
 
 void
-gui_key_end ()
+gui_key_end (void)
 {
     int context;
 

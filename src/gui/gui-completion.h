@@ -102,6 +102,6 @@ extern struct t_hdata *gui_completion_hdata_completion_cb (const void *pointer,
 extern struct t_hdata *gui_completion_hdata_completion_word_cb (const void *pointer,
                                                                 void *data,
                                                                 const char *hdata_name);
-extern void gui_completion_print_log ();
+extern void gui_completion_print_log (void);
 
 #endif /* WEECHAT_GUI_COMPLETION_H */

@@ -110,7 +110,7 @@ typing_config_change_item_max_length (const void *pointer, void *data,
  */
 
 int
-typing_config_init ()
+typing_config_init (void)
 {
     typing_config_file = weechat_config_new (
         TYPING_CONFIG_PRIO_NAME,
@@ -195,7 +195,7 @@ typing_config_init ()
  */
 
 int
-typing_config_read ()
+typing_config_read (void)
 {
     return weechat_config_read (typing_config_file);
 }
@@ -205,7 +205,7 @@ typing_config_read ()
  */
 
 int
-typing_config_write ()
+typing_config_write (void)
 {
     return weechat_config_write (typing_config_file);
 }
@@ -215,7 +215,7 @@ typing_config_write ()
  */
 
 void
-typing_config_free ()
+typing_config_free (void)
 {
     weechat_config_free (typing_config_file);
     typing_config_file = NULL;

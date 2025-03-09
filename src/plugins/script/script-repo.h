@@ -72,13 +72,13 @@ extern const char *script_repo_get_status_for_display (struct t_script_repo *scr
                                                        int collapse);
 extern const char *script_repo_get_status_desc_for_display (struct t_script_repo *script,
                                                             const char *list);
-extern void script_repo_remove_all ();
+extern void script_repo_remove_all (void);
 extern void script_repo_update_status (struct t_script_repo *script);
-extern void script_repo_update_status_all ();
+extern void script_repo_update_status_all (void);
 extern void script_repo_set_filter (const char *filter);
 extern void script_repo_filter_scripts (const char *search);
-extern int script_repo_file_exists ();
-extern int script_repo_file_is_uptodate ();
+extern int script_repo_file_exists (void);
+extern int script_repo_file_is_uptodate (void);
 extern int script_repo_file_read (int quiet);
 extern int script_repo_file_update (int quiet);
 extern struct t_hdata *script_repo_hdata_script_cb (const void *pointer,
@@ -86,6 +86,6 @@ extern struct t_hdata *script_repo_hdata_script_cb (const void *pointer,
                                                     const char *hdata_name);
 extern int script_repo_add_to_infolist (struct t_infolist *infolist,
                                         struct t_script_repo *script);
-extern void script_repo_print_log ();
+extern void script_repo_print_log (void);
 
 #endif /* WEECHAT_PLUGIN_SCRIPT_REPO_H */

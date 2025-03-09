@@ -525,7 +525,7 @@ gui_hotlist_restore_buffer (struct t_gui_buffer *buffer)
  */
 
 void
-gui_hotlist_restore_all_buffers ()
+gui_hotlist_restore_all_buffers (void)
 {
     struct t_gui_buffer *ptr_buffer;
 
@@ -541,7 +541,7 @@ gui_hotlist_restore_all_buffers ()
  */
 
 void
-gui_hotlist_resort ()
+gui_hotlist_resort (void)
 {
     struct t_gui_hotlist *new_hotlist, *last_new_hotlist;
     struct t_gui_hotlist *ptr_hotlist, *ptr_next_hotlist, *ptr_prev_hotlist;
@@ -841,7 +841,7 @@ gui_hotlist_add_to_infolist (struct t_infolist *infolist,
  */
 
 void
-gui_hotlist_print_log ()
+gui_hotlist_print_log (void)
 {
     struct t_gui_hotlist *ptr_hotlist;
     int i;
@@ -869,7 +869,7 @@ gui_hotlist_print_log ()
  */
 
 void
-gui_hotlist_end ()
+gui_hotlist_end (void)
 {
     if (gui_hotlist_hashtable_add_conditions_pointers)
     {

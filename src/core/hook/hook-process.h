@@ -70,7 +70,7 @@ extern struct t_hook *hook_process_hashtable (struct t_weechat_plugin *plugin,
                                               t_hook_callback_process *callback,
                                               const void *callback_pointer,
                                               void *callback_data);
-extern void hook_process_exec ();
+extern void hook_process_exec (void);
 extern void hook_process_free_data (struct t_hook *hook);
 extern int hook_process_add_to_infolist (struct t_infolist_item *item,
                                          struct t_hook *hook);

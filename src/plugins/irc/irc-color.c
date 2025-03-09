@@ -1080,7 +1080,7 @@ irc_color_weechat_add_to_infolist (struct t_infolist *infolist)
  */
 
 void
-irc_color_init ()
+irc_color_init (void)
 {
     irc_color_index_string_decoded = 0;
     memset (irc_color_string_decoded, 0, sizeof (irc_color_string_decoded));
@@ -1091,7 +1091,7 @@ irc_color_init ()
  */
 
 void
-irc_color_end ()
+irc_color_end (void)
 {
     int i;
 

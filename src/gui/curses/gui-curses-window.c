@@ -78,7 +78,7 @@ int gui_window_saved_style_index = 0;  /* index in list of savec styles     */
  */
 
 int
-gui_window_get_width ()
+gui_window_get_width (void)
 {
     return gui_term_cols;
 }
@@ -88,7 +88,7 @@ gui_window_get_width ()
  */
 
 int
-gui_window_get_height ()
+gui_window_get_height (void)
 {
     return gui_term_lines;
 }
@@ -98,7 +98,7 @@ gui_window_get_height ()
  */
 
 void
-gui_window_read_terminal_size ()
+gui_window_read_terminal_size (void)
 {
     struct winsize size;
     int new_width, new_height;
@@ -572,7 +572,7 @@ gui_window_set_custom_color_pair (WINDOW *window, int pair)
  */
 
 void
-gui_window_toggle_emphasis ()
+gui_window_toggle_emphasis (void)
 {
     gui_window_current_emphasis ^= 1;
 }
@@ -1808,7 +1808,7 @@ gui_window_auto_resize (struct t_gui_window_tree *tree,
  */
 
 void
-gui_window_refresh_windows ()
+gui_window_refresh_windows (void)
 {
     struct t_gui_window *ptr_win, *old_current_window;
     struct t_gui_bar_window *ptr_bar_win;
@@ -2685,7 +2685,7 @@ gui_window_set_bracketed_paste_mode (int enable)
  */
 
 void
-gui_window_move_cursor ()
+gui_window_move_cursor (void)
 {
     if (gui_cursor_mode)
     {
@@ -2699,7 +2699,7 @@ gui_window_move_cursor ()
  */
 
 void
-gui_window_term_display_infos ()
+gui_window_term_display_infos (void)
 {
     gui_chat_printf (NULL, "");
     gui_chat_printf (NULL, _("Terminal infos:"));

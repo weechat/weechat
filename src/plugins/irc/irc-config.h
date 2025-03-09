@@ -244,9 +244,9 @@ struct t_config_option *irc_config_server_new_option (struct t_config_file *conf
                                                                               struct t_config_option *option),
                                                       const void *callback_change_pointer,
                                                       void *callback_change_data);
-extern int irc_config_init ();
-extern int irc_config_read ();
+extern int irc_config_init (void);
+extern int irc_config_read (void);
 extern int irc_config_write (int write_temp_servers);
-extern void irc_config_free ();
+extern void irc_config_free (void);
 
 #endif /* WEECHAT_PLUGIN_IRC_CONFIG_H */

@@ -69,7 +69,7 @@ extern int irc_list_hsignal_redirect_list_cb (const void *pointer,
                                               struct t_hashtable *hashtable);
 extern int irc_list_export (struct t_irc_server *server, const char *filename);
 extern void irc_list_reset (struct t_irc_server *server);
-extern struct t_irc_list *irc_list_alloc ();
+extern struct t_irc_list *irc_list_alloc (void);
 extern void irc_list_free_data (struct t_irc_server *server);
 extern void irc_list_free (struct t_irc_server *server);
 extern struct t_hdata *irc_list_hdata_list_channel_cb (const void *pointer,
@@ -77,7 +77,7 @@ extern struct t_hdata *irc_list_hdata_list_channel_cb (const void *pointer,
                                                        const char *hdata_name);
 extern struct t_hdata *irc_list_hdata_list_cb (const void *pointer, void *data,
                                                const char *hdata_name);
-extern void irc_list_init ();
-extern void irc_list_end ();
+extern void irc_list_init (void);
+extern void irc_list_end (void);
 
 #endif /* WEECHAT_PLUGIN_IRC_LIST_H */

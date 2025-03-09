@@ -704,7 +704,7 @@ irc_bar_item_buffer_switch (const void *pointer, void *data,
  */
 
 void
-irc_bar_item_update_channel ()
+irc_bar_item_update_channel (void)
 {
     weechat_bar_item_update ("buffer_name");
     weechat_bar_item_update ("buffer_short_name");
@@ -716,7 +716,7 @@ irc_bar_item_update_channel ()
  */
 
 void
-irc_bar_item_init ()
+irc_bar_item_init (void)
 {
     weechat_bar_item_new ("buffer_plugin",
                           &irc_bar_item_buffer_plugin, NULL, NULL);

@@ -47,15 +47,15 @@ extern void plugin_auto_load (char *force_plugin_autoload,
                               char **argv);
 extern void plugin_unload (struct t_weechat_plugin *plugin);
 extern void plugin_unload_name (const char *name);
-extern void plugin_unload_all ();
+extern void plugin_unload_all (void);
 extern void plugin_reload_name (const char *name, int argc, char **argv);
 extern void plugin_init (char *force_plugin_autoload, int argc, char *argv[]);
-extern void plugin_end ();
+extern void plugin_end (void);
 extern struct t_hdata *plugin_hdata_plugin_cb (const void *pointer,
                                                void *data,
                                                const char *hdata_name);
 extern int plugin_add_to_infolist (struct t_infolist *infolist,
                                    struct t_weechat_plugin *plugin);
-extern void plugin_print_log ();
+extern void plugin_print_log (void);
 
 #endif /* WEECHAT_PLUGIN_PLUGIN_H */

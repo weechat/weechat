@@ -20,6 +20,6 @@
 #ifndef WEECHAT_PLUGIN_SCRIPT_INFO_H
 #define WEECHAT_PLUGIN_SCRIPT_INFO_H
 
-extern void script_info_init ();
+extern void script_info_init (void);
 
 #endif /* WEECHAT_PLUGIN_SCRIPT_INFO_H */

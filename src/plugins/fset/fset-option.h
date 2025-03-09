@@ -95,11 +95,11 @@ extern int fset_option_valid (struct t_fset_option *option);
 extern struct t_fset_option *fset_option_search_by_name (const char *name,
                                                          int *line);
 extern int fset_option_value_is_changed (struct t_fset_option *option);
-extern void fset_option_set_max_length_fields_all ();
+extern void fset_option_set_max_length_fields_all (void);
 extern void fset_option_free (struct t_fset_option *fset_option);
-extern struct t_arraylist *fset_option_get_arraylist_options ();
-extern struct t_fset_option_max_length *fset_option_get_max_length ();
-extern void fset_option_get_options ();
+extern struct t_arraylist *fset_option_get_arraylist_options (void);
+extern struct t_fset_option_max_length *fset_option_get_max_length (void);
+extern void fset_option_get_options (void);
 extern void fset_option_set_filter (const char *filter);
 extern void fset_option_filter_options (const char *filter);
 extern void fset_option_toggle_value (struct t_fset_option *fset_option,
@@ -119,7 +119,7 @@ extern void fset_option_toggle_mark (struct t_fset_option *fset_option,
                                      struct t_config_option *option);
 extern void fset_option_mark_options_matching_filter (const char *filter,
                                                       int mark);
-extern void fset_option_unmark_all ();
+extern void fset_option_unmark_all (void);
 extern int fset_option_export (const char *filename, int with_help);
 extern int fset_option_import (const char *filename);
 extern int fset_option_config_cb (const void *pointer,
@@ -131,8 +131,8 @@ extern struct t_hdata *fset_option_hdata_option_cb (const void *pointer,
                                                     const char *hdata_name);
 extern int fset_option_add_to_infolist (struct t_infolist *infolist,
                                         struct t_fset_option *option);
-extern void fset_option_print_log ();
-extern int fset_option_init ();
-extern void fset_option_end ();
+extern void fset_option_print_log (void);
+extern int fset_option_init (void);
+extern void fset_option_end (void);
 
 #endif /* WEECHAT_PLUGIN_FSET_OPTION_H */

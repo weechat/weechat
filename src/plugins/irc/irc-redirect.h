@@ -121,7 +121,7 @@ extern int irc_redirect_pattern_add_to_infolist (struct t_infolist *infolist,
                                                  struct t_irc_redirect_pattern *redirect_pattern);
 extern int irc_redirect_add_to_infolist (struct t_infolist *infolist,
                                          struct t_irc_redirect *redirect);
-extern void irc_redirect_pattern_print_log ();
+extern void irc_redirect_pattern_print_log (void);
 extern void irc_redirect_print_log (struct t_irc_server *server);
 extern int irc_redirect_pattern_hsignal_cb (const void *pointer, void *data,
                                             const char *signal,
@@ -129,7 +129,7 @@ extern int irc_redirect_pattern_hsignal_cb (const void *pointer, void *data,
 extern int irc_redirect_command_hsignal_cb (const void *pointer, void *data,
                                             const char *signal,
                                             struct t_hashtable *hashtable);
-extern void irc_redirect_init ();
-extern void irc_redirect_end ();
+extern void irc_redirect_init (void);
+extern void irc_redirect_end (void);
 
 #endif /* WEECHAT_PLUGIN_IRC_REDIRECT_H */

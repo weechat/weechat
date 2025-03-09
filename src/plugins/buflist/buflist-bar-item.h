@@ -33,7 +33,7 @@ extern const char *buflist_bar_item_get_name (int index);
 extern int buflist_bar_item_get_index (const char *item_name);
 extern int buflist_bar_item_get_index_with_pointer (struct t_gui_bar_item *item);
 extern void buflist_bar_item_update (int index, int force);
-extern int buflist_bar_item_init ();
-extern void buflist_bar_item_end ();
+extern int buflist_bar_item_init (void);
+extern void buflist_bar_item_end (void);
 
 #endif /* WEECHAT_PLUGIN_BUFLIST_BAR_ITEM_H */

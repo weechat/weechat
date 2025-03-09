@@ -54,7 +54,7 @@ xfer_upgrade_save_xfers (struct t_upgrade_file *upgrade_file)
  */
 
 int
-xfer_upgrade_save ()
+xfer_upgrade_save (void)
 {
     int rc;
     struct t_upgrade_file *upgrade_file;
@@ -77,7 +77,7 @@ xfer_upgrade_save ()
  */
 
 void
-xfer_upgrade_set_buffer_callbacks ()
+xfer_upgrade_set_buffer_callbacks (void)
 {
     struct t_infolist *infolist;
     struct t_gui_buffer *ptr_buffer;
@@ -144,7 +144,7 @@ xfer_upgrade_read_cb (const void *pointer, void *data,
  */
 
 int
-xfer_upgrade_load ()
+xfer_upgrade_load (void)
 {
     int rc;
     struct t_upgrade_file *upgrade_file;

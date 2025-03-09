@@ -693,7 +693,7 @@ plugin_api_infolist_free (struct t_infolist *infolist)
  */
 
 void
-plugin_api_init ()
+plugin_api_init (void)
 {
     /* WeeChat core modifiers */
     hook_modifier (NULL, "color_decode",

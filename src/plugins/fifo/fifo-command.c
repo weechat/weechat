@@ -90,7 +90,7 @@ fifo_command_fifo (const void *pointer, void *data,
  */
 
 void
-fifo_command_init ()
+fifo_command_init (void)
 {
     weechat_hook_command (
         "fifo",

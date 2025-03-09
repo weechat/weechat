@@ -93,7 +93,7 @@ long long debug_long_callbacks = 0;    /* callbacks taking more than        */
  */
 
 void
-debug_build_info ()
+debug_build_info (void)
 {
     /* display version and compilation date/time */
     string_fprintf (
@@ -343,7 +343,7 @@ debug_windows_tree_display (struct t_gui_window_tree *tree, int indent)
  */
 
 void
-debug_windows_tree ()
+debug_windows_tree (void)
 {
     gui_chat_printf (NULL, "");
     gui_chat_printf (NULL, _("Windows tree:"));
@@ -355,7 +355,7 @@ debug_windows_tree ()
  */
 
 void
-debug_memory ()
+debug_memory (void)
 {
 #ifdef HAVE_MALLINFO2
     struct mallinfo2 info;
@@ -501,7 +501,7 @@ debug_hdata_map_cb (void *data,
  */
 
 void
-debug_hdata ()
+debug_hdata (void)
 {
     int count;
 
@@ -519,7 +519,7 @@ debug_hdata ()
  */
 
 void
-debug_hooks ()
+debug_hooks (void)
 {
     int i;
 
@@ -653,7 +653,7 @@ debug_hooks_plugin_types (const char *plugin_mask, const char **hook_types)
  */
 
 void
-debug_infolists ()
+debug_infolists (void)
 {
     struct t_infolist *ptr_infolist;
     struct t_infolist_item *ptr_item;
@@ -817,7 +817,7 @@ debug_libs_cb (const void *pointer, void *data,
  */
 
 void
-debug_directories ()
+debug_directories (void)
 {
     char *extra_libdir, str_temp[1024];
 
@@ -1026,7 +1026,7 @@ debug_unicode (const char *string)
  */
 
 void
-debug_init ()
+debug_init (void)
 {
     /*
      * hook signals with high priority, to be sure they will be used before
@@ -1042,6 +1042,6 @@ debug_init ()
  */
 
 void
-debug_end ()
+debug_end (void)
 {
 }

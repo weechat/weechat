@@ -293,7 +293,7 @@ irc_upgrade_save (int force_disconnected_state)
  */
 
 void
-irc_upgrade_set_buffer_callbacks ()
+irc_upgrade_set_buffer_callbacks (void)
 {
     struct t_infolist *infolist;
     struct t_gui_buffer *ptr_buffer;
@@ -990,7 +990,7 @@ irc_upgrade_read_cb (const void *pointer, void *data,
  */
 
 void
-irc_upgrade_set_buffer_properties ()
+irc_upgrade_set_buffer_properties (void)
 {
     struct t_irc_server *ptr_server;
     struct t_irc_channel *ptr_channel;
@@ -1021,7 +1021,7 @@ irc_upgrade_set_buffer_properties ()
  */
 
 int
-irc_upgrade_load ()
+irc_upgrade_load (void)
 {
     int rc;
     struct t_upgrade_file *upgrade_file;

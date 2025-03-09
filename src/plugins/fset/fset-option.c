@@ -743,7 +743,7 @@ fset_option_init_max_length (struct t_fset_option_max_length *max_length)
  */
 
 void
-fset_option_set_max_length_fields_all ()
+fset_option_set_max_length_fields_all (void)
 {
     int i, num_options;
     struct t_fset_option *ptr_fset_option;
@@ -929,7 +929,7 @@ fset_option_free_cb (void *data, struct t_arraylist *arraylist, void *pointer)
  */
 
 struct t_arraylist *
-fset_option_get_arraylist_options ()
+fset_option_get_arraylist_options (void)
 {
     return weechat_arraylist_new (100, 1, 0,
                                   &fset_option_compare_options_cb, NULL,
@@ -941,7 +941,7 @@ fset_option_get_arraylist_options ()
  */
 
 struct t_fset_option_max_length *
-fset_option_get_max_length ()
+fset_option_get_max_length (void)
 {
     struct t_fset_option_max_length *max_length;
 
@@ -957,7 +957,7 @@ fset_option_get_max_length ()
  */
 
 void
-fset_option_get_options ()
+fset_option_get_options (void)
 {
     struct t_fset_option *new_fset_option, *ptr_fset_option;
     struct t_config_file *ptr_config;
@@ -1278,7 +1278,7 @@ fset_option_mark_options_matching_filter (const char *filter, int mark)
  */
 
 void
-fset_option_unmark_all ()
+fset_option_unmark_all (void)
 {
     int num_options, marked, set_title, i;
     struct t_fset_option *ptr_fset_option;
@@ -1772,7 +1772,7 @@ fset_option_add_to_infolist (struct t_infolist *infolist,
  */
 
 void
-fset_option_print_log ()
+fset_option_print_log (void)
 {
     struct t_fset_option *ptr_fset_option;
     int num_options, i;
@@ -1815,7 +1815,7 @@ fset_option_print_log ()
  */
 
 int
-fset_option_init ()
+fset_option_init (void)
 {
     fset_options = fset_option_get_arraylist_options ();
     if (!fset_options)
@@ -1891,7 +1891,7 @@ fset_option_init ()
  */
 
 void
-fset_option_end ()
+fset_option_end (void)
 {
     if (fset_options)
     {

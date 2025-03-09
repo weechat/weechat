@@ -114,7 +114,7 @@ buflist_info_infolist_buflist_cb (const void *pointer, void *data,
  */
 
 void
-buflist_info_init ()
+buflist_info_init (void)
 {
     weechat_hook_infolist (
         "buflist", N_("list of buffers in a buflist bar item"),

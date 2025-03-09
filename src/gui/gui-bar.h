@@ -153,22 +153,22 @@ extern struct t_gui_bar *gui_bar_new (const char *name,
                                       const char *color_bg_inactive,
                                       const char *separator,
                                       const char *items);
-extern void gui_bar_use_temp_bars ();
-extern void gui_bar_create_default_input ();
-extern void gui_bar_create_default_title ();
-extern void gui_bar_create_default_status ();
-extern void gui_bar_create_default_nicklist ();
-extern void gui_bar_create_default ();
+extern void gui_bar_use_temp_bars (void);
+extern void gui_bar_create_default_input (void);
+extern void gui_bar_create_default_title (void);
+extern void gui_bar_create_default_status (void);
+extern void gui_bar_create_default_nicklist (void);
+extern void gui_bar_create_default (void);
 extern void gui_bar_update (const char *name);
 extern int gui_bar_scroll (struct t_gui_bar *bar, struct t_gui_window *window,
                            const char *scroll);
 extern void gui_bar_free (struct t_gui_bar *bar);
-extern void gui_bar_free_all ();
+extern void gui_bar_free_all (void);
 extern struct t_hdata *gui_bar_hdata_bar_cb (const void *pointer,
                                              void *data,
                                              const char *hdata_name);
 extern int gui_bar_add_to_infolist (struct t_infolist *infolist,
                                     struct t_gui_bar *bar);
-extern void gui_bar_print_log ();
+extern void gui_bar_print_log (void);
 
 #endif /* WEECHAT_GUI_BAR_H */

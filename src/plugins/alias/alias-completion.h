@@ -20,6 +20,6 @@
 #ifndef WEECHAT_PLUGIN_ALIAS_COMPLETION_H
 #define WEECHAT_PLUGIN_ALIAS_COMPLETION_H
 
-extern void alias_completion_init ();
+extern void alias_completion_init (void);
 
 #endif /* WEECHAT_PLUGIN_ALIAS_COMPLETION_H */

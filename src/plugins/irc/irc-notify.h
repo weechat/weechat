@@ -52,7 +52,7 @@ extern struct t_irc_notify *irc_notify_new (struct t_irc_server *server,
                                             int check_away);
 extern void irc_notify_check_now (struct t_irc_notify *notify);
 extern void irc_notify_new_for_server (struct t_irc_server *server);
-extern void irc_notify_new_for_all_servers ();
+extern void irc_notify_new_for_all_servers (void);
 extern void irc_notify_free (struct t_irc_server *server,
                              struct t_irc_notify *notify, int remove_monitor);
 extern void irc_notify_display_is_on (struct t_irc_server *server,
@@ -75,9 +75,9 @@ extern struct t_hdata *irc_notify_hdata_notify_cb (const void *pointer,
 extern int irc_notify_add_to_infolist (struct t_infolist *infolist,
                                        struct t_irc_notify *notify);
 extern void irc_notify_print_log (struct t_irc_server *server);
-extern void irc_notify_hook_timer_ison ();
-extern void irc_notify_hook_timer_whois ();
-extern void irc_notify_init ();
-extern void irc_notify_end ();
+extern void irc_notify_hook_timer_ison (void);
+extern void irc_notify_hook_timer_whois (void);
+extern void irc_notify_init (void);
+extern void irc_notify_end (void);
 
 #endif /* WEECHAT_PLUGIN_IRC_NOTIFY_H */

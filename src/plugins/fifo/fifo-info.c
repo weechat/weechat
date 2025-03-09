@@ -49,7 +49,7 @@ fifo_info_info_fifo_filename_cb (const void *pointer, void *data,
  */
 
 void
-fifo_info_init ()
+fifo_info_init (void)
 {
     weechat_hook_info ("fifo_filename", N_("name of FIFO pipe"), NULL,
                        &fifo_info_info_fifo_filename_cb, NULL, NULL);

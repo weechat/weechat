@@ -93,7 +93,7 @@ relay_bar_item_input_prompt (const void *pointer, void *data,
  */
 
 void
-relay_bar_item_init ()
+relay_bar_item_init (void)
 {
     weechat_bar_item_new ("input_prompt",
                           &relay_bar_item_input_prompt, NULL, NULL);

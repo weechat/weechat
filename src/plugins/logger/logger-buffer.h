@@ -73,8 +73,8 @@ extern void logger_buffer_stop (struct t_logger_buffer *logger_buffer,
 extern void logger_buffer_stop_all (int write_info_line);
 extern void logger_buffer_start (struct t_gui_buffer *buffer, int write_info_line);
 extern void logger_buffer_start_all (int write_info_line);
-extern void logger_buffer_flush ();
-extern void logger_buffer_adjust_log_filenames ();
+extern void logger_buffer_flush (void);
+extern void logger_buffer_adjust_log_filenames (void);
 extern void logger_buffer_free (struct t_logger_buffer *logger_buffer);
 extern int logger_buffer_add_to_infolist (struct t_infolist *infolist,
                                           struct t_logger_buffer *logger_buffer);

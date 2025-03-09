@@ -190,7 +190,7 @@ char *spell_url_prefix[] =
  */
 
 void
-spell_warning_aspell_config ()
+spell_warning_aspell_config (void)
 {
     char *aspell_filename, *spell_filename;
 

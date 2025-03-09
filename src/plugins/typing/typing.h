@@ -40,6 +40,6 @@ extern struct t_typing *typing_list;
 
 extern struct t_weechat_plugin *weechat_typing_plugin;
 
-extern void typing_setup_hooks ();
+extern void typing_setup_hooks (void);
 
 #endif /* WEECHAT_PLUGIN_TYPING_H */

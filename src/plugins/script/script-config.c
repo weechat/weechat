@@ -101,7 +101,7 @@ struct t_config_option *script_config_scripts_url = NULL;
  */
 
 const char *
-script_config_get_diff_command ()
+script_config_get_diff_command (void)
 {
     const char *diff_command;
     char *dir_separator;
@@ -159,7 +159,7 @@ script_config_get_diff_command ()
  */
 
 char *
-script_config_get_xml_filename ()
+script_config_get_xml_filename (void)
 {
     char *path, *filename;
     struct t_hashtable *options;
@@ -403,7 +403,7 @@ script_config_reload (const void *pointer, void *data,
  */
 
 int
-script_config_init ()
+script_config_init (void)
 {
     script_config_file = weechat_config_new (
         SCRIPT_CONFIG_PRIO_NAME,
@@ -798,7 +798,7 @@ script_config_init ()
  */
 
 int
-script_config_read ()
+script_config_read (void)
 {
     return weechat_config_read (script_config_file);
 }
@@ -808,7 +808,7 @@ script_config_read ()
  */
 
 int
-script_config_write ()
+script_config_write (void)
 {
     return weechat_config_write (script_config_file);
 }
@@ -818,7 +818,7 @@ script_config_write ()
  */
 
 void
-script_config_free ()
+script_config_free (void)
 {
     weechat_config_free (script_config_file);
     script_config_file = NULL;

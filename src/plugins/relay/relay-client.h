@@ -131,19 +131,19 @@ extern int relay_client_send (struct t_relay_client *client,
                               enum t_relay_msg_type msg_type,
                               const char *data,
                               int data_size, const char *message_raw_buffer);
-extern void relay_client_timer ();
+extern void relay_client_timer (void);
 extern struct t_relay_client *relay_client_new (int sock, const char *address,
                                                 struct t_relay_server *server);
 extern struct t_relay_client *relay_client_new_with_infolist (struct t_infolist *infolist);
 extern void relay_client_set_status (struct t_relay_client *client,
                                      enum t_relay_status status);
 extern void relay_client_free (struct t_relay_client *client);
-extern void relay_client_free_all ();
+extern void relay_client_free_all (void);
 extern void relay_client_disconnect (struct t_relay_client *client);
-extern void relay_client_disconnect_all ();
+extern void relay_client_disconnect_all (void);
 extern int relay_client_add_to_infolist (struct t_infolist *infolist,
                                          struct t_relay_client *client,
                                          int force_disconnected_state);
-extern void relay_client_print_log ();
+extern void relay_client_print_log (void);
 
 #endif /* WEECHAT_PLUGIN_RELAY_CLIENT_H */

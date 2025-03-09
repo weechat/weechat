@@ -20,6 +20,6 @@
 #ifndef WEECHAT_PLUGIN_BUFLIST_COMPLETION_H
 #define WEECHAT_PLUGIN_BUFLIST_COMPLETION_H
 
-extern void buflist_completion_init ();
+extern void buflist_completion_init (void);
 
 #endif /* WEECHAT_PLUGIN_BUFLIST_COMPLETION_H */

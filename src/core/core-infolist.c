@@ -720,7 +720,7 @@ infolist_free_all_plugin (struct t_weechat_plugin *plugin)
  */
 
 void
-infolist_print_log ()
+infolist_print_log (void)
 {
     struct t_infolist *ptr_infolist;
     struct t_infolist_item *ptr_item;

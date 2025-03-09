@@ -31,6 +31,6 @@ extern int xfer_buffer_input_cb (const void *pointer, void *data,
                                  const char *input_data);
 extern int xfer_buffer_close_cb (const void *pointer, void *data,
                                  struct t_gui_buffer *buffer);
-extern void xfer_buffer_open ();
+extern void xfer_buffer_open (void);
 
 #endif /* WEECHAT_PLUGIN_XFER_BUFFER_H */

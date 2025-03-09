@@ -1835,7 +1835,7 @@ gui_bar_new_default (enum t_gui_bar_default bar)
  */
 
 void
-gui_bar_use_temp_bars ()
+gui_bar_use_temp_bars (void)
 {
     struct t_gui_bar *ptr_temp_bar, *next_temp_bar;
     int i, num_options_ok;
@@ -1908,7 +1908,7 @@ gui_bar_use_temp_bars ()
  */
 
 void
-gui_bar_create_default_input ()
+gui_bar_create_default_input (void)
 {
     struct t_gui_bar *ptr_bar;
     char *buf;
@@ -1952,7 +1952,7 @@ gui_bar_create_default_input ()
  */
 
 void
-gui_bar_create_default_title ()
+gui_bar_create_default_title (void)
 {
     struct t_gui_bar *ptr_bar;
 
@@ -1974,7 +1974,7 @@ gui_bar_create_default_title ()
  */
 
 void
-gui_bar_create_default_status ()
+gui_bar_create_default_status (void)
 {
     struct t_gui_bar *ptr_bar;
 
@@ -1996,7 +1996,7 @@ gui_bar_create_default_status ()
  */
 
 void
-gui_bar_create_default_nicklist ()
+gui_bar_create_default_nicklist (void)
 {
     struct t_gui_bar *ptr_bar;
 
@@ -2018,7 +2018,7 @@ gui_bar_create_default_nicklist ()
  */
 
 void
-gui_bar_create_default ()
+gui_bar_create_default (void)
 {
     gui_bar_create_default_input ();
     gui_bar_create_default_title ();
@@ -2213,7 +2213,7 @@ gui_bar_free (struct t_gui_bar *bar)
  */
 
 void
-gui_bar_free_all ()
+gui_bar_free_all (void)
 {
     while (gui_bars)
     {
@@ -2383,7 +2383,7 @@ gui_bar_add_to_infolist (struct t_infolist *infolist,
  */
 
 void
-gui_bar_print_log ()
+gui_bar_print_log (void)
 {
     struct t_gui_bar *ptr_bar;
     int i, j;

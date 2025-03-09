@@ -67,7 +67,7 @@ gui_mouse_debug_set (int debug)
  */
 
 void
-gui_mouse_event_reset ()
+gui_mouse_event_reset (void)
 {
     gui_mouse_event_index = 0;
     gui_mouse_event_x[0] = 0;

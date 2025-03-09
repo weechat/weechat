@@ -437,7 +437,7 @@ buflist_hsignal_cb (const void *pointer, void *data, const char *signal,
  */
 
 int
-buflist_mouse_init ()
+buflist_mouse_init (void)
 {
     int i;
 
@@ -458,6 +458,6 @@ buflist_mouse_init ()
  */
 
 void
-buflist_mouse_end ()
+buflist_mouse_end (void)
 {
 }

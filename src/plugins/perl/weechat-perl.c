@@ -233,7 +233,7 @@ weechat_perl_hash_to_hashtable (SV *hash, int size, const char *type_keys,
  */
 
 void
-weechat_perl_output_flush ()
+weechat_perl_output_flush (void)
 {
     const char *ptr_command;
     char *temp_buffer, *command;
@@ -784,7 +784,7 @@ weechat_perl_unload_name (const char *name)
  */
 
 void
-weechat_perl_unload_all ()
+weechat_perl_unload_all (void)
 {
     while (perl_scripts)
     {

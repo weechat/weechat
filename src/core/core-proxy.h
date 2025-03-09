@@ -89,14 +89,14 @@ extern struct t_proxy *proxy_new (const char *name,
                                   const char *port,
                                   const char *username,
                                   const char *password);
-extern void proxy_use_temp_proxies ();
+extern void proxy_use_temp_proxies (void);
 extern void proxy_free (struct t_proxy *proxy);
-extern void proxy_free_all ();
+extern void proxy_free_all (void);
 extern struct t_hdata *proxy_hdata_proxy_cb (const void *pointer,
                                              void *data,
                                              const char *hdata_name);
 extern int proxy_add_to_infolist (struct t_infolist *infolist,
                                   struct t_proxy *proxy);
-extern void proxy_print_log ();
+extern void proxy_print_log (void);
 
 #endif /* WEECHAT_PROXY_H */

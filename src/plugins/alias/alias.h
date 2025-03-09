@@ -48,7 +48,7 @@ extern struct t_alias *alias_new (const char *name, const char *command,
                                   const char *completion);
 extern int alias_rename (struct t_alias *alias, const char *new_name);
 extern void alias_free (struct t_alias *alias);
-extern void alias_free_all ();
+extern void alias_free_all (void);
 extern int alias_add_to_infolist (struct t_infolist *infolist,
                                   struct t_alias *alias);
 

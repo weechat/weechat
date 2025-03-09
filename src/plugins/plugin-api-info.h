@@ -20,6 +20,6 @@
 #ifndef WEECHAT_PLUGIN_PLUGIN_API_INFO_H
 #define WEECHAT_PLUGIN_PLUGIN_API_INFO_H
 
-extern void plugin_api_info_init ();
+extern void plugin_api_info_init (void);
 
 #endif /* WEECHAT_PLUGIN_PLUGIN_API_INFO_H */

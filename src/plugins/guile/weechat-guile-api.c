@@ -621,7 +621,7 @@ weechat_guile_api_mkdir_parents (SCM directory, SCM mode)
 }
 
 SCM
-weechat_guile_api_list_new ()
+weechat_guile_api_list_new (void)
 {
     const char *result;
     SCM return_value;
@@ -3541,7 +3541,7 @@ weechat_guile_api_unhook (SCM hook)
 }
 
 SCM
-weechat_guile_api_unhook_all ()
+weechat_guile_api_unhook_all (void)
 {
     API_INIT_FUNC(1, "unhook_all", API_RETURN_ERROR);
 
@@ -3707,7 +3707,7 @@ weechat_guile_api_buffer_search (SCM plugin, SCM name)
 }
 
 SCM
-weechat_guile_api_buffer_search_main ()
+weechat_guile_api_buffer_search_main (void)
 {
     const char *result;
     SCM return_value;
@@ -3720,7 +3720,7 @@ weechat_guile_api_buffer_search_main ()
 }
 
 SCM
-weechat_guile_api_current_buffer ()
+weechat_guile_api_current_buffer (void)
 {
     const char *result;
     SCM return_value;
@@ -3892,7 +3892,7 @@ weechat_guile_api_line_search_by_id (SCM buffer, SCM id)
 }
 
 SCM
-weechat_guile_api_current_window ()
+weechat_guile_api_current_window (void)
 {
     const char *result;
     SCM return_value;
@@ -4652,7 +4652,7 @@ weechat_guile_api_info_get_hashtable (SCM info_name, SCM hash)
 }
 
 SCM
-weechat_guile_api_infolist_new ()
+weechat_guile_api_infolist_new (void)
 {
     const char *result;
     SCM return_value;

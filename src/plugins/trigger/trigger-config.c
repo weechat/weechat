@@ -485,7 +485,7 @@ trigger_config_create_option_temp (struct t_trigger *temp_trigger,
  */
 
 void
-trigger_config_use_temp_triggers ()
+trigger_config_use_temp_triggers (void)
 {
     struct t_trigger *ptr_temp_trigger, *next_temp_trigger;
     int i, num_options_ok;
@@ -684,7 +684,7 @@ trigger_config_reload_cb (const void *pointer, void *data,
  */
 
 int
-trigger_config_init ()
+trigger_config_init (void)
 {
     trigger_config_file = weechat_config_new (
         TRIGGER_CONFIG_PRIO_NAME,
@@ -799,7 +799,7 @@ trigger_config_init ()
  */
 
 int
-trigger_config_read ()
+trigger_config_read (void)
 {
     int rc;
 
@@ -815,7 +815,7 @@ trigger_config_read ()
  */
 
 int
-trigger_config_write ()
+trigger_config_write (void)
 {
     return weechat_config_write (trigger_config_file);
 }
@@ -825,7 +825,7 @@ trigger_config_write ()
  */
 
 void
-trigger_config_free ()
+trigger_config_free (void)
 {
     weechat_config_free (trigger_config_file);
     trigger_config_file = NULL;

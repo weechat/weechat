@@ -708,7 +708,7 @@ relay_remote_auto_connect_timer_cb (const void *pointer, void *data,
  */
 
 void
-relay_remote_auto_connect ()
+relay_remote_auto_connect (void)
 {
     weechat_hook_timer (1, 0, 1,
                         &relay_remote_auto_connect_timer_cb, NULL, NULL);
@@ -920,7 +920,7 @@ relay_remote_reconnect (struct t_relay_remote *remote)
  */
 
 void
-relay_remote_timer ()
+relay_remote_timer (void)
 {
     struct t_relay_remote *ptr_remote, *ptr_next_remote;
     time_t current_time;
@@ -949,7 +949,7 @@ relay_remote_timer ()
  */
 
 void
-relay_remote_disconnect_all ()
+relay_remote_disconnect_all (void)
 {
     struct t_relay_remote *ptr_remote;
 
@@ -1021,7 +1021,7 @@ relay_remote_free (struct t_relay_remote *remote)
  */
 
 void
-relay_remote_free_all ()
+relay_remote_free_all (void)
 {
     while (relay_remotes)
     {
@@ -1135,7 +1135,7 @@ relay_remote_add_to_infolist (struct t_infolist *infolist,
  */
 
 void
-relay_remote_print_log ()
+relay_remote_print_log (void)
 {
     struct t_relay_remote *ptr_remote;
 

@@ -1541,7 +1541,7 @@ gui_nicklist_print_log (struct t_gui_nick_group *group, int indent)
  */
 
 void
-gui_nicklist_end ()
+gui_nicklist_end (void)
 {
     if (gui_nicklist_hsignal)
     {

@@ -252,7 +252,7 @@ xfer_command_xfer (const void *pointer, void *data,
  */
 
 void
-xfer_command_init ()
+xfer_command_init (void)
 {
     struct t_hook *ptr_hook;
 

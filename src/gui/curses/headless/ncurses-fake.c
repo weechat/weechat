@@ -29,13 +29,13 @@ chtype acs_map[256];
 
 
 WINDOW *
-initscr ()
+initscr (void)
 {
     return stdscr;
 }
 
 int
-endwin ()
+endwin (void)
 {
     return OK;
 }
@@ -187,7 +187,7 @@ wclrtobot (WINDOW *win)
 }
 
 int
-refresh ()
+refresh (void)
 {
     return OK;
 }
@@ -238,31 +238,31 @@ init_pair (short pair, short f, short b)
 }
 
 bool
-has_colors ()
+has_colors (void)
 {
     return TRUE;
 }
 
 int
-cbreak ()
+cbreak (void)
 {
     return OK;
 }
 
 int
-start_color ()
+start_color (void)
 {
     return OK;
 }
 
 int
-noecho ()
+noecho (void)
 {
     return OK;
 }
 
 int
-clear ()
+clear (void)
 {
     return OK;
 }
@@ -276,7 +276,7 @@ wclear (WINDOW *win)
 }
 
 bool
-can_change_color ()
+can_change_color (void)
 {
     /* not supported in WeeChat anyway */
     return FALSE;
@@ -402,7 +402,7 @@ mvwvline (WINDOW *win, int y, int x, chtype ch, int n)
 }
 
 int
-raw ()
+raw (void)
 {
     return OK;
 }
@@ -418,12 +418,12 @@ wcolor_set (WINDOW *win, short pair, void *opts)
 }
 
 void
-cur_term ()
+cur_term (void)
 {
 }
 
 int
-use_default_colors ()
+use_default_colors (void)
 {
     return OK;
 }
@@ -438,7 +438,7 @@ resizeterm (int lines, int columns)
 }
 
 int
-getch ()
+getch (void)
 {
     return ERR;
 }

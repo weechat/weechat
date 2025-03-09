@@ -124,7 +124,7 @@ typing_bar_item_typing (const void *pointer, void *data,
  */
 
 void
-typing_bar_item_init ()
+typing_bar_item_init (void)
 {
     weechat_bar_item_new (TYPING_BAR_ITEM_NAME,
                           &typing_bar_item_typing, NULL, NULL);

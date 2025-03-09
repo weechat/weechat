@@ -166,7 +166,7 @@ extern int string_dyn_copy (char **string, const char *new_string);
 extern int string_dyn_concat (char **string, const char *add, int bytes);
 extern char *string_dyn_free (char **string, int free_string);
 extern const char *string_concat (const char *separator, ...);
-extern void string_init ();
-extern void string_end ();
+extern void string_init (void);
+extern void string_end (void);
 
 #endif /* WEECHAT_STRING_H */

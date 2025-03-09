@@ -1295,7 +1295,7 @@ plugin_unload_name (const char *name)
  */
 
 void
-plugin_unload_all ()
+plugin_unload_all (void)
 {
     int plugins_loaded;
 
@@ -1349,7 +1349,7 @@ plugin_reload_name (const char *name, int argc, char **argv)
  */
 
 void
-plugin_display_short_list ()
+plugin_display_short_list (void)
 {
     char **buf;
     struct t_weechat_plugin *ptr_plugin;
@@ -1413,7 +1413,7 @@ plugin_init (char *force_plugin_autoload, int argc, char *argv[])
  */
 
 void
-plugin_end ()
+plugin_end (void)
 {
     /* write plugins configuration options */
     plugin_config_write ();
@@ -1529,7 +1529,7 @@ plugin_add_to_infolist (struct t_infolist *infolist,
  */
 
 void
-plugin_print_log ()
+plugin_print_log (void)
 {
     struct t_weechat_plugin *ptr_plugin;
 

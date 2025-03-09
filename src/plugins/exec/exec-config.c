@@ -99,7 +99,7 @@ exec_config_reload_cb (const void *pointer, void *data,
  */
 
 int
-exec_config_init ()
+exec_config_init (void)
 {
     exec_config_file = weechat_config_new (EXEC_CONFIG_PRIO_NAME,
                                            &exec_config_reload_cb, NULL, NULL);
@@ -181,7 +181,7 @@ exec_config_init ()
  */
 
 int
-exec_config_read ()
+exec_config_read (void)
 {
     return weechat_config_read (exec_config_file);
 }
@@ -191,7 +191,7 @@ exec_config_read ()
  */
 
 int
-exec_config_write ()
+exec_config_write (void)
 {
     return weechat_config_write (exec_config_file);
 }
@@ -201,7 +201,7 @@ exec_config_write ()
  */
 
 void
-exec_config_free ()
+exec_config_free (void)
 {
     weechat_config_free (exec_config_file);
     exec_config_file = NULL;

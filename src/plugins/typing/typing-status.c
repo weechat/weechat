@@ -349,7 +349,7 @@ typing_status_nick_remove (struct t_gui_buffer *buffer, const char *nick)
  */
 
 void
-typing_status_end ()
+typing_status_end (void)
 {
     if (typing_status_self)
     {

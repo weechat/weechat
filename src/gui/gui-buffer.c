@@ -387,7 +387,7 @@ gui_buffer_notify_set (struct t_gui_buffer *buffer)
  */
 
 void
-gui_buffer_notify_set_all ()
+gui_buffer_notify_set_all (void)
 {
     struct t_gui_buffer *ptr_buffer;
 
@@ -617,7 +617,7 @@ gui_buffer_insert (struct t_gui_buffer *buffer)
  */
 
 long long
-gui_buffer_generate_id ()
+gui_buffer_generate_id (void)
 {
     struct timeval tv;
     long long id;
@@ -1181,7 +1181,7 @@ gui_buffer_new_user (const char *name, enum t_gui_buffer_type buffer_type)
  */
 
 void
-gui_buffer_user_set_callbacks ()
+gui_buffer_user_set_callbacks (void)
 {
     struct t_gui_buffer *ptr_buffer;
     const char *ptr_type;
@@ -2907,7 +2907,7 @@ gui_buffer_set_pointer (struct t_gui_buffer *buffer, const char *property,
  */
 
 void
-gui_buffer_compute_num_displayed ()
+gui_buffer_compute_num_displayed (void)
 {
     struct t_gui_buffer *ptr_buffer;
     struct t_gui_window *ptr_window;
@@ -2988,7 +2988,7 @@ gui_buffer_is_main (const char *plugin_name, const char *name)
  */
 
 struct t_gui_buffer *
-gui_buffer_search_main ()
+gui_buffer_search_main (void)
 {
     struct t_gui_buffer *ptr_buffer;
 
@@ -3411,7 +3411,7 @@ gui_buffer_clear (struct t_gui_buffer *buffer)
  */
 
 void
-gui_buffer_clear_all ()
+gui_buffer_clear_all (void)
 {
     struct t_gui_buffer *ptr_buffer;
 
@@ -3517,7 +3517,7 @@ gui_buffer_get_previous_active_buffer (struct t_gui_buffer *buffer,
  */
 
 int
-gui_buffer_visited_get_index_previous ()
+gui_buffer_visited_get_index_previous (void)
 {
     if ((gui_buffers_visited_count < 2) || (gui_buffers_visited_index == 0))
         return -1;
@@ -3535,7 +3535,7 @@ gui_buffer_visited_get_index_previous ()
  */
 
 int
-gui_buffer_visited_get_index_next ()
+gui_buffer_visited_get_index_next (void)
 {
     if ((gui_buffers_visited_count < 2)
         || (gui_buffers_visited_index < 0)
@@ -3645,7 +3645,7 @@ gui_buffer_visited_remove_by_buffer (struct t_gui_buffer *buffer)
  */
 
 void
-gui_buffer_visited_remove_all ()
+gui_buffer_visited_remove_all (void)
 {
     while (gui_buffers_visited)
     {
@@ -4716,7 +4716,7 @@ gui_buffer_unmerge (struct t_gui_buffer *buffer, int number)
  */
 
 void
-gui_buffer_unmerge_all ()
+gui_buffer_unmerge_all (void)
 {
     struct t_gui_buffer *ptr_buffer, *ptr_next_buffer;
     int number;
@@ -4761,7 +4761,7 @@ gui_buffer_hide (struct t_gui_buffer *buffer)
  */
 
 void
-gui_buffer_hide_all ()
+gui_buffer_hide_all (void)
 {
     struct t_gui_buffer *ptr_buffer;
 
@@ -4794,7 +4794,7 @@ gui_buffer_unhide (struct t_gui_buffer *buffer)
  */
 
 void
-gui_buffer_unhide_all ()
+gui_buffer_unhide_all (void)
 {
     struct t_gui_buffer *ptr_buffer;
 
@@ -4810,7 +4810,7 @@ gui_buffer_unhide_all ()
  */
 
 void
-gui_buffer_sort_by_layout_number ()
+gui_buffer_sort_by_layout_number (void)
 {
     struct t_gui_buffer *ptr_buffer, *ptr_next_buffer;
     struct t_gui_buffer *extra_buffers, *last_extra_buffer;
@@ -5720,7 +5720,7 @@ gui_buffer_dump_hexa (struct t_gui_buffer *buffer)
  */
 
 void
-gui_buffer_print_log ()
+gui_buffer_print_log (void)
 {
     struct t_gui_buffer *ptr_buffer;
     struct t_gui_line *ptr_line;

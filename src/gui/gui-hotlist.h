@@ -64,8 +64,8 @@ extern struct t_gui_hotlist *gui_hotlist_add (struct t_gui_buffer *buffer,
                                               struct timeval *creation_time,
                                               int check_conditions);
 extern void gui_hotlist_restore_buffer (struct t_gui_buffer *buffer);
-extern void gui_hotlist_restore_all_buffers ();
-extern void gui_hotlist_resort ();
+extern void gui_hotlist_restore_all_buffers (void);
+extern void gui_hotlist_resort (void);
 extern void gui_hotlist_clear (int level_mask);
 extern void gui_hotlist_clear_level_string (struct t_gui_buffer *buffer,
                                             const char *str_level_mask);
@@ -76,7 +76,7 @@ extern struct t_hdata *gui_hotlist_hdata_hotlist_cb (const void *pointer,
                                                      const char *hdata_name);
 extern int gui_hotlist_add_to_infolist (struct t_infolist *infolist,
                                         struct t_gui_hotlist *hotlist);
-extern void gui_hotlist_print_log ();
-extern void gui_hotlist_end ();
+extern void gui_hotlist_print_log (void);
+extern void gui_hotlist_end (void);
 
 #endif /* WEECHAT_GUI_HOTLIST_H */

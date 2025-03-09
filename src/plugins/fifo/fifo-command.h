@@ -20,6 +20,6 @@
 #ifndef WEECHAT_PLUGIN_FIFO_COMMAND_H
 #define WEECHAT_PLUGIN_FIFO_COMMAND_H
 
-extern void fifo_command_init ();
+extern void fifo_command_init (void);
 
 #endif /* WEECHAT_PLUGIN_FIFO_COMMAND_H */

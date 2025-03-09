@@ -604,7 +604,7 @@ trigger_completion_add_arguments_cb (const void *pointer, void *data,
  */
 
 void
-trigger_completion_init ()
+trigger_completion_init (void)
 {
     weechat_hook_completion ("trigger_names",
                              N_("triggers"),

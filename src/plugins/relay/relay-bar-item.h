@@ -20,6 +20,6 @@
 #ifndef WEECHAT_PLUGIN_RELAY_BAR_ITEM_H
 #define WEECHAT_PLUGIN_RELAY_BAR_ITEM_H
 
-extern void relay_bar_item_init ();
+extern void relay_bar_item_init (void);
 
 #endif /* WEECHAT_PLUGIN_RELAY_BAR_ITEM_H */

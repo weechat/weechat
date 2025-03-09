@@ -48,11 +48,11 @@ extern int network_num_certs_system;
 extern int network_num_certs_user;
 extern int network_num_certs;
 
-extern void network_init_gcrypt ();
+extern void network_init_gcrypt (void);
 extern void network_load_ca_files (int force_display);
 extern void network_reload_ca_files (int force_display);
-extern void network_init_gnutls ();
-extern void network_end ();
+extern void network_init_gnutls (void);
+extern void network_end (void);
 extern int network_pass_proxy (const char *proxy, int sock,
                                const char *address, int port);
 extern int network_connect_to (const char *proxy, struct sockaddr *address,

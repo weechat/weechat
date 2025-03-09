@@ -43,7 +43,7 @@ extern int secure_decrypt_data (const char *buffer, int length_buffer,
                                 const char *passphrase, char **decrypted,
                                 int *length_decrypted);
 extern int secure_decrypt_data_not_decrypted (const char *passphrase);
-extern int secure_init ();
-extern void secure_end ();
+extern int secure_init (void);
+extern void secure_end (void);
 
 #endif /* WEECHAT_SECURE_H */

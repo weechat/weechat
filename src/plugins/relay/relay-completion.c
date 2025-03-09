@@ -199,7 +199,7 @@ relay_completion_remotes_cb (const void *pointer, void *data,
  */
 
 void
-relay_completion_init ()
+relay_completion_init (void)
 {
     weechat_hook_completion ("relay_protocol_name",
                              N_("all possible protocol.name for relay plugin"),

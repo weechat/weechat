@@ -2125,7 +2125,7 @@ plugin_api_infolist_window_cb (const void *pointer, void *data,
  */
 
 void
-plugin_api_info_init ()
+plugin_api_info_init (void)
 {
     /* WeeChat core info hooks */
     hook_info (NULL, "version",

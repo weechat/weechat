@@ -1383,7 +1383,7 @@ relay_remote_network_url_handshake_cb (const void *pointer,
  */
 
 char *
-relay_remote_network_get_handshake_request ()
+relay_remote_network_get_handshake_request (void)
 {
     cJSON *json, *json_algos;
     char *result;

@@ -57,6 +57,6 @@ extern struct t_typing_status *typing_status_nick_search (struct t_gui_buffer *b
                                                           const char *nick);
 extern void typing_status_nick_remove (struct t_gui_buffer *buffer,
                                        const char *nick);
-extern void typing_status_end ();
+extern void typing_status_end (void);
 
 #endif /* WEECHAT_PLUGIN_TYPING_STATUS_H */

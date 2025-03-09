@@ -32,7 +32,7 @@
  */
 
 const char *
-version_get_name ()
+version_get_name (void)
 {
     return PACKAGE_NAME;
 }
@@ -47,7 +47,7 @@ version_get_name ()
  */
 
 const char *
-version_get_version ()
+version_get_version (void)
 {
     return PACKAGE_VERSION;
 }
@@ -62,7 +62,7 @@ version_get_version ()
  */
 
 const char *
-version_get_name_version ()
+version_get_name_version (void)
 {
     return PACKAGE_STRING;
 }
@@ -76,7 +76,7 @@ version_get_name_version ()
  */
 
 const char *
-version_get_git ()
+version_get_git (void)
 {
     return PACKAGE_VERSION_GIT;
 }
@@ -93,7 +93,7 @@ version_get_git ()
  */
 
 const char *
-version_get_version_with_git ()
+version_get_version_with_git (void)
 {
     const char *git_version;
     static char version[256];
@@ -117,7 +117,7 @@ version_get_version_with_git ()
  */
 
 const char *
-version_get_compilation_date ()
+version_get_compilation_date (void)
 {
     return __DATE__;
 }
@@ -130,7 +130,7 @@ version_get_compilation_date ()
  */
 
 const char *
-version_get_compilation_time ()
+version_get_compilation_time (void)
 {
     return __TIME__;
 }
@@ -143,7 +143,7 @@ version_get_compilation_time ()
  */
 
 const char *
-version_get_compilation_date_time ()
+version_get_compilation_date_time (void)
 {
     return __DATE__ " " __TIME__;
 }

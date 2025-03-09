@@ -85,7 +85,7 @@ secure_buffer_display_data (void *data,
  */
 
 void
-secure_buffer_display ()
+secure_buffer_display (void)
 {
     int line, count, count_encrypted, hash_algo;
     char str_supported[1024];
@@ -197,7 +197,7 @@ secure_buffer_close_cb (const void *pointer, void *data,
  */
 
 void
-secure_buffer_assign ()
+secure_buffer_assign (void)
 {
     if (!secure_buffer)
     {
@@ -215,7 +215,7 @@ secure_buffer_assign ()
  */
 
 void
-secure_buffer_open ()
+secure_buffer_open (void)
 {
     struct t_hashtable *properties;
 

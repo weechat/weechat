@@ -159,7 +159,7 @@ t_callback_hook *hook_callback_print_log[HOOK_NUM_TYPES] =
  */
 
 void
-hook_init ()
+hook_init (void)
 {
     int type, sock[2], rc;
 
@@ -367,7 +367,7 @@ hook_remove_from_list (struct t_hook *hook)
  */
 
 void
-hook_remove_deleted ()
+hook_remove_deleted (void)
 {
     int type;
     struct t_hook *ptr_hook, *next_hook;
@@ -458,7 +458,7 @@ hook_valid (struct t_hook *hook)
  */
 
 void
-hook_exec_start ()
+hook_exec_start (void)
 {
     hook_exec_recursion++;
 }
@@ -468,7 +468,7 @@ hook_exec_start ()
  */
 
 void
-hook_exec_end ()
+hook_exec_end (void)
 {
     if (hook_exec_recursion > 0)
         hook_exec_recursion--;
@@ -774,7 +774,7 @@ unhook_all_plugin (struct t_weechat_plugin *plugin, const char *subplugin)
  */
 
 void
-unhook_all ()
+unhook_all (void)
 {
     int type;
     struct t_hook *ptr_hook, *next_hook;
@@ -939,7 +939,7 @@ hook_add_to_infolist (struct t_infolist *infolist, struct t_hook *pointer,
  */
 
 void
-hook_print_log ()
+hook_print_log (void)
 {
     int type;
     struct t_hook *ptr_hook;

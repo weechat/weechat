@@ -901,7 +901,7 @@ script_buffer_get_window_info (struct t_gui_window *window,
  */
 
 void
-script_buffer_check_line_outside_window ()
+script_buffer_check_line_outside_window (void)
 {
     struct t_gui_window *window;
     int start_line_y, chat_height;
@@ -1073,7 +1073,7 @@ script_buffer_close_cb (const void *pointer, void *data,
  */
 
 void
-script_buffer_set_callbacks ()
+script_buffer_set_callbacks (void)
 {
     struct t_gui_buffer *ptr_buffer;
 
@@ -1142,7 +1142,7 @@ script_buffer_set_keys (struct t_hashtable *hashtable)
  */
 
 void
-script_buffer_set_localvar_filter ()
+script_buffer_set_localvar_filter (void)
 {
     if (!script_buffer)
         return;
@@ -1156,7 +1156,7 @@ script_buffer_set_localvar_filter ()
  */
 
 void
-script_buffer_open ()
+script_buffer_open (void)
 {
     struct t_hashtable *buffer_props;
 

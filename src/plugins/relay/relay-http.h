@@ -88,7 +88,7 @@ struct t_relay_http_response
 };
 
 extern void relay_http_request_reinit (struct t_relay_http_request *request);
-extern struct t_relay_http_request *relay_http_request_alloc ();
+extern struct t_relay_http_request *relay_http_request_alloc (void);
 extern int relay_http_get_param_boolean (struct t_relay_http_request *request,
                                          const char *name, int default_value);
 extern long relay_http_get_param_long (struct t_relay_http_request *request,
@@ -112,7 +112,7 @@ extern int relay_http_send_error_json (struct t_relay_client *client,
                                        const char *headers,
                                        const char *format, ...);
 extern void relay_http_request_free (struct t_relay_http_request *request);
-extern struct t_relay_http_response *relay_http_response_alloc ();
+extern struct t_relay_http_response *relay_http_response_alloc (void);
 extern struct t_relay_http_response *relay_http_parse_response (const char *data);
 extern void relay_http_response_free (struct t_relay_http_response *response);
 extern void relay_http_print_log_request (struct t_relay_http_request *request);

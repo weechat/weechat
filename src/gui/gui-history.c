@@ -118,7 +118,7 @@ gui_history_buffer_add (struct t_gui_buffer *buffer, const char *string)
  */
 
 void
-gui_history_global_remove_oldest ()
+gui_history_global_remove_oldest (void)
 {
     struct t_gui_buffer *ptr_buffer;
     struct t_gui_history *ptr_history;
@@ -300,7 +300,7 @@ gui_history_search (struct t_gui_buffer *buffer,
  */
 
 void
-gui_history_global_free ()
+gui_history_global_free (void)
 {
     struct t_gui_history *ptr_history;
 

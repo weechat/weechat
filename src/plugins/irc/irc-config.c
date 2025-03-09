@@ -228,7 +228,7 @@ irc_config_get_server_from_option_name (const char *name)
  */
 
 void
-irc_config_compute_nick_colors ()
+irc_config_compute_nick_colors (void)
 {
     struct t_irc_server *ptr_server;
     struct t_irc_channel *ptr_channel;
@@ -3174,7 +3174,7 @@ irc_config_update_cb (const void *pointer, void *data,
  */
 
 int
-irc_config_init ()
+irc_config_init (void)
 {
     int i;
 
@@ -4249,7 +4249,7 @@ irc_config_init ()
  */
 
 int
-irc_config_read ()
+irc_config_read (void)
 {
     int rc;
 
@@ -4289,7 +4289,7 @@ irc_config_write (int write_temp_servers)
  */
 
 void
-irc_config_free ()
+irc_config_free (void)
 {
     weechat_config_free (irc_config_file);
     irc_config_file = NULL;

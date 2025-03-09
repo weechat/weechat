@@ -35,7 +35,7 @@ struct t_weelist
     int size;                          /* number of items in list           */
 };
 
-extern struct t_weelist *weelist_new ();
+extern struct t_weelist *weelist_new (void);
 extern struct t_weelist_item *weelist_add (struct t_weelist *weelist,
                                            const char *data, const char *where,
                                            void *user_data);

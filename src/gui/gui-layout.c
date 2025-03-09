@@ -198,7 +198,7 @@ gui_layout_buffer_remove_all (struct t_gui_layout *layout)
  */
 
 void
-gui_layout_buffer_reset ()
+gui_layout_buffer_reset (void)
 {
     struct t_gui_buffer *ptr_buffer;
 
@@ -419,7 +419,7 @@ gui_layout_window_remove_all (struct t_gui_layout *layout)
  */
 
 void
-gui_layout_window_reset ()
+gui_layout_window_reset (void)
 {
     struct t_gui_window *ptr_win;
 
@@ -652,7 +652,7 @@ gui_layout_window_assign_buffer (struct t_gui_buffer *buffer)
  */
 
 void
-gui_layout_window_assign_all_buffers ()
+gui_layout_window_assign_all_buffers (void)
 {
     struct t_gui_window *ptr_win;
     struct t_gui_buffer *ptr_buffer;
@@ -768,7 +768,7 @@ gui_layout_window_apply (struct t_gui_layout *layout,
  */
 
 void
-gui_layout_store_on_exit ()
+gui_layout_store_on_exit (void)
 {
     struct t_gui_layout *ptr_layout;
 
@@ -874,7 +874,7 @@ gui_layout_remove (struct t_gui_layout *layout)
  */
 
 void
-gui_layout_remove_all ()
+gui_layout_remove_all (void)
 {
     while (gui_layouts)
     {
@@ -1116,7 +1116,7 @@ gui_layout_print_log_window (struct t_gui_layout_window *layout_window,
  */
 
 void
-gui_layout_print_log ()
+gui_layout_print_log (void)
 {
     struct t_gui_layout *ptr_layout;
     struct t_gui_layout_buffer *ptr_layout_buffer;

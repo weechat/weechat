@@ -74,7 +74,7 @@ struct t_gui_lines
 
 /* line functions */
 
-extern struct t_gui_lines *gui_line_lines_alloc ();
+extern struct t_gui_lines *gui_line_lines_alloc (void);
 extern void gui_line_lines_free (struct t_gui_lines *lines);
 extern void gui_line_tags_alloc (struct t_gui_line_data *line_data,
                                  const char *tags);

@@ -86,7 +86,7 @@ char *gui_chat_pipe_color_string[GUI_CHAT_PIPE_NUM_COLORS] =
  */
 
 void
-gui_chat_init ()
+gui_chat_init (void)
 {
     char *default_prefix[GUI_CHAT_NUM_PREFIXES] =
         { GUI_CHAT_PREFIX_ERROR_DEFAULT, GUI_CHAT_PREFIX_NETWORK_DEFAULT,
@@ -114,7 +114,7 @@ gui_chat_init ()
  */
 
 void
-gui_chat_prefix_build ()
+gui_chat_prefix_build (void)
 {
     const char *ptr_prefix;
     char prefix[512], *pos_color;
@@ -525,7 +525,7 @@ gui_chat_get_time_string (time_t date, int date_usec, int highlight)
  */
 
 int
-gui_chat_get_time_length ()
+gui_chat_get_time_length (void)
 {
     struct timeval tv_now;
     char *text_time;
@@ -553,7 +553,7 @@ gui_chat_get_time_length ()
  */
 
 void
-gui_chat_change_time_format ()
+gui_chat_change_time_format (void)
 {
     struct t_gui_buffer *ptr_buffer;
     struct t_gui_line *ptr_line;
@@ -808,7 +808,7 @@ gui_chat_pipe_handle_line (struct t_gui_line *line)
  */
 
 void
-gui_chat_pipe_end ()
+gui_chat_pipe_end (void)
 {
     struct t_gui_buffer *pipe_buffer;
     struct t_hashtable *hashtable;
@@ -1492,7 +1492,7 @@ gui_chat_hsignal_quote_line_cb (const void *pointer, void *data,
  */
 
 void
-gui_chat_end ()
+gui_chat_end (void)
 {
     int i;
 

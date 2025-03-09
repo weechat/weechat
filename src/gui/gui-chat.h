@@ -98,8 +98,8 @@ extern int gui_chat_display_tags;
 
 /* chat functions */
 
-extern void gui_chat_init ();
-extern void gui_chat_prefix_build ();
+extern void gui_chat_init (void);
+extern void gui_chat_prefix_build (void);
 extern int gui_chat_strlen (const char *string);
 extern int gui_chat_strlen_screen (const char *string);
 extern const char *gui_chat_string_add_offset (const char *string, int offset);
@@ -115,12 +115,12 @@ extern void gui_chat_get_word_info (struct t_gui_window *window,
                                     int *word_length);
 extern char *gui_chat_get_time_string (time_t date, int date_usec,
                                        int highlight);
-extern int gui_chat_get_time_length ();
-extern void gui_chat_change_time_format ();
+extern int gui_chat_get_time_length (void);
+extern void gui_chat_change_time_format (void);
 extern int gui_chat_buffer_valid (struct t_gui_buffer *buffer,
                                   int buffer_type);
 extern int gui_chat_pipe_search_color (const char *color);
-extern void gui_chat_pipe_end ();
+extern void gui_chat_pipe_end (void);
 extern void gui_chat_printf_datetime_tags (struct t_gui_buffer *buffer,
                                            time_t date, int date_usec,
                                            const char *tags,
@@ -134,7 +134,7 @@ extern void gui_chat_print_lines_waiting_buffer (FILE *f);
 extern int gui_chat_hsignal_quote_line_cb (const void *pointer, void *data,
                                            const char *signal,
                                            struct t_hashtable *hashtable);
-extern void gui_chat_end ();
+extern void gui_chat_end (void);
 
 /* chat functions (GUI dependent) */
 

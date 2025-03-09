@@ -350,7 +350,7 @@ alias_command_cb (const void *pointer, void *data,
  */
 
 void
-alias_command_init ()
+alias_command_init (void)
 {
     struct t_hook *ptr_hook;
 

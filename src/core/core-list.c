@@ -40,7 +40,7 @@
  */
 
 struct t_weelist *
-weelist_new ()
+weelist_new (void)
 {
     struct t_weelist *new_weelist;
 

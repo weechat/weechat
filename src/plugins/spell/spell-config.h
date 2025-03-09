@@ -46,9 +46,9 @@ extern int *spell_length_commands_to_check;
 
 extern struct t_config_option *spell_config_get_dict (const char *name);
 extern int spell_config_set_dict (const char *name, const char *value);
-extern int spell_config_init ();
-extern int spell_config_read ();
-extern int spell_config_write ();
-extern void spell_config_free ();
+extern int spell_config_init (void);
+extern int spell_config_read (void);
+extern int spell_config_write (void);
+extern void spell_config_free (void);
 
 #endif /* WEECHAT_PLUGIN_SPELL_CONFIG_H */

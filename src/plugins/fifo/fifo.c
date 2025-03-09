@@ -62,7 +62,7 @@ int fifo_fd_cb (const void *pointer, void *data, int fd);
  */
 
 void
-fifo_create ()
+fifo_create (void)
 {
     struct stat st;
     struct t_hashtable *options;
@@ -146,7 +146,7 @@ fifo_create ()
  */
 
 void
-fifo_remove ()
+fifo_remove (void)
 {
     int fifo_found;
 

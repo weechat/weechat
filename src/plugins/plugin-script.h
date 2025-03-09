@@ -122,8 +122,8 @@ struct t_plugin_script_data
     void (*callback_load_file) (void *data, const char *filename);
 
     /* functions */
-    void (*init_before_autoload) ();
-    void (*unload_all) ();
+    void (*init_before_autoload) (void);
+    void (*unload_all) (void);
 };
 
 extern struct t_weechat_script_constant weechat_script_constants[];

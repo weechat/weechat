@@ -193,7 +193,7 @@ charset_config_create_option (const void *pointer, void *data,
  */
 
 int
-charset_config_init ()
+charset_config_init (void)
 {
     struct t_config_section *ptr_section;
 
@@ -281,7 +281,7 @@ charset_config_init ()
  */
 
 int
-charset_config_read ()
+charset_config_read (void)
 {
     return weechat_config_read (charset_config_file);
 }
@@ -291,7 +291,7 @@ charset_config_read ()
  */
 
 int
-charset_config_write ()
+charset_config_write (void)
 {
     return weechat_config_write (charset_config_file);
 }
@@ -465,7 +465,7 @@ charset_set (struct t_config_section *section, const char *type,
  */
 
 void
-charset_display_charsets ()
+charset_display_charsets (void)
 {
     weechat_printf (NULL,
                     _("%s: terminal: %s, internal: %s"),

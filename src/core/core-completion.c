@@ -2227,7 +2227,7 @@ completion_list_add_eval_variables_cb (const void *pointer, void *data,
  */
 
 void
-completion_init ()
+completion_init (void)
 {
     hook_completion (NULL, "buffers_names", /* formerly "%b" */
                      N_("names of buffers"),

@@ -68,7 +68,7 @@ irc_debug_signal_debug_dump_cb (const void *pointer, void *data,
  */
 
 void
-irc_debug_init ()
+irc_debug_init (void)
 {
     weechat_hook_signal ("debug_dump",
                          &irc_debug_signal_debug_dump_cb, NULL, NULL);

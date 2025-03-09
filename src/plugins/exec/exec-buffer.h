@@ -20,7 +20,7 @@
 #ifndef WEECHAT_PLUGIN_EXEC_BUFFER_H
 #define WEECHAT_PLUGIN_EXEC_BUFFER_H
 
-extern void exec_buffer_set_callbacks ();
+extern void exec_buffer_set_callbacks (void);
 extern struct t_gui_buffer *exec_buffer_new (const char *name,
                                              int free_content,
                                              int clear_buffer,

@@ -338,7 +338,7 @@ plugin_config_delete_desc (const void *pointer, void *data,
  */
 
 void
-plugin_config_init ()
+plugin_config_init (void)
 {
     plugin_config_file = config_file_new (NULL, PLUGIN_CONFIG_PRIO_NAME,
                                           &plugin_config_reload, NULL, NULL);
@@ -366,7 +366,7 @@ plugin_config_init ()
  */
 
 int
-plugin_config_read ()
+plugin_config_read (void)
 {
     return config_file_read (plugin_config_file);
 }
@@ -376,7 +376,7 @@ plugin_config_read ()
  */
 
 int
-plugin_config_write ()
+plugin_config_write (void)
 {
     return config_file_write (plugin_config_file);
 }
@@ -386,7 +386,7 @@ plugin_config_write ()
  */
 
 void
-plugin_config_end ()
+plugin_config_end (void)
 {
     /* free all plugin configuration options and descriptions */
     config_file_section_free_options (plugin_config_section_var);

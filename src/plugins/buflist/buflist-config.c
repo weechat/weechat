@@ -105,7 +105,7 @@ buflist_config_reload (const void *pointer, void *data,
  */
 
 void
-buflist_config_free_signals_refresh ()
+buflist_config_free_signals_refresh (void)
 {
     int i;
 
@@ -169,7 +169,7 @@ buflist_config_signal_buffer_cb (const void *pointer, void *data,
  */
 
 void
-buflist_config_hook_signals_refresh ()
+buflist_config_hook_signals_refresh (void)
 {
     char **all_signals, **signals;
     const char *ptr_signals_refresh;
@@ -469,7 +469,7 @@ buflist_config_change_format (const void *pointer, void *data,
  */
 
 int
-buflist_config_init ()
+buflist_config_init (void)
 {
     buflist_config_file = weechat_config_new (
         BUFLIST_CONFIG_PRIO_NAME,
@@ -804,7 +804,7 @@ buflist_config_init ()
  */
 
 int
-buflist_config_read ()
+buflist_config_read (void)
 {
     int rc;
 
@@ -825,7 +825,7 @@ buflist_config_read ()
  */
 
 int
-buflist_config_write ()
+buflist_config_write (void)
 {
     return weechat_config_write (buflist_config_file);
 }
@@ -835,7 +835,7 @@ buflist_config_write ()
  */
 
 void
-buflist_config_free ()
+buflist_config_free (void)
 {
     int i;
 

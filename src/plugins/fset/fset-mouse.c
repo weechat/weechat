@@ -311,7 +311,7 @@ fset_mouse_hsignal_cb (const void *pointer, void *data, const char *signal,
  */
 
 int
-fset_mouse_init ()
+fset_mouse_init (void)
 {
     struct t_hashtable *keys;
 
@@ -356,6 +356,6 @@ fset_mouse_init ()
  */
 
 void
-fset_mouse_end ()
+fset_mouse_end (void)
 {
 }

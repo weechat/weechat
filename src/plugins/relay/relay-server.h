@@ -70,9 +70,9 @@ extern void relay_server_update_path (struct t_relay_server *server,
                                       const char *path);
 extern void relay_server_update_port (struct t_relay_server *server, int port);
 extern void relay_server_free (struct t_relay_server *server);
-extern void relay_server_free_all ();
+extern void relay_server_free_all (void);
 extern int relay_server_add_to_infolist (struct t_infolist *infolist,
                                          struct t_relay_server *server);
-extern void relay_server_print_log ();
+extern void relay_server_print_log (void);
 
 #endif /* WEECHAT_PLUGIN_RELAY_SERVER_H */

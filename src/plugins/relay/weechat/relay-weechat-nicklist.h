@@ -47,7 +47,7 @@ struct t_relay_weechat_nicklist
     struct t_relay_weechat_nicklist_item *items; /* nicklist items          */
 };
 
-extern struct t_relay_weechat_nicklist *relay_weechat_nicklist_new ();
+extern struct t_relay_weechat_nicklist *relay_weechat_nicklist_new (void);
 extern void relay_weechat_nicklist_add_item (struct t_relay_weechat_nicklist *nicklist,
                                              char diff,
                                              struct t_gui_nick_group *group,

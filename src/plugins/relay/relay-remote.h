@@ -103,21 +103,21 @@ extern struct t_relay_remote *relay_remote_new_with_infolist (struct t_infolist 
 extern void relay_remote_set_status (struct t_relay_remote *remote,
                                      enum t_relay_status status);
 extern int relay_remote_connect (struct t_relay_remote *remote);
-extern void relay_remote_auto_connect ();
+extern void relay_remote_auto_connect (void);
 extern int relay_remote_send (struct t_relay_remote *remote, const char *json);
 extern int relay_remote_disconnect (struct t_relay_remote *remote);
 extern void relay_remote_reconnect_schedule (struct t_relay_remote *remote);
 extern int relay_remote_reconnect (struct t_relay_remote *remote);
-extern void relay_remote_timer ();
-extern void relay_remote_disconnect_all ();
+extern void relay_remote_timer (void);
+extern void relay_remote_disconnect_all (void);
 extern int relay_remote_rename (struct t_relay_remote *remote, const char *name);
 extern void relay_remote_buffer_input (struct t_gui_buffer *buffer,
                                        const char *input_data);
 extern void relay_remote_free (struct t_relay_remote *remote);
-extern void relay_remote_free_all ();
+extern void relay_remote_free_all (void);
 extern int relay_remote_add_to_infolist (struct t_infolist *infolist,
                                          struct t_relay_remote *remote,
                                          int force_disconnected_state);
-extern void relay_remote_print_log ();
+extern void relay_remote_print_log (void);
 
 #endif /* WEECHAT_PLUGIN_RELAY_REMOTE_H */

@@ -105,7 +105,7 @@ trigger_buffer_set_filter (const char *filter)
  */
 
 void
-trigger_buffer_set_title ()
+trigger_buffer_set_title (void)
 {
     const char *ptr_filter;
     char title[1024];
@@ -174,7 +174,7 @@ trigger_buffer_close_cb (const void *pointer, void *data,
  */
 
 void
-trigger_buffer_set_callbacks ()
+trigger_buffer_set_callbacks (void)
 {
     struct t_gui_buffer *ptr_buffer;
 
@@ -383,7 +383,7 @@ trigger_buffer_display_trigger (struct t_trigger *trigger,
  */
 
 void
-trigger_buffer_end ()
+trigger_buffer_end (void)
 {
     if (trigger_buffer)
     {

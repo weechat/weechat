@@ -139,7 +139,7 @@ alias_info_infolist_alias_default_cb (const void *pointer, void *data,
  */
 
 void
-alias_info_init ()
+alias_info_init (void)
 {
     weechat_hook_infolist (
         "alias", N_("list of aliases"),

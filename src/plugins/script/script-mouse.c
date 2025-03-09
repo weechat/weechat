@@ -116,7 +116,7 @@ script_mouse_focus_chat_cb (const void *pointer, void *data,
  */
 
 int
-script_mouse_init ()
+script_mouse_init (void)
 {
     struct t_hashtable *keys;
 
@@ -160,6 +160,6 @@ script_mouse_init ()
  */
 
 void
-script_mouse_end ()
+script_mouse_end (void)
 {
 }

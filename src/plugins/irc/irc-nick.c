@@ -465,7 +465,7 @@ irc_nick_nicklist_set (struct t_irc_channel *channel,
  */
 
 void
-irc_nick_nicklist_set_prefix_color_all ()
+irc_nick_nicklist_set_prefix_color_all (void)
 {
     struct t_irc_server *ptr_server;
     struct t_irc_channel *ptr_channel;
@@ -493,7 +493,7 @@ irc_nick_nicklist_set_prefix_color_all ()
  */
 
 void
-irc_nick_nicklist_set_color_all ()
+irc_nick_nicklist_set_color_all (void)
 {
     struct t_irc_server *ptr_server;
     struct t_irc_channel *ptr_channel;

@@ -117,7 +117,7 @@ log_open (const char *filename, const char *mode)
  */
 
 void
-log_init ()
+log_init (void)
 {
     if (!log_open (NULL, "w"))
     {
@@ -228,7 +228,7 @@ log_printf_hexa (const char *spaces, const char *string)
  */
 
 void
-log_close ()
+log_close (void)
 {
     /* close log file */
     if (weechat_log_file)
@@ -256,7 +256,7 @@ log_close ()
  */
 
 int
-log_crash_rename ()
+log_crash_rename (void)
 {
     char *old_name, *new_name;
     time_t time_now;
