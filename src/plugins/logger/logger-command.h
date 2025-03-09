@@ -20,6 +20,6 @@
 #ifndef WEECHAT_PLUGIN_LOGGER_COMMAND_H
 #define WEECHAT_PLUGIN_LOGGER_COMMAND_H
 
-extern void logger_command_init ();
+extern void logger_command_init (void);
 
 #endif /* WEECHAT_PLUGIN_LOGGER_COMMAND_H */

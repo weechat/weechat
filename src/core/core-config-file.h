@@ -205,7 +205,7 @@ extern int config_file_set_version (struct t_config_file *config_file,
                                                                            struct t_hashtable *data_read),
                                     const void *callback_update_pointer,
                                     void *callback_update_data);
-extern struct t_arraylist *config_file_get_configs_by_priority ();
+extern struct t_arraylist *config_file_get_configs_by_priority (void);
 extern struct t_config_section *config_file_new_section (struct t_config_file *config_file,
                                                          const char *name,
                                                          int user_can_add_options,
@@ -340,7 +340,7 @@ extern void config_file_option_free (struct t_config_option *option,
 extern void config_file_section_free_options (struct t_config_section *section);
 extern void config_file_section_free (struct t_config_section *section);
 extern void config_file_free (struct t_config_file *config_file);
-extern void config_file_free_all ();
+extern void config_file_free_all (void);
 extern void config_file_free_all_plugin (struct t_weechat_plugin *plugin);
 extern struct t_hdata *config_file_hdata_config_file_cb (const void *pointer,
                                                          void *data,
@@ -353,6 +353,6 @@ extern struct t_hdata *config_file_hdata_config_option_cb (const void *pointer,
                                                            const char *hdata_name);
 extern int config_file_add_to_infolist (struct t_infolist *infolist,
                                         const char *option_name);
-extern void config_file_print_log ();
+extern void config_file_print_log (void);
 
 #endif /* WEECHAT_CONFIG_FILE_H */

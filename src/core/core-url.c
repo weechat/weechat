@@ -1293,7 +1293,7 @@ weeurl_option_add_to_infolist (struct t_infolist *infolist,
  */
 
 void
-weeurl_init ()
+weeurl_init (void)
 {
     curl_global_init (CURL_GLOBAL_ALL);
 }
@@ -1303,7 +1303,7 @@ weeurl_init ()
  */
 
 void
-weeurl_end ()
+weeurl_end (void)
 {
     curl_global_cleanup ();
 }

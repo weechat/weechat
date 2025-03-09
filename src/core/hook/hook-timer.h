@@ -51,8 +51,8 @@ extern struct t_hook *hook_timer (struct t_weechat_plugin *plugin,
                                   t_hook_callback_timer *callback,
                                   const void *callback_pointer,
                                   void *callback_data);
-extern int hook_timer_get_time_to_next ();
-extern void hook_timer_exec ();
+extern int hook_timer_get_time_to_next (void);
+extern void hook_timer_exec (void);
 extern void hook_timer_free_data (struct t_hook *hook);
 extern int hook_timer_add_to_infolist (struct t_infolist_item *item,
                                        struct t_hook *hook);

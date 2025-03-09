@@ -55,7 +55,7 @@
  */
 
 struct t_gui_lines *
-gui_line_lines_alloc ()
+gui_line_lines_alloc (void)
 {
     struct t_gui_lines *new_lines;
 

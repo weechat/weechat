@@ -142,7 +142,7 @@ int weechat_auto_load_scripts = 1;     /* auto-load scripts                 */
  */
 
 void
-weechat_display_copyright ()
+weechat_display_copyright (void)
 {
     string_fprintf (stdout, "\n");
     string_fprintf (
@@ -164,7 +164,7 @@ weechat_display_copyright ()
  */
 
 void
-weechat_display_usage ()
+weechat_display_usage (void)
 {
     weechat_display_copyright ();
     string_fprintf (stdout, "\n");
@@ -410,7 +410,7 @@ weechat_parse_args (int argc, char *argv[])
  */
 
 void
-weechat_startup_message ()
+weechat_startup_message (void)
 {
     if (weechat_headless)
     {
@@ -485,7 +485,7 @@ weechat_startup_message ()
  */
 
 void
-weechat_term_check ()
+weechat_term_check (void)
 {
     char *term, *sty, *tmux;
     const char *screen_terms = "screen-256color, screen";
@@ -553,7 +553,7 @@ weechat_term_check ()
  */
 
 void
-weechat_locale_check ()
+weechat_locale_check (void)
 {
     if (!weechat_locale_ok)
     {
@@ -609,7 +609,7 @@ weechat_shutdown (int return_code, int crash)
  */
 
 void
-weechat_init_gettext ()
+weechat_init_gettext (void)
 {
     weechat_locale_ok = (setlocale (LC_ALL, "") != NULL);   /* init gettext */
 #if ENABLE_NLS == 1
@@ -631,7 +631,7 @@ weechat_init_gettext ()
  */
 
 void
-weechat_init (int argc, char *argv[], void (*gui_init_cb)())
+weechat_init (int argc, char *argv[], void (*gui_init_cb)(void))
 {
     weechat_first_start_time = time (NULL); /* initialize start time        */
     gettimeofday (&weechat_current_start_timeval, NULL);

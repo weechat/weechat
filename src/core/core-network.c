@@ -81,7 +81,7 @@ gnutls_certificate_credentials_t gnutls_xcred; /* GnuTLS client credentials */
  */
 
 void
-network_init_gcrypt ()
+network_init_gcrypt (void)
 {
     if (weechat_no_gcrypt)
         return;
@@ -96,7 +96,7 @@ network_init_gcrypt ()
  */
 
 void
-network_allocate_credentials ()
+network_allocate_credentials (void)
 {
     gnutls_certificate_allocate_credentials (&gnutls_xcred);
     gnutls_certificate_set_verify_function (gnutls_xcred,
@@ -279,7 +279,7 @@ network_reload_ca_files (int force_display)
  */
 
 void
-network_init_gnutls ()
+network_init_gnutls (void)
 {
     if (!weechat_no_gnutls)
     {
@@ -296,7 +296,7 @@ network_init_gnutls ()
  */
 
 void
-network_end ()
+network_end (void)
 {
     if (network_init_gnutls_ok)
     {

@@ -638,7 +638,7 @@ fset_command_run_key_cb (const void *pointer, void *data,
  */
 
 void
-fset_command_init ()
+fset_command_init (void)
 {
     weechat_hook_command (
         "fset",

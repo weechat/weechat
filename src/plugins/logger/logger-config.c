@@ -489,7 +489,7 @@ logger_config_get_mask (const char *name)
  */
 
 int
-logger_config_init ()
+logger_config_init (void)
 {
     logger_config_file = weechat_config_new (LOGGER_CONFIG_PRIO_NAME,
                                              NULL, NULL, NULL);
@@ -748,7 +748,7 @@ logger_config_init ()
  */
 
 int
-logger_config_read ()
+logger_config_read (void)
 {
     int rc;
 
@@ -766,7 +766,7 @@ logger_config_read ()
  */
 
 int
-logger_config_write ()
+logger_config_write (void)
 {
     return weechat_config_write (logger_config_file);
 }
@@ -776,7 +776,7 @@ logger_config_write ()
  */
 
 void
-logger_config_free ()
+logger_config_free (void)
 {
     weechat_config_free (logger_config_file);
     logger_config_file = NULL;

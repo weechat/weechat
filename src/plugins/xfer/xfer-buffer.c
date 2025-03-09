@@ -346,7 +346,7 @@ xfer_buffer_close_cb (const void *pointer, void *data,
  */
 
 void
-xfer_buffer_open ()
+xfer_buffer_open (void)
 {
     struct t_hashtable *buffer_props;
 

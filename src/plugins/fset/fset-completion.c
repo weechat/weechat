@@ -115,7 +115,7 @@ fset_completion_option_cb (const void *pointer, void *data,
  */
 
 void
-fset_completion_init ()
+fset_completion_init (void)
 {
     weechat_hook_completion ("fset_options",
                              N_("configuration files, sections, options and "

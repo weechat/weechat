@@ -478,7 +478,7 @@ typing_typing_reset_buffer_signal_cb (const void *pointer, void *data,
  */
 
 void
-typing_setup_hooks ()
+typing_setup_hooks (void)
 {
     if (weechat_config_boolean (typing_config_look_enabled_self))
     {
@@ -580,7 +580,7 @@ typing_setup_hooks ()
  */
 
 void
-typing_remove_hooks ()
+typing_remove_hooks (void)
 {
     if (typing_signal_buffer_closing)
     {

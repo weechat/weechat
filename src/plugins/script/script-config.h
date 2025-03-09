@@ -69,15 +69,15 @@ extern struct t_config_option *script_config_scripts_hold;
 extern struct t_config_option *script_config_scripts_path;
 extern struct t_config_option *script_config_scripts_url;
 
-extern const char *script_config_get_diff_command ();
-extern char *script_config_get_xml_filename ();
+extern const char *script_config_get_diff_command (void);
+extern char *script_config_get_xml_filename (void);
 extern char *script_config_get_script_download_filename (struct t_script_repo *script,
                                                          const char *suffix);
 extern void script_config_hold (const char *name_with_extension);
 extern void script_config_unhold (const char *name_with_extension);
-extern int script_config_init ();
-extern int script_config_read ();
-extern int script_config_write ();
-extern void script_config_free ();
+extern int script_config_init (void);
+extern int script_config_read (void);
+extern int script_config_write (void);
+extern void script_config_free (void);
 
 #endif /* WEECHAT_PLUGIN_SCRIPT_CONFIG_H */

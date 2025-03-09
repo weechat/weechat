@@ -47,6 +47,6 @@ struct t_exec_cmd_options
 extern int exec_command_run (struct t_gui_buffer *buffer,
                              int argc, char **argv, char **argv_eol,
                              int start_arg);
-extern void exec_command_init ();
+extern void exec_command_init (void);
 
 #endif /* WEECHAT_PLUGIN_EXEC_COMMAND_H */

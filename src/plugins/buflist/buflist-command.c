@@ -99,7 +99,7 @@ buflist_command_buflist (const void *pointer, void *data,
  */
 
 void
-buflist_command_init ()
+buflist_command_init (void)
 {
     weechat_hook_command (
         "buflist",

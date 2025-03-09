@@ -956,7 +956,7 @@ irc_completion_raw_filters_cb (const void *pointer, void *data,
  */
 
 void
-irc_completion_init ()
+irc_completion_init (void)
 {
     weechat_hook_completion ("irc_server",
                              N_("current IRC server"),

@@ -117,15 +117,15 @@ extern struct t_gui_bar_item *gui_bar_item_new (struct t_weechat_plugin *plugin,
                                                 void *build_callback_data);
 extern void gui_bar_item_update (const char *name);
 extern void gui_bar_item_free (struct t_gui_bar_item *item);
-extern void gui_bar_item_free_all ();
+extern void gui_bar_item_free_all (void);
 extern void gui_bar_item_free_all_plugin (struct t_weechat_plugin *plugin);
-extern void gui_bar_item_init ();
-extern void gui_bar_item_end ();
+extern void gui_bar_item_init (void);
+extern void gui_bar_item_end (void);
 extern struct t_hdata *gui_bar_item_hdata_bar_item_cb (const void *pointer,
                                                        void *data,
                                                        const char *hdata_name);
 extern int gui_bar_item_add_to_infolist (struct t_infolist *infolist,
                                          struct t_gui_bar_item *bar_item);
-extern void gui_bar_item_print_log ();
+extern void gui_bar_item_print_log (void);
 
 #endif /* WEECHAT_GUI_BAR_ITEM_H */

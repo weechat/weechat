@@ -94,7 +94,7 @@ fset_info_infolist_fset_option_cb (const void *pointer, void *data,
  */
 
 void
-fset_info_init ()
+fset_info_init (void)
 {
     /* infolist hooks */
     weechat_hook_infolist (

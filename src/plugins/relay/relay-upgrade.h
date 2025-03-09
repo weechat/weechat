@@ -32,6 +32,6 @@ enum t_relay_upgrade_type
 };
 
 extern int relay_upgrade_save (int force_disconnected_state);
-extern int relay_upgrade_load ();
+extern int relay_upgrade_load (void);
 
 #endif /* WEECHAT_PLUGIN_RELAY_UPGRADE_H */

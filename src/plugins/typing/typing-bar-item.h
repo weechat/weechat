@@ -22,6 +22,6 @@
 
 #define TYPING_BAR_ITEM_NAME "typing"
 
-extern void typing_bar_item_init ();
+extern void typing_bar_item_init (void);
 
 #endif /* WEECHAT_PLUGIN_TYPING_BAR_ITEM_H */

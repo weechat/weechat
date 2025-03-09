@@ -53,9 +53,9 @@ extern int logger_config_set_level (const char *name, const char *value);
 extern struct t_config_option *logger_config_get_mask (const char *name);
 extern void logger_config_color_lines_change (const void *pointer, void *data,
                                               struct t_config_option *option);
-extern int logger_config_init ();
-extern int logger_config_read ();
-extern int logger_config_write ();
-extern void logger_config_free ();
+extern int logger_config_init (void);
+extern int logger_config_read (void);
+extern int logger_config_write (void);
+extern void logger_config_free (void);
 
 #endif /* WEECHAT_PLUGIN_LOGGER_CONFIG_H */

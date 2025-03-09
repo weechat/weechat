@@ -126,7 +126,7 @@ relay_command_client_list (int full)
  */
 
 void
-relay_command_server_list ()
+relay_command_server_list (void)
 {
     struct t_relay_server *ptr_server;
     char date_start[128];
@@ -868,7 +868,7 @@ relay_command_remote (const void *pointer, void *data,
  */
 
 void
-relay_command_init ()
+relay_command_init (void)
 {
     weechat_hook_command (
         "relay",

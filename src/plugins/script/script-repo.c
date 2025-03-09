@@ -375,7 +375,7 @@ script_repo_get_status_desc_for_display (struct t_script_repo *script,
  */
 
 struct t_script_repo *
-script_repo_alloc ()
+script_repo_alloc (void)
 {
     struct t_script_repo *new_script;
 
@@ -688,7 +688,7 @@ script_repo_remove (struct t_script_repo *script)
  */
 
 void
-script_repo_remove_all ()
+script_repo_remove_all (void)
 {
     while (scripts_repo)
     {
@@ -855,7 +855,7 @@ script_repo_update_status (struct t_script_repo *script)
  */
 
 void
-script_repo_update_status_all ()
+script_repo_update_status_all (void)
 {
     struct t_script_repo *ptr_script;
 
@@ -1006,7 +1006,7 @@ script_repo_filter_scripts (const char *search)
  */
 
 int
-script_repo_file_exists ()
+script_repo_file_exists (void)
 {
     char *filename;
     int rc;
@@ -1036,7 +1036,7 @@ script_repo_file_exists ()
  */
 
 int
-script_repo_file_is_uptodate ()
+script_repo_file_is_uptodate (void)
 {
     char *filename;
     struct stat st;
@@ -1599,7 +1599,7 @@ script_repo_add_to_infolist (struct t_infolist *infolist,
  */
 
 void
-script_repo_print_log ()
+script_repo_print_log (void)
 {
     struct t_script_repo *ptr_script;
 

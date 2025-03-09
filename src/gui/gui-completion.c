@@ -1714,7 +1714,7 @@ gui_completion_list_words_print_log (struct t_arraylist *list,
  */
 
 void
-gui_completion_print_log ()
+gui_completion_print_log (void)
 {
     struct t_gui_completion *ptr_completion;
 

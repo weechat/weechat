@@ -178,11 +178,11 @@ extern struct t_trigger *trigger_new (const char *name,
                                       const char *command,
                                       const char *return_code,
                                       const char *post_action);
-extern void trigger_create_default ();
+extern void trigger_create_default (void);
 extern int trigger_rename (struct t_trigger *trigger, const char *name);
 extern struct t_trigger *trigger_copy (struct t_trigger *trigger,
                                        const char *name);
 extern void trigger_free (struct t_trigger *trigger);
-extern void trigger_free_all ();
+extern void trigger_free_all (void);
 
 #endif /* WEECHAT_PLUGIN_TRIGGER_H */

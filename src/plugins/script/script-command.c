@@ -315,7 +315,7 @@ script_command_script (const void *pointer, void *data,
  */
 
 void
-script_command_init ()
+script_command_init (void)
 {
     weechat_hook_command (
         "script",

@@ -20,14 +20,14 @@
 #ifndef WEECHAT_DIR_H
 #define WEECHAT_DIR_H
 
-extern char *dir_get_temp_dir();
+extern char *dir_get_temp_dir (void);
 extern int dir_mkdir_home (const char *directory, int mode);
 extern int dir_mkdir (const char *directory, int mode);
 extern int dir_mkdir_parents (const char *directory, int mode);
 extern int dir_rmtree (const char *directory);
-extern void dir_create_home_dirs ();
-extern void dir_remove_home_dirs ();
-extern char *dir_get_string_home_dirs ();
+extern void dir_create_home_dirs (void);
+extern void dir_remove_home_dirs (void);
+extern char *dir_get_string_home_dirs (void);
 extern void dir_exec_on_files (const char *directory, int recurse_subdirs,
                                int hidden_files,
                                void (*callback)(void *data,

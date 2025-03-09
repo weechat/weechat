@@ -1335,7 +1335,7 @@ irc_info_infolist_irc_color_weechat_cb (const void *pointer, void *data,
  */
 
 void
-irc_info_init ()
+irc_info_init (void)
 {
     /* info hooks */
     weechat_hook_info (

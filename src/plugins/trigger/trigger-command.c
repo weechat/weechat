@@ -35,7 +35,7 @@
  */
 
 void
-trigger_command_display_status ()
+trigger_command_display_status (void)
 {
     weechat_printf_date_tags (NULL, 0, "no_trigger",
                               (trigger_enabled) ?
@@ -1252,7 +1252,7 @@ end:
  */
 
 void
-trigger_command_init ()
+trigger_command_init (void)
 {
     weechat_hook_command (
         "trigger",

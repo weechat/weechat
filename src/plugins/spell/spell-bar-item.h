@@ -20,6 +20,6 @@
 #ifndef WEECHAT_PLUGIN_SPELL_BAR_ITEM_H
 #define WEECHAT_PLUGIN_SPELL_BAR_ITEM_H
 
-extern void spell_bar_item_init ();
+extern void spell_bar_item_init (void);
 
 #endif /* WEECHAT_PLUGIN_SPELL_BAR_ITEM_H */

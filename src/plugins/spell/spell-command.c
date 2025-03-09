@@ -135,7 +135,7 @@ spell_enchant_dict_describe_cb (const char *lang_tag,
  */
 
 void
-spell_command_speller_list_dicts ()
+spell_command_speller_list_dicts (void)
 {
 #ifndef USE_ENCHANT
     char *country, *lang, *pos, *iso;
@@ -478,7 +478,7 @@ spell_command_cb (const void *pointer, void *data,
  */
 
 void
-spell_command_init ()
+spell_command_init (void)
 {
     weechat_hook_command (
         "spell",

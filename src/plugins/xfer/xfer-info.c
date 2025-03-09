@@ -84,7 +84,7 @@ xfer_info_infolist_xfer_cb (const void *pointer, void *data,
  */
 
 void
-xfer_info_init ()
+xfer_info_init (void)
 {
     weechat_hook_infolist (
         "xfer", N_("list of xfer"),

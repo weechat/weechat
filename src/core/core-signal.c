@@ -281,7 +281,7 @@ signal_handle_number (int signal_number, int count, const char *command)
  */
 
 void
-signal_handle ()
+signal_handle (void)
 {
     /* SIGUSR1 */
     signal_handle_number (SIGUSR1, signal_sigusr1_count,
@@ -314,7 +314,7 @@ signal_handle ()
  */
 
 void
-signal_suspend ()
+signal_suspend (void)
 {
     kill (getpid (), SIGTSTP);
     gui_window_ask_refresh (2);
@@ -325,7 +325,7 @@ signal_suspend ()
  */
 
 void
-signal_init ()
+signal_init (void)
 {
     /* ignore some signals */
     signal_catch (SIGINT, SIG_IGN);

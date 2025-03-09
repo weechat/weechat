@@ -34,13 +34,13 @@ extern char gui_mouse_event_button;
 /* mouse functions */
 
 extern void gui_mouse_debug_set (int debug);
-extern void gui_mouse_event_reset ();
+extern void gui_mouse_event_reset (void);
 
 /* mouse functions (GUI dependent) */
 
-extern void gui_mouse_enable ();
-extern void gui_mouse_disable ();
-extern void gui_mouse_display_state ();
+extern void gui_mouse_enable (void);
+extern void gui_mouse_disable (void);
+extern void gui_mouse_display_state (void);
 extern void gui_mouse_grab_init (int area);
 extern int gui_mouse_event_size (const char *key);
 extern void gui_mouse_event_process (const char *key);

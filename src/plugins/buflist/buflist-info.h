@@ -20,6 +20,6 @@
 #ifndef WEECHAT_PLUGIN_BUFLIST_INFO_H
 #define WEECHAT_PLUGIN_BUFLIST_INFO_H
 
-extern void buflist_info_init ();
+extern void buflist_info_init (void);
 
 #endif /* WEECHAT_PLUGIN_BUFLIST_INFO_H */

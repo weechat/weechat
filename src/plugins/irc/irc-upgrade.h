@@ -40,6 +40,6 @@ enum t_irc_upgrade_type
 extern int irc_upgrading;
 
 extern int irc_upgrade_save (int force_disconnected_state);
-extern int irc_upgrade_load ();
+extern int irc_upgrade_load (void);
 
 #endif /* WEECHAT_PLUGIN_IRC_UPGRADE_H */

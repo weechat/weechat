@@ -33,7 +33,7 @@
  */
 
 void
-logger_list ()
+logger_list (void)
 {
     struct t_infolist *ptr_infolist;
     struct t_logger_buffer *ptr_logger_buffer;
@@ -161,7 +161,7 @@ logger_command_cb (const void *pointer, void *data,
  */
 
 void
-logger_command_init ()
+logger_command_init (void)
 {
     weechat_hook_command (
         "logger",

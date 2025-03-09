@@ -88,7 +88,7 @@ buflist_completion_items_used_cb (const void *pointer, void *data,
  */
 
 void
-buflist_completion_init ()
+buflist_completion_init (void)
 {
     weechat_hook_completion ("buflist_items",
                              N_("buflist bar items"),

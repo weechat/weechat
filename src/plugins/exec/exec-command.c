@@ -36,7 +36,7 @@
  */
 
 void
-exec_command_list ()
+exec_command_list (void)
 {
     struct t_exec_cmd *ptr_exec_cmd;
     char str_elapsed[32], str_time1[256], str_time2[256];
@@ -815,7 +815,7 @@ exec_command_exec (const void *pointer, void *data,
  */
 
 void
-exec_command_init ()
+exec_command_init (void)
 {
     weechat_hook_command (
         "exec",

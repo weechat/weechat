@@ -20,6 +20,6 @@
 #ifndef WEECHAT_PLUGIN_RELAY_COMPLETION_H
 #define WEECHAT_PLUGIN_RELAY_COMPLETION_H
 
-extern void relay_completion_init ();
+extern void relay_completion_init (void);
 
 #endif /* WEECHAT_PLUGIN_RELAY_COMPLETION_H */

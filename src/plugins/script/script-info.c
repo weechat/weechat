@@ -220,7 +220,7 @@ script_info_infolist_script_script_cb (const void *pointer, void *data,
  */
 
 void
-script_info_init ()
+script_info_init (void)
 {
     /* info hooks */
     weechat_hook_info (

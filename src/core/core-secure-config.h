@@ -31,9 +31,9 @@ extern struct t_config_option *secure_config_crypt_hash_algo;
 extern struct t_config_option *secure_config_crypt_passphrase_command;
 extern struct t_config_option *secure_config_crypt_salt;
 
-extern int secure_config_read ();
-extern int secure_config_write ();
-extern int secure_config_init ();
-extern void secure_config_free ();
+extern int secure_config_read (void);
+extern int secure_config_write (void);
+extern int secure_config_init (void);
+extern void secure_config_free (void);
 
 #endif /* WEECHAT_SECURE_CONFIG_H */

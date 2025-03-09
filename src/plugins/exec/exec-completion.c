@@ -68,7 +68,7 @@ exec_completion_commands_ids_cb (const void *pointer, void *data,
  */
 
 void
-exec_completion_init ()
+exec_completion_init (void)
 {
     weechat_hook_completion ("exec_commands_ids",
                              N_("ids (numbers and names) of executed commands"),

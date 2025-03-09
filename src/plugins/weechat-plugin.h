@@ -467,7 +467,7 @@ struct t_weechat_plugin
     int (*util_version_number) (const char *version);
 
     /* sorted lists */
-    struct t_weelist *(*list_new) ();
+    struct t_weelist *(*list_new) (void);
     struct t_weelist_item *(*list_add) (struct t_weelist *weelist,
                                         const char *data,
                                         const char *where,
@@ -998,7 +998,7 @@ struct t_weechat_plugin
                                               const void *close_callback_pointer,
                                               void *close_callback_data);
     struct t_gui_buffer *(*buffer_search) (const char *plugin, const char *name);
-    struct t_gui_buffer *(*buffer_search_main) ();
+    struct t_gui_buffer *(*buffer_search_main) (void);
     void (*buffer_clear) (struct t_gui_buffer *buffer);
     void (*buffer_close) (struct t_gui_buffer *buffer);
     void (*buffer_merge) (struct t_gui_buffer *buffer,

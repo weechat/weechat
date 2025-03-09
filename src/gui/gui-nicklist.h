@@ -135,6 +135,6 @@ extern int gui_nicklist_add_to_infolist (struct t_infolist *infolist,
                                          struct t_gui_buffer *buffer,
                                          const char *name);
 extern void gui_nicklist_print_log (struct t_gui_nick_group *group, int indent);
-extern void gui_nicklist_end ();
+extern void gui_nicklist_end (void);
 
 #endif /* WEECHAT_GUI_NICKLIST_H */

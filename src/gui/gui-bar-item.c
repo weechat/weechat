@@ -739,7 +739,7 @@ gui_bar_item_free (struct t_gui_bar_item *item)
  */
 
 void
-gui_bar_item_free_all ()
+gui_bar_item_free_all (void)
 {
     while (gui_bar_items)
     {
@@ -2341,7 +2341,7 @@ gui_bar_item_hook_signal (const char *signal, const char *item)
  */
 
 void
-gui_bar_item_init ()
+gui_bar_item_init (void)
 {
     char name[128];
 
@@ -2553,7 +2553,7 @@ gui_bar_item_init ()
  */
 
 void
-gui_bar_item_end ()
+gui_bar_item_end (void)
 {
     struct t_gui_bar_item_hook *next_bar_item_hook;
 
@@ -2643,7 +2643,7 @@ gui_bar_item_add_to_infolist (struct t_infolist *infolist,
  */
 
 void
-gui_bar_item_print_log ()
+gui_bar_item_print_log (void)
 {
     struct t_gui_bar_item *ptr_item;
 

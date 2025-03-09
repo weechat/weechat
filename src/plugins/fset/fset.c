@@ -86,7 +86,7 @@ fset_debug_dump_cb (const void *pointer, void *data,
  */
 
 void
-fset_add_bar ()
+fset_add_bar (void)
 {
     weechat_bar_new (
         FSET_BAR_NAME, "off", "0", "window",

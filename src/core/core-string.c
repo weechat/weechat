@@ -4875,7 +4875,7 @@ string_concat (const char *separator, ...)
  */
 
 void
-string_init ()
+string_init (void)
 {
     int i;
 
@@ -4890,7 +4890,7 @@ string_init ()
  */
 
 void
-string_end ()
+string_end (void)
 {
     int i;
 

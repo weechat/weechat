@@ -115,7 +115,7 @@ alias_completion_alias_value_cb (const void *pointer, void *data,
  */
 
 void
-alias_completion_init ()
+alias_completion_init (void)
 {
     weechat_hook_completion ("alias", N_("list of aliases"),
                              &alias_completion_alias_cb, NULL, NULL);

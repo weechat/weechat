@@ -377,7 +377,7 @@ irc_redirect_pattern_free (struct t_irc_redirect_pattern *redirect_pattern)
  */
 
 void
-irc_redirect_pattern_free_all ()
+irc_redirect_pattern_free_all (void)
 {
     while (irc_redirect_patterns)
     {
@@ -1177,7 +1177,7 @@ irc_redirect_add_to_infolist (struct t_infolist *infolist,
  */
 
 void
-irc_redirect_pattern_print_log ()
+irc_redirect_pattern_print_log (void)
 {
     struct t_irc_redirect_pattern *ptr_redirect_pattern;
 
@@ -1391,7 +1391,7 @@ irc_redirect_command_hsignal_cb (const void *pointer, void *data,
  */
 
 void
-irc_redirect_init ()
+irc_redirect_init (void)
 {
     int i;
 
@@ -1411,7 +1411,7 @@ irc_redirect_init ()
  */
 
 void
-irc_redirect_end ()
+irc_redirect_end (void)
 {
     irc_redirect_pattern_free_all ();
 }

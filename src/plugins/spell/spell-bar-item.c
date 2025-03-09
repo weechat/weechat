@@ -174,7 +174,7 @@ end:
  */
 
 void
-spell_bar_item_init ()
+spell_bar_item_init (void)
 {
     weechat_bar_item_new ("spell_dict",
                           &spell_bar_item_dict, NULL, NULL);

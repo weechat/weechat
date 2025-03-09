@@ -227,7 +227,7 @@ relay_info_infolist_relay_cb (const void *pointer, void *data,
  */
 
 void
-relay_info_init ()
+relay_info_init (void)
 {
     /* info hooks */
     weechat_hook_info (

@@ -1467,7 +1467,7 @@ hdata_free_all_plugin (struct t_weechat_plugin *plugin)
  */
 
 void
-hdata_free_all ()
+hdata_free_all (void)
 {
     hashtable_remove_all (weechat_hdata);
 }
@@ -1540,7 +1540,7 @@ hdata_print_log_map_cb (void *data, struct t_hashtable *hashtable,
  */
 
 void
-hdata_print_log ()
+hdata_print_log (void)
 {
     hashtable_map (weechat_hdata, &hdata_print_log_map_cb, NULL);
 }
@@ -1565,7 +1565,7 @@ hdata_free_hdata_cb (struct t_hashtable *hashtable,
  */
 
 void
-hdata_init ()
+hdata_init (void)
 {
     weechat_hdata = hashtable_new (32,
                                    WEECHAT_HASHTABLE_STRING,
@@ -1580,7 +1580,7 @@ hdata_init ()
  */
 
 void
-hdata_end ()
+hdata_end (void)
 {
     hdata_free_all ();
     hashtable_free (weechat_hdata);

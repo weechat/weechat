@@ -22,8 +22,8 @@
 
 #define FSET_BAR_ITEM_NAME "fset"
 
-extern void fset_bar_item_update ();
-extern int fset_bar_item_init ();
-extern void fset_bar_item_end ();
+extern void fset_bar_item_update (void);
+extern int fset_bar_item_init (void);
+extern void fset_bar_item_end (void);
 
 #endif /* WEECHAT_PLUGIN_FSET_BAR_ITEM_H */

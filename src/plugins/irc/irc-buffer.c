@@ -305,7 +305,7 @@ irc_buffer_nickcmp_cb (const void *pointer, void *data,
  */
 
 struct t_gui_buffer *
-irc_buffer_search_server_lowest_number ()
+irc_buffer_search_server_lowest_number (void)
 {
     struct t_gui_buffer *ptr_buffer;
     struct t_irc_server *ptr_server;

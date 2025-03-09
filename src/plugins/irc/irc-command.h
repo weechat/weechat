@@ -85,6 +85,6 @@ extern void irc_command_part_channel (struct t_irc_server *server,
                                       const char *part_message);
 extern void irc_command_quit_server (struct t_irc_server *server,
                                      const char *arguments);
-extern void irc_command_init ();
+extern void irc_command_init (void);
 
 #endif /* WEECHAT_PLUGIN_IRC_COMMAND_H */

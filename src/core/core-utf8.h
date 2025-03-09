@@ -22,7 +22,7 @@
 
 extern int local_utf8;
 
-extern void utf8_init ();
+extern void utf8_init (void);
 extern int utf8_has_8bits (const char *string);
 extern int utf8_is_valid (const char *string, int length, char **error);
 extern void utf8_normalize (char *string, char replacement);

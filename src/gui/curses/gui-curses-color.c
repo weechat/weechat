@@ -325,7 +325,7 @@ gui_color_assign_by_diff (int *color, const char *color_name, int diff)
  */
 
 int
-gui_color_get_weechat_colors_number ()
+gui_color_get_weechat_colors_number (void)
 {
     return GUI_CURSES_NUM_WEECHAT_COLORS;
 }
@@ -335,7 +335,7 @@ gui_color_get_weechat_colors_number ()
  */
 
 int
-gui_color_get_term_colors ()
+gui_color_get_term_colors (void)
 {
     return gui_color_term_colors;
 }
@@ -345,7 +345,7 @@ gui_color_get_term_colors ()
  */
 
 int
-gui_color_get_term_color_pairs ()
+gui_color_get_term_color_pairs (void)
 {
     return gui_color_term_color_pairs;
 }
@@ -645,7 +645,7 @@ gui_color_build (int number, int foreground, int background)
  */
 
 void
-gui_color_init_vars ()
+gui_color_init_vars (void)
 {
     gui_color_term_has_colors = (has_colors ()) ? 1 : 0;
     gui_color_term_colors = 0;
@@ -705,7 +705,7 @@ gui_color_init_vars ()
  */
 
 void
-gui_color_free_vars ()
+gui_color_free_vars (void)
 {
     if (gui_color_pairs)
     {
@@ -724,7 +724,7 @@ gui_color_free_vars ()
  */
 
 void
-gui_color_init_pairs_terminal ()
+gui_color_init_pairs_terminal (void)
 {
     int i;
 
@@ -745,7 +745,7 @@ gui_color_init_pairs_terminal ()
  */
 
 void
-gui_color_init_pairs_weechat ()
+gui_color_init_pairs_weechat (void)
 {
     int i;
     short *foregrounds, *backgrounds;
@@ -775,7 +775,7 @@ gui_color_init_pairs_weechat ()
  */
 
 void
-gui_color_display_terminal_colors ()
+gui_color_display_terminal_colors (void)
 {
     int lines, columns, line, col, color;
     char str_line[1024], str_color[64];
@@ -833,7 +833,7 @@ gui_color_display_terminal_colors ()
  */
 
 void
-gui_color_buffer_display_timer ()
+gui_color_buffer_display_timer (void)
 {
     if (gui_color_buffer && gui_color_use_term_colors)
     {
@@ -866,7 +866,7 @@ gui_color_info_term_colors (char *buffer, int size)
  */
 
 void
-gui_color_buffer_display ()
+gui_color_buffer_display (void)
 {
     int y, i, lines, columns, line, col, color, max_color;
     char str_line[1024], str_color[64], str_rgb[64];
@@ -1170,7 +1170,7 @@ gui_color_timer_cb (const void *pointer, void *data, int remaining_calls)
  */
 
 void
-gui_color_switch_colors ()
+gui_color_switch_colors (void)
 {
     if (gui_color_hook_timer)
     {
@@ -1219,7 +1219,7 @@ gui_color_switch_colors ()
  */
 
 void
-gui_color_reset_pairs ()
+gui_color_reset_pairs (void)
 {
     if (gui_color_pairs)
     {
@@ -1291,7 +1291,7 @@ gui_color_buffer_close_cb (const void *pointer, void *data,
  */
 
 void
-gui_color_buffer_assign ()
+gui_color_buffer_assign (void)
 {
     if (!gui_color_buffer)
     {
@@ -1309,7 +1309,7 @@ gui_color_buffer_assign ()
  */
 
 void
-gui_color_buffer_open ()
+gui_color_buffer_open (void)
 {
     struct t_hashtable *properties;
 
@@ -1383,7 +1383,7 @@ gui_color_palette_add_alias_cb (void *data,
  */
 
 void
-gui_color_palette_build_aliases ()
+gui_color_palette_build_aliases (void)
 {
     int i;
     struct t_gui_color_palette *color_palette;
@@ -1540,7 +1540,7 @@ gui_color_palette_free (struct t_gui_color_palette *color_palette)
  */
 
 void
-gui_color_init_weechat ()
+gui_color_init_weechat (void)
 {
     if (CONFIG_BOOLEAN(config_look_color_basic_force_bold)
         || (gui_color_term_colors < 16))
@@ -1614,7 +1614,7 @@ gui_color_init_weechat ()
  */
 
 void
-gui_color_alloc ()
+gui_color_alloc (void)
 {
     if (has_colors ())
     {
@@ -1632,7 +1632,7 @@ gui_color_alloc ()
  */
 
 void
-gui_color_dump ()
+gui_color_dump (void)
 {
     char str_line[1024];
     int fg, bg, index;

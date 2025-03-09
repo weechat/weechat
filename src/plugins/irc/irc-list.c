@@ -1167,7 +1167,7 @@ irc_list_reset (struct t_irc_server *server)
  */
 
 struct t_irc_list *
-irc_list_alloc ()
+irc_list_alloc (void)
 {
     struct t_irc_list *list;
 
@@ -1348,7 +1348,7 @@ irc_list_mouse_hsignal_cb (const void *pointer, void *data, const char *signal,
  */
 
 void
-irc_list_init ()
+irc_list_init (void)
 {
     struct t_hashtable *keys;
 
@@ -1409,7 +1409,7 @@ irc_list_init ()
  */
 
 void
-irc_list_end ()
+irc_list_end (void)
 {
     if (irc_list_filter_hashtable_pointers)
     {

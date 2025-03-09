@@ -767,7 +767,7 @@ logger_buffer_start_all (int write_info_line)
  */
 
 void
-logger_buffer_flush ()
+logger_buffer_flush (void)
 {
     struct t_logger_buffer *ptr_logger_buffer;
 
@@ -800,7 +800,7 @@ logger_buffer_flush ()
  */
 
 void
-logger_buffer_adjust_log_filenames ()
+logger_buffer_adjust_log_filenames (void)
 {
     struct t_infolist *ptr_infolist;
     struct t_logger_buffer *ptr_logger_buffer;

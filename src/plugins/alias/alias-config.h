@@ -35,8 +35,8 @@ extern void alias_config_cmd_new_option (const char *name,
                                          const char *command);
 extern void alias_config_completion_new_option (const char *name,
                                                 const char *completion);
-extern int alias_config_init ();
-extern int alias_config_read ();
-extern int alias_config_write ();
+extern int alias_config_init (void);
+extern int alias_config_read (void);
+extern int alias_config_write (void);
 
 #endif /* WEECHAT_PLUGIN_ALIAS_CONFIG_H */

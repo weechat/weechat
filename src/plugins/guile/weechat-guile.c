@@ -116,7 +116,7 @@ char *guile_action_autoload_list = NULL;
  */
 
 void
-weechat_guile_output_flush ()
+weechat_guile_output_flush (void)
 {
     const char *ptr_command;
     char *temp_buffer, *command;
@@ -684,7 +684,7 @@ weechat_guile_unload_name (const char *name)
  */
 
 void
-weechat_guile_unload_all ()
+weechat_guile_unload_all (void)
 {
     while (guile_scripts)
     {

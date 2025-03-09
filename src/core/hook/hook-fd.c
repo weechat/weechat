@@ -89,7 +89,7 @@ hook_fd_search (int fd)
  */
 
 void
-hook_fd_realloc_pollfd ()
+hook_fd_realloc_pollfd (void)
 {
     struct pollfd *ptr_pollfd;
     int count;
@@ -201,7 +201,7 @@ hook_fd (struct t_weechat_plugin *plugin, int fd, int flag_read,
  */
 
 void
-hook_fd_exec ()
+hook_fd_exec (void)
 {
     struct t_hook *ptr_hook, *next_hook;
     struct t_hook_exec_cb hook_exec_cb;
