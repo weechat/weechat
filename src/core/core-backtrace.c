@@ -92,7 +92,7 @@ weechat_backtrace_addr2line (int number, void *address, const char *symbol)
 
     /* use addr2line to find symbols names */
     snprintf (cmd_line, sizeof (cmd_line),
-              "addr2line --functions --demangle -e $(which %s) %p",
+              "addr2line --functions --demangle -e $(command -v %s) %p",
               info.dli_fname, addr);
     output = popen (cmd_line, "r");
     if (!output)
