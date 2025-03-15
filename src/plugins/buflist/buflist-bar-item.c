@@ -464,34 +464,37 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
         /* nick prefix */
         str_nick_prefix[0] = '\0';
         str_color_nick_prefix[0] = '\0';
-        if (is_channel
+        if ((is_channel || is_private || is_list)
             && weechat_config_boolean (buflist_config_look_nick_prefix))
         {
             snprintf (str_nick_prefix, sizeof (str_nick_prefix),
                       "%s",
                       (weechat_config_boolean (buflist_config_look_nick_prefix_empty)) ?
                       " " : "");
-            ptr_nick = weechat_buffer_get_string (ptr_buffer, "localvar_nick");
-            if (ptr_nick)
+            if (is_channel)
             {
-                ptr_gui_nick = weechat_nicklist_search_nick (ptr_buffer, NULL,
-                                                             ptr_nick);
-                if (ptr_gui_nick)
+                ptr_nick = weechat_buffer_get_string (ptr_buffer, "localvar_nick");
+                if (ptr_nick)
                 {
-                    ptr_nick_prefix = weechat_nicklist_nick_get_string (
-                        ptr_buffer, ptr_gui_nick, "prefix");
-                    if (ptr_nick_prefix && (ptr_nick_prefix[0] != ' '))
+                    ptr_gui_nick = weechat_nicklist_search_nick (ptr_buffer, NULL,
+                                                                 ptr_nick);
+                    if (ptr_gui_nick)
                     {
-                        snprintf (str_color_nick_prefix,
-                                  sizeof (str_color_nick_prefix),
-                                  "%s",
-                                  weechat_color (
-                                      weechat_nicklist_nick_get_string (
-                                          ptr_buffer, ptr_gui_nick,
-                                          "prefix_color")));
-                        snprintf (str_nick_prefix, sizeof (str_nick_prefix),
-                                  "%s",
-                                  ptr_nick_prefix);
+                        ptr_nick_prefix = weechat_nicklist_nick_get_string (
+                            ptr_buffer, ptr_gui_nick, "prefix");
+                        if (ptr_nick_prefix && (ptr_nick_prefix[0] != ' '))
+                        {
+                            snprintf (str_color_nick_prefix,
+                                      sizeof (str_color_nick_prefix),
+                                      "%s",
+                                      weechat_color (
+                                          weechat_nicklist_nick_get_string (
+                                              ptr_buffer, ptr_gui_nick,
+                                              "prefix_color")));
+                            snprintf (str_nick_prefix, sizeof (str_nick_prefix),
+                                      "%s",
+                                      ptr_nick_prefix);
+                        }
                     }
                 }
             }
