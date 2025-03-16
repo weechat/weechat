@@ -253,7 +253,7 @@ irc_ctcp_display_reply_from_nick (struct t_irc_protocol_ctxt *ctxt,
 {
     char *dup_arguments, *ptr_args, *pos_end, *pos_space, *pos_args, *pos_usec;
     struct timeval tv;
-    long sec1, usec1, sec2, usec2, difftime;
+    long long sec1, usec1, sec2, usec2, difftime;
 
     dup_arguments = strdup (arguments);
     if (!dup_arguments)
@@ -284,8 +284,8 @@ irc_ctcp_display_reply_from_nick (struct t_irc_protocol_ctxt *ctxt,
                     pos_usec[0] = '\0';
 
                     gettimeofday (&tv, NULL);
-                    sec1 = atol (pos_args);
-                    usec1 = atol (pos_usec + 1);
+                    sec1 = atoll (pos_args);
+                    usec1 = atoll (pos_usec + 1);
                     sec2 = tv.tv_sec;
                     usec2 = tv.tv_usec;
 

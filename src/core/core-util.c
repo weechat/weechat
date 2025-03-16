@@ -288,7 +288,7 @@ util_parse_time (const char *datetime, struct timeval *tv)
     char *string, *pos, *pos2, str_usec[16], *error, str_date[128];
     struct tm tm_date, tm_date_gm, tm_date_local, *local_time;
     time_t time_now, time_gm, time_local;
-    long value;
+    long long value;
     int rc, length, use_local_time, timezone_offset, offset_factor, hour, min;
 
     if (!datetime || !datetime[0] || !tv)
@@ -330,14 +330,14 @@ util_parse_time (const char *datetime, struct timeval *tv)
                 strcat (str_usec, "0");
             }
             error = NULL;
-            value = strtol (str_usec, &error, 10);
+            value = strtoll (str_usec, &error, 10);
             if (error && !error[0])
             {
                 if (value < 0)
                     value = 0;
                 else if (value > 999999)
                     value = 999999;
-                tv->tv_usec = (int)value;
+                tv->tv_usec = (long)value;
             }
         }
         memmove (pos, pos2, strlen (pos2) + 1);
@@ -474,7 +474,7 @@ util_parse_time (const char *datetime, struct timeval *tv)
     {
         /* timestamp format: "1704402062" */
         error = NULL;
-        value = strtol (string, &error, 10);
+        value = strtoll (string, &error, 10);
         if (error && !error[0] && (value >= 0))
         {
             tv->tv_sec = (time_t)value;
