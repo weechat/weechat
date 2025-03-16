@@ -8,6 +8,7 @@
 - api: add property `keep_spaces_right` in function hook_set to keep trailing spaces in command arguments
 - irc: add option `-connected` in command `/server list|listfull`
 - buflist: apply option buflist.look.nick_prefix_empty also on private and list buffers
+- xfer: compute speed and ETA with microsecond precision
 
 ### Added
 
