@@ -221,8 +221,8 @@ xfer_buffer_refresh (const char *hotlist)
                     if (ptr_xfer->eta != ULLONG_MAX)
                     {
                         snprintf (eta, sizeof (eta),
-                                  "%s: %.2llu:%.2llu:%.2llu - ",
-                                  _("ETA"),
+                                  "%s %.2llu:%.2llu:%.2llu - ",
+                                  _("time left:"),
                                   ptr_xfer->eta / 3600,
                                   (ptr_xfer->eta / 60) % 60,
                                   ptr_xfer->eta % 60);
@@ -230,9 +230,8 @@ xfer_buffer_refresh (const char *hotlist)
                     else
                     {
                         snprintf (eta, sizeof (eta),
-                                  "%s: %s - ",
-                                  _("ETA"),
-                                  _("unknown"));
+                                  "%s - ",
+                                  _("time left: unknown"));
                     }
                 }
 
