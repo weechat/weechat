@@ -523,7 +523,7 @@ hook_callback_end (struct t_hook *hook, struct t_hook_exec_cb *hook_exec_cb)
         time_diff = util_timeval_diff (&hook_exec_cb->start_time, &end_time);
         if (time_diff >= debug_long_callbacks)
         {
-            str_diff = util_get_microseconds_string (time_diff);
+            str_diff = util_get_microseconds_string ((unsigned long long)time_diff);
             log_printf (
                 _("debug: long callback: hook %s (%s), plugin: %s, "
                   "subplugin: %s, time elapsed: %s"),

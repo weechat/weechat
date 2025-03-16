@@ -2035,7 +2035,7 @@ COMMAND_CALLBACK(debug)
     struct t_weechat_plugin *ptr_plugin;
     struct timeval time_start, time_end;
     char *result, *str_threshold;
-    long long threshold;
+    unsigned long long threshold;
     int debug;
 
     /* make C compiler happy */
@@ -2073,7 +2073,8 @@ COMMAND_CALLBACK(debug)
     if (string_strcmp (argv[1], "callbacks") == 0)
     {
         COMMAND_MIN_ARGS(3, argv[1]);
-        threshold = util_parse_delay (argv[2], 1);
+        if (!util_parse_delay (argv[2], 1, &threshold))
+            COMMAND_ERROR;
         if (threshold > 0)
         {
             str_threshold = util_get_microseconds_string (threshold);
@@ -6174,7 +6175,7 @@ command_repeat_timer_cb (const void *pointer, void *data, int remaining_calls)
 COMMAND_CALLBACK(repeat)
 {
     int arg_count, count, i;
-    long long interval;
+    unsigned long long interval;
     char *error;
     struct t_command_repeat *cmd_repeat;
 
@@ -6189,9 +6190,8 @@ COMMAND_CALLBACK(repeat)
 
     if ((argc >= 5) && (string_strcmp (argv[1], "-interval") == 0))
     {
-        interval = util_parse_delay (argv[2], 1000000);
-        if (interval < 0)
-            interval = 0;
+        if (!util_parse_delay (argv[2], 1000000, &interval))
+            COMMAND_ERROR;
         interval /= 1000;
         arg_count = 3;
     }
@@ -7871,7 +7871,7 @@ COMMAND_CALLBACK(version)
 
 COMMAND_CALLBACK(wait)
 {
-    long long delay;
+    unsigned long long delay;
 
     /* make C compiler happy */
     (void) pointer;
@@ -7879,7 +7879,8 @@ COMMAND_CALLBACK(wait)
 
     COMMAND_MIN_ARGS(3, "");
 
-    delay = util_parse_delay (argv[1], 1000000);
+    if (!util_parse_delay (argv[1], 1000000, &delay))
+        COMMAND_ERROR;
     if (delay < 1)
         COMMAND_ERROR;
 

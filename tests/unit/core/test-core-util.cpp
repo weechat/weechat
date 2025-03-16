@@ -25,6 +25,7 @@
 
 extern "C"
 {
+#include <limits.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <stdio.h>
@@ -41,6 +42,13 @@ extern "C"
     LONGS_EQUAL(__result, util_parse_time (__datetime, &tv));  \
     LONGS_EQUAL(__sec, tv.tv_sec);                             \
     LONGS_EQUAL(__usec, tv.tv_usec);
+
+#define WEE_PARSE_DELAY(__result, __result_delay,              \
+                        __delay, __factor)                     \
+    delay = ULLONG_MAX;                                        \
+    LONGS_EQUAL(__result,                                      \
+                util_parse_delay (__delay, __factor, &delay)); \
+    CHECK(delay == __result_delay);
 
 TEST_GROUP(CoreUtil)
 {
@@ -108,30 +116,30 @@ TEST(CoreUtil, GetMicrosecondsString)
 
     /* zero */
     WEE_TEST_STR("0:00:00.000000",
-                 util_get_microseconds_string (0LL));
+                 util_get_microseconds_string (0ULL));
 
     /* microseconds */
-    WEE_TEST_STR("0:00:00.000001", util_get_microseconds_string (1LL));
-    WEE_TEST_STR("0:00:00.000123", util_get_microseconds_string (123LL));
+    WEE_TEST_STR("0:00:00.000001", util_get_microseconds_string (1ULL));
+    WEE_TEST_STR("0:00:00.000123", util_get_microseconds_string (123ULL));
 
     /* microseconds */
-    WEE_TEST_STR("0:00:00.001000", util_get_microseconds_string (1LL * 1000LL));
-    WEE_TEST_STR("0:00:00.123000", util_get_microseconds_string (123LL * 1000LL));
+    WEE_TEST_STR("0:00:00.001000", util_get_microseconds_string (1ULL * 1000ULL));
+    WEE_TEST_STR("0:00:00.123000", util_get_microseconds_string (123ULL * 1000ULL));
 
     /* seconds */
-    WEE_TEST_STR("0:00:01.000000", util_get_microseconds_string (1LL * 1000LL * 1000LL));
-    WEE_TEST_STR("0:00:12.000000", util_get_microseconds_string (12LL * 1000LL * 1000LL));
+    WEE_TEST_STR("0:00:01.000000", util_get_microseconds_string (1ULL * 1000ULL * 1000ULL));
+    WEE_TEST_STR("0:00:12.000000", util_get_microseconds_string (12ULL * 1000ULL * 1000ULL));
 
     /* minutes */
-    WEE_TEST_STR("0:01:00.000000", util_get_microseconds_string (1LL * 60LL * 1000LL * 1000LL));
-    WEE_TEST_STR("0:34:00.000000", util_get_microseconds_string (34LL * 60LL * 1000LL * 1000LL));
+    WEE_TEST_STR("0:01:00.000000", util_get_microseconds_string (1ULL * 60ULL * 1000ULL * 1000ULL));
+    WEE_TEST_STR("0:34:00.000000", util_get_microseconds_string (34ULL * 60ULL * 1000ULL * 1000ULL));
 
     /* hours */
-    WEE_TEST_STR("1:00:00.000000", util_get_microseconds_string (1LL * 60LL * 60LL * 1000LL * 1000LL));
-    WEE_TEST_STR("34:00:00.000000", util_get_microseconds_string (34LL * 60LL * 60LL * 1000LL * 1000LL));
+    WEE_TEST_STR("1:00:00.000000", util_get_microseconds_string (1ULL * 60ULL * 60ULL * 1000ULL * 1000ULL));
+    WEE_TEST_STR("34:00:00.000000", util_get_microseconds_string (34ULL * 60ULL * 60ULL * 1000ULL * 1000ULL));
 
     /* hours + minutes + seconds + milliseconds + microseconds */
-    WEE_TEST_STR("3:25:45.678901", util_get_microseconds_string (12345678901LL));
+    WEE_TEST_STR("3:25:45.678901", util_get_microseconds_string (12345678901ULL));
 }
 
 /*
@@ -425,60 +433,64 @@ TEST(CoreUtil, GetTimeDiff)
 
 TEST(CoreUtil, ParseDelay)
 {
+    unsigned long long delay;
+
+    /* error: no delay */
+    LONGS_EQUAL(0, util_parse_delay ("123", 1ULL, NULL));
+
     /* error: no string */
-    LONGS_EQUAL(-1LL, util_parse_delay (NULL, -1LL));
-    LONGS_EQUAL(-1LL, util_parse_delay (NULL, 0LL));
-    LONGS_EQUAL(-1LL, util_parse_delay (NULL, 1LL));
-    LONGS_EQUAL(-1LL, util_parse_delay ("", -1LL));
-    LONGS_EQUAL(-1LL, util_parse_delay ("", 0LL));
-    LONGS_EQUAL(-1LL, util_parse_delay ("", 1LL));
+    WEE_PARSE_DELAY(0, 0ULL, NULL, 0ULL);
+    WEE_PARSE_DELAY(0, 0ULL, NULL, 1ULL);
+    WEE_PARSE_DELAY(0, 0ULL, "", 0ULL);
+    WEE_PARSE_DELAY(0, 0ULL, "", 1ULL);
 
     /* error: bad default_factor */
-    LONGS_EQUAL(-1LL, util_parse_delay ("abcd", -1LL));
-    LONGS_EQUAL(-1LL, util_parse_delay ("abcd", 0LL));
-    LONGS_EQUAL(-1LL, util_parse_delay ("123", -1LL));
-    LONGS_EQUAL(-1LL, util_parse_delay ("123", 0LL));
+    WEE_PARSE_DELAY(0, 0ULL, "abcd", 0ULL);
+    WEE_PARSE_DELAY(0, 0ULL, "123", 0ULL);
 
     /* error: bad unit */
-    LONGS_EQUAL(-1LL, util_parse_delay ("123a", 1LL));
-    LONGS_EQUAL(-1LL, util_parse_delay ("123ss", 1LL));
-    LONGS_EQUAL(-1LL, util_parse_delay ("123mss", 1LL));
-    LONGS_EQUAL(-1LL, util_parse_delay ("123uss", 1LL));
+    WEE_PARSE_DELAY(0, 0ULL, "123a", 1ULL);
+    WEE_PARSE_DELAY(0, 0ULL, "123ss", 1ULL);
+    WEE_PARSE_DELAY(0, 0ULL, "123mss", 1ULL);
+    WEE_PARSE_DELAY(0, 0ULL, "123uss", 1ULL);
 
     /* error: bad number */
-    LONGS_EQUAL(-1LL, util_parse_delay ("abcd", 1LL));
+    WEE_PARSE_DELAY(0, 0ULL, "abcd", 1LL);
+
+    /* error: bad delay */
+    WEE_PARSE_DELAY(0, 0ULL, "-123", 1LL);
 
     /* tests with delay == 0 */
-    LONGS_EQUAL(0LL, util_parse_delay ("0", 1LL));
-    LONGS_EQUAL(0LL, util_parse_delay ("0us", 1LL));
-    LONGS_EQUAL(0LL, util_parse_delay ("0ms", 1LL));
-    LONGS_EQUAL(0LL, util_parse_delay ("0s", 1LL));
-    LONGS_EQUAL(0LL, util_parse_delay ("0m", 1LL));
-    LONGS_EQUAL(0LL, util_parse_delay ("0h", 1LL));
+    WEE_PARSE_DELAY(1, 0ULL, "0", 1ULL);
+    WEE_PARSE_DELAY(1, 0ULL, "0us", 1ULL);
+    WEE_PARSE_DELAY(1, 0ULL, "0ms", 1ULL);
+    WEE_PARSE_DELAY(1, 0ULL, "0s", 1ULL);
+    WEE_PARSE_DELAY(1, 0ULL, "0m", 1ULL);
+    WEE_PARSE_DELAY(1, 0ULL, "0h", 1ULL);
 
     /* tests with delay == 123, default_factor = 1 (1 microsecond) */
-    LONGS_EQUAL(123LL, util_parse_delay ("123", 1LL));
-    LONGS_EQUAL(123LL, util_parse_delay ("123us", 1LL));
-    LONGS_EQUAL(123LL * 1000LL, util_parse_delay ("123ms", 1LL));
-    LONGS_EQUAL(123LL * 1000LL * 1000LL, util_parse_delay ("123s", 1LL));
-    LONGS_EQUAL(123LL * 1000LL * 1000LL * 60LL, util_parse_delay ("123m", 1LL));
-    LONGS_EQUAL(123LL * 1000LL * 1000LL * 60LL * 60LL, util_parse_delay ("123h", 1LL));
+    WEE_PARSE_DELAY(1, 123ULL, "123", 1ULL);
+    WEE_PARSE_DELAY(1, 123ULL, "123us", 1ULL);
+    WEE_PARSE_DELAY(1, 123ULL * 1000ULL, "123ms", 1ULL);
+    WEE_PARSE_DELAY(1, 123ULL * 1000ULL * 1000ULL, "123s", 1ULL);
+    WEE_PARSE_DELAY(1, 123ULL * 1000ULL * 1000ULL * 60ULL, "123m", 1ULL);
+    WEE_PARSE_DELAY(1, 123ULL * 1000ULL * 1000ULL * 60ULL * 60ULL, "123h", 1ULL);
 
     /* tests with delay == 123, default_factor = 1000 (1 millisecond) */
-    LONGS_EQUAL(123LL * 1000LL, util_parse_delay ("123", 1000LL));
-    LONGS_EQUAL(123LL, util_parse_delay ("123us", 1000LL));
-    LONGS_EQUAL(123LL * 1000LL, util_parse_delay ("123ms", 1000LL));
-    LONGS_EQUAL(123LL * 1000LL * 1000LL, util_parse_delay ("123s", 1000LL));
-    LONGS_EQUAL(123LL * 1000LL * 1000LL * 60LL, util_parse_delay ("123m", 1000LL));
-    LONGS_EQUAL(123LL * 1000LL * 1000LL * 60LL * 60LL, util_parse_delay ("123h", 1000LL));
+    WEE_PARSE_DELAY(1, 123ULL * 1000ULL, "123", 1000ULL);
+    WEE_PARSE_DELAY(1, 123ULL, "123us", 1000ULL);
+    WEE_PARSE_DELAY(1, 123ULL * 1000ULL, "123ms", 1000ULL);
+    WEE_PARSE_DELAY(1, 123ULL * 1000ULL * 1000ULL, "123s", 1000ULL);
+    WEE_PARSE_DELAY(1, 123ULL * 1000ULL * 1000ULL * 60ULL, "123m", 1000ULL);
+    WEE_PARSE_DELAY(1, 123ULL * 1000ULL * 1000ULL * 60ULL * 60ULL, "123h", 1000ULL);
 
     /* tests with delay == 123, default_factor = 1000000 (1 second) */
-    LONGS_EQUAL(123LL * 1000LL * 1000LL, util_parse_delay ("123", 1000000LL));
-    LONGS_EQUAL(123LL, util_parse_delay ("123us", 1000000LL));
-    LONGS_EQUAL(123LL * 1000LL, util_parse_delay ("123ms", 1000000LL));
-    LONGS_EQUAL(123LL * 1000LL * 1000LL, util_parse_delay ("123s", 1000000LL));
-    LONGS_EQUAL(123LL * 1000LL * 1000LL * 60LL, util_parse_delay ("123m", 1000000LL));
-    LONGS_EQUAL(123LL * 1000LL * 1000LL * 60LL * 60LL, util_parse_delay ("123h", 1000000LL));
+    WEE_PARSE_DELAY(1, 123ULL * 1000ULL * 1000ULL, "123", 1000000ULL);
+    WEE_PARSE_DELAY(1, 123ULL, "123us", 1000000ULL);
+    WEE_PARSE_DELAY(1, 123ULL * 1000ULL, "123ms", 1000000ULL);
+    WEE_PARSE_DELAY(1, 123ULL * 1000ULL * 1000ULL, "123s", 1000000ULL);
+    WEE_PARSE_DELAY(1, 123ULL * 1000ULL * 1000ULL * 60ULL, "123m", 1000000ULL);
+    WEE_PARSE_DELAY(1, 123ULL * 1000ULL * 1000ULL * 60ULL * 60ULL, "123h", 1000000ULL);
 }
 
 /*

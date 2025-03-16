@@ -123,9 +123,9 @@ util_timeval_add (struct timeval *tv, long long interval)
  */
 
 char *
-util_get_microseconds_string (long long microseconds)
+util_get_microseconds_string (unsigned long long microseconds)
 {
-    long long hour, min, sec, usec;
+    unsigned long long hour, min, sec, usec;
     char result[128];
 
     usec = microseconds % 1000000;
@@ -134,7 +134,7 @@ util_get_microseconds_string (long long microseconds)
     hour = (microseconds / 1000000) / 3600;
 
     snprintf (result, sizeof (result),
-              "%lld:%02lld:%02lld.%06lld",
+              "%llu:%02llu:%02llu.%06llu",
               hour, min, sec, usec);
 
     return strdup (result);
@@ -534,18 +534,26 @@ util_get_time_diff (time_t time1, time_t time2,
  *   - 60000000: minutes
  *   - 3600000000: hours
  *
- * Returns the delay in microseconds, -1 if error.
+ * Returns:
+ *   1: OK
+ *   0: error
  */
 
-long long
-util_parse_delay (const char *string_delay, long long default_factor)
+int
+util_parse_delay (const char *string_delay, unsigned long long default_factor,
+                  unsigned long long *delay)
 {
     const char *pos;
     char *str_number, *error;
-    long long factor, delay;
+    unsigned long long factor;
+
+    if (!delay)
+        return 0;
+
+    *delay = 0;
 
     if (!string_delay || !string_delay[0] || (default_factor < 1))
-        return -1LL;
+        return 0;
 
     factor = default_factor;
 
@@ -559,37 +567,42 @@ util_parse_delay (const char *string_delay, long long default_factor)
     {
         str_number = string_strndup (string_delay, pos - string_delay);
         if (strcmp (pos, "us") == 0)
-            factor = 1LL;
+            factor = 1ULL;
         else if (strcmp (pos, "ms") == 0)
-            factor = 1000LL;
+            factor = 1000ULL;
         else if (strcmp (pos, "s") == 0)
-            factor = 1000LL * 1000LL;
+            factor = 1000ULL * 1000ULL;
         else if (strcmp (pos, "m") == 0)
-            factor = 1000LL * 1000LL * 60LL;
+            factor = 1000ULL * 1000ULL * 60ULL;
         else if (strcmp (pos, "h") == 0)
-            factor = 1000LL * 1000LL * 60LL * 60LL;
+            factor = 1000ULL * 1000ULL * 60ULL * 60ULL;
         else
-            return -1LL;
+            return 0;
     }
     else
     {
+        if (string_delay[0] == '-')
+            return 0;
         str_number = strdup (string_delay);
     }
 
     if (!str_number)
-        return -1LL;
+        return 0;
 
     error = NULL;
-    delay = strtoll (str_number, &error, 10);
-    if (!error || error[0] || (delay < 0))
+    *delay = strtoull (str_number, &error, 10);
+    if (!error || error[0])
     {
         free (str_number);
-        return -1LL;
+        *delay = 0;
+        return 0;
     }
+
+    *delay *= factor;
 
     free (str_number);
 
-    return delay * factor;
+    return 1;
 }
 
 /*

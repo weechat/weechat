@@ -865,7 +865,9 @@ debug_display_time_elapsed (struct timeval *time1, struct timeval *time2,
 
     gettimeofday (&debug_timeval_end, NULL);
     diff = util_timeval_diff (time1, time2);
-    str_diff = util_get_microseconds_string (diff);
+    if (diff < 0)
+        diff *= -1;
+    str_diff = util_get_microseconds_string ((unsigned long long)diff);
 
     if (display)
     {
