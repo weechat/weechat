@@ -231,7 +231,7 @@ util_strftimeval (char *string, int max, const char *format, struct timeval *tv)
         }
         else if ((ptr_format[0] == '%') && (ptr_format[1] == '!'))
         {
-            snprintf (str_temp, sizeof (str_temp), "%ld", (long)(tv->tv_sec));
+            snprintf (str_temp, sizeof (str_temp), "%lld", (long long)(tv->tv_sec));
             string_dyn_concat (format2, str_temp, -1);
             ptr_format += 2;
         }

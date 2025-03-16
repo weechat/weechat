@@ -7331,9 +7331,9 @@ irc_server_print_log (void)
         weechat_log_printf ("  away_time . . . . . . . . : %lld", (long long)ptr_server->away_time);
         weechat_log_printf ("  lag . . . . . . . . . . . : %d", ptr_server->lag);
         weechat_log_printf ("  lag_displayed . . . . . . : %d", ptr_server->lag_displayed);
-        weechat_log_printf ("  lag_check_time. . . . . . : tv_sec:%d, tv_usec:%d",
-                            ptr_server->lag_check_time.tv_sec,
-                            ptr_server->lag_check_time.tv_usec);
+        weechat_log_printf ("  lag_check_time. . . . . . : tv_sec:%lld, tv_usec:%ld",
+                            (long long)(ptr_server->lag_check_time.tv_sec),
+                            (long)(ptr_server->lag_check_time.tv_usec));
         weechat_log_printf ("  lag_next_check. . . . . . : %lld", (long long)ptr_server->lag_next_check);
         weechat_log_printf ("  lag_last_refresh. . . . . : %lld", (long long)ptr_server->lag_last_refresh);
         weechat_log_printf ("  cmd_list_regexp . . . . . : %p", ptr_server->cmd_list_regexp);

@@ -851,9 +851,9 @@ gui_hotlist_print_log (void)
     {
         log_printf ("[hotlist (addr:%p)]", ptr_hotlist);
         log_printf ("  priority . . . . . . . : %d", ptr_hotlist->priority);
-        log_printf ("  creation_time. . . . . : tv_sec:%ld, tv_usec:%ld",
-                    ptr_hotlist->creation_time.tv_sec,
-                    ptr_hotlist->creation_time.tv_usec);
+        log_printf ("  creation_time. . . . . : tv_sec:%lld, tv_usec:%ld",
+                    (long long)(ptr_hotlist->creation_time.tv_sec),
+                    (long)(ptr_hotlist->creation_time.tv_usec));
         log_printf ("  buffer . . . . . . . . : %p", ptr_hotlist->buffer);
         for (i = 0; i < GUI_HOTLIST_NUM_PRIORITIES; i++)
         {

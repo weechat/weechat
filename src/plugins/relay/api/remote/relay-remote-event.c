@@ -359,14 +359,14 @@ relay_remote_event_line_update (struct t_relay_remote_event *event)
     if (!hashtable)
         return;
 
-    snprintf (str_value, sizeof (str_value), "%ld", tv_date.tv_sec);
+    snprintf (str_value, sizeof (str_value), "%lld", (long long)tv_date.tv_sec);
     weechat_hashtable_set (hashtable, "date", str_value);
-    snprintf (str_value, sizeof (str_value), "%ld", tv_date.tv_usec);
+    snprintf (str_value, sizeof (str_value), "%ld", (long)tv_date.tv_usec);
     weechat_hashtable_set (hashtable, "date_usec", str_value);
 
-    snprintf (str_value, sizeof (str_value), "%ld", tv_date_printed.tv_sec);
+    snprintf (str_value, sizeof (str_value), "%lld", (long long)tv_date_printed.tv_sec);
     weechat_hashtable_set (hashtable, "date_printed", str_value);
-    snprintf (str_value, sizeof (str_value), "%ld", tv_date_printed.tv_usec);
+    snprintf (str_value, sizeof (str_value), "%ld", (long)tv_date_printed.tv_usec);
     weechat_hashtable_set (hashtable, "date_usec_printed", str_value);
 
     tags = relay_remote_build_string_tags (

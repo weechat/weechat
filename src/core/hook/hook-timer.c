@@ -431,12 +431,12 @@ hook_timer_print_log (struct t_hook *hook)
     log_printf ("      tv_sec. . . . . . . : %lld",
                 (long long)(HOOK_TIMER(hook, last_exec.tv_sec)));
     log_printf ("      tv_usec. . . .  . . : %ld",
-                HOOK_TIMER(hook, last_exec.tv_usec));
+                (long)(HOOK_TIMER(hook, last_exec.tv_usec)));
     util_strftimeval (text_time, sizeof (text_time),
                       "%Y-%m-%dT%H:%M:%S.%f", &(HOOK_TIMER(hook, next_exec)));
     log_printf ("    last_exec . . . . . . : %s", text_time);
     log_printf ("      tv_sec. . . . . . . : %lld",
                 (long long)(HOOK_TIMER(hook, next_exec.tv_sec)));
     log_printf ("      tv_usec. . . .  . . : %ld",
-                HOOK_TIMER(hook, next_exec.tv_usec));
+                (long)(HOOK_TIMER(hook, next_exec.tv_usec)));
 }
