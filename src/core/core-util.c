@@ -178,6 +178,7 @@ util_strftimeval (char *string, int max, const char *format, struct timeval *tv)
     const char *ptr_format;
     struct tm *local_time;
     int length, bytes;
+    long usec;
 
     if (!string || (max <= 0) || !format || !tv)
         return 0;
@@ -191,6 +192,12 @@ util_strftimeval (char *string, int max, const char *format, struct timeval *tv)
     if (!format2)
         return 0;
 
+    usec = (long)(tv->tv_usec);
+    if (usec < 0)
+        usec = 0;
+    else if (usec > 999999)
+        usec = 999999;
+
     ptr_format = format;
     while (ptr_format && ptr_format[0])
     {
@@ -203,8 +210,7 @@ util_strftimeval (char *string, int max, const char *format, struct timeval *tv)
         {
             if ((ptr_format[2] >= '1') && (ptr_format[2] <= '6'))
             {
-                snprintf (str_temp, sizeof (str_temp),
-                          "%06ld", (long)(tv->tv_usec));
+                snprintf (str_temp, sizeof (str_temp), "%06ld", usec);
                 length = ptr_format[2] - '1' + 1;
                 str_temp[length] = '\0';
                 string_dyn_concat (format2, str_temp, -1);
@@ -219,7 +225,7 @@ util_strftimeval (char *string, int max, const char *format, struct timeval *tv)
         }
         else if ((ptr_format[0] == '%') && (ptr_format[1] == 'f'))
         {
-            snprintf (str_temp, sizeof (str_temp), "%06ld", (long)(tv->tv_usec));
+            snprintf (str_temp, sizeof (str_temp), "%06ld", usec);
             string_dyn_concat (format2, str_temp, -1);
             ptr_format += 2;
         }
