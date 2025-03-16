@@ -64,6 +64,7 @@ Alphabetically:
 - jesopo
 - Jim Ramsay (lack)
 - Jiri Golembiovsky (GolemJ)
+- Joe Hermaszewski
 - Joey Pabalinas (alyptik)
 - Johan Rylander
 - Johannes Kuhn
