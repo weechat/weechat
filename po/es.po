@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2025-03-15 19:16+0100\n"
+"POT-Creation-Date: 2025-03-16 10:34+0100\n"
 "PO-Revision-Date: 2024-11-20 18:17+0100\n"
 "Last-Translator: Santiago Forero <santiago@forero.xyz>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7221,7 +7221,7 @@ msgstr ""
 
 msgid ""
 "when the nick prefix is enabled, display a space instead if there is no nick "
-"prefix on the buffer (only for channels, private buffers and list buffers"
+"prefix on the buffer (only for channel, private and list buffers)"
 msgstr ""
 
 #, fuzzy

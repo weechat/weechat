@@ -578,8 +578,8 @@ buflist_config_init (void)
             buflist_config_file, buflist_config_section_look,
             "nick_prefix_empty", "boolean",
             N_("when the nick prefix is enabled, display a space instead if "
-               "there is no nick prefix on the buffer (only for channels, "
-               "private buffers and list buffers"),
+               "there is no nick prefix on the buffer (only for channel, "
+               "private and list buffers)"),
             NULL, 0, 0, "on", NULL, 0,
             NULL, NULL, NULL,
             &buflist_config_change_buflist, NULL, NULL,
