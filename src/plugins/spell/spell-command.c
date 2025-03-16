@@ -153,7 +153,8 @@ spell_command_speller_list_dicts (void)
                     SPELL_PLUGIN_NAME);
 
 #ifdef USE_ENCHANT
-    enchant_broker_list_dicts (broker, spell_enchant_dict_describe_cb,
+    enchant_broker_list_dicts (spell_enchant_broker,
+                               spell_enchant_dict_describe_cb,
                                NULL);
 #else
     config = new_aspell_config ();

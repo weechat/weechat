@@ -54,7 +54,7 @@ int
 spell_speller_dict_supported (const char *lang)
 {
 #ifdef USE_ENCHANT
-    return enchant_broker_dict_exists (broker, lang);
+    return enchant_broker_dict_exists (spell_enchant_broker, lang);
 #else
     struct AspellConfig *config;
     AspellDictInfoList *list;
@@ -164,7 +164,7 @@ spell_speller_new (const char *lang)
     }
 
 #ifdef USE_ENCHANT
-    new_speller = enchant_broker_request_dict (broker, lang);
+    new_speller = enchant_broker_request_dict (spell_enchant_broker, lang);
     if (!new_speller)
     {
         weechat_printf (NULL,
@@ -353,7 +353,7 @@ spell_speller_free_value_cb (struct t_hashtable *hashtable,
     /* free speller */
 #ifdef USE_ENCHANT
     ptr_speller = (EnchantDict *)value;
-    enchant_broker_free_dict (broker, ptr_speller);
+    enchant_broker_free_dict (spell_enchant_broker, ptr_speller);
 #else
     ptr_speller = (AspellSpeller *)value;
     aspell_speller_save_all_word_lists (ptr_speller);

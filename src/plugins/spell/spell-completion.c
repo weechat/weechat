@@ -102,7 +102,7 @@ spell_completion_dicts_cb (const void *pointer, void *data,
     (void) buffer;
 
 #ifdef USE_ENCHANT
-    enchant_broker_list_dicts (broker,
+    enchant_broker_list_dicts (spell_enchant_broker,
                                spell_completion_enchant_add_dict_cb,
                                completion);
 #else

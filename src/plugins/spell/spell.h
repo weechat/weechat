@@ -38,7 +38,7 @@ struct t_spell_code
 };
 
 #ifdef USE_ENCHANT
-extern EnchantBroker *broker;
+extern EnchantBroker *spell_enchant_broker;
 #endif /* USE_ENCHANT */
 
 extern struct t_weechat_plugin *weechat_spell_plugin;

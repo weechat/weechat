@@ -58,7 +58,7 @@ char *spell_nick_completer = NULL;
 int spell_len_nick_completer = 0;
 
 #ifdef USE_ENCHANT
-EnchantBroker *broker = NULL;
+EnchantBroker *spell_enchant_broker = NULL;
 #endif /* USE_ENCHANT */
 
 /*
@@ -1177,11 +1177,13 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
 #ifdef USE_ENCHANT
     /* acquire enchant broker */
-    broker = enchant_broker_init ();
-    if (!broker)
+    spell_enchant_broker = enchant_broker_init ();
+    if (!spell_enchant_broker)
         return WEECHAT_RC_ERROR;
 #ifdef ENCHANT_MYSPELL_DICT_DIR
-    enchant_broker_set_param(broker, "enchant.myspell.dictionary.path", ENCHANT_MYSPELL_DICT_DIR);
+    enchant_broker_set_param(spell_enchant_broker,
+                             "enchant.myspell.dictionary.path",
+                             ENCHANT_MYSPELL_DICT_DIR);
 #endif
 #endif /* USE_ENCHANT */
 
@@ -1247,8 +1249,8 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
 
 #ifdef USE_ENCHANT
     /* release enchant broker */
-    enchant_broker_free (broker);
-    broker = NULL;
+    enchant_broker_free (spell_enchant_broker);
+    spell_enchant_broker = NULL;
 #endif /* USE_ENCHANT */
 
     if (spell_nick_completer)
