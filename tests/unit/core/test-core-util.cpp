@@ -252,6 +252,24 @@ TEST(CoreUtil, Strftimeval)
     strcpy (str_time, "test");
     LONGS_EQUAL(17, util_strftimeval (str_time, sizeof (str_time), "%!.%f", &tv));
     STRCMP_EQUAL("1703500149.456789", str_time);
+
+    /* test date: 2023-12-25T10:29:09.000000Z (with microseconds < 0) */
+    tv.tv_sec = 1703500149;
+    tv.tv_usec = -1;
+
+    strcpy (str_time, "test");
+    LONGS_EQUAL(26, util_strftimeval (str_time, sizeof (str_time),
+                                      "%Y-%m-%d %H:%M:%S.%f", &tv));
+    STRCMP_EQUAL("2023-12-25 10:29:09.000000", str_time);
+
+    /* test date: 2023-12-25T10:29:09.999999Z (with microseconds > 999999) */
+    tv.tv_sec = 1703500149;
+    tv.tv_usec = 1000000;
+
+    strcpy (str_time, "test");
+    LONGS_EQUAL(26, util_strftimeval (str_time, sizeof (str_time),
+                                      "%Y-%m-%d %H:%M:%S.%f", &tv));
+    STRCMP_EQUAL("2023-12-25 10:29:09.999999", str_time);
 }
 
 /*
