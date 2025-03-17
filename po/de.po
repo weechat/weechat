@@ -1,7 +1,7 @@
 #
 # Copyright (C) 2005 Rudolf Polzer <weechat-te@durchnull.de>
 # Copyright (C) 2006-2007 Thomas Schuetz <i18n@internet-villa.de>
-# SPDX-FileCopyrightText: 2009-2019, 2023, 2024 Nils Görs <weechatter@arcor.de>
+# SPDX-FileCopyrightText: 2009-2019, 2023, 2024, 2025 Nils Görs <weechatter@arcor.de>
 # Copyright (C) 2015 Sven Knurr <zeug@tuxproject.de>
 #
 # This file is part of WeeChat, the extensible chat client.
@@ -27,7 +27,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2025-03-16 14:47+0100\n"
-"PO-Revision-Date: 2025-03-16 10:41+0100\n"
+"PO-Revision-Date: 2025-03-17 11:02+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de_DE\n"
@@ -35,7 +35,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Lokalize 23.08.5\n"
 "X-Poedit-Bookmarks: -1,-1,180,-1,-1,-1,-1,-1,-1,-1\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
@@ -18476,10 +18476,10 @@ msgid "xfer chat"
 msgstr "Transfer (xfer) Chat"
 
 msgid "time left:"
-msgstr ""
+msgstr "verbleibende Zeit:"
 
 msgid "time left: unknown"
-msgstr ""
+msgstr "verbleibende Zeit: unbekannt"
 
 msgid "Xfer list"
 msgstr "Transferliste"
@@ -18955,3 +18955,4 @@ msgstr ""
 
 #~ msgid "ETA"
 #~ msgstr "ETA"
+
