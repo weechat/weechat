@@ -6,6 +6,7 @@
 
 - core: add option `-v` to display upgrades in command `/version`
 - api: add property `keep_spaces_right` in function hook_set to keep trailing spaces in command arguments
+- core, irc, alias, xfer: keep spaces at the end of some commands, where trailing spaces are important
 - irc: add option `-connected` in command `/server list|listfull`
 - buflist: apply option buflist.look.nick_prefix_empty also on private and list buffers
 - xfer: compute speed and ETA with microsecond precision ([#665](https://github.com/weechat/weechat/issues/665))
