@@ -1,9 +1,9 @@
 /*
  * weechat-lua-api.c - lua API functions
  *
- * Copyright (C) 2006-2007 Emmanuel Bouthenot <kolter@openics.org>
- * Copyright (C) 2006-2025 Sébastien Helleu <flashcode@flashtux.org>
- * Copyright (C) 2012 Simon Arlott
+ * SPDX-FileCopyrightText: 2006-2007 Emmanuel Bouthenot <kolter@openics.org>
+ * SPDX-FileCopyrightText: 2006-2025 Sébastien Helleu <flashcode@flashtux.org>
+ * SPDX-FileCopyrightText: 2012 Simon Arlott
  *
  * This file is part of WeeChat, the extensible chat client.
  *

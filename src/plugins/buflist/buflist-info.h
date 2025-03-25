@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 Simmo Saan <simmo.saan@gmail.com>
+ * SPDX-FileCopyrightText: 2019 Simmo Saan <simmo.saan@gmail.com>
  *
  * This file is part of WeeChat, the extensible chat client.
  *

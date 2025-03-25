@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2006-2017 Adam Saponara <as@php.net>
+# SPDX-FileCopyrightText: 2006-2017 Adam Saponara <as@php.net>
 #
 # This file is part of WeeChat, the extensible chat client.
 #

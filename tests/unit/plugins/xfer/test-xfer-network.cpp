@@ -1,7 +1,7 @@
 /*
  * test-xfer-network.cpp - test xfer network functions
  *
- * Copyright (C) 2022-2025 Sébastien Helleu <flashcode@flashtux.org>
+ * SPDX-FileCopyrightText: 2022-2025 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *

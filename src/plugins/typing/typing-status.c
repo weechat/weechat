@@ -1,7 +1,7 @@
 /*
  * typing-status.c - manage self and other users typing status
  *
- * Copyright (C) 2021-2025 Sébastien Helleu <flashcode@flashtux.org>
+ * SPDX-FileCopyrightText: 2021-2025 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *

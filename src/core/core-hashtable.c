@@ -1,7 +1,7 @@
 /*
  * core-hashtable.c - implementation of hashtable
  *
- * Copyright (C) 2010-2025 Sébastien Helleu <flashcode@flashtux.org>
+ * SPDX-FileCopyrightText: 2010-2025 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *

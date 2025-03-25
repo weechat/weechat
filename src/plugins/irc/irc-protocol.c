@@ -1,9 +1,9 @@
 /*
  * irc-protocol.c - implementation of IRC protocol
  *
- * Copyright (C) 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
- * Copyright (C) 2006 Emmanuel Bouthenot <kolter@openics.org>
- * Copyright (C) 2014 Shawn Smith <ShawnSmith0828@gmail.com>
+ * SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
+ * SPDX-FileCopyrightText: 2006 Emmanuel Bouthenot <kolter@openics.org>
+ * SPDX-FileCopyrightText: 2014 Shawn Smith <ShawnSmith0828@gmail.com>
  *
  * This file is part of WeeChat, the extensible chat client.
  *

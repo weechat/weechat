@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2009-2013 Marco Paolone <marcopaolone@gmail.com>
+# SPDX-FileCopyrightText: 2009-2013 Marco Paolone <marcopaolone@gmail.com>
 #
 # This file is part of WeeChat, the extensible chat client.
 #

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2017-2025 Sébastien Helleu <flashcode@flashtux.org>
+# SPDX-FileCopyrightText: 2017-2025 Sébastien Helleu <flashcode@flashtux.org>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by

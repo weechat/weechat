@@ -1,6 +1,6 @@
 #
-# Copyright (C) 2009-2016 Krzysztof Koroscik <soltys1@gmail.com>
-# Copyright (C) 2010 B.J. Stobiecki <bartek@stobiecki.eu>
+# SPDX-FileCopyrightText: 2009-2016 Krzysztof Koroscik <soltys1@gmail.com>
+# SPDX-FileCopyrightText: 2010 B.J. Stobiecki <bartek@stobiecki.eu>
 #
 # This file is part of WeeChat, the extensible chat client.
 #

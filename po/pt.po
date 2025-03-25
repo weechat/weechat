@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2016 Vasco Almeida <vascomalmeida@sapo.pt>
+# SPDX-FileCopyrightText: 2016 Vasco Almeida <vascomalmeida@sapo.pt>
 #
 # This file is part of WeeChat, the extensible chat client.
 #

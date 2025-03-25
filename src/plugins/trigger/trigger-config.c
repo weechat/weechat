@@ -1,7 +1,7 @@
 /*
  * trigger-config.c - trigger configuration options (file trigger.conf)
  *
- * Copyright (C) 2014-2025 Sébastien Helleu <flashcode@flashtux.org>
+ * SPDX-FileCopyrightText: 2014-2025 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *

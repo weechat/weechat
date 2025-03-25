@@ -1,8 +1,8 @@
 /*
  * weechat-js-v8.cpp - v8 javascript functions
  *
- * Copyright (C) 2013 Koka El Kiwi <kokakiwi@kokakiwi.net>
- * Copyright (C) 2015-2025 Sébastien Helleu <flashcode@flashtux.org>
+ * SPDX-FileCopyrightText: 2013 Koka El Kiwi <kokakiwi@kokakiwi.net>
+ * SPDX-FileCopyrightText: 2015-2025 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *

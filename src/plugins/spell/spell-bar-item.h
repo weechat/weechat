@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 Nils Görs <weechatter@arcor.de>
+ * SPDX-FileCopyrightText: 2012 Nils Görs <weechatter@arcor.de>
  *
  * This file is part of WeeChat, the extensible chat client.
  *

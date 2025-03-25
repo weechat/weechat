@@ -1,8 +1,8 @@
 /*
  * weechat-perl.c - perl plugin for WeeChat
  *
- * Copyright (C) 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
- * Copyright (C) 2005-2008 Emmanuel Bouthenot <kolter@openics.org>
+ * SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
+ * SPDX-FileCopyrightText: 2005-2008 Emmanuel Bouthenot <kolter@openics.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *

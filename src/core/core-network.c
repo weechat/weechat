@@ -1,10 +1,10 @@
 /*
  * core-network.c - network functions
  *
- * Copyright (C) 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
- * Copyright (C) 2005-2010 Emmanuel Bouthenot <kolter@openics.org>
- * Copyright (C) 2010 Gu1ll4um3r0m41n <aeroxteam@gmail.com>
- * Copyright (C) 2012 Simon Arlott
+ * SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
+ * SPDX-FileCopyrightText: 2005-2010 Emmanuel Bouthenot <kolter@openics.org>
+ * SPDX-FileCopyrightText: 2010 Gu1ll4um3r0m41n <aeroxteam@gmail.com>
+ * SPDX-FileCopyrightText: 2012 Simon Arlott
  *
  * This file is part of WeeChat, the extensible chat client.
  *

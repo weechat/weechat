@@ -6,7 +6,7 @@
 #  ENCHANT_LIBRARIES - Link these to use ENCHANT
 #  ENCHANT_DEFINITIONS - Compiler switches required for using ENCHANT
 
-# Copyright (c) 2006, Zack Rusin, <zack@kde.org>
+# SPDX-FileCopyrightText: 2006 Zack Rusin <zack@kde.org>
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.

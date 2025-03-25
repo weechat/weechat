@@ -1,7 +1,7 @@
 /*
  * irc-typing.c - manage typing status on channels/private
  *
- * Copyright (C) 2021-2025 Sébastien Helleu <flashcode@flashtux.org>
+ * SPDX-FileCopyrightText: 2021-2025 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *

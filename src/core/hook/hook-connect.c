@@ -1,8 +1,8 @@
 /*
  * hook-connect.c - WeeChat connect hook
  *
- * Copyright (C) 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
- * Copyright (C) 2012 Simon Arlott
+ * SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
+ * SPDX-FileCopyrightText: 2012 Simon Arlott
  *
  * This file is part of WeeChat, the extensible chat client.
  *

@@ -1,6 +1,6 @@
 #
-# Copyright (C) 2006-2007 Pavel Shevchuk <stlwrt@gmail.com>
-# Copyright (C) 2012 Aleksey V Zapparov <ixti@member.fsf.org>
+# SPDX-FileCopyrightText: 2006-2007 Pavel Shevchuk <stlwrt@gmail.com>
+# SPDX-FileCopyrightText: 2012 Aleksey V Zapparov <ixti@member.fsf.org>
 #
 # This file is part of WeeChat, the extensible chat client.
 #

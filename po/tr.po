@@ -1,5 +1,6 @@
-# Copyright (C) 2013 Hasan Kiran <sunder67@hotmail.com>
-# Copyright (C) 2020-2024 Emir SARI <emir_sari@icloud.com>
+#
+# SPDX-FileCopyrightText: 2013 Hasan Kiran <sunder67@hotmail.com>
+# SPDX-FileCopyrightText: 2020-2024 Emir SARI <emir_sari@icloud.com>
 #
 # This file is part of WeeChat, the extensible chat client.
 #

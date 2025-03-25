@@ -1,7 +1,7 @@
 /*
  * gui-bar-item-custom.c - custom bar item functions (used by all GUI)
  *
- * Copyright (C) 2022-2025 Sébastien Helleu <flashcode@flashtux.org>
+ * SPDX-FileCopyrightText: 2022-2025 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *

@@ -1,7 +1,7 @@
 /*
  * xfer-file.c - file functions for xfer plugin
  *
- * Copyright (C) 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
+ * SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *

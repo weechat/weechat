@@ -701,7 +701,7 @@ WeeChat とプラグインの翻訳は gettext で行います、ファイルは
 /*
  * weechat.c - core functions for WeeChat
  *
- * Copyright (C) 2025 Your Name <your@email.com>
+ * SPDX-FileCopyrightText: 2025 Your Name <your@email.com>
  *
  * This file is part of WeeChat, the extensible chat client.
  *

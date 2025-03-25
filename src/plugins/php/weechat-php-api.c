@@ -1,8 +1,8 @@
 /*
  * weechat-php-api.c - PHP API functions
  *
- * Copyright (C) 2006-2017 Adam Saponara <as@php.net>
- * Copyright (C) 2017-2025 Sébastien Helleu <flashcode@flashtux.org>
+ * SPDX-FileCopyrightText: 2006-2017 Adam Saponara <as@php.net>
+ * SPDX-FileCopyrightText: 2017-2025 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *

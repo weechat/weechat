@@ -1,7 +1,7 @@
 /*
  * test-core-input.cpp - test input functions
  *
- * Copyright (C) 2024-2025 Sébastien Helleu <flashcode@flashtux.org>
+ * SPDX-FileCopyrightText: 2024-2025 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *

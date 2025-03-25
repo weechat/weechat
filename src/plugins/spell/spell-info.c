@@ -1,7 +1,7 @@
 /*
  * spell-info.c - info for spell checker plugin
  *
- * Copyright (C) 2013-2025 Sébastien Helleu <flashcode@flashtux.org>
+ * SPDX-FileCopyrightText: 2013-2025 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
