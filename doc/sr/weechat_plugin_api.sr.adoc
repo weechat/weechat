@@ -10702,11 +10702,10 @@ _WeeChat ≥ 4.1.0._
 
 URL трансфер.
 
-// TRANSLATION MISSING
-This function is similar to <<_hook_process,hook_process>> and
-<<_hook_process_hashtable,hook_process_hashtable>> with command "url:..."
-but it uses a thread instead of new process, making it more lightweight
-and thus recommended for this usage.
+Ова функција личи на <<_hook_process,hook_process>> и
+<<_hook_process_hashtable,hook_process_hashtable>> са командом "url:..."
+али уместо новог процеса користи нит, па тако мање оптерећује систем и
+препоручује се њена употреба.
 
 Прототип:
 
@@ -12183,21 +12182,19 @@ int weechat_hook_signal_send (const char *signal, const char *type_data,
 
 Аргументи:
 
-// TRANSLATION MISSING
-* _signal_: сигнал који се шаље; flags are allowed before the signal name (see below)
+* _signal_: сигнал који се шаље; пре имена сигнала су дозвољене заставице (погледајте испод)
   _(WeeChat ≥ 4.5.0)_
 * _type_data_: тип података који се шаљу уз сигнал (погледајте <<_hook_signal,hook_signal>>)
 * _signal_data_: подаци који се шаљу уз сигнал
 
-// TRANSLATION MISSING
-The signal name can contain flags with the following format: `[flags:xxx,yyy]signal`
-where `xxx` and `yyy` are names of flags, and `signal` the signal name. +
-The following flags are supported:
+Име сигнала може да садржи заставице у следећем формату: `[flags:ааа,ббб]сигнал`
+где су `ааа` и `ббб` имена заставица, а `сигнал` је име сигнала. +
+Подржане су следеће заставице:
 
-* _stop_on_error_: exit immediately if a callback returns WEECHAT_RC_ERROR
-  (remaining callbacks are then NOT executed) _(WeeChat ≥ 4.5.0)_
-* _ignore_eat_: consider any callback returning WEECHAT_RC_OK_EAT is in fact
-  WEECHAT_RC_OK and execute remaining callbacks _(WeeChat ≥ 4.5.0)_
+* _stop_on_error_: извршавање се тренутно прекида ако функција повратног позива враћа WEECHAT_RC_ERROR
+  (преостале функције повратног позива се НЕ извршавају) _(WeeChat ≥ 4.5.0)_
+* _ignore_eat_: сматра се да било која функција повратног позива која враћа WEECHAT_RC_OK_EAT
+  уствари враћа WEECHAT_RC_OK и извршавају се преостале функције повратног позива _(WeeChat ≥ 4.5.0)_
 
 Повратна вредност _(WeeChat ≥ 1.0)_:
 
@@ -12511,8 +12508,7 @@ int weechat_hook_hsignal_send (const char *signal, struct t_hashtable *hashtable
 
 Аргументи:
 
-// TRANSLATION MISSING
-* _signal_: сигнал који се шаље; flags are allowed before the signal name
+* _signal_: сигнал који се шаље; испред имена сигнала су дозвољене заставице
   (see function <<_hook_signal_send,hook_signal_send>>) _(WeeChat ≥ 4.5.0)_
 * _hashtable_: хеш табела
 
@@ -13627,10 +13623,9 @@ void weechat_hook_set (struct t_hook *hook, const char *property,
 | Име под додатка (обично је то име скрипте које се приказује у
   `/help команда` за куку типа _command_).
 
-// TRANSLATION MISSING
 | keep_spaces_right | 4.6.0 | _command_, _command_run_
-| "0" or "1"
-| Keep trailing spaces in command arguments when it is executed.
+| "0" или "1"
+| Задржава размаке на крају аргумената команде када се извршава.
 
 | stdin | 0.4.3 | _process_, _process_hashtable_ | било који стринг
 | Шаље податке на стандардни улаз (_stdin_) дете процеса.
@@ -16639,8 +16634,7 @@ def my_completion_cb(data: str, completion_item: str, buffer: str, completion: s
 
 _WeeChat ≥ 4.6.0._
 
-// TRANSLATION MISSING
-Set a completion property.
+Поставља особину довршавања.
 
 Прототип:
 
@@ -16663,10 +16657,9 @@ void weechat_completion_get_string (struct t_gui_completion *completion,
 |===
 | Име | Мин WeeChat | Вредност | Опис
 
-// TRANSLATION MISSING
-| add_space | 4.6.0 | "0" or "1"
-| "0": do not add space after completion +
-  "1": add space after completion (default).
+| add_space | 4.6.0 | "0" или "1"
+| "0": након довршавања се не додаје размак +
+  "1": након довршавања се додаје размак (подразумевано).
 |===
 
 C пример:
@@ -16678,7 +16671,7 @@ my_completion_cb (const void *pointer, void *data, const char *completion_item,
                   struct t_gui_buffer *buffer,
                   struct t_gui_completion *completion)
 {
-    /* do not add space after completion */
+    /* не додај размак након довршавања */
     weechat_completion_set (completion, "add_space", "0");
 
     /* ... */
@@ -16696,7 +16689,7 @@ def completion_set(completion: str, property: str, value: str) -> int: ...
 
 # пример
 def my_completion_cb(data: str, completion_item: str, buffer: str, completion: str) -> int:
-    # do not add space after completion
+    # не додај размак након довршавања
     weechat.completion_set(completion, "add_space", "0")
     # ...
     return weechat.WEECHAT_RC_OK

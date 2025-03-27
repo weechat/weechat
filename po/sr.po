@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2025-03-16 14:47+0100\n"
-"PO-Revision-Date: 2025-02-12 11:16+0400\n"
+"PO-Revision-Date: 2025-03-27 13:13+0400\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: sr\n"
@@ -1464,12 +1464,6 @@ msgid "debug functions"
 msgstr "дибаг функције"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
-#, fuzzy
-#| msgid ""
-#| "list || set <plugin> <level> || dump [<plugin>] || hooks [<plugin_mask> "
-#| "[<hook_type>...]] || buffer|certs|color|dirs|infolists|key|libs|memory|"
-#| "tags|term|url|windows || callbacks <duration>[<unit>] || mouse|cursor "
-#| "[verbose] || hdata [free] || time <command> || unicode <string>"
 msgid ""
 "list || set <plugin> <level> || dump [<plugin>] || hooks [<plugin_mask> "
 "[<hook_type>...]] || buffer|certs|color|dirs|infolists|key|libs|memory|tags|"
@@ -1479,7 +1473,7 @@ msgstr ""
 "list || set <додатак> <ниво> || dump [<додатак>] || hooks [<маска_додатака> "
 "[<тип_куке>...]] || buffer|certs|color|dirs|infolists|libs|memory|tags|term|"
 "url|windows || callbacks <трајање>[<јединица>] || mouse|cursor [verbose] || "
-"hdata [free] || time <команда> || unicode <стринг>"
+"hdata [free] || time <команда> || unicode <стринг> || whitespace"
 
 msgid "raw[list]: list plugins with debug levels"
 msgstr "raw[list]: исписује додатке са дибаг нивоима"
@@ -1612,6 +1606,9 @@ msgid ""
 "in buffers and bars (see options weechat.look.whitespace_char and "
 "weechat.look.tab_whitespace_char)"
 msgstr ""
+"raw[whitespace]: укљ./искљ. режим празног простора: размаци и табулатори "
+"постају видљиви у баферима и тракама (погледајте опције weechat.look."
+"whitespace_char и weechat.look.tab_whitespace_char)"
 
 msgid "evaluate expression"
 msgstr "израчунавање израза"
@@ -5423,6 +5420,10 @@ msgid ""
 "command `/debug whitespace`; width on screen must be exactly one char; "
 "subsequent chars are set by option weechat.look.whitespace_char"
 msgstr ""
+"први карактер који се приказује за табулације када је командом `/debug "
+"whitespace` уљкључен режим празног простора; ширина на екрану мора да буде "
+"тачно један карактер; накнадни карактери се постављају опцијом weechat.look."
+"whitespace_char"
 
 msgid "number of spaces used to display tabs in messages"
 msgstr "број размака који се користи за приказ табулатора у порукама"
@@ -5439,6 +5440,9 @@ msgid ""
 "debug whitespace`; width on screen must be exactly one char; see also option "
 "weechat.look.tab_whitespace_char"
 msgstr ""
+"карактер који се приказује за размаке када је командом `/debug whitespace` "
+"уљкључен режим празног простора; ширина на екрану мора да буде тачно један "
+"карактер; погледајте такође опцијоу weechat.look.tab_whitespace_char"
 
 msgid ""
 "automatically zoom on current window if the terminal becomes too small to "
@@ -5846,6 +5850,11 @@ msgid ""
 "then lower case, so it's possible to use only lower case for nicks in this "
 "option"
 msgstr ""
+"листа надимака радвојених запетама који се игноришу (не довршавају се); цео "
+"надимак мора да се постави у ову опцију чак и ако се карактери игноришу "
+"опцијом weechat.completion.nick_ignore_chars; претрага надимака је редом "
+"узимајући у обзир величину слова, па затим мала слова, тако да у овој "
+"опцији могу да се користе надимци исписани малим словима"
 
 msgid "send alert (BEL) when a partial completion occurs"
 msgstr "шаље упозорење (BEL) када се догоди делимично довршавање"
@@ -7601,16 +7610,13 @@ msgstr ""
 "да се користи ${nick_prefix}; ово може да буде споро у баферима са доста "
 "надимака у листи надимака, тако да је ова опција подразумевано искључена"
 
-#, fuzzy
-#| msgid ""
-#| "when the nick prefix is enabled, display a space instead if there is no "
-#| "nick prefix on the buffer"
 msgid ""
 "when the nick prefix is enabled, display a space instead if there is no nick "
 "prefix on the buffer (only for channel, private and list buffers)"
 msgstr ""
 "када је укључен префикс надимка, у случају да за бафер није дефинисан "
-"префикс надимка, приказује се размак"
+"префикс надимка, приказује се размак (само за бафере канала, приватне и "
+"бафере листе)"
 
 msgid ""
 "comma-separated list of extra signals that are hooked and trigger the "
@@ -9459,35 +9465,29 @@ msgstr[0] "канал"
 msgstr[1] "канала"
 msgstr[2] "канала"
 
-#, fuzzy
-#| msgid "All servers:"
 msgid "All connected servers:"
-msgstr "Сви сервери:"
+msgstr "Сви повезани сервери:"
 
 msgid "All servers:"
 msgstr "Сви сервери:"
 
-#, fuzzy
-#| msgid "%s%s: disconnected from server"
 msgid "No connected server"
-msgstr "%s%s: прекинута је веза са сервером"
+msgstr "Нема ниједног повезаног сервера"
 
 msgid "No server"
 msgstr "Нема сервера"
 
-#, fuzzy, c-format
-#| msgid "Servers with \"%s\":"
+#, c-format
 msgid "Connected servers with \"%s\":"
-msgstr "Сервери са „%s”:"
+msgstr "Повезани сервери са „%s”:"
 
 #, c-format
 msgid "Servers with \"%s\":"
 msgstr "Сервери са „%s”:"
 
-#, fuzzy, c-format
-#| msgid "No server found with \"%s\""
+#, c-format
 msgid "No connected server found with \"%s\""
-msgstr "Није пронађен ниједан сервер са „%s”"
+msgstr "Није пронађен ниједан повезани сервер са „%s”"
 
 #, c-format
 msgid "No server found with \"%s\""
@@ -10689,22 +10689,16 @@ msgid "list, add or remove IRC servers"
 msgstr "испис, додавање или уклањање IRC сервера"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
-#, fuzzy
-#| msgid ""
-#| "list|listfull [<name>] || add|addreplace <name> <hostname>[/<port>] [-"
-#| "temp] [-<option>[=<value>]] [-no<option>] || copy|rename <name> "
-#| "<new_name> || reorder <name>... || open <name>|-all [<name>...] || del|"
-#| "keep <name> || deloutq|jump || raw [<filter>]"
 msgid ""
 "list|listfull [-connected] [<name>] || add|addreplace <name> <hostname>[/"
 "<port>] [-temp] [-<option>[=<value>]] [-no<option>] || copy|rename <name> "
 "<new_name> || reorder <name>... || open <name>|-all [<name>...] || del|keep "
 "<name> || deloutq|jump || raw [<filter>]"
 msgstr ""
-"list|listfull [<име>] || add|addreplace <име> <имехоста>[/<порт>] [-temp] [-"
-"<опција>[=<вредност>]] [-no<опција>] || copy|rename <име> <ново_име> || "
-"reorder <име>... || open <име>|-all [<име>...] || del|keep <име> || deloutq|"
-"jump || raw [<филтер>]"
+"list|listfull [-connected] [<име>] || add|addreplace <име> <имехоста>[/"
+"<порт>] [-temp] [-<опција>[=<вредност>]] [-no<опција>] || copy|rename <име> "
+"<ново_име> || reorder <име>... || open <име>|-all [<име>...] || del|keep "
+"<име> || deloutq|jump || raw [<филтер>]"
 
 msgid "raw[list]: list servers (without argument, this list is displayed)"
 msgstr "raw[list]: листа сервера (без аргумента се приказује ова листа)"
@@ -10712,10 +10706,8 @@ msgstr "raw[list]: листа сервера (без аргумента се п�
 msgid "raw[listfull]: list servers with detailed info for each server"
 msgstr "raw[listfull]: листа сервера са детаљним инфо за сваки сервер"
 
-#, fuzzy
-#| msgid "raw[-all]: set new nick for all connected servers"
 msgid "raw[-connected]: list only connected servers"
-msgstr "raw[-all]: нови надимак се поставља на све повезане сервере"
+msgstr "raw[-connected]: приказује само повезане сервере"
 
 msgid "raw[add]: add a new server"
 msgstr "raw[add]: додавање новог сервера"
@@ -17599,10 +17591,10 @@ msgid "xfer chat"
 msgstr "xfer разговор"
 
 msgid "time left:"
-msgstr ""
+msgstr "преостало време:"
 
 msgid "time left: unknown"
-msgstr ""
+msgstr "преостало време: непознато"
 
 msgid "Xfer list"
 msgstr "Xfer листа"
