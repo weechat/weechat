@@ -4,10 +4,9 @@
 :lang: es
 include::includes/attributes-es.adoc[]
 
-Traductores:
-
-* Lázaro A. <uranio-235@myopera.com>, 2012
-* Victorhck <victorhck@mailbox.org>, 2021
+// SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
+// SPDX-FileCopyrightText: 2012 Lázaro A. <uranio-235@myopera.com>
+// SPDX-FileCopyrightText: 2021 Victorhck <victorhck@mailbox.org>
 
 [[start]]
 == Iniciar WeeChat

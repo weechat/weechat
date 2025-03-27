@@ -4,9 +4,8 @@
 :lang: de
 include::includes/attributes-de.adoc[]
 
-Übersetzer:
-
-* Nils Görs <weechatter@arcor.de>, 2010-2016
+// SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
+// SPDX-FileCopyrightText: 2010-2025 Nils Görs <weechatter@arcor.de>
 
 Diese Anleitung beschreibt den WeeChat Chat Client und ist Teil von WeeChat.
 

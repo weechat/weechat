@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
+// SPDX-FileCopyrightText: 2006-2007 Pavel Shevchuk <stlwrt@gmail.com>
+// SPDX-FileCopyrightText: 2012 Aleksey V Zapparov <ixti@member.fsf.org>
+
 // tag::plugin_options[]
 Полное описание параметров плагинов доступно в документации по плагинам в
 https://weechat.org/doc/[Руководстве пользователя WeeChat].

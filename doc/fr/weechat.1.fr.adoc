@@ -6,6 +6,8 @@
 :man manual: Manuel WeeChat
 :man source: WeeChat {revnumber}
 
+// SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
+
 == NOM
 
 weechat - le client de discussion extensible

@@ -7,6 +7,9 @@
 :man manual: WeeChat Manual
 :man source: WeeChat {revnumber}
 
+// SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
+// SPDX-FileCopyrightText: 2016 Evgeny Shmarnev <eshmarnev@suse.com>
+
 == НАЗВАНИЕ
 
 weechat - расширяемый чат-клиент

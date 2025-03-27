@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
+// SPDX-FileCopyrightText: 2012-2019 Ryuunosuke Ayanokouzi <i38w7i3@yahoo.co.jp>
+
 // tag::plugin_options[]
 プラグインオプションに関する完全な文書は
 https://weechat.org/doc[WeeChat ユーザーズガイド] のプラグインの章を参照してください。

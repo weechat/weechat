@@ -4,9 +4,8 @@
 :lang: ja-jp
 include::includes/attributes-ja.adoc[]
 
-翻訳者:
-
-* Ryuunosuke Ayanokouzi <i38w7i3@yahoo.co.jp>, 2014-2019
+// SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
+// SPDX-FileCopyrightText: 2014-2019 Ryuunosuke Ayanokouzi <i38w7i3@yahoo.co.jp>
 
 [[introduction]]
 == はじめに

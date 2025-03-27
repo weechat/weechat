@@ -4,9 +4,8 @@
 :lang: pl
 include::includes/attributes-pl.adoc[]
 
-Tłumaczenie:
-
-* Krzysztof Korościk <soltys1@gmail.com>, 2009-2024
+// SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
+// SPDX-FileCopyrightText: 2009-2024 Krzysztof Korościk <soltys1@gmail.com>
 
 [[start]]
 == Uruchamianie WeeChat

@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
+// SPDX-FileCopyrightText: 2021-2025 Иван Пешић <ivan.pesic@gmail.com>
+
 // tag::plugin_options[]
 За комплетну документацију у вези опција додатака, молимо вас да погледате документацију за додатке у https://weechat.org/doc/[WeeChat корисничком упутству].
 

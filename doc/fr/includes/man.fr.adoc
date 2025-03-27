@@ -1,3 +1,5 @@
+// SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
+
 // tag::plugin_options[]
 Pour une documentation complète sur les options des extensions, merci de
 consulter la documentation des extensions dans le

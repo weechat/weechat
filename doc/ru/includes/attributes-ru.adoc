@@ -1,4 +1,8 @@
 // Russian translation, courtesy of Alexander Zobkov <alexander.zobkov@gmail.com>
+//
+// SPDX-FileCopyrightText: 2017-2020 Dan Allen, Sarah White, Ryan Waldron
+// SPDX-FileCopyrightText: 2017-2020 Alexander Zobkov <alexander.zobkov@gmail.com>
+//
 :appendix-caption: Приложение
 :appendix-refsig: {appendix-caption}
 :caution-caption: Внимание

@@ -8,6 +8,9 @@
 :man manual: WeeChat Manual
 :man source: WeeChat {revnumber}
 
+// SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
+// SPDX-FileCopyrightText: 2009-2012 Marco Paolone <marcopaolone@gmail.com>
+
 == NAME
 
 weechat-headless - the extensible chat client (headless version)

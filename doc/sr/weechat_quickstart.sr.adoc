@@ -4,9 +4,8 @@
 :lang: sr
 include::includes/attributes-sr.adoc[]
 
-Превод:
-
-* Иван Пешић (<ivan.pesic@gmail.com>), 2025.
+// SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
+// SPDX-FileCopyrightText: 2021-2025 Иван Пешић <ivan.pesic@gmail.com>
 
 [[start]]
 == Покретање програма WeeChat

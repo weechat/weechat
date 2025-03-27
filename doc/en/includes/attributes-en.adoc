@@ -1,4 +1,7 @@
 // English translation, for reference only; matches the built-in behavior of core
+//
+// SPDX-FileCopyrightText: 2017-2020 Dan Allen, Sarah White, Ryan Waldron
+//
 :appendix-caption: Appendix
 :appendix-refsig: {appendix-caption}
 :caution-caption: Caution

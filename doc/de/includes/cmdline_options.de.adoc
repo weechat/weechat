@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
+// SPDX-FileCopyrightText: 2009-2025 Nils Görs <weechatter@arcor.de>
+
 // tag::standard[]
 *-a*, *--no-connect*::
     deaktiviert das automatische Verbinden mit den Servern beim Start von WeeChat.

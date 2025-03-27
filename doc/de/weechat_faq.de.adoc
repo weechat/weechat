@@ -4,10 +4,9 @@
 :lang: de
 include::includes/attributes-de.adoc[]
 
-Übersetzer:
-
-* Juergen Descher <jhdl@gmx.net>, 2009
-* Nils Görs <weechatter@arcor.de>, 2009-2022
+// SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
+// SPDX-FileCopyrightText: 2009 Juergen Descher <jhdl@gmx.net>
+// SPDX-FileCopyrightText: 2009-2025 Nils Görs <weechatter@arcor.de>
 
 [[general]]
 == Allgemein

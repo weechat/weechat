@@ -4,6 +4,8 @@
 :lang: fr
 include::includes/attributes-fr.adoc[]
 
+// SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
+
 [[introduction]]
 == Introduction
 

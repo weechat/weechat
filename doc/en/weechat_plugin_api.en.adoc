@@ -4,6 +4,8 @@
 :lang: en
 include::includes/attributes-en.adoc[]
 
+// SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
+
 This manual documents WeeChat chat client, it is part of WeeChat.
 
 Latest version of this document can be found on

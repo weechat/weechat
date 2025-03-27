@@ -1,4 +1,8 @@
 // Italian translation, courtesy of Marco Ciampa <ciampix@posteo.net>
+//
+// SPDX-FileCopyrightText: 2017-2020 Dan Allen, Sarah White, Ryan Waldron
+// SPDX-FileCopyrightText: 2017-2021 Marco Ciampa <ciampix@posteo.net>
+//
 :appendix-caption: Appendice
 :appendix-refsig: {appendix-caption}
 :caution-caption: Attenzione

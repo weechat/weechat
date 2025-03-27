@@ -6,6 +6,9 @@
 :man manual: WeeChat Manual
 :man source: WeeChat {revnumber}
 
+// SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
+// SPDX-FileCopyrightText: 2009-2024 Krzysztof Korościk <soltys1@gmail.com>
+
 == NAZWA
 
 weechat-headless - rozszerzalny klient rozmów (wersja headless)

@@ -4,12 +4,11 @@
 :lang: ru
 include::includes/attributes-ru.adoc[]
 
-Переводчики:
-
-* Stalwart <stlwrt@gmail.com>, 2006
-* Алексей Бортник <thebosha@gmail.com>, 2009
-* Alexander Turenko <totktonada.ru@gmail.com>, 2014-2015
-* Evgeny Shmarnev <eshmarnev@suse.com>, 2016
+// SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
+// SPDX-FileCopyrightText: 2006 Stalwart <stlwrt@gmail.com>
+// SPDX-FileCopyrightText: 2009 Алексей Бортник <thebosha@gmail.com>
+// SPDX-FileCopyrightText: 2014-2015 Alexander Turenko <totktonada.ru@gmail.com>
+// SPDX-FileCopyrightText: 2016 Evgeny Shmarnev <eshmarnev@suse.com>
 
 [[start]]
 == Запуск WeeChat

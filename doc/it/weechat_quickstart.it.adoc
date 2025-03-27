@@ -4,10 +4,9 @@
 :lang: it
 include::includes/attributes-it.adoc[]
 
-Traduttori:
-
-* Marco Paolone <marcopaolone@gmail.com>, 2009-2013
-* Mattia Ronchi <ronchimattia03@gmail.com>, 2023
+// SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
+// SPDX-FileCopyrightText: 2009-2013 Marco Paolone <marcopaolone@gmail.com>
+// SPDX-FileCopyrightText: 2023 Mattia Ronchi <ronchimattia03@gmail.com>
 
 [[start]]
 == Avvio di WeeChat

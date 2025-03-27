@@ -7,6 +7,10 @@
 :man manual: WeeChat Manual
 :man source: WeeChat {revnumber}
 
+// SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
+// SPDX-FileCopyrightText: 2005-2011 Jiri Golembiovsky <golemj@gmail.com>
+// SPDX-FileCopyrightText: 2015-2017 Ondřej Súkup <mimi.vx@gmail.com>
+
 == JMÉNO
 
 weechat - the extensible chat client

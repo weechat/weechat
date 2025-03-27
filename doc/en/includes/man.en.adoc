@@ -1,3 +1,5 @@
+// SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
+
 // tag::plugin_options[]
 For complete doc on plugin options, please look at plugins documentation in
 https://weechat.org/doc/[WeeChat user's guide].

@@ -4,10 +4,8 @@
 :lang: it
 include::includes/attributes-it.adoc[]
 
-// TRANSLATION MISSING
-Translators:
-
-* Marco Paolone <marcopaolone@gmail.com>, 2009-2013
+// SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
+// SPDX-FileCopyrightText: 2009-2013 Marco Paolone <marcopaolone@gmail.com>
 
 [[general]]
 == Generale

@@ -4,6 +4,9 @@
 :lang: cs
 include::includes/attributes-cs.adoc[]
 
+// SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
+// SPDX-FileCopyrightText: 2015-2017 Ondřej Súkup <mimi.vx@gmail.com>
+
 [[start]]
 == Spuštění WeeChatu
 

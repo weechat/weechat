@@ -1,4 +1,8 @@
 // Japanese translation, courtesy of Takayuki Konishi <seannos.takayuki@gmail.com>
+//
+// SPDX-FileCopyrightText: 2017-2020 Dan Allen, Sarah White, Ryan Waldron
+// SPDX-FileCopyrightText: 2017-2020 Takayuki Konishi <seannos.takayuki@gmail.com>
+//
 :appendix-caption: 付録
 :appendix-refsig: {appendix-caption}
 :caution-caption: 注意

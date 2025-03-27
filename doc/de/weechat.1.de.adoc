@@ -6,6 +6,9 @@
 :man manual: WeeChat Manual
 :man source: WeeChat {revnumber}
 
+// SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
+// SPDX-FileCopyrightText: 2010-2025 Nils Görs <weechatter@arcor.de>
+
 == NAME
 
 weechat - der erweiterbare Chat Client

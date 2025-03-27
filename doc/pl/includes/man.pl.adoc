@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
+// SPDX-FileCopyrightText: 2009-2016 Krzysztof Koroscik <soltys1@gmail.com>
+
 // tag::plugin_options[]
 Kompletna dokumentacja na temat opcji wtyczek dostępna jest
 w https://weechat.org/doc/[WeeChat user's guide].
