@@ -2,6 +2,8 @@
 
 ## Version 4.6.0 (2025-03-23)
 
+_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
+
 ### Changed
 
 - core: add option `-v` to display upgrades in command `/version`
