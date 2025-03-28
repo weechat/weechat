@@ -1,5 +1,11 @@
 # WeeChat ChangeLog
 
+## Version 4.7.0 (under dev)
+
+### Fixed
+
+- irc: display nick changes and quit messages when option irc.look.ignore_tag_messages is enabled ([#2241](https://github.com/weechat/weechat/issues/2241))
+
 ## Version 4.6.0 (2025-03-23)
 
 _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._

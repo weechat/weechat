@@ -2393,8 +2393,7 @@ IRC_PROTOCOL_CALLBACK(nick)
                     }
                     else
                     {
-                        if (!irc_ignore_check (ctxt->server, ptr_channel->name,
-                                               ctxt->nick, ctxt->host))
+                        if (!ctxt->ignore_remove)
                         {
                             ptr_nick_speaking = ((weechat_config_boolean (irc_config_look_smart_filter))
                                                  && (weechat_config_boolean (irc_config_look_smart_filter_nick))) ?
@@ -3401,7 +3400,7 @@ IRC_PROTOCOL_CALLBACK(quit)
         if (ptr_nick
             || (irc_server_strcasecmp (ctxt->server, ptr_channel->name, ctxt->nick) == 0))
         {
-            if (!irc_ignore_check (ctxt->server, ptr_channel->name, ctxt->nick, ctxt->host))
+            if (!ctxt->ignore_remove)
             {
                 /* display quit message */
                 ptr_nick_speaking = NULL;
