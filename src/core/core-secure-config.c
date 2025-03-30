@@ -1,6 +1,4 @@
 /*
- * core-secure-config.c - secured data configuration options (file sec.conf)
- *
  * SPDX-FileCopyrightText: 2013-2025 Sébastien Helleu <flashcode@flashtux.org>
  *
  * SPDX-License-Identifier: GPL-3.0-or-later
@@ -20,6 +18,8 @@
  * You should have received a copy of the GNU General Public License
  * along with WeeChat.  If not, see <https://www.gnu.org/licenses/>.
  */
+
+/* Secured data configuration options (file sec.conf) */
 
 #ifdef HAVE_CONFIG_H
 #include "config.h"

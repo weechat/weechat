@@ -1,6 +1,4 @@
 /*
- * weechat-guile-api.c - guile API functions
- *
  * SPDX-FileCopyrightText: 2011-2025 Sébastien Helleu <flashcode@flashtux.org>
  * SPDX-FileCopyrightText: 2012 Simon Arlott
  *
@@ -21,6 +19,8 @@
  * You should have received a copy of the GNU General Public License
  * along with WeeChat.  If not, see <https://www.gnu.org/licenses/>.
  */
+
+/* Guile API functions */
 
 #undef _
 

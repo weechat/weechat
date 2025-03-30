@@ -1,6 +1,4 @@
 /*
- * relay-remote-event.c - process events received from relay remote
- *
  * SPDX-FileCopyrightText: 2024-2025 Sébastien Helleu <flashcode@flashtux.org>
  *
  * SPDX-License-Identifier: GPL-3.0-or-later
@@ -20,6 +18,8 @@
  * You should have received a copy of the GNU General Public License
  * along with WeeChat.  If not, see <https://www.gnu.org/licenses/>.
  */
+
+/* Process events received from relay remote */
 
 #include <stdlib.h>
 #include <unistd.h>

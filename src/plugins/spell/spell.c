@@ -1,6 +1,4 @@
 /*
- * spell.c - spell checker plugin for WeeChat
- *
  * SPDX-FileCopyrightText: 2006 Emmanuel Bouthenot <kolter@openics.org>
  * SPDX-FileCopyrightText: 2006-2025 Sébastien Helleu <flashcode@flashtux.org>
  * SPDX-FileCopyrightText: 2012 Nils Görs <weechatter@arcor.de>
@@ -22,6 +20,8 @@
  * You should have received a copy of the GNU General Public License
  * along with WeeChat.  If not, see <https://www.gnu.org/licenses/>.
  */
+
+/* Spell checker plugin for WeeChat */
 
 #ifdef HAVE_CONFIG_H
 #include "config.h"

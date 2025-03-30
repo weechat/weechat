@@ -580,8 +580,6 @@ Exemple en C :
 [source,c]
 ----
 /*
- * weechat.c - core functions for WeeChat
- *
  * SPDX-FileCopyrightText: 2025 Your Name <your@email.com>
  *
  * SPDX-License-Identifier: GPL-3.0-or-later
@@ -601,6 +599,8 @@ Exemple en C :
  * You should have received a copy of the GNU General Public License
  * along with WeeChat.  If not, see <https://www.gnu.org/licenses/>.
  */
+
+/* Core functions for WeeChat */
 ----
 
 [[coding_c_style]]

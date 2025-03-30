@@ -1,6 +1,4 @@
 /*
- * irc-protocol.c - implementation of IRC protocol
- *
  * SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
  * SPDX-FileCopyrightText: 2006 Emmanuel Bouthenot <kolter@openics.org>
  * SPDX-FileCopyrightText: 2014 Shawn Smith <ShawnSmith0828@gmail.com>
@@ -22,6 +20,8 @@
  * You should have received a copy of the GNU General Public License
  * along with WeeChat.  If not, see <https://www.gnu.org/licenses/>.
  */
+
+/* Implementation of IRC protocol */
 
 /* this define is needed for strptime() (not on OpenBSD/Sun) */
 #if !defined(__OpenBSD__) && !defined(__sun)

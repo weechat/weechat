@@ -1,6 +1,4 @@
 /*
- * spell-speller.c - speller management for spell checker plugin
- *
  * SPDX-FileCopyrightText: 2006 Emmanuel Bouthenot <kolter@openics.org>
  * SPDX-FileCopyrightText: 2006-2025 Sébastien Helleu <flashcode@flashtux.org>
  *
@@ -21,6 +19,8 @@
  * You should have received a copy of the GNU General Public License
  * along with WeeChat.  If not, see <https://www.gnu.org/licenses/>.
  */
+
+/* Speller management for spell checker plugin */
 
 #include <stdlib.h>
 #include <string.h>

@@ -1,6 +1,4 @@
 /*
- * gui-bar-item-custom.c - custom bar item functions (used by all GUI)
- *
  * SPDX-FileCopyrightText: 2022-2025 Sébastien Helleu <flashcode@flashtux.org>
  *
  * SPDX-License-Identifier: GPL-3.0-or-later
@@ -20,6 +18,8 @@
  * You should have received a copy of the GNU General Public License
  * along with WeeChat.  If not, see <https://www.gnu.org/licenses/>.
  */
+
+/* Custom bar item functions (used by all GUI) */
 
 #ifdef HAVE_CONFIG_H
 #include "config.h"

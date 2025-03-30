@@ -1,6 +1,4 @@
 /*
- * weechat-python-api.c - python API functions
- *
  * SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
  * SPDX-FileCopyrightText: 2005-2007 Emmanuel Bouthenot <kolter@openics.org>
  * SPDX-FileCopyrightText: 2012 Simon Arlott
@@ -22,6 +20,8 @@
  * You should have received a copy of the GNU General Public License
  * along with WeeChat.  If not, see <https://www.gnu.org/licenses/>.
  */
+
+/* Python API functions */
 
 #undef _
 

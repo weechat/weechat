@@ -1,6 +1,4 @@
 /*
- * script-api.c - script API functions, used by script plugins
- *
  * SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
  * SPDX-FileCopyrightText: 2012 Simon Arlott
  *
@@ -21,6 +19,8 @@
  * You should have received a copy of the GNU General Public License
  * along with WeeChat.  If not, see <https://www.gnu.org/licenses/>.
  */
+
+/* Script API functions, used by script plugins */
 
 #include <stdlib.h>
 #include <string.h>

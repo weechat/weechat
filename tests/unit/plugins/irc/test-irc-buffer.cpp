@@ -1,6 +1,4 @@
 /*
- * test-irc-buffer.cpp - test IRC buffer functions
- *
  * SPDX-FileCopyrightText: 2021-2025 Sébastien Helleu <flashcode@flashtux.org>
  *
  * SPDX-License-Identifier: GPL-3.0-or-later
@@ -20,6 +18,8 @@
  * You should have received a copy of the GNU General Public License
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+/* Test IRC buffer functions */
 
 #include "CppUTest/TestHarness.h"
 

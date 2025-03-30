@@ -1,6 +1,4 @@
 /*
- * relay-websocket.c - websocket server functions for relay plugin (RFC 6455)
- *
  * SPDX-FileCopyrightText: 2013-2025 Sébastien Helleu <flashcode@flashtux.org>
  *
  * SPDX-License-Identifier: GPL-3.0-or-later
@@ -20,6 +18,8 @@
  * You should have received a copy of the GNU General Public License
  * along with WeeChat.  If not, see <https://www.gnu.org/licenses/>.
  */
+
+/* Websocket server functions for relay plugin (RFC 6455) */
 
 #include <stdlib.h>
 #include <unistd.h>

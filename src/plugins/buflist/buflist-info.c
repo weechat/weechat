@@ -1,6 +1,4 @@
 /*
- * buflist-info.c - infolist hook for buflist plugin
- *
  * SPDX-FileCopyrightText: 2019 Simmo Saan <simmo.saan@gmail.com>
  * SPDX-FileCopyrightText: 2019-2025 Sébastien Helleu <flashcode@flashtux.org>
  *
@@ -21,6 +19,8 @@
  * You should have received a copy of the GNU General Public License
  * along with WeeChat.  If not, see <https://www.gnu.org/licenses/>.
  */
+
+/* Infolist hook for buflist plugin */
 
 #include "../weechat-plugin.h"
 #include "buflist.h"

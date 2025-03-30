@@ -1,6 +1,4 @@
 /*
- * core-log.c - WeeChat log file (weechat.log)
- *
  * SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
  * SPDX-FileCopyrightText: 2006 Emmanuel Bouthenot <kolter@openics.org>
  *
@@ -21,6 +19,8 @@
  * You should have received a copy of the GNU General Public License
  * along with WeeChat.  If not, see <https://www.gnu.org/licenses/>.
  */
+
+/* WeeChat log file (weechat.log) */
 
 #ifdef HAVE_CONFIG_H
 #include "config.h"

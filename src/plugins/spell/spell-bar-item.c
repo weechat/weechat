@@ -1,6 +1,4 @@
 /*
- * spell-bar-item.c - bar items for spell checker plugin
- *
  * SPDX-FileCopyrightText: 2012 Nils Görs <weechatter@arcor.de>
  * SPDX-FileCopyrightText: 2012-2025 Sébastien Helleu <flashcode@flashtux.org>
  *
@@ -21,6 +19,8 @@
  * You should have received a copy of the GNU General Public License
  * along with WeeChat.  If not, see <https://www.gnu.org/licenses/>.
  */
+
+/* Bar items for spell checker plugin */
 
 #include <stdio.h>
 #include <stdlib.h>

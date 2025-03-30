@@ -1,6 +1,4 @@
 /*
- * fset-config.c - Fast Set configuration options (file fset.conf)
- *
  * SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
  *
  * SPDX-License-Identifier: GPL-3.0-or-later
@@ -20,6 +18,8 @@
  * You should have received a copy of the GNU General Public License
  * along with WeeChat.  If not, see <https://www.gnu.org/licenses/>.
  */
+
+/* Fast Set configuration options (file fset.conf) */
 
 #include <stdlib.h>
 #include <string.h>

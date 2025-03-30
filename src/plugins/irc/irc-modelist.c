@@ -1,6 +1,4 @@
 /*
- * irc-modelist.c - channel mode list management for IRC plugin
- *
  * SPDX-FileCopyrightText: 2015 Simmo Saan <simmo.saan@gmail.com>
  * SPDX-FileCopyrightText: 2018-2025 Sébastien Helleu <flashcode@flashtux.org>
  *
@@ -21,6 +19,8 @@
  * You should have received a copy of the GNU General Public License
  * along with WeeChat.  If not, see <https://www.gnu.org/licenses/>.
  */
+
+/* Channel mode list management for IRC plugin */
 
 #include <stdlib.h>
 #include <stddef.h>

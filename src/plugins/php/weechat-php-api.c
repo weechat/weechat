@@ -1,6 +1,4 @@
 /*
- * weechat-php-api.c - PHP API functions
- *
  * SPDX-FileCopyrightText: 2006-2017 Adam Saponara <as@php.net>
  * SPDX-FileCopyrightText: 2017-2025 Sébastien Helleu <flashcode@flashtux.org>
  *
@@ -34,6 +32,8 @@
  *   shall include the source code for the parts of OpenSSL used as well
  *   as that of the covered work.
  */
+
+/* PHP API functions */
 
 #include <sapi/embed/php_embed.h>
 #include <php.h>

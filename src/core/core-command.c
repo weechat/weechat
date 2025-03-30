@@ -1,6 +1,4 @@
 /*
- * core-command.c - WeeChat core commands
- *
  * SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
  * SPDX-FileCopyrightText: 2005-2006 Emmanuel Bouthenot <kolter@openics.org>
  *
@@ -21,6 +19,8 @@
  * You should have received a copy of the GNU General Public License
  * along with WeeChat.  If not, see <https://www.gnu.org/licenses/>.
  */
+
+/* WeeChat core commands */
 
 /* this define is needed for strptime() (not on OpenBSD/Sun) */
 #if !defined(__OpenBSD__) && !defined(__sun)

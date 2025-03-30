@@ -1,6 +1,4 @@
 /*
- * weechat-tcl-api.c - tcl API functions
- *
  * SPDX-FileCopyrightText: 2008-2010 Dmitry Kobylin <fnfal@academ.tsc.ru>
  * SPDX-FileCopyrightText: 2008 Julien Louis <ptitlouis@sysif.net>
  * SPDX-FileCopyrightText: 2008-2025 Sébastien Helleu <flashcode@flashtux.org>
@@ -23,6 +21,8 @@
  * You should have received a copy of the GNU General Public License
  * along with WeeChat.  If not, see <https://www.gnu.org/licenses/>.
  */
+
+/* Tcl API functions */
 
 #undef _
 

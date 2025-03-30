@@ -1,6 +1,4 @@
 /*
- * logger-backlog.c - display backlog of messages
- *
  * SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
  *
  * SPDX-License-Identifier: GPL-3.0-or-later
@@ -20,6 +18,8 @@
  * You should have received a copy of the GNU General Public License
  * along with WeeChat.  If not, see <https://www.gnu.org/licenses/>.
  */
+
+/* Display backlog of messages */
 
 /* this define is needed for strptime() (not on OpenBSD/Sun) */
 #if !defined(__OpenBSD__) && !defined(__sun)
