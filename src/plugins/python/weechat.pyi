@@ -3,6 +3,8 @@
 # DO NOT EDIT BY HAND!
 #
 
+# SPDX-FileCopyrightText: 2019-2025 Sébastien Helleu <flashcode@flashtux.org>
+
 from typing import Dict, Union
 
 WEECHAT_RC_OK: int = 0
