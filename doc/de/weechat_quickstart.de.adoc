@@ -8,6 +8,8 @@ include::includes/attributes-de.adoc[]
 // SPDX-FileCopyrightText: 2006 Frank Zacharias <frank_zacharias@web.de>
 // SPDX-FileCopyrightText: 2009 Juergen Descher <jhdl@gmx.net>
 // SPDX-FileCopyrightText: 2009-2025 Nils Görs <weechatter@arcor.de>
+//
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 [[start]]
 == Start von WeeChat

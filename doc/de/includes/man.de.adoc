@@ -1,5 +1,7 @@
 // SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
 // SPDX-FileCopyrightText: 2009-2025 Nils Görs <weechatter@arcor.de>
+//
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 // tag::plugin_options[]
 Um eine vollständige Dokumentation der Optionen zu erhalten, siehe

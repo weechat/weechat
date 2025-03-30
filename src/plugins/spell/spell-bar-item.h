@@ -1,6 +1,8 @@
 /*
  * SPDX-FileCopyrightText: 2012 Nils Görs <weechatter@arcor.de>
  *
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ *
  * This file is part of WeeChat, the extensible chat client.
  *
  * WeeChat is free software; you can redistribute it and/or modify

@@ -6,6 +6,8 @@ include::includes/attributes-es.adoc[]
 
 // SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
 // SPDX-FileCopyrightText: 2021 Victorhck <victorhck.mailbox.org>
+//
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 [[general]]
 == General

@@ -5,6 +5,8 @@
 include::includes/attributes-fr.adoc[]
 
 // SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
+//
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 Ce manuel documente le client de messagerie instantanée WeeChat, il fait
 partie de WeeChat.

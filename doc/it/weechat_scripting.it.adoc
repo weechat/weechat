@@ -6,6 +6,8 @@ include::includes/attributes-it.adoc[]
 
 // SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
 // SPDX-FileCopyrightText: 2010-2013 Marco Paolone <marcopaolone@gmail.com>
+//
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 Questo manuale documenta il client di chat WeeChat, ed è parte
 del programma stesso.

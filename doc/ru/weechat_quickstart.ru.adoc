@@ -9,6 +9,8 @@ include::includes/attributes-ru.adoc[]
 // SPDX-FileCopyrightText: 2009 Алексей Бортник <thebosha@gmail.com>
 // SPDX-FileCopyrightText: 2014-2015 Alexander Turenko <totktonada.ru@gmail.com>
 // SPDX-FileCopyrightText: 2016 Evgeny Shmarnev <eshmarnev@suse.com>
+//
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 [[start]]
 == Запуск WeeChat

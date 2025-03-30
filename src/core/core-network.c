@@ -6,6 +6,8 @@
  * SPDX-FileCopyrightText: 2010 Gu1ll4um3r0m41n <aeroxteam@gmail.com>
  * SPDX-FileCopyrightText: 2012 Simon Arlott
  *
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ *
  * This file is part of WeeChat, the extensible chat client.
  *
  * WeeChat is free software; you can redistribute it and/or modify

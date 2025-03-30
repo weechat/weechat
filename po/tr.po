@@ -2,6 +2,8 @@
 # SPDX-FileCopyrightText: 2013 Hasan Kiran <sunder67@hotmail.com>
 # SPDX-FileCopyrightText: 2020-2024 Emir SARI <emir_sari@icloud.com>
 #
+# SPDX-License-Identifier: GPL-3.0-or-later
+#
 # This file is part of WeeChat, the extensible chat client.
 #
 # WeeChat is free software; you can redistribute it and/or modify

@@ -2,6 +2,8 @@
 # SPDX-FileCopyrightText: 2010-2013 Ivan Sichmann Freitas <ivansichfreitas@gmail.com>
 # SPDX-FileCopyrightText: 2011 Sergio Durigan Junior <sergiosdj@gmail.com>
 #
+# SPDX-License-Identifier: GPL-3.0-or-later
+#
 # This file is part of WeeChat, the extensible chat client.
 #
 # WeeChat is free software; you can redistribute it and/or modify

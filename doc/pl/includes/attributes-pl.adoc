@@ -4,6 +4,8 @@
 // SPDX-FileCopyrightText: 2017-2020 Łukasz Dziedziul <l.dziedziul@gmail.com>
 // SPDX-FileCopyrightText: 2017-2020 Matthew Blissett <mblissett@gbif.org>
 //
+// SPDX-License-Identifier: GPL-3.0-or-later
+//
 :appendix-caption: Dodatek
 :appendix-refsig: {appendix-caption}
 :caution-caption: Uwaga

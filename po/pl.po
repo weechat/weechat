@@ -2,6 +2,8 @@
 # SPDX-FileCopyrightText: 2009-2016 Krzysztof Koroscik <soltys1@gmail.com>
 # SPDX-FileCopyrightText: 2010 B.J. Stobiecki <bartek@stobiecki.eu>
 #
+# SPDX-License-Identifier: GPL-3.0-or-later
+#
 # This file is part of WeeChat, the extensible chat client.
 #
 # WeeChat is free software; you can redistribute it and/or modify

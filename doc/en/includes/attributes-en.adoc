@@ -2,6 +2,8 @@
 //
 // SPDX-FileCopyrightText: 2017-2020 Dan Allen, Sarah White, Ryan Waldron
 //
+// SPDX-License-Identifier: GPL-3.0-or-later
+//
 :appendix-caption: Appendix
 :appendix-refsig: {appendix-caption}
 :caution-caption: Caution

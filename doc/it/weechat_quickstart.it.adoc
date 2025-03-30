@@ -7,6 +7,8 @@ include::includes/attributes-it.adoc[]
 // SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
 // SPDX-FileCopyrightText: 2009-2013 Marco Paolone <marcopaolone@gmail.com>
 // SPDX-FileCopyrightText: 2023 Mattia Ronchi <ronchimattia03@gmail.com>
+//
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 [[start]]
 == Avvio di WeeChat

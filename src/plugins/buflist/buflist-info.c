@@ -4,6 +4,8 @@
  * SPDX-FileCopyrightText: 2019 Simmo Saan <simmo.saan@gmail.com>
  * SPDX-FileCopyrightText: 2019-2025 Sébastien Helleu <flashcode@flashtux.org>
  *
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ *
  * This file is part of WeeChat, the extensible chat client.
  *
  * WeeChat is free software; you can redistribute it and/or modify

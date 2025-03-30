@@ -1,6 +1,8 @@
 #
 # SPDX-FileCopyrightText: 2024 Иван Пешић <ivan.pesic@gmail.com>
 #
+# SPDX-License-Identifier: GPL-3.0-or-later
+#
 # This file is part of WeeChat, the extensible chat client.
 #
 # WeeChat is free software; you can redistribute it and/or modify

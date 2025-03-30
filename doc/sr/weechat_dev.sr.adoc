@@ -6,6 +6,8 @@ include::includes/attributes-sr.adoc[]
 
 // SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
 // SPDX-FileCopyrightText: 2021-2025 Иван Пешић <ivan.pesic@gmail.com>
+//
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 Ово упутство описује WeeChat чет клијент и део је програма WeeChat.
 
@@ -576,6 +578,8 @@ WeeChat „језгро” се налази у следећим директо�
  * weechat.c - core functions for WeeChat
  *
  * SPDX-FileCopyrightText: 2025 Your Name <your@email.com>
+ *
+ * SPDX-License-Identifier: GPL-3.0-or-later
  *
  * This file is part of WeeChat, the extensible chat client.
  *

@@ -5,6 +5,8 @@
  * SPDX-FileCopyrightText: 2006 Emmanuel Bouthenot <kolter@openics.org>
  * SPDX-FileCopyrightText: 2014 Shawn Smith <ShawnSmith0828@gmail.com>
  *
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ *
  * This file is part of WeeChat, the extensible chat client.
  *
  * WeeChat is free software; you can redistribute it and/or modify

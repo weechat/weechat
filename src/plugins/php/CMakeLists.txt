@@ -1,6 +1,8 @@
 #
 # SPDX-FileCopyrightText: 2006-2017 Adam Saponara <as@php.net>
 #
+# SPDX-License-Identifier: GPL-3.0-or-later
+#
 # This file is part of WeeChat, the extensible chat client.
 #
 # WeeChat is free software; you can redistribute it and/or modify

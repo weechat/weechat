@@ -4,6 +4,8 @@
 // SPDX-FileCopyrightText: 2017-2021 Nicolas Comet <nicolas.comet@gmail.com>
 // SPDX-FileCopyrightText: 2017-2021 Maheva Bagard Laursen <mblaursen@gbif.org>
 //
+// SPDX-License-Identifier: GPL-3.0-or-later
+//
 :appendix-caption: Annexe
 :appendix-refsig: {appendix-caption}
 :caution-caption: Attention
