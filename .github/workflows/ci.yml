@@ -125,7 +125,10 @@ jobs:
         sudo apt-get --yes --no-install-recommends install ${{ env.WEECHAT_DEPS_UBUNTU }}
         # uninstall php imagick as is causes a crash when loading php plugin (see #2009)
         sudo apt-get --yes purge php8.3-imagick
-        pipx install msgcheck
+        pipx install msgcheck reuse schemathesis
+
+    - name: Check REUSE compliancy
+      run: reuse lint
 
     - name: Check gettext files
       run: msgcheck po/*.po
@@ -163,7 +166,6 @@ jobs:
       env:
         RELAY_PASSWORD: test
       run: |
-        pipx install schemathesis
         weechat-headless \
           --dir /tmp/weechat-test-api \
           --run-command '/set relay.network.password "${{ env.RELAY_PASSWORD }}"' \
