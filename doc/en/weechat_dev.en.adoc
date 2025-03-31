@@ -568,11 +568,19 @@ directory:
 * In source code, your comments, variable names, .. must be written in English
   *only* (no other language is allowed).
 * Use a copyright header in each new source file with:
-** short description of file (one line),
-** date,
-** name,
-** e-mail,
-** license.
+** date
+** name
+** e-mail
+** license
+** short description of file (one line).
+
+The copyright and license must be set using SPDX (System Package Data Exchange),
+following best practices in REUSE Software
+(see the https://reuse.software/spec/[REUSE specification ^↗^^]).
+
+All files in the repository must have a valid copyright and license information. +
+When the information can not be put in the file itself, you can use the REUSE.toml
+file at the root of the project tree.
 
 Example in C:
 

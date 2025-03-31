@@ -691,11 +691,24 @@ WeeChat とプラグインの翻訳は gettext で行います、ファイルは
 * ソースコード内で使用する、コメント、変数名、...
   は必ず *英語* で記述してください (他の言語を使わないでください)
 * 新しいファイルにはコピーライトヘッダを入れ、以下の情報を含めてください:
-** ファイルの短い説明 (1 行)、
-** 日付、
-** 名前、
-** 電子メールアドレス、
-** ライセンス。
+** 日付
+** 名前
+** 電子メールアドレス
+** ライセンス
+** ファイルの短い説明 (1 行)。
+
+// TRANSLATION MISSING
+The copyright and license must be set using SPDX (System Package Data Exchange),
+following best practices in REUSE Software
+(see the https://reuse.software/spec/[REUSE specification ^↗^^]).
+
+// TRANSLATION MISSING
+All files in the repository must have a valid copyright and license information. +
+When the information can not be put in the file itself, you can use the REUSE.toml
+file at the root of the project tree.
+
+// TRANSLATION MISSING
+Example in C:
 
 [source,c]
 ----

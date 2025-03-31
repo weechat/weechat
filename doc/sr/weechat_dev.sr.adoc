@@ -564,11 +564,21 @@ WeeChat „језгро” се налази у следећим директо�
 
 * Ваши коментари, имена променљивих, ... у изворном коду морају бити написани *само* на енглеском језику (није дозвољена употреба ниједног другог језика).
 * Употребите заглавље ауторских права у сваком новом изворном фајлу са:
-** кратким описом фајла (једна линија)
-** датумом,
-** именом,
-** имејл адресом,
-** лиценцом.
+** датумом
+** именом
+** имејл адресом
+** лиценцом
+** кратким описом фајла (једна линија).
+
+// TRANSLATION MISSING
+The copyright and license must be set using SPDX (System Package Data Exchange),
+following best practices in REUSE Software
+(see the https://reuse.software/spec/[REUSE specification ^↗^^]).
+
+// TRANSLATION MISSING
+All files in the repository must have a valid copyright and license information. +
+When the information can not be put in the file itself, you can use the REUSE.toml
+file at the root of the project tree.
 
 Пример у језику C:
 

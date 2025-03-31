@@ -569,11 +569,19 @@ fichiers sont dans le répertoire _po/_ :
 * Dans le code source, vos commentaires, noms de variables, ... doivent être
   écrits en anglais *uniquement* (aucune autre langue n'est autorisée).
 * Utilisez un en-tête de copyright dans chaque nouveau fichier source avec :
-** une brève description du fichier (une seule ligne),
-** la date,
-** le nom,
-** l'e-mail,
-** la licence.
+** la date
+** le nom
+** l'e-mail
+** la licence
+** une brève description du fichier (une seule ligne).
+
+Le copyright et la licence doivent être définis en utilisant SPDX (System Package Data Exchange),
+en suivant les recommandations de REUSE Software
+(voir la https://reuse.software/spec/[spécification REUSE ^↗^^]).
+
+Tous les fichiers du dépôt doivent avoir un copyright et une licence valide. +
+Lorsque l'information ne peut pas être mise dans le fichier lui-même, vous pouvez
+utiliser le fichier REUSE.toml à la racine du projet.
 
 Exemple en C :
 
