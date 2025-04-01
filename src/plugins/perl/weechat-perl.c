@@ -354,7 +354,7 @@ weechat_perl_exec (struct t_plugin_script *script,
     if (weechat_asprintf (
             &func,
             "%s::%s",
-            (char *) ((script->interpreter) ? script->interpreter : perl_main)
+            (char *) ((script->interpreter) ? script->interpreter : perl_main),
             function) < 0)
     {
         return NULL;
