@@ -104,13 +104,38 @@ jobs:
         os:
           - ubuntu-24.04
         config:
-          - { name: "gcc", cc: "gcc", cxx: "g++", buildargs: "" }
-          - { name: "gcc_ninja", cc: "gcc", cxx: "g++", buildargs: "-G Ninja" }
-          - { name: "gcc_no_nls", cc: "gcc", cxx: "g++", buildargs: "-DENABLE_NLS=OFF -DENABLE_DOC=OFF" }
-          - { name: "gcc_no_zstd", cc: "gcc", cxx: "g++", buildargs: "-DENABLE_ZSTD=OFF -DENABLE_DOC=OFF" }
-          - { name: "gcc_no_cjson", cc: "gcc", cxx: "g++", buildargs: "-DENABLE_CJSON=OFF -DENABLE_DOC=OFF" }
-          - { name: "gcc_coverage", cc: "gcc", cxx: "g++", buildargs: "-DENABLE_CODE_COVERAGE=ON" }
-          - { name: "clang", cc: "clang", cxx: "clang++", buildargs: "" }
+          - name: "gcc"
+            cc: "gcc"
+            cxx: "g++"
+            buildargs: ""
+          - name: "gcc_ninja"
+            cc: "gcc"
+            cxx: "g++"
+            buildargs: "-G Ninja"
+          - name: "gcc_no_nls"
+            cc: "gcc"
+            cxx: "g++"
+            buildargs: "-DENABLE_NLS=OFF -DENABLE_DOC=OFF"
+          - name: "gcc_no_zstd"
+            cc: "gcc"
+            cxx: "g++"
+            buildargs: "-DENABLE_ZSTD=OFF -DENABLE_DOC=OFF"
+          - name: "gcc_no_cjson"
+            cc: "gcc"
+            cxx: "g++"
+            buildargs: "-DENABLE_CJSON=OFF -DENABLE_DOC=OFF"
+          - name: "gcc_no_perl_multiplicity"
+            cc: "gcc"
+            cxx: "g++"
+            buildargs: "-DCMAKE_C_FLAGS=\"-DNO_PERL_MULTIPLICITY=1\" -DENABLE_DOC=OFF"
+          - name: "gcc_coverage"
+            cc: "gcc"
+            cxx: "g++"
+            buildargs: "-DENABLE_CODE_COVERAGE=ON"
+          - name: "clang"
+            cc: "clang"
+            cxx: "clang++"
+            buildargs: ""
 
     name: "${{ matrix.os }} (${{ matrix.config.name }})"
     runs-on: ${{ matrix.os }}
