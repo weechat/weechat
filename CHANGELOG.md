@@ -4,6 +4,7 @@
 
 ### Fixed
 
+- core: consider all keys are safe in cursor context ([#2244](https://github.com/weechat/weechat/issues/2244))
 - irc: display nick changes and quit messages when option irc.look.ignore_tag_messages is enabled ([#2241](https://github.com/weechat/weechat/issues/2241))
 - perl: fix build when multiplicity is not available ([#2243](https://github.com/weechat/weechat/issues/2243))
 

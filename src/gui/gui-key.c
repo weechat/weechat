@@ -1215,12 +1215,12 @@ gui_key_set_score (struct t_gui_key *key)
 }
 
 /*
- * Checks if a key is safe or not: a safe key begins always with the "meta" or
- * "ctrl" code (except "@" allowed in cursor/mouse contexts).
+ * Checks if a key is safe or not: a safe key should begin with the "meta" or
+ * "ctrl" code (there are exceptions).
  *
  * Returns:
- *   1: key is safe
- *   0: key is NOT safe
+ *   1: key is safe for the given context
+ *   0: key is NOT safe for the given context
  */
 
 int
@@ -1231,13 +1231,13 @@ gui_key_is_safe (int context, const char *key)
     if (!key || !key[0])
         return 0;
 
-    /* "@" is allowed at beginning for cursor/mouse contexts */
-    if ((key[0] == '@')
-        && ((context == GUI_KEY_CONTEXT_CURSOR)
-            || (context == GUI_KEY_CONTEXT_MOUSE)))
-    {
+    /* all keys are safe in cursor mode */
+    if (context == GUI_KEY_CONTEXT_CURSOR)
         return 1;
-    }
+
+    /* "@" is allowed at beginning for mouse context */
+    if ((key[0] == '@') && (context == GUI_KEY_CONTEXT_MOUSE))
+        return 1;
 
     if (strncmp (key, "comma", 5) == 0)
         return 0;
