@@ -1,7 +1,6 @@
 # SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
-#
 
 version = 1
 
@@ -9,7 +8,8 @@ version = 1
 path = [
     ".editorconfig",
     ".gitattributes",
-    ".github/**",
+    ".github/FUNDING.yml",
+    ".github/ISSUE_TEMPLATE/*.yml",
     ".gitignore",
     ".mailmap",
     "AUTHORS.md",
@@ -18,8 +18,15 @@ path = [
     "README.md",
     "UPGRADING.md",
     "config.h.cmake",
-    "debian-*/**",
-    "icons/**",
+    "debian-devel/**",
+    "debian-stable/**",
+    "icons/128x128/weechat.png",
+    "icons/16x16/weechat.png",
+    "icons/256x256/weechat.png",
+    "icons/32x32/weechat.png",
+    "icons/512x512/weechat.png",
+    "icons/64x64/weechat.png",
+    "icons/scalable/weechat.svg",
     "src/plugins/php/weechat-php_arginfo.h",
     "src/plugins/php/weechat-php_legacy_arginfo.h",
     "tools/debian/patches/**",
