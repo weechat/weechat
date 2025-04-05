@@ -1,0 +1,22 @@
+# SPDX-FileCopyrightText: 2025 Sébastien Helleu <flashcode@flashtux.org>
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+name: REUSE Compliance Check
+
+on:
+  - push
+  - pull_request
+
+jobs:
+
+  test:
+
+    runs-on: ubuntu-24.04
+
+    steps:
+
+      - uses: actions/checkout@v4
+
+      - name: REUSE Compliance Check
+        uses: fsfe/reuse-action@v4
