@@ -15797,8 +15797,8 @@ void weechat_window_set_title (const char *title);
 
 引数:
 
-* _title_: 端末の新しいタイトル (タイトルをリセットする場合は NULL);
-  この文字列は評価されるため、文字列内に `${info:version}` などの変数を含めることが可能です
+* _title_: 端末の新しいタイトル; この文字列は評価されるため、文字列内に
+  `${info:version}` などの変数を含めることが可能です
   (<<_string_eval_expression,string_eval_expression>> を参照)
 
 C 言語での使用例:

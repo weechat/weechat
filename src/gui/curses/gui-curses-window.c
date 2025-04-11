@@ -2479,13 +2479,11 @@ gui_window_refresh_screen (int full_refresh)
         refresh ();
         gui_window_read_terminal_size ();
         refresh ();
-        gui_window_set_title (
-            (CONFIG_STRING(config_look_window_title)
-            && CONFIG_STRING(config_look_window_title)[0]) ?
-            CONFIG_STRING(config_look_window_title) : NULL);
     }
 
     gui_window_refresh_windows ();
+
+    gui_window_set_title (CONFIG_STRING(config_look_window_title));
 }
 
 /*
@@ -2573,13 +2571,15 @@ gui_window_set_title (const char *title)
 {
     char *new_title, *envterm, *envshell, *shell, *shellname;
 
-    envterm = getenv ("TERM");
-    if (!envterm)
+    if (!title || !title[0])
         return;
 
-    new_title = (title && title[0]) ?
-        eval_expression (title, NULL, NULL, NULL) : NULL;
+    new_title = eval_expression (title, NULL, NULL, NULL);
     if (!new_title)
+        return;
+
+    envterm = getenv ("TERM");
+    if (!envterm)
         return;
 
     if (strcmp (envterm, "sun-cmd") == 0)

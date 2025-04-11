@@ -498,12 +498,8 @@ config_change_window_title (const void *pointer, void *data,
     (void) data;
     (void) option;
 
-    if (gui_init_ok
-        || (CONFIG_STRING(config_look_window_title)
-            && CONFIG_STRING(config_look_window_title)[0]))
-    {
+    if (gui_init_ok)
         gui_window_set_title (CONFIG_STRING(config_look_window_title));
-    }
 }
 
 /*

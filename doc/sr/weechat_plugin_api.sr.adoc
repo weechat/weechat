@@ -15104,7 +15104,9 @@ void weechat_window_set_title (const char *title);
 
 Аргументи:
 
-* _title_: нови наслов за терминал (NULL ако желите да ресетујете наслов); стринг се израчунава, тако да је могуће коришћење променљивих као што је `${info:version}` (погледајте <<_string_eval_expression,string_eval_expression>>)
+* _title_: нови наслов за терминал; стринг се израчунава, тако да је могуће
+  коришћење променљивих као што је `${info:version}`
+  (погледајте <<_string_eval_expression,string_eval_expression>>)
 
 C пример:
 

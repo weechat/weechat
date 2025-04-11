@@ -1,5 +1,11 @@
 # WeeChat ChangeLog
 
+## Version 4.6.2 (under dev)
+
+### Fixed
+
+- core: add refresh of window title on buffer switch, when option weechat.look.window_title is set
+
 ## Version 4.6.1 (2025-04-09)
 
 ### Fixed

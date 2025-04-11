@@ -16302,8 +16302,8 @@ void weechat_window_set_title (const char *title);
 Argomenti:
 
 // TRANSLATION MISSING
-* _title_: nuovo titolo per il terminale (NULL per resettarlo);
-  string is evaluated, so variables like `${info:version}` can be used
+* _title_: nuovo titolo per il terminale; string is evaluated, so variables
+  like `${info:version}` can be used
   (see <<_string_eval_expression,string_eval_expression>>)
 
 Esempio in C:

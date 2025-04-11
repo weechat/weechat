@@ -15528,8 +15528,8 @@ void weechat_window_set_title (const char *title);
 
 Arguments:
 
-* _title_: new title for terminal (NULL to reset title); string is evaluated,
-  so variables like `${info:version}` can be used
+* _title_: new title for terminal; string is evaluated, so variables like
+  `${info:version}` can be used
   (see <<_string_eval_expression,string_eval_expression>>)
 
 C example:

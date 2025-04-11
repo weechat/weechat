@@ -231,12 +231,7 @@ gui_main_init (void)
                             gui_term_cols, gui_term_lines, 100, 100))
         {
             gui_current_window = gui_windows;
-
-            if (CONFIG_STRING(config_look_window_title)
-                && CONFIG_STRING(config_look_window_title)[0])
-            {
-                gui_window_set_title (CONFIG_STRING(config_look_window_title));
-            }
+            gui_window_set_title (CONFIG_STRING(config_look_window_title));
         }
 
         /* switch to buffer */
@@ -525,13 +520,6 @@ gui_main_end (int clean_exit)
 
         /* delete global history */
         gui_history_global_free ();
-
-        /* reset title */
-        if (CONFIG_STRING(config_look_window_title)
-            && CONFIG_STRING(config_look_window_title)[0])
-        {
-            gui_window_set_title (NULL);
-        }
 
         /* end color */
         gui_color_end ();
