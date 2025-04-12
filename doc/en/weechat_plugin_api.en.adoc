@@ -10987,7 +10987,7 @@ URL transfer.
 
 This function is similar to <<_hook_process,hook_process>> and
 <<_hook_process_hashtable,hook_process_hashtable>> with command "url:..."
-but it uses a thread instead of new process, making it more lightweight
+but it uses a thread instead of a new process, making it more lightweight
 and thus recommended for this usage.
 
 Prototype:
