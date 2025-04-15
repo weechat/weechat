@@ -72,20 +72,21 @@ log_open (const char *filename, const char *mode)
     {
         weechat_log_file = stdout;
     }
-    else if (filename)
-    {
-        weechat_log_filename = strdup (filename);
-    }
     else
     {
-        string_asprintf (&weechat_log_filename,
-                         "%s/%s", weechat_state_dir, WEECHAT_LOG_NAME);
+        if (filename)
+        {
+            weechat_log_filename = strdup (filename);
+        }
+        else
+        {
+            string_asprintf (&weechat_log_filename,
+                             "%s/%s", weechat_state_dir, WEECHAT_LOG_NAME);
+        }
+        if (!weechat_log_filename)
+            return 0;
+        weechat_log_file = fopen (weechat_log_filename, mode);
     }
-
-    if (!weechat_log_filename)
-        return 0;
-
-    weechat_log_file = fopen (weechat_log_filename, mode);
 
     if (!weechat_log_file)
     {
