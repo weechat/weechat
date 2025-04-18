@@ -10,6 +10,13 @@
 - irc: display nick changes and quit messages when option irc.look.ignore_tag_messages is enabled ([#2241](https://github.com/weechat/weechat/issues/2241))
 - perl: fix build when multiplicity is not available ([#2243](https://github.com/weechat/weechat/issues/2243))
 
+## Version 4.6.2 (2025-04-18)
+
+### Fixed
+
+- core: fix write of weechat.log to stdout with `weechat-headless --stdout` ([#2247](https://github.com/weechat/weechat/issues/2247))
+- core: add refresh of window title on buffer switch, when option weechat.look.window_title is set
+
 ## Version 4.6.1 (2025-04-09)
 
 ### Fixed
