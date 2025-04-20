@@ -78,6 +78,7 @@ url="$1"
 
 schemathesis run \
     --checks all \
+    --show-trace \
     --validate-schema=true \
     --experimental=openapi-3.1 \
     --base-url "${url}/api" \
