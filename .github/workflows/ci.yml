@@ -92,7 +92,7 @@ env:
     ruby
     rubygem-asciidoctor
     sudo
-    tcl87
+    tcl86
     zstd
 
 jobs:
