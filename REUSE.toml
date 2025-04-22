@@ -33,5 +33,6 @@ path = [
     "weechat.desktop",
     "weechat.pc.in",
 ]
+precedence = "override"
 SPDX-FileCopyrightText = "2018-2025 Sébastien Helleu <flashcode@flashtux.org>"
 SPDX-License-Identifier = "GPL-3.0-or-later"
