@@ -710,6 +710,7 @@ file at the root of the project tree.
 // TRANSLATION MISSING
 Example in C:
 
+// REUSE-IgnoreStart
 [source,c]
 ----
 /*
@@ -735,6 +736,7 @@ Example in C:
 
 /* Core functions for WeeChat */
 ----
+// REUSE-IgnoreEnd
 
 [[coding_c_style]]
 === C 言語スタイル

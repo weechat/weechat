@@ -584,6 +584,7 @@ file at the root of the project tree.
 
 Example in C:
 
+// REUSE-IgnoreStart
 [source,c]
 ----
 /*
@@ -609,6 +610,7 @@ Example in C:
 
 /* Core functions for WeeChat */
 ----
+// REUSE-IgnoreEnd
 
 [[coding_c_style]]
 === C style

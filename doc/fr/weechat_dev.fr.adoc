@@ -585,6 +585,7 @@ utiliser le fichier REUSE.toml à la racine du projet.
 
 Exemple en C :
 
+// REUSE-IgnoreStart
 [source,c]
 ----
 /*
@@ -610,6 +611,7 @@ Exemple en C :
 
 /* Core functions for WeeChat */
 ----
+// REUSE-IgnoreEnd
 
 [[coding_c_style]]
 === Style C
