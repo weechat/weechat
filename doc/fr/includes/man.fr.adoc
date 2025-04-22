@@ -106,7 +106,9 @@ $HOME/.local/share/weechat/weechat.log::
 WeeChat est écrit par Sébastien Helleu et des contributeurs (la liste complète
 est dans le fichier AUTHORS.md).
 
+// REUSE-IgnoreStart
 Copyright (C) 2003-2025 {author}
+// REUSE-IgnoreEnd
 
 WeeChat est un logiciel libre ; vous pouvez le redistribuer et/ou le modifier
 sous les termes de la GNU General Public License telle que publiée par la
