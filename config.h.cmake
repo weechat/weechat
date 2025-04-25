@@ -1,3 +1,9 @@
+/*
+SPDX-FileCopyrightText: 2007-2025 Sébastien Helleu <flashcode@flashtux.org>
+
+SPDX-License-Identifier: GPL-3.0-or-later
+*/
+
 #cmakedefine01 ENABLE_NCURSES
 #cmakedefine01 ENABLE_HEADLESS
 #cmakedefine01 ENABLE_NLS

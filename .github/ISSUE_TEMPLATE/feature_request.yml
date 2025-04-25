@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2023-2025 Sébastien Helleu <flashcode@flashtux.org>
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 name: Feature request
 description: Request a new feature / enhancement
 labels: ["feature"]

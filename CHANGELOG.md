@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
+
+SPDX-License-Identifier: GPL-3.0-or-later
+-->
+
 # WeeChat ChangeLog
 
 ## Version 4.7.0 (under dev)

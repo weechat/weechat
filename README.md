@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
+
+SPDX-License-Identifier: GPL-3.0-or-later
+-->
+
 # WeeChat
 
 <p align="center">
@@ -49,6 +55,7 @@ WeeChat is following a "practical" semantic versioning, see file [CONTRIBUTING.m
 
 ## Copyright
 
+<!-- REUSE-IgnoreStart -->
 Copyright © 2003-2025 [Sébastien Helleu](https://github.com/flashcode)
 
 This file is part of WeeChat, the extensible chat client.
@@ -65,3 +72,4 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with WeeChat.  If not, see <https://www.gnu.org/licenses/>.
+<!-- REUSE-IgnoreEnd -->

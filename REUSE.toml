@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
+# SPDX-FileCopyrightText: 2025 Sébastien Helleu <flashcode@flashtux.org>
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
@@ -6,27 +6,10 @@ version = 1
 
 [[annotations]]
 path = [
-    ".editorconfig",
-    ".gitattributes",
-    ".github/FUNDING.yml",
-    ".github/ISSUE_TEMPLATE/*.yml",
-    ".gitignore",
-    ".mailmap",
-    "AUTHORS.md",
-    "CHANGELOG.md",
-    "CONTRIBUTING.md",
-    "README.md",
-    "UPGRADING.md",
-    "config.h.cmake",
     "debian-devel/**",
     "debian-stable/**",
-    "icons/128x128/weechat.png",
-    "icons/16x16/weechat.png",
-    "icons/256x256/weechat.png",
-    "icons/32x32/weechat.png",
-    "icons/512x512/weechat.png",
-    "icons/64x64/weechat.png",
-    "icons/scalable/weechat.svg",
+    "icons/**/*.png",
+    "icons/**/*.svg",
     "src/plugins/php/weechat-php_arginfo.h",
     "src/plugins/php/weechat-php_legacy_arginfo.h",
     "tools/debian/patches/**",
@@ -34,5 +17,5 @@ path = [
     "weechat.pc.in",
 ]
 precedence = "override"
-SPDX-FileCopyrightText = "2018-2025 Sébastien Helleu <flashcode@flashtux.org>"
+SPDX-FileCopyrightText = "2003-2025 Sébastien Helleu <flashcode@flashtux.org>"
 SPDX-License-Identifier = "GPL-3.0-or-later"
