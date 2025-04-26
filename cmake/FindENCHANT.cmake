@@ -1,11 +1,3 @@
-# - Try to find the Enchant spell checker
-# Once done this will define
-#
-#  ENCHANT_FOUND - system has ENCHANT
-#  ENCHANT_INCLUDE_DIR - the ENCHANT include directory
-#  ENCHANT_LIBRARIES - Link these to use ENCHANT
-#  ENCHANT_DEFINITIONS - Compiler switches required for using ENCHANT
-
 # SPDX-FileCopyrightText: 2006 Zack Rusin <zack@kde.org>
 #
 # SPDX-License-Identifier: BSD-3-Clause
@@ -13,6 +5,13 @@
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
+# - Try to find the Enchant spell checker
+# Once done this will define
+#
+#  ENCHANT_FOUND - system has ENCHANT
+#  ENCHANT_INCLUDE_DIR - the ENCHANT include directory
+#  ENCHANT_LIBRARIES - Link these to use ENCHANT
+#  ENCHANT_DEFINITIONS - Compiler switches required for using ENCHANT
 
 if(ENCHANT_INCLUDE_DIR AND ENCHANT_LIBRARIES)
   # in cache already
