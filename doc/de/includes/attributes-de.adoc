@@ -1,10 +1,9 @@
-// German translation, courtesy of Florian Wilhelm
-//
 // SPDX-FileCopyrightText: 2017-2020 Dan Allen, Sarah White, Ryan Waldron
 // SPDX-FileCopyrightText: 2017-2020 Florian Wilhelm
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 //
+// German translation, courtesy of Florian Wilhelm
 :appendix-caption: Anhang
 :appendix-refsig: {appendix-caption}
 :caution-caption: Achtung

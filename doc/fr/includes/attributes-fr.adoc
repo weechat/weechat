@@ -1,11 +1,10 @@
-// French translation, courtesy of Nicolas Comet <nicolas.comet@gmail.com> with updates from Maheva Bagard Laursen <mblaursen@gbif.org>
-//
 // SPDX-FileCopyrightText: 2017-2020 Dan Allen, Sarah White, Ryan Waldron
 // SPDX-FileCopyrightText: 2017-2021 Nicolas Comet <nicolas.comet@gmail.com>
 // SPDX-FileCopyrightText: 2017-2021 Maheva Bagard Laursen <mblaursen@gbif.org>
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 //
+// French translation, courtesy of Nicolas Comet <nicolas.comet@gmail.com> with updates from Maheva Bagard Laursen <mblaursen@gbif.org>
 :appendix-caption: Annexe
 :appendix-refsig: {appendix-caption}
 :caution-caption: Attention

@@ -1,11 +1,10 @@
-// Spanish translation, courtesy of Eddú Meléndez <eddu.melendez@gmail.com> with updates from Fede Mendez <federicomh@gmail.com>
-//
 // SPDX-FileCopyrightText: 2017-2020 Dan Allen, Sarah White, Ryan Waldron
 // SPDX-FileCopyrightText: 2017-2020 Eddú Meléndez <eddu.melendez@gmail.com>
 // SPDX-FileCopyrightText: 2017-2020 Fede Mendez <federicomh@gmail.com>
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 //
+// Spanish translation, courtesy of Eddú Meléndez <eddu.melendez@gmail.com> with updates from Fede Mendez <federicomh@gmail.com>
 :appendix-caption: Apéndice
 :appendix-refsig: {appendix-caption}
 :caution-caption: Precaución

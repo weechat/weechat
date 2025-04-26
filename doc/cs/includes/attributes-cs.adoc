@@ -1,9 +1,8 @@
-// czech translation, for reference only; matches the built-in behavior of core
-//
 // SPDX-FileCopyrightText: 2017-2020 Dan Allen, Sarah White, Ryan Waldron
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 //
+// czech translation, for reference only; matches the built-in behavior of core
 :appendix-caption: Příloha
 :appendix-refsig: {appendix-caption}
 :caution-caption: Upozornění

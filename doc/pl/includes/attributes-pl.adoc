@@ -1,11 +1,10 @@
-// Polish translation, courtesy of Łukasz Dziedziul <l.dziedziul@gmail.com> with updates via Matthew Blissett <mblissett@gbif.org>
-//
 // SPDX-FileCopyrightText: 2017-2020 Dan Allen, Sarah White, Ryan Waldron
 // SPDX-FileCopyrightText: 2017-2020 Łukasz Dziedziul <l.dziedziul@gmail.com>
 // SPDX-FileCopyrightText: 2017-2020 Matthew Blissett <mblissett@gbif.org>
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 //
+// Polish translation, courtesy of Łukasz Dziedziul <l.dziedziul@gmail.com> with updates via Matthew Blissett <mblissett@gbif.org>
 :appendix-caption: Dodatek
 :appendix-refsig: {appendix-caption}
 :caution-caption: Uwaga
