@@ -40,26 +40,29 @@
 
 /* attributes in IRC messages for color & style (bold, ..) */
 
-#define IRC_COLOR_BOLD_CHAR      '\x02'  /* bold text                       */
-#define IRC_COLOR_BOLD_STR       "\x02"  /*   [02]...[02]                   */
+#define IRC_COLOR_BOLD_CHAR          '\x02'  /* bold text                   */
+#define IRC_COLOR_BOLD_STR           "\x02"  /*   [02]...[02]               */
 
-#define IRC_COLOR_COLOR_CHAR     '\x03'  /* text color: fg/fg,bg/,bg        */
-#define IRC_COLOR_COLOR_STR      "\x03"  /*   [03]15,05...[03]              */
+#define IRC_COLOR_COLOR_CHAR         '\x03'  /* text color: fg/fg,bg/,bg    */
+#define IRC_COLOR_COLOR_STR          "\x03"  /*   [03]15,05...[03]          */
 
-#define IRC_COLOR_HEX_COLOR_CHAR '\x04'  /* text color (hex): fg/fg,bg/,bg  */
-#define IRC_COLOR_HEX_COLOR_STR  "\x04"  /*   [04]FFFF00,8B008B...[04]      */
+#define IRC_COLOR_HEX_COLOR_CHAR     '\x04'  /* hex text col.: fg/fg,bg/,bg */
+#define IRC_COLOR_HEX_COLOR_STR      "\x04"  /*   [04]FFFF00,8B008B...[04]  */
 
-#define IRC_COLOR_RESET_CHAR     '\x0F'  /* reset color/attributes          */
-#define IRC_COLOR_RESET_STR      "\x0F"  /*   [0F]...                       */
+#define IRC_COLOR_RESET_CHAR         '\x0F'  /* reset color/attributes      */
+#define IRC_COLOR_RESET_STR          "\x0F"  /*   [0F]...                   */
 
-#define IRC_COLOR_REVERSE_CHAR   '\x16'  /* reverse video (fg <--> bg)      */
-#define IRC_COLOR_REVERSE_STR    "\x16"  /*   [16]...[16]                   */
+#define IRC_COLOR_REVERSE_CHAR       '\x16'  /* reverse video (fg <--> bg)  */
+#define IRC_COLOR_REVERSE_STR        "\x16"  /*   [16]...[16]               */
 
-#define IRC_COLOR_ITALIC_CHAR    '\x1D'  /* italic text                     */
-#define IRC_COLOR_ITALIC_STR     "\x1D"  /*   [1D]...[1D]                   */
+#define IRC_COLOR_ITALIC_CHAR        '\x1D'  /* italic text                 */
+#define IRC_COLOR_ITALIC_STR         "\x1D"  /*   [1D]...[1D]               */
 
-#define IRC_COLOR_UNDERLINE_CHAR '\x1F'  /* underlined text                 */
-#define IRC_COLOR_UNDERLINE_STR  "\x1F"  /*   [1F]...[1F]                   */
+#define IRC_COLOR_STRIKETHROUGH_CHAR '\x1E'  /* strikethrough text          */
+#define IRC_COLOR_STRIKETHROUGH_STR  "\x1E"  /*   [1E]...[1E]               */
+
+#define IRC_COLOR_UNDERLINE_CHAR     '\x1F'  /* underlined text             */
+#define IRC_COLOR_UNDERLINE_STR      "\x1F"  /*   [1F]...[1F]               */
 
 #define IRC_COLOR_TERM2IRC_NUM_COLORS 16
 
@@ -117,6 +120,7 @@ struct t_irc_color_ansi_state
     char bold;
     char underline;
     char italic;
+    char strikethrough;
 };
 
 extern char *irc_color_decode (const char *string, int keep_colors);

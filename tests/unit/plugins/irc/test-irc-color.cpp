@@ -47,6 +47,8 @@ extern int irc_color_convert_term2irc (int color);
     "test_" IRC_COLOR_REVERSE_STR "reverse" IRC_COLOR_REVERSE_STR "_end"
 #define STRING_IRC_ITALIC                                               \
     "test_" IRC_COLOR_ITALIC_STR "italic" IRC_COLOR_ITALIC_STR "_end"
+#define STRING_IRC_STRIKETHROUGH                                        \
+    "test_" IRC_COLOR_STRIKETHROUGH_STR "strikethrough" IRC_COLOR_STRIKETHROUGH_STR "_end"
 #define STRING_IRC_UNDERLINE                                            \
     "test_" IRC_COLOR_UNDERLINE_STR "underline" IRC_COLOR_UNDERLINE_STR "_end"
 #define STRING_IRC_COLOR_RESET                                          \
@@ -62,8 +64,10 @@ extern int irc_color_convert_term2irc (int color);
     IRC_COLOR_BOLD_STR                                                  \
     IRC_COLOR_REVERSE_STR                                               \
     IRC_COLOR_ITALIC_STR                                                \
+    IRC_COLOR_STRIKETHROUGH_STR                                         \
     IRC_COLOR_UNDERLINE_STR                                             \
     IRC_COLOR_UNDERLINE_STR                                             \
+    IRC_COLOR_STRIKETHROUGH_STR                                         \
     IRC_COLOR_ITALIC_STR                                                \
     IRC_COLOR_REVERSE_STR                                               \
     IRC_COLOR_BOLD_STR
@@ -96,6 +100,8 @@ extern int irc_color_convert_term2irc (int color);
     "test_" "\x16" "reverse" "\x16" "_end"
 #define STRING_USER_ITALIC                                              \
     "test_" "\x1D" "italic" "\x1D" "_end"
+#define STRING_USER_STRIKETHROUGH                                       \
+    "test_" "\x1E" "strikethrough" "\x1E" "_end"
 #define STRING_USER_UNDERLINE                                           \
     "test_" "\x1F" "underline" "\x1F" "_end"
 #define STRING_USER_FG_LIGHTCYAN                                        \
@@ -103,8 +109,8 @@ extern int irc_color_convert_term2irc (int color);
 #define STRING_USER_FG_LIGHTCYAN_BG_RED                                 \
     "test_" "\x03" "11,05" "lightcyan/red" "\x03" "_end"
 #define STRING_USER_ONLY_ATTRS_AND_COLORS                               \
-    "\x03" "\x0F" "\x02" "\x16" "\x1D" "\x1F"                           \
-    "\x1F" "\x1D" "\x16" "\x02"
+    "\x03" "\x0F" "\x02" "\x16" "\x1D" "\x1E" "\x1F" "\x1F" "\x1E"      \
+    "\x1D" "\x16" "\x02"
 #define STRING_USER_ATTRS_AND_COLORS                                    \
     "test_" "\x02" "\x1F" "\x03" "08,02" "bold_underline_yellow/blue"   \
     "\x02" "\x1F" "_normal_yellow/blue"
@@ -122,6 +128,8 @@ extern int irc_color_convert_term2irc (int color);
     "\x1B[1mbold3\x1B[22m_normal"
 #define STRING_ANSI_ITALIC                                              \
     "test_\x1B[3mitalic\x1B[23m_normal"
+#define STRING_ANSI_STRIKETHROUGH                                       \
+    "test_\x1B[9mstrikethrough\x1B[29m_normal"
 #define STRING_ANSI_UNDERLINE                                           \
     "test_\x1B[4munderline\x1B[24m_normal"
 #define STRING_ANSI_FG_BLUE                                             \
@@ -258,6 +266,14 @@ TEST(IrcColor, Decode)
               gui_color_get_custom ("-italic"));
     WEE_CHECK_DECODE(string, STRING_IRC_ITALIC, 1);
 
+    /* strikethrough */
+    WEE_CHECK_DECODE("test_strikethrough_end", STRING_IRC_STRIKETHROUGH, 0);
+    snprintf (string, sizeof (string),
+              "test_%sstrikethrough%s_end",
+              gui_color_get_custom ("dim"),
+              gui_color_get_custom ("-dim"));
+    WEE_CHECK_DECODE(string, STRING_IRC_STRIKETHROUGH, 1);
+
     /* underline */
     WEE_CHECK_DECODE("test_underline_end", STRING_IRC_UNDERLINE, 0);
     snprintf (string, sizeof (string),
@@ -297,14 +313,14 @@ TEST(IrcColor, Decode)
               gui_color_get_custom ("resetcolor"),
               gui_color_get_custom ("reset"),
               gui_color_get_custom ("bold"),
-              "",  /* fixed */
               gui_color_get_custom ("reverse"),
               gui_color_get_custom ("italic"),
+              gui_color_get_custom ("dim"),
               gui_color_get_custom ("underline"),
               gui_color_get_custom ("-underline"),
+              gui_color_get_custom ("-dim"),
               gui_color_get_custom ("-italic"),
               gui_color_get_custom ("-reverse"),
-              "",  /* fixed */
               gui_color_get_custom ("-bold"));
     WEE_CHECK_DECODE(string, STRING_IRC_ONLY_ATTRS_AND_COLORS, 1);
 
@@ -411,6 +427,14 @@ TEST(IrcColor, Encode)
               IRC_COLOR_ITALIC_STR);
     WEE_CHECK_ENCODE(string, STRING_USER_ITALIC, 1);
 
+    /* strikethrough */
+    WEE_CHECK_ENCODE("test_strikethrough_end", STRING_USER_STRIKETHROUGH, 0);
+    snprintf (string, sizeof (string),
+              "test_%sstrikethrough%s_end",
+              IRC_COLOR_STRIKETHROUGH_STR,
+              IRC_COLOR_STRIKETHROUGH_STR);
+    WEE_CHECK_ENCODE(string, STRING_USER_STRIKETHROUGH, 1);
+
     /* underline */
     WEE_CHECK_ENCODE("test_underline_end", STRING_USER_UNDERLINE, 0);
     snprintf (string, sizeof (string),
@@ -439,14 +463,16 @@ TEST(IrcColor, Encode)
     /* color: only attributes and colors */
     WEE_CHECK_ENCODE("", STRING_USER_ONLY_ATTRS_AND_COLORS, 0);
     snprintf (string, sizeof (string),
-              "%s%s%s%s%s%s%s%s%s%s",
+              "%s%s%s%s%s%s%s%s%s%s%s%s",
               IRC_COLOR_COLOR_STR,
               IRC_COLOR_RESET_STR,
               IRC_COLOR_BOLD_STR,
               IRC_COLOR_REVERSE_STR,
               IRC_COLOR_ITALIC_STR,
+              IRC_COLOR_STRIKETHROUGH_STR,
               IRC_COLOR_UNDERLINE_STR,
               IRC_COLOR_UNDERLINE_STR,
+              IRC_COLOR_STRIKETHROUGH_STR,
               IRC_COLOR_ITALIC_STR,
               IRC_COLOR_REVERSE_STR,
               IRC_COLOR_BOLD_STR);
@@ -542,6 +568,14 @@ TEST(IrcColor, DecodeAnsi)
               IRC_COLOR_ITALIC_STR,
               IRC_COLOR_ITALIC_STR);
     WEE_CHECK_DECODE_ANSI(string, STRING_ANSI_ITALIC, 1);
+
+    /* strikethrough */
+    WEE_CHECK_DECODE_ANSI("test_strikethrough_normal", STRING_ANSI_STRIKETHROUGH, 0);
+    snprintf (string, sizeof (string),
+              "test_%sstrikethrough%s_normal",
+              IRC_COLOR_STRIKETHROUGH_STR,
+              IRC_COLOR_STRIKETHROUGH_STR);
+    WEE_CHECK_DECODE_ANSI(string, STRING_ANSI_STRIKETHROUGH, 1);
 
     /* underline */
     WEE_CHECK_DECODE_ANSI("test_underline_normal", STRING_ANSI_UNDERLINE, 0);

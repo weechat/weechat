@@ -1063,6 +1063,7 @@ follow (press kbd:[Ctrl+c] then following letter, with optional value):
   kbd:[yyyyyy]           | Text color `xxxxxx` and background `yyyyyy` (RGB as hexadecimal).
 | kbd:[Ctrl+c], kbd:[i]  | Italic text.
 | kbd:[Ctrl+c], kbd:[o]  | Disable color and attributes.
+| kbd:[Ctrl+c], kbd:[s]  | Strikethrough text (displayed as half bright in ncurses interface because strikethrough is not supported).
 | kbd:[Ctrl+c], kbd:[v]  | Reverse video (revert text color with background).
 | kbd:[Ctrl+c], kbd:[_]  | Underlined text.
 |===
@@ -1632,6 +1633,7 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
 | kbd:[Ctrl+c], kbd:[d] | Insert code for colored text (RGB color, as hexadecimal). | `+/input insert \x04+`
 | kbd:[Ctrl+c], kbd:[i] | Insert code for italic text. | `+/input insert \x1D+`
 | kbd:[Ctrl+c], kbd:[o] | Insert code for color reset. | `+/input insert \x0F+`
+| kbd:[Ctrl+c], kbd:[s] | Insert code for strikethrough text. | `+/input insert \x1E+`
 | kbd:[Ctrl+c], kbd:[v] | Insert code for reverse color. | `+/input insert \x16+`
 | kbd:[Ctrl+c], kbd:[_] | Insert code for underlined text. | `+/input insert \x1F+`
 |===

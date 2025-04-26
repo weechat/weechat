@@ -1079,6 +1079,7 @@ suit et éventuellement une valeur) :
   kbd:[yyyyyy]           | Couleur du texte `xxxxxx` et du fond `yyyyyy` (RGB en hexadécimal).
 | kbd:[Ctrl+c], kbd:[i]  | Texte en italique.
 | kbd:[Ctrl+c], kbd:[o]  | Désactiver la couleur et tous les attributs.
+| kbd:[Ctrl+c], kbd:[s]  | Texte barré (affiché en demi-intensité dans l'interface ncurses car le texte barré n'est pas supporté).
 | kbd:[Ctrl+c], kbd:[v]  | Vidéo inverse (inversion de la couleur d'écriture et du fond).
 | kbd:[Ctrl+c], kbd:[_]  | Texte souligné.
 |===
@@ -1667,6 +1668,8 @@ Ils peuvent être modifiés et de nouveaux peuvent être ajoutés avec la comman
 | kbd:[Ctrl+c], kbd:[d] | Insérer le code pour écrire en couleur (couleur RGB, en hexadécimal). | `+/input insert \x04+`
 | kbd:[Ctrl+c], kbd:[i] | Insérer le code pour mettre le texte en italique. | `+/input insert \x1D+`
 | kbd:[Ctrl+c], kbd:[o] | Insérer le code pour réinitialiser la couleur. | `+/input insert \x0F+`
+// TRANSLATION MISSING
+| kbd:[Ctrl+c], kbd:[s] | Insert code for strikethrough text. | `+/input insert \x1E+`
 | kbd:[Ctrl+c], kbd:[v] | Insérer le code pour écrire en couleur inversée. | `+/input insert \x16+`
 | kbd:[Ctrl+c], kbd:[_] | Insérer le code pour écrire en souligné. | `+/input insert \x1F+`
 |===

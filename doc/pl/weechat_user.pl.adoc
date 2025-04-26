@@ -1064,6 +1064,8 @@ Dla niektórych wtyczek jak IRC, można użyć kolorów i atrybutów w następuj
   kbd:[yyyyyy]           | Kolor tekstu `xxxxxx` i tła `yyyyyy` (RGB jako wartości szesnastkowe).
 | kbd:[Ctrl+c], kbd:[i]  | Kursywa
 | kbd:[Ctrl+c], kbd:[o]  | Wyłącza kolory i atrybuty
+// TRANSLATION MISSING
+| kbd:[Ctrl+c], kbd:[s]  | Strikethrough text (displayed as half bright in ncurses interface because strikethrough is not supported).
 | kbd:[Ctrl+c], kbd:[v]  | Odwróć video (przywraca kolor tekstu i tła)
 | kbd:[Ctrl+c], kbd:[_]  | Podkreślony tekst
 |===
@@ -1637,6 +1639,8 @@ Można je zmienić oraz dodać nowe za pomocą komendy <<command_weechat_key,/ke
 | kbd:[Ctrl+c], kbd:[d] | Wstaw kod dla kolorowego tekstu (kolor RGB jaki liczba szesnastkowa). | `+/input insert \x04+`
 | kbd:[Ctrl+c], kbd:[i] | Wstaw kod dla pochyłego tekstu. | `+/input insert \x1D+`
 | kbd:[Ctrl+c], kbd:[o] | Wstaw kod dla zresetowania koloru. | `+/input insert \x0F+`
+// TRANSLATION MISSING
+| kbd:[Ctrl+c], kbd:[s] | Insert code for strikethrough text. | `+/input insert \x1E+`
 | kbd:[Ctrl+c], kbd:[v] | Wstaw kod dla odwrócenia koloru. | `+/input insert \x16+`
 | kbd:[Ctrl+c], kbd:[_] | Wstaw kod dla podkreślonego tekstu. | `+/input insert \x1F+`
 |===

@@ -1146,6 +1146,8 @@ IRC 等のプラグインでは、以下の色コードと属性を利用でき�
   kbd:[yyyyyy]           | Text color `xxxxxx` and background `yyyyyy` (RGB as hexadecimal).
 | kbd:[Ctrl+c], kbd:[i]  | テキストをイタリック体に
 | kbd:[Ctrl+c], kbd:[o]  | テキスト表示色と属性をリセット
+// TRANSLATION MISSING
+| kbd:[Ctrl+c], kbd:[s]  | Strikethrough text (displayed as half bright in ncurses interface because strikethrough is not supported).
 | kbd:[Ctrl+c], kbd:[v]  | テキストを反転 (テキスト表示色と背景色の入れ替え)
 | kbd:[Ctrl+c], kbd:[_]  | テキストに下線を引く
 |===
@@ -1754,6 +1756,8 @@ They can be changed and new ones can be added with the <<command_weechat_key,/ke
 | kbd:[Ctrl+c], kbd:[d] | Insert code for colored text (RGB color, as hexadecimal). | `+/input insert \x04+`
 | kbd:[Ctrl+c], kbd:[i] | テキストをイタリック体にするコードの挿入 | `+/input insert \x1D+`
 | kbd:[Ctrl+c], kbd:[o] | テキスト色のリセットを行うコードの挿入 | `+/input insert \x0F+`
+// TRANSLATION MISSING
+| kbd:[Ctrl+c], kbd:[s] | Insert code for strikethrough text. | `+/input insert \x1E+`
 | kbd:[Ctrl+c], kbd:[v] | テキスト色の反転を行うコードの挿入 | `+/input insert \x16+`
 | kbd:[Ctrl+c], kbd:[_] | テキストに下線を引くコードの挿入 | `+/input insert \x1F+`
 |===

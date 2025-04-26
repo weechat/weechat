@@ -1002,6 +1002,8 @@ WeeChat командна линија (на дну прозора) вам омо
   kbd:[yyyyyy]           | Текст у боји `xxxxxx` и позадина `yyyyyy` (RGB као хексадецимални број).
 | kbd:[Ctrl+c], kbd:[i]  | Текст у курзиву.
 | kbd:[Ctrl+c], kbd:[o]  | Искључивање боје и атрибута.
+// TRANSLATION MISSING
+| kbd:[Ctrl+c], kbd:[s]  | Strikethrough text (displayed as half bright in ncurses interface because strikethrough is not supported).
 | kbd:[Ctrl+c], kbd:[v]  | Обрнути видео (боје текста и позадине се замењују једна са другом).
 | kbd:[Ctrl+c], kbd:[_]  | Подвучени текст.
 |===
@@ -1547,6 +1549,8 @@ WeeChat нуди доста подразумеваних тастерских п
 | kbd:[Ctrl+c], kbd:[d] | Уметање кода за обојени текст (RGB боја, као хексадецимални број). | `+/input insert \x04+`
 | kbd:[Ctrl+c], kbd:[i] | Уметање кода за текст у курзиву. | `+/input insert \x1D+`
 | kbd:[Ctrl+c], kbd:[o] | Уметање кода за ресет боје. | `+/input insert \x0F+`
+// TRANSLATION MISSING
+| kbd:[Ctrl+c], kbd:[s] | Insert code for strikethrough text. | `+/input insert \x1E+`
 | kbd:[Ctrl+c], kbd:[v] | Уметање кода за обрнуту боју. | `+/input insert \x16+`
 | kbd:[Ctrl+c], kbd:[_] | Уметање кода за подвучени текст. | `+/input insert \x1F+`
 |===

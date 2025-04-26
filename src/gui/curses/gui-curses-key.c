@@ -148,6 +148,7 @@ gui_key_default_bindings (int context, int create_option)
         BIND("ctrl-c,d",          "/input insert \\x04");
         BIND("ctrl-c,i",          "/input insert \\x1D");
         BIND("ctrl-c,o",          "/input insert \\x0F");
+        BIND("ctrl-c,s",          "/input insert \\x1E");
         BIND("ctrl-c,v",          "/input insert \\x16");
         BIND("ctrl-c,_",          "/input insert \\x1F");
         BIND("meta-right",        "/buffer +1");

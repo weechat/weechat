@@ -215,7 +215,8 @@ irc_color_decode (const char *string, int keep_colors)
     char str_fg[16], str_bg[16], str_color[128], str_key[128], str_to_add[128];
     const char *remapped_color;
     unsigned char *ptr_string;
-    int length, fg, bg, fg_term, bg_term, bold, reverse, italic, underline;
+    int length, fg, bg, fg_term, bg_term;
+    int bold, reverse, italic, strikethrough, underline;
     long fg_rgb, bg_rgb;
 
     if (!string)
@@ -230,6 +231,7 @@ irc_color_decode (const char *string, int keep_colors)
     bold = 0;
     reverse = 0;
     italic = 0;
+    strikethrough = 0;
     underline = 0;
 
     ptr_string = (unsigned char *)string;
@@ -256,6 +258,7 @@ irc_color_decode (const char *string, int keep_colors)
                 bold = 0;
                 reverse = 0;
                 italic = 0;
+                strikethrough = 0;
                 underline = 0;
                 ptr_string++;
                 break;
@@ -275,6 +278,15 @@ irc_color_decode (const char *string, int keep_colors)
                               weechat_color ((italic) ? "-italic" : "italic"));
                 }
                 italic ^= 1;
+                ptr_string++;
+                break;
+            case IRC_COLOR_STRIKETHROUGH_CHAR:
+                if (keep_colors)
+                {
+                    snprintf (str_to_add, sizeof (str_to_add), "%s",
+                              weechat_color ((strikethrough) ? "-dim" : "dim"));
+                }
+                strikethrough ^= 1;
                 ptr_string++;
                 break;
             case IRC_COLOR_UNDERLINE_CHAR:
@@ -660,6 +672,11 @@ irc_color_encode (const char *string, int keep_colors)
                     weechat_string_dyn_concat (out, IRC_COLOR_ITALIC_STR, -1);
                 ptr_string++;
                 break;
+            case 0x1E: /* ^^ */
+                if (keep_colors)
+                    weechat_string_dyn_concat (out, IRC_COLOR_STRIKETHROUGH_STR, -1);
+                ptr_string++;
+                break;
             case 0x1F: /* ^_ */
                 if (keep_colors)
                     weechat_string_dyn_concat (out, IRC_COLOR_UNDERLINE_STR, -1);
@@ -740,6 +757,7 @@ irc_color_decode_ansi_cb (void *data, const char *text)
                 ansi_state->bold = 0;
                 ansi_state->underline = 0;
                 ansi_state->italic = 0;
+                ansi_state->strikethrough = 0;
                 break;
             case 1: /* bold */
                 if (!ansi_state->bold)
@@ -771,6 +789,13 @@ irc_color_decode_ansi_cb (void *data, const char *text)
                     ansi_state->underline = 1;
                 }
                 break;
+            case 9: /* strikethrough */
+                if (!ansi_state->strikethrough)
+                {
+                    strcat (output, IRC_COLOR_STRIKETHROUGH_STR);
+                    ansi_state->strikethrough = 1;
+                }
+                break;
             case 23: /* remove italic */
                 if (ansi_state->italic)
                 {
@@ -783,6 +808,13 @@ irc_color_decode_ansi_cb (void *data, const char *text)
                 {
                     strcat (output, IRC_COLOR_UNDERLINE_STR);
                     ansi_state->underline = 0;
+                }
+                break;
+            case 29: /* remove strikethrough */
+                if (ansi_state->strikethrough)
+                {
+                    strcat (output, IRC_COLOR_STRIKETHROUGH_STR);
+                    ansi_state->strikethrough = 0;
                 }
                 break;
             case 30: /* text color */
@@ -987,6 +1019,7 @@ irc_color_decode_ansi (const char *string, int keep_colors)
     ansi_state.bold = 0;
     ansi_state.underline = 0;
     ansi_state.italic = 0;
+    ansi_state.strikethrough = 0;
 
     return weechat_string_replace_regex (string, irc_color_regex_ansi,
                                          "$0", '$',

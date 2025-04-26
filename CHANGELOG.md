@@ -8,6 +8,10 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 ## Version 4.7.0 (under dev)
 
+### Added
+
+- irc: add support strikethrough text in IRC messages ([#2248](https://github.com/weechat/weechat/issues/2248))
+
 ### Fixed
 
 - core: fix write of weechat.log to stdout with `weechat-headless --stdout` ([#2247](https://github.com/weechat/weechat/issues/2247))
