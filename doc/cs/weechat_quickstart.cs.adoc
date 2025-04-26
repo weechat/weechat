@@ -1,13 +1,13 @@
+// SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
+// SPDX-FileCopyrightText: 2015-2017 Ondřej Súkup <mimi.vx@gmail.com>
+//
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 = WeeChat quick start guide
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: cs
 include::includes/attributes-cs.adoc[]
-
-// SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
-// SPDX-FileCopyrightText: 2015-2017 Ondřej Súkup <mimi.vx@gmail.com>
-//
-// SPDX-License-Identifier: GPL-3.0-or-later
 
 [[start]]
 == Spuštění WeeChatu

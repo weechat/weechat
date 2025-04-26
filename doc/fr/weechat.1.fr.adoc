@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
+//
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 = weechat(1)
 :doctype: manpage
 :author: Sébastien Helleu
@@ -5,10 +9,6 @@
 :lang: fr
 :man manual: Manuel WeeChat
 :man source: WeeChat {revnumber}
-
-// SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
-//
-// SPDX-License-Identifier: GPL-3.0-or-later
 
 == NOM
 

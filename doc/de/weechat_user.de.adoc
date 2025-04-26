@@ -1,13 +1,13 @@
+// SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
+// SPDX-FileCopyrightText: 2010-2025 Nils Görs <weechatter@arcor.de>
+//
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 = WeeChat Benutzerhandbuch
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: de
 include::includes/attributes-de.adoc[]
-
-// SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
-// SPDX-FileCopyrightText: 2010-2025 Nils Görs <weechatter@arcor.de>
-//
-// SPDX-License-Identifier: GPL-3.0-or-later
 
 Diese Anleitung beschreibt den WeeChat Chat Client und ist Teil von WeeChat.
 

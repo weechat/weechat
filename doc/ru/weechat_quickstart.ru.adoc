@@ -1,9 +1,3 @@
-= Краткое введение в WeeChat
-:author: Sébastien Helleu
-:email: flashcode@flashtux.org
-:lang: ru
-include::includes/attributes-ru.adoc[]
-
 // SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
 // SPDX-FileCopyrightText: 2006 Stalwart <stlwrt@gmail.com>
 // SPDX-FileCopyrightText: 2009 Алексей Бортник <thebosha@gmail.com>
@@ -11,6 +5,12 @@ include::includes/attributes-ru.adoc[]
 // SPDX-FileCopyrightText: 2016 Evgeny Shmarnev <eshmarnev@suse.com>
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
+
+= Краткое введение в WeeChat
+:author: Sébastien Helleu
+:email: flashcode@flashtux.org
+:lang: ru
+include::includes/attributes-ru.adoc[]
 
 [[start]]
 == Запуск WeeChat

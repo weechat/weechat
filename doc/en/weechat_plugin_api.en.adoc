@@ -1,12 +1,12 @@
+// SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
+//
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 = WeeChat plugin API reference
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: en
 include::includes/attributes-en.adoc[]
-
-// SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
-//
-// SPDX-License-Identifier: GPL-3.0-or-later
 
 This manual documents WeeChat chat client, it is part of WeeChat.
 

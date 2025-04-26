@@ -1,3 +1,8 @@
+// SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
+// SPDX-FileCopyrightText: 2012-2019 Ryuunosuke Ayanokouzi <i38w7i3@yahoo.co.jp>
+//
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 = weechat(1)
 :doctype: manpage
 :author: Sébastien Helleu
@@ -5,11 +10,6 @@
 :lang: ja-jp
 :man manual: WeeChat マニュアル
 :man source: WeeChat {revnumber}
-
-// SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
-// SPDX-FileCopyrightText: 2012-2019 Ryuunosuke Ayanokouzi <i38w7i3@yahoo.co.jp>
-//
-// SPDX-License-Identifier: GPL-3.0-or-later
 
 == 名前
 

@@ -1,13 +1,13 @@
+// SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
+// SPDX-FileCopyrightText: 2014-2019 Ryuunosuke Ayanokouzi <i38w7i3@yahoo.co.jp>
+//
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 = WeeChat 開発者ガイド
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: ja-jp
 include::includes/attributes-ja.adoc[]
-
-// SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
-// SPDX-FileCopyrightText: 2014-2019 Ryuunosuke Ayanokouzi <i38w7i3@yahoo.co.jp>
-//
-// SPDX-License-Identifier: GPL-3.0-or-later
 
 このマニュアルは WeeChat チャットクライアントについての文書で、これは WeeChat の一部です。
 

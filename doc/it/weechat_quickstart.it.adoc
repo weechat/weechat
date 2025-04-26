@@ -1,14 +1,14 @@
-= Guida Rapida a WeeChat
-:author: Sébastien Helleu
-:email: flashcode@flashtux.org
-:lang: it
-include::includes/attributes-it.adoc[]
-
 // SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
 // SPDX-FileCopyrightText: 2009-2013 Marco Paolone <marcopaolone@gmail.com>
 // SPDX-FileCopyrightText: 2023 Mattia Ronchi <ronchimattia03@gmail.com>
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
+
+= Guida Rapida a WeeChat
+:author: Sébastien Helleu
+:email: flashcode@flashtux.org
+:lang: it
+include::includes/attributes-it.adoc[]
 
 [[start]]
 == Avvio di WeeChat

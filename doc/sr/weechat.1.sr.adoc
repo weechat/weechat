@@ -1,3 +1,8 @@
+// SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
+// SPDX-FileCopyrightText: 2021-2025 Иван Пешић <ivan.pesic@gmail.com>
+//
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 = weechat(1)
 :doctype: manpage
 :author: Sébastien Helleu
@@ -5,11 +10,6 @@
 :lang: sr
 :man manual: WeeChat упутство
 :man source: WeeChat {revnumber}
-
-// SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
-// SPDX-FileCopyrightText: 2021-2025 Иван Пешић <ivan.pesic@gmail.com>
-//
-// SPDX-License-Identifier: GPL-3.0-or-later
 
 == ИМЕ
 

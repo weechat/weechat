@@ -1,14 +1,14 @@
-= WeeChat FAQ (häufig gestellte Fragen)
-:author: Sébastien Helleu
-:email: flashcode@flashtux.org
-:lang: de
-include::includes/attributes-de.adoc[]
-
 // SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
 // SPDX-FileCopyrightText: 2009 Juergen Descher <jhdl@gmx.net>
 // SPDX-FileCopyrightText: 2009-2025 Nils Görs <weechatter@arcor.de>
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
+
+= WeeChat FAQ (häufig gestellte Fragen)
+:author: Sébastien Helleu
+:email: flashcode@flashtux.org
+:lang: de
+include::includes/attributes-de.adoc[]
 
 [[general]]
 == Allgemein

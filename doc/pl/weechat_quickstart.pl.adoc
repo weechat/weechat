@@ -1,13 +1,13 @@
+// SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
+// SPDX-FileCopyrightText: 2009-2024 Krzysztof Korościk <soltys1@gmail.com>
+//
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 = WeeChat szybki start
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: pl
 include::includes/attributes-pl.adoc[]
-
-// SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
-// SPDX-FileCopyrightText: 2009-2024 Krzysztof Korościk <soltys1@gmail.com>
-//
-// SPDX-License-Identifier: GPL-3.0-or-later
 
 [[start]]
 == Uruchamianie WeeChat
