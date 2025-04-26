@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-#
 # SPDX-FileCopyrightText: 2017-2025 Sébastien Helleu <flashcode@flashtux.org>
 #
 # SPDX-License-Identifier: GPL-3.0-or-later

@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 #
 # SPDX-FileCopyrightText: 2017-2025 Sébastien Helleu <flashcode@flashtux.org>
 #
@@ -188,7 +187,6 @@ class WeechatPythonScript(WeechatScript):
             UnparsePython, tree, source_script, output_dir, 'python', 'py')
 
     def write_header(self, output):
-        output.write('# -*- coding: utf-8 -*-\n')
         super(WeechatPythonScript, self).write_header(output)
         output.write('\n'
                      'import weechat')
