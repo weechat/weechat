@@ -23,8 +23,8 @@
 
 #include "CppUTest/TestHarness.h"
 
-#include "tests/tests.h"
-#include "tests/tests-record.h"
+#include "tests.h"
+#include "tests-record.h"
 
 #define TEST_INPUT_DATA(__rc, __buffer, __data, __commands_allowed,     \
                         __split_newline, __user_data)                   \

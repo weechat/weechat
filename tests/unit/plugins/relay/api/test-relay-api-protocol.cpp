@@ -23,7 +23,7 @@
 
 #include "CppUTest/TestHarness.h"
 
-#include "tests/tests-record.h"
+#include "tests-record.h"
 
 extern "C"
 {

@@ -91,11 +91,11 @@ The main WeeChat directories are:
 |       typing/      | Typing plugin.
 |       xfer/        | Xfer plugin (IRC DCC file/chat).
 | tests/             | Tests.
-|    scripts/        | Scripting API tests.
-|       python/      | Python scripts to generate and run the scripting API tests.
 |    unit/           | Unit tests.
 |       core/        | Unit tests for core functions.
 |       gui/         | Unit tests for interfaces functions.
+|       scripts/     | Scripting API tests.
+|          python/   | Python scripts to generate and run the scripting API tests.
 |       plugins/     | Unit tests for plugins.
 |          irc/      | Unit tests for IRC plugin.
 |          trigger/  | Unit tests for trigger plugin.
@@ -408,18 +408,9 @@ WeeChat "core" is located in following directories:
 |===
 | Path/file                                  | Description
 | tests/                                     | Root of tests.
-|    tests.cpp                               | Program used to run all tests.
-|    tests-record.cpp                        | Record and search in messages displayed.
-|    scripts/                                | Root of scripting API tests.
-|       test-scripts.cpp                     | Program used to run the scripting API tests.
-|       python/                              | Python scripts to generate and run the scripting API tests.
-|          testapigen.py                     | Python script generating scripts in all languages to test the scripting API.
-|          testapi.py                        | Python script with scripting API tests, used by script testapigen.py.
-|          unparse.py                        | Convert Python code to other languages, used by script testapigen.py.
 |    unit/                                   | Root of unit tests.
-|       test-plugins.cpp                     | Tests: plugins.
-|       test-plugin-api-info.cpp             | Tests: plugin API info functions.
-|       test-plugin-config.cpp               | Tests: plugin config functions.
+|       tests.cpp                            | Program used to run all tests.
+|       tests-record.cpp                     | Record and search in messages displayed.
 |       core/                                | Root of unit tests for core.
 |          test-core-arraylist.cpp           | Tests: arraylists.
 |          test-core-calc.cpp                | Tests: calculation of expressions.
@@ -438,13 +429,13 @@ WeeChat "core" is located in following directories:
 |          test-core-secure.cpp              | Tests: secured data.
 |          test-core-signal.cpp              | Tests: signals.
 |          test-core-string.cpp              | Tests: strings.
+|          test-core-sys.cpp                 | Tests: system functions.
 |          test-core-url.cpp                 | Tests: URLs.
 |          test-core-utf8.cpp                | Tests: UTF-8.
 |          test-core-util.cpp                | Tests: utility functions.
-|          test-core-sys.cpp                 | Tests: system functions.
 |          hook/                             | Root of unit tests for hooks.
-|             test-hook-command.cpp          | Tests: hooks "command".
 |             test-hook-command-run.cpp      | Tests: hooks "command_run".
+|             test-hook-command.cpp          | Tests: hooks "command".
 |             test-hook-completion.cpp       | Tests: hooks "completion".
 |             test-hook-config.cpp           | Tests: hooks "config".
 |             test-hook-connect.cpp          | Tests: hooks "connect".
@@ -476,7 +467,16 @@ WeeChat "core" is located in following directories:
 |          test-gui-nicklist.cpp             | Tests: nicklist functions.
 |          curses/                           | Root of unit tests for Curses interface.
 |             test-gui-curses-mouse.cpp      | Tests: mouse (Curses interface).
+|       scripts/                             | Root of scripting API tests.
+|          test-scripts.cpp                  | Program used to run the scripting API tests.
+|          python/                           | Python scripts to generate and run the scripting API tests.
+|             testapigen.py                  | Python script generating scripts in all languages to test the scripting API.
+|             testapi.py                     | Python script with scripting API tests, used by script testapigen.py.
+|             unparse.py                     | Convert Python code to other languages, used by script testapigen.py.
 |       plugins/                             | Root of unit tests for plugins.
+|          test-plugin-api-info.cpp          | Tests: plugin API info functions.
+|          test-plugin-config.cpp            | Tests: plugin config functions.
+|          test-plugins.cpp                  | Tests: plugins.
 |          irc/                              | Root of unit tests for IRC plugin.
 |             test-irc-batch.cpp             | Tests: IRC batched events.
 |             test-irc-buffer.cpp            | Tests: IRC buffers.

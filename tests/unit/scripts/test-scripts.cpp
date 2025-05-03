@@ -23,7 +23,7 @@
 
 #include "CppUTest/TestHarness.h"
 
-#include "tests/tests.h"
+#include "tests.h"
 
 extern "C"
 {
@@ -169,7 +169,7 @@ TEST(Scripts, API)
     ptr_test_scripts_dir = getenv ("WEECHAT_TESTS_SCRIPTS_DIR");
     test_scripts_dir = strdup (
         (ptr_test_scripts_dir) ?
-        ptr_test_scripts_dir : "../tests/scripts/python");
+        ptr_test_scripts_dir : "./scripts/python");
 
     /* build paths for scripting API tests */
     snprintf (path_testapigen, sizeof (path_testapigen),
