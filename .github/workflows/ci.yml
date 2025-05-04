@@ -299,8 +299,14 @@ jobs:
         os:
           - ubuntu-24.04
         config:
-          - { name: "gcc", cc: "gcc", cxx: "g++", buildargs: "" }
-          - { name: "clang", cc: "clang", cxx: "clang++", buildargs: "" }
+          - name: "gcc"
+            cc: "gcc"
+            cxx: "g++"
+            buildargs: ""
+          - name: "clang"
+            cc: "clang"
+            cxx: "clang++"
+            buildargs: ""
 
     name: "rockylinux-9 (${{ matrix.config.name }})"
     runs-on: ${{ matrix.os }}
@@ -343,8 +349,14 @@ jobs:
         os:
           - ubuntu-24.04
         config:
-          # - { name: "gcc", cc: "gcc", cxx: "g++", buildargs: "" }
-          - { name: "clang", cc: "clang", cxx: "clang++", buildargs: "" }
+          # - name: "gcc"
+          # cc: "gcc"
+          # cxx: "g++"
+          # buildargs: ""
+          - name: "clang"
+            cc: "clang"
+            cxx: "clang++"
+            buildargs: ""
 
     name: "freebsd-14 (${{ matrix.config.name }})"
     runs-on: ${{ matrix.os }}
