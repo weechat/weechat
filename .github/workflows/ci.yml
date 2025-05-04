@@ -433,6 +433,7 @@ jobs:
         CC: ${{ matrix.config.cc }}
         CXX: ${{ matrix.config.cxx }}
         RUN_TESTS: "0"
+        JOBS: "2"
       run: ./tools/build_test.sh ${{ matrix.config.buildargs }}
 
     - name: Run WeeChat
