@@ -393,8 +393,14 @@ jobs:
         os:
           - macos-14
         config:
-          - { name: "gcc", cc: "gcc", cxx: "g++" }
-          - { name: "clang", cc: "clang", cxx: "clang++" }
+          - name: "gcc"
+            cc: "gcc"
+            cxx: "g++"
+            buildargs: "-DENABLE_TESTS=OFF -DENABLE_DOC_INCOMPLETE=ON -DENABLE_PHP=OFF"
+          - name: "clang"
+            cc: "clang"
+            cxx: "clang++"
+            buildargs: "-DENABLE_TESTS=OFF -DENABLE_DOC_INCOMPLETE=ON -DENABLE_PHP=OFF"
 
     name: "${{ matrix.os }} (${{ matrix.config.name }})"
     runs-on: ${{ matrix.os }}
@@ -429,11 +435,9 @@ jobs:
       env:
         CC: ${{ matrix.config.cc }}
         CXX: ${{ matrix.config.cxx }}
-      run: |
-        mkdir build-tmp && cd build-tmp
-        cmake .. -DENABLE_MAN=ON -DENABLE_DOC=ON -DENABLE_DOC_INCOMPLETE=ON -DENABLE_PHP=OFF
-        make VERBOSE=1 -j2
-        sudo make install
+        BUILDARGS: ${{ matrix.config.buildargs }}
+        RUN_TESTS: "0"
+      run: ./tools/build_test.sh
 
     - name: Run WeeChat
       env:
