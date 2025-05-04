@@ -22,10 +22,11 @@
 
 #
 # Build WeeChat according to environment variables:
+#   - JOBS: number of parallel jobs
 #   - RUN_TESTS: set to 0 to disable run of tests
 #
 # Syntax to run the script with environment variables:
-#   RUN_TESTS=0 ./build_test.sh
+#   RUN_TESTS=0 JOBS=2 ./build_test.sh
 #
 # Syntax to run the script with arguments on command line:
 #   ./build_test.sh [arguments]
@@ -44,12 +45,16 @@ build_dir="build-tmp-$$"
 mkdir "${build_dir}"
 cd "${build_dir}"
 
+if [ -z "${JOBS}" ]; then
+    JOBS="$(nproc)"
+fi
+
 cmake .. "$@"
 if [ -f "build.ninja" ]; then
     ninja -v
     sudo ninja install
 else
-    make VERBOSE=1 -j "$(nproc)"
+    make VERBOSE=1 -j "${JOBS}"
     sudo make install
 fi
 if [ "$RUN_TESTS" != "0" ]; then
