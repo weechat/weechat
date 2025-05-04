@@ -23,6 +23,7 @@
 #
 # Build WeeChat according to environment variables:
 #   - BUILDARGS: arguments for cmake command
+#   - RUN_TESTS: set to 0 to disable run of tests
 #
 # Syntax to run the script with environment variables:
 #   BUILDARGS="arguments" ./build_test.sh
@@ -61,4 +62,6 @@ else
     make VERBOSE=1 -j "$(nproc)"
     sudo make install
 fi
-ctest -V
+if [ "$RUN_TESTS" != "0" ]; then
+    ctest -V
+fi
