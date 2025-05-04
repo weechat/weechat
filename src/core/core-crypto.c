@@ -363,6 +363,7 @@ hash_end:
         fclose (file);
     return rc;
 }
+
 /*
  * Computes PKCS#5 Passphrase Based Key Derivation Function number 2 (PBKDF2)
  * hash of data.
