@@ -317,10 +317,10 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
     struct t_gui_hotlist *ptr_hotlist;
     void *ptr_server, *ptr_channel;
     char **buflist, *str_buflist, *condition;
-    char str_format_number[32], str_format_number_empty[32];
+    char str_format_number[32], str_format_number_zero[32], str_format_number_empty[32];
     char str_nick_prefix[32], str_color_nick_prefix[32];
-    char str_number[32], str_number2[32], *line, **hotlist, *str_hotlist;
-    char str_hotlist_count[32];
+    char str_number[32], str_number2[32], str_number_zero[32], str_number_zero2[32];
+    char *line, **hotlist, *str_hotlist, str_hotlist_count[32];
     const char *ptr_format, *ptr_format_current, *ptr_format_indent;
     const char *ptr_name, *ptr_type, *ptr_nick, *ptr_nick_prefix;
     const char *ptr_hotlist_format, *ptr_hotlist_priority;
@@ -371,6 +371,8 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
         weechat_hdata_integer (buflist_hdata_buffer, ptr_buffer, "number"));
     snprintf (str_format_number, sizeof (str_format_number),
               "%%%dd", length_max_number);
+    snprintf (str_format_number_zero, sizeof (str_format_number_zero),
+              "%%0%dd", length_max_number);
     snprintf (str_format_number_empty, sizeof (str_format_number_empty),
               "%%-%ds", length_max_number);
 
@@ -419,6 +421,8 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
         {
             snprintf (str_number, sizeof (str_number),
                       str_format_number, number);
+            snprintf (str_number_zero, sizeof (str_number_zero),
+                      str_format_number_zero, number);
             weechat_hashtable_set (buflist_hashtable_extra_vars,
                                    "number_displayed", "1");
         }
@@ -426,11 +430,15 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
         {
             snprintf (str_number, sizeof (str_number),
                       str_format_number_empty, " ");
+            snprintf (str_number_zero, sizeof (str_number_zero),
+                      str_format_number_empty, " ");
             weechat_hashtable_set (buflist_hashtable_extra_vars,
                                    "number_displayed", "0");
         }
         snprintf (str_number2, sizeof (str_number2),
                   str_format_number, number);
+        snprintf (str_number_zero2, sizeof (str_number_zero2),
+                  str_format_number_zero, number);
 
         /* buffer merged */
         ptr_buffer_prev = weechat_hdata_move (buflist_hdata_buffer,
@@ -518,6 +526,10 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
                                "number", str_number);
         weechat_hashtable_set (buflist_hashtable_extra_vars,
                                "number2", str_number2);
+        weechat_hashtable_set (buflist_hashtable_extra_vars,
+                               "number_zero", str_number_zero);
+        weechat_hashtable_set (buflist_hashtable_extra_vars,
+                               "number_zero2", str_number_zero2);
         weechat_hashtable_set (buflist_hashtable_extra_vars,
                                "format_number",
                                weechat_config_string (

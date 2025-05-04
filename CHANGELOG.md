@@ -11,6 +11,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 ### Added
 
 - irc: add support strikethrough text in IRC messages ([#2248](https://github.com/weechat/weechat/issues/2248))
+- buflist: add variables `${number_zero}` and `${number_zero2}` (zero-padded buffer number)
 
 ### Fixed
 

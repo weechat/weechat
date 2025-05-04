@@ -165,6 +165,8 @@ buflist_command_init (void)
                "buffers with same number"),
             N_("    - ${number2}: indented number, for example \" 1\" if there "
                "are between 10 and 99 buffers"),
+            N_("    - ${number_zero}: like ${number} but the number is zero-padded"),
+            N_("    - ${number_zero2}: like ${number2} but the number is zero-padded"),
             N_("    - ${number_displayed}: \"1\" if the number is displayed, "
                "otherwise \"0\""),
             N_("    - ${indent}: indentation for name (channel, private and list "
