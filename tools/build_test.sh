@@ -22,11 +22,10 @@
 
 #
 # Build WeeChat according to environment variables:
-#   - BUILDARGS: arguments for cmake command
 #   - RUN_TESTS: set to 0 to disable run of tests
 #
 # Syntax to run the script with environment variables:
-#   BUILDARGS="arguments" ./build_test.sh
+#   RUN_TESTS=0 ./build_test.sh
 #
 # Syntax to run the script with arguments on command line:
 #   ./build_test.sh [arguments]
@@ -36,25 +35,16 @@
 
 set -o errexit
 
-build_dir="build-tmp-$$"
-
-if [ $# -ge 1 ]; then
-    BUILDARGS="$*"
-fi
-
-run ()
-{
-    "$@"
-}
-
 # display commands
 set -x
+
+build_dir="build-tmp-$$"
 
 # create build directory
 mkdir "${build_dir}"
 cd "${build_dir}"
 
-run cmake .. -DENABLE_MAN=ON -DENABLE_DOC=ON -DENABLE_TESTS=ON "${BUILDARGS}"
+cmake .. "$@"
 if [ -f "build.ninja" ]; then
     ninja -v
     sudo ninja install

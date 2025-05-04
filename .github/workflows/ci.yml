@@ -111,31 +111,31 @@ jobs:
           - name: "gcc"
             cc: "gcc"
             cxx: "g++"
-            buildargs: ""
+            buildargs: "-DENABLE_MAN=ON -DENABLE_DOC=ON -DENABLE_TESTS=ON"
           - name: "gcc_ninja"
             cc: "gcc"
             cxx: "g++"
-            buildargs: "-G Ninja"
+            buildargs: "-G Ninja -DENABLE_MAN=ON -DENABLE_DOC=ON -DENABLE_TESTS=ON"
           - name: "gcc_no_nls"
             cc: "gcc"
             cxx: "g++"
-            buildargs: "-DENABLE_NLS=OFF -DENABLE_DOC=OFF"
+            buildargs: "-DENABLE_MAN=ON -DENABLE_TESTS=ON -DENABLE_NLS=OFF"
           - name: "gcc_no_zstd"
             cc: "gcc"
             cxx: "g++"
-            buildargs: "-DENABLE_ZSTD=OFF -DENABLE_DOC=OFF"
+            buildargs: "-DENABLE_TESTS=ON -DENABLE_ZSTD=OFF"
           - name: "gcc_no_cjson"
             cc: "gcc"
             cxx: "g++"
-            buildargs: "-DENABLE_CJSON=OFF -DENABLE_DOC=OFF"
+            buildargs: "-DENABLE_TESTS=ON -DENABLE_CJSON=OFF"
           - name: "gcc_no_perl_multiplicity"
             cc: "gcc"
             cxx: "g++"
-            buildargs: "-DCMAKE_C_FLAGS=\"-DNO_PERL_MULTIPLICITY=1\" -DENABLE_DOC=OFF"
+            buildargs: "-DENABLE_TESTS=ON -DCMAKE_C_FLAGS=\"-DNO_PERL_MULTIPLICITY=1\""
           - name: "gcc_coverage"
             cc: "gcc"
             cxx: "g++"
-            buildargs: "-DENABLE_CODE_COVERAGE=ON"
+            buildargs: "-DENABLE_MAN=ON -DENABLE_DOC=ON -DENABLE_TESTS=ON -DENABLE_CODE_COVERAGE=ON"
           - name: "clang"
             cc: "clang"
             cxx: "clang++"
@@ -172,8 +172,7 @@ jobs:
       env:
         CC: ${{ matrix.config.cc }}
         CXX: ${{ matrix.config.cxx }}
-        BUILDARGS: ${{ matrix.config.buildargs }}
-      run: ./tools/build_test.sh
+      run: ./tools/build_test.sh ${{ matrix.config.buildargs }}
 
     - name: Run WeeChat
       env:
@@ -302,11 +301,11 @@ jobs:
           - name: "gcc"
             cc: "gcc"
             cxx: "g++"
-            buildargs: ""
+            buildargs: "-DENABLE_MAN=ON -DENABLE_DOC=ON -DENABLE_TESTS=ON"
           - name: "clang"
             cc: "clang"
             cxx: "clang++"
-            buildargs: ""
+            buildargs: "-DENABLE_MAN=ON -DENABLE_DOC=ON -DENABLE_TESTS=ON"
 
     name: "rockylinux-9 (${{ matrix.config.name }})"
     runs-on: ${{ matrix.os }}
@@ -327,8 +326,7 @@ jobs:
       env:
         CC: ${{ matrix.config.cc }}
         CXX: ${{ matrix.config.cxx }}
-        BUILDARGS: ${{ matrix.config.buildargs }}
-      run: ./tools/build_test.sh
+      run: ./tools/build_test.sh ${{ matrix.config.buildargs }}
 
     - name: Run WeeChat
       env:
@@ -352,11 +350,11 @@ jobs:
           # - name: "gcc"
           # cc: "gcc"
           # cxx: "g++"
-          # buildargs: ""
+          # buildargs: "-DENABLE_MAN=ON -DENABLE_DOC=ON -DENABLE_TESTS=ON"
           - name: "clang"
             cc: "clang"
             cxx: "clang++"
-            buildargs: ""
+            buildargs: "-DENABLE_MAN=ON -DENABLE_DOC=ON -DENABLE_TESTS=ON"
 
     name: "freebsd-14 (${{ matrix.config.name }})"
     runs-on: ${{ matrix.os }}
@@ -370,14 +368,13 @@ jobs:
       env:
         CC: ${{ matrix.config.cc }}
         CXX: ${{ matrix.config.cxx }}
-        BUILDARGS: ${{ matrix.config.buildargs }}
         TERM: xterm-256color
       with:
-        envs: "CC CXX BUILDARGS TERM"
+        envs: "CC CXX TERM"
         usesh: true
         prepare: pkg install -y ${{ env.WEECHAT_DEPS_FREEBSD }}
         run: |
-          ./tools/build_test.sh
+          ./tools/build_test.sh ${{ matrix.config.buildargs }}
           weechat --help
           weechat-curses --help
           weechat --version
@@ -396,11 +393,11 @@ jobs:
           - name: "gcc"
             cc: "gcc"
             cxx: "g++"
-            buildargs: "-DENABLE_TESTS=OFF -DENABLE_DOC_INCOMPLETE=ON -DENABLE_PHP=OFF"
+            buildargs: "-DENABLE_MAN=ON -DENABLE_DOC=ON -DENABLE_DOC_INCOMPLETE=ON -DENABLE_PHP=OFF -DENABLE_TESTS=OFF"
           - name: "clang"
             cc: "clang"
             cxx: "clang++"
-            buildargs: "-DENABLE_TESTS=OFF -DENABLE_DOC_INCOMPLETE=ON -DENABLE_PHP=OFF"
+            buildargs: "-DENABLE_MAN=ON -DENABLE_DOC=ON -DENABLE_DOC_INCOMPLETE=ON -DENABLE_PHP=OFF -DENABLE_TESTS=OFF"
 
     name: "${{ matrix.os }} (${{ matrix.config.name }})"
     runs-on: ${{ matrix.os }}
@@ -435,9 +432,8 @@ jobs:
       env:
         CC: ${{ matrix.config.cc }}
         CXX: ${{ matrix.config.cxx }}
-        BUILDARGS: ${{ matrix.config.buildargs }}
         RUN_TESTS: "0"
-      run: ./tools/build_test.sh
+      run: ./tools/build_test.sh ${{ matrix.config.buildargs }}
 
     - name: Run WeeChat
       env:
