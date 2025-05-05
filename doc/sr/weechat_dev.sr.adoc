@@ -91,6 +91,10 @@ qweechat::
 |       typing/      | Typing додатак.
 |       xfer/        | Xfer додатак (IRC DCC фајл/разговор).
 | tests/             | Тестови.
+// TRANSLATION MISSING
+|    fuzz/           | Fuzz testing.
+// TRANSLATION MISSING
+|       core/        | Fuzz testing for core functions.
 |    unit/           | Unit тестови.
 |       core/        | Unit тестови за функције језгра.
 // TRANSLATION MISSING
@@ -422,6 +426,18 @@ WeeChat „језгро” се налази у следећим директо�
 |===
 | Путања/фајл                                     | Опис
 | tests/                                          | Корен тестова.
+// TRANSLATION MISSING
+|    fuzz/                                        | Root of fuzz testing.
+// TRANSLATION MISSING
+|       core/                                     | Root of fuzz testing for core.
+// TRANSLATION MISSING
+|          calc-fuzzer.c                          | Fuzz testing: калкулација израза.
+// TRANSLATION MISSING
+|          crypto-fuzzer.c                        | Fuzz testing: криптографске функције.
+// TRANSLATION MISSING
+|          string-fuzzer.c                        | Fuzz testing: стрингови.
+// TRANSLATION MISSING
+|          utf8-fuzzer.c                          | Fuzz testing: UTF-8.
 |    unit/                                        | Корен unit тестова.
 |       tests.cpp                                 | Програм који се користи за извршавање свих тестова.
 |       tests-record.cpp                          | Бележење и претрага у приказаним порукама.

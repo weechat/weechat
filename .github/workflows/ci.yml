@@ -139,7 +139,7 @@ jobs:
           - name: "clang"
             cc: "clang"
             cxx: "clang++"
-            buildargs: ""
+            buildargs: "-DENABLE_FUZZ=ON"
 
     name: "${{ matrix.os }} (${{ matrix.config.name }})"
     runs-on: ${{ matrix.os }}
@@ -305,7 +305,7 @@ jobs:
           - name: "clang"
             cc: "clang"
             cxx: "clang++"
-            buildargs: "-DENABLE_MAN=ON -DENABLE_DOC=ON -DENABLE_TESTS=ON"
+            buildargs: "-DENABLE_MAN=ON -DENABLE_DOC=ON -DENABLE_TESTS=ON -DENABLE_FUZZ=ON"
 
     name: "rockylinux-9 (${{ matrix.config.name }})"
     runs-on: ${{ matrix.os }}
@@ -354,7 +354,7 @@ jobs:
           - name: "clang"
             cc: "clang"
             cxx: "clang++"
-            buildargs: "-DENABLE_MAN=ON -DENABLE_DOC=ON -DENABLE_TESTS=ON"
+            buildargs: "-DENABLE_MAN=ON -DENABLE_DOC=ON -DENABLE_TESTS=ON -DENABLE_FUZZ=ON"
 
     name: "freebsd-14 (${{ matrix.config.name }})"
     runs-on: ${{ matrix.os }}

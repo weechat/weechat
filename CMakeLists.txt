@@ -131,6 +131,7 @@ option(ENABLE_MAN            "Enable build of man page"                 OFF)
 option(ENABLE_DOC            "Enable build of documentation"            OFF)
 option(ENABLE_DOC_INCOMPLETE "Enable incomplete doc"                    OFF)
 option(ENABLE_TESTS          "Enable tests"                             OFF)
+option(ENABLE_FUZZ           "Enable fuzz testing"                      OFF)
 option(ENABLE_CODE_COVERAGE  "Enable code coverage"                     OFF)
 
 # code coverage
@@ -276,19 +277,7 @@ endif()
 
 add_subdirectory(src)
 add_subdirectory(doc)
-
-if(ENABLE_TESTS)
-  find_package(CppUTest)
-  if(CPPUTEST_FOUND)
-    enable_testing()
-    add_subdirectory(tests)
-  else()
-    message(SEND_ERROR "CppUTest not found")
-  endif()
-else()
-  enable_testing()
-  add_test(NAME notests COMMAND true)
-endif()
+add_subdirectory(tests)
 
 configure_file(config.h.cmake config.h @ONLY)
 

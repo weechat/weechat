@@ -93,6 +93,10 @@ qweechat::
 |       typing/      | typing プラグイン
 |       xfer/        | xfer (IRC DCC ファイル/チャット)
 | tests/             | テスト
+// TRANSLATION MISSING
+|    fuzz/           | Fuzz testing.
+// TRANSLATION MISSING
+|       core/        | Fuzz testing for core functions.
 |    unit/           | 単体テスト
 |       core/        | コア関数の単体テスト
 // TRANSLATION MISSING
@@ -456,6 +460,18 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |===
 | パス/ファイル名                                 | 説明
 | tests/                                          | テスト用のルートディレクトリ
+// TRANSLATION MISSING
+|    fuzz/                                        | Root of fuzz testing.
+// TRANSLATION MISSING
+|       core/                                     | Root of fuzz testing for core.
+// TRANSLATION MISSING
+|          calc-fuzzer.c                          | Fuzz testing: calculation of expressions.
+// TRANSLATION MISSING
+|          crypto-fuzzer.c                        | Fuzz testing: cryptographic functions.
+// TRANSLATION MISSING
+|          string-fuzzer.c                        | Fuzz testing: 文字列
+// TRANSLATION MISSING
+|          utf8-fuzzer.c                          | Fuzz testing: UTF-8.
 |    unit/                                        | 単体テスト用のルートディレクトリ
 |       tests.cpp                                 | 全テストの実行時に使われるプログラム
 // TRANSLATION MISSING

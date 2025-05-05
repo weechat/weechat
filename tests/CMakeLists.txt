@@ -19,6 +19,19 @@
 # along with WeeChat.  If not, see <https://www.gnu.org/licenses/>.
 #
 
+if(ENABLE_FUZZ)
+  add_subdirectory(fuzz)
+endif()
+
 if(ENABLE_TESTS)
-  add_subdirectory(unit)
+  find_package(CppUTest)
+  if(CPPUTEST_FOUND)
+    enable_testing()
+    add_subdirectory(unit)
+  else()
+    message(SEND_ERROR "CppUTest not found")
+  endif()
+else()
+  enable_testing()
+  add_test(NAME notests COMMAND true)
 endif()

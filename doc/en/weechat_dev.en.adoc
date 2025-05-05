@@ -91,6 +91,8 @@ The main WeeChat directories are:
 |       typing/      | Typing plugin.
 |       xfer/        | Xfer plugin (IRC DCC file/chat).
 | tests/             | Tests.
+|    fuzz/           | Fuzz testing.
+|       core/        | Fuzz testing for core functions.
 |    unit/           | Unit tests.
 |       core/        | Unit tests for core functions.
 |          hook/     | Unit tests for hook functions.
@@ -415,6 +417,12 @@ WeeChat "core" is located in following directories:
 |===
 | Path/file                                       | Description
 | tests/                                          | Root of tests.
+|    fuzz/                                        | Root of fuzz testing.
+|       core/                                     | Root of fuzz testing for core.
+|          calc-fuzzer.c                          | Fuzz testing: calculation of expressions.
+|          crypto-fuzzer.c                        | Fuzz testing: cryptographic functions.
+|          string-fuzzer.c                        | Fuzz testing: strings.
+|          utf8-fuzzer.c                          | Fuzz testing: UTF-8.
 |    unit/                                        | Root of unit tests.
 |       tests.cpp                                 | Program used to run all tests.
 |       tests-record.cpp                          | Record and search in messages displayed.
