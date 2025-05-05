@@ -1068,8 +1068,7 @@ Zeichen, genutzt werden:
   kbd:[yyyyyy]           | Textfarbe `xxxxxx` und Hintergrundfarbe `yyyyyy` (RGB als hexadezimale Zahl).
 | kbd:[Ctrl+c], kbd:[i]  | Text wird kursiv dargestellt.
 | kbd:[Ctrl+c], kbd:[o]  | deaktiviert Farben und Attribute.
-// TRANSLATION MISSING
-| kbd:[Ctrl+c], kbd:[s]  | Strikethrough text (displayed as half bright in ncurses interface because strikethrough is not supported).
+| kbd:[Ctrl+c], kbd:[s]  | durchgestrichener Text (die Darstellung findet in halber Helligkeit statt, da die ncurses Oberfläche keinen durchgestrichenen Text unterstützt).
 | kbd:[Ctrl+c], kbd:[v]  | Farben umkehren (kehrt Textfarbe und Hintergrundfarbe um).
 | kbd:[Ctrl+c], kbd:[_]  | Text wird mit Unterstrich dargestellt.
 |===
@@ -1642,8 +1641,7 @@ Sie können mit dem Befehl <<command_weechat_key,/key>> geändert und neue hinzu
 | kbd:[Ctrl+c], kbd:[d] | fügt Steuerzeichen für Textfarbe ein (RGB Farbe, als hexadezimale Zahl). | `+/input insert \x04+`
 | kbd:[Ctrl+c], kbd:[i] | fügt Steuerzeichen für kursiven Text ein. | `+/input insert \x1D+`
 | kbd:[Ctrl+c], kbd:[o] | fügt Steuerzeichen für Standardfarbe ein. | `+/input insert \x0F+`
-// TRANSLATION MISSING
-| kbd:[Ctrl+c], kbd:[s] | Insert code for strikethrough text. | `+/input insert \x1E+`
+| kbd:[Ctrl+c], kbd:[s] | fügt Steuerzeichen für durchgestrichenen Text ein. | `+/input insert \x1E+`
 | kbd:[Ctrl+c], kbd:[v] | fügt Steuerzeichen für Hintergrundfarbe ein. | `+/input insert \x16+`
 | kbd:[Ctrl+c], kbd:[_] | fügt Steuerzeichen für unterstrichenen Text ein. | `+/input insert \x1F+`
 |===
