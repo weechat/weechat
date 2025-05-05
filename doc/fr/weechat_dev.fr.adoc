@@ -94,12 +94,19 @@ Les répertoires principaux de WeeChat sont :
 | tests/             | Tests.
 |    unit/           | Tests unitaires.
 |       core/        | Tests unitaires pour les fonctions du cœur.
+|          hook/     | Tests unitaires pour les fonctions hook.
 |       gui/         | Tests unitaires pour les fonctions de l'interface.
+|          curses/   | Tests unitaires pour les fonctions de l'interface Curses.
 |       scripts/     | Tests de l'API script.
 |          python/   | Scripts Python pour générer et lancer les tests de l'API script.
 |       plugins/     | Tests unitaires pour les extensions.
+|          alias/    | Tests unitaires pour l'extension alias.
 |          irc/      | Tests unitaires pour l'extension IRC.
+|          logger/   | Tests unitaires pour l'extension logger.
+|          relay/    | Tests unitaires pour l'extension relay.
 |          trigger/  | Tests unitaires pour l'extension trigger.
+|          typing/   | Tests unitaires pour l'extension typing.
+|          xfer/     | Tests unitaires pour l'extension xfer.
 | doc/               | Documentation.
 | po/                | Fichiers de traductions (gettext).
 | debian/            | Empaquetage Debian.
@@ -407,121 +414,130 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 
 [width="100%",cols="2m,3",options="header"]
 |===
-| Chemin/fichier                             | Description
-| tests/                                     | Racine des tests.
-|    unit/                                   | Racine des tests unitaires.
-|       tests.cpp                            | Programme utilisé pour lancer tous les tests.
-|       tests-record.cpp                     | Enregistrement et recherche dans les messages affichés.
-|       core/                                | Racine des tests unitaires pour le cœur.
-|          test-core-arraylist.cpp           | Tests : listes avec tableau (« arraylists »).
-|          test-core-calc.cpp                | Tests : calcul d'expressions.
-|          test-core-command.cpp             | Tests : commandes.
-|          test-core-config-file.cpp         | Tests : fichiers de configuration.
-|          test-core-crypto.cpp              | Tests : fonctions cryptographiques.
-|          test-core-dir.cpp                 | Tests : répertoires/fichiers.
-|          test-core-eval.cpp                | Tests : évaluation d'expressions.
-|          test-core-hashtable.cpp           | Tests : tables de hachage.
-|          test-core-hdata.cpp               | Tests : hdata.
-|          test-core-hook.cpp                | Tests : hooks.
-|          test-core-infolist.cpp            | Tests : infolists.
-|          test-core-input.cpp               | Tests : fonctions d'entrée.
-|          test-core-list.cpp                | Tests : listes.
-|          test-core-network.cpp             | Tests : fonctions réseau.
-|          test-core-secure.cpp              | Tests : données sécurisées.
-|          test-core-signal.cpp              | Tests : signaux.
-|          test-core-string.cpp              | Tests : chaînes.
-|          test-core-sys.cpp                 | Tests : fonctions système.
-|          test-core-url.cpp                 | Tests : URLs.
-|          test-core-utf8.cpp                | Tests : UTF-8.
-|          test-core-util.cpp                | Tests : fonctions utiles.
-|          hook/                             | Racine des tests pour les hooks.
-|             test-hook-command.cpp          | Tests : hooks "command".
-|             test-hook-command-run.cpp      | Tests: hooks "command_run".
-|             test-hook-completion.cpp       | Tests: hooks "completion".
-|             test-hook-config.cpp           | Tests: hooks "config".
-|             test-hook-connect.cpp          | Tests: hooks "connect".
-|             test-hook-fd.cpp               | Tests: hooks "fd".
-|             test-hook-focus.cpp            | Tests: hooks "focus".
-|             test-hook-hdata.cpp            | Tests: hooks "hdata".
-|             test-hook-hsignal.cpp          | Tests: hooks "hsignal".
-|             test-hook-info-hashtable.cpp   | Tests: hooks "info_hashtable".
-|             test-hook-info.cpp             | Tests: hooks "info".
-|             test-hook-infolist.cpp         | Tests: hooks "infolist".
-|             test-hook-line.cpp             | Tests: hooks "line".
-|             test-hook-modifier.cpp         | Tests : hooks "modifier".
-|             test-hook-print.cpp            | Tests: hooks "print".
-|             test-hook-process.cpp          | Tests: hooks "process".
-|             test-hook-signal.cpp           | Tests: hooks "signal".
-|             test-hook-timer.cpp            | Tests: hooks "timer".
-|             test-hook-url.cpp              | Tests: hooks "url".
-|       gui/                                 | Racine des tests unitaires pour les interfaces.
-|          test-gui-bar-window.cpp           | Tests : fonctions de fenêtres de barre.
-|          test-gui-buffer.cpp               | Tests : fonctions de tampons.
-|          test-gui-chat.cpp                 | Tests : fonctions de discussion.
-|          test-gui-color.cpp                | Tests : couleurs.
-|          test-gui-filter.cpp               | Tests : filtres.
-|          test-gui-hotlist.cpp              | Tests : fonctions hotlist.
-|          test-gui-input.cpp                | Tests : fonctions d'entrée.
-|          test-gui-key.cpp                  | Tests : touches.
-|          test-gui-line.cpp                 | Tests : lignes.
-|          test-gui-nick.cpp                 | Tests : pseudos.
-|          test-gui-nicklist.cpp             | Tests : fonctions de liste de pseudos.
-|          curses/                           | Racine des tests unitaires pour l'interface Curses.
-|             test-gui-curses-mouse.cpp      | Tests : souris (interface Curses).
-|       scripts/                             | Racine des tests de l'API script.
-|          test-scripts.cpp                  | Programme utilisé pour lancer les tests de l'API script.
-|          python/                           | Scripts Python pour générer et lancer les tests de l'API script.
-|             testapigen.py                  | Script Python générant des scripts dans tous les languages pour tester l'API script.
-|             testapi.py                     | Script Python avec les tests API, utilisé par le script testapigen.py.
-|             unparse.py                     | Conversion de code Python vers d'autres langages, utilisé par le script testapigen.py.
-|       plugins/                             | Racine des tests unitaires pour les extensions.
-|          test-plugin-api-info.cpp          | Tests : fonctions info de l'API extension.
-|          test-plugin-config.cpp            | Tests : fonctions config de l'extension.
-|          test-plugins.cpp                  | Tests : extensions.
-|          irc/                              | Racine des tests unitaires pour l'extension IRC.
-|             test-irc-batch.cpp             | Tests : évènements batch IRC.
-|             test-irc-buffer.cpp            | Tests : tampons IRC.
-|             test-irc-channel.cpp           | Tests : canaux IRC.
-|             test-irc-color.cpp             | Tests : couleurs IRC.
-|             test-irc-command.cpp           | Tests : commandes IRC.
-|             test-irc-config.cpp            | Tests : configuration IRC.
-|             test-irc-ctcp.cpp              | Tests : CTCP IRC.
-|             test-irc-ignore.cpp            | Tests : ignores IRC.
-|             test-irc-info.cpp              | Tests : infos IRC.
-|             test-irc-join.cpp              | Tests : fonctions de join IRC.
-|             test-irc-list.cpp              | Tests : tampon IRC pour la réponse à la commande /list.
-|             test-irc-message.cpp           | Tests : messages IRC.
-|             test-irc-mode.cpp              | Tests : modes IRC.
-|             test-irc-nick.cpp              | Tests : pseudos IRC.
-|             test-irc-protocol.cpp          | Tests : protocole IRC.
-|             test-irc-sasl.cpp              | Tests : authentification SASL avec le protocole IRC.
-|             test-irc-server.cpp            | Tests : serveur IRC.
-|             test-irc-tag.cpp               | Tests : étiquettes des messages IRC.
-|          logger/                           | Racine des tests unitaires pour l'extension logger.
-|             test-logger.cpp                | Tests : logger.
-|             test-logger-backlog.cpp        | Tests : backlog logger.
-|             test-logger-tail.cpp           | Tests : fonctions "tail".
-|          trigger/                          | Racine des tests unitaires pour l'extension trigger.
-|             test-trigger.cpp               | Tests : triggers.
-|             test-trigger-config.cpp        | Tests : configuration trigger.
-|          typing/                           | Racine des tests unitaires pour l'extension typing.
-|             test-typing.cpp                | Tests : typing.
-|             test-typing-status.cpp         | Tests : statut d'écriture.
-|          relay/                            | Racine des tests unitaires pour l'extension Relay.
-|             test-relay-auth.cpp            | Tests : authentification des clients.
-|             test-relay-http.cpp            | Tests : fonctions HTTP pour l'extension Relay.
-|             test-relay-raw.cpp             | Tests : fonctions sur les messages bruts pour l'extension Relay.
-|             test-relay-remote.cpp          | Tests : fonctions remote pour l'extension Relay.
-|             test-relay-websocket.cpp       | Tests : fonctions websocket pour l'extension Relay.
-|             api/                           | Racine des tests unitaires pour le protocole relay "api".
-|                test-relay-api.cpp          | Tests : protocole relay "api" : fonctions générales.
-|                test-relay-api-msg.cpp      | Tests : protocole relay "api" : messages.
-|                test-relay-api-protocol.cpp | Tests : protocole relay "api" : protocole.
-|             irc/                           | Racine des tests unitaires pour le protocole relay "irc".
-|                test-relay-irc.cpp          | Tests : protocole relay "irc".
-|          xfer/                             | Racine des tests unitaires pour l'extension Xfer.
-|             test-xfer-file.cpp             | Tests : fonctions sur les fichiers.
-|             test-xfer-network.cpp          | Tests : fonctions réseau.
+| Chemin/fichier                                  | Description
+| tests/                                          | Racine des tests.
+|    unit/                                        | Racine des tests unitaires.
+|       tests.cpp                                 | Programme utilisé pour lancer tous les tests.
+|       tests-record.cpp                          | Enregistrement et recherche dans les messages affichés.
+|       core/                                     | Racine des tests unitaires pour le cœur.
+|          test-core-arraylist.cpp                | Tests : listes avec tableau (« arraylists »).
+|          test-core-calc.cpp                     | Tests : calcul d'expressions.
+|          test-core-command.cpp                  | Tests : commandes.
+|          test-core-config-file.cpp              | Tests : fichiers de configuration.
+|          test-core-crypto.cpp                   | Tests : fonctions cryptographiques.
+|          test-core-dir.cpp                      | Tests : répertoires/fichiers.
+|          test-core-eval.cpp                     | Tests : évaluation d'expressions.
+|          test-core-hashtable.cpp                | Tests : tables de hachage.
+|          test-core-hdata.cpp                    | Tests : hdata.
+|          test-core-hook.cpp                     | Tests : hooks.
+|          test-core-infolist.cpp                 | Tests : infolists.
+|          test-core-input.cpp                    | Tests : fonctions d'entrée.
+|          test-core-list.cpp                     | Tests : listes.
+|          test-core-network.cpp                  | Tests : fonctions réseau.
+|          test-core-secure.cpp                   | Tests : données sécurisées.
+|          test-core-signal.cpp                   | Tests : signaux.
+|          test-core-string.cpp                   | Tests : chaînes.
+|          test-core-sys.cpp                      | Tests : fonctions système.
+|          test-core-url.cpp                      | Tests : URLs.
+|          test-core-utf8.cpp                     | Tests : UTF-8.
+|          test-core-util.cpp                     | Tests : fonctions utiles.
+|          hook/                                  | Racine des tests pour les hooks.
+|             test-hook-command.cpp               | Tests : hooks "command".
+|             test-hook-command-run.cpp           | Tests : hooks "command_run".
+|             test-hook-completion.cpp            | Tests : hooks "completion".
+|             test-hook-config.cpp                | Tests : hooks "config".
+|             test-hook-connect.cpp               | Tests : hooks "connect".
+|             test-hook-fd.cpp                    | Tests : hooks "fd".
+|             test-hook-focus.cpp                 | Tests : hooks "focus".
+|             test-hook-hdata.cpp                 | Tests : hooks "hdata".
+|             test-hook-hsignal.cpp               | Tests : hooks "hsignal".
+|             test-hook-info-hashtable.cpp        | Tests : hooks "info_hashtable".
+|             test-hook-info.cpp                  | Tests : hooks "info".
+|             test-hook-infolist.cpp              | Tests : hooks "infolist".
+|             test-hook-line.cpp                  | Tests : hooks "line".
+|             test-hook-modifier.cpp              | Tests : hooks "modifier".
+|             test-hook-print.cpp                 | Tests : hooks "print".
+|             test-hook-process.cpp               | Tests : hooks "process".
+|             test-hook-signal.cpp                | Tests : hooks "signal".
+|             test-hook-timer.cpp                 | Tests : hooks "timer".
+|             test-hook-url.cpp                   | Tests : hooks "url".
+|       gui/                                      | Racine des tests unitaires pour les interfaces.
+|          test-gui-bar-item-custom.cpp           | Tests : fonctions d'objets de barre personnalisés.
+|          test-gui-bar-item.cpp                  | Tests : fonctions d'objets de barre.
+|          test-gui-bar-window.cpp                | Tests : fonctions de fenêtres de barre.
+|          test-gui-bar.cpp                       | Tests : fonctions de barres.
+|          test-gui-buffer.cpp                    | Tests : fonctions de tampons.
+|          test-gui-chat.cpp                      | Tests : fonctions de discussion.
+|          test-gui-color.cpp                     | Tests : couleurs.
+|          test-gui-filter.cpp                    | Tests : filtres.
+|          test-gui-hotlist.cpp                   | Tests : fonctions hotlist.
+|          test-gui-input.cpp                     | Tests : fonctions d'entrée.
+|          test-gui-key.cpp                       | Tests : touches.
+|          test-gui-line.cpp                      | Tests : lignes.
+|          test-gui-nick.cpp                      | Tests : pseudos.
+|          test-gui-nicklist.cpp                  | Tests : fonctions de liste de pseudos.
+|          curses/                                | Racine des tests unitaires pour l'interface Curses.
+|             test-gui-curses-mouse.cpp           | Tests : souris (interface Curses).
+|       scripts/                                  | Racine des tests de l'API script.
+|          test-scripts.cpp                       | Programme utilisé pour lancer les tests de l'API script.
+|          python/                                | Scripts Python pour générer et lancer les tests de l'API script.
+|             testapigen.py                       | Script Python générant des scripts dans tous les languages pour tester l'API script.
+|             testapi.py                          | Script Python avec les tests API, utilisé par le script testapigen.py.
+|             unparse.py                          | Conversion de code Python vers d'autres langages, utilisé par le script testapigen.py.
+|       plugins/                                  | Racine des tests unitaires pour les extensions.
+|          test-plugin-api-info.cpp               | Tests : fonctions info de l'API extension.
+|          test-plugin-config.cpp                 | Tests : fonctions config de l'extension.
+|          test-plugins.cpp                       | Tests : extensions.
+|          alias/                                 | Racine des tests unitaires pour l'extension alias.
+|             test-alias.cpp                      | Tests : alias.
+|          irc/                                   | Racine des tests unitaires pour l'extension IRC.
+|             test-irc-batch.cpp                  | Tests : évènements batch IRC.
+|             test-irc-buffer.cpp                 | Tests : tampons IRC.
+|             test-irc-channel.cpp                | Tests : canaux IRC.
+|             test-irc-color.cpp                  | Tests : couleurs IRC.
+|             test-irc-command.cpp                | Tests : commandes IRC.
+|             test-irc-config.cpp                 | Tests : configuration IRC.
+|             test-irc-ctcp.cpp                   | Tests : CTCP IRC.
+|             test-irc-ignore.cpp                 | Tests : ignores IRC.
+|             test-irc-info.cpp                   | Tests : infos IRC.
+|             test-irc-join.cpp                   | Tests : fonctions de join IRC.
+|             test-irc-list.cpp                   | Tests : tampon IRC pour la réponse à la commande /list.
+|             test-irc-message.cpp                | Tests : messages IRC.
+|             test-irc-mode.cpp                   | Tests : modes IRC.
+|             test-irc-nick.cpp                   | Tests : pseudos IRC.
+|             test-irc-protocol.cpp               | Tests : protocole IRC.
+|             test-irc-sasl.cpp                   | Tests : authentification SASL avec le protocole IRC.
+|             test-irc-server.cpp                 | Tests : serveur IRC.
+|             test-irc-tag.cpp                    | Tests : étiquettes des messages IRC.
+|          logger/                                | Racine des tests unitaires pour l'extension logger.
+|             test-logger.cpp                     | Tests : logger.
+|             test-logger-backlog.cpp             | Tests : backlog logger.
+|             test-logger-tail.cpp                | Tests : fonctions "tail".
+|          relay/                                 | Racine des tests unitaires pour l'extension Relay.
+|             test-relay-auth.cpp                 | Tests : authentification des clients.
+|             test-relay-bar-item.cpp             | Tests : objets de barre pour l'extension Relay.
+|             test-relay-http.cpp                 | Tests : fonctions HTTP pour l'extension Relay.
+|             test-relay-raw.cpp                  | Tests : fonctions sur les messages bruts pour l'extension Relay.
+|             test-relay-remote.cpp               | Tests : fonctions remote pour l'extension Relay.
+|             test-relay-websocket.cpp            | Tests : fonctions websocket pour l'extension Relay.
+|             api/                                | Racine des tests unitaires pour le protocole relay "api".
+|                test-relay-api.cpp               | Tests : protocole relay "api" : fonctions générales.
+|                test-relay-api-msg.cpp           | Tests : protocole relay "api" : messages.
+|                test-relay-api-protocol.cpp      | Tests : protocole relay "api" : protocole.
+|                remote/                          | Tests : protocole relay "api" : fonctions "remote" : évènement.
+|                   test-relay-remote-event.cpp   | Tests : protocole relay "api" : fonctions "remote" : réseau.
+|                   test-relay-remote-network.cpp | Tests: Relay "api" protocol: remote network.
+|             irc/                                | Racine des tests unitaires pour le protocole relay "irc".
+|                test-relay-irc.cpp               | Tests : protocole relay "irc".
+|          trigger/                               | Racine des tests unitaires pour l'extension trigger.
+|             test-trigger.cpp                    | Tests : triggers.
+|             test-trigger-config.cpp             | Tests : configuration trigger.
+|          typing/                                | Racine des tests unitaires pour l'extension typing.
+|             test-typing.cpp                     | Tests : typing.
+|             test-typing-status.cpp              | Tests : statut d'écriture.
+|          xfer/                                  | Racine des tests unitaires pour l'extension Xfer.
+|             test-xfer-file.cpp                  | Tests : fonctions sur les fichiers.
+|             test-xfer-network.cpp               | Tests : fonctions réseau.
 |===
 
 [[documentation_translations]]

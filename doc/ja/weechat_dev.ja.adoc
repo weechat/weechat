@@ -95,13 +95,27 @@ qweechat::
 | tests/             | テスト
 |    unit/           | 単体テスト
 |       core/        | コア関数の単体テスト
+// TRANSLATION MISSING
+|          hook/     | Unit tests for hook functions.
 |       gui/         | インターフェース関数の単体テスト
+// TRANSLATION MISSING
+|          curses/   | Unit tests for Curses interface functions.
 |       scripts/     | スクリプト API テスト
 |          python/   | スクリプト API テストを生成、実行する Python スクリプト
 |       plugins/     | プラグインの単体テスト
+// TRANSLATION MISSING
+|          alias/    | Unit tests for alias plugin.
 |          irc/      | IRC プラグインの単体テスト
 // TRANSLATION MISSING
+|          logger/   | Unit tests for logger plugin.
+// TRANSLATION MISSING
+|          relay/    | Unit tests for relay plugin.
+// TRANSLATION MISSING
 |          trigger/  | Unit tests for trigger plugin.
+// TRANSLATION MISSING
+|          typing/   | Unit tests for typing plugin.
+// TRANSLATION MISSING
+|          xfer/     | Unit tests for xfer plugin.
 | doc/               | 文書
 | po/                | 翻訳ファイル (gettext)
 | debian/            | Debian パッケージ用
@@ -440,206 +454,222 @@ WeeChat "core" は以下のディレクトリに配置されています:
 
 [width="100%",cols="2m,3",options="header"]
 |===
-| パス/ファイル名                            | 説明
-| tests/                                     | テスト用のルートディレクトリ
-|    unit/                                   | 単体テスト用のルートディレクトリ
-|       tests.cpp                            | 全テストの実行時に使われるプログラム
+| パス/ファイル名                                 | 説明
+| tests/                                          | テスト用のルートディレクトリ
+|    unit/                                        | 単体テスト用のルートディレクトリ
+|       tests.cpp                                 | 全テストの実行時に使われるプログラム
 // TRANSLATION MISSING
-|       tests-record.cpp                     | Record and search in messages displayed.
-|       core/                                | core 向け単体テスト用のルートディレクトリ
-|          test-core-arraylist.cpp           | テスト: 配列リスト
+|       tests-record.cpp                          | Record and search in messages displayed.
+|       core/                                     | core 向け単体テスト用のルートディレクトリ
+|          test-core-arraylist.cpp                | テスト: 配列リスト
 // TRANSLATION MISSING
-|          test-core-calc.cpp                | Tests: calculation of expressions.
+|          test-core-calc.cpp                     | Tests: calculation of expressions.
 // TRANSLATION MISSING
-|          test-core-command.cpp             | Tests: commands.
+|          test-core-command.cpp                  | Tests: commands.
 // TRANSLATION MISSING
-|          test-core-config-file.cpp         | Tests: configuration files.
+|          test-core-config-file.cpp              | Tests: configuration files.
 // TRANSLATION MISSING
-|          test-core-crypto.cpp              | Tests: cryptographic functions.
+|          test-core-crypto.cpp                   | Tests: cryptographic functions.
 // TRANSLATION MISSING
-|          test-core-dir.cpp                 | Tests: directory/file functions.
-|          test-core-eval.cpp                | テスト: 式の評価
-|          test-core-hashtable.cpp           | テスト: ハッシュテーブル
-|          test-core-hdata.cpp               | テスト: hdata
-|          test-core-hook.cpp                | テスト: フック
-|          test-core-infolist.cpp            | テスト: インフォリスト
+|          test-core-dir.cpp                      | Tests: directory/file functions.
+|          test-core-eval.cpp                     | テスト: 式の評価
+|          test-core-hashtable.cpp                | テスト: ハッシュテーブル
+|          test-core-hdata.cpp                    | テスト: hdata
+|          test-core-hook.cpp                     | テスト: フック
+|          test-core-infolist.cpp                 | テスト: インフォリスト
 // TRANSLATION MISSING
-|          test-core-input.cpp               | Tests: input functions.
-|          test-core-list.cpp                | テスト: リスト
+|          test-core-input.cpp                    | Tests: input functions.
+|          test-core-list.cpp                     | テスト: リスト
 // TRANSLATION MISSING
-|          test-core-network.cpp             | Tests: network functions.
-|          test-core-secure.cpp              | テスト: データ保護
+|          test-core-network.cpp                  | Tests: network functions.
+|          test-core-secure.cpp                   | テスト: データ保護
 // TRANSLATION MISSING
-|          test-core-signal.cpp              | テスト: signals.
-|          test-core-string.cpp              | テスト: 文字列
+|          test-core-signal.cpp                   | テスト: signals.
+|          test-core-string.cpp                   | テスト: 文字列
 // TRANSLATION MISSING
-|          test-core-sys.cpp                 | Tests: system functions.
-|          test-core-url.cpp                 | テスト: URL
-|          test-core-utf8.cpp                | テスト: UTF-8
-|          test-core-util.cpp                | テスト: ユーティリティ関数
+|          test-core-sys.cpp                      | Tests: system functions.
+|          test-core-url.cpp                      | テスト: URL
+|          test-core-utf8.cpp                     | テスト: UTF-8
+|          test-core-util.cpp                     | テスト: ユーティリティ関数
 // TRANSLATION MISSING
-|          hook/                             | Root of unit tests for hooks.
+|          hook/                                  | Root of unit tests for hooks.
 // TRANSLATION MISSING
-|             test-hook-command.cpp          | Tests: hooks "command".
+|             test-hook-command.cpp               | Tests: hooks "command".
 // TRANSLATION MISSING
-|             test-hook-command-run.cpp      | Tests: hooks "command_run".
+|             test-hook-command-run.cpp           | Tests: hooks "command_run".
 // TRANSLATION MISSING
-|             test-hook-completion.cpp       | Tests: hooks "completion".
+|             test-hook-completion.cpp            | Tests: hooks "completion".
 // TRANSLATION MISSING
-|             test-hook-config.cpp           | Tests: hooks "config".
+|             test-hook-config.cpp                | Tests: hooks "config".
 // TRANSLATION MISSING
-|             test-hook-connect.cpp          | Tests: hooks "connect".
+|             test-hook-connect.cpp               | Tests: hooks "connect".
 // TRANSLATION MISSING
-|             test-hook-fd.cpp               | Tests: hooks "fd".
+|             test-hook-fd.cpp                    | Tests: hooks "fd".
 // TRANSLATION MISSING
-|             test-hook-focus.cpp            | Tests: hooks "focus".
+|             test-hook-focus.cpp                 | Tests: hooks "focus".
 // TRANSLATION MISSING
-|             test-hook-hdata.cpp            | Tests: hooks "hdata".
+|             test-hook-hdata.cpp                 | Tests: hooks "hdata".
 // TRANSLATION MISSING
-|             test-hook-hsignal.cpp          | Tests: hooks "hsignal".
+|             test-hook-hsignal.cpp               | Tests: hooks "hsignal".
 // TRANSLATION MISSING
-|             test-hook-info-hashtable.cpp   | Tests: hooks "info_hashtable".
+|             test-hook-info-hashtable.cpp        | Tests: hooks "info_hashtable".
 // TRANSLATION MISSING
-|             test-hook-info.cpp             | Tests: hooks "info".
+|             test-hook-info.cpp                  | Tests: hooks "info".
 // TRANSLATION MISSING
-|             test-hook-infolist.cpp         | Tests: hooks "infolist".
+|             test-hook-infolist.cpp              | Tests: hooks "infolist".
 // TRANSLATION MISSING
-|             test-hook-line.cpp             | Tests: hooks "line".
+|             test-hook-line.cpp                  | Tests: hooks "line".
 // TRANSLATION MISSING
-|             test-hook-modifier.cpp         | Tests: hooks "modifier".
+|             test-hook-modifier.cpp              | Tests: hooks "modifier".
 // TRANSLATION MISSING
-|             test-hook-print.cpp            | Tests: hooks "print".
+|             test-hook-print.cpp                 | Tests: hooks "print".
 // TRANSLATION MISSING
-|             test-hook-process.cpp          | Tests: hooks "process".
+|             test-hook-process.cpp               | Tests: hooks "process".
 // TRANSLATION MISSING
-|             test-hook-signal.cpp           | Tests: hooks "signal".
+|             test-hook-signal.cpp                | Tests: hooks "signal".
 // TRANSLATION MISSING
-|             test-hook-timer.cpp            | Tests: hooks "timer".
+|             test-hook-timer.cpp                 | Tests: hooks "timer".
 // TRANSLATION MISSING
-|             test-hook-url.cpp              | Tests: hooks "url".
+|             test-hook-url.cpp                   | Tests: hooks "url".
 
-|       gui/                                 | インターフェースの単体テストを収める最上位ディレクトリ
+|       gui/                                      | インターフェースの単体テストを収める最上位ディレクトリ
 // TRANSLATION MISSING
-|          test-gui-bar-window.cpp           | Tests: bar window functions.
+|          test-gui-bar-item-custom.cpp           | Tests: custom bar item functions.
 // TRANSLATION MISSING
-|          test-gui-buffer.cpp               | Tests: buffer functions.
+|          test-gui-bar-item.cpp                  | Tests: bar item functions.
 // TRANSLATION MISSING
-|          test-gui-chat.cpp                 | Tests: chat functions.
+|          test-gui-bar-window.cpp                | Tests: bar window functions.
 // TRANSLATION MISSING
-|          test-gui-color.cpp                | Tests: colors.
+|          test-gui-bar.cpp                       | Tests: bar functions.
 // TRANSLATION MISSING
-|          test-gui-filter.cpp               | Tests: filters.
+|          test-gui-buffer.cpp                    | Tests: buffer functions.
 // TRANSLATION MISSING
-|          test-gui-hotlist.cpp              | Tests: hotlist functions.
+|          test-gui-chat.cpp                      | Tests: chat functions.
 // TRANSLATION MISSING
-|          test-gui-input.cpp                | Tests: input functions.
+|          test-gui-color.cpp                     | Tests: colors.
 // TRANSLATION MISSING
-|          test-gui-key.cpp                  | Tests: keys.
-|          test-gui-line.cpp                 | テスト: 行
+|          test-gui-filter.cpp                    | Tests: filters.
 // TRANSLATION MISSING
-|          test-gui-nick.cpp                 | テスト: nicks
+|          test-gui-hotlist.cpp                   | Tests: hotlist functions.
 // TRANSLATION MISSING
-|          test-gui-nicklist.cpp             | Tests: nicklist functions.
+|          test-gui-input.cpp                     | Tests: input functions.
 // TRANSLATION MISSING
-|          curses/                           | Root of unit tests for Curses interface.
+|          test-gui-key.cpp                       | Tests: keys.
+|          test-gui-line.cpp                      | テスト: 行
 // TRANSLATION MISSING
-|             test-gui-curses-mouse.cpp      | Tests: mouse (Curses interface).
-|       scripts/                             | スクリプト API テスト用のルートディレクトリ
-|          test-scripts.cpp                  | スクリプト API テストの実行時に使われるプログラム
-|          python/                           | スクリプト API テストを生成、実行する Python スクリプト
-|             testapigen.py                  | スクリプト API のテスト時にすべての言語に関するスクリプトを生成する Python スクリプト
-|             testapi.py                     | スクリプト API テスト時に使われる Python スクリプト (スクリプト testapigen.py から使われます)
-|          unparse.py                        | Python コードを別の言語に変換 (スクリプト testapigen.py から使われます)
-|       plugins/                             | プラグインの単体テストを収める最上位ディレクトリ
+|          test-gui-nick.cpp                      | テスト: nicks
 // TRANSLATION MISSING
-|          test-plugin-api-info.cpp          | Tests: plugin API info functions.
+|          test-gui-nicklist.cpp                  | Tests: nicklist functions.
 // TRANSLATION MISSING
-|          test-plugin-config.cpp            | Tests: plugin config functions.
-|          test-plugins.cpp                  | テスト: プラグイン
-|          irc/                              | IRC プラグインの単体テストを収める最上位ディレクトリ
+|          curses/                                | Root of unit tests for Curses interface.
 // TRANSLATION MISSING
-|             test-irc-batch.cpp             | Tests: IRC batched events.
+|             test-gui-curses-mouse.cpp           | Tests: mouse (Curses interface).
+|       scripts/                                  | スクリプト API テスト用のルートディレクトリ
+|          test-scripts.cpp                       | スクリプト API テストの実行時に使われるプログラム
+|          python/                                | スクリプト API テストを生成、実行する Python スクリプト
+|             testapigen.py                       | スクリプト API のテスト時にすべての言語に関するスクリプトを生成する Python スクリプト
+|             testapi.py                          | スクリプト API テスト時に使われる Python スクリプト (スクリプト testapigen.py から使われます)
+|          unparse.py                             | Python コードを別の言語に変換 (スクリプト testapigen.py から使われます)
+|       plugins/                                  | プラグインの単体テストを収める最上位ディレクトリ
 // TRANSLATION MISSING
-|             test-irc-buffer.cpp            | Tests: IRC buffers.
+|          test-plugin-api-info.cpp               | Tests: plugin API info functions.
 // TRANSLATION MISSING
-|             test-irc-channel.cpp           | Tests: IRC channels.
-|             test-irc-color.cpp             | Tests: IRC colors.
+|          test-plugin-config.cpp                 | Tests: plugin config functions.
+|          test-plugins.cpp                       | テスト: プラグイン
 // TRANSLATION MISSING
-|             test-irc-command.cpp           | Tests: IRC commands.
-|             test-irc-config.cpp            | テスト: IRC 設定
+|          alias/                                 | Root of unit tests for alias plugin.
 // TRANSLATION MISSING
-|             test-irc-ctcp.cpp              | Tests: IRC CTCP.
+|             test-alias.cpp                      | Tests: aliases.
+|          irc/                                   | IRC プラグインの単体テストを収める最上位ディレクトリ
 // TRANSLATION MISSING
-|             test-irc-ignore.cpp            | Tests: IRC ignores.
+|             test-irc-batch.cpp                  | Tests: IRC batched events.
 // TRANSLATION MISSING
-|             test-irc-info.cpp              | Tests: IRC info.
+|             test-irc-buffer.cpp                 | Tests: IRC buffers.
 // TRANSLATION MISSING
-|             test-irc-join.cpp              | Tests: IRC join functions.
+|             test-irc-channel.cpp                | Tests: IRC channels.
+|             test-irc-color.cpp                  | Tests: IRC colors.
 // TRANSLATION MISSING
-|             test-irc-list.cpp              | Tests: IRC buffer for reply to /list command.
+|             test-irc-command.cpp                | Tests: IRC commands.
+|             test-irc-config.cpp                 | テスト: IRC 設定
 // TRANSLATION MISSING
-|             test-irc-message.cpp           | Tests: IRC messages.
+|             test-irc-ctcp.cpp                   | Tests: IRC CTCP.
 // TRANSLATION MISSING
-|             test-irc-mode.cpp              | Tests: IRC modes.
+|             test-irc-ignore.cpp                 | Tests: IRC ignores.
 // TRANSLATION MISSING
-|             test-irc-nick.cpp              | Tests: IRC nicks.
-|             test-irc-protocol.cpp          | テスト: IRC プロトコル
+|             test-irc-info.cpp                   | Tests: IRC info.
 // TRANSLATION MISSING
-|             test-irc-sasl.cpp              | Tests: SASL authentication with IRC protocol.
+|             test-irc-join.cpp                   | Tests: IRC join functions.
 // TRANSLATION MISSING
-|             test-irc-server.cpp            | Tests: IRC server.
+|             test-irc-list.cpp                   | Tests: IRC buffer for reply to /list command.
 // TRANSLATION MISSING
-|             test-irc-tag.cpp               | Tests: IRC message tags.
+|             test-irc-message.cpp                | Tests: IRC messages.
 // TRANSLATION MISSING
-|          logger/                           | Root of unit tests for logger plugin.
+|             test-irc-mode.cpp                   | Tests: IRC modes.
 // TRANSLATION MISSING
-|             test-logger.cpp                | Tests: logger.
+|             test-irc-nick.cpp                   | Tests: IRC nicks.
+|             test-irc-protocol.cpp               | テスト: IRC プロトコル
 // TRANSLATION MISSING
-|             test-logger-backlog.cpp        | Tests: logger backlog.
+|             test-irc-sasl.cpp                   | Tests: SASL authentication with IRC protocol.
 // TRANSLATION MISSING
-|             test-logger-tail.cpp           | Tests: logger tail functions.
+|             test-irc-server.cpp                 | Tests: IRC server.
 // TRANSLATION MISSING
-|          trigger/                          | Root of unit tests for trigger plugin.
+|             test-irc-tag.cpp                    | Tests: IRC message tags.
 // TRANSLATION MISSING
-|             test-trigger.cpp               | Tests: triggers.
+|          logger/                                | Root of unit tests for logger plugin.
 // TRANSLATION MISSING
-|             test-trigger-config.cpp        | Tests: trigger configuration.
+|             test-logger.cpp                     | Tests: logger.
 // TRANSLATION MISSING
-|          typing/                           | Root of unit tests for typing plugin.
+|             test-logger-backlog.cpp             | Tests: logger backlog.
 // TRANSLATION MISSING
-|             test-typing.cpp                | Tests: typing.
+|             test-logger-tail.cpp                | Tests: logger tail functions.
 // TRANSLATION MISSING
-|             test-typing-status.cpp         | Tests: typing status.
+|          relay/                                 | Root of unit tests for Relay plugin.
 // TRANSLATION MISSING
-|          relay/                            | Root of unit tests for Relay plugin.
+|             test-relay-auth.cpp                 | Tests: clients authentication.
 // TRANSLATION MISSING
-|             test-relay-auth.cpp            | Tests: clients authentication.
+|             test-relay-http.cpp                 | Tests: HTTP functions for Relay plugin.
 // TRANSLATION MISSING
-|             test-relay-http.cpp            | Tests: HTTP functions for Relay plugin.
+|             test-relay-raw.cpp                  | Tests: raw messages functions for Relay plugin.
 // TRANSLATION MISSING
-|             test-relay-raw.cpp             | Tests: raw messages functions for Relay plugin.
+|             test-relay-remote.cpp               | Tests: remote functions for Relay plugin.
 // TRANSLATION MISSING
-|             test-relay-remote.cpp          | Tests: remote functions for Relay plugin.
+|             test-relay-websocket.cpp            | Tests: websocket functions for Relay plugin.
 // TRANSLATION MISSING
-|             test-relay-websocket.cpp       | Tests: websocket functions for Relay plugin.
+|             api/                                | Root of unit tests for Relay "api" protocol.
 // TRANSLATION MISSING
-|             api/                           | Root of unit tests for Relay "api" protocol.
+|                test-relay-api.cpp               | Tests: Relay "api" protocol: general functions.
 // TRANSLATION MISSING
-|                test-relay-api.cpp          | Tests: Relay "api" protocol: general functions.
+|                test-relay-api-msg.cpp           | Tests: Relay "api" protocol: messages.
 // TRANSLATION MISSING
-|                test-relay-api-msg.cpp      | Tests: Relay "api" protocol: messages.
+|                test-relay-api-protocol.cpp      | Tests: Relay "api" protocol: protocol.
 // TRANSLATION MISSING
-|                test-relay-api-protocol.cpp | Tests: Relay "api" protocol: protocol.
+|                remote/                          | Tests: Relay "api" protocol: remote functions.
 // TRANSLATION MISSING
-|             irc/                           | Root of unit tests for Relay "irc" protocol.
+|                   test-relay-remote-event.cpp   | Tests: Relay "api" protocol: remote events.
 // TRANSLATION MISSING
-|                test-relay-irc.cpp          | Tests: Relay "irc" protocol.
+|                   test-relay-remote-network.cpp | Tests: Relay "api" protocol: remote network.
 // TRANSLATION MISSING
-|          xfer/                             | Root of unit tests for Xfer plugin.
+|             irc/                                | Root of unit tests for Relay "irc" protocol.
 // TRANSLATION MISSING
-|             test-xfer-file.cpp             | Tests: file functions.
+|                test-relay-irc.cpp               | Tests: Relay "irc" protocol.
 // TRANSLATION MISSING
-|             test-xfer-network.cpp          | Tests: network functions.
+|          trigger/                               | Root of unit tests for trigger plugin.
+// TRANSLATION MISSING
+|             test-trigger.cpp                    | Tests: triggers.
+// TRANSLATION MISSING
+|             test-trigger-config.cpp             | Tests: trigger configuration.
+// TRANSLATION MISSING
+|          typing/                                | Root of unit tests for typing plugin.
+// TRANSLATION MISSING
+|             test-typing.cpp                     | Tests: typing.
+// TRANSLATION MISSING
+|             test-typing-status.cpp              | Tests: typing status.
+// TRANSLATION MISSING
+|          xfer/                                  | Root of unit tests for Xfer plugin.
+// TRANSLATION MISSING
+|             test-xfer-file.cpp                  | Tests: file functions.
+// TRANSLATION MISSING
+|             test-xfer-network.cpp               | Tests: network functions.
 |===
 
 [[documentation_translations]]
