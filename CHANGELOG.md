@@ -5,6 +5,7 @@
 ### Fixed
 
 - core: fix integer overflow with decimal numbers in calculation of expression
+- core: fix integer overflow in base32 encoding/decoding
 
 ## Version 4.6.2 (2025-04-18)
 
