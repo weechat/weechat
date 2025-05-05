@@ -1,5 +1,11 @@
 # WeeChat ChangeLog
 
+## Version 4.6.3 (under dev)
+
+### Fixed
+
+- core: fix integer overflow with decimal numbers in calculation of expression
+
 ## Version 4.6.2 (2025-04-18)
 
 ### Fixed

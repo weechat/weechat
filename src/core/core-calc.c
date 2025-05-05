@@ -336,9 +336,9 @@ calc_expression (const char *expr)
     struct t_arraylist *list_values, *list_ops;
     const char *ptr_expr, *ptr_expr2;
     char str_result[64], *ptr_operator, *operator;
-    int index_op, decimals;
+    int index_op;
     enum t_calc_symbol last_symbol;
-    double value, factor, *ptr_value;
+    double value, factor, decimals, *ptr_value;
 
     list_values = NULL;
     list_ops = NULL;
