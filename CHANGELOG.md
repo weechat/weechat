@@ -20,6 +20,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 - core: add refresh of window title on buffer switch, when option weechat.look.window_title is set
 - core: consider all keys are safe in cursor context ([#2244](https://github.com/weechat/weechat/issues/2244))
 - core: fix integer overflow with decimal numbers in calculation of expression
+- core: fix integer overflow in base32 encoding/decoding
 - irc: display nick changes and quit messages when option irc.look.ignore_tag_messages is enabled ([#2241](https://github.com/weechat/weechat/issues/2241))
 - perl: fix build when multiplicity is not available ([#2243](https://github.com/weechat/weechat/issues/2243))
 
