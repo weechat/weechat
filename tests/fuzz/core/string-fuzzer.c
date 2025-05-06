@@ -64,7 +64,6 @@ LLVMFuzzerTestOneInput (const uint8_t *data, size_t size)
     const char *name;
     int argc, flags, num_tags, priority;
     regex_t regex;
-    int rc;
 
     str = (char *)malloc (size + 1);
     memcpy (str, data, size);
@@ -136,13 +135,11 @@ LLVMFuzzerTestOneInput (const uint8_t *data, size_t size)
     string_regex_flags (str, 0, NULL);
     string_regex_flags (str, 0, &flags);
 
-    rc = string_regcomp (&regex, str, REG_ICASE | REG_NOSUB);
-    if (rc == 0)
+    if (string_regcomp (&regex, str, REG_ICASE | REG_NOSUB) == 0)
         regfree (&regex);
     str2 = (char *)malloc (16 + size + 1);
     snprintf (str2, 16 + size + 1, "(?ins)%s", str);
-    rc = string_regcomp (&regex, str2, REG_ICASE | REG_NOSUB);
-    if (rc == 0)
+    if (string_regcomp (&regex, str2, REG_ICASE | REG_NOSUB) == 0)
         regfree (&regex);
     free (str2);
 
