@@ -21,6 +21,8 @@
 
 /* Fuzz testing on WeeChat core crypto functions */
 
+extern "C"
+{
 #include <stdlib.h>
 #include <stdint.h>
 #include <stddef.h>
@@ -33,8 +35,9 @@
 
 extern char *weecrypto_hash_algo_string[];
 extern int weecrypto_hash_algo[];
+}
 
-int
+extern "C" int
 LLVMFuzzerTestOneInput (const uint8_t *data, size_t size)
 {
     char *str, hash[1024], *result;

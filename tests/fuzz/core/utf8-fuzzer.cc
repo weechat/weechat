@@ -21,6 +21,8 @@
 
 /* Fuzz testing on WeeChat core UTF-8 functions */
 
+extern "C"
+{
 #include <stdlib.h>
 #include <stdint.h>
 #include <stddef.h>
@@ -28,8 +30,9 @@
 
 #include "src/core/core-config.h"
 #include "src/core/core-utf8.h"
+}
 
-int
+extern "C" int
 LLVMFuzzerInitialize(int *argc, char ***argv)
 {
     (void) argc;
@@ -40,7 +43,7 @@ LLVMFuzzerInitialize(int *argc, char ***argv)
     return 0;
 }
 
-int
+extern "C" int
 LLVMFuzzerTestOneInput (const uint8_t *data, size_t size)
 {
     char *str, *str2, utf8_char[5], *error;

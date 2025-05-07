@@ -21,6 +21,8 @@
 
 /* Fuzz testing on WeeChat core string functions */
 
+extern "C"
+{
 #include <stdlib.h>
 #include <stdint.h>
 #include <stddef.h>
@@ -31,10 +33,11 @@
 #include "src/core/core-config.h"
 #include "src/core/core-string.h"
 #include "src/plugins/weechat-plugin.h"
+}
 
 regex_t global_regex;
 
-int
+extern "C" int
 LLVMFuzzerInitialize(int *argc, char ***argv)
 {
     (void) argc;
@@ -56,10 +59,11 @@ callback_replace (void *data, const char *text)
     return strdup ("z");
 }
 
-int
+extern "C" int
 LLVMFuzzerTestOneInput (const uint8_t *data, size_t size)
 {
-    char *str, *str2, **str_dyn, *result, *masks[3] = { "a*", "b*", NULL};
+    const char *masks[3] = { "a*", "b*", NULL};
+    char *str, *str2, **str_dyn, *result;
     char **argv, *buffer;
     const char *name;
     int argc, flags, num_tags, priority;
@@ -186,7 +190,7 @@ LLVMFuzzerTestOneInput (const uint8_t *data, size_t size)
 
     string_parse_size (str);
 
-    buffer = malloc ((size * 4) + 8 + 1);
+    buffer = (char *)malloc ((size * 4) + 8 + 1);
     string_base16_encode (str, size, buffer);
     string_base16_decode (str, buffer);
     string_base32_encode (str, size, buffer);
