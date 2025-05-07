@@ -8,6 +8,10 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 ## Version 4.7.0 (under dev)
 
+### Changed
+
+- core: write configuration files on disk only if there are changes ([#2250](https://github.com/weechat/weechat/issues/2250))
+
 ### Added
 
 - api: add function file_compare

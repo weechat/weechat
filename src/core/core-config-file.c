@@ -3285,6 +3285,12 @@ config_file_write_internal (struct t_config_file *config_file,
     if (fflush (config_file->file) != 0)
         goto error;
 
+    if (dir_file_compare (filename, filename2) == 0)
+    {
+        /* no changes in the config, don't write it on disk */
+        goto no_changes;
+    }
+
     /*
      * ensure the file is really written on the storage device;
      * this is disabled by default because it is really slow
@@ -3322,10 +3328,11 @@ config_file_write_internal (struct t_config_file *config_file,
     free (filename);
     free (filename2);
 
-    if (rc != 0)
-        return WEECHAT_CONFIG_WRITE_ERROR;
+    return (rc == 0) ? WEECHAT_CONFIG_WRITE_OK : WEECHAT_CONFIG_WRITE_ERROR;
 
-    return WEECHAT_CONFIG_WRITE_OK;
+no_changes:
+    rc = WEECHAT_CONFIG_WRITE_OK;
+    goto end;
 
 error:
     gui_chat_printf (NULL,
@@ -3334,6 +3341,10 @@ error:
                      filename);
     log_printf (_("%sError writing configuration file \"%s\""),
                 "", config_file->filename);
+    rc = WEECHAT_CONFIG_WRITE_ERROR;
+    goto end;
+
+end:
     if (config_file->file)
     {
         fclose (config_file->file);
@@ -3342,7 +3353,7 @@ error:
     unlink (filename2);
     free (filename);
     free (filename2);
-    return WEECHAT_CONFIG_WRITE_ERROR;
+    return rc;
 }
 
 /*
