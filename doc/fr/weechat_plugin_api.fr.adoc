@@ -4703,6 +4703,43 @@ if (weechat_file_compress ("/tmp/test.txt", "/tmp/test.txt.zst", "zstd", 50))
 [NOTE]
 Cette fonction n'est pas disponible dans l'API script.
 
+==== file_compare
+
+_WeeChat ≥ 4.7.0._
+
+Compare the content of two files.
+
+Prototype:
+
+[source,c]
+----
+int weechat_file_compare (const char *filename1, const char *filename2);
+----
+
+Arguments:
+
+* _filename1_: first file to compare
+* _filename2_: second file to compare
+
+Return value:
+
+* 0: both files have same content
+* 1: content is different
+* 2: error (file not found or read error)
+
+C example:
+
+[source,c]
+----
+if (weechat_file_compare ("/tmp/test.txt", "/tmp/test2.txt") == 0)
+{
+    /* same content */
+}
+----
+
+[NOTE]
+This function is not available in scripting API.
+
 [[util]]
 === Util
 

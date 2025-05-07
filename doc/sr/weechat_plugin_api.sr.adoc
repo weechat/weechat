@@ -4484,6 +4484,44 @@ if (weechat_file_compress ("/tmp/test.txt", "/tmp/test.txt.zst", "zstd", 50))
 [NOTE]
 Ова функција није доступна у API скриптовања.
 
+// TRANSLATION MISSING
+==== file_compare
+
+_WeeChat ≥ 4.7.0._
+
+Compare the content of two files.
+
+Прототип:
+
+[source,c]
+----
+int weechat_file_compare (const char *filename1, const char *filename2);
+----
+
+Аргументи:
+
+* _filename1_: first file to compare
+* _filename2_: second file to compare
+
+Повратна вредност:
+
+* 0: both files have same content
+* 1: content is different
+* 2: error (file not found or read error)
+
+C пример:
+
+[source,c]
+----
+if (weechat_file_compare ("/tmp/test.txt", "/tmp/test2.txt") == 0)
+{
+    /* same content */
+}
+----
+
+[NOTE]
+Ова функција није доступна у API скриптовања.
+
 [[util]]
 === Алати
 

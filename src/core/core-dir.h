@@ -41,5 +41,6 @@ extern char *dir_file_get_content (const char *filename);
 extern int dir_file_copy (const char *from, const char *to);
 extern int dir_file_compress (const char *from, const char *to,
                               const char *compressor, int compression_level);
+extern int dir_file_compare (const char *filename1, const char *filename2);
 
 #endif /* WEECHAT_DIR_H */

@@ -76,7 +76,7 @@ struct t_weelist_item;
  * please change the date with current one; for a second change at same
  * date, increment the 01, otherwise please keep 01.
  */
-#define WEECHAT_PLUGIN_API_VERSION "20250215-01"
+#define WEECHAT_PLUGIN_API_VERSION "20250507-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -457,6 +457,7 @@ struct t_weechat_plugin
     int (*file_copy) (const char *from, const char *to);
     int (*file_compress) (const char *from, const char *to,
                           const char *compressor, int compression_level);
+    int (*file_compare) (const char *filename1, const char *filename2);
 
     /* util */
     int (*util_timeval_cmp) (struct timeval *tv1, struct timeval *tv2);
@@ -1528,6 +1529,8 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
                               __compression_level)                      \
     (weechat_plugin->file_compress)(__from, __to, __compressor,         \
                                     __compression_level)
+#define weechat_file_compare(__filename1, __filename2)                  \
+    (weechat_plugin->file_compress)(__filename1, __filename2)
 
 /* util */
 #define weechat_util_timeval_cmp(__time1, __time2)                      \

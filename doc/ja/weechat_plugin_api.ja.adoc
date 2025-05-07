@@ -4756,6 +4756,44 @@ if (weechat_file_compress ("/tmp/test.txt", "/tmp/test.txt.zst", "zstd", 50))
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
+// TRANSLATION MISSING
+==== file_compare
+
+_WeeChat ≥ 4.7.0._
+
+Compare the content of two files.
+
+プロトタイプ:
+
+[source,c]
+----
+int weechat_file_compare (const char *filename1, const char *filename2);
+----
+
+引数:
+
+* _filename1_: first file to compare
+* _filename2_: second file to compare
+
+戻り値:
+
+* 0: both files have same content
+* 1: content is different
+* 2: error (file not found or read error)
+
+C 言語での使用例:
+
+[source,c]
+----
+if (weechat_file_compare ("/tmp/test.txt", "/tmp/test2.txt") == 0)
+{
+    /* same content */
+}
+----
+
+[NOTE]
+スクリプト API ではこの関数を利用できません。
+
 [[util]]
 === ユーティリティ
 

@@ -1431,3 +1431,127 @@ dir_file_compress (const char *filename_input,
         return 0;
     }
 }
+
+/*
+ * Compares the content of two files (the attributes of the files like the
+ * permissions or timestamp are ignored).
+ *
+ * Comparison is done like this:
+ *   1. if sizes are different, return 1 (different content)
+ *   2. if sizes are the same, read both files until a difference is found
+ *
+ * Returns:
+ *   0: both files exist and their content is exactly the same
+ *   1: content is different
+ *   2: other error (file not found, read error)
+ */
+
+int
+dir_file_compare (const char *filename1, const char *filename2)
+{
+    char buffer1[4096], buffer2[4096];
+    FILE *f1, *f2;
+    struct stat st;
+    off_t size1, size2;
+    size_t count1, count2;
+    int rc, eof1, eof2;
+
+    if (!filename1 || !filename1[0] || !filename2 || !filename2[0])
+        return 2;
+
+    rc = 1;
+
+    f1 = NULL;
+    f2 = NULL;
+
+    /* get size of first file */
+    if (access (filename1, R_OK) != 0)
+    {
+        rc = 2;
+        goto end;
+    }
+    if (stat (filename1, &st) != 0)
+    {
+        rc = 2;
+        goto end;
+    }
+    size1 = st.st_size;
+
+    /* get size of second file */
+    if (access (filename2, R_OK) != 0)
+    {
+        rc = 2;
+        goto end;
+    }
+    if (stat (filename2, &st) != 0)
+    {
+        rc = 2;
+        goto end;
+    }
+    size2 = st.st_size;
+
+    if (size1 != size2)
+    {
+        /* different size, so different content */
+        rc = 1;
+        goto end;
+    }
+
+    f1 = fopen (filename1, "r");
+    if (!f1)
+    {
+        rc = 2;
+        goto end;
+    }
+    f2 = fopen (filename2, "r");
+    if (!f2)
+    {
+        rc = 2;
+        goto end;
+    }
+
+    while (1)
+    {
+        eof1 = feof (f1);
+        eof2 = feof (f2);
+        if ((eof1 && !eof2) || (!eof1 && eof2))
+        {
+            /* different content */
+            rc = 1;
+            goto end;
+        }
+        if (eof1 && eof2)
+        {
+            /* same content */
+            rc = 0;
+            goto end;
+        }
+        count1 = fread (buffer1, sizeof (char), sizeof (buffer1), f1);
+        count2 = fread (buffer2, sizeof (char), sizeof (buffer2), f2);
+        if (count1 != count2)
+        {
+            /* different content */
+            rc = 1;
+            goto end;
+        }
+        if ((count1 == 0) || (count2 == 0))
+        {
+            /* read error */
+            rc = 2;
+            goto end;
+        }
+        if (memcmp (buffer1, buffer2, count1) != 0)
+        {
+            /* different content */
+            rc = 1;
+            goto end;
+        }
+    }
+
+end:
+    if (f1)
+	fclose (f1);
+    if (f2)
+        fclose (f2);
+    return rc;
+}
