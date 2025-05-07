@@ -95,7 +95,7 @@ set(FUZZ_CORE_TARGETS calc crypto string utf8)
 
 foreach(fuzz_target ${FUZZ_CORE_TARGETS})
   add_executable(weechat_core_${fuzz_target}_fuzzer core/${fuzz_target}-fuzzer.c)
-  target_link_libraries(weechat_core_${fuzz_target}_fuzzer ${FUZZ_TARGET_LINK})
+  target_link_libraries(weechat_core_${fuzz_target}_fuzzer ${FUZZ_TARGET_LINK} coverage_config)
   set_target_properties(weechat_core_${fuzz_target}_fuzzer PROPERTIES LINK_FLAGS "$ENV{LIB_FUZZING_ENGINE}")
   add_dependencies(weechat_core_${fuzz_target}_fuzzer ${FUZZ_TARGET_DEPS})
 endforeach()

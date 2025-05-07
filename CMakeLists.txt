@@ -33,8 +33,8 @@ set(CMAKE_SKIP_RPATH ON)
 # compiler options
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsigned-char -fms-extensions -Wall -Wextra -Werror-implicit-function-declaration -Wformat -Werror=format-security")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsigned-char -fms-extensions -Wall -Wextra")
-if (CMAKE_C_COMPILER_ID STREQUAL "GNU")
-  # extra options specific to gcc/g++
+if(CMAKE_C_COMPILER_ID STREQUAL "GNU")
+  # extra options specific to GCC
   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wformat-overflow=2 -Wformat-truncation=2")
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wformat-overflow=2 -Wformat-truncation=2")
 endif()
@@ -137,8 +137,15 @@ option(ENABLE_CODE_COVERAGE  "Enable code coverage"                     OFF)
 # code coverage
 add_library(coverage_config INTERFACE)
 if(ENABLE_CODE_COVERAGE)
-  target_compile_options(coverage_config INTERFACE -O0 -g --coverage)
-  target_link_libraries(coverage_config INTERFACE --coverage)
+  if(CMAKE_C_COMPILER_ID STREQUAL "GNU")
+    # GCC
+    target_compile_options(coverage_config INTERFACE -O0 -g --coverage)
+    target_link_libraries(coverage_config INTERFACE --coverage)
+  elseif(CMAKE_C_COMPILER_ID STREQUAL "Clang")
+    # Clang
+    target_compile_options(coverage_config INTERFACE -g -fprofile-instr-generate -fcoverage-mapping)
+    target_link_libraries(coverage_config INTERFACE -fprofile-instr-generate)
+  endif()
 endif()
 
 # headless mode is required for documentation
