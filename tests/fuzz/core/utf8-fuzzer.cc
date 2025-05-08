@@ -30,6 +30,8 @@ extern "C"
 
 #include "src/core/core-config.h"
 #include "src/core/core-utf8.h"
+
+extern void weechat_init_gettext (void);
 }
 
 extern "C" int
@@ -38,6 +40,7 @@ LLVMFuzzerInitialize(int *argc, char ***argv)
     (void) argc;
     (void) argv;
 
+    weechat_init_gettext ();
     config_weechat_init ();
 
     return 0;
