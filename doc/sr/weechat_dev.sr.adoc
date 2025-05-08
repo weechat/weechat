@@ -429,6 +429,8 @@ WeeChat „језгро” се налази у следећим директо�
 // TRANSLATION MISSING
 |    fuzz/                                        | Root of fuzz testing.
 // TRANSLATION MISSING
+|       ossfuzz.sh                                | Build script for https://github.com/google/oss-fuzz[OSS-Fuzz ^↗^^].
+// TRANSLATION MISSING
 |       core/                                     | Root of fuzz testing for core.
 // TRANSLATION MISSING
 |          calc-fuzzer.c                          | Fuzz testing: калкулација израза.
@@ -438,6 +440,8 @@ WeeChat „језгро” се налази у следећим директо�
 |          string-fuzzer.c                        | Fuzz testing: стрингови.
 // TRANSLATION MISSING
 |          utf8-fuzzer.c                          | Fuzz testing: UTF-8.
+// TRANSLATION MISSING
+|          util-fuzzer.c                          | Fuzz testing: utility functions.
 |    unit/                                        | Корен unit тестова.
 |       tests.cpp                                 | Програм који се користи за извршавање свих тестова.
 |       tests-record.cpp                          | Бележење и претрага у приказаним порукама.

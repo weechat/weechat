@@ -463,6 +463,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 // TRANSLATION MISSING
 |    fuzz/                                        | Root of fuzz testing.
 // TRANSLATION MISSING
+|       ossfuzz.sh                                | Build script for https://github.com/google/oss-fuzz[OSS-Fuzz ^↗^^].
+// TRANSLATION MISSING
 |       core/                                     | Root of fuzz testing for core.
 // TRANSLATION MISSING
 |          calc-fuzzer.c                          | Fuzz testing: calculation of expressions.
@@ -472,6 +474,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |          string-fuzzer.c                        | Fuzz testing: 文字列
 // TRANSLATION MISSING
 |          utf8-fuzzer.c                          | Fuzz testing: UTF-8.
+// TRANSLATION MISSING
+|          util-fuzzer.c                          | Fuzz testing: utility functions.
 |    unit/                                        | 単体テスト用のルートディレクトリ
 |       tests.cpp                                 | 全テストの実行時に使われるプログラム
 // TRANSLATION MISSING

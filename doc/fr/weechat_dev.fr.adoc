@@ -419,11 +419,13 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 | Chemin/fichier                                  | Description
 | tests/                                          | Racine des tests.
 |    fuzz/                                        | Racine du fuzzing (tests à données aléatoires).
+|       ossfuzz.sh                                | Script de construction pour https://github.com/google/oss-fuzz[OSS-Fuzz ^↗^^].
 |       core/                                     | Racine du fuzzing pour le cœur.
 |          calc-fuzzer.c                          | Fuzzing : calcul d'expressions.
 |          crypto-fuzzer.c                        | Fuzzing : fonctions cryptographiques.
 |          string-fuzzer.c                        | Fuzzing : chaînes.
 |          utf8-fuzzer.c                          | Fuzzing : UTF-8.
+|          util-fuzzer.c                          | Fuzzing : fonctions utiles.
 |    unit/                                        | Racine des tests unitaires.
 |       tests.cpp                                 | Programme utilisé pour lancer tous les tests.
 |       tests-record.cpp                          | Enregistrement et recherche dans les messages affichés.
