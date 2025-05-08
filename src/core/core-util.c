@@ -287,7 +287,8 @@ util_strftimeval (char *string, int max, const char *format, struct timeval *tv)
 int
 util_parse_time (const char *datetime, struct timeval *tv)
 {
-    char *string, *pos, *pos2, str_usec[16], *error, str_date[128];
+    char *string, *pos, *pos2, str_usec[16], *error;
+    char str_date[128], str_date2[256];
     struct tm tm_date, tm_date_gm, tm_date_local, *local_time;
     time_t time_now, time_gm, time_local;
     long long value;
@@ -447,10 +448,10 @@ util_parse_time (const char *datetime, struct timeval *tv)
         local_time = localtime (&time_now);
         strftime (str_date, sizeof (str_date),
                   "%Y-%m-%dT", local_time);
-        strcat (str_date, string);
+        snprintf (str_date2, sizeof (str_date2), "%s%s", str_date, string);
         /* initialize structure, because strptime does not do it */
         memset (&tm_date, 0, sizeof (struct tm));
-        pos = strptime (str_date, "%Y-%m-%dT%H:%M:%S", &tm_date);
+        pos = strptime (str_date2, "%Y-%m-%dT%H:%M:%S", &tm_date);
         if (pos)
         {
             if (use_local_time)
