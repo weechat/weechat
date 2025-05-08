@@ -83,7 +83,7 @@ TEST(PluginApiInfo, VersionNumberCb)
     char *str, str_version_number[128];
 
     snprintf (str_version_number, sizeof (str_version_number),
-              "%d", util_version_number (version_get_version ()));
+              "%lu", util_version_number (version_get_version ()));
     WEE_TEST_STR(str_version_number, hook_info_get (NULL, "version_number", NULL));
     WEE_TEST_STR(str_version_number, hook_info_get (NULL, "version_number", ""));
 

@@ -48,6 +48,6 @@ extern int util_parse_delay (const char *string_delay,
                              unsigned long long *delay);
 
 /* version */
-extern int util_version_number (const char *version);
+extern unsigned long util_version_number (const char *version);
 
 #endif /* WEECHAT_UTIL_H */

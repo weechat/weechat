@@ -629,13 +629,13 @@ util_parse_delay (const char *string_delay, unsigned long long default_factor,
  *   "0.3.0"     ==> 196608   (== 0x00030000)
  */
 
-int
+unsigned long
 util_version_number (const char *version)
 {
     char **items, buf[64], *error;
     const char *ptr_item;
-    int num_items, i, version_int[4], index_buf;
-    long number;
+    int num_items, i, index_buf;
+    unsigned long number, values[4];
 
     if (!version || !version[0])
         return 0;
@@ -647,7 +647,7 @@ util_version_number (const char *version)
                           4, &num_items);
     for (i = 0; i < 4; i++)
     {
-        version_int[i] = 0;
+        values[i] = 0;
         if (items && (i < num_items))
         {
             ptr_item = items[i];
@@ -667,20 +667,18 @@ util_version_number (const char *version)
             if (buf[0])
             {
                 error = NULL;
-                number = strtol (buf, &error, 10);
+                number = strtoul (buf, &error, 10);
                 if (error && !error[0])
                 {
-                    if (number < 0)
-                        number = 0;
-                    else if (number > 0xFF)
+                    if (number > 0xFF)
                         number = 0xFF;
-                    version_int[i] = number;
+                    values[i] = number;
                 }
             }
         }
     }
     string_free_split (items);
 
-    return (version_int[0] << 24) | (version_int[1] << 16)
-        | (version_int[2] << 8) | version_int[3];
+    return (values[0] << 24) | (values[1] << 16)
+        | (values[2] << 8) | values[3];
 }

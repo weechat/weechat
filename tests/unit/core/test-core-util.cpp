@@ -520,23 +520,25 @@ TEST(CoreUtil, ParseDelay)
 
 TEST(CoreUtil, VersionNumber)
 {
-    LONGS_EQUAL(0, util_version_number (NULL));
-    LONGS_EQUAL(0, util_version_number (""));
-    LONGS_EQUAL(0, util_version_number ("abc"));
+    CHECK(util_version_number (NULL) == 0);
+    CHECK(util_version_number ("") == 0);
+    CHECK(util_version_number ("abc") == 0);
 
-    LONGS_EQUAL(0x00030200, util_version_number ("0.3.2-dev"));
-    LONGS_EQUAL(0x00030200, util_version_number ("0.3.2-rc1"));
-    LONGS_EQUAL(0x00030200, util_version_number ("0.3.2"));
-    LONGS_EQUAL(0x00030101, util_version_number ("0.3.1.1"));
-    LONGS_EQUAL(0x00030100, util_version_number ("0.3.1"));
-    LONGS_EQUAL(0x00030000, util_version_number ("0.3.0"));
-    LONGS_EQUAL(0x01000000, util_version_number ("1.0"));
-    LONGS_EQUAL(0x01000000, util_version_number ("1.0.0"));
-    LONGS_EQUAL(0x01000000, util_version_number ("1.0.0.0"));
-    LONGS_EQUAL(0x01000100, util_version_number ("1.0.1"));
-    LONGS_EQUAL(0x01000200, util_version_number ("1.0.2"));
-    LONGS_EQUAL(0x01010000, util_version_number ("1.1"));
-    LONGS_EQUAL(0x01010100, util_version_number ("1.1.1"));
-    LONGS_EQUAL(0x01010200, util_version_number ("1.1.2"));
-    LONGS_EQUAL(0x01020304, util_version_number ("1.2.3.4"));
+    CHECK(util_version_number ("0.3.2-dev") == 0x00030200);
+    CHECK(util_version_number ("0.3.2-rc1") == 0x00030200);
+    CHECK(util_version_number ("0.3.2") == 0x00030200);
+    CHECK(util_version_number ("0.3.1.1") == 0x00030101);
+    CHECK(util_version_number ("0.3.1") == 0x00030100);
+    CHECK(util_version_number ("0.3.0") == 0x00030000);
+    CHECK(util_version_number ("1.0") == 0x01000000);
+    CHECK(util_version_number ("1.0.0") == 0x01000000);
+    CHECK(util_version_number ("1.0.0.0") == 0x01000000);
+    CHECK(util_version_number ("1.0.1") == 0x01000100);
+    CHECK(util_version_number ("1.0.2") == 0x01000200);
+    CHECK(util_version_number ("1.1") == 0x01010000);
+    CHECK(util_version_number ("1.1.1") == 0x01010100);
+    CHECK(util_version_number ("1.1.2") == 0x01010200);
+    CHECK(util_version_number ("1.2.3.4") == 0x01020304);
+    CHECK(util_version_number ("255.255.255.255") == 0xFFFFFFFF);
+    CHECK(util_version_number ("999999999.999999999.999999999.999999999") == 0xFFFFFFFF);
 }

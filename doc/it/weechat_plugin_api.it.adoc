@@ -5100,7 +5100,8 @@ Questa funzione non è disponibile nelle API per lo scripting.
 
 ==== util_version_number
 
-_WeeChat ≥ 0.3.9._
+// TRANSLATION MISSING
+_WeeChat ≥ 0.3.9, updated in 4.7.0._
 
 // TRANSLATION MISSING
 Convert a string with WeeChat version to a number.
@@ -5109,7 +5110,7 @@ Prototipo:
 
 [source,c]
 ----
-int weechat_util_version_number (const char *version);
+unsigned long weechat_util_version_number (const char *version);
 ----
 
 Argomenti:

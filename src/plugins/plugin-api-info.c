@@ -102,7 +102,7 @@ plugin_api_info_version_number_cb (const void *pointer, void *data,
     (void) arguments;
 
     snprintf (
-        version_number, sizeof (version_number), "%d",
+        version_number, sizeof (version_number), "%lu",
         util_version_number (
             (arguments && arguments[0]) ? arguments : version_get_version ()));
     return strdup (version_number);

@@ -76,7 +76,7 @@ struct t_weelist_item;
  * please change the date with current one; for a second change at same
  * date, increment the 01, otherwise please keep 01.
  */
-#define WEECHAT_PLUGIN_API_VERSION "20250507-01"
+#define WEECHAT_PLUGIN_API_VERSION "20250508-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -467,7 +467,7 @@ struct t_weechat_plugin
     int (*util_strftimeval) (char *string, int max, const char *format,
                              struct timeval *tv);
     int (*util_parse_time) (const char *datetime, struct timeval *tv);
-    int (*util_version_number) (const char *version);
+    unsigned long (*util_version_number) (const char *version);
 
     /* sorted lists */
     struct t_weelist *(*list_new) (void);

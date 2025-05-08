@@ -1109,7 +1109,8 @@ script_repo_file_read (int quiet)
     const char *ptr_desc;
     gzFile file;
     struct t_script_repo *script;
-    int version_number, version_ok, script_ok;
+    unsigned long version_number;
+    int version_ok, script_ok;
     struct tm tm_script;
     struct t_hashtable *descriptions;
 
