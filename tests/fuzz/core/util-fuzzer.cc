@@ -49,7 +49,7 @@ LLVMFuzzerInitialize (int *argc, char ***argv)
 extern "C" int
 LLVMFuzzerTestOneInput (const uint8_t *data, size_t size)
 {
-    char *str, *result;
+    char *str, str_time[32768];
     unsigned long long delay;
     struct timeval tv;
 
@@ -59,10 +59,8 @@ LLVMFuzzerTestOneInput (const uint8_t *data, size_t size)
 
     if (size < 256)
     {
-        result = (char *)malloc (32768);
         gettimeofday (&tv, NULL);
-        util_strftimeval (result, 32768, str, &tv);
-        free (result);
+        util_strftimeval (str_time, sizeof (str_time), str, &tv);
     }
 
     util_parse_time (str, &tv);
