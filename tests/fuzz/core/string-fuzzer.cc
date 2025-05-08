@@ -38,8 +38,9 @@ extern "C"
 regex_t global_regex;
 
 extern "C" int
-LLVMFuzzerInitialize(int *argc, char ***argv)
+LLVMFuzzerInitialize (int *argc, char ***argv)
 {
+    /* make C++ compiler happy */
     (void) argc;
     (void) argv;
 
@@ -54,6 +55,7 @@ LLVMFuzzerInitialize(int *argc, char ***argv)
 char *
 callback_replace (void *data, const char *text)
 {
+    /* make C++ compiler happy */
     (void) data;
     (void) text;
 

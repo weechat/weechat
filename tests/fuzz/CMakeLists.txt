@@ -93,7 +93,7 @@ list(APPEND FUZZ_TARGET_DEPS
 )
 
 # fuzz targets
-set(FUZZ_CORE_TARGETS calc crypto string utf8)
+set(FUZZ_CORE_TARGETS calc crypto string utf8 util)
 
 foreach(fuzz_target ${FUZZ_CORE_TARGETS})
   add_executable(weechat_core_${fuzz_target}_fuzzer core/${fuzz_target}-fuzzer.cc)

@@ -19,7 +19,7 @@
  * along with WeeChat.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-/* Fuzz testing on WeeChat core UTF-8 functions */
+/* Fuzz testing on WeeChat core util functions */
 
 extern "C"
 {
@@ -29,9 +29,8 @@ extern "C"
 #include <string.h>
 
 #include "src/core/core-config.h"
-#include "src/core/core-utf8.h"
-
-extern void weechat_init_gettext (void);
+#include "src/core/core-string.h"
+#include "src/core/core-util.h"
 }
 
 extern "C" int
@@ -41,7 +40,7 @@ LLVMFuzzerInitialize (int *argc, char ***argv)
     (void) argc;
     (void) argv;
 
-    weechat_init_gettext ();
+    string_init ();
     config_weechat_init ();
 
     return 0;
@@ -50,59 +49,28 @@ LLVMFuzzerInitialize (int *argc, char ***argv)
 extern "C" int
 LLVMFuzzerTestOneInput (const uint8_t *data, size_t size)
 {
-    char *str, *str2, utf8_char[5], *error;
-    size_t i;
+    char *str, *result;
+    unsigned long long delay;
+    struct timeval tv;
 
     str = (char *)malloc (size + 1);
     memcpy (str, data, size);
     str[size] = '\0';
 
-    utf8_has_8bits (str);
-
-    utf8_is_valid (str, size, &error);
-
-    str2 = strdup (str);
-    utf8_normalize (str2, '?');
-    free (str2);
-
-    for (i = 0; i < 5; i++)
+    if (size < 256)
     {
-        if (size >= i)
-        {
-            utf8_prev_char (str, str + i);
-            utf8_beginning_of_line (str, str + i);
-        }
+        result = (char *)malloc (32768);
+        gettimeofday (&tv, NULL);
+        util_strftimeval (result, 32768, str, &tv);
+        free (result);
     }
 
-    utf8_next_char (str);
+    util_parse_time (str, &tv);
 
-    utf8_end_of_line (str);
+    util_parse_delay (str, 1, &delay);
+    util_parse_delay (str, 10, &delay);
 
-    utf8_char_int (str);
-
-    utf8_int_string (utf8_char_int (str), utf8_char);
-
-    utf8_char_size (str);
-
-    utf8_strlen (str);
-
-    utf8_strnlen (str, size / 2);
-
-    utf8_char_size_screen (str);
-
-    utf8_strlen_screen (str);
-
-    if (size > 4)
-    {
-        utf8_add_offset (str, 1);
-        utf8_real_pos (str, 1);
-        utf8_pos (str, 1);
-    }
-
-    free (utf8_strndup (str, size / 2));
-
-    if (size > 4)
-        utf8_strncpy (utf8_char, str, 1);
+    util_version_number (str);
 
     free (str);
 
