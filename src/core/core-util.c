@@ -571,7 +571,6 @@ util_parse_delay (const char *string_delay, unsigned long long default_factor,
 
     if ((pos > string_delay) && pos[0])
     {
-        str_number = string_strndup (string_delay, pos - string_delay);
         if (strcmp (pos, "us") == 0)
             factor = 1ULL;
         else if (strcmp (pos, "ms") == 0)
@@ -584,6 +583,7 @@ util_parse_delay (const char *string_delay, unsigned long long default_factor,
             factor = 1000ULL * 1000ULL * 60ULL * 60ULL;
         else
             return 0;
+        str_number = string_strndup (string_delay, pos - string_delay);
     }
     else
     {
