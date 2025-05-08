@@ -6,6 +6,7 @@
 
 - core: fix integer overflow with decimal numbers in calculation of expression
 - core: fix integer overflow in base32 encoding/decoding
+- core: fix integer overflow in function util_version_number
 - core: fix memory leak in function util_parse_delay
 
 ## Version 4.6.2 (2025-04-18)

@@ -670,7 +670,9 @@ util_version_number (const char *version)
                 {
                     if (number < 0)
                         number = 0;
-                    else if (number > 0xFF)
+                    else if ((i == 0) && (number > 0x7F))
+                        number = 0x7F;
+                    else if ((i > 0) && (number > 0xFF))
                         number = 0xFF;
                     version_int[i] = number;
                 }
