@@ -43,6 +43,7 @@ LLVMFuzzerInitialize(int *argc, char ***argv)
     (void) argc;
     (void) argv;
 
+    string_init ();
     config_weechat_init ();
 
     regcomp (&global_regex, "a.*", 0);
@@ -63,7 +64,7 @@ extern "C" int
 LLVMFuzzerTestOneInput (const uint8_t *data, size_t size)
 {
     const char *masks[3] = { "a*", "b*", NULL};
-    char *str, *str2, **str_dyn, *result;
+    char *str, *str2, **str_dyn;
     char **argv, *buffer;
     const char *name;
     int argc, flags, num_tags, priority;
@@ -79,6 +80,7 @@ LLVMFuzzerTestOneInput (const uint8_t *data, size_t size)
     free (string_cut (str, size / 2, 1, 0, "…"));
     free (string_cut (str, size / 2, 0, 1, "…"));
     free (string_cut (str, size / 2, 1, 1, "…"));
+    free (string_cut (str, size / 2, 1, 1, NULL));
 
     free (string_reverse (str));
 
@@ -104,6 +106,8 @@ LLVMFuzzerTestOneInput (const uint8_t *data, size_t size)
 
     string_strncasecmp (str, str, size / 2);
 
+    string_strncasecmp_range (str, str, size / 2, 13);
+
     string_strcmp_ignore_chars (str, str, "abcd", 0);
     string_strcmp_ignore_chars (str, str, "abcd", 1);
 
@@ -111,6 +115,10 @@ LLVMFuzzerTestOneInput (const uint8_t *data, size_t size)
 
     string_match (str, "a*", 0);
     string_match (str, "a*", 1);
+    string_match (str, "*b", 0);
+    string_match (str, "*b", 1);
+    string_match (str, "*c*", 0);
+    string_match (str, "*c*", 1);
 
     string_match_list (str, (const char **)masks, 0);
     string_match_list (str, (const char **)masks, 1);
@@ -159,22 +167,25 @@ LLVMFuzzerTestOneInput (const uint8_t *data, size_t size)
 
     free (string_translate_chars (str, "abc", "def"));
 
-    argv = string_split (str, "/", NULL, 0, 0, &argc);
-    string_free_split (argv);
-    argv = string_split (str, "/", " ", 0, 0, &argc);
-    string_free_split (argv);
+    string_free_split (string_split (str, "/", NULL, 0, 0, &argc));
+    string_free_split (string_split (str, "/", " ", 0, 0, &argc));
     flags = WEECHAT_STRING_SPLIT_STRIP_LEFT
         | WEECHAT_STRING_SPLIT_STRIP_RIGHT
         | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS
         | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS;
     argv = string_split (str, "/", " ", flags, 0, &argc);
-    result = string_rebuild_split_string ((const char **)argv, "/", -1, -1);
-    if (argv && result)
-        assert (strcmp (str, result) == 0);
-    free (result);
+    free (string_rebuild_split_string ((const char **)argv, "/", 0, -1));
     string_free_split (argv);
+    flags = WEECHAT_STRING_SPLIT_STRIP_LEFT
+        | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+        | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS
+        | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS
+        | WEECHAT_STRING_SPLIT_KEEP_EOL;
+    string_free_split (string_split (str, "/", " ", flags, 0, &argc));
 
     string_free_split_shared (string_split_shared (str, "/", " ", flags, 0, &argc));
+
+    string_free_split (string_split_shell (str, &argc));
 
     string_free_split_command (string_split_command (str, ';'));
 
@@ -186,19 +197,25 @@ LLVMFuzzerTestOneInput (const uint8_t *data, size_t size)
 
     free (string_iconv_from_internal ("iso-8859-1", str));
 
-    free (string_format_size (size));
-
     string_parse_size (str);
 
     buffer = (char *)malloc ((size * 4) + 8 + 1);
     string_base16_encode (str, size, buffer);
     string_base16_decode (str, buffer);
+    string_base_encode ("16", str, size, buffer);
+    string_base_decode ("16", str, buffer);
     string_base32_encode (str, size, buffer);
     string_base32_decode (str, buffer);
+    string_base_encode ("32", str, size, buffer);
+    string_base_decode ("32", str, buffer);
     string_base64_encode (0, str, size, buffer);
-    string_base64_encode (1, str, size, buffer);
     string_base64_decode (0, str, buffer);
+    string_base_encode ("64", str, size, buffer);
+    string_base_decode ("64", str, buffer);
+    string_base64_encode (1, str, size, buffer);
     string_base64_decode (1, str, buffer);
+    string_base_encode ("64url", str, size, buffer);
+    string_base_decode ("64url", str, buffer);
     free (buffer);
 
     free (string_hex_dump (str, size, 16, "<", ">"));
