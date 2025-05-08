@@ -26,6 +26,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 - core: consider all keys are safe in cursor context ([#2244](https://github.com/weechat/weechat/issues/2244))
 - core: fix integer overflow with decimal numbers in calculation of expression
 - core: fix integer overflow in base32 encoding/decoding
+- core: fix memory leak in function util_parse_delay
 - irc: display nick changes and quit messages when option irc.look.ignore_tag_messages is enabled ([#2241](https://github.com/weechat/weechat/issues/2241))
 - perl: fix build when multiplicity is not available ([#2243](https://github.com/weechat/weechat/issues/2243))
 
