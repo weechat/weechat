@@ -471,6 +471,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 // TRANSLATION MISSING
 |          crypto-fuzzer.c                        | Fuzz testing: cryptographic functions.
 // TRANSLATION MISSING
+|          secure-fuzzer.c                        | Fuzz testing: secured data.
+// TRANSLATION MISSING
 |          string-fuzzer.c                        | Fuzz testing: 文字列
 // TRANSLATION MISSING
 |          utf8-fuzzer.c                          | Fuzz testing: UTF-8.

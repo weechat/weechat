@@ -437,6 +437,8 @@ WeeChat „језгро” се налази у следећим директо�
 // TRANSLATION MISSING
 |          crypto-fuzzer.c                        | Fuzz testing: криптографске функције.
 // TRANSLATION MISSING
+|          secure-fuzzer.c                        | Fuzz testing: secured data.
+// TRANSLATION MISSING
 |          string-fuzzer.c                        | Fuzz testing: стрингови.
 // TRANSLATION MISSING
 |          utf8-fuzzer.c                          | Fuzz testing: UTF-8.

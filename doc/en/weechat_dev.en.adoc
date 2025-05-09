@@ -422,6 +422,7 @@ WeeChat "core" is located in following directories:
 |       core/                                     | Root of fuzz testing for core.
 |          calc-fuzzer.c                          | Fuzz testing: calculation of expressions.
 |          crypto-fuzzer.c                        | Fuzz testing: cryptographic functions.
+|          secure-fuzzer.c                        | Fuzz testing: secured data.
 |          string-fuzzer.c                        | Fuzz testing: strings.
 |          utf8-fuzzer.c                          | Fuzz testing: UTF-8.
 |          util-fuzzer.c                          | Fuzz testing: utility functions.
