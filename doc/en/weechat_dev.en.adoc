@@ -1266,9 +1266,13 @@ Where _component_ is one of following:
   debian-stable/*
 | Debian packaging
 
-| tests
-| tests/*
-| Tests
+| tests/fuzz
+| tests/fuzz/*
+| Fuzz testing
+
+| tests/unit
+| tests/unit/*
+| Unit tests
 
 | doc
 | doc/*

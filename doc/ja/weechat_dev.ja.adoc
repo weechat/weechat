@@ -1437,10 +1437,15 @@ _component_ には以下から 1 つ選んで記入してください:
 // TRANSLATION MISSING
 | Debian packaging
 
-| tests
-| tests/*
+| tests/fuzz
+| tests/fuzz/*
 // TRANSLATION MISSING
-| Tests
+| Fuzz testing
+
+| tests/unit
+| tests/unit/*
+// TRANSLATION MISSING
+| Unit tests
 
 | doc
 | doc/*

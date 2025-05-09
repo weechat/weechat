@@ -1260,9 +1260,15 @@ server->hook_timer_sasl = weechat_hook_timer (timeout * 1000,
   debian-stable/*
 | Debian паковање
 
-| tests
-| tests/*
-| Тестови
+| tests/fuzz
+| tests/fuzz/*
+// TRANSLATION MISSING
+| Fuzz testing
+
+| tests/unit
+| tests/unit/*
+// TRANSLATION MISSING
+| Unit tests
 
 | doc
 | doc/*

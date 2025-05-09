@@ -1285,9 +1285,13 @@ Où _composant_ est :
   debian-stable/*
 | Empaquetage Debian
 
-| tests
-| tests/*
-| Tests
+| tests/fuzz
+| tests/fuzz/*
+| Fuzzing (tests à données aléatoires)
+
+| tests/unit
+| tests/unit/*
+| Tests unitaires
 
 | doc
 | doc/*
