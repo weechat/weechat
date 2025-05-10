@@ -420,6 +420,7 @@ void
 alias_hook_command (struct t_alias *alias)
 {
     char *str_priority_name, *str_completion;
+    const char *ptr_command;
 
     if (alias->hook)
     {
@@ -442,11 +443,10 @@ alias_hook_command (struct t_alias *alias)
     str_completion = NULL;
     if (!alias->completion)
     {
-        weechat_asprintf (
-            &str_completion,
-            "%%%%%s",
-            (weechat_string_is_command_char (alias->command)) ?
-            weechat_utf8_next_char (alias->command) : alias->command);
+        ptr_command = (weechat_string_is_command_char (alias->command)) ?
+            weechat_utf8_next_char (alias->command) : alias->command;
+        weechat_asprintf (&str_completion, "%%%%%s",
+                          (ptr_command) ? ptr_command : "");
     }
 
     alias->hook = weechat_hook_command (
@@ -681,9 +681,18 @@ alias_new (const char *name, const char *command, const char *completion)
     if (!command || !command[0])
         return NULL;
 
-    while (weechat_string_is_command_char (name))
+    while (name && weechat_string_is_command_char (name))
     {
         name = weechat_utf8_next_char (name);
+    }
+
+    if (!name || !name[0])
+    {
+        weechat_printf (NULL,
+                        _("%s%s: invalid alias name: \"%s\""),
+                        weechat_prefix ("error"), ALIAS_PLUGIN_NAME,
+                        "");
+        return NULL;
     }
 
     ptr_alias = alias_search (name);

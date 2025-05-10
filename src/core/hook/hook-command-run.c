@@ -115,7 +115,7 @@ hook_command_run_exec (struct t_gui_buffer *buffer, const char *command)
     if (command[0] != '/')
     {
         ptr_string = utf8_next_char (command);
-        if (string_asprintf (&command2, "/%s", ptr_string) < 0)
+        if (string_asprintf (&command2, "/%s", (ptr_string) ? ptr_string : "") < 0)
             return WEECHAT_RC_ERROR;
     }
     else

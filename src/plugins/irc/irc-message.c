@@ -1079,12 +1079,12 @@ irc_message_split_string (struct t_irc_message_split_context *context,
         pos = arguments;
         pos_max = pos + max_length;
         pos_last_delim = NULL;
-        while (pos[0])
+        while (pos && pos[0])
         {
             if (pos[0] == delimiter)
                 pos_last_delim = pos;
             pos_next = weechat_utf8_next_char (pos);
-            if (pos_next > pos_max)
+            if (!pos_next || (pos_next > pos_max))
                 break;
             pos = pos_next;
         }

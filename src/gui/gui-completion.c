@@ -323,9 +323,11 @@ gui_completion_nick_has_ignored_chars (const char *string)
     int char_size;
     char utf_char[16];
 
-    while (string[0])
+    while (string && string[0])
     {
         char_size = utf8_char_size (string);
+        if (char_size < 1)
+            break;
         memcpy (utf_char, string, char_size);
         utf_char[char_size] = '\0';
 
@@ -352,9 +354,11 @@ gui_completion_nick_strdup_ignore_chars (const char *string)
 
     result = malloc (strlen (string) + 1);
     pos = result;
-    while (string[0])
+    while (string && string[0])
     {
         char_size = utf8_char_size (string);
+        if (char_size < 1)
+            break;
         memcpy (utf_char, string, char_size);
         utf_char[char_size] = '\0';
 
@@ -915,13 +919,16 @@ gui_completion_find_context (struct t_gui_completion *completion,
     if (string_is_command_char (ptr_data))
     {
         ptr_data = utf8_next_char (ptr_data);
-        if (ptr_data < data + pos)
+        if (ptr_data)
         {
-            if (string_is_command_char (ptr_data))
-                ptr_data = utf8_next_char (ptr_data);
+            if (ptr_data < data + pos)
+            {
+                if (string_is_command_char (ptr_data))
+                    ptr_data = utf8_next_char (ptr_data);
+            }
+            if (!string_is_command_char (ptr_data))
+                ptr_command = ptr_data;
         }
-        if (!string_is_command_char (ptr_data))
-            ptr_command = ptr_data;
     }
 
     /*

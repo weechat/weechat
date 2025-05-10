@@ -242,7 +242,7 @@ utf8_prev_char (const char *string_start, const char *string)
 const char *
 utf8_next_char (const char *string)
 {
-    if (!string)
+    if (!string || !string[0])
         return NULL;
 
     /* UTF-8, 2 bytes: 110vvvvv 10vvvvvv */
@@ -311,7 +311,7 @@ utf8_end_of_line (const char *string)
     if (!string)
         return NULL;
 
-    while (string[0] && (string[0] != '\n'))
+    while (string && string[0] && (string[0] != '\n'))
     {
         string = utf8_next_char (string);
     }
@@ -451,10 +451,16 @@ utf8_int_string (unsigned int unicode_value, char *string)
 int
 utf8_char_size (const char *string)
 {
-    if (!string)
+    const char *ptr_next;
+
+    if (!string || !string[0])
         return 0;
 
-    return utf8_next_char (string) - string;
+    ptr_next = utf8_next_char (string);
+    if (!ptr_next)
+        return 0;
+
+    return ptr_next - string;
 }
 
 /*

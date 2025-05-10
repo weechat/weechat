@@ -254,6 +254,8 @@ string_reverse (const char *string)
     while (ptr_string && ptr_string[0])
     {
         char_size = utf8_char_size (ptr_string);
+        if (char_size < 1)
+            break;
 
         ptr_result -= char_size;
         memcpy (ptr_result, ptr_string, char_size);
@@ -313,6 +315,8 @@ string_reverse_screen (const char *string)
         if (ptr_string[0])
         {
             char_size = utf8_char_size (ptr_string);
+            if (char_size < 1)
+                break;
 
             ptr_result -= char_size;
             memcpy (ptr_result, ptr_string, char_size);
@@ -934,7 +938,7 @@ string_strcasestr (const char *string, const char *search)
     if (!string || !search || (length_search == 0))
         return NULL;
 
-    while (string[0])
+    while (string && string[0])
     {
         if (string_strncasecmp (string, search, length_search) == 0)
             return (char *)string;
@@ -4139,6 +4143,8 @@ string_input_for_buffer (const char *string)
         return string;
 
     next_char = utf8_next_char (string);
+    if (!next_char)
+        return NULL;
 
     /* next char is a space, then it's not a command */
     if (next_char[0] == ' ')
@@ -4226,8 +4232,12 @@ string_levenshtein (const char *string1, const char *string2,
                 last_diag + ((char1 == char2) ? 0 : 1));
             last_diag = old_diag;
             ptr_str1 = utf8_next_char (ptr_str1);
+            if (!ptr_str1)
+                break;
         }
         ptr_str2 = utf8_next_char (ptr_str2);
+        if (!ptr_str2)
+            break;
     }
 
     return column[length1];

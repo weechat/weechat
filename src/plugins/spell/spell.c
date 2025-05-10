@@ -834,7 +834,7 @@ spell_modifier_cb (const void *pointer, void *data,
     }
 
     current_pos = 0;
-    while (ptr_string[0])
+    while (ptr_string && ptr_string[0])
     {
         ptr_string_orig = NULL;
 
@@ -885,7 +885,7 @@ spell_modifier_cb (const void *pointer, void *data,
                 word_end_pos_valid = word_end_pos;
             }
             ptr_end = (char *)weechat_utf8_next_char (ptr_end);
-            if (!ptr_end[0])
+            if (!ptr_end || !ptr_end[0])
                 break;
             code_point = weechat_utf8_char_int (ptr_end);
         }
@@ -906,7 +906,7 @@ spell_modifier_cb (const void *pointer, void *data,
                 while (!iswspace (code_point))
                 {
                     ptr_end = (char *)weechat_utf8_next_char (ptr_end);
-                    if (!ptr_end[0])
+                    if (!ptr_end || !ptr_end[0])
                         break;
                     code_point = weechat_utf8_char_int (ptr_end);
                 }

@@ -1328,7 +1328,7 @@ gui_key_chunk_seems_valid (const char *chunk)
     if (!found)
         chunk = utf8_next_char (chunk);
 
-    if (chunk[0])
+    if (chunk && chunk[0])
         return 0;
 
     return 1;

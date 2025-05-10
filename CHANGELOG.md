@@ -10,6 +10,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 ### Changed
 
+- **breaking:** core: fix buffer overflow in function utf8_next_char and return NULL for empty string
 - **breaking:** core: fix integer overflow and return "unsigned long" in function util_version_number
 - core: write configuration files on disk only if there are changes ([#2250](https://github.com/weechat/weechat/issues/2250))
 

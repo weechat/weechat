@@ -351,7 +351,7 @@ TEST(CoreUtf8, Move)
     STRCMP_EQUAL(NULL, utf8_prev_char (NULL, NULL));
     STRCMP_EQUAL(NULL, utf8_next_char (NULL));
     STRCMP_EQUAL(NULL, utf8_prev_char (empty_string, empty_string));
-    STRCMP_EQUAL(empty_string + 1, utf8_next_char (empty_string));
+    STRCMP_EQUAL(NULL, utf8_next_char (empty_string));
     STRCMP_EQUAL(NULL, utf8_prev_char (noel_valid + 1, noel_valid));
     ptr = utf8_next_char (noel_valid);
     STRCMP_EQUAL("oël", ptr);
@@ -512,7 +512,7 @@ TEST(CoreUtf8, Size)
 {
     /* char size (in bytes) */
     LONGS_EQUAL(0, utf8_char_size (NULL));
-    LONGS_EQUAL(1, utf8_char_size (""));
+    LONGS_EQUAL(0, utf8_char_size (""));
     LONGS_EQUAL(1, utf8_char_size ("A"));
     LONGS_EQUAL(2, utf8_char_size ("ë"));
     LONGS_EQUAL(3, utf8_char_size ("€"));

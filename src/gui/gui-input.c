@@ -871,10 +871,14 @@ gui_input_delete_next_char (struct t_gui_buffer *buffer)
         return;
     }
 
-    gui_buffer_undo_snap (buffer);
     pos = (char *)utf8_add_offset (buffer->input_buffer,
                                    buffer->input_buffer_pos);
     pos_next = (char *)utf8_next_char (pos);
+    if (!pos_next)
+        return;
+
+    gui_buffer_undo_snap (buffer);
+
     char_size = pos_next - pos;
     size_to_move = strlen (pos_next);
     memmove (pos, pos_next, size_to_move);
@@ -899,9 +903,13 @@ gui_input_delete_range (struct t_gui_buffer *buffer,
                         char *start,
                         char *end)
 {
+    const char *ptr_next;
     int size_deleted, length_deleted;
 
-    size_deleted = utf8_next_char (end) - start;
+    ptr_next = utf8_next_char (end);
+    if (!ptr_next)
+        return;
+    size_deleted = ptr_next - start;
     length_deleted = utf8_strnlen (start, size_deleted);
 
     gui_input_clipboard_copy (start, size_deleted);
@@ -956,7 +964,8 @@ gui_input_delete_previous_word (struct t_gui_buffer *buffer)
     else
         string = buffer->input_buffer;
 
-    gui_input_delete_range (buffer, string, start);
+    if (string)
+        gui_input_delete_range (buffer, string, start);
 }
 
 /*
@@ -994,7 +1003,8 @@ gui_input_delete_previous_word_whitespace (struct t_gui_buffer *buffer)
     else
         string = buffer->input_buffer;
 
-    gui_input_delete_range (buffer, string, start);
+    if (string)
+        gui_input_delete_range (buffer, string, start);
 }
 
 /*
@@ -1016,13 +1026,13 @@ gui_input_delete_next_word (struct t_gui_buffer *buffer)
     string = start;
     length_deleted = 0;
     /* move to the right until we reach a word char */
-    while (string[0] && !string_is_word_char_input (string))
+    while (string && string[0] && !string_is_word_char_input (string))
     {
         string = (char *)utf8_next_char (string);
         length_deleted++;
     }
     /* move to the right to skip the whole word */
-    while (string[0] && string_is_word_char_input (string))
+    while (string && string[0] && string_is_word_char_input (string))
     {
         string = (char *)utf8_next_char (string);
         length_deleted++;
@@ -1060,12 +1070,14 @@ gui_input_delete_beginning_of_line (struct t_gui_buffer *buffer)
     if (!buffer->input || (buffer->input_buffer_pos <= 0))
         return;
 
-    gui_buffer_undo_snap (buffer);
     start = (char *)utf8_add_offset (buffer->input_buffer,
                                      buffer->input_buffer_pos);
 
     beginning_of_line = (char *)utf8_beginning_of_line (buffer->input_buffer,
                                                         start);
+    if (!beginning_of_line)
+        return;
+
     if (beginning_of_line == start)
     {
         beginning_of_line = (char *)utf8_prev_char (buffer->input_buffer,
@@ -1073,6 +1085,11 @@ gui_input_delete_beginning_of_line (struct t_gui_buffer *buffer)
         beginning_of_line = (char *)utf8_beginning_of_line (buffer->input_buffer,
                                                             beginning_of_line);
     }
+
+    if (!beginning_of_line)
+        return;
+
+    gui_buffer_undo_snap (buffer);
 
     size_deleted = start - beginning_of_line;
     length_deleted = utf8_strnlen (beginning_of_line, size_deleted);
@@ -1109,7 +1126,6 @@ gui_input_delete_end_of_line (struct t_gui_buffer *buffer)
     if (!buffer->input)
         return;
 
-    gui_buffer_undo_snap (buffer);
     start = (char *)utf8_add_offset (buffer->input_buffer,
                                      buffer->input_buffer_pos);
 
@@ -1117,7 +1133,14 @@ gui_input_delete_end_of_line (struct t_gui_buffer *buffer)
         end_of_line = (char *)utf8_next_char (start);
     else
         end_of_line = start;
+    if (!end_of_line)
+        return;
+
     end_of_line = (char *)utf8_end_of_line (end_of_line);
+    if (!end_of_line)
+        return;
+
+    gui_buffer_undo_snap (buffer);
 
     size_deleted = end_of_line - start;
     length_deleted = utf8_strnlen (start, size_deleted);
@@ -1215,13 +1238,17 @@ gui_input_delete_line (struct t_gui_buffer *buffer)
     if (!buffer->input)
         return;
 
-    gui_buffer_undo_snap (buffer);
     start = (char *)utf8_add_offset (buffer->input_buffer,
                                      buffer->input_buffer_pos);
 
     beginning_of_line = (char *)utf8_beginning_of_line (buffer->input_buffer,
                                                         start);
     end_of_line = (char *)utf8_end_of_line (start);
+
+    if (!beginning_of_line || !end_of_line)
+        return;
+
+    gui_buffer_undo_snap (buffer);
 
     size_deleted = end_of_line - beginning_of_line;
     length_deleted = utf8_strnlen (beginning_of_line, size_deleted);
@@ -1321,12 +1348,16 @@ gui_input_move_beginning_of_line (struct t_gui_buffer *buffer)
                                    buffer->input_buffer_pos);
     original_pos = pos;
     pos = (char *)utf8_beginning_of_line (buffer->input_buffer, pos);
+    if (!pos)
+        return;
 
     if (pos == original_pos)
     {
         pos = (char *)utf8_prev_char (buffer->input_buffer, pos);
         pos = (char *)utf8_beginning_of_line (buffer->input_buffer, pos);
     }
+    if (!pos)
+        return;
 
     buffer->input_buffer_pos = utf8_pos (buffer->input_buffer,
                                          pos - buffer->input_buffer);
@@ -1354,11 +1385,9 @@ gui_input_move_end_of_line (struct t_gui_buffer *buffer)
     pos = (char *)utf8_add_offset (buffer->input_buffer,
                                    buffer->input_buffer_pos);
     if (pos[0] && pos[0] == '\n')
-    {
         pos = (char *)utf8_next_char (pos);
-    }
     pos = (char *)utf8_end_of_line (pos);
-    if (pos[0])
+    if (pos && pos[0])
     {
         buffer->input_buffer_pos = utf8_pos (buffer->input_buffer,
                                              pos - buffer->input_buffer);
@@ -1462,6 +1491,8 @@ gui_input_move_previous_word (struct t_gui_buffer *buffer)
             pos = (char *)utf8_next_char (pos);
         else
             pos = buffer->input_buffer;
+        if (!pos)
+            return;
         buffer->input_buffer_pos = utf8_pos (buffer->input_buffer,
                                              pos - buffer->input_buffer);
     }
@@ -1489,17 +1520,17 @@ gui_input_move_next_word (struct t_gui_buffer *buffer)
 
     pos = (char *)utf8_add_offset (buffer->input_buffer,
                                    buffer->input_buffer_pos);
-    while (pos[0] && !string_is_word_char_input (pos))
+    while (pos && pos[0] && !string_is_word_char_input (pos))
     {
         pos = (char *)utf8_next_char (pos);
     }
-    if (pos[0])
+    if (pos && pos[0])
     {
         while (pos[0] && string_is_word_char_input (pos))
         {
             pos = (char *)utf8_next_char (pos);
         }
-        if (pos[0])
+        if (pos && pos[0])
         {
             buffer->input_buffer_pos =
                 utf8_pos (buffer->input_buffer,
@@ -1531,6 +1562,9 @@ gui_input_move_previous_line (struct t_gui_buffer *buffer)
                                    buffer->input_buffer_pos);
     pos = (char *)utf8_beginning_of_line (buffer->input_buffer, pos);
 
+    if (!pos)
+        return;
+
     if (pos != buffer->input_buffer)
     {
         beginning_of_line_pos = utf8_pos (buffer->input_buffer,
@@ -1540,12 +1574,18 @@ gui_input_move_previous_line (struct t_gui_buffer *buffer)
         pos = (char *)utf8_prev_char (buffer->input_buffer, pos);
         pos = (char *)utf8_beginning_of_line (buffer->input_buffer, pos);
 
+        if (!pos)
+            return;
+
         for (i = 0;
-             pos[0] && (pos[0] != '\n') && (i < length_from_beginning);
+             pos && pos[0] && (pos[0] != '\n') && (i < length_from_beginning);
              i++)
         {
             pos = (char *)utf8_next_char (pos);
         }
+
+        if (!pos)
+            return;
 
         buffer->input_buffer_pos = utf8_pos (buffer->input_buffer,
                                              pos - buffer->input_buffer);
@@ -1574,21 +1614,26 @@ gui_input_move_next_line (struct t_gui_buffer *buffer)
                                    buffer->input_buffer_pos);
     pos = (char *)utf8_beginning_of_line (buffer->input_buffer, pos);
 
+    if (!pos)
+        return;
+
     beginning_of_line_pos = utf8_pos (buffer->input_buffer,
                                       pos - buffer->input_buffer);
     length_from_beginning = buffer->input_buffer_pos - beginning_of_line_pos;
 
     pos = (char *)utf8_end_of_line (pos);
-    if (pos[0])
+    if (pos && pos[0])
     {
         pos = (char *)utf8_next_char (pos);
-
         for (i = 0;
-             pos[0] && (pos[0] != '\n') && (i < length_from_beginning);
+             pos && pos[0] && (pos[0] != '\n') && (i < length_from_beginning);
              i++)
         {
             pos = (char *)utf8_next_char (pos);
         }
+
+        if (!pos)
+            return;
 
         buffer->input_buffer_pos = utf8_pos (buffer->input_buffer,
                                              pos - buffer->input_buffer);
