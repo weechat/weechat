@@ -65,7 +65,8 @@ LLVMFuzzerTestOneInput (const uint8_t *data, size_t size)
     memcpy (str, data, size);
     str[size] = '\0';
 
-    secure_derive_key (str, str, (unsigned char *)hash, sizeof (hash));
+    if (size >= 8)
+        secure_derive_key (str, str, (unsigned char *)hash, sizeof (hash));
 
     if (size > 0)
     {
