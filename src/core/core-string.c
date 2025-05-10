@@ -4269,9 +4269,9 @@ string_replace_with_callback (const char *string,
                               void *callback_data,
                               int *errors)
 {
-    int length_prefix, length_suffix, length, length_value, index_string;
-    int index_result, sub_count, sub_level, sub_errors, replace, i;
-    char *result, *result2, *key, *key2, *value;
+    int length_prefix, length_suffix, index_string;
+    int sub_count, sub_level, sub_errors, replace, i;
+    char **result, *key, *key2, *value, str[128];
     const char *pos_end_name;
 
     if (errors)
@@ -4283,138 +4283,135 @@ string_replace_with_callback (const char *string,
     length_prefix = strlen (prefix);
     length_suffix = strlen (suffix);
 
-    length = strlen (string) + 1;
-    result = malloc (length);
-    if (result)
+    result = string_dyn_alloc (strlen (string) + 1);
+    if (!result)
+        return NULL;
+
+    index_string = 0;
+    while (string[index_string])
     {
-        index_string = 0;
-        index_result = 0;
-        while (string[index_string])
+        if ((string[index_string] == '\\')
+            && (string[index_string + 1] == prefix[0]))
         {
-            if ((string[index_string] == '\\')
-                && (string[index_string + 1] == prefix[0]))
+            if (allow_escape)
             {
-                if (allow_escape)
-                {
-                    index_string++;
-                    result[index_result++] = string[index_string++];
-                }
-                else
-                {
-                    result[index_result++] = string[index_string++];
-                    result[index_result++] = string[index_string++];
-                }
-            }
-            else if (strncmp (string + index_string, prefix, length_prefix) == 0)
-            {
-                sub_count = 0;
-                sub_level = 0;
-                pos_end_name = string + index_string + length_prefix;
-                while (pos_end_name[0])
-                {
-                    if (strncmp (pos_end_name, suffix, length_suffix) == 0)
-                    {
-                        if (sub_level == 0)
-                            break;
-                        sub_level--;
-                    }
-                    if (allow_escape
-                        && (pos_end_name[0] == '\\')
-                        && (pos_end_name[1] == prefix[0]))
-                    {
-                        pos_end_name++;
-                    }
-                    else if (strncmp (pos_end_name, prefix, length_prefix) == 0)
-                    {
-                        sub_count++;
-                        sub_level++;
-                    }
-                    pos_end_name++;
-                }
-                key = string_strndup (string + index_string + length_prefix,
-                                      pos_end_name - (string + index_string + length_prefix));
-                if (key)
-                {
-                    if (sub_count > 0)
-                    {
-                        replace = 1;
-                        if (list_prefix_no_replace)
-                        {
-                            for (i = 0; list_prefix_no_replace[i]; i++)
-                            {
-                                if (strncmp (
-                                        key, list_prefix_no_replace[i],
-                                        strlen (list_prefix_no_replace[i])) == 0)
-                                {
-                                    replace = 0;
-                                    break;
-                                }
-                            }
-                        }
-                        if (replace)
-                        {
-                            sub_errors = 0;
-                            key2 = string_replace_with_callback (
-                                key,
-                                prefix,
-                                suffix,
-                                1,
-                                list_prefix_no_replace,
-                                callback,
-                                callback_data,
-                                &sub_errors);
-                            if (errors)
-                                (*errors) += sub_errors;
-                            free (key);
-                            key = key2;
-                        }
-                    }
-                    value = (*callback) (callback_data,
-                                         prefix,
-                                         (key) ? key : "",
-                                         (pos_end_name[0]) ? suffix : "");
-                    if (value)
-                    {
-                        length_value = strlen (value);
-                        if (length_value > 0)
-                        {
-                            length += length_value;
-                            result2 = realloc (result, length);
-                            if (!result2)
-                            {
-                                free (result);
-                                free (key);
-                                free (value);
-                                return NULL;
-                            }
-                            result = result2;
-                            strcpy (result + index_result, value);
-                            index_result += length_value;
-                        }
-                        if (pos_end_name[0])
-                            index_string = pos_end_name - string + length_suffix;
-                        else
-                            index_string = pos_end_name - string;
-                        free (value);
-                    }
-                    else
-                    {
-                        result[index_result++] = string[index_string++];
-                        if (errors)
-                            (*errors)++;
-                    }
-                    free (key);
-                }
-                else
-                    result[index_result++] = string[index_string++];
+                index_string++;
+                str[0] = string[index_string++];
+                str[1] = '\0';
+                string_dyn_concat (result, str, -1);
             }
             else
-                result[index_result++] = string[index_string++];
+            {
+                str[0] = string[index_string++];
+                str[1] = string[index_string++];
+                str[2] = '\0';
+                string_dyn_concat (result, str, -1);
+            }
         }
-        result[index_result] = '\0';
+        else if (strncmp (string + index_string, prefix, length_prefix) == 0)
+        {
+            sub_count = 0;
+            sub_level = 0;
+            pos_end_name = string + index_string + length_prefix;
+            while (pos_end_name[0])
+            {
+                if (strncmp (pos_end_name, suffix, length_suffix) == 0)
+                {
+                    if (sub_level == 0)
+                        break;
+                    sub_level--;
+                }
+                if (allow_escape
+                    && (pos_end_name[0] == '\\')
+                    && (pos_end_name[1] == prefix[0]))
+                {
+                    pos_end_name++;
+                }
+                else if (strncmp (pos_end_name, prefix, length_prefix) == 0)
+                {
+                    sub_count++;
+                    sub_level++;
+                }
+                pos_end_name++;
+            }
+            key = string_strndup (string + index_string + length_prefix,
+                                  pos_end_name - (string + index_string + length_prefix));
+            if (key)
+            {
+                if (sub_count > 0)
+                {
+                    replace = 1;
+                    if (list_prefix_no_replace)
+                    {
+                        for (i = 0; list_prefix_no_replace[i]; i++)
+                        {
+                            if (strncmp (
+                                    key, list_prefix_no_replace[i],
+                                    strlen (list_prefix_no_replace[i])) == 0)
+                            {
+                                replace = 0;
+                                break;
+                            }
+                        }
+                    }
+                    if (replace)
+                    {
+                        sub_errors = 0;
+                        key2 = string_replace_with_callback (
+                            key,
+                            prefix,
+                            suffix,
+                            1,
+                            list_prefix_no_replace,
+                            callback,
+                            callback_data,
+                            &sub_errors);
+                        if (errors)
+                            (*errors) += sub_errors;
+                        free (key);
+                        key = key2;
+                    }
+                }
+                value = (*callback) (callback_data,
+                                     prefix,
+                                     (key) ? key : "",
+                                     (pos_end_name[0]) ? suffix : "");
+                if (value)
+                {
+                    if (value[0])
+                        string_dyn_concat (result, value, -1);
+                    if (pos_end_name[0])
+                        index_string = pos_end_name - string + length_suffix;
+                    else
+                        index_string = pos_end_name - string;
+                    free (value);
+                }
+                else
+                {
+                    str[0] = string[index_string++];
+                    str[1] = '\0';
+                    string_dyn_concat (result, str, -1);
+                    if (errors)
+                        (*errors)++;
+                }
+                free (key);
+            }
+            else
+            {
+                str[0] = string[index_string++];
+                str[1] = '\0';
+                string_dyn_concat (result, str, -1);
+            }
+        }
+        else
+        {
+            str[0] = string[index_string++];
+            str[1] = '\0';
+            string_dyn_concat (result, str, -1);
+        }
     }
 
-    return result;
+    return string_dyn_free (result, 0);
 }
 
 /*
