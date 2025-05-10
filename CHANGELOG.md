@@ -10,6 +10,7 @@
 - core: fix buffer overflow in function util_parse_time
 - core: fix buffer overflow in function eval_syntax_highlight_colorize
 - core: fix buffer overflow in function eval_string_base_encode
+- core: fix buffer overflow in function eval_string_range_chars
 - core: fix memory leak in function util_parse_delay
 
 ## Version 4.6.2 (2025-04-18)
