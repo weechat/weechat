@@ -1574,7 +1574,8 @@ eval_syntax_highlight_colorize (const char *value)
             else if (ptr_value[0] == '-')
                 color--;
         }
-        ptr_value++;
+        if (ptr_value[0])
+            ptr_value++;
         if (config_num_eval_syntax_colors > 0)
         {
             string_dyn_concat (
