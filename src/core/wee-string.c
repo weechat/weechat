@@ -3416,7 +3416,8 @@ int
 string_base32_encode (const char *from, int length, char *to)
 {
     unsigned char base32_table[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
-    int count, value, next, bits_left, pad, index;
+    unsigned int value;
+    int count, next, bits_left, pad, index;
     int length_padding[8] = { 0, 0, 6, 0, 4, 3, 0, 2 };
 
     if (!from || !to)
@@ -3494,7 +3495,8 @@ int
 string_base32_decode (const char *from, char *to)
 {
     const char *ptr_from;
-    int value, bits_left, count;
+    int bits_left, count;
+    unsigned int value;
     unsigned char c;
 
     if (!from || !to)
