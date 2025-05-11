@@ -20,6 +20,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 Bug fixes::
 
+  * core: fix integer overflow with decimal numbers in calculation of expression
   * core, plugins: fix integer overflow in loops (issue #2178)
   * core: fix crash in case of NULL message sent to function gui_chat_printf_y_date_tags (issue #1883)
 
