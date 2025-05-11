@@ -20,6 +20,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 Bug fixes::
 
+  * core: fix buffer overflow in function eval_string_range_chars
   * core: fix buffer overflow in function eval_string_base_encode
   * core: fix integer overflow in function util_version_number
   * core: fix integer overflow in base32 encoding/decoding
