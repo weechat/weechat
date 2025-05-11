@@ -30,6 +30,14 @@ The function [util_version_number](https://weechat.org/doc/weechat/plugin/#_util
 has been fixed and now returns an "unsigned long" instead of "int", so that any
 version up to "255.255.255.255" (0xFFFFFFFF) can be returned.
 
+## Version 4.6.3
+
+### API function util_version_number
+
+An integer overflow has been fixed in the function
+[util_version_number](https://weechat.org/doc/weechat/plugin/#_util_version_number)
+which now returns a version up to "127.255.255.255" (0x7FFFFFFF).
+
 ## Version 4.6.0
 
 ### Relay remote commands

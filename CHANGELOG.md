@@ -35,6 +35,19 @@ SPDX-License-Identifier: GPL-3.0-or-later
 - irc: display nick changes and quit messages when option irc.look.ignore_tag_messages is enabled ([#2241](https://github.com/weechat/weechat/issues/2241))
 - perl: fix build when multiplicity is not available ([#2243](https://github.com/weechat/weechat/issues/2243))
 
+## Version 4.6.3 (2025-05-11)
+
+### Fixed
+
+- core: fix integer overflow with decimal numbers in calculation of expression
+- core: fix integer overflow in base32 encoding/decoding
+- core: fix integer overflow in function util_version_number
+- core: fix buffer overflow in function util_parse_time
+- core: fix buffer overflow in function eval_syntax_highlight_colorize
+- core: fix buffer overflow in function eval_string_base_encode
+- core: fix buffer overflow in function eval_string_range_chars
+- core: fix memory leak in function util_parse_delay
+
 ## Version 4.6.2 (2025-04-18)
 
 ### Fixed
