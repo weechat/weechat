@@ -906,7 +906,7 @@ eval_string_base_encode (const char *text)
 
     ptr_string++;
     length = strlen (ptr_string);
-    result = malloc ((length * 4) + 1);
+    result = malloc ((length * 4) + 8 + 1);
     if (!result)
         goto end;
 
