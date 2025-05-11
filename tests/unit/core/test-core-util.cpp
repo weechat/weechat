@@ -244,4 +244,9 @@ TEST(CoreUtil, VersionNumber)
     LONGS_EQUAL(0x01010100, util_version_number ("1.1.1"));
     LONGS_EQUAL(0x01010200, util_version_number ("1.1.2"));
     LONGS_EQUAL(0x01020304, util_version_number ("1.2.3.4"));
+    LONGS_EQUAL(0x7EFFFFFF, util_version_number ("126.255.255.255"));
+    LONGS_EQUAL(0x7FFFFFFF, util_version_number ("127.255.255.255"));
+    LONGS_EQUAL(0x7FFFFFFF, util_version_number ("128.255.255.255"));
+    LONGS_EQUAL(0x7FFFFFFF, util_version_number ("255.255.255.255"));
+    LONGS_EQUAL(0x7FFFFFFF, util_version_number ("999999999.999999999.999999999.999999999"));;
 }
