@@ -7,6 +7,14 @@ When upgrading from version X to Y, please read and apply all instructions from 
 
 For a list of all changes in each version, please see [CHANGELOG.md](CHANGELOG.md).
 
+## Version 4.6.3
+
+### API function util_version_number
+
+An integer overflow has been fixed in the function
+[util_version_number](https://weechat.org/doc/weechat/plugin/#_util_version_number)
+which now returns a version up to "127.255.255.255" (0x7FFFFFFF).
+
 ## Version 4.6.0
 
 ### Relay remote commands
