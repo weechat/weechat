@@ -302,6 +302,9 @@ eval_string_range_chars (const char *range)
     string = NULL;
     result = NULL;
 
+    if (!range || !range[0])
+        goto end;
+
     for (i = 0; eval_range_chars[i][0]; i++)
     {
         if (strcmp (range, eval_range_chars[i][0]) == 0)
@@ -311,11 +314,15 @@ eval_string_range_chars (const char *range)
     char1 = utf8_char_int (range);
 
     /* next char must be '-' */
+    if (!range[0])
+        goto end;
     ptr_char = utf8_next_char (range);
     if (!ptr_char || !ptr_char[0] || (ptr_char[0] != '-'))
         goto end;
 
     /* next char is the char2 */
+    if (!range[0])
+        goto end;
     ptr_char = utf8_next_char (ptr_char);
     if (!ptr_char || !ptr_char[0])
         goto end;
