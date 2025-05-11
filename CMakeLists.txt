@@ -284,6 +284,18 @@ endif()
 
 add_subdirectory(src)
 add_subdirectory(doc)
+
+if(ENABLE_TESTS)
+  find_package(CppUTest)
+  if(CPPUTEST_FOUND)
+    enable_testing()
+  else()
+    message(SEND_ERROR "CppUTest not found")
+  endif()
+else()
+  enable_testing()
+  add_test(NAME notests COMMAND true)
+endif()
 add_subdirectory(tests)
 
 configure_file(config.h.cmake config.h @ONLY)
