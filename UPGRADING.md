@@ -13,6 +13,23 @@ When upgrading from version X to Y, please read and apply all instructions from 
 
 For a list of all changes in each version, please see [CHANGELOG.md](CHANGELOG.md).
 
+## Version 4.7.0
+
+### API functions utf8_next_char and utf8_char_size
+
+The function [utf8_next_char](https://weechat.org/doc/weechat/plugin/#_utf8_next_char)
+has been fixed and now returns NULL when an empty string is received (instead
+of the next char, which is after the end of string).
+
+The function [utf8_char_size](https://weechat.org/doc/weechat/plugin/#_utf8_char_size)
+has been fixed and now returns 0 when an empty string is received (instead of 1).
+
+### API function util_version_number
+
+The function [util_version_number](https://weechat.org/doc/weechat/plugin/#_util_version_number)
+has been fixed and now returns an "unsigned long" instead of "int", so that any
+version up to "255.255.255.255" (0xFFFFFFFF) can be returned.
+
 ## Version 4.6.0
 
 ### Relay remote commands
