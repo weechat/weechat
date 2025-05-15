@@ -183,6 +183,7 @@ typing_input_text_for_buffer_modifier_cb (const void *pointer,
                                           const char *string)
 {
     int rc, text_search;
+    unsigned long value;
     const char *ptr_input_for_buffer;
     struct t_gui_buffer *ptr_buffer;
     struct t_typing_status *ptr_typing_status;
@@ -193,9 +194,10 @@ typing_input_text_for_buffer_modifier_cb (const void *pointer,
     (void) modifier;
     (void) string;
 
-    rc = sscanf (modifier_data, "%p", &ptr_buffer);
+    rc = sscanf (modifier_data, "%lx", &value);
     if ((rc == EOF) || (rc == 0))
         return NULL;
+    ptr_buffer = (struct t_gui_buffer *)value;
 
     /* ignore any change in input if the user is searching text in the buffer */
     text_search = weechat_buffer_get_integer (ptr_buffer, "text_search");
@@ -382,6 +384,7 @@ typing_typing_set_nick_signal_cb (const void *pointer, void *data,
 {
     char **items;
     int num_items, rc, state, updated;
+    unsigned long value;
     struct t_gui_buffer *ptr_buffer;
     struct t_typing_status *ptr_typing_status;
 
@@ -396,9 +399,10 @@ typing_typing_set_nick_signal_cb (const void *pointer, void *data,
     if (!items || (num_items != 3))
         goto end;
 
-    rc = sscanf (items[0], "%p", &ptr_buffer);
+    rc = sscanf (items[0], "%lx", &value);
     if ((rc == EOF) || (rc == 0))
         goto end;
+    ptr_buffer = (struct t_gui_buffer *)value;
     if (!ptr_buffer)
         goto end;
 

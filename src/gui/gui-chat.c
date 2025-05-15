@@ -1398,6 +1398,7 @@ gui_chat_hsignal_quote_line_cb (const void *pointer, void *data,
 {
     const char *ptr_date, *ptr_date_usec, *line, *prefix, *ptr_prefix, *message;
     long long number;
+    unsigned long value;
     struct timeval tv;
     struct t_gui_line *ptr_line;
     int is_nick, rc;
@@ -1442,9 +1443,10 @@ gui_chat_hsignal_quote_line_cb (const void *pointer, void *data,
     line = hashtable_get (hashtable, "_chat_line");
     if (line && line[0])
     {
-        rc = sscanf (line, "%p", &ptr_line);
+        rc = sscanf (line, "%lx", &value);
         if ((rc != EOF) && (rc != 0))
         {
+            ptr_line = (struct t_gui_line *)value;
             if (gui_line_search_tag_starting_with (ptr_line, "prefix_nick"))
                 is_nick = 1;
         }

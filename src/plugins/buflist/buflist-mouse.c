@@ -335,6 +335,7 @@ buflist_hsignal_cb (const void *pointer, void *data, const char *signal,
     struct t_gui_buffer *ptr_buffer;
     char *error, str_command[1024];
     long number, number2;
+    unsigned long value;
     int rc, current_buffer_number;
 
     /* make C compiler happy */
@@ -354,9 +355,10 @@ buflist_hsignal_cb (const void *pointer, void *data, const char *signal,
         return WEECHAT_RC_OK;
     }
 
-    rc = sscanf (ptr_pointer, "%p", &ptr_buffer);
+    rc = sscanf (ptr_pointer, "%lx", &value);
     if ((rc == EOF) || (rc == 0))
         return WEECHAT_RC_OK;
+    ptr_buffer = (struct t_gui_buffer *)value;
 
     error = NULL;
     number = strtol (ptr_number, &error, 10);

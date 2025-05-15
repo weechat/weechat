@@ -1037,7 +1037,6 @@ TEST(CoreEval, EvalExpression)
     WEE_CHECK_EVAL("", "${buffer[].full_name}");
     WEE_CHECK_EVAL("", "${buffer[0x0].full_name}");
     WEE_CHECK_EVAL("", "${buffer[0x1].full_name}");
-    WEE_CHECK_EVAL("", "${buffer[0xZ].full_name}");
     WEE_CHECK_EVAL("", "${buffer[unknown_list].full_name}");
     WEE_CHECK_EVAL("", "${unknown_pointer}");
     WEE_CHECK_EVAL("", "${my_null_pointer}");

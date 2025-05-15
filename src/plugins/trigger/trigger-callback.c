@@ -999,7 +999,7 @@ trigger_callback_line_cb (const void *pointer, void *data,
 {
     struct t_hashtable *hashtable;
     struct t_weelist_item *ptr_item;
-    void *ptr;
+    unsigned long value;
     const char *ptr_key, *ptr_value;
     char **tags, *str_tags, *string_no_color;
     int rc, num_tags;
@@ -1023,10 +1023,10 @@ trigger_callback_line_cb (const void *pointer, void *data,
     ptr_value = weechat_hashtable_get (line, "buffer");
     if (!ptr_value || (ptr_value[0] != '0') || (ptr_value[1] != 'x'))
         goto end;
-    rc = sscanf (ptr_value, "%p", &ptr);
+    rc = sscanf (ptr_value + 2, "%lx", &value);
     if ((rc == EOF) || (rc < 1))
         goto end;
-    ctx.buffer = ptr;
+    ctx.buffer = (void *)value;
 
     weechat_hashtable_set (ctx.pointers, "buffer", ctx.buffer);
     ptr_value = weechat_hashtable_get (line, "tags");
@@ -1363,7 +1363,7 @@ trigger_callback_focus_cb (const void *pointer, void *data,
                            struct t_hashtable *info)
 {
     const char *ptr_value;
-    void *ptr;
+    unsigned long value;
     int rc;
 
     TRIGGER_CALLBACK_CB_INIT(info);
@@ -1377,16 +1377,16 @@ trigger_callback_focus_cb (const void *pointer, void *data,
     ptr_value = weechat_hashtable_get (info, "_window");
     if (ptr_value && ptr_value[0] && (strncmp (ptr_value, "0x", 2) == 0))
     {
-        rc = sscanf (ptr_value, "%p", &ptr);
+        rc = sscanf (ptr_value + 2, "%lx", &value);
         if ((rc != EOF) && (rc >= 1))
-            weechat_hashtable_set (ctx.pointers, "window", ptr);
+            weechat_hashtable_set (ctx.pointers, "window", (void *)value);
     }
     ptr_value = weechat_hashtable_get (info, "_buffer");
     if (ptr_value && ptr_value[0] && (strncmp (ptr_value, "0x", 2) == 0))
     {
-        rc = sscanf (ptr_value, "%p", &ptr);
+        rc = sscanf (ptr_value + 2, "%lx", &value);
         if ((rc != EOF) && (rc >= 1))
-            weechat_hashtable_set (ctx.pointers, "buffer", ptr);
+            weechat_hashtable_set (ctx.pointers, "buffer", (void *)value);
     }
 
     /* execute the trigger (conditions, regex, command) */
