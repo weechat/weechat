@@ -713,6 +713,7 @@ spell_modifier_cb (const void *pointer, void *data,
                    const char *modifier,
                    const char *modifier_data, const char *string)
 {
+    unsigned long value;
     struct t_gui_buffer *buffer;
     struct t_spell_speller_buffer *ptr_speller_buffer;
     char **result, *ptr_string, *ptr_string_orig, *pos_space;
@@ -735,9 +736,11 @@ spell_modifier_cb (const void *pointer, void *data,
     if (!string)
         return NULL;
 
-    rc = sscanf (modifier_data, "%p", &buffer);
+    rc = sscanf (modifier_data, "%lx", &value);
     if ((rc == EOF) || (rc == 0))
         return NULL;
+
+    buffer = (struct t_gui_buffer *)value;
 
     /* check text during search only if option is enabled */
     if (weechat_buffer_get_integer (buffer, "text_search")

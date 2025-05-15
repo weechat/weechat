@@ -356,6 +356,7 @@ gui_history_hdata_history_update_cb (void *data,
     struct t_gui_history *ptr_history;
     struct t_gui_buffer *ptr_buffer;
     const char *text, *buffer;
+    unsigned long value;
     int rc;
 
     /* make C compiler happy */
@@ -384,9 +385,9 @@ gui_history_hdata_history_update_cb (void *data,
             buffer = hashtable_get (hashtable, "buffer");
             if (buffer)
             {
-                rc = sscanf (buffer, "%p", &ptr_buffer);
-                if ((rc == EOF) || (rc == 0))
-                    ptr_buffer = NULL;
+                rc = sscanf (buffer, "%lx", &value);
+                if ((rc != EOF) && (rc != 0))
+                    ptr_buffer = (struct t_gui_buffer *)value;
             }
         }
         if (ptr_buffer)

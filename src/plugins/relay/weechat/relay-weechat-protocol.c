@@ -49,14 +49,17 @@ struct t_gui_buffer *
 relay_weechat_protocol_get_buffer (const char *arg)
 {
     struct t_gui_buffer *ptr_buffer;
+    unsigned long value;
     int rc;
 
     ptr_buffer = NULL;
 
     if (strncmp (arg, "0x", 2) == 0)
     {
-        rc = sscanf (arg, "%p", &ptr_buffer);
-        if ((rc != EOF) && (rc != 0) && ptr_buffer)
+        rc = sscanf (arg, "%lx", &value);
+        if ((rc != EOF) && (rc != 0))
+            ptr_buffer = (struct t_gui_buffer *)value;
+        if (ptr_buffer)
         {
             if (!weechat_hdata_check_pointer (
                     relay_hdata_buffer,
@@ -66,10 +69,6 @@ relay_weechat_protocol_get_buffer (const char *arg)
                 /* invalid pointer! */
                 ptr_buffer = NULL;
             }
-        }
-        else
-        {
-            ptr_buffer = NULL;
         }
     }
     else
@@ -527,7 +526,7 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(info)
 RELAY_WEECHAT_PROTOCOL_CALLBACK(infolist)
 {
     struct t_relay_weechat_msg *msg;
-    void *pointer;
+    unsigned long value;
     char *args;
     int rc;
 
@@ -536,17 +535,17 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(infolist)
     msg = relay_weechat_msg_new (id);
     if (msg)
     {
-        pointer = NULL;
+        value = 0;
         args = NULL;
         if (argc > 1)
         {
-            rc = sscanf (argv[1], "%p", &pointer);
+            rc = sscanf (argv[1], "%lx", &value);
             if ((rc == EOF) || (rc == 0))
-                pointer = NULL;
+                value = 0;
             if (argc > 2)
                 args = argv_eol[2];
         }
-        relay_weechat_msg_add_infolist (msg, argv[0], pointer, args);
+        relay_weechat_msg_add_infolist (msg, argv[0], (void *)value, args);
         relay_weechat_msg_send (client, msg);
         relay_weechat_msg_free (msg);
     }

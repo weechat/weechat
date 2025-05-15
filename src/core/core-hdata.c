@@ -1244,10 +1244,10 @@ hdata_set (struct t_hdata *hdata, void *pointer, const char *name,
            const char *value)
 {
     struct t_hdata_var *var;
-    void *ptr;
     char **ptr_string, *error;
     long number;
     long long number_longlong;
+    unsigned long ptr;
     int rc;
 
     if (!hdata->update_pending)
@@ -1307,10 +1307,10 @@ hdata_set (struct t_hdata *hdata, void *pointer, const char *name,
         case WEECHAT_HDATA_POINTER:
             if (value)
             {
-                rc = sscanf (value, "%p", &ptr);
+                rc = sscanf (value, "%lx", &ptr);
                 if ((rc != EOF) && (rc != 0))
                 {
-                    *((void **)(pointer + var->offset)) = ptr;
+                    *((void **)(pointer + var->offset)) = (void *)ptr;
                     return 1;
                 }
             }

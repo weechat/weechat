@@ -38,6 +38,7 @@ logger_info_log_file_cb (const void *pointer, void *data,
                          const char *arguments)
 {
     int rc;
+    unsigned long value;
     struct t_gui_buffer *buffer;
     struct t_logger_buffer *logger_buffer;
 
@@ -52,19 +53,15 @@ logger_info_log_file_cb (const void *pointer, void *data,
     buffer = NULL;
     if (strncmp (arguments, "0x", 2) == 0)
     {
-        rc = sscanf (arguments, "%p", &buffer);
-        if ((rc != EOF) && (rc != 0) && buffer)
+        rc = sscanf (arguments, "%lx", &value);
+        if ((rc != EOF) && (rc != 0) && value)
         {
-            if (!weechat_hdata_check_pointer (weechat_hdata_get ("buffer"),
-                                              NULL,
-                                              buffer))
+            if (weechat_hdata_check_pointer (weechat_hdata_get ("buffer"),
+                                             NULL,
+                                             (struct t_gui_buffer *)value))
             {
-                buffer = NULL;
+                buffer = (struct t_gui_buffer *)value;
             }
-        }
-        else
-        {
-            buffer = NULL;
         }
     }
     else

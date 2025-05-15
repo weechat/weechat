@@ -41,6 +41,7 @@ fset_mouse_focus_cb (const void *pointer, void *data, struct t_hashtable *info)
 {
     const char *buffer;
     int rc, format_number;
+    unsigned long value;
     struct t_gui_buffer *ptr_buffer;
     long y, option_index;
     char *error, str_value[128];
@@ -57,9 +58,11 @@ fset_mouse_focus_cb (const void *pointer, void *data, struct t_hashtable *info)
     if (!buffer)
         return info;
 
-    rc = sscanf (buffer, "%p", &ptr_buffer);
+    rc = sscanf (buffer, "%lx", &value);
     if ((rc == EOF) || (rc == 0))
         return info;
+
+    ptr_buffer = (struct t_gui_buffer *)value;
 
     if (!ptr_buffer || (ptr_buffer != fset_buffer))
         return info;
@@ -184,6 +187,7 @@ fset_mouse_hsignal_cb (const void *pointer, void *data, const char *signal,
     const char *ptr_key, *ptr_fset_option_pointer;
     char str_command[1024];
     struct t_fset_option *ptr_fset_option;
+    unsigned long value;
     int rc, distance, num_options, min_y, max_y, i;
     int chat_line_x, chat_line_x2, y, y2, chat_line_y, chat_line_y2;
     int option_index, option_index2, index1, index2;
@@ -202,9 +206,10 @@ fset_mouse_hsignal_cb (const void *pointer, void *data, const char *signal,
     if (!ptr_key || !ptr_fset_option_pointer)
         return WEECHAT_RC_OK;
 
-    rc = sscanf (ptr_fset_option_pointer, "%p", &ptr_fset_option);
+    rc = sscanf (ptr_fset_option_pointer, "%lx", &value);
     if ((rc == EOF) || (rc == 0))
         return WEECHAT_RC_OK;
+    ptr_fset_option = (struct t_fset_option *)value;
     if (!ptr_fset_option)
         return WEECHAT_RC_OK;
 

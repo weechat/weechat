@@ -6,6 +6,10 @@
 
 - core: add support of specifier `%@` for UTC time in function util_strftimeval
 
+### Fixed
+
+- relay/weechat: fix empty buffers in client when WeeChat is running on Solaris/illumos
+
 ## Version 4.6.3 (2025-05-11)
 
 ### Fixed
