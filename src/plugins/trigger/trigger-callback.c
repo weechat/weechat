@@ -811,9 +811,9 @@ trigger_callback_modifier_cb (const void *pointer, void *data,
     const char *ptr_string;
     char *string_modified, *pos, *buffer_pointer;
     char *str_tags, **tags, *prefix, *string_no_color;
+    unsigned long value;
     int num_tags, rc;
     void *ptr_irc_server, *ptr_irc_channel;
-    struct t_gui_buffer *ptr_buffer;
 
     TRIGGER_CALLBACK_CB_INIT(NULL);
 
@@ -926,10 +926,10 @@ trigger_callback_modifier_cb (const void *pointer, void *data,
                                               pos - modifier_data);
             if (buffer_pointer)
             {
-                rc = sscanf (buffer_pointer, "%p", &ptr_buffer);
+                rc = sscanf (buffer_pointer, "%lx", &value);
                 if ((rc != EOF) && (rc != 0))
                 {
-                    ctx.buffer = ptr_buffer;
+                    ctx.buffer = (struct t_gui_buffer *)value;
                     weechat_hashtable_set (
                         ctx.extra_vars,
                         "tg_plugin",

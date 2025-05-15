@@ -266,6 +266,7 @@ relay_modifier_input_text_display_cb (const void *pointer,
 {
     struct t_gui_buffer *ptr_buffer;
     struct t_relay_remote *ptr_remote;
+    unsigned long value;
     const char *ptr_input, *ptr_text_local, *ptr_text_remote;
     char *text, *new_input;
     int rc, input_get_any_user_data;
@@ -281,9 +282,11 @@ relay_modifier_input_text_display_cb (const void *pointer,
     if (!relay_remotes)
         return NULL;
 
-    rc = sscanf (modifier_data, "%p", &ptr_buffer);
+    rc = sscanf (modifier_data, "%lx", &value);
     if ((rc == EOF) || (rc == 0))
         return NULL;
+
+    ptr_buffer = (struct t_gui_buffer *)value;
 
     if (weechat_buffer_get_pointer (ptr_buffer, "plugin") != weechat_plugin)
         return NULL;
