@@ -1153,6 +1153,7 @@ char *
 eval_hdata_count (const char *text, struct t_eval_context *eval_context)
 {
     struct t_hdata *hdata;
+    unsigned long ptr_value;
     void *pointer;
     char *pos1, *pos2, *value, *hdata_name, *pointer_name, str_count[64];
     int rc, count;
@@ -1183,9 +1184,10 @@ eval_hdata_count (const char *text, struct t_eval_context *eval_context)
 
     if (strncmp (pointer_name, "0x", 2) == 0)
     {
-        rc = sscanf (pointer_name, "%p", &pointer);
+        rc = sscanf (pointer_name, "%lx", &ptr_value);
         if ((rc != EOF) && (rc != 0))
         {
+            pointer = (void *)ptr_value;
             if (!hdata_check_pointer (hdata, NULL, pointer))
                 goto end;
         }
