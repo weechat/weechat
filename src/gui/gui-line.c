@@ -1673,6 +1673,7 @@ gui_line_hook_update (struct t_gui_line *line,
 {
     const char *ptr_value, *ptr_value2;
     struct t_gui_buffer *ptr_buffer;
+    unsigned long value_pointer;
     long value;
     char *error, *new_message, *pos_newline;
     int rc, tags_updated, notify_level_updated, highlight_updated;
@@ -1706,7 +1707,8 @@ gui_line_hook_update (struct t_gui_line *line,
             {
                 if ((ptr_value2[0] == '0') && (ptr_value2[1] == 'x'))
                 {
-                    rc = sscanf (ptr_value2, "%p", &ptr_buffer);
+                    rc = sscanf (ptr_value2 + 2, "%lx", &value_pointer);
+                    ptr_buffer = (struct t_gui_buffer *)value_pointer;
                     if ((rc != EOF) && (rc >= 1)
                         && gui_chat_buffer_valid (ptr_buffer, line->data->buffer->type))
                     {

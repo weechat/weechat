@@ -590,6 +590,7 @@ relay_weechat_msg_add_hdata (struct t_relay_weechat_msg *msg,
     char *path_returned;
     const char *hdata_name, *array_size;
     void *pointer, **path_pointers;
+    unsigned long value;
     int rc, num_keys, num_path, i, type, pos_count, count, rc_sscanf;
     uint32_t count32;
 
@@ -630,9 +631,10 @@ relay_weechat_msg_add_hdata (struct t_relay_weechat_msg *msg,
         pos[0] = '\0';
     if (strncmp (list_path[0], "0x", 2) == 0)
     {
-        rc_sscanf = sscanf (list_path[0], "%p", &pointer);
+        rc_sscanf = sscanf (list_path[0], "%lx", &value);
         if ((rc_sscanf != EOF) && (rc_sscanf != 0))
         {
+            pointer = (void *)value;
             if (!weechat_hdata_check_pointer (ptr_hdata_head, NULL, pointer))
             {
                 if (weechat_relay_plugin->debug >= 1)
@@ -645,10 +647,6 @@ relay_weechat_msg_add_hdata (struct t_relay_weechat_msg *msg,
                 }
                 goto end;
             }
-        }
-        else
-        {
-            pointer = NULL;
         }
     }
     else
