@@ -27,8 +27,9 @@ add_library(lua MODULE
 set_target_properties(lua PROPERTIES PREFIX "")
 
 if(LUA_FOUND)
-  include_directories(${LUA_INCLUDE_DIRS})
-  target_link_libraries(lua ${LUA_LDFLAGS} weechat_plugins_scripts coverage_config)
+  add_definitions(${LUA_CFLAGS})
+  include_directories(${LUA_INCLUDE_DIR})
+  target_link_libraries(lua ${LUA_LIBRARIES} weechat_plugins_scripts coverage_config)
 endif()
 
 install(TARGETS lua LIBRARY DESTINATION "${WEECHAT_LIBDIR}/plugins")
