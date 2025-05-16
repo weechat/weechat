@@ -82,7 +82,7 @@ foreach(pofile ${PO_FILES})
     OUTPUT "${mofile}"
     COMMAND "${MSGMERGE_EXECUTABLE}" ARGS --quiet -o "${CMAKE_CURRENT_BINARY_DIR}/${pofile}" "${CMAKE_CURRENT_SOURCE_DIR}/${pofile}" ${POT_FILE_PATH}
     COMMAND "${MSGFMT_EXECUTABLE}" ARGS -o "${mofile}" "${CMAKE_CURRENT_BINARY_DIR}/${pofile}"
-    COMMAND "${MSGFMT_EXECUTABLE}" ARGS -c --statistics --verbose --output-file=/dev/null "${CMAKE_CURRENT_BINARY_DIR}/${pofile}"
+    COMMAND "${MSGFMT_EXECUTABLE}" ARGS -c --statistics --verbose "${CMAKE_CURRENT_BINARY_DIR}/${pofile}" >/dev/null 2>&1
     DEPENDS "${POT_FILE_PATH}" "${CMAKE_CURRENT_SOURCE_DIR}/${pofile}"
     COMMENT "Compiling ${polang}.po"
   )
