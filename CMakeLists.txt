@@ -228,6 +228,12 @@ if(ENABLE_LARGEFILE)
   add_definitions(-D_FILE_OFFSET_BITS=64 -D_LARGEFILE64_SOURCE -D_LARGEFILE_SOURCE -D_LARGE_FILES)
 endif()
 
+# _XPG4_2 is needed for macros like CMSG_SPACE
+# __EXTENSIONS__ is needed for constants like NI_MAXHOST and for struct timeval
+if(CMAKE_HOST_SOLARIS)
+  add_definitions(-D_XPG4_2 -D__EXTENSIONS__)
+endif()
+
 # Check for libgcrypt
 pkg_check_modules(LIBGCRYPT REQUIRED libgcrypt)
 include_directories(${LIBGCRYPT_INCLUDE_DIRS})
