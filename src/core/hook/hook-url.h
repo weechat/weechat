@@ -22,6 +22,8 @@
 #ifndef WEECHAT_HOOK_URL_H
 #define WEECHAT_HOOK_URL_H
 
+#include <pthread.h>
+
 struct t_weechat_plugin;
 struct t_infolist_item;
 struct t_hashtable;
