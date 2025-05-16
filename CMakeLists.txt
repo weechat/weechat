@@ -218,6 +218,8 @@ check_symbol_exists("malloc_trim" "malloc.h" HAVE_MALLOC_TRIM)
 check_function_exists(mallinfo HAVE_MALLINFO)
 check_function_exists(mallinfo2 HAVE_MALLINFO2)
 
+check_symbol_exists("htonll" "sys/types.h;netinet/in.h;inttypes.h" HAVE_HTONLL)
+
 check_symbol_exists("eat_newline_glitch" "term.h" HAVE_EAT_NEWLINE_GLITCH)
 
 # Check for Large File Support
