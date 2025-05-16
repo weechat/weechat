@@ -198,6 +198,7 @@ include(FindPkgConfig)
 include(CheckIncludeFiles)
 include(CheckFunctionExists)
 include(CheckSymbolExists)
+include(CheckLibraryExists)
 
 check_include_files("langinfo.h" HAVE_LANGINFO_CODESET)
 check_include_files("sys/resource.h" HAVE_SYS_RESOURCE_H)
@@ -211,6 +212,16 @@ check_function_exists(mallinfo2 HAVE_MALLINFO2)
 check_symbol_exists("htonll" "sys/types.h;netinet/in.h;inttypes.h" HAVE_HTONLL)
 
 check_symbol_exists("eat_newline_glitch" "term.h" HAVE_EAT_NEWLINE_GLITCH)
+
+# Check if res_init requires libresolv
+check_function_exists(res_init, LIBC_HAS_RES_INIT)
+if(NOT LIBC_HAS_RES_INIT)
+  find_library(RESOLV_LIBRARY resolv)
+  check_library_exists("${RESOLV_LIBRARY}" res_init "" LIBRESOLV_HAS_RES_INIT)
+  if(LIBRESOLV_HAS_RES_INIT)
+    list(APPEND EXTRA_LIBS ${RESOLV_LIBRARY})
+  endif()
+endif()
 
 # Check for Large File Support
 if(ENABLE_LARGEFILE)
