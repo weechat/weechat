@@ -43,6 +43,7 @@
 #cmakedefine HAVE_MALLINFO2
 #cmakedefine HAVE_MALLOC_H
 #cmakedefine HAVE_MALLOC_TRIM
+#cmakedefine HAVE_HTONLL
 #cmakedefine HAVE_EAT_NEWLINE_GLITCH
 #cmakedefine HAVE_ASPELL_VERSION_STRING
 #cmakedefine HAVE_ENCHANT_GET_VERSION

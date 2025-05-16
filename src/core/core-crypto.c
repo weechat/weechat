@@ -34,10 +34,18 @@
 /* Bring in htobe64 */
 #ifdef __ANDROID__
 #define _BSD_SOURCE
+#define BE_INT64 htobe64
 #include <endian.h>
 #elif defined(__APPLE__)
 #include <libkern/OSByteOrder.h>
-#define htobe64 OSSwapHostToBigInt64
+#define BE_INT64 OSSwapHostToBigInt64
+#elif defined(HAVE_HTONLL)
+#include <sys/types.h>
+#include <netinet/in.h>
+#include <inttypes.h>
+#define BE_INT64 htonll
+#else
+#define BE_INT64 htobe64
 #endif
 
 #include "weechat.h"
@@ -46,10 +54,6 @@
 #include "core-hashtable.h"
 #include "core-string.h"
 #include "../plugins/plugin.h"
-
-#ifdef htonll
-#define htobe64 htonll
-#endif
 
 char *weecrypto_hash_algo_string[] = {
     "crc32",
@@ -533,7 +537,7 @@ weecrypto_totp_generate_internal (const char *secret, int length_secret,
     int rc, offset, length;
     unsigned long bin_code;
 
-    moving_factor_swapped = htobe64 (moving_factor);
+    moving_factor_swapped = BE_INT64 (moving_factor);
     rc = weecrypto_hmac (secret, length_secret,
                          &moving_factor_swapped, sizeof (moving_factor_swapped),
                          GCRY_MD_SHA1,
