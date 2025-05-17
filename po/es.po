@@ -170,7 +170,7 @@ msgid ""
 "%sRenumbering is allowed only if option weechat.look.buffer_auto_renumber is "
 "off"
 msgstr ""
-"%sEl renombrado es permitido solo sila opción "
+"%sEl renombrado es permitido solo si la opción "
 "weechat.look.buffer_auto_renumber está desactivada (off)"
 
 #, c-format
@@ -846,7 +846,7 @@ msgstr "%sError: opción \"%s\" no encontrada"
 #, fuzzy
 #| msgid "Option changed: "
 msgid "Option unchanged: "
-msgstr "Opción cambiada: "
+msgstr "Opción sin cambios: "
 
 msgid "Option changed: "
 msgstr "Opción cambiada: "
