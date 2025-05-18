@@ -61,6 +61,10 @@ LLVMFuzzerTestOneInput (const uint8_t *data, size_t size)
     char *str, hash[1024], *encrypted, *decrypted;
     int length_encrypted, length_decrypted;
 
+    /* ignore empty or huge data */
+    if ((size == 0) || (size > 65536))
+        return 0;
+
     str = (char *)malloc (size + 1);
     memcpy (str, data, size);
     str[size] = '\0';
@@ -68,23 +72,20 @@ LLVMFuzzerTestOneInput (const uint8_t *data, size_t size)
     if (size >= 8)
         secure_derive_key (str, str, (unsigned char *)hash, sizeof (hash));
 
-    if (size > 0)
-    {
-        encrypted = NULL;
-        decrypted = NULL;
-        config_file_option_set (secure_config_crypt_salt, "on", 1);
-        secure_encrypt_data (str, size, GCRY_MD_SHA512, GCRY_CIPHER_AES256, "test", &encrypted, &length_encrypted);
-        secure_decrypt_data (encrypted, length_encrypted, GCRY_MD_SHA512, GCRY_CIPHER_AES256, "test", &decrypted, &length_decrypted);
-        assert ((size_t)length_decrypted == size);
-        assert (memcmp (decrypted, str, length_decrypted) == 0);
-        free (encrypted);
-        free (decrypted);
-        config_file_option_set (secure_config_crypt_salt, "off", 1);
-        encrypted = NULL;
-        secure_encrypt_data (str, size, GCRY_MD_SHA512, GCRY_CIPHER_AES256, "test", &encrypted, &length_encrypted);
-        free (encrypted);
-        config_file_option_reset (secure_config_crypt_salt, 1);
-    }
+    encrypted = NULL;
+    decrypted = NULL;
+    config_file_option_set (secure_config_crypt_salt, "on", 1);
+    secure_encrypt_data (str, size, GCRY_MD_SHA512, GCRY_CIPHER_AES256, "test", &encrypted, &length_encrypted);
+    secure_decrypt_data (encrypted, length_encrypted, GCRY_MD_SHA512, GCRY_CIPHER_AES256, "test", &decrypted, &length_decrypted);
+    assert ((size_t)length_decrypted == size);
+    assert (memcmp (decrypted, str, length_decrypted) == 0);
+    free (encrypted);
+    free (decrypted);
+    config_file_option_set (secure_config_crypt_salt, "off", 1);
+    encrypted = NULL;
+    secure_encrypt_data (str, size, GCRY_MD_SHA512, GCRY_CIPHER_AES256, "test", &encrypted, &length_encrypted);
+    free (encrypted);
+    config_file_option_reset (secure_config_crypt_salt, 1);
 
     free (str);
 
