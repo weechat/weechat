@@ -35,6 +35,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 - core: fix memory leak in function util_parse_delay
 - irc: display nick changes and quit messages when option irc.look.ignore_tag_messages is enabled ([#2241](https://github.com/weechat/weechat/issues/2241))
 - perl: fix build when multiplicity is not available ([#2243](https://github.com/weechat/weechat/issues/2243))
+- relay/weechat: fix empty buffers in client when WeeChat is running under Solaris/illumos
 
 ## Version 4.6.3 (2025-05-11)
 
