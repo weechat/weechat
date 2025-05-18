@@ -35,6 +35,10 @@ extern "C" int LLVMFuzzerTestOneInput (const uint8_t *data, size_t size)
 {
     char *str;
 
+    /* ignore huge data */
+    if (size > 65536)
+        return 0;
+
     str = (char *)malloc (size + 1);
     memcpy (str, data, size);
     str[size] = '\0';
