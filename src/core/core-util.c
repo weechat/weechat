@@ -168,6 +168,8 @@ util_get_time_string (const time_t *date)
 /*
  * Formats date and time like strftime (but with timeval structure as input)
  * and adds extra specifiers:
+ *   - "%@": return the date expressed in Coordinated Universal Time (UTC)
+ *           instead of date relative to the user's specified timezone
  *   - "%.1" to "%.6": first N digits of microseconds, zero-padded
  *   - "%f": alias of "%.6" (microseconds, zero-padded to 6 digits)
  *   - "%!": timestamp as integer, in seconds (value of tv->tv_sec)
@@ -178,14 +180,15 @@ util_strftimeval (char *string, int max, const char *format, struct timeval *tv)
 {
     char **format2, str_temp[32];
     const char *ptr_format;
-    struct tm *local_time;
-    int length, bytes;
+    struct tm *date_time;
+    int length, bytes, local_time;
     long usec;
 
     if (!string || (max <= 0) || !format || !tv)
         return 0;
 
     string[0] = '\0';
+    local_time = 1;
 
     if (!format[0])
         return 0;
@@ -206,6 +209,11 @@ util_strftimeval (char *string, int max, const char *format, struct timeval *tv)
         if ((ptr_format[0] == '%') && (ptr_format[1] == '%'))
         {
             string_dyn_concat (format2, "%%", -1);
+            ptr_format += 2;
+        }
+        else if ((ptr_format[0] == '%') && (ptr_format[1] == '@'))
+        {
+            local_time = 0;
             ptr_format += 2;
         }
         else if ((ptr_format[0] == '%') && (ptr_format[1] == '.'))
@@ -244,14 +252,17 @@ util_strftimeval (char *string, int max, const char *format, struct timeval *tv)
         }
     }
 
-    local_time = localtime (&(tv->tv_sec));
-    if (!local_time)
+    if (local_time)
+        date_time = localtime (&(tv->tv_sec));
+    else
+        date_time = gmtime (&(tv->tv_sec));
+    if (!date_time)
     {
         string_dyn_free (format2, 1);
         return 0;
     }
 
-    bytes = strftime (string, max, *format2, local_time);
+    bytes = strftime (string, max, *format2, date_time);
 
     string_dyn_free (format2, 1);
 

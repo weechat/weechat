@@ -4882,7 +4882,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== util_strftimeval
 
-_WeeChat ≥ 4.2.0, mis à jour dans la 4.3.0._
+_WeeChat ≥ 4.2.0, mis à jour dans la 4.3.0, 4.7.0._
 
 Formatter la date et l'heure comme la fonction `strftime` de la bibliothèque C,
 en utilisant un `struct timeval` en entrée et en supportant des caractères de
@@ -4901,6 +4901,8 @@ Paramètres :
 * _max_ : taille de la chaîne
 * _format_ : format, le même que celui de la fonction _strftime_, avec des
   caractères de conversion supplémentaires :
+** `%@` : retourner la date exprimée en Temps Universel Coordonné (UTC)
+   au lieu de la date relative au fuseau horaire de l'utilisateur _(WeeChat ≥ 4.7.0)_
 ** `%.N` où `N` est entre 1 and 6: microsecondes remplies avec des zéros sur
    N chiffres (par exemple `%.3` pour les millisecondes)
 ** `%f` : alias de `%.6`
@@ -4917,8 +4919,8 @@ Exemple en C :
 char time[256];
 struct timeval tv;
 gettimeofday (&tv, NULL);
-weechat_util_strftimeval (time, sizeof (time), "%FT%T.%f", &tv);
-/* résultat : 2023-12-26T18:10:04.460509 */
+weechat_util_strftimeval (time, sizeof (time), "%@%FT%T.%fZ", &tv);
+/* résultat : 2023-12-26T18:10:04.460509Z */
 ----
 
 [NOTE]

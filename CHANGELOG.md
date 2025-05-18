@@ -16,6 +16,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 ### Added
 
+- core: add support of specifier `%@` for UTC time in function util_strftimeval
 - api: add function file_compare
 - irc: add support of strikethrough text in IRC messages ([#2248](https://github.com/weechat/weechat/issues/2248))
 - buflist: add variables `${number_zero}` and `${number_zero2}` (zero-padded buffer number)
