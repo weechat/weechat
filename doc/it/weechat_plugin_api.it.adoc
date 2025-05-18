@@ -4985,7 +4985,7 @@ Questa funzione non è disponibile nelle API per lo scripting.
 // TRANSLATION MISSING
 ==== util_strftimeval
 
-_WeeChat ≥ 4.2.0, updated in 4.3.0._
+_WeeChat ≥ 4.2.0, updated in 4.3.0, 4.6.4._
 
 Format date and time like function `strftime` in C library, using `struct timeval`
 as input, and supporting extra specifiers.
@@ -5002,6 +5002,8 @@ Arguments:
 * _string_: buffer where the formatted string is stored
 * _max_: string size
 * _format_: format, the same as _strftime_ function, with these extra specifiers:
+** `%@`: return the date expressed in Coordinated Universal Time (UTC)
+   instead of date relative to the user's specified timezone _(WeeChat ≥ 4.7.0)_
 ** `%.N` where `N` is between 1 and 6: zero-padded microseconds on N digits
    (for example `%.3` for milliseconds)
 ** `%f`: alias of `%.6`
@@ -5018,8 +5020,8 @@ C example:
 char time[256];
 struct timeval tv;
 gettimeofday (&tv, NULL);
-weechat_util_strftimeval (time, sizeof (time), "%FT%T.%f", &tv);
-/* result: 2023-12-26T18:10:04.460509 */
+weechat_util_strftimeval (time, sizeof (time), "%@%FT%T.%fZ", &tv);
+/* result: 2023-12-26T18:10:04.460509Z */
 ----
 
 [NOTE]

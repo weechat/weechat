@@ -1,5 +1,11 @@
 # WeeChat ChangeLog
 
+## Version 4.6.4 (under dev)
+
+### Added
+
+- core: add support of specifier `%@` for UTC time in function util_strftimeval
+
 ## Version 4.6.3 (2025-05-11)
 
 ### Fixed

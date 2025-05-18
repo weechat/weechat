@@ -186,6 +186,11 @@ TEST(CoreUtil, Strftimeval)
     STRCMP_EQUAL("10:29:09", str_time);
 
     strcpy (str_time, "test");
+    LONGS_EQUAL(8, util_strftimeval (str_time, sizeof (str_time),
+                                     "%@%H:%M:%S", &tv));
+    STRCMP_EQUAL("10:29:09", str_time);
+
+    strcpy (str_time, "test");
     LONGS_EQUAL(19, util_strftimeval (str_time, sizeof (str_time),
                                       "%Y-%m-%d %H:%M:%S", &tv));
     STRCMP_EQUAL("2023-12-25 10:29:09", str_time);

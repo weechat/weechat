@@ -4624,7 +4624,7 @@ weechat_printf (NULL, "date: %s",
 
 ==== util_strftimeval
 
-_WeeChat ≥ 4.2.0, ажурирано у 4.3.0._
+_WeeChat ≥ 4.2.0, ажурирано у 4.3.0, 4.6.4._
 
 Форматира датум и време као функција `strftime` из C библиотеке, користећи `struct timeval`
 као улаз уз подршку за додатне спецификаторе.
@@ -4641,6 +4641,9 @@ int weechat_util_strftimeval (char *string, int max, const char *format, struct 
 * _string_: бафер у који се смешта форматирани стринг
 * _max_: величина стринга
 * _format_: формат, исто као за _strftime_ функцију, са следећим додатним спецификаторима:
+// TRANSLATION MISSING
+** `%@`: return the date expressed in Coordinated Universal Time (UTC)
+   instead of date relative to the user's specified timezone _(WeeChat ≥ 4.7.0)_
 ** `%.N` где је `N` између 1 и 6: микросекунде допуњене нулама на N цифара
    (на пример `%.3` за милисекунде)
 ** `%f`: алијас за `%.6`
@@ -4657,8 +4660,8 @@ C пример:
 char time[256];
 struct timeval tv;
 gettimeofday (&tv, NULL);
-weechat_util_strftimeval (time, sizeof (time), "%FT%T.%f", &tv);
-/* резултат: 2023-12-26T18:10:04.460509 */
+weechat_util_strftimeval (time, sizeof (time), "%@%FT%T.%fZ", &tv);
+/* резултат: 2023-12-26T18:10:04.460509Z */
 ----
 
 [NOTE]
