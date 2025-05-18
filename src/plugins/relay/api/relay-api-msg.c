@@ -57,15 +57,11 @@
 
 #define MSG_ADD_HDATA_TIME_USEC(__json_name,                            \
                                 __var_name, __var_name_usec)            \
-    time_value = weechat_hdata_time (hdata, pointer, __var_name);       \
-    local_time = localtime (&time_value);                               \
-    time_value -= local_time->tm_gmtoff;                                \
-    local_time = localtime (&time_value);                               \
-    tv.tv_sec = mktime (local_time);                                    \
+    tv.tv_sec = weechat_hdata_time (hdata, pointer, __var_name);        \
     tv.tv_usec = weechat_hdata_integer (hdata, pointer,                 \
                                         __var_name_usec);               \
     weechat_util_strftimeval (str_time, sizeof (str_time),              \
-                              "%FT%T.%fZ", &tv);                        \
+                              "%@%FT%T.%fZ", &tv);                      \
     MSG_ADD_STR_BUF(__json_name, str_time);
 
 #define MSG_ADD_HDATA_STR(__json_name, __var_name)                      \
@@ -487,9 +483,7 @@ relay_api_msg_line_data_to_json (struct t_gui_line_data *line_data,
     const char *ptr_string;
     char *string, str_time[256], str_var[64];
     int i, tags_count;
-    time_t time_value;
     struct timeval tv;
-    struct tm *local_time;
 
     hdata = relay_hdata_line_data;
     pointer = line_data;
@@ -792,9 +786,7 @@ relay_api_msg_hotlist_to_json (struct t_gui_hotlist *hotlist)
     struct t_gui_hotlist *pointer;
     struct t_gui_buffer *buffer;
     cJSON *json, *json_count;
-    time_t time_value;
     struct timeval tv;
-    struct tm *local_time;
     char str_time[256], str_key[32];
     int i, array_size;
     long long buffer_id;
