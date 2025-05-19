@@ -31,6 +31,7 @@ set(LIB_GUI_CURSES_SRC
 
 find_package(Ncurses)
 if(NCURSES_FOUND)
+  add_definitions(${NCURSES_CFLAGS})
   check_include_files(ncursesw/ncurses.h NCURSESW_HEADERS)
   if(NCURSESW_HEADERS)
     add_definitions(-DHAVE_NCURSESW_CURSES_H)
