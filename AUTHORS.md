@@ -29,6 +29,7 @@ Alphabetically:
 - Asakura
 - Bazerka
 - Benoit Papillault (benoit)
+- Caleb Josue Ruiz Torres
 - Chris Hills
 - Christian Duerr
 - Christian Heinz
