@@ -2232,7 +2232,7 @@ char **weechat_string_split_command (const char *command, char separator);
 戻り値:
 
 * 文字列の配列、分割に失敗した場合は NULL (使用後には必ず
-  <<_free_split_command,free_split_command>> を呼び出して領域を開放してください)
+  <<_string_free_split_command,string_free_split_command>> を呼び出して領域を開放してください)
 
 C 言語での使用例:
 

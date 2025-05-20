@@ -2297,7 +2297,7 @@ Argomenti:
 Valore restituito:
 
 * array di stringhe, NULL in caso di problemi (deve essere liberata chiamando
-  <<_free_split_command,free_split_command>> dopo l'uso)
+  <<_string_free_split_command,string_free_split_command>> dopo l'uso)
 
 Esempio in C:
 

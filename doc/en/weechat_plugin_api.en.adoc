@@ -2165,7 +2165,7 @@ Arguments:
 Return value:
 
 * array of strings, NULL if problem (must be freed by calling
-  <<_free_split_command,free_split_command>> after use)
+  <<_string_free_split_command,string_free_split_command>> after use)
 
 C example:
 

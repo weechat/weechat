@@ -2086,7 +2086,7 @@ char **weechat_string_split_command (const char *command, char separator);
 
 Повратна вредност:
 
-* низ стрингова, NULL у случају проблема (након употребе мора да се ослободи позивом <<_free_split_command,free_split_command>>)
+* низ стрингова, NULL у случају проблема (након употребе мора да се ослободи позивом <<_string_free_split_command,string_free_split_command>>)
 
 C пример:
 

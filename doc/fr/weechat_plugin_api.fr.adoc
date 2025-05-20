@@ -2205,7 +2205,7 @@ Paramètres :
 Valeur de retour :
 
 * tableau de chaînes, NULL en cas de problème (doit être supprimé par un appel à
-  <<_free_split_command,free_split_command>> après utilisation)
+  <<_string_free_split_command,string_free_split_command>> après utilisation)
 
 Exemple en C :
 
