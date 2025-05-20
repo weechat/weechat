@@ -620,7 +620,7 @@ Niektóre zmienne śwodowiskowe są używane przez WeeChat o ile zostały zdefin
 [width="100%",cols="1m,6",options="header"]
 |===
 | Nazwa                | Opis
-| WEECHAT_HOME         | Katalog domowy WeeChat (z plikami konfiguracyjnymi, logami, skryptami, ...). Działa tak samo jak <<compile_with_cmake,opcja CMake>> `WEECHAT_HOME`.
+| WEECHAT_HOME         | Katalog domowy WeeChat (z plikami konfiguracyjnymi, logami, skryptami, ...). Działa tak samo jak <<build,opcja CMake>> `WEECHAT_HOME`.
 | WEECHAT_PASSPHRASE   | Hasło używane do odszyfrowania zabezpieczonych danych.
 | WEECHAT_EXTRA_LIBDIR | Dodatkowy katalog do ładowania wtyczek (z katalogu "plugins" znajdującego się pod tą ścieżką).
 |===
@@ -3785,7 +3785,7 @@ WeeChat wspiera następujące https://ircv3.net/irc/[rozszerzenia IRCv3 ^↗^^]
 * <<irc_ircv3_batch,batch>>
 * <<irc_ircv3_cap_notify,cap-notify>>
 * <<irc_ircv3_chghost,chghost>>
-* <<irc_ircv3_draft/multiline,draft/multiline>>
+* <<irc_ircv3_draft_multiline,draft/multiline>>
 * <<irc_ircv3_echo_message,echo-message>>
 * <<irc_ircv3_extended_join,extended-join>>
 * <<irc_ircv3_invite_notify,invite-notify>>
@@ -3833,7 +3833,7 @@ Specyfikacja: https://ircv3.net/specs/extensions/account-tag[account-tag ^↗^^
 Ta właściwość pozwala serwerowi na wysyłanie komend konta jako tagów wiadomości
 do komend wysyłanych do klienta. +
 WeeChat parsuje te tagi i zapisuje je w wiadomości ale nie jest on używany ani
-wyświetlany. Można ich użyć w komendzie <<command_filter,/filter>> do filtrowania
+wyświetlany. Można ich użyć w komendzie <<command_weechat_filter,/filter>> do filtrowania
 wiadmości pasujących do konkretnych kont:
 
 Przykład otrzymanej nieprzetworzonej wiadomości:

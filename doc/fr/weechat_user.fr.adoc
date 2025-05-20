@@ -624,7 +624,7 @@ Des variables d'environnement sont utilisées par WeeChat si elles sont définie
 [width="100%",cols="1m,6",options="header"]
 |===
 | Nom                  | Description
-| WEECHAT_HOME         | Le répertoire "maison" de WeeChat (avec les fichiers de configuration, logs, scripts, etc.). Même comportement que <<compile_with_cmake,l'option CMake>> `WEECHAT_HOME`.
+| WEECHAT_HOME         | Le répertoire "maison" de WeeChat (avec les fichiers de configuration, logs, scripts, etc.). Même comportement que <<build,l'option CMake>> `WEECHAT_HOME`.
 | WEECHAT_PASSPHRASE   | La phrase secrète utilisée pour déchiffrer les données sécurisées.
 | WEECHAT_EXTRA_LIBDIR | Un répertoire supplémentaire pour charger les extensions (depuis le répertoire "plugins" sous ce chemin).
 |===
@@ -3869,7 +3869,7 @@ WeeChat supporte les https://ircv3.net/irc/[extensions IRCv3 ^↗^^] suivantes�
 * <<irc_ircv3_batch,batch>>
 * <<irc_ircv3_cap_notify,cap-notify>>
 * <<irc_ircv3_chghost,chghost>>
-* <<irc_ircv3_draft/multiline,draft/multiline>>
+* <<irc_ircv3_draft_multiline,draft/multiline>>
 * <<irc_ircv3_echo_message,echo-message>>
 * <<irc_ircv3_extended_join,extended-join>>
 * <<irc_ircv3_invite_notify,invite-notify>>
@@ -3917,7 +3917,7 @@ Spécification : https://ircv3.net/specs/extensions/account-tag[account-tag ^�
 Cette capacité autorise le serveur à envoyer le compte comme étiquette de message
 dans les commandes envoyées au client. +
 WeeChat extrait cette étiquette et la sauve dans le message, mais elle n'est pas
-utilisée ni affichée. Elle peut être utilisée dans la commande <<command_filter,/filter>>
+utilisée ni affichée. Elle peut être utilisée dans la commande <<command_weechat_filter,/filter>>
 pour filtrer les messages correspondants à des comptes spécifiques.
 
 Exemple de message IRC brut reçu :

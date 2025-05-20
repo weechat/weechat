@@ -686,7 +686,7 @@ Some environment variables are used by WeeChat if they are defined:
 [width="100%",cols="1m,6",options="header"]
 |===
 | Name                 | Description
-| WEECHAT_HOME         | The WeeChat home (with configuration files, logs, scripts, ...). Same behavior as <<compile_with_cmake,CMake option>> `WEECHAT_HOME`.
+| WEECHAT_HOME         | The WeeChat home (with configuration files, logs, scripts, ...). Same behavior as <<build,CMake option>> `WEECHAT_HOME`.
 | WEECHAT_PASSPHRASE   | The passphrase used to decrypt secured data.
 | WEECHAT_EXTRA_LIBDIR | An extra directory to load plugins (from the "plugins" directory in this path).
 |===
@@ -4110,7 +4110,7 @@ WeeChat supports the following https://ircv3.net/irc/[IRCv3 extensions ^↗^^]:
 * <<irc_ircv3_batch,batch>>
 * <<irc_ircv3_cap_notify,cap-notify>>
 * <<irc_ircv3_chghost,chghost>>
-* <<irc_ircv3_draft/multiline,draft/multiline>>
+* <<irc_ircv3_draft_multiline,draft/multiline>>
 * <<irc_ircv3_echo_message,echo-message>>
 * <<irc_ircv3_extended_join,extended-join>>
 * <<irc_ircv3_invite_notify,invite-notify>>
@@ -4158,7 +4158,7 @@ Specification: https://ircv3.net/specs/extensions/account-tag[account-tag ^↗^
 This capability allows the server to send account as message tag to commands
 sent to the client. +
 WeeChat parses this tag and saves it in the message, but it is not used or
-displayed. It can be used in <<command_filter,/filter>> command to filter
+displayed. It can be used in <<command_weechat_filter,/filter>> command to filter
 messages matching specific accounts.
 
 Example of raw IRC message received:

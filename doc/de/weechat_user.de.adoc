@@ -625,7 +625,7 @@ Einige Umgebungsvariablen werden von WeeChat genutzt, sofern sie definiert wurde
 [width="100%",cols="1m,6",options="header"]
 |===
 | Name                 | Beschreibung
-| WEECHAT_HOME         | Das WeeChat Verzeichnis (beinhaltet Konfigurationsdateien, Protokolldateien, Skripten, ...). Gleiches Verhalten wie <<compile_with_cmake,CMake option>> `WEECHAT_HOME`.
+| WEECHAT_HOME         | Das WeeChat Verzeichnis (beinhaltet Konfigurationsdateien, Protokolldateien, Skripten, ...). Gleiches Verhalten wie <<build,CMake option>> `WEECHAT_HOME`.
 | WEECHAT_PASSPHRASE   | Die Passphrase zum Entschlüsseln von schutzwürdigen Daten.
 | WEECHAT_EXTRA_LIBDIR | Ein zusätzliches Verzeichnis um Erweiterungen zu installieren (vom "plugins" Verzeichnis in dieses Verzeichnis).
 |===
@@ -3822,7 +3822,7 @@ WeeChat unterstützt folgende https://ircv3.net/irc/[IRCv3 extensions ^↗^^]:
 * <<irc_ircv3_batch,batch>>
 * <<irc_ircv3_cap_notify,cap-notify>>
 * <<irc_ircv3_chghost,chghost>>
-* <<irc_ircv3_draft/multiline,draft/multiline>>
+* <<irc_ircv3_draft_multiline,draft/multiline>>
 * <<irc_ircv3_echo_message,echo-message>>
 * <<irc_ircv3_extended_join,extended-join>>
 * <<irc_ircv3_invite_notify,invite-notify>>
@@ -3869,7 +3869,7 @@ Spezifikation: https://ircv3.net/specs/extensions/account-tag[account-tag ^↗^
 Diese Fähigkeit ermöglicht es dem Server, einen Account als Nachrichten-Tag an Befehle zu hängen,
 die an den Client gesendet werden. +
 WeeChat analysiert dieses Tag und speichert es in der Nachricht, aber es wird nicht verwendet oder
-angezeigt. Mit dem <<command_filter,/filter>> Befehl kann man diese Nachrichten explizit filtern,
+angezeigt. Mit dem <<command_weechat_filter,/filter>> Befehl kann man diese Nachrichten explizit filtern,
 in dem die Accounts nutzt.
 
 Beispiel einer empfangenen IRC-Rohnachricht:
