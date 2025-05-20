@@ -38,6 +38,7 @@ if(ENABLE_MAN OR ENABLE_DOC)
   if(ASCIIDOCTOR_FOUND)
     # common asciidoctor arguments
     set(ASCIIDOCTOR_ARGS
+      -v
       -a experimental
       -a reproducible
       -a "prewrap!"
