@@ -47,23 +47,20 @@ daemonize (void)
     pid_t pid;
     int fd, i;
 
-    printf (_("Running WeeChat in background..."));
-    printf (" ");
+    printf ("%s ", _("Running WeeChat in background..."));
 
     pid = fork ();
 
     if (pid < 0)
     {
-        printf (_("fork error"));
-        printf ("\n");
+        printf ("%s\n", _("fork error"));
         exit (EXIT_FAILURE);
     }
 
     if (pid > 0)
     {
         /* parent process */
-        printf (_("OK"));
-        printf ("\n");
+        printf ("%s\n", _("OK"));
         exit (EXIT_SUCCESS);
     }
 
