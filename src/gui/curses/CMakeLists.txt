@@ -53,11 +53,6 @@ if(ENABLE_ZSTD)
   list(APPEND EXTRA_LIBS ${LIBZSTD_LDFLAGS})
 endif()
 
-if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-  # link with resolv lib on macOS
-  list(APPEND EXTRA_LIBS "resolv")
-endif()
-
 if(ENABLE_NCURSES)
   subdirs(normal)
 endif()
