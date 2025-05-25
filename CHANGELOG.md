@@ -36,7 +36,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 - irc: display nick changes and quit messages when option irc.look.ignore_tag_messages is enabled ([#2241](https://github.com/weechat/weechat/issues/2241))
 - perl: fix build when multiplicity is not available ([#2243](https://github.com/weechat/weechat/issues/2243))
 - relay/weechat: fix empty buffers in client when WeeChat is running on Solaris/illumos
-- build: fix build on Solaris/illumos
+- build: fix build on Solaris/illumos (issue #2251)
 
 ## Version 4.6.3 (2025-05-11)
 
