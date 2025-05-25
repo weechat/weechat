@@ -9,6 +9,7 @@
 ### Fixed
 
 - relay/weechat: fix empty buffers in client when WeeChat is running on Solaris/illumos
+- build: fix build on Solaris/illumos (issue #2251)
 
 ## Version 4.6.3 (2025-05-11)
 
