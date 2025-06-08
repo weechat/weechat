@@ -611,6 +611,12 @@ debug_hooks_plugin_types (const char *plugin_mask, const char **hook_types)
                                        (ptr_hook->plugin) ?
                                        ptr_hook->plugin->name : PLUGIN_CORE,
                                        -1);
+                    if (ptr_hook->subplugin)
+                    {
+                        string_dyn_concat (result_type, "(", -1);
+                        string_dyn_concat (result_type, ptr_hook->subplugin, -1);
+                        string_dyn_concat (result_type, ")", -1);
+                    }
                     string_dyn_concat (result_type, ": ", -1);
                     string_dyn_concat (result_type, desc, -1);
                     string_dyn_concat (result_type, "\n", -1);
