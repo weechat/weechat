@@ -139,7 +139,7 @@ else()
 endif()
 
 if(ENABLE_SCRIPTS AND ENABLE_RUBY)
-  find_package(Ruby)
+  find_package(Ruby ${RUBY_VERSION} REQUIRED)
   if(RUBY_FOUND)
     add_subdirectory(ruby)
   else()

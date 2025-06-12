@@ -201,6 +201,9 @@ if(COMMAND cmake_policy)
   endif()
 endif()
 
+# option RUBY_VERSION (used by ruby plugin)
+set(RUBY_VERSION "3.1" CACHE STRING "Ruby Version")
+
 add_definitions(-DHAVE_CONFIG_H)
 
 include(FindPkgConfig)
