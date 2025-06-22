@@ -163,7 +163,7 @@ jobs:
       env:
         RELAY_PASSWORD: test
       run: |
-        pipx install schemathesis
+        pipx install schemathesis==3.39.16
         weechat-headless \
           --dir /tmp/weechat-test-api \
           --run-command '/set relay.network.password "${{ env.RELAY_PASSWORD }}"' \
