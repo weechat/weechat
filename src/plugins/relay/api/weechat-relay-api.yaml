@@ -1167,11 +1167,11 @@ components:
           type: array
           items:
             type: string
-            example:
-              - 'query'
-              - 'quiet'
-              - 'quit'
-              - 'quote'
+          example:
+            - 'query'
+            - 'quiet'
+            - 'quit'
+            - 'quote'
       required:
         - context
         - base_word
