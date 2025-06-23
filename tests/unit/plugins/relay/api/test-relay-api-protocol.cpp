@@ -964,7 +964,7 @@ TEST(RelayApiProtocolWithClient, RecvJson)
 TEST(RelayApiProtocolWithClient, RecvHttp404)
 {
     /* resource not found: error 404 */
-    test_client_recv_http ("GET / HTTP/1.1", NULL, NULL);
+    test_client_recv_http ("GET /", NULL, NULL);
     STRCMP_EQUAL("HTTP/1.1 404 Not Found\r\n"
                  "Access-Control-Allow-Origin: *\r\n"
                  "Content-Type: application/json; charset=utf-8\r\n"
@@ -974,7 +974,7 @@ TEST(RelayApiProtocolWithClient, RecvHttp404)
                  data_sent[0]);
 
     /* resource not found: error 404 */
-    test_client_recv_http ("GET /unknown HTTP/1.1", NULL, NULL);
+    test_client_recv_http ("GET /unknown", NULL, NULL);
     STRCMP_EQUAL("HTTP/1.1 404 Not Found\r\n"
                  "Access-Control-Allow-Origin: *\r\n"
                  "Content-Type: application/json; charset=utf-8\r\n"
@@ -984,7 +984,7 @@ TEST(RelayApiProtocolWithClient, RecvHttp404)
                  data_sent[0]);
 
     /* resource not found: error 404 */
-    test_client_recv_http ("GET /unknown/abc HTTP/1.1", NULL, NULL);
+    test_client_recv_http ("GET /unknown/abc", NULL, NULL);
     STRCMP_EQUAL("HTTP/1.1 404 Not Found\r\n"
                  "Access-Control-Allow-Origin: *\r\n"
                  "Content-Type: application/json; charset=utf-8\r\n"
@@ -994,7 +994,7 @@ TEST(RelayApiProtocolWithClient, RecvHttp404)
                  data_sent[0]);
 
     /* resource not found: error 404 */
-    test_client_recv_http ("GET /api HTTP/1.1", NULL, NULL);
+    test_client_recv_http ("GET /api", NULL, NULL);
     STRCMP_EQUAL("HTTP/1.1 404 Not Found\r\n"
                  "Access-Control-Allow-Origin: *\r\n"
                  "Content-Type: application/json; charset=utf-8\r\n"
@@ -1004,7 +1004,7 @@ TEST(RelayApiProtocolWithClient, RecvHttp404)
                  data_sent[0]);
 
     /* resource not found: error 404 */
-    test_client_recv_http ("GET /api/unknown HTTP/1.1", NULL, NULL);
+    test_client_recv_http ("GET /api/unknown", NULL, NULL);
     STRCMP_EQUAL("HTTP/1.1 404 Not Found\r\n"
                  "Access-Control-Allow-Origin: *\r\n"
                  "Content-Type: application/json; charset=utf-8\r\n"
@@ -1022,7 +1022,7 @@ TEST(RelayApiProtocolWithClient, RecvHttp404)
 TEST(RelayApiProtocolWithClient, RecvHttpMissingPassword)
 {
     /* unauthorized: missing password */
-    test_client_recv_http_raw ("GET /api/version HTTP/1.1\r\n"
+    test_client_recv_http_raw ("GET /api/version\r\n"
                                "\r\n");
     STRCMP_EQUAL("HTTP/1.1 401 Unauthorized\r\n"
                  "Access-Control-Allow-Origin: *\r\n"
@@ -1041,7 +1041,7 @@ TEST(RelayApiProtocolWithClient, RecvHttpMissingPassword)
 TEST(RelayApiProtocolWithClient, RecvHttpInvalidPassword)
 {
     /* unauthorized: invalid password: "plain:invalid" */
-    test_client_recv_http_raw ("GET /api/version HTTP/1.1\r\n"
+    test_client_recv_http_raw ("GET /api/version\r\n"
                                "Authorization: Basic cGxhaW46aW52YWxpZA==\r\n"
                                "\r\n");
     STRCMP_EQUAL("HTTP/1.1 401 Unauthorized\r\n"
