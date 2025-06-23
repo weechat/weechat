@@ -1183,7 +1183,7 @@ components:
       properties:
         data:
           type: string
-          example: 1714854355123456
+          example: '1714854355123456'
       required:
         - data
 
