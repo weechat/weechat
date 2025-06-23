@@ -194,6 +194,7 @@ jobs:
         weechat-headless \
           --dir /tmp/weechat-test-api \
           --run-command '/set relay.network.password "${{ env.RELAY_PASSWORD }}"' \
+          --run-command '/set relay.network.max_clients 0' \
           --run-command '/relay add api 9000' \
           --daemon \
         ;
