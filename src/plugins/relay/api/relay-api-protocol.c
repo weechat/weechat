@@ -712,57 +712,55 @@ RELAY_API_PROTOCOL_CALLBACK(input)
     char str_delay[32];
 
     json_body = cJSON_Parse (client->http_req->body);
-    if (!json_body)
+    if (!json_body || !cJSON_IsObject (json_body))
         return RELAY_API_PROTOCOL_RC_BAD_REQUEST;
 
-    /* get buffer either by id or by name */
+    /* get buffer either by name or by id */
     ptr_buffer = NULL;
-    json_buffer_id = cJSON_GetObjectItem (json_body, "buffer_id");
-    if (json_buffer_id)
+    json_buffer_name = cJSON_GetObjectItem (json_body, "buffer_name");
+    if (json_buffer_name)
     {
-        if (cJSON_IsNumber (json_buffer_id))
+        if (cJSON_IsString (json_buffer_name))
         {
-            snprintf (str_id, sizeof (str_id),
-                      "%lld", (long long)cJSON_GetNumberValue (json_buffer_id));
-            ptr_buffer = weechat_buffer_search ("==id", str_id);
+            ptr_buffer_name = cJSON_GetStringValue (json_buffer_name);
+            ptr_buffer = weechat_buffer_search ("==", ptr_buffer_name);
             if (!ptr_buffer)
             {
                 relay_api_msg_send_error_json (
                     client,
                     RELAY_HTTP_400_BAD_REQUEST, NULL,
-                    "Buffer \"%lld\" not found",
-                    (long long)cJSON_GetNumberValue (json_buffer_id));
+                    "Buffer \"%s\" not found",
+                    ptr_buffer_name);
                 cJSON_Delete (json_body);
                 return RELAY_API_PROTOCOL_RC_OK;
             }
         }
     }
-    else
+    if (!ptr_buffer)
     {
-        json_buffer_name = cJSON_GetObjectItem (json_body, "buffer_name");
-        if (json_buffer_name)
+        json_buffer_id = cJSON_GetObjectItem (json_body, "buffer_id");
+        if (json_buffer_id)
         {
-            if (cJSON_IsString (json_buffer_name))
+            if (cJSON_IsNumber (json_buffer_id))
             {
-                ptr_buffer_name = cJSON_GetStringValue (json_buffer_name);
-                ptr_buffer = weechat_buffer_search ("==", ptr_buffer_name);
+                snprintf (str_id, sizeof (str_id),
+                          "%lld", (long long)cJSON_GetNumberValue (json_buffer_id));
+                ptr_buffer = weechat_buffer_search ("==id", str_id);
                 if (!ptr_buffer)
                 {
                     relay_api_msg_send_error_json (
                         client,
                         RELAY_HTTP_400_BAD_REQUEST, NULL,
-                        "Buffer \"%s\" not found",
-                        ptr_buffer_name);
+                        "Buffer \"%lld\" not found",
+                        (long long)cJSON_GetNumberValue (json_buffer_id));
                     cJSON_Delete (json_body);
                     return RELAY_API_PROTOCOL_RC_OK;
                 }
             }
         }
-        else
-        {
-            ptr_buffer = weechat_buffer_search_main ();
-        }
     }
+    if (!ptr_buffer)
+        ptr_buffer = weechat_buffer_search_main ();
     if (!ptr_buffer)
     {
         cJSON_Delete (json_body);
@@ -841,57 +839,55 @@ RELAY_API_PROTOCOL_CALLBACK(completion)
     struct t_gui_buffer *ptr_buffer;
 
     json_body = cJSON_Parse (client->http_req->body);
-    if (!json_body)
+    if (!json_body || !cJSON_IsObject(json_body))
         return RELAY_API_PROTOCOL_RC_BAD_REQUEST;
 
-    /* get buffer either by id or by name */
+    /* get buffer either by name or by id */
     ptr_buffer = NULL;
-    json_buffer_id = cJSON_GetObjectItem (json_body, "buffer_id");
-    if (json_buffer_id)
+    json_buffer_name = cJSON_GetObjectItem (json_body, "buffer_name");
+    if (json_buffer_name)
     {
-        if (cJSON_IsNumber (json_buffer_id))
+        if (cJSON_IsString (json_buffer_name))
         {
-            snprintf (str_id, sizeof(str_id),
-                      "%lld", (long long)cJSON_GetNumberValue (json_buffer_id));
-            ptr_buffer = weechat_buffer_search ("==id", str_id);
+            ptr_buffer_name = cJSON_GetStringValue (json_buffer_name);
+            ptr_buffer = weechat_buffer_search ("==", ptr_buffer_name);
             if (!ptr_buffer)
             {
                 relay_api_msg_send_error_json (
                     client,
                     RELAY_HTTP_400_BAD_REQUEST, NULL,
-                    "Buffer \"%lld\" not found",
-                    (long long)cJSON_GetNumberValue (json_buffer_id));
+                    "Buffer \"%s\" not found",
+                    ptr_buffer_name);
                 cJSON_Delete (json_body);
                 return RELAY_API_PROTOCOL_RC_OK;
             }
         }
     }
-    else
+    if (!ptr_buffer)
     {
-        json_buffer_name = cJSON_GetObjectItem (json_body, "buffer_name");
-        if (json_buffer_name)
+        json_buffer_id = cJSON_GetObjectItem (json_body, "buffer_id");
+        if (json_buffer_id)
         {
-            if (cJSON_IsString (json_buffer_name))
+            if (cJSON_IsNumber (json_buffer_id))
             {
-                ptr_buffer_name = cJSON_GetStringValue (json_buffer_name);
-                ptr_buffer = weechat_buffer_search ("==", ptr_buffer_name);
+                snprintf (str_id, sizeof(str_id),
+                          "%lld", (long long)cJSON_GetNumberValue (json_buffer_id));
+                ptr_buffer = weechat_buffer_search ("==id", str_id);
                 if (!ptr_buffer)
                 {
                     relay_api_msg_send_error_json (
                         client,
                         RELAY_HTTP_400_BAD_REQUEST, NULL,
-                        "Buffer \"%s\" not found",
-                        ptr_buffer_name);
+                        "Buffer \"%lld\" not found",
+                        (long long)cJSON_GetNumberValue (json_buffer_id));
                     cJSON_Delete (json_body);
                     return RELAY_API_PROTOCOL_RC_OK;
                 }
             }
         }
-        else
-        {
-            ptr_buffer = weechat_buffer_search_main ();
-        }
     }
+    if (!ptr_buffer)
+        ptr_buffer = weechat_buffer_search_main ();
     if (!ptr_buffer)
     {
         cJSON_Delete (json_body);
