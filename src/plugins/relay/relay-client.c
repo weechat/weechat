@@ -504,7 +504,8 @@ relay_client_recv_text_buffer (struct t_relay_client *client,
             if ((client->websocket == RELAY_CLIENT_WEBSOCKET_INITIALIZING)
                 || (client->recv_data_type == RELAY_CLIENT_DATA_HTTP))
             {
-                relay_http_recv (client, buffer + index);
+                relay_http_recv (client, buffer + index, length_buffer - index);
+                break;
             }
             else
             {
@@ -582,7 +583,7 @@ relay_client_read_websocket_frames (struct t_relay_client *client,
                     if ((client->websocket == RELAY_CLIENT_WEBSOCKET_INITIALIZING)
                         || (client->recv_data_type == RELAY_CLIENT_DATA_HTTP))
                     {
-                        relay_http_recv (client, frames[i].payload);
+                        relay_http_recv (client, frames[i].payload, frames[i].payload_size);
                     }
                     else if ((client->recv_data_type == RELAY_CLIENT_DATA_TEXT_LINE)
                              || (client->recv_data_type == RELAY_CLIENT_DATA_TEXT_MULTILINE))
@@ -694,7 +695,7 @@ relay_client_recv_buffer (struct t_relay_client *client,
         if ((client->websocket == RELAY_CLIENT_WEBSOCKET_INITIALIZING)
             || (client->recv_data_type == RELAY_CLIENT_DATA_HTTP))
         {
-            relay_http_recv (client, buffer);
+            relay_http_recv (client, buffer, buffer_size);
         }
         else if ((client->recv_data_type == RELAY_CLIENT_DATA_TEXT_LINE)
                  || (client->recv_data_type == RELAY_CLIENT_DATA_TEXT_MULTILINE))
