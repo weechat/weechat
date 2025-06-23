@@ -638,6 +638,7 @@ components:
         type: integer
         format: int64
       description: Buffer identifier
+      example: 1709932823238637
     bufferName:
       name: buffer_name
       in: path
