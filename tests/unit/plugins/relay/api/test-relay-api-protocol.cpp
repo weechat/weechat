@@ -321,14 +321,23 @@ TEST(RelayApiProtocolWithClient, CbHandshake)
     /* unknown password hash algorithm */
     test_client_recv_http ("POST /api/handshake", NULL,
                            "{\"password_hash_algo\": [\"invalid\"]}");
-    STRCMP_EQUAL("HTTP/1.1 200 OK\r\n"
+    STRCMP_EQUAL("HTTP/1.1 400 Bad Request\r\n"
                  "Access-Control-Allow-Origin: *\r\n"
                  "Content-Type: application/json; charset=utf-8\r\n"
-                 "Content-Length: 74\r\n"
+                 "Content-Length: 48\r\n"
                  "\r\n"
-                 "{\"password_hash_algo\":null,"
-                 "\"password_hash_iterations\":100000,"
-                 "\"totp\":false}",
+                 "{\"error\":\"Hash algorithm \\\"invalid\\\" not found\"}",
+                 data_sent[0]);
+
+    /* invalid password hash algorithm */
+    test_client_recv_http ("POST /api/handshake", NULL,
+                           "{\"password_hash_algo\": [{}]}");
+    STRCMP_EQUAL("HTTP/1.1 400 Bad Request\r\n"
+                 "Access-Control-Allow-Origin: *\r\n"
+                 "Content-Type: application/json; charset=utf-8\r\n"
+                 "Content-Length: 34\r\n"
+                 "\r\n"
+                 "{\"error\":\"Invalid hash algorithm\"}",
                  data_sent[0]);
 
     /* two supported hash algorithms */
