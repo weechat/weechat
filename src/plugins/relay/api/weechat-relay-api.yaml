@@ -522,7 +522,7 @@ paths:
         - completion
       description: |
         Complete user command or text.
-      operationId: input
+      operationId: completion
       parameters:
         - $ref: '#/components/parameters/totp'
       requestBody:
