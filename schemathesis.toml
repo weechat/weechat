@@ -1,0 +1,13 @@
+# SPDX-FileCopyrightText: 2025 Sébastien Helleu <flashcode@flashtux.org>
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+[parameters]
+continue-on-failure = true
+
+[[operations]]
+include-path-regex = "/sync/?.*"
+enabled = false
+
+[auth]
+basic = { username = "plain", password = "${RELAY_PASSWORD}" }

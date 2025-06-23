@@ -200,7 +200,7 @@ jobs:
           --daemon \
         ;
         sleep 5
-        ./tools/test_relay_api.sh http://localhost:9000
+        schemathesis run --url http://localhost:9000/api ./src/plugins/relay/api/weechat-relay-api.yaml
         echo '*/quit' >/tmp/weechat-test-api/weechat_fifo_*
 
     - name: Code coverage
