@@ -15,6 +15,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 - core: write configuration files on disk only if there are changes ([#2250](https://github.com/weechat/weechat/issues/2250))
 - core: always enable partial completion for templates in option weechat.completion.partial_completion_templates, add option weechat.completion.partial_completion_auto_expand to expand word on new completion ([#2253](https://github.com/weechat/weechat/issues/2253))
 - core: add script name in output of `/debug hooks <plugin>`
+- relay/api: return HTTP error 405 (Method Not Allowed) when the method received is not allowed
 
 ### Added
 

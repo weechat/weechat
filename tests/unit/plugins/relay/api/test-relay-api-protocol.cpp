@@ -1052,3 +1052,44 @@ TEST(RelayApiProtocolWithClient, RecvHttpInvalidPassword)
                  "{\"error\":\"Invalid password\"}",
                  data_sent[0]);
 }
+
+/*
+ * Tests functions:
+ *   relay_api_protocol_recv_http (method not allowed)
+ */
+
+TEST(RelayApiProtocolWithClient, RecvHttpMethodNotAllowed)
+{
+    /* method not allowed (PATCH) with existing resource (/api/ping) */
+    test_client_recv_http ("PATCH /api/ping", NULL, "{\"data\": \"abcdef\"}");
+    STRCMP_EQUAL("HTTP/1.1 405 Method Not Allowed\r\n"
+                 "Allow: GET, POST, PUT, DELETE\r\n"
+                 "Access-Control-Allow-Origin: *\r\n"
+                 "Content-Type: application/json; charset=utf-8\r\n"
+                 "Content-Length: 30\r\n"
+                 "\r\n"
+                 "{\"error\":\"Method Not Allowed\"}",
+                 data_sent[0]);
+
+    /* method not allowed (PATCH) with unknown resource (/api/unknown) */
+    test_client_recv_http ("PATCH /api/unknown", NULL, "{\"data\": \"abcdef\"}");
+    STRCMP_EQUAL("HTTP/1.1 405 Method Not Allowed\r\n"
+                 "Allow: GET, POST, PUT, DELETE\r\n"
+                 "Access-Control-Allow-Origin: *\r\n"
+                 "Content-Type: application/json; charset=utf-8\r\n"
+                 "Content-Length: 30\r\n"
+                 "\r\n"
+                 "{\"error\":\"Method Not Allowed\"}",
+                 data_sent[0]);
+
+    /* method not allowed (PATCH) with unknown resource (/unknown) */
+    test_client_recv_http ("PATCH /unknown", NULL, "{\"data\": \"abcdef\"}");
+    STRCMP_EQUAL("HTTP/1.1 405 Method Not Allowed\r\n"
+                 "Allow: GET, POST, PUT, DELETE\r\n"
+                 "Access-Control-Allow-Origin: *\r\n"
+                 "Content-Type: application/json; charset=utf-8\r\n"
+                 "Content-Length: 30\r\n"
+                 "\r\n"
+                 "{\"error\":\"Method Not Allowed\"}",
+                 data_sent[0]);
+}

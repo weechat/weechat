@@ -374,7 +374,7 @@ RELAY_API_PROTOCOL_CALLBACK(options)
     relay_api_msg_send_json (
         client,
         RELAY_HTTP_204_NO_CONTENT,
-        "Access-Control-Allow-Methods: GET, POST, PUT, DELETE\r\n"
+        "Access-Control-Allow-Methods: " RELAY_API_ALLOWED_METHODS "\r\n"
         "Access-Control-Allow-Headers: origin, content-type, accept, authorization",
         NULL,  /* body_type */
         NULL);  /* json_body */
@@ -1197,7 +1197,7 @@ relay_api_protocol_recv_json (struct t_relay_client *client, const char *json)
 void
 relay_api_protocol_recv_http (struct t_relay_client *client)
 {
-    int i, num_args;
+    int i, num_args, match_method, match_resource;
     char str_error[1024];
     enum t_relay_api_protocol_rc return_code;
     struct t_relay_api_protocol_cb protocol_cb[] = {
@@ -1238,18 +1238,22 @@ relay_api_protocol_recv_http (struct t_relay_client *client)
         || !client->http_req->path_items[1]
         || (strcmp (client->http_req->path_items[0], "api") != 0))
     {
-        goto error_not_found;
+        goto resource_not_found;
     }
 
     num_args = client->http_req->num_path_items - 2;
 
     for (i = 0; protocol_cb[i].resource; i++)
     {
-        if (strcmp (protocol_cb[i].method, client->http_req->method) != 0)
-            continue;
+        match_method = (strcmp (protocol_cb[i].method, client->http_req->method) == 0);
 
-        if ((strcmp (protocol_cb[i].resource, "*") != 0)
-            && (strcmp (protocol_cb[i].resource, client->http_req->path_items[1]) != 0))
+        match_resource = ((strcmp (protocol_cb[i].resource, "*") == 0)
+                          || (strcmp (protocol_cb[i].resource, client->http_req->path_items[1]) == 0));
+
+        if (!match_method && (strcmp (protocol_cb[i].resource, "*") != 0) && match_resource)
+            goto error_method_not_allowed;
+
+        if (!match_method || !match_resource)
             continue;
 
         if (protocol_cb[i].auth_required
@@ -1331,7 +1335,18 @@ relay_api_protocol_recv_http (struct t_relay_client *client)
         }
     }
 
-    goto error_not_found;
+resource_not_found:
+    if ((strcmp (client->http_req->method, "GET") != 0)
+        && (strcmp (client->http_req->method, "POST") != 0)
+        && (strcmp (client->http_req->method, "PUT") != 0)
+        && (strcmp (client->http_req->method, "DELETE") != 0))
+    {
+        goto error_method_not_allowed;
+    }
+    else
+    {
+        goto error_not_found;
+    }
 
 error_bad_request:
     relay_api_msg_send_error_json (client, RELAY_HTTP_400_BAD_REQUEST,
@@ -1341,6 +1356,12 @@ error_bad_request:
 error_not_found:
     relay_api_msg_send_error_json (client, RELAY_HTTP_404_NOT_FOUND,
                                    NULL, RELAY_HTTP_ERROR_NOT_FOUND);
+    goto error;
+
+error_method_not_allowed:
+    relay_api_msg_send_error_json (client, RELAY_HTTP_405_METHOD_NOT_ALLOWED,
+                                   "Allow: " RELAY_API_ALLOWED_METHODS,
+                                   RELAY_HTTP_ERROR_METHOD_NOT_ALLOWED);
     goto error;
 
 error_memory:
