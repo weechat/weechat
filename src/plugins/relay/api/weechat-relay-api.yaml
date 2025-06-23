@@ -180,7 +180,7 @@ paths:
       tags:
         - buffers
       description: |
-        Get buffer by full name, with optional lines and nicks.
+        Get a single buffer by full name, with optional lines and nicks.
       operationId: getBufferByName
       parameters:
         - $ref: '#/components/parameters/totp'
