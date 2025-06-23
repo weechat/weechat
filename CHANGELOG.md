@@ -14,6 +14,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 - **breaking:** core: fix integer overflow and return "unsigned long" in function util_version_number
 - core: write configuration files on disk only if there are changes ([#2250](https://github.com/weechat/weechat/issues/2250))
 - core: add script name in output of `/debug hooks <plugin>`
+- relay/api: return HTTP error 405 (Method Not Allowed) when the method received is not allowed
 
 ### Added
 
