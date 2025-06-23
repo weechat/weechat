@@ -50,7 +50,29 @@ paths:
         This endpoint does not require authentication.
       operationId: handshake
       requestBody:
-        $ref: '#/components/requestBodies/HandshakeBody'
+        description: Handshake request
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                password_hash_algo:
+                  type: array
+                  items:
+                    type: string
+                    enum:
+                      - plain
+                      - sha256
+                      - sha512
+                      - pbkdf2+sha256
+                      - pbkdf2+sha512
+                  example:
+                    - plain
+                    - sha256
+                    - sha512
+                    - pbkdf2+sha256
+                    - pbkdf2+sha512
       responses:
         '200':
           description: Successful operation
@@ -498,7 +520,31 @@ paths:
       parameters:
         - $ref: '#/components/parameters/totp'
       requestBody:
-        $ref: '#/components/requestBodies/InputBody'
+        description: Buffer and command to execute
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                buffer_id:
+                  type: integer
+                  format: int64
+                  description: Buffer identifier (≥ 0)
+                buffer_name:
+                  type: string
+                  description: >-
+                    Buffer full name
+                  example: 'core.weechat'
+                command:
+                  type: string
+                  description: text or command to send
+                  example: '/print test'
+              required:
+                - command
+            example:
+              buffer_name: 'core.weechat'
+              command: '/print test'
       responses:
         '204':
           description: Successful operation
@@ -526,7 +572,38 @@ paths:
       parameters:
         - $ref: '#/components/parameters/totp'
       requestBody:
-        $ref: '#/components/requestBodies/CompletionBody'
+        description: Buffer and user text/command to complete
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                buffer_id:
+                  type: integer
+                  format: int64
+                  description: Buffer identifier (≥ 0)
+                buffer_name:
+                  type: string
+                  description: >-
+                    Buffer full name
+                  example: 'core.weechat'
+                command:
+                  type: string
+                  description: user command or text to complete
+                  example: '/hel'
+                position:
+                  type: integer
+                  format: int32
+                  description: Position in data (≥ 0)
+                  example: 4
+              required:
+                - command
+                - position
+            example:
+              buffer_name: 'core.weechat'
+              command: '/hel'
+              position: 4
       responses:
         '200':
           description: Successful operation
@@ -558,7 +635,16 @@ paths:
       parameters:
         - $ref: '#/components/parameters/totp'
       requestBody:
-        $ref: '#/components/requestBodies/PingBody'
+        description: Custom data that will be returned in the response
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: string
+                  example: '1714854355123456'
       responses:
         '200':
           description: Successful operation
@@ -595,7 +681,37 @@ paths:
       parameters:
         - $ref: '#/components/parameters/totp'
       requestBody:
-        $ref: '#/components/requestBodies/SyncBody'
+        description: Synchronization parameters
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                sync:
+                  type: boolean
+                  description: Enable synchronization
+                  example: true
+                nicks:
+                  type: boolean
+                  description: Receive nick updates in buffers
+                  example: true
+                input:
+                  type: boolean
+                  description: Receive input changes in buffers (content and cursor position)
+                  example: true
+                colors:
+                  type: string
+                  enum:
+                    - ansi
+                    - weechat
+                    - strip
+                  default: ansi
+                  description: |
+                    How to return strings with color codes:
+                    * `ansi`: return ANSI color codes
+                    * `weechat`: return WeeChat internal color codes
+                    * `strip`: strip colors
       responses:
         '204':
           description: Successful operation
@@ -1187,134 +1303,6 @@ components:
           example: '1714854355123456'
       required:
         - data
-
-  requestBodies:
-    HandshakeBody:
-      description: Handshake request
-      required: false
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              password_hash_algo:
-                type: array
-                items:
-                  type: string
-                  enum:
-                    - plain
-                    - sha256
-                    - sha512
-                    - pbkdf2+sha256
-                    - pbkdf2+sha512
-                  example:
-                    - plain
-                    - sha256
-                    - sha512
-                    - pbkdf2+sha256
-                    - pbkdf2+sha512
-    InputBody:
-      description: Buffer and command to execute
-      required: true
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              buffer_id:
-                type: integer
-                format: int64
-                description: Buffer identifier (≥ 0)
-                example: 1709932823238637
-              buffer_name:
-                type: string
-                description: >-
-                  Buffer full name
-                example: 'irc.libera.#weechat'
-              command:
-                type: string
-                description: text or command to send
-                example: 'hello, world!'
-            required:
-              - command
-          example:
-            buffer_id: 1709932823238637
-            command: 'hello, world!'
-    CompletionBody:
-      description: Buffer and user text/command to complete
-      required: true
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              buffer_id:
-                type: integer
-                format: int64
-                description: Buffer identifier (≥ 0)
-                example: 1709932823238637
-              buffer_name:
-                type: string
-                description: >-
-                  Buffer full name
-                example: 'irc.libera.#weechat'
-              command:
-                type: string
-                description: user command or text to complete
-                example: '/qu'
-              position:
-                type: integer
-                format: int32
-                description: Position in data (≥ 0)
-                example: 3
-            required:
-              - data
-          example:
-            buffer_id: 1709932823238637
-            command: '/qu'
-    PingBody:
-      description: Custom data that will be returned in the response
-      required: false
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              data:
-                type: string
-                example: 1714854355123456
-    SyncBody:
-      description: Synchronization parameters
-      required: false
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              sync:
-                type: boolean
-                description: Enable synchronization
-                example: true
-              nicks:
-                type: boolean
-                description: Receive nick updates in buffers
-                example: true
-              input:
-                type: boolean
-                description: Receive input changes in buffers (content and cursor position)
-                example: true
-              colors:
-                type: string
-                enum:
-                  - ansi
-                  - weechat
-                  - strip
-                default: ansi
-                description: |
-                  How to return strings with color codes:
-                  * `ansi`: return ANSI color codes
-                  * `weechat`: return WeeChat internal color codes
-                  * `strip`: strip colors
 
   securitySchemes:
     password:
