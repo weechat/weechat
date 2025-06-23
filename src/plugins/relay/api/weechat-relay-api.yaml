@@ -906,7 +906,7 @@ components:
           type: string
           format: date-time
           description: date and time of line
-          example: '"2023-12-05T19:46:03.847625Z'
+          example: '2023-12-05T19:46:03.847625Z'
         date_printed:
           type: string
           format: date-time
