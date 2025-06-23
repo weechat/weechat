@@ -100,7 +100,8 @@ extern long relay_http_get_param_long (struct t_relay_http_request *request,
 extern int relay_http_parse_method_path (struct t_relay_http_request *request,
                                          const char *method_path);
 extern int relay_http_check_auth (struct t_relay_client *client);
-extern void relay_http_recv (struct t_relay_client *client, const char *data);
+extern void relay_http_recv (struct t_relay_client *client,
+                             const char *data, int size);
 extern int relay_http_send (struct t_relay_client *client,
                             int return_code, const char *message,
                             const char *headers,

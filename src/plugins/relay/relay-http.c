@@ -935,10 +935,12 @@ relay_http_process_request (struct t_relay_client *client)
  */
 
 void
-relay_http_recv (struct t_relay_client *client, const char *data)
+relay_http_recv (struct t_relay_client *client, const char *data, int size)
 {
-    char *new_partial, *pos;
+    char *new_partial, *pos, **null_char;
     int length, ws_deflate_allowed;
+
+    null_char = memchr (data, 0, size);
 
     if (client->partial_message)
     {
@@ -1003,8 +1005,11 @@ relay_http_recv (struct t_relay_client *client, const char *data)
             relay_http_add_to_body (client->http_req, &(client->partial_message));
         }
 
-        /* process the request if it's ready to be processed (all parsed) */
-        if (client->http_req->status == RELAY_HTTP_END)
+        /*
+         * process the request if it's ready to be processed (all parsed)
+         * or if we received a NULL char in the HTTP message (forbidden)
+         * */
+        if ((client->http_req->status == RELAY_HTTP_END) || null_char)
         {
             relay_http_process_request (client);
             relay_http_request_reinit (client->http_req);
