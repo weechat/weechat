@@ -401,9 +401,13 @@ RELAY_API_PROTOCOL_CALLBACK(handshake)
     json_body = cJSON_Parse (client->http_req->body);
     if (json_body)
     {
+        if (!cJSON_IsObject (json_body))
+            return RELAY_API_PROTOCOL_RC_BAD_REQUEST;
         json_algos = cJSON_GetObjectItem (json_body, "password_hash_algo");
         if (json_algos)
         {
+            if (!cJSON_IsArray (json_algos))
+                goto invalid_hash_algo;
             cJSON_ArrayForEach (json_algo, json_algos)
             {
                 ptr_algo = (cJSON_IsString (json_algo)) ?
@@ -411,7 +415,17 @@ RELAY_API_PROTOCOL_CALLBACK(handshake)
                 if (ptr_algo)
                 {
                     index_hash_algo = relay_auth_password_hash_algo_search (ptr_algo);
-                    if ((index_hash_algo >= 0) && (index_hash_algo > hash_algo_found))
+                    if (index_hash_algo < 0)
+                    {
+                        relay_api_msg_send_error_json (
+                            client,
+                            RELAY_HTTP_400_BAD_REQUEST, NULL,
+                            "Hash algorithm \"%s\" not found",
+                            ptr_algo);
+                        cJSON_Delete (json_body);
+                        return RELAY_API_PROTOCOL_RC_OK;
+                    }
+                    if (index_hash_algo > hash_algo_found)
                     {
                         if (weechat_string_match_list (
                                 relay_auth_password_hash_algo_name[index_hash_algo],
@@ -422,6 +436,8 @@ RELAY_API_PROTOCOL_CALLBACK(handshake)
                         }
                     }
                 }
+                else
+                    goto invalid_hash_algo;
             }
         }
     }
@@ -459,6 +475,14 @@ RELAY_API_PROTOCOL_CALLBACK(handshake)
     if (json_body)
         cJSON_Delete (json_body);
 
+    return RELAY_API_PROTOCOL_RC_OK;
+
+invalid_hash_algo:
+    relay_api_msg_send_error_json (
+        client,
+        RELAY_HTTP_400_BAD_REQUEST, NULL,
+        "Invalid hash algorithm");
+    cJSON_Delete (json_body);
     return RELAY_API_PROTOCOL_RC_OK;
 }
 

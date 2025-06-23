@@ -58,6 +58,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Handshake'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '503':
           description: Out of memory
           content:
