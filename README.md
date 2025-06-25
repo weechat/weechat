@@ -49,6 +49,13 @@ On WeeChat's website you can find [more screenshots](https://weechat.org/about/s
 WeeChat can be installed using your favorite package manager (recommended) or by compiling it yourself.\
 For detailed instructions, please check the [WeeChat user's guide](https://weechat.org/doc/weechat/user/#install).
 
+## Mock Server
+
+You can use a hosted mock server to simulate the weechat relay API, allowing you to test requests and inspect responses without spinning up a backend. It's ideal for exploring the API's behavior, validating payloads, or building client integrations in isolation. The mock server uses the OpenAPI spec to return dynamic and schema-aware responses.
+
+<a href="https://beeceptor.com/openapi-mock-server/?utm_source=github&utm_campaign=weechat&url=https://raw.githubusercontent.com/weechat/weechat/6d45a69f39f0eb231a088389a7e43ff28f19fef3/src/plugins/relay/api/weechat-relay-api.yaml" target="_blank"><img src="https://cdn.beeceptor.com/assets/images/buttons/mock-openapi-with-beeceptor.png" alt="Mock These APIs Instantly" style="height: 60px;"></a>
+
+
 ## Semantic versioning
 
 WeeChat is following a "practical" semantic versioning, see file [CONTRIBUTING.md](CONTRIBUTING.md#semantic-versioning).
