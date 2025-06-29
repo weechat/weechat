@@ -127,8 +127,8 @@ gui_completion_init (struct t_gui_completion *completion,
     completion->args = NULL;
     completion->direction = 0;
     completion->add_space = 1;
-    completion->force_partial_completion = 0;
-    completion->reverse_partial_completion = 0;
+    completion->partial_completion = 0;
+    completion->template_partial_completion = 0;
 
     completion->list = arraylist_new (
         32, 1, 0,
@@ -631,7 +631,7 @@ gui_completion_build_list_template (struct t_gui_completion *completion,
                                                 config_hashtable_completion_partial_templates,
                                                 custom_completion))
                                         {
-                                            completion->reverse_partial_completion = 1;
+                                            completion->template_partial_completion = 1;
                                         }
                                         gui_completion_custom (completion,
                                                                custom_completion,
@@ -907,8 +907,6 @@ gui_completion_find_context (struct t_gui_completion *completion,
     const char *ptr_command, *ptr_data, *ptr_space, *ptr_newline, *prev_char;
 
     /* look for context */
-    gui_completion_free_data (completion);
-    gui_completion_init (completion, completion->plugin, completion->buffer);
     ptr_command = NULL;
     command_arg = 0;
 
@@ -1241,7 +1239,7 @@ gui_completion_partial_build_list (struct t_gui_completion *completion,
 void
 gui_completion_complete (struct t_gui_completion *completion)
 {
-    int length, word_found_seen, other_completion, partial_completion;
+    int length, word_found_seen, other_completion;
     int common_prefix_size, index, index2;
     struct t_gui_completion_word *ptr_completion_word, *ptr_completion_word2;
 
@@ -1249,34 +1247,15 @@ gui_completion_complete (struct t_gui_completion *completion)
     word_found_seen = 0;
     other_completion = 0;
 
-    partial_completion = completion->force_partial_completion;
-
-    if (!partial_completion)
-    {
-        if (completion->context == GUI_COMPLETION_COMMAND)
-        {
-            partial_completion = CONFIG_BOOLEAN(config_completion_partial_completion_command);
-        }
-        else if (completion->context == GUI_COMPLETION_COMMAND_ARG)
-        {
-            partial_completion = CONFIG_BOOLEAN(config_completion_partial_completion_command_arg);
-        }
-        else
-            partial_completion = CONFIG_BOOLEAN(config_completion_partial_completion_other);
-    }
-
-    if (completion->reverse_partial_completion)
-        partial_completion ^= 1;
-
     common_prefix_size = 0;
-    if (partial_completion
+    if (completion->partial_completion
         && completion->list && (completion->list->size > 0))
     {
         common_prefix_size = gui_completion_common_prefix_size (completion->list,
                                                                 NULL);
     }
 
-    if (partial_completion
+    if (completion->partial_completion
         && completion->word_found
         && (utf8_strlen (completion->word_found) >= common_prefix_size))
     {
@@ -1355,7 +1334,7 @@ gui_completion_complete (struct t_gui_completion *completion)
                         completion->position = 0;
 
                 /* stop after common prefix, if asked by user */
-                if (partial_completion
+                if (completion->partial_completion
                     && ((utf8_strlen (completion->word_found) >= common_prefix_size))
                     && (other_completion > 0))
                 {
@@ -1538,8 +1517,55 @@ gui_completion_search (struct t_gui_completion *completion, const char *data,
         free (completion->word_found);
         completion->word_found = NULL;
         completion->word_found_is_nick = 0;
+        gui_completion_free_data (completion);
+        gui_completion_init (completion, completion->plugin, completion->buffer);
+        completion->partial_completion = (direction < 0);
+        completion->direction = direction;
         gui_completion_find_context (completion, data, real_position);
-        completion->force_partial_completion = (direction < 0);
+        if (completion->template_partial_completion)
+        {
+            if (completion->direction < 0)
+            {
+                completion->partial_completion = 0;
+                completion->direction = 1;
+            }
+            else
+            {
+                completion->partial_completion = 1;
+            }
+        }
+        else
+        {
+            switch (completion->context)
+            {
+                case GUI_COMPLETION_NULL:
+                    break;
+                case GUI_COMPLETION_COMMAND:
+                    if (CONFIG_BOOLEAN(config_completion_partial_completion_command))
+                    {
+                        completion->partial_completion ^= 1;
+                        if (completion->direction < 0)
+                            completion->direction = 1;
+                    }
+                    break;
+                case GUI_COMPLETION_COMMAND_ARG:
+                    if (CONFIG_BOOLEAN(config_completion_partial_completion_command_arg))
+                    {
+                        completion->partial_completion ^= 1;
+                        if (completion->direction < 0)
+                            completion->direction = 1;
+                    }
+                    break;
+                case GUI_COMPLETION_AUTO:
+                    if (CONFIG_BOOLEAN(config_completion_partial_completion_other))
+                    {
+                        completion->partial_completion ^= 1;
+                        if (completion->direction < 0)
+                            completion->direction = 1;
+                    }
+                    break;
+            }
+        }
     }
 
     /* completion */
@@ -1656,8 +1682,8 @@ gui_completion_hdata_completion_cb (const void *pointer, void *data,
         HDATA_VAR(struct t_gui_completion, args, STRING, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_completion, direction, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_completion, add_space, INTEGER, 0, NULL, NULL);
-        HDATA_VAR(struct t_gui_completion, force_partial_completion, INTEGER, 0, NULL, NULL);
-        HDATA_VAR(struct t_gui_completion, reverse_partial_completion, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_completion, partial_completion, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_completion, template_partial_completion, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_completion, list, POINTER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_completion, word_found, STRING, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_completion, word_found_is_nick, INTEGER, 0, NULL, NULL);
@@ -1745,8 +1771,8 @@ gui_completion_print_log (void)
         log_printf ("  args. . . . . . . . . . . : '%s'", ptr_completion->args);
         log_printf ("  direction . . . . . . . . : %d", ptr_completion->direction);
         log_printf ("  add_space . . . . . . . . : %d", ptr_completion->add_space);
-        log_printf ("  force_partial_completion. : %d", ptr_completion->force_partial_completion);
-        log_printf ("  reverse_partial_completion: %d", ptr_completion->reverse_partial_completion);
+        log_printf ("  partial_completion. . . . : %d", ptr_completion->partial_completion);
+        log_printf ("  template_partial_completion: %d", ptr_completion->template_partial_completion);
         log_printf ("  list. . . . . . . . . . . : %p", ptr_completion->list);
         log_printf ("  word_found. . . . . . . . : '%s'", ptr_completion->word_found);
         log_printf ("  word_found_is_nick. . . . : %d", ptr_completion->word_found_is_nick);
