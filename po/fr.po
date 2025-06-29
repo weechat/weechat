@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2025-05-04 09:21+0200\n"
-"PO-Revision-Date: 2025-05-04 09:24+0200\n"
+"POT-Creation-Date: 2025-06-30 09:32+0200\n"
+"PO-Revision-Date: 2025-06-30 09:34+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -6069,6 +6069,12 @@ msgid "send alert (BEL) when a partial completion occurs"
 msgstr "envoyer une alerte (BEL) lorsqu'une complétion partielle survient"
 
 msgid ""
+"automatically expand word after partial completion when completing again"
+msgstr ""
+"étendre automatiquement le mot après une complétion partielle lors d'une "
+"nouvelle complétion"
+
+msgid ""
 "partially complete command names (stop when many commands found begin with "
 "same letters)"
 msgstr ""
@@ -7089,15 +7095,12 @@ msgstr "La souris est désactivée"
 msgid "  TERM='%s', size: %dx%d"
 msgstr "  TERM='%s', taille : %dx%d"
 
-#, c-format
 msgid "Running WeeChat in background..."
 msgstr "Lancement de WeeChat en tâche de fond..."
 
-#, c-format
 msgid "fork error"
 msgstr "erreur de fork"
 
-#, c-format
 msgid "OK"
 msgstr "OK"
 
