@@ -313,6 +313,7 @@ struct t_config_option *config_completion_nick_first_only = NULL;
 struct t_config_option *config_completion_nick_ignore_chars = NULL;
 struct t_config_option *config_completion_nick_ignore_words = NULL;
 struct t_config_option *config_completion_partial_completion_alert = NULL;
+struct t_config_option *config_completion_partial_completion_auto_expand = NULL;
 struct t_config_option *config_completion_partial_completion_command = NULL;
 struct t_config_option *config_completion_partial_completion_command_arg = NULL;
 struct t_config_option *config_completion_partial_completion_count = NULL;
@@ -5241,6 +5242,13 @@ config_weechat_init_options (void)
             weechat_config_file, weechat_config_section_completion,
             "partial_completion_alert", "boolean",
             N_("send alert (BEL) when a partial completion occurs"),
+            NULL, 0, 0, "on", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        config_completion_partial_completion_auto_expand = config_file_new_option (
+            weechat_config_file, weechat_config_section_completion,
+            "partial_completion_auto_expand", "boolean",
+            N_("automatically expand word after partial completion when "
+               "completing again"),
             NULL, 0, 0, "on", NULL, 0,
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
         config_completion_partial_completion_command = config_file_new_option (

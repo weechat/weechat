@@ -28,7 +28,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2025-05-04 09:21+0200\n"
+"POT-Creation-Date: 2025-06-30 09:32+0200\n"
 "PO-Revision-Date: 2025-05-05 09:24+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -6200,6 +6200,10 @@ msgstr ""
 "erzeugt eine Mitteilung (BEL) wenn eine teilweise Vervollständigung auftritt"
 
 msgid ""
+"automatically expand word after partial completion when completing again"
+msgstr ""
+
+msgid ""
 "partially complete command names (stop when many commands found begin with "
 "same letters)"
 msgstr ""
@@ -7228,15 +7232,12 @@ msgstr "Maus ist inaktiv"
 msgid "  TERM='%s', size: %dx%d"
 msgstr "  TERM='%s', Größe: %dx%d"
 
-#, c-format
 msgid "Running WeeChat in background..."
 msgstr "WeeChat wird im Hintergrund ausgeführt..."
 
-#, c-format
 msgid "fork error"
 msgstr "Fork-Fehler"
 
-#, c-format
 msgid "OK"
 msgstr "OK"
 
@@ -7837,8 +7838,8 @@ msgstr ""
 
 msgid "    - ${number_zero2}: like ${number2} but the number is zero-padded"
 msgstr ""
-"    - ${number_zero2}: wie ${number2}, aber die Zahl wird mit Nullen"
-" aufgefüllt"
+"    - ${number_zero2}: wie ${number2}, aber die Zahl wird mit Nullen "
+"aufgefüllt"
 
 msgid ""
 "    - ${number_displayed}: \"1\" if the number is displayed, otherwise \"0\""
@@ -18963,4 +18964,3 @@ msgstr ""
 "%s%s Datei \"%s\" zum Fortsetzen der Übertragung wird nicht akzeptiert "
 "(Port: %d, Startposition: %llu): xfer nicht gefunden oder nicht bereit für "
 "Transfer"
-

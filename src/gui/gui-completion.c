@@ -1502,7 +1502,7 @@ gui_completion_search (struct t_gui_completion *completion, const char *data,
                        int position, int direction)
 {
     char *old_word_found;
-    int real_position;
+    int real_position, force_no_partial;
 
     if (!completion || !data || (position < 0))
         return 0;
@@ -1510,6 +1510,15 @@ gui_completion_search (struct t_gui_completion *completion, const char *data,
     real_position = utf8_real_pos (data, position);
 
     completion->direction = direction;
+
+    force_no_partial = 0;
+    if ((completion->context != GUI_COMPLETION_NULL)
+        && (arraylist_size (completion->partial_list) > 0)
+        && CONFIG_BOOLEAN(config_completion_partial_completion_auto_expand))
+    {
+        force_no_partial = 1;
+        arraylist_clear (completion->partial_list);
+    }
 
     /* if new completion => look for base word */
     if (real_position != completion->position)
@@ -1522,7 +1531,12 @@ gui_completion_search (struct t_gui_completion *completion, const char *data,
         completion->partial_completion = (direction < 0);
         completion->direction = direction;
         gui_completion_find_context (completion, data, real_position);
-        if (completion->template_partial_completion)
+        if (force_no_partial)
+        {
+            completion->partial_completion = 0;
+            completion->direction = 1;
+        }
+        else if (completion->template_partial_completion)
         {
             if (completion->direction < 0)
             {

@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2025-05-04 09:21+0200\n"
+"POT-Creation-Date: 2025-06-30 09:32+0200\n"
 "PO-Revision-Date: 2025-05-04 09:25+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -5741,6 +5741,10 @@ msgid "send alert (BEL) when a partial completion occurs"
 msgstr "補完候補が複数あった場合に警告 (BEL) を送信"
 
 msgid ""
+"automatically expand word after partial completion when completing again"
+msgstr ""
+
+msgid ""
 "partially complete command names (stop when many commands found begin with "
 "same letters)"
 msgstr ""
@@ -6712,15 +6716,12 @@ msgstr "マウスを無効化しました"
 msgid "  TERM='%s', size: %dx%d"
 msgstr "  TERM='%s'、サイズ: %dx%d"
 
-#, c-format
 msgid "Running WeeChat in background..."
 msgstr "WeeChat をバックグラウンドで実行中..."
 
-#, c-format
 msgid "fork error"
 msgstr "フォークエラー"
 
-#, c-format
 msgid "OK"
 msgstr "成功"
 
