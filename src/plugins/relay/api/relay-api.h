@@ -27,7 +27,7 @@ enum t_relay_status;
 
 #define RELAY_API_VERSION_MAJOR 0
 #define RELAY_API_VERSION_MINOR 4
-#define RELAY_API_VERSION_PATCH 0
+#define RELAY_API_VERSION_PATCH 1
 #define RELAY_API_VERSION_NUMBER                                        \
     ((RELAY_API_VERSION_MAJOR << 16)                                    \
      + (RELAY_API_VERSION_MINOR << 8)                                   \

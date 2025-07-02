@@ -17,7 +17,7 @@ info:
   license:
     name: CC BY-NC-SA 4.0
     url: https://creativecommons.org/licenses/by-nc-sa/4.0/
-  version: 0.4.0
+  version: 0.4.1
 
 externalDocs:
   url: https://weechat.org/doc/
