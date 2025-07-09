@@ -4484,12 +4484,11 @@ if (weechat_file_compress ("/tmp/test.txt", "/tmp/test.txt.zst", "zstd", 50))
 [NOTE]
 Ова функција није доступна у API скриптовања.
 
-// TRANSLATION MISSING
 ==== file_compare
 
 _WeeChat ≥ 4.7.0._
 
-Compare the content of two files.
+Пореди садржаје два фајла.
 
 Прототип:
 
@@ -4500,14 +4499,14 @@ int weechat_file_compare (const char *filename1, const char *filename2);
 
 Аргументи:
 
-* _filename1_: first file to compare
-* _filename2_: second file to compare
+* _filename1_: први фајл за поређење
+* _filename2_: други фајл за поређење
 
 Повратна вредност:
 
-* 0: both files have same content
-* 1: content is different
-* 2: error (file not found or read error)
+* 0: оба фајла имају исти садржај
+* 1: садржај се разликује
+* 2: грешка (фајл није пронађен или грешка при читању)
 
 C пример:
 
@@ -4515,7 +4514,7 @@ C пример:
 ----
 if (weechat_file_compare ("/tmp/test.txt", "/tmp/test2.txt") == 0)
 {
-    /* same content */
+    /* исти садржај */
 }
 ----
 
@@ -4680,9 +4679,8 @@ int weechat_util_strftimeval (char *string, int max, const char *format, struct 
 * _string_: бафер у који се смешта форматирани стринг
 * _max_: величина стринга
 * _format_: формат, исто као за _strftime_ функцију, са следећим додатним спецификаторима:
-// TRANSLATION MISSING
-** `%@`: return the date expressed in Coordinated Universal Time (UTC)
-   instead of date relative to the user's specified timezone _(WeeChat ≥ 4.7.0)_
+** `%@`: враћа датум изражен у Coordinated Universal Time (UTC) уместо као датум
+   релативан у односу на временску зону коју је задао корисник _(WeeChat ≥ 4.7.0)_
 ** `%.N` где је `N` између 1 и 6: микросекунде допуњене нулама на N цифара
    (на пример `%.3` за милисекунде)
 ** `%f`: алијас за `%.6`
