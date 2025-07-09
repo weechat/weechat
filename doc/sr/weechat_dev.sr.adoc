@@ -91,33 +91,23 @@ qweechat::
 |       typing/      | Typing додатак.
 |       xfer/        | Xfer додатак (IRC DCC фајл/разговор).
 | tests/             | Тестови.
-// TRANSLATION MISSING
-|    fuzz/           | Fuzz testing.
-// TRANSLATION MISSING
-|       core/        | Fuzz testing for core functions.
+|    fuzz/           | Fuzz тестирање.
+|       core/        | Fuzz тестирање функција језгра.
 |    unit/           | Unit тестови.
 |       core/        | Unit тестови за функције језгра.
-// TRANSLATION MISSING
-|          hook/     | Unit tests for hook functions.
+|          hook/     | Unit тестову за функције куке.
 |       gui/         | Unit тестови за функције интерфејса.
-// TRANSLATION MISSING
-|          curses/   | Unit tests for Curses interface functions.
+|          curses/   | Unit тестови за функције Curses интерфејса.
 |       scripts/     | Тестови за API скриптовања.
 |          python/   | Python скрипте за генерисање и покретање тестова за API скриптовања.
 |       plugins/     | Unit тестови за додатке.
-// TRANSLATION MISSING
-|          alias/    | Unit tests for alias plugin.
+|          alias/    | Unit тестови за alias додатак.
 |          irc/      | Unit тестови за IRC додатак.
-// TRANSLATION MISSING
-|          logger/   | Unit tests for logger plugin.
-// TRANSLATION MISSING
-|          relay/    | Unit tests for relay plugin.
-// TRANSLATION MISSING
-|          trigger/  | Unit tests for trigger plugin.
-// TRANSLATION MISSING
-|          typing/   | Unit tests for typing plugin.
-// TRANSLATION MISSING
-|          xfer/     | Unit tests for xfer plugin.
+|          logger/   | Unit тестови за logger додатак.
+|          relay/    | Unit тестови за relay додатак.
+|          trigger/  | Unit тестови за trigger додатак.
+|          typing/   | Unit тестови за typing додатак.
+|          xfer/     | Unit тестови за xfer додатак.
 | doc/               | Документација.
 | po/                | Фајлови превода (gettext).
 | debian/            | Debian паковање.
@@ -426,24 +416,15 @@ WeeChat „језгро” се налази у следећим директо�
 |===
 | Путања/фајл                                     | Опис
 | tests/                                          | Корен тестова.
-// TRANSLATION MISSING
-|    fuzz/                                        | Root of fuzz testing.
-// TRANSLATION MISSING
-|       ossfuzz.sh                                | Build script for https://github.com/google/oss-fuzz[OSS-Fuzz ^↗^^].
-// TRANSLATION MISSING
-|       core/                                     | Root of fuzz testing for core.
-// TRANSLATION MISSING
-|          calc-fuzzer.c                          | Fuzz testing: калкулација израза.
-// TRANSLATION MISSING
-|          crypto-fuzzer.c                        | Fuzz testing: криптографске функције.
-// TRANSLATION MISSING
-|          secure-fuzzer.c                        | Fuzz testing: secured data.
-// TRANSLATION MISSING
-|          string-fuzzer.c                        | Fuzz testing: стрингови.
-// TRANSLATION MISSING
-|          utf8-fuzzer.c                          | Fuzz testing: UTF-8.
-// TRANSLATION MISSING
-|          util-fuzzer.c                          | Fuzz testing: utility functions.
+|    fuzz/                                        | Корен fuzz тестирања.
+|       ossfuzz.sh                                | Скрипта изградње за https://github.com/google/oss-fuzz[OSS-Fuzz ^↗^^].
+|       core/                                     | Корен fuzz тестирања за језгро.
+|          calc-fuzzer.c                          | Fuzz тестирање: калкулација израза.
+|          crypto-fuzzer.c                        | Fuzz тестирање: криптографске функције.
+|          secure-fuzzer.c                        | Fuzz тестирање: обезбеђени подаци.
+|          string-fuzzer.c                        | Fuzz тестирање: стрингови.
+|          utf8-fuzzer.c                          | Fuzz тестирање: UTF-8.
+|          util-fuzzer.c                          | Fuzz тестирање: услужне функције.
 |    unit/                                        | Корен unit тестова.
 |       tests.cpp                                 | Програм који се користи за извршавање свих тестова.
 |       tests-record.cpp                          | Бележење и претрага у приказаним порукама.
@@ -490,13 +471,10 @@ WeeChat „језгро” се налази у следећим директо�
 |             test-hook-timer.cpp                 | Тестови: куке „timer”.
 |             test-hook-url.cpp                   | Тестови: куке „url”.
 |       gui/                                      | Корен unit тестова интерфејса.
-// TRANSLATION MISSING
-|          test-gui-bar-item-custom.cpp           | Tests: custom bar item functions.
-// TRANSLATION MISSING
-|          test-gui-bar-item.cpp                  | Tests: bar item functions.
+|          test-gui-bar-item-custom.cpp           | Тестови: функције ставки прилагођене траке.
+|          test-gui-bar-item.cpp                  | Тестови: функције ставки траке.
 |          test-gui-bar-window.cpp                | Тестови: функције прозора траке.
-// TRANSLATION MISSING
-|          test-gui-bar.cpp                       | Tests: bar functions.
+|          test-gui-bar.cpp                       | Тестови: функције траке.
 |          test-gui-buffer.cpp                    | Тестови: бафер функције.
 |          test-gui-chat.cpp                      | Тестови: чет функције.
 |          test-gui-color.cpp                     | Тестови: боје.
@@ -519,10 +497,8 @@ WeeChat „језгро” се налази у следећим директо�
 |          test-plugin-config.cpp                 | Тестови: функције конфигурације додатка.
 |          test-plugin-api-info.cpp               | Тестови: инфо функције API додатака.
 |          test-plugins.cpp                       | Тестови: plugins.
-// TRANSLATION MISSING
-|          alias/                                 | Root of unit tests for alias plugin.
-// TRANSLATION MISSING
-|             test-alias.cpp                      | Tests: aliases.
+|          alias/                                 | Корен unit тестова за alias додатак.
+|             test-alias.cpp                      | Тестови: алијаси.
 |          irc/                                   | Корен unit тестова IRC додатка.
 |             test-irc-batch.cpp                  | Тестови: IRC пакетни догађаји.
 |             test-irc-buffer.cpp                 | Тестови: IRC бафери.
@@ -556,12 +532,9 @@ WeeChat „језгро” се налази у следећим директо�
 |                test-relay-api.cpp               | Тестови: Релеј „api” протокол: опште функције.
 |                test-relay-api-msg.cpp           | Тестови: Релеј „api” протокол: поруке.
 |                test-relay-api-protocol.cpp      | Тестови: Релеј „api” протокол: протокол.
-// TRANSLATION MISSING
-|                remote/                          | Tests: Relay "api" protocol: remote functions.
-// TRANSLATION MISSING
-|                   test-relay-remote-event.cpp   | Tests: Relay "api" protocol: remote events.
-// TRANSLATION MISSING
-|                   test-relay-remote-network.cpp | Tests: Relay "api" protocol: remote network.
+|                remote/                          | Тестови: Релеј „api” протокол: удаљене функције.
+|                   test-relay-remote-event.cpp   | Тестови: Релеј „api” протокол: удаљени догађаји.
+|                   test-relay-remote-network.cpp | Тестови: Релеј „api” протокол: удаљена мрежа.
 |             irc/                                | Корен unit тестова за Релеј „irc” протокол.
 |                test-relay-irc.cpp               | Тестови: Релеј „irc” протокол.
 |          trigger/                               | Корен unit тестова за окидач додатак.
@@ -1262,13 +1235,11 @@ server->hook_timer_sasl = weechat_hook_timer (timeout * 1000,
 
 | tests/fuzz
 | tests/fuzz/*
-// TRANSLATION MISSING
-| Fuzz testing
+| Fuzz тестирање
 
 | tests/unit
 | tests/unit/*
-// TRANSLATION MISSING
-| Unit tests
+| Unit тестови
 
 | doc
 | doc/*
