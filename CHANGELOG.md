@@ -41,7 +41,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 - relay/api: reject any invalid or unknown password hash algorithm in handshake resource
 - relay/api: process HTTP request received as soon as a NULL char is received
 - relay/weechat: fix empty buffers in client when WeeChat is running on Solaris/illumos
-- build: fix build on Solaris/illumos (issue #2251)
+- build: fix build on Solaris/illumos ([#2251](https://github.com/weechat/weechat/issues/2251))
 
 ## Version 4.6.3 (2025-05-11)
 
