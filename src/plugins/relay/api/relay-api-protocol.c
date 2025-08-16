@@ -1356,10 +1356,11 @@ relay_api_protocol_recv_http (struct t_relay_client *client)
     }
 
 resource_not_found:
-    if ((strcmp (client->http_req->method, "GET") != 0)
-        && (strcmp (client->http_req->method, "POST") != 0)
-        && (strcmp (client->http_req->method, "PUT") != 0)
-        && (strcmp (client->http_req->method, "DELETE") != 0))
+    if (!client->http_req->method
+        || ((strcmp (client->http_req->method, "GET") != 0)
+            && (strcmp (client->http_req->method, "POST") != 0)
+            && (strcmp (client->http_req->method, "PUT") != 0)
+            && (strcmp (client->http_req->method, "DELETE") != 0)))
     {
         goto error_method_not_allowed;
     }
@@ -1392,15 +1393,28 @@ error_memory:
 error:
     if (weechat_relay_plugin->debug >= 1)
     {
-        weechat_printf (NULL,
-                        _("%s%s: failed to execute route \"%s %s\" "
-                          "for client %s%s%s"),
-                        weechat_prefix ("error"),
-                        RELAY_PLUGIN_NAME,
-                        client->http_req->method,
-                        client->http_req->path,
-                        RELAY_COLOR_CHAT_CLIENT,
-                        client->desc,
-                        RELAY_COLOR_CHAT);
+        if (client->http_req->method && client->http_req->path)
+        {
+            weechat_printf (NULL,
+                            _("%s%s: failed to execute route \"%s %s\" "
+                              "for client %s%s%s"),
+                            weechat_prefix ("error"),
+                            RELAY_PLUGIN_NAME,
+                            client->http_req->method,
+                            client->http_req->path,
+                            RELAY_COLOR_CHAT_CLIENT,
+                            client->desc,
+                            RELAY_COLOR_CHAT);
+        }
+        else
+        {
+            weechat_printf (NULL,
+                            _("%s%s: invalid data received from client %s%s%s"),
+                            weechat_prefix ("error"),
+                            RELAY_PLUGIN_NAME,
+                            RELAY_COLOR_CHAT_CLIENT,
+                            client->desc,
+                            RELAY_COLOR_CHAT);
+        }
     }
 }

@@ -28,7 +28,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2025-06-30 09:32+0200\n"
+"POT-Creation-Date: 2025-08-16 19:26+0200\n"
 "PO-Revision-Date: 2025-05-05 09:24+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -15418,6 +15418,11 @@ msgstr ""
 #, c-format
 msgid "%s%s: failed to execute route \"%s %s\" for client %s%s%s"
 msgstr "%s%s: Route „%s %s“ für Client %s%s%s konnte nicht ausgeführt werden"
+
+#, fuzzy, c-format
+#| msgid "%s%s: invalid websocket handshake received for client %s%s%s"
+msgid "%s%s: invalid data received from client %s%s%s"
+msgstr "%s%s: ungültigen WebSocket Handshake für Client %s%s%s empfangen"
 
 #, c-format
 msgid "%sremote[%s]: unable to send data, disconnecting"

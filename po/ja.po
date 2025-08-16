@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2025-06-30 09:32+0200\n"
+"POT-Creation-Date: 2025-08-16 19:26+0200\n"
 "PO-Revision-Date: 2025-05-04 09:25+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -14848,6 +14848,12 @@ msgstr ""
 msgid "%s%s: failed to execute route \"%s %s\" for client %s%s%s"
 msgstr ""
 "%1$s%2$s: クライアント %4$s%5$s%6$s に対するコマンド \"%3$s\" の実行に失敗"
+
+#, fuzzy, c-format
+#| msgid "%s%s: invalid websocket handshake received for client %s%s%s"
+msgid "%s%s: invalid data received from client %s%s%s"
+msgstr ""
+"%s%s: クライアント %s%s%s から受け取った不正なウェブソケットハンドシェイク"
 
 #, fuzzy, c-format
 #| msgid "%s%s: unable to create socket"
