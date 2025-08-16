@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2025-06-30 09:32+0200\n"
-"PO-Revision-Date: 2025-06-30 09:34+0200\n"
+"POT-Creation-Date: 2025-08-16 19:26+0200\n"
+"PO-Revision-Date: 2025-08-16 19:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -15115,6 +15115,10 @@ msgstr ""
 #, c-format
 msgid "%s%s: failed to execute route \"%s %s\" for client %s%s%s"
 msgstr "%s%s : échec d'exécution de la route \"%s %s\" pour le client %s%s%s"
+
+#, c-format
+msgid "%s%s: invalid data received from client %s%s%s"
+msgstr "%s%s : données invalides reçues du client %s%s%s"
 
 #, c-format
 msgid "%sremote[%s]: unable to send data, disconnecting"

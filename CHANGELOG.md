@@ -6,6 +6,12 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 # WeeChat ChangeLog
 
+## Version 4.8.0 (under dev)
+
+### Fixed
+
+- relay/api: fix crash when an invalid HTTP request is received from a client
+
 ## Version 4.7.0 (2025-07-19)
 
 ### Changed
