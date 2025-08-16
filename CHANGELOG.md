@@ -12,6 +12,12 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 - relay/api: fix crash when an invalid HTTP request is received from a client
 
+## Version 4.7.1 (2025-08-16)
+
+### Fixed
+
+- relay/api: fix crash when an invalid HTTP request is received from a client
+
 ## Version 4.7.0 (2025-07-19)
 
 ### Changed
