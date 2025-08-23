@@ -247,7 +247,7 @@ if(CMAKE_HOST_SOLARIS)
 endif()
 
 # Check for libgcrypt
-pkg_check_modules(LIBGCRYPT REQUIRED libgcrypt)
+pkg_check_modules(LIBGCRYPT REQUIRED libgcrypt>=1.8.0)
 include_directories(${LIBGCRYPT_INCLUDE_DIRS})
 list(APPEND EXTRA_LIBS ${LIBGCRYPT_LDFLAGS})
 
