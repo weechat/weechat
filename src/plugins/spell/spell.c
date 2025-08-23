@@ -1123,12 +1123,8 @@ spell_debug_libs_cb (const void *pointer, void *data, const char *signal,
     (void) signal_data;
 
 #ifdef USE_ENCHANT
-#ifdef HAVE_ENCHANT_GET_VERSION
     weechat_printf (NULL, "  %s: enchant %s",
                     SPELL_PLUGIN_NAME, enchant_get_version ());
-#else
-    weechat_printf (NULL, "  %s: enchant (?)", SPELL_PLUGIN_NAME);
-#endif /* HAVE_ENCHANT_GET_VERSION */
 #else
 #ifdef HAVE_ASPELL_VERSION_STRING
     weechat_printf (NULL, "  %s: aspell %s",

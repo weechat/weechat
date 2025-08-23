@@ -32,8 +32,8 @@ add_library(spell MODULE
 set_target_properties(spell PROPERTIES PREFIX "")
 
 if(ENCHANT_FOUND)
-  include_directories(${ENCHANT_INCLUDE_DIR})
-  target_link_libraries(spell ${ENCHANT_LIBRARIES} coverage_config)
+  include_directories(${ENCHANT_INCLUDE_DIRS})
+  target_link_libraries(spell ${ENCHANT_LDFLAGS} coverage_config)
   add_definitions(-DUSE_ENCHANT)
 else()
   if(ASPELL_FOUND)

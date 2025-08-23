@@ -52,7 +52,6 @@ SPDX-License-Identifier: GPL-3.0-or-later
 #cmakedefine HAVE_HTONLL
 #cmakedefine HAVE_EAT_NEWLINE_GLITCH
 #cmakedefine HAVE_ASPELL_VERSION_STRING
-#cmakedefine HAVE_ENCHANT_GET_VERSION
 #cmakedefine HAVE_GUILE_GMP_MEMORY_FUNCTIONS
 
 #define CMAKE_BUILD_TYPE "@CMAKE_BUILD_TYPE@"
