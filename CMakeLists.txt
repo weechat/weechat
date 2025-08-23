@@ -246,7 +246,7 @@ list(APPEND EXTRA_LIBS ${ZLIB_LIBRARY})
 
 # Check for zstd
 if(ENABLE_ZSTD)
-  pkg_check_modules(LIBZSTD REQUIRED libzstd)
+  pkg_check_modules(LIBZSTD REQUIRED libzstd>=1.4.0)
   include_directories(${LIBZSTD_INCLUDE_DIRS})
   list(APPEND EXTRA_LIBS ${LIBZSTD_LDFLAGS})
   add_definitions(-DHAVE_ZSTD)
