@@ -59,14 +59,9 @@ int lua_eval_mode = 0;
 int lua_eval_send_input = 0;
 int lua_eval_exec_commands = 0;
 struct t_gui_buffer *lua_eval_buffer = NULL;
-#if LUA_VERSION_NUM >= 502
-#define LUA_LOAD "load"
-#else
-#define LUA_LOAD "loadstring"
-#endif /* LUA_VERSION_NUM >= 502 */
 #define LUA_EVAL_SCRIPT                                                 \
     "function script_lua_eval(code)\n"                                  \
-    "    assert(" LUA_LOAD "(code))()\n"                                \
+    "    assert(load(code))()\n"                                        \
     "end\n"                                                             \
     "\n"                                                                \
     "weechat.register('" WEECHAT_SCRIPT_EVAL_NAME "', '', '1.0', "      \
@@ -332,11 +327,7 @@ weechat_lua_exec (struct t_plugin_script *script, int ret_type,
                         lua_pushnil (lua_current_interpreter);
                     break;
                 case 'i': /* integer */
-#if LUA_VERSION_NUM >= 503
                     lua_pushinteger (lua_current_interpreter, *((int *)argv[i]));
-#else
-                    lua_pushnumber (lua_current_interpreter, *((int *)argv[i]));
-#endif /* LUA_VERSION_NUM >= 503 */
                     break;
                 case 'h': /* hash */
                     weechat_lua_pushhashtable (lua_current_interpreter,
@@ -462,7 +453,6 @@ weechat_lua_register_lib (lua_State *L, const char *libname,
 {
     int i;
 
-#if LUA_VERSION_NUM >= 502
     if (libname)
     {
         lua_newtable (L);
@@ -472,9 +462,6 @@ weechat_lua_register_lib (lua_State *L, const char *libname,
     }
     else
         luaL_setfuncs (L, lua_api_funcs, 0);
-#else
-    luaL_register (L, libname, lua_api_funcs);
-#endif /* LUA_VERSION_NUM >= 502 */
 
     luaL_newmetatable (L, "weechat");
     lua_pushliteral (L, "__index");
@@ -487,11 +474,7 @@ weechat_lua_register_lib (lua_State *L, const char *libname,
         if (weechat_script_constants[i].value_string)
             lua_pushstring (L, weechat_script_constants[i].value_string);
         else
-#if LUA_VERSION_NUM >= 503
             lua_pushinteger (L, weechat_script_constants[i].value_integer);
-#else
-            lua_pushnumber (L, weechat_script_constants[i].value_integer);
-#endif /* LUA_VERSION_NUM >= 503 */
         lua_settable (L, -3);
     }
 
@@ -557,16 +540,7 @@ weechat_lua_load (const char *filename, const char *code)
         return NULL;
     }
 
-#ifndef LUA_VERSION_NUM /* Lua ≤ 5.0 */
-    luaopen_base (lua_current_interpreter);
-    luaopen_string (lua_current_interpreter);
-    luaopen_table (lua_current_interpreter);
-    luaopen_math (lua_current_interpreter);
-    luaopen_io (lua_current_interpreter);
-    luaopen_debug (lua_current_interpreter);
-#else
     luaL_openlibs (lua_current_interpreter);
-#endif /* LUA_VERSION_NUM */
 
     weechat_lua_register_lib (lua_current_interpreter, "weechat",
                               weechat_lua_api_funcs);
@@ -1269,16 +1243,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     /* set interpreter name and version */
     weechat_hashtable_set (plugin->variables, "interpreter_name",
                            plugin->name);
-#if defined(LUA_VERSION_MAJOR) && defined(LUA_VERSION_MINOR)
     weechat_hashtable_set (plugin->variables, "interpreter_version",
                            LUA_VERSION_MAJOR "." LUA_VERSION_MINOR);
-#elif defined(LUA_VERSION)
-    weechat_hashtable_set (plugin->variables, "interpreter_version",
-                           LUA_VERSION);
-#else
-    weechat_hashtable_set (plugin->variables, "interpreter_version",
-                           "");
-#endif /* LUA_VERSION */
 
     /* init stdout/stderr buffer */
     lua_buffer_output = weechat_string_dyn_alloc (256);
