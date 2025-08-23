@@ -279,7 +279,7 @@ endif()
 
 # Check for CURL
 # NOTE: keep version in sync with tools/check_curl_symbols.py
-pkg_check_modules(LIBCURL REQUIRED libcurl>=7.47.0)
+pkg_check_modules(LIBCURL REQUIRED libcurl>=7.68.0)
 include_directories(${LIBCURL_INCLUDE_DIRS})
 list(APPEND EXTRA_LIBS ${LIBCURL_LDFLAGS})
 
