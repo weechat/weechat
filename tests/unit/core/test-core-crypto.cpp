@@ -245,13 +245,10 @@ TEST(CoreCrypto, GetHashAlgo)
     LONGS_EQUAL(GCRY_MD_SHA512_224, weecrypto_get_hash_algo ("sha512-224"));
     LONGS_EQUAL(GCRY_MD_SHA512_256, weecrypto_get_hash_algo ("sha512-256"));
 #endif
-#if GCRYPT_VERSION_NUMBER >= 0x010700
     LONGS_EQUAL(GCRY_MD_SHA3_224, weecrypto_get_hash_algo ("sha3-224"));
     LONGS_EQUAL(GCRY_MD_SHA3_256, weecrypto_get_hash_algo ("sha3-256"));
     LONGS_EQUAL(GCRY_MD_SHA3_384, weecrypto_get_hash_algo ("sha3-384"));
     LONGS_EQUAL(GCRY_MD_SHA3_512, weecrypto_get_hash_algo ("sha3-512"));
-#endif
-#if GCRYPT_VERSION_NUMBER >= 0x010800
     LONGS_EQUAL(GCRY_MD_BLAKE2B_160, weecrypto_get_hash_algo ("blake2b-160"));
     LONGS_EQUAL(GCRY_MD_BLAKE2B_256, weecrypto_get_hash_algo ("blake2b-256"));
     LONGS_EQUAL(GCRY_MD_BLAKE2B_384, weecrypto_get_hash_algo ("blake2b-384"));
@@ -260,7 +257,6 @@ TEST(CoreCrypto, GetHashAlgo)
     LONGS_EQUAL(GCRY_MD_BLAKE2S_160, weecrypto_get_hash_algo ("blake2s-160"));
     LONGS_EQUAL(GCRY_MD_BLAKE2S_224, weecrypto_get_hash_algo ("blake2s-224"));
     LONGS_EQUAL(GCRY_MD_BLAKE2S_256, weecrypto_get_hash_algo ("blake2s-256"));
-#endif
 }
 
 /*
@@ -309,13 +305,10 @@ TEST(CoreCrypto, Hash)
     WEE_CHECK_HASH(1, DATA_HASH_SHA512_224, data, data_size, GCRY_MD_SHA512_224);
     WEE_CHECK_HASH(1, DATA_HASH_SHA512_256, data, data_size, GCRY_MD_SHA512_256);
 #endif
-#if GCRYPT_VERSION_NUMBER >= 0x010700
     WEE_CHECK_HASH(1, DATA_HASH_SHA3_224, data, data_size, GCRY_MD_SHA3_224);
     WEE_CHECK_HASH(1, DATA_HASH_SHA3_256, data, data_size, GCRY_MD_SHA3_256);
     WEE_CHECK_HASH(1, DATA_HASH_SHA3_384, data, data_size, GCRY_MD_SHA3_384);
     WEE_CHECK_HASH(1, DATA_HASH_SHA3_512, data, data_size, GCRY_MD_SHA3_512);
-#endif
-#if GCRYPT_VERSION_NUMBER >= 0x010800
     WEE_CHECK_HASH(1, DATA_HASH_BLAKE2B_160, data, data_size, GCRY_MD_BLAKE2B_160);
     WEE_CHECK_HASH(1, DATA_HASH_BLAKE2B_256, data, data_size, GCRY_MD_BLAKE2B_256);
     WEE_CHECK_HASH(1, DATA_HASH_BLAKE2B_384, data, data_size, GCRY_MD_BLAKE2B_384);
@@ -324,7 +317,6 @@ TEST(CoreCrypto, Hash)
     WEE_CHECK_HASH(1, DATA_HASH_BLAKE2S_160, data, data_size, GCRY_MD_BLAKE2S_160);
     WEE_CHECK_HASH(1, DATA_HASH_BLAKE2S_224, data, data_size, GCRY_MD_BLAKE2S_224);
     WEE_CHECK_HASH(1, DATA_HASH_BLAKE2S_256, data, data_size, GCRY_MD_BLAKE2S_256);
-#endif
 }
 
 /*
@@ -362,13 +354,10 @@ TEST(CoreCrypto, HashFile)
     WEE_CHECK_HASH_FILE(1, DATA_HASH_SHA512_224, filename, GCRY_MD_SHA512_224);
     WEE_CHECK_HASH_FILE(1, DATA_HASH_SHA512_256, filename, GCRY_MD_SHA512_256);
 #endif
-#if GCRYPT_VERSION_NUMBER >= 0x010700
     WEE_CHECK_HASH_FILE(1, DATA_HASH_SHA3_224, filename, GCRY_MD_SHA3_224);
     WEE_CHECK_HASH_FILE(1, DATA_HASH_SHA3_256, filename, GCRY_MD_SHA3_256);
     WEE_CHECK_HASH_FILE(1, DATA_HASH_SHA3_384, filename, GCRY_MD_SHA3_384);
     WEE_CHECK_HASH_FILE(1, DATA_HASH_SHA3_512, filename, GCRY_MD_SHA3_512);
-#endif
-#if GCRYPT_VERSION_NUMBER >= 0x010800
     WEE_CHECK_HASH_FILE(1, DATA_HASH_BLAKE2B_160, filename, GCRY_MD_BLAKE2B_160);
     WEE_CHECK_HASH_FILE(1, DATA_HASH_BLAKE2B_256, filename, GCRY_MD_BLAKE2B_256);
     WEE_CHECK_HASH_FILE(1, DATA_HASH_BLAKE2B_384, filename, GCRY_MD_BLAKE2B_384);
@@ -377,7 +366,6 @@ TEST(CoreCrypto, HashFile)
     WEE_CHECK_HASH_FILE(1, DATA_HASH_BLAKE2S_160, filename, GCRY_MD_BLAKE2S_160);
     WEE_CHECK_HASH_FILE(1, DATA_HASH_BLAKE2S_224, filename, GCRY_MD_BLAKE2S_224);
     WEE_CHECK_HASH_FILE(1, DATA_HASH_BLAKE2S_256, filename, GCRY_MD_BLAKE2S_256);
-#endif
 
     unlink (filename);
     free (filename);
@@ -460,12 +448,10 @@ TEST(CoreCrypto, Hmac)
     WEE_CHECK_HMAC(1, DATA_HMAC_SHA512_224, key, key_size, msg, msg_size, GCRY_MD_SHA512_224);
     WEE_CHECK_HMAC(1, DATA_HMAC_SHA512_256, key, key_size, msg, msg_size, GCRY_MD_SHA512_256);
 #endif
-#if GCRYPT_VERSION_NUMBER >= 0x010700
     WEE_CHECK_HMAC(1, DATA_HMAC_SHA3_224, key, key_size, msg, msg_size, GCRY_MD_SHA3_224);
     WEE_CHECK_HMAC(1, DATA_HMAC_SHA3_256, key, key_size, msg, msg_size, GCRY_MD_SHA3_256);
     WEE_CHECK_HMAC(1, DATA_HMAC_SHA3_384, key, key_size, msg, msg_size, GCRY_MD_SHA3_384);
     WEE_CHECK_HMAC(1, DATA_HMAC_SHA3_512, key, key_size, msg, msg_size, GCRY_MD_SHA3_512);
-#endif
 }
 
 /*

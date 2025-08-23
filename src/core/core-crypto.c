@@ -65,13 +65,10 @@ char *weecrypto_hash_algo_string[] = {
     "sha256",
     "sha384",
     "sha512",
-#if GCRYPT_VERSION_NUMBER >= 0x010700
     "sha3-224",
     "sha3-256",
     "sha3-384",
     "sha3-512",
-#endif
-#if GCRYPT_VERSION_NUMBER >= 0x010800
     "blake2b-160",
     "blake2b-256",
     "blake2b-384",
@@ -80,7 +77,6 @@ char *weecrypto_hash_algo_string[] = {
     "blake2s-160",
     "blake2s-224",
     "blake2s-256",
-#endif
 #if GCRYPT_VERSION_NUMBER >= 0x010904
     "sha512-224",
     "sha512-256",
@@ -95,13 +91,10 @@ int weecrypto_hash_algo[] = {
     GCRY_MD_SHA256,
     GCRY_MD_SHA384,
     GCRY_MD_SHA512,
-#if GCRYPT_VERSION_NUMBER >= 0x010700
     GCRY_MD_SHA3_224,
     GCRY_MD_SHA3_256,
     GCRY_MD_SHA3_384,
     GCRY_MD_SHA3_512,
-#endif
-#if GCRYPT_VERSION_NUMBER >= 0x010800
     GCRY_MD_BLAKE2B_160,
     GCRY_MD_BLAKE2B_256,
     GCRY_MD_BLAKE2B_384,
@@ -110,7 +103,6 @@ int weecrypto_hash_algo[] = {
     GCRY_MD_BLAKE2S_160,
     GCRY_MD_BLAKE2S_224,
     GCRY_MD_BLAKE2S_256,
-#endif
 #if GCRYPT_VERSION_NUMBER >= 0x010904
     GCRY_MD_SHA512_224,
     GCRY_MD_SHA512_256,

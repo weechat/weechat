@@ -53,7 +53,7 @@ SRC_PATH = (
 )
 
 # NOTE: keep version in sync with CMakeLists.txt
-CURL_MIN_VERSION_STR = "7.47.0"
+CURL_MIN_VERSION_STR = "7.68.0"
 
 WEECHAT_CURL_MIN_VERSION_RE = (
     r"#if LIBCURL_VERSION_NUM >= (?P<hex_min_version>0x[0-9A-F]+) "

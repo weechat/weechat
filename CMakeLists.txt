@@ -247,12 +247,12 @@ if(CMAKE_HOST_SOLARIS)
 endif()
 
 # Check for libgcrypt
-pkg_check_modules(LIBGCRYPT REQUIRED libgcrypt)
+pkg_check_modules(LIBGCRYPT REQUIRED libgcrypt>=1.8.0)
 include_directories(${LIBGCRYPT_INCLUDE_DIRS})
 list(APPEND EXTRA_LIBS ${LIBGCRYPT_LDFLAGS})
 
 # Check for GnuTLS
-pkg_check_modules(GNUTLS REQUIRED gnutls>=3.3.0)
+pkg_check_modules(GNUTLS REQUIRED gnutls>=3.6.3)
 include_directories(${GNUTLS_INCLUDE_DIRS})
 list(APPEND EXTRA_LIBS ${GNUTLS_LDFLAGS})
 
@@ -279,7 +279,7 @@ endif()
 
 # Check for CURL
 # NOTE: keep version in sync with tools/check_curl_symbols.py
-pkg_check_modules(LIBCURL REQUIRED libcurl>=7.47.0)
+pkg_check_modules(LIBCURL REQUIRED libcurl>=7.68.0)
 include_directories(${LIBCURL_INCLUDE_DIRS})
 list(APPEND EXTRA_LIBS ${LIBCURL_LDFLAGS})
 

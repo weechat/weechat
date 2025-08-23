@@ -206,7 +206,7 @@ endif()
 
 if(ENABLE_SPELL)
   if(ENABLE_ENCHANT)
-    find_package(ENCHANT)
+    pkg_check_modules(ENCHANT enchant-2)
     if(ENCHANT_FOUND)
       add_subdirectory(spell)
     else()
