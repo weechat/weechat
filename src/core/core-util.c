@@ -341,6 +341,8 @@ util_strftimeval (char *string, int max, const char *format, struct timeval *tv)
  *   "1704402062.123456"                 -> timestamp date, microseconds
  *   "1704402062,123456"                 -> timestamp date, microseconds
  *
+ * Note: lower characters "t" and "z" are also supported.
+ *
  * Returns:
  *   1: OK
  *   0: error
@@ -439,6 +441,8 @@ util_parse_time (const char *datetime, struct timeval *tv)
 
     /* extract timezone and remove it from string */
     pos = strrchr (string, 'Z');
+    if (!pos)
+        pos = strrchr (string, 'z');
     if (pos)
     {
         pos[0] = '\0';
@@ -448,6 +452,8 @@ util_parse_time (const char *datetime, struct timeval *tv)
     else
     {
         pos = strchr (string, 'T');
+        if (!pos)
+            pos = strchr (string, 't');
         if (!pos)
             pos = strchr (string, ' ');
         if (pos)
@@ -500,6 +506,34 @@ util_parse_time (const char *datetime, struct timeval *tv)
             /* initialize structure, because strptime does not do it */
             memset (&tm_date, 0, sizeof (struct tm));
             pos = strptime (string, "%Y-%m-%dT%H:%M:%S", &tm_date);
+            if (pos && (tm_date.tm_year > 0))
+            {
+                if (use_local_time)
+                {
+                    tm_date.tm_isdst = -1;
+                    tv->tv_sec = mktime (&tm_date);
+                }
+                else
+                {
+                    /* convert to UTC and add timezone_offset */
+                    time_now = mktime (&tm_date);
+                    gmtime_r (&time_now, &tm_date_gm);
+                    localtime_r (&time_now, &tm_date_local);
+                    time_gm = mktime (&tm_date_gm);
+                    time_local = mktime (&tm_date_local);
+                    tv->tv_sec = mktime (&tm_date_local)
+                        + (time_local - time_gm)
+                        - timezone_offset;
+                }
+                rc = 1;
+            }
+        }
+        else if (strchr (string, 't'))
+        {
+            /* ISO 8601 format like: "2024-01-04t21:01:02" */
+            /* initialize structure, because strptime does not do it */
+            memset (&tm_date, 0, sizeof (struct tm));
+            pos = strptime (string, "%Y-%m-%dt%H:%M:%S", &tm_date);
             if (pos && (tm_date.tm_year > 0))
             {
                 if (use_local_time)
