@@ -59,7 +59,8 @@ logger_backlog_display_line (struct t_gui_buffer *buffer, const char *line)
     char *str_date, *charset, *pos_tab, *error, *message, *message2;
     time_t datetime, time_now;
     struct tm tm_line;
-    int color_lines;
+    struct timeval date_parsed;
+    int datetime_usec, color_lines;
 
     if (!line)
         return;
@@ -67,11 +68,10 @@ logger_backlog_display_line (struct t_gui_buffer *buffer, const char *line)
     color_lines = weechat_config_boolean (logger_config_file_color_lines);
 
     datetime = 0;
+    datetime_usec = 0;
     pos_message = strchr (line, '\t');
     if (pos_message)
     {
-        /* initialize structure, because strptime does not do it */
-        memset (&tm_line, 0, sizeof (struct tm));
         /*
          * we get current time to initialize daylight saving time in
          * structure tm_line, otherwise printed time will be shifted
@@ -82,13 +82,22 @@ logger_backlog_display_line (struct t_gui_buffer *buffer, const char *line)
         str_date = weechat_strndup (line, pos_message - line);
         if (str_date)
         {
-            error = strptime (
-                str_date,
-                weechat_config_string (logger_config_file_time_format),
-                &tm_line);
-            if (error && !error[0] && (tm_line.tm_year > 0))
-                datetime = mktime (&tm_line);
-            free (str_date);
+            if (weechat_util_parse_time (str_date, &date_parsed))
+            {
+                datetime = date_parsed.tv_sec;
+                datetime_usec = date_parsed.tv_usec;
+            }
+            else
+            {
+                memset (&tm_line, 0, sizeof (struct tm));
+                error = strptime (
+                    str_date,
+                    weechat_config_string (logger_config_file_time_format),
+                    &tm_line);
+                if (error && !error[0] && (tm_line.tm_year > 0))
+                    datetime = mktime (&tm_line);
+                free (str_date);
+            }
         }
     }
     pos_message = (pos_message && (datetime != 0)) ?
@@ -108,8 +117,8 @@ logger_backlog_display_line (struct t_gui_buffer *buffer, const char *line)
             pos_tab = strchr (message2, '\t');
             if (pos_tab)
                 pos_tab[0] = '\0';
-            weechat_printf_date_tags (
-                buffer, datetime,
+            weechat_printf_datetime_tags (
+                buffer, datetime, datetime_usec,
                 "no_highlight,notify_none,logger_backlog",
                 "%s%s%s%s%s",
                 (color_lines) ? "" : weechat_color (weechat_config_string (logger_config_color_backlog_line)),
@@ -172,6 +181,7 @@ logger_backlog_group_messages (struct t_arraylist *lines)
     char *message, *new_message, *str_date, *error;
     const char *ptr_line, *pos_message;
     struct tm tm_line;
+    struct timeval date_parsed;
     struct t_arraylist *messages;
 
     if (!lines)
@@ -212,13 +222,20 @@ logger_backlog_group_messages (struct t_arraylist *lines)
             str_date = weechat_strndup (ptr_line, pos_message - ptr_line);
             if (str_date)
             {
-                memset (&tm_line, 0, sizeof (struct tm));
-                error = strptime (
-                    str_date,
-                    weechat_config_string (logger_config_file_time_format),
-                    &tm_line);
-                if (error && !error[0] && (tm_line.tm_year > 0))
+                if (weechat_util_parse_time (str_date, &date_parsed))
+                {
                     time_found = 1;
+                }
+                else
+                {
+                    memset (&tm_line, 0, sizeof (struct tm));
+                    error = strptime (
+                        str_date,
+                        weechat_config_string (logger_config_file_time_format),
+                        &tm_line);
+                    if (error && !error[0] && (tm_line.tm_year > 0))
+                        time_found = 1;
+                }
                 free (str_date);
             }
         }

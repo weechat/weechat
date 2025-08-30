@@ -11,6 +11,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 ### Changed
 
 - api: add support of date like ISO 8601 but with spaces in function util_parse_time
+- logger: use function util_parse_time to parse date/time in log files
 - build: require Curl ≥ 7.68.0 ([#2268](https://github.com/weechat/weechat/issues/2268))
 - build: require GnuTLS ≥ 3.6.3 ([#2268](https://github.com/weechat/weechat/issues/2268))
 - build: require libgcrypt ≥ 1.8.0 ([#2268](https://github.com/weechat/weechat/issues/2268))
