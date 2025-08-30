@@ -103,7 +103,7 @@ TEST(LoggerBacklog, DisplayLine)
 
     /* valid line */
     snprintf (str_line, sizeof (str_line),
-              "2022-02-19 16:32:20\tnick\tthe message");
+              "2022-02-19 16:32:20.123456Z\tnick\tthe message");
     logger_backlog_display_line (gui_buffers, str_line);
     ptr_data = gui_buffers->own_lines->last_line->data;
     LONGS_EQUAL(1645288340, ptr_data->date);
@@ -127,7 +127,7 @@ TEST(LoggerBacklog, DisplayLine)
 
     /* valid line with Tab in message */
     snprintf (str_line, sizeof (str_line),
-              "2022-02-19 16:32:21\tnick\tthe message\twith tab");
+              "2022-02-19 16:32:21.123456Z\tnick\tthe message\twith tab");
     logger_backlog_display_line (gui_buffers, str_line);
     ptr_data = gui_buffers->own_lines->last_line->data;
     LONGS_EQUAL(1645288341, ptr_data->date);
@@ -193,19 +193,19 @@ TEST(LoggerBacklog, GroupMessages)
 {
     struct t_arraylist *lines, *messages;
     const char *test_lines_1[] = {
-        "2023-06-04 21:15:34\t\tMessage 1",
-        "2023-06-04 21:15:40\t\tMessage 2",
+        "2023-06-04 21:15:34.123456Z\t\tMessage 1",
+        "2023-06-04 21:15:40.123456Z\t\tMessage 2",
         NULL,
     };
     const char *test_lines_2[] = {
         "end of line",
-        "2023-06-04 21:15:34\t\tFirst line",
+        "2023-06-04 21:15:34.123456Z\t\tFirst line",
         "of multiline message",
         "",
         "end of message",
-        "2023-06-04 21:15:37\t\tTwo lines with empty line",
+        "2023-06-04 21:15:37.123456Z\t\tTwo lines with empty line",
         "",
-        "2023-06-04 21:15:40\t\tMessage on one line",
+        "2023-06-04 21:15:40.123456Z\t\tMessage on one line",
         NULL,
     };
     int i;
@@ -224,9 +224,9 @@ TEST(LoggerBacklog, GroupMessages)
     messages = logger_backlog_group_messages (lines);
     CHECK(messages);
     LONGS_EQUAL(2, arraylist_size (messages));
-    STRCMP_EQUAL("2023-06-04 21:15:34\t\tMessage 1",
+    STRCMP_EQUAL("2023-06-04 21:15:34.123456Z\t\tMessage 1",
                  (const char *)arraylist_get (messages, 0));
-    STRCMP_EQUAL("2023-06-04 21:15:40\t\tMessage 2",
+    STRCMP_EQUAL("2023-06-04 21:15:40.123456Z\t\tMessage 2",
                  (const char *)arraylist_get (messages, 1));
     arraylist_free (messages);
 
@@ -242,14 +242,14 @@ TEST(LoggerBacklog, GroupMessages)
     LONGS_EQUAL(4, arraylist_size (messages));
     STRCMP_EQUAL("end of line",
                  (const char *)arraylist_get (messages, 0));
-    STRCMP_EQUAL("2023-06-04 21:15:34\t\tFirst line\n"
+    STRCMP_EQUAL("2023-06-04 21:15:34.123456Z\t\tFirst line\n"
                  "of multiline message\n"
                  "\n"
                  "end of message",
                  (const char *)arraylist_get (messages, 1));
-    STRCMP_EQUAL("2023-06-04 21:15:37\t\tTwo lines with empty line\n",
+    STRCMP_EQUAL("2023-06-04 21:15:37.123456Z\t\tTwo lines with empty line\n",
                  (const char *)arraylist_get (messages, 2));
-    STRCMP_EQUAL("2023-06-04 21:15:40\t\tMessage on one line",
+    STRCMP_EQUAL("2023-06-04 21:15:40.123456Z\t\tMessage on one line",
                  (const char *)arraylist_get (messages, 3));
     arraylist_free (messages);
 
