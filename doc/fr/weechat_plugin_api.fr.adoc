@@ -4941,20 +4941,108 @@ int util_parse_time (const char *datetime, struct timeval *tv);
 
 Paramètres :
 
-* _date_ : date/heure
+* _date_ : date/heure (voir les formats supportés ci-dessous)
 * _tv_: date/heure analysée (structure "timeval")
+
+Les formats supportés pour la date/heure (en supposant que l'heure courante est
+`2025-08-30 21:04:55` (Europe/Paris), donc avec le décalage horaire `+02:00`,
+l'heure UTC étant `19:04:55`) :
+
+[width="70%",cols="5,6m",options="header"]
+|===
+| Format | Exemples
+
+| Date (minuit)
+| 2025-08-30
+
+| ISO 8601, date + heure locale
+| 2025-08-30T21:04:55 +
+  2025-08-30T21:04:55.123456
+
+| ISO 8601, date + heure locale + décalage horaire
+| 2025-08-30T16:04:55-03 +
+  2025-08-30T16:04:55-0300 +
+  2025-08-30T21:04:55+0200 +
+  2025-08-30T21:04:55+02:00 +
+  2025-08-30T21:04:55.123456+0200
+
+| ISO 8601, date + heure UTC
+| 2025-08-30T19:04:55Z +
+  2025-08-30T19:04:55.123456Z
+
+| RFC 3339, date + heure locale
+| 2025-08-30 21:04:55 +
+  2025-08-30 21:04:55.123456
+
+| RFC 3339, date + heure locale + décalage horaire
+| 2025-08-30 16:04:55-03 +
+  2025-08-30 16:04:55-0300 +
+  2025-08-30 21:04:55+0200 +
+  2025-08-30 21:04:55 +0200 +
+  2025-08-30 21:04:55+02:00 +
+  2025-08-30 21:04:55 +02:00 +
+  2025-08-30 21:04:55.123456+0200 +
+  2025-08-30 21:04:55.123456 +02:00
+
+| RFC 3339, date + heure UTC
+| 2025-08-30 19:04:55Z +
+  2025-08-30 19:04:55.123456Z
+
+| Heure locale
+| 21:04:55 +
+  21:04:55.123456
+
+| Heure locale + décalage horaire
+| 16:04:55-03 +
+  16:04:55-0300 +
+  21:04:55+0200 +
+  21:04:55 +0200 +
+  21:04:55+02:00 +
+  21:04:55 +02:00 +
+  21:04:55.123456+0200 +
+  21:04:55.123456 +02:00
+
+| Heure UTC
+| 19:04:55Z +
+  19:04:55.123456Z
+
+| Date d'horodatage
+| 1756580695 +
+  1756580695.123456 +
+  1756580695,123456
+|===
+
+Notes :
+
+* Pour ISO 8601, le séparateur entre la date et l'heure est `T` (majuscule) ou
+  `t` (minuscule).
+* Pour l'heure UTC, le caractère final est `Z` (majuscule) ou `z` (minuscule).
+* Le format du décalage horaire est l'un des suivants :
+** `++[+/-]hh:mm++` (heures et minutes)
+** `++[+/-]hhmm++` (heures et minutes)
+** `++[+/-]hh++` (heures).
+* La précision après les secondes peut aller d'un dixième de seconde (1 chiffre,
+  par exemple `21:04:55.1`) à une microseconde (6 chiffres, par exemple `21:04:55.123456`). +
+  Un point (`.`) ou une virgule (`,`) peut séparer les secondes des autres chiffres.
 
 Valeur de retour :
 
 * 1 si OK, 0 si erreur
 
-Exemple en C :
+Exemples en C :
 
 [source,c]
 ----
 struct timeval tv;
-weechat_util_parse_time ("2023-12-25T10:29:09.456789Z", &tv);  /* == 1 */
-/* result: tv.tv_sec == 1703500149, tv.tv_usec = 456789 */
+
+weechat_util_parse_time ("2025-08-30T19:04:55.123456Z", &tv);  /* == 1 */
+/* résultat : tv.tv_sec == 1756580695, tv.tv_usec = 123456 */
+
+weechat_util_parse_time ("2025-08-30 21:04:55.123456 +02:00", &tv);  /* == 1 */
+/* même résultat */
+
+weechat_util_parse_time ("21:04:55.123456", &tv);  /* == 1 */
+/* même résultat */
 ----
 
 [NOTE]

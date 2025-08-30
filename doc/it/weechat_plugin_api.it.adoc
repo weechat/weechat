@@ -5081,20 +5081,106 @@ int util_parse_time (const char *datetime, struct timeval *tv);
 
 Arguments:
 
-* _date_: date/time
+* _date_: date/time (see supported formats below)
 * _tv_: parsed date/time ("timeval" structure)
+
+Supported date/time format (supposing the current time is `2025-08-30 21:04:55`
+(Europe/Paris), so with timezone offset `+02:00`, UTC time being `19:04:55`):
+
+[width="70%",cols="5,6m",options="header"]
+|===
+| Format | Examples
+
+| Date (midnight)
+| 2025-08-30
+
+| ISO 8601, date + local time
+| 2025-08-30T21:04:55 +
+  2025-08-30T21:04:55.123456
+
+| ISO 8601, date + local time + offset
+| 2025-08-30T16:04:55-03 +
+  2025-08-30T16:04:55-0300 +
+  2025-08-30T21:04:55+0200 +
+  2025-08-30T21:04:55+02:00 +
+  2025-08-30T21:04:55.123456+0200
+
+| ISO 8601, date + UTC time
+| 2025-08-30T19:04:55Z +
+  2025-08-30T19:04:55.123456Z
+
+| RFC 3339, date + local time
+| 2025-08-30 21:04:55 +
+  2025-08-30 21:04:55.123456
+
+| RFC 3339, date + local time + offset
+| 2025-08-30 16:04:55-03 +
+  2025-08-30 16:04:55-0300 +
+  2025-08-30 21:04:55+0200 +
+  2025-08-30 21:04:55 +0200 +
+  2025-08-30 21:04:55+02:00 +
+  2025-08-30 21:04:55 +02:00 +
+  2025-08-30 21:04:55.123456+0200 +
+  2025-08-30 21:04:55.123456 +02:00
+
+| RFC 3339, date + UTC time
+| 2025-08-30 19:04:55Z +
+  2025-08-30 19:04:55.123456Z
+
+| Local time
+| 21:04:55 +
+  21:04:55.123456
+
+| Local time + offset
+| 16:04:55-03 +
+  16:04:55-0300 +
+  21:04:55+0200 +
+  21:04:55 +0200 +
+  21:04:55+02:00 +
+  21:04:55 +02:00 +
+  21:04:55.123456+0200 +
+  21:04:55.123456 +02:00
+
+| UTC time
+| 19:04:55Z +
+  19:04:55.123456Z
+
+| Timestamp date
+| 1756580695 +
+  1756580695.123456 +
+  1756580695,123456
+|===
+
+Notes:
+
+* For ISO 8601, the separator between date and time is `T` (upper case) or `t` (lower case).
+* For UTC time, the final char is `Z` (upper case) or `z` (lower case).
+* The timezone offset format is one of:
+** `++[+/-]hh:mm++` (hours and minutes)
+** `++[+/-]hhmm++` (hours and minutes)
+** `++[+/-]hh++` (hours).
+* Precision after seconds can be from one-tenth of second (1 digit, for example
+  `21:04:55.1`) to one microsecond (6 digits, for example `21:04:55.123456`). +
+  A dot (`.`) or comma (`,`) can separate seconds from the other digits.
 
 Return value:
 
 * 1 if OK, 0 if error
 
-C example:
+C examples:
 
 [source,c]
 ----
 struct timeval tv;
-weechat_util_parse_time ("2023-12-25T10:29:09.456789Z", &tv);  /* == 1 */
-/* result: tv.tv_sec == 1703500149, tv.tv_usec = 456789 */
+
+weechat_util_parse_time ("2025-08-30T19:04:55.123456Z", &tv);  /* == 1 */
+/* result: tv.tv_sec == 1756580695, tv.tv_usec = 123456 */
+
+weechat_util_parse_time ("2025-08-30 21:04:55.123456 +02:00", &tv);  /* == 1 */
+/* same result */
+
+weechat_util_parse_time ("21:04:55.123456", &tv);  /* == 1 */
+/* same result */
 ----
 
 [NOTE]
