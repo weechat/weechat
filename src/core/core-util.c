@@ -349,8 +349,8 @@ util_strftimeval (char *string, int max, const char *format, struct timeval *tv)
 int
 util_parse_time (const char *datetime, struct timeval *tv)
 {
-    char *string, *pos, *pos2, *pos_colon, *pos_hyphen, str_usec[16], *error;
-    char str_date[128], str_date2[256];
+    char *string, *pos, *pos2, *pos_colon, *pos_hyphen, *pos_dot;
+    char str_usec[16], *error, str_date[128], str_date2[256];
     struct tm tm_date, tm_date_gm, tm_date_local, *local_time;
     time_t time_now, time_gm, time_local;
     long long value;
@@ -370,6 +370,7 @@ util_parse_time (const char *datetime, struct timeval *tv)
 
     pos_colon = strchr (datetime, ':');
     pos_hyphen = strchr (datetime, '-');
+    pos_dot = strchr (datetime, '.');
     if (pos_colon && !pos_hyphen)
     {
         /* add current date: "21:01:02" -> "2024-01-04T21:01:02" */
@@ -381,7 +382,7 @@ util_parse_time (const char *datetime, struct timeval *tv)
         strftime (str_date, sizeof (str_date), "%Y-%m-%dT", local_time);
         snprintf (string, sizeof (str_date2), "%s%s", str_date, datetime);
     }
-    else if (!pos_colon && pos_hyphen)
+    else if (!pos_colon && pos_hyphen && (!pos_dot || (pos_hyphen < pos_dot)))
     {
         /* add time (midnight): "2024-01-04" -> "2024-01-04T00:00:00" */
         string = malloc (strlen (datetime) + 16 + 1);
@@ -436,7 +437,7 @@ util_parse_time (const char *datetime, struct timeval *tv)
         memmove (pos, pos2, strlen (pos2) + 1);
     }
 
-    /* extract timezone and remove it from string2 */
+    /* extract timezone and remove it from string */
     pos = strrchr (string, 'Z');
     if (pos)
     {
@@ -451,7 +452,7 @@ util_parse_time (const char *datetime, struct timeval *tv)
             pos = strchr (string, ' ');
         if (pos)
         {
-            pos2 = strchr (pos, '+');
+            pos2 = strrchr (pos, '+');
             if (pos2)
             {
                 pos2[0] = '\0';
@@ -460,7 +461,7 @@ util_parse_time (const char *datetime, struct timeval *tv)
             }
             else
             {
-                pos2 = strchr (pos, '-');
+                pos2 = strrchr (pos, '-');
                 if (pos2)
                 {
                     pos2[0] = '\0';
@@ -491,107 +492,63 @@ util_parse_time (const char *datetime, struct timeval *tv)
         }
     }
 
-    if (strchr (string, '-'))
+    if (strchr (string, '-') && strchr (string, ':'))
     {
-        if (strchr (string, ':'))
+        if (strchr (string, 'T'))
         {
-            if (strchr (string, 'T'))
+            /* ISO 8601 format like: "2024-01-04T21:01:02" */
+            /* initialize structure, because strptime does not do it */
+            memset (&tm_date, 0, sizeof (struct tm));
+            pos = strptime (string, "%Y-%m-%dT%H:%M:%S", &tm_date);
+            if (pos && (tm_date.tm_year > 0))
             {
-                /* ISO 8601 format like: "2024-01-04T21:01:02.123Z" */
-                /* initialize structure, because strptime does not do it */
-                memset (&tm_date, 0, sizeof (struct tm));
-                pos = strptime (string, "%Y-%m-%dT%H:%M:%S", &tm_date);
-                if (pos && (tm_date.tm_year > 0))
+                if (use_local_time)
                 {
-                    if (use_local_time)
-                    {
-                        tv->tv_sec = mktime (&tm_date);
-                    }
-                    else
-                    {
-                        /* convert to UTC and add timezone_offset */
-                        time_now = mktime (&tm_date);
-                        gmtime_r (&time_now, &tm_date_gm);
-                        localtime_r (&time_now, &tm_date_local);
-                        time_gm = mktime (&tm_date_gm);
-                        time_local = mktime (&tm_date_local);
-                        tv->tv_sec = mktime (&tm_date_local)
-                            + (time_local - time_gm)
-                            + timezone_offset;
-                    }
-                    rc = 1;
+                    tm_date.tm_isdst = -1;
+                    tv->tv_sec = mktime (&tm_date);
                 }
-            }
-            else
-            {
-                /* like ISO 8601 but with space like: "2024-01-04 21:01:02.123Z" */
-                /* initialize structure, because strptime does not do it */
-                memset (&tm_date, 0, sizeof (struct tm));
-                pos = strptime (string, "%Y-%m-%d %H:%M:%S", &tm_date);
-                if (pos && (tm_date.tm_year > 0))
+                else
                 {
-                    if (use_local_time)
-                    {
-                        tv->tv_sec = mktime (&tm_date);
-                    }
-                    else
-                    {
-                        /* convert to UTC and add timezone_offset */
-                        time_now = mktime (&tm_date);
-                        gmtime_r (&time_now, &tm_date_gm);
-                        localtime_r (&time_now, &tm_date_local);
-                        time_gm = mktime (&tm_date_gm);
-                        time_local = mktime (&tm_date_local);
-                        tv->tv_sec = mktime (&tm_date_local)
-                            + (time_local - time_gm)
-                            + timezone_offset;
-                    }
-                    rc = 1;
+                    /* convert to UTC and add timezone_offset */
+                    time_now = mktime (&tm_date);
+                    gmtime_r (&time_now, &tm_date_gm);
+                    localtime_r (&time_now, &tm_date_local);
+                    time_gm = mktime (&tm_date_gm);
+                    time_local = mktime (&tm_date_local);
+                    tv->tv_sec = mktime (&tm_date_local)
+                        + (time_local - time_gm)
+                        - timezone_offset;
                 }
+                rc = 1;
             }
         }
         else
         {
-            /* ISO 8601 format like: "2024-01-04" */
+            /* like ISO 8601 but with space like: "2024-01-04 21:01:02" */
             /* initialize structure, because strptime does not do it */
             memset (&tm_date, 0, sizeof (struct tm));
-            pos = strptime (string, "%Y-%m-%d", &tm_date);
+            pos = strptime (string, "%Y-%m-%d %H:%M:%S", &tm_date);
             if (pos && (tm_date.tm_year > 0))
             {
-                tv->tv_sec = mktime (&tm_date);
+                if (use_local_time)
+                {
+                    tm_date.tm_isdst = -1;
+                    tv->tv_sec = mktime (&tm_date);
+                }
+                else
+                {
+                    /* convert to UTC and add timezone_offset */
+                    time_now = mktime (&tm_date);
+                    gmtime_r (&time_now, &tm_date_gm);
+                    localtime_r (&time_now, &tm_date_local);
+                    time_gm = mktime (&tm_date_gm);
+                    time_local = mktime (&tm_date_local);
+                    tv->tv_sec = mktime (&tm_date_local)
+                        + (time_local - time_gm)
+                        - timezone_offset;
+                }
                 rc = 1;
             }
-        }
-    }
-    else if (strchr (string, ':'))
-    {
-        /* hour format like: "21:01:02" */
-        time_now = time (NULL);
-        local_time = localtime (&time_now);
-        strftime (str_date, sizeof (str_date), "%Y-%m-%dT", local_time);
-        snprintf (str_date2, sizeof (str_date2), "%s%s", str_date, string);
-        /* initialize structure, because strptime does not do it */
-        memset (&tm_date, 0, sizeof (struct tm));
-        pos = strptime (str_date2, "%Y-%m-%dT%H:%M:%S", &tm_date);
-        if (pos)
-        {
-            if (use_local_time)
-            {
-                tv->tv_sec = mktime (&tm_date);
-            }
-            else
-            {
-                /* convert to UTC and add timezone_offset */
-                time_now = mktime (&tm_date);
-                gmtime_r (&time_now, &tm_date_gm);
-                localtime_r (&time_now, &tm_date_local);
-                time_gm = mktime (&tm_date_gm);
-                time_local = mktime (&tm_date_local);
-                tv->tv_sec = mktime (&tm_date_local)
-                    + (time_local - time_gm)
-                    + timezone_offset;
-            }
-            rc = 1;
         }
     }
     else

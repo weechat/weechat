@@ -291,8 +291,9 @@ TEST(CoreUtil, ParseTime)
     time_t date;
     char str_time[128];
 
-    /* test with local timezone: UTC+1 */
-    setenv ("TZ", "UTC+1", 1);
+    /* test with UTC timezone */
+    setenv ("TZ", "UTC", 1);
+    tzset ();
 
     LONGS_EQUAL(0, util_parse_time (NULL, NULL));
     LONGS_EQUAL(0, util_parse_time (NULL, &tv));
@@ -305,9 +306,8 @@ TEST(CoreUtil, ParseTime)
 
     /*
      * expected: 2023-12-25T00:00:00Z == 1703462400
-     * (local timezone UTC+1: 1703466000)
      */
-    WEE_PARSE_DATE(1, 1703466000, 0, "2023-12-25");
+    WEE_PARSE_DATE(1, 1703462400, 0, "2023-12-25");
 
     /* expected: current date with specified local time */
     date = time (NULL);
@@ -329,42 +329,42 @@ TEST(CoreUtil, ParseTime)
     local_time = localtime (&date);
     strftime (str_time, sizeof (str_time), "%H:%M:%S+0100", local_time);
     LONGS_EQUAL(1, util_parse_time (str_time, &tv));
-    CHECK((tv.tv_sec >= date) && (tv.tv_sec <= date + 10));
+    CHECK((tv.tv_sec >= date - 3600) && (tv.tv_sec <= date - 3600 + 10));
     LONGS_EQUAL(0, tv.tv_usec);
 
     date = time (NULL);
     local_time = localtime (&date);
     strftime (str_time, sizeof (str_time), "%H:%M:%S +01:00", local_time);
     LONGS_EQUAL(1, util_parse_time (str_time, &tv));
-    CHECK((tv.tv_sec >= date) && (tv.tv_sec <= date + 10));
+    CHECK((tv.tv_sec >= date - 3600) && (tv.tv_sec <= date - 3600 + 10));
     LONGS_EQUAL(0, tv.tv_usec);
 
     date = time (NULL);
     local_time = localtime (&date);
     strftime (str_time, sizeof (str_time), "%H:%M:%S +02:00", local_time);
     LONGS_EQUAL(1, util_parse_time (str_time, &tv));
-    CHECK((tv.tv_sec >= date + 3600) && (tv.tv_sec <= date + 3600 + 10));
+    CHECK((tv.tv_sec >= date - 7200) && (tv.tv_sec <= date - 7200 + 10));
     LONGS_EQUAL(0, tv.tv_usec);
 
     date = time (NULL);
     local_time = localtime (&date);
     strftime (str_time, sizeof (str_time), "%H:%M:%S.456789+0100", local_time);
     LONGS_EQUAL(1, util_parse_time (str_time, &tv));
-    CHECK((tv.tv_sec >= date) && (tv.tv_sec <= date + 10));
+    CHECK((tv.tv_sec >= date - 3600) && (tv.tv_sec <= date - 3600 + 10));
     LONGS_EQUAL(456789, tv.tv_usec);
 
     date = time (NULL);
     local_time = localtime (&date);
     strftime (str_time, sizeof (str_time), "%H:%M:%S.456789 +01:00", local_time);
     LONGS_EQUAL(1, util_parse_time (str_time, &tv));
-    CHECK((tv.tv_sec >= date) && (tv.tv_sec <= date + 10));
+    CHECK((tv.tv_sec >= date - 3600) && (tv.tv_sec <= date - 3600 + 10));
     LONGS_EQUAL(456789, tv.tv_usec);
 
     date = time (NULL);
     local_time = localtime (&date);
     strftime (str_time, sizeof (str_time), "%H:%M:%S.456789 +02:00", local_time);
     LONGS_EQUAL(1, util_parse_time (str_time, &tv));
-    CHECK((tv.tv_sec >= date + 3600) && (tv.tv_sec <= date + 3600 + 10));
+    CHECK((tv.tv_sec >= date - 7200) && (tv.tv_sec <= date - 7200 + 10));
     LONGS_EQUAL(456789, tv.tv_usec);
 
     /* expected: current date with specified UTC time */
@@ -372,31 +372,29 @@ TEST(CoreUtil, ParseTime)
     local_time = localtime (&date);
     strftime (str_time, sizeof (str_time), "%H:%M:%SZ", local_time);
     LONGS_EQUAL(1, util_parse_time (str_time, &tv));
-    CHECK((tv.tv_sec >= date - 3600) && (tv.tv_sec <= date - 3600 + 10));
+    CHECK((tv.tv_sec >= date) && (tv.tv_sec <= date + 10));
     LONGS_EQUAL(0, tv.tv_usec);
 
     date = time (NULL);
     local_time = localtime (&date);
     strftime (str_time, sizeof (str_time), "%H:%M:%S.456789Z", local_time);
     LONGS_EQUAL(1, util_parse_time (str_time, &tv));
-    CHECK((tv.tv_sec >= date - 3600) && (tv.tv_sec <= date - 3600 + 10));
+    CHECK((tv.tv_sec >= date) && (tv.tv_sec <= date + 10));
     LONGS_EQUAL(456789, tv.tv_usec);
 
     /*
      * expected: 2023-12-25T10:29:09.456789Z == 1703500149.456789
-     * (local timezone UTC+1: 1703503749.456789)
      */
-    WEE_PARSE_DATE(1, 1703500149 + 3600, 0, "2023-12-25T10:29:09");
+    WEE_PARSE_DATE(1, 1703500149, 0, "2023-12-25T10:29:09");
     WEE_PARSE_DATE(1, 1703500149, 0, "2023-12-25T10:29:09Z");
     WEE_PARSE_DATE(1, 1703500149, 456000, "2023-12-25T10:29:09.456Z");
     WEE_PARSE_DATE(1, 1703500149, 456789, "2023-12-25T10:29:09.456789Z");
 
     /*
      * expected: 2023-12-25T10:29:09.456789Z == 1703500149.456789
-     * (local timezone UTC+1: 1703503749.456789)
      * with space instead of "T"
      */
-    WEE_PARSE_DATE(1, 1703500149 + 3600, 0, "2023-12-25 10:29:09");
+    WEE_PARSE_DATE(1, 1703500149, 0, "2023-12-25 10:29:09");
     WEE_PARSE_DATE(1, 1703500149, 0, "2023-12-25 10:29:09Z");
     WEE_PARSE_DATE(1, 1703500149, 456000, "2023-12-25 10:29:09.456Z");
     WEE_PARSE_DATE(1, 1703500149, 456789, "2023-12-25 10:29:09.456789Z");
@@ -413,20 +411,20 @@ TEST(CoreUtil, ParseTime)
     WEE_PARSE_DATE(1, 1703500149, 0, "2023-12-25T10:29:09-00:00");
     WEE_PARSE_DATE(1, 1703500149, 456789, "2023-12-25T10:29:09.456789-00:00");
 
-    WEE_PARSE_DATE(1, 1703500149 + 7200, 0, "2023-12-25T10:29:09+02");
-    WEE_PARSE_DATE(1, 1703500149 + 60, 0, "2023-12-25T10:29:09+0001");
-    WEE_PARSE_DATE(1, 1703500149 + 60, 456789, "2023-12-25T10:29:09.456789+0001");
+    WEE_PARSE_DATE(1, 1703500149, 0, "2023-12-25T12:29:09+02");
+    WEE_PARSE_DATE(1, 1703500149 - 60, 0, "2023-12-25T10:29:09+0001");
+    WEE_PARSE_DATE(1, 1703500149 - 60, 456789, "2023-12-25T10:29:09.456789+0001");
 
-    WEE_PARSE_DATE(1, 1703500149 + 7200, 0, "2023-12-25T10:29:09+0200");
-    WEE_PARSE_DATE(1, 1703500149 + 7200, 0, "2023-12-25T10:29:09+02:00");
-    WEE_PARSE_DATE(1, 1703500149 + 3600 + 1800, 0, "2023-12-25T10:29:09+0130");
-    WEE_PARSE_DATE(1, 1703500149 + 3600 + 1800, 0, "2023-12-25T10:29:09+01:30");
-    WEE_PARSE_DATE(1, 1703500149 + 3600 + 1800, 456789, "2023-12-25T10:29:09.456789+01:30");
+    WEE_PARSE_DATE(1, 1703500149 - 7200, 0, "2023-12-25T10:29:09+0200");
+    WEE_PARSE_DATE(1, 1703500149 - 7200, 0, "2023-12-25T10:29:09+02:00");
+    WEE_PARSE_DATE(1, 1703500149 - 3600 - 1800, 0, "2023-12-25T10:29:09+0130");
+    WEE_PARSE_DATE(1, 1703500149 - 3600 - 1800, 0, "2023-12-25T10:29:09+01:30");
+    WEE_PARSE_DATE(1, 1703500149 - 3600 - 1800, 456789, "2023-12-25T10:29:09.456789+01:30");
 
-    WEE_PARSE_DATE(1, 1703500149 - 60, 0, "2023-12-25T10:29:09-0001");
-    WEE_PARSE_DATE(1, 1703500149 - 3600 - 1800, 0, "2023-12-25T10:29:09-0130");
-    WEE_PARSE_DATE(1, 1703500149 - 3600 - 1800, 0, "2023-12-25T10:29:09-01:30");
-    WEE_PARSE_DATE(1, 1703500149 - 3600 - 1800, 456789, "2023-12-25T10:29:09.456789-01:30");
+    WEE_PARSE_DATE(1, 1703500149 + 60, 0, "2023-12-25T10:29:09-0001");
+    WEE_PARSE_DATE(1, 1703500149 + 3600 + 1800, 0, "2023-12-25T10:29:09-0130");
+    WEE_PARSE_DATE(1, 1703500149 + 3600 + 1800, 0, "2023-12-25T10:29:09-01:30");
+    WEE_PARSE_DATE(1, 1703500149 + 3600 + 1800, 456789, "2023-12-25T10:29:09.456789-01:30");
 
     /*
      * expected: 2023-12-25T10:29:09.456789Z == 1703500149.456789
@@ -440,20 +438,20 @@ TEST(CoreUtil, ParseTime)
     WEE_PARSE_DATE(1, 1703500149, 0, "2023-12-25 10:29:09-00:00");
     WEE_PARSE_DATE(1, 1703500149, 456789, "2023-12-25 10:29:09.456789-00:00");
 
-    WEE_PARSE_DATE(1, 1703500149 + 7200, 0, "2023-12-25 10:29:09+02");
-    WEE_PARSE_DATE(1, 1703500149 + 60, 0, "2023-12-25 10:29:09+0001");
-    WEE_PARSE_DATE(1, 1703500149 + 60, 456789, "2023-12-25 10:29:09.456789+0001");
+    WEE_PARSE_DATE(1, 1703500149 - 7200, 0, "2023-12-25 10:29:09+02");
+    WEE_PARSE_DATE(1, 1703500149 - 60, 0, "2023-12-25 10:29:09+0001");
+    WEE_PARSE_DATE(1, 1703500149 - 60, 456789, "2023-12-25 10:29:09.456789+0001");
 
-    WEE_PARSE_DATE(1, 1703500149 + 7200, 0, "2023-12-25 10:29:09+0200");
-    WEE_PARSE_DATE(1, 1703500149 + 7200, 0, "2023-12-25 10:29:09+02:00");
-    WEE_PARSE_DATE(1, 1703500149 + 3600 + 1800, 0, "2023-12-25 10:29:09+0130");
-    WEE_PARSE_DATE(1, 1703500149 + 3600 + 1800, 0, "2023-12-25 10:29:09+01:30");
-    WEE_PARSE_DATE(1, 1703500149 + 3600 + 1800, 456789, "2023-12-25 10:29:09.456789+01:30");
+    WEE_PARSE_DATE(1, 1703500149 - 7200, 0, "2023-12-25 10:29:09+0200");
+    WEE_PARSE_DATE(1, 1703500149 - 7200, 0, "2023-12-25 10:29:09+02:00");
+    WEE_PARSE_DATE(1, 1703500149 - 3600 - 1800, 0, "2023-12-25 10:29:09+0130");
+    WEE_PARSE_DATE(1, 1703500149 - 3600 - 1800, 0, "2023-12-25 10:29:09+01:30");
+    WEE_PARSE_DATE(1, 1703500149 - 3600 - 1800, 456789, "2023-12-25 10:29:09.456789+01:30");
 
-    WEE_PARSE_DATE(1, 1703500149 - 60, 0, "2023-12-25 10:29:09-0001");
-    WEE_PARSE_DATE(1, 1703500149 - 3600 - 1800, 0, "2023-12-25 10:29:09-0130");
-    WEE_PARSE_DATE(1, 1703500149 - 3600 - 1800, 0, "2023-12-25 10:29:09-01:30");
-    WEE_PARSE_DATE(1, 1703500149 - 3600 - 1800, 456789, "2023-12-25 10:29:09.456789-01:30");
+    WEE_PARSE_DATE(1, 1703500149 + 60, 0, "2023-12-25 10:29:09-0001");
+    WEE_PARSE_DATE(1, 1703500149 + 3600 + 1800, 0, "2023-12-25 10:29:09-0130");
+    WEE_PARSE_DATE(1, 1703500149 + 3600 + 1800, 0, "2023-12-25 10:29:09-01:30");
+    WEE_PARSE_DATE(1, 1703500149 + 3600 + 1800, 456789, "2023-12-25 10:29:09.456789-01:30");
 
     /*
      * expected: 2023-12-25T10:29:09.456789Z == 1703500149.456789
@@ -467,20 +465,20 @@ TEST(CoreUtil, ParseTime)
     WEE_PARSE_DATE(1, 1703500149, 0, "2023-12-25 10:29:09 -00:00");
     WEE_PARSE_DATE(1, 1703500149, 456789, "2023-12-25 10:29:09.456789 -00:00");
 
-    WEE_PARSE_DATE(1, 1703500149 + 7200, 0, "2023-12-25 10:29:09 +02");
-    WEE_PARSE_DATE(1, 1703500149 + 60, 0, "2023-12-25 10:29:09 +0001");
-    WEE_PARSE_DATE(1, 1703500149 + 60, 456789, "2023-12-25 10:29:09.456789 +0001");
+    WEE_PARSE_DATE(1, 1703500149 - 7200, 0, "2023-12-25 10:29:09 +02");
+    WEE_PARSE_DATE(1, 1703500149 - 60, 0, "2023-12-25 10:29:09 +0001");
+    WEE_PARSE_DATE(1, 1703500149 - 60, 456789, "2023-12-25 10:29:09.456789 +0001");
 
-    WEE_PARSE_DATE(1, 1703500149 + 7200, 0, "2023-12-25 10:29:09 +0200");
-    WEE_PARSE_DATE(1, 1703500149 + 7200, 0, "2023-12-25 10:29:09 +02:00");
-    WEE_PARSE_DATE(1, 1703500149 + 3600 + 1800, 0, "2023-12-25 10:29:09 +0130");
-    WEE_PARSE_DATE(1, 1703500149 + 3600 + 1800, 0, "2023-12-25 10:29:09 +01:30");
-    WEE_PARSE_DATE(1, 1703500149 + 3600 + 1800, 456789, "2023-12-25 10:29:09.456789 +01:30");
+    WEE_PARSE_DATE(1, 1703500149 - 7200, 0, "2023-12-25 10:29:09 +0200");
+    WEE_PARSE_DATE(1, 1703500149 - 7200, 0, "2023-12-25 10:29:09 +02:00");
+    WEE_PARSE_DATE(1, 1703500149 - 3600 - 1800, 0, "2023-12-25 10:29:09 +0130");
+    WEE_PARSE_DATE(1, 1703500149 - 3600 - 1800, 0, "2023-12-25 10:29:09 +01:30");
+    WEE_PARSE_DATE(1, 1703500149 - 3600 - 1800, 456789, "2023-12-25 10:29:09.456789 +01:30");
 
-    WEE_PARSE_DATE(1, 1703500149 - 60, 0, "2023-12-25 10:29:09 -0001");
-    WEE_PARSE_DATE(1, 1703500149 - 3600 - 1800, 0, "2023-12-25 10:29:09 -0130");
-    WEE_PARSE_DATE(1, 1703500149 - 3600 - 1800, 0, "2023-12-25 10:29:09 -01:30");
-    WEE_PARSE_DATE(1, 1703500149 - 3600 - 1800, 456789, "2023-12-25 10:29:09.456789 -01:30");
+    WEE_PARSE_DATE(1, 1703500149 + 60, 0, "2023-12-25 10:29:09 -0001");
+    WEE_PARSE_DATE(1, 1703500149 + 3600 + 1800, 0, "2023-12-25 10:29:09 -0130");
+    WEE_PARSE_DATE(1, 1703500149 + 3600 + 1800, 0, "2023-12-25 10:29:09 -01:30");
+    WEE_PARSE_DATE(1, 1703500149 + 3600 + 1800, 456789, "2023-12-25 10:29:09.456789 -01:30");
 
     /* expected: 2023-12-25T10:29:09.456789Z == 1703500149.456789 */
     WEE_PARSE_DATE(1, 1703500149, 0, "1703500149");
@@ -495,6 +493,7 @@ TEST(CoreUtil, ParseTime)
     WEE_PARSE_DATE(1, 1703500149, 456789, "1703500149.456789123456789123456789123456789");
 
     setenv ("TZ", "", 1);
+    tzset ();
 }
 
 /*
