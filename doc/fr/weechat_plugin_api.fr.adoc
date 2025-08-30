@@ -4928,7 +4928,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== util_parse_time
 
-_WeeChat ≥ 4.2.0._
+_WeeChat ≥ 4.2.0, mis à jour dans la 4.8.0._
 
 Analyser la date/heure avec le support des microsecondes.
 

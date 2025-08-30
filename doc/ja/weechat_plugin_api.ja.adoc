@@ -4982,7 +4982,7 @@ weechat_util_strftimeval (time, sizeof (time), "%@%FT%T.%fZ", &tv);
 // TRANSLATION MISSING
 ==== util_parse_time
 
-_WeeChat ≥ 4.2.0._
+_WeeChat ≥ 4.2.0, updated in 4.8.0._
 
 Parse date/time with support of microseconds.
 

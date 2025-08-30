@@ -271,24 +271,75 @@ util_strftimeval (char *string, int max, const char *format, struct timeval *tv)
 
 /*
  * Parses a date/time string, which can be one of these formats:
- *   "2024-01-04"                  -> date at midnight
- *   "2024-01-04T22:01:02"         -> ISO 8601, local time
- *   "2024-01-04T22:01:02.123"     -> ISO 8601, local time, with milliseconds
- *   "2024-01-04T22:01:02.123456"  -> ISO 8601, local time, with microseconds
- *   "2024-01-04T21:01:02Z"        -> ISO 8601, UTC
- *   "2024-01-04T21:01:02.123Z"    -> ISO 8601, UTC, with milliseconds
- *   "2024-01-04T21:01:02.123456Z" -> ISO 8601, UTC, with microseconds
- *   "22:01:02"                    -> current date, local time
- *   "22:01:02.123"                -> current date, local time with milliseconds
- *   "22.01:02.123456"             -> current date, local time with microseconds
- *   "21:01:02Z"                   -> current date, UTC
- *   "21:01:02.123Z"               -> current date, UTC, with milliseconds
- *   "21.01:02.123456Z"            -> current date, UTC, with microseconds
- *   "1704402062"                  -> timestamp date
- *   "1704402062.123"              -> timestamp date, with milliseconds
- *   "1704402062,123"              -> timestamp date, with milliseconds
- *   "1704402062.123456"           -> timestamp date, with microseconds
- *   "1704402062,123456"           -> timestamp date, with microseconds
+ *
+ *   "2024-01-04"                        -> date at midnight
+ *
+ *   "2024-01-04T22:01:02"               -> ISO 8601, local time
+ *   "2024-01-04T22:01:02.123"           -> ISO 8601, local time, milliseconds
+ *   "2024-01-04T22:01:02.123456"        -> ISO 8601, local time, microseconds
+ *
+ *   "2024-01-04T22:01:02+0100"          -> ISO 8601, local time + offset
+ *   "2024-01-04T22:01:02+01:00"         -> ISO 8601, local time + offset
+ *   "2024-01-04T22:01:02.123+0100"      -> ISO 8601, local time + offset, milliseconds
+ *   "2024-01-04T22:01:02.123+01:00"     -> ISO 8601, local time + offset, milliseconds
+ *   "2024-01-04T22:01:02.123456+0100"   -> ISO 8601, local time + offset, microseconds
+ *   "2024-01-04T22:01:02.123456+01:00"  -> ISO 8601, local time + offset, microseconds
+ *
+ *   "2024-01-04T21:01:02Z"              -> ISO 8601, UTC
+ *   "2024-01-04T21:01:02.123Z"          -> ISO 8601, UTC, milliseconds
+ *   "2024-01-04T21:01:02.123456Z"       -> ISO 8601, UTC, microseconds
+ *
+ *   "2024-01-04 22:01:02"               -> ~ISO 8601 (space), local time
+ *   "2024-01-04 22:01:02.123"           -> ~ISO 8601 (space), local time, milliseconds
+ *   "2024-01-04 22:01:02.123456"        -> ~ISO 8601 (space), local time, microseconds
+ *
+ *   "2024-01-04 22:01:02+0100"          -> ~ISO 8601 (space), local time + offset
+ *   "2024-01-04 22:01:02+01:00"         -> ~ISO 8601 (space), local time + offset
+ *   "2024-01-04 22:01:02 +0100"         -> ~ISO 8601 (space), local time + offset
+ *   "2024-01-04 22:01:02 +01:00"        -> ~ISO 8601 (space), local time + offset
+ *   "2024-01-04 22:01:02.123"           -> ~ISO 8601 (space), local time + offset, milliseconds
+ *   "2024-01-04 22:01:02.123+0100"      -> ~ISO 8601 (space), local time + offset, milliseconds
+ *   "2024-01-04 22:01:02.123+01:00"     -> ~ISO 8601 (space), local time + offset, milliseconds
+ *   "2024-01-04 22:01:02.123 +0100"     -> ~ISO 8601 (space), local time + offset, milliseconds
+ *   "2024-01-04 22:01:02.123 +01:00"    -> ~ISO 8601 (space), local time + offset, milliseconds
+ *   "2024-01-04 22:01:02.123456"        -> ~ISO 8601 (space), local time + offset, microseconds
+ *   "2024-01-04 22:01:02.123456+0100"   -> ~ISO 8601 (space), local time + offset, microseconds
+ *   "2024-01-04 22:01:02.123456+01:00"  -> ~ISO 8601 (space), local time + offset, microseconds
+ *   "2024-01-04 22:01:02.123456 +0100"  -> ~ISO 8601 (space), local time + offset, microseconds
+ *   "2024-01-04 22:01:02.123456 +01:00" -> ~ISO 8601 (space), local time + offset, microseconds
+ *
+ *   "2024-01-04 21:01:02Z"              -> ~ISO 8601 (space), UTC
+ *   "2024-01-04 21:01:02.123Z"          -> ~ISO 8601 (space), UTC, milliseconds
+ *   "2024-01-04 21:01:02.123456Z"       -> ~ISO 8601 (space), UTC, microseconds
+ *
+ *   "22:01:02"                          -> current date, local time
+ *   "22:01:02.123"                      -> current date, local time, milliseconds
+ *   "22:01:02.123456"                   -> current date, local time, microseconds
+ *
+ *   "22:01:02+0100"                     -> current date, local time + offset
+ *   "22:01:02+01:00"                    -> current date, local time + offset
+ *   "22:01:02 +0100"                    -> current date, local time + offset
+ *   "22:01:02 +01:00"                   -> current date, local time + offset
+ *   "22:01:02.123"                      -> current date, local time + offset, milliseconds
+ *   "22:01:02.123+0100"                 -> current date, local time + offset, milliseconds
+ *   "22:01:02.123+01:00"                -> current date, local time + offset, milliseconds
+ *   "22:01:02.123 +0100"                -> current date, local time + offset, milliseconds
+ *   "22:01:02.123 +01:00"               -> current date, local time + offset, milliseconds
+ *   "22:01:02.123456"                   -> current date, local time + offset, microseconds
+ *   "22:01:02.123456+0100"              -> current date, local time + offset, microseconds
+ *   "22:01:02.123456+01:00"             -> current date, local time + offset, microseconds
+ *   "22:01:02.123456 +0100"             -> current date, local time + offset, microseconds
+ *   "22:01:02.123456 +01:00"            -> current date, local time + offset, microseconds
+ *
+ *   "21:01:02Z"                         -> current date, UTC
+ *   "21:01:02.123Z"                     -> current date, UTC, milliseconds
+ *   "21:01:02.123456Z"                  -> current date, UTC, microseconds
+ *
+ *   "1704402062"                        -> timestamp date
+ *   "1704402062.123"                    -> timestamp date, milliseconds
+ *   "1704402062,123"                    -> timestamp date, milliseconds
+ *   "1704402062.123456"                 -> timestamp date, microseconds
+ *   "1704402062,123456"                 -> timestamp date, microseconds
  *
  * Returns:
  *   1: OK
@@ -298,7 +349,7 @@ util_strftimeval (char *string, int max, const char *format, struct timeval *tv)
 int
 util_parse_time (const char *datetime, struct timeval *tv)
 {
-    char *string, *pos, *pos2, str_usec[16], *error;
+    char *string, *pos, *pos2, *pos_colon, *pos_hyphen, str_usec[16], *error;
     char str_date[128], str_date2[256];
     struct tm tm_date, tm_date_gm, tm_date_local, *local_time;
     time_t time_now, time_gm, time_local;
@@ -317,11 +368,35 @@ util_parse_time (const char *datetime, struct timeval *tv)
     timezone_offset = 0;
     offset_factor = 1;
 
-    string = strdup (datetime);
-    if (!string)
-        return 0;
+    pos_colon = strchr (datetime, ':');
+    pos_hyphen = strchr (datetime, '-');
+    if (pos_colon && !pos_hyphen)
+    {
+        /* add current date: "21:01:02" -> "2024-01-04T21:01:02" */
+        string = malloc (strlen (datetime) + 16 + 1);
+        if (!string)
+            return 0;
+        time_now = time (NULL);
+        local_time = localtime (&time_now);
+        strftime (str_date, sizeof (str_date), "%Y-%m-%dT", local_time);
+        snprintf (string, sizeof (str_date2), "%s%s", str_date, datetime);
+    }
+    else if (!pos_colon && pos_hyphen)
+    {
+        /* add time (midnight): "2024-01-04" -> "2024-01-04T00:00:00" */
+        string = malloc (strlen (datetime) + 16 + 1);
+        if (!string)
+            return 0;
+        snprintf (string, sizeof (str_date2), "%sT00:00:00", datetime);
+    }
+    else
+    {
+        string = strdup (datetime);
+        if (!string)
+            return 0;
+    }
 
-    /* extract microseconds and remove them from string2 */
+    /* extract microseconds and remove them from string */
     pos = strchr (string, '.');
     if (!pos)
         pos = strchr (string, ',');
@@ -347,6 +422,10 @@ util_parse_time (const char *datetime, struct timeval *tv)
             value = strtoll (str_usec, &error, 10);
             if (error && !error[0])
             {
+                /*
+                 * just in case: this should not happen as minus is not
+                 * supported and we truncate at 6 digits
+                 */
                 if (value < 0)
                     value = 0;
                 else if (value > 999999)
@@ -358,7 +437,7 @@ util_parse_time (const char *datetime, struct timeval *tv)
     }
 
     /* extract timezone and remove it from string2 */
-    pos = strchr (string, 'Z');
+    pos = strrchr (string, 'Z');
     if (pos)
     {
         pos[0] = '\0';
@@ -368,6 +447,8 @@ util_parse_time (const char *datetime, struct timeval *tv)
     else
     {
         pos = strchr (string, 'T');
+        if (!pos)
+            pos = strchr (string, ' ');
         if (pos)
         {
             pos2 = strchr (pos, '+');
@@ -414,29 +495,59 @@ util_parse_time (const char *datetime, struct timeval *tv)
     {
         if (strchr (string, ':'))
         {
-            /* ISO 8601 format like: "2024-01-04T21:01:02.123Z" */
-            /* initialize structure, because strptime does not do it */
-            memset (&tm_date, 0, sizeof (struct tm));
-            pos = strptime (string, "%Y-%m-%dT%H:%M:%S", &tm_date);
-            if (pos && (tm_date.tm_year > 0))
+            if (strchr (string, 'T'))
             {
-                if (use_local_time)
+                /* ISO 8601 format like: "2024-01-04T21:01:02.123Z" */
+                /* initialize structure, because strptime does not do it */
+                memset (&tm_date, 0, sizeof (struct tm));
+                pos = strptime (string, "%Y-%m-%dT%H:%M:%S", &tm_date);
+                if (pos && (tm_date.tm_year > 0))
                 {
-                    tv->tv_sec = mktime (&tm_date);
+                    if (use_local_time)
+                    {
+                        tv->tv_sec = mktime (&tm_date);
+                    }
+                    else
+                    {
+                        /* convert to UTC and add timezone_offset */
+                        time_now = mktime (&tm_date);
+                        gmtime_r (&time_now, &tm_date_gm);
+                        localtime_r (&time_now, &tm_date_local);
+                        time_gm = mktime (&tm_date_gm);
+                        time_local = mktime (&tm_date_local);
+                        tv->tv_sec = mktime (&tm_date_local)
+                            + (time_local - time_gm)
+                            + timezone_offset;
+                    }
+                    rc = 1;
                 }
-                else
+            }
+            else
+            {
+                /* like ISO 8601 but with space like: "2024-01-04 21:01:02.123Z" */
+                /* initialize structure, because strptime does not do it */
+                memset (&tm_date, 0, sizeof (struct tm));
+                pos = strptime (string, "%Y-%m-%d %H:%M:%S", &tm_date);
+                if (pos && (tm_date.tm_year > 0))
                 {
-                    /* convert to UTC and add timezone_offset */
-                    time_now = mktime (&tm_date);
-                    gmtime_r (&time_now, &tm_date_gm);
-                    localtime_r (&time_now, &tm_date_local);
-                    time_gm = mktime (&tm_date_gm);
-                    time_local = mktime (&tm_date_local);
-                    tv->tv_sec = mktime (&tm_date_local)
-                        + (time_local - time_gm)
-                        + timezone_offset;
+                    if (use_local_time)
+                    {
+                        tv->tv_sec = mktime (&tm_date);
+                    }
+                    else
+                    {
+                        /* convert to UTC and add timezone_offset */
+                        time_now = mktime (&tm_date);
+                        gmtime_r (&time_now, &tm_date_gm);
+                        localtime_r (&time_now, &tm_date_local);
+                        time_gm = mktime (&tm_date_gm);
+                        time_local = mktime (&tm_date_local);
+                        tv->tv_sec = mktime (&tm_date_local)
+                            + (time_local - time_gm)
+                            + timezone_offset;
+                    }
+                    rc = 1;
                 }
-                rc = 1;
             }
         }
         else
@@ -457,8 +568,7 @@ util_parse_time (const char *datetime, struct timeval *tv)
         /* hour format like: "21:01:02" */
         time_now = time (NULL);
         local_time = localtime (&time_now);
-        strftime (str_date, sizeof (str_date),
-                  "%Y-%m-%dT", local_time);
+        strftime (str_date, sizeof (str_date), "%Y-%m-%dT", local_time);
         snprintf (str_date2, sizeof (str_date2), "%s%s", str_date, string);
         /* initialize structure, because strptime does not do it */
         memset (&tm_date, 0, sizeof (struct tm));
