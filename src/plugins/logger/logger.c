@@ -36,7 +36,6 @@
 #include "logger-command.h"
 #include "logger-config.h"
 #include "logger-info.h"
-#include "logger-tail.h"
 
 
 WEECHAT_PLUGIN_NAME(LOGGER_PLUGIN_NAME);
