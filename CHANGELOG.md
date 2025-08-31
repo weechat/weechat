@@ -8,6 +8,14 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 ## Version 4.8.0 (under dev)
 
+### Changed
+
+- build: require Curl ≥ 7.68.0 ([#2268](https://github.com/weechat/weechat/issues/2268))
+- build: require GnuTLS ≥ 3.6.3 ([#2268](https://github.com/weechat/weechat/issues/2268))
+- build: require libgcrypt ≥ 1.8.0 ([#2268](https://github.com/weechat/weechat/issues/2268))
+- build: require Enchant v2 ([#2268](https://github.com/weechat/weechat/issues/2268))
+- build: require Lua ≥ 5.3 ([#2268](https://github.com/weechat/weechat/issues/2268))
+
 ### Fixed
 
 - relay/api: fix crash when an invalid HTTP request is received from a client
