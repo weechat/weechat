@@ -1015,7 +1015,7 @@ weeurl_set_proxy (CURL *curl, struct t_proxy *proxy)
 
     /* set proxy port */
     curl_easy_setopt (curl, CURLOPT_PROXYPORT,
-                      CONFIG_INTEGER(proxy->options[PROXY_OPTION_PORT]));
+                      (long)(CONFIG_INTEGER(proxy->options[PROXY_OPTION_PORT])));
 
     /* set username/password */
     if (CONFIG_STRING(proxy->options[PROXY_OPTION_USERNAME])
