@@ -10,9 +10,9 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 ### Changed
 
-- api: add support of date like ISO 8601 but with spaces and lower `t` and `z` in function util_parse_time
-- logger: change default time format to "%@%F %T.%fZ" (UTC)
-- logger: use function util_parse_time to parse date/time in log files
+- api: add support of date like ISO 8601 but with spaces and lower `t` and `z` in function util_parse_time ([#886](https://github.com/weechat/weechat/issues/886))
+- logger: change default time format to "%@%F %T.%fZ" (UTC) ([#886](https://github.com/weechat/weechat/issues/886))
+- logger: use function util_parse_time to parse date/time in log files ([#886](https://github.com/weechat/weechat/issues/886))
 - build: require Curl ≥ 7.68.0 ([#2268](https://github.com/weechat/weechat/issues/2268))
 - build: require GnuTLS ≥ 3.6.3 ([#2268](https://github.com/weechat/weechat/issues/2268))
 - build: require libgcrypt ≥ 1.8.0 ([#2268](https://github.com/weechat/weechat/issues/2268))
