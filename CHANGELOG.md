@@ -8,6 +8,10 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 ## Version 4.8.0 (under dev)
 
+### Added
+
+- core: add option weechat.completion.cycle
+
 ### Changed
 
 - api: add support of date like ISO 8601 but with spaces and lower `t` and `z` in function util_parse_time ([#886](https://github.com/weechat/weechat/issues/886))

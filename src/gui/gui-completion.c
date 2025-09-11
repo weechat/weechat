@@ -1384,7 +1384,8 @@ gui_completion_complete (struct t_gui_completion *completion)
      * if we was on last completion in list, then complete again, starting from
      * first matching item
      */
-    if (completion->word_found && (completion->position >= 0))
+    if (CONFIG_BOOLEAN(config_completion_cycle)
+        && completion->word_found && (completion->position >= 0))
     {
         free (completion->word_found);
         completion->word_found = NULL;

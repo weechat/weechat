@@ -305,6 +305,7 @@ struct t_config_option *config_color_status_time = NULL;
 struct t_config_option *config_completion_base_word_until_cursor = NULL;
 struct t_config_option *config_completion_case_sensitive = NULL;
 struct t_config_option *config_completion_command_inline = NULL;
+struct t_config_option *config_completion_cycle = NULL;
 struct t_config_option *config_completion_default_template = NULL;
 struct t_config_option *config_completion_nick_add_space = NULL;
 struct t_config_option *config_completion_nick_case_sensitive = NULL;
@@ -5183,6 +5184,14 @@ config_weechat_init_options (void)
                "first); note: when this option is enabled, there is no more "
                "automatic completion of paths beginning with \"/\" (outside "
                "commands arguments)"),
+            NULL, 0, 0, "on", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        config_completion_cycle = config_file_new_option (
+            weechat_config_file, weechat_config_section_completion,
+            "cycle", "boolean",
+            N_("if enabled, restart from beginning (first completion found) "
+               "when the last completion is reached, otherwise stop at last "
+               "completion"),
             NULL, 0, 0, "on", NULL, 0,
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
         config_completion_default_template = config_file_new_option (
