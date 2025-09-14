@@ -290,13 +290,7 @@ pkg_check_modules(LIBCURL REQUIRED libcurl>=7.68.0)
 include_directories(${LIBCURL_INCLUDE_DIRS})
 list(APPEND EXTRA_LIBS ${LIBCURL_LDFLAGS})
 
-find_library(DL_LIBRARY
-  NAMES dl
-  PATHS /lib /usr/lib /usr/libexec /usr/local/lib /usr/local/libexec
-)
-if(DL_LIBRARY)
-  list(APPEND EXTRA_LIBS ${DL_LIBRARY})
-endif()
+list(APPEND EXTRA_LIBS ${CMAKE_DL_LIBS})
 
 add_subdirectory(icons)
 
