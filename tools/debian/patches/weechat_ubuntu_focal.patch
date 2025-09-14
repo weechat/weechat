@@ -36,17 +36,16 @@ index 086056f76..559ccfffb 100755
  		-DENABLE_MAN:BOOL=ON \
  		-DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
 diff --git a/src/plugins/ruby/CMakeLists.txt b/src/plugins/ruby/CMakeLists.txt
-index 9f921fde8..2860f7d6d 100644
+index fe72c7c56..1fb293512 100644
 --- a/src/plugins/ruby/CMakeLists.txt
 +++ b/src/plugins/ruby/CMakeLists.txt
-@@ -28,8 +28,8 @@ if(RUBY_FOUND)
-   # caused by Ruby headers (with Ruby ≥ 3.1.0)
-   # see: https://github.com/ruby/ruby/pull/7085
-   add_definitions(-Wno-unused-parameter)
--  include_directories(${Ruby_INCLUDE_DIRS})
--  target_link_libraries(ruby ${Ruby_LIBRARIES} weechat_plugins_scripts coverage_config)
-+  include_directories(${RUBY_INCLUDE_DIRS})
-+  target_link_libraries(ruby ${RUBY_LIBRARY} weechat_plugins_scripts coverage_config)
- endif(RUBY_FOUND)
+@@ -31,7 +31,7 @@ set_target_properties(ruby PROPERTIES PREFIX "")
+ # caused by Ruby headers (with Ruby ≥ 3.1.0)
+ # see: https://github.com/ruby/ruby/pull/7085
+ add_definitions(-Wno-unused-parameter)
+-include_directories(${Ruby_INCLUDE_DIRS})
+-target_link_libraries(ruby ${Ruby_LIBRARIES} weechat_plugins_scripts coverage_config)
++include_directories(${RUBY_INCLUDE_DIRS})
++target_link_libraries(ruby ${RUBY_LIBRARY} weechat_plugins_scripts coverage_config)
  
  install(TARGETS ruby LIBRARY DESTINATION "${WEECHAT_LIBDIR}/plugins")

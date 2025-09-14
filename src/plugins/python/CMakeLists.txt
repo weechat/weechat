@@ -19,16 +19,20 @@
 # along with WeeChat.  If not, see <https://www.gnu.org/licenses/>.
 #
 
+if(CMAKE_VERSION VERSION_LESS "3.18.0")
+  find_package(Python 3.0 REQUIRED COMPONENTS Development)
+else()
+  find_package(Python 3.0 REQUIRED COMPONENTS Development.Embed)
+endif()
+
 add_library(python MODULE
   weechat-python.c weechat-python.h
   weechat-python-api.c weechat-python-api.h
 )
 set_target_properties(python PROPERTIES PREFIX "")
 
-if(Python_FOUND)
-  include_directories(${Python_INCLUDE_DIRS})
-  add_definitions(${Python_DEFINITIONS})
-  target_link_libraries(python ${Python_LIBRARIES} weechat_plugins_scripts coverage_config)
-endif()
+include_directories(${Python_INCLUDE_DIRS})
+add_definitions(${Python_DEFINITIONS})
+target_link_libraries(python ${Python_LIBRARIES} weechat_plugins_scripts coverage_config)
 
 install(TARGETS python LIBRARY DESTINATION "${WEECHAT_LIBDIR}/plugins")

@@ -19,16 +19,16 @@
 # along with WeeChat.  If not, see <https://www.gnu.org/licenses/>.
 #
 
+find_package(PHP REQUIRED)
+
 add_library(php MODULE
   weechat-php.c weechat-php.h
   weechat-php-api.c weechat-php-api.h
 )
 set_target_properties(php PROPERTIES PREFIX "")
 
-if(PHP_FOUND)
-  include_directories(${PHP_INCLUDE_DIRS})
-  set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} ${PHP_LDFLAGS}")
-  target_link_libraries(php ${PHP_LIB} weechat_plugins_scripts coverage_config)
-endif()
+include_directories(${PHP_INCLUDE_DIRS})
+set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} ${PHP_LDFLAGS}")
+target_link_libraries(php ${PHP_LIB} weechat_plugins_scripts coverage_config)
 
 install(TARGETS php LIBRARY DESTINATION "${WEECHAT_LIBDIR}/plugins")
