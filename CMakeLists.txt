@@ -263,6 +263,7 @@ list(APPEND EXTRA_LIBS ${ZLIB_LIBRARY})
 # Check for zstd
 if(ENABLE_ZSTD)
   pkg_check_modules(LIBZSTD REQUIRED libzstd)
+  include_directories(${LIBZSTD_INCLUDE_DIRS})
   list(APPEND EXTRA_LIBS ${LIBZSTD_LDFLAGS})
   add_definitions(-DHAVE_ZSTD)
 endif()
@@ -270,6 +271,7 @@ endif()
 # Check for cJSON
 if(ENABLE_CJSON)
   pkg_check_modules(LIBCJSON REQUIRED libcjson)
+  include_directories(${LIBCJSON_INCLUDE_DIRS})
   add_definitions(-DHAVE_CJSON)
 endif()
 
