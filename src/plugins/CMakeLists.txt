@@ -41,10 +41,6 @@ target_link_libraries(weechat_plugins coverage_config)
 add_definitions(${CMAKE_SHARED_LIBRARY_C_FLAGS})
 add_library(weechat_plugins_scripts STATIC ${LIB_PLUGINS_SCRIPTS_SRC})
 
-include(CheckIncludeFiles)
-include(CheckFunctionExists)
-include(CheckLibraryExists)
-
 if(ENABLE_ALIAS)
   add_subdirectory(alias)
 else()
