@@ -258,10 +258,12 @@ list(APPEND EXTRA_LIBS ${GNUTLS_LDFLAGS})
 
 # Check for zlib
 find_package(ZLIB REQUIRED)
+list(APPEND EXTRA_LIBS ${ZLIB_LIBRARY})
 
 # Check for zstd
 if(ENABLE_ZSTD)
   pkg_check_modules(LIBZSTD REQUIRED libzstd)
+  list(APPEND EXTRA_LIBS ${LIBZSTD_LDFLAGS})
   add_definitions(-DHAVE_ZSTD)
 endif()
 
