@@ -59,9 +59,8 @@ list(APPEND LINK_LIBS ${GNUTLS_LDFLAGS})
 
 list(APPEND LINK_LIBS ${LIBGCRYPT_LDFLAGS})
 
-if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-  # link with resolv lib on macOS
-  list(APPEND LINK_LIBS "resolv")
+if(LIBRESOLV_HAS_RES_INIT)
+  list(APPEND LINK_LIBS ${RESOLV_LIBRARY})
 endif()
 
 target_link_libraries(irc ${LINK_LIBS} coverage_config)
