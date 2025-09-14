@@ -37,8 +37,6 @@ if(NOT ${CMAKE_SYSTEM_NAME} STREQUAL "Haiku")
   list(APPEND EXTRA_LIBS "pthread")
 endif()
 
-list(APPEND EXTRA_LIBS "m")
-
 if(ENABLE_NCURSES)
   subdirs(normal)
 endif()
