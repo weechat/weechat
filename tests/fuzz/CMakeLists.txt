@@ -40,27 +40,6 @@ if(NOT CYGWIN)
   add_definitions(-fPIC)
 endif()
 
-if(${CMAKE_SYSTEM_NAME} STREQUAL "FreeBSD" AND HAVE_BACKTRACE)
-  list(APPEND EXTRA_LIBS "execinfo")
-endif()
-
-if(${CMAKE_SYSTEM_NAME} STREQUAL "SunOS")
-  list(APPEND EXTRA_LIBS "socket" "nsl")
-endif()
-
-if(${CMAKE_SYSTEM_NAME} STREQUAL "Haiku")
-  list(APPEND EXTRA_LIBS "network")
-endif()
-
-if(NOT ${CMAKE_SYSTEM_NAME} STREQUAL "Haiku")
-  list(APPEND EXTRA_LIBS "pthread")
-endif()
-
-if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-  # link with resolv lib on macOS
-  list(APPEND EXTRA_LIBS "resolv")
-endif()
-
 list(APPEND FUZZ_TARGET_LINK
   weechat_core
   weechat_plugins

@@ -206,17 +206,6 @@ endif()
 
 add_library(weechat_unit_tests_plugins MODULE ${LIB_WEECHAT_UNIT_TESTS_PLUGINS_SRC})
 
-if(${CMAKE_SYSTEM_NAME} STREQUAL "FreeBSD" OR ${CMAKE_SYSTEM_NAME} STREQUAL "OpenBSD")
-  list(APPEND EXTRA_LIBS "intl")
-  if(HAVE_BACKTRACE)
-    list(APPEND EXTRA_LIBS "execinfo")
-  endif()
-endif()
-
-if(NOT ${CMAKE_SYSTEM_NAME} STREQUAL "Haiku")
-  list(APPEND EXTRA_LIBS "pthread")
-endif()
-
 # binary to run tests
 set(WEECHAT_TESTS_SRC
   tests.cpp tests.h

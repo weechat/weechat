@@ -311,6 +311,25 @@ else()
   add_custom_target(translations COMMAND true)
 endif()
 
+if(${CMAKE_SYSTEM_NAME} STREQUAL "FreeBSD")
+  find_library(EXECINFO_LIB_PATH execinfo /usr/local/lib)
+  set(CMAKE_REQUIRED_LIBRARIES "${EXECINFO_LIB_PATH}")
+  check_function_exists(backtrace HAVE_BACKTRACE)
+  list(APPEND EXTRA_LIBS "execinfo")
+else()
+  check_symbol_exists(backtrace "execinfo.h" HAVE_BACKTRACE)
+endif()
+
+if(${CMAKE_SYSTEM_NAME} STREQUAL "Haiku")
+  list(APPEND EXTRA_LIBS "network")
+else()
+  list(APPEND EXTRA_LIBS "pthread")
+endif()
+
+if(${CMAKE_SYSTEM_NAME} STREQUAL "SunOS")
+  list(APPEND EXTRA_LIBS "socket" "nsl")
+endif()
+
 list(APPEND EXTRA_LIBS "m")
 
 add_subdirectory(src)
