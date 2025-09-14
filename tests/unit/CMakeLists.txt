@@ -29,10 +29,6 @@ include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-if(NOT CYGWIN)
-  add_definitions(-fPIC)
-endif()
-
 if(ENABLE_PYTHON)
   add_definitions(-DHAVE_PYTHON)
 endif()

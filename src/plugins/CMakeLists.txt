@@ -39,9 +39,6 @@ add_library(weechat_plugins STATIC ${LIB_PLUGINS_SRC})
 target_link_libraries(weechat_plugins coverage_config)
 
 add_definitions(${CMAKE_SHARED_LIBRARY_C_FLAGS})
-if(NOT CYGWIN)
-  add_definitions(-fPIC)
-endif()
 add_library(weechat_plugins_scripts STATIC ${LIB_PLUGINS_SCRIPTS_SRC})
 
 include(CheckIncludeFiles)

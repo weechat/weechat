@@ -36,10 +36,6 @@ include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-if(NOT CYGWIN)
-  add_definitions(-fPIC)
-endif()
-
 list(APPEND FUZZ_TARGET_LINK
   weechat_core
   weechat_plugins
