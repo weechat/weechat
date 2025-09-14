@@ -66,12 +66,6 @@ endif()
 
 list(APPEND EXTRA_LIBS "m")
 
-list(APPEND EXTRA_LIBS ${ZLIB_LIBRARY})
-
-if(ENABLE_ZSTD)
-  list(APPEND EXTRA_LIBS ${LIBZSTD_LDFLAGS})
-endif()
-
 if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
   # link with resolv lib on macOS
   list(APPEND EXTRA_LIBS "resolv")
@@ -84,8 +78,6 @@ list(APPEND FUZZ_TARGET_LINK
   weechat_gui_headless
   weechat_ncurses_fake
   ${EXTRA_LIBS}
-  ${ZLIB_LIBRARY}
-  ${LIBZSTD_LDFLAGS}
   -rdynamic
 )
 

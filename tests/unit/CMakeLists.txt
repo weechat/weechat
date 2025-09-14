@@ -235,8 +235,6 @@ target_link_libraries(tests
   weechat_ncurses_fake
   weechat_unit_tests_core
   ${EXTRA_LIBS}
-  ${ZLIB_LIBRARY}
-  ${LIBZSTD_LDFLAGS}
   ${CPPUTEST_LIBRARIES}
   -rdynamic
 )

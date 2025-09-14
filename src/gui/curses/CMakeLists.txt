@@ -47,12 +47,6 @@ endif()
 
 list(APPEND EXTRA_LIBS "m")
 
-list(APPEND EXTRA_LIBS ${ZLIB_LIBRARY})
-
-if(ENABLE_ZSTD)
-  list(APPEND EXTRA_LIBS ${LIBZSTD_LDFLAGS})
-endif()
-
 if(ENABLE_NCURSES)
   subdirs(normal)
 endif()
