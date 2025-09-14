@@ -22,6 +22,8 @@
 enable_language(CXX)
 
 remove_definitions(-DHAVE_CONFIG_H)
+
+find_package(CppUTest REQUIRED)
 include_directories(
   ${CPPUTEST_INCLUDE_DIRS}
   ${PROJECT_BINARY_DIR}
