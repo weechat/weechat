@@ -81,14 +81,6 @@ set(LIB_CORE_SRC
 include(CheckSymbolExists)
 check_symbol_exists(flock "sys/file.h" HAVE_FLOCK)
 
-if(${CMAKE_SYSTEM_NAME} STREQUAL "FreeBSD")
-  find_library(EXECINFO_LIB_PATH execinfo /usr/local/lib)
-  set(CMAKE_REQUIRED_LIBRARIES "${EXECINFO_LIB_PATH}")
-  check_function_exists(backtrace HAVE_BACKTRACE)
-else()
-  check_symbol_exists(backtrace "execinfo.h" HAVE_BACKTRACE)
-endif()
-
 if(ENABLE_ZSTD)
   include_directories(${LIBZSTD_INCLUDE_DIRS})
 endif()
