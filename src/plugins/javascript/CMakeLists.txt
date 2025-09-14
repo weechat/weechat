@@ -19,6 +19,8 @@
 # along with WeeChat.  If not, see <https://www.gnu.org/licenses/>.
 #
 
+find_package(V8 REQUIRED)
+
 enable_language(CXX)
 
 add_library(javascript MODULE
@@ -28,9 +30,7 @@ add_library(javascript MODULE
 )
 set_target_properties(javascript PROPERTIES PREFIX "")
 
-if(V8_FOUND)
-  include_directories(${V8_INCLUDE_DIR})
-  target_link_libraries(javascript ${V8_LIBRARY} weechat_plugins_scripts coverage_config)
-endif()
+include_directories(${V8_INCLUDE_DIR})
+target_link_libraries(javascript ${V8_LIBRARY} weechat_plugins_scripts coverage_config)
 
 install(TARGETS javascript LIBRARY DESTINATION "${WEECHAT_LIBDIR}/plugins")

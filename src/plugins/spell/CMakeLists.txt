@@ -20,6 +20,12 @@
 # along with WeeChat.  If not, see <https://www.gnu.org/licenses/>.
 #
 
+if(ENABLE_ENCHANT)
+  pkg_check_modules(ENCHANT REQUIRED enchant-2)
+else()
+  find_package(Aspell REQUIRED)
+endif()
+
 add_library(spell MODULE
   spell.c spell.h
   spell-bar-item.c spell-bar-item.h
