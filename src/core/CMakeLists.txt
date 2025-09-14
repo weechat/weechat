@@ -81,14 +81,6 @@ set(LIB_CORE_SRC
 include(CheckSymbolExists)
 check_symbol_exists(flock "sys/file.h" HAVE_FLOCK)
 
-if(ENABLE_ZSTD)
-  include_directories(${LIBZSTD_INCLUDE_DIRS})
-endif()
-
-if(ENABLE_CJSON)
-  include_directories(${LIBCJSON_INCLUDE_DIRS})
-endif()
-
 include_directories("${CMAKE_BINARY_DIR}")
 add_library(weechat_core OBJECT ${LIB_CORE_SRC})
 target_link_libraries(weechat_core coverage_config)
