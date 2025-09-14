@@ -56,14 +56,6 @@ if(NOT ${CMAKE_SYSTEM_NAME} STREQUAL "Haiku")
   list(APPEND EXTRA_LIBS "pthread")
 endif()
 
-if(ICONV_LIBRARY)
-  list(APPEND EXTRA_LIBS ${ICONV_LIBRARY})
-endif()
-
-if(LIBINTL_LIBRARY)
-  list(APPEND EXTRA_LIBS ${LIBINTL_LIBRARY})
-endif()
-
 list(APPEND EXTRA_LIBS "m")
 
 if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
