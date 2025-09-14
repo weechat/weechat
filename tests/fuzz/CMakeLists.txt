@@ -88,13 +88,6 @@ list(APPEND FUZZ_TARGET_LINK
   ${LIBZSTD_LDFLAGS}
   -rdynamic
 )
-list(APPEND FUZZ_TARGET_DEPS
-  weechat_core
-  weechat_plugins
-  weechat_gui_common
-  weechat_gui_headless
-  weechat_ncurses_fake
-)
 
 # fuzz targets
 set(FUZZ_CORE_TARGETS calc eval crypto secure string utf8 util)
@@ -103,5 +96,4 @@ foreach(fuzz_target ${FUZZ_CORE_TARGETS})
   add_executable(weechat_core_${fuzz_target}_fuzzer core/${fuzz_target}-fuzzer.cc)
   target_link_libraries(weechat_core_${fuzz_target}_fuzzer ${FUZZ_TARGET_LINK} coverage_config)
   set_target_properties(weechat_core_${fuzz_target}_fuzzer PROPERTIES LINK_OPTIONS "$ENV{LIB_FUZZING_ENGINE}")
-  add_dependencies(weechat_core_${fuzz_target}_fuzzer ${FUZZ_TARGET_DEPS})
 endforeach()

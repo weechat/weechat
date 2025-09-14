@@ -57,8 +57,6 @@ set(EXECUTABLE weechat)
 
 add_executable(${EXECUTABLE} ${WEECHAT_CURSES_MAIN_SRC})
 
-add_dependencies(${EXECUTABLE} weechat_gui_curses_normal)
-
 list(APPEND EXTRA_LIBS ${NCURSES_LIBRARY})
 
 target_link_libraries(${EXECUTABLE}
