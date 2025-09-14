@@ -52,16 +52,8 @@ else()
   set(VERSION "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}")
 endif()
 
-# license
-set(LICENSE "GPL3")
-
 # add definitions for version and license
-if(COMMAND cmake_policy)
-  cmake_policy(SET CMP0005 NEW)
-  add_definitions(-DWEECHAT_VERSION="${VERSION}" -DWEECHAT_LICENSE="${LICENSE}")
-else()
-  add_definitions(-DWEECHAT_VERSION='"${VERSION}"' -DWEECHAT_LICENSE='"${LICENSE}"')
-endif()
+add_definitions(-DWEECHAT_VERSION="${VERSION}" -DWEECHAT_LICENSE="GPL3")
 
 # package string
 set(PKG_STRING "${PROJECT_NAME} ${VERSION}")
@@ -191,15 +183,6 @@ set(WEECHAT_HOME "${WEECHAT_HOME}" CACHE
   STRING "Force a single WeeChat home directory for config, logs, scripts, etc."
   FORCE)
 mark_as_advanced(CLEAR WEECHAT_HOME)
-
-if(COMMAND cmake_policy)
-  if(POLICY CMP0003)
-    cmake_policy(SET CMP0003 NEW)
-  endif()
-  if(POLICY CMP0017)
-    cmake_policy(SET CMP0017 NEW)
-  endif()
-endif()
 
 add_definitions(-DHAVE_CONFIG_H)
 
