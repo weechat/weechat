@@ -240,14 +240,6 @@ target_link_libraries(tests
   ${CPPUTEST_LIBRARIES}
   -rdynamic
 )
-add_dependencies(tests
-  weechat_core
-  weechat_plugins
-  weechat_gui_common
-  weechat_gui_headless
-  weechat_ncurses_fake
-  weechat_unit_tests_core
-)
 
 # test for cmake (ctest)
 add_test(NAME unit

@@ -52,11 +52,6 @@ add_executable(${EXECUTABLE}
   ${WEECHAT_CURSES_MAIN_HEADLESS_SRC}
 )
 
-add_dependencies(${EXECUTABLE}
-  weechat_gui_headless
-  weechat_ncurses_fake
-)
-
 target_link_libraries(${EXECUTABLE}
   weechat_core
   weechat_plugins
