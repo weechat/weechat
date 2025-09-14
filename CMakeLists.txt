@@ -311,6 +311,8 @@ else()
   add_custom_target(translations COMMAND true)
 endif()
 
+list(APPEND EXTRA_LIBS "m")
+
 add_subdirectory(src)
 add_subdirectory(doc)
 

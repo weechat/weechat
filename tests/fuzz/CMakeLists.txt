@@ -56,8 +56,6 @@ if(NOT ${CMAKE_SYSTEM_NAME} STREQUAL "Haiku")
   list(APPEND EXTRA_LIBS "pthread")
 endif()
 
-list(APPEND EXTRA_LIBS "m")
-
 if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
   # link with resolv lib on macOS
   list(APPEND EXTRA_LIBS "resolv")
