@@ -25,4 +25,6 @@ endif()
 
 if(ENABLE_TESTS)
   add_subdirectory(unit)
+else()
+  add_test(NAME notests COMMAND true)
 endif()
