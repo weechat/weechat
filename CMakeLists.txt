@@ -313,7 +313,6 @@ endif()
 
 if(${CMAKE_SYSTEM_NAME} STREQUAL "FreeBSD")
   find_library(EXECINFO_LIB_PATH execinfo /usr/local/lib)
-  set(CMAKE_REQUIRED_LIBRARIES "${EXECINFO_LIB_PATH}")
   check_function_exists(backtrace HAVE_BACKTRACE)
   list(APPEND EXTRA_LIBS "execinfo")
 else()
