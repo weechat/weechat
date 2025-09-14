@@ -206,10 +206,6 @@ endif()
 
 add_library(weechat_unit_tests_plugins MODULE ${LIB_WEECHAT_UNIT_TESTS_PLUGINS_SRC})
 
-if(ICONV_LIBRARY)
-  list(APPEND EXTRA_LIBS ${ICONV_LIBRARY})
-endif()
-
 if(${CMAKE_SYSTEM_NAME} STREQUAL "FreeBSD" OR ${CMAKE_SYSTEM_NAME} STREQUAL "OpenBSD")
   list(APPEND EXTRA_LIBS "intl")
   if(HAVE_BACKTRACE)
