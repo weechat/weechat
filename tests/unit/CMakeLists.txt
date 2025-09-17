@@ -22,16 +22,14 @@
 enable_language(CXX)
 
 remove_definitions(-DHAVE_CONFIG_H)
+
+find_package(CppUTest REQUIRED)
 include_directories(
   ${CPPUTEST_INCLUDE_DIRS}
   ${PROJECT_BINARY_DIR}
   ${PROJECT_SOURCE_DIR}
   ${CMAKE_CURRENT_SOURCE_DIR}
 )
-
-if(NOT CYGWIN)
-  add_definitions(-fPIC)
-endif()
 
 if(ENABLE_PYTHON)
   add_definitions(-DHAVE_PYTHON)
@@ -206,21 +204,6 @@ endif()
 
 add_library(weechat_unit_tests_plugins MODULE ${LIB_WEECHAT_UNIT_TESTS_PLUGINS_SRC})
 
-if(ICONV_LIBRARY)
-  list(APPEND EXTRA_LIBS ${ICONV_LIBRARY})
-endif()
-
-if(${CMAKE_SYSTEM_NAME} STREQUAL "FreeBSD" OR ${CMAKE_SYSTEM_NAME} STREQUAL "OpenBSD")
-  list(APPEND EXTRA_LIBS "intl")
-  if(HAVE_BACKTRACE)
-    list(APPEND EXTRA_LIBS "execinfo")
-  endif()
-endif()
-
-if(NOT ${CMAKE_SYSTEM_NAME} STREQUAL "Haiku")
-  list(APPEND EXTRA_LIBS "pthread")
-endif()
-
 # binary to run tests
 set(WEECHAT_TESTS_SRC
   tests.cpp tests.h
@@ -235,18 +218,8 @@ target_link_libraries(tests
   weechat_ncurses_fake
   weechat_unit_tests_core
   ${EXTRA_LIBS}
-  ${ZLIB_LIBRARY}
-  ${LIBZSTD_LDFLAGS}
   ${CPPUTEST_LIBRARIES}
   -rdynamic
-)
-add_dependencies(tests
-  weechat_core
-  weechat_plugins
-  weechat_gui_common
-  weechat_gui_headless
-  weechat_ncurses_fake
-  weechat_unit_tests_core
 )
 
 # test for cmake (ctest)
