@@ -827,12 +827,15 @@ irc_protocol_cap_sync_req (struct t_irc_server *server,
     if (!new_caps_req || new_caps_req[0])
     {
         ptr_caps_req = (new_caps_req) ? new_caps_req : caps_req;
-        weechat_printf (
-            server->buffer,
-            _("%s%s: client capability, requesting: %s"),
-            weechat_prefix ("network"), IRC_PLUGIN_NAME,
-            ptr_caps_req);
-        irc_server_sendf (server, 0, NULL, "CAP REQ :%s", ptr_caps_req);
+        if (ptr_caps_req && ptr_caps_req[0])
+        {
+            weechat_printf (
+                server->buffer,
+                _("%s%s: client capability, requesting: %s"),
+                weechat_prefix ("network"), IRC_PLUGIN_NAME,
+                ptr_caps_req);
+            irc_server_sendf (server, 0, NULL, "CAP REQ :%s", ptr_caps_req);
+        }
     }
 
     free (new_caps_req);
@@ -843,7 +846,7 @@ irc_protocol_cap_sync_req (struct t_irc_server *server,
  */
 
 void
-irc_protocol_cap_sync (struct t_irc_server *server, int sasl)
+irc_protocol_cap_sync (struct t_irc_server *server, int sasl, int cap_new_received)
 {
     char *str_caps_server, **caps_server, *caps_to_enable;
     char **list_caps_to_enable, **cap_req;
@@ -913,7 +916,7 @@ irc_protocol_cap_sync (struct t_irc_server *server, int sasl)
         {
             if (!sasl_to_do)
                 irc_server_sendf (server, 0, NULL, "CAP END");
-            if (sasl_requested && !sasl_to_do)
+            if (sasl_requested && !sasl_to_do && !cap_new_received)
             {
                 weechat_printf (
                     server->buffer,
@@ -961,7 +964,7 @@ IRC_PROTOCOL_CALLBACK(cap)
     char str_msg_auth[512], *str_msg_auth_upper, **str_caps_enabled;
     char **str_caps_disabled, *str_params;
     int arg_caps, num_caps_supported, num_caps_added, num_caps_removed;
-    int num_caps_enabled, sasl_to_do, sasl_mechanism;
+    int num_caps_enabled, sasl, sasl_to_do, sasl_mechanism;
     int i, j, timeout, last_reply;
 
     IRC_PROTOCOL_MIN_PARAMS(2);
@@ -1053,7 +1056,7 @@ IRC_PROTOCOL_CALLBACK(cap)
 
         /* auto-enable capabilities only when connecting to server */
         if (last_reply && !ctxt->server->is_connected)
-            irc_protocol_cap_sync (ctxt->server, 1);
+            irc_protocol_cap_sync (ctxt->server, 1, 0);
     }
     else if (strcmp (ctxt->params[1], "LIST") == 0)
     {
@@ -1325,9 +1328,10 @@ IRC_PROTOCOL_CALLBACK(cap)
             }
             weechat_string_free_split (caps_added);
         }
-
-        /* TODO: SASL Reauthentication */
-        irc_protocol_cap_sync (ctxt->server, 0);
+        /* we can auth with SASL only if not already authenticaded */
+        sasl = (ctxt->server->authentication_method == IRC_SERVER_AUTH_METHOD_SASL) ?
+            0 : 1;
+        irc_protocol_cap_sync (ctxt->server, sasl, 1);
     }
     else if (strcmp (ctxt->params[1], "DEL") == 0)
     {
