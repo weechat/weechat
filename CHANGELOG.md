@@ -18,6 +18,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 - irc: request and perform SASL authentication when the server advertises SASL support with message "CAP NEW" ([#2277](https://github.com/weechat/weechat/issues/2277))
 - logger: change default time format to `%@%F %T.%fZ` (UTC) ([#886](https://github.com/weechat/weechat/issues/886))
 - logger: use function util_parse_time to parse date/time in log files ([#886](https://github.com/weechat/weechat/issues/886))
+- xfer: add buffer local variable "server" in DCC CHAT buffers
 - build: require Curl ≥ 7.68.0 ([#2268](https://github.com/weechat/weechat/issues/2268))
 - build: require GnuTLS ≥ 3.6.3 ([#2268](https://github.com/weechat/weechat/issues/2268))
 - build: require libgcrypt ≥ 1.8.0 ([#2268](https://github.com/weechat/weechat/issues/2268))

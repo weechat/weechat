@@ -386,6 +386,7 @@ xfer_chat_open_buffer (struct t_xfer *xfer)
         weechat_hashtable_set (buffer_props, "input_prompt", xfer->local_nick);
         weechat_hashtable_set (buffer_props, "localvar_set_type", "private");
         weechat_hashtable_set (buffer_props, "localvar_set_nick", xfer->local_nick);
+        weechat_hashtable_set (buffer_props, "localvar_set_server", xfer->plugin_id);
         weechat_hashtable_set (buffer_props, "localvar_set_channel", xfer->remote_nick);
         weechat_hashtable_set (buffer_props, "localvar_set_tls_version", "cleartext");
         weechat_hashtable_set (buffer_props, "highlight_words_add", "$nick");
