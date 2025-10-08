@@ -591,7 +591,7 @@ IRC_PROTOCOL_CALLBACK(authenticate)
                 sasl_username, sasl_key, &sasl_error);
             break;
         case IRC_SASL_MECHANISM_EXTERNAL:
-            answer = strdup ("+");
+            answer = irc_sasl_mechanism_external (sasl_username) ? irc_sasl_mechanism_external (sasl_username) : strdup("+");
             break;
     }
     if (answer)

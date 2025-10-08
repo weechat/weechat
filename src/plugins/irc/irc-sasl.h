@@ -45,6 +45,7 @@ extern char *irc_sasl_mechanism_string[];
 
 extern char *irc_sasl_mechanism_plain (const char *sasl_username,
                                        const char *sasl_password);
+extern char *irc_sasl_mechanism_external (const char *sasl_username);
 extern char *irc_sasl_mechanism_scram (struct t_irc_server *server,
                                        const char *hash_algo,
                                        const char *data_base64,

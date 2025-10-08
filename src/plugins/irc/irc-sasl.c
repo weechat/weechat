@@ -91,6 +91,39 @@ irc_sasl_mechanism_plain (const char *sasl_username, const char *sasl_password)
     return answer_base64;
 }
 
+char *
+irc_sasl_mechanism_external (const char *sasl_username)
+{
+    char *answer_base64, *string;
+    int length;
+
+    if (!sasl_username)
+        return NULL;
+
+    if (weechat_asprintf (&string,
+                          "%s",
+                          sasl_username) < 0)
+    {
+        return NULL;
+    }
+
+    length = strlen (string);
+
+    answer_base64 = malloc ((length * 4) + 1);
+    if (answer_base64)
+    {
+        if (weechat_string_base_encode ("64", string, length, answer_base64) < 0)
+        {
+            free (answer_base64);
+            answer_base64 = NULL;
+        }
+    }
+
+    free (string);
+
+    return answer_base64;
+}
+
 /*
  * Builds answer for SASL authentication, using mechanism
  * "SCRAM-SHA-1", "SCRAM-SHA-256" or "SCRAM-SHA-512".
