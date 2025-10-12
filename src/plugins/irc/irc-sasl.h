@@ -56,5 +56,6 @@ extern char *irc_sasl_mechanism_ecdsa_nist256p_challenge (struct t_irc_server *s
                                                           const char *sasl_username,
                                                           const char *sasl_key,
                                                           char **sasl_error);
+extern char *irc_sasl_mechanism_external (const char *sasl_username);
 
 #endif /* WEECHAT_PLUGIN_IRC_SASL_H */

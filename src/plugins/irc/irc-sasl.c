@@ -684,3 +684,32 @@ irc_sasl_mechanism_ecdsa_nist256p_challenge (struct t_irc_server *server,
 
     return answer_base64;
 }
+
+/*
+ * Builds answer for SASL authentication, using mechanism "EXTERNAL".
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+irc_sasl_mechanism_external (const char *sasl_username)
+{
+    char *answer_base64;
+    int length;
+
+    if (!sasl_username || !sasl_username[0])
+        return strdup ("+");
+
+    length = strlen (sasl_username);
+    answer_base64 = malloc ((length * 4) + 1);
+    if (answer_base64)
+    {
+        if (weechat_string_base_encode ("64", sasl_username, length, answer_base64) < 0)
+        {
+            free (answer_base64);
+            answer_base64 = NULL;
+        }
+    }
+
+    return answer_base64;
+}

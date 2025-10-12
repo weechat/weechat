@@ -16,6 +16,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 - api: add support of date like ISO 8601 but with spaces and lower `t` and `z` in function util_parse_time ([#886](https://github.com/weechat/weechat/issues/886))
 - irc: request and perform SASL authentication when the server advertises SASL support with message "CAP NEW" ([#2277](https://github.com/weechat/weechat/issues/2277))
+- irc: send SASL username with mechanism EXTERNAL ([#2270](https://github.com/weechat/weechat/issues/2270))
 - logger: change default time format to `%@%F %T.%fZ` (UTC) ([#886](https://github.com/weechat/weechat/issues/886))
 - logger: use function util_parse_time to parse date/time in log files ([#886](https://github.com/weechat/weechat/issues/886))
 - xfer: add buffer local variable "server" in DCC CHAT buffers

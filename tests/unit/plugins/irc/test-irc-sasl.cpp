@@ -114,3 +114,18 @@ TEST(IrcSasl, MechanismEcdsaNist256pChallenge)
 {
     /* TODO: write tests */
 }
+
+/*
+ * Tests functions:
+ *   irc_sasl_mechanism_external
+ */
+
+TEST(IrcSasl, MechanismExternal)
+{
+    char *str;
+
+    WEE_TEST_STR("+", irc_sasl_mechanism_external (NULL));
+    WEE_TEST_STR("+", irc_sasl_mechanism_external (""));
+
+    WEE_TEST_STR("YWxpY2U=", irc_sasl_mechanism_external ("alice"));
+}
