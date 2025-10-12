@@ -23,6 +23,8 @@
 
 #include "CppUTest/TestHarness.h"
 
+#include "tests.h"
+
 extern "C"
 {
 #include <string.h>
@@ -43,6 +45,8 @@ TEST_GROUP(IrcSasl)
 
 TEST(IrcSasl, MechanismPlain)
 {
+    char *str;
+
     STRCMP_EQUAL(NULL, irc_sasl_mechanism_plain (NULL, NULL));
     STRCMP_EQUAL(NULL, irc_sasl_mechanism_plain (NULL, ""));
     STRCMP_EQUAL(NULL, irc_sasl_mechanism_plain ("", NULL));
@@ -50,15 +54,15 @@ TEST(IrcSasl, MechanismPlain)
     STRCMP_EQUAL("AAA=", irc_sasl_mechanism_plain ("", ""));
 
     /* "alice\0alice\0" */
-    STRCMP_EQUAL("YWxpY2UAYWxpY2UA",
+    WEE_TEST_STR("YWxpY2UAYWxpY2UA",
                  irc_sasl_mechanism_plain ("alice", ""));
 
     /* "alice\0alice\0secret" */
-    STRCMP_EQUAL("YWxpY2UAYWxpY2UAc2VjcmV0",
+    WEE_TEST_STR("YWxpY2UAYWxpY2UAc2VjcmV0",
                  irc_sasl_mechanism_plain ("alice", "secret"));
 
     /* "\0\0secret" */
-    STRCMP_EQUAL("AABzZWNyZXQ=",
+    WEE_TEST_STR("AABzZWNyZXQ=",
                  irc_sasl_mechanism_plain ("", "secret"));
 }
 
