@@ -29,8 +29,9 @@
 #include <string.h>
 
 #include "../weechat.h"
-#include "../core-hashtable.h"
 #include "../core-hook.h"
+#include "../core-hashtable.h"
+#include "../core-hdata.h"
 #include "../core-infolist.h"
 #include "../core-log.h"
 #include "../core-string.h"
@@ -292,6 +293,29 @@ hook_focus_free_data (struct t_hook *hook)
 
     free (hook->hook_data);
     hook->hook_data = NULL;
+}
+
+/*
+ * Returns hdata for focus hook.
+ */
+
+struct t_hdata *
+hook_focus_hdata_hook_focus_cb (const void *pointer, void *data,
+                                const char *hdata_name)
+{
+    struct t_hdata *hdata;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+
+    hdata = hdata_new (NULL, hdata_name, NULL, NULL, 0, 0, NULL, NULL);
+    if (hdata)
+    {
+        HDATA_VAR(struct t_hook_focus, callback, POINTER, 0, NULL, NULL);
+        HDATA_VAR(struct t_hook_focus, area, STRING, 0, NULL, NULL);
+    }
+    return hdata;
 }
 
 /*

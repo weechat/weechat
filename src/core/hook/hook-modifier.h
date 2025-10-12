@@ -49,6 +49,9 @@ extern char *hook_modifier_exec (struct t_weechat_plugin *plugin,
                                  const char *modifier_data,
                                  const char *string);
 extern void hook_modifier_free_data (struct t_hook *hook);
+extern struct t_hdata *hook_modifier_hdata_hook_modifier_cb (const void *pointer,
+                                                             void *data,
+                                                             const char *hdata_name);
 extern int hook_modifier_add_to_infolist (struct t_infolist_item *item,
                                           struct t_hook *hook);
 extern void hook_modifier_print_log (struct t_hook *hook);

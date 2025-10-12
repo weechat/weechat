@@ -30,12 +30,14 @@
 
 #include "../weechat.h"
 #include "../core-hook.h"
+#include "../core-hdata.h"
 #include "../core-infolist.h"
 #include "../core-log.h"
 #include "../core-string.h"
 #include "../../gui/gui-buffer.h"
 #include "../../gui/gui-color.h"
 #include "../../gui/gui-line.h"
+#include "../../plugins/plugin.h"
 
 
 /*
@@ -210,6 +212,33 @@ hook_print_free_data (struct t_hook *hook)
 
     free (hook->hook_data);
     hook->hook_data = NULL;
+}
+
+/*
+ * Returns hdata for print hook.
+ */
+
+struct t_hdata *
+hook_print_hdata_hook_print_cb (const void *pointer, void *data,
+                                const char *hdata_name)
+{
+    struct t_hdata *hdata;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+
+    hdata = hdata_new (NULL, hdata_name, NULL, NULL, 0, 0, NULL, NULL);
+    if (hdata)
+    {
+        HDATA_VAR(struct t_hook_print, callback, POINTER, 0, NULL, NULL);
+        HDATA_VAR(struct t_hook_print, buffer, POINTER, 0, NULL, "buffer");
+        HDATA_VAR(struct t_hook_print, tags_count, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_hook_print, tags_array, STRING, 0, "*,tags_count", NULL);
+        HDATA_VAR(struct t_hook_print, message, STRING, 0, NULL, NULL);
+        HDATA_VAR(struct t_hook_print, strip_colors, INTEGER, 0, NULL, NULL);
+    }
+    return hdata;
 }
 
 /*

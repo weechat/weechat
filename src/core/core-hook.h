@@ -153,6 +153,9 @@ extern void unhook (struct t_hook *hook);
 extern void unhook_all_plugin (struct t_weechat_plugin *plugin,
                                const char *subplugin);
 extern void unhook_all (void);
+extern struct t_hdata *hook_hdata_hook_cb (const void *pointer,
+                                           void *data,
+                                           const char *hdata_name);
 extern int hook_add_to_infolist (struct t_infolist *infolist,
                                  struct t_hook *hook,
                                  const char *arguments);

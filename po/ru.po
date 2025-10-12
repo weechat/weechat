@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2025-09-11 21:08+0200\n"
+"POT-Creation-Date: 2025-10-12 17:27+0200\n"
 "PO-Revision-Date: 2025-05-04 09:25+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -13138,6 +13138,71 @@ msgstr ""
 #, fuzzy
 msgid "history of commands in buffer"
 msgstr "Внутренние команды %s:\n"
+
+msgid "hook"
+msgstr ""
+
+#, fuzzy
+msgid "hook \"command\""
+msgstr "Внутренние команды %s:\n"
+
+msgid "hook \"command_run\""
+msgstr ""
+
+#, fuzzy
+msgid "hook \"completion\""
+msgstr "собран:"
+
+msgid "hook \"config\""
+msgstr ""
+
+#, fuzzy
+#| msgid "not connected"
+msgid "hook \"connect\""
+msgstr "отключен"
+
+msgid "hook \"fd\""
+msgstr ""
+
+msgid "hook \"focus\""
+msgstr ""
+
+msgid "hook \"hdata\""
+msgstr ""
+
+msgid "hook \"hsignal\""
+msgstr ""
+
+msgid "hook \"info\""
+msgstr ""
+
+msgid "hook \"info_hashtable\""
+msgstr ""
+
+msgid "hook \"infolist\""
+msgstr ""
+
+msgid "hook \"line\""
+msgstr ""
+
+msgid "hook \"modifier\""
+msgstr ""
+
+msgid "hook \"print\""
+msgstr ""
+
+msgid "hook \"process\""
+msgstr ""
+
+msgid "hook \"signal\""
+msgstr ""
+
+#, fuzzy
+msgid "hook \"timer\""
+msgstr "Список сокращений:\n"
+
+msgid "hook \"url\""
+msgstr ""
 
 msgid "hotlist"
 msgstr ""

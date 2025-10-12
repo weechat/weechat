@@ -98,6 +98,9 @@ extern int hook_command_exec (struct t_gui_buffer *buffer, int any_plugin,
                               const char *string);
 extern void hook_command_display_error_unknown (const char *command);
 extern void hook_command_free_data (struct t_hook *hook);
+extern struct t_hdata *hook_command_hdata_hook_command_cb (const void *pointer,
+                                                           void *data,
+                                                           const char *hdata_name);
 extern int hook_command_add_to_infolist (struct t_infolist_item *item,
                                          struct t_hook *hook);
 extern void hook_command_print_log (struct t_hook *hook);

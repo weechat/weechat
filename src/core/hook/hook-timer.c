@@ -31,10 +31,12 @@
 
 #include "../weechat.h"
 #include "../core-hook.h"
+#include "../core-hdata.h"
 #include "../core-infolist.h"
 #include "../core-log.h"
 #include "../core-util.h"
 #include "../../gui/gui-chat.h"
+#include "../../plugins/plugin.h"
 
 
 time_t hook_last_system_time = 0;      /* used to detect system clock skew  */
@@ -370,6 +372,35 @@ hook_timer_free_data (struct t_hook *hook)
 
     free (hook->hook_data);
     hook->hook_data = NULL;
+}
+
+/*
+ * Returns hdata for timer hook.
+ */
+
+struct t_hdata *
+hook_timer_hdata_hook_timer_cb (const void *pointer, void *data,
+                                const char *hdata_name)
+{
+    struct t_hdata *hdata;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+
+    hdata = hdata_new (NULL, hdata_name, NULL, NULL, 0, 0, NULL, NULL);
+    if (hdata)
+    {
+        HDATA_VAR(struct t_hook_timer, callback, POINTER, 0, NULL, NULL);
+        HDATA_VAR(struct t_hook_timer, interval, LONG, 0, NULL, NULL);
+        HDATA_VAR(struct t_hook_timer, align_second, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_hook_timer, remaining_calls, INTEGER, 0, NULL, NULL);
+        HDATA_VAR_NAME(struct t_hook_timer, last_exec.tv_sec, "last_exec", TIME, 0, NULL, NULL);
+        HDATA_VAR_NAME(struct t_hook_timer, last_exec.tv_usec, "last_exec_usec", LONG, 0, NULL, NULL);
+        HDATA_VAR_NAME(struct t_hook_timer, next_exec.tv_sec, "next_exec", TIME, 0, NULL, NULL);
+        HDATA_VAR_NAME(struct t_hook_timer, next_exec.tv_usec, "next_exec_usec", LONG, 0, NULL, NULL);
+    }
+    return hdata;
 }
 
 /*

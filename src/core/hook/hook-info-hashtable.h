@@ -54,6 +54,9 @@ extern struct t_hashtable *hook_info_get_hashtable (struct t_weechat_plugin *plu
                                                     const char *info_name,
                                                     struct t_hashtable *hashtable);
 extern void hook_info_hashtable_free_data (struct t_hook *hook);
+extern struct t_hdata *hook_info_hashtable_hdata_hook_info_hashtable_cb (const void *pointer,
+                                                                         void *data,
+                                                                         const char *hdata_name);
 extern int hook_info_hashtable_add_to_infolist (struct t_infolist_item *item,
                                                 struct t_hook *hook);
 extern void hook_info_hashtable_print_log (struct t_hook *hook);

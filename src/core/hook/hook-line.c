@@ -29,8 +29,9 @@
 #include <string.h>
 
 #include "../weechat.h"
-#include "../core-hashtable.h"
 #include "../core-hook.h"
+#include "../core-hashtable.h"
+#include "../core-hdata.h"
 #include "../core-infolist.h"
 #include "../core-log.h"
 #include "../core-string.h"
@@ -233,6 +234,33 @@ hook_line_free_data (struct t_hook *hook)
 
     free (hook->hook_data);
     hook->hook_data = NULL;
+}
+
+/*
+ * Returns hdata for line hook.
+ */
+
+struct t_hdata *
+hook_line_hdata_hook_line_cb (const void *pointer, void *data,
+                              const char *hdata_name)
+{
+    struct t_hdata *hdata;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+
+    hdata = hdata_new (NULL, hdata_name, NULL, NULL, 0, 0, NULL, NULL);
+    if (hdata)
+    {
+        HDATA_VAR(struct t_hook_line, callback, POINTER, 0, NULL, NULL);
+        HDATA_VAR(struct t_hook_line, buffer_type, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_hook_line, buffers, STRING, 0, "*,num_buffers", NULL);
+        HDATA_VAR(struct t_hook_line, num_buffers, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_hook_line, tags_count, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_hook_line, tags_array, STRING, 0, "*,tags_count", NULL);
+    }
+    return hdata;
 }
 
 /*

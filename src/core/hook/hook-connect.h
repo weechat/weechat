@@ -94,6 +94,9 @@ extern int hook_connect_gnutls_set_certificates (gnutls_session_t tls_session,
                                                  int pk_algos_len,
                                                  gnutls_retr2_st *answer);
 extern void hook_connect_free_data (struct t_hook *hook);
+extern struct t_hdata *hook_connect_hdata_hook_connect_cb (const void *pointer,
+                                                           void *data,
+                                                           const char *hdata_name);
 extern int hook_connect_add_to_infolist (struct t_infolist_item *item,
                                          struct t_hook *hook);
 extern void hook_connect_print_log (struct t_hook *hook);

@@ -53,6 +53,9 @@ extern void hook_completion_exec (struct t_weechat_plugin *plugin,
                                   struct t_gui_buffer *buffer,
                                   struct t_gui_completion *completion);
 extern void hook_completion_free_data (struct t_hook *hook);
+extern struct t_hdata *hook_completion_hdata_hook_completion_cb (const void *pointer,
+                                                                 void *data,
+                                                                 const char *hdata_name);
 extern int hook_completion_add_to_infolist (struct t_infolist_item *item,
                                             struct t_hook *hook);
 extern void hook_completion_print_log (struct t_hook *hook);

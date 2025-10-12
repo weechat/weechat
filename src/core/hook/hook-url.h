@@ -57,6 +57,9 @@ extern struct t_hook *hook_url (struct t_weechat_plugin *plugin,
                                 const void *callback_pointer,
                                 void *callback_data);
 extern void hook_url_free_data (struct t_hook *hook);
+extern struct t_hdata *hook_url_hdata_hook_url_cb (const void *pointer,
+                                                   void *data,
+                                                   const char *hdata_name);
 extern int hook_url_add_to_infolist (struct t_infolist_item *item,
                                          struct t_hook *hook);
 extern void hook_url_print_log (struct t_hook *hook);

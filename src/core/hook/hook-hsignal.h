@@ -49,6 +49,9 @@ extern struct t_hook *hook_hsignal (struct t_weechat_plugin *plugin,
 extern int hook_hsignal_send (const char *signal,
                               struct t_hashtable *hashtable);
 extern void hook_hsignal_free_data (struct t_hook *hook);
+extern struct t_hdata *hook_hsignal_hdata_hook_hsignal_cb (const void *pointer,
+                                                           void *data,
+                                                           const char *hdata_name);
 extern int hook_hsignal_add_to_infolist (struct t_infolist_item *item,
                                          struct t_hook *hook);
 extern void hook_hsignal_print_log (struct t_hook *hook);

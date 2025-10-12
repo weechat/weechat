@@ -30,10 +30,12 @@
 
 #include "../weechat.h"
 #include "../core-hook.h"
+#include "../core-hdata.h"
 #include "../core-infolist.h"
 #include "../core-log.h"
 #include "../core-string.h"
 #include "../../gui/gui-completion.h"
+#include "../../plugins/plugin.h"
 
 
 /*
@@ -178,6 +180,30 @@ hook_completion_free_data (struct t_hook *hook)
 
     free (hook->hook_data);
     hook->hook_data = NULL;
+}
+
+/*
+ * Returns hdata for completion hook.
+ */
+
+struct t_hdata *
+hook_completion_hdata_hook_completion_cb (const void *pointer, void *data,
+                                          const char *hdata_name)
+{
+    struct t_hdata *hdata;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+
+    hdata = hdata_new (NULL, hdata_name, NULL, NULL, 0, 0, NULL, NULL);
+    if (hdata)
+    {
+        HDATA_VAR(struct t_hook_completion, callback, POINTER, 0, NULL, NULL);
+        HDATA_VAR(struct t_hook_completion, completion_item, STRING, 0, NULL, NULL);
+        HDATA_VAR(struct t_hook_completion, description, STRING, 0, NULL, NULL);
+    }
+    return hdata;
 }
 
 /*

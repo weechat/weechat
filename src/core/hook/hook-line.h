@@ -55,6 +55,9 @@ extern struct t_hook *hook_line (struct t_weechat_plugin *plugin,
                                  void *callback_data);
 extern void hook_line_exec (struct t_gui_line *line);
 extern void hook_line_free_data (struct t_hook *hook);
+extern struct t_hdata *hook_line_hdata_hook_line_cb (const void *pointer,
+                                                     void *data,
+                                                     const char *hdata_name);
 extern int hook_line_add_to_infolist (struct t_infolist_item *item,
                                       struct t_hook *hook);
 extern void hook_line_print_log (struct t_hook *hook);

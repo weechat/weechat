@@ -51,6 +51,9 @@ extern char *hook_info_get (struct t_weechat_plugin *plugin,
                             const char *info_name,
                             const char *arguments);
 extern void hook_info_free_data (struct t_hook *hook);
+extern struct t_hdata *hook_info_hdata_hook_info_cb (const void *pointer,
+                                                     void *data,
+                                                     const char *hdata_name);
 extern int hook_info_add_to_infolist (struct t_infolist_item *item,
                                       struct t_hook *hook);
 extern void hook_info_print_log (struct t_hook *hook);

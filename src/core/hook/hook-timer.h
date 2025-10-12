@@ -56,6 +56,9 @@ extern struct t_hook *hook_timer (struct t_weechat_plugin *plugin,
 extern int hook_timer_get_time_to_next (void);
 extern void hook_timer_exec (void);
 extern void hook_timer_free_data (struct t_hook *hook);
+extern struct t_hdata *hook_timer_hdata_hook_timer_cb (const void *pointer,
+                                                       void *data,
+                                                       const char *hdata_name);
 extern int hook_timer_add_to_infolist (struct t_infolist_item *item,
                                        struct t_hook *hook);
 extern void hook_timer_print_log (struct t_hook *hook);

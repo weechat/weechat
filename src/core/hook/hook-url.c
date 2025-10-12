@@ -35,8 +35,9 @@
 #include <pthread.h>
 
 #include "../weechat.h"
-#include "../core-hashtable.h"
 #include "../core-hook.h"
+#include "../core-hashtable.h"
+#include "../core-hdata.h"
 #include "../core-infolist.h"
 #include "../core-log.h"
 #include "../core-string.h"
@@ -396,6 +397,36 @@ hook_url_free_data (struct t_hook *hook)
 
     free (hook->hook_data);
     hook->hook_data = NULL;
+}
+
+/*
+ * Returns hdata for url hook.
+ */
+
+struct t_hdata *
+hook_url_hdata_hook_url_cb (const void *pointer, void *data,
+                            const char *hdata_name)
+{
+    struct t_hdata *hdata;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+
+    hdata = hdata_new (NULL, hdata_name, NULL, NULL, 0, 0, NULL, NULL);
+    if (hdata)
+    {
+        HDATA_VAR(struct t_hook_url, callback, POINTER, 0, NULL, NULL);
+        HDATA_VAR(struct t_hook_url, url, STRING, 0, NULL, NULL);
+        HDATA_VAR(struct t_hook_url, options, HASHTABLE, 0, NULL, NULL);
+        HDATA_VAR(struct t_hook_url, timeout, LONG, 0, NULL, NULL);
+        HDATA_VAR(struct t_hook_url, thread_id, LONG, 0, NULL, NULL);
+        HDATA_VAR(struct t_hook_url, thread_created, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_hook_url, thread_running, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_hook_url, hook_timer, POINTER, 0, NULL, "hook");
+        HDATA_VAR(struct t_hook_url, output, HASHTABLE, 0, NULL, NULL);
+    }
+    return hdata;
 }
 
 /*

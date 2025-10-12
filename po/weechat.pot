@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2025-09-11 21:08+0200\n"
+"POT-Creation-Date: 2025-10-12 17:27+0200\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -11948,6 +11948,66 @@ msgid "filter"
 msgstr ""
 
 msgid "history of commands in buffer"
+msgstr ""
+
+msgid "hook"
+msgstr ""
+
+msgid "hook \"command\""
+msgstr ""
+
+msgid "hook \"command_run\""
+msgstr ""
+
+msgid "hook \"completion\""
+msgstr ""
+
+msgid "hook \"config\""
+msgstr ""
+
+msgid "hook \"connect\""
+msgstr ""
+
+msgid "hook \"fd\""
+msgstr ""
+
+msgid "hook \"focus\""
+msgstr ""
+
+msgid "hook \"hdata\""
+msgstr ""
+
+msgid "hook \"hsignal\""
+msgstr ""
+
+msgid "hook \"info\""
+msgstr ""
+
+msgid "hook \"info_hashtable\""
+msgstr ""
+
+msgid "hook \"infolist\""
+msgstr ""
+
+msgid "hook \"line\""
+msgstr ""
+
+msgid "hook \"modifier\""
+msgstr ""
+
+msgid "hook \"print\""
+msgstr ""
+
+msgid "hook \"process\""
+msgstr ""
+
+msgid "hook \"signal\""
+msgstr ""
+
+msgid "hook \"timer\""
+msgstr ""
+
+msgid "hook \"url\""
 msgstr ""
 
 msgid "hotlist"

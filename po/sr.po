@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2025-09-11 21:08+0200\n"
+"POT-Creation-Date: 2025-10-12 17:27+0200\n"
 "PO-Revision-Date: 2025-09-22 11:16+0400\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -14330,6 +14330,78 @@ msgstr "филтер"
 
 msgid "history of commands in buffer"
 msgstr "историја команди у баферу"
+
+msgid "hook"
+msgstr ""
+
+#, fuzzy
+#| msgid "history of commands"
+msgid "hook \"command\""
+msgstr "историја команди"
+
+#, fuzzy
+#| msgid "No command is running"
+msgid "hook \"command_run\""
+msgstr "Не извршава се ниједна команда"
+
+#, fuzzy
+#| msgid "completion:"
+msgid "hook \"completion\""
+msgstr "довршавање:"
+
+msgid "hook \"config\""
+msgstr ""
+
+#, fuzzy
+#| msgid "not connected"
+msgid "hook \"connect\""
+msgstr "није повезан"
+
+msgid "hook \"fd\""
+msgstr ""
+
+msgid "hook \"focus\""
+msgstr ""
+
+msgid "hook \"hdata\""
+msgstr ""
+
+msgid "hook \"hsignal\""
+msgstr ""
+
+msgid "hook \"info\""
+msgstr ""
+
+msgid "hook \"info_hashtable\""
+msgstr ""
+
+msgid "hook \"infolist\""
+msgstr ""
+
+msgid "hook \"line\""
+msgstr ""
+
+msgid "hook \"modifier\""
+msgstr ""
+
+msgid "hook \"print\""
+msgstr ""
+
+#, fuzzy
+#| msgid "hook types"
+msgid "hook \"process\""
+msgstr "типови куке"
+
+msgid "hook \"signal\""
+msgstr ""
+
+#, fuzzy
+#| msgid "hook types"
+msgid "hook \"timer\""
+msgstr "типови куке"
+
+msgid "hook \"url\""
+msgstr ""
 
 msgid "hotlist"
 msgstr "врућа листа"

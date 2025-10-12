@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2025-09-11 21:08+0200\n"
+"POT-Creation-Date: 2025-10-12 17:27+0200\n"
 "PO-Revision-Date: 2025-05-04 09:24+0200\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -13686,6 +13686,75 @@ msgstr "filtr"
 #, fuzzy
 msgid "history of commands in buffer"
 msgstr "historie příkazů"
+
+msgid "hook"
+msgstr ""
+
+#, fuzzy
+#| msgid "history of commands"
+msgid "hook \"command\""
+msgstr "historie příkazů"
+
+#, fuzzy
+#| msgid "No command is running"
+msgid "hook \"command_run\""
+msgstr "Neběží žádný příkaz"
+
+#, fuzzy
+#| msgid "completion:"
+msgid "hook \"completion\""
+msgstr "doplnění:"
+
+msgid "hook \"config\""
+msgstr ""
+
+#, fuzzy
+#| msgid "not connected"
+msgid "hook \"connect\""
+msgstr "nepřipojen"
+
+msgid "hook \"fd\""
+msgstr ""
+
+msgid "hook \"focus\""
+msgstr ""
+
+msgid "hook \"hdata\""
+msgstr ""
+
+msgid "hook \"hsignal\""
+msgstr ""
+
+msgid "hook \"info\""
+msgstr ""
+
+msgid "hook \"info_hashtable\""
+msgstr ""
+
+msgid "hook \"infolist\""
+msgstr ""
+
+msgid "hook \"line\""
+msgstr ""
+
+msgid "hook \"modifier\""
+msgstr ""
+
+msgid "hook \"print\""
+msgstr ""
+
+msgid "hook \"process\""
+msgstr ""
+
+msgid "hook \"signal\""
+msgstr ""
+
+#, fuzzy
+msgid "hook \"timer\""
+msgstr "Seznam trigerů:"
+
+msgid "hook \"url\""
+msgstr ""
 
 #, fuzzy
 msgid "hotlist"

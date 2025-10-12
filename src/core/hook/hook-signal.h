@@ -53,6 +53,9 @@ extern void hook_signal_extract_flags (const char *signal,
 extern int hook_signal_send (const char *signal, const char *type_data,
                              void *signal_data);
 extern void hook_signal_free_data (struct t_hook *hook);
+extern struct t_hdata *hook_signal_hdata_hook_signal_cb (const void *pointer,
+                                                         void *data,
+                                                         const char *hdata_name);
 extern int hook_signal_add_to_infolist (struct t_infolist_item *item,
                                         struct t_hook *hook);
 extern void hook_signal_print_log (struct t_hook *hook);

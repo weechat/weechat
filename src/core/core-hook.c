@@ -37,6 +37,7 @@
 #include "core-debug.h"
 #include "core-hook.h"
 #include "core-hashtable.h"
+#include "core-hdata.h"
 #include "core-infolist.h"
 #include "core-log.h"
 #include "core-signal.h"
@@ -791,6 +792,50 @@ unhook_all (void)
             ptr_hook = next_hook;
         }
     }
+}
+
+/*
+ * Returns hdata for hook.
+ */
+
+struct t_hdata *
+hook_hdata_hook_cb (const void *pointer, void *data, const char *hdata_name)
+{
+    struct t_hdata *hdata;
+    int hook_type;
+    char str_list[128];
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+
+    hdata = hdata_new (NULL, hdata_name, "prev_hook", "next_hook",
+                       0, 0, NULL, NULL);
+    if (hdata)
+    {
+        HDATA_VAR(struct t_hook, plugin, POINTER, 0, NULL, "plugin");
+        HDATA_VAR(struct t_hook, subplugin, STRING, 0, NULL, NULL);
+        HDATA_VAR(struct t_hook, type, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_hook, deleted, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_hook, running, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_hook, priority, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_hook, callback_pointer, POINTER, 0, NULL, NULL);
+        HDATA_VAR(struct t_hook, callback_data, POINTER, 0, NULL, NULL);
+        HDATA_VAR(struct t_hook, hook_data, POINTER, 0, NULL, NULL);
+        HDATA_VAR(struct t_hook, prev_hook, POINTER, 0, NULL, hdata_name);
+        HDATA_VAR(struct t_hook, next_hook, POINTER, 0, NULL, hdata_name);
+        for (hook_type = 0; hook_type < HOOK_NUM_TYPES; hook_type++)
+        {
+            snprintf (str_list, sizeof (str_list),
+                      "weechat_hooks_%s", hook_type_string[hook_type]);
+            hdata_new_list (hdata, str_list, &weechat_hooks[hook_type],
+                            WEECHAT_HDATA_LIST_CHECK_POINTERS);
+            snprintf (str_list, sizeof (str_list),
+                      "last_weechat_hook_%s", hook_type_string[hook_type]);
+            hdata_new_list (hdata, str_list, &last_weechat_hook[hook_type], 0);
+        }
+    }
+    return hdata;
 }
 
 /*

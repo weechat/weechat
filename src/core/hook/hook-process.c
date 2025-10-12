@@ -34,8 +34,9 @@
 #include <errno.h>
 
 #include "../weechat.h"
-#include "../core-hashtable.h"
 #include "../core-hook.h"
+#include "../core-hashtable.h"
+#include "../core-hdata.h"
 #include "../core-infolist.h"
 #include "../core-log.h"
 #include "../core-string.h"
@@ -912,6 +913,40 @@ hook_process_free_data (struct t_hook *hook)
 
     free (hook->hook_data);
     hook->hook_data = NULL;
+}
+
+/*
+ * Returns hdata for process hook.
+ */
+
+struct t_hdata *
+hook_process_hdata_hook_process_cb (const void *pointer, void *data,
+                                    const char *hdata_name)
+{
+    struct t_hdata *hdata;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+
+    hdata = hdata_new (NULL, hdata_name, NULL, NULL, 0, 0, NULL, NULL);
+    if (hdata)
+    {
+        HDATA_VAR(struct t_hook_process, callback, POINTER, 0, NULL, NULL);
+        HDATA_VAR(struct t_hook_process, command, STRING, 0, NULL, NULL);
+        HDATA_VAR(struct t_hook_process, options, HASHTABLE, 0, NULL, NULL);
+        HDATA_VAR(struct t_hook_process, detached, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_hook_process, timeout, LONG, 0, NULL, NULL);
+        HDATA_VAR(struct t_hook_process, child_read, INTEGER, 0, "3", NULL);
+        HDATA_VAR(struct t_hook_process, child_write, INTEGER, 0, "3", NULL);
+        HDATA_VAR(struct t_hook_process, child_pid, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_hook_process, hook_fd, POINTER, 0, "3", "hook");
+        HDATA_VAR(struct t_hook_process, hook_timer, POINTER, 0, NULL, "hook");
+        HDATA_VAR(struct t_hook_process, buffer, STRING, 0, "3", NULL);
+        HDATA_VAR(struct t_hook_process, buffer_size, INTEGER, 0, "3", NULL);
+        HDATA_VAR(struct t_hook_process, buffer_flush, INTEGER, 0, NULL, NULL);
+    }
+    return hdata;
 }
 
 /*

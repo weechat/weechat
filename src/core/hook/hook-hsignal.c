@@ -30,6 +30,7 @@
 
 #include "../weechat.h"
 #include "../core-hook.h"
+#include "../core-hdata.h"
 #include "../core-infolist.h"
 #include "../core-log.h"
 #include "../core-string.h"
@@ -202,6 +203,30 @@ hook_hsignal_free_data (struct t_hook *hook)
 
     free (hook->hook_data);
     hook->hook_data = NULL;
+}
+
+/*
+ * Returns hdata for hsignal hook.
+ */
+
+struct t_hdata *
+hook_hsignal_hdata_hook_hsignal_cb (const void *pointer, void *data,
+                                    const char *hdata_name)
+{
+    struct t_hdata *hdata;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+
+    hdata = hdata_new (NULL, hdata_name, NULL, NULL, 0, 0, NULL, NULL);
+    if (hdata)
+    {
+        HDATA_VAR(struct t_hook_hsignal, callback, POINTER, 0, NULL, NULL);
+        HDATA_VAR(struct t_hook_hsignal, signals, STRING, 0, "*,num_signals", NULL);
+        HDATA_VAR(struct t_hook_hsignal, num_signals, INTEGER, 0, NULL, NULL);
+    }
+    return hdata;
 }
 
 /*

@@ -56,6 +56,9 @@ extern struct t_infolist *hook_infolist_get (struct t_weechat_plugin *plugin,
                                              void *pointer,
                                              const char *arguments);
 extern void hook_infolist_free_data (struct t_hook *hook);
+extern struct t_hdata *hook_infolist_hdata_hook_infolist_cb (const void *pointer,
+                                                             void *data,
+                                                             const char *hdata_name);
 extern int hook_infolist_add_to_infolist (struct t_infolist_item *item,
                                           struct t_hook *hook);
 extern void hook_infolist_print_log (struct t_hook *hook);

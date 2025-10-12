@@ -736,6 +736,46 @@ plugin_api_init (void)
                 &gui_filter_hdata_filter_cb, NULL, NULL);
     hook_hdata (NULL, "history", N_("history of commands in buffer"),
                 &gui_history_hdata_history_cb, NULL, NULL);
+    hook_hdata (NULL, "hook", N_("hook"),
+                &hook_hdata_hook_cb, NULL, NULL);
+    hook_hdata (NULL, "hook_command", N_("hook \"command\""),
+                &hook_command_hdata_hook_command_cb, NULL, NULL);
+    hook_hdata (NULL, "hook_command_run", N_("hook \"command_run\""),
+                &hook_command_run_hdata_hook_command_run_cb, NULL, NULL);
+    hook_hdata (NULL, "hook_completion", N_("hook \"completion\""),
+                &hook_completion_hdata_hook_completion_cb, NULL, NULL);
+    hook_hdata (NULL, "hook_config", N_("hook \"config\""),
+                &hook_config_hdata_hook_config_cb, NULL, NULL);
+    hook_hdata (NULL, "hook_connect", N_("hook \"connect\""),
+                &hook_connect_hdata_hook_connect_cb, NULL, NULL);
+    hook_hdata (NULL, "hook_fd", N_("hook \"fd\""),
+                &hook_fd_hdata_hook_fd_cb, NULL, NULL);
+    hook_hdata (NULL, "hook_focus", N_("hook \"focus\""),
+                &hook_focus_hdata_hook_focus_cb, NULL, NULL);
+    hook_hdata (NULL, "hook_hdata", N_("hook \"hdata\""),
+                &hook_hdata_hdata_hook_hdata_cb, NULL, NULL);
+    hook_hdata (NULL, "hook_hsignal", N_("hook \"hsignal\""),
+                &hook_hsignal_hdata_hook_hsignal_cb, NULL, NULL);
+    hook_hdata (NULL, "hook_info", N_("hook \"info\""),
+                &hook_info_hdata_hook_info_cb, NULL, NULL);
+    hook_hdata (NULL, "hook_info_hashtable", N_("hook \"info_hashtable\""),
+                &hook_info_hashtable_hdata_hook_info_hashtable_cb, NULL, NULL);
+    hook_hdata (NULL, "hook_infolist", N_("hook \"infolist\""),
+                &hook_infolist_hdata_hook_infolist_cb, NULL, NULL);
+    hook_hdata (NULL, "hook_line", N_("hook \"line\""),
+                &hook_line_hdata_hook_line_cb, NULL, NULL);
+    hook_hdata (NULL, "hook_modifier", N_("hook \"modifier\""),
+                &hook_modifier_hdata_hook_modifier_cb, NULL, NULL);
+    hook_hdata (NULL, "hook_print", N_("hook \"print\""),
+                &hook_print_hdata_hook_print_cb, NULL, NULL);
+    hook_hdata (NULL, "hook_process", N_("hook \"process\""),
+                &hook_process_hdata_hook_process_cb, NULL, NULL);
+    hook_hdata (NULL, "hook_signal", N_("hook \"signal\""),
+                &hook_signal_hdata_hook_signal_cb, NULL, NULL);
+    hook_hdata (NULL, "hook_timer", N_("hook \"timer\""),
+                &hook_timer_hdata_hook_timer_cb, NULL, NULL);
+    hook_hdata (NULL, "hook_url", N_("hook \"url\""),
+                &hook_url_hdata_hook_url_cb, NULL, NULL);
     hook_hdata (NULL, "hotlist", N_("hotlist"),
                 &gui_hotlist_hdata_hotlist_cb, NULL, NULL);
     hook_hdata (NULL, "input_undo", N_("structure with undo for input line"),

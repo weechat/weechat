@@ -34,6 +34,7 @@
 
 #include "../weechat.h"
 #include "../core-hook.h"
+#include "../core-hdata.h"
 #include "../core-infolist.h"
 #include "../core-log.h"
 #include "../core-network.h"
@@ -310,6 +311,52 @@ hook_connect_free_data (struct t_hook *hook)
 
     free (hook->hook_data);
     hook->hook_data = NULL;
+}
+
+/*
+ * Returns hdata for connect hook.
+ */
+
+struct t_hdata *
+hook_connect_hdata_hook_connect_cb (const void *pointer, void *data,
+                                    const char *hdata_name)
+{
+    struct t_hdata *hdata;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+
+    hdata = hdata_new (NULL, hdata_name, NULL, NULL, 0, 0, NULL, NULL);
+    if (hdata)
+    {
+        HDATA_VAR(struct t_hook_connect, callback, POINTER, 0, NULL, NULL);
+        HDATA_VAR(struct t_hook_connect, proxy, STRING, 0, NULL, NULL);
+        HDATA_VAR(struct t_hook_connect, address, STRING, 0, NULL, NULL);
+        HDATA_VAR(struct t_hook_connect, port, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_hook_connect, ipv6, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_hook_connect, sock, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_hook_connect, retry, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_hook_connect, gnutls_sess, POINTER, 0, NULL, NULL);
+        HDATA_VAR(struct t_hook_connect, gnutls_cb, POINTER, 0, NULL, NULL);
+        HDATA_VAR(struct t_hook_connect, gnutls_dhkey_size, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_hook_connect, gnutls_priorities, STRING, 0, NULL, NULL);
+        HDATA_VAR(struct t_hook_connect, local_hostname, STRING, 0, NULL, NULL);
+        HDATA_VAR(struct t_hook_connect, child_read, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_hook_connect, child_write, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_hook_connect, child_recv, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_hook_connect, child_send, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_hook_connect, child_pid, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_hook_connect, hook_child_timer, POINTER, 0, NULL, "hook");
+        HDATA_VAR(struct t_hook_connect, hook_fd, POINTER, 0, NULL, "hook");
+        HDATA_VAR(struct t_hook_connect, handshake_hook_fd, POINTER, 0, NULL, "hook");
+        HDATA_VAR(struct t_hook_connect, handshake_hook_timer, POINTER, 0, NULL, "hook");
+        HDATA_VAR(struct t_hook_connect, handshake_fd_flags, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_hook_connect, handshake_ip_address, STRING, 0, NULL, NULL);
+        HDATA_VAR(struct t_hook_connect, sock_v4, INTEGER, 0, TO_STR(HOOK_CONNECT_MAX_SOCKETS), NULL);
+        HDATA_VAR(struct t_hook_connect, sock_v6, INTEGER, 0, TO_STR(HOOK_CONNECT_MAX_SOCKETS), NULL);
+    }
+    return hdata;
 }
 
 /*

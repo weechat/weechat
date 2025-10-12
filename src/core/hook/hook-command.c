@@ -29,9 +29,10 @@
 #include <string.h>
 
 #include "../weechat.h"
+#include "../core-hook.h"
 #include "../core-arraylist.h"
 #include "../core-config.h"
-#include "../core-hook.h"
+#include "../core-hdata.h"
 #include "../core-infolist.h"
 #include "../core-list.h"
 #include "../core-log.h"
@@ -1045,6 +1046,41 @@ hook_command_free_data (struct t_hook *hook)
 
     free (hook->hook_data);
     hook->hook_data = NULL;
+}
+
+/*
+ * Returns hdata for command hook.
+ */
+
+struct t_hdata *
+hook_command_hdata_hook_command_cb (const void *pointer, void *data,
+                                    const char *hdata_name)
+{
+    struct t_hdata *hdata;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+
+    hdata = hdata_new (NULL, hdata_name, NULL, NULL, 0, 0, NULL, NULL);
+    if (hdata)
+    {
+        HDATA_VAR(struct t_hook_command, callback, POINTER, 0, NULL, NULL);
+        HDATA_VAR(struct t_hook_command, command, STRING, 0, NULL, NULL);
+        HDATA_VAR(struct t_hook_command, description, STRING, 0, NULL, NULL);
+        HDATA_VAR(struct t_hook_command, args, STRING, 0, NULL, NULL);
+        HDATA_VAR(struct t_hook_command, args_description, STRING, 0, NULL, NULL);
+        HDATA_VAR(struct t_hook_command, completion, STRING, 0, NULL, NULL);
+        HDATA_VAR(struct t_hook_command, cplt_num_templates, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_hook_command, cplt_templates, POINTER, 0, "*,cplt_num_templates", NULL);
+        HDATA_VAR(struct t_hook_command, cplt_templates_static, POINTER, 0, "*,cplt_num_templates", NULL);
+        HDATA_VAR(struct t_hook_command, cplt_template_num_args, INTEGER, 0, "*,cplt_num_templates", NULL);
+        HDATA_VAR(struct t_hook_command, cplt_template_args, POINTER, 0, "*,cplt_num_templates", NULL);
+        HDATA_VAR(struct t_hook_command, cplt_template_num_args_concat, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_hook_command, cplt_template_args_concat, POINTER, 0, "*,cplt_template_num_args_concat", NULL);
+        HDATA_VAR(struct t_hook_command, keep_spaces_right, INTEGER, 0, NULL, NULL);
+    }
+    return hdata;
 }
 
 /*
