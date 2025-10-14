@@ -28,7 +28,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2025-10-12 17:27+0200\n"
+"POT-Creation-Date: 2025-10-14 22:54+0200\n"
 "PO-Revision-Date: 2025-05-05 09:24+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -11722,20 +11722,19 @@ msgstr ""
 "gefunden werden. Da der Server zur Zeit genutzt wird, konnte er noch nicht "
 "entfernt werden"
 
-#, c-format
-msgid ""
-"%s%s: warning: the command name \"%s\" must be lower case, the option "
-"\"irc.msgbuffer.%s\" will not work"
-msgstr ""
-"%s%s: Warnung: Der Befehl \"%s\" muss in Kleinbuchstaben geschrieben werden, "
-"die Option \"irc.msgbuffer.%s\" funktioniert nicht"
-
 msgid "buffer used to display message received from IRC server"
 msgstr ""
 "Buffer welcher zur Ausgabe von IRC Server Nachrichten genutzt werden soll"
 
 #, c-format
-msgid "%s%s: error creating \"%s\" => \"%s\""
+msgid ""
+"%s%s: error: invalid option \"%s.%s\", the command name or alias \"%s\" must "
+"be lower case"
+msgstr ""
+
+#, fuzzy, c-format
+#| msgid "%s%s: error creating \"%s\" => \"%s\""
+msgid "%s%s: error creating \"%s.%s\" => \"%s\""
 msgstr "%s%s: Fehler beim Erstellen von \"%s\" => \"%s\""
 
 #, c-format
@@ -19046,3 +19045,11 @@ msgstr ""
 "%s%s Datei \"%s\" zum Fortsetzen der Übertragung wird nicht akzeptiert "
 "(Port: %d, Startposition: %llu): xfer nicht gefunden oder nicht bereit für "
 "Transfer"
+
+#, c-format
+#~ msgid ""
+#~ "%s%s: warning: the command name \"%s\" must be lower case, the option "
+#~ "\"irc.msgbuffer.%s\" will not work"
+#~ msgstr ""
+#~ "%s%s: Warnung: Der Befehl \"%s\" muss in Kleinbuchstaben geschrieben "
+#~ "werden, die Option \"irc.msgbuffer.%s\" funktioniert nicht"

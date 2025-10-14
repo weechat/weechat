@@ -24,7 +24,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2025-10-12 17:27+0200\n"
+"POT-Creation-Date: 2025-10-14 22:54+0200\n"
 "PO-Revision-Date: 2025-05-04 09:25+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -11482,19 +11482,18 @@ msgstr ""
 "%s%s: ostrzeżenie: serwer \"%s\" nie znaleziony w pliku konfiguracyjnym, nie "
 "usunięty z pamięci, ponieważ jest obecnie używany"
 
-#, c-format
-msgid ""
-"%s%s: warning: the command name \"%s\" must be lower case, the option "
-"\"irc.msgbuffer.%s\" will not work"
-msgstr ""
-"%s%s: ostrzeżenie: nazwa komendy „%s” musi być pisana małymi literami, opcja "
-"„irc.msgbuffer.%s” nie będzie działać"
-
 msgid "buffer used to display message received from IRC server"
 msgstr "bufor używany do wyświetlania wiadomości otrzymanych od serwera IRC"
 
 #, c-format
-msgid "%s%s: error creating \"%s\" => \"%s\""
+msgid ""
+"%s%s: error: invalid option \"%s.%s\", the command name or alias \"%s\" must "
+"be lower case"
+msgstr ""
+
+#, fuzzy, c-format
+#| msgid "%s%s: error creating \"%s\" => \"%s\""
+msgid "%s%s: error creating \"%s.%s\" => \"%s\""
 msgstr "%s%s: błąd podczas tworzenia \"%s\" => \"%s\""
 
 #, c-format
@@ -18615,3 +18614,11 @@ msgid ""
 msgstr ""
 "%s%s: nie można zaakceptować wznowienia pliku \"%s\" (port: %d, pozycja "
 "startowa: %llu): xfer nie znaleziony lub nie gotowy do transferu"
+
+#, c-format
+#~ msgid ""
+#~ "%s%s: warning: the command name \"%s\" must be lower case, the option "
+#~ "\"irc.msgbuffer.%s\" will not work"
+#~ msgstr ""
+#~ "%s%s: ostrzeżenie: nazwa komendy „%s” musi być pisana małymi literami, "
+#~ "opcja „irc.msgbuffer.%s” nie będzie działać"

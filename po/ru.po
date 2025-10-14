@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2025-10-12 17:27+0200\n"
+"POT-Creation-Date: 2025-10-14 22:54+0200\n"
 "PO-Revision-Date: 2025-05-04 09:25+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -10244,17 +10244,17 @@ msgid ""
 "memory because it's currently used"
 msgstr ""
 
-#, c-format
-msgid ""
-"%s%s: warning: the command name \"%s\" must be lower case, the option "
-"\"irc.msgbuffer.%s\" will not work"
-msgstr ""
-
 msgid "buffer used to display message received from IRC server"
 msgstr ""
 
+#, c-format
+msgid ""
+"%s%s: error: invalid option \"%s.%s\", the command name or alias \"%s\" must "
+"be lower case"
+msgstr ""
+
 #, fuzzy, c-format
-msgid "%s%s: error creating \"%s\" => \"%s\""
+msgid "%s%s: error creating \"%s.%s\" => \"%s\""
 msgstr "%s недостаточно памяти для сообщения в строке информации\n"
 
 #, c-format

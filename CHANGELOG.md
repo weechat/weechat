@@ -30,6 +30,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 ### Fixed
 
 - api: fix parsing of date/times with timezone offset in function util_parse_time
+- irc: fix warning on creation of irc.msgbuffer option when the server name contains upper case letters ([#2281](https://github.com/weechat/weechat/issues/2281))
 - relay/api: fix crash when an invalid HTTP request is received from a client
 
 ## Version 4.7.1 (2025-08-16)
