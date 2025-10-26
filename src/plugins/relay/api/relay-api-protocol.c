@@ -579,7 +579,13 @@ RELAY_API_PROTOCOL_CALLBACK(buffers)
         }
     }
 
-    nicks = relay_http_get_param_boolean (client->http_req, "nicks", 0);
+    if (!relay_http_get_param_boolean (client->http_req, "nicks", 0, &nicks))
+    {
+        relay_api_msg_send_error_json (client, RELAY_HTTP_400_BAD_REQUEST, NULL,
+                                       "Invalid parameter \"%s\"",
+                                       "nicks");
+        return RELAY_API_PROTOCOL_RC_OK;
+    }
     colors = RELAY_API_COLORS_ANSI;
     ptr_colors = weechat_hashtable_get (client->http_req->params, "colors");
     if (ptr_colors)
@@ -623,7 +629,16 @@ RELAY_API_PROTOCOL_CALLBACK(buffers)
             }
             else
             {
-                lines = relay_http_get_param_long (client->http_req, "lines", LONG_MAX);
+                if (!relay_http_get_param_long (client->http_req, "lines", LONG_MAX, &lines))
+                {
+                    relay_api_msg_send_error_json (
+                        client,
+                        RELAY_HTTP_400_BAD_REQUEST,
+                        NULL,
+                        "Invalid query string parameter \"%s\"",
+                        "lines");
+                    return RELAY_API_PROTOCOL_RC_OK;
+                }
                 json = relay_api_msg_lines_to_json (ptr_buffer, lines, colors);
                 if (json)
                 {
@@ -655,10 +670,29 @@ RELAY_API_PROTOCOL_CALLBACK(buffers)
     }
     else
     {
-        lines = relay_http_get_param_long (client->http_req, "lines", 0L);
-        lines_free = relay_http_get_param_long (client->http_req,
-                                                "lines_free",
-                                                (lines == 0) ? 0 : LONG_MAX);
+        if (!relay_http_get_param_long (client->http_req, "lines", 0L, &lines))
+        {
+            relay_api_msg_send_error_json (
+                client,
+                RELAY_HTTP_400_BAD_REQUEST,
+                NULL,
+                "Invalid query string parameter \"%s\"",
+                "lines");
+            return RELAY_API_PROTOCOL_RC_OK;
+        }
+        if (!relay_http_get_param_long (client->http_req,
+                                        "lines_free",
+                                        (lines == 0) ? 0 : LONG_MAX,
+                                        &lines_free))
+        {
+            relay_api_msg_send_error_json (
+                client,
+                RELAY_HTTP_400_BAD_REQUEST,
+                NULL,
+                "Invalid query string parameter \"%s\"",
+                "lines_free");
+            return RELAY_API_PROTOCOL_RC_OK;
+        }
         if (ptr_buffer)
         {
             json = relay_api_msg_buffer_to_json (ptr_buffer, lines, lines_free,

@@ -94,9 +94,11 @@ struct t_relay_http_response
 extern void relay_http_request_reinit (struct t_relay_http_request *request);
 extern struct t_relay_http_request *relay_http_request_alloc (void);
 extern int relay_http_get_param_boolean (struct t_relay_http_request *request,
-                                         const char *name, int default_value);
-extern long relay_http_get_param_long (struct t_relay_http_request *request,
-                                       const char *name, long default_value);
+                                         const char *name, int default_value,
+                                         int *value);
+extern int relay_http_get_param_long (struct t_relay_http_request *request,
+                                      const char *name, long default_value,
+                                      long *value);
 extern int relay_http_parse_method_path (struct t_relay_http_request *request,
                                          const char *method_path);
 extern int relay_http_check_auth (struct t_relay_client *client);

@@ -193,18 +193,31 @@ TEST(RelayHttp, UrlDecode)
 TEST(RelayHttp, GetParamBoolean)
 {
     struct t_relay_http_request *request;
+    int value;
 
     request = relay_http_request_alloc ();
     CHECK(request);
     relay_http_parse_method_path (request, "GET /api/test?key1=true&key2=1&key3=off");
-    LONGS_EQUAL(1, relay_http_get_param_boolean (request, "key1", 0));
-    LONGS_EQUAL(1, relay_http_get_param_boolean (request, "key1", 1));
-    LONGS_EQUAL(1, relay_http_get_param_boolean (request, "key2", 0));
-    LONGS_EQUAL(1, relay_http_get_param_boolean (request, "key2", 1));
-    LONGS_EQUAL(0, relay_http_get_param_boolean (request, "key3", 0));
-    LONGS_EQUAL(0, relay_http_get_param_boolean (request, "key3", 1));
-    LONGS_EQUAL(0, relay_http_get_param_boolean (request, "xxx", 0));
-    LONGS_EQUAL(1, relay_http_get_param_boolean (request, "xxx", 1));
+
+    LONGS_EQUAL(0, relay_http_get_param_boolean (request, "key1", 0, NULL));
+
+    LONGS_EQUAL(1, relay_http_get_param_boolean (request, "key1", 0, &value));
+    LONGS_EQUAL(1, value);
+    LONGS_EQUAL(1, relay_http_get_param_boolean (request, "key1", 1, &value));
+    LONGS_EQUAL(1, value);
+    LONGS_EQUAL(1, relay_http_get_param_boolean (request, "key2", 0, &value));
+    LONGS_EQUAL(1, value);
+    LONGS_EQUAL(1, relay_http_get_param_boolean (request, "key2", 1, &value));
+    LONGS_EQUAL(1, value);
+    LONGS_EQUAL(1, relay_http_get_param_boolean (request, "key3", 0, &value));
+    LONGS_EQUAL(0, value);
+    LONGS_EQUAL(1, relay_http_get_param_boolean (request, "key3", 1, &value));
+    LONGS_EQUAL(0, value);
+    LONGS_EQUAL(1, relay_http_get_param_boolean (request, "xxx", 0, &value));
+    LONGS_EQUAL(0, value);
+    LONGS_EQUAL(1, relay_http_get_param_boolean (request, "xxx", 1, &value));
+    LONGS_EQUAL(1, value);
+
     relay_http_request_free (request);
 }
 
@@ -216,14 +229,22 @@ TEST(RelayHttp, GetParamBoolean)
 TEST(RelayHttp, GetParamLong)
 {
     struct t_relay_http_request *request;
+    long value;
 
     request = relay_http_request_alloc ();
     CHECK(request);
     relay_http_parse_method_path (request, "GET /api/test?key1=123&key2=-4&key3=abc");
-    LONGS_EQUAL(123, relay_http_get_param_long (request, "key1", 8));
-    LONGS_EQUAL(-4, relay_http_get_param_long (request, "key2", 8));
-    LONGS_EQUAL(8, relay_http_get_param_long (request, "key3", 8));
-    LONGS_EQUAL(99, relay_http_get_param_long (request, "xxx", 99));
+
+    LONGS_EQUAL(0, relay_http_get_param_long (request, "key1", 0, NULL));
+    LONGS_EQUAL(0, relay_http_get_param_long (request, "key3", 8, &value));
+
+    LONGS_EQUAL(1, relay_http_get_param_long (request, "key1", 8, &value));
+    LONGS_EQUAL(123, value);
+    LONGS_EQUAL(1, relay_http_get_param_long (request, "key2", 8, &value));
+    LONGS_EQUAL(-4, value);
+    LONGS_EQUAL(1, relay_http_get_param_long (request, "xxx", 99, &value));
+    LONGS_EQUAL(99, value);
+
     relay_http_request_free (request);
 }
 

@@ -32,7 +32,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 - api: fix parsing of date/times with timezone offset in function util_parse_time
 - irc: fix warning on creation of irc.msgbuffer option when the server name contains upper case letters ([#2281](https://github.com/weechat/weechat/issues/2281))
 - relay/api: fix crash when an invalid HTTP request is received from a client
-- relay/api: return an error 400 when URL parameter "colors" has an invalid value
+- relay/api: return an error 400 when URL parameters "colors", "nicks", "lines" and "lines_free" have an invalid value
 
 ## Version 4.7.1 (2025-08-16)
 

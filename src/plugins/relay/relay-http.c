@@ -170,45 +170,65 @@ relay_http_url_decode (const char *url)
 }
 
 /*
- * Returns value of an URL parameter as boolean (0 or 1), using a default value
- * if the parameter is not set.
+ * Reads value of an URL parameter as boolean (0 or 1) into *value.
+ * If the parameter is not in URL, the default value is used.
+ *
+ * Returns:
+ *   1: OK, *value is set
+ *   0: error (URL parameter has invalid format)
  */
 
 int
 relay_http_get_param_boolean (struct t_relay_http_request *request,
-                              const char *name, int default_value)
+                              const char *name, int default_value,
+                              int *value)
 {
     const char *ptr_value;
 
-    ptr_value = weechat_hashtable_get (request->params, name);
-    if (!ptr_value)
-        return default_value;
+    if (!value)
+        return 0;
 
-    return weechat_config_string_to_boolean (ptr_value);
+    ptr_value = weechat_hashtable_get (request->params, name);
+    *value = (ptr_value) ?
+        weechat_config_string_to_boolean (ptr_value) : default_value;
+
+    return 1;
 }
 
 /*
- * Returns value of an URL parameter as long, using a default value if the
- * parameter is not set or if it's not a valid long integer.
+ * Reads value of an URL parameter as long into *value.
+ * If the parameter is not in URL, the default value is used.
+ *
+ * Returns:
+ *   1: OK, *value is set
+ *   0: error (URL parameter has invalid format)
  */
 
-long
+int
 relay_http_get_param_long (struct t_relay_http_request *request,
-                           const char *name, long default_value)
+                           const char *name, long default_value,
+                           long *value)
 {
     const char *ptr_value;
     char *error;
     long number;
 
+    if (!value)
+        return 0;
+
     ptr_value = weechat_hashtable_get (request->params, name);
-    if (!ptr_value)
-        return default_value;
-
-    number = strtol (ptr_value, &error, 10);
-    if (error && !error[0])
-        return number;
-
-    return default_value;
+    if (ptr_value)
+    {
+        number = strtol (ptr_value, &error, 10);
+        if (!error || error[0])
+            return 0;
+        *value = number;
+    }
+    else
+    {
+        *value = default_value;
+    }
+    return 1;
 }
 
 /*
