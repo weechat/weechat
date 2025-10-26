@@ -20,6 +20,8 @@ SPDX-License-Identifier: GPL-3.0-or-later
 - irc: send SASL username with mechanism EXTERNAL ([#2270](https://github.com/weechat/weechat/issues/2270))
 - logger: change default time format to `%@%F %T.%fZ` (UTC) ([#886](https://github.com/weechat/weechat/issues/886))
 - logger: use function util_parse_time to parse date/time in log files ([#886](https://github.com/weechat/weechat/issues/886))
+- relay/api: return an error 400 (Bad Request) when URL parameters "colors", "nicks", "lines" and "lines_free" have an invalid value
+- relay/api: return an error 401 (Unauthorized) when header "x-weechat-totp" has an invalid value
 - xfer: add buffer local variable "server" in DCC CHAT buffers
 - build: require Curl ≥ 7.68.0 ([#2268](https://github.com/weechat/weechat/issues/2268))
 - build: require GnuTLS ≥ 3.6.3 ([#2268](https://github.com/weechat/weechat/issues/2268))
@@ -32,8 +34,6 @@ SPDX-License-Identifier: GPL-3.0-or-later
 - api: fix parsing of date/times with timezone offset in function util_parse_time
 - irc: fix warning on creation of irc.msgbuffer option when the server name contains upper case letters ([#2281](https://github.com/weechat/weechat/issues/2281))
 - relay/api: fix crash when an invalid HTTP request is received from a client
-- relay/api: return an error 400 when URL parameters "colors", "nicks", "lines" and "lines_free" have an invalid value
-- relay/api: return an error 401 when header "x-weechat-totp" has an invalid value
 
 ## Version 4.7.1 (2025-08-16)
 
