@@ -8,5 +8,8 @@ continue-on-failure = true
 include-path-regex = "/sync/?.*"
 enabled = false
 
+[phases.stateful]
+enabled = false
+
 [auth]
 basic = { username = "plain", password = "${RELAY_PASSWORD}" }
