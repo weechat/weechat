@@ -70,7 +70,7 @@ struct t_relay_api_data
 };
 
 extern long long relay_api_get_buffer_id (struct t_gui_buffer *buffer);
-extern enum t_relay_api_colors relay_api_search_colors (const char *colors);
+extern int relay_api_search_colors (const char *colors);
 extern void relay_api_hook_signals (struct t_relay_client *client);
 extern void relay_api_unhook_signals (struct t_relay_client *client);
 extern void relay_api_recv_http (struct t_relay_client *client);

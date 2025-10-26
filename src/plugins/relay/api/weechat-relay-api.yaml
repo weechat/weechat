@@ -143,6 +143,12 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Buffer'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '401':
           description: Unauthorized
           content:
@@ -177,6 +183,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Buffer'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '401':
           description: Unauthorized
           content:
@@ -217,6 +229,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Buffer'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '401':
           description: Unauthorized
           content:
@@ -258,6 +276,12 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Line'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '401':
           description: Unauthorized
           content:
@@ -298,6 +322,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Line'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '401':
           description: Unauthorized
           content:
@@ -339,6 +369,12 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Line'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '401':
           description: Unauthorized
           content:
@@ -379,6 +415,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Line'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '401':
           description: Unauthorized
           content:
@@ -416,6 +458,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/NickGroup'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '401':
           description: Unauthorized
           content:
@@ -453,6 +501,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/NickGroup'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '401':
           description: Unauthorized
           content:

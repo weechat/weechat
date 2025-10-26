@@ -41,12 +41,14 @@ TEST_GROUP(RelayApi)
 
 TEST(RelayApi, SearchColors)
 {
-    LONGS_EQUAL(RELAY_API_COLORS_ANSI, relay_api_search_colors (NULL));
-    LONGS_EQUAL(RELAY_API_COLORS_ANSI, relay_api_search_colors (""));
-    LONGS_EQUAL(RELAY_API_COLORS_ANSI, relay_api_search_colors ("xxx"));
-    LONGS_EQUAL(RELAY_API_COLORS_ANSI, relay_api_search_colors ("WEECHAT"));
-    LONGS_EQUAL(RELAY_API_COLORS_ANSI, relay_api_search_colors ("STRIP"));
+    LONGS_EQUAL(-1, relay_api_search_colors (NULL));
+    LONGS_EQUAL(-1, relay_api_search_colors (""));
+    LONGS_EQUAL(-1, relay_api_search_colors ("xxx"));
+    LONGS_EQUAL(-1, relay_api_search_colors ("ANSI"));
+    LONGS_EQUAL(-1, relay_api_search_colors ("WEECHAT"));
+    LONGS_EQUAL(-1, relay_api_search_colors ("STRIP"));
 
+    LONGS_EQUAL(RELAY_API_COLORS_ANSI, relay_api_search_colors ("ansi"));
     LONGS_EQUAL(RELAY_API_COLORS_WEECHAT, relay_api_search_colors ("weechat"));
     LONGS_EQUAL(RELAY_API_COLORS_STRIP, relay_api_search_colors ("strip"));
 }

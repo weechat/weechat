@@ -559,9 +559,9 @@ RELAY_API_PROTOCOL_CALLBACK(buffers)
     struct t_gui_line *ptr_line;
     struct t_gui_line_data *ptr_line_data;
     long lines, lines_free, line_id;
-    int nicks;
+    int colors, nicks;
+    const char *ptr_colors;
     char *error;
-    enum t_relay_api_colors colors;
 
     json = NULL;
 
@@ -580,8 +580,19 @@ RELAY_API_PROTOCOL_CALLBACK(buffers)
     }
 
     nicks = relay_http_get_param_boolean (client->http_req, "nicks", 0);
-    colors = relay_api_search_colors (
-        weechat_hashtable_get (client->http_req->params, "colors"));
+    colors = RELAY_API_COLORS_ANSI;
+    ptr_colors = weechat_hashtable_get (client->http_req->params, "colors");
+    if (ptr_colors)
+    {
+        colors = relay_api_search_colors (ptr_colors);
+        if (colors < 0)
+        {
+            relay_api_msg_send_error_json (client, RELAY_HTTP_400_BAD_REQUEST, NULL,
+                                           "Invalid parameter \"%s\"",
+                                           "colors");
+            return RELAY_API_PROTOCOL_RC_OK;
+        }
+    }
 
     if (client->http_req->num_path_items > 3)
     {
@@ -1057,8 +1068,12 @@ RELAY_API_PROTOCOL_CALLBACK(sync)
             RELAY_API_DATA(client, sync_input) = (cJSON_IsTrue (json_input)) ? 1 : 0;
         json_colors = cJSON_GetObjectItem (json_body, "colors");
         if (json_colors && cJSON_IsString (json_colors))
+        {
             RELAY_API_DATA(client, sync_colors) = relay_api_search_colors (
                 cJSON_GetStringValue (json_colors));
+            if (RELAY_API_DATA(client, sync_colors) < 0)
+                RELAY_API_DATA(client, sync_colors) = RELAY_API_COLORS_ANSI;
+        }
     }
 
     if (RELAY_API_DATA(client, sync_enabled))

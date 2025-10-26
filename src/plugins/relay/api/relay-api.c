@@ -76,19 +76,20 @@ relay_api_get_buffer_id (struct t_gui_buffer *buffer)
  *   - RELAY_API_COLORS_STRIP
  */
 
-enum t_relay_api_colors
+int
 relay_api_search_colors (const char *colors)
 {
     if (!colors)
-        return RELAY_API_COLORS_ANSI;
+        return -1;
 
+    if (strcmp (colors, "ansi") == 0)
+        return RELAY_API_COLORS_ANSI;
     if (strcmp (colors, "weechat") == 0)
         return RELAY_API_COLORS_WEECHAT;
-
     if (strcmp (colors, "strip") == 0)
         return RELAY_API_COLORS_STRIP;
 
-    return RELAY_API_COLORS_ANSI;
+    return -1;
 }
 
 /*
