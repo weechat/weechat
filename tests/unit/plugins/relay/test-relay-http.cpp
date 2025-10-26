@@ -713,13 +713,6 @@ TEST(RelayHttp, GetAuthStatus)
     hashtable_set (client->http_req->headers, "authorization", "Basic \u26c4");
     LONGS_EQUAL(-2, relay_http_get_auth_status (client));
 
-    /* test invalid TOTP */
-    hashtable_set (client->http_req->headers, "x-weechat-totp", "abcdef");
-    LONGS_EQUAL(-4, relay_http_get_auth_status (client));
-    hashtable_set (client->http_req->headers, "x-weechat-totp", "1234567");
-    LONGS_EQUAL(-4, relay_http_get_auth_status (client));
-    hashtable_remove (client->http_req->headers, "x-weechat-totp");
-
     /* test invalid plain-text password ("test") */
     hashtable_set (client->http_req->headers, "authorization", "Basic cGxhaW46dGVzdA==");
     LONGS_EQUAL(-2, relay_http_get_auth_status (client));
@@ -897,6 +890,20 @@ TEST(RelayHttp, GetAuthStatus)
     snprintf (auth_header, sizeof (auth_header), "Basic %s", auth_base64);
     hashtable_set (client->http_req->headers, "authorization", auth_header);
     LONGS_EQUAL(0, relay_http_get_auth_status (client));
+
+    /* test invalid TOTP */
+    hashtable_set (client->http_req->headers, "x-weechat-totp", "");
+    LONGS_EQUAL(-4, relay_http_get_auth_status (client));
+    hashtable_set (client->http_req->headers, "x-weechat-totp", "abcdef");
+    LONGS_EQUAL(-4, relay_http_get_auth_status (client));
+    hashtable_set (client->http_req->headers, "x-weechat-totp", "1234567");
+    LONGS_EQUAL(-4, relay_http_get_auth_status (client));
+    hashtable_remove (client->http_req->headers, "x-weechat-totp");
+
+    /* test valid TOTP without TOTP configuration */
+    hashtable_set (client->http_req->headers, "x-weechat-totp", "123456");
+    LONGS_EQUAL(-4, relay_http_get_auth_status (client));
+    hashtable_remove (client->http_req->headers, "x-weechat-totp");
 
     /* test missing/invalid TOTP */
     config_file_option_set (relay_config_network_totp_secret, "secretbase32", 1);

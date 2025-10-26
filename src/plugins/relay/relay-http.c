@@ -599,9 +599,15 @@ relay_http_get_auth_status (struct t_relay_client *client)
     user_pass = NULL;
     use_base64url = 0;
 
+    /* check TOTP */
     client_totp = weechat_hashtable_get (client->http_req->headers, "x-weechat-totp");
-    if (client_totp && client_totp[0])
+    if (client_totp)
     {
+        if (!client_totp[0])
+        {
+            rc = -4;
+            goto end;
+        }
         number = strtol (client_totp, &error, 10);
         if (!error || error[0] || (number < 0) || (number > 999999))
         {
@@ -609,7 +615,47 @@ relay_http_get_auth_status (struct t_relay_client *client)
             goto end;
         }
     }
+    totp_secret = weechat_string_eval_expression (
+        weechat_config_string (relay_config_network_totp_secret),
+        NULL, NULL, NULL);
+    if (totp_secret && totp_secret[0])
+    {
+        if (!client_totp || !client_totp[0])
+        {
+            rc = -3;
+            goto end;
+        }
+        /* validate the TOTP received from the client */
+        if (weechat_asprintf (
+                &info_totp_args,
+                "%s,%s,0,%d",
+                totp_secret,  /* the shared secret */
+                client_totp,  /* the TOTP from client */
+                weechat_config_integer (relay_config_network_totp_window)) >= 0)
+        {
+            info_totp = weechat_info_get ("totp_validate", info_totp_args);
+            totp_ok = (info_totp && (strcmp (info_totp, "1") == 0)) ?
+                1 : 0;
+            free (info_totp);
+            free (info_totp_args);
+            if (!totp_ok)
+            {
+                rc = -4;
+                goto end;
+            }
+        }
+    }
+    else
+    {
+        /* error if TOTP received without TOTP configuration */
+        if (client_totp && client_totp[0])
+        {
+            rc = -4;
+            goto end;
+        }
+    }
 
+    /* check password */
     relay_password = weechat_string_eval_expression (
         weechat_config_string (relay_config_network_password),
         NULL, NULL, NULL);
@@ -728,37 +774,6 @@ relay_http_get_auth_status (struct t_relay_client *client)
         {
             rc = -2;
             goto end;
-        }
-    }
-
-    totp_secret = weechat_string_eval_expression (
-        weechat_config_string (relay_config_network_totp_secret),
-        NULL, NULL, NULL);
-    if (totp_secret && totp_secret[0])
-    {
-        if (!client_totp || !client_totp[0])
-        {
-            rc = -3;
-            goto end;
-        }
-        /* validate the TOTP received from the client */
-        if (weechat_asprintf (
-                &info_totp_args,
-                "%s,%s,0,%d",
-                totp_secret,  /* the shared secret */
-                client_totp,  /* the TOTP from client */
-                weechat_config_integer (relay_config_network_totp_window)) >= 0)
-        {
-            info_totp = weechat_info_get ("totp_validate", info_totp_args);
-            totp_ok = (info_totp && (strcmp (info_totp, "1") == 0)) ?
-                1 : 0;
-            free (info_totp);
-            free (info_totp_args);
-            if (!totp_ok)
-            {
-                rc = -4;
-                goto end;
-            }
         }
     }
 
