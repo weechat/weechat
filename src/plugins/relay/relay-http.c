@@ -588,9 +588,9 @@ relay_http_get_auth_status (struct t_relay_client *client)
 {
     const char *auth, *sec_websocket_protocol, *client_totp, *pos;
     char *relay_password, *totp_secret, *info_totp_args, *info_totp;
-    char *user_pass;
-    char **protocol_array;
+    char *user_pass, **protocol_array, *error;
     int rc, i, length, protocol_count, use_base64url, totp_ok;
+    long number;
 
     rc = 0;
     relay_password = NULL;
@@ -598,6 +598,17 @@ relay_http_get_auth_status (struct t_relay_client *client)
     totp_secret = NULL;
     user_pass = NULL;
     use_base64url = 0;
+
+    client_totp = weechat_hashtable_get (client->http_req->headers, "x-weechat-totp");
+    if (client_totp && client_totp[0])
+    {
+        number = strtol (client_totp, &error, 10);
+        if (!error || error[0] || (number < 0) || (number > 999999))
+        {
+            rc = -4;
+            goto end;
+        }
+    }
 
     relay_password = weechat_string_eval_expression (
         weechat_config_string (relay_config_network_password),
@@ -725,7 +736,6 @@ relay_http_get_auth_status (struct t_relay_client *client)
         NULL, NULL, NULL);
     if (totp_secret && totp_secret[0])
     {
-        client_totp = weechat_hashtable_get (client->http_req->headers, "x-weechat-totp");
         if (!client_totp || !client_totp[0])
         {
             rc = -3;

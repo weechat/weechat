@@ -713,6 +713,13 @@ TEST(RelayHttp, GetAuthStatus)
     hashtable_set (client->http_req->headers, "authorization", "Basic \u26c4");
     LONGS_EQUAL(-2, relay_http_get_auth_status (client));
 
+    /* test invalid TOTP */
+    hashtable_set (client->http_req->headers, "x-weechat-totp", "abcdef");
+    LONGS_EQUAL(-4, relay_http_get_auth_status (client));
+    hashtable_set (client->http_req->headers, "x-weechat-totp", "1234567");
+    LONGS_EQUAL(-4, relay_http_get_auth_status (client));
+    hashtable_remove (client->http_req->headers, "x-weechat-totp");
+
     /* test invalid plain-text password ("test") */
     hashtable_set (client->http_req->headers, "authorization", "Basic cGxhaW46dGVzdA==");
     LONGS_EQUAL(-2, relay_http_get_auth_status (client));
@@ -907,6 +914,7 @@ TEST(RelayHttp, GetAuthStatus)
     free (totp2);
     config_file_option_reset (relay_config_network_totp_secret, 1);
     config_file_option_reset (relay_config_network_totp_window, 1);
+    hashtable_remove (client->http_req->headers, "x-weechat-totp");
 
     /* test invalid plain-text password ("test") via Sec-WebSocket-Protocol */
     hashtable_remove (client->http_req->headers, "authorization");
