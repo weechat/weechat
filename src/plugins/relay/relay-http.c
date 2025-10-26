@@ -170,12 +170,12 @@ relay_http_url_decode (const char *url)
 }
 
 /*
- * Reads value of an URL parameter as boolean (0 or 1) into *value.
+ * Reads value of a query string parameter as boolean (0 or 1) into *value.
  * If the parameter is not in URL, the default value is used.
  *
  * Returns:
  *   1: OK, *value is set
- *   0: error (URL parameter has invalid format)
+ *   0: error (query string parameter has invalid format)
  */
 
 int
@@ -189,6 +189,8 @@ relay_http_get_param_boolean (struct t_relay_http_request *request,
         return 0;
 
     ptr_value = weechat_hashtable_get (request->params, name);
+    if (ptr_value && !ptr_value[0])
+        return 0;
     *value = (ptr_value) ?
         weechat_config_string_to_boolean (ptr_value) : default_value;
 
@@ -196,7 +198,7 @@ relay_http_get_param_boolean (struct t_relay_http_request *request,
 }
 
 /*
- * Reads value of an URL parameter as long into *value.
+ * Reads value of a query string parameter as long into *value.
  * If the parameter is not in URL, the default value is used.
  *
  * Returns:
@@ -217,6 +219,8 @@ relay_http_get_param_long (struct t_relay_http_request *request,
         return 0;
 
     ptr_value = weechat_hashtable_get (request->params, name);
+    if (ptr_value && !ptr_value[0])
+        return 0;
     if (ptr_value)
     {
         number = strtol (ptr_value, &error, 10);
