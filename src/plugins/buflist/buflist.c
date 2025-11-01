@@ -401,14 +401,14 @@ buflist_script_loaded_cb (const void *pointer, void *data, const char *signal,
     if (strcmp (base_name2, "buffers.pl") == 0)
     {
         weechat_printf (NULL,
-                        _("%sbuflist: warning: the script buffers.pl is "
+                        _("%s%s: warning: the script buffers.pl is "
                           "loaded and provides a bar with list of buffers "
                           "similar to the buflist plugin; you may want to "
                           "uninstall the script buffers.pl "
                           "(/script remove buffers.pl) or disable/unload the "
                           "buflist plugin; see WeeChat release notes for more "
                           "information"),
-                        weechat_prefix ("error"));
+                        weechat_prefix ("error"), BUFLIST_PLUGIN_NAME);
     }
 
     free (base_name2);
