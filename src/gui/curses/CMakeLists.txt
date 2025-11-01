@@ -21,38 +21,6 @@
 # along with WeeChat.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-if(${CMAKE_SYSTEM_NAME} STREQUAL "FreeBSD" AND HAVE_BACKTRACE)
-  list(APPEND EXTRA_LIBS "execinfo")
-endif()
-
-if(${CMAKE_SYSTEM_NAME} STREQUAL "SunOS")
-  list(APPEND EXTRA_LIBS "socket" "nsl")
-endif()
-
-if(${CMAKE_SYSTEM_NAME} STREQUAL "Haiku")
-  list(APPEND EXTRA_LIBS "network")
-endif()
-
-if(NOT ${CMAKE_SYSTEM_NAME} STREQUAL "Haiku")
-  list(APPEND EXTRA_LIBS "pthread")
-endif()
-
-if(ICONV_LIBRARY)
-  list(APPEND EXTRA_LIBS ${ICONV_LIBRARY})
-endif()
-
-if(LIBINTL_LIBRARY)
-  list(APPEND EXTRA_LIBS ${LIBINTL_LIBRARY})
-endif()
-
-list(APPEND EXTRA_LIBS "m")
-
-list(APPEND EXTRA_LIBS ${ZLIB_LIBRARY})
-
-if(ENABLE_ZSTD)
-  list(APPEND EXTRA_LIBS ${LIBZSTD_LDFLAGS})
-endif()
-
 if(ENABLE_NCURSES)
   subdirs(normal)
 endif()
