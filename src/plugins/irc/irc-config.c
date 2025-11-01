@@ -133,7 +133,6 @@ struct t_config_option *irc_config_look_smart_filter_mode = NULL;
 struct t_config_option *irc_config_look_smart_filter_nick = NULL;
 struct t_config_option *irc_config_look_smart_filter_quit = NULL;
 struct t_config_option *irc_config_look_smart_filter_setname = NULL;
-struct t_config_option *irc_config_look_temporary_servers = NULL;
 struct t_config_option *irc_config_look_topic_strip_colors = NULL;
 
 /* IRC config, color section */
@@ -192,8 +191,6 @@ struct t_hashtable *irc_config_hashtable_color_mirc_remap = NULL;
 struct t_hashtable *irc_config_hashtable_color_term_remap = NULL;
 char **irc_config_nicks_hide_password = NULL;
 int irc_config_num_nicks_hide_password = 0;
-
-int irc_config_write_temp_servers = 0;
 
 
 /*
@@ -2898,14 +2895,11 @@ irc_config_server_write_cb (const void *pointer, void *data,
     for (ptr_server = irc_servers; ptr_server;
          ptr_server = ptr_server->next_server)
     {
-        if (!ptr_server->temp_server || irc_config_write_temp_servers)
+        for (i = 0; i < IRC_SERVER_NUM_OPTIONS; i++)
         {
-            for (i = 0; i < IRC_SERVER_NUM_OPTIONS; i++)
-            {
-                if (!weechat_config_write_option (config_file,
-                                                  ptr_server->options[i]))
-                    return WEECHAT_CONFIG_WRITE_ERROR;
-            }
+            if (!weechat_config_write_option (config_file,
+                                              ptr_server->options[i]))
+                return WEECHAT_CONFIG_WRITE_ERROR;
         }
     }
 
@@ -3834,13 +3828,6 @@ irc_config_init (void)
             N_("enable smart filter for \"setname\" messages"),
             NULL, 0, 0, "on", NULL, 0,
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-        irc_config_look_temporary_servers = weechat_config_new_option (
-            irc_config_file, irc_config_section_look,
-            "temporary_servers", "boolean",
-            N_("enable automatic addition of temporary servers with command "
-               "/connect"),
-            NULL, 0, 0, "off", NULL, 0,
-            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
         irc_config_look_topic_strip_colors = weechat_config_new_option (
             irc_config_file, irc_config_section_look,
             "topic_strip_colors", "boolean",
@@ -4288,10 +4275,8 @@ irc_config_read (void)
  */
 
 int
-irc_config_write (int write_temp_servers)
+irc_config_write (void)
 {
-    irc_config_write_temp_servers = write_temp_servers;
-
     return weechat_config_write (irc_config_file);
 }
 

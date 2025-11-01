@@ -13,6 +13,10 @@ SPDX-License-Identifier: GPL-3.0-or-later
 - core: add option weechat.completion.cycle
 - core: add hdata for hooks
 
+### Removed
+
+- irc: remove temporary servers and option irc.look.temporary_servers
+
 ### Changed
 
 - api: add support of date like ISO 8601 but with spaces and lower `t` and `z` in function util_parse_time ([#886](https://github.com/weechat/weechat/issues/886))

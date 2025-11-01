@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2025-10-14 22:54+0200\n"
-"PO-Revision-Date: 2025-05-04 09:25+0200\n"
+"POT-Creation-Date: 2025-10-26 21:18+0100\n"
+"PO-Revision-Date: 2025-10-27 08:27+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: ru\n"
@@ -8176,30 +8176,13 @@ msgid "%s%s: currently connecting to server \"%s\"!"
 msgstr "%s подключается к серверу \"%s\"!\n"
 
 #, fuzzy, c-format
-msgid "%s: server added: %s%s%s%s%s"
+msgid "%s: server added: %s%s"
 msgstr "Сервер %s%s%s создан\n"
 
-#. TRANSLATORS: "temporary IRC server"
-msgid " (temporary)"
-msgstr ""
-
 #, c-format
 msgid ""
-"%s%s: unable to add temporary server \"%s\" (check if there is already a "
-"server with this name)"
-msgstr ""
-
-#, c-format
-msgid ""
-"%s%s: unable to add temporary server \"%s\" because the addition of "
-"temporary servers with command /connect is currently disabled"
-msgstr ""
-
-#, c-format
-msgid ""
-"%s%s: if you want to add a standard server, use the command \"/server add\" "
-"(see /help server); if you really want to add a temporary server (NOT "
-"SAVED), turn on the option irc.look.temporary_servers"
+"%s%s: unable to add server \"%s\" (check if there is already a server with "
+"this name)"
 msgstr ""
 
 #, fuzzy, c-format
@@ -8362,7 +8345,7 @@ msgid "nick:"
 msgstr "ник"
 
 #, fuzzy, c-format
-msgid "Server: %s%s %s[%s%s%s]%s%s%s%s"
+msgid "Server: %s%s %s[%s%s%s]%s%s%s"
 msgstr "%sСервер: %s%s %s[%s%s%s]\n"
 
 msgid "connected"
@@ -8466,14 +8449,6 @@ msgid_plural "%d servers moved"
 msgstr[0] "     обработчики таймера:\n"
 msgstr[1] "     обработчики таймера:\n"
 msgstr[2] "     обработчики таймера:\n"
-
-#, fuzzy, c-format
-msgid "%s%s: server \"%s\" is not a temporary server"
-msgstr "Сервер %s%s%s создан\n"
-
-#, fuzzy, c-format
-msgid "%s: server %s%s%s is not temporary anymore"
-msgstr "Сервер %s%s%s создан\n"
 
 #, fuzzy, c-format
 msgid ""
@@ -8904,11 +8879,6 @@ msgstr ""
 msgid ""
 "> - URL with format: irc[6][s]://[nickname[:password]@]irc.example.org[:port]"
 "[/#channel1][,#channel2[...]]"
-msgstr ""
-
-msgid ""
-"> Note: for an address/IP/URL, a temporary server is added (NOT SAVED), see /"
-"help irc.look.temporary_servers"
 msgstr ""
 
 msgid ""
@@ -9750,9 +9720,9 @@ msgstr "перечислить, добавить или удалить серв�
 #, fuzzy
 msgid ""
 "list|listfull [-connected] [<name>] || add|addreplace <name> <hostname>[/"
-"<port>] [-temp] [-<option>[=<value>]] [-no<option>] || copy|rename <name> "
-"<new_name> || reorder <name>... || open <name>|-all [<name>...] || del|keep "
-"<name> || deloutq|jump || raw [<filter>]"
+"<port>] [-<option>[=<value>]] [-no<option>] || copy|rename <name> <new_name> "
+"|| reorder <name>... || open <name>|-all [<name>...] || del <name> || "
+"deloutq|jump || raw [<filter>]"
 msgstr ""
 "[list [сервер]] | [listfull [сервер]] | [add сервер адрес [-port порт] [-"
 "temp] [-auto | -noauto] [-ipv6] [-ssl] [-pwd пароль] [-nicks ник1 ник2 ник3] "
@@ -9790,9 +9760,6 @@ msgid ""
 "for TLS, 6667 otherwise), many addresses can be separated by a comma"
 msgstr ""
 
-msgid "raw[-temp]: add a temporary server (not saved)"
-msgstr ""
-
 msgid "raw[copy]: duplicate a server"
 msgstr ""
 
@@ -9803,9 +9770,6 @@ msgid "raw[reorder]: reorder list of servers"
 msgstr ""
 
 msgid "raw[open]: open the server buffer without connecting"
-msgstr ""
-
-msgid "raw[keep]: keep server in config file (for temporary servers only)"
 msgstr ""
 
 msgid "raw[del]: delete a server"
@@ -11003,9 +10967,6 @@ msgstr ""
 msgid "enable smart filter for \"setname\" messages"
 msgstr "цвет  текущего окна с сообщениями"
 
-msgid "enable automatic addition of temporary servers with command /connect"
-msgstr ""
-
 msgid "strip colors in topic (used only when displaying buffer title)"
 msgstr ""
 
@@ -12091,10 +12052,6 @@ msgstr ""
 msgid ""
 "%s%s: invalid fingerprint for server \"%s\", it must contain only "
 "hexadecimal digits (0-9, a-f)"
-msgstr ""
-
-#. TRANSLATORS: "temporary IRC server"
-msgid "temporary"
 msgstr ""
 
 #. TRANSLATORS: "fake IRC server"

@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2025-10-14 22:54+0200\n"
-"PO-Revision-Date: 2025-05-04 09:25+0200\n"
+"POT-Creation-Date: 2025-10-26 21:18+0100\n"
+"PO-Revision-Date: 2025-10-27 08:27+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: pl\n"
@@ -9501,40 +9501,21 @@ msgstr "%s%s: już połączony z serwerem \"%s\"!"
 msgid "%s%s: currently connecting to server \"%s\"!"
 msgstr "%s%s: obecnie łączę się z serwerem \"%s\"!"
 
-#, c-format
-msgid "%s: server added: %s%s%s%s%s"
+#, fuzzy, c-format
+#| msgid "%s: server added: %s%s%s%s%s"
+msgid "%s: server added: %s%s"
 msgstr "%s: dodano serwer %s%s%s%s%s"
 
-#. TRANSLATORS: "temporary IRC server"
-msgid " (temporary)"
-msgstr " (tymczasowy)"
-
-#, c-format
+#, fuzzy, c-format
+#| msgid ""
+#| "%s%s: unable to add temporary server \"%s\" (check if there is already a "
+#| "server with this name)"
 msgid ""
-"%s%s: unable to add temporary server \"%s\" (check if there is already a "
-"server with this name)"
+"%s%s: unable to add server \"%s\" (check if there is already a server with "
+"this name)"
 msgstr ""
 "%s%s: nie można dodać tymczasowego serwera \"%s\" (sprawdź czy serwer z ta "
 "nazwą już nie istnieje)"
-
-#, c-format
-msgid ""
-"%s%s: unable to add temporary server \"%s\" because the addition of "
-"temporary servers with command /connect is currently disabled"
-msgstr ""
-"%s%s: nie można dodać tymczasowego serwera \"%s\" ponieważ możliwość "
-"dodawania tymczasowych serwerów za pomocą komendy /connect jest obecnie "
-"wyłączona"
-
-#, c-format
-msgid ""
-"%s%s: if you want to add a standard server, use the command \"/server add\" "
-"(see /help server); if you really want to add a temporary server (NOT "
-"SAVED), turn on the option irc.look.temporary_servers"
-msgstr ""
-"%s%s: jeśli chcesz dodać standardowy serwer, użyj komendy \"/server add\" "
-"(zobacz /help server); jeśli naprawdę chcesz utworzyć serwer tymczasowy (NIE "
-"ZAPISANY), włącz opcję irc.look.temporary_servers"
 
 #, fuzzy, c-format
 #| msgid "%s%s: \"%s\" command can not be executed on a server buffer"
@@ -9702,8 +9683,9 @@ msgstr "%s%s: nie można utworzyć nowego bufora prywatnego \"%s\""
 msgid "nick:"
 msgstr "nick:"
 
-#, c-format
-msgid "Server: %s%s %s[%s%s%s]%s%s%s%s"
+#, fuzzy, c-format
+#| msgid "Server: %s%s %s[%s%s%s]%s%s%s%s"
+msgid "Server: %s%s %s[%s%s%s]%s%s%s"
 msgstr "Serwer: %s%s %s[%s%s%s]%s%s%s%s"
 
 msgid "connected"
@@ -9806,15 +9788,6 @@ msgid_plural "%d servers moved"
 msgstr[0] "%d serwer przesunięto"
 msgstr[1] "%d serwery przesunięto"
 msgstr[2] "%d serwerów przesunięto"
-
-#, c-format
-msgid "%s%s: server \"%s\" is not a temporary server"
-msgstr "%s%s: serwer \"%s\" nie jest serwerem tymczasowym"
-
-#, fuzzy, c-format
-#| msgid "%s: server %s%s%s is not temporary any more"
-msgid "%s: server %s%s%s is not temporary anymore"
-msgstr "%s: serwer %s%s%s nie jest juz tymczasowy"
 
 #, fuzzy, c-format
 #| msgid ""
@@ -10258,13 +10231,6 @@ msgid ""
 msgstr ""
 "> - URL w formacie: irc[6][s]://[nick[:hasło]@]irc.example.org[:port][/"
 "#kanał1][,#kanał2[...]]"
-
-msgid ""
-"> Note: for an address/IP/URL, a temporary server is added (NOT SAVED), see /"
-"help irc.look.temporary_servers"
-msgstr ""
-"> Uwaga: dla adresu/IP/URL, dodawany jest tymczasowy serwer (NIE "
-"ZAPISYWANY), zobacz /help irc.look.temporary_servers"
 
 msgid ""
 "option: set option for server (for boolean option, value can be omitted)"
@@ -11026,9 +10992,9 @@ msgstr "wyświetla, dodaje lub usuwa serwery IRC"
 #| "|| del|keep <name> || deloutq|jump || raw [<filter>]"
 msgid ""
 "list|listfull [-connected] [<name>] || add|addreplace <name> <hostname>[/"
-"<port>] [-temp] [-<option>[=<value>]] [-no<option>] || copy|rename <name> "
-"<new_name> || reorder <name>... || open <name>|-all [<name>...] || del|keep "
-"<name> || deloutq|jump || raw [<filter>]"
+"<port>] [-<option>[=<value>]] [-no<option>] || copy|rename <name> <new_name> "
+"|| reorder <name>... || open <name>|-all [<name>...] || del <name> || "
+"deloutq|jump || raw [<filter>]"
 msgstr ""
 "list|listfull [<nazwa>] || add|addreplace <nazwa> <host>[/<port>] [-temp] [-"
 "<opcja>[=<wartość>]] [-no<opcja>] || copy|rename <nazwa> <nowa_nazwa> || "
@@ -11072,9 +11038,6 @@ msgstr ""
 "nazwa_hosta: nazwa lub adres IP serwera, z opcjonalnym portem (domyslnie: "
 "6697 dla TLS, inaczej 6667), wiele adresów należy oddzielić przecinkiem"
 
-msgid "raw[-temp]: add a temporary server (not saved)"
-msgstr "raw[-temp]: dodaj tymczasowy serwer (nie zapisywany)"
-
 msgid "raw[copy]: duplicate a server"
 msgstr "raw[copy]: skopiuj serwer"
 
@@ -11086,11 +11049,6 @@ msgstr "raw[reorder]: zmień kolejność listy serwerów"
 
 msgid "raw[open]: open the server buffer without connecting"
 msgstr "raw[open]: otwiera bufor serwera bez łączenia się z nim"
-
-msgid "raw[keep]: keep server in config file (for temporary servers only)"
-msgstr ""
-"raw[keep]: zapisz serwer w pliku konfiguracyjnym (tylko dla tymczasowych "
-"serwerów)"
 
 msgid "raw[del]: delete a server"
 msgstr "raw[del]: usuń serwer"
@@ -12482,9 +12440,6 @@ msgstr "włącza inteligentne filtrowanie dla wiadomości \"part\" oraz \"quit\"
 msgid "enable smart filter for \"setname\" messages"
 msgstr "włącza mądre filtrowanie dla wiadomości \"setname\""
 
-msgid "enable automatic addition of temporary servers with command /connect"
-msgstr "włącza tworzenie tymczasowych serwerów za pomocą komendy /connect"
-
 msgid "strip colors in topic (used only when displaying buffer title)"
 msgstr "usuń kolory w tematach (używane przy wyświetlaniu tytułu bufora)"
 
@@ -13596,10 +13551,6 @@ msgid ""
 msgstr ""
 "%s%s: niepoprawny skrót dla serwera \"%s\", może on zawierać tylko znaki "
 "heksadecymalne (0-9, a-f)"
-
-#. TRANSLATORS: "temporary IRC server"
-msgid "temporary"
-msgstr "tymczasowy"
 
 #. TRANSLATORS: "fake IRC server"
 msgid "fake"
@@ -18614,11 +18565,3 @@ msgid ""
 msgstr ""
 "%s%s: nie można zaakceptować wznowienia pliku \"%s\" (port: %d, pozycja "
 "startowa: %llu): xfer nie znaleziony lub nie gotowy do transferu"
-
-#, c-format
-#~ msgid ""
-#~ "%s%s: warning: the command name \"%s\" must be lower case, the option "
-#~ "\"irc.msgbuffer.%s\" will not work"
-#~ msgstr ""
-#~ "%s%s: ostrzeżenie: nazwa komendy „%s” musi być pisana małymi literami, "
-#~ "opcja „irc.msgbuffer.%s” nie będzie działać"

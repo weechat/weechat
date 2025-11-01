@@ -167,7 +167,6 @@ extern struct t_config_option *irc_config_look_smart_filter_mode;
 extern struct t_config_option *irc_config_look_smart_filter_nick;
 extern struct t_config_option *irc_config_look_smart_filter_quit;
 extern struct t_config_option *irc_config_look_smart_filter_setname;
-extern struct t_config_option *irc_config_look_temporary_servers;
 extern struct t_config_option *irc_config_look_topic_strip_colors;
 
 extern struct t_config_option *irc_config_color_input_nick;
@@ -248,7 +247,7 @@ struct t_config_option *irc_config_server_new_option (struct t_config_file *conf
                                                       void *callback_change_data);
 extern int irc_config_init (void);
 extern int irc_config_read (void);
-extern int irc_config_write (int write_temp_servers);
+extern int irc_config_write (void);
 extern void irc_config_free (void);
 
 #endif /* WEECHAT_PLUGIN_IRC_CONFIG_H */

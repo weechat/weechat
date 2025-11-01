@@ -603,7 +603,6 @@ irc_server_get_name_without_port (const char *name)
 /*
  * Gets a string with description of server, that includes:
  *   - addresses + ports
- *   - temporary server?
  *   - fake server?
  *   - TLS option (enabled/disabled).
  *
@@ -639,12 +638,6 @@ irc_server_get_short_description (struct t_irc_server *server)
     }
 
     weechat_string_dyn_concat (result, " (", -1);
-    if (server->temp_server)
-    {
-        /* TRANSLATORS: "temporary IRC server" */
-        weechat_string_dyn_concat (result, _("temporary"), -1);
-        weechat_string_dyn_concat (result, ", ", -1);
-    }
     if (server->fake_server)
     {
         /* TRANSLATORS: "fake IRC server" */
@@ -1739,7 +1732,6 @@ irc_server_alloc (const char *name)
     new_server->name = strdup (name);
 
     /* internal vars */
-    new_server->temp_server = 0;
     new_server->fake_server = 0;
     new_server->reloading_from_config = 0;
     new_server->reloaded_from_config = 0;
@@ -2057,7 +2049,6 @@ irc_server_alloc_with_url (const char *irc_url)
     ptr_server = irc_server_alloc (pos_address);
     if (ptr_server)
     {
-        ptr_server->temp_server = 1;
         if (pos_address && pos_address[0])
         {
             if (weechat_asprintf (
@@ -2157,30 +2148,22 @@ irc_server_apply_command_line_options (struct t_irc_server *server,
             }
             if (option_name)
             {
-                if (weechat_strcmp (option_name, "temp") == 0)
+                index_option = irc_server_search_option (option_name);
+                if (index_option < 0)
                 {
-                    /* temporary server, not saved */
-                    server->temp_server = 1;
+                    /* look if option is negative, like "-noxxx" */
+                    if (weechat_strncmp (argv[i], "-no", 3) == 0)
+                    {
+                        free (option_name);
+                        option_name = strdup (argv[i] + 3);
+                        index_option = irc_server_search_option (option_name);
+                        ptr_value = value_boolean[0];
+                    }
                 }
-                else
+                if (index_option >= 0)
                 {
-                    index_option = irc_server_search_option (option_name);
-                    if (index_option < 0)
-                    {
-                        /* look if option is negative, like "-noxxx" */
-                        if (weechat_strncmp (argv[i], "-no", 3) == 0)
-                        {
-                            free (option_name);
-                            option_name = strdup (argv[i] + 3);
-                            index_option = irc_server_search_option (option_name);
-                            ptr_value = value_boolean[0];
-                        }
-                    }
-                    if (index_option >= 0)
-                    {
-                        weechat_config_option_set (server->options[index_option],
-                                                   ptr_value, 1);
-                    }
+                    weechat_config_option_set (server->options[index_option],
+                                               ptr_value, 1);
                 }
                 free (option_name);
             }
@@ -2456,8 +2439,7 @@ irc_server_copy (struct t_irc_server *server, const char *new_name)
     if (!new_server)
         return NULL;
 
-    /* duplicate temporary/fake server flags */
-    new_server->temp_server = server->temp_server;
+    /* duplicate fake server flag */
     new_server->fake_server = server->fake_server;
 
     /* duplicate options */
@@ -5627,7 +5609,7 @@ irc_server_auto_connect_timer_cb (const void *pointer, void *data,
     for (ptr_server = irc_servers; ptr_server;
          ptr_server = ptr_server->next_server)
     {
-        if ((auto_connect || ptr_server->temp_server)
+        if (auto_connect
             && (IRC_SERVER_OPTION_BOOLEAN(ptr_server, IRC_SERVER_OPTION_AUTOCONNECT)))
         {
             if (!irc_server_connect (ptr_server))
@@ -5642,7 +5624,6 @@ irc_server_auto_connect_timer_cb (const void *pointer, void *data,
  * Auto-connects to servers (called at startup).
  *
  * If auto_connect == 1, auto-connects to all servers with flag "autoconnect".
- * If auto_connect == 0, auto-connect to temporary servers only.
  */
 
 void
@@ -6477,7 +6458,6 @@ irc_server_hdata_server_cb (const void *pointer, void *data,
     {
         WEECHAT_HDATA_VAR(struct t_irc_server, name, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, options, POINTER, 0, NULL, NULL);
-        WEECHAT_HDATA_VAR(struct t_irc_server, temp_server, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, fake_server, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, reloading_from_config, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, reloaded_from_config, INTEGER, 0, NULL, NULL);
@@ -6746,8 +6726,6 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "msg_quit",
                                           IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_MSG_QUIT)))
-        return 0;
-    if (!weechat_infolist_new_var_integer (ptr_item, "temp_server", server->temp_server))
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "fake_server", server->fake_server))
         return 0;
@@ -7248,7 +7226,6 @@ irc_server_print_log (void)
             weechat_log_printf ("  msg_quit. . . . . . . . . : '%s'",
                                 weechat_config_string (ptr_server->options[IRC_SERVER_OPTION_MSG_QUIT]));
         /* other server variables */
-        weechat_log_printf ("  temp_server . . . . . . . : %d", ptr_server->temp_server);
         weechat_log_printf ("  fake_server . . . . . . . : %d", ptr_server->fake_server);
         weechat_log_printf ("  reloading_from_config . . : %d", ptr_server->reloaded_from_config);
         weechat_log_printf ("  reloaded_from_config. . . : %d", ptr_server->reloaded_from_config);

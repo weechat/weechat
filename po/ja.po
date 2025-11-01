@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2025-10-14 22:54+0200\n"
-"PO-Revision-Date: 2025-05-04 09:25+0200\n"
+"POT-Creation-Date: 2025-10-26 21:18+0100\n"
+"PO-Revision-Date: 2025-10-27 08:27+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
 "translation/ja_JP>\n"
@@ -9000,38 +9000,19 @@ msgid "%s%s: currently connecting to server \"%s\"!"
 msgstr "%s%s: サーバ \"%s\" に接続試行中!"
 
 #, fuzzy, c-format
-msgid "%s: server added: %s%s%s%s%s"
+msgid "%s: server added: %s%s"
 msgstr "%s: サーバ %s%s%s を追加"
 
-#. TRANSLATORS: "temporary IRC server"
-msgid " (temporary)"
-msgstr " (一時的)"
-
-#, c-format
+#, fuzzy, c-format
+#| msgid ""
+#| "%s%s: unable to add temporary server \"%s\" (check if there is already a "
+#| "server with this name)"
 msgid ""
-"%s%s: unable to add temporary server \"%s\" (check if there is already a "
-"server with this name)"
+"%s%s: unable to add server \"%s\" (check if there is already a server with "
+"this name)"
 msgstr ""
 "%s%s: 一時的なサーバ \"%s\" を追加できません (同じ名前のサーバが登録済みでな"
 "いか確認してください)"
-
-#, c-format
-msgid ""
-"%s%s: unable to add temporary server \"%s\" because the addition of "
-"temporary servers with command /connect is currently disabled"
-msgstr ""
-"%s%s: 現在 /connect コマンドによる一時的なサーバの追加が無効化されているため"
-"一時的なサーバ \"%s\" を追加できません"
-
-#, c-format
-msgid ""
-"%s%s: if you want to add a standard server, use the command \"/server add\" "
-"(see /help server); if you really want to add a temporary server (NOT "
-"SAVED), turn on the option irc.look.temporary_servers"
-msgstr ""
-"%s%s: 標準的なサーバを追加したい場合は、\"/server add\" コマンドを使ってくだ"
-"さい (/help server を参照してください); 一時的な (保存されない) サーバを本当"
-"に追加したい場合は、irc.look.temporary_servers オプションを on にしてください"
 
 #, fuzzy, c-format
 #| msgid "%s%s: \"%s\" command can not be executed on a server buffer"
@@ -9204,7 +9185,7 @@ msgid "nick:"
 msgstr "ニックネーム:"
 
 #, fuzzy, c-format
-msgid "Server: %s%s %s[%s%s%s]%s%s%s%s"
+msgid "Server: %s%s %s[%s%s%s]%s%s%s"
 msgstr "サーバ: %s%s %s[%s%s%s]%s%s%s"
 
 msgid "connected"
@@ -9300,15 +9281,6 @@ msgstr "%s: サーバ %s%s%s を %s%s%s にリネームしました"
 msgid "%d server moved"
 msgid_plural "%d servers moved"
 msgstr[0] "%d 個のサーバを移動しました"
-
-#, c-format
-msgid "%s%s: server \"%s\" is not a temporary server"
-msgstr "%s%s: サーバ \"%s\" は一時的なサーバではありません"
-
-#, fuzzy, c-format
-#| msgid "%s: server %s%s%s is not temporary any more"
-msgid "%s: server %s%s%s is not temporary anymore"
-msgstr "%s: 一時的なサーバ %s%s%s が保存されました"
 
 #, fuzzy, c-format
 #| msgid ""
@@ -9804,11 +9776,6 @@ msgstr ""
 msgid ""
 "> - URL with format: irc[6][s]://[nickname[:password]@]irc.example.org[:port]"
 "[/#channel1][,#channel2[...]]"
-msgstr ""
-
-msgid ""
-"> Note: for an address/IP/URL, a temporary server is added (NOT SAVED), see /"
-"help irc.look.temporary_servers"
 msgstr ""
 
 msgid ""
@@ -10722,9 +10689,9 @@ msgstr "IRC サーバのリストアップ、追加、削除"
 #, fuzzy
 msgid ""
 "list|listfull [-connected] [<name>] || add|addreplace <name> <hostname>[/"
-"<port>] [-temp] [-<option>[=<value>]] [-no<option>] || copy|rename <name> "
-"<new_name> || reorder <name>... || open <name>|-all [<name>...] || del|keep "
-"<name> || deloutq|jump || raw [<filter>]"
+"<port>] [-<option>[=<value>]] [-no<option>] || copy|rename <name> <new_name> "
+"|| reorder <name>... || open <name>|-all [<name>...] || del <name> || "
+"deloutq|jump || raw [<filter>]"
 msgstr ""
 "list|listfull [<name>] || add <name> <hostname>[/<port>] [-temp] [-"
 "<option>[=<value>]] [-no<option>] || copy|rename <name> <new_name> || "
@@ -10765,9 +10732,6 @@ msgid ""
 "for TLS, 6667 otherwise), many addresses can be separated by a comma"
 msgstr ""
 
-msgid "raw[-temp]: add a temporary server (not saved)"
-msgstr ""
-
 msgid "raw[copy]: duplicate a server"
 msgstr ""
 
@@ -10781,9 +10745,6 @@ msgstr ""
 #| msgid "auto open relay buffer when a new client is connecting"
 msgid "raw[open]: open the server buffer without connecting"
 msgstr "新しいクライアントが接続したらリレーバッファを自動的に開く"
-
-msgid "raw[keep]: keep server in config file (for temporary servers only)"
-msgstr ""
 
 msgid "raw[del]: delete a server"
 msgstr ""
@@ -12225,9 +12186,6 @@ msgstr "\"part\" と \"quit\" メッセージのスマートフィルタを有�
 msgid "enable smart filter for \"setname\" messages"
 msgstr "\"join\" メッセージのスマートフィルタを有効化"
 
-msgid "enable automatic addition of temporary servers with command /connect"
-msgstr "/connect コマンドによる一時的なサーバの自動追加を有効化する"
-
 msgid "strip colors in topic (used only when displaying buffer title)"
 msgstr ""
 "トピックにつけられた色を無効化 (バッファタイルに表示される場合のみ利用)"
@@ -13386,12 +13344,6 @@ msgid ""
 msgstr ""
 "%s%s: サーバ \"%s\" の指紋が間違っています、指紋の各桁は 16 進数で使える文字 "
 "(0-9, a-f) を使ってください"
-
-#. TRANSLATORS: "temporary IRC server"
-#, fuzzy
-#| msgid " (temporary)"
-msgid "temporary"
-msgstr " (一時的)"
 
 #. TRANSLATORS: "fake IRC server"
 msgid "fake"

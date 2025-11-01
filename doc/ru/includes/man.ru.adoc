@@ -8,7 +8,8 @@
 Полное описание параметров плагинов доступно в документации по плагинам в
 https://weechat.org/doc/[Руководстве пользователя WeeChat].
 
-С помощью плагина irc можно присоединиться ко временному серверу, используя URL вроде:
+// TRANSLATION MISSING
+With irc plugin, you can connect to a server with an URL like:
 
     irc[6][s]://[[nickname][:password]@]server[:port][/#channel1[,#channel2...]]
 

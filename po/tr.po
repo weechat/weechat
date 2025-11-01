@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2025-10-14 22:54+0200\n"
-"PO-Revision-Date: 2025-07-06 09:25+0200\n"
+"POT-Creation-Date: 2025-10-26 21:18+0100\n"
+"PO-Revision-Date: 2025-10-27 08:27+0100\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: tr\n"
@@ -8988,39 +8988,21 @@ msgstr "%s%s: \"%s\" sunucusuna halihazırda bağlı!"
 msgid "%s%s: currently connecting to server \"%s\"!"
 msgstr "%s%s: Şu anda \"%s\" sunucusuna bağlanılıyor!"
 
-#, c-format
-msgid "%s: server added: %s%s%s%s%s"
+#, fuzzy, c-format
+#| msgid "%s: server added: %s%s%s%s%s"
+msgid "%s: server added: %s%s"
 msgstr "%s: Sunucu eklendi: %s%s%s%s%s"
 
-#. TRANSLATORS: "temporary IRC server"
-msgid " (temporary)"
-msgstr " (geçici)"
-
-#, c-format
+#, fuzzy, c-format
+#| msgid ""
+#| "%s%s: unable to add temporary server \"%s\" (check if there is already a "
+#| "server with this name)"
 msgid ""
-"%s%s: unable to add temporary server \"%s\" (check if there is already a "
-"server with this name)"
+"%s%s: unable to add server \"%s\" (check if there is already a server with "
+"this name)"
 msgstr ""
 "%s%s: \"%s\" geçici sunucusu eklenemiyor (aynı adlı başka bir sunucu var mı "
 "diye denetleyin)"
-
-#, c-format
-msgid ""
-"%s%s: unable to add temporary server \"%s\" because the addition of "
-"temporary servers with command /connect is currently disabled"
-msgstr ""
-"%s%s: \"%s\" geçici sunucusu eklenemiyor; çünkü /connect komutu ile geçici "
-"sunucu eklenmesi şu anda devre dışı"
-
-#, c-format
-msgid ""
-"%s%s: if you want to add a standard server, use the command \"/server add\" "
-"(see /help server); if you really want to add a temporary server (NOT "
-"SAVED), turn on the option irc.look.temporary_servers"
-msgstr ""
-"%s%s: Standart bir sunucu eklemek istiyorsanız \"/server add\" komutunu "
-"kullanın (bkz. /help server); eğer gerçekten bir geçici sunucu eklemek "
-"istiyorsanız (KAYDEDİLMEZ), irc.look_temporary_servers seçeneğini açın"
 
 #, fuzzy, c-format
 #| msgid "%s%s: \"%s\" command can not be executed on a server buffer"
@@ -9195,8 +9177,9 @@ msgstr "%s%s: \"%s\" yeni özel arabelleği oluşturulamıyor"
 msgid "nick:"
 msgstr "takma ad:"
 
-#, c-format
-msgid "Server: %s%s %s[%s%s%s]%s%s%s%s"
+#, fuzzy, c-format
+#| msgid "Server: %s%s %s[%s%s%s]%s%s%s%s"
+msgid "Server: %s%s %s[%s%s%s]%s%s%s"
 msgstr "Sunucu: %s%s %s[%s%s%s]%s%s%s%s"
 
 msgid "connected"
@@ -9298,15 +9281,6 @@ msgid "%d server moved"
 msgid_plural "%d servers moved"
 msgstr[0] "%d sunucu taşındı"
 msgstr[1] "%d sunucu taşındı"
-
-#, c-format
-msgid "%s%s: server \"%s\" is not a temporary server"
-msgstr "%s%s: \"%s\" sunucusu geçici bir sunucu değil"
-
-#, fuzzy, c-format
-#| msgid "%s: server %s%s%s is not temporary any more"
-msgid "%s: server %s%s%s is not temporary anymore"
-msgstr "%s: %s%s%s sunucusu artık geçici değil"
 
 #, fuzzy, c-format
 #| msgid ""
@@ -9805,11 +9779,6 @@ msgstr ""
 msgid ""
 "> - URL with format: irc[6][s]://[nickname[:password]@]irc.example.org[:port]"
 "[/#channel1][,#channel2[...]]"
-msgstr ""
-
-msgid ""
-"> Note: for an address/IP/URL, a temporary server is added (NOT SAVED), see /"
-"help irc.look.temporary_servers"
 msgstr ""
 
 msgid ""
@@ -10738,9 +10707,9 @@ msgstr "İRC sunucularını listele, ekle veya kaldır"
 #| "<name> || deloutq|jump || raw [<filter>]"
 msgid ""
 "list|listfull [-connected] [<name>] || add|addreplace <name> <hostname>[/"
-"<port>] [-temp] [-<option>[=<value>]] [-no<option>] || copy|rename <name> "
-"<new_name> || reorder <name>... || open <name>|-all [<name>...] || del|keep "
-"<name> || deloutq|jump || raw [<filter>]"
+"<port>] [-<option>[=<value>]] [-no<option>] || copy|rename <name> <new_name> "
+"|| reorder <name>... || open <name>|-all [<name>...] || del <name> || "
+"deloutq|jump || raw [<filter>]"
 msgstr ""
 "list|listfull [<ad>] || add <ad> <makine>[/<kapı>] [-temp] [-"
 "<seçenek>[=<değer>]] [-no<seçenek>] || copy|rename <ad> <yeni_ad> || reorder "
@@ -10781,9 +10750,6 @@ msgid ""
 "for TLS, 6667 otherwise), many addresses can be separated by a comma"
 msgstr ""
 
-msgid "raw[-temp]: add a temporary server (not saved)"
-msgstr ""
-
 msgid "raw[copy]: duplicate a server"
 msgstr ""
 
@@ -10797,9 +10763,6 @@ msgstr ""
 #| msgid "auto open relay buffer when a new client is connecting"
 msgid "raw[open]: open the server buffer without connecting"
 msgstr "yeni bir istemci bağlanırken iletim arabelleğini kendiliğinden aç"
-
-msgid "raw[keep]: keep server in config file (for temporary servers only)"
-msgstr ""
 
 msgid "raw[del]: delete a server"
 msgstr ""
@@ -12301,10 +12264,6 @@ msgstr "\"part\" ve \"quit\" iletileri için akıllı süzgeci etkinleştir"
 msgid "enable smart filter for \"setname\" messages"
 msgstr "\"setname\" iletileri için akıllı süzgeci etkinleştir"
 
-msgid "enable automatic addition of temporary servers with command /connect"
-msgstr ""
-"/connect komutu ile geçici sunucuların kendiliğinden eklenmesini etkinleştir"
-
 msgid "strip colors in topic (used only when displaying buffer title)"
 msgstr ""
 "konudaki renkleri çıkar (yalnızca arabellek başlığı görüntülenirken "
@@ -13439,12 +13398,6 @@ msgid ""
 msgstr ""
 "%s%s: \"%s\" sunucusu için geçersiz parmak izi boyutu, yalnızca onaltılı "
 "basamaklardan oluşmalıdır (0-9, a-f)"
-
-#. TRANSLATORS: "temporary IRC server"
-#, fuzzy
-#| msgid " (temporary)"
-msgid "temporary"
-msgstr " (geçici)"
 
 #. TRANSLATORS: "fake IRC server"
 #, fuzzy

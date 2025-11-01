@@ -192,7 +192,6 @@ struct t_irc_server
     struct t_config_option *options[IRC_SERVER_NUM_OPTIONS];
 
     /* internal vars */
-    int temp_server;                /* temporary server (not saved)          */
     int fake_server;                /* fake server (no I/O, for tests)       */
     int reloading_from_config;      /* 1 if reloading from config file       */
     int reloaded_from_config;       /* 1 if reloaded from config file        */

@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2025-10-14 22:54+0200\n"
+"POT-Creation-Date: 2025-10-26 21:18+0100\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7593,30 +7593,13 @@ msgid "%s%s: currently connecting to server \"%s\"!"
 msgstr ""
 
 #, c-format
-msgid "%s: server added: %s%s%s%s%s"
-msgstr ""
-
-#. TRANSLATORS: "temporary IRC server"
-msgid " (temporary)"
+msgid "%s: server added: %s%s"
 msgstr ""
 
 #, c-format
 msgid ""
-"%s%s: unable to add temporary server \"%s\" (check if there is already a "
-"server with this name)"
-msgstr ""
-
-#, c-format
-msgid ""
-"%s%s: unable to add temporary server \"%s\" because the addition of "
-"temporary servers with command /connect is currently disabled"
-msgstr ""
-
-#, c-format
-msgid ""
-"%s%s: if you want to add a standard server, use the command \"/server add\" "
-"(see /help server); if you really want to add a temporary server (NOT "
-"SAVED), turn on the option irc.look.temporary_servers"
+"%s%s: unable to add server \"%s\" (check if there is already a server with "
+"this name)"
 msgstr ""
 
 #, c-format
@@ -7778,7 +7761,7 @@ msgid "nick:"
 msgstr ""
 
 #, c-format
-msgid "Server: %s%s %s[%s%s%s]%s%s%s%s"
+msgid "Server: %s%s %s[%s%s%s]%s%s%s"
 msgstr ""
 
 msgid "connected"
@@ -7871,14 +7854,6 @@ msgid "%d server moved"
 msgid_plural "%d servers moved"
 msgstr[0] ""
 msgstr[1] ""
-
-#, c-format
-msgid "%s%s: server \"%s\" is not a temporary server"
-msgstr ""
-
-#, c-format
-msgid "%s: server %s%s%s is not temporary anymore"
-msgstr ""
 
 #, c-format
 msgid ""
@@ -8238,11 +8213,6 @@ msgstr ""
 msgid ""
 "> - URL with format: irc[6][s]://[nickname[:password]@]irc.example.org[:port]"
 "[/#channel1][,#channel2[...]]"
-msgstr ""
-
-msgid ""
-"> Note: for an address/IP/URL, a temporary server is added (NOT SAVED), see /"
-"help irc.look.temporary_servers"
 msgstr ""
 
 msgid ""
@@ -8912,9 +8882,9 @@ msgstr ""
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid ""
 "list|listfull [-connected] [<name>] || add|addreplace <name> <hostname>[/"
-"<port>] [-temp] [-<option>[=<value>]] [-no<option>] || copy|rename <name> "
-"<new_name> || reorder <name>... || open <name>|-all [<name>...] || del|keep "
-"<name> || deloutq|jump || raw [<filter>]"
+"<port>] [-<option>[=<value>]] [-no<option>] || copy|rename <name> <new_name> "
+"|| reorder <name>... || open <name>|-all [<name>...] || del <name> || "
+"deloutq|jump || raw [<filter>]"
 msgstr ""
 
 msgid "raw[list]: list servers (without argument, this list is displayed)"
@@ -8943,9 +8913,6 @@ msgid ""
 "for TLS, 6667 otherwise), many addresses can be separated by a comma"
 msgstr ""
 
-msgid "raw[-temp]: add a temporary server (not saved)"
-msgstr ""
-
 msgid "raw[copy]: duplicate a server"
 msgstr ""
 
@@ -8956,9 +8923,6 @@ msgid "raw[reorder]: reorder list of servers"
 msgstr ""
 
 msgid "raw[open]: open the server buffer without connecting"
-msgstr ""
-
-msgid "raw[keep]: keep server in config file (for temporary servers only)"
 msgstr ""
 
 msgid "raw[del]: delete a server"
@@ -9982,9 +9946,6 @@ msgstr ""
 msgid "enable smart filter for \"setname\" messages"
 msgstr ""
 
-msgid "enable automatic addition of temporary servers with command /connect"
-msgstr ""
-
 msgid "strip colors in topic (used only when displaying buffer title)"
 msgstr ""
 
@@ -10980,10 +10941,6 @@ msgstr ""
 msgid ""
 "%s%s: invalid fingerprint for server \"%s\", it must contain only "
 "hexadecimal digits (0-9, a-f)"
-msgstr ""
-
-#. TRANSLATORS: "temporary IRC server"
-msgid "temporary"
 msgstr ""
 
 #. TRANSLATORS: "fake IRC server"

@@ -462,12 +462,6 @@ TEST(IrcServer, SetAddresses)
     WEE_TEST_STR("irc.example.org/6697, irc2.example.org/7000 (TLS: enabled)",
                  irc_server_get_short_description (server));
 
-    server->temp_server = 1;
-
-    WEE_TEST_STR("irc.example.org/6697, irc2.example.org/7000 "
-                 "(temporary, TLS: enabled)",
-                 irc_server_get_short_description (server));
-
     irc_server_free (server);
 }
 

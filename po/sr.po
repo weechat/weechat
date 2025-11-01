@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2025-10-14 22:54+0200\n"
+"POT-Creation-Date: 2025-10-26 21:18+0100\n"
 "PO-Revision-Date: 2025-10-31 11:14+0400\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -9256,39 +9256,21 @@ msgstr "%s%s: већ постоји веза са сервером „%s”!"
 msgid "%s%s: currently connecting to server \"%s\"!"
 msgstr "%s%s: тренутно се врши повезивање са сервером „%s”!"
 
-#, c-format
-msgid "%s: server added: %s%s%s%s%s"
+#, fuzzy, c-format
+#| msgid "%s: server added: %s%s%s%s%s"
+msgid "%s: server added: %s%s"
 msgstr "%s: додат је сервер: %s%s%s%s%s"
 
-#. TRANSLATORS: "temporary IRC server"
-msgid " (temporary)"
-msgstr " (привремени)"
-
-#, c-format
+#, fuzzy, c-format
+#| msgid ""
+#| "%s%s: unable to add temporary server \"%s\" (check if there is already a "
+#| "server with this name)"
 msgid ""
-"%s%s: unable to add temporary server \"%s\" (check if there is already a "
-"server with this name)"
+"%s%s: unable to add server \"%s\" (check if there is already a server with "
+"this name)"
 msgstr ""
 "%s%s: није успело додавање привременог сервера „%s” (проверите да ли већ "
 "постоји сервер под овим именом)"
-
-#, c-format
-msgid ""
-"%s%s: unable to add temporary server \"%s\" because the addition of "
-"temporary servers with command /connect is currently disabled"
-msgstr ""
-"%s%s: није могуће додавање привременог сервера „%s” јер је тренутно "
-"забрањено додавање привремених сервера командом /connect"
-
-#, c-format
-msgid ""
-"%s%s: if you want to add a standard server, use the command \"/server add\" "
-"(see /help server); if you really want to add a temporary server (NOT "
-"SAVED), turn on the option irc.look.temporary_servers"
-msgstr ""
-"%s%s: ако желите да додате стандардни сервер, употребите команду „/server "
-"add” (погледајте /help server); ако заиста желите да додате привремени "
-"сервер (који се НЕ ЧУВА), укључите опцију irc.look.temporary_servers"
 
 #, c-format
 msgid "%s%s: \"%s\" command cannot be executed on a server buffer"
@@ -9451,8 +9433,9 @@ msgstr "%s%s: не може да се креира нови приватни б�
 msgid "nick:"
 msgstr "надимак:"
 
-#, c-format
-msgid "Server: %s%s %s[%s%s%s]%s%s%s%s"
+#, fuzzy, c-format
+#| msgid "Server: %s%s %s[%s%s%s]%s%s%s%s"
+msgid "Server: %s%s %s[%s%s%s]%s%s%s"
 msgstr "Сервер: %s%s %s[%s%s%s]%s%s%s%s"
 
 msgid "connected"
@@ -9549,14 +9532,6 @@ msgid_plural "%d servers moved"
 msgstr[0] "померен је %d сервер"
 msgstr[1] "померена су %d сервера"
 msgstr[2] "померено је %d сервера"
-
-#, c-format
-msgid "%s%s: server \"%s\" is not a temporary server"
-msgstr "%s%s: сервер „%s” није привремени сервер"
-
-#, c-format
-msgid "%s: server %s%s%s is not temporary anymore"
-msgstr "%s: сервер %s%s%s више није привремени сервер"
 
 #, c-format
 msgid ""
@@ -9977,13 +9952,6 @@ msgid ""
 msgstr ""
 "> - URL са форматом: irc[6][s]://[надимак[:лозинка]@]irc.example.org[:порт][/"
 "#канал1][,#канал2[...]]"
-
-msgid ""
-"> Note: for an address/IP/URL, a temporary server is added (NOT SAVED), see /"
-"help irc.look.temporary_servers"
-msgstr ""
-"> Напомена: за адресу/IP/URL, додаје се привремени сервер (НЕ ЧУВА СЕ), "
-"погледајте /help irc.look.temporary_servers"
 
 msgid ""
 "option: set option for server (for boolean option, value can be omitted)"
@@ -10707,11 +10675,17 @@ msgid "list, add or remove IRC servers"
 msgstr "испис, додавање или уклањање IRC сервера"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#, fuzzy
+#| msgid ""
+#| "list|listfull [-connected] [<name>] || add|addreplace <name> <hostname>[/"
+#| "<port>] [-temp] [-<option>[=<value>]] [-no<option>] || copy|rename <name> "
+#| "<new_name> || reorder <name>... || open <name>|-all [<name>...] || del|"
+#| "keep <name> || deloutq|jump || raw [<filter>]"
 msgid ""
 "list|listfull [-connected] [<name>] || add|addreplace <name> <hostname>[/"
-"<port>] [-temp] [-<option>[=<value>]] [-no<option>] || copy|rename <name> "
-"<new_name> || reorder <name>... || open <name>|-all [<name>...] || del|keep "
-"<name> || deloutq|jump || raw [<filter>]"
+"<port>] [-<option>[=<value>]] [-no<option>] || copy|rename <name> <new_name> "
+"|| reorder <name>... || open <name>|-all [<name>...] || del <name> || "
+"deloutq|jump || raw [<filter>]"
 msgstr ""
 "list|listfull [-connected] [<име>] || add|addreplace <име> <имехоста>[/"
 "<порт>] [-temp] [-<опција>[=<вредност>]] [-no<опција>] || copy|rename <име> "
@@ -10749,9 +10723,6 @@ msgstr ""
 "имехоста: име или IP адреса сервера, са необавезним портом (подразумевано: "
 "6697 за TLS, иначе 6667), више адреса може да се раздвоји запетама"
 
-msgid "raw[-temp]: add a temporary server (not saved)"
-msgstr "raw[-temp]: додавање привременог сервера (који се не чува)"
-
 msgid "raw[copy]: duplicate a server"
 msgstr "raw[copy]: прављење дупликата сервера"
 
@@ -10763,11 +10734,6 @@ msgstr "raw[reorder]: промена редоследа сервера у лис
 
 msgid "raw[open]: open the server buffer without connecting"
 msgstr "raw[open]: отварање бафера за сервер без успостављања везе"
-
-msgid "raw[keep]: keep server in config file (for temporary servers only)"
-msgstr ""
-"raw[keep]: сервер се чува у конфигурационом фајлу (само за привремене "
-"сервере)"
 
 msgid "raw[del]: delete a server"
 msgstr "raw[del]: брисање сервера"
@@ -12124,9 +12090,6 @@ msgstr "укључивање паметног филтера за „part” и 
 msgid "enable smart filter for \"setname\" messages"
 msgstr "укључивање паметног филтера за „setname” поруке"
 
-msgid "enable automatic addition of temporary servers with command /connect"
-msgstr "укључивање аутоматског додавања привремених сервера командом /connect"
-
 msgid "strip colors in topic (used only when displaying buffer title)"
 msgstr ""
 "уклањање боја из теме (користи се само онда када се приказује наслов бафера)"
@@ -13220,10 +13183,6 @@ msgid ""
 msgstr ""
 "%s%s: неважећи отисак за сервер „%s”, сме да садржи само хексадецималне "
 "цифре (0-9, a-f)"
-
-#. TRANSLATORS: "temporary IRC server"
-msgid "temporary"
-msgstr "привремени"
 
 #. TRANSLATORS: "fake IRC server"
 msgid "fake"
@@ -18127,11 +18086,3 @@ msgid ""
 msgstr ""
 "%s%s: не може да се прихвати настављање фајла „%s” (порт: %d, почетна "
 "позиција: %llu): xfer није пронађен или није спреман за трансфер"
-
-#, c-format
-#~ msgid ""
-#~ "%s%s: warning: the command name \"%s\" must be lower case, the option "
-#~ "\"irc.msgbuffer.%s\" will not work"
-#~ msgstr ""
-#~ "%s%s: упозорење: име команде „%s” мора бити исписано малим словима, "
-#~ "опција „irc.msgbuffer.%s” неће функционисати"

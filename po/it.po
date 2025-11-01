@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2025-10-14 22:54+0200\n"
-"PO-Revision-Date: 2025-05-04 09:25+0200\n"
+"POT-Creation-Date: 2025-10-26 21:18+0100\n"
+"PO-Revision-Date: 2025-10-27 08:27+0100\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: it\n"
@@ -8687,35 +8687,16 @@ msgid "%s%s: currently connecting to server \"%s\"!"
 msgstr "%s%s: la connessione al server \"%s\" è già in corso!"
 
 #, fuzzy, c-format
-msgid "%s: server added: %s%s%s%s%s"
+msgid "%s: server added: %s%s"
 msgstr "%s: server %s%s%s creato"
 
-#. TRANSLATORS: "temporary IRC server"
-msgid " (temporary)"
-msgstr " (temporaneo)"
-
 #, fuzzy, c-format
 msgid ""
-"%s%s: unable to add temporary server \"%s\" (check if there is already a "
-"server with this name)"
+"%s%s: unable to add server \"%s\" (check if there is already a server with "
+"this name)"
 msgstr ""
 "%s%s: impossibile registrare lo script \"%s\" (esiste un altro script con lo "
 "stesso nome)"
-
-#, fuzzy, c-format
-msgid ""
-"%s%s: unable to add temporary server \"%s\" because the addition of "
-"temporary servers with command /connect is currently disabled"
-msgstr ""
-"%s%s: impossibile registrare lo script \"%s\" (esiste un altro script con lo "
-"stesso nome)"
-
-#, c-format
-msgid ""
-"%s%s: if you want to add a standard server, use the command \"/server add\" "
-"(see /help server); if you really want to add a temporary server (NOT "
-"SAVED), turn on the option irc.look.temporary_servers"
-msgstr ""
 
 #, fuzzy, c-format
 #| msgid "%s%s: \"%s\" command can not be executed on a server buffer"
@@ -8889,7 +8870,7 @@ msgid "nick:"
 msgstr "nick"
 
 #, fuzzy, c-format
-msgid "Server: %s%s %s[%s%s%s]%s%s%s%s"
+msgid "Server: %s%s %s[%s%s%s]%s%s%s"
 msgstr "Server: %s%s %s[%s%s%s]%s%s"
 
 msgid "connected"
@@ -8988,15 +8969,6 @@ msgid "%d server moved"
 msgid_plural "%d servers moved"
 msgstr[0] "%d rmodifier eliminati"
 msgstr[1] "%d rmodifier eliminati"
-
-#, c-format
-msgid "%s%s: server \"%s\" is not a temporary server"
-msgstr "%s%s: il server \"%s\" non è temporaneo"
-
-#, fuzzy, c-format
-#| msgid "%s: server %s%s%s is not temporary any more"
-msgid "%s: server %s%s%s is not temporary anymore"
-msgstr "%s: il server %s%s%s non è più temporaneo"
 
 #, fuzzy, c-format
 #| msgid ""
@@ -9465,11 +9437,6 @@ msgstr ""
 msgid ""
 "> - URL with format: irc[6][s]://[nickname[:password]@]irc.example.org[:port]"
 "[/#channel1][,#channel2[...]]"
-msgstr ""
-
-msgid ""
-"> Note: for an address/IP/URL, a temporary server is added (NOT SAVED), see /"
-"help irc.look.temporary_servers"
 msgstr ""
 
 msgid ""
@@ -10355,9 +10322,9 @@ msgstr "elenca, aggiunge o rimuove server IRC"
 #, fuzzy
 msgid ""
 "list|listfull [-connected] [<name>] || add|addreplace <name> <hostname>[/"
-"<port>] [-temp] [-<option>[=<value>]] [-no<option>] || copy|rename <name> "
-"<new_name> || reorder <name>... || open <name>|-all [<name>...] || del|keep "
-"<name> || deloutq|jump || raw [<filter>]"
+"<port>] [-<option>[=<value>]] [-no<option>] || copy|rename <name> <new_name> "
+"|| reorder <name>... || open <name>|-all [<name>...] || del <name> || "
+"deloutq|jump || raw [<filter>]"
 msgstr ""
 "list|listfull [<server>] || add <server> <host>[/<porta>] [-temp] [-"
 "<opzione>[=<valore>]] [-no<option>] || copy|rename <server> <nuovo_nome> || "
@@ -10397,9 +10364,6 @@ msgid ""
 "for TLS, 6667 otherwise), many addresses can be separated by a comma"
 msgstr ""
 
-msgid "raw[-temp]: add a temporary server (not saved)"
-msgstr ""
-
 msgid "raw[copy]: duplicate a server"
 msgstr ""
 
@@ -10414,9 +10378,6 @@ msgstr ""
 msgid "raw[open]: open the server buffer without connecting"
 msgstr ""
 "apre automaticamente il buffer relay alla connessione di un nuovo client"
-
-msgid "raw[keep]: keep server in config file (for temporary servers only)"
-msgstr ""
 
 msgid "raw[del]: delete a server"
 msgstr ""
@@ -11752,12 +11713,6 @@ msgstr ""
 msgid "enable smart filter for \"setname\" messages"
 msgstr "abilita filtro smart per i messaggi \"join\" (entrata)"
 
-#, fuzzy
-msgid "enable automatic addition of temporary servers with command /connect"
-msgstr ""
-"%s%s: impossibile registrare lo script \"%s\" (esiste un altro script con lo "
-"stesso nome)"
-
 msgid "strip colors in topic (used only when displaying buffer title)"
 msgstr ""
 "elimina colori nell'argomento (usato solo quando mostrato il titolo del "
@@ -12900,12 +12855,6 @@ msgid ""
 "%s%s: invalid fingerprint for server \"%s\", it must contain only "
 "hexadecimal digits (0-9, a-f)"
 msgstr ""
-
-#. TRANSLATORS: "temporary IRC server"
-#, fuzzy
-#| msgid " (temporary)"
-msgid "temporary"
-msgstr " (temporaneo)"
 
 #. TRANSLATORS: "fake IRC server"
 msgid "fake"

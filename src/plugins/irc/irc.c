@@ -290,7 +290,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
             {
                 weechat_printf (
                     NULL,
-                    _("%s%s: unable to add temporary server \"%s\" (check "
+                    _("%s%s: unable to add server \"%s\" (check "
                       "if there is already a server with this name)"),
                     weechat_prefix ("error"), IRC_PLUGIN_NAME, argv[i]);
             }
@@ -337,15 +337,10 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
         irc_hook_timer = NULL;
     }
 
-    if (weechat_irc_plugin->unload_with_upgrade)
-    {
-        irc_config_write (1);
-    }
-    else
-    {
-        irc_config_write (0);
+    irc_config_write ();
+
+    if (!weechat_irc_plugin->unload_with_upgrade)
         irc_server_disconnect_all ();
-    }
 
     irc_ignore_free_all ();
 

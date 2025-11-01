@@ -1875,8 +1875,9 @@ IRC_COMMAND_CALLBACK(connect)
                         connect_ok = 0;
                     }
                 }
-                else if (weechat_config_boolean (irc_config_look_temporary_servers))
+                else
                 {
+                    name = NULL;
                     if ((strncmp (argv[i], "irc", 3) == 0)
                         && strstr (argv[i], "://"))
                     {
@@ -1895,22 +1896,17 @@ IRC_COMMAND_CALLBACK(connect)
                         /* add server with address */
                         name = irc_server_get_name_without_port (argv[i]);
                         ptr_server = irc_server_alloc ((name) ? name : argv[i]);
-                        free (name);
                         if (ptr_server)
                         {
-                            ptr_server->temp_server = 1;
                             weechat_config_option_set (
                                 ptr_server->options[IRC_SERVER_OPTION_ADDRESSES],
                                 argv[i], 1);
                             weechat_printf (
                                 NULL,
-                                _("%s: server added: %s%s%s%s%s"),
+                                _("%s: server added: %s%s"),
                                 IRC_PLUGIN_NAME,
                                 IRC_COLOR_CHAT_SERVER,
-                                ptr_server->name,
-                                IRC_COLOR_RESET,
-                                _(" (temporary)"),
-                                "");
+                                ptr_server->name);
                             irc_server_apply_command_line_options (ptr_server,
                                                                    argc, argv);
                             if (!irc_command_connect_one_server (ptr_server, 0, 0))
@@ -1921,29 +1917,14 @@ IRC_COMMAND_CALLBACK(connect)
                     {
                         weechat_printf (
                             NULL,
-                            _("%s%s: unable to add temporary server \"%s\" "
+                            _("%s%s: unable to add server \"%s\" "
                               "(check if there is already a server with this "
                               "name)"),
-                            weechat_prefix ("error"), IRC_PLUGIN_NAME, argv[i]);
+                            weechat_prefix ("error"),
+                            IRC_PLUGIN_NAME,
+                            (name) ? name : argv[i]);
                     }
-                }
-                else
-                {
-                    weechat_printf (
-                        NULL,
-                        _("%s%s: unable to add temporary server \"%s\" "
-                          "because the addition of temporary servers with "
-                          "command /connect is currently disabled"),
-                        weechat_prefix ("error"), IRC_PLUGIN_NAME, argv[i]);
-                    weechat_printf (
-                        NULL,
-                        _("%s%s: if you want to add a standard server, "
-                          "use the command \"/server add\" (see /help "
-                          "server); if you really want to add a temporary "
-                          "server (NOT SAVED), turn on the option "
-                          "irc.look.temporary_servers"),
-                        weechat_prefix ("error"),
-                        IRC_PLUGIN_NAME);
+                    free (name);
                 }
             }
             else
@@ -5298,7 +5279,7 @@ irc_command_display_server (struct t_irc_server *server, int with_detail)
     if (with_detail)
     {
         weechat_printf (NULL, "");
-        weechat_printf (NULL, _("Server: %s%s %s[%s%s%s]%s%s%s%s"),
+        weechat_printf (NULL, _("Server: %s%s %s[%s%s%s]%s%s%s"),
                         IRC_COLOR_CHAT_SERVER,
                         server->name,
                         IRC_COLOR_CHAT_DELIMITERS,
@@ -5308,8 +5289,6 @@ irc_command_display_server (struct t_irc_server *server, int with_detail)
                         IRC_COLOR_CHAT_DELIMITERS,
                         IRC_COLOR_RESET,
                         str_nick,
-                        /* TRANSLATORS: "temporary IRC server" */
-                        (server->temp_server) ? _(" (temporary)") : "",
                         /* TRANSLATORS: "fake IRC server" */
                         (server->fake_server) ? _(" (fake)") : "");
         /* addresses */
@@ -5725,7 +5704,7 @@ irc_command_display_server (struct t_irc_server *server, int with_detail)
             num_pv = irc_server_get_pv_count (server);
             weechat_printf (
                 NULL,
-                " %s %s%s %s[%s%s%s]%s%s%s%s, %d %s, %d pv",
+                " %s %s%s %s[%s%s%s]%s%s%s, %d %s, %d pv",
                 (server->is_connected) ? "*" : " ",
                 IRC_COLOR_CHAT_SERVER,
                 server->name,
@@ -5735,8 +5714,6 @@ irc_command_display_server (struct t_irc_server *server, int with_detail)
                 IRC_COLOR_CHAT_DELIMITERS,
                 IRC_COLOR_RESET,
                 str_nick,
-                /* TRANSLATORS: "temporary IRC server" */
-                (server->temp_server) ? _(" (temporary)") : "",
                 /* TRANSLATORS: "fake IRC server" */
                 (server->fake_server) ? _(" (fake)") : "",
                 num_channels,
@@ -5747,12 +5724,10 @@ irc_command_display_server (struct t_irc_server *server, int with_detail)
         {
             weechat_printf (
                 NULL,
-                "   %s%s%s%s%s",
+                "   %s%s%s%s",
                 IRC_COLOR_CHAT_SERVER,
                 server->name,
                 IRC_COLOR_RESET,
-                /* TRANSLATORS: "temporary IRC server" */
-                (server->temp_server) ? _(" (temporary)") : "",
                 /* TRANSLATORS: "fake IRC server" */
                 (server->fake_server) ? _(" (fake)") : "");
         }
@@ -6093,47 +6068,6 @@ IRC_COMMAND_CALLBACK(server)
                 }
             }
         }
-
-        return WEECHAT_RC_OK;
-    }
-
-    if (weechat_strcmp (argv[1], "keep") == 0)
-    {
-        WEECHAT_COMMAND_MIN_ARGS(3, argv[1]);
-
-        /* look for server by name */
-        server_found = irc_server_search (argv[2]);
-        if (!server_found)
-        {
-            weechat_printf (
-                NULL,
-                _("%s%s: server \"%s\" not found for \"%s\" command"),
-                weechat_prefix ("error"), IRC_PLUGIN_NAME,
-                argv[2], "server keep");
-            return WEECHAT_RC_ERROR;
-        }
-
-        /* check that is it temporary server */
-        if (!server_found->temp_server)
-        {
-            weechat_printf (
-                NULL,
-                _("%s%s: server \"%s\" is not a temporary server"),
-                weechat_prefix ("error"), IRC_PLUGIN_NAME,
-                argv[2], "server keep");
-            return WEECHAT_RC_ERROR;
-        }
-
-        /* remove temporary flag on server */
-        server_found->temp_server = 0;
-
-        weechat_printf (
-            NULL,
-            _("%s: server %s%s%s is not temporary anymore"),
-            IRC_PLUGIN_NAME,
-            IRC_COLOR_CHAT_SERVER,
-            argv[2],
-            IRC_COLOR_RESET);
 
         return WEECHAT_RC_OK;
     }
@@ -7306,8 +7240,6 @@ irc_command_init (void)
                "for TLS, 6667 otherwise"),
             N_("> - URL with format: irc[6][s]://[nickname[:password]@]"
                "irc.example.org[:port][/#channel1][,#channel2[...]]"),
-            N_("> Note: for an address/IP/URL, a temporary server is "
-               "added (NOT SAVED), see /help irc.look.temporary_servers"),
             N_("option: set option for server (for boolean option, value can be "
                "omitted)"),
             N_("raw[nooption]: set boolean option to \"off\" (for example: -notls)"),
@@ -7972,12 +7904,12 @@ irc_command_init (void)
         N_("list, add or remove IRC servers"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated */
         N_("list|listfull [-connected] [<name>]"
-           " || add|addreplace <name> <hostname>[/<port>] [-temp] [-<option>[=<value>]] "
+           " || add|addreplace <name> <hostname>[/<port>] [-<option>[=<value>]] "
            "[-no<option>]"
            " || copy|rename <name> <new_name>"
            " || reorder <name>..."
            " || open <name>|-all [<name>...]"
-           " || del|keep <name>"
+           " || del <name>"
            " || deloutq|jump"
            " || raw [<filter>]"),
         WEECHAT_CMD_ARGS_DESC(
@@ -7992,14 +7924,12 @@ irc_command_init (void)
             N_("hostname: name or IP address of server, with optional port "
                "(default: 6697 for TLS, 6667 otherwise), many addresses can be "
                "separated by a comma"),
-            N_("raw[-temp]: add a temporary server (not saved)"),
             N_("option: set option for server (for boolean option, value can be omitted)"),
             N_("raw[nooption]: set boolean option to \"off\" (for example: -notls)"),
             N_("raw[copy]: duplicate a server"),
             N_("raw[rename]: rename a server"),
             N_("raw[reorder]: reorder list of servers"),
             N_("raw[open]: open the server buffer without connecting"),
-            N_("raw[keep]: keep server in config file (for temporary servers only)"),
             N_("raw[del]: delete a server"),
             N_("raw[deloutq]: delete messages out queue for all servers (all messages "
                "WeeChat is currently sending)"),
@@ -8043,7 +7973,6 @@ irc_command_init (void)
         " || add|addreplace %(irc_servers)"
         " || copy %(irc_servers) %(irc_servers)"
         " || rename %(irc_servers) %(irc_servers)"
-        " || keep %(irc_servers)"
         " || reorder %(irc_servers)|%*"
         " || open %(irc_servers)|-all %(irc_servers)|%*"
         " || del %(irc_servers)"

@@ -7,8 +7,8 @@
 Um eine vollständige Dokumentation der Optionen zu erhalten, siehe
 https://weechat.org/doc/[WeeChat user's guide].
 
-Mittels der IRC Erweiterung kann man sich zu einen temporären Server verbinden lassen,
-indem man eine URL verwendet:
+// TRANSLATION MISSING
+With irc plugin, you can connect to a server with an URL like:
 
     irc[6][s]://[[nickname][:password]@]server[:port][/#channel1[,#channel2...]]
 
