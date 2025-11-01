@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2025-10-26 21:18+0100\n"
+"POT-Creation-Date: 2025-11-01 15:58+0100\n"
 "PO-Revision-Date: 2025-10-27 08:27+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -12008,6 +12008,14 @@ msgstr ""
 #, fuzzy, c-format
 msgid "%s%s: error when allocating new server"
 msgstr "%s az új szerver lefoglalása sikertelen\n"
+
+#, fuzzy, c-format
+msgid "%s%s: warning: unable to set option \"%s\" for server \"%s\""
+msgstr "%s ismeretlen opció a \"%s\" parancsnak\n"
+
+#, fuzzy, c-format
+msgid "%s%s: warning: unknown option \"%s\" for server \"%s\""
+msgstr "%s %s, %d. sor: ismeretlen csoportazonosító (\"%s\")\n"
 
 #, c-format
 msgid ""

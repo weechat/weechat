@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2025-10-26 21:18+0100\n"
+"POT-Creation-Date: 2025-11-01 15:58+0100\n"
 "PO-Revision-Date: 2025-10-27 08:26+0100\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -12549,6 +12549,14 @@ msgstr ""
 #, c-format
 msgid "%s%s: error when allocating new server"
 msgstr "%s%s: chyba při alokování nového serveru"
+
+#, fuzzy, c-format
+msgid "%s%s: warning: unable to set option \"%s\" for server \"%s\""
+msgstr "%sChyba: nemohu nastavit volbu \"%s\" pro pole \"%s\""
+
+#, fuzzy, c-format
+msgid "%s%s: warning: unknown option \"%s\" for server \"%s\""
+msgstr "%sUpozornění: %s, řádek %d: neznámý identifikátor sekce (\"%s\")"
 
 #, c-format
 msgid ""

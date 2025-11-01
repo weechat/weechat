@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2025-10-26 21:18+0100\n"
+"POT-Creation-Date: 2025-11-01 15:58+0100\n"
 "PO-Revision-Date: 2025-10-31 11:14+0400\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -13194,6 +13194,16 @@ msgstr "TLS:"
 #, c-format
 msgid "%s%s: error when allocating new server"
 msgstr "%s%s: грешка приликом алокације новог сервера"
+
+#, fuzzy, c-format
+#| msgid "%sUnable to set option \"%s\" for bar \"%s\""
+msgid "%s%s: warning: unable to set option \"%s\" for server \"%s\""
+msgstr "%sПостављање опције „%s” за траку „%s” није успело"
+
+#, fuzzy, c-format
+#| msgid "%sWarning: unknown option for section \"%s\": %s (value: \"%s\")"
+msgid "%s%s: warning: unknown option \"%s\" for server \"%s\""
+msgstr "%sУпозорење: непозната опција за одељак „%s”: %s (вредност: „%s”)"
 
 #, c-format
 msgid ""

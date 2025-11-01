@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2025-10-26 21:18+0100\n"
-"PO-Revision-Date: 2025-10-27 08:26+0100\n"
+"POT-Creation-Date: 2025-11-01 15:58+0100\n"
+"PO-Revision-Date: 2025-11-01 16:00+0100\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -13599,6 +13599,16 @@ msgstr "TLS :"
 #, c-format
 msgid "%s%s: error when allocating new server"
 msgstr "%s%s : impossible d'allouer un nouveau serveur"
+
+#, c-format
+msgid "%s%s: warning: unable to set option \"%s\" for server \"%s\""
+msgstr ""
+"%s%s : attention : impossible de modifier l'option \"%s\" pour le serveur "
+"\"%s\""
+
+#, c-format
+msgid "%s%s: warning: unknown option \"%s\" for server \"%s\""
+msgstr "%s%s : attention : option \"%s\" inconnue pour le serveur \"%s\""
 
 #, c-format
 msgid ""

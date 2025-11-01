@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2025-10-26 21:18+0100\n"
+"POT-Creation-Date: 2025-11-01 15:58+0100\n"
 "PO-Revision-Date: 2025-10-27 08:27+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -12064,6 +12064,14 @@ msgstr ""
 #, fuzzy, c-format
 msgid "%s%s: error when allocating new server"
 msgstr "%s не могу расположить новый сервер\n"
+
+#, fuzzy, c-format
+msgid "%s%s: warning: unable to set option \"%s\" for server \"%s\""
+msgstr "%s неизвестный параметр для команды \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: warning: unknown option \"%s\" for server \"%s\""
+msgstr "%s %s, строка %d: неизвестный идентификатор секции (\"%s\")\n"
 
 #, c-format
 msgid ""

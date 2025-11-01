@@ -24,7 +24,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2025-10-26 21:18+0100\n"
+"POT-Creation-Date: 2025-11-01 15:58+0100\n"
 "PO-Revision-Date: 2025-10-27 08:26+0100\n"
 "Last-Translator: Santiago Forero <santiago@forero.xyz>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -12858,6 +12858,17 @@ msgstr ""
 #, c-format
 msgid "%s%s: error when allocating new server"
 msgstr "%s%s: no hay suficiente memoria para crear el nuevo servidor"
+
+#, fuzzy, c-format
+#| msgid "%sUnable to set option \"%s\" for bar \"%s\""
+msgid "%s%s: warning: unable to set option \"%s\" for server \"%s\""
+msgstr "%sError: no se pudo configurar la opción \"%s\" en la barra \"%s\""
+
+#, fuzzy, c-format
+#| msgid "%sWarning: unknown option for section \"%s\": %s (value: \"%s\")"
+msgid "%s%s: warning: unknown option \"%s\" for server \"%s\""
+msgstr ""
+"%sAtención: opción desconocida para la sección \"%s\": %s (valor: \"%s\")"
 
 #, c-format
 msgid ""

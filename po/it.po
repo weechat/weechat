@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2025-10-26 21:18+0100\n"
+"POT-Creation-Date: 2025-11-01 15:58+0100\n"
 "PO-Revision-Date: 2025-10-27 08:27+0100\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -12866,6 +12866,16 @@ msgstr ""
 #, c-format
 msgid "%s%s: error when allocating new server"
 msgstr "%s%s: errore durante l'allocazione del nuovo server"
+
+#, fuzzy, c-format
+msgid "%s%s: warning: unable to set option \"%s\" for server \"%s\""
+msgstr "%sErrore: impossibile impostare l'opzione \"%s\" per la barra \"%s\""
+
+#, fuzzy, c-format
+#| msgid "%sWarning: unknown option for section \"%s\": %s (value: \"%s\")"
+msgid "%s%s: warning: unknown option \"%s\" for server \"%s\""
+msgstr ""
+"%sAttenzione: opzione sconosciuta per la sezione \"%s\": %s (valore: \"%s\")"
 
 #, c-format
 msgid ""
