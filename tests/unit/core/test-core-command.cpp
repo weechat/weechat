@@ -270,7 +270,208 @@ TEST(CoreCommand, Bar)
 
 TEST(CoreCommand, Buffer)
 {
-    /* TODO: write tests */
+    char string[1024];
+
+    WEE_CMD_CORE_ERROR_GENERIC("/buffer xxx");
+
+    /* /buffer, /buffer list */
+    WEE_CMD_CORE("/buffer");
+    WEE_CHECK_MSG_CORE("", "Buffers list:");
+    WEE_CMD_CORE("/buffer list");
+    WEE_CHECK_MSG_CORE("", "Buffers list:");
+
+    /* /buffer add, /buffer close */
+    WEE_CMD_CORE_MIN_ARGS("/buffer add", "/buffer add");
+    WEE_CMD_CORE_ERROR_MSG("/buffer add weechat",
+                           "Buffer name \"weechat\" is reserved for WeeChat");
+    WEE_CMD_CORE_ERROR_MSG("/buffer add weechat",
+                           "Buffer name \"weechat\" is reserved for WeeChat");
+    WEE_CMD_CORE_ERROR_GENERIC("/buffer close 1a-b");
+    WEE_CMD_CORE_ERROR_GENERIC("/buffer close 2-b");
+    WEE_CMD_CORE_ERROR_GENERIC("/buffer close 1a-5");
+    WEE_CMD_CORE("/buffer add test");
+    WEE_CMD_CORE("/buffer close core.test");
+    WEE_CMD_CORE("/buffer add -free -switch test");
+    WEE_CMD_CORE("/buffer close");
+    WEE_CMD_CORE("/buffer add test");
+    WEE_CMD_CORE("/buffer close 2");
+    WEE_CMD_CORE("/buffer add test");
+    WEE_CMD_CORE("/buffer close 2-50");
+    WEE_CMD_CORE("/buffer add test");
+    WEE_CMD_CORE("/buffer close core.test");
+    WEE_CMD_CORE("/buffer close xxx");
+
+    /* /buffer clear */
+    WEE_CMD_CORE("/buffer clear");
+    WEE_CMD_CORE("/buffer clear -all");
+    WEE_CMD_CORE("/buffer clear -merged");
+    WEE_CMD_CORE("/buffer add test");
+    WEE_CMD_CORE("/buffer clear core.test");
+    WEE_CMD_CORE("/buffer close core.test");
+
+    /* /buffer move */
+    WEE_CMD_CORE_MIN_ARGS("/buffer move", "/buffer move");
+    WEE_CMD_CORE_ERROR_MSG("/buffer move xxx", "Invalid buffer number: \"xxx\"");
+    WEE_CMD_CORE("/buffer move -");
+    WEE_CMD_CORE("/buffer move +");
+    WEE_CMD_CORE("/buffer add -switch test");
+    WEE_CMD_CORE("/buffer move -1");
+    WEE_CMD_CORE("/buffer move +1");
+    WEE_CMD_CORE("/buffer close core.test");
+
+    /* /buffer swap */
+    WEE_CMD_CORE_MIN_ARGS("/buffer swap", "/buffer swap");
+    WEE_CMD_CORE_ERROR_MSG("/buffer swap xxx", "Buffer \"xxx\" not found");
+    WEE_CMD_CORE_ERROR_MSG("/buffer swap core.weechat xxx", "Buffer \"xxx\" not found");
+    WEE_CMD_CORE("/buffer add test");
+    WEE_CMD_CORE("/buffer swap core.test");
+    WEE_CMD_CORE("/buffer core.test");
+    WEE_CMD_CORE("/buffer swap core.test");
+    WEE_CMD_CORE("/buffer swap core.weechat core.test");
+    WEE_CMD_CORE("/buffer close core.test");
+
+    /* /buffer cycle */
+    WEE_CMD_CORE_MIN_ARGS("/buffer cycle", "/buffer cycle");
+    WEE_CMD_CORE("/buffer cycle xxx");
+    WEE_CMD_CORE("/buffer cycle core.weechat");
+    WEE_CMD_CORE("/buffer add test");
+    WEE_CMD_CORE("/buffer cycle core.test");
+    WEE_CMD_CORE("/buffer cycle core.weechat core.test");
+    WEE_CMD_CORE("/buffer cycle core.weechat core.test");
+    WEE_CMD_CORE("/buffer cycle 1 2");
+    WEE_CMD_CORE("/buffer cycle 1 2");
+    WEE_CMD_CORE("/buffer close core.test");
+
+    /* /buffer merge, /buffer unmerge */
+    WEE_CMD_CORE_MIN_ARGS("/buffer merge", "/buffer merge");
+    WEE_CMD_CORE_ERROR_MSG("/buffer merge xxx", "Buffer \"xxx\" not found");
+    WEE_CMD_CORE_ERROR_MSG("/buffer unmerge xxx", "Invalid buffer number: \"xxx\"");
+    WEE_CMD_CORE("/buffer add test");
+    WEE_CMD_CORE("/buffer merge 2");
+    WEE_CMD_CORE("/buffer unmerge");
+    WEE_CMD_CORE("/buffer core.weechat");
+    WEE_CMD_CORE("/buffer merge core.test");
+    WEE_CMD_CORE("/buffer unmerge 1");
+    WEE_CMD_CORE("/buffer core.weechat");
+    WEE_CMD_CORE("/buffer merge core.test");
+    WEE_CMD_CORE("/buffer unmerge -all");
+    WEE_CMD_CORE("/buffer close core.test");
+
+    /* /buffer hide, /buffer unhide */
+    WEE_CMD_CORE("/buffer hide");
+    WEE_CMD_CORE("/buffer unhide");
+    WEE_CMD_CORE("/buffer hide -all");
+    WEE_CMD_CORE("/buffer unhide -all");
+    WEE_CMD_CORE("/buffer add test");
+    WEE_CMD_CORE("/buffer hide core.weechat 2");
+    WEE_CMD_CORE("/buffer unhide 1 core.test");
+    WEE_CMD_CORE("/buffer close core.test");
+
+    /* /buffer switch */
+    WEE_CMD_CORE("/buffer switch -previous");
+    WEE_CMD_CORE("/buffer switch");
+
+    /* /buffer zoom */
+    WEE_CMD_CORE("/buffer zoom");
+
+    /* /buffer renumber */
+    WEE_CMD_CORE_ERROR_MSG(
+        "/buffer renumber",
+        "Renumbering is allowed only if option weechat.look.buffer_auto_renumber is off");
+    WEE_CMD_CORE("/set weechat.look.buffer_auto_renumber off");
+    WEE_CMD_CORE_ERROR_MSG("/buffer renumber xxx 2 5", "Invalid buffer number: \"xxx\"");
+    WEE_CMD_CORE_ERROR_MSG("/buffer renumber 1 xxx 5", "Invalid buffer number: \"xxx\"");
+    WEE_CMD_CORE_ERROR_MSG("/buffer renumber 1 2 xxx", "Invalid buffer number: \"xxx\"");
+    snprintf (string, sizeof (string),
+              "Buffer number \"-1\" is out of range (it must be between 1 and %d)",
+              GUI_BUFFER_NUMBER_MAX);
+    WEE_CMD_CORE_ERROR_MSG("/buffer renumber 1 2 -1", string);
+    WEE_CMD_CORE("/buffer renumber");
+    WEE_CMD_CORE("/buffer add test");
+    WEE_CMD_CORE("/buffer add test2");
+    WEE_CMD_CORE("/buffer renumber 1 2 5");
+    WEE_CMD_CORE("/buffer close core.test core.test2");
+    WEE_CMD_CORE("/reset weechat.look.buffer_auto_renumber");
+
+    /* /buffer notify */
+    WEE_CMD_CORE("/buffer notify");
+    WEE_CHECK_MSG_CORE("", "Notify for \"core.weechat\": \"all\"");
+    WEE_CMD_CORE_ERROR_MSG("/buffer notify xxx", "Unable to set notify level \"xxx\"");
+
+    /* /buffer listvar */
+    WEE_CMD_CORE("/buffer listvar");
+    WEE_CHECK_MSG_CORE("", "Local variables for buffer \"core.weechat\":");
+    WEE_CMD_CORE("/buffer localvar");
+    WEE_CHECK_MSG_CORE("", "Local variables for buffer \"core.weechat\":");
+    WEE_CMD_CORE_ERROR_MSG("/buffer listvar xxx", "Buffer \"xxx\" not found");
+
+    /* /buffer setvar, /buffer delvar */
+    WEE_CMD_CORE_MIN_ARGS("/buffer setvar", "/buffer setvar");
+    WEE_CMD_CORE_MIN_ARGS("/buffer delvar", "/buffer delvar");
+    WEE_CMD_CORE("/buffer setvar test");
+    WEE_CMD_CORE("/buffer listvar core.weechat");
+    WEE_CHECK_MSG_CORE("", "  test: \"\"");
+    WEE_CMD_CORE("/buffer setvar test value");
+    WEE_CMD_CORE("/buffer listvar core.weechat");
+    WEE_CHECK_MSG_CORE("", "  test: \"value\"");
+    WEE_CMD_CORE("/buffer setvar test \"value2\"");
+    WEE_CMD_CORE("/buffer listvar core.weechat");
+    WEE_CHECK_MSG_CORE("", "  test: \"value2\"");
+    WEE_CMD_CORE("/buffer delvar test");
+
+    /* /buffer set, /buffer setauto, /buffer get */
+    WEE_CMD_CORE_MIN_ARGS("/buffer set", "/buffer set");
+    WEE_CMD_CORE_MIN_ARGS("/buffer setauto", "/buffer setauto");
+    WEE_CMD_CORE_MIN_ARGS("/buffer get", "/buffer get");
+    WEE_CMD_CORE("/buffer set input");
+    WEE_CMD_CORE("/buffer setauto input");
+    WEE_CMD_CORE("/buffer set input test");
+    WEE_CMD_CORE("/buffer get input");
+    WEE_CHECK_MSG_CORE("", "core.weechat: (str) input = test");
+    WEE_CMD_CORE("/buffer set input");
+    WEE_CMD_CORE("/buffer get localvar_plugin");
+    WEE_CHECK_MSG_CORE("", "core.weechat: (str) localvar_plugin = core");
+    WEE_CMD_CORE("/buffer setauto short_name weechat2");
+    WEE_CMD_CORE("/buffer get short_name");
+    WEE_CHECK_MSG_CORE("", "core.weechat: (str) short_name = weechat2");
+    WEE_CMD_CORE("/buffer setauto short_name weechat");
+    WEE_CMD_CORE("/buffer get plugin");
+    snprintf (string, sizeof (string), "core.weechat: (ptr) plugin = %p", (void *)NULL);
+    WEE_CHECK_MSG_CORE("", string);
+
+    /* /buffer jump */
+    WEE_CMD_CORE_MIN_ARGS("/buffer jump", "/buffer jump");
+    WEE_CMD_CORE_ERROR_GENERIC("/buffer jump xxx");
+    WEE_CMD_CORE("/buffer jump smart");
+    WEE_CMD_CORE("/buffer jump last_displayed");
+    WEE_CMD_CORE("/buffer jump prev_visited");
+    WEE_CMD_CORE("/buffer jump next_visited");
+
+    /* relative jump */
+    WEE_CMD_CORE("/buffer -");
+    WEE_CMD_CORE("/buffer +");
+    WEE_CMD_CORE("/buffer -10");
+    WEE_CMD_CORE("/buffer add test");
+    WEE_CMD_CORE("/buffer hide test");
+    WEE_CMD_CORE("/buffer add test2");
+    WEE_CMD_CORE("/buffer +1");
+    WEE_CMD_CORE("/buffer -1");
+    WEE_CMD_CORE("/buffer close core.test core.test2");
+
+    /* smart jump */
+    WEE_CMD_CORE_ERROR_MSG("/buffer *xxx", "Invalid buffer number: \"xxx\"");
+    WEE_CMD_CORE("/buffer *");
+    WEE_CMD_CORE("/buffer *2");
+
+    /* jump by id, number or name */
+    WEE_CMD_CORE("/buffer add test");
+    WEE_CMD_CORE("/buffer 2");
+    WEE_CMD_CORE("/buffer 1");
+    WEE_CMD_CORE("/buffer core.test");
+    WEE_CMD_CORE("/buffer core.weechat");
+    snprintf (string, sizeof (string), "/buffer %lld", gui_buffers->id);
+    WEE_CMD_CORE(string);
+    WEE_CMD_CORE("/buffer close core.test");
 }
 
 /*
