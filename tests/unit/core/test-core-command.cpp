@@ -555,7 +555,24 @@ TEST(CoreCommand, Color)
 
 TEST(CoreCommand, Command)
 {
-    /* TODO: write tests */
+    WEE_CMD_CORE_MIN_ARGS("/command", "/command");
+    WEE_CMD_CORE_MIN_ARGS("/command *", "/command");
+
+    /* /command -s */
+    WEE_CMD_CORE("/command -s /print test1;/print test2");
+    WEE_CHECK_MSG_CORE("", "test1");
+    WEE_CHECK_MSG_CORE("", "test2");
+
+    /* /command -buffer */
+    WEE_CMD_CORE_ERROR_MSG("/command -buffer xxx * /print test",
+                           "Buffer \"xxx\" not found");
+
+    /* /command <extension> <command> */
+    WEE_CMD_CORE_ERROR_MSG("/command xxx /print test", "Plugin \"xxx\" not found");
+    WEE_CMD_CORE("/command * /print test");
+    WEE_CHECK_MSG_CORE("", "test");
+    WEE_CMD_CORE("/command * print test");
+    WEE_CHECK_MSG_CORE("", "test");
 }
 
 /*
