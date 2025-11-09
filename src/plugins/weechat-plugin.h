@@ -1,6 +1,4 @@
 /*
- * weechat-plugin.h - header to compile WeeChat plugins
- *
  * SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
  *
  * SPDX-License-Identifier: GPL-3.0-or-later
@@ -20,6 +18,8 @@
  * You should have received a copy of the GNU General Public License
  * along with WeeChat.  If not, see <https://www.gnu.org/licenses/>.
  */
+
+/* The single header used to compile WeeChat plugins */
 
 #ifndef WEECHAT_WEECHAT_PLUGIN_H
 #define WEECHAT_WEECHAT_PLUGIN_H
