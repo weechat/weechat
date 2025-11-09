@@ -176,7 +176,91 @@ TEST(CoreCommand, Away)
 
 TEST(CoreCommand, Bar)
 {
-    /* TODO: write tests */
+    WEE_CMD_CORE_ERROR_GENERIC("/bar xxx");
+
+    /* /bar, /bar list, /bar listfull, /bar listitems */
+    WEE_CMD_CORE("/bar");
+    WEE_CHECK_MSG_CORE("", "List of bars:");
+    WEE_CMD_CORE("/bar list");
+    WEE_CHECK_MSG_CORE("", "List of bars:");
+    WEE_CMD_CORE("/bar listfull");
+    WEE_CHECK_MSG_CORE("", "List of bars:");
+    WEE_CMD_CORE("/bar listitems");
+    WEE_CHECK_MSG_CORE("", "List of bar items:");
+
+    /* /bar add, /bar del */
+    WEE_CMD_CORE_MIN_ARGS("/bar add", "/bar add");
+    WEE_CMD_CORE_MIN_ARGS("/bar del", "/bar del");
+    WEE_CMD_CORE_MIN_ARGS("/bar add test", "/bar add");
+    WEE_CMD_CORE_MIN_ARGS("/bar add test root", "/bar add");
+    WEE_CMD_CORE_MIN_ARGS("/bar add test root top", "/bar add");
+    WEE_CMD_CORE_MIN_ARGS("/bar add test root top 1", "/bar add");
+    WEE_CMD_CORE_MIN_ARGS("/bar add test root top 1 0", "/bar add");
+    WEE_CMD_CORE_ERROR_MSG("/bar add test type1 top 1 0 item1",
+                           "Invalid type \"type1\" for bar \"test\"");
+    WEE_CMD_CORE_ERROR_MSG("/bar add test root top_top 1 0 item1",
+                           "Invalid position \"top_top\" for bar \"test\"");
+    WEE_CMD_CORE_ERROR_MSG("/bar add test root top size1 0 item1",
+                           "Invalid size \"size1\" for bar \"test\"");
+    WEE_CMD_CORE("/bar add test root top 1 0 item1");
+    WEE_CHECK_MSG_CORE("", "Bar \"test\" created");
+    WEE_CMD_CORE_ERROR_MSG("/bar add test root top 1 0 item1",
+                           "Bar \"test\" already exists");
+    WEE_CMD_CORE("/bar addreplace test root top 1 0 item2");
+    WEE_CHECK_MSG_CORE("", "Bar \"test\" updated");
+    WEE_CMD_CORE("/bar addreplace test root,1 top 1 0 item3");
+    WEE_CHECK_MSG_CORE("", "Bar \"test\" updated");
+    WEE_CMD_CORE("/bar del test");
+    WEE_CHECK_MSG_CORE("", "Bar \"test\" deleted");
+
+    /* /bar default */
+    WEE_CMD_CORE("/bar default");
+    WEE_CMD_CORE("/bar default input title status nicklist");
+
+    /* /bar rename */
+    WEE_CMD_CORE_MIN_ARGS("/bar rename", "/bar rename");
+    WEE_CMD_CORE_MIN_ARGS("/bar rename status", "/bar rename");
+    WEE_CMD_CORE_ERROR_MSG("/bar rename xxx test", "Bar \"xxx\" not found");
+    WEE_CMD_CORE_ERROR_MSG("/bar rename status nicklist",
+                           "Bar \"nicklist\" already exists for \"bar rename\" command");
+    WEE_CMD_CORE("/bar rename status status2");
+    WEE_CMD_CORE("/bar rename status2 status");
+
+    /* /bar set */
+    WEE_CMD_CORE_MIN_ARGS("/bar set", "/bar set");
+    WEE_CMD_CORE_MIN_ARGS("/bar set status", "/bar set");
+    WEE_CMD_CORE_MIN_ARGS("/bar set status position", "/bar set");
+    WEE_CMD_CORE_ERROR_MSG("/bar set xxx position top", "Bar \"xxx\" not found");
+    WEE_CMD_CORE_ERROR_MSG("/bar set status xxx top",
+                           "Unable to set option \"xxx\" for bar \"status\"");
+    WEE_CMD_CORE("/bar set status position top");
+    WEE_CMD_CORE("/bar set status position bottom");
+
+    /* /bar hide, /bar show, /bar toggle */
+    WEE_CMD_CORE_MIN_ARGS("/bar hide", "/bar hide");
+    WEE_CMD_CORE_MIN_ARGS("/bar show", "/bar show");
+    WEE_CMD_CORE_MIN_ARGS("/bar toggle", "/bar toggle");
+    WEE_CMD_CORE_ERROR_MSG("/bar hide xxx", "Bar \"xxx\" not found");
+    WEE_CMD_CORE_ERROR_MSG("/bar show xxx", "Bar \"xxx\" not found");
+    WEE_CMD_CORE_ERROR_MSG("/bar toggle xxx", "Bar \"xxx\" not found");
+    WEE_CMD_CORE("/bar toggle status");
+    WEE_CMD_CORE("/bar toggle status");
+    WEE_CMD_CORE("/bar hide status");
+    WEE_CMD_CORE("/bar hide status");
+    WEE_CMD_CORE("/bar show status");
+    WEE_CMD_CORE("/bar show status");
+
+    /* /bar scroll */
+    WEE_CMD_CORE_MIN_ARGS("/bar scroll", "/bar scroll");
+    WEE_CMD_CORE_MIN_ARGS("/bar scroll status", "/bar scroll");
+    WEE_CMD_CORE_MIN_ARGS("/bar scroll status *", "/bar scroll");
+    WEE_CMD_CORE_ERROR_MSG("/bar scroll xxx * +10", "Bar \"xxx\" not found");
+    WEE_CMD_CORE_ERROR_MSG("/bar scroll status 999999 +10", "Window not found for \"bar\" command");
+    WEE_CMD_CORE_ERROR_MSG("/bar scroll status * +xxx", "Unable to scroll bar \"status\"");
+    WEE_CMD_CORE("/bar scroll status * +10");
+    WEE_CMD_CORE("/bar scroll status * -10");
+    WEE_CMD_CORE("/bar scroll status 1 +10");
+    WEE_CMD_CORE("/bar scroll status 1 -10");
 }
 
 /*
