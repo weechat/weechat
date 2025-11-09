@@ -559,33 +559,38 @@ COMMAND_CALLBACK(bar)
     {
         COMMAND_MIN_ARGS(5, argv[1]);
         ptr_bar = gui_bar_search (argv[2]);
-        if (ptr_bar)
+        if (!ptr_bar)
         {
-            if (strcmp (argv[3], "*") == 0)
-                ptr_window = gui_current_window;
-            else
-            {
-                ptr_window = NULL;
-                error = NULL;
-                number = (int)strtol (argv[3], &error, 10);
-                if (error && !error[0])
-                    ptr_window = gui_window_search_by_number (number);
-            }
-            if (!ptr_window)
-            {
-                gui_chat_printf (NULL,
-                                 _("%sWindow not found for \"%s\" command"),
-                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR], "bar");
-                return WEECHAT_RC_ERROR;
-            }
-            if (!gui_bar_scroll (ptr_bar, ptr_window, argv_eol[4]))
-            {
-                gui_chat_printf (NULL,
-                                 _("%sUnable to scroll bar \"%s\""),
-                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                 argv[2]);
-                return WEECHAT_RC_ERROR;
-            }
+            gui_chat_printf (NULL,
+                             _("%sBar \"%s\" not found"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             argv[2]);
+            return WEECHAT_RC_ERROR;
+        }
+        if (strcmp (argv[3], "*") == 0)
+            ptr_window = gui_current_window;
+        else
+        {
+            ptr_window = NULL;
+            error = NULL;
+            number = (int)strtol (argv[3], &error, 10);
+            if (error && !error[0])
+                ptr_window = gui_window_search_by_number (number);
+        }
+        if (!ptr_window)
+        {
+            gui_chat_printf (NULL,
+                             _("%sWindow not found for \"%s\" command"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR], "bar");
+            return WEECHAT_RC_ERROR;
+        }
+        if (!gui_bar_scroll (ptr_bar, ptr_window, argv_eol[4]))
+        {
+            gui_chat_printf (NULL,
+                             _("%sUnable to scroll bar \"%s\""),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             argv[2]);
+            return WEECHAT_RC_ERROR;
         }
         return WEECHAT_RC_OK;
     }
