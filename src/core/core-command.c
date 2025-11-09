@@ -1286,28 +1286,30 @@ COMMAND_CALLBACK(buffer)
             ptr_buffer = gui_buffer_search_by_id_number_name (argv[2]);
         else
             ptr_buffer = buffer;
-
-        if (ptr_buffer)
+        if (!ptr_buffer)
         {
-            if (ptr_buffer->local_variables
-                && (ptr_buffer->local_variables->items_count > 0))
-            {
-                gui_chat_printf (NULL, "");
-                gui_chat_printf (NULL,
-                                 _("Local variables for buffer \"%s\":"),
-                                 ptr_buffer->name);
-                hashtable_map (ptr_buffer->local_variables,
-                               &command_buffer_display_localvar, NULL);
-            }
-            else
-            {
-                gui_chat_printf (NULL,
-                                 _("No local variable defined for buffer "
-                                   "\"%s\""),
-                                 ptr_buffer->name);
-            }
+            gui_chat_printf (NULL,
+                             _("%sBuffer \"%s\" not found"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             argv[2]);
+            return WEECHAT_RC_ERROR;
         }
-
+        if (ptr_buffer->local_variables
+            && (ptr_buffer->local_variables->items_count > 0))
+        {
+            gui_chat_printf (NULL, "");
+            gui_chat_printf (NULL,
+                             _("Local variables for buffer \"%s\":"),
+                             ptr_buffer->name);
+            hashtable_map (ptr_buffer->local_variables,
+                           &command_buffer_display_localvar, NULL);
+        }
+        else
+        {
+            gui_chat_printf (NULL,
+                             _("No local variable defined for buffer \"%s\""),
+                             ptr_buffer->name);
+        }
         return WEECHAT_RC_OK;
     }
 
