@@ -1300,7 +1300,7 @@ COMMAND_CALLBACK(buffer)
             gui_chat_printf (NULL, "");
             gui_chat_printf (NULL,
                              _("Local variables for buffer \"%s\":"),
-                             ptr_buffer->name);
+                             ptr_buffer->full_name);
             hashtable_map (ptr_buffer->local_variables,
                            &command_buffer_display_localvar, NULL);
         }
@@ -1308,7 +1308,7 @@ COMMAND_CALLBACK(buffer)
         {
             gui_chat_printf (NULL,
                              _("No local variable defined for buffer \"%s\""),
-                             ptr_buffer->name);
+                             ptr_buffer->full_name);
         }
         return WEECHAT_RC_OK;
     }
