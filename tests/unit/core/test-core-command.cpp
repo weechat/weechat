@@ -36,13 +36,34 @@ extern "C"
 #include "src/core/core-input.h"
 #include "src/core/core-string.h"
 #include "src/gui/gui-buffer.h"
+#include "src/gui/gui-chat.h"
+#include "src/plugins/plugin.h"
 }
 
 #define WEE_CMD_BUFFER(__buffer_name, __command)                        \
     command_record (__buffer, __command);
 
 #define WEE_CMD_CORE(__command)                                         \
-    command_record ("core.weechat", __command);
+    LONGS_EQUAL(WEECHAT_RC_OK,                                          \
+                command_record ("core.weechat", __command));
+
+#define WEE_CMD_CORE_MIN_ARGS(__command, __error_command)               \
+    LONGS_EQUAL(WEECHAT_RC_ERROR,                                       \
+                command_record ("core.weechat", __command));            \
+    command_check_min_args (__command, __error_command);
+
+#define WEE_CMD_CORE_ERROR_GENERIC(__command)                           \
+    LONGS_EQUAL(WEECHAT_RC_ERROR,                                       \
+                command_record ("core.weechat", __command));            \
+    command_check_error_generic (__command);
+
+#define WEE_CMD_CORE_ERROR_MSG(__command, __error_message)              \
+    LONGS_EQUAL(WEECHAT_RC_ERROR,                                       \
+                command_record ("core.weechat", __command));            \
+    WEE_CHECK_MSG_BUFFER(                                               \
+        "core.weechat",                                                 \
+        GUI_CHAT_PREFIX_ERROR_DEFAULT,                                  \
+        __error_message);
 
 #define WEE_CHECK_MSG_BUFFER(__buffer_name, __prefix, __message)        \
     if (!record_search (__buffer_name, __prefix, __message, NULL))      \
@@ -59,9 +80,10 @@ extern "C"
 
 TEST_GROUP(CoreCommand)
 {
-    void command_record (const char *buffer_name, const char *command)
+    int command_record (const char *buffer_name, const char *command)
     {
         struct t_gui_buffer *buffer;
+        int rc;
 
         buffer = gui_buffer_search_by_full_name (buffer_name);
         if (!buffer)
@@ -69,8 +91,9 @@ TEST_GROUP(CoreCommand)
             FAIL("Buffer not found");
         }
         record_start ();
-        input_data (buffer, command, NULL, 0, 0);
+        rc = input_data (buffer, command, NULL, 0, 0);
         record_stop ();
+        return rc;
     }
 
     char **command_build_error (const char *buffer_name, const char *prefix,
@@ -88,6 +111,38 @@ TEST_GROUP(CoreCommand)
         string_dyn_concat (msg, "\"\n", -1);
         string_dyn_concat (msg, "All messages displayed:\n", -1);
         return msg;
+    }
+
+    void command_check_min_args (const char *command, const char *error_command)
+    {
+        char *pos, *command_name, error[1024];
+
+        command_name = strdup (command + 1);
+        pos = strchr (command_name, ' ');
+        if (pos)
+            pos[0] = '\0';
+        snprintf (error, sizeof (error),
+                  "Too few arguments for command \"%s\" (help on command: /help %s)",
+                  error_command,
+                  command_name);
+        free (command_name);
+        WEE_CHECK_MSG_CORE(GUI_CHAT_PREFIX_ERROR_DEFAULT, error);
+    }
+
+    void command_check_error_generic (const char *command)
+    {
+        char *pos, *command_name, error[1024];
+
+        command_name = strdup (command + 1);
+        pos = strchr (command_name, ' ');
+        if (pos)
+            pos[0] = '\0';
+        snprintf (error, sizeof (error),
+                  "Error with command \"%s\" (help on command: /help %s)",
+                  command,
+                  command_name);
+        free (command_name);
+        WEE_CHECK_MSG_CORE(GUI_CHAT_PREFIX_ERROR_DEFAULT, error);
     }
 };
 
