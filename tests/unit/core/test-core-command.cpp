@@ -148,6 +148,19 @@ TEST_GROUP(CoreCommand)
 
 /*
  * Tests functions:
+ *   command_allbuf
+ */
+
+TEST(CoreCommand, Allbuf)
+{
+    WEE_CMD_CORE_MIN_ARGS("/allbuf", "/allbuf");
+
+    WEE_CMD_CORE("/allbuf /print test allbuf");
+    WEE_CHECK_MSG_CORE("", "test allbuf");
+}
+
+/*
+ * Tests functions:
  *   command_away
  */
 
