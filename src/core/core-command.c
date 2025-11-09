@@ -1110,7 +1110,7 @@ COMMAND_CALLBACK(buffer)
                     return WEECHAT_RC_ERROR;
                 }
                 if ((i == 2) && !command_buffer_check_number ((int)numbers[i]))
-                    return WEECHAT_RC_OK;
+                    return WEECHAT_RC_ERROR;
             }
             else
                 numbers[i] = -1;
