@@ -37,6 +37,7 @@ extern "C"
 #include "src/core/core-string.h"
 #include "src/gui/gui-buffer.h"
 #include "src/gui/gui-chat.h"
+#include "src/gui/gui-color.h"
 #include "src/plugins/plugin.h"
 }
 
@@ -481,7 +482,70 @@ TEST(CoreCommand, Buffer)
 
 TEST(CoreCommand, Color)
 {
-    /* TODO: write tests */
+    char string[1024];
+
+    WEE_CMD_CORE_ERROR_GENERIC("/color xxx");
+
+    /* /color */
+    WEE_CMD_CORE("/color");
+    WEE_CMD_CORE("/buffer close core.color");
+    WEE_CMD_CORE("/buffer add -switch test");
+
+    /* /color -o */
+    WEE_CMD_CORE("/color -o");
+
+    /* /color alias, /color unalias */
+    WEE_CMD_CORE_MIN_ARGS("/color alias", "/color alias");
+    WEE_CMD_CORE_MIN_ARGS("/color alias 214", "/color alias");
+    WEE_CMD_CORE_MIN_ARGS("/color unalias", "/color unalias");
+    WEE_CMD_CORE("/color alias 214 orange");
+    WEE_CMD_CORE("/color unalias 214");
+    snprintf (string, sizeof (string),
+              "Invalid color number \"-2\" (must be between 0 and %d)",
+              gui_color_get_term_colors ());
+    WEE_CMD_CORE_ERROR_MSG("/color alias -2 red", string);
+    WEE_CMD_CORE_ERROR_MSG("/color unalias -2", string);
+    snprintf (string, sizeof (string),
+              "Invalid color number \"9999999\" (must be between 0 and %d)",
+              gui_color_get_term_colors ());
+    WEE_CMD_CORE_ERROR_MSG("/color alias 9999999 red", string);
+    WEE_CMD_CORE_ERROR_MSG("/color unalias 9999999", string);
+    snprintf (string, sizeof (string),
+              "Invalid color number \"xxx\" (must be between 0 and %d)",
+              gui_color_get_term_colors ());
+    WEE_CMD_CORE_ERROR_MSG("/color alias xxx red", string);
+    WEE_CMD_CORE_ERROR_MSG("/color unalias xxx", string);
+    WEE_CMD_CORE_ERROR_MSG("/color unalias 214",
+                           "Color \"214\" is not defined in palette");
+    WEE_CMD_CORE("/color alias 214 orange 255/175/0");
+    WEE_CMD_CORE("/color unalias 214");
+
+    /* /color reset */
+    WEE_CMD_CORE("/color reset");
+
+    /* /color switch */
+    WEE_CMD_CORE("/color");
+    WEE_CMD_CORE("/color switch");
+    WEE_CMD_CORE("/color switch");
+    WEE_CMD_CORE("/buffer close core.color");
+
+    /* /color term2rgb */
+    WEE_CMD_CORE_MIN_ARGS("/color term2rgb", "/color term2rgb");
+    WEE_CMD_CORE_ERROR_GENERIC("/color term2rgb xxx");
+    WEE_CMD_CORE("/color term2rgb 214");
+    WEE_CHECK_MSG_CORE("", "214 -> #ffaf00");
+
+    /* /color rgb2term */
+    WEE_CMD_CORE_MIN_ARGS("/color rgb2term", "/color rgb2term");
+    WEE_CMD_CORE_ERROR_GENERIC("/color rgb2term xxx");
+    WEE_CMD_CORE_ERROR_GENERIC("/color rgb2term fffffff");
+    WEE_CMD_CORE_ERROR_GENERIC("/color rgb2term ffaf00 1000");
+    WEE_CMD_CORE("/color rgb2term ffaf00");
+    WEE_CHECK_MSG_CORE("", "#ffaf00 -> 214");
+    WEE_CMD_CORE("/color rgb2term #ffaf00");
+    WEE_CHECK_MSG_CORE("", "#ffaf00 -> 214");
+    WEE_CMD_CORE("/color rgb2term #ffaf00 100");
+    WEE_CHECK_MSG_CORE("", "#ffaf00 -> 11");
 }
 
 /*
