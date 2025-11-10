@@ -388,9 +388,13 @@ gui_cursor_move_area_add_xy (int add_x, int add_y)
  *
  * Parameter "position" can be "top_left", "top_right", "bottom_left" or
  * "bottom_right" (if NULL, top left is the default position).
+ *
+ * Returns:
+ *   1: OK
+ *   0: area not found
  */
 
-void
+int
 gui_cursor_move_area (const char *area, const char *position)
 {
     int area_found, x1, y1, x2, y2, x, y;
@@ -443,7 +447,7 @@ gui_cursor_move_area (const char *area, const char *position)
     }
 
     if (!area_found)
-        return;
+        return 0;
 
     if (!position || (strcmp (position, "top_left") == 0))
     {
@@ -477,4 +481,6 @@ gui_cursor_move_area (const char *area, const char *position)
     gui_cursor_y = y;
     gui_cursor_display_debug_info ();
     gui_window_move_cursor ();
+
+    return 1;
 }

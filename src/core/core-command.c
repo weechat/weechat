@@ -1958,70 +1958,71 @@ COMMAND_CALLBACK(cursor)
 
     if (string_strcmp (argv[1], "go") == 0)
     {
-        if (argc > 2)
+        COMMAND_MIN_ARGS(3, argv[1]);
+        pos = strchr (argv[2], ',');
+        if (pos)
         {
-            pos = strchr (argv[2], ',');
-            if (pos)
+            str_x = string_strndup (argv[2], pos - argv[2]);
+            pos++;
+            if (str_x)
             {
-                str_x = string_strndup (argv[2], pos - argv[2]);
-                pos++;
-                if (str_x)
+                error = NULL;
+                x = (int) strtol (str_x, &error, 10);
+                if (error && !error[0])
                 {
                     error = NULL;
-                    x = (int) strtol (str_x, &error, 10);
+                    y = (int) strtol (pos, &error, 10);
                     if (error && !error[0])
                     {
-                        error = NULL;
-                        y = (int) strtol (pos, &error, 10);
-                        if (error && !error[0])
-                        {
-                            gui_cursor_move_xy (x, y);
-                        }
+                        gui_cursor_move_xy (x, y);
+                        free (str_x);
+                        return WEECHAT_RC_OK;
                     }
-                    free (str_x);
                 }
-            }
-            else
-            {
-                gui_cursor_move_area (argv[2],
-                                      (argc > 3) ? argv_eol[3] : NULL);
+                free (str_x);
             }
         }
-        return WEECHAT_RC_OK;
+        else
+        {
+            if (gui_cursor_move_area (argv[2],
+                                      (argc > 3) ? argv_eol[3] : NULL))
+                return WEECHAT_RC_OK;
+        }
+        COMMAND_ERROR;
     }
 
     if (string_strcmp (argv[1], "move") == 0)
     {
-        if (argc > 2)
+        COMMAND_MIN_ARGS(3, argv[1]);
+        if (string_strcmp (argv[2], "up") == 0)
+            gui_cursor_move_add_xy (0, -1);
+        else if (string_strcmp (argv[2], "down") == 0)
+            gui_cursor_move_add_xy (0, 1);
+        else if (string_strcmp (argv[2], "left") == 0)
+            gui_cursor_move_add_xy (-1, 0);
+        else if (string_strcmp (argv[2], "right") == 0)
+            gui_cursor_move_add_xy (1, 0);
+        else if (string_strcmp (argv[2], "area_up") == 0)
+            gui_cursor_move_area_add_xy (0, -1);
+        else if (string_strcmp (argv[2], "area_down") == 0)
+            gui_cursor_move_area_add_xy (0, 1);
+        else if (string_strcmp (argv[2], "area_left") == 0)
+            gui_cursor_move_area_add_xy (-1, 0);
+        else if (string_strcmp (argv[2], "area_right") == 0)
+            gui_cursor_move_area_add_xy (1, 0);
+        else if ((string_strcmp (argv[2], "top_left") == 0)
+                 || (string_strcmp (argv[2], "top_right") == 0)
+                 || (string_strcmp (argv[2], "bottom_left") == 0)
+                 || (string_strcmp (argv[2], "bottom_right") == 0)
+                 || (string_strcmp (argv[2], "edge_top") == 0)
+                 || (string_strcmp (argv[2], "edge_bottom") == 0)
+                 || (string_strcmp (argv[2], "edge_left") == 0)
+                 || (string_strcmp (argv[2], "edge_right") == 0))
         {
-            if (string_strcmp (argv[2], "up") == 0)
-                gui_cursor_move_add_xy (0, -1);
-            else if (string_strcmp (argv[2], "down") == 0)
-                gui_cursor_move_add_xy (0, 1);
-            else if (string_strcmp (argv[2], "left") == 0)
-                gui_cursor_move_add_xy (-1, 0);
-            else if (string_strcmp (argv[2], "right") == 0)
-                gui_cursor_move_add_xy (1, 0);
-            else if (string_strcmp (argv[2], "area_up") == 0)
-                gui_cursor_move_area_add_xy (0, -1);
-            else if (string_strcmp (argv[2], "area_down") == 0)
-                gui_cursor_move_area_add_xy (0, 1);
-            else if (string_strcmp (argv[2], "area_left") == 0)
-                gui_cursor_move_area_add_xy (-1, 0);
-            else if (string_strcmp (argv[2], "area_right") == 0)
-                gui_cursor_move_area_add_xy (1, 0);
-            else if ((string_strcmp (argv[2], "top_left") == 0)
-                     || (string_strcmp (argv[2], "top_right") == 0)
-                     || (string_strcmp (argv[2], "bottom_left") == 0)
-                     || (string_strcmp (argv[2], "bottom_right") == 0)
-                     || (string_strcmp (argv[2], "edge_top") == 0)
-                     || (string_strcmp (argv[2], "edge_bottom") == 0)
-                     || (string_strcmp (argv[2], "edge_left") == 0)
-                     || (string_strcmp (argv[2], "edge_right") == 0))
-            {
-                gui_cursor_move_position (argv[2]);
-            }
+            gui_cursor_move_position (argv[2]);
         }
+        else
+            COMMAND_ERROR;
         return WEECHAT_RC_OK;
     }
 

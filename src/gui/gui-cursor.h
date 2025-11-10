@@ -38,6 +38,6 @@ extern void gui_cursor_move_xy (int x, int y);
 extern void gui_cursor_move_add_xy (int add_x, int add_y);
 extern void gui_cursor_move_position (const char *position);
 extern void gui_cursor_move_area_add_xy (int add_x, int add_y);
-extern void gui_cursor_move_area (const char *area, const char *position);
+extern int gui_cursor_move_area (const char *area, const char *position);
 
 #endif /* WEECHAT_GUI_CURSOR_H */
