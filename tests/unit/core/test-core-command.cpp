@@ -42,6 +42,7 @@ extern "C"
 #include "src/gui/gui-chat.h"
 #include "src/gui/gui-color.h"
 #include "src/gui/gui-cursor.h"
+#include "src/gui/gui-filter.h"
 #include "src/gui/gui-key.h"
 #include "src/gui/gui-mouse.h"
 #include "src/plugins/plugin.h"
@@ -880,7 +881,94 @@ TEST(CoreCommand, Eval)
 
 TEST(CoreCommand, Filter)
 {
-    /* TODO: write tests */
+    WEE_CMD_CORE_ERROR_GENERIC("/filter xxx");
+
+    /* /filter, /filter list */
+    WEE_CMD_CORE("/filter");
+    WEE_CHECK_MSG_CORE("", "Message filtering enabled");
+    WEE_CHECK_MSG_CORE("", "No message filter defined");
+    WEE_CMD_CORE("/filter list");
+    WEE_CHECK_MSG_CORE("", "Message filtering enabled");
+    WEE_CHECK_MSG_CORE("", "No message filter defined");
+    WEE_CMD_CORE("/filter add test core.weechat * regex example");
+    WEE_CMD_CORE("/filter list");
+    WEE_CHECK_MSG_CORE("", "Message filtering enabled");
+    WEE_CHECK_MSG_CORE("", "Message filters:");
+    WEE_CHECK_MSG_CORE("", "  test: buffer: core.weechat / tags: * / regex: regex example");
+    WEE_CMD_CORE("/filter del test");
+
+    /* /filter enable, /filter disable, /filter toggle */
+    WEE_CMD_CORE("/filter disable");
+    WEE_CHECK_MSG_CORE("", "Message filtering disabled");
+    WEE_CMD_CORE("/filter enable");
+    WEE_CHECK_MSG_CORE("", "Message filtering enabled");
+    WEE_CMD_CORE("/filter toggle");
+    WEE_CHECK_MSG_CORE("", "Message filtering disabled");
+    WEE_CMD_CORE("/filter toggle");
+    WEE_CHECK_MSG_CORE("", "Message filtering enabled");
+    WEE_CMD_CORE("/filter add test core.weechat * regex example");
+    WEE_CMD_CORE("/filter disable test");
+    WEE_CHECK_MSG_CORE("", "Filter \"test\" disabled");
+    WEE_CMD_CORE("/filter enable test");
+    WEE_CHECK_MSG_CORE("", "Filter \"test\" enabled");
+    WEE_CMD_CORE("/filter toggle test");
+    WEE_CHECK_MSG_CORE("", "Filter \"test\" disabled");
+    WEE_CMD_CORE("/filter toggle test");
+    WEE_CHECK_MSG_CORE("", "Filter \"test\" enabled");
+    LONGS_EQUAL(1, gui_buffers->filter);
+    WEE_CMD_CORE("/filter disable @");
+    LONGS_EQUAL(0, gui_buffers->filter);
+    WEE_CMD_CORE("/filter enable @");
+    LONGS_EQUAL(1, gui_buffers->filter);
+    WEE_CMD_CORE("/filter toggle @");
+    LONGS_EQUAL(0, gui_buffers->filter);
+    WEE_CMD_CORE("/filter toggle @");
+    LONGS_EQUAL(1, gui_buffers->filter);
+    WEE_CMD_CORE("/filter del test");
+
+    /* /filter add, /filter addreplace, /filter recreate */
+    WEE_CMD_CORE_MIN_ARGS("/filter add", "/filter add");
+    WEE_CMD_CORE_MIN_ARGS("/filter add test", "/filter add");
+    WEE_CMD_CORE_MIN_ARGS("/filter add test core.weechat", "/filter add");
+    WEE_CMD_CORE_MIN_ARGS("/filter add test core.weechat *", "/filter add");
+    WEE_CMD_CORE_ERROR_MSG("/filter add test core.weechat * *",
+                           "You must specify at least tags or regex for filter");
+    WEE_CMD_CORE("/filter add test core.weechat * regex example");
+    WEE_CHECK_MSG_CORE("", "Filter \"test\" added:");
+    WEE_CHECK_MSG_CORE("", "  test: buffer: core.weechat / tags: * / regex: regex example");
+    WEE_CMD_CORE_MIN_ARGS("/filter addreplace", "/filter addreplace");
+    WEE_CMD_CORE_MIN_ARGS("/filter addreplace test", "/filter addreplace");
+    WEE_CMD_CORE_MIN_ARGS("/filter addreplace test core.weechat", "/filter addreplace");
+    WEE_CMD_CORE_MIN_ARGS("/filter addreplace test core.weechat *", "/filter addreplace");
+    WEE_CMD_CORE("/filter addreplace test core.weechat * regex example2");
+    WEE_CHECK_MSG_CORE("", "Filter \"test\" updated:");
+    WEE_CHECK_MSG_CORE("", "  test: buffer: core.weechat / tags: * / regex: regex example2");
+    WEE_CMD_CORE_ERROR_MSG("/filter recreate xxx", "Filter \"xxx\" not found");
+    WEE_CMD_CORE("/filter recreate test");
+    STRCMP_EQUAL(gui_buffers->input_buffer,
+                 "/filter addreplace test core.weechat * regex example2");
+    WEE_CMD_CORE("/input delete_line");
+    WEE_CMD_CORE("/filter del test");
+
+    /* /filter rename */
+    WEE_CMD_CORE_MIN_ARGS("/filter rename", "/filter rename");
+    WEE_CMD_CORE_MIN_ARGS("/filter rename xxx", "/filter rename");
+    WEE_CMD_CORE_ERROR_MSG("/filter rename xxx yyy", "Filter \"xxx\" not found");
+    WEE_CMD_CORE("/filter add test1 core.weechat * regex example");
+    WEE_CMD_CORE("/filter add test2 core.weechat * regex example");
+    WEE_CMD_CORE_ERROR_MSG("/filter rename test1 test2",
+                           "Unable to rename filter \"test1\" to \"test2\"");
+    WEE_CMD_CORE("/filter rename test1 test3");
+    WEE_CHECK_MSG_CORE("", "Filter \"test1\" renamed to \"test3\"");
+    WEE_CMD_CORE("/filter del test2 test3");
+
+    /* /filter del */
+    WEE_CMD_CORE("/filter add test1 core.weechat * regex example");
+    WEE_CMD_CORE("/filter add test2 core.weechat * regex example2");
+    CHECK(gui_filters);
+    CHECK(gui_filters->next_filter);
+    WEE_CMD_CORE("/filter del test*");
+    POINTERS_EQUAL(NULL, gui_filters);
 }
 
 /*
