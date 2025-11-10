@@ -31,6 +31,7 @@ extern "C"
 #ifndef HAVE_CONFIG_H
 #define HAVE_CONFIG_H
 #endif
+#include <string.h>
 #include "src/core/weechat.h"
 #include "src/core/core-command.h"
 #include "src/core/core-input.h"
