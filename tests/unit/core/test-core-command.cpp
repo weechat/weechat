@@ -43,6 +43,7 @@ extern "C"
 #include "src/gui/gui-color.h"
 #include "src/gui/gui-cursor.h"
 #include "src/gui/gui-filter.h"
+#include "src/gui/gui-hotlist.h"
 #include "src/gui/gui-key.h"
 #include "src/gui/gui-mouse.h"
 #include "src/plugins/plugin.h"
@@ -1043,6 +1044,62 @@ TEST(CoreCommand, History)
     WEE_CMD_CORE("/history clear");
     WEE_CMD_CORE_ERROR_GENERIC("/history xxx");
     WEE_CMD_CORE_ERROR_GENERIC("/history -1");
+}
+
+
+/*
+ * Tests functions:
+ *   command_hotlist
+ */
+
+TEST(CoreCommand, Hotlist)
+{
+    WEE_CMD_CORE_MIN_ARGS("/hotlist", "/hotlist");
+    WEE_CMD_CORE_ERROR_GENERIC("/hotlist xxx");
+
+    /* /hotlist add, /hotlist clear, /hotlist remove */
+    WEE_CMD_CORE_ERROR_GENERIC("/hotlist add xxx");
+    WEE_CMD_CORE("/hotlist clear");
+    POINTERS_EQUAL(NULL, gui_buffers->hotlist);
+    WEE_CMD_CORE("/hotlist add");
+    CHECK(gui_buffers->hotlist);
+    LONGS_EQUAL(GUI_HOTLIST_LOW, gui_buffers->hotlist->priority);
+    WEE_CMD_CORE("/hotlist remove");
+    POINTERS_EQUAL(NULL, gui_buffers->hotlist);
+    WEE_CMD_CORE("/hotlist add message");
+    CHECK(gui_buffers->hotlist);
+    LONGS_EQUAL(GUI_HOTLIST_MESSAGE, gui_buffers->hotlist->priority);
+    WEE_CMD_CORE("/hotlist remove");
+    POINTERS_EQUAL(NULL, gui_buffers->hotlist);
+    WEE_CMD_CORE("/hotlist add private");
+    CHECK(gui_buffers->hotlist);
+    LONGS_EQUAL(GUI_HOTLIST_PRIVATE, gui_buffers->hotlist->priority);
+    WEE_CMD_CORE("/hotlist remove");
+    POINTERS_EQUAL(NULL, gui_buffers->hotlist);
+    WEE_CMD_CORE("/hotlist add highlight");
+    CHECK(gui_buffers->hotlist);
+    LONGS_EQUAL(GUI_HOTLIST_HIGHLIGHT, gui_buffers->hotlist->priority);
+    WEE_CMD_CORE("/hotlist remove");
+
+    /* /hotlist restore */
+    WEE_CMD_CORE("/buffer add test");
+    WEE_CMD_CORE("/command -buffer core.test * /hotlist add highlight");
+    CHECK(gui_hotlist);
+    LONGS_EQUAL(GUI_HOTLIST_HIGHLIGHT, gui_hotlist->priority);
+    WEE_CMD_CORE("/hotlist clear 1");
+    CHECK(gui_hotlist);
+    LONGS_EQUAL(GUI_HOTLIST_HIGHLIGHT, gui_hotlist->priority);
+    WEE_CMD_CORE("/hotlist clear");
+    POINTERS_EQUAL(NULL, gui_hotlist);
+    WEE_CMD_CORE("/hotlist restore -all");
+    CHECK(gui_hotlist);
+    WEE_CMD_CORE("/hotlist clear");
+    POINTERS_EQUAL(NULL, gui_hotlist);
+    WEE_CMD_CORE("/command -buffer core.test * /hotlist restore");
+    CHECK(gui_hotlist);
+    LONGS_EQUAL(GUI_HOTLIST_HIGHLIGHT, gui_hotlist->priority);
+    WEE_CMD_CORE("/hotlist clear");
+    WEE_CMD_CORE("/buffer close core.test");
 }
 
 /*
