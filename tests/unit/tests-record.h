@@ -58,6 +58,8 @@ extern void record_start ();
 extern void record_stop ();
 extern struct t_hashtable *record_search (const char *buffer, const char *prefix,
                                           const char *message, const char *tags);
+extern struct t_hashtable *record_search_msg_regex (const char *buffer,
+                                                    const char *regex);
 extern int record_count_messages ();
 extern void record_dump (char **msg);
 extern void record_error_missing (const char *message);

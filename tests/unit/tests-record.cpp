@@ -24,6 +24,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
+#include <regex.h>
 
 #include "tests-record.h"
 
@@ -173,6 +174,26 @@ record_match (struct t_hashtable *recorded_msg,
 }
 
 /*
+ * Checks if a recorded message field matches a regular expression.
+ *
+ * Returns:
+ *   1: value matches the regex
+ *   0: value does NOT match the regex
+ */
+
+int
+record_match_regex (struct t_hashtable *recorded_msg,
+                    const char *field, regex_t *regex)
+{
+    const char *ptr_value;
+
+    ptr_value = (const char *)hashtable_get (recorded_msg, field);
+
+    return ((!ptr_value && !regex)
+            || (regexec (regex, ptr_value, 0, NULL, 0) == 0));
+}
+
+/*
  * Searches if a prefix/message has been displayed in a buffer.
  *
  * Returns pointer to hashtable with the message found, NULL if the message
@@ -203,6 +224,45 @@ record_search (const char *buffer, const char *prefix, const char *message,
     }
 
     /* message not displayed */
+    return NULL;
+}
+
+/*
+ * Searches if a message has been displayed in a buffer using a regular
+ * expression.
+ *
+ * Returns pointer to hashtable with the first message found, NULL if no
+ * message is matching the regular expression.
+ */
+
+struct t_hashtable *
+record_search_msg_regex (const char *buffer, const char *regex)
+{
+    int i, size;
+    struct t_hashtable *rec_msg;
+    regex_t preg;
+
+    if (string_regcomp (&preg, regex, REG_EXTENDED | REG_NOSUB) != 0)
+        return NULL;
+
+    size = arraylist_size (recorded_messages);
+
+    for (i = 0; i < size; i++)
+    {
+        rec_msg = (struct t_hashtable *)arraylist_get (recorded_messages, i);
+        if (!rec_msg)
+            continue;
+        if (record_match (rec_msg, "buffer_name", buffer)
+            && record_match_regex (rec_msg, "message_no_color", &preg))
+        {
+            regfree (&preg);
+            return rec_msg;
+        }
+    }
+
+    regfree (&preg);
+
+    /* no message matching the regex */
     return NULL;
 }
 
