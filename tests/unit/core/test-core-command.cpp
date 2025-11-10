@@ -1039,7 +1039,10 @@ TEST(CoreCommand, Help)
 
 TEST(CoreCommand, History)
 {
-    /* TODO: write tests */
+    WEE_CMD_CORE("/history");
+    WEE_CMD_CORE("/history clear");
+    WEE_CMD_CORE_ERROR_GENERIC("/history xxx");
+    WEE_CMD_CORE_ERROR_GENERIC("/history -1");
 }
 
 /*
