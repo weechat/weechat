@@ -34,11 +34,16 @@ extern "C"
 #include <string.h>
 #include "src/core/weechat.h"
 #include "src/core/core-command.h"
+#include "src/core/core-debug.h"
 #include "src/core/core-input.h"
 #include "src/core/core-string.h"
+#include "src/core/core-url.h"
 #include "src/gui/gui-buffer.h"
 #include "src/gui/gui-chat.h"
 #include "src/gui/gui-color.h"
+#include "src/gui/gui-cursor.h"
+#include "src/gui/gui-key.h"
+#include "src/gui/gui-mouse.h"
 #include "src/plugins/plugin.h"
 }
 
@@ -654,71 +659,172 @@ TEST(CoreCommand, Debug)
         "\u26C4"  /* ⛄ (snowman without snow) */
         "";
 
-    /* test command "/debug list" */
-    /* TODO: write tests */
+    WEE_CMD_CORE_ERROR_GENERIC("/debug xxx");
 
-    /* test command "/debug buffer" */
-    /* TODO: write tests */
+    /* /debug, /debug list */
+    WEE_CMD_CORE("/debug set core 1");
+    WEE_CMD_CORE("/debug");
+    WEE_CHECK_MSG_CORE("", "Debug:");
+    WEE_CMD_CORE("/debug list");
+    WEE_CHECK_MSG_CORE("", "Debug:");
+    WEE_CMD_CORE("/debug set core 0");
 
-    /* test command "/debug certs" */
-    /* TODO: write tests */
+    /* /debug buffer */
+    WEE_CMD_CORE("/debug buffer");
+    WEE_CHECK_MSG_CORE("", "Raw content of buffers has been written in log file");
 
-    /* test command "/debug color" */
-    /* TODO: write tests */
+    /* /debug callbacks */
+    WEE_CMD_CORE_MIN_ARGS("/debug callbacks", "/debug callbacks");
+    WEE_CMD_CORE_ERROR_GENERIC("/debug callbacks xxx");
+    CHECK(debug_long_callbacks == 0);
+    WEE_CMD_CORE("/debug callbacks 957ms");
+    CHECK(debug_long_callbacks == 957000);
+    WEE_CHECK_MSG_CORE("", "Debug enabled for callbacks (threshold: 0:00:00.957000)");
+    WEE_CMD_CORE("/debug callbacks 0");
+    CHECK(debug_long_callbacks == 0);
+    WEE_CHECK_MSG_CORE("", "Debug disabled for callbacks");
 
-    /* test command "/debug cursor" */
-    /* TODO: write tests */
+    /* /debug certs */
+    WEE_CMD_CORE("/debug certs");
+    WEE_CHECK_MSG_REGEX_CORE("certificate.*loaded.*system.*user");
 
-    /* test command "/debug dirs" */
-    /* TODO: write tests */
+    /* /debug color */
+    WEE_CMD_CORE("/debug color");
+    WEE_CHECK_MSG_REGEX_CORE("TERM=.*COLORS:.*COLOR_PAIRS:.*");
+    WEE_CHECK_MSG_REGEX_CORE("WeeChat colors");
 
-    /* test command "/debug dump" */
-    /* TODO: write tests */
+    /* /debug cursor */
+    LONGS_EQUAL(0, gui_cursor_debug);
+    WEE_CMD_CORE("/debug cursor");
+    LONGS_EQUAL(1, gui_cursor_debug);
+    WEE_CHECK_MSG_CORE("", "Debug enabled for cursor mode (normal)");
+    WEE_CMD_CORE("/debug cursor");
+    LONGS_EQUAL(0, gui_cursor_debug);
+    WEE_CHECK_MSG_CORE("", "Debug disabled for cursor mode");
+    WEE_CMD_CORE("/debug cursor verbose");
+    LONGS_EQUAL(2, gui_cursor_debug);
+    WEE_CHECK_MSG_CORE("", "Debug enabled for cursor mode (verbose)");
+    WEE_CMD_CORE("/debug cursor verbose");
+    LONGS_EQUAL(0, gui_cursor_debug);
+    WEE_CHECK_MSG_CORE("", "Debug disabled for cursor mode");
 
-    /* test command "/debug hdata" */
-    /* TODO: write tests */
+    /* /debug dirs */
+    WEE_CMD_CORE("/debug dirs");
+    WEE_CHECK_MSG_CORE("", "  home:");
+    WEE_CHECK_MSG_REGEX_CORE("    config: ");
+    WEE_CHECK_MSG_REGEX_CORE("    data: ");
+    WEE_CHECK_MSG_REGEX_CORE("    state: ");
+    WEE_CHECK_MSG_REGEX_CORE("    cache: ");
+    WEE_CHECK_MSG_REGEX_CORE("    runtime: ");
+    WEE_CHECK_MSG_REGEX_CORE("  lib: ");
+    WEE_CHECK_MSG_REGEX_CORE("  lib \\(extra\\): ");
+    WEE_CHECK_MSG_REGEX_CORE("  share: ");
+    WEE_CHECK_MSG_REGEX_CORE("  locale: ");
 
-    /* test command "/debug hooks" */
-    /* TODO: write tests */
+    /* /debug dump */
+    WEE_CMD_CORE("/debug dump");
+    WEE_CMD_CORE("/debug dump irc");
 
-    /* test command "/debug infolists" */
-    /* TODO: write tests */
+    /* /debug hdata */
+    WEE_CMD_CORE("/debug hdata");
+    WEE_CHECK_MSG_REGEX_CORE("[0-9]+ hdata in memory");
+    WEE_CMD_CORE("/debug hdata free");
 
-    /* test command "/debug libs" */
-    /* TODO: write tests */
+    /* /debug hooks */
+    WEE_CMD_CORE("/debug hooks");
+    WEE_CHECK_MSG_CORE("", "hooks in memory:");
+    WEE_CMD_CORE("/debug hooks irc");
+    WEE_CHECK_MSG_REGEX_CORE("hooks \\([0-9]+\\):");
+    WEE_CMD_CORE("/debug hooks irc timer");
+    WEE_CHECK_MSG_REGEX_CORE("hooks \\([0-9]+\\):");
 
-    /* test command "/debug memory" */
-    /* TODO: write tests */
+    /* /debug infolists */
+    WEE_CMD_CORE("/debug infolists");
+    WEE_CHECK_MSG_REGEX_CORE("[0-9]+ infolists in memory");
 
-    /* test command "/debug mouse" */
-    /* TODO: write tests */
+    /* /debug key */
+    LONGS_EQUAL(0, gui_key_debug);
+    WEE_CMD_CORE("/debug key");
+    LONGS_EQUAL(1, gui_key_debug);
+    gui_key_debug = 0;
 
-    /* test command "/debug set" */
+    /* /debug libs */
+    WEE_CMD_CORE("/debug libs");
+    WEE_CHECK_MSG_CORE("", "Libs:");
+
+    /* /debug memory */
+    WEE_CMD_CORE("/debug memory");
+    WEE_CHECK_MSG_REGEX_CORE("Memory usage");
+
+    /* /debug mouse */
+    LONGS_EQUAL(0, gui_mouse_debug);
+    WEE_CMD_CORE("/debug mouse");
+    LONGS_EQUAL(1, gui_mouse_debug);
+    WEE_CHECK_MSG_CORE("", "Debug enabled for mouse (normal)");
+    WEE_CMD_CORE("/debug mouse");
+    LONGS_EQUAL(0, gui_mouse_debug);
+    WEE_CHECK_MSG_CORE("", "Debug disabled for mouse");
+    WEE_CMD_CORE("/debug mouse verbose");
+    LONGS_EQUAL(2, gui_mouse_debug);
+    WEE_CHECK_MSG_CORE("", "Debug enabled for mouse (verbose)");
+    WEE_CMD_CORE("/debug mouse");
+    LONGS_EQUAL(0, gui_mouse_debug);
+    WEE_CHECK_MSG_CORE("", "Debug disabled for mouse");
+
+    /* /debug set */
     LONGS_EQUAL(0, weechat_debug_core);
     WEE_CMD_CORE("/debug set core 1");
+    WEE_CHECK_MSG_CORE("", "debug: \"core\" => 1");
     LONGS_EQUAL(1, weechat_debug_core);
     WEE_CMD_CORE("/debug set core 2");
+    WEE_CHECK_MSG_CORE("", "debug: \"core\" => 2");
     LONGS_EQUAL(2, weechat_debug_core);
     WEE_CMD_CORE("/debug set core 0");
+    WEE_CHECK_MSG_CORE("", "Debug disabled for \"core\"");
     LONGS_EQUAL(0, weechat_debug_core);
 
-    /* test command "/debug tags" */
-    /* TODO: write tests */
+    /* /debug tags */
+    LONGS_EQUAL(0, gui_chat_display_tags);
+    WEE_CMD_CORE("/debug tags");
+    LONGS_EQUAL(1, gui_chat_display_tags);
+    WEE_CMD_CORE("/debug tags");
+    LONGS_EQUAL(0, gui_chat_display_tags);
 
-    /* test command "/debug term" */
-    /* TODO: write tests */
+    /* /debug term */
+    WEE_CMD_CORE("/debug term");
+    WEE_CHECK_MSG_REGEX_CORE("TERM=.*size:");
 
-    /* test command "/debug time" */
-    /* TODO: write tests */
+    /* /debug time */
+    WEE_CMD_CORE_MIN_ARGS("/debug time", "/debug time");
+    WEE_CMD_CORE("/debug time /print test");
+    WEE_CHECK_MSG_CORE("", "test");
 
-    /* test command "/debug unicode" */
+    /* /debug unicode */
+    WEE_CMD_CORE_MIN_ARGS("/debug unicode", "/debug unicode");
     WEE_CMD_CORE(command_debug_unicode);
     WEE_CHECK_MSG_CORE("", "  \"\u00E9\u26C4\": 5 / 2, 2 / 3, 3, 3");
     WEE_CHECK_MSG_CORE("", "  \"\u00E9\" (U+00E9, 233, 0xC3 0xA9): 2 / 1, 1 / 1, 1, 1, 1");
     WEE_CHECK_MSG_CORE("", "  \"\u26C4\" (U+26C4, 9924, 0xE2 0x9B 0x84): 3 / 1, 1 / 2, 2, 2, 2");
 
-    /* test command "/debug windows" */
-    /* TODO: write tests */
+    /* /debug url */
+    LONGS_EQUAL(0, url_debug);
+    WEE_CMD_CORE("/debug url");
+    LONGS_EQUAL(1, url_debug);
+    WEE_CHECK_MSG_CORE("", "Debug hook_url: enabled");
+    WEE_CMD_CORE("/debug url");
+    LONGS_EQUAL(0, url_debug);
+    WEE_CHECK_MSG_CORE("", "Debug hook_url: disabled");
+
+    /* /debug windows */
+    WEE_CMD_CORE("/debug windows");
+    WEE_CHECK_MSG_CORE("", "Windows tree:");
+
+    /* /debug whitespace */
+    LONGS_EQUAL(0, gui_chat_whitespace_mode);
+    WEE_CMD_CORE("/debug whitespace");
+    LONGS_EQUAL(1, gui_chat_whitespace_mode);
+    WEE_CMD_CORE("/debug whitespace");
+    LONGS_EQUAL(0, gui_chat_whitespace_mode);
 }
 
 /*
