@@ -79,6 +79,18 @@ extern "C"
 #define WEE_CHECK_MSG_CORE(__prefix, __message)                         \
     WEE_CHECK_MSG_BUFFER("core.weechat", __prefix, __message);
 
+#define WEE_CHECK_MSG_REGEX_BUFFER(__buffer_name, __regex)              \
+    if (!record_search_msg_regex (__buffer_name, __regex))              \
+    {                                                                   \
+        char **msg = command_build_error (__buffer_name, NULL,          \
+                                          __regex);                     \
+        record_dump (msg);                                              \
+        FAIL(string_dyn_free (msg, 0));                                 \
+    }
+
+#define WEE_CHECK_MSG_REGEX_CORE(__regex)                               \
+    WEE_CHECK_MSG_REGEX_BUFFER("core.weechat", __regex);
+
 
 TEST_GROUP(CoreCommand)
 {
@@ -106,9 +118,14 @@ TEST_GROUP(CoreCommand)
         msg = string_dyn_alloc (1024);
         string_dyn_concat (msg, "Message not displayed on buffer ", -1);
         string_dyn_concat (msg, buffer_name, -1);
-        string_dyn_concat (msg, ": prefix=\"", -1);
-        string_dyn_concat (msg, prefix, -1);
-        string_dyn_concat (msg, "\", message=\"", -1);
+        string_dyn_concat (msg, ": ", -1);
+        if (prefix)
+        {
+            string_dyn_concat (msg, "prefix=\"", -1);
+            string_dyn_concat (msg, prefix, -1);
+            string_dyn_concat (msg, "\", ", -1);
+        }
+        string_dyn_concat (msg, "message=\"", -1);
         string_dyn_concat (msg, message, -1);
         string_dyn_concat (msg, "\"\n", -1);
         string_dyn_concat (msg, "All messages displayed:\n", -1);
