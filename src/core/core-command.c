@@ -2751,9 +2751,17 @@ COMMAND_CALLBACK(filter)
         else
         {
             if (gui_filters_enabled)
+            {
                 gui_filter_global_disable ();
+                gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
+                                           _("Message filtering disabled"));
+            }
             else
+            {
                 gui_filter_global_enable ();
+                gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
+                                           _("Message filtering enabled"));
+            }
         }
         return WEECHAT_RC_OK;
     }
