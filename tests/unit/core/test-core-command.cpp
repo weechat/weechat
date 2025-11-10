@@ -978,7 +978,58 @@ TEST(CoreCommand, Filter)
 
 TEST(CoreCommand, Help)
 {
-    /* TODO: write tests */
+    WEE_CMD_CORE_ERROR_MSG(
+        "/help xxx",
+        "No help available, \"xxx\" is not a command or an option");
+
+    /* /help, /help -list, /help -listfull */
+    WEE_CMD_CORE("/help");
+    WEE_CHECK_MSG_CORE("", "[core]");
+    WEE_CMD_CORE("/help -list");
+    WEE_CHECK_MSG_CORE("", "[core]");
+    WEE_CMD_CORE("/help -listfull");
+    WEE_CHECK_MSG_CORE("", "[core]");
+    WEE_CMD_CORE("/help -listfull core irc fset");
+    WEE_CHECK_MSG_CORE("", "[core]");
+    WEE_CHECK_MSG_CORE("", "[irc]");
+    WEE_CHECK_MSG_CORE("", "[fset]");
+
+    /* /help <command> */
+    WEE_CMD_CORE("/help help");
+    WEE_CHECK_MSG_CORE("", "display help about commands and options");
+
+    /* /help <option> (with defined value) */
+    /* boolean */
+    WEE_CMD_CORE("/help weechat.look.confirm_quit");
+    WEE_CHECK_MSG_CORE("", "Option \"weechat.look.confirm_quit\":");
+    /* integer */
+    WEE_CMD_CORE("/help weechat.look.color_pairs_auto_reset");
+    WEE_CHECK_MSG_CORE("", "Option \"weechat.look.color_pairs_auto_reset\":");
+    /* string */
+    WEE_CMD_CORE("/help weechat.look.bar_more_down");
+    WEE_CHECK_MSG_CORE("", "Option \"weechat.look.bar_more_down\":");
+    /* color */
+    WEE_CMD_CORE("/help weechat.color.bar_more");
+    WEE_CHECK_MSG_CORE("", "Option \"weechat.color.bar_more\":");
+    /* enum */
+    WEE_CMD_CORE("/help weechat.look.input_share");
+    WEE_CHECK_MSG_CORE("", "Option \"weechat.look.input_share\":");
+
+    /* /help <option> (with undefined value: test with a new IRC server) */
+    WEE_CMD_CORE("/server add test 127.0.0.1");
+    /* boolean */
+    WEE_CMD_CORE("/help irc.server.test.autojoin_dynamic");
+    WEE_CHECK_MSG_CORE("", "Option \"irc.server.test.autojoin_dynamic\":");
+    /* integer */
+    WEE_CMD_CORE("/help irc.server.test.autojoin_delay");
+    WEE_CHECK_MSG_CORE("", "Option \"irc.server.test.autojoin_delay\":");
+    /* string */
+    WEE_CMD_CORE("/help irc.server.test.autojoin");
+    WEE_CHECK_MSG_CORE("", "Option \"irc.server.test.autojoin\":");
+    /* enum */
+    WEE_CMD_CORE("/help irc.server.test.sasl_fail");
+    WEE_CHECK_MSG_CORE("", "Option \"irc.server.test.sasl_fail\":");
+    WEE_CMD_CORE("/server del test");
 }
 
 /*
