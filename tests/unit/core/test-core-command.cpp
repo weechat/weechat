@@ -582,7 +582,45 @@ TEST(CoreCommand, Command)
 
 TEST(CoreCommand, Cursor)
 {
-    /* TODO: write tests */
+    WEE_CMD_CORE_ERROR_GENERIC("/cursor xxx");
+
+    WEE_CMD_CORE("/window bare");
+    WEE_CMD_CORE("/cursor");
+    WEE_CMD_CORE("/window bare");
+    WEE_CMD_CORE("/cursor");
+    WEE_CMD_CORE("/cursor");
+
+    /* /cursor go, /cursor stop */
+    WEE_CMD_CORE_MIN_ARGS("/cursor go", "/cursor go");
+    WEE_CMD_CORE_ERROR_GENERIC("/cursor go x,y");
+    WEE_CMD_CORE_ERROR_GENERIC("/cursor go xxx");
+    WEE_CMD_CORE("/cursor go 0,0");
+    WEE_CMD_CORE("/cursor stop");
+    WEE_CMD_CORE("/cursor go chat");
+    WEE_CMD_CORE("/cursor stop");
+    WEE_CMD_CORE("/cursor go chat bottom_left");
+    WEE_CMD_CORE("/cursor stop");
+
+    /* /cursor move, /cursor stop */
+    WEE_CMD_CORE_MIN_ARGS("/cursor move", "/cursor move");
+    WEE_CMD_CORE_ERROR_GENERIC("/cursor move xxx");
+    WEE_CMD_CORE("/cursor move up");
+    WEE_CMD_CORE("/cursor move down");
+    WEE_CMD_CORE("/cursor move left");
+    WEE_CMD_CORE("/cursor move right");
+    WEE_CMD_CORE("/cursor move top_left");
+    WEE_CMD_CORE("/cursor move top_right");
+    WEE_CMD_CORE("/cursor move bottom_left");
+    WEE_CMD_CORE("/cursor move bottom_right");
+    WEE_CMD_CORE("/cursor move edge_top");
+    WEE_CMD_CORE("/cursor move edge_bottom");
+    WEE_CMD_CORE("/cursor move edge_left");
+    WEE_CMD_CORE("/cursor move edge_right");
+    WEE_CMD_CORE("/cursor move area_up");
+    WEE_CMD_CORE("/cursor move area_down");
+    WEE_CMD_CORE("/cursor move area_left");
+    WEE_CMD_CORE("/cursor move area_right");
+    WEE_CMD_CORE("/cursor stop");
 }
 
 /*
