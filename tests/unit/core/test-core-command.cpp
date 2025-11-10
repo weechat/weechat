@@ -834,7 +834,43 @@ TEST(CoreCommand, Debug)
 
 TEST(CoreCommand, Eval)
 {
-    /* TODO: write tests */
+    WEE_CMD_CORE_MIN_ARGS("/eval", "/eval");
+
+    /* /eval */
+    WEE_CMD_CORE("/eval /print test");
+    WEE_CHECK_MSG_CORE("", "test");
+
+    /* /eval -d */
+    WEE_CMD_CORE("/eval -d /print test");
+    WEE_CHECK_MSG_REGEX_CORE("eval_expression\\(\"/print test\"\\)");
+    WEE_CHECK_MSG_CORE("", "test");
+
+    /* /eval -n */
+    WEE_CMD_CORE("/eval -n ${calc:1+1}");
+    WEE_CHECK_MSG_CORE("", "== [2]");
+
+    /* /eval -c -n */
+    WEE_CMD_CORE("/eval -c -n abc == abc");
+    WEE_CHECK_MSG_CORE("", "== [1]");
+    WEE_CMD_CORE("/eval -c -n abc != abc");
+    WEE_CHECK_MSG_CORE("", "== [0]");
+
+    /* /eval -c -n -d */
+    WEE_CMD_CORE("/eval -c -n -d abc == abc");
+    WEE_CHECK_MSG_REGEX_CORE("eval_expression\\(\"abc == abc\"\\)");
+    WEE_CHECK_MSG_CORE("", "== [1]");
+
+    /* /eval -s */
+    WEE_CMD_CORE("/eval -s /print test1;/print test2");
+    WEE_CHECK_MSG_CORE("", "test1");
+    WEE_CHECK_MSG_CORE("", "test2");
+
+    /* /eval -s -d */
+    WEE_CMD_CORE("/eval -s -d /print test1;/print test2");
+    WEE_CHECK_MSG_REGEX_CORE("eval_expression\\(\"/print test1\"\\)");
+    WEE_CHECK_MSG_REGEX_CORE("eval_expression\\(\"/print test2\"\\)");
+    WEE_CHECK_MSG_CORE("", "test1");
+    WEE_CHECK_MSG_CORE("", "test2");
 }
 
 /*
