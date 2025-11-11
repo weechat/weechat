@@ -1372,7 +1372,23 @@ TEST(CoreCommand, Reload)
 
 TEST(CoreCommand, Repeat)
 {
-    /* TODO: write tests */
+    WEE_CMD_CORE_MIN_ARGS("/repeat", "/repeat");
+    WEE_CMD_CORE_MIN_ARGS("/repeat 2", "/repeat");
+
+    /* /repeat <count> */
+    WEE_CMD_CORE_ERROR_MSG("/repeat xxx /yyy", "Invalid number: \"xxx\"");
+    WEE_CMD_CORE("/repeat 2 /print test ${repeat_index}");
+    WEE_CHECK_MSG_CORE("", "test 1");
+    WEE_CHECK_MSG_CORE("", "test 2");
+
+    /* /repeat -interval */
+    WEE_CMD_CORE_MIN_ARGS("/repeat -interval", "/repeat");
+    WEE_CMD_CORE_ERROR_GENERIC("/repeat -interval xxx 2 /yyy");
+    WEE_CMD_CORE("/repeat -interval 0 2 /print test");
+    WEE_CHECK_MSG_CORE("", "test");
+    WEE_CMD_CORE("/repeat -interval 0 2 /print test ${repeat_index}");
+    WEE_CHECK_MSG_CORE("", "test 1");
+    WEE_CHECK_MSG_CORE("", "test 2");
 }
 
 /*
