@@ -1288,7 +1288,56 @@ TEST(CoreCommand, Print)
 
 TEST(CoreCommand, Proxy)
 {
-    /* TODO: write tests */
+    WEE_CMD_CORE_ERROR_GENERIC("/proxy xxx");
+
+    /* /proxy, /proxy list */
+    WEE_CMD_CORE("/proxy");
+    WEE_CHECK_MSG_CORE("", "No proxy defined");
+    WEE_CMD_CORE("/proxy list");
+    WEE_CHECK_MSG_CORE("", "No proxy defined");
+
+    /* /proxy add, /proxy addreplace, /proxy del */
+    WEE_CMD_CORE_MIN_ARGS("/proxy add", "/proxy add");
+    WEE_CMD_CORE_MIN_ARGS("/proxy add local", "/proxy add");
+    WEE_CMD_CORE_MIN_ARGS("/proxy add local http", "/proxy add");
+    WEE_CMD_CORE_MIN_ARGS("/proxy add local http 127.0.0.1", "/proxy add");
+    WEE_CMD_CORE_MIN_ARGS("/proxy addreplace", "/proxy addreplace");
+    WEE_CMD_CORE_MIN_ARGS("/proxy addreplace local", "/proxy addreplace");
+    WEE_CMD_CORE_MIN_ARGS("/proxy addreplace local http", "/proxy addreplace");
+    WEE_CMD_CORE_MIN_ARGS("/proxy addreplace local http 127.0.0.1", "/proxy addreplace");
+    WEE_CMD_CORE_ERROR_MSG("/proxy add local xxx 127.0.0.1 8888",
+                           "Invalid type \"xxx\" for proxy \"local\"");
+    WEE_CMD_CORE_ERROR_MSG("/proxy add local http 127.0.0.1 xxx",
+                           "Invalid port \"xxx\" for proxy \"local\"");
+    WEE_CMD_CORE("/proxy add local http 127.0.0.1 8888");
+    WEE_CHECK_MSG_CORE("", "Proxy \"local\" added");
+    WEE_CMD_CORE("/proxy list");
+    WEE_CHECK_MSG_CORE("", "List of proxies:");
+    WEE_CMD_CORE_ERROR_MSG("/proxy add local http 127.0.0.1 8888",
+                           "Proxy \"local\" already exists");
+    WEE_CMD_CORE("/proxy addreplace local http 127.0.0.1 9999");
+    WEE_CHECK_MSG_CORE("", "Proxy \"local\" updated");
+    WEE_CMD_CORE("/proxy addreplace local http 127.0.0.1 9999 user password");
+    WEE_CHECK_MSG_CORE("", "Proxy \"local\" updated");
+    WEE_CMD_CORE("/proxy del local");
+    WEE_CHECK_MSG_CORE("", "Proxy \"local\" deleted");
+
+    /* /proxy set */
+    WEE_CMD_CORE("/proxy add local http 127.0.0.1 9999 user password");
+    WEE_CMD_CORE_MIN_ARGS("/proxy set", "/proxy set");
+    WEE_CMD_CORE_MIN_ARGS("/proxy set local", "/proxy set");
+    WEE_CMD_CORE_MIN_ARGS("/proxy set local name", "/proxy set");
+    WEE_CMD_CORE_ERROR_MSG("/proxy set local xxx yyy",
+                           "Unable to set option \"xxx\" for proxy \"local\"");
+    WEE_CMD_CORE("/proxy set local name local2");
+    WEE_CMD_CORE_ERROR_MSG("/proxy set local name local2", "Proxy \"local\" not found");
+    WEE_CMD_CORE("/proxy set local2 type socks4");
+    WEE_CMD_CORE("/proxy set local2 ipv6 disable");
+    WEE_CMD_CORE("/proxy set local2 address localhost");
+    WEE_CMD_CORE("/proxy set local2 port 1234");
+    WEE_CMD_CORE("/proxy set local2 username user2");
+    WEE_CMD_CORE("/proxy set local2 password password2");
+    WEE_CMD_CORE("/proxy del local2");
 }
 
 /*
