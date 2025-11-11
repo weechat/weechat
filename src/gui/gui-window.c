@@ -185,6 +185,8 @@ gui_window_get_context_at_xy (struct t_gui_window *window,
     *chat = 1;
 
     /* get line */
+    if (win_y >= window->coords_size)
+        return;
     *line = window->coords[win_y].line;
     if (!*line)
         return;
@@ -222,6 +224,7 @@ gui_window_get_context_at_xy (struct t_gui_window *window,
     {
         /* X is in message (or after) */
         data_next_line = ((win_y < window->win_chat_height - 1)
+                          && (win_y + 1 < window->coords_size)
                           && (window->coords[win_y + 1].line == *line)) ?
             window->coords[win_y + 1].data : NULL;
         ptr_data = gui_chat_string_add_offset_screen (window->coords[win_y].data,
