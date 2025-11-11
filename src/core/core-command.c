@@ -5825,7 +5825,7 @@ COMMAND_CALLBACK(proxy)
     (void) data;
     (void) buffer;
 
-    /* list of bars */
+    /* list of proxies */
     if ((argc == 1) || (string_strcmp (argv[1], "list") == 0))
     {
         command_proxy_list ();
