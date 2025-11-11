@@ -310,8 +310,6 @@ TEST(CoreCommand, Buffer)
     WEE_CMD_CORE_MIN_ARGS("/buffer add", "/buffer add");
     WEE_CMD_CORE_ERROR_MSG("/buffer add weechat",
                            "Buffer name \"weechat\" is reserved for WeeChat");
-    WEE_CMD_CORE_ERROR_MSG("/buffer add weechat",
-                           "Buffer name \"weechat\" is reserved for WeeChat");
     WEE_CMD_CORE_ERROR_GENERIC("/buffer close 1a-b");
     WEE_CMD_CORE_ERROR_GENERIC("/buffer close 2-b");
     WEE_CMD_CORE_ERROR_GENERIC("/buffer close 1a-5");
