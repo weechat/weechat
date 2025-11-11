@@ -1431,6 +1431,38 @@ TEST(CoreCommand, Set)
     /* TODO: write tests */
 }
 
+TEST(CoreCommand, Sys)
+{
+    WEE_CMD_CORE_MIN_ARGS("/sys", "/sys");
+    WEE_CMD_CORE_ERROR_GENERIC("/sys xxx");
+
+    /* /sys get */
+    WEE_CMD_CORE_ERROR_GENERIC("/sys get xxx");
+    WEE_CMD_CORE("/sys get rlimit");
+    WEE_CHECK_MSG_CORE("", "Resource limits (see \"man getrlimit\" for help):");
+    WEE_CMD_CORE("/sys get rusage");
+    WEE_CHECK_MSG_CORE("", "Resource usage (see \"man getrusage\" for help):");
+
+    /* /sys suspend */
+    /* TODO: write tests */
+
+    /* /sys malloc_trim */
+#ifdef HAVE_MALLOC_TRIM
+    WEE_CMD_CORE_ERROR_GENERIC("/sys malloc_trim xxx");
+    WEE_CMD_CORE_ERROR_GENERIC("/sys malloc_trim -10");
+    WEE_CMD_CORE("/sys malloc_trim 512");
+    WEE_CMD_CORE("/sys malloc_trim");
+#else
+    WEE_CMD_CORE_ERROR_MSG(
+        "/sys malloc_trim",
+        "Function \"malloc_trim\" is not available on this system");
+#endif
+
+    /* /sys waitpid */
+    WEE_CMD_CORE_ERROR_GENERIC("/sys waitpid xxx");
+    WEE_CMD_CORE("/sys waitpid 3");
+}
+
 /*
  * Tests functions:
  *   command_toggle
