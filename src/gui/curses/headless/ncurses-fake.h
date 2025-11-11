@@ -63,8 +63,8 @@
     y = 0;
 
 #define getmaxyx(win, x, y)                     \
-    x = 0;                                      \
-    y = 0;
+    x = COLS - 1;                               \
+    y = LINES - 1;
 
 struct _window
 {
