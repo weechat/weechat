@@ -5599,7 +5599,8 @@ COMMAND_CALLBACK(print)
             }
             else
             {
-                util_parse_time (argv[i], &tv_date);
+                if (!util_parse_time (argv[i], &tv_date))
+                    COMMAND_ERROR;
             }
         }
         else if (string_strcmp (argv[i], "-tags") == 0)
