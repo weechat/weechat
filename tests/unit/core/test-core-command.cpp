@@ -1187,7 +1187,98 @@ TEST(CoreCommand, Plugin)
 
 TEST(CoreCommand, Print)
 {
-    /* TODO: write tests */
+    WEE_CMD_CORE_ERROR_GENERIC("/print -xxx");
+
+    /* /print */
+    WEE_CMD_CORE("/print");
+    WEE_CHECK_MSG_CORE("", "");
+    WEE_CMD_CORE("/print hello");
+    WEE_CHECK_MSG_CORE("", "hello");
+    WEE_CMD_CORE("/print \\-hello");
+    WEE_CHECK_MSG_CORE("", "-hello");
+    WEE_CMD_CORE("/print prefix\\thello");
+    WEE_CHECK_MSG_CORE("prefix", "hello");
+
+    /* /print -buffer */
+    WEE_CMD_CORE("/buffer add test");
+    WEE_CMD_CORE_ERROR_GENERIC("/print -buffer");
+    WEE_CMD_CORE_ERROR_GENERIC("/print -buffer xxx");
+    WEE_CMD_CORE("/print -buffer core.test hello");
+    WEE_CHECK_MSG_BUFFER("core.test", "", "hello");
+    WEE_CMD_CORE("/print -buffer core.weechat hello");
+    WEE_CHECK_MSG_CORE("", "hello");
+    WEE_CMD_CORE("/buffer close test");
+
+    /* /print -core, /print -current */
+    WEE_CMD_CORE("/print -core hello");
+    WEE_CHECK_MSG_CORE("", "hello");
+    WEE_CMD_CORE("/print -current hello");
+    WEE_CHECK_MSG_CORE("", "hello");
+
+    /* /print -newbuffer */
+    WEE_CMD_CORE_ERROR_GENERIC("/print -newbuffer");
+    WEE_CMD_CORE_ERROR_MSG("/print -newbuffer weechat",
+                           "Buffer name \"weechat\" is reserved for WeeChat");
+    WEE_CMD_CORE("/print -newbuffer test hello");
+    WEE_CHECK_MSG_BUFFER("core.test", "", "hello");
+    WEE_CMD_CORE("/buffer close test");
+    WEE_CMD_CORE("/print -newbuffer test -free -switch hello");
+    WEE_CHECK_MSG_BUFFER("core.test", "", "hello");
+    WEE_CMD_CORE("/buffer close test");
+
+    /* /print -escape */
+    WEE_CMD_CORE("/print -escape hello\\a");
+    WEE_CHECK_MSG_CORE("", "hello\a");
+
+    /* /print -y */
+    WEE_CMD_CORE("/buffer add -free test");
+    WEE_CMD_CORE_ERROR_GENERIC("/print -buffer core.test -y");
+    WEE_CMD_CORE_ERROR_GENERIC("/print -buffer core.test -y xxx hello");
+    WEE_CMD_CORE("/print -buffer core.test -y 5 hello");
+    WEE_CHECK_MSG_BUFFER("core.test", "", "hello");
+    WEE_CMD_CORE("/print -buffer core.test -y -1 hello");
+    WEE_CHECK_MSG_BUFFER("core.test", "", "hello");
+    WEE_CMD_CORE("/buffer close test");
+
+    /* /print -date */
+    WEE_CMD_CORE_ERROR_GENERIC("/print -date");
+    WEE_CMD_CORE_ERROR_GENERIC("/print -date xxx");
+    WEE_CMD_CORE_ERROR_GENERIC("/print -date -x");
+    WEE_CMD_CORE_ERROR_GENERIC("/print -date +x");
+    WEE_CMD_CORE("/print -date 0 hello");
+    WEE_CHECK_MSG_CORE("", "hello");
+    WEE_CMD_CORE("/print -date -1 hello");
+    WEE_CHECK_MSG_CORE("", "hello");
+    WEE_CMD_CORE("/print -date +1 hello");
+    WEE_CHECK_MSG_CORE("", "hello");
+    WEE_CMD_CORE("/print -date 10:32:05 hello");
+    WEE_CHECK_MSG_CORE("", "hello");
+    WEE_CMD_CORE("/print -date 2025-10-11T10:32:09.123456Z hello");
+    WEE_CHECK_MSG_CORE("", "hello");
+
+    /* /print -tags */
+    WEE_CMD_CORE_ERROR_GENERIC("/print -tags");
+    WEE_CMD_CORE("/print -tags tag1,tag2,tag3 hello");
+    WEE_CHECK_MSG_CORE("", "hello");
+
+    /* /print -action, /print -error, /print -join, /print -network, /print -quit */
+    WEE_CMD_CORE("/print -action hello");
+    WEE_CHECK_MSG_CORE(GUI_CHAT_PREFIX_ACTION_DEFAULT, "hello");
+    WEE_CMD_CORE("/print -error hello");
+    WEE_CHECK_MSG_CORE(GUI_CHAT_PREFIX_ERROR_DEFAULT, "hello");
+    WEE_CMD_CORE("/print -join hello");
+    WEE_CHECK_MSG_CORE(GUI_CHAT_PREFIX_JOIN_DEFAULT, "hello");
+    WEE_CMD_CORE("/print -network hello");
+    WEE_CHECK_MSG_CORE(GUI_CHAT_PREFIX_NETWORK_DEFAULT, "hello");
+    WEE_CMD_CORE("/print -quit hello");
+    WEE_CHECK_MSG_CORE(GUI_CHAT_PREFIX_QUIT_DEFAULT, "hello");
+
+    /* /print -stdout, /print -stderr */
+    WEE_CMD_CORE("/print -stdout hello");
+    WEE_CMD_CORE("/print -stderr hello");
+
+    /* /print -beep */
+    WEE_CMD_CORE("/print -beep");
 }
 
 /*
