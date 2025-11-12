@@ -7984,8 +7984,18 @@ COMMAND_CALLBACK(window)
     {
         error = NULL;
         number = strtol (argv[3], &error, 10);
-        if (error && !error[0])
+        if (error && !error[0] && (number >= 1))
+        {
             ptr_win = gui_window_search_by_number (number);
+            if (!ptr_win)
+            {
+                gui_chat_printf (NULL,
+                                 _("%sWindow \"%s\" not found"),
+                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                 argv[3]);
+                return WEECHAT_RC_ERROR;
+            }
+        }
         else
         {
             /* invalid number */
