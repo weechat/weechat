@@ -8035,11 +8035,10 @@ COMMAND_CALLBACK(window)
     /* horizontal scroll in window (for buffers with free content) */
     if (string_strcmp (argv[1], "scroll_horiz") == 0)
     {
-        if ((argc > win_args)
-            && (ptr_win->buffer->type == GUI_BUFFER_TYPE_FREE))
-        {
-            gui_window_scroll_horiz (ptr_win, argv[win_args]);
-        }
+        COMMAND_MIN_ARGS(win_args + 1, argv[1]);
+        if (ptr_win->buffer->type != GUI_BUFFER_TYPE_FREE)
+            COMMAND_ERROR;
+        gui_window_scroll_horiz (ptr_win, argv[win_args]);
         return WEECHAT_RC_OK;
     }
 
