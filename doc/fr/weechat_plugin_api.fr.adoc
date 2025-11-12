@@ -4745,6 +4745,159 @@ This function is not available in scripting API.
 
 Quelques fonctions utiles.
 
+==== util_parse_int
+
+_WeeChat ≥ 4.8.0._
+
+Analyser un nombre entier de type "int" dans une chaîne.
+
+Prototype :
+
+[source,c]
+----
+int weechat_util_parse_int (const char *string, int base, int *result);
+----
+
+Paramètres :
+
+* _string_ : chaîne à analyser
+* _base_ : peut être 0 (automatique) ou un entier entre 2 et 36 (inclus)
+* _result_ : pointeur vers une variable mise à jour si la chaîne est correctement analysée
+  (si le pointeur est NULL, le nombre trouvé n'est pas retourné)
+
+Valeur de retour :
+
+* 1 : OK
+* 0 : erreur
+
+Les chaînes suivantes sont invalides et la fonction retourne 0 :
+
+* chaîne vide
+* nombre avec des caractères non numériques après
+* nombre < INT_MIN (valeur minimale pour une variable de type "int")
+* nombre > INT_MAX (valeur maximale pour une variable de type "int")
+* entier invalide pour la _base_ donnée
+
+Exemples en C :
+
+[source,c]
+----
+int nombre;
+if (weechat_util_parse_int ("1234", 10, &nombre))
+{
+    /* nombre == 1234 */
+}
+if (!weechat_util_parse_int ("abc", 10, &nombre))
+{
+    /* erreur d'analyse, nombre est inchangé */
+}
+----
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
+==== util_parse_long
+
+_WeeChat ≥ 4.8.0._
+
+Analyser un nombre entier de type "long" dans une chaîne.
+
+Prototype :
+
+[source,c]
+----
+int weechat_util_parse_long (const char *string, int base, long *result);
+----
+
+Paramètres :
+
+* _string_ : chaîne à analyser
+* _base_ : peut être 0 (automatique) ou un entier entre 2 et 36 (inclus)
+* _result_ : pointeur vers une variable mise à jour si la chaîne est correctement analysée
+  (si le pointeur est NULL, le nombre trouvé n'est pas retourné)
+
+Valeur de retour :
+
+* 1 : OK
+* 0 : erreur
+
+Les chaînes suivantes sont invalides et la fonction retourne 0 :
+
+* chaîne vide
+* nombre avec des caractères non numériques après
+* nombre < LONG_MIN (valeur minimale pour une variable de type "long")
+* nombre > LONG_MAX (valeur maximale pour une variable de type "long")
+* entier invalide pour la _base_ donnée
+
+Exemples en C :
+
+[source,c]
+----
+long nombre;
+if (weechat_util_parse_long ("1234", 10, &nombre))
+{
+    /* nombre == 1234 */
+}
+if (!weechat_util_parse_long ("abc", 10, &nombre))
+{
+    /* erreur d'analyse, nombre est inchangé */
+}
+----
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
+==== util_parse_longlong
+
+_WeeChat ≥ 4.8.0._
+
+Analyser un nombre entier de type "long long" dans une chaîne.
+
+Prototype :
+
+[source,c]
+----
+int weechat_util_parse_longlong (const char *string, int base, long long *result);
+----
+
+Paramètres :
+
+* _string_ : chaîne à analyser
+* _base_ : peut être 0 (automatique) ou un entier entre 2 et 36 (inclus)
+* _result_ : pointeur vers une variable mise à jour si la chaîne est correctement analysée
+  (si le pointeur est NULL, le nombre trouvé n'est pas retourné)
+
+Valeur de retour :
+
+* 1 : OK
+* 0 : erreur
+
+Les chaînes suivantes sont invalides et la fonction retourne 0 :
+
+* chaîne vide
+* nombre avec des caractères non numériques après
+* nombre < LLONG_MIN (valeur minimale pour une variable de type "long long")
+* nombre > LLONG_MAX (valeur maximale pour une variable de type "long long")
+* entier invalide pour la _base_ donnée
+
+Exemples en C :
+
+[source,c]
+----
+long long nombre;
+if (weechat_util_parse_longlong ("1234", 10, &nombre))
+{
+    /* nombre == 1234 */
+}
+if (!weechat_util_parse_longlong ("abc", 10, &nombre))
+{
+    /* erreur d'analyse, nombre est inchangé */
+}
+----
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
 ==== util_timeval_cmp
 
 Comparer deux structures "timeval".

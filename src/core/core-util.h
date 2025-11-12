@@ -25,6 +25,11 @@
 #include <time.h>
 #include <sys/time.h>
 
+/* parse numbers */
+extern int util_parse_int (const char *string, int base, int *result);
+extern int util_parse_long (const char *string, int base, long *result);
+extern int util_parse_longlong (const char *string, int base, long long *result);
+
 /* timeval */
 extern int util_timeval_cmp (struct timeval *tv1, struct timeval *tv2);
 extern long long util_timeval_diff (struct timeval *tv1, struct timeval *tv2);

@@ -4874,6 +4874,162 @@ Questa funzione non è disponibile nelle API per lo scripting.
 
 Alcune funzioni utili.
 
+// TRANSLATION MISSING
+==== util_parse_int
+
+_WeeChat ≥ 4.8.0._
+
+Parse an integer number of type "int" in a string.
+
+Prototipo:
+
+[source,c]
+----
+int weechat_util_parse_int (const char *string, int base, int *result);
+----
+
+Argomenti:
+
+* _string_: string to parse
+* _base_: can be 0 (automatic) or an integer between 2 and 36 (inclusive)
+* _result_: pointer to a variable updated if the string is correctly parsed
+  (if pointer is NULL, the number found is not returned)
+
+Valore restituito:
+
+* 1: OK
+* 0: error
+
+The following strings are invalid and the function returns 0:
+
+* empty string
+* number with extra non-digits after
+* number < INT_MIN (min value for a variable of type "int")
+* number > INT_MAX (max value for a variable of type "int")
+* invalid integer for the given _base_
+
+Esempi in C:
+
+[source,c]
+----
+int number;
+if (weechat_util_parse_int ("1234", 10, &number))
+{
+    /* number == 1234 */
+}
+if (!weechat_util_parse_int ("abc", 10, &number))
+{
+    /* parsing error, number is unchanged */
+}
+----
+
+[NOTE]
+Questa funzione non è disponibile nelle API per lo scripting.
+
+// TRANSLATION MISSING
+==== util_parse_long
+
+_WeeChat ≥ 4.8.0._
+
+Parse an integer number of type "long" in a string.
+
+Prototipo:
+
+[source,c]
+----
+int weechat_util_parse_long (const char *string, int base, long *result);
+----
+
+Argomenti:
+
+* _string_: string to parse
+* _base_: can be 0 (automatic) or an integer between 2 and 36 (inclusive)
+* _result_: pointer to a variable updated if the string is correctly parsed
+  (if pointer is NULL, the number found is not returned)
+
+Valore restituito:
+
+* 1: OK
+* 0: error
+
+The following strings are invalid and the function returns 0:
+
+* empty string
+* number with extra non-digits after
+* number < LONG_MIN (min value for a variable of type "long")
+* number > LONG_MAX (max value for a variable of type "long")
+* invalid integer for the given _base_
+
+Esempi in C:
+
+[source,c]
+----
+long number;
+if (weechat_util_parse_long ("1234", 10, &number))
+{
+    /* number == 1234 */
+}
+if (!weechat_util_parse_long ("abc", 10, &number))
+{
+    /* parsing error, number is unchanged */
+}
+----
+
+[NOTE]
+Questa funzione non è disponibile nelle API per lo scripting.
+
+// TRANSLATION MISSING
+==== util_parse_longlong
+
+_WeeChat ≥ 4.8.0._
+
+Parse an integer number of type "long long" in a string.
+
+Prototipo:
+
+[source,c]
+----
+int weechat_util_parse_longlong (const char *string, int base, long long *result);
+----
+
+Argomenti:
+
+* _string_: string to parse
+* _base_: can be 0 (automatic) or an integer between 2 and 36 (inclusive)
+* _result_: pointer to a variable updated if the string is correctly parsed
+  (if pointer is NULL, the number found is not returned)
+
+Valore restituito:
+
+* 1: OK
+* 0: error
+
+The following strings are invalid and the function returns 0:
+
+* empty string
+* number with extra non-digits after
+* number < LLONG_MIN (min value for a variable of type "long long")
+* number > LLONG_MAX (max value for a variable of type "long long")
+* invalid integer for the given _base_
+
+Esempi in C:
+
+[source,c]
+----
+long long number;
+if (weechat_util_parse_longlong ("1234", 10, &number))
+{
+    /* number == 1234 */
+}
+if (!weechat_util_parse_longlong ("abc", 10, &number))
+{
+    /* parsing error, number is unchanged */
+}
+----
+
+[NOTE]
+Questa funzione non è disponibile nelle API per lo scripting.
+
 ==== util_timeval_cmp
 
 Confronta due strutture "timeval".

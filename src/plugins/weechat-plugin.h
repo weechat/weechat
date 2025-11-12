@@ -76,7 +76,7 @@ struct t_weelist_item;
  * please change the date with current one; for a second change at same
  * date, increment the 01, otherwise please keep 01.
  */
-#define WEECHAT_PLUGIN_API_VERSION "20250508-01"
+#define WEECHAT_PLUGIN_API_VERSION "20251112-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -460,6 +460,9 @@ struct t_weechat_plugin
     int (*file_compare) (const char *filename1, const char *filename2);
 
     /* util */
+    int (*util_parse_int) (const char *string, int base, int *result);
+    int (*util_parse_long) (const char *string, int base, long *result);
+    int (*util_parse_longlong) (const char *string, int base, long long *result);
     int (*util_timeval_cmp) (struct timeval *tv1, struct timeval *tv2);
     long long (*util_timeval_diff) (struct timeval *tv1, struct timeval *tv2);
     void (*util_timeval_add) (struct timeval *tv, long long interval);
@@ -1533,6 +1536,12 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     (weechat_plugin->file_compress)(__filename1, __filename2)
 
 /* util */
+#define weechat_util_parse_int(__string, __base, __result)              \
+    (weechat_plugin->util_parse_int)(__string, __base, __result)
+#define weechat_util_parse_long(__string, __base, __result)             \
+    (weechat_plugin->util_parse_long)(__string, __base, __result)
+#define weechat_util_parse_longlong(__string, __base, __result)         \
+    (weechat_plugin->util_parse_longlong)(__string, __base, __result)
 #define weechat_util_timeval_cmp(__time1, __time2)                      \
     (weechat_plugin->util_timeval_cmp)(__time1, __time2)
 #define weechat_util_timeval_diff(__time1, __time2)                     \

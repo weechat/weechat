@@ -38,6 +38,33 @@ extern "C"
 #include "src/core/core-util.h"
 }
 
+#define WEE_PARSE_NUMBER(__result, __parsed, __string, __base) \
+    LONGS_EQUAL(                                               \
+        __result,                                              \
+        util_parse_int (__string, __base, NULL));              \
+    LONGS_EQUAL(                                               \
+        __result,                                              \
+        util_parse_int (__string, __base, &number_int));       \
+    if (__result)                                              \
+        LONGS_EQUAL(__parsed, number_int);                     \
+    LONGS_EQUAL(                                               \
+        __result,                                              \
+        util_parse_long (__string, __base, NULL));             \
+    LONGS_EQUAL(                                               \
+        __result,                                              \
+        util_parse_long (__string, __base, &number_long));     \
+    if (__result)                                              \
+        LONGS_EQUAL(__parsed, number_long);                    \
+    LONGS_EQUAL(                                               \
+        __result,                                              \
+        util_parse_longlong (__string, __base, NULL));         \
+    LONGS_EQUAL(                                               \
+        __result,                                              \
+        util_parse_longlong (__string, __base,                 \
+                             &number_longlong));               \
+    if (__result)                                              \
+        CHECK_EQUAL(__parsed, number_longlong);
+
 #define WEE_PARSE_DATE(__result, __sec, __usec, __datetime)    \
     tv.tv_sec = 0;                                             \
     tv.tv_usec = 0;                                            \
@@ -55,6 +82,101 @@ extern "C"
 TEST_GROUP(CoreUtil)
 {
 };
+
+/*
+ * Tests functions:
+ *   util_parse_int
+ *   util_parse_long
+ *   util_parse_longlong
+ */
+
+TEST(CoreUtil, ParseNumber)
+{
+    int number_int;
+    long number_long;
+    long long number_longlong;
+    char str_number[256];
+
+    /* NULL string */
+    WEE_PARSE_NUMBER(0, 0, NULL, 10);
+
+    /* invalid base */
+    WEE_PARSE_NUMBER(0, 0, "123", -1);
+    WEE_PARSE_NUMBER(0, 0, "123", 1);
+    WEE_PARSE_NUMBER(0, 0, "123", 37);
+
+    /* invalid number */
+    WEE_PARSE_NUMBER(0, 0, "", 10);
+    WEE_PARSE_NUMBER(0, 0, " ", 10);
+    WEE_PARSE_NUMBER(0, 0, "-", 10);
+    WEE_PARSE_NUMBER(0, 0, "+", 10);
+    WEE_PARSE_NUMBER(0, 0, "3-", 10);
+    WEE_PARSE_NUMBER(0, 0, "3+", 10);
+    WEE_PARSE_NUMBER(0, 0, "--3", 10);
+    WEE_PARSE_NUMBER(0, 0, "++3", 10);
+    WEE_PARSE_NUMBER(0, 0, ".1", 10);
+    WEE_PARSE_NUMBER(0, 0, "1.", 10);
+    WEE_PARSE_NUMBER(0, 0, "1.2", 10);
+    WEE_PARSE_NUMBER(0, 0, "1,2", 10);
+    WEE_PARSE_NUMBER(0, 0, "a", 10);
+    WEE_PARSE_NUMBER(0, 0, "1a", 10);
+    WEE_PARSE_NUMBER(0, 0, "a1", 10);
+    WEE_PARSE_NUMBER(0, 0, "123 ", 10);
+    WEE_PARSE_NUMBER(0, 0, "12", 2);
+    WEE_PARSE_NUMBER(0, 0, "18", 8);
+    WEE_PARSE_NUMBER(0, 0, "1g", 16);
+
+    /* invalid int: outside range (INT_MIN, INT_MAX) */
+    snprintf (str_number, sizeof (str_number), "%d1", INT_MIN);
+    LONGS_EQUAL(0, util_parse_int (str_number, 10, &number_int));
+    snprintf (str_number, sizeof (str_number), "%d1", INT_MAX);
+    LONGS_EQUAL(0, util_parse_int (str_number, 10, &number_int));
+
+    /* invalid long: outside range (LONG_MIN, LONG_MAX) */
+    snprintf (str_number, sizeof (str_number), "%ld1", LONG_MIN);
+    LONGS_EQUAL(0, util_parse_long (str_number, 10, &number_long));
+    snprintf (str_number, sizeof (str_number), "%ld1", LONG_MAX);
+    LONGS_EQUAL(0, util_parse_long (str_number, 10, &number_long));
+
+    /* invalid long long: outside range (LLONG_MIN, LLONG_MAX) */
+    snprintf (str_number, sizeof (str_number), "%lld1", LLONG_MIN);
+    LONGS_EQUAL(0, util_parse_longlong (str_number, 10, &number_longlong));
+    snprintf (str_number, sizeof (str_number), "%lld1", LLONG_MAX);
+    LONGS_EQUAL(0, util_parse_longlong (str_number, 10, &number_longlong));
+
+    /* OK */
+    WEE_PARSE_NUMBER(1, 12, "12", 10);
+    WEE_PARSE_NUMBER(1, 15, "  15", 10);
+    WEE_PARSE_NUMBER(1, -3, "-3", 10);
+    WEE_PARSE_NUMBER(1, 5, "101", 2);
+    WEE_PARSE_NUMBER(1, 71, "107", 8);
+    WEE_PARSE_NUMBER(1, 30, "1e", 16);
+    WEE_PARSE_NUMBER(1, 31, "1F", 16);
+
+    /* OK, boundary limits for int */
+    snprintf (str_number, sizeof (str_number), "%d", INT_MIN);
+    LONGS_EQUAL(1, util_parse_int (str_number, 10, &number_int));
+    LONGS_EQUAL(INT_MIN, number_int);
+    snprintf (str_number, sizeof (str_number), "%d", INT_MAX);
+    LONGS_EQUAL(1, util_parse_int (str_number, 10, &number_int));
+    LONGS_EQUAL(INT_MAX, number_int);
+
+    /* OK, boundary limits for long */
+    snprintf (str_number, sizeof (str_number), "%ld", LONG_MIN);
+    LONGS_EQUAL(1, util_parse_long (str_number, 10, &number_long));
+    LONGS_EQUAL(LONG_MIN, number_long);
+    snprintf (str_number, sizeof (str_number), "%ld", LONG_MAX);
+    LONGS_EQUAL(1, util_parse_long (str_number, 10, &number_long));
+    LONGS_EQUAL(LONG_MAX, number_long);
+
+    /* OK, boundary limits for long long */
+    snprintf (str_number, sizeof (str_number), "%lld", LLONG_MIN);
+    LONGS_EQUAL(1, util_parse_longlong (str_number, 10, &number_longlong));
+    CHECK_EQUAL(LLONG_MIN, number_longlong);
+    snprintf (str_number, sizeof (str_number), "%lld", LLONG_MAX);
+    LONGS_EQUAL(1, util_parse_longlong (str_number, 10, &number_longlong));
+    CHECK_EQUAL(LLONG_MAX, number_longlong);
+}
 
 /*
  * Tests functions:

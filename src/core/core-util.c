@@ -29,6 +29,7 @@
 #include <stdio.h>
 #include <errno.h>
 #include <string.h>
+#include <limits.h>
 #include <sys/types.h>
 #include <sys/time.h>
 #ifdef HAVE_SYS_RESOURCE_H
@@ -47,6 +48,118 @@
 #include "../gui/gui-window.h"
 #include "../plugins/plugin.h"
 
+
+/*
+ * Parses an integer.
+ *
+ * If result is not NULL, *result is set with the parsed integer in case
+ * there is no error.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
+ */
+
+int
+util_parse_int (const char *string, int base, int *result)
+{
+    long number;
+    char *error;
+
+    if (!string || !string[0])
+        return 0;
+
+    /* base must be 0 or between 2-36 (inclusive) */
+    if ((base < 0) || (base == 1) || (base > 36))
+        return 0;
+
+    errno = 0;
+    error = NULL;
+    number = strtol (string, &error, base);
+
+    if ((errno == ERANGE) || !error || error[0] || (error == string)
+        || (number < INT_MIN) || (number > INT_MAX))
+        return 0;
+
+    if (result)
+        *result = (int)number;
+
+    return 1;
+}
+
+/*
+ * Parses a long integer.
+ *
+ * If result is not NULL, *result is set with the parsed long integer in case
+ * there is no error.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
+ */
+
+int
+util_parse_long (const char *string, int base, long *result)
+{
+    long number;
+    char *error;
+
+    if (!string || !string[0])
+        return 0;
+
+    /* base must be 0 or between 2-36 (inclusive) */
+    if ((base < 0) || (base == 1) || (base > 36))
+        return 0;
+
+    errno = 0;
+    error = NULL;
+    number = strtol (string, &error, base);
+
+    if ((errno == ERANGE) || !error || error[0] || (error == string))
+        return 0;
+
+    if (result)
+        *result = number;
+
+    return 1;
+}
+
+/*
+ * Parses a long long integer.
+ *
+ * If result is not NULL, *result is set with the parsed long integer in case
+ * there is no error.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
+ */
+
+int
+util_parse_longlong (const char *string, int base, long long *result)
+{
+    long long number;
+    char *error;
+
+    if (!string || !string[0])
+        return 0;
+
+    /* base must be 0 or between 2-36 (inclusive) */
+    if ((base < 0) || (base == 1) || (base > 36))
+        return 0;
+
+    errno = 0;
+    error = NULL;
+    number = strtoll (string, &error, base);
+
+    if ((errno == ERANGE) || !error || error[0] || (error == string))
+        return 0;
+
+    if (result)
+        *result = number;
+
+    return 1;
+}
 
 /*
  * Compares two timeval structures.

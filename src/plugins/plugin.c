@@ -695,6 +695,9 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
         new_plugin->file_compress = &dir_file_compress;
         new_plugin->file_compare = &dir_file_compare;
 
+        new_plugin->util_parse_int = &util_parse_int;
+        new_plugin->util_parse_long = &util_parse_long;
+        new_plugin->util_parse_longlong = &util_parse_longlong;
         new_plugin->util_timeval_cmp = &util_timeval_cmp;
         new_plugin->util_timeval_diff = &util_timeval_diff;
         new_plugin->util_timeval_add = &util_timeval_add;

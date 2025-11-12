@@ -12,6 +12,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 - core: add option weechat.completion.cycle
 - core: add hdata for hooks
+- api: add functions util_parse_int, util_parse_long and util_parse_longlong
 
 ### Removed
 
