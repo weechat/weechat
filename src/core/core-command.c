@@ -8027,8 +8027,8 @@ COMMAND_CALLBACK(window)
     /* vertical scroll */
     if (string_strcmp (argv[1], "scroll") == 0)
     {
-        if (argc > win_args)
-            gui_window_scroll (ptr_win, argv[win_args]);
+        COMMAND_MIN_ARGS(win_args + 1, argv[1]);
+        gui_window_scroll (ptr_win, argv[win_args]);
         return WEECHAT_RC_OK;
     }
 
