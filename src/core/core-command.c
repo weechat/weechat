@@ -8110,6 +8110,8 @@ COMMAND_CALLBACK(window)
             {
                 gui_window_split_horizontal (ptr_win, number);
             }
+            else
+                COMMAND_ERROR;
         }
         else
             gui_window_split_horizontal (ptr_win, 50);
@@ -8128,6 +8130,8 @@ COMMAND_CALLBACK(window)
             {
                 gui_window_split_vertical (ptr_win, number);
             }
+            else
+                COMMAND_ERROR;
         }
         else
             gui_window_split_vertical (ptr_win, 50);
