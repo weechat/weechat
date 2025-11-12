@@ -8170,6 +8170,8 @@ COMMAND_CALLBACK(window)
                 gui_window_resize (ptr_tree, number);
             }
         }
+        else
+            COMMAND_ERROR;
         return WEECHAT_RC_OK;
     }
 
