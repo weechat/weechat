@@ -370,7 +370,8 @@ Um die Teilung des Bildschirms rückgängig zu machen:
 == Tastaturbelegung
 
 WeeChat verwendet viele Standardtasten.
-Alle Tastenbelegungen sind in der Dokumentation beschrieben.
+Alle Tastenbelegungen sind in der Dokumentation beschrieben
+(link:weechat_user.de.html#key_bindings[Benutzerhandbuch / Tastenbelegungen ^↗^^]).
 Im Folgenden werden die wichtigsten Tastenbelegungen kurz erläutert:
 
 - kbd:[Alt+←] / kbd:[Alt+→] oder kbd:[F5] / kbd:[F6]: Wechsel zum

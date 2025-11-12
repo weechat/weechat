@@ -351,8 +351,10 @@ To remove the split:
 [[key_bindings]]
 == Předvoblby klávesových zkratek
 
-WeeChat používá ve výchozím nastavení mnoho klávesových zkratek, Všechny
-najdete v dokumentaci, ale je dobré znát alespoň pár těchto důležitých:
+// TRANSLATION MISSING
+WeeChat používá ve výchozím nastavení mnoho klávesových zkratek, Všechny najdete v dokumentaci
+(link:weechat_user.en.html#key_bindings[User's guide / Key bindings ^↗^^]),
+ale je dobré znát alespoň pár těchto důležitých:
 
 - kbd:[Alt+←] / kbd:[Alt+→] nebo kbd:[F5] / kbd:[F6]: přepnout na předchozí/další bufer
 // TRANSLATION MISSING

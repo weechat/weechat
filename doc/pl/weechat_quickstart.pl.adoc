@@ -328,7 +328,8 @@ Usunięcie podziału:
 [[key_bindings]]
 == Skróty klawiszowe
 
-WeeChat używa domyślnie wiele klawiszy. Wszystkie z nich są w dokumentacji,
+WeeChat używa domyślnie wiele klawiszy. Wszystkie z nich są w dokumentacji
+(link:weechat_user.pl.html#key_bindings[Poradnik użytkownika / Skróty klawiszowe ^↗^^]),
 ale powinieneś znać przynajmniej kilka najprzydatniejszych:
 
 - kbd:[Alt+←] / kbd:[Alt+→] lub kbd:[F5] / kbd:[F6]: przełącza na

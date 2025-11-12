@@ -342,9 +342,10 @@ Para eliminar esa división:
 [[key_bindings]]
 == Atajos de teclado
 
-WeeChat usa muchas teclas por defecto. Éstas, están bien
-explicadas en la documentación pero debe conocer al menos la mas
-importantes.
+// TRANSLATION MISSING
+WeeChat usa muchas teclas por defecto. Éstas, están bien explicadas en la documentación
+(link:weechat_user.en.html#key_bindings[User's guide / Key bindings ^↗^^]),
+pero debe conocer al menos la mas importantes.
 
 - kbd:[Alt+←] / kbd:[Alt+→] o kbd:[F5] / kbd:[F6]: Cambiará al buffer
   siguiente/anterior

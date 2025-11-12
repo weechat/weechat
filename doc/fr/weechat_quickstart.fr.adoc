@@ -338,8 +338,9 @@ Pour supprimer le découpage :
 == Raccourcis clavier
 
 WeeChat utilise un certain nombre de touches par défaut. Toutes ces
-touches sont dans la documentation, mais vous devriez connaître au moins
-les touches vitales :
+touches sont dans la documentation
+(link:weechat_user.fr.html#key_bindings[Guide utilisateur / Raccourcis clavier ^↗^^]),
+mais vous devriez connaître au moins les touches vitales :
 
 - kbd:[Alt+←] / kbd:[Alt+→] ou kbd:[F5] / kbd:[F6] : aller au tampon précédent/suivant
 - kbd:[F1] / kbd:[F2] : faire défiler la barre avec la liste des tampons ("buflist")

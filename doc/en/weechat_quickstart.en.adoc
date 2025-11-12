@@ -329,7 +329,8 @@ To remove the split:
 [[key_bindings]]
 == Key bindings
 
-WeeChat uses many keys by default. All these keys are in the documentation,
+WeeChat uses many keys by default. All these keys are in the documentation
+(link:weechat_user.en.html#key_bindings[User's guide / Key bindings ^↗^^]),
 but you should know at least some vital keys:
 
 - kbd:[Alt+←] / kbd:[Alt+→] or kbd:[F5] / kbd:[F6]: switch to previous/next

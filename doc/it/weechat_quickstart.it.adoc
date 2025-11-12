@@ -338,7 +338,9 @@ Per rimuovere la divisione:
 [[key_bindings]]
 == Associazione tasti
 
-WeeChat usa molti tasti. Essi sono tutti presenti nella documentazione,
+// TRANSLATION MISSING
+WeeChat usa molti tasti. Essi sono tutti presenti nella documentazione
+(link:weechat_user.it.html#key_bindings[Guida per l'Utente / Key bindings ^↗^^]),
 ma si dovrebbero conoscere almeno quelli vitali:
 
 - kbd:[Alt+←] / kbd:[Alt+→] oppure kbd:[F5] / kbd:[F6]: passa al buffer

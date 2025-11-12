@@ -333,8 +333,10 @@ channels configured in the "autojoin" server option.
 [[key_bindings]]
 == キー割り当て設定
 
-WeeChat
-はデフォルトでたくさんのショートカットキーが設定されています。これらはドキュメントに記載されていますが、いくつか重要なキーがあります:
+// TRANSLATION MISSING
+WeeChat uses many keys by default. All these keys are in the documentation
+(link:weechat_user.ja.html#key_bindings[ユーザーズガイド / Key bindings ^↗^^]),
+but you should know at least some vital keys:
 
 - kbd:[Alt+←] / kbd:[Alt+→] または kbd:[F5] / kbd:[F6]: 前後のバッファに切り替える
 - kbd:[F1] / kbd:[F2]: バッファリストを含むバー ("buflist") をスクロール表示
