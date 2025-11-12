@@ -1530,5 +1530,145 @@ TEST(CoreCommand, Wait)
 
 TEST(CoreCommand, Window)
 {
-    /* TODO: write tests */
+    WEE_CMD_CORE_ERROR_GENERIC("/window xxx");
+
+    /* /window, /window list */
+    WEE_CMD_CORE("/window");
+    WEE_CHECK_MSG_CORE("", "Windows list:");
+
+    /* /window * */
+    WEE_CMD_CORE("/window *");
+
+    /* /window refresh */
+    WEE_CMD_CORE("/window refresh");
+
+    /* /window balance */
+    WEE_CMD_CORE("/window balance");
+
+    /* /window xxx -window N */
+    WEE_CMD_CORE_ERROR_MSG("/window page_up -window xxx", "Invalid window number: \"xxx\"");
+    WEE_CMD_CORE_ERROR_MSG("/window page_up -window -1", "Invalid window number: \"-1\"");
+    WEE_CMD_CORE_ERROR_MSG("/window page_up -window 0", "Invalid window number: \"0\"");
+    WEE_CMD_CORE_ERROR_MSG("/window page_up -window 999999", "Window \"999999\" not found");
+    WEE_CMD_CORE("/window page_down -window 1");
+
+    /* /window page_up, /window page_down, /window scroll_up, /window scroll_down */
+    /* /window scroll_top, /window scroll_bottom, /window scroll_beyond_end */
+    /* /window scroll_previous_highlight, /window scroll_next_highlight */
+    /* /window scroll_unread */
+    WEE_CMD_CORE("/window page_up");
+    WEE_CMD_CORE("/window page_down");
+    WEE_CMD_CORE("/window scroll_up");
+    WEE_CMD_CORE("/window scroll_down");
+    WEE_CMD_CORE("/window scroll_top");
+    WEE_CMD_CORE("/window scroll_bottom");
+    WEE_CMD_CORE("/window scroll_beyond_end");
+    WEE_CMD_CORE("/window scroll_previous_highlight");
+    WEE_CMD_CORE("/window scroll_next_highlight");
+    WEE_CMD_CORE("/window scroll_unread");
+
+    /* /window scroll */
+    WEE_CMD_CORE_MIN_ARGS("/window scroll", "/window scroll");
+    WEE_CMD_CORE("/window scroll -1");
+    WEE_CMD_CORE("/window scroll +1");
+
+    /* /window scroll_horiz */
+    WEE_CMD_CORE_MIN_ARGS("/window scroll_horiz", "/window scroll_horiz");
+    WEE_CMD_CORE_ERROR_GENERIC("/window scroll_horiz +1");
+    WEE_CMD_CORE("/buffer add -free -switch test");
+    WEE_CMD_CORE("/window scroll_horiz +1");
+    WEE_CMD_CORE("/window scroll_horiz -1");
+    WEE_CMD_CORE("/buffer close core.test");
+
+    /* /window splith, /window splitv, /window merge */
+    WEE_CMD_CORE_ERROR_GENERIC("/window splith xxx");
+    WEE_CMD_CORE_ERROR_GENERIC("/window splith 0");
+    WEE_CMD_CORE_ERROR_GENERIC("/window splith 100");
+    WEE_CMD_CORE_ERROR_GENERIC("/window splitv xxx");
+    WEE_CMD_CORE_ERROR_GENERIC("/window splitv 0");
+    WEE_CMD_CORE_ERROR_GENERIC("/window splitv 100");
+    WEE_CMD_CORE("/window splith");
+    WEE_CMD_CORE("/window merge");
+    WEE_CMD_CORE("/window splith 40");
+    WEE_CMD_CORE("/window merge");
+    WEE_CMD_CORE("/window splitv");
+    WEE_CMD_CORE("/window merge");
+    WEE_CMD_CORE("/window splitv 40");
+    WEE_CMD_CORE_ERROR_GENERIC("/window merge xxx");
+    WEE_CMD_CORE("/window merge all");
+    WEE_CMD_CORE_ERROR_MSG(
+        "/window merge",
+        "Cannot merge windows, there's no other window with same size near current one");
+
+    /* /window resize */
+    WEE_CMD_CORE("/window splith");
+    WEE_CMD_CORE_MIN_ARGS("/window resize", "/window resize");
+    WEE_CMD_CORE_ERROR_GENERIC("/window resize xxx");
+    WEE_CMD_CORE("/window resize 40");
+    WEE_CMD_CORE("/window resize h45");
+    WEE_CMD_CORE("/window resize h-2");
+    WEE_CMD_CORE("/window resize h+3");
+    WEE_CMD_CORE("/window merge");
+    WEE_CMD_CORE("/window splitv");
+    WEE_CMD_CORE("/window resize 40");
+    WEE_CMD_CORE("/window resize v45");
+    WEE_CMD_CORE("/window resize v-2");
+    WEE_CMD_CORE("/window resize v+3");
+    WEE_CMD_CORE("/window merge");
+
+    /* /window close */
+    WEE_CMD_CORE_ERROR_MSG(
+        "/window close",
+        "Cannot close window, there's no other window with same size near current one");
+    WEE_CMD_CORE("/window splith");
+    WEE_CMD_CORE("/window close");
+
+    /* /window -1, /window +1, /window up, /window down, /window left, /window right */
+    WEE_CMD_CORE("/window splith");
+    WEE_CMD_CORE("/window +1");
+    WEE_CMD_CORE("/window -1");
+    WEE_CMD_CORE("/window down");
+    WEE_CMD_CORE("/window up");
+    WEE_CMD_CORE("/window close");
+    WEE_CMD_CORE("/window splitv");
+    WEE_CMD_CORE("/window +1");
+    WEE_CMD_CORE("/window -1");
+    WEE_CMD_CORE("/window left");
+    WEE_CMD_CORE("/window right");
+    WEE_CMD_CORE("/window close");
+
+    /* /window swap */
+    WEE_CMD_CORE("/window splith");
+    WEE_CMD_CORE_ERROR_GENERIC("/window swap xxx");
+    WEE_CMD_CORE("/window swap");
+    WEE_CMD_CORE("/window swap down");
+    WEE_CMD_CORE("/window down");
+    WEE_CMD_CORE("/window swap up");
+    WEE_CMD_CORE("/window up");
+    WEE_CMD_CORE("/window close");
+    WEE_CMD_CORE("/window splitv");
+    WEE_CMD_CORE("/window swap");
+    WEE_CMD_CORE("/window swap left");
+    WEE_CMD_CORE("/window left");
+    WEE_CMD_CORE("/window swap right");
+    WEE_CMD_CORE("/window right");
+    WEE_CMD_CORE("/window close");
+
+    /* /window zoom */
+    WEE_CMD_CORE("/window splith");
+    WEE_CMD_CORE("/window zoom");
+    WEE_CMD_CORE("/window zoom");
+    WEE_CMD_CORE("/window close");
+
+    /* /window bare */
+    WEE_CMD_CORE("/window bare");
+    WEE_CMD_CORE("/window bare");
+    WEE_CMD_CORE("/window bare 10");
+    WEE_CMD_CORE("/window bare");
+
+    /* /window b<N> */
+    WEE_CMD_CORE("/window b1");
+
+    /* /window N */
+    WEE_CMD_CORE("/window 1");
 }
