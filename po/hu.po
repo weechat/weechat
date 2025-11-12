@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2025-11-01 16:05+0100\n"
+"POT-Creation-Date: 2025-11-12 20:22+0100\n"
 "PO-Revision-Date: 2025-10-27 08:27+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -943,6 +943,10 @@ msgstr "lefordítva:"
 #, fuzzy
 msgid "Windows list:"
 msgstr "a /who lista vége"
+
+#, fuzzy, c-format
+msgid "%sWindow \"%s\" not found"
+msgstr "%s cím \"%s\" nem található\n"
 
 #, fuzzy, c-format
 msgid "%sInvalid window number: \"%s\""

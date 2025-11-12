@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2025-11-01 16:05+0100\n"
+"POT-Creation-Date: 2025-11-12 20:22+0100\n"
 "PO-Revision-Date: 2025-11-01 16:08+0100\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -917,6 +917,11 @@ msgstr "derlenme tarihi:"
 
 msgid "Windows list:"
 msgstr "Pencere listesi:"
+
+#, fuzzy, c-format
+#| msgid "%sPlugin \"%s\" not found"
+msgid "%sWindow \"%s\" not found"
+msgstr "%s\"%s\" eklentisi bulunamadı"
 
 #, c-format
 msgid "%sInvalid window number: \"%s\""

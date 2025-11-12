@@ -24,7 +24,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2025-11-01 16:05+0100\n"
+"POT-Creation-Date: 2025-11-12 20:22+0100\n"
 "PO-Revision-Date: 2025-10-27 08:26+0100\n"
 "Last-Translator: Santiago Forero <santiago@forero.xyz>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -967,6 +967,11 @@ msgstr "compilado en"
 
 msgid "Windows list:"
 msgstr "Lista de ventanas:"
+
+#, fuzzy, c-format
+#| msgid "%sPlugin \"%s\" not found"
+msgid "%sWindow \"%s\" not found"
+msgstr "%sPlugin \"%s\" no encontrado"
 
 #, c-format
 msgid "%sInvalid window number: \"%s\""

@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2025-11-01 16:05+0100\n"
+"POT-Creation-Date: 2025-11-12 20:22+0100\n"
 "PO-Revision-Date: 2025-11-01 16:08+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -948,6 +948,11 @@ msgstr "コンパイル日時"
 
 msgid "Windows list:"
 msgstr "ウィンドウリスト:"
+
+#, fuzzy, c-format
+#| msgid "%sPlugin \"%s\" not found"
+msgid "%sWindow \"%s\" not found"
+msgstr "%sプラグイン \"%s\" が見つかりません"
 
 #, fuzzy, c-format
 msgid "%sInvalid window number: \"%s\""

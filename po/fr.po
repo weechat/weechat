@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2025-11-01 16:05+0100\n"
-"PO-Revision-Date: 2025-11-10 20:54+0100\n"
+"POT-Creation-Date: 2025-11-12 20:22+0100\n"
+"PO-Revision-Date: 2025-11-12 20:42+0100\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -934,6 +934,10 @@ msgstr "compilé le"
 
 msgid "Windows list:"
 msgstr "Liste des fenêtres :"
+
+#, c-format
+msgid "%sWindow \"%s\" not found"
+msgstr "%sFenêtre \"%s\" non trouvée"
 
 #, c-format
 msgid "%sInvalid window number: \"%s\""

@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2025-11-01 16:05+0100\n"
+"POT-Creation-Date: 2025-11-12 20:22+0100\n"
 "PO-Revision-Date: 2025-10-27 08:26+0100\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -956,6 +956,11 @@ msgstr "kompilováno"
 
 msgid "Windows list:"
 msgstr "Seznam oken:"
+
+#, fuzzy, c-format
+#| msgid "%sPlugin \"%s\" not found"
+msgid "%sWindow \"%s\" not found"
+msgstr "%sPlugin \"%s\" nenalezen"
 
 #, fuzzy, c-format
 msgid "%sInvalid window number: \"%s\""
