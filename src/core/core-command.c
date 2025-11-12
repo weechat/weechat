@@ -8137,39 +8137,37 @@ COMMAND_CALLBACK(window)
     /* resize window */
     if (string_strcmp (argv[1], "resize") == 0)
     {
-        if (argc > win_args)
+        COMMAND_MIN_ARGS(win_args + 1, argv[1]);
+        ptr_sizearg = argv[win_args];
+        sign = 0;
+        if ((ptr_sizearg[0] == 'h') || (ptr_sizearg[0] == 'v'))
         {
-            ptr_sizearg = argv[win_args];
-            sign = 0;
-            if ((ptr_sizearg[0] == 'h') || (ptr_sizearg[0] == 'v'))
+            ptr_tree = gui_window_tree_get_split (ptr_win->ptr_tree,
+                                                  ptr_sizearg[0]);
+            ptr_sizearg++;
+        }
+        else
+        {
+            ptr_tree = ptr_win->ptr_tree;
+        }
+        if ((ptr_sizearg[0] == '+') || (ptr_sizearg[0] == '-'))
+        {
+            sign = ptr_sizearg[0];
+            ptr_sizearg++;
+        }
+        error = NULL;
+        number = strtol (ptr_sizearg, &error, 10);
+        if (error && !error[0])
+        {
+            if (sign)
             {
-                ptr_tree = gui_window_tree_get_split (ptr_win->ptr_tree,
-                                                      ptr_sizearg[0]);
-                ptr_sizearg++;
+                if (sign == '-')
+                    number *= -1;
+                gui_window_resize_delta (ptr_tree, number);
             }
             else
             {
-                ptr_tree = ptr_win->ptr_tree;
-            }
-            if ((ptr_sizearg[0] == '+') || (ptr_sizearg[0] == '-'))
-            {
-                sign = ptr_sizearg[0];
-                ptr_sizearg++;
-            }
-            error = NULL;
-            number = strtol (ptr_sizearg, &error, 10);
-            if (error && !error[0])
-            {
-                if (sign)
-                {
-                    if (sign == '-')
-                        number *= -1;
-                    gui_window_resize_delta (ptr_tree, number);
-                }
-                else
-                {
-                    gui_window_resize (ptr_tree, number);
-                }
+                gui_window_resize (ptr_tree, number);
             }
         }
         return WEECHAT_RC_OK;
