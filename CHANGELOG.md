@@ -41,6 +41,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 - irc: fix warning on creation of irc.msgbuffer option when the server name contains upper case letters ([#2281](https://github.com/weechat/weechat/issues/2281))
 - irc: display a warning for each unknown or invalid server option in commands /connect and /server
 - relay/api: fix crash when an invalid HTTP request is received from a client
+- relay/api: return HTTP error 404 instead of 400 when the buffer is not found in resources completion and input
 
 ## Version 4.7.1 (2025-08-16)
 

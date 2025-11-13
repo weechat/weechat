@@ -614,6 +614,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+        '404':
+          description: Buffer not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
       security:
         - password: []
   /completion:
@@ -673,6 +679,12 @@ paths:
                 $ref: '#/components/schemas/Error'
         '401':
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Buffer not found
           content:
             application/json:
               schema:

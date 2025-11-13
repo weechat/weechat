@@ -622,7 +622,6 @@ TEST(RelayApiProtocolWithClient, CbCompletion)
 
     /* error: no body */
     test_client_recv_http ("POST /api/completion", NULL, NULL);
-    WEE_CHECK_HTTP_CODE(400, "Bad Request");
     STRCMP_EQUAL("HTTP/1.1 400 Bad Request\r\n"
                  "Access-Control-Allow-Origin: *\r\n"
                  "Content-Type: application/json; charset=utf-8\r\n"
@@ -636,8 +635,7 @@ TEST(RelayApiProtocolWithClient, CbCompletion)
                            NULL,
                            "{\"buffer_name\": \"invalid\", "
                            "\"command\": \"test\"}");
-    WEE_CHECK_HTTP_CODE(400, "Bad Request");
-    STRCMP_EQUAL("HTTP/1.1 400 Bad Request\r\n"
+    STRCMP_EQUAL("HTTP/1.1 404 Not Found\r\n"
                  "Access-Control-Allow-Origin: *\r\n"
                  "Content-Type: application/json; charset=utf-8\r\n"
                  "Content-Length: 40\r\n"
@@ -717,7 +715,7 @@ TEST(RelayApiProtocolWithClient, CbInput)
                            NULL,
                            "{\"buffer_name\": \"invalid\", "
                            "\"command\": \"/print test\"}");
-    STRCMP_EQUAL("HTTP/1.1 400 Bad Request\r\n"
+    STRCMP_EQUAL("HTTP/1.1 404 Not Found\r\n"
                  "Access-Control-Allow-Origin: *\r\n"
                  "Content-Type: application/json; charset=utf-8\r\n"
                  "Content-Length: 40\r\n"
