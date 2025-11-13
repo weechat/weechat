@@ -720,6 +720,12 @@ paths:
                 $ref: '#/components/schemas/Ping'
         '204':
           description: Successful operation
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '401':
           description: Unauthorized
           content:

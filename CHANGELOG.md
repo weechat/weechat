@@ -42,6 +42,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 - irc: display a warning for each unknown or invalid server option in commands /connect and /server
 - relay/api: fix crash when an invalid HTTP request is received from a client
 - relay/api: return HTTP error 404 instead of 400 when the buffer is not found in resources completion and input
+- relay/api: return HTTP error 400 in case of invalid body in resource ping
 
 ## Version 4.7.1 (2025-08-16)
 

@@ -1000,12 +1000,11 @@ RELAY_API_PROTOCOL_CALLBACK(completion)
         return RELAY_API_PROTOCOL_RC_MEMORY;
     }
 
-    if (!weechat_completion_search (ptr_completion, ptr_command, position, 1))
-    {
-        weechat_completion_free (ptr_completion);
-        cJSON_Delete (json_body);
-        return RELAY_API_PROTOCOL_RC_BAD_REQUEST;
-    }
+    /*
+     * ignore the return code, as 0 may indicate that completion "null" was used
+     * (that means no completion context found)
+     */
+    (void) weechat_completion_search (ptr_completion, ptr_command, position, 1);
 
     /* create response */
     json_response = relay_api_msg_completion_to_json (ptr_completion);
@@ -1035,6 +1034,11 @@ RELAY_API_PROTOCOL_CALLBACK(ping)
     json_body = cJSON_Parse (client->http_req->body);
     if (json_body)
     {
+        if (!cJSON_IsObject (json_body))
+        {
+            cJSON_Delete (json_body);
+            return RELAY_API_PROTOCOL_RC_BAD_REQUEST;
+        }
         json_data = cJSON_GetObjectItem (json_body, "data");
         if (json_data && cJSON_IsString (json_data))
             ptr_data = cJSON_GetStringValue (json_data);
