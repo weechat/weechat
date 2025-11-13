@@ -36,6 +36,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 ### Fixed
 
+- core: display an error message in case of invalid parameters in commands /bar, /buffer, /cursor, /print and /window
 - api: fix parsing of date/times with timezone offset in function util_parse_time
 - irc: fix warning on creation of irc.msgbuffer option when the server name contains upper case letters ([#2281](https://github.com/weechat/weechat/issues/2281))
 - irc: display a warning for each unknown or invalid server option in commands /connect and /server
