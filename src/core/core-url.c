@@ -994,7 +994,7 @@ weeurl_set_proxy (CURL *curl, struct t_proxy *proxy)
  *   2: error downloading URL
  *   3: not enough memory
  *   4: file error
- *   5: transfer stopped by the called
+ *   5: transfer stopped by the caller
  *   6: transfer timeout
  */
 
