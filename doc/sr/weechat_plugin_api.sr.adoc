@@ -11023,6 +11023,16 @@ struct t_hook *weechat_hook_url (const char *url,
 *** _headers_: HTTP заглавља у одзиву
 *** _output_: стандардни излаз (поставља се само ако у опцијама није постављено _file_out_)
 *** _error_: порука о грешки (поставља се само у случају грешке)
+*** _error_code_: error code (integer, set only in case of error):
+**** `1`: invalid URL
+**** `2`: transfer error (Curl error)
+**** `3`: not enough memory
+**** `4`: file error
+**** `5`: transfer stopped (hook removed during the transfer)
+**** `6`: transfer timeout
+**** `100`: thread creation error
+*** _error_code_pthread_: return code of function _pthread_create_
+    (integer, set only if _error_code_ is `100`)
 ** повратна вредност:
 *** _WEECHAT_RC_OK_
 *** _WEECHAT_RC_ERROR_
