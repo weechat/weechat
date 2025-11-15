@@ -11270,6 +11270,16 @@ Paramètres :
 *** _output_ : sortie standard (défini seulement si _file_out_ n'était pas défini
     dans les options)
 *** _error_ : message d'erreur (défini seulement en cas d'erreur)
+*** _error_code_ : code d'erreur (entier, défini seulement en cas d'erreur) :
+**** `1` : URL invalide
+**** `2` : erreur de transfert (erreur Curl)
+**** `3` : mémoire insuffisante
+**** `4` : erreur de fichier
+**** `5` : transfert stoppé (hook supprimé durant le transfert)
+**** `6` : délai d'attente dépassé pour le transfert ("timeout")
+**** `100` : erreur de création du thread
+*** _error_code_pthread_ : code retour de la fonction _pthread_create_
+    (entier, défini seulement si _error_code_ vaut `100`)
 ** valeur de retour :
 *** _WEECHAT_RC_OK_
 *** _WEECHAT_RC_ERROR_

@@ -11064,6 +11064,16 @@ Arguments:
 *** _headers_: HTTP headers in response
 *** _output_: standard output (set only if _file_out_ was not set in options)
 *** _error_: error message (set only in case of error)
+*** _error_code_: error code (integer, set only in case of error):
+**** `1`: invalid URL
+**** `2`: transfer error (Curl error)
+**** `3`: not enough memory
+**** `4`: file error
+**** `5`: transfer stopped (hook removed during the transfer)
+**** `6`: transfer timeout
+**** `100`: thread creation error
+*** _error_code_pthread_: return code of function _pthread_create_
+    (integer, set only if _error_code_ is `100`)
 ** return value:
 *** _WEECHAT_RC_OK_
 *** _WEECHAT_RC_ERROR_
