@@ -138,7 +138,9 @@ hook_url_transfer_thread (void *hook_pointer)
 
     url_rc = weeurl_download (HOOK_URL(hook, url),
                               HOOK_URL(hook, options),
-                              HOOK_URL(hook, output));
+                              HOOK_URL(hook, timeout),
+                              HOOK_URL(hook, output),
+                              &(HOOK_URL(hook, stop_transfer)));
 
     if (url_rc != 0)
     {
@@ -160,7 +162,7 @@ hook_url_timer_cb (const void *pointer, void *data, int remaining_calls)
 {
     struct t_hook *hook;
     const char *ptr_error;
-    char str_error[1024], str_error_code[12];
+    char str_error[1024];
 
     /* make C compiler happy */
     (void) data;
@@ -193,11 +195,10 @@ hook_url_timer_cb (const void *pointer, void *data, int remaining_calls)
         if (!hashtable_has_key (HOOK_URL(hook, output), "error_code"))
         {
             snprintf (str_error, sizeof (str_error),
-                      "transfer timeout reached (%.3fs)",
+                      URL_ERROR_TIMEOUT " (%.3fs)",
                       ((float)HOOK_URL(hook, timeout)) / 1000);
-            snprintf (str_error_code, sizeof (str_error_code), "6");
             hashtable_set (HOOK_URL(hook, output), "error", str_error);
-            hashtable_set (HOOK_URL(hook, output), "error_code", str_error_code);
+            hashtable_set (HOOK_URL(hook, output), "error_code", "6");
         }
         hook_url_run_callback (hook);
         if (weechat_debug_core >= 1)
@@ -225,7 +226,7 @@ hook_url_transfer (struct t_hook *hook)
 {
     int rc, timeout, max_calls;
     long interval;
-    char str_error[1024], str_error_code[12], str_error_code_pthread[12];
+    char str_error[1024], str_error_code_pthread[12];
 
     HOOK_URL(hook, thread_running) = 1;
 
@@ -236,11 +237,10 @@ hook_url_transfer (struct t_hook *hook)
     {
         snprintf (str_error, sizeof (str_error),
                   "error calling pthread_create (%d)", rc);
-        snprintf (str_error_code, sizeof (str_error_code), "5");
         snprintf (str_error_code_pthread, sizeof (str_error_code_pthread),
                   "%d", rc);
         hashtable_set (HOOK_URL(hook, output), "error", str_error);
-        hashtable_set (HOOK_URL(hook, output), "error_code", str_error_code);
+        hashtable_set (HOOK_URL(hook, output), "error_code", "100");
         hashtable_set (HOOK_URL(hook, output), "error_code_pthread",
                        str_error_code_pthread);
         hook_url_run_callback (hook);
@@ -266,7 +266,7 @@ hook_url_transfer (struct t_hook *hook)
     {
         if (timeout <= 100)
         {
-            interval = timeout;
+            interval = timeout + 50;
             max_calls = 1;
         }
         else
@@ -275,6 +275,7 @@ hook_url_transfer (struct t_hook *hook)
             max_calls = timeout / 100;
             if (timeout % 100 == 0)
                 max_calls++;
+            max_calls++;
         }
     }
     HOOK_URL(hook, hook_timer) = hook_timer (hook->plugin,
@@ -324,6 +325,7 @@ hook_url (struct t_weechat_plugin *plugin,
     new_hook_url->url = strdup (url);
     new_hook_url->options = (options) ? hashtable_dup (options) : NULL;
     new_hook_url->timeout = timeout;
+    new_hook_url->stop_transfer = 0;
     new_hook_url->thread_id = 0;
     new_hook_url->thread_created = 0;
     new_hook_url->thread_running = 0;
@@ -366,6 +368,26 @@ hook_url_free_data (struct t_hook *hook)
 
     if (!hook || !hook->hook_data)
         return;
+
+    /* stop transfer if it's still active */
+    if (HOOK_URL(hook, thread_created) && HOOK_URL(hook, thread_running))
+    {
+        HOOK_URL(hook, stop_transfer) = 1;
+        usleep (10000);
+        if (!hashtable_has_key (HOOK_URL(hook, output), "error_code"))
+        {
+            hashtable_set (HOOK_URL(hook, output), "error", "transfer stopped");
+            hashtable_set (HOOK_URL(hook, output), "error_code", "5");
+        }
+        hook_url_run_callback (hook);
+        if (weechat_debug_core >= 1)
+        {
+            gui_chat_printf (
+                NULL,
+                _("End of URL transfer '%s', transfer stopped"),
+                HOOK_URL(hook, url));
+        }
+    }
 
     if (HOOK_URL(hook, url))
     {
@@ -452,6 +474,8 @@ hook_url_add_to_infolist (struct t_infolist_item *item,
         return 0;
     if (!infolist_new_var_integer (item, "timeout", (int)(HOOK_URL(hook, timeout))))
         return 0;
+    if (!infolist_new_var_integer (item, "stop_transfer", HOOK_URL(hook, stop_transfer)))
+        return 0;
     if (!infolist_new_var_integer (item, "thread_created", (int)(HOOK_URL(hook, thread_created))))
         return 0;
     if (!infolist_new_var_integer (item, "thread_running", (int)(HOOK_URL(hook, thread_running))))
@@ -482,6 +506,7 @@ hook_url_print_log (struct t_hook *hook)
                 hashtable_get_string (HOOK_URL(hook, options),
                                       "keys_values"));
     log_printf ("    timeout . . . . . . . : %ld", HOOK_URL(hook, timeout));
+    log_printf ("    stop_transfer . . . . : %d", HOOK_URL(hook, stop_transfer));
     log_printf ("    thread_created. . . . : %d", (int)HOOK_URL(hook, thread_created));
     log_printf ("    thread_running. . . . : %d", (int)HOOK_URL(hook, thread_running));
     log_printf ("    hook_timer. . . . . . : %p", HOOK_URL(hook, hook_timer));

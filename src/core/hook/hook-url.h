@@ -41,6 +41,7 @@ struct t_hook_url
     char *url;                         /* URL                               */
     struct t_hashtable *options;       /* URL options (see doc)             */
     long timeout;                      /* timeout (ms) (0 = no timeout)     */
+    int stop_transfer;                 /* 1 is used to stop transfer now    */
     pthread_t thread_id;               /* thread id                         */
     int thread_created;                /* thread created                    */
     int thread_running;                /* 1 if thread is running            */
