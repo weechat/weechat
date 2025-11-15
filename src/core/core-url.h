@@ -24,6 +24,8 @@
 
 #include <stdio.h>
 
+#define URL_ERROR_TIMEOUT "transfer timeout reached"
+
 struct t_hashtable;
 struct t_infolist;
 
@@ -61,7 +63,8 @@ extern char *url_type_string[];
 extern struct t_url_option url_options[];
 
 extern int weeurl_download (const char *url, struct t_hashtable *options,
-                            struct t_hashtable *output);
+                            long timeout, struct t_hashtable *output,
+                            int *stop_transfer);
 extern int weeurl_option_add_to_infolist (struct t_infolist *infolist,
                                           struct t_url_option *option);
 extern void weeurl_init (void);

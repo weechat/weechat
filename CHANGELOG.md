@@ -6,6 +6,12 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 # WeeChat ChangeLog
 
+## Version 4.7.2 (under dev)
+
+### Fixed
+
+- api: fix file descriptor leak in hook_url when a timeout occurs or if the hook is removed during the transfer ([#2284](https://github.com/weechat/weechat/issues/2284))
+
 ## Version 4.7.1 (2025-08-16)
 
 ### Fixed

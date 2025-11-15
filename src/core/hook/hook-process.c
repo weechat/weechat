@@ -279,7 +279,9 @@ hook_process_child (struct t_hook *hook_process)
         }
         rc = weeurl_download (ptr_url,
                               HOOK_PROCESS(hook_process, options),
-                              NULL);  /* output */
+                              0,  /* timeout */
+                              NULL,  /* output */
+                              NULL);  /* stop_download */
     }
     else if (strncmp (HOOK_PROCESS(hook_process, command), "func:", 5) == 0)
     {

@@ -37,6 +37,7 @@
 #include "core-infolist.h"
 #include "core-proxy.h"
 #include "core-string.h"
+#include "core-util.h"
 #include "../plugins/plugin.h"
 
 
@@ -1048,31 +1049,46 @@ weeurl_set_proxy (CURL *curl, struct t_proxy *proxy)
  *   output        | stdout (set only if "file_out" was not set in options)
  *   error         | error message (set only in case of error)
  *
+ * If timeout is 0, the function blocks until the end of the transfer.
+ * If timeout (in milliseconds) is > 0, the function returns an error in the
+ * output hashtable if the timeout is reached while the transfer is still
+ * active.
+ *
+ * If stop_download is not NULL, it is checked regularly, and as soon as the
+ * pointed integer becomes different from 0 (set by the caller of this function),
+ * the download is immediately stopped with an error.
+ *
  * Returns:
  *   0: OK
  *   1: invalid URL
  *   2: error downloading URL
  *   3: not enough memory
  *   4: file error
+ *   5: transfer stopped by the caller
+ *   6: transfer timeout
  */
 
 int
 weeurl_download (const char *url, struct t_hashtable *options,
-                 struct t_hashtable *output)
+                 long timeout, struct t_hashtable *output,
+                 int *stop_transfer)
 {
     CURL *curl;
+    CURLM *multi;
+    CURLMcode curl_mc;
     struct t_url_file url_file[2];
     char *url_file_option[2] = { "file_in", "file_out" };
     char *url_file_mode[2] = { "rb", "wb" };
-    char url_error[CURL_ERROR_SIZE + 1], url_error_code[12];
+    char url_error[4096], url_error_code[12];
     char **string_headers, **string_output;
     char str_response_code[32];
     CURLoption url_file_opt_func[2] = { CURLOPT_READFUNCTION, CURLOPT_WRITEFUNCTION };
     CURLoption url_file_opt_data[2] = { CURLOPT_READDATA, CURLOPT_WRITEDATA };
     void *url_file_opt_cb[2] = { &weeurl_read_stream, &weeurl_write_stream };
     struct t_proxy *ptr_proxy;
-    int rc, curl_rc, i, output_to_file;
+    int rc, i, output_to_file, still_running;
     long response_code;
+    struct timeval tv_now, tv_end;
 
     rc = 0;
 
@@ -1171,44 +1187,120 @@ weeurl_download (const char *url, struct t_hashtable *options,
     /* set error buffer */
     curl_easy_setopt (curl, CURLOPT_ERRORBUFFER, url_error);
 
-    /* perform action! */
-    curl_rc = curl_easy_perform (curl);
-    if (curl_rc == CURLE_OK)
+    /* compute end time for transfer, according to the timeout */
+    if (timeout > 0)
     {
-        if (output)
-        {
-            curl_easy_getinfo (curl, CURLINFO_RESPONSE_CODE, &response_code);
-            snprintf (str_response_code, sizeof (str_response_code),
-                      "%ld", response_code);
-            hashtable_set (output, "response_code", str_response_code);
-        }
+        gettimeofday (&tv_end, NULL);
+        util_timeval_add (&tv_end, ((long long)timeout) * 1000);
     }
     else
     {
-        if (output)
+        tv_end.tv_sec = 0;
+        tv_end.tv_usec = 0;
+    }
+
+    /* start the transfer */
+    multi = curl_multi_init ();
+    curl_multi_add_handle (multi, curl);
+    while (1)
+    {
+        curl_mc = curl_multi_perform (multi, &still_running);
+
+        if ((curl_mc == CURLM_OK) && still_running)
+            curl_mc = curl_multi_poll (multi, NULL, 0, 5, NULL);
+
+        if (curl_mc != CURLM_OK)
         {
-            snprintf (url_error_code, sizeof (url_error_code), "%d", curl_rc);
-            if (!url_error[0])
+            if (output)
             {
-                snprintf (url_error, sizeof (url_error),
-                          "%s", _("transfer error"));
+                snprintf (url_error_code, sizeof (url_error_code), "%d", curl_mc);
+                if (!url_error[0])
+                {
+                    snprintf (url_error, sizeof (url_error),
+                              "%s", _("transfer error"));
+                }
+            }
+            else
+            {
+                /*
+                 * URL transfer done in a forked process: display error on stderr,
+                 * which will be sent to the hook_process callback
+                 */
+                fprintf (stderr,
+                         _("curl error %d (%s) (URL: \"%s\")\n"),
+                         curl_mc, url_error, url);
+            }
+            rc = 2;
+            break;
+        }
+        if (!still_running)
+        {
+            /* transfer OK */
+            if (output)
+            {
+                curl_easy_getinfo (curl, CURLINFO_RESPONSE_CODE, &response_code);
+                snprintf (str_response_code, sizeof (str_response_code),
+                          "%ld", response_code);
+                hashtable_set (output, "response_code", str_response_code);
+            }
+            break;
+        }
+        if (stop_transfer && *stop_transfer)
+        {
+            /* transfer stopped by the caller */
+            if (output)
+            {
+                if (!url_error[0])
+                    snprintf (url_error, sizeof (url_error), "transfer stopped");
+            }
+            else
+            {
+                /*
+                 * URL transfer done in a forked process: display error on stderr,
+                 * which will be sent to the hook_process callback
+                 */
+                fprintf (stderr,
+                         _("transfer stopped (URL: \"%s\")\n"),
+                         url);
+            }
+            rc = 5;
+            break;
+        }
+        if (tv_end.tv_sec > 0)
+        {
+            /* timeout reached? */
+            gettimeofday (&tv_now, NULL);
+            if (util_timeval_cmp (&tv_now, &tv_end) >= 0)
+            {
+                if (output)
+                {
+                    if (!url_error[0])
+                    {
+                        snprintf (url_error, sizeof (url_error),
+                                  URL_ERROR_TIMEOUT " (%.3fs)",
+                                  ((float)timeout) / 1000);
+                    }
+                }
+                else
+                {
+                    /*
+                     * URL transfer done in a forked process: display error on stderr,
+                     * which will be sent to the hook_process callback
+                     */
+                    fprintf (stderr,
+                             _("transfer timeout reached (%.3fs) (URL: \"%s\")\n"),
+                             ((float)timeout) / 1000, url);
+                }
+                rc = 6;
+                break;
             }
         }
-        else
-        {
-            /*
-             * URL transfer done in a forked process: display error on stderr,
-             * which will be sent to the hook_process callback
-             */
-            fprintf (stderr,
-                     _("curl error %d (%s) (URL: \"%s\")\n"),
-                     curl_rc, url_error, url);
-        }
-        rc = 2;
     }
 
     /* cleanup */
+    curl_multi_remove_handle (multi, curl);
     curl_easy_cleanup (curl);
+    curl_multi_cleanup (multi);
 
 end:
     for (i = 0; i < 2; i++)
