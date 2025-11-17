@@ -2410,6 +2410,7 @@ gui_buffer_set_input_get_unknown_commands (struct t_gui_buffer *buffer,
     buffer->input_get_unknown_commands = (input_get_unknown_commands) ? 1 : 0;
 
 }
+
 /*
  * Sets flag "input_get_empty" for a buffer.
  */

@@ -395,6 +395,10 @@ extern void gui_buffer_set_highlight_tags (struct t_gui_buffer *buffer,
                                            const char *new_tags);
 extern void gui_buffer_set_hotlist_max_level_nicks (struct t_gui_buffer *buffer,
                                                     const char *new_hotlist_max_level_nicks);
+extern void gui_buffer_add_hotlist_max_level_nicks (struct t_gui_buffer *buffer,
+                                                    const char *nicks_to_add);
+extern void gui_buffer_remove_hotlist_max_level_nicks (struct t_gui_buffer *buffer,
+                                                       const char *nicks_to_remove);
 extern void gui_buffer_set_input_prompt (struct t_gui_buffer *buffer,
                                          const char *input_prompt);
 extern void gui_buffer_set (struct t_gui_buffer *buffer, const char *property,

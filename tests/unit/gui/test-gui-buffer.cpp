@@ -46,12 +46,38 @@ extern int gui_buffer_user_close_cb (const void *pointer, void *data,
                                      struct t_gui_buffer *buffer);
 extern void gui_buffer_set_short_name (struct t_gui_buffer *buffer,
                                        const char *short_name);
+extern void gui_buffer_set_filter (struct t_gui_buffer *buffer, int filter);
+extern void gui_buffer_set_name (struct t_gui_buffer *buffer, const char *name);
+extern void gui_buffer_set_type (struct t_gui_buffer *buffer,
+                                 enum t_gui_buffer_type type);
+extern void gui_buffer_set_notify (struct t_gui_buffer *buffer,
+                                   const char *notify);
+extern void gui_buffer_set_nicklist (struct t_gui_buffer *buffer, int nicklist);
+extern void gui_buffer_set_nicklist_case_sensitive (struct t_gui_buffer *buffer,
+                                                    int case_sensitive);
+extern void gui_buffer_set_nicklist_display_groups (struct t_gui_buffer *buffer,
+                                                    int display_groups);
 extern void gui_buffer_set_highlight_words_list (struct t_gui_buffer *buffer,
                                                  struct t_weelist *list);
-
+extern void gui_buffer_add_highlight_words (struct t_gui_buffer *buffer,
+                                            const char *words_to_add);
+extern void gui_buffer_remove_highlight_words (struct t_gui_buffer *buffer,
+                                               const char *words_to_remove);
+extern void gui_buffer_set_input (struct t_gui_buffer *buffer, const char *input);
+extern void gui_buffer_set_input_get_any_user_data (struct t_gui_buffer *buffer,
+                                                    int input_get_any_user_data);
+extern void gui_buffer_set_input_get_unknown_commands (struct t_gui_buffer *buffer,
+                                                       int input_get_unknown_commands);
+extern void gui_buffer_set_input_get_empty (struct t_gui_buffer *buffer,
+                                            int input_get_empty);
+extern void gui_buffer_set_input_multiline (struct t_gui_buffer *buffer,
+                                            int input_multiline);
+extern void gui_buffer_set_unread (struct t_gui_buffer *buffer,
+                                   const char *argument);
 }
 
 #define TEST_BUFFER_NAME "test"
+#define TEST_BUFFER_NAME2 "test2"
 
 char signal_buffer_user_input[256];
 int signal_buffer_user_closing = 0;
@@ -324,26 +350,6 @@ TEST(GuiBuffer, NotifyGet)
     config_file_option_unset (ptr_option);
 
     gui_buffer_close (buffer);
-}
-
-/*
- * Tests functions:
- *   gui_buffer_notify_set
- */
-
-TEST(GuiBuffer, NotifySet)
-{
-    /* TODO: write tests */
-}
-
-/*
- * Tests functions:
- *   gui_buffer_notify_set_all
- */
-
-TEST(GuiBuffer, NotifySetAll)
-{
-    /* TODO: write tests */
 }
 
 /*
@@ -985,7 +991,16 @@ TEST(GuiBuffer, SetDayChange)
 
 TEST(GuiBuffer, SetFilter)
 {
-    /* TODO: write tests */
+    gui_buffer_set_filter (NULL, 0);
+
+    LONGS_EQUAL(1, gui_buffers->filter);
+    gui_buffer_set_filter (gui_buffers, 0);
+    LONGS_EQUAL(0, gui_buffers->filter);
+    gui_buffer_set_filter (gui_buffers, 1);
+    LONGS_EQUAL(1, gui_buffers->filter);
+    gui_buffer_set_filter (gui_buffers, 0);
+    gui_buffer_set_filter (gui_buffers, 2);
+    LONGS_EQUAL(1, gui_buffers->filter);
 }
 
 /*
@@ -995,7 +1010,24 @@ TEST(GuiBuffer, SetFilter)
 
 TEST(GuiBuffer, SetName)
 {
-    /* TODO: write tests */
+    struct t_gui_buffer *buffer;
+
+    gui_buffer_set_name (NULL, "test");
+    gui_buffer_set_name (gui_buffers, NULL);
+    gui_buffer_set_name (gui_buffers, "");
+
+    buffer = gui_buffer_new (NULL, TEST_BUFFER_NAME,
+                             NULL, NULL, NULL,
+                             NULL, NULL, NULL);
+    CHECK(buffer);
+    STRCMP_EQUAL(TEST_BUFFER_NAME, buffer->name);
+    STRCMP_EQUAL("core." TEST_BUFFER_NAME, buffer->full_name);
+
+    gui_buffer_set_name (buffer, TEST_BUFFER_NAME2);
+    STRCMP_EQUAL(TEST_BUFFER_NAME2, buffer->name);
+    STRCMP_EQUAL("core." TEST_BUFFER_NAME2, buffer->full_name);
+
+    gui_buffer_close (buffer);
 }
 
 /*
@@ -1005,17 +1037,56 @@ TEST(GuiBuffer, SetName)
 
 TEST(GuiBuffer, SetType)
 {
-    /* TODO: write tests */
+    struct t_gui_buffer *buffer;
+
+    gui_buffer_set_type (NULL, GUI_BUFFER_TYPE_FREE);
+
+    buffer = gui_buffer_new (NULL, TEST_BUFFER_NAME,
+                             NULL, NULL, NULL,
+                             NULL, NULL, NULL);
+    CHECK(buffer);
+    LONGS_EQUAL(GUI_BUFFER_TYPE_FORMATTED, buffer->type);
+
+    gui_buffer_set_type (buffer, GUI_BUFFER_TYPE_FREE);
+    LONGS_EQUAL(GUI_BUFFER_TYPE_FREE, buffer->type);
+
+    gui_buffer_set_type (buffer, GUI_BUFFER_TYPE_FORMATTED);
+    LONGS_EQUAL(GUI_BUFFER_TYPE_FORMATTED, buffer->type);
+
+    gui_buffer_close (buffer);
 }
 
 /*
  * Tests functions:
+ *   gui_buffer_notify_set
  *   gui_buffer_set_notify
+ *   gui_buffer_notify_set_all
  */
 
 TEST(GuiBuffer, SetNotify)
 {
-    /* TODO: write tests */
+    int notify, old_notify;
+    char str_notify[32];
+
+    gui_buffer_set_notify (NULL, "0");
+
+    old_notify = gui_buffers->notify;
+    for (notify = 0; notify < GUI_BUFFER_NUM_NOTIFY; notify++)
+    {
+        snprintf (str_notify, sizeof (str_notify), "%d", notify);
+        gui_buffer_set_notify (gui_buffers, str_notify);
+        LONGS_EQUAL(notify, gui_buffers->notify);
+    }
+    for (notify = 0; notify < GUI_BUFFER_NUM_NOTIFY; notify++)
+    {
+        gui_buffer_set_notify (gui_buffers, gui_buffer_notify_string[notify]);
+        LONGS_EQUAL(notify, gui_buffers->notify);
+    }
+    gui_buffer_set_notify (gui_buffers, "-1");
+    LONGS_EQUAL(CONFIG_ENUM(config_look_buffer_notify_default), gui_buffers->notify);
+    snprintf (str_notify, sizeof (str_notify), "%d", old_notify);
+    gui_buffer_set_notify (gui_buffers, str_notify);
+    LONGS_EQUAL(old_notify, gui_buffers->notify);
 }
 
 /*
@@ -1025,7 +1096,24 @@ TEST(GuiBuffer, SetNotify)
 
 TEST(GuiBuffer, SetTitle)
 {
-    /* TODO: write tests */
+    struct t_gui_buffer *buffer;
+
+    gui_buffer_set_title (NULL, "test");
+
+    buffer = gui_buffer_new (NULL, TEST_BUFFER_NAME,
+                             NULL, NULL, NULL,
+                             NULL, NULL, NULL);
+    CHECK(buffer);
+    STRCMP_EQUAL(NULL, buffer->title);
+
+    gui_buffer_set_title (buffer, "the new title");
+    STRCMP_EQUAL("the new title", buffer->title);
+    gui_buffer_set_title (buffer, "");
+    STRCMP_EQUAL(NULL, buffer->title);
+    gui_buffer_set_title (buffer, NULL);
+    STRCMP_EQUAL(NULL, buffer->title);
+
+    gui_buffer_close (buffer);
 }
 
 /*
@@ -1035,7 +1123,24 @@ TEST(GuiBuffer, SetTitle)
 
 TEST(GuiBuffer, SetModes)
 {
-    /* TODO: write tests */
+    struct t_gui_buffer *buffer;
+
+    gui_buffer_set_modes (NULL, "+nt");
+
+    buffer = gui_buffer_new (NULL, TEST_BUFFER_NAME,
+                             NULL, NULL, NULL,
+                             NULL, NULL, NULL);
+    CHECK(buffer);
+    STRCMP_EQUAL(NULL, buffer->modes);
+
+    gui_buffer_set_modes (buffer, "+nt");
+    STRCMP_EQUAL("+nt", buffer->modes);
+    gui_buffer_set_modes (buffer, "");
+    STRCMP_EQUAL(NULL, buffer->modes);
+    gui_buffer_set_modes (buffer, NULL);
+    STRCMP_EQUAL(NULL, buffer->modes);
+
+    gui_buffer_close (buffer);
 }
 
 /*
@@ -1045,7 +1150,16 @@ TEST(GuiBuffer, SetModes)
 
 TEST(GuiBuffer, SetTimeForEachLine)
 {
-    /* TODO: write tests */
+    gui_buffer_set_time_for_each_line (NULL, 0);
+
+    LONGS_EQUAL(1, gui_buffers->time_for_each_line);
+    gui_buffer_set_time_for_each_line (gui_buffers, 0);
+    LONGS_EQUAL(0, gui_buffers->time_for_each_line);
+    gui_buffer_set_time_for_each_line (gui_buffers, 1);
+    LONGS_EQUAL(1, gui_buffers->time_for_each_line);
+    gui_buffer_set_time_for_each_line (gui_buffers, 0);
+    gui_buffer_set_time_for_each_line (gui_buffers, 2);
+    LONGS_EQUAL(1, gui_buffers->time_for_each_line);
 }
 
 /*
@@ -1055,7 +1169,16 @@ TEST(GuiBuffer, SetTimeForEachLine)
 
 TEST(GuiBuffer, SetNicklist)
 {
-    /* TODO: write tests */
+    gui_buffer_set_nicklist (NULL, 0);
+
+    LONGS_EQUAL(0, gui_buffers->nicklist);
+    gui_buffer_set_nicklist (gui_buffers, 1);
+    LONGS_EQUAL(1, gui_buffers->nicklist);
+    gui_buffer_set_nicklist (gui_buffers, 0);
+    gui_buffer_set_nicklist (gui_buffers, 2);
+    LONGS_EQUAL(1, gui_buffers->nicklist);
+    gui_buffer_set_nicklist (gui_buffers, 0);
+    LONGS_EQUAL(0, gui_buffers->nicklist);
 }
 
 /*
@@ -1065,7 +1188,16 @@ TEST(GuiBuffer, SetNicklist)
 
 TEST(GuiBuffer, SetNicklistCaseSensitive)
 {
-    /* TODO: write tests */
+    gui_buffer_set_nicklist_case_sensitive (NULL, 0);
+
+    LONGS_EQUAL(0, gui_buffers->nicklist_case_sensitive);
+    gui_buffer_set_nicklist_case_sensitive (gui_buffers, 1);
+    LONGS_EQUAL(1, gui_buffers->nicklist_case_sensitive);
+    gui_buffer_set_nicklist_case_sensitive (gui_buffers, 0);
+    gui_buffer_set_nicklist_case_sensitive (gui_buffers, 2);
+    LONGS_EQUAL(1, gui_buffers->nicklist_case_sensitive);
+    gui_buffer_set_nicklist_case_sensitive (gui_buffers, 0);
+    LONGS_EQUAL(0, gui_buffers->nicklist_case_sensitive);
 }
 
 /*
@@ -1075,7 +1207,16 @@ TEST(GuiBuffer, SetNicklistCaseSensitive)
 
 TEST(GuiBuffer, SetNicklistDisplayGroups)
 {
-    /* TODO: write tests */
+    gui_buffer_set_nicklist_display_groups (NULL, 0);
+
+    LONGS_EQUAL(1, gui_buffers->nicklist_display_groups);
+    gui_buffer_set_nicklist_display_groups (gui_buffers, 0);
+    LONGS_EQUAL(0, gui_buffers->nicklist_display_groups);
+    gui_buffer_set_nicklist_display_groups (gui_buffers, 1);
+    LONGS_EQUAL(1, gui_buffers->nicklist_display_groups);
+    gui_buffer_set_nicklist_display_groups (gui_buffers, 0);
+    gui_buffer_set_nicklist_display_groups (gui_buffers, 2);
+    LONGS_EQUAL(1, gui_buffers->nicklist_display_groups);
 }
 
 /*
@@ -1086,6 +1227,8 @@ TEST(GuiBuffer, SetNicklistDisplayGroups)
 TEST(GuiBuffer, SetHighlightWords)
 {
     struct t_gui_buffer *buffer;
+
+    gui_buffer_set_highlight_words (NULL, "test");
 
     buffer = gui_buffer_new (NULL, TEST_BUFFER_NAME,
                              NULL, NULL, NULL,
@@ -1115,6 +1258,8 @@ TEST(GuiBuffer, SetHighlightWordsList)
 {
     struct t_gui_buffer *buffer;
     struct t_weelist *list;
+
+    gui_buffer_set_highlight_words_list (NULL, NULL);
 
     buffer = gui_buffer_new (NULL, TEST_BUFFER_NAME,
                              NULL, NULL, NULL,
@@ -1147,21 +1292,47 @@ TEST(GuiBuffer, SetHighlightWordsList)
 /*
  * Tests functions:
  *   gui_buffer_add_highlight_words
+ *   gui_buffer_remove_highlight_words
  */
 
-TEST(GuiBuffer, AddHighlightWords)
+TEST(GuiBuffer, AddRemoveHighlightWords)
 {
-    /* TODO: write tests */
+    gui_buffer_add_highlight_words (NULL, "test");
+    gui_buffer_remove_highlight_words (NULL, "test");
+    gui_buffer_add_highlight_words (gui_buffers, NULL);
+    gui_buffer_remove_highlight_words (gui_buffers, NULL);
+
+    STRCMP_EQUAL(NULL, gui_buffers->highlight_words);
+    gui_buffer_add_highlight_words (gui_buffers, "test1");
+    STRCMP_EQUAL("test1", gui_buffers->highlight_words);
+    gui_buffer_add_highlight_words (gui_buffers, "test2");
+    STRCMP_EQUAL("test1,test2", gui_buffers->highlight_words);
+
+    gui_buffer_remove_highlight_words (gui_buffers, "test1");
+    STRCMP_EQUAL("test2", gui_buffers->highlight_words);
+    gui_buffer_remove_highlight_words (gui_buffers, "test2");
+    STRCMP_EQUAL(NULL, gui_buffers->highlight_words);
 }
 
 /*
  * Tests functions:
- *   gui_buffer_remove_highlight_words
+ *   gui_buffer_set_highlight_disable_regex
  */
 
-TEST(GuiBuffer, RemoveHighlightWords)
+TEST(GuiBuffer, SetHighlightDisableRegex)
 {
-    /* TODO: write tests */
+    gui_buffer_set_highlight_disable_regex (NULL, "test");
+
+    STRCMP_EQUAL(NULL, gui_buffers->highlight_disable_regex);
+
+    /* invalid regex */
+    gui_buffer_set_highlight_disable_regex (gui_buffers, "*");
+    STRCMP_EQUAL(NULL, gui_buffers->highlight_disable_regex);
+
+    gui_buffer_set_highlight_disable_regex (gui_buffers, "test");
+    STRCMP_EQUAL("test", gui_buffers->highlight_disable_regex);
+    gui_buffer_set_highlight_disable_regex (gui_buffers, NULL);
+    STRCMP_EQUAL(NULL, gui_buffers->highlight_disable_regex);
 }
 
 /*
@@ -1171,7 +1342,18 @@ TEST(GuiBuffer, RemoveHighlightWords)
 
 TEST(GuiBuffer, SetHighlightRegex)
 {
-    /* TODO: write tests */
+    gui_buffer_set_highlight_regex (NULL, "test");
+
+    STRCMP_EQUAL(NULL, gui_buffers->highlight_regex);
+
+    /* invalid regex */
+    gui_buffer_set_highlight_regex (gui_buffers, "*");
+    STRCMP_EQUAL(NULL, gui_buffers->highlight_regex);
+
+    gui_buffer_set_highlight_regex (gui_buffers, "test");
+    STRCMP_EQUAL("test", gui_buffers->highlight_regex);
+    gui_buffer_set_highlight_regex (gui_buffers, NULL);
+    STRCMP_EQUAL(NULL, gui_buffers->highlight_regex);
 }
 
 /*
@@ -1181,7 +1363,25 @@ TEST(GuiBuffer, SetHighlightRegex)
 
 TEST(GuiBuffer, SetHighlightTagsRestrict)
 {
-    /* TODO: write tests */
+    gui_buffer_set_highlight_tags_restrict (NULL, "irc_join+nick_test,irc_quit");
+
+    POINTERS_EQUAL(NULL, gui_buffers->highlight_tags_restrict);
+    LONGS_EQUAL(0, gui_buffers->highlight_tags_restrict_count);
+    POINTERS_EQUAL(NULL, gui_buffers->highlight_tags_restrict_array);
+
+    gui_buffer_set_highlight_tags_restrict (gui_buffers, "irc_join+nick_test,irc_quit");
+    STRCMP_EQUAL("irc_join+nick_test,irc_quit", gui_buffers->highlight_tags_restrict);
+    LONGS_EQUAL(2, gui_buffers->highlight_tags_restrict_count);
+    STRCMP_EQUAL("irc_join", gui_buffers->highlight_tags_restrict_array[0][0]);
+    STRCMP_EQUAL("nick_test", gui_buffers->highlight_tags_restrict_array[0][1]);
+    STRCMP_EQUAL(NULL, gui_buffers->highlight_tags_restrict_array[0][2]);
+    STRCMP_EQUAL("irc_quit", gui_buffers->highlight_tags_restrict_array[1][0]);
+    STRCMP_EQUAL(NULL, gui_buffers->highlight_tags_restrict_array[1][1]);
+
+    gui_buffer_set_highlight_tags_restrict (gui_buffers, NULL);
+    POINTERS_EQUAL(NULL, gui_buffers->highlight_tags_restrict);
+    LONGS_EQUAL(0, gui_buffers->highlight_tags_restrict_count);
+    POINTERS_EQUAL(NULL, gui_buffers->highlight_tags_restrict_array);
 }
 
 /*
@@ -1191,37 +1391,74 @@ TEST(GuiBuffer, SetHighlightTagsRestrict)
 
 TEST(GuiBuffer, SetHighlightTags)
 {
-    /* TODO: write tests */
+    gui_buffer_set_highlight_tags (NULL, "irc_join+nick_test,irc_quit");
+
+    POINTERS_EQUAL(NULL, gui_buffers->highlight_tags);
+    LONGS_EQUAL(0, gui_buffers->highlight_tags_count);
+    POINTERS_EQUAL(NULL, gui_buffers->highlight_tags_array);
+
+    gui_buffer_set_highlight_tags (gui_buffers, "irc_join+nick_test,irc_quit");
+    STRCMP_EQUAL("irc_join+nick_test,irc_quit", gui_buffers->highlight_tags);
+    LONGS_EQUAL(2, gui_buffers->highlight_tags_count);
+    STRCMP_EQUAL("irc_join", gui_buffers->highlight_tags_array[0][0]);
+    STRCMP_EQUAL("nick_test", gui_buffers->highlight_tags_array[0][1]);
+    STRCMP_EQUAL(NULL, gui_buffers->highlight_tags_array[0][2]);
+    STRCMP_EQUAL("irc_quit", gui_buffers->highlight_tags_array[1][0]);
+    STRCMP_EQUAL(NULL, gui_buffers->highlight_tags_array[1][1]);
+
+    gui_buffer_set_highlight_tags (gui_buffers, NULL);
+    POINTERS_EQUAL(NULL, gui_buffers->highlight_tags);
+    LONGS_EQUAL(0, gui_buffers->highlight_tags_count);
+    POINTERS_EQUAL(NULL, gui_buffers->highlight_tags_array);
 }
 
 /*
  * Tests functions:
  *   gui_buffer_set_hotlist_max_level_nicks
+ *   gui_buffer_add_hotlist_max_level_nicks
+ *   gui_buffer_remove_hotlist_max_level_nicks
  */
 
 TEST(GuiBuffer, SetHotlistMaxLevelNicks)
 {
-    /* TODO: write tests */
-}
+    gui_buffer_set_hotlist_max_level_nicks (NULL, "carl:0,alice:1");
+    gui_buffer_add_hotlist_max_level_nicks (NULL, "bob:2");
+    gui_buffer_remove_hotlist_max_level_nicks (NULL, "alice:999");
 
-/*
- * Tests functions:
- *   gui_buffer_add_hotlist_max_level_nicks
- */
+    LONGS_EQUAL(0, gui_buffers->hotlist_max_level_nicks->items_count);
 
-TEST(GuiBuffer, AddHotlistMaxLevelNicks)
-{
-    /* TODO: write tests */
-}
+    gui_buffer_set_hotlist_max_level_nicks (gui_buffers, "carl:0,alice:1");
+    LONGS_EQUAL(2, gui_buffers->hotlist_max_level_nicks->items_count);
+    STRCMP_EQUAL("alice:1,carl:0",
+                 hashtable_get_string (gui_buffers->hotlist_max_level_nicks,
+                                       "keys_values_sorted"));
 
-/*
- * Tests functions:
- *   gui_buffer_remove_hotlist_max_level_nicks
- */
+    gui_buffer_add_hotlist_max_level_nicks (gui_buffers, NULL);
+    LONGS_EQUAL(2, gui_buffers->hotlist_max_level_nicks->items_count);
+    STRCMP_EQUAL("alice:1,carl:0",
+                 hashtable_get_string (gui_buffers->hotlist_max_level_nicks,
+                                       "keys_values_sorted"));
 
-TEST(GuiBuffer, RemoveHotlistMaxLevelNicks)
-{
-    /* TODO: write tests */
+    gui_buffer_add_hotlist_max_level_nicks (gui_buffers, "bob:2");
+    LONGS_EQUAL(3, gui_buffers->hotlist_max_level_nicks->items_count);
+    STRCMP_EQUAL("alice:1,bob:2,carl:0",
+                 hashtable_get_string (gui_buffers->hotlist_max_level_nicks,
+                                       "keys_values_sorted"));
+
+    gui_buffer_remove_hotlist_max_level_nicks (gui_buffers, NULL);
+    LONGS_EQUAL(3, gui_buffers->hotlist_max_level_nicks->items_count);
+    STRCMP_EQUAL("alice:1,bob:2,carl:0",
+                 hashtable_get_string (gui_buffers->hotlist_max_level_nicks,
+                                       "keys_values_sorted"));
+
+    gui_buffer_remove_hotlist_max_level_nicks (gui_buffers, "alice:999");
+    LONGS_EQUAL(2, gui_buffers->hotlist_max_level_nicks->items_count);
+    STRCMP_EQUAL("bob:2,carl:0",
+                 hashtable_get_string (gui_buffers->hotlist_max_level_nicks,
+                                       "keys_values_sorted"));
+
+    gui_buffer_set_hotlist_max_level_nicks (gui_buffers, NULL);
+    LONGS_EQUAL(0, gui_buffers->hotlist_max_level_nicks->items_count);
 }
 
 /*
@@ -1247,7 +1484,13 @@ TEST(GuiBuffer, SetInputPrompt)
 
 TEST(GuiBuffer, SetInput)
 {
-    /* TODO: write tests */
+    gui_buffer_set_input (NULL, "test");
+
+    STRCMP_EQUAL("", gui_buffers->input_buffer);
+    gui_buffer_set_input (gui_buffers, "test");
+    STRCMP_EQUAL("test", gui_buffers->input_buffer);
+    gui_buffer_set_input (gui_buffers, NULL);
+    STRCMP_EQUAL("", gui_buffers->input_buffer);
 }
 
 /*
@@ -1257,7 +1500,16 @@ TEST(GuiBuffer, SetInput)
 
 TEST(GuiBuffer, SetInputGetAnyUserData)
 {
-    /* TODO: write tests */
+    gui_buffer_set_input_get_any_user_data (NULL, 1);
+
+    LONGS_EQUAL(0, gui_buffers->input_get_any_user_data);
+    gui_buffer_set_input_get_any_user_data (gui_buffers, 1);
+    LONGS_EQUAL(1, gui_buffers->input_get_any_user_data);
+    gui_buffer_set_input_get_any_user_data (gui_buffers, 0);
+    gui_buffer_set_input_get_any_user_data (gui_buffers, 2);
+    LONGS_EQUAL(1, gui_buffers->input_get_any_user_data);
+    gui_buffer_set_input_get_any_user_data (gui_buffers, 0);
+    LONGS_EQUAL(0, gui_buffers->input_get_any_user_data);
 }
 
 /*
@@ -1267,7 +1519,16 @@ TEST(GuiBuffer, SetInputGetAnyUserData)
 
 TEST(GuiBuffer, SetInputGetUnknownCommands)
 {
-    /* TODO: write tests */
+    gui_buffer_set_input_get_unknown_commands (NULL, 1);
+
+    LONGS_EQUAL(0, gui_buffers->input_get_unknown_commands);
+    gui_buffer_set_input_get_unknown_commands (gui_buffers, 1);
+    LONGS_EQUAL(1, gui_buffers->input_get_unknown_commands);
+    gui_buffer_set_input_get_unknown_commands (gui_buffers, 0);
+    gui_buffer_set_input_get_unknown_commands (gui_buffers, 2);
+    LONGS_EQUAL(1, gui_buffers->input_get_unknown_commands);
+    gui_buffer_set_input_get_unknown_commands (gui_buffers, 0);
+    LONGS_EQUAL(0, gui_buffers->input_get_unknown_commands);
 }
 
 /*
@@ -1277,7 +1538,16 @@ TEST(GuiBuffer, SetInputGetUnknownCommands)
 
 TEST(GuiBuffer, SetInputGetEmpty)
 {
-    /* TODO: write tests */
+    gui_buffer_set_input_get_empty (NULL, 1);
+
+    LONGS_EQUAL(0, gui_buffers->input_get_empty);
+    gui_buffer_set_input_get_empty (gui_buffers, 1);
+    LONGS_EQUAL(1, gui_buffers->input_get_empty);
+    gui_buffer_set_input_get_empty (gui_buffers, 0);
+    gui_buffer_set_input_get_empty (gui_buffers, 2);
+    LONGS_EQUAL(1, gui_buffers->input_get_empty);
+    gui_buffer_set_input_get_empty (gui_buffers, 0);
+    LONGS_EQUAL(0, gui_buffers->input_get_empty);
 }
 
 /*
@@ -1287,7 +1557,16 @@ TEST(GuiBuffer, SetInputGetEmpty)
 
 TEST(GuiBuffer, SetInputMultiline)
 {
-    /* TODO: write tests */
+    gui_buffer_set_input_multiline (NULL, 1);
+
+    LONGS_EQUAL(0, gui_buffers->input_multiline);
+    gui_buffer_set_input_multiline (gui_buffers, 1);
+    LONGS_EQUAL(1, gui_buffers->input_multiline);
+    gui_buffer_set_input_multiline (gui_buffers, 0);
+    gui_buffer_set_input_multiline (gui_buffers, 2);
+    LONGS_EQUAL(1, gui_buffers->input_multiline);
+    gui_buffer_set_input_multiline (gui_buffers, 0);
+    LONGS_EQUAL(0, gui_buffers->input_multiline);
 }
 
 /*
@@ -1297,7 +1576,16 @@ TEST(GuiBuffer, SetInputMultiline)
 
 TEST(GuiBuffer, SetUnread)
 {
-    /* TODO: write tests */
+    gui_buffer_set_unread (NULL, "1");
+
+    gui_buffer_set_unread (gui_buffers, NULL);
+    gui_buffer_set_unread (gui_buffers, "");
+    gui_buffer_set_unread (gui_buffers, "-");
+    gui_buffer_set_unread (gui_buffers, "-1");
+    gui_buffer_set_unread (gui_buffers, "+");
+    gui_buffer_set_unread (gui_buffers, "+1");
+    gui_buffer_set_unread (gui_buffers, "1");
+    gui_buffer_set_unread (gui_buffers, "0");
 }
 
 /*
