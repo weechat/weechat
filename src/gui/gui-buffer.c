@@ -2100,6 +2100,8 @@ gui_buffer_set_highlight_disable_regex (struct t_gui_buffer *buffer,
                 {
                     free (buffer->highlight_disable_regex_compiled);
                     buffer->highlight_disable_regex_compiled = NULL;
+                    free (buffer->highlight_disable_regex);
+                    buffer->highlight_disable_regex = NULL;
                 }
             }
         }
