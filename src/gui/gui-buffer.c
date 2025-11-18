@@ -2144,6 +2144,8 @@ gui_buffer_set_highlight_regex (struct t_gui_buffer *buffer,
                 {
                     free (buffer->highlight_regex_compiled);
                     buffer->highlight_regex_compiled = NULL;
+                    free (buffer->highlight_regex);
+                    buffer->highlight_regex = NULL;
                 }
             }
         }
