@@ -28,6 +28,7 @@
 
 #include "../weechat-plugin.h"
 #include "irc.h"
+#include "irc-color.h"
 #include "irc-mode.h"
 #include "irc-config.h"
 #include "irc-server.h"
@@ -37,17 +38,23 @@
 
 
 /*
- * Gets mode arguments: skip colons before arguments.
+ * Gets mode arguments: skips colons before arguments and converts IRC color
+ * codes into WeeChat color codes, so that the result can be displayed in a
+ * buffer.
  */
 
 char *
-irc_mode_get_arguments (const char *arguments)
+irc_mode_get_arguments_colors (const char *arguments)
 {
-    char **argv, **argv2, *new_arguments;
+    char **argv, **new_arguments;
     int argc, i;
 
     if (!arguments || !arguments[0])
         return strdup ("");
+
+    new_arguments = weechat_string_dyn_alloc (1024);
+    if (!new_arguments)
+        return NULL;
 
     argv = weechat_string_split (arguments, " ", NULL,
                                  WEECHAT_STRING_SPLIT_STRIP_LEFT
@@ -57,26 +64,20 @@ irc_mode_get_arguments (const char *arguments)
     if (!argv)
         return strdup ("");
 
-    argv2 = malloc (sizeof (*argv) * (argc + 1));
-    if (!argv2)
-    {
-        weechat_string_free_split (argv);
-        return strdup ("");;
-    }
-
     for (i = 0; i < argc; i++)
     {
-        argv2[i] = (argv[i][0] == ':') ? argv[i] + 1 : argv[i];
+        if ((*new_arguments)[0])
+            weechat_string_dyn_concat (new_arguments, " ", -1);
+        weechat_string_dyn_concat (
+            new_arguments,
+            (argv[i][0] == ':') ? IRC_COLOR_MSG(argv[i] + 1) : IRC_COLOR_MSG(argv[i]),
+            -1);
+        weechat_string_dyn_concat (new_arguments, IRC_COLOR_RESET, -1);
     }
-    argv2[argc] = NULL;
-
-    new_arguments = weechat_string_rebuild_split_string (
-        (const char **)argv2, " ", 0, -1);
 
     weechat_string_free_split (argv);
-    free (argv2);
 
-    return new_arguments;
+    return weechat_string_dyn_free (new_arguments, 0);
 }
 
 /*

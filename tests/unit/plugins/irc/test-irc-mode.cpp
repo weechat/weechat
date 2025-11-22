@@ -25,11 +25,13 @@
 
 extern "C"
 {
+#include "src/gui/gui-color.h"
+#include "src/plugins/irc/irc-color.h"
 #include "src/plugins/irc/irc-mode.h"
 }
 
 #define WEE_CHECK_GET_ARGS(__result, __arguments)                       \
-    str = irc_mode_get_arguments (__arguments);                         \
+    str = irc_mode_get_arguments_colors (__arguments);                  \
     STRCMP_EQUAL(__result, str);                                        \
     free (str);
 
@@ -44,23 +46,93 @@ TEST_GROUP(IrcMode)
 
 TEST(IrcMode, GetArguments)
 {
-    char *str;
+    char *str, string[1024], expected[1024];
 
     /* invalid arguments */
-    WEE_CHECK_GET_ARGS("", irc_mode_get_arguments (NULL));
-    WEE_CHECK_GET_ARGS("", irc_mode_get_arguments (""));
-    WEE_CHECK_GET_ARGS("", irc_mode_get_arguments (" "));
+    WEE_CHECK_GET_ARGS("", NULL);
+    WEE_CHECK_GET_ARGS("", "");
+    WEE_CHECK_GET_ARGS("", " ");
 
     /* simple arguments */
-    WEE_CHECK_GET_ARGS("abc", irc_mode_get_arguments ("abc"));
-    WEE_CHECK_GET_ARGS("abc def", irc_mode_get_arguments ("abc def"));
-    WEE_CHECK_GET_ARGS("abc def ghi", irc_mode_get_arguments ("abc def ghi"));
+    snprintf (string, sizeof (string), "abc%c02_blue", IRC_COLOR_COLOR_CHAR);
+    snprintf (expected, sizeof (expected),
+              "abc%s_blue%s",
+              gui_color_get_custom ("|blue"),
+              gui_color_get_custom ("reset"));
+    WEE_CHECK_GET_ARGS(expected, string);
+    snprintf (string, sizeof (string),
+              "abc%c02_blue def%c02_blue",
+              IRC_COLOR_COLOR_CHAR,
+              IRC_COLOR_COLOR_CHAR);
+    snprintf (expected, sizeof (expected),
+              "abc%s_blue%s def%s_blue%s",
+              gui_color_get_custom ("|blue"),
+              gui_color_get_custom ("reset"),
+              gui_color_get_custom ("|blue"),
+              gui_color_get_custom ("reset"));
+    WEE_CHECK_GET_ARGS(expected, string);
+    snprintf (string, sizeof (string),
+              "abc%c02_blue def%c02_blue ghi%c02_blue",
+              IRC_COLOR_COLOR_CHAR,
+              IRC_COLOR_COLOR_CHAR,
+              IRC_COLOR_COLOR_CHAR);
+    snprintf (expected, sizeof (expected),
+              "abc%s_blue%s def%s_blue%s ghi%s_blue%s",
+              gui_color_get_custom ("|blue"),
+              gui_color_get_custom ("reset"),
+              gui_color_get_custom ("|blue"),
+              gui_color_get_custom ("reset"),
+              gui_color_get_custom ("|blue"),
+              gui_color_get_custom ("reset"));
+    WEE_CHECK_GET_ARGS(expected, string);
 
     /* some arguments starting with a colon */
-    WEE_CHECK_GET_ARGS("abc", irc_mode_get_arguments (":abc"));
-    WEE_CHECK_GET_ARGS("abc def", irc_mode_get_arguments (":abc def"));
-    WEE_CHECK_GET_ARGS("abc def", irc_mode_get_arguments ("abc :def"));
-    WEE_CHECK_GET_ARGS("abc def ghi", irc_mode_get_arguments ("abc :def ghi"));
-    WEE_CHECK_GET_ARGS("abc def ghi", irc_mode_get_arguments ("abc :def :ghi"));
-    WEE_CHECK_GET_ARGS("abc def ghi", irc_mode_get_arguments (":abc :def :ghi"));
+    snprintf (string, sizeof (string), ":abc%c02_blue", IRC_COLOR_COLOR_CHAR);
+    snprintf (expected, sizeof (expected),
+              "abc%s_blue%s",
+              gui_color_get_custom ("|blue"),
+              gui_color_get_custom ("reset"));
+    WEE_CHECK_GET_ARGS(expected, string);
+    snprintf (string, sizeof (string),
+              ":abc%c02_blue def%c02_blue",
+              IRC_COLOR_COLOR_CHAR,
+              IRC_COLOR_COLOR_CHAR);
+    snprintf (expected, sizeof (expected),
+              "abc%s_blue%s def%s_blue%s",
+              gui_color_get_custom ("|blue"),
+              gui_color_get_custom ("reset"),
+              gui_color_get_custom ("|blue"),
+              gui_color_get_custom ("reset"));
+    WEE_CHECK_GET_ARGS(expected, string);
+    snprintf (string, sizeof (string),
+              "abc%c02_blue :def%c02_blue",
+              IRC_COLOR_COLOR_CHAR,
+              IRC_COLOR_COLOR_CHAR);
+    WEE_CHECK_GET_ARGS(expected, string);
+    snprintf (string, sizeof (string),
+              "abc%c02_blue :def%c02_blue ghi%c02_blue",
+              IRC_COLOR_COLOR_CHAR,
+              IRC_COLOR_COLOR_CHAR,
+              IRC_COLOR_COLOR_CHAR);
+    snprintf (expected, sizeof (expected),
+              "abc%s_blue%s def%s_blue%s ghi%s_blue%s",
+              gui_color_get_custom ("|blue"),
+              gui_color_get_custom ("reset"),
+              gui_color_get_custom ("|blue"),
+              gui_color_get_custom ("reset"),
+              gui_color_get_custom ("|blue"),
+              gui_color_get_custom ("reset"));
+    WEE_CHECK_GET_ARGS(expected, string);
+    snprintf (string, sizeof (string),
+              "abc%c02_blue :def%c02_blue :ghi%c02_blue",
+              IRC_COLOR_COLOR_CHAR,
+              IRC_COLOR_COLOR_CHAR,
+              IRC_COLOR_COLOR_CHAR);
+    WEE_CHECK_GET_ARGS(expected, string);
+    snprintf (string, sizeof (string),
+              ":abc%c02_blue :def%c02_blue :ghi%c02_blue",
+              IRC_COLOR_COLOR_CHAR,
+              IRC_COLOR_COLOR_CHAR,
+              IRC_COLOR_COLOR_CHAR);
+    WEE_CHECK_GET_ARGS(expected, string);
 }

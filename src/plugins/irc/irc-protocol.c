@@ -2178,7 +2178,7 @@ IRC_PROTOCOL_CALLBACK(mode)
         }
         ptr_nick = irc_nick_search (ctxt->server, ptr_channel, ctxt->nick);
         ptr_buffer = (ptr_channel) ? ptr_channel->buffer : ctxt->server->buffer;
-        modes_args = irc_mode_get_arguments (msg_modes_args);
+        modes_args = irc_mode_get_arguments_colors (msg_modes_args);
         weechat_printf_datetime_tags (
             irc_msgbuffer_get_target_buffer (ctxt->server, NULL, ctxt->command, NULL,
                                              ptr_buffer),
@@ -2195,7 +2195,7 @@ IRC_PROTOCOL_CALLBACK(mode)
             IRC_COLOR_RESET,
             ctxt->params[1],  /* mode */
             (modes_args && modes_args[0]) ? " " : "",
-            (modes_args && modes_args[0]) ? IRC_COLOR_MSG(modes_args) : "",
+            (modes_args && modes_args[0]) ? modes_args : "",
             IRC_COLOR_CHAT_DELIMITERS,
             IRC_COLOR_RESET,
             irc_nick_color_for_msg (ctxt->server, 1, ptr_nick, ctxt->nick),

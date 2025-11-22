@@ -12,6 +12,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 - api: fix file descriptor leak in hook_url when a timeout occurs or if the hook is removed during the transfer ([#2284](https://github.com/weechat/weechat/issues/2284))
 - irc: fix colors in messages 367 (ban mask), 728 (quiet mask) and MODE ([#2286](https://github.com/weechat/weechat/issues/2286))
+- irc: fix reset of color when multiple modes are set with command `/mode`
 
 ## Version 4.7.1 (2025-08-16)
 
