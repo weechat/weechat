@@ -2316,14 +2316,20 @@ TEST(IrcProtocolWithServer, mode)
                "irc_mode,nick_admin,host_user@host,log3");
     STRCMP_EQUAL(NULL, ptr_channel->modes);
 
-    /* ban added on channel */
-    RECV(":admin!user@host MODE #test +b bob!user_\00304red@host_\00304red");
-    CHECK_CHAN("--", "Mode #test [+b bob!user_red@host_red] by admin",
+    /* bans added on channel */
+    RECV(":admin!user@host MODE #test +bb "
+         "bob!user_\00304red@host_\00304red "
+         "carol!user_\00304red@host_\00304red");
+    CHECK_CHAN("--", "Mode #test [+bb bob!user_red@host_red "
+               "carol!user_red@host_red] by admin",
                "irc_mode,nick_admin,host_user@host,log3");
 
-    /* ban removed from channel */
-    RECV(":admin!user@host MODE #test -b bob!user_\00304red@host_\00304red");
-    CHECK_CHAN("--", "Mode #test [-b bob!user_red@host_red] by admin",
+    /* bans removed from channel */
+    RECV(":admin!user@host MODE #test -bb "
+         "bob!user_\00304red@host_\00304red "
+         "carol!user_\00304red@host_\00304red");
+    CHECK_CHAN("--", "Mode #test [-bb bob!user_red@host_red "
+               "carol!user_red@host_red] by admin",
                "irc_mode,nick_admin,host_user@host,log3");
 
     /* nick mode '@' on channel #test */

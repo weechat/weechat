@@ -42,6 +42,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 - irc: fix warning on creation of irc.msgbuffer option when the server name contains upper case letters ([#2281](https://github.com/weechat/weechat/issues/2281))
 - irc: display a warning for each unknown or invalid server option in commands /connect and /server
 - irc: fix colors in messages 367 (ban mask), 728 (quiet mask) and MODE ([#2286](https://github.com/weechat/weechat/issues/2286))
+- irc: fix reset of color when multiple modes are set with command `/mode`
 - relay/api: fix crash when an invalid HTTP request is received from a client
 - relay/api: return HTTP error 404 instead of 400 when the buffer is not found in resources completion and input
 - relay/api: return HTTP error 400 in case of invalid body in resource ping
