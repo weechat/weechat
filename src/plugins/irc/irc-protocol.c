@@ -829,8 +829,8 @@ irc_protocol_cap_sync_req (struct t_irc_server *server,
         ptr_caps_req = (new_caps_req) ? new_caps_req : caps_req;
         if (ptr_caps_req && ptr_caps_req[0])
         {
-            weechat_printf (
-                server->buffer,
+            weechat_printf_date_tags (
+                server->buffer, 0, "irc_cap,log3",
                 _("%s%s: client capability, requesting: %s"),
                 weechat_prefix ("network"), IRC_PLUGIN_NAME,
                 ptr_caps_req);
@@ -918,8 +918,8 @@ irc_protocol_cap_sync (struct t_irc_server *server, int sasl, int cap_new_receiv
                 irc_server_sendf (server, 0, NULL, "CAP END");
             if (sasl_requested && !sasl_to_do && !cap_new_received)
             {
-                weechat_printf (
-                    server->buffer,
+                weechat_printf_date_tags (
+                    server->buffer, 0, "irc_cap,log3",
                     _("%s%s: client capability: SASL not supported"),
                     weechat_prefix ("network"), IRC_PLUGIN_NAME);
 

@@ -29,6 +29,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 - relay/api: return an error 401 (Unauthorized) when header "x-weechat-totp" has an invalid value
 - xfer: add buffer local variable "server" in DCC CHAT buffers
 - core, irc, relay: add tag "tls" in gnutls messages
+- irc: add tags "irc_cap" and "log3" in client capability request and SASL not supported messages
 - build: require Curl ≥ 7.68.0 ([#2268](https://github.com/weechat/weechat/issues/2268))
 - build: require GnuTLS ≥ 3.6.3 ([#2268](https://github.com/weechat/weechat/issues/2268))
 - build: require libgcrypt ≥ 1.8.0 ([#2268](https://github.com/weechat/weechat/issues/2268))
