@@ -6811,7 +6811,7 @@ IRC_PROTOCOL_CALLBACK(367)
                 IRC_COLOR_CHAT_DELIMITERS,
                 str_number,
                 IRC_COLOR_CHAT_HOST,
-                ctxt->params[2],  /* banmask */
+                IRC_COLOR_MSG(ctxt->params[2]),  /* banmask */
                 IRC_COLOR_RESET,
                 (nick_address[0]) ? nick_address : "?",
                 weechat_util_get_time_string (&datetime));
@@ -6834,7 +6834,7 @@ IRC_PROTOCOL_CALLBACK(367)
                 IRC_COLOR_CHAT_DELIMITERS,
                 str_number,
                 IRC_COLOR_CHAT_HOST,
-                ctxt->params[2],  /* banmask */
+                IRC_COLOR_MSG(ctxt->params[2]),  /* banmask */
                 IRC_COLOR_RESET,
                 (nick_address[0]) ? nick_address : "?");
         }
@@ -6857,7 +6857,7 @@ IRC_PROTOCOL_CALLBACK(367)
             IRC_COLOR_CHAT_DELIMITERS,
             str_number,
             IRC_COLOR_CHAT_HOST,
-            ctxt->params[2],  /* banmask */
+            IRC_COLOR_MSG(ctxt->params[2]),  /* banmask */
             IRC_COLOR_RESET);
     }
 
@@ -7386,7 +7386,7 @@ IRC_PROTOCOL_CALLBACK(728)
                 IRC_COLOR_CHAT_DELIMITERS,
                 str_number,
                 IRC_COLOR_CHAT_HOST,
-                ctxt->params[3],  /* quietmask */
+                IRC_COLOR_MSG(ctxt->params[3]),  /* quietmask */
                 IRC_COLOR_RESET,
                 (nick_address[0]) ? nick_address : "?",
                 weechat_util_get_time_string (&datetime));
@@ -7409,7 +7409,7 @@ IRC_PROTOCOL_CALLBACK(728)
                 IRC_COLOR_CHAT_DELIMITERS,
                 str_number,
                 IRC_COLOR_CHAT_HOST,
-                ctxt->params[3],  /* quietmask */
+                IRC_COLOR_MSG(ctxt->params[3]),  /* quietmask */
                 IRC_COLOR_RESET,
                 (nick_address[0]) ? nick_address : "?");
         }
@@ -7432,7 +7432,7 @@ IRC_PROTOCOL_CALLBACK(728)
             IRC_COLOR_CHAT_DELIMITERS,
             str_number,
             IRC_COLOR_CHAT_HOST,
-            ctxt->params[3],  /* quietmask */
+            IRC_COLOR_MSG(ctxt->params[3]),  /* quietmask */
             IRC_COLOR_RESET);
     }
 
