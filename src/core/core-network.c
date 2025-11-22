@@ -120,8 +120,8 @@ network_load_system_ca_file (int force_display)
     rc = gnutls_certificate_set_x509_system_trust (gnutls_xcred);
     if (rc < 0)
     {
-        gui_chat_printf (
-            NULL,
+        gui_chat_printf_date_tags (
+            NULL, 0, "tls",
             _("%sWarning: failed to load system certificate authorities"),
             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
         return 0;
@@ -129,8 +129,8 @@ network_load_system_ca_file (int force_display)
 
     if (force_display || (weechat_debug_core >= 1))
     {
-        gui_chat_printf (
-            NULL,
+        gui_chat_printf_date_tags (
+            NULL, 0, "tls",
             NG_("%d certificate loaded (system)",
                 "%d certificates loaded (system)",
                 rc),
@@ -185,8 +185,8 @@ network_load_user_ca_files (int force_display)
                     gnutls_xcred, ca_path, GNUTLS_X509_FMT_PEM);
                 if (rc < 0)
                 {
-                    gui_chat_printf (
-                        NULL,
+                    gui_chat_printf_date_tags (
+                        NULL, 0, "tls",
                         _("%sWarning: failed to load certificate authorities "
                           "from file %s"),
                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
@@ -197,8 +197,8 @@ network_load_user_ca_files (int force_display)
                     num_loaded += rc;
                     if (force_display || (weechat_debug_core >= 1))
                     {
-                        gui_chat_printf (
-                            NULL,
+                        gui_chat_printf_date_tags (
+                            NULL, 0, "tls",
                             NG_("%d certificate loaded (file: %s)",
                                 "%d certificates loaded (file: %s)",
                                 rc),
@@ -208,8 +208,8 @@ network_load_user_ca_files (int force_display)
             }
             else
             {
-                gui_chat_printf (
-                    NULL,
+                gui_chat_printf_date_tags (
+                    NULL, 0, "tls",
                     _("%sWarning: failed to load certificate authorities "
                       "from file %s (file not found)"),
                     gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
@@ -259,11 +259,12 @@ network_reload_ca_files (int force_display)
     gnutls_certificate_free_credentials (gnutls_xcred);
     if (force_display || (weechat_debug_core >= 1))
     {
-        gui_chat_printf (NULL,
-                         NG_("%d certificate purged",
-                             "%d certificates purged",
-                             network_num_certs),
-                         network_num_certs);
+        gui_chat_printf_date_tags (
+            NULL, 0, "tls",
+            NG_("%d certificate purged",
+                "%d certificates purged",
+                network_num_certs),
+            network_num_certs);
     }
     network_allocate_credentials ();
     network_load_ca_files (force_display);

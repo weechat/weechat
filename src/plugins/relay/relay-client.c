@@ -252,7 +252,7 @@ relay_client_handshake_timer_cb (const void *pointer, void *data,
     {
         /* handshake error, disconnect client */
         weechat_printf_date_tags (
-            NULL, 0, "relay_client",
+            NULL, 0, "relay_client,tls",
             _("%s%s: TLS handshake failed for client %s%s%s: error %d %s"),
             weechat_prefix ("error"),
             RELAY_PLUGIN_NAME,
@@ -271,7 +271,7 @@ relay_client_handshake_timer_cb (const void *pointer, void *data,
     {
         /* handshake timeout, disconnect client */
         weechat_printf_date_tags (
-            NULL, 0, "relay_client",
+            NULL, 0, "relay_client,tls",
             _("%s%s: TLS handshake timeout for client %s%s%s"),
             weechat_prefix ("error"),
             RELAY_PLUGIN_NAME,
@@ -1433,7 +1433,7 @@ relay_client_new (int sock, const char *address, struct t_relay_server *server)
             if (!relay_network_init_tls_cert_key_ok)
             {
                 weechat_printf_date_tags (
-                    NULL, 0, "relay_client",
+                    NULL, 0, "relay_client,tls",
                     _("%s%s: warning: no TLS certificate/key found (option "
                       "relay.network.tls_cert_key)"),
                     weechat_prefix ("error"),

@@ -4956,8 +4956,8 @@ irc_server_check_certificate_fingerprint (struct t_irc_server *server,
                         fingerprint_server[algo],
                         &size_bytes) != GNUTLS_E_SUCCESS)
                 {
-                    weechat_printf (
-                        server->buffer,
+                    weechat_printf_date_tags (
+                        server->buffer, 0, "tls",
                         _("%sgnutls: failed to calculate certificate "
                           "fingerprint (%s)"),
                         weechat_prefix ("error"),
@@ -4968,8 +4968,8 @@ irc_server_check_certificate_fingerprint (struct t_irc_server *server,
             }
             else
             {
-                weechat_printf (
-                    server->buffer,
+                weechat_printf_date_tags (
+                    server->buffer, 0, "tls",
                     _("%s%s: not enough memory (%s)"),
                     weechat_prefix ("error"), IRC_PLUGIN_NAME,
                     "fingerprint");
@@ -5054,8 +5054,8 @@ irc_server_gnutls_callback (const void *pointer, void *data,
         /* initialize the certificate structure */
         if (gnutls_x509_crt_init (&cert_temp) != GNUTLS_E_SUCCESS)
         {
-            weechat_printf (
-                server->buffer,
+            weechat_printf_date_tags (
+                server->buffer, 0, "tls",
                 _("%sgnutls: failed to initialize certificate structure"),
                 weechat_prefix ("error"));
             rc = -1;
@@ -5083,8 +5083,8 @@ irc_server_gnutls_callback (const void *pointer, void *data,
         cert_list = gnutls_certificate_get_peers (tls_session, &cert_list_len);
         if (cert_list)
         {
-            weechat_printf (
-                server->buffer,
+            weechat_printf_date_tags (
+                server->buffer, 0, "tls",
                 NG_("%sgnutls: receiving %d certificate",
                     "%sgnutls: receiving %d certificates",
                     cert_list_len),
@@ -5097,8 +5097,8 @@ irc_server_gnutls_callback (const void *pointer, void *data,
                                             &cert_list[i],
                                             GNUTLS_X509_FMT_DER) != GNUTLS_E_SUCCESS)
                 {
-                    weechat_printf (
-                        server->buffer,
+                    weechat_printf_date_tags (
+                        server->buffer, 0, "tls",
                         _("%sgnutls: failed to import certificate[%d]"),
                         weechat_prefix ("error"), i + 1);
                     rc = -1;
@@ -5126,12 +5126,12 @@ irc_server_gnutls_callback (const void *pointer, void *data,
                                                GNUTLS_CRT_PRINT_ONELINE, &cinfo);
                 if (rinfo == 0)
                 {
-                    weechat_printf (
-                        server->buffer,
+                    weechat_printf_date_tags (
+                        server->buffer, 0, "tls",
                         _("%s - certificate[%d] info:"),
                         weechat_prefix ("network"), i + 1);
-                    weechat_printf (
-                        server->buffer,
+                    weechat_printf_date_tags (
+                        server->buffer, 0, "tls",
                         "%s   - %s",
                         weechat_prefix ("network"), cinfo.data);
                     gnutls_free (cinfo.data);
@@ -5143,8 +5143,8 @@ irc_server_gnutls_callback (const void *pointer, void *data,
                     cert_time = gnutls_x509_crt_get_expiration_time (cert_temp);
                     if (cert_time < time (NULL))
                     {
-                        weechat_printf (
-                            server->buffer,
+                        weechat_printf_date_tags (
+                            server->buffer, 0, "tls",
                             _("%sgnutls: certificate has expired"),
                             weechat_prefix ("error"));
                         rc = -1;
@@ -5153,8 +5153,8 @@ irc_server_gnutls_callback (const void *pointer, void *data,
                     cert_time = gnutls_x509_crt_get_activation_time (cert_temp);
                     if (cert_time > time (NULL))
                     {
-                        weechat_printf (
-                            server->buffer,
+                        weechat_printf_date_tags (
+                            server->buffer, 0, "tls",
                             _("%sgnutls: certificate is not yet activated"),
                             weechat_prefix ("error"));
                         rc = -1;
@@ -5170,15 +5170,15 @@ irc_server_gnutls_callback (const void *pointer, void *data,
             {
                 if (fingerprint_match)
                 {
-                    weechat_printf (
-                        server->buffer,
+                    weechat_printf_date_tags (
+                        server->buffer, 0, "tls",
                         _("%sgnutls: certificate fingerprint matches"),
                         weechat_prefix ("network"));
                 }
                 else
                 {
-                    weechat_printf (
-                        server->buffer,
+                    weechat_printf_date_tags (
+                        server->buffer, 0, "tls",
                         _("%sgnutls: certificate fingerprint does NOT match "
                           "(check value of option "
                           "irc.server.%s.tls_fingerprint)"),
@@ -5190,8 +5190,8 @@ irc_server_gnutls_callback (const void *pointer, void *data,
 
             if (!hostname_match)
             {
-                weechat_printf (
-                    server->buffer,
+                weechat_printf_date_tags (
+                    server->buffer, 0, "tls",
                     _("%sgnutls: the hostname in the certificate does NOT "
                       "match \"%s\""),
                     weechat_prefix ("error"), server->current_address);
@@ -5202,8 +5202,8 @@ irc_server_gnutls_callback (const void *pointer, void *data,
         /* verify the peer’s certificate */
         if (gnutls_certificate_verify_peers2 (tls_session, &status) < 0)
         {
-            weechat_printf (
-                server->buffer,
+            weechat_printf_date_tags (
+                server->buffer, 0, "tls",
                 _("%sgnutls: error while checking peer's certificate"),
                 weechat_prefix ("error"));
             rc = -1;
@@ -5213,16 +5213,16 @@ irc_server_gnutls_callback (const void *pointer, void *data,
         /* check if certificate is trusted */
         if (status & GNUTLS_CERT_INVALID)
         {
-            weechat_printf (
-                server->buffer,
+            weechat_printf_date_tags (
+                server->buffer, 0, "tls",
                 _("%sgnutls: peer's certificate is NOT trusted"),
                 weechat_prefix ("error"));
             rc = -1;
         }
         else
         {
-            weechat_printf (
-                server->buffer,
+            weechat_printf_date_tags (
+                server->buffer, 0, "tls",
                 _("%sgnutls: peer's certificate is trusted"),
                 weechat_prefix ("network"));
         }
@@ -5230,8 +5230,8 @@ irc_server_gnutls_callback (const void *pointer, void *data,
         /* check if certificate issuer is known */
         if (status & GNUTLS_CERT_SIGNER_NOT_FOUND)
         {
-            weechat_printf (
-                server->buffer,
+            weechat_printf_date_tags (
+                server->buffer, 0, "tls",
                 _("%sgnutls: peer's certificate issuer is unknown"),
                 weechat_prefix ("error"));
             rc = -1;
@@ -5240,8 +5240,8 @@ irc_server_gnutls_callback (const void *pointer, void *data,
         /* check that certificate is not revoked */
         if (status & GNUTLS_CERT_REVOKED)
         {
-            weechat_printf (
-                server->buffer,
+            weechat_printf_date_tags (
+                server->buffer, 0, "tls",
                 _("%sgnutls: the certificate has been revoked"),
                 weechat_prefix ("error"));
             rc = -1;
@@ -5269,8 +5269,8 @@ irc_server_gnutls_callback (const void *pointer, void *data,
                 cert_str = weechat_file_get_content (cert_path);
                 if (cert_str)
                 {
-                    weechat_printf (
-                        server->buffer,
+                    weechat_printf_date_tags (
+                        server->buffer, 0, "tls",
                         _("%sgnutls: sending one certificate"),
                         weechat_prefix ("network"));
 
@@ -5307,8 +5307,8 @@ irc_server_gnutls_callback (const void *pointer, void *data,
                     }
                     if (ret < 0)
                     {
-                        weechat_printf (
-                            server->buffer,
+                        weechat_printf_date_tags (
+                            server->buffer, 0, "tls",
                             _("%sgnutls: invalid certificate \"%s\", error: "
                               "%s"),
                             weechat_prefix ("error"), cert_path,
@@ -5329,8 +5329,8 @@ irc_server_gnutls_callback (const void *pointer, void *data,
                                                        &cinfo);
                         if (rinfo == 0)
                         {
-                            weechat_printf (
-                                server->buffer,
+                            weechat_printf_date_tags (
+                                server->buffer, 0, "tls",
                                 _("%s - client certificate info (%s):"),
                                 weechat_prefix ("network"), cert_path);
                             weechat_printf (
@@ -5346,8 +5346,8 @@ irc_server_gnutls_callback (const void *pointer, void *data,
                 }
                 else
                 {
-                    weechat_printf (
-                        server->buffer,
+                    weechat_printf_date_tags (
+                        server->buffer, 0, "tls",
                         _("%sgnutls: unable to read certificate \"%s\""),
                         weechat_prefix ("error"), cert_path);
                 }

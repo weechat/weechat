@@ -66,10 +66,11 @@ relay_network_set_tls_cert_key (int verbose)
     {
         if (verbose)
         {
-            weechat_printf (NULL,
-                            _("%s%s: no TLS certificate/key found (option "
-                              "relay.network.tls_cert_key is empty)"),
-                            weechat_prefix ("error"), RELAY_PLUGIN_NAME);
+            weechat_printf_date_tags (
+                NULL, 0, "tls",
+                _("%s%s: no TLS certificate/key found (option "
+                  "relay.network.tls_cert_key is empty)"),
+                weechat_prefix ("error"), RELAY_PLUGIN_NAME);
         }
         return;
     }
@@ -98,23 +99,25 @@ relay_network_set_tls_cert_key (int verbose)
                 relay_network_init_tls_cert_key_ok = 1;
                 if (verbose)
                 {
-                    weechat_printf (NULL,
-                                    _("%s: TLS certificate and key have been "
-                                      "set"),
-                                    RELAY_PLUGIN_NAME);
+                    weechat_printf_date_tags (
+                        NULL, 0, "tls",
+                        _("%s: TLS certificate and key have been "
+                          "set"),
+                        RELAY_PLUGIN_NAME);
                 }
             }
             else
             {
                 if (verbose)
                 {
-                    weechat_printf (NULL,
-                                    _("%s%s: gnutls error: %s: %s "
-                                      "(option relay.network.tls_cert_key)"),
-                                    weechat_prefix ("error"),
-                                    RELAY_PLUGIN_NAME,
-                                    gnutls_strerror_name (ret),
-                                    gnutls_strerror (ret));
+                    weechat_printf_date_tags (
+                        NULL, 0, "tls",
+                        _("%s%s: gnutls error: %s: %s "
+                          "(option relay.network.tls_cert_key)"),
+                        weechat_prefix ("error"),
+                        RELAY_PLUGIN_NAME,
+                        gnutls_strerror_name (ret),
+                        gnutls_strerror (ret));
                 }
             }
         }
@@ -122,12 +125,13 @@ relay_network_set_tls_cert_key (int verbose)
         {
             if (verbose)
             {
-                weechat_printf (NULL,
-                                _("%s%s: error: file with TLS certificate/key "
-                                  "is not readable: \"%s\" "
-                                  "(option relay.network.tls_cert_key)"),
-                                weechat_prefix ("error"), RELAY_PLUGIN_NAME,
-                                certkey_path);
+                weechat_printf_date_tags (
+                    NULL, 0, "tls",
+                    _("%s%s: error: file with TLS certificate/key "
+                      "is not readable: \"%s\" "
+                      "(option relay.network.tls_cert_key)"),
+                    weechat_prefix ("error"), RELAY_PLUGIN_NAME,
+                    certkey_path);
             }
         }
     }

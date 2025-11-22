@@ -1007,8 +1007,8 @@ relay_remote_network_gnutls_callback (const void *pointer, void *data,
         /* initialize the certificate structure */
         if (gnutls_x509_crt_init (&cert_temp) != GNUTLS_E_SUCCESS)
         {
-            weechat_printf (
-                NULL,
+            weechat_printf_date_tags (
+                NULL, 0, "tls",
                 _("%sremote[%s]: gnutls: failed to initialize certificate structure"),
                 weechat_prefix ("error"), remote->name);
             rc = -1;
@@ -1025,8 +1025,8 @@ relay_remote_network_gnutls_callback (const void *pointer, void *data,
         cert_list = gnutls_certificate_get_peers (tls_session, &cert_list_len);
         if (cert_list)
         {
-            weechat_printf (
-                NULL,
+            weechat_printf_date_tags (
+                NULL, 0, "tls",
                 NG_("remote[%s]: gnutls: receiving %d certificate",
                     "remote[%s]: gnutls: receiving %d certificates",
                     cert_list_len),
@@ -1039,8 +1039,8 @@ relay_remote_network_gnutls_callback (const void *pointer, void *data,
                                             &cert_list[i],
                                             GNUTLS_X509_FMT_DER) != GNUTLS_E_SUCCESS)
                 {
-                    weechat_printf (
-                        NULL,
+                    weechat_printf_date_tags (
+                        NULL, 0, "tls",
                         _("%sremote[%s]: gnutls: failed to import certificate[%d]"),
                         weechat_prefix ("error"), remote->name, i + 1);
                     rc = -1;
@@ -1062,12 +1062,12 @@ relay_remote_network_gnutls_callback (const void *pointer, void *data,
                                                GNUTLS_CRT_PRINT_ONELINE, &cinfo);
                 if (rinfo == 0)
                 {
-                    weechat_printf (
-                        NULL,
+                    weechat_printf_date_tags (
+                        NULL, 0, "tls",
                         _("remote[%s] - certificate[%d] info:"),
                         remote->name, i + 1);
-                    weechat_printf (
-                        NULL,
+                    weechat_printf_date_tags (
+                        NULL, 0, "tls",
                         "remote[%s]   - %s",
                         remote->name, cinfo.data);
                     gnutls_free (cinfo.data);
@@ -1076,8 +1076,8 @@ relay_remote_network_gnutls_callback (const void *pointer, void *data,
                 cert_time = gnutls_x509_crt_get_expiration_time (cert_temp);
                 if (cert_time < time (NULL))
                 {
-                    weechat_printf (
-                        NULL,
+                    weechat_printf_date_tags (
+                        NULL, 0, "tls",
                         _("%sremote[%s]: gnutls: certificate has expired"),
                         weechat_prefix ("error"), remote->name);
                     rc = -1;
@@ -1086,8 +1086,8 @@ relay_remote_network_gnutls_callback (const void *pointer, void *data,
                 cert_time = gnutls_x509_crt_get_activation_time (cert_temp);
                 if (cert_time > time (NULL))
                 {
-                    weechat_printf (
-                        NULL,
+                    weechat_printf_date_tags (
+                        NULL, 0, "tls",
                         _("%sremote[%s]: gnutls: certificate is not yet activated"),
                         weechat_prefix ("error"), remote->name);
                     rc = -1;
@@ -1096,8 +1096,8 @@ relay_remote_network_gnutls_callback (const void *pointer, void *data,
 
             if (!hostname_match)
             {
-                weechat_printf (
-                    NULL,
+                weechat_printf_date_tags (
+                    NULL, 0, "tls",
                     _("%sremote[%s]: gnutls: the hostname in the certificate "
                       "does NOT match \"%s\""),
                     weechat_prefix ("error"), remote->name, remote->address);
@@ -1108,8 +1108,8 @@ relay_remote_network_gnutls_callback (const void *pointer, void *data,
         /* verify the peer’s certificate */
         if (gnutls_certificate_verify_peers2 (tls_session, &status) < 0)
         {
-            weechat_printf (
-                NULL,
+            weechat_printf_date_tags (
+                NULL, 0, "tls",
                 _("%sremote[%s]: gnutls: error while checking peer's certificate"),
                 weechat_prefix ("error"), remote->name);
             rc = -1;
@@ -1119,16 +1119,16 @@ relay_remote_network_gnutls_callback (const void *pointer, void *data,
         /* check if certificate is trusted */
         if (status & GNUTLS_CERT_INVALID)
         {
-            weechat_printf (
-                NULL,
+            weechat_printf_date_tags (
+                NULL, 0, "tls",
                 _("%sremote[%s]: gnutls: peer's certificate is NOT trusted"),
                 weechat_prefix ("error"), remote->name);
             rc = -1;
         }
         else
         {
-            weechat_printf (
-                NULL,
+            weechat_printf_date_tags (
+                NULL, 0, "tls",
                 _("remote[%s]: gnutls: peer's certificate is trusted"),
                 remote->name);
         }
@@ -1136,8 +1136,8 @@ relay_remote_network_gnutls_callback (const void *pointer, void *data,
         /* check if certificate issuer is known */
         if (status & GNUTLS_CERT_SIGNER_NOT_FOUND)
         {
-            weechat_printf (
-                NULL,
+            weechat_printf_date_tags (
+                NULL, 0, "tls",
                 _("%sremote[%s]: gnutls: peer's certificate issuer is unknown"),
                 weechat_prefix ("error"), remote->name);
             rc = -1;
@@ -1146,8 +1146,8 @@ relay_remote_network_gnutls_callback (const void *pointer, void *data,
         /* check that certificate is not revoked */
         if (status & GNUTLS_CERT_REVOKED)
         {
-            weechat_printf (
-                NULL,
+            weechat_printf_date_tags (
+                NULL, 0, "tls",
                 _("%sremote[%s]: gnutls: the certificate has been revoked"),
                 weechat_prefix ("error"), remote->name);
             rc = -1;
