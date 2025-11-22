@@ -5603,27 +5603,29 @@ TEST(IrcProtocolWithServer, 367)
     RECV(":server 367 alice #test nick1!user1@host1_\00304red");
     CHECK_CHAN("--", "[#test] [1] nick1!user1@host1_red banned",
                "irc_367,irc_numeric,nick_server,log3");
-    RECV(":server 367 alice #test nick1!user1@host1_\00304red nick2!user2@host2_\00304red ");
+    RECV(":server 367 alice #test nick1!user1_\00304red@host1_\00304red "
+         "nick2!user2_\00304red@host2_\00304red ");
     CHECK_CHAN("--",
-               "[#test] [2] nick1!user1@host1_red banned by nick2 (user2@host2_red)",
+               "[#test] [2] nick1!user1_red@host1_red banned by nick2 (user2_red@host2_red)",
                "irc_367,irc_numeric,nick_server,log3");
-    RECV(":server 367 alice #test nick1!user1@host1_\00304red nick2!user2@host2_\00304red "
-         "1205585109 ");
+    RECV(":server 367 alice #test nick1!user1_\00304red@host1_\00304red "
+         "nick2!user2_\00304red@host2_\00304red 1205585109 ");
     CHECK_CHAN("--",
-               "[#test] [3] nick1!user1@host1_red banned "
-               "by nick2 (user2@host2_red) on Sat, 15 Mar 2008 12:45:09",
+               "[#test] [3] nick1!user1_red@host1_red banned "
+               "by nick2 (user2_red@host2_red) on Sat, 15 Mar 2008 12:45:09",
                "irc_367,irc_numeric,nick_server,log3");
 
     /* channel not found */
-    RECV(":server 367 alice #xyz nick1!user1@host1_\00304red");
-    CHECK_SRV("--", "[#xyz] nick1!user1@host1_red banned",
+    RECV(":server 367 alice #xyz nick1!user1_\00304red@host1_\00304red");
+    CHECK_SRV("--", "[#xyz] nick1!user1_red@host1_red banned",
               "irc_367,irc_numeric,nick_server,log3");
-    RECV(":server 367 alice #xyz nick1!user1@host1_\00304red nick2!user2@host2_\00304red");
-    CHECK_SRV("--", "[#xyz] nick1!user1@host1_red banned by nick2 (user2@host2_red)",
+    RECV(":server 367 alice #xyz nick1!user1_\00304red@host1_\00304red "
+         "nick2!user2_\00304red@host2_\00304red");
+    CHECK_SRV("--", "[#xyz] nick1!user1_red@host1_red banned by nick2 (user2_red@host2_red)",
               "irc_367,irc_numeric,nick_server,log3");
-    RECV(":server 367 alice #xyz nick1!user1@host1_\00304red nick2!user2@host2_\00304red "
-         "1205585109");
-    CHECK_SRV("--", "[#xyz] nick1!user1@host1_red banned by nick2 (user2@host2_red) "
+    RECV(":server 367 alice #xyz nick1!user1_\00304red@host1_\00304red "
+         "nick2!user2_\00304red@host2_\00304red 1205585109");
+    CHECK_SRV("--", "[#xyz] nick1!user1_red@host1_red banned by nick2 (user2_red@host2_red) "
               "on Sat, 15 Mar 2008 12:45:09",
               "irc_367,irc_numeric,nick_server,log3");
 }
@@ -7208,29 +7210,30 @@ TEST(IrcProtocolWithServer, 728)
     RECV(":server 728 alice #test q");
     CHECK_ERROR_PARAMS("728", 3, 4);
 
-    RECV(":server 728 alice #test q nick1!user1@host1_\00304red");
-    CHECK_CHAN("--", "[#test] nick1!user1@host1_red quieted",
+    RECV(":server 728 alice #test q nick1!user1_\00304red@host1_\00304red");
+    CHECK_CHAN("--", "[#test] nick1!user1_red@host1_red quieted",
                "irc_728,irc_numeric,nick_server,log3");
-    RECV(":server 728 alice #test q nick1!user1@host1_\00304red alice!user@host_\00304red");
-    CHECK_CHAN("--", "[#test] nick1!user1@host1_red quieted by alice (user@host_red)",
+    RECV(":server 728 alice #test q nick1!user1_\00304red@host1_\00304red "
+         "alice!user_\00304red@host_\00304red");
+    CHECK_CHAN("--", "[#test] nick1!user1_red@host1_red quieted by alice (user_red@host_red)",
                "irc_728,irc_numeric,nick_server,log3");
-    RECV(":server 728 alice #test q nick1!user1@host1_\00304red alice!user@host_\00304red "
-         "1351350090 ");
+    RECV(":server 728 alice #test q nick1!user1_\00304red@host1_\00304red "
+         "alice!user_\00304red@host_\00304red 1351350090 ");
     CHECK_CHAN("--",
-               "[#test] nick1!user1@host1_red quieted by alice (user@host_red) "
+               "[#test] nick1!user1_red@host1_red quieted by alice (user_red@host_red) "
                "on Sat, 27 Oct 2012 15:01:30",
                "irc_728,irc_numeric,nick_server,log3");
 
     /* channel not found */
-    RECV(":server 728 alice #xyz q nick1!user1@host1_\00304red");
-    CHECK_SRV("--", "[#xyz] nick1!user1@host1_red quieted",
+    RECV(":server 728 alice #xyz q nick1!user1_\00304red@host1_\00304red");
+    CHECK_SRV("--", "[#xyz] nick1!user1_red@host1_red quieted",
               "irc_728,irc_numeric,nick_server,log3");
-    RECV(":server 728 alice #xyz q nick1!user1@host1_\00304red alice!user@host_\00304red");
-    CHECK_SRV("--", "[#xyz] nick1!user1@host1_red quieted by alice (user@host_red)",
+    RECV(":server 728 alice #xyz q nick1!user1_\00304red@host1_\00304red alice!user_\00304red@host_\00304red");
+    CHECK_SRV("--", "[#xyz] nick1!user1_red@host1_red quieted by alice (user_red@host_red)",
               "irc_728,irc_numeric,nick_server,log3");
-    RECV(":server 728 alice #xyz q nick1!user1@host1_\00304red alice!user@host_\00304red "
+    RECV(":server 728 alice #xyz q nick1!user1_\00304red@host1_\00304red alice!user_\00304red@host_\00304red "
          "1351350090 ");
-    CHECK_SRV("--", "[#xyz] nick1!user1@host1_red quieted by alice (user@host_red) "
+    CHECK_SRV("--", "[#xyz] nick1!user1_red@host1_red quieted by alice (user_red@host_red) "
               "on Sat, 27 Oct 2012 15:01:30",
               "irc_728,irc_numeric,nick_server,log3");
 }
