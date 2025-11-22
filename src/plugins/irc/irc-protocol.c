@@ -2195,7 +2195,7 @@ IRC_PROTOCOL_CALLBACK(mode)
             IRC_COLOR_RESET,
             ctxt->params[1],  /* mode */
             (modes_args && modes_args[0]) ? " " : "",
-            (modes_args && modes_args[0]) ? modes_args : "",
+            (modes_args && modes_args[0]) ? IRC_COLOR_MSG(modes_args) : "",
             IRC_COLOR_CHAT_DELIMITERS,
             IRC_COLOR_RESET,
             irc_nick_color_for_msg (ctxt->server, 1, ptr_nick, ctxt->nick),
