@@ -2085,24 +2085,24 @@ gui_buffer_set_highlight_disable_regex (struct t_gui_buffer *buffer,
         buffer->highlight_disable_regex_compiled = NULL;
     }
 
-    if (new_regex && new_regex[0])
+    if (!new_regex || !new_regex[0])
+        return;
+
+    buffer->highlight_disable_regex = strdup (new_regex);
+    if (buffer->highlight_disable_regex)
     {
-        buffer->highlight_disable_regex = strdup (new_regex);
-        if (buffer->highlight_disable_regex)
+        buffer->highlight_disable_regex_compiled =
+            malloc (sizeof (*buffer->highlight_disable_regex_compiled));
+        if (buffer->highlight_disable_regex_compiled)
         {
-            buffer->highlight_disable_regex_compiled =
-                malloc (sizeof (*buffer->highlight_disable_regex_compiled));
-            if (buffer->highlight_disable_regex_compiled)
+            if (string_regcomp (buffer->highlight_disable_regex_compiled,
+                                buffer->highlight_disable_regex,
+                                REG_EXTENDED | REG_ICASE) != 0)
             {
-                if (string_regcomp (buffer->highlight_disable_regex_compiled,
-                                    buffer->highlight_disable_regex,
-                                    REG_EXTENDED | REG_ICASE) != 0)
-                {
-                    free (buffer->highlight_disable_regex_compiled);
-                    buffer->highlight_disable_regex_compiled = NULL;
-                    free (buffer->highlight_disable_regex);
-                    buffer->highlight_disable_regex = NULL;
-                }
+                free (buffer->highlight_disable_regex_compiled);
+                buffer->highlight_disable_regex_compiled = NULL;
+                free (buffer->highlight_disable_regex);
+                buffer->highlight_disable_regex = NULL;
             }
         }
     }
@@ -2131,24 +2131,24 @@ gui_buffer_set_highlight_regex (struct t_gui_buffer *buffer,
         buffer->highlight_regex_compiled = NULL;
     }
 
-    if (new_regex && new_regex[0])
+    if (!new_regex || !new_regex[0])
+        return;
+
+    buffer->highlight_regex = strdup (new_regex);
+    if (buffer->highlight_regex)
     {
-        buffer->highlight_regex = strdup (new_regex);
-        if (buffer->highlight_regex)
+        buffer->highlight_regex_compiled =
+            malloc (sizeof (*buffer->highlight_regex_compiled));
+        if (buffer->highlight_regex_compiled)
         {
-            buffer->highlight_regex_compiled =
-                malloc (sizeof (*buffer->highlight_regex_compiled));
-            if (buffer->highlight_regex_compiled)
+            if (string_regcomp (buffer->highlight_regex_compiled,
+                                buffer->highlight_regex,
+                                REG_EXTENDED | REG_ICASE) != 0)
             {
-                if (string_regcomp (buffer->highlight_regex_compiled,
-                                    buffer->highlight_regex,
-                                    REG_EXTENDED | REG_ICASE) != 0)
-                {
-                    free (buffer->highlight_regex_compiled);
-                    buffer->highlight_regex_compiled = NULL;
-                    free (buffer->highlight_regex);
-                    buffer->highlight_regex = NULL;
-                }
+                free (buffer->highlight_regex_compiled);
+                buffer->highlight_regex_compiled = NULL;
+                free (buffer->highlight_regex);
+                buffer->highlight_regex = NULL;
             }
         }
     }
@@ -2241,34 +2241,34 @@ gui_buffer_set_hotlist_max_level_nicks (struct t_gui_buffer *buffer,
 
     hashtable_remove_all (buffer->hotlist_max_level_nicks);
 
-    if (new_hotlist_max_level_nicks && new_hotlist_max_level_nicks[0])
+    if (!new_hotlist_max_level_nicks || !new_hotlist_max_level_nicks[0])
+        return;
+
+    nicks = string_split (new_hotlist_max_level_nicks, ",", NULL,
+                          WEECHAT_STRING_SPLIT_STRIP_LEFT
+                          | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                          | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                          0, &nicks_count);
+    if (!nicks)
+        return;
+
+    for (i = 0; i < nicks_count; i++)
     {
-        nicks = string_split (new_hotlist_max_level_nicks, ",", NULL,
-                              WEECHAT_STRING_SPLIT_STRIP_LEFT
-                              | WEECHAT_STRING_SPLIT_STRIP_RIGHT
-                              | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
-                              0, &nicks_count);
-        if (nicks)
+        value = -1;
+        pos = strchr (nicks[i], ':');
+        if (pos)
         {
-            for (i = 0; i < nicks_count; i++)
-            {
-                value = -1;
-                pos = strchr (nicks[i], ':');
-                if (pos)
-                {
-                    pos[0] = '\0';
-                    pos++;
-                    error = NULL;
-                    number = strtol (pos, &error, 10);
-                    if (error && !error[0])
-                        value = (int)number;
-                }
-                hashtable_set (buffer->hotlist_max_level_nicks, nicks[i],
-                               &value);
-            }
-            string_free_split (nicks);
+            pos[0] = '\0';
+            pos++;
+            error = NULL;
+            number = strtol (pos, &error, 10);
+            if (error && !error[0])
+                value = (int)number;
         }
+        hashtable_set (buffer->hotlist_max_level_nicks, nicks[i],
+                       &value);
     }
+    string_free_split (nicks);
 }
 
 /*
@@ -2291,26 +2291,26 @@ gui_buffer_add_hotlist_max_level_nicks (struct t_gui_buffer *buffer,
                           | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                           | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
                           0, &nicks_count);
-    if (nicks)
+    if (!nicks)
+        return;
+
+    for (i = 0; i < nicks_count; i++)
     {
-        for (i = 0; i < nicks_count; i++)
+        value = -1;
+        pos = strchr (nicks[i], ':');
+        if (pos)
         {
-            value = -1;
-            pos = strchr (nicks[i], ':');
-            if (pos)
-            {
-                pos[0] = '\0';
-                pos++;
-                error = NULL;
-                number = strtol (pos, &error, 10);
-                if (error && !error[0])
-                    value = (int)number;
-            }
-            hashtable_set (buffer->hotlist_max_level_nicks, nicks[i],
-                           &value);
+            pos[0] = '\0';
+            pos++;
+            error = NULL;
+            number = strtol (pos, &error, 10);
+            if (error && !error[0])
+                value = (int)number;
         }
-        string_free_split (nicks);
+        hashtable_set (buffer->hotlist_max_level_nicks, nicks[i],
+                       &value);
     }
+    string_free_split (nicks);
 }
 
 /*
@@ -2332,17 +2332,17 @@ gui_buffer_remove_hotlist_max_level_nicks (struct t_gui_buffer *buffer,
                           | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                           | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
                           0, &nicks_count);
-    if (nicks)
+    if (!nicks)
+        return;
+
+    for (i = 0; i < nicks_count; i++)
     {
-        for (i = 0; i < nicks_count; i++)
-        {
-            pos = strchr (nicks[i], ':');
-            if (pos)
-                pos[0] = '\0';
-            hashtable_remove (buffer->hotlist_max_level_nicks, nicks[i]);
-        }
-        string_free_split (nicks);
+        pos = strchr (nicks[i], ':');
+        if (pos)
+            pos[0] = '\0';
+        hashtable_remove (buffer->hotlist_max_level_nicks, nicks[i]);
     }
+    string_free_split (nicks);
 }
 
 /*
