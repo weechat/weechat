@@ -1971,7 +1971,7 @@ gui_buffer_add_highlight_words (struct t_gui_buffer *buffer,
     int current_count, add_count, i;
     struct t_weelist *list;
 
-    if (!buffer || !words_to_add)
+    if (!buffer || !words_to_add || !words_to_add[0])
         return;
 
     list = weelist_new ();
@@ -2020,7 +2020,7 @@ gui_buffer_remove_highlight_words (struct t_gui_buffer *buffer,
     int current_count, remove_count, i, j, to_remove;
     struct t_weelist *list;
 
-    if (!buffer || !words_to_remove)
+    if (!buffer || !words_to_remove || !words_to_remove[0])
         return;
 
     list = weelist_new ();
