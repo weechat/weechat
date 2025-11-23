@@ -2177,7 +2177,7 @@ gui_buffer_set_highlight_tags_restrict (struct t_gui_buffer *buffer,
     }
     buffer->highlight_tags_restrict_count = 0;
 
-    if (!new_tags)
+    if (!new_tags || !new_tags[0])
         return;
 
     buffer->highlight_tags_restrict = strdup (new_tags);
@@ -2212,7 +2212,7 @@ gui_buffer_set_highlight_tags (struct t_gui_buffer *buffer,
     }
     buffer->highlight_tags_count = 0;
 
-    if (!new_tags)
+    if (!new_tags || !new_tags[0])
         return;
 
     buffer->highlight_tags = strdup (new_tags);
