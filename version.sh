@@ -42,7 +42,7 @@
 #
 
 weechat_stable="4.7.2"
-weechat_devel="4.7.2"
+weechat_devel="4.7.3-dev"
 
 stable_major=$(echo "${weechat_stable}" | cut -d"." -f1)
 stable_minor=$(echo "${weechat_stable}" | cut -d"." -f2)
