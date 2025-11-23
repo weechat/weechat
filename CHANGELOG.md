@@ -6,7 +6,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 # WeeChat ChangeLog
 
-## Version 4.7.2 (under dev)
+## Version 4.7.2 (2025-11-23)
 
 ### Fixed
 
