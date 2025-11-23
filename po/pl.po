@@ -25,7 +25,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2025-11-12 20:22+0100\n"
-"PO-Revision-Date: 2025-11-01 16:08+0100\n"
+"PO-Revision-Date: 2025-11-24 00:14+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: pl\n"
@@ -34,7 +34,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.8\n"
 
 msgid "List of bars:"
 msgstr "Lista pasków:"
@@ -542,10 +542,9 @@ msgstr "Obsługa myszy włączona"
 msgid "Mouse disabled"
 msgstr "Obsługa myszy wyłączona"
 
-#, fuzzy, c-format
-#| msgid "%sInvalid number: \"%s\""
+#, c-format
 msgid "%sInvalid color: \"%s\""
-msgstr "%sNieprawidłowy numer: \"%s\""
+msgstr "%sNieprawidłowy kolor: „%s”"
 
 #, fuzzy, c-format
 #| msgid "%s%s: unable to parse file \"%s\""
@@ -576,16 +575,14 @@ msgstr "Brak załadowanych wtyczek"
 msgid "List of proxies:"
 msgstr "Lista proxy:"
 
-#, fuzzy
-#| msgid "disabled"
 msgid "IPv6: disabled"
-msgstr "wyłączone"
+msgstr "IPv6: wyłączone"
 
 msgid "IPv6: automatic"
 msgstr ""
 
 msgid "IPv6: forced"
-msgstr ""
+msgstr "IPv6: wymuszone"
 
 #, c-format
 msgid "  %s%s%s: %s, %s/%d (%s), username: %s, password: %s"
@@ -916,7 +913,7 @@ msgstr "Uaktualniam WeeChat z użyciem pliku: \"%s\"..."
 
 #, c-format
 msgid "%sUpgrade aborted"
-msgstr ""
+msgstr "%sAktualizacja przerwana"
 
 #, c-format
 msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
@@ -947,10 +944,9 @@ msgstr "skompilowano"
 msgid "Windows list:"
 msgstr "Lista okien:"
 
-#, fuzzy, c-format
-#| msgid "%sPlugin \"%s\" not found"
+#, c-format
 msgid "%sWindow \"%s\" not found"
-msgstr "%sNie odnaleziono wtyczki \"%s\""
+msgstr "%sNie odnaleziono okna „%s”"
 
 #, c-format
 msgid "%sInvalid window number: \"%s\""
@@ -1727,7 +1723,7 @@ msgid ""
 "expression: expression to evaluate, variables with format ${variable} are "
 "replaced (see below)"
 msgstr ""
-"wyrażenie: wyrażenie do przetworzenia, zmienne w formacie ${zmienna} są "
+"wyrażenie: wyrażenie do przetworzenia, zmienne w formacie ${variable} są "
 "zastępowane (zobacz poniżej)"
 
 msgid "operator: a logical or comparison operator (see below)"
@@ -1763,7 +1759,7 @@ msgid ""
 "which can be, by order of priority:"
 msgstr ""
 "Niektóre zmienne w wyrażeniach są zamieniane, poprzez zastosowanie formatu $"
-"{zmienna}, według priorytetu zmienną może być:"
+"{variable}, według priorytetu zmienną może być:"
 
 msgid ""
 "  - ${raw_hl:string}: the string itself without evaluation but with syntax "
@@ -1778,7 +1774,7 @@ msgid "  - ${hl:string}: the string with syntax highlighting"
 msgstr "  - ${hl:ciąg}: ciąg z podświetlaniem składni"
 
 msgid "  - ${name}: the user-defined variable"
-msgstr "  - ${nazwa}: zmienna zdefiniowana przez użytkownika"
+msgstr "  - ${name}: zmienna zdefiniowana przez użytkownika"
 
 msgid "  - ${weechat_config_dir}: WeeChat config directory"
 msgstr "  - ${weechat_config_dir}: katalog z konfiguracją WeeChat"
@@ -1983,10 +1979,10 @@ msgid "  - ${sec.data.xxx}: the value of the secured data \"xxx\""
 msgstr "  - ${sec.data.xxx}: wartość zabezpieczonej zmiennej „xxx”"
 
 msgid "  - ${file.section.option}: the value of the config option"
-msgstr "  - ${plik.sekcja.opcja}: wartość opcji konfiguracyjnej"
+msgstr "  - ${file.section.option}: wartość opcji konfiguracyjnej"
 
 msgid "  - ${name}: the local variable in buffer"
-msgstr "  - ${nazwa}: zmienna lokalna w buforze"
+msgstr "  - ${name}: zmienna lokalna w buforze"
 
 msgid ""
 "  - the hdata name/variable (the value is automatically converted to "
@@ -2002,7 +1998,7 @@ msgid ""
 "  - ${hdata.var1.var2...}: start with a hdata (pointer must be known), and "
 "ask variables one after one (other hdata can be followed)"
 msgstr ""
-"  - ${hdata.zmienna1.zmienna2...}: inicjuje hdata (wskaźnik musi być znany), "
+"  - ${hdata.var1.var2...}: inicjuje hdata (wskaźnik musi być znany), "
 "następnie wypytuje o zmienne jedna po drugiej (inne hdata mogą być następne)"
 
 msgid ""
@@ -2278,16 +2274,12 @@ msgstr ""
 "> - dwa wyrażenia regularne są tworzone: jedno dla prefiksu i drugie dla "
 "wiadomości"
 
-#, fuzzy
-#| msgid ""
-#| "> - regex are case insensitive, they can start by \"(?-i)\" to become "
-#| "case sensitive"
 msgid ""
 "> - regex are case-insensitive, they can start by \"(?-i)\" to become case-"
 "sensitive"
 msgstr ""
-"> - wyrażenia nie uwzględniają wielkości znaków, żeby zaczęły należy je "
-"zacząć od „(?-i)”"
+"> - wyrażenia nie uwzględniają wielkości znaków, żeby zaczęły je uwzględniać "
+"należy je zacząć od „(?-i)”"
 
 msgid ""
 "The default key alt+\"=\" toggles filtering on/off globally and alt+\"-\" "
@@ -3466,10 +3458,8 @@ msgid "reload configuration files from disk"
 msgstr "przeładuj pliki konfiguracyjne z dysku"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
-#, fuzzy
-#| msgid "[<file> [<file>...]]"
 msgid "[<file>...]"
-msgstr "[<plik> [<plik>...]]"
+msgstr "[<plik> ...]"
 
 msgid "file: configuration file to reload (without extension \".conf\")"
 msgstr "plik: plik konfiguracyjny do przeładowania (bez rozszerzenia „.conf”)"
@@ -3534,7 +3524,7 @@ msgid "> ${repeat_first}: \"1\" for the first execution, \"0\" for the others"
 msgstr "> ${repeat_first}: „1” dla pierwszego wykonania, „0” dla pozostałych"
 
 msgid "> ${repeat_last}: \"1\" for the last execution, \"0\" for the others"
-msgstr "> ${repeat_first}: „1” dla ostatniego wykonania, „0” dla pozostałych"
+msgstr "> ${repeat_last}: „1” dla ostatniego wykonania, „0” dla pozostałych"
 
 #, fuzzy
 #| msgid ""
@@ -3816,10 +3806,8 @@ msgid "toggle value of a config option"
 msgstr "przełącza wartość opcji konfiguracyjnej"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
-#, fuzzy
-#| msgid "<option> [<value> [<value>...]]"
 msgid "<option> [<value>...]"
-msgstr "<opcja> [<wartość> [<wartość>...]]"
+msgstr "<opcja> [<wartość>...]"
 
 msgid ""
 "value: possible values for the option (values are split like the shell "
@@ -4808,7 +4796,7 @@ msgstr ""
 "specyfikatorów daty/czasu, dodatkowe specyfikatory są wspierane, zobacz "
 "funkcję util_strftimeval w Opisie API wtyczek) (uwaga: zawartość jest "
 "przetwarzana, dlatego można użyć kolorów w formacie \"${color:xxx}\", "
-"zobacz /help eval); zmienna „${higlight}” może zostać użyta w wyrażeniu do "
+"zobacz /help eval); zmienna „${highlight}” może zostać użyta w wyrażeniu do "
 "uzyskania formatu specyficznego dla linii z podświetleniem (zobacz opcję "
 "weechat.look.highlight_prefix); na przykład czas w odcieniach szarości: „$"
 "{color:252}%H${color:243}%M${color:237}%S”, to samo z milisekundami „$"
@@ -6196,10 +6184,8 @@ msgstr "KRYTYCZNE: błąd podczas inicjacji zmiennych konfiguracyjnych"
 msgid "WeeChat %s, compiled on %s %s\n"
 msgstr ""
 
-#, fuzzy
-#| msgid "(old options?)"
 msgid "Build options:\n"
-msgstr "(stare opcje?)"
+msgstr "Opcje kompilacji:\n"
 
 msgid "Windows tree:"
 msgstr "Drzewo okien:"
@@ -6433,10 +6419,8 @@ msgstr "nieprawidłowe priorytety"
 msgid "proxy type (http (default), socks4, socks5)"
 msgstr "typ proxy (http (domyślny), socks4, socks5)"
 
-#, fuzzy
-#| msgid "connect to proxy using ipv6"
 msgid "connect to proxy using IPv6"
-msgstr "połącz się z proxy używając ipv6"
+msgstr "połącz się z proxy używając IPv6"
 
 msgid "proxy server address (IP or hostname)"
 msgstr "adres serwera proxy (adres IP lub nazwa hosta)"
@@ -6764,8 +6748,7 @@ msgstr "za mało pamięci"
 msgid "file \"%s\" not found"
 msgstr "nie znaleziono pliku \"%s\""
 
-#, fuzzy, c-format
-#| msgid "can not write file \"%s\""
+#, c-format
 msgid "cannot write file \"%s\""
 msgstr "nie można zapisać pliku \"%s\""
 
@@ -9688,10 +9671,9 @@ msgstr "%s%s: nie można utworzyć nowego bufora prywatnego \"%s\""
 msgid "nick:"
 msgstr "nick:"
 
-#, fuzzy, c-format
-#| msgid "Server: %s%s %s[%s%s%s]%s%s%s%s"
+#, c-format
 msgid "Server: %s%s %s[%s%s%s]%s%s%s"
-msgstr "Serwer: %s%s %s[%s%s%s]%s%s%s%s"
+msgstr "Serwer: %s%s %s[%s%s%s]%s%s%s"
 
 msgid "connected"
 msgstr "połączony"
@@ -9721,10 +9703,8 @@ msgstr[0] "kanał"
 msgstr[1] "kanały"
 msgstr[2] "kanałów"
 
-#, fuzzy
-#| msgid "All servers:"
 msgid "All connected servers:"
-msgstr "Wszystkie serwery:"
+msgstr "Wszystkie połączone serwery:"
 
 msgid "All servers:"
 msgstr "Wszystkie serwery:"
@@ -9737,19 +9717,17 @@ msgstr "%s%s: rozłączono z serwerem"
 msgid "No server"
 msgstr "Brak serwerów"
 
-#, fuzzy, c-format
-#| msgid "Servers with \"%s\":"
+#, c-format
 msgid "Connected servers with \"%s\":"
-msgstr "Serwery z \"%s\":"
+msgstr "Połączone serwery z \"%s\":"
 
 #, c-format
 msgid "Servers with \"%s\":"
 msgstr "Serwery z \"%s\":"
 
-#, fuzzy, c-format
-#| msgid "No server found with \"%s\""
+#, c-format
 msgid "No connected server found with \"%s\""
-msgstr "Nie znaleziono serwera z  \"%s\""
+msgstr "Nie znaleziono połączonego serwera z \"%s\""
 
 #, c-format
 msgid "No server found with \"%s\""
@@ -10067,18 +10045,12 @@ msgid "configure the \"autojoin\" server option"
 msgstr "konfiguruje opcje serwera \"autojoin\""
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
-#, fuzzy
-#| msgid ""
-#| "add [<channel1> [<channel2>...]] || addraw <channel1>[,<channel2>...] "
-#| "[<key1>[,<key2>...]] || del [<channel1> [<channel2>...]] || apply || join "
-#| "|| sort [buffer]"
 msgid ""
 "add [<channel>...] || addraw <channel1>[,<channel2>...] [<key1>[,<key2>...]] "
 "|| del [<channel>...] || apply || join || sort [buffer]"
 msgstr ""
-"add [<kanał1> [<kanał2>...]] || addraw <kanał1>[,<kanał2>...] [<hasło1>[,"
-"<hasło2>...]] || del [<kanał1> [<kanał2>...]] || apply || join || sort "
-"[bufor]"
+"add [<kanał>...] || addraw <kanał1>[,<kanał2>...] [<hasło1>[,<hasło2>...]] "
+"|| del [<kanał>...] || apply || join || sort [bufor]"
 
 msgid ""
 "raw[add]: add current channel or a list of channels (with optional keys) to "
@@ -10141,10 +10113,8 @@ msgid "client capability negotiation"
 msgstr "negocjacja możliwości klienta"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
-#, fuzzy
-#| msgid "ls || list || req|ack [<capability> [<capability>...]] || end"
 msgid "ls || list || req|ack [<capability>...] || end"
-msgstr "ls || list || req|ack [<opcja> [<opcja>...]] || end"
+msgstr "ls || list || req|ack [<capability>...]] || end"
 
 msgid "raw[ls]: list the capabilities supported by the server"
 msgstr "raw[ls]: lista możliwości wspieranych przez serwer"
@@ -10318,10 +10288,8 @@ msgid "remove channel half-operator status from nick(s)"
 msgstr "usuwa status halfopa kanału"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
-#, fuzzy
-#| msgid "<nick> [<nick>...] || * -yes"
 msgid "<nick>... || * -yes"
-msgstr "<nick> [<nick>...] || * -yes"
+msgstr "<nick>... || * -yes"
 
 msgid "nick: nick or mask (wildcard \"*\" is allowed)"
 msgstr "nick: nick lub maska (wildcard „*” jest dozwolony)"
@@ -10439,19 +10407,15 @@ msgid "invite a nick on a channel"
 msgstr "zaprasza użytkownika na kanał"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
-#, fuzzy
-#| msgid "<nick> [<nick>...] [<channel>]"
 msgid "<nick>... [<channel>]"
-msgstr "<nick> [<nick>...] [<kanał>]"
+msgstr "<nick>... [<kanał>]"
 
 msgid "check if a nick is currently on IRC"
 msgstr "sprawdza czy użytkownik jest obecnie na IRC"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
-#, fuzzy
-#| msgid "<nick> [<nick>...]"
 msgid "<nick>..."
-msgstr "<nick> [<nick>...]"
+msgstr "<nick>..."
 
 msgid "join a channel"
 msgstr "wchodzi na kanał"
@@ -10900,11 +10864,8 @@ msgid "reconnect to server(s)"
 msgstr "ponownie połącz się z serwerem(ami)"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
-#, fuzzy
-#| msgid ""
-#| "<server> [<server>...] [-nojoin] [-switch] || -all [-nojoin] [-switch]"
 msgid "<server>... [-nojoin] [-switch] || -all [-nojoin] [-switch]"
-msgstr "<serwer> [<serwer>...] [-nojoin] [-switch] || -all [-nojoin] [-switch]"
+msgstr "<serwer>... [-nojoin] [-switch] || -all [-nojoin] [-switch]"
 
 msgid "raw[-all]: reconnect to all servers"
 msgstr "raw[-all]: połącz się ponownie ze wszystkimi serwerami"
@@ -11505,10 +11466,8 @@ msgstr ""
 "nazwa pośrednika używanego dla tego serwera (opcjonalne, pośrednik musi być "
 "zdefiniowany za pomocą komendy /proxy)"
 
-#, fuzzy
-#| msgid "use TLS for server communication"
 msgid "use IPv6 protocol for server communication"
-msgstr "użyj protokołu TLS do komunikacji z serwerem"
+msgstr "użyj protokołu IPv6 do komunikacji z serwerem"
 
 msgid "use TLS for server communication"
 msgstr "użyj protokołu TLS do komunikacji z serwerem"
@@ -12787,30 +12746,20 @@ msgstr "1 jeśli nick jest ignorowany (wiadomość nie jest wyświetlana)"
 msgid "server,message (message is the raw IRC message)"
 msgstr "serwer,wiadomość (wiadomość to nieprzetworzona wiadomość IRC)"
 
-#, fuzzy
-#| msgid "get buffer pointer for an IRC server/channel/nick"
 msgid "get pointer to an IRC server"
-msgstr "pobiera wskaźnik dla serwera/kanału/nicku IRC"
+msgstr "pobierz wskaźnik dla serwera IRC"
 
-#, fuzzy
-#| msgid "get buffer pointer for an IRC server/channel/nick"
 msgid "get pointer to an IRC channel"
-msgstr "pobiera wskaźnik dla serwera/kanału/nicku IRC"
+msgstr "pobierz wskaźnik dla kanału IRC"
 
-#, fuzzy
-#| msgid "leave a channel"
 msgid "server,channel"
-msgstr "opuszcza kanał"
+msgstr "serwer,kanał"
 
-#, fuzzy
-#| msgid "get buffer pointer for an IRC server/channel/nick"
 msgid "get pointer to an IRC nick"
-msgstr "pobiera wskaźnik dla serwera/kanału/nicku IRC"
+msgstr "pobierz wskaźnik dla nicka IRC"
 
-#, fuzzy
-#| msgid "server,channel,nick (nick is optional)"
 msgid "server,channel,nick"
-msgstr "serwer,kanał,nick (nick jest opcjonalny)"
+msgstr "serwer,kanał,nick"
 
 msgid "parse an IRC message"
 msgstr "przetwarza wiadomość IRC"
@@ -14483,15 +14432,11 @@ msgstr "1 jeśli wtyczka jest załadowana"
 msgid "plugin name"
 msgstr "nazwa wtyczki"
 
-#, fuzzy
-#| msgid "window pointer (optional)"
 msgid "window pointer"
-msgstr "wskaźnik okna (opcjonalne)"
+msgstr "wskaźnik okna"
 
-#, fuzzy
-#| msgid "window"
 msgid "window number"
-msgstr "okno"
+msgstr "numer okna"
 
 msgid "get focus info"
 msgstr "pobierz informacje o focusie"
@@ -16275,10 +16220,9 @@ msgstr ""
 msgid "remote[%s]: reconnecting to remote relay in %d %s, %d %s"
 msgstr "%s%s: ponowne połączenie z serwerem za %d %s, %d %s"
 
-#, fuzzy, c-format
-#| msgid "remote[%s]: connecting to remote relay %s/%d%s..."
+#, c-format
 msgid "remote[%s]: reconnecting to remote relay in %d %s"
-msgstr "remote[%s]: łączenie ze zdalnym pośrednikiem %s/%d%s..."
+msgstr "remote[%s]: łączenie ze zdalnym pośrednikiem %d %s"
 
 #, c-format
 msgid "%s: socket closed for %s (%s: %s)"
@@ -18126,10 +18070,10 @@ msgid "xfer chat"
 msgstr "rozmowa xfer"
 
 msgid "time left:"
-msgstr ""
+msgstr "pozostały czas:"
 
 msgid "time left: unknown"
-msgstr ""
+msgstr "pozostały czas: nieznany"
 
 msgid "Xfer list"
 msgstr "Lista Xfer"
