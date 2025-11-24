@@ -36,47 +36,6 @@ include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-if(NOT CYGWIN)
-  add_definitions(-fPIC)
-endif()
-
-if(${CMAKE_SYSTEM_NAME} STREQUAL "FreeBSD" AND HAVE_BACKTRACE)
-  list(APPEND EXTRA_LIBS "execinfo")
-endif()
-
-if(${CMAKE_SYSTEM_NAME} STREQUAL "SunOS")
-  list(APPEND EXTRA_LIBS "socket" "nsl")
-endif()
-
-if(${CMAKE_SYSTEM_NAME} STREQUAL "Haiku")
-  list(APPEND EXTRA_LIBS "network")
-endif()
-
-if(NOT ${CMAKE_SYSTEM_NAME} STREQUAL "Haiku")
-  list(APPEND EXTRA_LIBS "pthread")
-endif()
-
-if(ICONV_LIBRARY)
-  list(APPEND EXTRA_LIBS ${ICONV_LIBRARY})
-endif()
-
-if(LIBINTL_LIBRARY)
-  list(APPEND EXTRA_LIBS ${LIBINTL_LIBRARY})
-endif()
-
-list(APPEND EXTRA_LIBS "m")
-
-list(APPEND EXTRA_LIBS ${ZLIB_LIBRARY})
-
-if(ENABLE_ZSTD)
-  list(APPEND EXTRA_LIBS ${LIBZSTD_LDFLAGS})
-endif()
-
-if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-  # link with resolv lib on macOS
-  list(APPEND EXTRA_LIBS "resolv")
-endif()
-
 list(APPEND FUZZ_TARGET_LINK
   weechat_core
   weechat_plugins
@@ -84,16 +43,7 @@ list(APPEND FUZZ_TARGET_LINK
   weechat_gui_headless
   weechat_ncurses_fake
   ${EXTRA_LIBS}
-  ${ZLIB_LIBRARY}
-  ${LIBZSTD_LDFLAGS}
   -rdynamic
-)
-list(APPEND FUZZ_TARGET_DEPS
-  weechat_core
-  weechat_plugins
-  weechat_gui_common
-  weechat_gui_headless
-  weechat_ncurses_fake
 )
 
 # fuzz targets
@@ -103,5 +53,4 @@ foreach(fuzz_target ${FUZZ_CORE_TARGETS})
   add_executable(weechat_core_${fuzz_target}_fuzzer core/${fuzz_target}-fuzzer.cc)
   target_link_libraries(weechat_core_${fuzz_target}_fuzzer ${FUZZ_TARGET_LINK} coverage_config)
   set_target_properties(weechat_core_${fuzz_target}_fuzzer PROPERTIES LINK_OPTIONS "$ENV{LIB_FUZZING_ENGINE}")
-  add_dependencies(weechat_core_${fuzz_target}_fuzzer ${FUZZ_TARGET_DEPS})
 endforeach()
