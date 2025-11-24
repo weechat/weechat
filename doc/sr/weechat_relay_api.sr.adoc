@@ -1,0 +1,1828 @@
+// SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
+// SPDX-FileCopyrightText: 2021-2025 Иван Пешић <ivan.pesic@gmail.com>
+//
+// SPDX-License-Identifier: GPL-3.0-or-later
+
+= WeeChat Релеј API
+:author: Sébastien Helleu
+:email: flashcode@flashtux.org
+:lang: sr
+include::includes/attributes-sr.adoc[]
+
+[[introduction]]
+== Увод
+
+Овај документ је спецификација _api_ релеј протокола: протокола који се
+користи за прослеђивање WeeChat података клијентима употребом HTTP REST API.
+
+[[terminology]]
+=== Терминологија
+
+У документу се користе следећи појмови:
+
+* _релеј_: то је програм WeeChat за релеј додатком који се понаша као „сервер”
+  омогућава _клијентима_ да се успоставе везу са њим
+* _клијент_: то је софтвер повезан са _релејем_ преком мрежне везе (сам
+  WeeChat или удаљени интерфејс).
+
+[[network_diagram]]
+=== Мрежни дијаграм
+
+_клијенти_ су повезани са _релејем_ као што је приказано на следећем дијаграму:
+
+include::includes/relay.sr.adoc[tag=diagram]
+
+[NOTE]
+Сви клијенти овде су клијенти који користе _api_ протокол у _релеј_ додатку. +
+_релеј_ додатак такође подржава _irc_ и _weechat_ протоколе (који нису описани у овом документу).
+
+[[protocol_generalities]]
+== Уопштено о протоколу
+
+* Везе од _клијента_ ка _релеју_ се успостављају преко TCP сокета на IP/порту
+  који користи _релеј_ додатак за ослушкивање нових веза.
+* Број _клијената_ је ограничен опцијом _relay.network.max_clients_.
+* Сваки _клијент_ је независан у односу на остале клијенте.
+* _api_ релеј је HTTP REST API који користи JSON формат за улаз/излаз.
+* Поруке се аутоматски компресују (deflate, gzip, zstd и permessage-deflate
+  за websocket протокол).
+* WeeChat може да се користи као клијент за овај релеј.
+
+[[api_versioning]]
+=== API верзије
+
+API верзије се додељују користећи „практично” https://semver.org[семантичко Верзирање ^↗^^],
+као и WeeChat, на три цифре `X.Y.Z`, при чему је:
+
+* `X` главна верзија
+* `Y` мала верзија
+* `Z` верзија закрпе.
+
+Пример: верзија `2.0.0` уводи измене које нису компатибилне са верзијом `1.2.3`.
+
+API верзију враћа <<resource_version,version>> ресурс.
+
+[[api_schema]]
+=== API схема
+
+API можете да прегледате и тестирате на мрежи: https://weechat.org/api/[WeeChat API релеј ^↗^^].
+
+[[response_codes]]
+=== Кодови одговора
+
+Клијенту могу да се врате следећи HTTP кодови одговора:
+
+* `200 OK`: одговор OK са телом (JSON)
+* `204 No Content`: одговор OK без тела
+* `400 Bad Request`: примљен је неисправан захтев
+* `401 Unauthorized`: подаци за пријаву недостају или нису исправни
+* `403 Forbidden`: нема довољно дозвола
+* `404 Not Found`: није пронађен ресурс
+* `500 Internal Server Error`: интерна грешка сервера
+* `503 Service Unavailable`: сервис није доступан
+
+Када је веза успостављена преко websocket протокола, шаље се још један додатни код
+одговора када WeeChat гура податке клијенту приликом догађаја:
+
+* `0 Event`: догађај је гурнут клијенту, ако је синхронизација укључена
+  <<resource_sync,sync>> ресурсом.
+
+[[date_format]]
+=== Формат датума
+
+Формат датума је https://en.wikipedia.org/wiki/ISO_8601[ISO 8601 ^↗^^],
+уз коришћење UTC временске зоне (ово се разликује у односу на приказ у програму
+WeeChat који користи локалну временску зону). +
+Датуми се враћају са максималном прецизношћу: до микросекунде, ако је то могуће,
+или милисекунде, или само секунде.
+
+Примери:
+
+----
+2023-12-05T19:46:03.847625Z
+2023-12-05T19:46:03.847Z
+2023-12-05T19:46:03Z
+----
+
+[[authentication]]
+== Потврда идентитета
+
+Лозинка мора да се пошаље у `Authorization` заглављу са `Basic` схемом
+потврде идентитета или у заглављу `Sec-WebSocket-Protocol` (погледајте
+детаље испод).
+
+Лозинка може да се пошаље као прости текст или хеширана, користећи један од
+следећих формата за корисничко име и лозинку:
+
+* `plain:<лозинка>`
+* `hash:sha256:<временска_ознака>:<хеш>`
+* `hash:sha512:<временска_ознака>:<хеш>`
+* `hash:pbkdf2+sha256:<временска_ознака>:<итерација>:<хеш>`
+* `hash:pbkdf2+sha512:<временска_ознака>:<итерација>:<хеш>`
+
+Где је:
+
+* `<лозинка>` лозинка као прости текст
+* `<временска_ознака>` је текућа временска ознака као цео број (број секунди
+  протекао од Unix Епохе); користи се за спречавање replay напада
+* `<итерација>` број итерација (само за PBKDF2 алгоритам)
+* `<хеш>` је хеширана вредност временска_ознака + лозинка (као хексадецимални број)
+
+[NOTE]
+Максимални број секунди који се дозвољава пре и након примљеног времена
+(када се лозинка шаље хеширана) може да се подеси опцијом _relay.network.time_window_.
+
+Пример:
+
+* тренутна временска ознака је `1706431066`
+* лозинка је `secret_password`
+* хеш алгоритам је `sha256`
+* добијени хеш је SHA256 стринга `1706431066secret_password` и он је хексадецимални број:
+  `dfa1db3f6bb6445d18d9ec7427c10f6421274e3a4751e6c1ffc7dd28c94eadf6`
+* `Authorization` заглавље је base64 кодирани стринг
+  `hash:sha256:1706431066:dfa1db3f6bb6445d18d9ec7427c10f6421274e3a4751e6c1ffc7dd28c94eadf6`:
+  `aGFzaDpzaGEyNTY6MTcwNjQzMTA2NjpkZmExZGIzZjZiYjY0NDVkMThkOWVjNzQyN2MxMGY2NDIxMjc0ZTNhNDc1MWU2YzFmZmM3ZGQyOGM5NGVhZGY2`.
+
+Заглавља `Authorization` и `Sec-WebSocket-Protocol` се дозвољавају у првом захтеву
+код websocket протокола, или у било ком HTTP захтеву у осталим случајевима.
+
+Пример захтева са лозинком у простом тексту:
+
+[source,shell]
+----
+curl -L -u 'plain:secret_password' 'https://localhost:9000/api/version'
+----
+
+Пример захтева са хешираном лозинком (SHA256):
+
+[source,shell]
+----
+curl -L -u 'hash:sha256:1706431066:dfa1db3f6bb6445d18d9ec7427c10f6421274e3a4751e6c1ffc7dd28c94eadf6' 'https://localhost:9000/api/version'
+----
+
+Ако је на WeeChat/релеј страни укључен TOTP (Time-based One-Time Password)
+(постављена је опција `relay.network.totp_secret`), у `x-weechat-totp` заглављу морате
+да пошаљете TOTP вредност на следећи начин:
+
+[source,shell]
+----
+curl -L -u 'hash:sha256:1706431066:dfa1db3f6bb6445d18d9ec7427c10f6421274e3a4751e6c1ffc7dd28c94eadf6' -H "x-weechat-totp: 123456" 'https://localhost:9000/api/version'
+----
+
+У случају грешке, враћа се одговор `401 Unauthorized` са пољем `error` у
+JSON подацима које описује грешку.
+
+Одговор: недостаје лозинка:
+
+[source,http]
+----
+HTTP/1.1 401 Unauthorized
+----
+
+[source,json]
+----
+{
+    "error": "Missing password"
+}
+----
+
+Одговор: неисправна лозинка:
+
+[source,http]
+----
+HTTP/1.1 401 Unauthorized
+----
+
+[source,json]
+----
+{
+    "error": "Invalid password"
+}
+----
+
+Одговор: неисправан хеш алгоритам:
+
+[source,http]
+----
+HTTP/1.1 401 Unauthorized
+----
+
+[source,json]
+----
+{
+    "error": "Invalid hash algorithm (not found or not supported)"
+}
+----
+
+Одговор: неисправна временска ознака:
+
+[source,http]
+----
+HTTP/1.1 401 Unauthorized
+----
+
+[source,json]
+----
+{
+    "error": "Invalid timestamp"
+}
+----
+
+Одговор: неисправан број итерација:
+
+[source,http]
+----
+HTTP/1.1 401 Unauthorized
+----
+
+[source,json]
+----
+{
+    "error": "Invalid number of iterations"
+}
+----
+
+Одговор: недостаје TOTP:
+
+[source,http]
+----
+HTTP/1.1 401 Unauthorized
+----
+
+[source,json]
+----
+{
+    "error": "Missing TOTP"
+}
+----
+
+Одговор: неисправан TOTP:
+
+[source,http]
+----
+HTTP/1.1 401 Unauthorized
+----
+
+[source,json]
+----
+{
+    "error": "Invalid TOTP"
+}
+----
+
+[[authentication_sec_websocket_protocol]]
+=== Sec-WebSocket-Protocol
+
+JavaScript WebSocket API који се користи у текућим веб прегледачима не подржава
+навођење `Authorization` заглавља. Због тога се такође подржава и слање
+лозинке у `Sec-WebSocket-Protocol` заглављу и то је једино заглавље које
+може да се постави овим API.
+
+Да бисте користили ово заглавље, морате да наведете под-протоколе `api.weechat` и
+`base64url.bearer.authorization.weechat.<аут>` где је `<аут>` base64url
+кодирани стринг лозинке у истом формату који је објашњен изнад.
+
+Пример са лозинком `secret_password` кодираном у простом тексту. То значи да
+base64url треба да кодира стринг `plain:secret_password`, а то је
+`cGxhaW46c2VjcmV0X3Bhc3N3b3Jk`.
+
+----
+Sec-WebSocket-Protocol: api.weechat, base64url.bearer.authorization.weechat.cGxhaW46c2VjcmV0X3Bhc3N3b3Jk
+----
+
+Ово може да се постави са JavaScript WebSocket API на следећи начин:
+
+[source,javascript]
+----
+const ws = new WebSocket("wss://localhost:9000/api", [
+  "api.weechat",
+  "base64url.bearer.authorization.weechat.cGxhaW46c2VjcmV0X3Bhc3N3b3Jk",
+])
+----
+
+[[compression]]
+== Компресија
+
+Компресија тела одговора је аутоматска и заснива се на заглављу `Accept-Encoding`
+које пошаље клијент.
+
+Подржавају се следећи формати компресије:
+
+* `deflate` (zlib)
+* `gzip`
+* `zstd`
+
+Пример захтева:
+
+[source,shell]
+----
+curl -L -u 'plain:secret_password' -H "Accept-Encoding: gzip" 'https://localhost:9000/api/version'
+----
+
+Одговор:
+
+[source,http]
+----
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+Content-Encoding: gzip
+Content-Length: 77
+----
+
+----
+[77 bytes data]
+----
+
+Напомена: са websocket протоколом, проширење „permessage-deflate” омогућава да се
+поруке компресују са zlib.
+
+[[resources]]
+== Ресурси
+
+[[resource_preflight]]
+=== Пробни захтев
+
+Веб прегледачи користе пробне захтеве са HTTP методом `OPTIONS` да провере да ли ће сервер
+(WeeChat) дозволити стварни захтев.
+
+Пример захтева: провера да ли је захтев `GET /api/version` одобрен:
+
+[source,http]
+----
+OPTIONS /api/version HTTP/1.1
+Host: localhost:9000
+Connection: keep-alive
+Accept: */*
+Access-Control-Request-Method: GET
+Access-Control-Request-Headers: authorization
+Origin: https://localhost
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36
+Sec-Fetch-Mode: cors
+Sec-Fetch-Site: same-site
+Sec-Fetch-Dest: empty
+Referer: https://localhost/
+Accept-Encoding: gzip, deflate, br, zstd
+Accept-Language: en-US,en;q=0.9,fr;q=0.8
+----
+
+Одговор:
+
+[source,http]
+----
+HTTP/1.1 204 No Content
+Access-Control-Allow-Methods: GET, POST, PUT, DELETE
+Access-Control-Allow-Headers: origin, content-type, accept, authorization
+Access-Control-Allow-Origin: *
+Content-Type: application/json; charset=utf-8
+Content-Length: 0
+----
+
+[[resource_handshake]]
+=== Handshake
+
+Обавља усаглашавање клијента и WeeChat.
+
+Приступ овом ресурсу је дозвољен и без провере идентитета.
+
+Крајња тачка:
+
+----
+POST /api/handshake
+----
+
+Параметри тела:
+
+* `password_hash_algo` (низ стрингова, није обавезан): листа хеш алгоритама
+  које подржава клијент, сваки стринг може да буде:
+** `plain`: лозинка у чистом тексту (нема хеширања)
+** `sha256`: хеш SHA256
+** `sha512`: хеш SHA512
+** `pbkdf2+sha256`: хеш PBKDF2 са SHA256
+** `pbkdf2+sha512`: хеш PBKDF2 са SHA512
+
+Одговор има следећа поља:
+
+* `password_hash_algo` (стринг): хеш алгоритам који треба да се користи
+  (`null` ако ниједан алгоритам није компатибилан)
+* `password_hash_iterations` (цео број): број итерација који треба да се
+  примени ако се користи хеш PBKDF2
+* `totp` (логичка): `true` ако је у WeeChat укључен TOTP (онда клијент
+  мора да пошаље TOTP у одређеном заглављу), `false` у супротном
+
+Пример захтева:
+
+[source,shell]
+----
+curl -L -X POST -d '{"password_hash_algo": ["plain", "sha256", "sha512"]}' 'https://localhost:9000/api/handshake'
+----
+
+Одговор:
+
+[source,http]
+----
+HTTP/1.1 200 OK
+----
+
+[source,json]
+----
+{
+    "password_hash_algo": "sha512",
+    "password_hash_iterations": 100000,
+    "totp": false
+}
+----
+
+[[resource_version]]
+=== Version
+
+Враћа верзије програма WeeChat и релеј API-ја.
+
+Крајња тачка:
+
+----
+GET /api/version
+----
+
+Пример захтева:
+
+[source,shell]
+----
+curl -L -u 'plain:secret_password' 'https://localhost:9000/api/version'
+----
+
+Одговор:
+
+[source,http]
+----
+HTTP/1.1 200 OK
+----
+
+[source,json]
+----
+{
+    "weechat_version": "4.2.0-dev",
+    "weechat_version_git": "v4.1.0-143-g0b1cda1c4",
+    "weechat_version_number": 67239936,
+    "relay_api_version": "0.0.1",
+    "relay_api_version_number": 1
+}
+----
+
+[[resource_buffers]]
+=== Buffers
+
+Враћа бафере, линије и надимке.
+
+Крајње тачке:
+
+----
+GET /api/buffers
+GET /api/buffers/{id_бафера}
+GET /api/buffers/{име_бафера}
+----
+
+Path parameters:
+
+* `id_бафера` (цео број, није обавезно): јединствени идентификатор бафера (не треба
+  да се помеша са бројем бафера, то је нешто друго)
+* `име_бафера` (стринг, није обавезно): име бафера
+
+Параметри упита:
+
+* `lines` (цео број, није обавезно, подразумевано: `0`): број линија које се враћају у
+  баферима са форматираним садржајем:
+** негативни број: враћа N линија од краја бафера (најновијих линија)
+** `0`: не враћа ниједну линију
+** позитивни број: враћа N линија од почетка бафера (најстаријих линија)
+* `lines_free` (цео број, није обавезно, подразумевано: `0` ако је `lines` `0`, у супротном, све линије):
+  број линија који се враћа у баверима са слободним садржајем:
+** негативни број: враћа N линија од краја бафера
+** `0`: не враћа ниједну линију
+** позитивни број: враћа N линија од почетка бафера
+* `nicks` (логичка, није обавезно, подразумевано: `false`): враћа надимке у баферу
+* `colors` (стринг, није обавезно, подразумевано: `ansi`): како се враћају стрингови са кодовима боје:
+** `ansi`: враћају се ANSI кодови боје
+** `weechat`: враћају се WeeChat интерни кодови боје
+** `strip`: уклањају се боје
+
+Пример захтева: врати све бафере без линија:
+
+[source,shell]
+----
+curl -L -u 'plain:secret_password' 'https://localhost:9000/api/buffers'
+----
+
+Одговор:
+
+[source,http]
+----
+HTTP/1.1 200 OK
+----
+
+[source,json]
+----
+[
+    {
+        "id": 1709932823238637,
+        "name": "core.weechat",
+        "short_name": "weechat",
+        "number": 1,
+        "type": "formatted",
+        "hidden": false,
+        "title": "WeeChat 4.2.0-dev (C) 2003-2023 - https://weechat.org/",
+        "modes": "",
+        "input_prompt": "",
+        "input": "",
+        "input_position": 0,
+        "input_multiline": false,
+        "nicklist": false,
+        "nicklist_case_sensitive": false,
+        "nicklist_display_groups": true,
+        "time_displayed": true,
+        "local_variables": {
+            "plugin": "core",
+            "name": "weechat"
+        },
+        "keys": []
+    },
+    {
+        "id": 1709932823423765,
+        "name": "irc.server.libera",
+        "short_name": "libera",
+        "number": 2,
+        "type": "formatted",
+        "hidden": false,
+        "title": "IRC: irc.libera.chat/6697 (2001:4b7a:a008::6667)",
+        "modes": "",
+        "input_prompt": "",
+        "input": "",
+        "input_position": 0,
+        "input_multiline": false,
+        "nicklist": false,
+        "nicklist_case_sensitive": false,
+        "nicklist_display_groups": true,
+        "time_displayed": true,
+        "local_variables": {
+            "plugin": "irc",
+            "name": "server.libera",
+            "type": "server",
+            "server": "libera",
+            "channel": "libera",
+            "charset_modifier": "irc.libera",
+            "nick": "alice",
+            "tls_version": "TLS1.3",
+            "host": "~alice@example.com"
+        },
+        "keys": []
+    },
+    {
+        "id": 1709932823649069,
+        "name": "irc.libera.#weechat",
+        "short_name": "#weechat",
+        "number": 3,
+        "type": "formatted",
+        "hidden": false,
+        "title": "Welcome to the WeeChat official support channel",
+        "modes": "+nt",
+        "input_prompt": "\u001b[92m@\u001b[96malice\u001b[48;5;22m(\u001b[39mi\u001b[48;5;22m)",
+        "input": "",
+        "input_position": 0,
+        "input_multiline": false,
+        "nicklist": true,
+        "nicklist_case_sensitive": false,
+        "nicklist_display_groups": false,
+        "time_displayed": true,
+        "local_variables": {
+            "plugin": "irc",
+            "name": "libera.#weechat",
+            "type": "channel",
+            "server": "libera",
+            "channel": "#weechat",
+            "nick": "alice",
+            "host": "~alice@example.com"
+        },
+        "keys": []
+    }
+]
+----
+
+Пример захтева: врати WeeChat основни бафер само са последњом линијом и без кодова боје:
+
+[source,shell]
+----
+curl -L -u 'plain:secret_password' 'https://localhost:9000/api/buffers/core.weechat?lines=-1&colors=strip'
+----
+
+Одговор:
+
+[source,http]
+----
+HTTP/1.1 200 OK
+----
+
+[source,json]
+----
+{
+    "id": 1709932823238637,
+    "name": "core.weechat",
+    "short_name": "weechat",
+    "number": 1,
+    "type": "formatted",
+    "hidden": false,
+    "title": "WeeChat 4.2.0-dev (C) 2003-2023 - https://weechat.org/",
+    "modes": "",
+    "input_prompt": "",
+    "input": "",
+    "input_position": 0,
+    "input_multiline": false,
+    "nicklist": false,
+    "nicklist_case_sensitive": false,
+    "nicklist_display_groups": true,
+    "time_displayed": true,
+    "local_variables": {
+        "plugin": "core",
+        "name": "weechat"
+    },
+    "keys": [],
+    "lines": [
+        {
+            "id": 10,
+            "y": -1,
+            "date": "2023-12-24T08:17:20.786538Z",
+            "date_printed": "2023-12-24T08:17:20.786538Z",
+            "displayed": true,
+            "highlight": false,
+            "notify_level": 0,
+            "prefix": "",
+            "message": "Учитани додаци: alias, buflist, charset, exec, fifo, fset, guile, irc, javascript, logger, lua, perl, php, python, relay, ruby, script, spell, tcl, trigger, typing, xfer",
+            "tags": []
+        }
+    ]
+}
+----
+
+Пример захтева: врати бафере IRC канала са надимцима:
+
+[source,shell]
+----
+curl -L -u 'plain:secret_password' 'https://localhost:9000/api/buffers/irc.libera.%23weechat?nicks=true'
+----
+
+Одговор:
+
+[source,http]
+----
+HTTP/1.1 200 OK
+----
+
+[source,json]
+----
+{
+    "id": 1709932823649069,
+    "name": "irc.libera.#weechat",
+    "short_name": "#weechat",
+    "number": 3,
+    "type": "formatted",
+    "hidden": false,
+    "title": "Welcome to the WeeChat official support channel",
+    "modes": "+nt",
+    "input_prompt": "\u001b[92m@\u001b[96malice\u001b[48;5;22m(\u001b[39mi\u001b[48;5;22m)",
+    "input": "",
+    "input_position": 0,
+    "input_multiline": false,
+    "nicklist": true,
+    "nicklist_case_sensitive": false,
+    "nicklist_display_groups": false,
+    "time_displayed": true,
+    "local_variables": {
+        "plugin": "irc",
+        "name": "libera.#weechat",
+        "type": "channel",
+        "server": "libera",
+        "channel": "#weechat",
+        "nick": "alice",
+        "host": "~alice@example.com"
+    },
+    "keys": [],
+    "nicklist_root": {
+        "id": 0,
+        "parent_group_id": -1,
+        "name": "root",
+        "color_name": "",
+        "color": "",
+        "visible": false,
+        "groups": [
+            {
+                "id": 1709932823649181,
+                "parent_group_id": 0,
+                "name": "000|o",
+                "color_name": "weechat.color.nicklist_group",
+                "color": "\u001b[32m",
+                "visible": true,
+                "groups": [],
+                "nicks": [
+                    {
+                        "id": 1709932823649184,
+                        "parent_group_id": 1709932823649181,
+                        "prefix": "@",
+                        "prefix_color_name": "lightgreen",
+                        "prefix_color": "\u001b[92m",
+                        "name": "alice",
+                        "color_name": "bar_fg",
+                        "color": "",
+                        "visible": true
+                    }
+                ]
+            },
+            {
+                "id": 1709932823649189,
+                "parent_group_id": 0,
+                "name": "001|h",
+                "color_name": "weechat.color.nicklist_group",
+                "color": "\u001b[32m",
+                "visible": true,
+                "groups": [],
+                "nicks": []
+            },
+            {
+                "id": 1709932823649203,
+                "parent_group_id": 0,
+                "name": "002|v",
+                "color_name": "weechat.color.nicklist_group",
+                "color": "\u001b[32m",
+                "visible": true,
+                "groups": [],
+                "nicks": []
+            },
+            {
+                "id": 1709932823649210,
+                "parent_group_id": 0,
+                "name": "999|...",
+                "color_name": "weechat.color.nicklist_group",
+                "color": "\u001b[32m",
+                "visible": true,
+                "groups": [],
+                "nicks": []
+            }
+        ],
+        "nicks": []
+    }
+}
+----
+
+Пример захтева: врати fset бафер:
+
+[source,shell]
+----
+curl -L -u 'plain:secret_password' 'https://localhost:9000/api/buffers/fset.fset'
+----
+
+Одговор:
+
+[source,http]
+----
+HTTP/1.1 200 OK
+----
+
+[source,json]
+----
+{
+    "id": 1709932823897200,
+    "name": "fset.fset",
+    "short_name": "",
+    "number": 4,
+    "type": "free",
+    "hidden": false,
+    "title": "\u001b[96m1/\u001b[36m3565 | Filter: \u001b[93m* | Sort: \u001b[97m~name | Key(input): alt+space=toggle boolean, alt+'-'(-)=subtract 1 or set, alt+'+'(+)=add 1 or append, alt+f,alt+r(r)=reset, alt+f,alt+u(u)=unset, alt+enter(s)=set, alt+f,alt+n(n)=set new value, alt+f,alt+a(a)=append, alt+','=mark/unmark, shift+down=mark and move down, shift+up=move up and mark, ($)=refresh, ($$)=unmark/refresh, (m)=mark matching options, (u)=unmark matching options, alt+p(p)=toggle plugins desc, alt+v(v)=toggle help bar, ctrl+x(x)=switch format, (q)=close buffer",
+    "modes": "",
+    "input_prompt": "",
+    "input": "",
+    "input_position": 0,
+    "input_multiline": false,
+    "nicklist": false,
+    "nicklist_case_sensitive": false,
+    "nicklist_display_groups": true,
+    "time_displayed": true,
+    "local_variables": {
+        "plugin": "fset",
+        "name": "fset",
+        "type": "option",
+        "filter": "*"
+    },
+    "keys": [
+        {
+            "key": "ctrl-l",
+            "command": "/fset -refresh"
+        },
+        {
+            "key": "ctrl-n",
+            "command": "/eval ${if:${weechat.bar.buflist.hidden}?/fset -down:/buffer +1}"
+        },
+        {
+            "key": "ctrl-x",
+            "command": "/fset -format"
+        },
+        {
+            "key": "down",
+            "command": "/fset -down"
+        },
+        {
+            "key": "f11",
+            "command": "/fset -left"
+        },
+        {
+            "key": "f12",
+            "command": "/fset -right"
+        },
+        {
+            "key": "meta-+",
+            "command": "/fset -add 1"
+        },
+        {
+            "key": "meta--",
+            "command": "/fset -add -1"
+        },
+        {
+            "key": "meta-comma",
+            "command": "/fset -mark"
+        },
+        {
+            "key": "meta-end",
+            "command": "/fset -go end"
+        },
+        {
+            "key": "meta-f,meta-a",
+            "command": "/fset -append"
+        },
+        {
+            "key": "meta-f,meta-n",
+            "command": "/fset -setnew"
+        },
+        {
+            "key": "meta-f,meta-r",
+            "command": "/fset -reset"
+        },
+        {
+            "key": "meta-f,meta-u",
+            "command": "/fset -unset"
+        },
+        {
+            "key": "meta-home",
+            "command": "/fset -go 0"
+        },
+        {
+            "key": "meta-p",
+            "command": "/mute /set fset.look.show_plugins_desc toggle"
+        },
+        {
+            "key": "meta-q",
+            "command": "/input insert meta-q fset ${property}"
+        },
+        {
+            "key": "meta-return",
+            "command": "/fset -set"
+        },
+        {
+            "key": "meta-space",
+            "command": "/fset -toggle"
+        },
+        {
+            "key": "meta-v",
+            "command": "/bar toggle fset"
+        },
+        {
+            "key": "shift-down",
+            "command": "/fset -mark; /fset -down"
+        },
+        {
+            "key": "shift-up",
+            "command": "/fset -up; /fset -mark"
+        },
+        {
+            "key": "up",
+            "command": "/fset -up"
+        }
+    ]
+}
+----
+
+[[resource_buffers_lines]]
+==== Lines
+
+Враћа линије бафера.
+
+Крајње тачке:
+
+----
+GET /api/buffers/{id_бафера}/lines
+GET /api/buffers/{id_бафера}/lines/{id_линије}
+GET /api/buffers/{име_бафера}/lines
+GET /api/buffers/{име_бафера}/lines/{id_линије}
+----
+
+Параметри путање:
+
+* `id_бафера` (цео број, **обавезно**): јединствени идентификатор бафера (не треба
+  да се помеша са именом бафера, то је нешто друго)
+* `име_бафера` (стринг, **обавезно**): име бафера
+* `id_линије` (цео број, није обавезно): враћа једну линију са овим идентификатором
+
+Параметри упита:
+
+* `lines` (цео број, није обавезно, подразумевано:  све линије): број линија који се враћа:
+** негативни број: враћа N линија од краја бафера (најновијих линија)
+** `0`: не враћа се ниједна линија (дозвољено је, али нема смисла са овим ресурсом)
+** позитивни број: враћа N линија од почетка бафера (најстаријих линија)
+* `colors` (стринг, није обавезно, подразумевано: `ansi`): како да се врати стринг са кодовима боје:
+** `ansi`: враћају се ANSI кодови боје
+** `weechat`: враћају се WeeChat интерни кодови боје
+** `strip`: уклањају се боје
+
+Пример захтева: врати последњих 1000 линија бафера, без кодова боје:
+
+[source,shell]
+----
+curl -L -u 'plain:secret_password' 'https://localhost:9000/api/buffers/irc.libera.%23weechat/lines?lines=-1000&colors=strip'
+----
+
+Одговор:
+
+[source,http]
+----
+HTTP/1.1 200 OK
+----
+
+[source,json]
+----
+[
+    {
+        "id": 0,
+        "y": -1,
+        "date": "2023-12-05T19:46:03.847625Z",
+        "date_printed": "2023-12-05T19:46:03.847625Z",
+        "displayed": true,
+        "highlight": false,
+        "notify_level": 0,
+        "prefix": "-->",
+        "message": "alice (~alice@example.com) has joined #test",
+        "tags": [
+            "irc_join",
+            "irc_tag_account=alice",
+            "irc_tag_time=2023-12-05T19:46:03.847Z",
+            "nick_alice",
+            "host_~alice@example.com",
+            "log4"
+        ]
+    },
+    {
+        "id": 1,
+        "y": -1,
+        "date": "2023-12-05T19:46:03.986543Z",
+        "date_printed": "2023-12-05T19:46:03.986543Z",
+        "displayed": true,
+        "highlight": false,
+        "notify_level": 0,
+        "prefix": "--",
+        "message": "Mode #test [+Cnst] by zirconium.libera.chat",
+        "tags": [
+            "irc_mode",
+            "irc_tag_time=2023-12-05T19:46:03.986Z",
+            "nick_zirconium.libera.chat",
+            "log3"
+        ]
+    },
+    {
+        "id": 2,
+        "y": -1,
+        "date": "2023-12-05T19:46:04.287546Z",
+        "date_printed": "2023-12-05T19:46:04.287546Z",
+        "displayed": true,
+        "highlight": false,
+        "notify_level": 0,
+        "prefix": "--",
+        "message": "Channel #test: 1 nick (1 op, 0 voiced, 0 regular)",
+        "tags": [
+            "irc_366",
+            "irc_numeric",
+            "irc_tag_time=2023-12-05T19:46:04.287Z",
+            "nick_zirconium.libera.chat",
+            "log3"
+        ]
+    }
+]
+----
+
+[[resources_buffers_nicks]]
+==== Nicks
+
+Враћа надимке у баферу.
+
+Крајње тачке:
+
+----
+GET /api/buffers/{id_бафера}/nicks
+GET /api/buffers/{име_бафера}/nicks
+----
+
+Параметри упита:
+
+* `id_бафера` (цео број, **обавезно**): јединствени идентификатор бафера (не треба
+  да се помеша са бројем бафера, то је нешто друго)
+* `име_бафера` (стринг, **обавезно**): име бафера
+
+Пример захтева: врати надимке бафера:
+
+[source,shell]
+----
+curl -L -u 'plain:secret_password' 'https://localhost:9000/api/buffers/irc.libera.%23weechat/nicks'
+----
+
+Одговор:
+
+[source,http]
+----
+HTTP/1.1 200 OK
+----
+
+[source,json]
+----
+{
+    "id": 0,
+    "parent_group_id": -1,
+    "name": "root",
+    "color_name": "",
+    "color": "",
+    "visible": false,
+    "groups": [
+        {
+            "id": 1709932823649181,
+            "parent_group_id": 0,
+            "name": "000|o",
+            "color_name": "weechat.color.nicklist_group",
+            "color": "\u001b[32m",
+            "visible": true,
+            "groups": [],
+            "nicks": [
+                {
+                    "id": 1709932823649184,
+                    "parent_group_id": 1709932823649181,
+                    "prefix": "@",
+                    "prefix_color_name": "lightgreen",
+                    "prefix_color": "\u001b[92m",
+                    "name": "alice",
+                    "color_name": "bar_fg",
+                    "color": "",
+                    "visible": true
+                }
+            ]
+        },
+        {
+            "id": 1709932823649189,
+            "parent_group_id": 0,
+            "name": "001|h",
+            "color_name": "weechat.color.nicklist_group",
+            "color": "\u001b[32m",
+            "visible": true,
+            "groups": [],
+            "nicks": []
+        },
+        {
+            "id": 1709932823649203,
+            "parent_group_id": 0,
+            "name": "002|v",
+            "color_name": "weechat.color.nicklist_group",
+            "color": "\u001b[32m",
+            "visible": true,
+            "groups": [],
+            "nicks": []
+        },
+        {
+            "id": 1709932823649210,
+            "parent_group_id": 0,
+            "name": "999|...",
+            "color_name": "weechat.color.nicklist_group",
+            "color": "\u001b[32m",
+            "visible": true,
+            "groups": [],
+            "nicks": []
+        }
+    ],
+    "nicks": []
+}
+----
+
+[[resource_hotlist]]
+=== Hotlist
+
+Враћа врућу листу.
+
+Крајња тачка:
+
+----
+GET /api/hotlist
+----
+
+Пример захтева:
+
+[source,shell]
+----
+curl -L -u 'plain:secret_password' 'https://localhost:9000/api/hotlist'
+----
+
+Одговор:
+
+[source,http]
+----
+HTTP/1.1 200 OK
+----
+
+[source,json]
+----
+[
+    {
+        "priority": 0,
+        "date": "2024-03-17T16:38:51.572834Z",
+        "buffer_id": 1710693531508204,
+        "count": [
+            44,
+            0,
+            0,
+            0
+        ]
+    },
+    {
+        "priority": 0,
+        "date": "2024-03-17T16:38:51.573028Z",
+        "buffer_id": 1710693530395959,
+        "count": [
+            14,
+            0,
+            0,
+            0
+        ]
+    },
+    {
+        "priority": 0,
+        "date": "2024-03-17T16:38:51.611617Z",
+        "buffer_id": 1710693531529248,
+        "count": [
+            4,
+            0,
+            0,
+            0
+        ]
+    }
+]
+----
+
+[[resource_input]]
+=== Input
+
+Шаље команду или текст у бафер.
+
+Крајња тачка:
+
+----
+POST /api/input
+----
+
+Параметри тела:
+
+* `buffer_id` (цео број, није обавезно): јединствени идентификатор бафера (не треба
+  да се помеша са бројем бафера, то је нешто друго)
+* `buffer_name` (стринг, није обавезно, подразумевано: `core.weechat`): име бафера
+* `command` (стринг, **обавезно**): команда или текст који се шаље баферу
+
+Пример захтева: кажи „здраво!” на канал #weechat:
+
+[source,shell]
+----
+curl -L -u 'plain:secret_password' -X POST \
+  -d '{"buffer_name": "irc.libera.#weechat", "command": "здраво!"}' \
+  'https://localhost:9000/api/input'
+----
+
+Одговор:
+
+[source,http]
+----
+HTTP/1.1 204 No content
+----
+
+Пример захтева: напусти и затвори канал #weechat (команда се извршава у WeeChat
+основном баферу):
+
+[source,shell]
+----
+curl -L -u 'plain:secret_password' -X POST \
+  -d '{"command": "/buffer close irc.libera.#weechat"}' \
+  'https://localhost:9000/api/input'
+----
+
+Одговор:
+
+[source,http]
+----
+HTTP/1.1 204 No content
+----
+
+[[resource_completion]]
+=== Completion
+
+Довршава команду или текст у баферу.
+
+Крајња тачка:
+
+----
+POST /api/completion
+----
+
+Параметри тела:
+
+* `buffer_id` (цео број, није обавезно): јединствени идентификатор (не треба
+  да се помеша са бројем бафера, то је нешто друго)
+* `buffer_name` (стринг, није обавезно, подразумевано: `core.weechat`): име бафера
+* `command` (стринг, **обавезно**): команда или текст који се довршава
+* `position` (цео број, није обавезно, подразумевано: крај стринга): позиција
+  у команди (прва позиција је 0)
+
+Пример захтева: доврши команду `/qu` на каналу #weechat:
+
+[source,shell]
+----
+curl -L -u 'plain:secret_password' -X POST \
+  -d '{"buffer_name": "irc.libera.#weechat", "command": "/qu"}' \
+  'https://localhost:9000/api/completion'
+----
+
+Одговор:
+
+[source,http]
+----
+HTTP/1.1 200 OK
+----
+
+[source,json]
+----
+{
+    "context": "command",
+    "base_word": "qu",
+    "position_replace": 1,
+    "add_space": true,
+    "list": [
+        "query",
+        "quiet",
+        "quit",
+        "quote"
+    ]
+}
+----
+
+[[resource_ping]]
+=== Ping
+
+Шаље „ping” захтев.
+
+Крајња тачка:
+
+----
+POST /api/ping
+----
+
+Параметри тела:
+
+* `data` (стринг, није обавезно): стринг који се шаље назад у одговору
+
+Пример захтева: без тела:
+
+[source,shell]
+----
+curl -L -u 'plain:secret_password' -X POST 'https://localhost:9000/api/ping'
+----
+
+Одговор:
+
+[source,http]
+----
+HTTP/1.1 204 No content
+----
+
+Пример захтева: са подацима:
+
+[source,shell]
+----
+curl -L -u 'plain:secret_password' -X POST \
+  -d '{"data": "1702835741"}' \
+  'https://localhost:9000/api/ping'
+----
+
+Одговор:
+
+[source,http]
+----
+HTTP/1.1 200 OK
+----
+
+[source,json]
+----
+{
+    "data": "1702835741"
+}
+----
+
+[[resource_sync]]
+=== Sync
+
+Почиње или зауставља синхронизацију података са WeeChat.
+
+Овај ресурс може да се користи само онда када је клијент повезан websocket
+протоколом, јер ће WeeChat гурати поруке клијенту у било које време.
+
+Ако се овај ресурс употреби без websocket везе, враћа се грешка 403 (Forbidden).
+
+Крајња тачка:
+
+----
+POST /api/sync
+----
+
+Параметри тела:
+
+* `sync` (логичка, није обавезно, подразумевано: `true`): `true` да се укључи синхронизација
+  са WeeChat
+* `nicks` (логичка, није обавезно, подразумевано: `true`): `true` да се примају
+  ажурирања надимака у баферима (користи се само ако је `sync` `true`)
+* `input` (логичка, није обавезно, подразумевано: `true`): `true` да се синхронизује улаз
+  бафера са удаљеног релеја на локални клијент (користи се само ако је `sync` `true`)
+* `colors` (стринг, није обавезно, подразумевано: `ansi`): како се враћају стрингови са
+  кодовома боје (користи се само ако је `sync` `true`):
+** `ansi`: враћају се ANSI кодови боје
+** `weechat`: враћају се WeeChat интерни кодови боје
+** `strip`: уклањају се боје
+
+Пример захтева са websocket протоколом:
+
+[source,json]
+----
+{
+    "request": "POST /api/sync",
+    "body": {
+        "nicks": false
+    }
+}
+----
+
+Одговор:
+
+[source,json]
+----
+{
+    "code": 204,
+    "message": "No Content",
+    "request": "POST /api/sync",
+    "request_body": {
+        "nicks":false
+    },
+    "body_type": null,
+    "body": null
+}
+----
+
+Пример захтева без websocket протокола (без пријаве):
+
+[source,shell]
+----
+curl -L -u 'plain:secret_password' -X POST \
+  -d '{"nicks": false}' \
+  'https://localhost:9000/api/sync'
+----
+
+Одговор:
+
+[source,http]
+----
+HTTP/1.1 403 Forbidden
+----
+
+[source,json]
+----
+{
+    "error": "Sync resource is available only with a websocket connection"
+}
+----
+
+[[websocket]]
+== Websocket
+
+Websocket протокол се користи за креирање сталне везе измељу клијента и
+WeeChat програма, и за пријем догађаја у стварном времену, у случају када је
+<<resource_sync,sync>> ресурсом укључена синхронизација.
+
+Када се користи websocket протокол, потврда идентитета мора да се обави само једном.
+(погледајте <<authentication,потврду идентитета>>).
+
+[[websocket_handshake]]
+=== Websocket усаглашавање
+
+Да би се успоставила веза, врши се усаглашавање на `/api` крајњој тачки, које
+изгледа овако:
+
+[source,http]
+----
+GET /api HTTP/1.1
+Host: localhost:9000
+Connection: Upgrade
+Pragma: no-cache
+Cache-Control: no-cache
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
+Upgrade: websocket
+Origin: https://example.com
+Sec-WebSocket-Version: 13
+Accept-Encoding: gzip, deflate, br
+Accept-Language: en-US,en;q=0.9,fr;q=0.8
+Sec-WebSocket-Key: 2XE8VAJktqi3Tpw5QnfxVQ==
+Sec-WebSocket-Extensions: permessage-deflate; client_max_window_bits
+----
+
+WeeChat враћа свој одговор усаглашавања којим потврђује да је websocket протокол исправно
+подржан (и да је потврда идентитета била успешна):
+
+[source,http]
+----
+HTTP/1.1 101 Switching Protocols
+Upgrade: websocket
+Connection: Upgrade
+Sec-WebSocket-Accept: PaY9vRflWeOKuD0/F7e5gD9At9U=
+Sec-WebSocket-Extensions: permessage-deflate; client_max_window_bits
+----
+
+[NOTE]
+Враћена `Sec-WebSocket-Accept` вредност је SHA-1 хеш примљене вредности на коју је надовезан
+GUID `258EAFA5-E914-47DA-95CA-C5AB0DC85B11` (SHA-1 се кодира у base64). +
+У горњем примеру, SHA-1 од
+`2XE8VAJktqi3Tpw5QnfxVQ==258EAFA5-E914-47DA-95CA-C5AB0DC85B11` је
+`PaY9vRflWeOKuD0/F7e5gD9At9U=` (у base64).
+
+[[websocket_frames]]
+=== Оквири
+
+Када је клијент повезан websocket протоколом:
+
+* захтеви и одговори су у JSON, унутар websocket оквира
+* ако је ресурсом <<resource_sync,sync>> укључена синхронизација, WeeChat
+  може клијенту да пошаље JSON оквире у било које време.
+
+Захтеви WeeChat програму се праве JSON објектом који садржи следећа поља:
+
+* `request` (стринг): HTTP метода и путања (пример: `GET /api/buffers?lines=-100`)
+* `body` (објекат или низ): тело (није обавезно, за `POST` и `PUT` методе)
+* `request_id` (стринг): идентификатор који се шаље назад у одговору
+
+Употребом низа објеката, више захтева може да се пошаље одједном, тако што је
+сваки објекат посебан захтев. +
+Захтеви се извршавају у редоследу у којем су примљени (погледајте пример испод).
+
+Одговори клијенту се шаљу као JSON објекат који садржи следећа поља:
+
+* `code` (цео број): код HTTP одговора (пример: `200`)
+* `message` (стринг): порука за код (пример: `OK`)
+* `request` (стринг):  захтев (пример: `GET /api/buffers?lines=-100`)
+* `request_body` (објекат): тело захтева, или `null` ако захтев није имао тело
+* `request_id` (стринг): id захтева, или `null` ако захтев није имао id
+* `body_type` (стринг): тип објеката који се враћа у телу (погледајте испод),
+  или `null` ако одговор нема тело
+* `body` (објекат или низ): враћено тело, или `null` ако одговор нема тело
+
+Типови тела који могу да се врате:
+
+* `handshake` (објекат)
+* `version` (објекат)
+* `buffers` (низ)
+* `buffer` (објекат)
+* `lines` (низ)
+* `line` (објекат)
+* `nick_group` (објекат)
+* `nick` (објекат)
+* `hotlist` (објекат)
+* `ping` (објекат)
+
+[TIP]
+Ове схеме можете да прегледате на мрежи: https://weechat.org/api/[WeeChat Relay API ^↗^^].
+
+Пример захтева: врати верзију:
+
+[source,json]
+----
+{
+    "request": "GET /api/version",
+    "request_id": "get_version"
+}
+----
+
+Одговор:
+
+[source,json]
+----
+{
+    "code": 200,
+    "message": "OK",
+    "request": "GET /api/version",
+    "request_body": null,
+    "request_id": "get_version",
+    "body_type": "version",
+    "body": {
+        "weechat_version": "4.2.0-dev",
+        "weechat_version_git": "v4.1.0-143-g0b1cda1c4",
+        "weechat_version_number": 67239936,
+        "relay_api_version": "0.0.1",
+        "relay_api_version_number": 1
+    }
+}
+----
+
+Пример захтева: кажи „здраво!” на каналу #weechat:
+
+[source,json]
+----
+{
+    "request": "POST /api/input",
+    "body": {
+        "buffer_name": "irc.libera.#weechat",
+        "command": "здраво!"
+    }
+}
+----
+
+Response:
+
+[source,json]
+----
+{
+    "code": 204,
+    "message": "No Content",
+    "request": "POST /api/input",
+    "request_body": {
+        "buffer_name": "irc.libera.#weechat",
+        "command": "здраво!"
+    },
+    "request_id": null,
+    "body_type": null,
+    "body": null
+}
+----
+
+Пример захтева: пошаљи сва захтева одједном: врати листу свих бафера са линијама и
+надимцима, а затим се синхронизуј са удаљеним:
+
+[source,json]
+----
+[
+    {
+        "request": "GET /api/buffers?lines=-1000&nicks=true&colors=weechat",
+        "request_id": "initial_sync"
+    },
+    {
+        "request": "POST /api/sync",
+        "body": {
+            "colors": "weechat"
+        }
+    }
+]
+----
+
+[NOTE]
+Препоручује се да се захтев за синхронизацијом пошаље заједно са првим
+захтевом који преузима податке, тако да се не пропусти ниједан догађај.
+
+Први одговор (тело са баферима је одсечено ради лакшег читања):
+
+[source,json]
+----
+{
+    "code": 200,
+    "message": "OK",
+    "request": "GET /api/buffers?lines=-1000&nicks=true&colors=weechat",
+    "request_body": null,
+    "request_id": "initial_sync",
+    "body_type": "buffers",
+    "body": [
+        {
+            "id": 1709932823238637,
+            "name": "core.weechat",
+            "short_name": "weechat",
+            "number": 1,
+            "type": "formatted"
+        }
+    ]
+}
+----
+
+Други одговор:
+
+[source,json]
+----
+{
+    "code": 204,
+    "message": "No Content",
+    "request": "POST /api/sync",
+    "request_body": {
+        "colors": "weechat"
+    },
+    "request_id": null,
+    "body_type": null,
+    "body": null
+}
+----
+
+WeeChat гура податке клијенту у било које време када се десе одређени догађаји:
+када се линије приказују,бафери додају/уклањају/мењају, надимци nicks додају/уклањају/мењају, итд.
+
+Поруке које се шаљу клијенту имају следећа поља:
+
+* `code`: `0`
+* `message`: `Event`
+* `event_name` (стринг): име догађаја (име сигнала or hsignal)
+* `buffer_id` (цео број): јединствени идентификатор бафера, поставља се само за под-објекте,
+  -1 у осталим случајевима
+
+Клијенту се шаљу следећи догађаји, у сагласности са опцијама синхронизације:
+
+[width="100%",cols="5,3,3,5",options="header"]
+|===
+| Име догађаја                        | Id бафера | Тип тела      | Тело
+| `buffer_opened`                     | buffer id | `buffer`      | бафер са свим линијама и надимцима
+| `buffer_type_changed`               | buffer id | `buffer`      | бафер
+| `buffer_moved`                      | buffer id | `buffer`      | бафер
+| `buffer_merged`                     | buffer id | `buffer`      | бафер
+| `buffer_unmerged`                   | buffer id | `buffer`      | бафер
+| `buffer_hidden`                     | buffer id | `buffer`      | бафер
+| `buffer_unhidden`                   | buffer id | `buffer`      | бафер
+| `buffer_renamed`                    | buffer id | `buffer`      | бафер
+| `buffer_title_changed`              | buffer id | `buffer`      | бафер
+| `buffer_time_for_each_line_changed` | buffer id | `buffer`      | бафер
+| `buffer_localvar_added`             | buffer id | `buffer`      | бафер
+| `buffer_localvar_changed`           | buffer id | `buffer`      | бафер
+| `buffer_localvar_removed`           | buffer id | `buffer`      | бафер
+| `buffer_cleared`                    | buffer id | `buffer`      | бафер
+| `buffer_closing`                    | buffer id | `buffer`      | бафер
+| `buffer_closed`                     | buffer id | null          | null
+| `buffer_line_added`                 | buffer id | `line`        | бафер линија
+| `buffer_line_data_changed`          | buffer id | `line`        | бафер линија
+| `input_text_changed`                | buffer id | `buffer`      | бафер
+| `input_text_cursor_moved`           | buffer id | `buffer`      | бафер
+| `nicklist_group_changed`            | buffer id | `nick_group`  | група надимака
+| `nicklist_group_added`              | buffer id | `nick_group`  | група надимака
+| `nicklist_group_removing`           | buffer id | `nick_group`  | група надимака
+| `nicklist_nick_added`               | buffer id | `nick`        | надимак
+| `nicklist_nick_removing`            | buffer id | `nick`        | надимак
+| `nicklist_nick_changed`             | buffer id | `nick`        | надимак
+| `upgrade` ^(1)^                     | -1        | null          | null
+| `upgrade_ended` ^(1)^               | -1        | null          | null
+| `quit`                              | -1        | null          | null
+|===
+
+[NOTE]
+^(1)^ Догађаји `upgrade` и `upgrade_ended` се шаљу само ако је клијент повезан чистим
+текстом (без TLS), јер се у случају TLS веза са клијентом најпре прекида пре
+него што се обави ажурирање (ажурирање TLS веза није подржано).
+
+Пример: нови бафер: приступљено је каналу `#weechat`:
+
+[source,json]
+----
+{
+    "code": 0,
+    "message": "Event",
+    "event_name": "buffer_opened",
+    "buffer_id": 1709932823649069,
+    "body_type": "buffer",
+    "body": {
+        "id": 1709932823649069,
+        "name": "irc.libera.#test",
+        "short_name": "",
+        "number": 4,
+        "type": "formatted",
+        "hidden": false,
+        "title": "",
+        "modes": "+nt",
+        "input_prompt": "\u001b[92m@\u001b[96malice\u001b[48;5;22m(\u001b[39mi\u001b[48;5;22m)",
+        "input": "",
+        "input_position": 0,
+        "input_multiline": false,
+        "nicklist": true,
+        "nicklist_case_sensitive": false,
+        "nicklist_display_groups": false,
+        "time_displayed": true,
+        "local_variables": {
+            "plugin": "irc",
+            "name": "libera.#test",
+            "type": "channel",
+            "nick": "alice",
+            "host": "~alice@example.com",
+            "server": "libera",
+            "channel": "#test"
+        },
+        "keys": [],
+        "lines": []
+    }
+}
+----
+
+Пример: приказана је нова линија на каналу `#weechat`:
+
+[source,json]
+----
+{
+    "code": 0,
+    "message": "Event",
+    "event_name": "buffer_line_added",
+    "buffer_id": 1709932823649069,
+    "body_type": "line",
+    "body": {
+        "id": 5,
+        "index": -1,
+        "date": "2024-01-07T08:54:00.179483Z",
+        "date_printed": "2024-01-07T08:54:00.179483Z",
+        "displayed": true,
+        "highlight": false,
+        "notify_level": 0,
+        "prefix": "alice",
+        "message": "hello!",
+        "tags": [
+            "irc_privmsg",
+            "self_msg",
+            "notify_none",
+            "no_highlight",
+            "prefix_nick_white",
+            "nick_alice",
+            "log1"
+        ]
+    }
+}
+----
+
+Пример: додат је надимак `bob` са статусом оператора у канал `#weechat`:
+
+[source,json]
+----
+{
+    "code": 0,
+    "message": "Event",
+    "event_name": "nicklist_nick_added",
+    "buffer_id": 1709932823649069,
+    "body_type": "nick",
+    "body": {
+        "id": 1709932823649902,
+        "parent_group_id": 1709932823649181,
+        "prefix": "@",
+        "prefix_color_name": "lightgreen",
+        "prefix_color": "\u001b[92m",
+        "name": "bob",
+        "color_name": "bar_fg",
+        "color": "",
+        "visible": true
+    }
+}
+----
+
+Пример: затворен је бафер канала `#weechat`:
+
+[source,json]
+----
+{
+    "code": 0,
+    "message": "Event",
+    "event_name": "buffer_closed",
+    "buffer_id": 1709932823649069,
+    "body_type": null,
+    "body": null
+}
+----
+
+Пример: WeeChat се ажурира:
+
+[source,json]
+----
+{
+    "code": 0,
+    "message": "Event",
+    "event_name": "upgrade",
+    "buffer_id": -1,
+    "body_type": null,
+    "body": null
+}
+----
+
+Пример: извршено је ажурирање програма WeeChat:
+
+[source,json]
+----
+{
+    "code": 0,
+    "message": "Event",
+    "event_name": "upgrade_ended",
+    "buffer_id": -1,
+    "body_type": null,
+    "body": null
+}
+----

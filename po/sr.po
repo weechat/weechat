@@ -23,7 +23,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2025-11-12 20:22+0100\n"
-"PO-Revision-Date: 2025-11-01 16:08+0100\n"
+"PO-Revision-Date: 2025-11-24 14:27+0400\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: sr\n"
@@ -923,10 +923,9 @@ msgstr "компајлиран"
 msgid "Windows list:"
 msgstr "Листа прозора:"
 
-#, fuzzy, c-format
-#| msgid "%sPlugin \"%s\" not found"
+#, c-format
 msgid "%sWindow \"%s\" not found"
-msgstr "%sНије пронађен додатак „%s”"
+msgstr "%sНије пронађен прозор „%s”"
 
 #, c-format
 msgid "%sInvalid window number: \"%s\""
@@ -9261,21 +9260,17 @@ msgstr "%s%s: већ постоји веза са сервером „%s”!"
 msgid "%s%s: currently connecting to server \"%s\"!"
 msgstr "%s%s: тренутно се врши повезивање са сервером „%s”!"
 
-#, fuzzy, c-format
-#| msgid "%s: server added: %s%s%s%s%s"
+#, c-format
 msgid "%s: server added: %s%s"
-msgstr "%s: додат је сервер: %s%s%s%s%s"
+msgstr "%s: додат је сервер: %s%s"
 
-#, fuzzy, c-format
-#| msgid ""
-#| "%s%s: unable to add temporary server \"%s\" (check if there is already a "
-#| "server with this name)"
+#, c-format
 msgid ""
 "%s%s: unable to add server \"%s\" (check if there is already a server with "
 "this name)"
 msgstr ""
-"%s%s: није успело додавање привременог сервера „%s” (проверите да ли већ "
-"постоји сервер под овим именом)"
+"%s%s: није успело додавање сервера „%s” (проверите да ли већ постоји сервер "
+"под овим именом)"
 
 #, c-format
 msgid "%s%s: \"%s\" command cannot be executed on a server buffer"
@@ -9438,10 +9433,9 @@ msgstr "%s%s: не може да се креира нови приватни б�
 msgid "nick:"
 msgstr "надимак:"
 
-#, fuzzy, c-format
-#| msgid "Server: %s%s %s[%s%s%s]%s%s%s%s"
+#, c-format
 msgid "Server: %s%s %s[%s%s%s]%s%s%s"
-msgstr "Сервер: %s%s %s[%s%s%s]%s%s%s%s"
+msgstr "Сервер: %s%s %s[%s%s%s]%s%s%s"
 
 msgid "connected"
 msgstr "повезан"
@@ -10680,12 +10674,6 @@ msgid "list, add or remove IRC servers"
 msgstr "испис, додавање или уклањање IRC сервера"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
-#, fuzzy
-#| msgid ""
-#| "list|listfull [-connected] [<name>] || add|addreplace <name> <hostname>[/"
-#| "<port>] [-temp] [-<option>[=<value>]] [-no<option>] || copy|rename <name> "
-#| "<new_name> || reorder <name>... || open <name>|-all [<name>...] || del|"
-#| "keep <name> || deloutq|jump || raw [<filter>]"
 msgid ""
 "list|listfull [-connected] [<name>] || add|addreplace <name> <hostname>[/"
 "<port>] [-<option>[=<value>]] [-no<option>] || copy|rename <name> <new_name> "
@@ -10693,8 +10681,8 @@ msgid ""
 "deloutq|jump || raw [<filter>]"
 msgstr ""
 "list|listfull [-connected] [<име>] || add|addreplace <име> <имехоста>[/"
-"<порт>] [-temp] [-<опција>[=<вредност>]] [-no<опција>] || copy|rename <име> "
-"<ново_име> || reorder <име>... || open <име>|-all [<име>...] || del|keep "
+"<порт>] [-<опција>[=<вредност>]] [-no<опција>] || copy|rename <име> "
+"<ново_име> || reorder <име>... || open <име>|-all [<име>...] || del "
 "<име> || deloutq|jump || raw [<филтер>]"
 
 msgid "raw[list]: list servers (without argument, this list is displayed)"
@@ -13200,15 +13188,13 @@ msgstr "TLS:"
 msgid "%s%s: error when allocating new server"
 msgstr "%s%s: грешка приликом алокације новог сервера"
 
-#, fuzzy, c-format
-#| msgid "%sUnable to set option \"%s\" for bar \"%s\""
+#, c-format
 msgid "%s%s: warning: unable to set option \"%s\" for server \"%s\""
-msgstr "%sПостављање опције „%s” за траку „%s” није успело"
+msgstr "%s%s: упозорење: постављање опције „%s” за сервер „%s” није успело"
 
-#, fuzzy, c-format
-#| msgid "%sWarning: unknown option for section \"%s\": %s (value: \"%s\")"
+#, c-format
 msgid "%s%s: warning: unknown option \"%s\" for server \"%s\""
-msgstr "%sУпозорење: непозната опција за одељак „%s”: %s (вредност: „%s”)"
+msgstr "%s%s: упозорење: непозната опција „%s” за сервер „%s”"
 
 #, c-format
 msgid ""

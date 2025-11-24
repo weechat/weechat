@@ -4526,12 +4526,11 @@ if (weechat_file_compare ("/tmp/test.txt", "/tmp/test2.txt") == 0)
 
 Неке корисне функције.
 
-// TRANSLATION MISSING
 ==== util_parse_int
 
 _WeeChat ≥ 4.8.0._
 
-Parse an integer number of type "int" in a string.
+Парсира цео број типа „int” у стрингу.
 
 Прототип:
 
@@ -4542,23 +4541,23 @@ int weechat_util_parse_int (const char *string, int base, int *result);
 
 Аргументи:
 
-* _string_: string to parse
-* _base_: can be 0 (automatic) or an integer between 2 and 36 (inclusive)
-* _result_: pointer to a variable updated if the string is correctly parsed
-  (if pointer is NULL, the number found is not returned)
+* _string_: стринг који се парсира
+* _base_: може да буде 0 (аутоматски) или цео број између 2 и 36 (укључујући)
+* _result_: показивач на ажурирану променљиву ако је стринг исправно парсиран
+  (ако је показивач NULL, пронађени број се не враћа)
 
 Повратна вредност:
 
 * 1: OK
-* 0: error
+* 0: грешка
 
-The following strings are invalid and the function returns 0:
+Следећи стрингови нису исправни и функција враћа 0:
 
-* empty string
-* number with extra non-digits after
-* number < INT_MIN (min value for a variable of type "int")
-* number > INT_MAX (max value for a variable of type "int")
-* invalid integer for the given _base_
+* празан стринг
+* број са вишком не-цифара на крају
+* број < INT_MIN (минимална вредност за променљиву типа „int”)
+* број > INT_MAX (максимална вредност за променљиву типа „int”)
+* неисправни цео број за наведену _base_
 
 C примери:
 
@@ -4571,19 +4570,18 @@ if (weechat_util_parse_int ("1234", 10, &number))
 }
 if (!weechat_util_parse_int ("abc", 10, &number))
 {
-    /* parsing error, number is unchanged */
+    /* грешка парсирања, број није измењен */
 }
 ----
 
 [NOTE]
 Ова функција није доступна у API скриптовања.
 
-// TRANSLATION MISSING
 ==== util_parse_long
 
 _WeeChat ≥ 4.8.0._
 
-Parse an integer number of type "long" in a string.
+Парсира цео број типа „long” у стрингу.
 
 Прототип:
 
@@ -4594,23 +4592,23 @@ int weechat_util_parse_long (const char *string, int base, long *result);
 
 Аргументи:
 
-* _string_: string to parse
-* _base_: can be 0 (automatic) or an integer between 2 and 36 (inclusive)
-* _result_: pointer to a variable updated if the string is correctly parsed
-  (if pointer is NULL, the number found is not returned)
+* _string_: стринг који се парсира
+* _base_: може да буде 0 (аутоматски) или цео број између 2 и 36 (укључујући)
+* _result_: показивач на ажурирану променљиву ако је стринг исправно парсиран
+  (ако је показивач NULL, пронађени број се не враћа)
 
 Повратна вредност:
 
 * 1: OK
-* 0: error
+* 0: грешка
 
-The following strings are invalid and the function returns 0:
+Следећи стрингови нису исправни и функција враћа 0:
 
-* empty string
-* number with extra non-digits after
-* number < LONG_MIN (min value for a variable of type "long")
-* number > LONG_MAX (max value for a variable of type "long")
-* invalid integer for the given _base_
+* празан стринг
+* број са вишком не-цифара на крају
+* број < LONG_MIN (минимална вредност за променљиву типа „long”)
+* број > LONG_MAX (максимална вредност за променљиву типа „long”)
+* неисправни цео број за наведену _base_
 
 C примери:
 
@@ -4623,19 +4621,18 @@ if (weechat_util_parse_long ("1234", 10, &number))
 }
 if (!weechat_util_parse_long ("abc", 10, &number))
 {
-    /* parsing error, number is unchanged */
+    /* грешка парсирања, број није измењен */
 }
 ----
 
 [NOTE]
 Ова функција није доступна у API скриптовања.
 
-// TRANSLATION MISSING
 ==== util_parse_longlong
 
 _WeeChat ≥ 4.8.0._
 
-Parse an integer number of type "long long" in a string.
+Парсира цео број типа „long long” у стрингу.
 
 Прототип:
 
@@ -4646,23 +4643,23 @@ int weechat_util_parse_longlong (const char *string, int base, long long *result
 
 Аргументи:
 
-* _string_: string to parse
-* _base_: can be 0 (automatic) or an integer between 2 and 36 (inclusive)
-* _result_: pointer to a variable updated if the string is correctly parsed
-  (if pointer is NULL, the number found is not returned)
+* _string_: стринг који се парсира
+* _base_: може да буде 0 (аутоматски) или цео број између 2 и 36 (укључујући)
+* _result_: показивач на ажурирану променљиву ако је стринг исправно парсиран
+  (ако је показивач NULL, пронађени број се не враћа)
 
 Повратна вредност:
 
 * 1: OK
-* 0: error
+* 0: грешка
 
-The following strings are invalid and the function returns 0:
+Следећи стрингови нису исправни и функција враћа 0:
 
-* empty string
-* number with extra non-digits after
-* number < LLONG_MIN (min value for a variable of type "long long")
-* number > LLONG_MAX (max value for a variable of type "long long")
-* invalid integer for the given _base_
+* празан стринг
+* број са вишком не-цифара на крају
+* број < LLONG_MIN (минимална вредност за променљиву типа „long long”)
+* број > LLONG_MAX (максимална вредност за променљиву типа „long long”)
+* неисправни цео број за наведену _base_
 
 C примери:
 
@@ -4675,7 +4672,7 @@ if (weechat_util_parse_longlong ("1234", 10, &number))
 }
 if (!weechat_util_parse_longlong ("abc", 10, &number))
 {
-    /* parsing error, number is unchanged */
+    /* грешка парсирања, број није измењен */
 }
 ----
 
