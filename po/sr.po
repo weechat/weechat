@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2025-11-12 20:22+0100\n"
+"POT-Creation-Date: 2025-11-28 18:38+0100\n"
 "PO-Revision-Date: 2025-11-24 14:27+0400\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6586,6 +6586,16 @@ msgstr "грешка преноса"
 msgid "curl error %d (%s) (URL: \"%s\")\n"
 msgstr "curl грешка %d (%s) (URL: „%s”)\n"
 
+#, fuzzy, c-format
+#| msgid "%sURL transfer error: %s (URL: \"%s\")"
+msgid "transfer stopped (URL: \"%s\")\n"
+msgstr "%sГрешка URL трансфера: %s (URL: „%s”)"
+
+#, fuzzy, c-format
+#| msgid "End of URL transfer '%s', timeout reached (%.3fs)"
+msgid "transfer timeout reached (%.3fs) (URL: \"%s\")\n"
+msgstr "Крај URL трансфера ’%s’, достигнут је тајмаут (%.3fs)"
+
 #, c-format
 msgid "%sAnother command \"%s\" already exists for plugin \"%s\""
 msgstr "%sВећ постоји друга команда \"%s\" за додатак \"%s\""
@@ -6631,6 +6641,11 @@ msgstr "Крај URL трансфера ’%s’, достигнут је тај
 #, c-format
 msgid "%sError running thread in hook_url: %s (URL: \"%s\")"
 msgstr "%sГрешка покретања нити у hook_url: %s (URL: „%s”)"
+
+#, fuzzy, c-format
+#| msgid "End of URL transfer '%s', timeout reached (%.3fs)"
+msgid "End of URL transfer '%s', transfer stopped"
+msgstr "Крај URL трансфера ’%s’, достигнут је тајмаут (%.3fs)"
 
 #. TRANSLATORS: "%s %s" after "compiled on" is date and time
 #, c-format
@@ -10682,8 +10697,8 @@ msgid ""
 msgstr ""
 "list|listfull [-connected] [<име>] || add|addreplace <име> <имехоста>[/"
 "<порт>] [-<опција>[=<вредност>]] [-no<опција>] || copy|rename <име> "
-"<ново_име> || reorder <име>... || open <име>|-all [<име>...] || del "
-"<име> || deloutq|jump || raw [<филтер>]"
+"<ново_име> || reorder <име>... || open <име>|-all [<име>...] || del <име> || "
+"deloutq|jump || raw [<филтер>]"
 
 msgid "raw[list]: list servers (without argument, this list is displayed)"
 msgstr "raw[list]: листа сервера (без аргумента се приказује ова листа)"

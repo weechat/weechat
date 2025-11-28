@@ -24,7 +24,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2025-11-12 20:22+0100\n"
+"POT-Creation-Date: 2025-11-28 18:38+0100\n"
 "PO-Revision-Date: 2025-10-27 08:26+0100\n"
 "Last-Translator: Santiago Forero <santiago@forero.xyz>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6255,6 +6255,15 @@ msgid "curl error %d (%s) (URL: \"%s\")\n"
 msgstr ""
 
 #, c-format
+msgid "transfer stopped (URL: \"%s\")\n"
+msgstr ""
+
+#, fuzzy, c-format
+#| msgid "End of command '%s', timeout reached (%.1fs)"
+msgid "transfer timeout reached (%.3fs) (URL: \"%s\")\n"
+msgstr "Fin del comando '%s', tiempo de espera alcanzado (%.1fs)"
+
+#, c-format
 msgid "%sAnother command \"%s\" already exists for plugin \"%s\""
 msgstr "%sError: el comando \"%s\" ya existe en el plugin \"%s\""
 
@@ -6297,6 +6306,11 @@ msgstr "Fin del comando '%s', tiempo de espera alcanzado (%.1fs)"
 #, c-format
 msgid "%sError running thread in hook_url: %s (URL: \"%s\")"
 msgstr ""
+
+#, fuzzy, c-format
+#| msgid "End of command '%s', timeout reached (%.1fs)"
+msgid "End of URL transfer '%s', transfer stopped"
+msgstr "Fin del comando '%s', tiempo de espera alcanzado (%.1fs)"
 
 #. TRANSLATORS: "%s %s" after "compiled on" is date and time
 #, c-format

@@ -28,7 +28,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2025-11-12 20:22+0100\n"
+"POT-Creation-Date: 2025-11-28 18:38+0100\n"
 "PO-Revision-Date: 2025-11-09 11:00+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -6942,6 +6942,16 @@ msgstr "Übertragungsfehler"
 msgid "curl error %d (%s) (URL: \"%s\")\n"
 msgstr "curl Fehler %d (%s) (URL: \"%s\")\n"
 
+#, fuzzy, c-format
+#| msgid "%sURL transfer error: %s (URL: \"%s\")"
+msgid "transfer stopped (URL: \"%s\")\n"
+msgstr "%sURL Transferfehler: %s (URL: \"%s\")"
+
+#, fuzzy, c-format
+#| msgid "End of URL transfer '%s', timeout reached (%.3fs)"
+msgid "transfer timeout reached (%.3fs) (URL: \"%s\")\n"
+msgstr "Ende der URL-Übertragung „%s“, Zeitüberschreitung erreicht (%.3fs)"
+
 #, c-format
 msgid "%sAnother command \"%s\" already exists for plugin \"%s\""
 msgstr ""
@@ -6987,6 +6997,11 @@ msgstr "Ende der URL-Übertragung „%s“, Zeitüberschreitung erreicht (%.3fs)
 #, c-format
 msgid "%sError running thread in hook_url: %s (URL: \"%s\")"
 msgstr "%sFehler beim Ausführen des Threads in hook_url: %s (URL: \"%s\")"
+
+#, fuzzy, c-format
+#| msgid "End of URL transfer '%s', timeout reached (%.3fs)"
+msgid "End of URL transfer '%s', transfer stopped"
+msgstr "Ende der URL-Übertragung „%s“, Zeitüberschreitung erreicht (%.3fs)"
 
 #. TRANSLATORS: "%s %s" after "compiled on" is date and time
 #, c-format

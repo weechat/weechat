@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2025-11-12 20:22+0100\n"
+"POT-Creation-Date: 2025-11-28 18:38+0100\n"
 "PO-Revision-Date: 2025-10-27 08:27+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5846,6 +5846,14 @@ msgstr "%sСервер: %s%s\n"
 msgid "curl error %d (%s) (URL: \"%s\")\n"
 msgstr ""
 
+#, c-format
+msgid "transfer stopped (URL: \"%s\")\n"
+msgstr ""
+
+#, c-format
+msgid "transfer timeout reached (%.3fs) (URL: \"%s\")\n"
+msgstr ""
+
 #, fuzzy, c-format
 msgid "%sAnother command \"%s\" already exists for plugin \"%s\""
 msgstr "%s игнорирование уже существует\n"
@@ -5884,6 +5892,10 @@ msgstr ""
 
 #, c-format
 msgid "%sError running thread in hook_url: %s (URL: \"%s\")"
+msgstr ""
+
+#, c-format
+msgid "End of URL transfer '%s', transfer stopped"
 msgstr ""
 
 #. TRANSLATORS: "%s %s" after "compiled on" is date and time

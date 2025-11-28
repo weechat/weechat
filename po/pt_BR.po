@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2025-11-12 20:22+0100\n"
+"POT-Creation-Date: 2025-11-28 18:38+0100\n"
 "PO-Revision-Date: 2025-10-27 08:27+0100\n"
 "Last-Translator: Érico Nogueira <ericonr@disroot.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6144,6 +6144,14 @@ msgid "curl error %d (%s) (URL: \"%s\")\n"
 msgstr ""
 
 #, c-format
+msgid "transfer stopped (URL: \"%s\")\n"
+msgstr ""
+
+#, c-format
+msgid "transfer timeout reached (%.3fs) (URL: \"%s\")\n"
+msgstr ""
+
+#, c-format
 msgid "%sAnother command \"%s\" already exists for plugin \"%s\""
 msgstr "%sOutro comando \"%s\" já existe para o plugin \"%s\""
 
@@ -6183,6 +6191,10 @@ msgstr ""
 
 #, c-format
 msgid "%sError running thread in hook_url: %s (URL: \"%s\")"
+msgstr ""
+
+#, c-format
+msgid "End of URL transfer '%s', transfer stopped"
 msgstr ""
 
 # Common conventions used here:

@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2025-11-12 20:22+0100\n"
-"PO-Revision-Date: 2025-11-12 20:42+0100\n"
+"POT-Creation-Date: 2025-11-28 18:38+0100\n"
+"PO-Revision-Date: 2025-11-28 18:40+0100\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -6808,6 +6808,14 @@ msgid "curl error %d (%s) (URL: \"%s\")\n"
 msgstr "erreur curl %d (%s) (URL : \"%s\")\n"
 
 #, c-format
+msgid "transfer stopped (URL: \"%s\")\n"
+msgstr "transfert arrêté (URL : \"%s\")\n"
+
+#, c-format
+msgid "transfer timeout reached (%.3fs) (URL: \"%s\")\n"
+msgstr "temps maximum atteint (%.3fs) (URL : \"%s\")\n"
+
+#, c-format
 msgid "%sAnother command \"%s\" already exists for plugin \"%s\""
 msgstr "%sUne autre commande \"%s\" existe déjà pour l'extension \"%s\""
 
@@ -6852,6 +6860,10 @@ msgstr "Fin du transfert d'URL '%s', temps maximum atteint (%.3fs)"
 #, c-format
 msgid "%sError running thread in hook_url: %s (URL: \"%s\")"
 msgstr "%sErreur de lancement du thread dans hook_url : %s (URL : \"%s\")"
+
+#, c-format
+msgid "End of URL transfer '%s', transfer stopped"
+msgstr "Fin du transfert d'URL '%s', transfert arrêté"
 
 #. TRANSLATORS: "%s %s" after "compiled on" is date and time
 #, c-format

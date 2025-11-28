@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2025-11-12 20:22+0100\n"
+"POT-Creation-Date: 2025-11-28 18:38+0100\n"
 "PO-Revision-Date: 2025-11-01 16:08+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -6439,6 +6439,16 @@ msgid "curl error %d (%s) (URL: \"%s\")\n"
 msgstr "curl エラー %d (%s) (URL: \"%s\")\n"
 
 #, fuzzy, c-format
+#| msgid "curl error %d (%s) (URL: \"%s\")\n"
+msgid "transfer stopped (URL: \"%s\")\n"
+msgstr "curl エラー %d (%s) (URL: \"%s\")\n"
+
+#, fuzzy, c-format
+#| msgid "End of command '%s', timeout reached (%.1fs)"
+msgid "transfer timeout reached (%.3fs) (URL: \"%s\")\n"
+msgstr "コマンド '%s' の終了、タイムアウトになりました (%.1fs)"
+
+#, fuzzy, c-format
 msgid "%sAnother command \"%s\" already exists for plugin \"%s\""
 msgstr ""
 "%1$sエラー: プラグイン \"%3$s\" で他のコマンド \"%2$s\" は既に定義されていま"
@@ -6484,6 +6494,11 @@ msgstr "コマンド '%s' の終了、タイムアウトになりました (%.1f
 #, c-format
 msgid "%sError running thread in hook_url: %s (URL: \"%s\")"
 msgstr ""
+
+#, fuzzy, c-format
+#| msgid "End of command '%s', timeout reached (%.1fs)"
+msgid "End of URL transfer '%s', transfer stopped"
+msgstr "コマンド '%s' の終了、タイムアウトになりました (%.1fs)"
 
 #. TRANSLATORS: "%s %s" after "compiled on" is date and time
 #, c-format
