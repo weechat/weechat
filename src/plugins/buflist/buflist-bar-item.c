@@ -332,7 +332,7 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
     int item_index, num_buffers, is_channel, is_private, is_list;
     int i, j, length_max_number, current_buffer, number, prev_number, priority;
     int rc, count, line_number, line_number_current_buffer;
-    int hotlist_priority_number;
+    int hotlist_priority_number, index_displayed;
 
     /* make C compiler happy */
     (void) data;
@@ -350,6 +350,7 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
     prev_number = -1;
     line_number = 0;
     line_number_current_buffer = 0;
+    index_displayed = 0;
 
     buflist = weechat_string_dyn_alloc (256);
 
@@ -658,6 +659,10 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
         if (current_buffer)
             line_number_current_buffer = line_number;
         prev_number = number;
+        snprintf (str_number, sizeof (str_number), "%d", index_displayed);
+        weechat_hashtable_set (buflist_hashtable_extra_vars,
+                               "index_displayed", str_number);
+        index_displayed++;
 
         /* add newline between each buffer (if needed) */
         if (weechat_config_boolean (buflist_config_look_add_newline)

@@ -196,7 +196,10 @@ buflist_command_init (void)
                "there's no lag (evaluation of option buflist.format.lag)"),
             N_("    - ${format_tls_version}: indicator of TLS version for a server "
                "buffer, empty for channels (evaluation of option "
-               "buflist.format.tls_version)")),
+               "buflist.format.tls_version)"),
+            N_("    - ${index_displayed}: index of line displayed in the bar "
+               "item (starts at 0, only buffers displayed increment this index, "
+               "see option buflist.look.display_conditions")),
         "enable|disable|toggle"
         " || bar"
         " || refresh %(buflist_items_used)|%*",
