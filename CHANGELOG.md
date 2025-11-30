@@ -10,13 +10,6 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
-### Added
-
-- core: add option weechat.completion.cycle
-- core: add hdata for hooks
-- api: add functions util_parse_int, util_parse_long and util_parse_longlong
-- buflist: add variable `${index_displayed}`
-
 ### Removed
 
 - irc: remove temporary servers and option irc.look.temporary_servers
@@ -38,6 +31,13 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - build: require libgcrypt ≥ 1.8.0 ([#2268](https://github.com/weechat/weechat/issues/2268))
 - build: require Enchant v2 ([#2268](https://github.com/weechat/weechat/issues/2268))
 - build: require Lua ≥ 5.3 ([#2268](https://github.com/weechat/weechat/issues/2268))
+
+### Added
+
+- core: add option weechat.completion.cycle
+- core: add hdata for hooks
+- api: add functions util_parse_int, util_parse_long and util_parse_longlong
+- buflist: add variable `${index_displayed}`
 
 ### Fixed
 
