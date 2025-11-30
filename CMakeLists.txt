@@ -261,7 +261,7 @@ find_package(ZLIB REQUIRED)
 
 # Check for zstd
 if(ENABLE_ZSTD)
-  pkg_check_modules(LIBZSTD REQUIRED libzstd)
+  pkg_check_modules(LIBZSTD REQUIRED libzstd>=1.4.0)
   add_definitions(-DHAVE_ZSTD)
 endif()
 
