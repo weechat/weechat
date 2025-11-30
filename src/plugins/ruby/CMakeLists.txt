@@ -19,19 +19,19 @@
 # along with WeeChat.  If not, see <https://www.gnu.org/licenses/>.
 #
 
+find_package(Ruby REQUIRED)
+
 add_library(ruby MODULE
   weechat-ruby.c weechat-ruby.h
   weechat-ruby-api.c weechat-ruby-api.h
 )
 set_target_properties(ruby PROPERTIES PREFIX "")
 
-if(RUBY_FOUND)
-  # temporary fix: ignore all warnings on unused parameters due to warnings
-  # caused by Ruby headers (with Ruby ≥ 3.1.0)
-  # see: https://github.com/ruby/ruby/pull/7085
-  add_definitions(-Wno-unused-parameter)
-  include_directories(${Ruby_INCLUDE_DIRS})
-  target_link_libraries(ruby ${Ruby_LIBRARIES} weechat_plugins_scripts coverage_config)
-endif(RUBY_FOUND)
+# temporary fix: ignore all warnings on unused parameters due to warnings
+# caused by Ruby headers (with Ruby ≥ 3.1.0)
+# see: https://github.com/ruby/ruby/pull/7085
+add_definitions(-Wno-unused-parameter)
+include_directories(${Ruby_INCLUDE_DIRS})
+target_link_libraries(ruby ${Ruby_LIBRARIES} weechat_plugins_scripts coverage_config)
 
 install(TARGETS ruby LIBRARY DESTINATION "${WEECHAT_LIBDIR}/plugins")
