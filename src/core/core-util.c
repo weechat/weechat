@@ -417,11 +417,12 @@ int
 util_parse_time (const char *datetime, struct timeval *tv)
 {
     char *string, *pos, *pos2, *pos_colon, *pos_hyphen, *pos_dot;
-    char str_usec[16], *error, str_date[128], str_date2[256];
+    char str_usec[16], *error, str_date[128];
     struct tm tm_date, tm_date_gm, tm_date_local, *local_time;
     time_t time_now, time_gm, time_local;
     long long value;
     int rc, length, use_local_time, timezone_offset, offset_factor, hour, min;
+    size_t string_size;
 
     if (!datetime || !datetime[0] || !tv)
         return 0;
@@ -441,21 +442,23 @@ util_parse_time (const char *datetime, struct timeval *tv)
     if (pos_colon && !pos_hyphen)
     {
         /* add current date: "19:04:55" -> "2025-08-30T19:04:55" */
-        string = malloc (strlen (datetime) + 16 + 1);
+        string_size = strlen (datetime) + 16 + 1;
+        string = malloc (string_size);
         if (!string)
             return 0;
         time_now = time (NULL);
         local_time = localtime (&time_now);
         strftime (str_date, sizeof (str_date), "%Y-%m-%dT", local_time);
-        snprintf (string, sizeof (str_date2), "%s%s", str_date, datetime);
+        snprintf (string, string_size, "%s%s", str_date, datetime);
     }
     else if (!pos_colon && pos_hyphen && (!pos_dot || (pos_hyphen < pos_dot)))
     {
         /* add time (midnight): "2025-08-30" -> "2025-08-30T00:00:00" */
-        string = malloc (strlen (datetime) + 16 + 1);
+        string_size = strlen (datetime) + 16 + 1;
+        string = malloc (string_size);
         if (!string)
             return 0;
-        snprintf (string, sizeof (str_date2), "%sT00:00:00", datetime);
+        snprintf (string, string_size, "%sT00:00:00", datetime);
     }
     else
     {
