@@ -1,3 +1,18 @@
+weechat (4.7.2-1) unstable; urgency=medium
+
+  * New upstream release (Closes: #1119787)
+  * Update debian/watch to version 5
+  * Remove useless 'Rules-Requires-Root: no' from debian/control
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Sat, 29 Nov 2025 08:53:10 +0000
+
+weechat (4.6.3-1) unstable; urgency=medium
+
+  * New upstream release
+    - fixes multiple security vulnerabilities (Closes: #1104554)
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Sat, 17 May 2025 05:49:46 +0000
+
 weechat (4.6.1-1) unstable; urgency=medium
 
   * New upstream release (Closes: #1102450, #1098090)
