@@ -13,6 +13,32 @@ When upgrading from version X to Y, please read and apply all instructions from 
 
 For a list of all changes in each version, please see [CHANGELOG.md](CHANGELOG.md).
 
+## Version 4.8.0
+
+### IRC temporary servers
+
+The IRC temporary server feature has been removed.
+
+When upgrading from an old version with `/upgrade`, any temporary server is
+converted to a standard server, and thus is saved in configuration file `irc.conf`.
+
+Servers can easily be removed with `/server del <name>`.
+
+### New time format in log files
+
+The time format used in log files now uses UTC and precision of microsecond
+by default: option `logger.file.time_format` has new default value: `%@%F %T.%fZ`.
+
+Only the default value for the option has changed, so when upgrading from
+an old version, you keep your old format, even if it was the default one used
+in previous versions.
+
+To use the new default value, you can reset the option:
+
+```text
+/reset logger.file.time_format
+```
+
 ## Version 4.7.0
 
 ### API functions utf8_next_char and utf8_char_size
