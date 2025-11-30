@@ -8,6 +8,8 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 ## Version 4.8.0 (under dev)
 
+_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
+
 ### Added
 
 - core: add option weechat.completion.cycle
@@ -66,6 +68,8 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 ## Version 4.7.0 (2025-07-19)
 
+_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
+
 ### Changed
 
 - **breaking:** core: fix buffer overflow in function utf8_next_char and return NULL for empty string
@@ -102,6 +106,8 @@ SPDX-License-Identifier: GPL-3.0-or-later
 - build: fix build on Solaris/illumos ([#2251](https://github.com/weechat/weechat/issues/2251))
 
 ## Version 4.6.3 (2025-05-11)
+
+_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### Fixed
 
@@ -3589,6 +3595,8 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - irc: fix compilation with old GnuTLS versions ([bug #28723](https://savannah.nongnu.org/bugs/?28723))
 
 ## Version 0.3.1.1 (2010-01-31)
+
+_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### Bug fixes
 
