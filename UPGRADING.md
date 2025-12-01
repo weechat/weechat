@@ -24,6 +24,19 @@ converted to a standard server, and thus is saved in configuration file `irc.con
 
 Servers can easily be removed with `/server del <name>`.
 
+### IRC SASL EXTERNAL
+
+When server option `sasl_mechanism` is set to `external`, WeeChat now sends the
+username defined in option `sasl_username` to the IRC server
+(see issue [#2270](https://github.com/weechat/weechat/issues/2270)).
+
+If you use the EXTERNAL mechanism and the username is set, you could either:
+
+- reset `sasl_username` to an empty string, if the username is **not** needed on this server:
+  `/reset irc.server.xxx.sasl_username`
+- set `sasl_username` to your actual username, if the username **is** required on this server:
+  `/set irc.server.xxx.sasl_username "user"`
+
 ### New time format in log files
 
 The time format used in log files now uses UTC and precision of microsecond
