@@ -13,6 +13,13 @@ SPDX-License-Identifier: GPL-3.0-or-later
 - core: fix buffer size in function util_parse_time, causing buffer overflow error in unit tests
 - irc: fix creation of irc.msgbuffer option without a server name
 
+## Version 4.8.1 (2025-12-01)
+
+### Fixed
+
+- core: fix buffer size in function util_parse_time, causing buffer overflow error in unit tests
+- irc: fix creation of irc.msgbuffer option without a server name
+
 ## Version 4.8.0 (2025-11-30)
 
 _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
