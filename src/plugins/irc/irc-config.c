@@ -1577,7 +1577,8 @@ irc_config_msgbuffer_create_option_cb (const void *pointer, void *data,
                                        const char *option_name, const char *value)
 {
     struct t_config_option *ptr_option;
-    char *pos, *name_lower;
+    const char *pos;
+    char *name_lower;
     int rc;
 
     /* make C compiler happy */
@@ -1605,36 +1606,33 @@ irc_config_msgbuffer_create_option_cb (const void *pointer, void *data,
             if (value)
             {
                 pos = strrchr (option_name, '.');
-                if (pos)
+                pos = (pos) ? pos + 1 : option_name;
+                name_lower = weechat_string_tolower (pos);
+                if (name_lower && (strcmp (pos, name_lower) == 0))
                 {
-                    pos++;
-                    name_lower = weechat_string_tolower (pos);
-                    if (name_lower && (strcmp (pos, name_lower) == 0))
-                    {
-                        ptr_option = weechat_config_new_option (
-                            config_file, section,
-                            option_name, "enum",
-                            _("buffer used to display message received from IRC "
-                              "server"),
-                            "weechat|server|current|private", 0, 0, value, value, 0,
-                            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-                        rc = (ptr_option) ?
-                            WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE :
-                            WEECHAT_CONFIG_OPTION_SET_ERROR;
-                    }
-                    else
-                    {
-                        weechat_printf (
-                            NULL,
-                            _("%s%s: error: invalid option \"%s.%s\", the command "
-                              "name or alias \"%s\" must be lower case"),
-                            weechat_prefix ("error"), IRC_PLUGIN_NAME,
-                            "irc.msgbuffer", option_name, pos);
-                        free (name_lower);
-                        return rc;
-                    }
-                    free (name_lower);
+                    ptr_option = weechat_config_new_option (
+                        config_file, section,
+                        option_name, "enum",
+                        _("buffer used to display message received from IRC "
+                          "server"),
+                        "weechat|server|current|private", 0, 0, value, value, 0,
+                        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+                    rc = (ptr_option) ?
+                        WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE :
+                        WEECHAT_CONFIG_OPTION_SET_ERROR;
                 }
+                else
+                {
+                    weechat_printf (
+                        NULL,
+                        _("%s%s: error: invalid option \"%s.%s\", the command "
+                          "name or alias \"%s\" must be lower case"),
+                        weechat_prefix ("error"), IRC_PLUGIN_NAME,
+                        "irc.msgbuffer", option_name, pos);
+                    free (name_lower);
+                    return rc;
+                }
+                free (name_lower);
             }
             else
                 rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
