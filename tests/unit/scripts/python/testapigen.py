@@ -226,7 +226,7 @@ class WeechatRubyScript(WeechatScript):
             if isinstance(node, ast.Call) \
                     and isinstance(node.func, ast.Attribute) \
                     and node.func.attr == 'config_new_option':
-                node.args = node.args[:11] + [ast.List(node.args[11:])]
+                node.args = [*node.args[:11], ast.List(node.args[11:])]
 
 
 class WeechatLuaScript(WeechatScript):

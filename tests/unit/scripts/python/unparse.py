@@ -1385,7 +1385,7 @@ LANGUAGES = get_languages()
 
 def get_parser():
     """Get parser arguments."""
-    all_languages = LANGUAGES + ['all']
+    all_languages = [*LANGUAGES, 'all']
     default_language = LANGUAGES[0]
     parser = argparse.ArgumentParser(
         description=('Unparse Python code from stdin and generate code in '
