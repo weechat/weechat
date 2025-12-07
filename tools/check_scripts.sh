@@ -23,7 +23,7 @@
 #
 # Check shell and Python scripts in WeeChat git repository using these tools:
 #  - shell scripts: shellcheck
-#  - Python scripts: flake8 + pylint + bandit
+#  - Python scripts: ruff
 #
 
 set -o errexit
@@ -45,7 +45,5 @@ done
 
 # check Python scripts
 for script in ${python_scripts}; do
-    flake8 --max-line-length=100 --builtins=_ "${root_dir}/$script"
-    pylint --additional-builtins=_ "${root_dir}/$script"
-    bandit "${root_dir}/$script"
+    ruff check "${root_dir}/$script"
 done

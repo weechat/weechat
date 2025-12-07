@@ -7,6 +7,8 @@
 # DO NOT EDIT BY HAND!
 #
 
+# ruff: noqa: A002,D400,D205,D301,D415,E501,PIE790,PYI021,PYI048,UP006,UP007,UP035
+
 from typing import Dict, Union
 
 WEECHAT_RC_OK: int = 0
@@ -55,8 +57,7 @@ WEECHAT_HOOK_SIGNAL_POINTER: str = "pointer"
 
 
 def register(name: str, author: str, version: str, license: str, description: str, shutdown_function: str, charset: str) -> int:
-    """`register in WeeChat plugin API reference <https://weechat.org/doc/weechat/api/#_register>`_
-    """
+    """`register in WeeChat plugin API reference <https://weechat.org/doc/weechat/api/#_register>`_"""
     ...
 
 
@@ -1981,8 +1982,7 @@ def window_get_integer(window: str, property: str) -> int:
 
 
 def window_get_string(window: str, property: str) -> str:
-    """`window_get_string in WeeChat plugin API reference <https://weechat.org/doc/weechat/api/#_window_get_string>`_
-    """
+    """`window_get_string in WeeChat plugin API reference <https://weechat.org/doc/weechat/api/#_window_get_string>`_"""
     ...
 
 

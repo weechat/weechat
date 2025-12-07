@@ -1,0 +1,15 @@
+# SPDX-FileCopyrightText: 2025 Sébastien Helleu <flashcode@flashtux.org>
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+line-length = 120
+
+[lint]
+select = ["ALL"]
+ignore = [
+    "D203", # incorrect-blank-line-before-class
+    "D213", # multi-line-summary-second-line
+]
+
+[lint.pylint]
+max-args = 10

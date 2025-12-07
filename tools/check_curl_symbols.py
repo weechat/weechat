@@ -18,7 +18,8 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-"""
+"""Check Curl symbols defined in WeeChat source code.
+
 Check if Curl symbols defined in src/core/core-url.c are matching symbols
 defined in Curl (introduced/deprecated/last versions), using this file:
 https://github.com/curl/curl/blob/master/docs/libcurl/symbols-in-versions.
@@ -41,16 +42,15 @@ Or with Curl repository cloned locally:
 This script requires Python 3.7+.
 """
 
-from dataclasses import dataclass
-from pathlib import Path
-from typing import Dict, List, TextIO, Tuple
+# ruff: noqa: COM812,T201
 
+import io
 import re
 import sys
+from dataclasses import dataclass
+from pathlib import Path
 
-SRC_PATH = (
-    Path(__file__).resolve().parent.parent / "src" / "core" / "core-url.c"
-)
+SRC_PATH = Path(__file__).resolve().parent.parent / "src" / "core" / "core-url.c"
 
 # NOTE: keep version in sync with CMakeLists.txt
 CURL_MIN_VERSION_STR = "7.68.0"
@@ -72,13 +72,10 @@ WEECHAT_CURL_MIN_MAX_VERSION_RE = (
     r"(?P<str_max_version>[0-9][0-9.]+) \*/"
 )
 WEECHAT_ENDIF_RE = r"#endif"
-WEECHAT_CURL_CONSTANT_RE = (
-    r"    URL_DEF_CONST\((?P<prefix>[A-Z0-9_]+), (?P<name>[A-Z0-9_]+)\),"
-)
-WEECHAT_CURL_OPTION_RE = (
-    r"    URL_DEF_OPTION\((?P<name>[A-Z0-9_]+), .*\),"
-)
+WEECHAT_CURL_CONSTANT_RE = r"    URL_DEF_CONST\((?P<prefix>[A-Z0-9_]+), (?P<name>[A-Z0-9_]+)\),"
+WEECHAT_CURL_OPTION_RE = r"    URL_DEF_OPTION\((?P<name>[A-Z0-9_]+), .*\),"
 CURL_SYMBOL_RE = r"[A-Z][A-Z0-9_]"
+CURL_VERSION_ITEMS = 3
 
 
 @dataclass
@@ -92,8 +89,7 @@ class WeechatCurlSymbol:
 
 
 def curl_version_to_int(version: str) -> int:
-    """
-    Convert Curl version as string to integer.
+    """Convert Curl version as string to integer.
 
     :param version: version as string (eg: "7.87.0")
     :return: version as integer, eg: 481024 (== 0x075700, 0x57 == 87)
@@ -102,7 +98,7 @@ def curl_version_to_int(version: str) -> int:
         return 0
     result = 0
     items = version.split(".")
-    if len(items) < 3:
+    while len(items) < CURL_VERSION_ITEMS:
         items.append("0")
     factor = 0
     for item in reversed(items):
@@ -112,8 +108,7 @@ def curl_version_to_int(version: str) -> int:
 
 
 def curl_version_to_str(version: int) -> str:
-    """
-    Convert Curl version as integer to string.
+    """Convert Curl version as integer to string.
 
     :param version: version as integer, eg: 481024 (0x075700)
     :return: version as string, eg: "7.87.0"
@@ -127,15 +122,14 @@ def curl_version_to_str(version: int) -> str:
     return result.rstrip(".")
 
 
-def get_curl_symbols(symbols_file: TextIO) -> Dict[str, Tuple[int, int]]:
-    """
-    Parse file docs/libcurl/symbols-in-versions from Curl repository.
+def get_curl_symbols(symbols_file: io.TextIOBase) -> dict[str, tuple[int, int]]:
+    """Parse file docs/libcurl/symbols-in-versions from Curl repository.
 
     :param symbols_file: file with Curl symbols
     :return: Curl symbols as dict: {name: (version_min, version_max)}
     """
     curl_symbol_pattern = re.compile(CURL_SYMBOL_RE)
-    symbols: Dict[str, Tuple[int, int]] = {}
+    symbols: dict[str, tuple[int, int]] = {}
     if symbols_file.isatty():
         return symbols
     for line in symbols_file:
@@ -150,10 +144,8 @@ def get_curl_symbols(symbols_file: TextIO) -> Dict[str, Tuple[int, int]]:
     return symbols
 
 
-def check_req_symbols(symbols: List[WeechatCurlSymbol]) -> int:
-    """
-    Checks the symbols' min/max version, relative to minimum Curl version that
-    we require.
+def check_req_symbols(symbols: list[WeechatCurlSymbol]) -> int:
+    """Check the symbols' min/max version, relative to min Curl version required.
 
     :return: errors
     """
@@ -177,13 +169,11 @@ def check_req_symbols(symbols: List[WeechatCurlSymbol]) -> int:
     return errors
 
 
-def get_weechat_curl_symbols() -> Tuple[List[WeechatCurlSymbol], int]:
-    """
-    Parse Curl symbols declared in src/core/core-url.c.
+def get_weechat_curl_symbols() -> tuple[list[WeechatCurlSymbol], int]:  # noqa: C901,PLR0915
+    """Parse Curl symbols declared in src/core/core-url.c.
 
     :return: tuple (list_symbols, errors)
     """
-    # pylint: disable=too-many-locals,too-many-statements
     min_version_pattern = re.compile(WEECHAT_CURL_MIN_VERSION_RE)
     max_version_pattern = re.compile(WEECHAT_CURL_MAX_VERSION_RE)
     min_max_version_pattern = re.compile(WEECHAT_CURL_MIN_MAX_VERSION_RE)
@@ -192,10 +182,10 @@ def get_weechat_curl_symbols() -> Tuple[List[WeechatCurlSymbol], int]:
     option_pattern = re.compile(WEECHAT_CURL_OPTION_RE)
     v_min: int = 0
     v_max: int = 0
-    symbols: List[WeechatCurlSymbol] = []
+    symbols: list[WeechatCurlSymbol] = []
     errors: int = 0
     line_no: int = 0
-    with open(SRC_PATH, encoding="utf-8") as src_file:
+    with Path(SRC_PATH).open(encoding="utf-8") as src_file:
         for line in src_file:
             line_no += 1
             # min Curl version
@@ -207,9 +197,7 @@ def get_weechat_curl_symbols() -> Tuple[List[WeechatCurlSymbol], int]:
                 comment_min = curl_version_to_int(str_min_vers)
                 if v_min != comment_min:
                     print(
-                        f"{SRC_PATH}:{line_no}: min version not matching "
-                        f"the comment: "
-                        f"{hex_min_vers} != {str_min_vers}"
+                        f"{SRC_PATH}:{line_no}: min version not matching the comment: {hex_min_vers} != {str_min_vers}"
                     )
                     errors += 1
                 continue
@@ -222,9 +210,7 @@ def get_weechat_curl_symbols() -> Tuple[List[WeechatCurlSymbol], int]:
                 comment_max = curl_version_to_int(str_max_vers)
                 if v_max != comment_max:
                     print(
-                        f"{SRC_PATH}:{line_no}: max version not matching "
-                        f"the comment: "
-                        f"{hex_max_vers} != {str_max_vers}"
+                        f"{SRC_PATH}:{line_no}: max version not matching the comment: {hex_max_vers} != {str_max_vers}"
                     )
                     errors += 1
                 continue
@@ -240,16 +226,12 @@ def get_weechat_curl_symbols() -> Tuple[List[WeechatCurlSymbol], int]:
                 comment_max = curl_version_to_int(str_max_vers)
                 if v_min != comment_min:
                     print(
-                        f"{SRC_PATH}:{line_no}: min version not matching "
-                        f"the comment: "
-                        f"{hex_min_vers} != {str_min_vers}"
+                        f"{SRC_PATH}:{line_no}: min version not matching the comment: {hex_min_vers} != {str_min_vers}"
                     )
                     errors += 1
                 if v_max != comment_max:
                     print(
-                        f"{SRC_PATH}:{line_no}: max version not matching "
-                        f"the comment: "
-                        f"{hex_max_vers} != {str_max_vers}"
+                        f"{SRC_PATH}:{line_no}: max version not matching the comment: {hex_max_vers} != {str_max_vers}"
                     )
                     errors += 1
                 continue
@@ -276,11 +258,10 @@ def get_weechat_curl_symbols() -> Tuple[List[WeechatCurlSymbol], int]:
 
 
 def check_symbols(
-    weechat_curl_symbols: List[WeechatCurlSymbol],
-    curl_symbols: Dict[str, Tuple[int, int]],
+    weechat_curl_symbols: list[WeechatCurlSymbol],
+    curl_symbols: dict[str, tuple[int, int]],
 ) -> int:
-    """
-    Check that symbols declared are matching Curl symbols.
+    """Check that symbols declared are matching Curl symbols.
 
     :param weechat_curl_symbols: list of Curl symbols in WeeChat
     :param curl_symbols: list of all Curl symbols
@@ -291,10 +272,7 @@ def check_symbols(
     for symbol in weechat_curl_symbols:
         curl_symbol = curl_symbols.get(symbol.name)
         if not curl_symbol:
-            print(
-                f"{SRC_PATH}:{symbol.line_no}: symbol {symbol.name} "
-                f"not found in Curl"
-            )
+            print(f"{SRC_PATH}:{symbol.line_no}: symbol {symbol.name} not found in Curl")
             errors += 1
             continue
         if curl_symbol[0] > req_curl and symbol.min_curl != curl_symbol[0]:

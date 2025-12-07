@@ -18,30 +18,31 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-"""
-Unparse AST tree to generate scripts in all supported languages
-(Python, Perl, Ruby, ...).
+"""Unparse AST tree to generate script.
+
+All languages supported by WeeChat can be used: Python, Perl, Ruby, etc.
 """
 
-# pylint: disable=too-many-lines,unnecessary-pass,useless-object-inheritance
-# pylint: disable=consider-using-f-string
-# pylint: disable=super-with-arguments
+# ruff: noqa: B905,T201,UP006,UP007,UP035
 
-from __future__ import print_function
 import argparse
 import ast
 import inspect
+import io
 import os
 import select
-from io import StringIO
 import sys
+from typing import Any, List, Union
 
 sys.dont_write_bytecode = True
 
 
-class UnparsePython(object):
-    """
-    Unparse AST to generate Python script code.
+class Unparse:
+    """Unparse AST to generate script code."""
+
+
+class UnparsePython(Unparse):
+    """Unparse AST to generate Python script code.
 
     This class is inspired from _Unparser class in cpython:
     https://github.com/python/cpython/blob/main/Lib/ast.py
@@ -52,65 +53,66 @@ class UnparsePython(object):
 
     __lineno__ = inspect.currentframe().f_lineno
 
-    def __init__(self, output=sys.stdout):
+    def __init__(self, output: io.TextIOBase = sys.stdout) -> None:
+        """Initialize Python parser."""
         self.output = output
-        self.indent_string = ' ' * 4
+        self.indent_string = " " * 4
         self._indent_level = 0
         self._prefix = []  # not used in Python, only in other languages
         self.binop = {
-            'Add': '+',
-            'Sub': '-',
-            'Mult': '*',
-            'MatMult': '@',
-            'Div': '/',
-            'Mod': '%',
-            'LShift': '<<',
-            'RShift': '>>',
-            'BitOr': '|',
-            'BitXor': '^',
-            'BitAnd': '&',
-            'FloorDiv': '//',
-            'Pow': '**',
+            "Add": "+",
+            "Sub": "-",
+            "Mult": "*",
+            "MatMult": "@",
+            "Div": "/",
+            "Mod": "%",
+            "LShift": "<<",
+            "RShift": ">>",
+            "BitOr": "|",
+            "BitXor": "^",
+            "BitAnd": "&",
+            "FloorDiv": "//",
+            "Pow": "**",
         }
         self.unaryop = {
-            'Invert': '~',
-            'Not': 'not ',
-            'UAdd': '+',
-            'USub': '-',
+            "Invert": "~",
+            "Not": "not ",
+            "UAdd": "+",
+            "USub": "-",
         }
         self.cmpop = {
-            'Eq': '==',
-            'NotEq': '!=',
-            'Lt': '<',
-            'LtE': '<=',
-            'Gt': '>',
-            'GtE': '>=',
-            'Is': 'is',
-            'IsNot': 'is not',
-            'In': 'in',
-            'NotIn': 'not in',
+            "Eq": "==",
+            "NotEq": "!=",
+            "Lt": "<",
+            "LtE": "<=",
+            "Gt": ">",
+            "GtE": ">=",
+            "Is": "is",
+            "IsNot": "is not",
+            "In": "in",
+            "NotIn": "not in",
         }
 
-    def fill(self, string=''):
+    def fill(self, string: str = "") -> None:
         """Add a new line and an indented string."""
-        self.add('\n%s%s' % (self.indent_string * self._indent_level, string))
+        self.add(f"\n{self.indent_string * self._indent_level}{string}")
 
-    def indent(self):
+    def indent(self) -> None:
         """Indent code."""
         self._indent_level += 1
 
-    def unindent(self):
+    def unindent(self) -> None:
         """Unindent code."""
         self._indent_level -= 1
 
-    def prefix(self, prefix):
+    def prefix(self, prefix: Union[str, None]) -> None:
         """Add or remove a prefix from list."""
         if prefix:
             self._prefix.append(prefix)
         else:
             self._prefix.pop()
 
-    def add(self, *args):
+    def add(self, *args) -> None:  # noqa: ANN002
         """Add string/node(s) to the output file."""
         for arg in args:
             if callable(arg):
@@ -121,9 +123,7 @@ class UnparsePython(object):
                 for item in arg:
                     self.add(item)
             elif isinstance(arg, ast.AST):
-                method = getattr(
-                    self, '_ast_%s' % arg.__class__.__name__.lower(),
-                    None)
+                method = getattr(self, f"_ast_{arg.__class__.__name__.lower()}", None)
                 if method is None:
                     raise NotImplementedError(arg)
                 method(arg)
@@ -131,7 +131,7 @@ class UnparsePython(object):
                 self.output.write(arg)
 
     @staticmethod
-    def make_list(values, sep=', '):
+    def make_list(values: List[Any], sep: str = ", ") -> list:
         """Add multiple values using a custom method and separator."""
         result = []
         for value in values:
@@ -141,79 +141,78 @@ class UnparsePython(object):
         return result
 
     @staticmethod
-    def is_bool(node):
+    def is_bool(node: ast.AST) -> bool:
         """Check if the node is a boolean."""
-        return isinstance(node, ast.Name) and node.id in ('False', 'True')
+        return isinstance(node, ast.Name) and node.id in ("False", "True")
 
     @staticmethod
-    def is_number(node):
+    def is_number(node: ast.AST) -> bool:
         """Check if the node is a number."""
-        return ((isinstance(node, ast.Constant) and isinstance(node.value, int)) or
-                (isinstance(node, ast.UnaryOp) and
-                 isinstance(node.op, (ast.UAdd, ast.USub))))
+        return (isinstance(node, ast.Constant) and isinstance(node.value, int)) or (
+            isinstance(node, ast.UnaryOp) and isinstance(node.op, (ast.UAdd, ast.USub))
+        )
 
-    def _ast_alias(self, node):
+    def _ast_alias(self, node: ast.AST) -> None:
         """Add an AST alias in output."""
         # ignore alias
-        pass
+        pass  # noqa: PIE790
 
-    def _ast_arg(self, node):
+    def _ast_arg(self, node: ast.AST) -> None:
         """Add an AST arg in output."""
-        self.add('%s%s' % (self._prefix[-1] if self._prefix else '',
-                           node.arg))
+        prefix = self._prefix[-1] if self._prefix else ""
+        self.add(f"{prefix}{node.arg}")
 
-    def _ast_assign(self, node):
+    def _ast_assign(self, node: ast.Assign) -> None:
         """Add an AST Assign in output."""
         self.add(
             self.fill,
-            [[target, ' = '] for target in node.targets],
+            [[target, " = "] for target in node.targets],
             node.value,
         )
 
-    def _ast_attribute(self, node):
+    def _ast_attribute(self, node: ast.Attribute) -> None:
         """Add an AST Attribute in output."""
-        self.add(node.value, '.', node.attr)
+        self.add(node.value, ".", node.attr)
 
-    def _ast_binop(self, node):
+    def _ast_binop(self, node: ast.BinOp) -> None:
         """Add an AST BinOp in output."""
         self.add(
             node.left,
-            ' %s ' % self.binop[node.op.__class__.__name__],
+            f" {self.binop[node.op.__class__.__name__]} ",
             node.right,
         )
 
-    def _ast_call(self, node):
+    def _ast_call(self, node: ast.Call) -> None:
         """Add an AST Call in output."""
         self.add(
             node.func,
-            '(',
+            "(",
             self.make_list(node.args),
-            ')',
+            ")",
         )
 
-    def _ast_compare(self, node):
+    def _ast_compare(self, node: ast.Compare) -> None:
         """Add an AST Compare in output."""
         self.add(node.left)
         for operator, comparator in zip(node.ops, node.comparators):
             self.add(
-                ' %s ' % self.cmpop[operator.__class__.__name__],
+                f" {self.cmpop[operator.__class__.__name__]} ",
                 comparator,
             )
 
-    def _ast_constant(self, node):
+    def _ast_constant(self, node: ast.Constant) -> None:
         """Add an AST Constant in output."""
         self.add(repr(node.value))
 
-    def _ast_dict(self, node):
+    def _ast_dict(self, node: ast.Dict) -> None:
         """Add an AST Dict in output."""
         self.add(
-            '{',
-            self.make_list([[key, ': ', value]
-                            for key, value in zip(node.keys, node.values)]),
-            '}',
+            "{",
+            self.make_list([[key, ": ", value] for key, value in zip(node.keys, node.values)]),
+            "}",
         )
 
-    def _ast_expr(self, node):
+    def _ast_expr(self, node: ast.Expr) -> None:
         """Add an AST Expr in output."""
         if not isinstance(node.value, ast.Constant):  # ignore docstrings
             self.add(
@@ -221,27 +220,27 @@ class UnparsePython(object):
                 node.value,
             )
 
-    def _ast_functiondef(self, node):
+    def _ast_functiondef(self, node: ast.FunctionDef) -> None:
         """Add an AST FunctionDef in output."""
         self.add(
             self.fill,
             self.fill,
             self.fill if self._indent_level == 0 else None,
-            'def %s(' % node.name,
+            f"def {node.name}(",
             self.make_list(node.args.args),
-            '):',
+            "):",
             self.indent,
             node.body,
             self.unindent,
         )
 
-    def _ast_if(self, node):
+    def _ast_if(self, node: ast.If) -> None:
         """Add an AST If in output."""
         self.add(
             self.fill,
-            'if ',
+            "if ",
             node.test,
-            ':',
+            ":",
             self.indent,
             node.body,
             self.unindent,
@@ -249,76 +248,76 @@ class UnparsePython(object):
         if node.orelse:
             self.add(
                 self.fill,
-                'else:',
+                "else:",
                 self.indent,
                 node.orelse,
                 self.unindent,
             )
 
-    def _ast_index(self, node):
+    def _ast_index(self, node: ast.Index) -> None:
         """Add an AST Subscript in output."""
         # note: deprecated since Python 3.9
         self.add(node.value)
 
-    def _ast_import(self, node):
+    def _ast_import(self, node: ast.AST) -> None:
         """Add an AST Import in output."""
         # ignore import
-        pass
+        pass  # noqa: PIE790
 
-    def _ast_list(self, node):
+    def _ast_list(self, node: ast.AST) -> None:
         """Add an AST List in output."""
         self.add(
-            '[',
+            "[",
             self.make_list(node.elts),
-            ']',
+            "]",
         )
 
-    def _ast_module(self, node):
+    def _ast_module(self, node: ast.Module) -> None:
         """Add an AST Module in output."""
         self.add(node.body)
 
-    def _ast_name(self, node):
+    def _ast_name(self, node: ast.Name) -> None:
         """Add an AST Name in output."""
-        self.add('%s%s' % (self._prefix[-1] if self._prefix else '',
-                           node.id))
+        prefix = self._prefix[-1] if self._prefix else ""
+        self.add(f"{prefix}{node.id}")
 
-    def _ast_num(self, node):
+    def _ast_num(self, node: ast.Num) -> None:
         """Add an AST Num in output."""
         self.add(repr(node.n))
 
-    def _ast_pass(self, node):  # pylint: disable=unused-argument
+    def _ast_pass(self, node: ast.Pass) -> None:  # noqa: ARG002
         """Add an AST Pass in output."""
-        self.fill('pass')
+        self.fill("pass")
 
-    def _ast_return(self, node):
+    def _ast_return(self, node: ast.Return) -> None:
         """Add an AST Return in output."""
-        self.fill('return')
+        self.fill("return")
         if node.value:
-            self.add(' ', node.value)
+            self.add(" ", node.value)
 
-    def _ast_str(self, node):
+    def _ast_str(self, node: ast.Str) -> None:
         """Add an AST Str in output."""
         self._ast_constant(node)
 
-    def _ast_subscript(self, node):
+    def _ast_subscript(self, node: ast.Subscript) -> None:
         """Add an AST Subscript in output."""
         self.add(
             node.value,
-            '[',
+            "[",
             node.slice,
-            ']',
+            "]",
         )
 
-    def _ast_tuple(self, node):
+    def _ast_tuple(self, node: ast.Tuple) -> None:
         """Add an AST Tuple in output."""
         self.add(
-            '(',
+            "(",
             self.make_list(node.elts),
-            ',' if len(node.elts) == 1 else None,
-            ')',
+            "," if len(node.elts) == 1 else None,
+            ")",
         )
 
-    def _ast_unaryop(self, node):
+    def _ast_unaryop(self, node: ast.UnaryOp) -> None:
         """Add an AST UnaryOp in output."""
         self.add(
             self.unaryop[node.op.__class__.__name__],
@@ -327,8 +326,7 @@ class UnparsePython(object):
 
 
 class UnparsePerl(UnparsePython):
-    """
-    Unparse AST to generate Perl script code.
+    """Unparse AST to generate Perl script code.
 
     Note: only part of AST types are supported (just the types used by
     the script to test WeeChat scripting API).
@@ -336,198 +334,196 @@ class UnparsePerl(UnparsePython):
 
     __lineno__ = inspect.currentframe().f_lineno
 
-    def _ast_assign(self, node):
+    def _ast_assign(self, node: ast.Assign) -> None:
         """Add an AST Assign in output."""
         self.add(
             self.fill,
-            (self.prefix, '$'),
-            [[target, ' = '] for target in node.targets],
+            (self.prefix, "$"),
+            [[target, " = "] for target in node.targets],
             (self.prefix, None),
             node.value,
-            ';',
+            ";",
         )
 
-    def _ast_attribute(self, node):
+    def _ast_attribute(self, node: ast.Attribute) -> None:
         """Add an AST Attribute in output."""
         saved_prefix = self._prefix
         self._prefix = []
-        self.add(node.value, '::', node.attr)
+        self.add(node.value, "::", node.attr)
         self._prefix = saved_prefix
 
-    def _ast_binop(self, node):
+    def _ast_binop(self, node: ast.BinOp) -> None:
         """Add an AST BinOp in output."""
-        if isinstance(node.op, ast.Add) and \
-                (not self.is_number(node.left) or
-                 not self.is_number(node.right)):
-            str_op = '.'
+        if isinstance(node.op, ast.Add) and (not self.is_number(node.left) or not self.is_number(node.right)):
+            str_op = "."
         else:
             str_op = self.binop[node.op.__class__.__name__]
         self.add(
-            (self.prefix, '$'),
+            (self.prefix, "$"),
             node.left,
-            ' %s ' % str_op,
+            f" {str_op} ",
             node.right,
             (self.prefix, None),
         )
 
-    def _ast_call(self, node):
+    def _ast_call(self, node: ast.Call) -> None:
         """Add an AST Call in output."""
         self.add(
             node.func,
-            '(',
-            (self.prefix, '$'),
+            "(",
+            (self.prefix, "$"),
             self.make_list(node.args),
             (self.prefix, None),
-            ')',
+            ")",
         )
 
-    def _ast_compare(self, node):
+    def _ast_compare(self, node: ast.Compare) -> None:
         """Add an AST Compare in output."""
         self.add(node.left)
         for operator, comparator in zip(node.ops, node.comparators):
-            if isinstance(operator, (ast.Eq, ast.NotEq)) and \
-                    not self.is_number(node.left) and \
-                    not self.is_bool(node.left) and \
-                    not self.is_number(comparator) and \
-                    not self.is_bool(comparator):
+            if (
+                isinstance(operator, (ast.Eq, ast.NotEq))
+                and not self.is_number(node.left)
+                and not self.is_bool(node.left)
+                and not self.is_number(comparator)
+                and not self.is_bool(comparator)
+            ):
                 custom_cmpop = {
-                    'Eq': 'eq',
-                    'NotEq': 'ne',
+                    "Eq": "eq",
+                    "NotEq": "ne",
                 }
             else:
                 custom_cmpop = self.cmpop
             self.add(
-                ' %s ' % custom_cmpop[operator.__class__.__name__],
+                f" {custom_cmpop[operator.__class__.__name__]} ",
                 comparator,
             )
 
-    def _ast_constant(self, node):
+    def _ast_constant(self, node: ast.Constant) -> None:
         """Add an AST Constant in output."""
         if isinstance(node.value, str):
-            self.add('"%s"' % node.value.replace('$', '\\$').replace('@', '\\@'))
+            str_node = node.value.replace("$", "\\$").replace("@", "\\@")
+            self.add(f'"{str_node}"')
         elif node.value is None:
-            self.add('undef')
+            self.add("undef")
         else:
             self.add(repr(node.value))
 
-    def _ast_dict(self, node):
+    def _ast_dict(self, node: ast.Dict) -> None:
         """Add an AST Dict in output."""
         self.add(
-            '{',
-            self.make_list([[key, ' => ', value]
-                            for key, value in zip(node.keys, node.values)]),
-            '}',
+            "{",
+            self.make_list([[key, " => ", value] for key, value in zip(node.keys, node.values)]),
+            "}",
         )
 
-    def _ast_expr(self, node):
+    def _ast_expr(self, node: ast.Expr) -> None:
         """Add an AST Expr in output."""
         if not isinstance(node.value, ast.Constant):  # ignore docstrings
             self.add(
                 self.fill,
                 node.value,
-                ';',
+                ";",
             )
 
-    def _ast_functiondef(self, node):
+    def _ast_functiondef(self, node: ast.FunctionDef) -> None:
         """Add an AST FunctionDef in output."""
         self.add(
             self.fill,
             self.fill,
-            'sub %s' % node.name,
+            f"sub {node.name}",
             self.fill,
-            '{',
+            "{",
             self.indent,
         )
         if node.args.args:
             self.add(
                 self.fill,
-                'my (',
-                (self.prefix, '$'),
+                "my (",
+                (self.prefix, "$"),
                 self.make_list(node.args.args),
                 (self.prefix, None),
-                ') = @_;',
+                ") = @_;",
             )
         self.add(
             node.body,
             self.unindent,
             self.fill,
-            '}',
+            "}",
         )
 
-    def _ast_if(self, node):
+    def _ast_if(self, node: ast.If) -> None:
         """Add an AST If in output."""
         self.add(
             self.fill,
-            'if (',
-            (self.prefix, '$'),
+            "if (",
+            (self.prefix, "$"),
             node.test,
             (self.prefix, None),
-            ')',
+            ")",
             self.fill,
-            '{',
+            "{",
             self.indent,
             node.body,
             self.unindent,
             self.fill,
-            '}',
+            "}",
         )
         if node.orelse:
             self.add(
                 self.fill,
-                'else',
+                "else",
                 self.fill,
-                '{',
+                "{",
                 self.indent,
                 node.orelse,
                 self.unindent,
                 self.fill,
-                '}',
+                "}",
             )
 
-    def _ast_list(self, node):
+    def _ast_list(self, node: ast.List) -> None:
         """Add an AST List in output."""
         self.add(
-            '(',
+            "(",
             self.make_list(node.elts),
-            ')',
+            ")",
         )
 
-    def _ast_pass(self, node):
+    def _ast_pass(self, node: ast.Pass) -> None:
         """Add an AST Pass in output."""
-        pass
+        pass  # noqa: PIE790
 
-    def _ast_return(self, node):
+    def _ast_return(self, node: ast.Return) -> None:
         """Add an AST Return in output."""
-        self.fill('return')
+        self.fill("return")
         if node.value:
             self.add(
-                ' ',
-                (self.prefix,
-                 '%' if isinstance(node.value, ast.Dict) else '$'),
+                " ",
+                (self.prefix, "%" if isinstance(node.value, ast.Dict) else "$"),
                 node.value,
                 (self.prefix, None),
-                ';',
+                ";",
             )
 
-    def _ast_str(self, node):
+    def _ast_str(self, node: ast.Str) -> None:
         """Add an AST Str in output."""
         self._ast_constant(node)
 
-    def _ast_subscript(self, node):
+    def _ast_subscript(self, node: ast.Subscript) -> None:
         """Add an AST Subscript in output."""
         self.add(
-            (self.prefix, '$'),
+            (self.prefix, "$"),
             node.value,
             (self.prefix, None),
-            '->{',
+            "->{",
             node.slice,
-            '}',
+            "}",
         )
 
 
 class UnparseRuby(UnparsePython):
-    """
-    Unparse AST to generate Ruby script code.
+    """Unparse AST to generate Ruby script code.
 
     Note: only part of AST types are supported (just the types used by
     the script to test WeeChat scripting API).
@@ -535,58 +531,58 @@ class UnparseRuby(UnparsePython):
 
     __lineno__ = inspect.currentframe().f_lineno
 
-    def _ast_attribute(self, node):
+    def _ast_attribute(self, node: ast.Attribute) -> None:
         """Add an AST Attribute in output."""
         self.add(
             node.value,
-            '::' if node.attr.startswith('WEECHAT_') else '.',
+            "::" if node.attr.startswith("WEECHAT_") else ".",
             node.attr,
         )
 
-    def _ast_constant(self, node):
+    def _ast_constant(self, node: ast.Constant) -> None:
         """Add an AST Constant in output."""
         if isinstance(node.value, str):
-            self.add('"%s"' % node.value.replace('#{', '\\#{'))
+            str_node = node.value.replace("#{", "\\#{")
+            self.add(f'"{str_node}"')
         elif node.value is None:
-            self.add('nil')
+            self.add("nil")
         else:
             self.add(repr(node.value))
 
-    def _ast_dict(self, node):
+    def _ast_dict(self, node: ast.Dict) -> None:
         """Add an AST Dict in output."""
         self.add(
-            'Hash[',
-            self.make_list([[key, ' => ', value]
-                            for key, value in zip(node.keys, node.values)]),
-            ']',
+            "Hash[",
+            self.make_list([[key, " => ", value] for key, value in zip(node.keys, node.values)]),
+            "]",
         )
 
-    def _ast_functiondef(self, node):
+    def _ast_functiondef(self, node: ast.FunctionDef) -> None:
         """Add an AST FunctionDef in output."""
         self.add(
             self.fill,
             self.fill,
-            'def %s' % node.name,
+            f"def {node.name}",
         )
         if node.args.args:
             self.add(
-                '(',
+                "(",
                 self.make_list(node.args.args),
-                ')',
+                ")",
             )
         self.add(
             self.indent,
             node.body,
             self.unindent,
             self.fill,
-            'end',
+            "end",
         )
 
-    def _ast_if(self, node):
+    def _ast_if(self, node: ast.If) -> None:
         """Add an AST If in output."""
         self.add(
             self.fill,
-            'if ',
+            "if ",
             node.test,
             self.indent,
             node.body,
@@ -595,34 +591,33 @@ class UnparseRuby(UnparsePython):
         if node.orelse:
             self.add(
                 self.fill,
-                'else',
+                "else",
                 self.indent,
                 node.orelse,
                 self.unindent,
                 self.fill,
-                'end',
+                "end",
             )
 
-    def _ast_list(self, node):
+    def _ast_list(self, node: ast.List) -> None:
         """Add an AST List in output."""
         self.add(
-            'Array[',
+            "Array[",
             self.make_list(node.elts),
-            ']',
+            "]",
         )
 
-    def _ast_pass(self, node):
+    def _ast_pass(self, node: ast.Pass) -> None:
         """Add an AST Pass in output."""
-        pass
+        pass  # noqa: PIE790
 
-    def _ast_str(self, node):
+    def _ast_str(self, node: ast.Str) -> None:
         """Add an AST Str in output."""
         self._ast_constant(node)
 
 
 class UnparseLua(UnparsePython):
-    """
-    Unparse AST to generate Lua script code.
+    """Unparse AST to generate Lua script code.
 
     Note: only part of AST types are supported (just the types used by
     the script to test WeeChat scripting API).
@@ -630,73 +625,70 @@ class UnparseLua(UnparsePython):
 
     __lineno__ = inspect.currentframe().f_lineno
 
-    def __init__(self, *args, **kwargs):
-        super(UnparseLua, self).__init__(*args, **kwargs)
+    def __init__(self, *args, **kwargs) -> None:  # noqa: ANN002,ANN003
+        """Initialize Lua parser."""
+        super().__init__(*args, **kwargs)
         self.cmpop = {
-            'Eq': '==',
-            'NotEq': '~=',
-            'Lt': '<',
-            'LtE': '<=',
-            'Gt': '>',
-            'GtE': '>=',
+            "Eq": "==",
+            "NotEq": "~=",
+            "Lt": "<",
+            "LtE": "<=",
+            "Gt": ">",
+            "GtE": ">=",
         }
 
-    def _ast_binop(self, node):
+    def _ast_binop(self, node: ast.BinOp) -> None:
         """Add an AST BinOp in output."""
-        if isinstance(node.op, ast.Add) and \
-                (not self.is_number(node.left) or
-                 not self.is_number(node.right)):
-            str_op = '..'
+        if isinstance(node.op, ast.Add) and (not self.is_number(node.left) or not self.is_number(node.right)):
+            str_op = ".."
         else:
             str_op = self.binop[node.op.__class__.__name__]
         self.add(
             node.left,
-            ' %s ' % str_op,
+            f" {str_op} ",
             node.right,
         )
 
-    def _ast_constant(self, node):
+    def _ast_constant(self, node: ast.Constant) -> None:
         """Add an AST Constant in output."""
         if node.value is None:
-            self.add('nil')
+            self.add("nil")
         else:
             self.add(repr(node.value))
 
-    def _ast_dict(self, node):
+    def _ast_dict(self, node: ast.Dict) -> None:
         """Add an AST Dict in output."""
         self.add(
-            '{',
-            self.make_list([
-                ['[', key, ']', '=', value]
-                for key, value in zip(node.keys, node.values)]),
-            '}',
+            "{",
+            self.make_list([["[", key, "]", "=", value] for key, value in zip(node.keys, node.values)]),
+            "}",
         )
 
-    def _ast_functiondef(self, node):
+    def _ast_functiondef(self, node: ast.FunctionDef) -> None:
         """Add an AST FunctionDef in output."""
         self.add(
             self.fill,
             self.fill,
-            'function %s' % node.name,
+            f"function {node.name}",
         )
         self.add(
-            '(',
+            "(",
             self.make_list(node.args.args),
-            ')',
+            ")",
             self.indent,
             node.body,
             self.unindent,
             self.fill,
-            'end',
+            "end",
         )
 
-    def _ast_if(self, node):
+    def _ast_if(self, node: ast.If) -> None:
         """Add an AST If in output."""
         self.add(
             self.fill,
-            'if ',
+            "if ",
             node.test,
-            ' then',
+            " then",
             self.indent,
             node.body,
             self.unindent,
@@ -704,30 +696,29 @@ class UnparseLua(UnparsePython):
         if node.orelse:
             self.add(
                 self.fill,
-                'else',
+                "else",
                 self.indent,
                 node.orelse,
                 self.unindent,
                 self.fill,
-                'end',
+                "end",
             )
 
-    def _ast_list(self, node):
+    def _ast_list(self, node: ast.List) -> None:
         """Add an AST List in output."""
         self.add(
-            '{',
+            "{",
             self.make_list(node.elts),
-            '}',
+            "}",
         )
 
-    def _ast_pass(self, node):
+    def _ast_pass(self, node: ast.Pass) -> None:
         """Add an AST Pass in output."""
-        pass
+        pass  # noqa: PIE790
 
 
 class UnparseTcl(UnparsePython):
-    """
-    Unparse AST to generate Tcl script code.
+    """Unparse AST to generate Tcl script code.
 
     Note: only part of AST types are supported (just the types used by
     the script to test WeeChat scripting API).
@@ -735,189 +726,189 @@ class UnparseTcl(UnparsePython):
 
     __lineno__ = inspect.currentframe().f_lineno
 
-    def __init__(self, *args, **kwargs):
-        super(UnparseTcl, self).__init__(*args, **kwargs)
+    def __init__(self, *args, **kwargs) -> None:  # noqa: ANN002,ANN003
+        """Initialize Tcl parser."""
+        super().__init__(*args, **kwargs)
         self._call = 0
 
-    def _ast_assign(self, node):
+    def _ast_assign(self, node: ast.Assign) -> None:
         """Add an AST Assign in output."""
         exclude_types = (ast.Dict, ast.List, ast.Constant, ast.Subscript)
         self.add(
             self.fill,
-            'set ',
+            "set ",
             node.targets[0],
-            ' ',
-            '[' if not isinstance(node.value, exclude_types) else '',
+            " ",
+            "[" if not isinstance(node.value, exclude_types) else "",
             node.value,
-            ']' if not isinstance(node.value, exclude_types) else '',
+            "]" if not isinstance(node.value, exclude_types) else "",
         )
 
-    def _ast_attribute(self, node):
+    def _ast_attribute(self, node: ast.Attribute) -> None:
         """Add an AST Attribute in output."""
         saved_prefix = self._prefix
         self._prefix = []
-        if node.attr.startswith('WEECHAT_'):
-            self.add('$::')
-        self.add(node.value, '::', node.attr)
+        if node.attr.startswith("WEECHAT_"):
+            self.add("$::")
+        self.add(node.value, "::", node.attr)
         self._prefix = saved_prefix
 
-    def _ast_binop(self, node):
+    def _ast_binop(self, node: ast.BinOp) -> None:
         """Add an AST BinOp in output."""
         self.add(
-            '[join [list ',
-            (self.prefix, '$'),
+            "[join [list ",
+            (self.prefix, "$"),
             node.left,
-            ' ',
+            " ",
             node.right,
             (self.prefix, None),
             '] ""]',
         )
 
-    def _ast_call(self, node):
+    def _ast_call(self, node: ast.Call) -> None:
         """Add an AST Call in output."""
         if self._call:
-            self.add('[')
+            self.add("[")
         self._call += 1
         self.add(
             node.func,
-            ' ' if node.args else None,
-            (self.prefix, '$'),
-            self.make_list(node.args, sep=' '),
+            " " if node.args else None,
+            (self.prefix, "$"),
+            self.make_list(node.args, sep=" "),
             (self.prefix, None),
         )
         self._call -= 1
         if self._call:
-            self.add(']')
+            self.add("]")
 
-    def _ast_compare(self, node):
+    def _ast_compare(self, node: ast.Compare) -> None:
         """Add an AST Compare in output."""
-        self.prefix('$')
+        self.prefix("$")
         if self._call:
-            self.add('[expr {')
+            self.add("[expr {")
         self.add(node.left)
         for operator, comparator in zip(node.ops, node.comparators):
-            if isinstance(operator, (ast.Eq, ast.NotEq)) and \
-                    not self.is_number(node.left) and \
-                    not self.is_bool(node.left) and \
-                    not self.is_number(comparator) and \
-                    not self.is_bool(comparator):
+            if (
+                isinstance(operator, (ast.Eq, ast.NotEq))
+                and not self.is_number(node.left)
+                and not self.is_bool(node.left)
+                and not self.is_number(comparator)
+                and not self.is_bool(comparator)
+            ):
                 custom_cmpop = {
-                    'Eq': 'eq',
-                    'NotEq': 'ne',
+                    "Eq": "eq",
+                    "NotEq": "ne",
                 }
             else:
                 custom_cmpop = self.cmpop
             self.add(
-                ' %s ' % custom_cmpop[operator.__class__.__name__],
+                f" {custom_cmpop[operator.__class__.__name__]} ",
                 comparator,
             )
         if self._call:
-            self.add('}]')
+            self.add("}]")
         self.prefix(None)
 
-    def _ast_constant(self, node):
+    def _ast_constant(self, node: ast.Constant) -> None:
         """Add an AST Constant in output."""
         if isinstance(node.value, str):
-            self.add('"%s"' % node.value.replace('$', '\\$'))
+            str_node = node.value.replace("$", "\\$")
+            self.add(f'"{str_node}"')
         elif node.value is None:
-            self.add('$::weechat::WEECHAT_NULL')
+            self.add("$::weechat::WEECHAT_NULL")
         else:
             self.add(repr(node.value))
 
-    def _ast_dict(self, node):
+    def _ast_dict(self, node: ast.Dict) -> None:
         """Add an AST Dict in output."""
         self.add(
-            '[dict create ',
-            self.make_list([[key, ' ', value]
-                            for key, value in zip(node.keys, node.values)],
-                           sep=' '),
-            ']',
+            "[dict create ",
+            self.make_list([[key, " ", value] for key, value in zip(node.keys, node.values)], sep=" "),
+            "]",
         )
 
-    def _ast_functiondef(self, node):
+    def _ast_functiondef(self, node: ast.FunctionDef) -> None:
         """Add an AST FunctionDef in output."""
         self.add(
             self.fill,
             self.fill,
-            'proc %s {' % node.name,
-            (self.make_list(node.args.args, sep=' ')
-             if node.args.args else None),
-            '} {',
+            f"proc {node.name} {{",
+            (self.make_list(node.args.args, sep=" ") if node.args.args else None),
+            "} {",
             self.indent,
             node.body,
             self.unindent,
             self.fill,
-            '}',
+            "}",
         )
 
-    def _ast_if(self, node):
+    def _ast_if(self, node: ast.If) -> None:
         """Add an AST If in output."""
         self.add(
             self.fill,
-            'if {',
-            (self.prefix, '$'),
+            "if {",
+            (self.prefix, "$"),
             node.test,
             (self.prefix, None),
-            '} {',
+            "} {",
             self.indent,
             node.body,
             self.unindent,
             self.fill,
-            '}',
+            "}",
         )
         if node.orelse:
             self.add(
-                ' else {',
+                " else {",
                 self.indent,
                 node.orelse,
                 self.unindent,
                 self.fill,
-                '}',
+                "}",
             )
 
-    def _ast_list(self, node):
+    def _ast_list(self, node: ast.List) -> None:
         """Add an AST List in output."""
         self.add(
-            '[',
-            self.make_list(node.elts, sep=' '),
-            ']',
+            "[",
+            self.make_list(node.elts, sep=" "),
+            "]",
         )
 
-    def _ast_pass(self, node):
+    def _ast_pass(self, node: ast.Pass) -> None:
         """Add an AST Pass in output."""
-        pass
+        pass  # noqa: PIE790
 
-    def _ast_return(self, node):
+    def _ast_return(self, node: ast.Return) -> None:
         """Add an AST Return in output."""
-        self.fill('return')
+        self.fill("return")
         if node.value:
             self.add(
-                ' ',
-                (self.prefix, '$'),
+                " ",
+                (self.prefix, "$"),
                 node.value,
                 (self.prefix, None),
             )
 
-    def _ast_str(self, node):
+    def _ast_str(self, node: ast.Str) -> None:
         """Add an AST Str in output."""
         self._ast_constant(node)
 
-    def _ast_subscript(self, node):
+    def _ast_subscript(self, node: ast.Subscript) -> None:
         """Add an AST Subscript in output."""
         self.add(
-            '[dict get ',
-            (self.prefix, '$'),
+            "[dict get ",
+            (self.prefix, "$"),
             node.value,
             (self.prefix, None),
-            ' ',
+            " ",
             node.slice,
-            ']',
+            "]",
         )
 
 
 class UnparseGuile(UnparsePython):
-    """
-    Unparse AST to generate Guile script code.
+    """Unparse AST to generate Guile script code.
 
     Note: only part of AST types are supported (just the types used by
     the script to test WeeChat scripting API).
@@ -925,118 +916,120 @@ class UnparseGuile(UnparsePython):
 
     __lineno__ = inspect.currentframe().f_lineno
 
-    def __init__(self, *args, **kwargs):
-        super(UnparseGuile, self).__init__(*args, **kwargs)
+    def __init__(self, *args, **kwargs) -> None:  # noqa: ANN002,ANN003
+        """Initialize Guile parser."""
+        super().__init__(*args, **kwargs)
         self.cmpop = {
-            'Eq': '=',
-            'NotEq': '<>',
-            'Lt': '<',
-            'LtE': '<=',
-            'Gt': '>',
-            'GtE': '>=',
+            "Eq": "=",
+            "NotEq": "<>",
+            "Lt": "<",
+            "LtE": "<=",
+            "Gt": ">",
+            "GtE": ">=",
         }
         self._call = 0
         self._let = 0
 
-    def _ast_assign(self, node):
+    def _ast_assign(self, node: ast.Assign) -> None:
         """Add an AST Assign in output."""
         self.add(
             self.fill,
-            '(let ((',
+            "(let ((",
             node.targets[0],
-            ' ',
+            " ",
             node.value,
-            '))',
+            "))",
             self.indent,
             self.fill,
-            '(begin',
+            "(begin",
             self.indent,
         )
         self._let += 1
 
-    def _ast_attribute(self, node):
+    def _ast_attribute(self, node: ast.Attribute) -> None:
         """Add an AST Attribute in output."""
-        self.add(node.value, ':', node.attr)
+        self.add(node.value, ":", node.attr)
 
-    def _ast_binop(self, node):
+    def _ast_binop(self, node: ast.BinOp) -> None:
         """Add an AST BinOp in output."""
-        if isinstance(node.op, ast.Add) and \
-                (isinstance(node.left, (ast.Name, ast.Constant)) or
-                 isinstance(node.right, (ast.Name, ast.Constant))):
+        if isinstance(node.op, ast.Add) and (
+            isinstance(node.left, (ast.Name, ast.Constant)) or isinstance(node.right, (ast.Name, ast.Constant))
+        ):
             self.add(
-                '(string-append ',
+                "(string-append ",
                 node.left,
-                ' ',
+                " ",
                 node.right,
-                ')',
+                ")",
             )
         else:
             self.add(
                 node.left,
-                ' %s ' % self.binop[node.op.__class__.__name__],
+                f" {self.binop[node.op.__class__.__name__]} ",
                 node.right,
             )
 
-    def _ast_call(self, node):
+    def _ast_call(self, node: ast.Call) -> None:
         """Add an AST Call in output."""
         self._call += 1
         self.add(
-            '(',
+            "(",
             node.func,
-            ' ' if node.args else None,
-            self.make_list(node.args, sep=' '),
-            ')',
+            " " if node.args else None,
+            self.make_list(node.args, sep=" "),
+            ")",
         )
         self._call -= 1
 
-    def _ast_compare(self, node):
+    def _ast_compare(self, node: ast.Compare) -> None:
         """Add an AST Compare in output."""
         for operator, comparator in zip(node.ops, node.comparators):
-            if isinstance(operator, (ast.Eq, ast.NotEq)) and \
-                    not self.is_number(node.left) and \
-                    not self.is_bool(node.left) and \
-                    not self.is_number(comparator) and \
-                    not self.is_bool(comparator):
-                prefix = 'string'
+            if (
+                isinstance(operator, (ast.Eq, ast.NotEq))
+                and not self.is_number(node.left)
+                and not self.is_bool(node.left)
+                and not self.is_number(comparator)
+                and not self.is_bool(comparator)
+            ):
+                prefix = "string"
             else:
-                prefix = ''
+                prefix = ""
             self.add(
-                '(%s%s ' % (prefix, self.cmpop[operator.__class__.__name__]),
+                f"({prefix}{self.cmpop[operator.__class__.__name__]} ",
                 node.left,
-                ' ',
+                " ",
                 comparator,
-                ')',
+                ")",
             )
 
-    def _ast_constant(self, node):
+    def _ast_constant(self, node: ast.Constant) -> None:
         """Add an AST Constant in output."""
         if isinstance(node.value, str):
-            self.add('"%s"' % node.value)
+            self.add(f'"{node.value}"')
         elif node.value is None:
-            self.add('#nil')
+            self.add("#nil")
         else:
             self.add(repr(node.value))
 
-    def _ast_dict(self, node):
+    def _ast_dict(self, node: ast.Dict) -> None:
         """Add an AST Dict in output."""
         self.add(
-            '\'(',
-            self.make_list([['(', key, ' ', value, ')']
-                            for key, value in zip(node.keys, node.values)],
-                           sep=' '),
-            ')',
+            "'(",
+            self.make_list(
+                [["(", key, " ", value, ")"] for key, value in zip(node.keys, node.values)], sep=" ",
+            ),
+            ")",
         )
 
-    def _ast_functiondef(self, node):
+    def _ast_functiondef(self, node: ast.FunctionDef) -> None:
         """Add an AST FunctionDef in output."""
         self.add(
             self.fill,
             self.fill,
-            '(define (%s' % node.name,
-            ' ' if node.args.args else None,
-            (self.make_list(node.args.args, sep=' ')
-             if node.args.args else None),
-            ')',
+            f"(define ({node.name}",
+            " " if node.args.args else None,
+            (self.make_list(node.args.args, sep=" ") if node.args.args else None),
+            ")",
             self.indent,
             node.body,
         )
@@ -1044,85 +1037,83 @@ class UnparseGuile(UnparsePython):
             self.add(
                 self.unindent,
                 self.fill,
-                ')',
+                ")",
                 self.unindent,
                 self.fill,
-                ')',
+                ")",
             )
             self._let -= 1
         self.add(
             self.unindent,
             self.fill,
-            ')',
+            ")",
         )
 
-    def _ast_if(self, node):
+    def _ast_if(self, node: ast.If) -> None:
         """Add an AST If in output."""
         self.add(
             self.fill,
-            '(if '
-            '' if isinstance(node.test, ast.Name) else '(',
+            "(if " if isinstance(node.test, ast.Name) else "(",
             node.test,
-            '' if isinstance(node.test, ast.Name) else ')',
+            "" if isinstance(node.test, ast.Name) else ")",
             self.indent,
             self.fill,
-            '(begin',
+            "(begin",
             self.indent,
             node.body,
             self.unindent,
             self.fill,
-            ')',
+            ")",
             self.unindent,
         )
         if node.orelse:
             self.add(
                 self.indent,
                 self.fill,
-                '(begin',
+                "(begin",
                 self.indent,
                 node.orelse,
                 self.unindent,
                 self.fill,
-                ')',
+                ")",
                 self.unindent,
             )
-        self.add(self.fill, ')')
+        self.add(self.fill, ")")
 
-    def _ast_list(self, node):
+    def _ast_list(self, node: ast.List) -> None:
         """Add an AST List in output."""
         self.add(
-            '\'(',
-            self.make_list(node.elts, sep=' '),
-            ')',
+            "'(",
+            self.make_list(node.elts, sep=" "),
+            ")",
         )
 
-    def _ast_pass(self, node):
+    def _ast_pass(self, node: ast.Pass) -> None:  # noqa: ARG002
         """Add an AST Pass in output."""
-        self.add('#t')
+        self.add("#t")
 
-    def _ast_return(self, node):
+    def _ast_return(self, node: ast.Return) -> None:
         """Add an AST Return in output."""
         if node.value:
             self.add(self.fill, node.value)
 
-    def _ast_str(self, node):
+    def _ast_str(self, node: ast.Str) -> None:
         """Add an AST Str in output."""
         self._ast_constant(node)
 
-    def _ast_subscript(self, node):
+    def _ast_subscript(self, node: ast.Subscript) -> None:
         """Add an AST Subscript in output."""
         self.add(
-            '(assoc-ref ',
+            "(assoc-ref ",
             node.value,
-            ' ',
+            " ",
             node.slice,
-            ')',
+            ")",
         )
 
 
 class UnparseJavaScript(UnparsePython):
-    """
-    Unparse AST to generate JavaScript script code.
+    """Unparse AST to generate JavaScript script code.
 
     Note: only part of AST types are supported (just the types used by
     the script to test WeeChat scripting API).
@@ -1130,68 +1121,66 @@ class UnparseJavaScript(UnparsePython):
 
     __lineno__ = inspect.currentframe().f_lineno
 
-    def _ast_dict(self, node):
+    def _ast_dict(self, node: ast.Dict) -> None:
         """Add an AST Dict in output."""
         self.add(
-            '{',
-            self.make_list([[key, ': ', value]
-                            for key, value in zip(node.keys, node.values)]),
-            '}',
+            "{",
+            self.make_list([[key, ": ", value] for key, value in zip(node.keys, node.values)]),
+            "}",
         )
 
-    def _ast_constant(self, node):
+    def _ast_constant(self, node: ast.Constant) -> None:
         """Add an AST Constant in output."""
         if node.value is None:
-            self.add('null')
+            self.add("null")
         else:
             self.add(repr(node.value))
 
-    def _ast_functiondef(self, node):
+    def _ast_functiondef(self, node: ast.FunctionDef) -> None:
         """Add an AST FunctionDef in output."""
         self.add(
             self.fill,
             self.fill,
-            'function %s(' % node.name,
+            f"function {node.name}(",
             self.make_list(node.args.args),
-            ') {',
+            ") {",
             self.indent,
             node.body,
             self.unindent,
             self.fill,
-            '}',
+            "}",
         )
 
-    def _ast_if(self, node):
+    def _ast_if(self, node: ast.If) -> None:
         """Add an AST If in output."""
         self.add(
             self.fill,
-            'if (',
+            "if (",
             node.test,
-            ') {',
+            ") {",
             self.indent,
             node.body,
             self.unindent,
             self.fill,
-            '}',
+            "}",
         )
         if node.orelse:
             self.add(
-                ' else {',
+                " else {",
                 self.indent,
                 node.orelse,
                 self.unindent,
                 self.fill,
-                '}',
+                "}",
             )
 
-    def _ast_pass(self, node):
+    def _ast_pass(self, node: ast.Pass) -> None:
         """Add an AST Pass in output."""
-        pass
+        pass  # noqa: PIE790
 
 
 class UnparsePhp(UnparsePython):
-    """
-    Unparse AST to generate PHP script code.
+    """Unparse AST to generate PHP script code.
 
     Note: only part of AST types are supported (just the types used by
     the script to test WeeChat scripting API).
@@ -1199,218 +1188,213 @@ class UnparsePhp(UnparsePython):
 
     __lineno__ = inspect.currentframe().f_lineno
 
-    def _ast_assign(self, node):
+    def _ast_assign(self, node: ast.Assign) -> None:
         """Add an AST Assign in output."""
         self.add(
             self.fill,
-            (self.prefix, '$'),
-            [[target, ' = '] for target in node.targets],
+            (self.prefix, "$"),
+            [[target, " = "] for target in node.targets],
             (self.prefix, None),
             node.value,
-            ';',
+            ";",
         )
 
-    def _ast_attribute(self, node):
+    def _ast_attribute(self, node: ast.Attribute) -> None:
         """Add an AST Attribute in output."""
         saved_prefix = self._prefix
         self._prefix = []
-        if not node.attr.startswith('WEECHAT_'):
-            self.add(node.value, '_')
+        if not node.attr.startswith("WEECHAT_"):
+            self.add(node.value, "_")
         self.add(node.attr)
         self._prefix = saved_prefix
 
-    def _ast_binop(self, node):
+    def _ast_binop(self, node: ast.BinOp) -> None:
         """Add an AST BinOp in output."""
-        if isinstance(node.op, ast.Add) and \
-                (isinstance(node.left, (ast.Name, ast.Constant)) or
-                 isinstance(node.right, (ast.Name, ast.Constant))):
-            str_op = '.'
+        if isinstance(node.op, ast.Add) and (
+            isinstance(node.left, (ast.Name, ast.Constant)) or isinstance(node.right, (ast.Name, ast.Constant))
+        ):
+            str_op = "."
         else:
             str_op = self.binop[node.op.__class__.__name__]
         self.add(
-            (self.prefix, '$'),
+            (self.prefix, "$"),
             node.left,
-            ' %s ' % str_op,
+            f" {str_op} ",
             node.right,
             (self.prefix, None),
         )
 
-    def _ast_call(self, node):
+    def _ast_call(self, node: ast.Call) -> None:
         """Add an AST Call in output."""
         self.add(
             node.func,
-            '(',
-            (self.prefix, '$'),
+            "(",
+            (self.prefix, "$"),
             self.make_list(node.args),
             (self.prefix, None),
-            ')',
+            ")",
         )
 
-    def _ast_constant(self, node):
+    def _ast_constant(self, node: ast.Constant) -> None:
         """Add an AST Constant in output."""
         if isinstance(node.value, str):
-            self.add('"%s"' % node.value.replace('$', '\\$'))
+            str_node = node.value.replace("$", "\\$")
+            self.add(f'"{str_node}"')
         elif node.value is None:
-            self.add('NULL')
+            self.add("NULL")
         else:
             self.add(repr(node.value))
 
-    def _ast_dict(self, node):
+    def _ast_dict(self, node: ast.Dict) -> None:
         """Add an AST Dict in output."""
         self.add(
-            'array(',
-            self.make_list([[key, ' => ', value]
-                            for key, value in zip(node.keys, node.values)]),
-            ')',
+            "array(",
+            self.make_list([[key, " => ", value] for key, value in zip(node.keys, node.values)]),
+            ")",
         )
 
-    def _ast_expr(self, node):
+    def _ast_expr(self, node: ast.Expr) -> None:
         """Add an AST Expr in output."""
         if not isinstance(node.value, ast.Constant):  # ignore docstrings
             self.add(
                 self.fill,
                 node.value,
-                ';',
+                ";",
             )
 
-    def _ast_functiondef(self, node):
+    def _ast_functiondef(self, node: ast.FunctionDef) -> None:
         """Add an AST FunctionDef in output."""
         self.add(
             self.fill,
             self.fill,
-            'function %s(' % node.name,
-            (self.prefix, '$'),
+            f"function {node.name}(",
+            (self.prefix, "$"),
             self.make_list(node.args.args),
             (self.prefix, None),
-            ')',
+            ")",
             self.fill,
-            '{',
+            "{",
             self.indent,
             node.body,
             self.unindent,
             self.fill,
-            '}',
+            "}",
         )
 
-    def _ast_list(self, node):
+    def _ast_list(self, node: ast.List) -> None:
         """Add an AST List in output."""
         self.add(
-            'array(',
+            "array(",
             self.make_list(node.elts),
-            ')',
+            ")",
         )
 
-    def _ast_if(self, node):
+    def _ast_if(self, node: ast.If) -> None:
         """Add an AST If in output."""
         self.add(
             self.fill,
-            'if (',
-            (self.prefix, '$'),
+            "if (",
+            (self.prefix, "$"),
             node.test,
             (self.prefix, None),
-            ')',
+            ")",
             self.fill,
-            '{',
+            "{",
             self.indent,
             node.body,
             self.unindent,
             self.fill,
-            '}',
+            "}",
         )
         if node.orelse:
             self.add(
                 self.fill,
-                'else',
+                "else",
                 self.fill,
-                '{',
+                "{",
                 self.indent,
                 node.orelse,
                 self.unindent,
                 self.fill,
-                '}',
+                "}",
             )
 
-    def _ast_pass(self, node):
+    def _ast_pass(self, node: ast.Pass) -> None:
         """Add an AST Pass in output."""
-        pass
+        pass  # noqa: PIE790
 
-    def _ast_return(self, node):
+    def _ast_return(self, node: ast.Return) -> None:
         """Add an AST Return in output."""
-        self.fill('return')
+        self.fill("return")
         if node.value:
             self.add(
-                ' ',
-                (self.prefix, '$'),
+                " ",
+                (self.prefix, "$"),
                 node.value,
                 (self.prefix, None),
-                ';',
+                ";",
             )
 
-    def _ast_str(self, node):
+    def _ast_str(self, node: ast.Str) -> None:
         """Add an AST Str in output."""
         self._ast_constant(node)
 
-    def _ast_subscript(self, node):
+    def _ast_subscript(self, node: ast.Subscript) -> None:
         """Add an AST Subscript in output."""
         self.add(
-            '$',
+            "$",
             node.value,
-            '[',
+            "[",
             node.slice,
-            ']',
+            "]",
         )
 
 
-def get_languages():
+def get_languages() -> List[str]:
     """Return a list of supported languages: ['python', 'perl', ...]."""
-
     members = [
         member
-        for member in inspect.getmembers(sys.modules[__name__],
-                                         predicate=inspect.isclass)
-        if inspect.isclass(member[1]) and member[0].startswith('Unparse')
+        for member in inspect.getmembers(sys.modules[__name__], predicate=inspect.isclass)
+        if inspect.isclass(member[1]) and member[0].startswith("Unparse") and member[0] != "Unparse"
     ]
-
-    languages = [
-        name[7:].lower()
-        for name, _ in sorted(members,
-                              key=lambda member: member[1].__lineno__)
-    ]
-
-    return languages
+    return [name[7:].lower() for name, _ in sorted(members, key=lambda member: member[1].__lineno__)]
 
 
 LANGUAGES = get_languages()
 
 
-def get_parser():
+def get_parser() -> argparse.ArgumentParser:
     """Get parser arguments."""
-    all_languages = [*LANGUAGES, 'all']
+    all_languages = [*LANGUAGES, "all"]
     default_language = LANGUAGES[0]
     parser = argparse.ArgumentParser(
-        description=('Unparse Python code from stdin and generate code in '
-                     'another language (to stdout).\n\n'
-                     'The code is read from stdin and generated code is '
-                     'written on stdout.'))
+        description=(
+            "Unparse Python code from stdin and generate code in "
+            "another language (to stdout).\n\n"
+            "The code is read from stdin and generated code is "
+            "written on stdout."
+        ),
+    )
     parser.add_argument(
-        '-l', '--language',
+        "-l",
+        "--language",
         default=default_language,
         choices=all_languages,
-        help='output language (default: %s)' % default_language)
+        help="output language (default: {default_language})",
+    )
     return parser
 
 
-def get_stdin():
-    """
-    Return data from standard input.
+def get_stdin() -> str:
+    """Return data from standard input.
 
     If there is nothing in stdin, wait for data until ctrl-d (EOF)
     is received.
     """
-    data = ''
+    data = ""
     inr = select.select([sys.stdin], [], [], 0)[0]
     if not inr:
-        print('Enter the code to convert (Enter + ctrl-d to end)')
+        print("Enter the code to convert (Enter + ctrl-d to end)")
     while True:
         inr = select.select([sys.stdin], [], [], 0.1)[0]
         if not inr:
@@ -1418,38 +1402,38 @@ def get_stdin():
         new_data = os.read(sys.stdin.fileno(), 4096)
         if not new_data:  # EOF?
             break
-        data += new_data.decode('utf-8')
+        data += new_data.decode("utf-8")
     return data
 
 
-def convert_to_language(code, language, prefix=''):
+def convert_to_language(code: str, language: str, prefix: str = "") -> None:
     """Convert Python code to a language."""
-    class_name = 'Unparse%s' % language.capitalize()
+    class_name = f"Unparse{language.capitalize()}"
     unparse_class = getattr(sys.modules[__name__], class_name)
     if prefix:
         print(prefix)
-    output = StringIO()
+    output = io.StringIO()
     unparse_class(output=output).add(ast.parse(code))
     print(output.getvalue().lstrip())
 
 
-def convert(code, language):
+def convert(code: str, language: str) -> None:
     """Convert Python code to one or all languages."""
-    if language == 'all':
+    if language == "all":
         for lang in LANGUAGES:
-            convert_to_language(code, lang, '\n%s:' % lang)
+            convert_to_language(code, lang, "\n{lang}:")
     else:
         convert_to_language(code, language)
 
 
-def main():
-    """Main function."""
+def main() -> None:
+    """Generate scripts."""
     parser = get_parser()
     args = parser.parse_args()
 
     code = get_stdin()
     if not code:
-        print('ERROR: missing input')
+        print("ERROR: missing input")
         print()
         parser.print_help()
         sys.exit(1)
@@ -1459,5 +1443,5 @@ def main():
     sys.exit(0)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
