@@ -49,6 +49,7 @@
 #include "../core/core-secure-buffer.h"
 #include "../core/core-string.h"
 #include "../core/core-utf8.h"
+#include "../core/core-util.h"
 #include "../plugins/plugin.h"
 #include "gui-buffer.h"
 #include "gui-chat.h"
@@ -3276,6 +3277,35 @@ gui_buffer_search_by_number (int number)
 
     /* buffer not found */
     return NULL;
+}
+
+/*
+ * Search for a buffer by id, full name or partial name.
+ */
+
+struct t_gui_buffer *
+gui_buffer_search_by_id_name (const char *string)
+{
+    struct t_gui_buffer *ptr_buffer;
+    long long id;
+
+    if (!string || !string[0])
+        return NULL;
+
+    ptr_buffer = NULL;
+
+    if (util_parse_longlong (string, 10, &id))
+    {
+        ptr_buffer = gui_buffer_search_by_id (id);
+    }
+    else
+    {
+        ptr_buffer = gui_buffer_search_by_full_name (string);
+        if (!ptr_buffer)
+            ptr_buffer = gui_buffer_search_by_partial_name (NULL, string);
+    }
+
+    return ptr_buffer;
 }
 
 /*
