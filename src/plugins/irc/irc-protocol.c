@@ -1753,6 +1753,9 @@ IRC_PROTOCOL_CALLBACK(join)
     ptr_channel = irc_channel_search (ctxt->server, ctxt->params[0]);
     if (ptr_channel)
     {
+        /* ignore self join if the channel is already joined */
+        if (ctxt->nick_is_me && ptr_channel->nicks)
+            return WEECHAT_RC_OK;
         ptr_channel->part = 0;
     }
     else

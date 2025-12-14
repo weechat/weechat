@@ -6,6 +6,12 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 # WeeChat ChangeLog
 
+## Version 4.8.2 (under dev)
+
+### Fixed
+
+- irc: ignore self join if the channel is already joined ([#2291](https://github.com/weechat/weechat/issues/2291))
+
 ## Version 4.8.1 (2025-12-01)
 
 ### Fixed
