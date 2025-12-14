@@ -2070,7 +2070,6 @@ TEST(IrcProtocolWithServer, join)
     LONGS_EQUAL(0, ptr_channel->has_quit_server);
     LONGS_EQUAL(0, ptr_channel->cycle);
     LONGS_EQUAL(0, ptr_channel->part);
-    LONGS_EQUAL(0, ptr_channel->part);
     STRCMP_EQUAL(NULL, ptr_channel->pv_remote_nick_color);
     POINTERS_EQUAL(NULL, ptr_channel->hook_autorejoin);
 
@@ -2089,6 +2088,10 @@ TEST(IrcProtocolWithServer, join)
     CHECK(ptr_nick->color);
 
     CHECK(ptr_channel->buffer);
+
+    /* second self JOIN should be ignored if already joined */
+    RECV(":alice!user@host JOIN #test ");
+    CHECK_NO_MSG;
 
     RECV(":bob!user@host JOIN #test  *  :   ");
     CHECK_CHAN("-->", "bob (   ) (user@host) has joined #test",

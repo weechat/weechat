@@ -12,6 +12,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 - core: fix buffer size in function util_parse_time, causing buffer overflow error in unit tests
 - irc: fix creation of irc.msgbuffer option without a server name
+- irc: ignore self join if the channel is already joined ([#2291](https://github.com/weechat/weechat/issues/2291))
 
 ## Version 4.8.1 (2025-12-01)
 
