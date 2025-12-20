@@ -35,6 +35,7 @@
 #include "core-hashtable.h"
 #include "core-log.h"
 #include "core-string.h"
+#include "core-util.h"
 #include "../plugins/plugin.h"
 
 
@@ -262,9 +263,7 @@ hdata_get_var_array_size (struct t_hdata *hdata, void *pointer,
 {
     struct t_hdata_var *var;
     const char *ptr_size;
-    char *error;
-    long value;
-    int i, offset;
+    int i, offset, value;
     void *ptr_value;
 
     if (!hdata || !name)
@@ -340,10 +339,8 @@ hdata_get_var_array_size (struct t_hdata *hdata, void *pointer,
         else
         {
             /* check if the size is a valid integer */
-            error = NULL;
-            value = strtol (ptr_size, &error, 10);
-            if (error && !error[0])
-                return (int)value;
+            if (util_parse_int (ptr_size, 10, &value))
+                return value;
         }
     }
 
@@ -691,8 +688,8 @@ hdata_count (struct t_hdata *hdata, void *pointer)
 void
 hdata_get_index_and_name (const char *name, int *index, const char **ptr_name)
 {
-    char *pos, *str_index, *error;
-    long number;
+    char *pos, *str_index;
+    int number;
 
     if (index)
         *index = -1;
@@ -708,9 +705,7 @@ hdata_get_index_and_name (const char *name, int *index, const char **ptr_name)
         str_index = string_strndup (name, pos - name);
         if (str_index)
         {
-            error = NULL;
-            number = strtol (str_index, &error, 10);
-            if (error && !error[0])
+            if (util_parse_int (str_index, 10, &number))
             {
                 if (index)
                     *index = number;
@@ -1246,11 +1241,11 @@ hdata_set (struct t_hdata *hdata, void *pointer, const char *name,
            const char *value)
 {
     struct t_hdata_var *var;
-    char **ptr_string, *error;
-    long number;
-    long long number_longlong;
+    char **ptr_string;
     unsigned long ptr;
-    int rc;
+    int rc, number_int;
+    long number_long;
+    long long number_longlong;
 
     if (!hdata->update_pending)
         return 0;
@@ -1270,27 +1265,21 @@ hdata_set (struct t_hdata *hdata, void *pointer, const char *name,
             *((char *)(pointer + var->offset)) = (value) ? value[0] : '\0';
             return 1;
         case WEECHAT_HDATA_INTEGER:
-            error = NULL;
-            number = strtol (value, &error, 10);
-            if (error && !error[0])
+            if (util_parse_int (value, 10, &number_int))
             {
-                *((int *)(pointer + var->offset)) = (int)number;
+                *((int *)(pointer + var->offset)) = number_int;
                 return 1;
             }
             break;
         case WEECHAT_HDATA_LONG:
-            error = NULL;
-            number = strtol (value, &error, 10);
-            if (error && !error[0])
+            if (util_parse_long (value, 10, &number_long))
             {
-                *((long *)(pointer + var->offset)) = number;
+                *((long *)(pointer + var->offset)) = number_long;
                 return 1;
             }
             break;
         case WEECHAT_HDATA_LONGLONG:
-            error = NULL;
-            number_longlong = strtoll (value, &error, 10);
-            if (error && !error[0])
+            if (util_parse_longlong (value, 10, &number_longlong))
             {
                 *((long long *)(pointer + var->offset)) = number_longlong;
                 return 1;
@@ -1323,11 +1312,9 @@ hdata_set (struct t_hdata *hdata, void *pointer, const char *name,
             }
             break;
         case WEECHAT_HDATA_TIME:
-            error = NULL;
-            number = strtol (value, &error, 10);
-            if (error && !error[0] && (number >= 0))
+            if (util_parse_long (value, 10, &number_long) && (number_long >= 0))
             {
-                *((time_t *)(pointer + var->offset)) = (time_t)number;
+                *((time_t *)(pointer + var->offset)) = (time_t)number_long;
                 return 1;
             }
             break;
