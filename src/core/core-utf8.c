@@ -277,6 +277,97 @@ utf8_grapheme_next (const char *string)
 }
 
 /*
+ * Gets pointer to the start of the previous grapheme cluster in a string.
+ *
+ * A grapheme cluster is a user-perceived character, which may consist
+ * of multiple Unicode code points. This function finds the beginning of
+ * the grapheme cluster that precedes the current position.
+ *
+ * Arguments:
+ *   string: the beginning of the UTF-8 string
+ *   pos: current position in the string
+ *
+ * Returns pointer to the start of the previous grapheme cluster,
+ * NULL if pos is at beginning of string or invalid.
+ */
+
+const char *
+utf8_grapheme_prev (const char *string, const char *pos)
+{
+    const char *ptr_prev, *ptr_scan, *ptr_grapheme_start;
+    int codepoint;
+
+    if (!string || !pos || pos <= string)
+        return NULL;
+
+    /* Move to the previous code point first */
+    ptr_prev = utf8_prev_char (string, pos);
+    if (!ptr_prev)
+        return NULL;
+
+    /*
+     * The previous code point might be:
+     * 1. A standalone character (the grapheme start)
+     * 2. A grapheme extender (we need to find the base character)
+     * 3. Second part of a regional indicator pair (flag)
+     */
+
+    codepoint = utf8_char_int (ptr_prev);
+
+    /* Check if this is a grapheme extender - need to find the base */
+    while (ptr_prev > string && utf8_is_grapheme_extender (codepoint))
+    {
+        ptr_prev = utf8_prev_char (string, ptr_prev);
+        if (!ptr_prev)
+            break;
+        codepoint = utf8_char_int (ptr_prev);
+    }
+
+    /* Handle regional indicators (flags) - they come in pairs */
+    if (ptr_prev && utf8_is_regional_indicator (codepoint))
+    {
+        /* Check if there's a previous regional indicator forming a pair */
+        const char *ptr_check = utf8_prev_char (string, ptr_prev);
+        if (ptr_check)
+        {
+            int prev_cp = utf8_char_int (ptr_check);
+            if (utf8_is_regional_indicator (prev_cp))
+            {
+                /* This is the second indicator of a flag pair,
+                 * go back to the first one */
+                ptr_prev = ptr_check;
+            }
+        }
+    }
+
+    /*
+     * Now verify: scan forward from ptr_prev using utf8_grapheme_next
+     * to ensure we found the correct grapheme boundary.
+     * If utf8_grapheme_next(ptr_prev) goes past or to pos, we're good.
+     */
+    if (ptr_prev)
+    {
+        ptr_scan = ptr_prev;
+        ptr_grapheme_start = ptr_prev;
+
+        /* Walk forward through grapheme clusters until we reach or pass pos */
+        while (ptr_scan && ptr_scan < pos)
+        {
+            ptr_grapheme_start = ptr_scan;
+            ptr_scan = utf8_grapheme_next (ptr_scan);
+        }
+
+        /* If we found a grapheme that ends at or after pos, return its start */
+        if (ptr_scan && ptr_scan >= pos)
+        {
+            return ptr_grapheme_start;
+        }
+    }
+
+    return ptr_prev;
+}
+
+/*
  * Gets number of chars needed on screen to display a grapheme cluster.
  *
  * A grapheme cluster is displayed as a single unit, so complex emoji

@@ -35,6 +35,7 @@ extern int utf8_is_grapheme_extender (int codepoint);
 
 /* Grapheme cluster iteration and size functions */
 extern const char *utf8_grapheme_next (const char *string);
+extern const char *utf8_grapheme_prev (const char *string, const char *pos);
 extern int utf8_grapheme_size_screen (const char *string);
 extern int utf8_grapheme_size (const char *string);
 extern int utf8_grapheme_strlen (const char *string);
