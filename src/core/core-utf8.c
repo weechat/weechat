@@ -44,6 +44,409 @@ int local_utf8 = 0;
 
 
 /*
+ * Unicode code points for grapheme cluster detection (UAX #29).
+ */
+
+#define UNICODE_ZWJ                 0x200D   /* Zero Width Joiner */
+#define UNICODE_VS16                0xFE0F   /* Variation Selector 16 (emoji) */
+#define UNICODE_VS15                0xFE0E   /* Variation Selector 15 (text) */
+#define UNICODE_VS1_START           0xFE00   /* Variation Selector 1 */
+#define UNICODE_VS16_END            0xFE0F   /* Variation Selector 16 */
+#define UNICODE_REGIONAL_START      0x1F1E6  /* Regional Indicator A */
+#define UNICODE_REGIONAL_END        0x1F1FF  /* Regional Indicator Z */
+#define UNICODE_SKIN_TONE_START     0x1F3FB  /* Skin Tone Light */
+#define UNICODE_SKIN_TONE_END       0x1F3FF  /* Skin Tone Dark */
+#define UNICODE_COMBINING_START     0x0300   /* Combining Diacritical Marks start */
+#define UNICODE_COMBINING_END       0x036F   /* Combining Diacritical Marks end */
+#define UNICODE_KEYCAP              0x20E3   /* Combining Enclosing Keycap */
+#define UNICODE_TAG_START           0xE0020  /* Tag Space */
+#define UNICODE_TAG_END             0xE007F  /* Cancel Tag */
+
+/*
+ * Checks if a Unicode code point is a Zero Width Joiner.
+ *
+ * Returns:
+ *   1: code point is ZWJ
+ *   0: code point is not ZWJ
+ */
+
+int
+utf8_is_zwj (int codepoint)
+{
+    return (codepoint == UNICODE_ZWJ);
+}
+
+/*
+ * Checks if a Unicode code point is a Variation Selector (VS1-VS16).
+ *
+ * Returns:
+ *   1: code point is a variation selector
+ *   0: code point is not a variation selector
+ */
+
+int
+utf8_is_variation_selector (int codepoint)
+{
+    return (codepoint >= UNICODE_VS1_START && codepoint <= UNICODE_VS16_END);
+}
+
+/*
+ * Checks if a Unicode code point is a Regional Indicator.
+ *
+ * Returns:
+ *   1: code point is a regional indicator
+ *   0: code point is not a regional indicator
+ */
+
+int
+utf8_is_regional_indicator (int codepoint)
+{
+    return (codepoint >= UNICODE_REGIONAL_START && codepoint <= UNICODE_REGIONAL_END);
+}
+
+/*
+ * Checks if a Unicode code point is a Skin Tone Modifier (Fitzpatrick).
+ *
+ * Returns:
+ *   1: code point is a skin tone modifier
+ *   0: code point is not a skin tone modifier
+ */
+
+int
+utf8_is_skin_tone_modifier (int codepoint)
+{
+    return (codepoint >= UNICODE_SKIN_TONE_START && codepoint <= UNICODE_SKIN_TONE_END);
+}
+
+/*
+ * Checks if a Unicode code point is a Combining Mark.
+ *
+ * Returns:
+ *   1: code point is a combining mark
+ *   0: code point is not a combining mark
+ */
+
+int
+utf8_is_combining_mark (int codepoint)
+{
+    /* Basic Combining Diacritical Marks */
+    if (codepoint >= UNICODE_COMBINING_START && codepoint <= UNICODE_COMBINING_END)
+        return 1;
+
+    /* Combining Diacritical Marks Extended */
+    if (codepoint >= 0x1AB0 && codepoint <= 0x1AFF)
+        return 1;
+
+    /* Combining Diacritical Marks Supplement */
+    if (codepoint >= 0x1DC0 && codepoint <= 0x1DFF)
+        return 1;
+
+    /* Combining Diacritical Marks for Symbols */
+    if (codepoint >= 0x20D0 && codepoint <= 0x20FF)
+        return 1;
+
+    /* Combining Half Marks */
+    if (codepoint >= 0xFE20 && codepoint <= 0xFE2F)
+        return 1;
+
+    return 0;
+}
+
+/*
+ * Checks if a Unicode code point is a Tag character (for flag sequences).
+ *
+ * Returns:
+ *   1: code point is a tag character
+ *   0: code point is not a tag character
+ */
+
+int
+utf8_is_tag_character (int codepoint)
+{
+    return (codepoint >= UNICODE_TAG_START && codepoint <= UNICODE_TAG_END);
+}
+
+/*
+ * Checks if a Unicode code point extends a grapheme cluster.
+ *
+ * A grapheme extender is a code point that should be combined with
+ * the previous character to form a single grapheme cluster.
+ *
+ * Returns:
+ *   1: code point extends grapheme cluster
+ *   0: code point does not extend grapheme cluster
+ */
+
+int
+utf8_is_grapheme_extender (int codepoint)
+{
+    /* Zero Width Joiner - joins characters */
+    if (utf8_is_zwj (codepoint))
+        return 1;
+
+    /* Variation Selectors - modify previous character appearance */
+    if (utf8_is_variation_selector (codepoint))
+        return 1;
+
+    /* Skin Tone Modifiers - modify emoji skin color */
+    if (utf8_is_skin_tone_modifier (codepoint))
+        return 1;
+
+    /* Combining Marks - modify previous character */
+    if (utf8_is_combining_mark (codepoint))
+        return 1;
+
+    /* Keycap - for keycap sequences like 1️⃣ */
+    if (codepoint == UNICODE_KEYCAP)
+        return 1;
+
+    /* Tag characters - for subdivision flags like 🏴󠁧󠁢󠁥󠁮󠁧󠁿 */
+    if (utf8_is_tag_character (codepoint))
+        return 1;
+
+    return 0;
+}
+
+/*
+ * Gets pointer to next grapheme cluster in a string.
+ *
+ * A grapheme cluster is a user-perceived character, which may consist
+ * of multiple Unicode code points (e.g., emoji with skin tone, flag
+ * sequences, characters with combining marks).
+ *
+ * Returns pointer to next grapheme cluster, NULL if string was NULL or empty.
+ */
+
+const char *
+utf8_grapheme_next (const char *string)
+{
+    const char *ptr_next;
+    int codepoint, next_codepoint, in_regional_pair;
+
+    if (!string || !string[0])
+        return NULL;
+
+    /* Move past first code point */
+    ptr_next = utf8_next_char (string);
+    if (!ptr_next || !ptr_next[0])
+        return ptr_next;
+
+    /* Get first code point to check if it's a regional indicator */
+    codepoint = utf8_char_int (string);
+    in_regional_pair = utf8_is_regional_indicator (codepoint);
+
+    /* Keep consuming code points that extend the grapheme cluster */
+    while (ptr_next && ptr_next[0])
+    {
+        next_codepoint = utf8_char_int (ptr_next);
+
+        /* Regional indicators come in pairs (flags) */
+        if (in_regional_pair && utf8_is_regional_indicator (next_codepoint))
+        {
+            /* Consume the second regional indicator */
+            ptr_next = utf8_next_char (ptr_next);
+            in_regional_pair = 0;
+            continue;
+        }
+
+        /* Check if next code point extends the grapheme cluster */
+        if (utf8_is_grapheme_extender (next_codepoint))
+        {
+            /* After ZWJ, consume the next character too */
+            if (utf8_is_zwj (next_codepoint))
+            {
+                ptr_next = utf8_next_char (ptr_next);
+                if (ptr_next && ptr_next[0])
+                {
+                    /* Continue to potentially consume more extenders */
+                    ptr_next = utf8_next_char (ptr_next);
+                }
+            }
+            else
+            {
+                ptr_next = utf8_next_char (ptr_next);
+            }
+            continue;
+        }
+
+        /* No more extenders, we've reached the end of the grapheme cluster */
+        break;
+    }
+
+    return ptr_next;
+}
+
+/*
+ * Gets number of chars needed on screen to display a grapheme cluster.
+ *
+ * A grapheme cluster is displayed as a single unit, so complex emoji
+ * sequences like ❤️‍🔥 should have width 2, not 4.
+ *
+ * Returns the number of chars (>= 0), or -1 for non-printable grapheme.
+ */
+
+int
+utf8_grapheme_size_screen (const char *string)
+{
+    const char *ptr_next;
+    int first_codepoint, codepoint;
+    int width, has_vs16;
+    wchar_t wc;
+
+    if (!string || !string[0])
+        return 0;
+
+    /* Get the first code point */
+    first_codepoint = utf8_char_int (string);
+
+    /* Handle special cases */
+    if (string[0] == '\t')
+        return CONFIG_INTEGER(config_look_tab_width);
+
+    if (((unsigned char)string[0]) < 32)
+        return 1;
+
+    /* Special non-printable chars */
+    if ((first_codepoint == 0x00AD) || (first_codepoint == 0x200B))
+        return -1;
+
+    /* Find the end of the grapheme cluster */
+    ptr_next = utf8_grapheme_next (string);
+    if (!ptr_next)
+        ptr_next = string + strlen (string);
+
+    /*
+     * For grapheme clusters, we need to determine the display width.
+     * The rules are:
+     * 1. If the cluster contains VS16 (emoji presentation), width is 2
+     * 2. Regional indicator pairs (flags) have width 2
+     * 3. Otherwise, use wcwidth of the base character
+     */
+
+    /* Check for VS16 and regional indicators in the cluster */
+    has_vs16 = 0;
+
+    /* Check if first char is regional indicator */
+    if (utf8_is_regional_indicator (first_codepoint))
+    {
+        /* Regional indicator pair (flag) always has width 2 */
+        return 2;
+    }
+
+    /* Scan through the cluster for VS16 */
+    {
+        const char *ptr_scan = utf8_next_char (string);
+        while (ptr_scan && ptr_scan < ptr_next)
+        {
+            codepoint = utf8_char_int (ptr_scan);
+            if (codepoint == UNICODE_VS16)
+            {
+                has_vs16 = 1;
+                break;
+            }
+            ptr_scan = utf8_next_char (ptr_scan);
+        }
+    }
+
+    /* If VS16 is present, emoji presentation selector forces width 2 */
+    if (has_vs16)
+        return 2;
+
+    /* For other grapheme clusters, use wcwidth of the base character */
+    wc = (wchar_t)first_codepoint;
+    width = wcwidth (wc);
+
+    /* If base character is an emoji (wide char), return 2 */
+    if (width == 2)
+        return 2;
+
+    /* Single-width character with possible combining marks */
+    if (width >= 0)
+        return width;
+
+    /* Fallback for unknown width */
+    return 1;
+}
+
+/*
+ * Gets the size in bytes of a grapheme cluster.
+ *
+ * Returns an integer >= 0.
+ */
+
+int
+utf8_grapheme_size (const char *string)
+{
+    const char *ptr_next;
+
+    if (!string || !string[0])
+        return 0;
+
+    ptr_next = utf8_grapheme_next (string);
+    if (!ptr_next)
+        return strlen (string);
+
+    return ptr_next - string;
+}
+
+/*
+ * Gets length of an UTF-8 string in number of grapheme clusters (not bytes).
+ *
+ * Returns length of string (>= 0).
+ */
+
+int
+utf8_grapheme_strlen (const char *string)
+{
+    int length;
+
+    if (!string)
+        return 0;
+
+    length = 0;
+    while (string && string[0])
+    {
+        string = utf8_grapheme_next (string);
+        length++;
+    }
+    return length;
+}
+
+/*
+ * Gets number of chars needed on screen to display the UTF-8 string,
+ * counting grapheme clusters properly.
+ *
+ * Returns the number of chars (>= 0).
+ */
+
+int
+utf8_grapheme_strlen_screen (const char *string)
+{
+    int size_screen, size_screen_char;
+    const char *ptr_string;
+
+    if (!string)
+        return 0;
+
+    if (!local_utf8)
+        return utf8_strlen (string);
+
+    size_screen = 0;
+    ptr_string = string;
+    while (ptr_string && ptr_string[0])
+    {
+        size_screen_char = utf8_grapheme_size_screen (ptr_string);
+        /* count only chars that use at least one column */
+        if (size_screen_char > 0)
+            size_screen += size_screen_char;
+        ptr_string = utf8_grapheme_next (ptr_string);
+    }
+
+    return size_screen;
+}
+
+
+/*
  * Initializes UTF-8 in WeeChat.
  */
 
