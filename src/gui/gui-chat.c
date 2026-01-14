@@ -220,7 +220,7 @@ gui_chat_string_add_offset (const char *string, int offset)
                                             0, 0, 0);
         if (string)
         {
-            string = utf8_grapheme_next (string);
+            string = utf8_next_char (string);
             offset--;
         }
     }
