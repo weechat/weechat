@@ -2140,7 +2140,7 @@ msgid ""
 msgstr ""
 "list || enable|disable|toggle [<nom>|<masque>|@...] || add|addreplace <nom> "
 "<tampon>[,<tampon>...] <étiquettes> <regex> || rename <nom> <nouveau_nom> || "
-"recreate <nom>|<masque> || del <nom>|<masque>..."
+"recreate <nom> || del <nom>|<masque>..."
 
 msgid "raw[list]: list all filters"
 msgstr "raw[list] : lister tous les filtres"
