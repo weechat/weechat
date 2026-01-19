@@ -3153,7 +3153,7 @@ msgid ""
 "|| unload [<name>]"
 msgstr ""
 "list [-o|-ol|-i|-il|<nom>] || listfull [<nom>] || load <fichier> "
-"[<paramètres>] || autoload [<paramètres>] || reload [<nom>|* [<paramètres]] "
+"[<paramètres>] || autoload [<paramètres>] || reload [<nom>|* [<paramètres>]] "
 "|| unload [<nom>]"
 
 msgid "raw[list]: list loaded plugins"

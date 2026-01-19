@@ -3045,7 +3045,7 @@ msgid ""
 "[<arguments>] || autoload [<arguments>] || reload [<name>|* [<arguments>]] "
 "|| unload [<name>]"
 msgstr ""
-"list| [-o|-ol|-i|-il|<име>] || listfull [<име>] || load <имефајла> "
+"list [-o|-ol|-i|-il|<име>] || listfull [<име>] || load <имефајла> "
 "[<аргументи>] || autoload [<аргументи>] || reload [<име>|* [<аргументи>]] || "
 "unload [<име>]"
 
