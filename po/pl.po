@@ -24,7 +24,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-01-15 22:25+0100\n"
+"POT-Creation-Date: 2026-01-21 20:23+0100\n"
 "PO-Revision-Date: 2026-01-15 23:02+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1522,7 +1522,6 @@ msgstr ""
 "raw[hooks]: zapisz informacje o hookach (z wtyczką: wyświetl szczegółowe "
 "informacje o hookach stworzonych przez wtyczkę)"
 
-#| msgid "plugin: list commands for this plugin"
 msgid "plugin_mask: plugin mask, \"*\" for all plugins"
 msgstr "plugin_mask: maska pluginów, \"*\" dla wszystkich"
 
@@ -2971,7 +2970,6 @@ msgstr ""
 "nazwa: pełna nazwa bufora (przykłady: „core.weechat”, „irc.server.libera”, "
 "„irc.libera.#weechat”)"
 
-#| msgid "raw[-buffer]: execute the command on this buffer"
 msgid "raw[-file]: write command output in this file"
 msgstr "raw[-file]: zapisz wyjście komendy do tego pliku"
 
@@ -2984,7 +2982,6 @@ msgstr ""
 "„output” (linie oddzielone separatorem) oraz „tags” (tagi każdej z linii "
 "oddzielone nową linią)"
 
-#| msgid "raw[clear]: clear hotlist"
 msgid "raw[-color]: convert colors"
 msgstr "raw[-color]: konwertuj kolory"
 
@@ -3049,7 +3046,6 @@ msgstr "  wyświetl informacje o użytych zewnętrznych bibliotekach w pliku:"
 msgid "  send output of \"/debug libs\" as a single line on current channel:"
 msgstr "  wyślij wynik „/debug libs” na obecny kanał jako pojedynczą linię:"
 
-#| msgid "  display an error on core buffer:"
 msgid "  display info about all buffers on current buffer:"
 msgstr "  wyświetl informacje w obecnym buforze o wszystkich buforach:"
 
@@ -9871,7 +9867,6 @@ msgid "ban nicks or hosts"
 msgstr "banuje nick albo host"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
-#| msgid "[<channel>] [<nick> [<nick>...]]"
 msgid "[<channel>] [<nick>...]"
 msgstr "[<kanał>] [<nick>...]"
 
@@ -11162,7 +11157,6 @@ msgstr ""
 "pisany małymi literami"
 
 #, c-format
-#| msgid "%s%s: error creating \"%s\" => \"%s\""
 msgid "%s%s: error creating \"%s.%s\" => \"%s\""
 msgstr "%s%s: błąd tworzenia \"%s.%s\" => \"%s\""
 
@@ -13232,12 +13226,10 @@ msgid "%s%s: error when allocating new server"
 msgstr "%s%s: błąd podczas przydzielania nowego serwera"
 
 #, c-format
-#| msgid "%sUnable to set option \"%s\" for bar \"%s\""
 msgid "%s%s: warning: unable to set option \"%s\" for server \"%s\""
 msgstr "%s%s: uwaga: nie można ustawić opcji „%s” dla serwera „%s”"
 
 #, c-format
-#| msgid "%sWarning: unknown option for section \"%s\": %s (value: \"%s\")"
 msgid "%s%s: warning: unknown option \"%s\" for server \"%s\""
 msgstr "%s%s: uwaga: nieznana opcja „%s” dla serwera „%s”"
 
@@ -13492,7 +13484,6 @@ msgid "IRC (Internet Relay Chat) protocol"
 msgstr "Protokół IRC (Internet Relay Chat)"
 
 #, c-format
-#| msgid "%s%s: failed to rename trigger \"%s\""
 msgid "%s%s: failed to save upgrade data"
 msgstr "%s%s: nie udało się zapisać danych aktualizacji"
 
@@ -14330,22 +14321,18 @@ msgstr "historia komend w buforze"
 msgid "hook"
 msgstr "hook"
 
-#| msgid "history of commands"
 msgid "hook \"command\""
 msgstr "hook \"command\""
 
-#| msgid "No command is running"
 msgid "hook \"command_run\""
 msgstr "hook \"command_run\""
 
-#| msgid "completion:"
 msgid "hook \"completion\""
 msgstr "hook \"completion\""
 
 msgid "hook \"config\""
 msgstr "hook \"config\""
 
-#| msgid "not connected"
 msgid "hook \"connect\""
 msgstr "hook \"connect\""
 
@@ -14385,7 +14372,6 @@ msgstr "hook \"process\""
 msgid "hook \"signal\""
 msgstr "hook \"signal\""
 
-#| msgid "hooks for triggers"
 msgid "hook \"timer\""
 msgstr "hook \"timer\""
 
@@ -15102,7 +15088,6 @@ msgid "%s%s: relay \"%s\" not found"
 msgstr "%s%s: relay \"%s\" nie został znaleziony"
 
 #, c-format
-#| msgid "%sMode %s%s %s[%s%s%s]"
 msgid "Remote: %s %s[%s%s%s]"
 msgstr "Remote: %s %s[%s%s%s]"
 
@@ -15364,7 +15349,6 @@ msgstr "opcja: ustaw opcję dla zdalnego pośrednika"
 msgid "raw[connect]: connect to a remote relay server"
 msgstr "raw[connect]: połącz się z pośrednikiem"
 
-#| msgid "raw[connect]: connect to a remote relay server"
 msgid "raw[reconnect]: reconnect to a remote relay server"
 msgstr "raw[reconnect]: łączy ponownie ze zdalnym serwerem"
 
@@ -15892,7 +15876,6 @@ msgstr ""
 "(wsparcie dla cJSON jest wyłączone)"
 
 #, c-format
-#| msgid "%s%s: reconnecting to server in %d %s, %d %s"
 msgid "remote[%s]: reconnecting to remote relay in %d %s, %d %s"
 msgstr "remote[%s]: łączę ponownie do zdalnego pośrednika za %d %s, %d %s"
 
