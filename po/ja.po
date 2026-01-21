@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2025-11-28 18:41+0100\n"
+"POT-Creation-Date: 2026-01-21 20:25+0100\n"
 "PO-Revision-Date: 2025-11-01 16:08+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -2204,7 +2204,7 @@ msgstr "コマンドとオプションに関するヘルプを表示"
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 #, fuzzy
 #| msgid "-list|-listfull [<plugin> [<plugin>...]] || <command> || <option>"
-msgid "-list|-listfull [<plugin>...]] || <command> || <option>"
+msgid "-list|-listfull [<plugin>...] || <command> || <option>"
 msgstr "-list|-listfull [<plugin> [<plugin>...]] || <command> || <option>"
 
 msgid ""

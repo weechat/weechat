@@ -9021,7 +9021,7 @@ command_init (void)
         NULL, "help",
         N_("display help about commands and options"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated */
-        N_("-list|-listfull [<plugin>...]] || <command> || <option>"),
+        N_("-list|-listfull [<plugin>...] || <command> || <option>"),
         CMD_ARGS_DESC(
             N_("raw[-list]: list commands, by plugin (without argument, this list is "
                "displayed)"),

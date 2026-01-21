@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2025-11-28 18:41+0100\n"
+"POT-Creation-Date: 2026-01-21 20:25+0100\n"
 "PO-Revision-Date: 2025-10-27 08:27+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2085,7 +2085,7 @@ msgid "display help about commands and options"
 msgstr "segítség megjelenítése a parancsokhoz"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
-msgid "-list|-listfull [<plugin>...]] || <command> || <option>"
+msgid "-list|-listfull [<plugin>...] || <command> || <option>"
 msgstr ""
 
 msgid ""
