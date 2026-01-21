@@ -4474,8 +4474,9 @@ COMMAND_CALLBACK(key)
                 keys_added = (gui_keys_count[context] > old_keys_count) ?
                     gui_keys_count[context] - old_keys_count : 0;
                 gui_chat_printf (NULL,
-                                 NG_("%d new key added", "%d new keys added "
-                                     "(context: \"%s\")", keys_added),
+                                 NG_("%d new key added (context: \"%s\")",
+                                     "%d new keys added (context: \"%s\")",
+                                     keys_added),
                                  keys_added,
                                  gui_key_context_string[context]);
             }

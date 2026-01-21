@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-01-21 20:28+0100\n"
-"PO-Revision-Date: 2025-10-27 08:27+0100\n"
+"POT-Creation-Date: 2026-01-21 20:45+0100\n"
+"PO-Revision-Date: 2026-01-21 20:50+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: hu\n"
@@ -493,11 +493,11 @@ msgstr ""
 "%s \"-yes\" paraméter megadása kötelező a billentyűparancsok "
 "visszaállításához (biztonsági okokból)\n"
 
-#, fuzzy, c-format
-msgid "%d new key added"
+#, c-format
+msgid "%d new key added (context: \"%s\")"
 msgid_plural "%d new keys added (context: \"%s\")"
-msgstr[0] "Nincs mellőzés megadva.\n"
-msgstr[1] "Nincs mellőzés megadva.\n"
+msgstr[0] ""
+msgstr[1] ""
 
 #, fuzzy
 msgid "Stored layouts:"

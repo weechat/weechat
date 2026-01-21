@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-01-21 20:28+0100\n"
-"PO-Revision-Date: 2026-01-21 20:36+0100\n"
+"POT-Creation-Date: 2026-01-21 20:45+0100\n"
+"PO-Revision-Date: 2026-01-21 20:51+0100\n"
 "Last-Translator: Érico Nogueira <ericonr@disroot.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: pt_BR\n"
@@ -504,9 +504,9 @@ msgstr ""
 "de segurança)"
 
 #, c-format
-msgid "%d new key added"
+msgid "%d new key added (context: \"%s\")"
 msgid_plural "%d new keys added (context: \"%s\")"
-msgstr[0] "%d nova tecla adicionada"
+msgstr[0] "%d nova tecla adicionada (context: \"%s\")"
 msgstr[1] "%d novas teclas adicionadas (context: \"%s\")"
 
 #, fuzzy
