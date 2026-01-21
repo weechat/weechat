@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-01-21 20:25+0100\n"
-"PO-Revision-Date: 2025-10-27 08:27+0100\n"
+"POT-Creation-Date: 2026-01-21 20:28+0100\n"
+"PO-Revision-Date: 2026-01-21 20:36+0100\n"
 "Last-Translator: Érico Nogueira <ericonr@disroot.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: pt_BR\n"
@@ -8922,7 +8922,7 @@ msgstr ""
 #, fuzzy
 msgid ""
 "[-current] [-parted|-all] [-exclude=<channel>[,<channel>...]] <command> || [-"
-"current] [-parted|-all] -include=<channel>[,<channel>...] <command>"
+"current] [-parted|-all] [-include=<channel>[,<channel>...]] <command>"
 msgstr "<apelido>[,<apelido>...] [<contador> [<target>]]"
 
 #, fuzzy
@@ -9011,8 +9011,8 @@ msgstr ""
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 #, fuzzy
 msgid ""
-"[-current] [-exclude=<nick>[,<nick>...]] <command> || [-current] "
-"-include=<nick>[,<nick>...] <command>"
+"[-current] [-exclude=<nick>[,<nick>...]] <command> || [-current] [-"
+"include=<nick>[,<nick>...]] <command>"
 msgstr "<apelido>[,<apelido>...] [<contador> [<target>]]"
 
 msgid ""
@@ -9064,8 +9064,8 @@ msgstr ""
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid ""
-"[-exclude=<server>[,<server>...]] <command> || -include=<server>[,"
-"<server>...] <command>"
+"[-exclude=<server>[,<server>...]] <command> || [-include=<server>[,"
+"<server>...]] <command>"
 msgstr ""
 
 msgid "raw[-exclude]: exclude some servers (wildcard \"*\" is allowed)"

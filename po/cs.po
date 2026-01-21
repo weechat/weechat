@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-01-21 20:25+0100\n"
+"POT-Creation-Date: 2026-01-21 20:28+0100\n"
 "PO-Revision-Date: 2025-10-27 08:26+0100\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8898,7 +8898,7 @@ msgstr "vykonat příkaz na všech kanálech všech připojených serverů"
 #, fuzzy
 msgid ""
 "[-current] [-parted|-all] [-exclude=<channel>[,<channel>...]] <command> || [-"
-"current] [-parted|-all] -include=<channel>[,<channel>...] <command>"
+"current] [-parted|-all] [-include=<channel>[,<channel>...]] <command>"
 msgstr "[-current] [-exclude=<kanál>[,<kanál>...]] <příkaz> [<argumenty>]"
 
 #, fuzzy
@@ -9000,8 +9000,8 @@ msgstr "vykonat příkaz na všech kanálech všech připojených serverů"
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 #, fuzzy
 msgid ""
-"[-current] [-exclude=<nick>[,<nick>...]] <command> || [-current] "
-"-include=<nick>[,<nick>...] <command>"
+"[-current] [-exclude=<nick>[,<nick>...]] <command> || [-current] [-"
+"include=<nick>[,<nick>...]] <command>"
 msgstr "[-current] [-exclude=<kanál>[,<kanál>...]] <příkaz> [<argumenty>]"
 
 #, fuzzy
@@ -9054,8 +9054,8 @@ msgstr "vykonat příkaz na všech připojených serverech"
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 #, fuzzy
 msgid ""
-"[-exclude=<server>[,<server>...]] <command> || -include=<server>[,"
-"<server>...] <command>"
+"[-exclude=<server>[,<server>...]] <command> || [-include=<server>[,"
+"<server>...]] <command>"
 msgstr "[-exclude=<server>[,<server>...]] <příkaz> [<argumenty>]"
 
 msgid "raw[-exclude]: exclude some servers (wildcard \"*\" is allowed)"

@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-01-21 20:25+0100\n"
+"POT-Creation-Date: 2026-01-21 20:28+0100\n"
 "PO-Revision-Date: 2025-10-27 08:27+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8499,7 +8499,7 @@ msgstr "CTCP üzenet küldése az összes csatlakoztatott szerver összes szobá
 #, fuzzy
 msgid ""
 "[-current] [-parted|-all] [-exclude=<channel>[,<channel>...]] <command> || [-"
-"current] [-parted|-all] -include=<channel>[,<channel>...] <command>"
+"current] [-parted|-all] [-include=<channel>[,<channel>...]] <command>"
 msgstr "[alias_név [parancs [paraméterek]]]"
 
 #, fuzzy
@@ -8589,8 +8589,8 @@ msgstr "CTCP üzenet küldése az összes csatlakoztatott szerver összes szobá
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 #, fuzzy
 msgid ""
-"[-current] [-exclude=<nick>[,<nick>...]] <command> || [-current] "
-"-include=<nick>[,<nick>...] <command>"
+"[-current] [-exclude=<nick>[,<nick>...]] <command> || [-current] [-"
+"include=<nick>[,<nick>...]] <command>"
 msgstr "[alias_név [parancs [paraméterek]]]"
 
 #, fuzzy
@@ -8639,10 +8639,11 @@ msgid "execute a command on all connected servers"
 msgstr "üzenet küldése az összes csatlakoztatott szerver összes szobájába"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#, fuzzy
 msgid ""
-"[-exclude=<server>[,<server>...]] <command> || -include=<server>[,"
-"<server>...] <command>"
-msgstr ""
+"[-exclude=<server>[,<server>...]] <command> || [-include=<server>[,"
+"<server>...]] <command>"
+msgstr "[alias_név [parancs [paraméterek]]]"
 
 msgid "raw[-exclude]: exclude some servers (wildcard \"*\" is allowed)"
 msgstr ""

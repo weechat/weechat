@@ -7002,7 +7002,7 @@ irc_command_init (void)
         N_("execute a command on all channels of all connected servers"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated */
         N_("[-current] [-parted|-all] [-exclude=<channel>[,<channel>...]] <command>"
-           " || [-current] [-parted|-all] -include=<channel>[,<channel>...] <command>"),
+           " || [-current] [-parted|-all] [-include=<channel>[,<channel>...]] <command>"),
         WEECHAT_CMD_ARGS_DESC(
             N_("raw[-current]: execute command for channels of current server only"),
             N_("raw[-parted]: execute command on parted channels "
@@ -7040,7 +7040,7 @@ irc_command_init (void)
         N_("execute a command on all private buffers of all connected servers"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated */
         N_("[-current] [-exclude=<nick>[,<nick>...]] <command>"
-           " || [-current] -include=<nick>[,<nick>...] <command>"),
+           " || [-current] [-include=<nick>[,<nick>...]] <command>"),
         WEECHAT_CMD_ARGS_DESC(
             N_("raw[-current]: execute command for private buffers of current server "
                "only"),
@@ -7076,8 +7076,7 @@ irc_command_init (void)
         N_("execute a command on all connected servers"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated */
         N_("[-exclude=<server>[,<server>...]] <command>"
-           " || -include=<server>[,<server>...] "
-           "<command>"),
+           " || [-include=<server>[,<server>...]] <command>"),
         WEECHAT_CMD_ARGS_DESC(
             N_("raw[-exclude]: exclude some servers (wildcard \"*\" is allowed)"),
             N_("raw[-include]: include only some servers (wildcard \"*\" is allowed)"),
