@@ -52,16 +52,8 @@ else()
   set(VERSION "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}")
 endif()
 
-# license
-set(LICENSE "GPL3")
-
 # add definitions for version and license
-if(COMMAND cmake_policy)
-  cmake_policy(SET CMP0005 NEW)
-  add_definitions(-DWEECHAT_VERSION="${VERSION}" -DWEECHAT_LICENSE="${LICENSE}")
-else()
-  add_definitions(-DWEECHAT_VERSION='"${VERSION}"' -DWEECHAT_LICENSE='"${LICENSE}"')
-endif()
+add_definitions(-DWEECHAT_VERSION="${VERSION}" -DWEECHAT_LICENSE="GPL3")
 
 # package string
 set(PKG_STRING "${PROJECT_NAME} ${VERSION}")
@@ -192,15 +184,6 @@ set(WEECHAT_HOME "${WEECHAT_HOME}" CACHE
   FORCE)
 mark_as_advanced(CLEAR WEECHAT_HOME)
 
-if(COMMAND cmake_policy)
-  if(POLICY CMP0003)
-    cmake_policy(SET CMP0003 NEW)
-  endif()
-  if(POLICY CMP0017)
-    cmake_policy(SET CMP0017 NEW)
-  endif()
-endif()
-
 add_definitions(-DHAVE_CONFIG_H)
 
 include(FindPkgConfig)
@@ -258,22 +241,29 @@ list(APPEND EXTRA_LIBS ${GNUTLS_LDFLAGS})
 
 # Check for zlib
 find_package(ZLIB REQUIRED)
+list(APPEND EXTRA_LIBS ${ZLIB_LIBRARY})
 
 # Check for zstd
 if(ENABLE_ZSTD)
   pkg_check_modules(LIBZSTD REQUIRED libzstd)
+  include_directories(${LIBZSTD_INCLUDE_DIRS})
+  list(APPEND EXTRA_LIBS ${LIBZSTD_LDFLAGS})
   add_definitions(-DHAVE_ZSTD)
 endif()
 
 # Check for cJSON
 if(ENABLE_CJSON)
   pkg_check_modules(LIBCJSON REQUIRED libcjson)
+  include_directories(${LIBCJSON_INCLUDE_DIRS})
   add_definitions(-DHAVE_CJSON)
 endif()
 
 # Check for iconv
 find_package(Iconv)
 if(ICONV_FOUND)
+  if(ICONV_LIBRARY)
+    list(APPEND EXTRA_LIBS ${ICONV_LIBRARY})
+  endif()
   add_definitions(-DHAVE_ICONV)
 endif()
 
@@ -283,18 +273,15 @@ pkg_check_modules(LIBCURL REQUIRED libcurl>=7.68.0)
 include_directories(${LIBCURL_INCLUDE_DIRS})
 list(APPEND EXTRA_LIBS ${LIBCURL_LDFLAGS})
 
-find_library(DL_LIBRARY
-  NAMES dl
-  PATHS /lib /usr/lib /usr/libexec /usr/local/lib /usr/local/libexec
-)
-if(DL_LIBRARY)
-  list(APPEND EXTRA_LIBS ${DL_LIBRARY})
-endif()
+list(APPEND EXTRA_LIBS ${CMAKE_DL_LIBS})
 
 add_subdirectory(icons)
 
 if(ENABLE_NLS)
   find_package(Gettext REQUIRED)
+  if(LIBINTL_LIBRARY)
+    list(APPEND EXTRA_LIBS ${LIBINTL_LIBRARY})
+  endif()
   find_package(Intl REQUIRED)
   include_directories(${Intl_INCLUDE_DIRS})
   list(APPEND EXTRA_LIBS "${Intl_LIBRARIES}")
@@ -303,20 +290,30 @@ else()
   add_custom_target(translations COMMAND true)
 endif()
 
+if(${CMAKE_SYSTEM_NAME} STREQUAL "FreeBSD")
+  find_library(EXECINFO_LIB_PATH execinfo /usr/local/lib)
+  check_function_exists(backtrace HAVE_BACKTRACE)
+  list(APPEND EXTRA_LIBS "execinfo")
+else()
+  check_symbol_exists(backtrace "execinfo.h" HAVE_BACKTRACE)
+endif()
+
+if(${CMAKE_SYSTEM_NAME} STREQUAL "Haiku")
+  list(APPEND EXTRA_LIBS "network")
+else()
+  list(APPEND EXTRA_LIBS "pthread")
+endif()
+
+if(${CMAKE_SYSTEM_NAME} STREQUAL "SunOS")
+  list(APPEND EXTRA_LIBS "socket" "nsl")
+endif()
+
+list(APPEND EXTRA_LIBS "m")
+
 add_subdirectory(src)
 add_subdirectory(doc)
 
-if(ENABLE_TESTS)
-  find_package(CppUTest)
-  if(CPPUTEST_FOUND)
-    enable_testing()
-  else()
-    message(SEND_ERROR "CppUTest not found")
-  endif()
-else()
-  enable_testing()
-  add_test(NAME notests COMMAND true)
-endif()
+enable_testing()
 add_subdirectory(tests)
 
 configure_file(config.h.cmake config.h @ONLY)
