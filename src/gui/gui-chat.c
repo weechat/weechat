@@ -149,8 +149,10 @@ gui_chat_prefix_build (void)
 }
 
 /*
- * Returns number of char in a string (special chars like colors/attributes are
- * ignored).
+ * Returns number of grapheme clusters in a string (special chars like
+ * colors/attributes are ignored).
+ *
+ * Uses grapheme clusters for proper handling of complex emoji sequences.
  */
 
 int
@@ -166,7 +168,7 @@ gui_chat_strlen (const char *string)
         if (string)
         {
             length++;
-            string = utf8_next_char (string);
+            string = utf8_grapheme_next (string);
         }
     }
     return length;
@@ -175,6 +177,9 @@ gui_chat_strlen (const char *string)
 /*
  * Returns number of char needed on screen to display a word (special chars like
  * colors/attributes are ignored).
+ *
+ * This function uses grapheme clusters to properly handle complex emoji
+ * sequences like ❤️‍🔥, flags 🇵🇱, and characters with skin tone modifiers 👋🏻.
  */
 
 int
@@ -189,18 +194,20 @@ gui_chat_strlen_screen (const char *string)
                                             (unsigned char *)string, 0, 0, 0);
         if (string)
         {
-            size_on_screen = utf8_char_size_screen (string);
+            size_on_screen = utf8_grapheme_size_screen (string);
             if (size_on_screen > 0)
                 length += size_on_screen;
-            string = utf8_next_char (string);
+            string = utf8_grapheme_next (string);
         }
     }
     return length;
 }
 
 /*
- * Moves forward N chars in a string, skipping all formatting chars (like
- * colors/attributes).
+ * Moves forward N grapheme clusters in a string, skipping all formatting chars
+ * (like colors/attributes).
+ *
+ * Uses grapheme clusters for proper handling of complex emoji sequences.
  */
 
 const char *
@@ -223,6 +230,8 @@ gui_chat_string_add_offset (const char *string, int offset)
 /*
  * Moves forward N chars (using size on screen) in a string, skipping all
  * formatting chars (like colors/attributes).
+ *
+ * Uses grapheme clusters for proper handling of complex emoji sequences.
  */
 
 const char *
@@ -237,14 +246,14 @@ gui_chat_string_add_offset_screen (const char *string, int offset_screen)
                                             0, 0, 0);
         if (string)
         {
-            size_on_screen = utf8_char_size_screen (string);
+            size_on_screen = utf8_grapheme_size_screen (string);
             if (size_on_screen > 0)
             {
                 offset_screen -= size_on_screen;
                 if (offset_screen < 0)
                     return string;
             }
-            string = utf8_next_char (string);
+            string = utf8_grapheme_next (string);
         }
     }
     return string;
@@ -254,10 +263,12 @@ gui_chat_string_add_offset_screen (const char *string, int offset_screen)
  * Gets real position in string (ignoring formatting chars like
  * colors/attributes).
  *
- * If argument "use_screen_size" is 0, the "pos" argument is a number of UTF-8
- * chars.
- * If argument "use_screen_size" is 1, the "pos" argument is the width of UTF-8
- * chars on screen.
+ * If argument "use_screen_size" is 0, the "pos" argument is a number of
+ * grapheme clusters.
+ * If argument "use_screen_size" is 1, the "pos" argument is the width of
+ * grapheme clusters on screen.
+ *
+ * Uses grapheme clusters for proper handling of complex emoji sequences.
  *
  * Returns real position, in bytes.
  */
@@ -281,10 +292,10 @@ gui_chat_string_real_pos (const char *string, int pos, int use_screen_size)
                                                 0, 0, 0);
         if (ptr_string)
         {
-            size_on_screen = utf8_char_size_screen (ptr_string);
+            size_on_screen = utf8_grapheme_size_screen (ptr_string);
             if (size_on_screen > 0)
                 pos -= (use_screen_size) ? size_on_screen : 1;
-            ptr_string = utf8_next_char (ptr_string);
+            ptr_string = utf8_grapheme_next (ptr_string);
             real_pos_prev = real_pos;
             real_pos = ptr_string;
         }
@@ -298,7 +309,9 @@ gui_chat_string_real_pos (const char *string, int pos, int use_screen_size)
  * Gets real position in string (ignoring formatting chars like
  * colors/attributes).
  *
- * Returns position, in number of UTF-8 chars.
+ * Uses grapheme clusters for proper handling of complex emoji sequences.
+ *
+ * Returns position, in number of grapheme clusters.
  */
 
 int
@@ -317,7 +330,7 @@ gui_chat_string_pos (const char *string, int real_pos)
                                                 0, 0, 0);
         if (ptr_string)
         {
-            ptr_string = utf8_next_char (ptr_string);
+            ptr_string = utf8_grapheme_next (ptr_string);
             count++;
         }
     }
@@ -331,6 +344,8 @@ gui_chat_string_pos (const char *string, int real_pos)
  *
  * Note: the word_{start|end}_offset are in bytes, but word_length(_with_spaces)
  * are in number of chars on screen.
+ *
+ * Uses grapheme clusters for proper handling of complex emoji sequences.
  */
 
 void
@@ -356,7 +371,7 @@ gui_chat_get_word_info (struct t_gui_window *window,
                                                (unsigned char *)data, 0, 0, 0);
         if (next_char)
         {
-            next_char2 = utf8_next_char (next_char);
+            next_char2 = utf8_grapheme_next (next_char);
             if (next_char2)
             {
                 if (next_char[0] == '\n')
@@ -372,7 +387,7 @@ gui_chat_get_word_info (struct t_gui_window *window,
                         *word_start_offset = next_char - start_data;
                     leading_spaces = 0;
                     *word_end_offset = next_char2 - start_data;
-                    char_size_screen = utf8_char_size_screen (next_char);
+                    char_size_screen = utf8_grapheme_size_screen (next_char);
                     if (char_size_screen > 0)
                         (*word_length_with_spaces) += char_size_screen;
                     if (*word_length < 0)
