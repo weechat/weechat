@@ -151,19 +151,22 @@ def check_req_symbols(symbols: list[WeechatCurlSymbol]) -> int:
     """
     errors: int = 0
     req_curl = curl_version_to_int(CURL_MIN_VERSION_STR)
+    to_str = curl_version_to_str
     for symbol in symbols:
         if symbol.min_curl and symbol.min_curl <= req_curl:
             print(
-                f"{SRC_PATH}:{symbol.line_no}: min version for "
-                f"symbol {symbol.name} older than minimal required "
-                f"curl {req_curl}. Remove if guard."
+                f"{SRC_PATH}:{symbol.line_no}: "
+                f"symbol {symbol.name} min_version {to_str(symbol.min_curl)} is "
+                f"older/equal to the minimal required curl {to_str(req_curl)}. "
+                f"Remove the if guard."
             )
             errors += 1
-        if symbol.max_curl and symbol.max_curl < req_curl:
+        if symbol.max_curl and symbol.max_curl <= req_curl:
             print(
-                f"{SRC_PATH}:{symbol.line_no}: max version for "
-                f"symbol {symbol.name} older than minimal required "
-                f"curl {req_curl}. Remove the symbol."
+                f"{SRC_PATH}:{symbol.line_no}: "
+                f"symbol {symbol.name} max_version {to_str(symbol.max_curl)} is "
+                f"older/equal to the minimal required curl {to_str(req_curl)}. "
+                f"Remove the if guard and symbol."
             )
             errors += 1
     return errors
@@ -275,22 +278,50 @@ def check_symbols(
             print(f"{SRC_PATH}:{symbol.line_no}: symbol {symbol.name} not found in Curl")
             errors += 1
             continue
-        if curl_symbol[0] > req_curl and symbol.min_curl != curl_symbol[0]:
+        if curl_symbol[1] and req_curl >= curl_symbol[1]:
             print(
-                f"{SRC_PATH}:{symbol.line_no}: min version for "
-                f"symbol {symbol.name} differs: "
-                f"{to_str(symbol.min_curl)} in WeeChat, "
-                f"{to_str(curl_symbol[0])} in Curl"
+                f"{SRC_PATH}:{symbol.line_no}: "
+                f"symbol {symbol.name} max version "
+                f"{to_str(curl_symbol[1])} is below/equal to the minimal "
+                f"required curl {to_str(req_curl)}. "
+                f"Remove the symbol"
             )
             errors += 1
-        if curl_symbol[1] >= req_curl and symbol.max_curl != curl_symbol[1]:
-            print(
-                f"{SRC_PATH}:{symbol.line_no}: max version for "
-                f"symbol {symbol.name} differs: "
-                f"{to_str(symbol.max_curl)} in WeeChat, "
-                f"{to_str(curl_symbol[1])} in Curl"
-            )
-            errors += 1
+            continue
+        if symbol.min_curl != curl_symbol[0]:
+            if not symbol.min_curl:
+                if req_curl < curl_symbol[0]:
+                    print(
+                        f"{SRC_PATH}:{symbol.line_no}: "
+                        f"symbol {symbol.name} is missing min_version "
+                        f"if guard {curl_symbol[0]:#x}/{to_str(curl_symbol[0])}"
+                    )
+                    errors += 1
+            else:
+                print(
+                    f"{SRC_PATH}:{symbol.line_no}: min_version for "
+                    f"symbol {symbol.name} differs: "
+                    f"{to_str(symbol.min_curl)} in WeeChat, "
+                    f"{to_str(curl_symbol[0])} in Curl"
+                )
+                errors += 1
+        if symbol.max_curl != curl_symbol[1]:
+            if not symbol.max_curl:
+                if req_curl >= curl_symbol[1]:
+                    print(
+                        f"{SRC_PATH}:{symbol.line_no}: "
+                        f"symbol {symbol.name} is missing max_version "
+                        f"if guard {curl_symbol[1]:#x}/{to_str(curl_symbol[1])}"
+                    )
+                    errors += 1
+            else:
+                print(
+                    f"{SRC_PATH}:{symbol.line_no}: max_version for "
+                    f"symbol {symbol.name} differs: "
+                    f"{to_str(symbol.max_curl)} in WeeChat, "
+                    f"{to_str(curl_symbol[1])} in Curl"
+                )
+                errors += 1
     return errors
 
 
