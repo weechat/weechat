@@ -46,6 +46,9 @@
 #include <netinet/in.h>
 #include <inttypes.h>
 #define BE_INT64 htonll
+#elif defined(__HAIKU__)
+#include <ByteOrder.h>
+#define BE_INT64 B_HOST_TO_BENDIAN_INT64
 #else
 #define BE_INT64 htobe64
 #endif
