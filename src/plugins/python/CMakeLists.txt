@@ -20,9 +20,9 @@
 #
 
 if(CMAKE_VERSION VERSION_LESS "3.18.0")
-  find_package(Python 3.0 REQUIRED COMPONENTS Development)
+  find_package(Python 3.0 REQUIRED COMPONENTS Interpreter Development)
 else()
-  find_package(Python 3.0 REQUIRED COMPONENTS Development.Embed)
+  find_package(Python 3.0 REQUIRED COMPONENTS Interpreter Development.Embed)
 endif()
 
 add_library(python MODULE
