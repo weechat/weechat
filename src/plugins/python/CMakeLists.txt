@@ -31,8 +31,8 @@ add_library(python MODULE
 )
 set_target_properties(python PROPERTIES PREFIX "")
 
-include_directories(${Python_INCLUDE_DIRS})
-add_definitions(${Python_DEFINITIONS})
-target_link_libraries(python ${Python_LIBRARIES} weechat_plugins_scripts coverage_config)
+if(Python_FOUND)
+  target_link_libraries(python Python::Python weechat_plugins_scripts coverage_config)
+endif()
 
 install(TARGETS python LIBRARY DESTINATION "${WEECHAT_LIBDIR}/plugins")
