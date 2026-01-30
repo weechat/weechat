@@ -28,7 +28,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-01-21 20:45+0100\n"
+"POT-Creation-Date: 2026-01-30 13:45+0100\n"
 "PO-Revision-Date: 2026-01-21 20:49+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -9954,6 +9954,14 @@ msgstr " (Fälschung)"
 
 msgid "second"
 msgid_plural "seconds"
+msgstr[0] "Sekunde"
+msgstr[1] "Sekunden"
+
+#, fuzzy
+#| msgid "second"
+#| msgid_plural "seconds"
+msgid "millisecond"
+msgid_plural "milliseconds"
 msgstr[0] "Sekunde"
 msgstr[1] "Sekunden"
 

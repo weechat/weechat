@@ -5615,12 +5615,12 @@ irc_command_display_server (struct t_irc_server *server, int with_detail)
         if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_ANTI_FLOOD]))
             weechat_printf (NULL, "  anti_flood . . . . . :   (%d %s)",
                             IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_ANTI_FLOOD),
-                            NG_("second", "seconds", IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_ANTI_FLOOD)));
+                            NG_("millisecond", "milliseconds", IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_ANTI_FLOOD)));
         else
             weechat_printf (NULL, "  anti_flood . . . . . : %s%d %s",
                             IRC_COLOR_CHAT_VALUE,
                             weechat_config_integer (server->options[IRC_SERVER_OPTION_ANTI_FLOOD]),
-                            NG_("second", "seconds", weechat_config_integer (server->options[IRC_SERVER_OPTION_ANTI_FLOOD])));
+                            NG_("millisecond", "milliseconds", weechat_config_integer (server->options[IRC_SERVER_OPTION_ANTI_FLOOD])));
         /* away_check */
         if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_AWAY_CHECK]))
             weechat_printf (NULL, "  away_check . . . . . :   (%d %s)",
