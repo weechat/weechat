@@ -23,7 +23,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2026-01-30 13:45+0100\n"
-"PO-Revision-Date: 2026-01-21 20:50+0100\n"
+"PO-Revision-Date: 2026-02-07 21:37+0100\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: it\n"
@@ -4808,7 +4808,7 @@ msgid ""
 "string used to show that some lines are filtered in current buffer (bar item "
 "\"buffer_filter\")"
 msgstr ""
-"stringa usata per mostrare che alcune righe sono state filtrate  nel buffer "
+"stringa usata per mostrare che alcune righe sono state filtrate nel buffer "
 "corrente (elemento barra \"buffer_filter\")"
 
 #, fuzzy
@@ -6182,7 +6182,7 @@ msgstr "%s    sorgente: %s, riga: %d"
 #, c-format
 msgid "%s    *** Please report above info to developers ***"
 msgstr ""
-"%s *** Per favore inviare le precedenti informazioni agli sviluppatori ***"
+"%s    *** Per favore inviare le precedenti informazioni agli sviluppatori ***"
 
 msgid "write - object type"
 msgstr "scrittura - tipo oggetto"
@@ -12603,7 +12603,7 @@ msgstr "%sL'argomento per %s%s%s è \"%s%s\""
 #. TRANSLATORS: "%s" after "on" is a date
 #, c-format
 msgid "%sTopic set by %s%s%s%s%s%s%s%s%s on %s"
-msgstr "%sArgomento impostato da  %s%s%s%s%s%s%s%s%s il %s"
+msgstr "%sArgomento impostato da %s%s%s%s%s%s%s%s%s il %s"
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, c-format
@@ -12815,7 +12815,7 @@ msgstr "%s%s: nessuna connessione al server \"%s\" per la redirezione"
 
 #, c-format
 msgid "%s%s: missing argument \"%s\" for redirect"
-msgstr "%s%s: argomento \"%s\"  mancante per la redirezione"
+msgstr "%s%s: argomento \"%s\" mancante per la redirezione"
 
 #, c-format
 msgid "%s%s: redirect pattern \"%s\" not found"
@@ -17781,7 +17781,7 @@ msgstr "%s%s: tipo xfer \"%s\" sconosciuto"
 
 #, c-format
 msgid "%s%s: unknown xfer protocol \"%s\""
-msgstr "%s%s: protocollo xfer  \"%s\" sconosciuto"
+msgstr "%s%s: protocollo xfer \"%s\" sconosciuto"
 
 #, c-format
 msgid "%s%s: cannot access file \"%s\""
@@ -17816,6 +17816,5 @@ msgid ""
 "%s%s: unable to accept resume file \"%s\" (port: %d, start position: %llu): "
 "xfer not found or not ready for transfer"
 msgstr ""
-"%s%s: impossibile accettare di riprendere il file  \"%s\" (porta: %d, "
-"posizione di avvio: %llu):  xfer non trovato o non pronto per il "
-"trasferimento"
+"%s%s: impossibile accettare di riprendere il file \"%s\" (porta: %d, "
+"posizione di avvio: %llu): xfer non trovato o non pronto per il trasferimento"

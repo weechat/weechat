@@ -24,7 +24,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2026-01-30 13:45+0100\n"
-"PO-Revision-Date: 2026-01-21 20:48+0100\n"
+"PO-Revision-Date: 2026-02-07 21:37+0100\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: cs\n"
@@ -555,7 +555,7 @@ msgstr "%sChyba: rozložení \"%s\" pro příkaz \"%s\" už existuje"
 
 #, c-format
 msgid "Layout \"%s\" has been renamed to \"%s\""
-msgstr "Rozložení \"%s\" přejmenováno na  %s"
+msgstr "Rozložení \"%s\" přejmenováno na %s"
 
 msgid "Mouse enabled"
 msgstr "Myš povolena"
@@ -4194,7 +4194,7 @@ msgid ""
 "Warning: you should now issue /save to write option "
 "weechat.look.save_config_on_exit in configuration file"
 msgstr ""
-"Upozornění: měl by jste nyní provést /save pro zapsání volby  "
+"Upozornění: měl by jste nyní provést /save pro zapsání volby "
 "weechat.look.save_config_on_exit do konfiguračního souboru"
 
 msgid ""
@@ -5992,7 +5992,7 @@ msgstr "%sNekorektní číslo barvy \"%s\" (musí být mezi %d a %d)"
 
 #, c-format
 msgid "Limit for resource \"%s\" has been set to %s"
-msgstr "Limit pro zdroj \"%s\" byl nastaven na  %s"
+msgstr "Limit pro zdroj \"%s\" byl nastaven na %s"
 
 #, fuzzy, c-format
 msgid "%sUnable to set resource limit \"%s\" to %s: error %d %s"
@@ -12720,7 +12720,7 @@ msgstr ""
 
 #, c-format
 msgid "%s%s: timeout"
-msgstr "%s%s:  časový limit"
+msgstr "%s%s: časový limit"
 
 #, c-format
 msgid "%s%s: unable to create socket"
@@ -15510,7 +15510,7 @@ msgid "%s: script \"%s\" is not held anymore"
 msgstr "%s: server %s%s%s již není dočasným"
 
 msgid "Error: file not found"
-msgstr "Chyba: soubor  nenalezen"
+msgstr "Chyba: soubor nenalezen"
 
 msgid "Source code:"
 msgstr "Zdrojový kód:"
@@ -16104,7 +16104,7 @@ msgid "Spell checking is enabled"
 msgstr "Kontrola pravopisu je zapnuta"
 
 msgid "Spell checking is disabled"
-msgstr "Kontrola  pravopisu je vypnuta"
+msgstr "Kontrola pravopisu je vypnuta"
 
 #, c-format
 msgid "Default dictionary: %s"
@@ -17256,7 +17256,7 @@ msgstr "%s%s: nemohu odeslat ACK k odesílateli"
 
 #, c-format
 msgid "%s%s: wrong CRC32 for file %s"
-msgstr "%s%s: špatný  kontrolní součet CRC32 souboru %s"
+msgstr "%s%s: špatný kontrolní součet CRC32 souboru %s"
 
 #, fuzzy, c-format
 msgid "%s%s: CRC32 error while resuming"

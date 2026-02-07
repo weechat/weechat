@@ -29,7 +29,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2026-01-30 13:45+0100\n"
-"PO-Revision-Date: 2026-02-04 23:06+0100\n"
+"PO-Revision-Date: 2026-02-07 21:37+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de_DE\n"
@@ -2099,7 +2099,7 @@ msgstr ""
 
 msgid "  =*   is matching mask, case-insensitive (wildcard \"*\" is allowed)"
 msgstr ""
-"  =*    stimmt mit der Maske überein, Groß- und Kleinschreibung wird nicht "
+"  =*   stimmt mit der Maske überein, Groß- und Kleinschreibung wird nicht "
 "beachtet (Platzhalter \"*\" ist zulässig)"
 
 msgid ""
@@ -2109,7 +2109,7 @@ msgstr ""
 "nicht beachtet (Platzhalter \"*\" ist zulässig)"
 
 msgid "  ==-  is included, case-sensitive"
-msgstr "  ==- ist enthalten, Groß- und Kleinschreibung wird berücksichtigt"
+msgstr "  ==-  ist enthalten, Groß- und Kleinschreibung wird berücksichtigt"
 
 msgid "  !!-  is NOT included, case-sensitive"
 msgstr ""
@@ -3569,7 +3569,7 @@ msgid "> ${repeat_index}: current index (from 1 to \"count\")"
 msgstr "> ${repeat_index}: aktueller Index (von 1 bis \"Einheit\")"
 
 msgid "> ${repeat_index0}: current index (from 0 to \"count\" - 1)"
-msgstr "> ${repeat_index0}: aktueller Index (von 0  bis \"Einheit\" - 1)"
+msgstr "> ${repeat_index0}: aktueller Index (von 0 bis \"Einheit\" - 1)"
 
 msgid "> ${repeat_revindex}: current index from the end (from \"count\" to 1)"
 msgstr "> ${repeat_revindex}: aktueller Index vom Ende (von \"Einheit\" bis 1)"
@@ -3690,7 +3690,7 @@ msgid "Keys on secure buffer:"
 msgstr "Tastenbefehle für den secure-Buffer:"
 
 msgid "  alt+v  toggle values"
-msgstr "  alt+v, Werte werden in Klartext angezeigt bzw. verborgen"
+msgstr "  alt+v  Werte werden in Klartext angezeigt bzw. verborgen"
 
 msgid ""
 "When a passphrase is used (data encrypted), it is asked by WeeChat on "
@@ -3814,7 +3814,7 @@ msgid ""
 "(undefined value). This works only for some special plugin variables."
 msgstr ""
 "Hinweis: für alle Typen von Variablen kann die Zeichenkette \"null\" (ohne "
-"\"\")  genutzt werden, um den Wert der Einstellung zu löschen (undefinierter "
+"\"\") genutzt werden, um den Wert der Einstellung zu löschen (undefinierter "
 "Wert). Dies kann nur auf einige besondere Variablen (Erweiterungen) "
 "angewendet werden."
 
@@ -4679,7 +4679,7 @@ msgstr "Veraltete Taste wurde entfernt: \"%s\""
 
 #, c-format
 msgid "Legacy key converted: \"%s\" => \"%s\""
-msgstr "Veraltete Taste konvertiert:  \"%s\" => \"%s\""
+msgstr "Veraltete Taste konvertiert: \"%s\" => \"%s\""
 
 #, c-format
 msgid "Command converted for key \"%s\": \"%s\" => \"%s\""
@@ -5229,7 +5229,7 @@ msgid ""
 "the highest to lowest priority)"
 msgstr ""
 "maximale Anzahl an Nachrichtenzähler in der Hotlist, für einen Buffer: 0 = "
-"der Nachrichtenzähler wird nicht dargestellt,  nächst höhere Zahl = zeigt "
+"der Nachrichtenzähler wird nicht dargestellt, nächst höhere Zahl = zeigt "
 "maximal <N> Nachrichtenzähler an (von höchster zu niedrigster Priorität)"
 
 msgid ""
@@ -5293,8 +5293,8 @@ msgstr ""
 "eines Buffers (\"buffer.var\"); wird das \"-\" Zeichen vor einem Feld "
 "angewendet, wird die Ausgabe umgekehrt, um bei einem Vergleich nicht "
 "zwischen Groß- und Kleinschreibung zu unterscheiden wird das Zeichen \"~\" "
-"verwendet; Beispiel:  \"-priority,buffer.number\" sortiert die Hotliste nach "
-"Priorität, dann nach Buffernummern,  \"-~buffer.full_name\" für Groß-/"
+"verwendet; Beispiel: \"-priority,buffer.number\" sortiert die Hotliste nach "
+"Priorität, dann nach Buffernummern, \"-~buffer.full_name\" für Groß-/"
 "Kleinschreibung und umgekehrte Sortierung nach vollständigem Buffernamen"
 
 msgid "text displayed at the end of the hotlist"
@@ -5878,7 +5878,7 @@ msgid ""
 msgstr ""
 "Textfarbe für Nicks im Chatfenster: Farbe wird für einige Server-Nachrichten "
 "verwendet und als Ersatz falls eine Farbe für einen Nick nicht gefunden "
-"wird;  normalerweise wird die Farbe von der Option "
+"wird; normalerweise wird die Farbe von der Option "
 "weechat.color.chat_nick_colors bereitgestellt"
 
 #. TRANSLATORS: please do not translate "lightred:blue"
@@ -7172,7 +7172,7 @@ msgstr ""
 
 #, c-format
 msgid "%sYou should add this line in the file %s:  %s"
-msgstr "%sEs sollte folgende Zeile in Datei %s eingefügt werden: %s"
+msgstr "%sEs sollte folgende Zeile in Datei %s eingefügt werden:  %s"
 
 #, c-format
 msgid ""
@@ -7473,7 +7473,7 @@ msgstr "Neue Tastenbelegung (Kontext \"%s\"): %s%s => %s%s"
 #, c-format
 msgid "%sUnable to bind key \"%s\" in context \"%s\" (see /help key)"
 msgstr ""
-"%sTastenbelegung „%s“ kann nicht in diesem Kontext „%s“ zugeordnet werden  "
+"%sTastenbelegung „%s“ kann nicht in diesem Kontext „%s“ zugeordnet werden "
 "(siehe /help key)"
 
 #, c-format
@@ -7591,7 +7591,7 @@ msgstr ""
 
 msgid "raw[list]: list aliases (without argument, this list is displayed)"
 msgstr ""
-"raw[list]: listet Alternativbefehle auf (ohne Angabe von Argumenten wird  "
+"raw[list]: listet Alternativbefehle auf (ohne Angabe von Argumenten wird "
 "diese Liste dargestellt)"
 
 msgid "raw[add]: add an alias"
@@ -9340,7 +9340,7 @@ msgstr ""
 "erstes von zwei Formaten um Optionen anzuzeigen, wird genutzt wenn die "
 "Option fset.look.format_number auf 1 gesetzt ist (Hinweis: der Inhalt ist "
 "evaluiert, siehe /help fset); eine leere Zeichenkette nutzt die "
-"Standardeinstellung (\"${marked} ${name} ${type}  ${value2}\"), dies findet "
+"Standardeinstellung (\"${marked} ${name}  ${type}  ${value2}\"), dies findet "
 "ohne eine Evaluierung statt, was wesentlich schneller ist; zwischen den "
 "Formaten kann mittels ctrl-x umgeschaltet werden"
 
@@ -9354,7 +9354,7 @@ msgstr ""
 "zweites von zwei Formaten um Optionen anzuzeigen,wird genutzt wenn die "
 "Option fset.look.format_number auf 1 gesetzt ist (Hinweis: der Inhalt ist "
 "evaluiert, siehe /help fset); eine leere Zeichenkette nutzt die "
-"Standardeinstellung (\"${marked} ${name} ${type}  ${value2}\"), dies findet "
+"Standardeinstellung (\"${marked} ${name}  ${type}  ${value2}\"), dies findet "
 "ohne eine Evaluierung statt, was wesentlich schneller ist; zwischen den "
 "Formaten kann mittels ctrl-x umgeschaltet werden"
 
@@ -17818,7 +17818,7 @@ msgstr "erstelle Variable"
 
 #, c-format
 msgid "%s%lu%s  running command %s\"%s%s%s\"%s on buffer %s%s%s"
-msgstr "%s%lu%s führe Befehl %s\"%s%s%s\"%s für Buffer %s%s%s aus"
+msgstr "%s%lu%s  führe Befehl %s\"%s%s%s\"%s für Buffer %s%s%s aus"
 
 #, c-format
 msgid ""

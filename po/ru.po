@@ -24,7 +24,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2026-01-30 13:45+0100\n"
-"PO-Revision-Date: 2026-01-21 20:52+0100\n"
+"PO-Revision-Date: 2026-02-07 21:37+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: ru\n"
@@ -4330,7 +4330,7 @@ msgstr ""
 "(см. /help quit)"
 
 msgid "display special message when day changes"
-msgstr "отображать специальное сообщение  при смене дня"
+msgstr "отображать специальное сообщение при смене дня"
 
 #. TRANSLATORS: string "${color:xxx}" must NOT be translated
 #, fuzzy
