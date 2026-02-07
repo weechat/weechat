@@ -199,7 +199,7 @@ buflist_command_init (void)
                "buflist.format.tls_version)"),
             N_("    - ${index_displayed}: index of line displayed in the bar "
                "item (starts at 0, only buffers displayed increment this index, "
-               "see option buflist.look.display_conditions")),
+               "see option buflist.look.display_conditions)")),
         "enable|disable|toggle"
         " || bar"
         " || refresh %(buflist_items_used)|%*",
