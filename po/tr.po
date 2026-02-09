@@ -24,7 +24,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2026-02-07 22:07+0100\n"
-"PO-Revision-Date: 2026-02-07 21:37+0100\n"
+"PO-Revision-Date: 2026-02-09 21:31+0100\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: tr\n"
@@ -4973,6 +4973,7 @@ msgstr ""
 "iliştirilir ve sağlama algoritması bu dizi üzerinde çalışır); bu değeri "
 "değiştirmek takma adların renklerini karıştırır"
 
+#, fuzzy
 msgid ""
 "chars used to stop in nick when computing color with letters of nick (at "
 "least one char outside this list must be in string before stopping) "
@@ -17436,7 +17437,7 @@ msgstr "%s%s: \"%s\" dosyası ayrıştırılırken hata: %s"
 
 #, c-format
 msgid "Trigger monitor (filter: %s) | Input: q=close, words=filter"
-msgstr "Tetikleyici monitörü (süzgeç: %s) Girdi: q=kapat, sözcükler=süz"
+msgstr "Tetikleyici monitörü (süzgeç: %s) | Girdi: q=kapat, sözcükler=süz"
 
 msgid "no variable"
 msgstr "değişken yok"
