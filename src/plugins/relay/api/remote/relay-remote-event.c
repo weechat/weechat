@@ -1283,7 +1283,15 @@ relay_remote_event_recv (struct t_relay_remote *remote, const char *data)
 
     json = cJSON_Parse (data);
     if (!json)
-        goto error_data;
+    {
+        weechat_printf (
+            NULL,
+            _("%sremote[%s]: invalid data received from remote relay: \"%s\""),
+            weechat_prefix ("error"),
+            remote->name,
+            data);
+        return;
+    }
 
     event.remote = remote;
     event.name = NULL;
@@ -1296,7 +1304,7 @@ relay_remote_event_recv (struct t_relay_remote *remote, const char *data)
     json_body = cJSON_GetObjectItem (json, "body");
 
     if (!body_type && ((code == 200) || (code == 204)))
-        return;
+        goto end;
 
     JSON_GET_STR(json, event_name);
     event.name = event_name;
@@ -1352,7 +1360,15 @@ relay_remote_event_recv (struct t_relay_remote *remote, const char *data)
             rc = (callback) (&event);
         }
         if (rc == WEECHAT_RC_ERROR)
-            goto error_cb;
+        {
+            weechat_printf (
+                NULL,
+                _("%sremote[%s]: callback failed for body type \"%s\""),
+                weechat_prefix ("error"),
+                remote->name,
+                body_type);
+            goto end;
+        }
     }
 
     if (!remote->synced && initial_sync)
@@ -1361,23 +1377,6 @@ relay_remote_event_recv (struct t_relay_remote *remote, const char *data)
         weechat_bar_item_update ("input_prompt");
     }
 
-    return;
-
-error_data:
-    weechat_printf (
-        NULL,
-        _("%sremote[%s]: invalid data received from remote relay: \"%s\""),
-        weechat_prefix ("error"),
-        remote->name,
-        data);
-    return;
-
-error_cb:
-    weechat_printf (
-        NULL,
-        _("%sremote[%s]: callback failed for body type \"%s\""),
-        weechat_prefix ("error"),
-        remote->name,
-        body_type);
-    return;
+end:
+    cJSON_Delete (json);
 }
