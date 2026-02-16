@@ -154,6 +154,7 @@ relay_remote_network_check_auth (struct t_relay_remote *remote,
     int accept_ok, hash_size;
 
     http_resp = NULL;
+    json_body = NULL;
     msg_error = NULL;
     msg_resp_error = NULL;
     accept_ok = 0;
@@ -223,6 +224,9 @@ relay_remote_network_check_auth (struct t_relay_remote *remote,
 
     relay_http_response_free (http_resp);
 
+    if (json_body)
+        cJSON_Delete (json_body);
+
     return 1;
 
 error:
@@ -236,6 +240,8 @@ error:
         (msg_resp_error) ? msg_resp_error : "",
         (msg_resp_error) ? ")" : "");
     relay_http_response_free (http_resp);
+    if (json_body)
+        cJSON_Delete (json_body);
     return 0;
 }
 
@@ -1199,6 +1205,8 @@ relay_remote_network_url_handshake_cb (const void *pointer,
 
     remote->hook_url_handshake = NULL;
 
+    json_body = NULL;
+
     ptr_resp_code = weechat_hashtable_get (output, "response_code");
     if (ptr_resp_code && ptr_resp_code[0] && (strcmp (ptr_resp_code, "200") != 0))
     {
@@ -1210,7 +1218,7 @@ relay_remote_network_url_handshake_cb (const void *pointer,
             weechat_config_string (remote->options[RELAY_REMOTE_OPTION_URL]),
             ptr_resp_code);
         relay_remote_network_disconnect (remote);
-        return WEECHAT_RC_OK;
+        goto end;
     }
 
     ptr_error = weechat_hashtable_get (output, "error");
@@ -1224,7 +1232,7 @@ relay_remote_network_url_handshake_cb (const void *pointer,
             weechat_config_string (remote->options[RELAY_REMOTE_OPTION_URL]),
             ptr_error);
         relay_remote_network_disconnect (remote);
-        return WEECHAT_RC_OK;
+        goto end;
     }
 
     ptr_output = weechat_hashtable_get (output, "output");
@@ -1267,9 +1275,8 @@ relay_remote_network_url_handshake_cb (const void *pointer,
                         remote->name,
                         weechat_config_string (remote->options[RELAY_REMOTE_OPTION_URL]),
                         str_error);
-                    cJSON_Delete (json_body);
                     relay_remote_network_disconnect (remote);
-                    return WEECHAT_RC_OK;
+                    goto end;
                 }
                 remote->password_hash_iterations = (int)iterations;
             }
@@ -1290,7 +1297,7 @@ relay_remote_network_url_handshake_cb (const void *pointer,
             weechat_config_string (remote->options[RELAY_REMOTE_OPTION_URL]),
             _("hash algorithm not found"));
         relay_remote_network_disconnect (remote);
-        return WEECHAT_RC_OK;
+        goto end;
     }
 
     if (remote->password_hash_iterations < 0)
@@ -1303,7 +1310,7 @@ relay_remote_network_url_handshake_cb (const void *pointer,
             weechat_config_string (remote->options[RELAY_REMOTE_OPTION_URL]),
             _("unknown number of hash iterations"));
         relay_remote_network_disconnect (remote);
-        return WEECHAT_RC_OK;
+        goto end;
     }
 
     if (remote->totp < 0)
@@ -1316,7 +1323,7 @@ relay_remote_network_url_handshake_cb (const void *pointer,
             weechat_config_string (remote->options[RELAY_REMOTE_OPTION_URL]),
             _("unknown TOTP status"));
         relay_remote_network_disconnect (remote);
-        return WEECHAT_RC_OK;
+        goto end;
     }
 
     if (weechat_relay_plugin->debug >= 1)
@@ -1353,7 +1360,7 @@ relay_remote_network_url_handshake_cb (const void *pointer,
                 weechat_prefix ("error"),
                 remote->name);
             relay_remote_network_disconnect (remote);
-            return WEECHAT_RC_OK;
+            goto end;
         }
         snprintf (option_name, length, "weechat.proxy.%s.type", proxy);
         proxy_type = weechat_config_get (option_name);
@@ -1371,7 +1378,7 @@ relay_remote_network_url_handshake_cb (const void *pointer,
                 _("%sremote[%s]: proxy \"%s\" not found, cannot connect"),
                 weechat_prefix ("error"), remote->name, proxy);
             relay_remote_network_disconnect (remote);
-            return WEECHAT_RC_OK;
+            goto end;
         }
         str_proxy_type = weechat_config_string (proxy_type);
         str_proxy_address = weechat_config_string (proxy_address);
@@ -1384,7 +1391,7 @@ relay_remote_network_url_handshake_cb (const void *pointer,
                   "proxy \"%s\""),
                 weechat_prefix ("error"), remote->name, proxy);
             relay_remote_network_disconnect (remote);
-            return WEECHAT_RC_OK;
+            goto end;
         }
     }
 
@@ -1403,6 +1410,9 @@ relay_remote_network_url_handshake_cb (const void *pointer,
         remote,
         NULL);
 
+end:
+    if (json_body)
+        cJSON_Delete (json_body);
     return WEECHAT_RC_OK;
 }
 
