@@ -48,6 +48,7 @@
 - relay: fix timing attack on password authentication ([GHSA-vhv8-g2r9-cwcc](https://github.com/weechat/weechat/security/advisories/GHSA-vhv8-g2r9-cwcc), [CVE-2026-53525](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-53525))
 - api, relay: fix timing attack on TOTP validation ([GHSA-vhv8-g2r9-cwcc](https://github.com/weechat/weechat/security/advisories/GHSA-vhv8-g2r9-cwcc), [CVE-2026-53525](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-53525))
 - relay: limit size of decompressed websocket frame with permessage-deflate to prevent memory exhaustion ([GHSA-v2v4-45wm-5cr3](https://github.com/weechat/weechat/security/advisories/GHSA-v2v4-45wm-5cr3), [CVE-2026-53524](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-53524))
+- relay/api: fix memory leaks in resources "ping" and "sync"
 - relay/api: fix memory leak in receive of message from remote WeeChat
 - relay/api: refuse number of hash iterations lower than 1 or greater than 1000000 received from the remote relay, to prevent blocking WeeChat for a long time
 - relay/weechat: fix empty buffers in client when WeeChat is running on Solaris/illumos
