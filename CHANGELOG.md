@@ -11,6 +11,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 ### Fixed
 
 - irc: ignore self join if the channel is already joined ([#2291](https://github.com/weechat/weechat/issues/2291))
+- relay/api: fix memory leaks in resources "ping" and "sync"
 
 ## Version 4.8.1 (2025-12-01)
 

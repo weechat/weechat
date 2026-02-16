@@ -1056,12 +1056,14 @@ RELAY_API_PROTOCOL_CALLBACK(ping)
                                cJSON_CreateString ((ptr_data) ? ptr_data : ""));
         relay_api_msg_send_json (client, RELAY_HTTP_200_OK, NULL, "ping", json);
         cJSON_Delete (json);
-        cJSON_Delete (json_body);
     }
     else
     {
         relay_api_msg_send_json (client, RELAY_HTTP_204_NO_CONTENT, NULL, NULL, NULL);
     }
+
+    if (json_body)
+        cJSON_Delete (json_body);
 
     return RELAY_API_PROTOCOL_RC_OK;
 }
@@ -1120,6 +1122,9 @@ RELAY_API_PROTOCOL_CALLBACK(sync)
         relay_api_unhook_signals (client);
 
     relay_api_msg_send_json (client, RELAY_HTTP_204_NO_CONTENT, NULL, NULL, NULL);
+
+    if (json_body)
+        cJSON_Delete (json_body);
 
     return RELAY_API_PROTOCOL_RC_OK;
 }
