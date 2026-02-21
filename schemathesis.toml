@@ -11,6 +11,9 @@ enabled = false
 [phases.stateful]
 enabled = false
 
+[phases.fuzzing]
+enabled = false
+
 [auth]
 basic = { username = "plain", password = "${RELAY_PASSWORD}" }
 
