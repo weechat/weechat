@@ -66,6 +66,15 @@ struct t_upgrade_file;
 struct t_weelist;
 struct t_weelist_item;
 
+
+#if defined(_WIN32)
+#define WEECHAT_PUBLIC  __declspec(dllimport)
+#elif (defined(__GNUC__) && (__GNUC__ * 100 + __GNUC_MINOR__) >= 303)
+#define WEECHAT_PUBLIC  __attribute__((visibility("default")))
+#else
+#define WEECHAT_PUBLIC
+#endif
+
 /*
  * IMPORTANT NOTE for WeeChat developers: if you update, add or remove
  * some functions in this file, then please update API version below.
@@ -80,18 +89,18 @@ struct t_weelist_item;
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
-    char weechat_plugin_name[] = __name;                                \
-    char weechat_plugin_api_version[] = WEECHAT_PLUGIN_API_VERSION;
+    WEECHAT_PUBLIC char weechat_plugin_name[] = __name;                        \
+    WEECHAT_PUBLIC char weechat_plugin_api_version[] = WEECHAT_PLUGIN_API_VERSION;
 #define WEECHAT_PLUGIN_AUTHOR(__author)         \
-    char weechat_plugin_author[] = __author;
+    WEECHAT_PUBLIC char weechat_plugin_author[] = __author;
 #define WEECHAT_PLUGIN_DESCRIPTION(__desc)      \
-    char weechat_plugin_description[] = __desc;
+    WEECHAT_PUBLIC char weechat_plugin_description[] = __desc;
 #define WEECHAT_PLUGIN_VERSION(__version)       \
-    char weechat_plugin_version[] = __version;
+    WEECHAT_PUBLIC char weechat_plugin_version[] = __version;
 #define WEECHAT_PLUGIN_LICENSE(__license)       \
-    char weechat_plugin_license[] = __license;
+    WEECHAT_PUBLIC char weechat_plugin_license[] = __license;
 #define WEECHAT_PLUGIN_PRIORITY(__priority)     \
-    int weechat_plugin_priority = __priority;
+    WEECHAT_PUBLIC int weechat_plugin_priority = __priority;
 
 /* return codes for plugin functions */
 #define WEECHAT_RC_OK                               0
@@ -1281,9 +1290,9 @@ struct t_weechat_plugin
     void (*upgrade_close) (struct t_upgrade_file *upgrade_file);
 };
 
-extern int weechat_plugin_init (struct t_weechat_plugin *plugin,
+WEECHAT_PUBLIC int weechat_plugin_init (struct t_weechat_plugin *plugin,
                                 int argc, char *argv[]);
-extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
+WEECHAT_PUBLIC int weechat_plugin_end (struct t_weechat_plugin *plugin);
 
 /* macros for easy call to plugin API */
 
