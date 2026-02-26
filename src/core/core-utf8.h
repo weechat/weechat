@@ -24,6 +24,23 @@
 
 extern int local_utf8;
 
+/* Grapheme cluster detection functions */
+extern int utf8_is_zwj (int codepoint);
+extern int utf8_is_variation_selector (int codepoint);
+extern int utf8_is_regional_indicator (int codepoint);
+extern int utf8_is_skin_tone_modifier (int codepoint);
+extern int utf8_is_combining_mark (int codepoint);
+extern int utf8_is_tag_character (int codepoint);
+extern int utf8_is_grapheme_extender (int codepoint);
+
+/* Grapheme cluster iteration and size functions */
+extern const char *utf8_grapheme_next (const char *string);
+extern const char *utf8_grapheme_prev (const char *string, const char *pos);
+extern int utf8_grapheme_size_screen (const char *string);
+extern int utf8_grapheme_size (const char *string);
+extern int utf8_grapheme_strlen (const char *string);
+extern int utf8_grapheme_strlen_screen (const char *string);
+
 extern void utf8_init (void);
 extern int utf8_has_8bits (const char *string);
 extern int utf8_is_valid (const char *string, int length, char **error);

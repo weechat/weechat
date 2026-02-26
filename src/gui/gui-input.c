@@ -824,30 +824,44 @@ gui_input_search_stop (struct t_gui_buffer *buffer)
 }
 
 /*
- * Deletes previous char (default key: backspace).
+ * Deletes previous char (grapheme cluster) (default key: backspace).
  */
 
 void
 gui_input_delete_previous_char (struct t_gui_buffer *buffer)
 {
-    char *pos, *pos_last;
-    int char_size, size_to_move;
+    const char *pos, *prev_grapheme;
+    int grapheme_size_bytes, grapheme_size_codepoints, size_to_move, new_pos;
 
     if (!buffer->input || (buffer->input_buffer_pos <= 0))
         return;
 
     gui_buffer_undo_snap (buffer);
-    pos = (char *)utf8_add_offset (buffer->input_buffer,
-                                   buffer->input_buffer_pos);
-    pos_last = (char *)utf8_prev_char (buffer->input_buffer, pos);
-    char_size = pos - pos_last;
+
+    /* Find current position in bytes */
+    pos = utf8_add_offset (buffer->input_buffer, buffer->input_buffer_pos);
+
+    /* Find the start of the previous grapheme cluster */
+    prev_grapheme = utf8_grapheme_prev (buffer->input_buffer, pos);
+    if (!prev_grapheme)
+        return;
+
+    /* Calculate size of grapheme cluster in bytes and codepoints */
+    grapheme_size_bytes = pos - prev_grapheme;
+    grapheme_size_codepoints = utf8_strnlen (prev_grapheme, grapheme_size_bytes);
+
+    /* Calculate new cursor position in codepoints */
+    new_pos = buffer->input_buffer_pos - grapheme_size_codepoints;
+
+    /* Move remaining content */
     size_to_move = strlen (pos);
-    memmove (pos_last, pos, size_to_move);
+    memmove ((char *)prev_grapheme, pos, size_to_move);
+
     if (gui_input_optimize_size (buffer,
-                                 buffer->input_buffer_size - char_size,
-                                 buffer->input_buffer_length - 1))
+                                 buffer->input_buffer_size - grapheme_size_bytes,
+                                 buffer->input_buffer_length - grapheme_size_codepoints))
     {
-        buffer->input_buffer_pos--;
+        buffer->input_buffer_pos = new_pos;
         buffer->input_buffer[buffer->input_buffer_size] = '\0';
     }
     gui_input_text_changed_modifier_and_signal (buffer,
@@ -856,14 +870,14 @@ gui_input_delete_previous_char (struct t_gui_buffer *buffer)
 }
 
 /*
- * Deletes next char (default key: del).
+ * Deletes next char (grapheme cluster) (default key: del).
  */
 
 void
 gui_input_delete_next_char (struct t_gui_buffer *buffer)
 {
-    char *pos, *pos_next;
-    int char_size, size_to_move;
+    const char *pos, *next_grapheme;
+    int grapheme_size_bytes, grapheme_size_codepoints, size_to_move;
 
     if (!buffer->input
         || (buffer->input_buffer_pos >= buffer->input_buffer_length))
@@ -871,20 +885,27 @@ gui_input_delete_next_char (struct t_gui_buffer *buffer)
         return;
     }
 
-    pos = (char *)utf8_add_offset (buffer->input_buffer,
-                                   buffer->input_buffer_pos);
-    pos_next = (char *)utf8_next_char (pos);
-    if (!pos_next)
+    /* Find current position in bytes */
+    pos = utf8_add_offset (buffer->input_buffer, buffer->input_buffer_pos);
+
+    /* Find the start of the next grapheme cluster */
+    next_grapheme = utf8_grapheme_next (pos);
+    if (!next_grapheme)
         return;
 
     gui_buffer_undo_snap (buffer);
 
-    char_size = pos_next - pos;
-    size_to_move = strlen (pos_next);
-    memmove (pos, pos_next, size_to_move);
+    /* Calculate size of grapheme cluster in bytes and codepoints */
+    grapheme_size_bytes = next_grapheme - pos;
+    grapheme_size_codepoints = utf8_strnlen (pos, grapheme_size_bytes);
+
+    /* Move remaining content */
+    size_to_move = strlen (next_grapheme);
+    memmove ((char *)pos, next_grapheme, size_to_move);
+
     if (gui_input_optimize_size (buffer,
-                                 buffer->input_buffer_size - char_size,
-                                 buffer->input_buffer_length - 1))
+                                 buffer->input_buffer_size - grapheme_size_bytes,
+                                 buffer->input_buffer_length - grapheme_size_codepoints))
     {
         buffer->input_buffer[buffer->input_buffer_size] = '\0';
     }
@@ -1432,33 +1453,69 @@ gui_input_move_end_of_input (struct t_gui_buffer *buffer)
 }
 
 /*
- * Moves cursor to previous char (default key: left).
+ * Moves cursor to previous char (grapheme cluster) (default key: left).
  */
 
 void
 gui_input_move_previous_char (struct t_gui_buffer *buffer)
 {
+    const char *pos, *prev_grapheme;
+
     if (!buffer->input || (buffer->input_buffer_pos <= 0))
         return;
 
-    buffer->input_buffer_pos--;
+    /* Find current position in bytes */
+    pos = utf8_add_offset (buffer->input_buffer, buffer->input_buffer_pos);
+
+    /* Find the start of the previous grapheme cluster */
+    prev_grapheme = utf8_grapheme_prev (buffer->input_buffer, pos);
+
+    if (!prev_grapheme)
+    {
+        buffer->input_buffer_pos = 0;
+    }
+    else
+    {
+        /* Calculate new position in codepoints */
+        buffer->input_buffer_pos = utf8_pos (buffer->input_buffer,
+                                             prev_grapheme - buffer->input_buffer);
+    }
+
     gui_input_text_cursor_moved_signal (buffer);
 }
 
 /*
- * Moves cursor to next char (default key: right).
+ * Moves cursor to next char (grapheme cluster) (default key: right).
  */
 
 void
 gui_input_move_next_char (struct t_gui_buffer *buffer)
 {
+    const char *pos, *next_grapheme;
+
     if (!buffer->input
         || (buffer->input_buffer_pos >= buffer->input_buffer_length))
     {
         return;
     }
 
-    buffer->input_buffer_pos++;
+    /* Find current position in bytes */
+    pos = utf8_add_offset (buffer->input_buffer, buffer->input_buffer_pos);
+
+    /* Find the start of the next grapheme cluster */
+    next_grapheme = utf8_grapheme_next (pos);
+
+    if (!next_grapheme || !next_grapheme[0])
+    {
+        buffer->input_buffer_pos = buffer->input_buffer_length;
+    }
+    else
+    {
+        /* Calculate new position in codepoints */
+        buffer->input_buffer_pos = utf8_pos (buffer->input_buffer,
+                                             next_grapheme - buffer->input_buffer);
+    }
+
     gui_input_text_cursor_moved_signal (buffer);
 }
 
