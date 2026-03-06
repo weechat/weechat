@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
+ * SPDX-FileCopyrightText: 2003-2026 Sébastien Helleu <flashcode@flashtux.org>
  * SPDX-FileCopyrightText: 2006 Emmanuel Bouthenot <kolter@openics.org>
  *
  * SPDX-License-Identifier: GPL-3.0-or-later
@@ -53,7 +53,7 @@
 #define AI(string) (string)
 
 
-#define WEECHAT_COPYRIGHT_DATE   "(C) 2003-2025"
+#define WEECHAT_COPYRIGHT_DATE   "(C) 2003-2026"
 #define WEECHAT_WEBSITE          "https://weechat.org/"
 #define WEECHAT_WEBSITE_DOWNLOAD "https://weechat.org/download/"
 
