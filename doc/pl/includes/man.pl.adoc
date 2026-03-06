@@ -7,8 +7,7 @@
 Kompletna dokumentacja na temat opcji wtyczek dostępna jest
 w https://weechat.org/doc/[WeeChat user's guide].
 
-// TRANSLATION MISSING
-With irc plugin, you can connect to a server with an URL like:
+Używając wtyczki irc możesz połączyć się z serwerem używając URLa w poniższm formacie:
 
     irc[6][s]://[[nick][:hasło]@]serwer[:port][/#kanał1[,#kanał2...]]
 
