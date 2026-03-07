@@ -2179,6 +2179,7 @@ msgstr ""
 msgid "regex: POSIX extended regular expression to search in line:"
 msgstr "regex: rozszerzone wyrażenia regularne POSIX do wyszukiwania w linii:"
 
+#, noqa
 msgid ""
 "> - use \"\\t\" to separate prefix from message, special chars like \"|\" "
 "must be escaped: \"\\|\""
@@ -3211,11 +3212,13 @@ msgstr ""
 "takst: tekst do wyświetlenia (prefiks i wiadomość muszą być oddzielone przez "
 "„\\t”, jeśli tekst zaczyna się od „-” należy dodać przed nim „\\”)"
 
+#, noqa
 msgid "raw[-stdout]: display text on stdout (escaped chars are interpreted)"
 msgstr ""
 "raw[-stdout]: wyświetl tekst na standardowe wyjście (znaki poprzedzone \\ są "
 "interpretowane)"
 
+#, noqa
 msgid "raw[-stderr]: display text on stderr (escaped chars are interpreted)"
 msgstr ""
 "raw[-stderr]: wyświetl tekst na standardowe wyjście błędu (znaki poprzedzone "
