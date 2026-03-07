@@ -24,7 +24,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2026-02-07 22:07+0100\n"
-"PO-Revision-Date: 2026-02-07 22:07+0100\n"
+"PO-Revision-Date: 2026-03-07 08:47+0100\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -15598,7 +15598,7 @@ msgstr "%s%s : le relai distant \"%s\" n'existe pas pour la commande \"%s\""
 
 #, c-format
 msgid "%s%s: no connection to remote relay \"%s\""
-msgstr "%s%s : non connecté au relai distant \"%s\" !"
+msgstr "%s%s : non connecté au relai distant \"%s\""
 
 #, c-format
 msgid "remote[%s]: auto-reconnection is cancelled"

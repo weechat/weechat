@@ -23,7 +23,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2026-02-07 22:07+0100\n"
-"PO-Revision-Date: 2026-02-07 21:37+0100\n"
+"PO-Revision-Date: 2026-03-07 08:48+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
 "translation/ja_JP>\n"
@@ -12771,7 +12771,7 @@ msgstr "%s%s: サーバに接続していません"
 
 #, c-format
 msgid "%s%s: this buffer is not a channel!"
-msgstr "%s%s: このバッファはチャンネルではありません"
+msgstr "%s%s: このバッファはチャンネルではありません!"
 
 #, c-format
 msgid ""

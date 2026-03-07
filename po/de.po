@@ -29,7 +29,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2026-02-07 22:07+0100\n"
-"PO-Revision-Date: 2026-02-07 22:07+0100\n"
+"PO-Revision-Date: 2026-03-07 08:43+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de_DE\n"
@@ -912,7 +912,7 @@ msgstr "%skeine Binärdatei angegeben"
 
 #, c-format
 msgid "Upgrading WeeChat with binary file: \"%s\"..."
-msgstr "Aktualisiere WeeChat mit Binärdatei \"%s\"...."
+msgstr "Aktualisiere WeeChat mit Binärdatei \"%s\"..."
 
 #, c-format
 msgid "%sUpgrade aborted"
