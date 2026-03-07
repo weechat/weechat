@@ -23,6 +23,7 @@
 
 set(LIB_CORE_SRC
   weechat.c weechat.h
+  core-args.c core-args.h
   core-arraylist.c core-arraylist.h
   core-backtrace.c core-backtrace.h
   core-calc.c core-calc.h
