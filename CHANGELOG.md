@@ -1,5 +1,5 @@
 <!--
-SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
+SPDX-FileCopyrightText: 2003-2026 Sébastien Helleu <flashcode@flashtux.org>
 
 SPDX-License-Identifier: GPL-3.0-or-later
 -->
@@ -13,6 +13,14 @@ SPDX-License-Identifier: GPL-3.0-or-later
 - core: fix buffer size in function util_parse_time, causing buffer overflow error in unit tests
 - irc: fix unit of server option `anti_flood` from seconds to milliseconds in output of `/server listfull`
 - irc: fix creation of irc.msgbuffer option without a server name
+- irc: ignore self join if the channel is already joined ([#2291](https://github.com/weechat/weechat/issues/2291))
+- relay/api: fix memory leaks in resources "ping" and "sync"
+- relay/api: fix memory leak in receive of message from remote WeeChat
+
+## Version 4.8.2 (2026-03-06)
+
+### Fixed
+
 - irc: ignore self join if the channel is already joined ([#2291](https://github.com/weechat/weechat/issues/2291))
 - relay/api: fix memory leaks in resources "ping" and "sync"
 - relay/api: fix memory leak in receive of message from remote WeeChat

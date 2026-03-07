@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# SPDX-FileCopyrightText: 2015-2025 Sébastien Helleu <flashcode@flashtux.org>
+# SPDX-FileCopyrightText: 2015-2026 Sébastien Helleu <flashcode@flashtux.org>
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 #
@@ -41,7 +41,7 @@
 #     devel-number   the devel version as hex number ("0x04010000" for "4.1.0-dev")
 #
 
-weechat_stable="4.8.1"
+weechat_stable="4.8.2"
 weechat_devel="4.9.0-dev"
 
 stable_major=$(echo "${weechat_stable}" | cut -d"." -f1)
