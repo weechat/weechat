@@ -911,7 +911,7 @@ msgid "WeeChat uptime: %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, started on %s%s"
 msgstr ""
 "WeeChat çalışma süresi: %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, başlatma: %s%s"
 
-# noqa
+#, noqa
 msgid "compiled on"
 msgstr "derlenme tarihi:"
 
@@ -18147,11 +18147,11 @@ msgid ""
 msgstr ""
 "%3d. %s (%s), dosya: \"%s\" (yerel: \"%s\"), %s %s, durum: %s%s%s (%%%llu)"
 
-# noqa
+#, noqa
 msgid "sent to"
 msgstr "gönderilen:"
 
-# noqa
+#, noqa
 msgid "received from"
 msgstr "alınan:"
 
