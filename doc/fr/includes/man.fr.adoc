@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
+// SPDX-FileCopyrightText: 2003-2026 Sébastien Helleu <flashcode@flashtux.org>
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
@@ -106,7 +106,7 @@ WeeChat est écrit par Sébastien Helleu et des contributeurs (la liste complèt
 est dans le fichier AUTHORS.md).
 
 // REUSE-IgnoreStart
-Copyright (C) 2003-2025 {author}
+Copyright (C) 2003-2026 {author}
 // REUSE-IgnoreEnd
 
 WeeChat est un logiciel libre ; vous pouvez le redistribuer et/ou le modifier

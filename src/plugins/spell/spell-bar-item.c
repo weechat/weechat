@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2012 Nils Görs <weechatter@arcor.de>
- * SPDX-FileCopyrightText: 2012-2025 Sébastien Helleu <flashcode@flashtux.org>
+ * SPDX-FileCopyrightText: 2012-2026 Sébastien Helleu <flashcode@flashtux.org>
  *
  * SPDX-License-Identifier: GPL-3.0-or-later
  *

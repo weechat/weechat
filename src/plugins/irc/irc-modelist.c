@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015 Simmo Saan <simmo.saan@gmail.com>
- * SPDX-FileCopyrightText: 2018-2025 Sébastien Helleu <flashcode@flashtux.org>
+ * SPDX-FileCopyrightText: 2018-2026 Sébastien Helleu <flashcode@flashtux.org>
  *
  * SPDX-License-Identifier: GPL-3.0-or-later
  *

@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
+// SPDX-FileCopyrightText: 2003-2026 Sébastien Helleu <flashcode@flashtux.org>
 // SPDX-FileCopyrightText: 2006 Stalwart <stlwrt@gmail.com>
 // SPDX-FileCopyrightText: 2009 Алексей Бортник <thebosha@gmail.com>
 // SPDX-FileCopyrightText: 2014-2015 Alexander Turenko <totktonada.ru@gmail.com>

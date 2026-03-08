@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
+// SPDX-FileCopyrightText: 2003-2026 Sébastien Helleu <flashcode@flashtux.org>
 // SPDX-FileCopyrightText: 2021-2025 Иван Пешић <ivan.pesic@gmail.com>
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
@@ -103,7 +103,7 @@ $HOME/.config/weechat/weechat.log::
 Програм WeeChat је написао Себастијен Елеу и људи који су дали свој допринос (комплетна листа се налази у фајлу AUTHORS.md).
 
 // REUSE-IgnoreStart
-Ауторска права (C) 2003-2025 {author}
+Ауторска права (C) 2003-2026 {author}
 // REUSE-IgnoreEnd
 
 WeeChat је слободни софтвер; можете га редистрибуирати и/или изменити под условима ГНУ Опште Јавне Лиценце коју је објавила Free Software Foundation; или верзије 3 Лиценце, или (по вашој жељи) било којој каснијој верзији.

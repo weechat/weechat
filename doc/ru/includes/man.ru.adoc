@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
+// SPDX-FileCopyrightText: 2003-2026 Sébastien Helleu <flashcode@flashtux.org>
 // SPDX-FileCopyrightText: 2006-2007 Pavel Shevchuk <stlwrt@gmail.com>
 // SPDX-FileCopyrightText: 2012 Aleksey V Zapparov <ixti@member.fsf.org>
 //
@@ -107,7 +107,7 @@ WeeChat написан Sébastien Helleu и другими участникам�
 в файле AUTHORS.md).
 
 // REUSE-IgnoreStart
-Copyright (C) 2003-2025 {author}
+Copyright (C) 2003-2026 {author}
 // REUSE-IgnoreEnd
 
 WeeChat is free software; you can redistribute it and/or modify

@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
+ * SPDX-FileCopyrightText: 2003-2026 Sébastien Helleu <flashcode@flashtux.org>
  * SPDX-FileCopyrightText: 2005-2008 Emmanuel Bouthenot <kolter@openics.org>
  * SPDX-FileCopyrightText: 2012 Simon Arlott
  *

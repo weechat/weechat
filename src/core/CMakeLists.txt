@@ -1,5 +1,5 @@
 #
-# SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
+# SPDX-FileCopyrightText: 2003-2026 Sébastien Helleu <flashcode@flashtux.org>
 # SPDX-FileCopyrightText: 2008 Julien Louis <ptitlouis@sysif.net>
 # SPDX-FileCopyrightText: 2009 Emmanuel Bouthenot <kolter@openics.org>
 #
