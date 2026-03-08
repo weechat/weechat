@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-02-07 22:07+0100\n"
-"PO-Revision-Date: 2026-02-07 21:37+0100\n"
+"POT-Creation-Date: 2026-03-08 08:25+0100\n"
+"PO-Revision-Date: 2026-03-08 08:59+0100\n"
 "Last-Translator: Santiago Forero <santiago@forero.xyz>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: es\n"
@@ -33,6 +33,181 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. TRANSLATORS: command line option "-a", "--no-connect"
+#, fuzzy
+#| msgid "%s%s: unable to connect to sender"
+msgid "disable auto-connect to servers at startup"
+msgstr "%s%s: no es posible conectarse al transmisor"
+
+#. TRANSLATORS: command line option "-c", "--colors"
+msgid "display default colors in terminal and exit"
+msgstr ""
+
+#. TRANSLATORS: only "<path>" may be translated
+msgid "-d, --dir <path>"
+msgstr ""
+
+#. TRANSLATORS: command line option "-d", "--dir <path>"
+msgid ""
+"force a single WeeChat home directory or 5 different directories separated "
+"by colons (in this order: config, data, state, cache, runtime) (environment "
+"variable WEECHAT_HOME is read if this option is not given)"
+msgstr ""
+
+#. TRANSLATORS: command line option "-t", "--temp-dir"
+msgid ""
+"create a temporary WeeChat home directory and delete it on exit "
+"(incompatible with option \"-d\")"
+msgstr ""
+
+#. TRANSLATORS: command line option "-h", "--help"
+#, fuzzy
+#| msgid "use same nick color for channel and private"
+msgid "display this help and exit"
+msgstr "usar el mismo color de apodo en el canal y conversaciones privadas"
+
+#. TRANSLATORS: command line option "-i", "--build-info"
+msgid "display build information and exit"
+msgstr ""
+
+#. TRANSLATORS: command line option "-l", "--license"
+#, fuzzy
+#| msgid "display WeeChat logo at startup"
+msgid "display WeeChat license and exit"
+msgstr "mostrar el logo de WeeChat en el arranque"
+
+#. TRANSLATORS: command line option "-p", "--no-plugin"
+#, fuzzy
+#| msgid "display WeeChat logo at startup"
+msgid "don't load any plugin at startup"
+msgstr "mostrar el logo de WeeChat en el arranque"
+
+#. TRANSLATORS: only "<plugins>" may be translated
+msgid "-P, --plugins <plugins>"
+msgstr ""
+
+#. TRANSLATORS: command line option "-P", "--plugins <plugins>"
+msgid "load only these plugins at startup (see /help weechat.plugin.autoload)"
+msgstr ""
+
+#. TRANSLATORS: only "<cmd>" may be translated (please keep it short)
+msgid "-r, --run-command <cmd>"
+msgstr ""
+
+#. TRANSLATORS: command line option "-r", "--run-command <cmd>"
+#, fuzzy
+#| msgid ""
+#| "command executed when WeeChat starts, after loading plugins; multiple "
+#| "commands can be separated by semicolons (note: commands are evaluated, "
+#| "see /help eval)"
+msgid ""
+"run command(s) after startup; many commands can be separated by semicolons "
+"and are evaluated, this option can be given multiple times"
+msgstr ""
+"comando ejecutado cuando WeeChat inicia, después de cargar los plugins, "
+"multiples comandos pueden ser separados por puntos y comas (nota: los "
+"comandos se evaluan, ver /help eval)"
+
+#. TRANSLATORS: command line option "-s", "--no-script"
+msgid "don't load any script at startup"
+msgstr ""
+
+#. TRANSLATORS: command line option "--upgrade"
+#, fuzzy
+#| msgid "%sUnable to save session in file"
+msgid "upgrade WeeChat using session files (see /help upgrade in WeeChat)"
+msgstr "%sError: no se pudo guardar la sesión"
+
+#. TRANSLATORS: command line option "-v", "--version"
+#, fuzzy
+#| msgid "display WeeChat version at startup"
+msgid "display WeeChat version and exit"
+msgstr "mostrar la versión de WeeChat en el arranque"
+
+#. TRANSLATORS: command line option: "plugin" and "option" may be translated
+#, fuzzy
+#| msgid "plugin pointer (optional)"
+msgid "plugin:option"
+msgstr "puntero del plugin (opcional)"
+
+#. TRANSLATORS: command line option "plugin:option"
+msgid "option for plugin (see man weechat)"
+msgstr ""
+
+#. TRANSLATORS: only "<path>" may be translated
+msgid "--doc-gen <path>"
+msgstr ""
+
+#. TRANSLATORS: command line option "--doc-gen <path>"
+msgid "generate files to build documentation and exit"
+msgstr ""
+
+#. TRANSLATORS: command line option "--daemon"
+#, fuzzy
+#| msgid ""
+#| "                           (by default in headless mode WeeChat is "
+#| "blocking and does not run in background)\n"
+msgid ""
+"run WeeChat as a daemon (fork, new process group, file descriptors closed); "
+"by default in headless mode WeeChat is blocking and does not run in "
+"background"
+msgstr ""
+"                           (por defecto en el modo de segundo plano WeeChat "
+"está bloqueado y no se ejecuta)\n"
+
+#. TRANSLATORS: command line option "--stdout"
+#, fuzzy
+#| msgid ""
+#| "      --stdout             display log messages on standard output "
+#| "instead of writing them in log file\n"
+msgid ""
+"display log messages on standard output instead of writing them in log file "
+"(option ignored if option \"--daemon\" is given)"
+msgstr ""
+"      --stdout             imprime los registros (logs) en salida estandar "
+"en lugar de escribirlos en un archivo\n"
+
+#. TRANSLATORS: command line option "--no-dlclose"
+msgid "do not call function dlclose after plugins are unloaded"
+msgstr ""
+
+#. TRANSLATORS: command line option "--no-gnutls"
+msgid "disable init/deinit of gnutls"
+msgstr ""
+
+#. TRANSLATORS: command line option "--no-gcrypt"
+msgid "disable init/deinit of gcrypt"
+msgstr ""
+
+#. TRANSLATORS: "%s %s" after "compiled on" is date and time
+#, c-format
+msgid ""
+"WeeChat %s Copyright %s, compiled on %s %s\n"
+"Developed by Sébastien Helleu <flashcode@flashtux.org> - %s"
+msgstr ""
+"WeeChat %s Copyright %s, compilado en %s %s\n"
+"Desarrollado por Sébastien Helleu <flashcode@flashtux.org> - %s"
+
+msgid "Usage:"
+msgstr ""
+
+#, fuzzy
+#| msgid "Usage: %s [option...] [plugin:option...]\n"
+msgid "[option...] [plugin:option...]"
+msgstr "Uso: %s [opción...] [plugin:opción...]\n"
+
+#, fuzzy
+#| msgid "Extra options in headless mode:\n"
+msgid "Extra options in headless mode:"
+msgstr "Opciones extra en el modo de segundo plano:\n"
+
+msgid "Debug options (for tools like valgrind, DO NOT USE IN PRODUCTION):"
+msgstr ""
+
+#, c-format
+msgid "Error: missing argument for \"%s\" option\n"
+msgstr "Error: falta un argumento para la opción \"%s\"\n"
 
 msgid "List of bars:"
 msgstr "Lista de barras:"
@@ -6311,152 +6486,6 @@ msgstr ""
 #| msgid "End of command '%s', timeout reached (%.1fs)"
 msgid "End of URL transfer '%s', transfer stopped"
 msgstr "Fin del comando '%s', tiempo de espera alcanzado (%.1fs)"
-
-#. TRANSLATORS: "%s %s" after "compiled on" is date and time
-#, c-format
-msgid ""
-"WeeChat %s Copyright %s, compiled on %s %s\n"
-"Developed by Sébastien Helleu <flashcode@flashtux.org> - %s"
-msgstr ""
-"WeeChat %s Copyright %s, compilado en %s %s\n"
-"Desarrollado por Sébastien Helleu <flashcode@flashtux.org> - %s"
-
-#, c-format
-msgid "Usage: %s [option...] [plugin:option...]\n"
-msgstr "Uso: %s [opción...] [plugin:opción...]\n"
-
-#
-#, fuzzy
-#| msgid ""
-#| "  -a, --no-connect         disable auto-connect to servers at startup\n"
-#| "  -c, --colors             display default colors in terminal\n"
-#| "  -d, --dir <path>         force a single WeeChat home directory\n"
-#| "                           or 4 different directories separated by colons "
-#| "(in this order: config, data, cache, runtime)\n"
-#| "                           (environment variable WEECHAT_HOME is read if "
-#| "this option is not given)\n"
-#| "  -t, --temp-dir           create a temporary WeeChat homedirectory and "
-#| "delete it on exit\n"
-#| "                           (incompatible with option \"-d\")\n"
-#| "  -h, --help               display this help\n"
-#| "  -l, --license            display WeeChat license\n"
-#| "  -p, --no-plugin          don't load any plugin at startup\n"
-#| "  -P, --plugins <plugins>  load only these plugins at startup\n"
-#| "                           (see /help weechat.plugin.autoload)\n"
-#| "  -r, --run-command <cmd>  run command(s) after startup;\n"
-#| "                           many commands can be separated by semicolons "
-#| "and are evaluated,\n"
-#| "                           this option can be given multiple times\n"
-#| "  -s, --no-script          don't load any script at startup\n"
-#| "      --upgrade            upgrade WeeChat using session files (see /help "
-#| "upgrade in WeeChat)\n"
-#| "  -v, --version            display WeeChat version\n"
-#| "  plugin:option            option for plugin (see man weechat)\n"
-msgid ""
-"  -a, --no-connect         disable auto-connect to servers at startup\n"
-"  -c, --colors             display default colors in terminal and exit\n"
-"  -d, --dir <path>         force a single WeeChat home directory\n"
-"                           or 5 different directories separated by colons "
-"(in this order: config, data, state, cache, runtime)\n"
-"                           (environment variable WEECHAT_HOME is read if "
-"this option is not given)\n"
-"  -t, --temp-dir           create a temporary WeeChat home directory and "
-"delete it on exit\n"
-"                           (incompatible with option \"-d\")\n"
-"  -h, --help               display this help and exit\n"
-"  -i, --build-info         display build information and exit\n"
-"  -l, --license            display WeeChat license and exit\n"
-"  -p, --no-plugin          don't load any plugin at startup\n"
-"  -P, --plugins <plugins>  load only these plugins at startup\n"
-"                           (see /help weechat.plugin.autoload)\n"
-"  -r, --run-command <cmd>  run command(s) after startup;\n"
-"                           many commands can be separated by semicolons and "
-"are evaluated,\n"
-"                           this option can be given multiple times\n"
-"  -s, --no-script          don't load any script at startup\n"
-"      --upgrade            upgrade WeeChat using session files (see /help "
-"upgrade in WeeChat)\n"
-"  -v, --version            display WeeChat version and exit\n"
-"  plugin:option            option for plugin (see man weechat)\n"
-msgstr ""
-"  -a, --no-connect         desactivar la autoconexión de los servidores al "
-"inicio\n"
-"  -c, --colors             mostrar los colores predeterminados en la "
-"terminal\n"
-"  -d, --dir <path>         establecer el directorio raíz de WeeChat\n"
-"                           o 4 directorios diferentes separados por dos "
-"puntos (en este orden: configuración, datos, cache, ejecución)\n"
-"                           (la variable WEECHAT_HOME es usada si esta opción "
-"no es dada)\n"
-"  -t, --temp-dir           crear un directorio raíz temporal para weechat y "
-"borrarlo al salir\n"
-"                           (incompatible con la opción \"-d\")\n"
-"  -h, --help               mostrar esta ayuda\n"
-"  -l, --license            mostrar la licencia de Weechat\n"
-"  -p, --no-plugin          no cargar ningún plugin al inicio\n"
-"  -P, --plugins <plugins>  cargar solo estos plugins al inicio\n"
-"                           (ver /help weechat.plugin.autoload)\n"
-"  -r, --run-command <cmd>  ejecutar un comando luego del inicio;\n"
-"                           varios cmoandos pueden ser separados por dos "
-"puntos y son evaluados\n"
-"                           esta opción se puede usar varias veces\n"
-"  -s, --no-script          no cargar ningún script al inicio\n"
-"      --upgrade            actualizar WeeChat usando archivos de sesión "
-"(ver /help upgrade in WeeChat)\n"
-"  -v, --version            mostrar la versión de WeeChat\n"
-"  plugin:option            opción para plugin (ver man weechat)\n"
-
-msgid "Extra options in headless mode:\n"
-msgstr "Opciones extra en el modo de segundo plano:\n"
-
-msgid ""
-"      --doc-gen <path>     generate files to build documentation and exit\n"
-msgstr ""
-
-msgid ""
-"      --daemon             run WeeChat as a daemon (fork, new process group, "
-"file descriptors closed);\n"
-msgstr ""
-"      --daemon             ejecuta WeeChat como un daemon (fork, nuevo grupo "
-"de procesos, file descriptores cerrados);\n"
-
-msgid ""
-"                           (by default in headless mode WeeChat is blocking "
-"and does not run in background)\n"
-msgstr ""
-"                           (por defecto en el modo de segundo plano WeeChat "
-"está bloqueado y no se ejecuta)\n"
-
-msgid ""
-"      --stdout             display log messages on standard output instead "
-"of writing them in log file\n"
-msgstr ""
-"      --stdout             imprime los registros (logs) en salida estandar "
-"en lugar de escribirlos en un archivo\n"
-
-msgid ""
-"                           (option ignored if option \"--daemon\" is given)\n"
-msgstr ""
-"                           (opción ignorada si la opción \"--daemon\" es "
-"indicada)\n"
-
-msgid ""
-"Debug options (for tools like valgrind, DO NOT USE IN PRODUCTION):\n"
-"      --no-dlclose         do not call function dlclose after plugins are "
-"unloaded\n"
-"      --no-gnutls          disable init/deinit of gnutls\n"
-"      --no-gcrypt          disable init/deinit of gcrypt\n"
-msgstr ""
-"Opciones de depuración (para herramientas como valgrind, NO USAR EN "
-"PRODUCCIÓN):\n"
-"      --no-dlclose         no llamar a la función dlclose luego de que los "
-"plugins estén descargados\n"
-"      --no-gnutls          desactivar init/deinit de gnutls\n"
-"      --no-gcrypt          desactivar init/deinit de gcrypt\n"
-
-#, c-format
-msgid "Error: missing argument for \"%s\" option\n"
-msgstr "Error: falta un argumento para la opción \"%s\"\n"
 
 #, fuzzy
 #| msgid "WeeChat is running in headless mode (Ctrl-C to quit)."

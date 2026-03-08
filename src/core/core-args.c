@@ -33,6 +33,7 @@
 #include "core-debug.h"
 #include "core-list.h"
 #include "core-string.h"
+#include "core-utf8.h"
 #include "core-version.h"
 #include "../gui/gui-color.h"
 #include "../plugins/plugin.h"
@@ -42,6 +43,127 @@
 #define OPTION_NO_DLCLOSE 1001
 #define OPTION_NO_GNUTLS  1002
 #define OPTION_NO_GCRYPT  1003
+
+char *weechat_args_common[][2] = {
+    {
+        "-a, --no-connect",
+        /* TRANSLATORS: command line option "-a", "--no-connect" */
+        N_("disable auto-connect to servers at startup"),
+    },
+    {
+        "-c, --colors",
+        /* TRANSLATORS: command line option "-c", "--colors" */
+        N_("display default colors in terminal and exit"),
+    },
+    {
+        /* TRANSLATORS: only "<path>" may be translated */
+        N_("-d, --dir <path>"),
+        /* TRANSLATORS: command line option "-d", "--dir <path>" */
+        N_("force a single WeeChat home directory or 5 different directories "
+           "separated by colons (in this order: config, data, state, cache, runtime) "
+           "(environment variable WEECHAT_HOME is read if this option is not given)"),
+    },
+    {
+        "-t, --temp-dir",
+        /* TRANSLATORS: command line option "-t", "--temp-dir" */
+        N_("create a temporary WeeChat home directory and delete it on exit "
+           "(incompatible with option \"-d\")"),
+    },
+    {
+        "-h, --help",
+        /* TRANSLATORS: command line option "-h", "--help" */
+        N_("display this help and exit"),
+    },
+    {
+        "-i, --build-info",
+        /* TRANSLATORS: command line option "-i", "--build-info" */
+        N_("display build information and exit"),
+    },
+    {
+        "-l, --license",
+        /* TRANSLATORS: command line option "-l", "--license" */
+        N_("display WeeChat license and exit"),
+    },
+    {
+        "-p, --no-plugin",
+        /* TRANSLATORS: command line option "-p", "--no-plugin" */
+        N_("don't load any plugin at startup"),
+    },
+    {
+        /* TRANSLATORS: only "<plugins>" may be translated */
+        N_("-P, --plugins <plugins>"),
+        /* TRANSLATORS: command line option "-P", "--plugins <plugins>" */
+        N_("load only these plugins at startup (see /help weechat.plugin.autoload)"),
+    },
+    {
+        /* TRANSLATORS: only "<cmd>" may be translated (please keep it short) */
+        N_("-r, --run-command <cmd>"),
+        /* TRANSLATORS: command line option "-r", "--run-command <cmd>" */
+        N_("run command(s) after startup; many commands can be separated "
+           "by semicolons and are evaluated, this option can be given multiple times"),
+    },
+    {
+        "-s, --no-script",
+        /* TRANSLATORS: command line option "-s", "--no-script" */
+        N_("don't load any script at startup"),
+    },
+    {
+        "--upgrade",
+        /* TRANSLATORS: command line option "--upgrade" */
+        N_("upgrade WeeChat using session files (see /help upgrade in WeeChat)"),
+    },
+    {
+        "-v, --version",
+        /* TRANSLATORS: command line option "-v", "--version" */
+        N_("display WeeChat version and exit"),
+    },
+    {
+        /* TRANSLATORS: command line option: "plugin" and "option" may be translated */
+        N_("plugin:option"),
+        /* TRANSLATORS: command line option "plugin:option" */
+        N_("option for plugin (see man weechat)"),
+    },
+    { NULL, NULL },
+};
+char *weechat_args_headless[][2] = {
+    {
+        /* TRANSLATORS: only "<path>" may be translated */
+        N_("--doc-gen <path>"),
+        /* TRANSLATORS: command line option "--doc-gen <path>" */
+        N_("generate files to build documentation and exit"),
+    },
+    {
+        "--daemon",
+        /* TRANSLATORS: command line option "--daemon" */
+        N_("run WeeChat as a daemon (fork, new process group, file descriptors closed); "
+           "by default in headless mode WeeChat is blocking and does not run in background"),
+    },
+    {
+        "--stdout",
+        /* TRANSLATORS: command line option "--stdout" */
+        N_("display log messages on standard output instead of writing them in log file "
+           "(option ignored if option \"--daemon\" is given)"),
+    },
+    { NULL, NULL },
+};
+char *weechat_args_debug[][2] = {
+    {
+        "--no-dlclose",
+        /* TRANSLATORS: command line option "--no-dlclose" */
+        N_("do not call function dlclose after plugins are unloaded"),
+    },
+    {
+        "--no-gnutls",
+        /* TRANSLATORS: command line option "--no-gnutls" */
+        N_("disable init/deinit of gnutls"),
+    },
+    {
+        "--no-gcrypt",
+        /* TRANSLATORS: command line option "--no-gcrypt" */
+        N_("disable init/deinit of gcrypt"),
+    },
+    { NULL, NULL },
+};
 
 
 /*
@@ -66,6 +188,34 @@ args_display_copyright (void)
     string_fprintf (stdout, "\n");
 }
 
+void
+args_display_list_args (char *args[][2])
+{
+    int i, j, length, length_fill, max_length_screen;
+    const char *ptr_text;
+
+    max_length_screen = 0;
+    for (i = 0; args[i][0]; i++)
+    {
+        length = utf8_strlen_screen (_(args[i][0]));
+        if (length > max_length_screen)
+            max_length_screen = length;
+    }
+
+    for (i = 0; args[i][0]; i++)
+    {
+        ptr_text = _(args[i][0]);
+        length = utf8_strlen_screen (ptr_text);
+        length_fill = max_length_screen - length;
+        string_fprintf (stdout, "  %s", ptr_text);
+        for (j = 0; j < length_fill; j++)
+        {
+            string_fprintf (stdout, " ");
+        }
+        string_fprintf (stdout, "  %s\n", _(args[i][1]));
+    }
+}
+
 /*
  * Displays WeeChat help on standard output.
  */
@@ -76,76 +226,27 @@ args_display_help (void)
     args_display_copyright ();
     string_fprintf (stdout, "\n");
     string_fprintf (stdout,
-                    _("Usage: %s [option...] [plugin:option...]\n"),
-                    weechat_argv0);
-    string_fprintf (stdout, "\n");
-    string_fprintf (
-        stdout,
-        _("  -a, --no-connect         disable auto-connect to servers at "
-          "startup\n"
-          "  -c, --colors             display default colors in terminal "
-          "and exit\n"
-          "  -d, --dir <path>         force a single WeeChat home directory\n"
-          "                           or 5 different directories separated "
-          "by colons (in this order: config, data, state, cache, runtime)\n"
-          "                           (environment variable WEECHAT_HOME is "
-          "read if this option is not given)\n"
-          "  -t, --temp-dir           create a temporary WeeChat home "
-          "directory and delete it on exit\n"
-          "                           (incompatible with option \"-d\")\n"
-          "  -h, --help               display this help and exit\n"
-          "  -i, --build-info         display build information and exit\n"
-          "  -l, --license            display WeeChat license and exit\n"
-          "  -p, --no-plugin          don't load any plugin at startup\n"
-          "  -P, --plugins <plugins>  load only these plugins at startup\n"
-          "                           (see /help weechat.plugin.autoload)\n"
-          "  -r, --run-command <cmd>  run command(s) after startup;\n"
-          "                           many commands can be separated by "
-          "semicolons and are evaluated,\n"
-          "                           this option can be given multiple "
-          "times\n"
-          "  -s, --no-script          don't load any script at startup\n"
-          "      --upgrade            upgrade WeeChat using session files "
-          "(see /help upgrade in WeeChat)\n"
-          "  -v, --version            display WeeChat version and exit\n"
-          "  plugin:option            option for plugin (see man weechat)\n"));
+                    "%s %s %s\n\n",
+                    _("Usage:"),
+                    weechat_argv0,
+                    _("[option...] [plugin:option...]"));
+    args_display_list_args (weechat_args_common);
     string_fprintf (stdout, "\n");
 
     /* extra options in headless mode */
     if (weechat_headless)
     {
-        string_fprintf (stdout, _("Extra options in headless mode:\n"));
-        string_fprintf (
-            stdout,
-            _("      --doc-gen <path>     generate files to build "
-              "documentation and exit\n"));
-        string_fprintf (
-            stdout,
-            _("      --daemon             run WeeChat as a daemon (fork, "
-              "new process group, file descriptors closed);\n"));
-        string_fprintf (
-            stdout,
-            _("                           (by default in headless mode "
-              "WeeChat is blocking and does not run in background)\n"));
-        string_fprintf (
-            stdout,
-            _("      --stdout             display log messages on standard "
-              "output instead of writing them in log file\n"));
-        string_fprintf (
-            stdout,
-            _("                           (option ignored if option "
-              "\"--daemon\" is given)\n"));
+        string_fprintf (stdout, "%s\n",
+                        _("Extra options in headless mode:"));
+        args_display_list_args (weechat_args_headless);
         string_fprintf (stdout, "\n");
     }
 
     /* debug options */
-    string_fprintf (
-        stdout,
-        _("Debug options (for tools like valgrind, DO NOT USE IN PRODUCTION):\n"
-          "      --no-dlclose         do not call function dlclose after "
-          "plugins are unloaded\n"
-          "      --no-gnutls          disable init/deinit of gnutls\n"
-          "      --no-gcrypt          disable init/deinit of gcrypt\n"));
+    string_fprintf (stdout, "%s\n",
+                    _("Debug options (for tools like valgrind, "
+                      "DO NOT USE IN PRODUCTION):"));
+    args_display_list_args (weechat_args_debug);
     string_fprintf (stdout, "\n");
 }
 
