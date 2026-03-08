@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #
 # SPDX-FileCopyrightText: 2019 Simmo Saan <simmo.saan@gmail.com>
-# SPDX-FileCopyrightText: 2021-2025 Sébastien Helleu <flashcode@flashtux.org>
+# SPDX-FileCopyrightText: 2021-2026 Sébastien Helleu <flashcode@flashtux.org>
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 #
@@ -35,7 +35,7 @@ SRC_DIR = Path(__file__).resolve().parent.parent / "src"
 
 STUB_HEADER = """\
 #
-# SPDX-FileCopyrightText: 2019-2025 Sébastien Helleu <flashcode@flashtux.org>
+# SPDX-FileCopyrightText: 2019-2026 Sébastien Helleu <flashcode@flashtux.org>
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 #

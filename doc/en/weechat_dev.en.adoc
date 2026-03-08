@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
+// SPDX-FileCopyrightText: 2003-2026 Sébastien Helleu <flashcode@flashtux.org>
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
@@ -615,7 +615,7 @@ Example in C:
 [source,c]
 ----
 /*
- * SPDX-FileCopyrightText: 2025 Your Name <your@email.com>
+ * SPDX-FileCopyrightText: 2026 Your Name <your@email.com>
  *
  * SPDX-License-Identifier: GPL-3.0-or-later
  *

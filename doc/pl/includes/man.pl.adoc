@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
+// SPDX-FileCopyrightText: 2003-2026 Sébastien Helleu <flashcode@flashtux.org>
 // SPDX-FileCopyrightText: 2009-2016 Krzysztof Koroscik <soltys1@gmail.com>
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
@@ -107,7 +107,7 @@ WeeChat jest tworzony przez Sébastien Helleu i społeczność (pełna lista dos
 jest w pliku AUTHORS.md).
 
 // REUSE-IgnoreStart
-Copyright (C) 2003-2025 {author}
+Copyright (C) 2003-2026 {author}
 // REUSE-IgnoreEnd
 
 WeeChat is free software; you can redistribute it and/or modify

@@ -1,5 +1,5 @@
 <!--
-SPDX-FileCopyrightText: 2003-2025 Sébastien Helleu <flashcode@flashtux.org>
+SPDX-FileCopyrightText: 2003-2026 Sébastien Helleu <flashcode@flashtux.org>
 
 SPDX-License-Identifier: GPL-3.0-or-later
 -->
@@ -56,7 +56,7 @@ WeeChat is following a "practical" semantic versioning, see file [CONTRIBUTING.m
 ## Copyright
 
 <!-- REUSE-IgnoreStart -->
-Copyright © 2003-2025 [Sébastien Helleu](https://github.com/flashcode)
+Copyright © 2003-2026 [Sébastien Helleu](https://github.com/flashcode)
 
 This file is part of WeeChat, the extensible chat client.
 

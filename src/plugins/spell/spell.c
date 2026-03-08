@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2006 Emmanuel Bouthenot <kolter@openics.org>
- * SPDX-FileCopyrightText: 2006-2025 Sébastien Helleu <flashcode@flashtux.org>
+ * SPDX-FileCopyrightText: 2006-2026 Sébastien Helleu <flashcode@flashtux.org>
  * SPDX-FileCopyrightText: 2012 Nils Görs <weechatter@arcor.de>
  *
  * SPDX-License-Identifier: GPL-3.0-or-later
