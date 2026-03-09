@@ -46,7 +46,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-03-08 08:25+0100\n"
+"POT-Creation-Date: 2026-03-09 22:41+0100\n"
 "PO-Revision-Date: 2026-03-08 08:59+0100\n"
 "Last-Translator: Érico Nogueira <ericonr@disroot.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -317,7 +317,7 @@ msgid "%sUnable to scroll bar \"%s\""
 msgstr "%sErro: não foi possível rolar a barra \"%s\""
 
 #, fuzzy, c-format
-msgid "%sBuffer number \"%d\" is out of range (it must be between 1 and %d)"
+msgid "%sBuffer number %d is out of range (it must be between 1 and %d)"
 msgstr "%sNúmero de cor inválido \"%s\" (precisa ser entre %d e %d)"
 
 msgid "Buffers list:"

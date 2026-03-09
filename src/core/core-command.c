@@ -615,7 +615,7 @@ command_buffer_check_number (long number)
     {
         /* invalid number */
         gui_chat_printf (NULL,
-                         _("%sBuffer number \"%d\" is out of range "
+                         _("%sBuffer number %d is out of range "
                            "(it must be between 1 and %d)"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                          number,

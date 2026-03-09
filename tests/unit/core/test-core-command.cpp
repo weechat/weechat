@@ -407,7 +407,7 @@ TEST(CoreCommand, Buffer)
     WEE_CMD_CORE_ERROR_MSG("/buffer renumber 1 xxx 5", "Invalid buffer number: \"xxx\"");
     WEE_CMD_CORE_ERROR_MSG("/buffer renumber 1 2 xxx", "Invalid buffer number: \"xxx\"");
     snprintf (string, sizeof (string),
-              "Buffer number \"-1\" is out of range (it must be between 1 and %d)",
+              "Buffer number -1 is out of range (it must be between 1 and %d)",
               GUI_BUFFER_NUMBER_MAX);
     WEE_CMD_CORE_ERROR_MSG("/buffer renumber 1 2 -1", string);
     WEE_CMD_CORE("/buffer renumber");

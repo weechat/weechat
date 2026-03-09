@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-03-08 08:25+0100\n"
+"POT-Creation-Date: 2026-03-09 22:41+0100\n"
 "PO-Revision-Date: 2026-03-08 08:59+0100\n"
 "Last-Translator: Vasco Almeida <vascomalmeida@sapo.pt>\n"
 "Language-Team: Portuguese <>\n"
@@ -294,7 +294,7 @@ msgid "%sUnable to scroll bar \"%s\""
 msgstr "%sErro: não foi possível deslocar a barra \"%s\""
 
 #, fuzzy, c-format
-msgid "%sBuffer number \"%d\" is out of range (it must be between 1 and %d)"
+msgid "%sBuffer number %d is out of range (it must be between 1 and %d)"
 msgstr ""
 "%sErro: o buffer número %d está fora do intervalo (deve estar entre 1 e %d)"
 

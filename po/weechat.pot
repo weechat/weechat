@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-03-08 08:25+0100\n"
+"POT-Creation-Date: 2026-03-09 22:41+0100\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -271,7 +271,7 @@ msgid "%sUnable to scroll bar \"%s\""
 msgstr ""
 
 #, c-format
-msgid "%sBuffer number \"%d\" is out of range (it must be between 1 and %d)"
+msgid "%sBuffer number %d is out of range (it must be between 1 and %d)"
 msgstr ""
 
 msgid "Buffers list:"

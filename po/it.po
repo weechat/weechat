@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-03-08 08:25+0100\n"
-"PO-Revision-Date: 2026-03-08 08:59+0100\n"
+"POT-Creation-Date: 2026-03-09 22:41+0100\n"
+"PO-Revision-Date: 2026-03-09 22:44+0100\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: it\n"
@@ -293,9 +293,9 @@ msgstr "%sErrore: finestra non trovata per il comando \"%s\""
 msgid "%sUnable to scroll bar \"%s\""
 msgstr "%sErrore: impossibile scorrere la barra \"%s\""
 
-#, fuzzy, c-format
-msgid "%sBuffer number \"%d\" is out of range (it must be between 1 and %d)"
-msgstr "%sNumero colore \"%s\" non valido (deve essere compresto tra %d e %d)"
+#, c-format
+msgid "%sBuffer number %d is out of range (it must be between 1 and %d)"
+msgstr ""
 
 msgid "Buffers list:"
 msgstr "Elenco buffer:"

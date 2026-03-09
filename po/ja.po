@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-03-08 08:25+0100\n"
+"POT-Creation-Date: 2026-03-09 22:41+0100\n"
 "PO-Revision-Date: 2026-03-08 08:59+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -298,7 +298,7 @@ msgid "%sUnable to scroll bar \"%s\""
 msgstr "%sエラー: バー \"%s\" をスクロールできません"
 
 #, fuzzy, c-format
-msgid "%sBuffer number \"%d\" is out of range (it must be between 1 and %d)"
+msgid "%sBuffer number %d is out of range (it must be between 1 and %d)"
 msgstr ""
 "%sエラー: %d は範囲外のバッファ番号です (1 から %d の間で指定してください)"
 
