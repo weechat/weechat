@@ -9058,7 +9058,7 @@ command_init (void)
                "are NOT checked)"),
             N_("raw[clear]: clear hotlist"),
             N_("level: \"lowest\" to clear only lowest level in hotlist, "
-               "highest\" to clear only highest level in hotlist, or level mask: "
+               "\"highest\" to clear only highest level in hotlist, or level mask: "
                "integer which is a combination of 1=join/part, 2=message, "
                "4=private, 8=highlight"),
             N_("raw[remove]: remove current buffer from hotlist"),
