@@ -32,6 +32,7 @@ extern struct t_config_option *typing_config_look_enabled_nicks;
 extern struct t_config_option *typing_config_look_enabled_self;
 extern struct t_config_option *typing_config_look_input_min_chars;
 extern struct t_config_option *typing_config_look_item_max_length;
+extern struct t_config_option *typing_config_look_item_text;
 
 extern int typing_config_init (void);
 extern int typing_config_read (void);

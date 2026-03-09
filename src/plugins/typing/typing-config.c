@@ -47,6 +47,7 @@ struct t_config_option *typing_config_look_enabled_nicks = NULL;
 struct t_config_option *typing_config_look_enabled_self = NULL;
 struct t_config_option *typing_config_look_input_min_chars = NULL;
 struct t_config_option *typing_config_look_item_max_length = NULL;
+struct t_config_option *typing_config_look_item_text = NULL;
 
 
 /*
@@ -94,6 +95,22 @@ typing_config_change_enabled (const void *pointer, void *data,
 void
 typing_config_change_item_max_length (const void *pointer, void *data,
                                       struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) option;
+
+    weechat_bar_item_update (TYPING_BAR_ITEM_NAME);
+}
+
+/*
+ * Callback for changes on options "typing.look.item_text".
+ */
+
+void
+typing_config_change_item_text (const void *pointer, void *data,
+                                struct t_config_option *option)
 {
     /* make C compiler happy */
     (void) pointer;
@@ -187,6 +204,17 @@ typing_config_init (void)
             NULL, NULL, NULL,
             &typing_config_change_item_max_length, NULL, NULL,
             NULL, NULL, NULL);
+        typing_config_look_item_text = weechat_config_new_option (
+            typing_config_file, typing_config_section_look,
+            "item_text", "string",
+            N_("text to display before the nicks in the bar item \"typing\"; "
+               "if set, it is used instead of the translated string \"Typing: \" "
+               "which is used by default"),
+            NULL, 0, 0, "", NULL, 0,
+            NULL, NULL, NULL,
+            &typing_config_change_item_text, NULL, NULL,
+            NULL, NULL, NULL);
+
     }
 
     return 1;

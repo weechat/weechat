@@ -79,6 +79,7 @@ typing_bar_item_typing (const void *pointer, void *data,
 {
     struct t_hashtable *ptr_nicks;
     char **str_nicks_typing, **str_typing, *str_typing_cut;
+    const char *ptr_text;
     int max_length;
 
     /* make C compiler happy */
@@ -103,9 +104,13 @@ typing_bar_item_typing (const void *pointer, void *data,
                            &typing_bar_item_nicks_map_cb, str_nicks_typing);
 
     str_typing = weechat_string_dyn_alloc (256);
-    /* TRANSLATORS: this text is displayed before the list of nicks typing in the bar item "typing", it must be as short as possible */
-    weechat_string_dyn_concat (str_typing, _("Typing:"), -1);
-    weechat_string_dyn_concat (str_typing, " ", -1);
+    ptr_text = weechat_config_string (typing_config_look_item_text);
+    if (!ptr_text || !ptr_text[0])
+    {
+        /* TRANSLATORS: this text is displayed before the list of nicks typing in the bar item "typing", it must be as short as possible */
+        ptr_text = _("Typing: ");
+    }
+    weechat_string_dyn_concat (str_typing, ptr_text, -1);
     weechat_string_dyn_concat (str_typing, *str_nicks_typing, -1);
 
     weechat_string_dyn_free (str_nicks_typing, 1);

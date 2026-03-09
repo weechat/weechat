@@ -8,6 +8,10 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 ## Version 4.9.0 (under dev)
 
+### Added
+
+- typing: add option typing.look.item_text ([#2305](https://github.com/weechat/weechat/issues/2305))
+
 ### Fixed
 
 - core: fix buffer size in function util_parse_time, causing buffer overflow error in unit tests
