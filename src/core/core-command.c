@@ -9933,7 +9933,7 @@ command_init (void)
             N_("  4. execute new WeeChat binary and reload session."),
             "",
             N_("With option \"-quit\", the process is:"),
-            N_("  1. close *ALL* connections (irc, xfer, relay, ...)"),
+            N_("  1. close *ALL* connections (irc, xfer, relay, etc.)"),
             N_("  2. save session into files (*.upgrade)"),
             N_("  3. unload all plugins"),
             N_("  4. save WeeChat configuration"),
