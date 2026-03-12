@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-03-12 20:13+0100\n"
+"POT-Creation-Date: 2026-03-12 20:22+0100\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7700,7 +7700,7 @@ msgid "%s%s: not connected to server \"%s\"!"
 msgstr ""
 
 #, c-format
-msgid "%s: auto-reconnection is cancelled"
+msgid "%s: auto-reconnection is canceled"
 msgstr ""
 
 #, c-format
@@ -12779,7 +12779,7 @@ msgid "%s%s: no connection to remote relay \"%s\""
 msgstr ""
 
 #, c-format
-msgid "remote[%s]: auto-reconnection is cancelled"
+msgid "remote[%s]: auto-reconnection is canceled"
 msgstr ""
 
 #, c-format

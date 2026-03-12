@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-03-12 20:13+0100\n"
-"PO-Revision-Date: 2026-03-12 20:15+0100\n"
+"POT-Creation-Date: 2026-03-12 20:22+0100\n"
+"PO-Revision-Date: 2026-03-12 20:23+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: pl\n"
@@ -9341,7 +9341,7 @@ msgid "%s%s: not connected to server \"%s\"!"
 msgstr "%s%s: nie połączony z serwerem \"%s\"!"
 
 #, c-format
-msgid "%s: auto-reconnection is cancelled"
+msgid "%s: auto-reconnection is canceled"
 msgstr "%s: automatyczne ponowne łączenie z serwerem anulowane"
 
 #, c-format
@@ -15195,7 +15195,7 @@ msgid "%s%s: no connection to remote relay \"%s\""
 msgstr "%s%s: brak połączenia ze zdalnym pośrednikiem „%s”"
 
 #, c-format
-msgid "remote[%s]: auto-reconnection is cancelled"
+msgid "remote[%s]: auto-reconnection is canceled"
 msgstr "remote[%s]: automatyczne ponowne łączenie anulowane"
 
 #, c-format

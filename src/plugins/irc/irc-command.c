@@ -2468,7 +2468,7 @@ irc_command_disconnect_one_server (struct t_irc_server *server,
     {
         weechat_printf (
             server->buffer,
-            _("%s: auto-reconnection is cancelled"),
+            _("%s: auto-reconnection is canceled"),
             IRC_PLUGIN_NAME);
     }
     irc_command_quit_server (server, reason);

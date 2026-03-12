@@ -46,8 +46,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-03-12 20:13+0100\n"
-"PO-Revision-Date: 2026-03-08 08:59+0100\n"
+"POT-Creation-Date: 2026-03-12 20:22+0100\n"
+"PO-Revision-Date: 2026-03-12 20:19+0100\n"
 "Last-Translator: Érico Nogueira <ericonr@disroot.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: pt_BR\n"
@@ -8665,7 +8665,7 @@ msgid "%s%s: not connected to server \"%s\"!"
 msgstr ""
 
 #, c-format
-msgid "%s: auto-reconnection is cancelled"
+msgid "%s: auto-reconnection is canceled"
 msgstr ""
 
 #, c-format
@@ -14420,7 +14420,7 @@ msgstr "%s%s: sem conexão com o servidor \"%s\" para redirecionamento"
 
 #, fuzzy, c-format
 #| msgid "%s%s: connection refused"
-msgid "remote[%s]: auto-reconnection is cancelled"
+msgid "remote[%s]: auto-reconnection is canceled"
 msgstr "%s%s: conexão recusada"
 
 #, fuzzy, c-format

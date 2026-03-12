@@ -760,7 +760,7 @@ relay_command_remote (const void *pointer, void *data,
             ptr_remote->reconnect_delay = 0;
             ptr_remote->reconnect_start = 0;
             weechat_printf (NULL,
-                            _("remote[%s]: auto-reconnection is cancelled"),
+                            _("remote[%s]: auto-reconnection is canceled"),
                             ptr_remote->name);
         }
         return WEECHAT_RC_OK;

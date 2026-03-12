@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-03-12 20:13+0100\n"
-"PO-Revision-Date: 2026-03-12 20:15+0100\n"
+"POT-Creation-Date: 2026-03-12 20:22+0100\n"
+"PO-Revision-Date: 2026-03-12 20:24+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
 "translation/ja_JP>\n"
@@ -9103,7 +9103,7 @@ msgid "%s%s: not connected to server \"%s\"!"
 msgstr "%s%s: サーバ \"%s\" に接続されていません!"
 
 #, c-format
-msgid "%s: auto-reconnection is cancelled"
+msgid "%s: auto-reconnection is canceled"
 msgstr "%s: 自動再接続がキャンセルされました"
 
 #, c-format
@@ -15452,10 +15452,9 @@ msgstr "%1$s%2$s: \"%4$s\" コマンドのサーバ \"%3$s\" は見つかりま�
 msgid "%s%s: no connection to remote relay \"%s\""
 msgstr "%s%s: サーバ \"%s\" に接続されていません!"
 
-#, fuzzy, c-format
-#| msgid "%s: auto-reconnection is cancelled"
-msgid "remote[%s]: auto-reconnection is cancelled"
-msgstr "%s: 自動再接続がキャンセルされました"
+#, c-format
+msgid "remote[%s]: auto-reconnection is canceled"
+msgstr ""
 
 #, fuzzy, c-format
 #| msgid "%s%s: server \"%s\" already exists for \"%s\" command"
