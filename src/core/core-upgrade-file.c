@@ -600,7 +600,7 @@ upgrade_file_read_object (struct t_upgrade_file *upgrade_file)
 
     if (type != UPGRADE_TYPE_OBJECT_START)
     {
-        UPGRADE_ERROR(_("read - bad object type ('object start' expected)"), "");
+        UPGRADE_ERROR(_("read - bad object type (\"object start\" expected)"), "");
         goto end;
     }
 
