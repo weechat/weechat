@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-03-12 20:22+0100\n"
+"POT-Creation-Date: 2026-03-12 20:25+0100\n"
 "PO-Revision-Date: 2026-03-08 08:59+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8854,7 +8854,7 @@ msgid ""
 msgstr ""
 
 msgid ""
-"raw[ack]: acknowledge capabilities which require client-side acknowledgement"
+"raw[ack]: acknowledge capabilities which require client-side acknowledgment"
 msgstr ""
 
 #, fuzzy

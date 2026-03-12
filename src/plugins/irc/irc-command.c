@@ -7194,7 +7194,7 @@ irc_command_init (void)
             N_("raw[req]: request a new capability or remove a capability "
                "(if starting with \"-\", for example: \"-multi-prefix\")"),
             N_("raw[ack]: acknowledge capabilities which require client-side "
-               "acknowledgement"),
+               "acknowledgment"),
             N_("raw[end]: end the capability negotiation"),
             "",
             N_("Without argument, \"ls\" and \"list\" are sent."),
