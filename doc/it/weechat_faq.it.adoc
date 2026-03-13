@@ -490,7 +490,7 @@ for more information about colors management.
 [[search_text]]
 === Come posso cercare testo nel buffer (come /lastlog con irssi)?
 
-Il tasto predefinito è kbd:[Ctrl+r] (il comando è: `+/input search_text_here+`).
+Il tasto predefinito è kbd:[Ctrl+s] (il comando è: `+/input search_text_here+`).
 E per passare alle notifiche: kbd:[Alt+p] / kbd:[Alt+n].
 
 // TRANSLATION MISSING

@@ -441,7 +441,7 @@ for more information about colors management.
 [[search_text]]
 === How can I search text in buffer (like /lastlog in irssi)?
 
-The default key is kbd:[Ctrl+r] (command is: `+/input search_text_here+`).
+The default key is kbd:[Ctrl+s] (command is: `+/input search_text_here+`).
 And jump to highlights: kbd:[Alt+p] / kbd:[Alt+n].
 
 See link:weechat_user.en.html#key_bindings[User's guide / Key bindings ^↗^^]

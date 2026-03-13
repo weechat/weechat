@@ -436,7 +436,7 @@ link:weechat_user.pl.html#colors[Poradniku użytkownika / Kolory ^↗^^].
 [[search_text]]
 === Jak mogę wyszukać tekst w buforze (jak za pomocą /lastlog w irssi)?
 
-Domyślny skrót klawiszowy to kbd:[Ctrl+r] (komenda: `+/input search_text_here+`).
+Domyślny skrót klawiszowy to kbd:[Ctrl+s] (komenda: `+/input search_text_here+`).
 
 Poruszanie się między podświetleniami: kbd:[Alt+p] / kbd:[Alt+n].
 

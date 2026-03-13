@@ -454,7 +454,7 @@ información sobre la gestión de los colores.
 [[search_text]]
 === ¿Cómo busco texto en un buffer (como /lastlog en irssi)?
 
-La tecla predeterminada es kbd:[Ctrl+r] (el comando es: `+/input texto_a_buscar_aquí+`).
+La tecla predeterminada es kbd:[Ctrl+s] (el comando es: `+/input texto_a_buscar_aquí+`).
 Y para saltar a los textos resaltados: kbd:[Alt+p] / kbd:[Alt+n].
 
 Vea la link:weechat_user.en.html#key_bindings[Guía del usuario / Atajos de teclado ^↗^^]

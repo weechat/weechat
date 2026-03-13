@@ -457,7 +457,7 @@ pour plus d'information sur la gestion des couleurs.
 [[search_text]]
 === Comment puis-je chercher du texte dans le tampon (comme /lastlog dans irssi) ?
 
-La touche par défaut est kbd:[Ctrl+r] (la commande est : `+/input search_text_here+`).
+La touche par défaut est kbd:[Ctrl+s] (la commande est : `+/input search_text_here+`).
 Et sauter aux highlights : kbd:[Alt+p] / kbd:[Alt+n].
 
 Voir le link:weechat_user.fr.html#key_bindings[Guide utilisateur / Raccourcis clavier par défaut ^↗^^]

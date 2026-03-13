@@ -451,7 +451,7 @@ with command `/color`).
 [[search_text]]
 === どうすればバッファ内の文字列を検索できますか (irssi の /lastlog の様に)。
 
-デフォルトのキーは kbd:[Ctrl+r] です (コマンドは: `+/input search_text_here+`)。
+デフォルトのキーは kbd:[Ctrl+s] です (コマンドは: `+/input search_text_here+`)。
 ハイライト部分へのジャンプは: kbd:[Alt+p] / kbd:[Alt+n]
 
 この機能に関するより詳しい情報はlink:weechat_user.ja.html#key_bindings[ユーザーズガイド / デフォルトのキー割り当て ^↗^^]を参照してください

@@ -458,7 +458,7 @@ für weitere Informationen die das Farbmanagement betreffen.
 [[search_text]]
 === Wie kann ich in einem Buffer nach einem Text suchen (vergleichbar /lastlog in irssi)?
 
-Die Standardtastenbelegung lautet kbd:[Ctrl+r]
+Die Standardtastenbelegung lautet kbd:[Ctrl+s]
 (der dazugehörige Befehl: `+/input search_text_here+`).
 Um zu Highlight-Nachrichten zu springen:
 kbd:[Alt+p] für vorherige, kbd:[Alt+n] für die nächste Nachricht.
