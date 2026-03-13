@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-03-12 20:25+0100\n"
+"POT-Creation-Date: 2026-03-13 23:38+0100\n"
 "PO-Revision-Date: 2026-03-12 20:24+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -1803,7 +1803,7 @@ msgstr "式を評価"
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 #, fuzzy
 msgid ""
-"[-n|-s] [-d] <expression> || [-n] [-d [-d]] -c <expression1> <operator> "
+"[-n|-s] [-e] [-d] <expression> || [-n] [-d [-d]] -c <expression1> <operator> "
 "<expression2>"
 msgstr "[-n|-s] <expression> || [-n] -c <expression1> <operator> <expression2>"
 
@@ -1820,6 +1820,9 @@ msgid ""
 msgstr ""
 "正規表現置換が行われた後に条件が満足された場合に実行するコマンド (多くのコマ"
 "ンドを実行するにはセミコロンで区切ってください)"
+
+msgid "raw[-e]: evaluate all commands before executing them"
+msgstr ""
 
 msgid ""
 "raw[-d]: display debug output after evaluation (with two -d: more verbose "

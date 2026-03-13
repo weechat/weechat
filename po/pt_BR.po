@@ -46,7 +46,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-03-12 20:25+0100\n"
+"POT-Creation-Date: 2026-03-13 23:38+0100\n"
 "PO-Revision-Date: 2026-03-12 20:19+0100\n"
 "Last-Translator: Érico Nogueira <ericonr@disroot.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1795,7 +1795,7 @@ msgstr "avaliar expressão"
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 #, fuzzy
 msgid ""
-"[-n|-s] [-d] <expression> || [-n] [-d [-d]] -c <expression1> <operator> "
+"[-n|-s] [-e] [-d] <expression> || [-n] [-d [-d]] -c <expression1> <operator> "
 "<expression2>"
 msgstr "[-n|-s] <expression> || [-n] -c <expression1> <operator> <expression2>"
 
@@ -1805,6 +1805,9 @@ msgstr ""
 msgid ""
 "raw[-s]: split expression before evaluating it (many commands can be "
 "separated by semicolons)"
+msgstr ""
+
+msgid "raw[-e]: evaluate all commands before executing them"
 msgstr ""
 
 msgid ""

@@ -8,6 +8,10 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 ## Version 4.9.0 (under dev)
 
+### Changed
+
+- core: add option `-e` to evaluate all commands before executing them in command `/eval`
+
 ### Added
 
 - typing: add option typing.look.item_text ([#2305](https://github.com/weechat/weechat/issues/2305))

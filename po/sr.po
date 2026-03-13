@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-03-12 20:25+0100\n"
+"POT-Creation-Date: 2026-03-13 23:38+0100\n"
 "PO-Revision-Date: 2026-03-12 20:26+0100\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1775,8 +1775,12 @@ msgid "evaluate expression"
 msgstr "израчунавање израза"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#, fuzzy
+#| msgid ""
+#| "[-n|-s] [-d] <expression> || [-n] [-d [-d]] -c <expression1> <operator> "
+#| "<expression2>"
 msgid ""
-"[-n|-s] [-d] <expression> || [-n] [-d [-d]] -c <expression1> <operator> "
+"[-n|-s] [-e] [-d] <expression> || [-n] [-d [-d]] -c <expression1> <operator> "
 "<expression2>"
 msgstr "[-n|-s] [-d] <израз> || [-n] [-d [-d]] -c <израз1> <оператор> <израз2>"
 
@@ -1789,6 +1793,9 @@ msgid ""
 msgstr ""
 "raw[-s]: дели израз пре израчунавања (многе команде могу да се раздвоје са "
 "тачка запетама)"
+
+msgid "raw[-e]: evaluate all commands before executing them"
+msgstr ""
 
 msgid ""
 "raw[-d]: display debug output after evaluation (with two -d: more verbose "

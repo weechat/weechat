@@ -2348,10 +2348,12 @@ command_eval_print_debug (const char *debug)
 
 COMMAND_CALLBACK(eval)
 {
-    int i, rc, print_only, split_command, condition, debug, error;
+    int i, rc, print_only, split_command, eval_first, condition, debug, error;
     char *result, *ptr_args, **commands, **ptr_command, str_debug[32];
     const char *debug_output;
     struct t_hashtable *pointers, *options;
+    struct t_weelist *list_commands;
+    struct t_weelist_item *ptr_item;
 
     /* make C compiler happy */
     (void) pointer;
@@ -2361,6 +2363,7 @@ COMMAND_CALLBACK(eval)
     rc = WEECHAT_RC_OK;
     print_only = 0;
     split_command = 0;
+    eval_first = 0;
     condition = 0;
     debug = 0;
     error = 0;
@@ -2380,6 +2383,11 @@ COMMAND_CALLBACK(eval)
             split_command = 1;
             ptr_args = argv_eol[i + 1];
         }
+        else if (string_strcmp (argv[i], "-e") == 0)
+        {
+            eval_first = 1;
+            ptr_args = argv_eol[i + 1];
+        }
         else if (string_strcmp (argv[i], "-c") == 0)
         {
             condition = 1;
@@ -2397,97 +2405,89 @@ COMMAND_CALLBACK(eval)
         }
     }
 
-    if (ptr_args)
+    if (!ptr_args)
+        return rc;
+
+    pointers = hashtable_new (32,
+                              WEECHAT_HASHTABLE_STRING,
+                              WEECHAT_HASHTABLE_POINTER,
+                              NULL,
+                              NULL);
+    if (pointers)
     {
-        pointers = hashtable_new (32,
-                                  WEECHAT_HASHTABLE_STRING,
-                                  WEECHAT_HASHTABLE_POINTER,
-                                  NULL,
-                                  NULL);
-        if (pointers)
-        {
-            hashtable_set (pointers, "window",
-                           gui_window_search_with_buffer (buffer));
-            hashtable_set (pointers, "buffer", buffer);
-        }
+        hashtable_set (pointers, "window",
+                       gui_window_search_with_buffer (buffer));
+        hashtable_set (pointers, "buffer", buffer);
+    }
 
-        options = NULL;
-        if (condition || debug)
+    options = NULL;
+    if (condition || debug)
+    {
+        options = hashtable_new (32,
+                                 WEECHAT_HASHTABLE_STRING,
+                                 WEECHAT_HASHTABLE_STRING,
+                                 NULL,
+                                 NULL);
+        if (options)
         {
-            options = hashtable_new (32,
-                                     WEECHAT_HASHTABLE_STRING,
-                                     WEECHAT_HASHTABLE_STRING,
-                                     NULL,
-                                     NULL);
-            if (options)
+            if (condition)
+                hashtable_set (options, "type", "condition");
+            if (debug > 0)
             {
-                if (condition)
-                    hashtable_set (options, "type", "condition");
-                if (debug > 0)
-                {
-                    snprintf (str_debug, sizeof (str_debug), "%d", debug);
-                    hashtable_set (options, "debug", str_debug);
-                }
+                snprintf (str_debug, sizeof (str_debug), "%d", debug);
+                hashtable_set (options, "debug", str_debug);
             }
         }
+    }
 
-        if (print_only)
+    if (print_only)
+    {
+        result = eval_expression (ptr_args, pointers, NULL, options);
+        gui_chat_printf_date_tags (NULL, 0, "no_log", "\t>> %s", ptr_args);
+        if (result)
         {
-            result = eval_expression (ptr_args, pointers, NULL, options);
-            gui_chat_printf_date_tags (NULL, 0, "no_log", "\t>> %s", ptr_args);
-            if (result)
-            {
-                gui_chat_printf_date_tags (NULL, 0, "no_log", "\t== %s[%s%s%s]",
-                                           GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                                           GUI_COLOR(GUI_COLOR_CHAT),
-                                           result,
-                                           GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
-                free (result);
-            }
-            else
-            {
-                gui_chat_printf_date_tags (NULL, 0, "no_log", "\t== %s<%s%s%s>",
-                                           GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                                           GUI_COLOR(GUI_COLOR_CHAT),
-                                           _("error"),
-                                           GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
-            }
-            if (options && debug)
-            {
-                debug_output = hashtable_get (options,
-                                              "debug_output");
-                if (debug_output)
-                    command_eval_print_debug (debug_output);
-            }
+            gui_chat_printf_date_tags (NULL, 0, "no_log", "\t== %s[%s%s%s]",
+                                       GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                                       GUI_COLOR(GUI_COLOR_CHAT),
+                                       result,
+                                       GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
+            free (result);
         }
         else
         {
-            if (split_command)
+            gui_chat_printf_date_tags (NULL, 0, "no_log", "\t== %s<%s%s%s>",
+                                       GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                                       GUI_COLOR(GUI_COLOR_CHAT),
+                                       _("error"),
+                                       GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
+        }
+        if (options && debug)
+        {
+            debug_output = hashtable_get (options,
+                                          "debug_output");
+            if (debug_output)
+                command_eval_print_debug (debug_output);
+        }
+        return rc;
+    }
+
+    if (split_command)
+    {
+        commands = string_split_command (ptr_args, ';');
+        if (commands)
+        {
+            if (eval_first)
             {
-                commands = string_split_command (ptr_args, ';');
-                if (commands)
+                list_commands = weelist_new ();
+                if (list_commands)
                 {
+                    /* first build a list of all evaluated commands */
                     for (ptr_command = commands; *ptr_command; ptr_command++)
                     {
-                        if (!gui_buffer_valid (buffer))
-                        {
-                            buffer = gui_current_window->buffer;
-                            if (pointers)
-                            {
-                                hashtable_set (pointers, "window",
-                                               gui_window_search_with_buffer (buffer));
-                                hashtable_set (pointers, "buffer", buffer);
-                            }
-                        }
-                        result = eval_expression (*ptr_command, pointers, NULL,
-                                                  options);
+                        result = eval_expression (*ptr_command, pointers, NULL, options);
                         if (result)
                         {
-                            (void) input_data (buffer,
-                                               result,
-                                               NULL,
-                                               0,  /* split_newline */
-                                               0);  /* user_data */
+                            weelist_add (list_commands, result, WEECHAT_LIST_POS_END, NULL);
                             free (result);
                         }
                         else
@@ -2502,46 +2502,97 @@ COMMAND_CALLBACK(eval)
                                 command_eval_print_debug (debug_output);
                         }
                     }
-                    string_free_split_command (commands);
+                    /* execute evaluated commands */
+                    for (ptr_item = list_commands->items; ptr_item;
+                         ptr_item = ptr_item->next_item)
+                    {
+                        if (!gui_buffer_valid (buffer))
+                            buffer = gui_current_window->buffer;
+                        (void) input_data (buffer,
+                                           ptr_item->data,
+                                           NULL,
+                                           0,  /* split_newline */
+                                           0);  /* user_data */
+                    }
+                    weelist_free (list_commands);
                 }
             }
             else
             {
-                result = eval_expression (ptr_args, pointers, NULL, options);
-                if (result)
+                for (ptr_command = commands; *ptr_command; ptr_command++)
                 {
-                    (void) input_data (buffer,
-                                       result,
-                                       NULL,
-                                       0,  /* split_newline */
-                                       0);  /* user_data */
-                    free (result);
-                }
-                else
-                {
-                    error = 1;
-                }
-                if (options && debug)
-                {
-                    debug_output = hashtable_get (options,
-                                                  "debug_output");
-                    if (debug_output)
-                        command_eval_print_debug (debug_output);
+                    if (!gui_buffer_valid (buffer))
+                    {
+                        buffer = gui_current_window->buffer;
+                        if (pointers)
+                        {
+                            hashtable_set (pointers, "window",
+                                           gui_window_search_with_buffer (buffer));
+                            hashtable_set (pointers, "buffer", buffer);
+                        }
+                    }
+                    result = eval_expression (*ptr_command, pointers, NULL,
+                                              options);
+                    if (result)
+                    {
+                        (void) input_data (buffer,
+                                           result,
+                                           NULL,
+                                           0,  /* split_newline */
+                                           0);  /* user_data */
+                        free (result);
+                    }
+                    else
+                    {
+                        error = 1;
+                    }
+                    if (options && debug)
+                    {
+                        debug_output = hashtable_get (options,
+                                                      "debug_output");
+                        if (debug_output)
+                            command_eval_print_debug (debug_output);
+                    }
                 }
             }
+            string_free_split_command (commands);
         }
-
-        if (error)
-        {
-            gui_chat_printf (NULL,
-                             _("%sError in expression to evaluate"),
-                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
-            rc = WEECHAT_RC_ERROR;
-        }
-
-        hashtable_free (pointers);
-        hashtable_free (options);
     }
+    else
+    {
+        result = eval_expression (ptr_args, pointers, NULL, options);
+        if (result)
+        {
+            (void) input_data (buffer,
+                               result,
+                               NULL,
+                               0,  /* split_newline */
+                               0);  /* user_data */
+            free (result);
+        }
+        else
+        {
+            error = 1;
+        }
+        if (options && debug)
+        {
+            debug_output = hashtable_get (options,
+                                          "debug_output");
+            if (debug_output)
+                command_eval_print_debug (debug_output);
+        }
+    }
+
+    if (error)
+    {
+        gui_chat_printf (NULL,
+                         _("%sError in expression to evaluate"),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+        rc = WEECHAT_RC_ERROR;
+    }
+
+    hashtable_free (pointers);
+    hashtable_free (options);
 
     return rc;
 }
@@ -8756,12 +8807,13 @@ command_init (void)
         NULL, "eval",
         N_("evaluate expression"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated */
-        N_("[-n|-s] [-d] <expression>"
+        N_("[-n|-s] [-e] [-d] <expression>"
            " || [-n] [-d [-d]] -c <expression1> <operator> <expression2>"),
         CMD_ARGS_DESC(
             N_("raw[-n]: display result without sending it to buffer (debug mode)"),
             N_("raw[-s]: split expression before evaluating it "
                "(many commands can be separated by semicolons)"),
+            N_("raw[-e]: evaluate all commands before executing them"),
             N_("raw[-d]: display debug output after evaluation "
                "(with two -d: more verbose debug)"),
             N_("raw[-c]: evaluate as condition: use operators and parentheses, "
