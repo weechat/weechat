@@ -2469,6 +2469,16 @@ COMMAND_CALLBACK(eval)
                 {
                     for (ptr_command = commands; *ptr_command; ptr_command++)
                     {
+                        if (!gui_buffer_valid (buffer))
+                        {
+                            buffer = gui_current_window->buffer;
+                            if (pointers)
+                            {
+                                hashtable_set (pointers, "window",
+                                               gui_window_search_with_buffer (buffer));
+                                hashtable_set (pointers, "buffer", buffer);
+                            }
+                        }
                         result = eval_expression (*ptr_command, pointers, NULL,
                                                   options);
                         if (result)

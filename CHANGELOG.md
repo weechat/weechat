@@ -14,6 +14,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 ### Fixed
 
+- core: fix crash with /eval when the current buffer is closed in a command
 - core: fix buffer size in function util_parse_time, causing buffer overflow error in unit tests
 - irc: fix unit of server option `anti_flood` from seconds to milliseconds in output of `/server listfull`
 - irc: fix creation of irc.msgbuffer option without a server name
