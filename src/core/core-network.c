@@ -58,6 +58,7 @@
 #include "core-config.h"
 #include "core-proxy.h"
 #include "core-string.h"
+#include "core-util.h"
 #include "../gui/gui-chat.h"
 #include "../plugins/plugin.h"
 
@@ -1570,11 +1571,9 @@ int
 network_connect_child_read_cb (const void *pointer, void *data, int fd)
 {
     struct t_hook *hook_connect;
-    char buffer[1], buf_size[6], *cb_error, *cb_ip_address, *error;
-    int num_read;
+    char buffer[1], buf_size[6], *cb_error, *cb_ip_address;
     long size_msg;
-    int rc, direction;
-    int sock, i;
+    int rc, num_read, direction, sock, i;
     struct msghdr msg;
     struct cmsghdr *cmsg;
     char msg_buf[CMSG_SPACE(sizeof (sock))];
@@ -1603,9 +1602,7 @@ network_connect_child_read_cb (const void *pointer, void *data, int fd)
                              buf_size, 5);
             if (num_read == 5)
             {
-                error = NULL;
-                size_msg = strtol (buf_size, &error, 10);
-                if (error && !error[0] && (size_msg > 0))
+                if (util_parse_long (buf_size, 10, &size_msg) && (size_msg > 0))
                 {
                     cb_ip_address = malloc (size_msg + 1);
                     if (cb_ip_address)
@@ -1740,9 +1737,7 @@ network_connect_child_read_cb (const void *pointer, void *data, int fd)
                              buf_size, 5);
             if (num_read == 5)
             {
-                error = NULL;
-                size_msg = strtol (buf_size, &error, 10);
-                if (error && !error[0] && (size_msg > 0))
+                if (util_parse_long (buf_size, 10, &size_msg) && (size_msg > 0))
                 {
                     cb_error = malloc (size_msg + 1);
                     if (cb_error)
