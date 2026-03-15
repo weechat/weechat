@@ -55,6 +55,7 @@
 #include "core-eval.h"
 #include "core-hashtable.h"
 #include "core-utf8.h"
+#include "core-util.h"
 #include "../gui/gui-chat.h"
 #include "../gui/gui-color.h"
 #include "../plugins/plugin.h"
@@ -4439,8 +4440,8 @@ string_get_priority_and_name (const char *string,
                               int *priority, const char **name,
                               int default_priority)
 {
-    char *pos, *str_priority, *error;
-    long number;
+    char *pos, *str_priority;
+    int number;
 
     if (priority)
         *priority = default_priority;
@@ -4456,17 +4457,15 @@ string_get_priority_and_name (const char *string,
         str_priority = string_strndup (string, pos - string);
         if (str_priority)
         {
-            error = NULL;
-            number = strtol (str_priority, &error, 10);
-            if (error && !error[0])
+            if (util_parse_int (str_priority, 10, &number))
             {
                 if (priority)
                     *priority = number;
-                if (name)
-                    *name = pos + 1;
             }
             free (str_priority);
         }
+        if (name)
+            *name = pos + 1;
     }
 }
 
