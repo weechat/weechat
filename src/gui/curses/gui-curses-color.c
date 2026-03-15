@@ -37,6 +37,7 @@
 #include "../../core/core-list.h"
 #include "../../core/core-string.h"
 #include "../../core/core-utf8.h"
+#include "../../core/core-util.h"
 #include "../../plugins/plugin.h"
 #include "../gui-buffer.h"
 #include "../gui-color.h"
@@ -225,7 +226,6 @@ int
 gui_color_assign (int *color, const char *color_name)
 {
     int flag, extra_attr, color_index, number;
-    char *error;
 
     /* read extended attributes */
     extra_attr = 0;
@@ -244,9 +244,7 @@ gui_color_assign (int *color, const char *color_name)
     }
 
     /* is it a color number? */
-    error = NULL;
-    number = (int)strtol (color_name, &error, 10);
-    if (color_name[0] && error && !error[0] && (number >= 0))
+    if (color_name[0] && util_parse_int (color_name, 10, &number) && (number >= 0))
     {
         /* color_name is a number, use this color number */
         if (number > GUI_COLOR_EXTENDED_MAX)
@@ -1357,7 +1355,6 @@ gui_color_palette_add_alias_cb (void *data,
                                 const void *key, const void *value)
 {
     struct t_gui_color_palette *color_palette;
-    char *error;
     int number;
 
     /* make C compiler happy */
@@ -1368,9 +1365,7 @@ gui_color_palette_add_alias_cb (void *data,
 
     if (color_palette && color_palette->alias)
     {
-        error = NULL;
-        number = (int)strtol ((char *)key, &error, 10);
-        if (error && !error[0])
+        if (util_parse_int ((const char *)key, 10, &number))
         {
             hashtable_set (gui_color_hash_palette_alias,
                            color_palette->alias,
@@ -1437,8 +1432,7 @@ struct t_gui_color_palette *
 gui_color_palette_new (int number, const char *value)
 {
     struct t_gui_color_palette *new_color_palette;
-    char **items, *pos, *pos2, *error1, *error2, *error3;
-    char *str_alias, *str_rgb, str_number[64];
+    char **items, *pos, *pos2, *str_alias, *str_rgb, str_number[64];
     int num_items, i, r, g, b;
 
     if (!value)
@@ -1490,16 +1484,11 @@ gui_color_palette_new (int number, const char *value)
                     if (pos2)
                     {
                         pos2[0] = '\0';
-                        error1 = NULL;
-                        r = (int)strtol (str_rgb, &error1, 10);
-                        error2 = NULL;
-                        g = (int)strtol (pos + 1, &error2, 10);
-                        error3 = NULL;
-                        b = (int)strtol (pos2 + 1, &error3, 10);
-                        if (error1 && !error1[0] && error2 && !error2[0]
-                            && error3 && !error3[0]
+                        if (util_parse_int (str_rgb, 10, &r)
                             && (r >= 0) && (r <= 1000)
+                            && util_parse_int (pos + 1, 10, &g)
                             && (g >= 0) && (g <= 1000)
+                            && util_parse_int (pos2 + 1, 10, &b)
                             && (b >= 0) && (b <= 1000))
                         {
                             new_color_palette->r = r;

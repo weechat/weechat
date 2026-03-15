@@ -36,6 +36,7 @@
 #include "../../core/core-hook.h"
 #include "../../core/core-string.h"
 #include "../../core/core-utf8.h"
+#include "../../core/core-util.h"
 #include "../../plugins/plugin.h"
 #include "../gui-bar.h"
 #include "../gui-bar-window.h"
@@ -355,10 +356,9 @@ gui_mouse_event_concat_gesture (char *key)
 const char *
 gui_mouse_event_name_sgr (const char *key)
 {
-    int length, num_items, is_release;
-    char **items, *error;
+    int length, num_items, is_release, button, x, y;
+    char **items;
     static char mouse_key[128];
-    long button, x, y;
 
     if (!key || !key[0])
         return NULL;
@@ -372,14 +372,10 @@ gui_mouse_event_name_sgr (const char *key)
     if (num_items < 3)
         goto error;
 
-    error = NULL;
-    button = strtol (items[0], &error, 10);
-    if (!error || error[0])
+    if (!util_parse_int (items[0], 10, &button))
         goto error;
 
-    error = NULL;
-    x = strtol (items[1], &error, 10);
-    if (!error || error[0])
+    if (!util_parse_int (items[1], 10, &x))
         goto error;
     x = (x >= 1) ? x - 1 : 0;
 
@@ -388,9 +384,7 @@ gui_mouse_event_name_sgr (const char *key)
         goto error;
     is_release = (items[2][length - 1] == 'm') ? 1 : 0;
     items[2][length - 1] = '\0';
-    error = NULL;
-    y = strtol (items[2], &error, 10);
-    if (!error || error[0])
+    if (!util_parse_int (items[2], 10, &y))
         goto error;
     y = (y >= 1) ? y - 1 : 0;
 
