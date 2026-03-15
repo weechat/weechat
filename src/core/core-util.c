@@ -773,9 +773,10 @@ util_parse_delay (const char *string_delay, unsigned long long default_factor,
     if (!str_number)
         return 0;
 
+    errno = 0;
     error = NULL;
     *delay = strtoull (str_number, &error, 10);
-    if (!error || error[0])
+    if ((errno == ERANGE) || !error || error[0])
     {
         free (str_number);
         *delay = 0;

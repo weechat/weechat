@@ -698,6 +698,7 @@ TEST(CoreUtil, GetTimeDiff)
 TEST(CoreUtil, ParseDelay)
 {
     unsigned long long delay;
+    char str_delay[128];
 
     /* error: no delay */
     LONGS_EQUAL(0, util_parse_delay ("123", 1ULL, NULL));
@@ -721,8 +722,10 @@ TEST(CoreUtil, ParseDelay)
     /* error: bad number */
     WEE_PARSE_DELAY(0, 0ULL, "abcd", 1LL);
 
-    /* error: bad delay */
+    /* invalid unsigned long long: outside range (0, ULLONG_MAX) */
     WEE_PARSE_DELAY(0, 0ULL, "-123", 1LL);
+    snprintf (str_delay, sizeof (str_delay), "%llu1", ULLONG_MAX);
+    LONGS_EQUAL(0, util_parse_delay (str_delay, 10, &delay));
 
     /* tests with delay == 0 */
     WEE_PARSE_DELAY(1, 0ULL, "0", 1ULL);
