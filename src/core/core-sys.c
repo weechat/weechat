@@ -181,7 +181,7 @@ void
 sys_setrlimit (void)
 {
 #ifdef HAVE_SYS_RESOURCE_H
-    char **items, *pos, *error;
+    char **items, *pos;
     int num_items, i;
     long long number;
 
@@ -198,9 +198,7 @@ sys_setrlimit (void)
             if (pos)
             {
                 pos[0] = '\0';
-                error = NULL;
-                number = strtoll (pos + 1, &error, 10);
-                if (error && !error[0])
+                if (util_parse_longlong (pos + 1, 10, &number) && (number >= -1))
                 {
                     sys_setrlimit_resource (items[i], number);
                 }
