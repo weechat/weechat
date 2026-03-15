@@ -767,9 +767,15 @@ TEST(CoreUtil, ParseDelay)
 
 TEST(CoreUtil, VersionNumber)
 {
+    char str_version[256];
+
     CHECK(util_version_number (NULL) == 0);
     CHECK(util_version_number ("") == 0);
     CHECK(util_version_number ("abc") == 0);
+
+    /* invalid unsigned long: outside range (0, ULONG_MAX) */
+    snprintf (str_version, sizeof (str_version), "0.0.%lu1", ULONG_MAX);
+    CHECK(util_version_number (str_version) == 0);
 
     CHECK(util_version_number ("0.3.2-dev") == 0x00030200);
     CHECK(util_version_number ("0.3.2-rc1") == 0x00030200);

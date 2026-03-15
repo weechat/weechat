@@ -843,9 +843,10 @@ util_version_number (const char *version)
             buf[index_buf] = '\0';
             if (buf[0])
             {
+                errno = 0;
                 error = NULL;
                 number = strtoul (buf, &error, 10);
-                if (error && !error[0])
+                if ((errno != ERANGE) && error && !error[0])
                 {
                     if (number > 0xFF)
                         number = 0xFF;
