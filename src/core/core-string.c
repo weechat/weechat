@@ -3395,7 +3395,7 @@ unsigned long long
 string_parse_size (const char *size)
 {
     const char *pos;
-    char *str_number, *error;
+    char *str_number;
     long long number;
     unsigned long long result;
 
@@ -3418,11 +3418,7 @@ string_parse_size (const char *size)
     if (!str_number)
         goto end;
 
-    error = NULL;
-    number = strtoll (str_number, &error, 10);
-    if (!error || error[0])
-        goto end;
-    if (number < 0)
+    if (!util_parse_longlong (str_number, 10, &number) || (number < 0))
         goto end;
 
     while (pos[0] == ' ')
