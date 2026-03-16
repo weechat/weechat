@@ -3547,7 +3547,7 @@ irc_config_init (void)
             N_("comma-separated list of fields to sort channels (see /help list "
                "for a list of fields); char \"-\" can be used before field to "
                "reverse order, char \"~\" can be used to do a case-insensitive "
-               "comparison; example: \"-count,~name\" for biggest channels "
+               "comparison; example: \"-users,~name\" for biggest channels "
                "first then case-insensitive sort on name"),
             NULL, 0, 0, "~name2", NULL, 0,
             NULL, NULL, NULL,
