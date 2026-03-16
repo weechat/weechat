@@ -4822,7 +4822,7 @@ avec ces commandes :
 ----
 
 [[relay_api_protocol]]
-=== API protocol
+=== Protocole API
 
 L'extension Relay peut envoyer les données à un autre WeeChat ou une interface
 distante avec un protocol HTTP de type API REST.
