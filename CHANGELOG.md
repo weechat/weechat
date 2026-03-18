@@ -11,6 +11,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 ### Changed
 
 - core: add option `-e` to evaluate all commands before executing them in command `/eval`
+- xfer: evaluate option xfer.network.own_ip
 
 ### Added
 

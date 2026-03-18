@@ -273,8 +273,9 @@ xfer_config_init (void)
         xfer_config_network_own_ip = weechat_config_new_option (
             xfer_config_file, xfer_config_section_network,
             "own_ip", "string",
-            N_("IP or DNS address used for sending and passively receiving files/chats "
-               "(if empty, local interface IP is used)"),
+            N_("IP or DNS address used for sending and passively receiving files/chats; "
+               "if empty, local interface IP is used "
+               "(note: content is evaluated, see /help eval)"),
             NULL, 0, 0, "", NULL, 0,
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
         xfer_config_network_port_range = weechat_config_new_option (

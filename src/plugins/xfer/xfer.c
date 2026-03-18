@@ -1001,8 +1001,8 @@ xfer_add_cb (const void *pointer, void *data,
     const char *plugin_name, *plugin_id, *str_type, *str_protocol;
     const char *remote_nick, *local_nick, *charset_modifier, *filename, *proxy;
     const char *str_address, *str_port, *token;
-    int type, protocol, args, port_start, port_end, sock, server_sock, port;
-    char *path, *filename2, *short_filename, *pos, str_port_temp[16];
+    int type, protocol, args, port_start, port_end, sock, server_sock, port, rc;
+    char *path, *filename2, *short_filename, *pos, str_port_temp[16], *eval_own_ip;
     struct stat st;
     struct sockaddr_storage local_addr_storage, remote_addr_storage, own_ip_addr, bind_addr;
     struct sockaddr *local_addr = (struct sockaddr*)&local_addr_storage;
@@ -1205,16 +1205,19 @@ xfer_add_cb (const void *pointer, void *data,
             && weechat_config_string (xfer_config_network_own_ip)[0])
         {
             /* resolve own_ip to a numeric address */
-            str_address = weechat_config_string (xfer_config_network_own_ip);
+            eval_own_ip = weechat_string_eval_expression (
+                weechat_config_string (xfer_config_network_own_ip),
+                NULL, NULL, NULL);
+            if (!eval_own_ip)
+                goto error;
             local_addr_length = sizeof (own_ip_addr);
-
-            if (!xfer_network_resolve_addr (str_address, NULL,
+            rc = xfer_network_resolve_addr (eval_own_ip, NULL,
                                             (struct sockaddr*)&own_ip_addr,
                                             &local_addr_length,
-                                            AI_NUMERICSERV))
-            {
+                                            AI_NUMERICSERV);
+            free (eval_own_ip);
+            if (!rc)
                 goto error;
-            }
 
             /* set the advertised address to own_ip */
             local_addr = (struct sockaddr*)&own_ip_addr;
