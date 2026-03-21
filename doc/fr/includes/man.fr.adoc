@@ -9,7 +9,7 @@ https://weechat.org/doc/[guide utilisateur de WeeChat].
 
 Avec l'extension irc, vous pouvez vous connecter à un serveur avec une URL, comme ceci :
 
-    irc[6][s]://[[pseudo][:motdepasse]@]serveur[:port][/#canal1[,#canal2...]]
+    irc[6][s]://[[pseudo][:mot_de_passe]@]serveur[:port][/#canal1[,#canal2...]]
 
 Pour rejoindre le canal IRC de support WeeChat avec le pseudo "monpseudo" :
 

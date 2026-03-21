@@ -3351,7 +3351,7 @@ Pour ajouter une donnée sécurisée, utilisez la commande `/secure set`, par
 exemple un mot de passe pour le serveur IRC _libera_ :
 
 ----
-/secure set libera motdepasse
+/secure set libera mot_de_passe
 ----
 
 Pour plus de confort, les données sécurisées peuvent être affichées dans un
@@ -4712,7 +4712,7 @@ Il est fortement recommandé de définir un mot de passe pour le relai, avec ces
 commandes :
 
 ----
-/secure set relay motdepasse
+/secure set relay mot_de_passe
 /set relay.network.password "${sec.data.relay}"
 ----
 
@@ -4793,7 +4793,7 @@ le nom interne du serveur dans la commande IRC "PASS", avec le format
 (voir l'exemple ci-dessous) :
 
 ----
-PASS serveur:motdepasse
+PASS serveur:mot_de_passe
 ----
 
 Exemple : proxy IRC avec TLS pour tout serveur (le client choisira) :
@@ -4809,7 +4809,7 @@ Exemple : proxy IRC sans TLS seulement pour le serveur "libera" :
 ----
 
 Maintenant vous pouvez vous connecter sur le port 8000 avec n'importe quel
-client IRC en utilisant le mot de passe "motdepasse" (ou "libera:motdepasse"
+client IRC en utilisant le mot de passe "mot_de_passe" (ou "libera:mot_de_passe"
 si aucun serveur n'a été spécifié dans le relai).
 
 Par exemple si vous utilisez WeeChat comme client IRC du relai, avec un serveur
@@ -4840,12 +4840,12 @@ Par exemple :
 ----
 
 Maintenant vous pouvez vous connecter sur le port 9000 avec une interface
-distante en utilisant le mot de passe "motdepasse".
+distante en utilisant le mot de passe "mot_de_passe".
 
 Pour vous connecter à un relai _api_ avec WeeChat :
 
 ----
-/remote add weechat http://localhost:9000 -password=motdepasse
+/remote add weechat http://localhost:9000 -password=mot_de_passe
 /remote connect weechat
 ----
 
@@ -4882,7 +4882,7 @@ Par exemple :
 ----
 
 Maintenant vous pouvez vous connecter sur le port 9500 avec une interface
-distante en utilisant le mot de passe "motdepasse".
+distante en utilisant le mot de passe "mot_de_passe".
 
 [[relay_websocket]]
 === WebSocket
