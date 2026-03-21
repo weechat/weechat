@@ -356,7 +356,7 @@ jobs:
 
     - name: Setup Homebrew
       id: setup-homebrew
-      uses: Homebrew/actions/setup-homebrew@master
+      uses: Homebrew/actions/setup-homebrew@main
 
     - name: Install dependencies
       run: |
