@@ -98,7 +98,7 @@ env:
 
 jobs:
 
-  tests_ubuntu:
+  install:
 
     strategy:
       matrix:
@@ -142,7 +142,7 @@ jobs:
             cxx: "clang++"
             buildargs: "-DENABLE_CODE_COVERAGE=ON -DENABLE_FUZZ=ON"
 
-    name: "${{ matrix.os }} (${{ matrix.config.name }})"
+    name: "install (${{ matrix.os }}, ${{ matrix.config.name }})"
     runs-on: ${{ matrix.os }}
 
     steps:
@@ -215,85 +215,7 @@ jobs:
         lcov --list coverage.info
         bash <(curl -s https://codecov.io/bash) -f coverage.info || echo 'Codecov error'
 
-  build_debian:
-
-    strategy:
-      matrix:
-        os:
-          - ubuntu-24.04
-
-    name: "${{ matrix.os }} (build Debian)"
-    runs-on: ${{ matrix.os }}
-
-    steps:
-
-    - uses: actions/checkout@v4
-
-    - name: Install dependencies
-      run: |
-        sudo apt-get update -qq
-        sudo apt-get --yes --no-install-recommends install ${{ env.WEECHAT_DEPS_UBUNTU }}
-
-    - name: Test Debian patches
-      run: ./tools/build_debian.sh test-patches
-
-    - name: Build Debian packages
-      run: ./tools/build_debian.sh devel ubuntu/noble
-
-    - name: Install Debian packages
-      run: sudo dpkg -i ../weechat-devel*.deb
-
-    - name: Run WeeChat
-      env:
-        TERM: xterm-256color
-      run: |
-        weechat --help
-        weechat-curses --help
-        weechat --version
-        weechat --build-info
-        weechat --run-command "/debug dirs;/debug libs" --run-command "/quit"
-
-  codeql-analysis:
-
-    strategy:
-      matrix:
-        os:
-          - ubuntu-24.04
-
-    name: "${{ matrix.os }} (CodeQL)"
-    runs-on: ${{ matrix.os }}
-
-    permissions:
-      actions: read
-      contents: read
-      security-events: write
-
-    steps:
-
-    - name: Checkout repository
-      uses: actions/checkout@v4
-
-    - name: Install dependencies
-      run: |
-        sudo apt-get update -qq
-        sudo apt-get --yes --no-install-recommends install ${{ env.WEECHAT_DEPS_UBUNTU }}
-        # uninstall php imagick as is causes a crash when loading php plugin (see #2009)
-        sudo apt-get --yes purge php8.3-imagick
-
-    - name: Initialize CodeQL
-      uses: github/codeql-action/init@v3
-      with:
-        languages: cpp
-
-    - name: Autobuild
-      uses: github/codeql-action/autobuild@v3
-
-    - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v3
-      with:
-        category: "/language:cpp"
-
-  tests_rockylinux:
+  install_rockylinux:
 
     strategy:
       matrix:
@@ -309,7 +231,7 @@ jobs:
             cxx: "clang++"
             buildargs: "-DENABLE_MAN=ON -DENABLE_DOC=ON -DENABLE_TESTS=ON -DENABLE_CODE_COVERAGE=ON -DENABLE_FUZZ=ON"
 
-    name: "rockylinux-9 (${{ matrix.config.name }})"
+    name: "install (rockylinux:9, ${{ matrix.config.name }})"
     runs-on: ${{ matrix.os }}
     container:
       image: rockylinux:9
@@ -342,7 +264,7 @@ jobs:
         weechat --license
         weechat --run-command "/debug dirs;/debug libs" --run-command "/quit"
 
-  tests_freebsd:
+  install_freebsd:
 
     strategy:
       matrix:
@@ -358,7 +280,7 @@ jobs:
             cxx: "clang++"
             buildargs: "-DENABLE_MAN=ON -DENABLE_DOC=ON -DENABLE_TESTS=ON -DENABLE_CODE_COVERAGE=ON -DENABLE_FUZZ=ON"
 
-    name: "freebsd-14 (${{ matrix.config.name }})"
+    name: "install (freebsd, ${{ matrix.config.name }})"
     runs-on: ${{ matrix.os }}
 
     steps:
@@ -385,7 +307,7 @@ jobs:
           weechat --license
           weechat --run-command "/debug dirs;/debug libs" --run-command "/quit"
 
-  tests_macos:
+  install_macos:
 
     strategy:
       matrix:
@@ -401,7 +323,7 @@ jobs:
             cxx: "clang++"
             buildargs: "-DENABLE_MAN=ON -DENABLE_DOC=ON -DENABLE_DOC_INCOMPLETE=ON -DENABLE_PHP=OFF -DENABLE_TESTS=OFF"
 
-    name: "${{ matrix.os }} (${{ matrix.config.name }})"
+    name: "install (${{ matrix.os }}, ${{ matrix.config.name }})"
     runs-on: ${{ matrix.os }}
 
     steps:
@@ -436,3 +358,79 @@ jobs:
         weechat --colors
         weechat --license
         weechat --run-command "/debug dirs;/debug libs" --run-command "/quit"
+
+  build_debian:
+
+    strategy:
+      matrix:
+        os:
+          - ubuntu-24.04
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+
+    - uses: actions/checkout@v4
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update -qq
+        sudo apt-get --yes --no-install-recommends install ${{ env.WEECHAT_DEPS_UBUNTU }}
+
+    - name: Test Debian patches
+      run: ./tools/build_debian.sh test-patches
+
+    - name: Build Debian packages
+      run: ./tools/build_debian.sh devel ubuntu/noble
+
+    - name: Install Debian packages
+      run: sudo dpkg -i ../weechat-devel*.deb
+
+    - name: Run WeeChat
+      env:
+        TERM: xterm-256color
+      run: |
+        weechat --help
+        weechat-curses --help
+        weechat --version
+        weechat --build-info
+        weechat --run-command "/debug dirs;/debug libs" --run-command "/quit"
+
+  codeql_analysis:
+
+    strategy:
+      matrix:
+        os:
+          - ubuntu-24.04
+
+    runs-on: ${{ matrix.os }}
+
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+
+    steps:
+
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update -qq
+        sudo apt-get --yes --no-install-recommends install ${{ env.WEECHAT_DEPS_UBUNTU }}
+        # uninstall php imagick as is causes a crash when loading php plugin (see #2009)
+        sudo apt-get --yes purge php8.3-imagick
+
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v3
+      with:
+        languages: cpp
+
+    - name: Autobuild
+      uses: github/codeql-action/autobuild@v3
+
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v3
+      with:
+        category: "/language:cpp"
