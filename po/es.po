@@ -24,7 +24,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-03-18 18:18+0100\n"
+"POT-Creation-Date: 2026-03-21 13:20+0100\n"
 "PO-Revision-Date: 2026-03-12 20:24+0100\n"
 "Last-Translator: Santiago Forero <santiago@forero.xyz>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1326,7 +1326,7 @@ msgstr ""
 
 msgid ""
 "option: option to change (for options list, look at /set weechat.bar."
-"<barname>.*)"
+"<bar_name>.*)"
 msgstr ""
 
 #, fuzzy

@@ -8457,7 +8457,7 @@ command_init (void)
             N_("mask: name where wildcard \"*\" is allowed"),
             N_("raw[set]: set a value for a bar property"),
             N_("option: option to change (for options list, look at /set "
-               "weechat.bar.<barname>.*)"),
+               "weechat.bar.<bar_name>.*)"),
             N_("value: new value for option"),
             N_("raw[hide]: hide a bar"),
             N_("raw[show]: show an hidden bar"),
