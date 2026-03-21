@@ -9817,10 +9817,10 @@ command_init (void)
             N_("  use program \"pass\" to read the passphrase on startup:"),
             AI("    /set sec.crypt.passphrase_command \"/usr/bin/pass show weechat/passphrase\""),
             N_("  encrypt libera SASL password:"),
-            N_("    /secure set libera mypassword"),
+            N_("    /secure set libera my_password"),
             AI("    /set irc.server.libera.sasl_password \"${sec.data.libera}\""),
             N_("  encrypt oftc password for nickserv:"),
-            N_("    /secure set oftc mypassword"),
+            N_("    /secure set oftc my_password"),
             AI("    /set irc.server.oftc.command \"/msg nickserv identify ${sec.data.oftc}\""),
             N_("  alias to ghost the nick \"andrew\":"),
             N_("    /alias add ghost /eval /msg -server libera nickserv ghost andrew "
