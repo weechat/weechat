@@ -9654,7 +9654,7 @@ command_init (void)
             N_("mask: name where wildcard \"*\" is allowed"),
             N_("raw[set]: set a value for a proxy property"),
             N_("option: option to change (for options list, look at /set "
-               "weechat.proxy.<proxyname>.*)"),
+               "weechat.proxy.<proxy_name>.*)"),
             N_("value: new value for option"),
             "",
             N_("Examples:"),
