@@ -41,7 +41,6 @@ env:
     pkgconf
     python3-dev
     ruby-pygments.rb
-    shellcheck
     tcl8.6-dev
     zlib1g-dev
   WEECHAT_DEPS_ROCKYLINUX: >-
@@ -95,8 +94,47 @@ env:
     sudo
     tcl86
     zstd
+  WEECHAT_DEPS_MACOS: >-
+    asciidoctor
+    aspell
+    cjson
+    guile
+    lua
+    pkg-config
+    ruby
 
 jobs:
+
+  checks:
+
+    strategy:
+      matrix:
+        os:
+          - ubuntu-24.04
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+
+    - uses: actions/checkout@v4
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update -qq
+        sudo apt-get --yes --no-install-recommends install curl gettext pipx shellcheck
+        pipx install msgcheck ruff
+
+    - name: Check gettext files
+      run: msgcheck po/*.po
+
+    - name: Check shell and Python scripts
+      run: ./tools/check_scripts.sh
+
+    - name: Check Python stub file
+      run: ./tools/generate_python_stub.py | diff src/plugins/python/weechat.pyi -
+
+    - name: Check Curl symbols
+      run: curl --silent --show-error --fail --retry 10 https://raw.githubusercontent.com/curl/curl/master/docs/libcurl/symbols-in-versions | ./tools/check_curl_symbols.py
 
   install:
 
@@ -155,19 +193,7 @@ jobs:
         sudo apt-get --yes --no-install-recommends install ${{ env.WEECHAT_DEPS_UBUNTU }}
         # uninstall php imagick as is causes a crash when loading php plugin (see #2009)
         sudo apt-get --yes purge php8.3-imagick
-        pipx install msgcheck ruff schemathesis
-
-    - name: Check gettext files
-      run: msgcheck po/*.po
-
-    - name: Check shell and Python scripts
-      run: ./tools/check_scripts.sh
-
-    - name: Check Python stub file
-      run: ./tools/generate_python_stub.py | diff src/plugins/python/weechat.pyi -
-
-    - name: Check Curl symbols
-      run: curl --silent --show-error --fail --retry 10 https://raw.githubusercontent.com/curl/curl/master/docs/libcurl/symbols-in-versions | ./tools/check_curl_symbols.py
+        pipx install schemathesis
 
     - name: Build and run tests
       env:
@@ -335,7 +361,7 @@ jobs:
     - name: Install dependencies
       run: |
         brew update
-        brew install asciidoctor aspell cjson guile lua pkg-config ruby
+        brew install ${{ env.WEECHAT_DEPS_MACOS }}
 
     - uses: actions/checkout@v4
 
