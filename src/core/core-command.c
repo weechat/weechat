@@ -9822,8 +9822,8 @@ command_init (void)
             N_("  encrypt oftc password for nickserv:"),
             N_("    /secure set oftc mypassword"),
             AI("    /set irc.server.oftc.command \"/msg nickserv identify ${sec.data.oftc}\""),
-            N_("  alias to ghost the nick \"mynick\":"),
-            N_("    /alias add ghost /eval /msg -server libera nickserv ghost mynick "
+            N_("  alias to ghost the nick \"andrew\":"),
+            N_("    /alias add ghost /eval /msg -server libera nickserv ghost andrew "
                "${sec.data.libera}")),
         "passphrase -delete"
         " || decrypt -discard"
