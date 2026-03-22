@@ -369,8 +369,11 @@ gui_chat_string_next_char (struct t_gui_window *window, struct t_gui_line *line,
 }
 
 /*
- * Displays word on chat buffer, letter by letter, special chars like
- * colors/attributes are interpreted.
+ * Displays word on chat buffer, grapheme cluster by grapheme cluster,
+ * special chars like colors/attributes are interpreted.
+ *
+ * Uses grapheme clusters for proper handling of complex emoji sequences
+ * like ❤️‍🔥, flags 🇵🇱, and characters with skin tone modifiers 👋🏻.
  *
  * Returns number of chars displayed on screen.
  */
@@ -383,8 +386,9 @@ gui_chat_display_word_raw (struct t_gui_window *window, struct t_gui_line *line,
                            int nick_offline)
 {
     const char *ptr_char;
-    char *output, utf_char[16], utf_char2[16];
+    char *output, utf_char[64], utf_char2[64];
     int x, chars_displayed, display_char, size_on_screen, reverse_video;
+    int grapheme_size;
 
     if (!simulate)
     {
@@ -405,7 +409,18 @@ gui_chat_display_word_raw (struct t_gui_window *window, struct t_gui_line *line,
         if (!string)
             return chars_displayed;
 
-        utf8_strncpy (utf_char, string, 1);
+        /* Copy the entire grapheme cluster */
+        grapheme_size = utf8_grapheme_size (string);
+        if (grapheme_size > 0 && grapheme_size < (int)sizeof (utf_char) - 1)
+        {
+            memcpy (utf_char, string, grapheme_size);
+            utf_char[grapheme_size] = '\0';
+        }
+        else
+        {
+            utf8_strncpy (utf_char, string, 1);
+        }
+
         if (utf_char[0])
         {
             reverse_video = 0;
@@ -437,7 +452,8 @@ gui_chat_display_word_raw (struct t_gui_window *window, struct t_gui_line *line,
             display_char = (window->buffer->type != GUI_BUFFER_TYPE_FREE)
                 || (x >= window->scroll->start_col);
 
-            size_on_screen = utf8_strlen_screen (ptr_char);
+            /* Calculate size for the entire grapheme cluster */
+            size_on_screen = utf8_grapheme_size_screen (ptr_char);
             if ((max_chars_on_screen > 0)
                 && (chars_displayed + size_on_screen > max_chars_on_screen))
             {
@@ -446,10 +462,22 @@ gui_chat_display_word_raw (struct t_gui_window *window, struct t_gui_line *line,
 
             if (display_char)
             {
+                /* Display grapheme cluster by grapheme cluster */
                 while (ptr_char && ptr_char[0])
                 {
-                    utf8_strncpy (utf_char2, ptr_char, 1);
-                    size_on_screen = utf8_char_size_screen (utf_char2);
+                    /* Get the grapheme cluster size */
+                    grapheme_size = utf8_grapheme_size (ptr_char);
+                    if (grapheme_size > 0 && grapheme_size < (int)sizeof (utf_char2) - 1)
+                    {
+                        memcpy (utf_char2, ptr_char, grapheme_size);
+                        utf_char2[grapheme_size] = '\0';
+                    }
+                    else
+                    {
+                        utf8_strncpy (utf_char2, ptr_char, 1);
+                    }
+
+                    size_on_screen = utf8_grapheme_size_screen (utf_char2);
                     if (size_on_screen >= 0)
                     {
                         if (!simulate)
@@ -480,7 +508,7 @@ gui_chat_display_word_raw (struct t_gui_window *window, struct t_gui_line *line,
                         chars_displayed += size_on_screen;
                         x += size_on_screen;
                     }
-                    ptr_char = utf8_next_char (ptr_char);
+                    ptr_char = utf8_grapheme_next (ptr_char);
                 }
             }
             else
@@ -489,7 +517,7 @@ gui_chat_display_word_raw (struct t_gui_window *window, struct t_gui_line *line,
             }
         }
 
-        string = utf8_next_char (string);
+        string = utf8_grapheme_next (string);
     }
 
     return chars_displayed;
