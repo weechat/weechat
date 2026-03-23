@@ -110,7 +110,7 @@ weechat_js_hashtable_map_cb (void *data,
 }
 
 /*
- * Converts a WeeChat hashtable to a javascript hashtable.
+ * Convert a WeeChat hashtable to a javascript hashtable.
  */
 
 v8::Handle<v8::Object>
@@ -125,7 +125,7 @@ weechat_js_hashtable_to_object (struct t_hashtable *hashtable)
 }
 
 /*
- * Converts a javascript hashtable to a WeeChat hashtable.
+ * Convert a javascript hashtable to a WeeChat hashtable.
  *
  * Note: hashtable must be freed after use.
  */
@@ -171,7 +171,7 @@ weechat_js_object_to_hashtable (v8::Handle<v8::Object> obj,
 }
 
 /*
- * Executes a javascript function.
+ * Execute a javascript function.
  */
 
 void *
@@ -292,12 +292,12 @@ end:
 }
 
 /*
- * Loads a javascript script.
+ * Load a javascript script.
  *
- * If code is NULL, the content of filename is read and executed.
- * If code is not NULL, it is executed (the file is not read).
+ * If code is NULL, read and execute the file content.
+ * If code is not NULL, execute it (do not read the file).
  *
- * Returns pointer to new registered script, NULL if error.
+ * Return pointer to new registered script, NULL if error.
  */
 
 struct t_plugin_script *
@@ -433,7 +433,7 @@ weechat_js_load_cb (void *data, const char *filename)
 }
 
 /*
- * Unloads a javascript script.
+ * Unload a javascript script.
  */
 
 void
@@ -478,7 +478,7 @@ weechat_js_unload (struct t_plugin_script *script)
 }
 
 /*
- * Unloads a javascript script by name.
+ * Unload a javascript script by name.
  */
 
 void
@@ -506,7 +506,7 @@ weechat_js_unload_name (const char *name)
 }
 
 /*
- * Unloads all javascript scripts.
+ * Unload all javascript scripts.
  */
 
 void
@@ -519,7 +519,7 @@ weechat_js_unload_all ()
 }
 
 /*
- * Reloads a javascript script by name.
+ * Reload a javascript script by name.
  */
 
 void
@@ -554,9 +554,9 @@ weechat_js_reload_name (const char *name)
 }
 
 /*
- * Evaluates javascript source code.
+ * Evaluate javascript source code.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -721,7 +721,7 @@ weechat_js_command_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds javascript scripts to completion list.
+ * Add javascript scripts to completion list.
  */
 
 int
@@ -742,7 +742,7 @@ weechat_js_completion_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns hdata for javascript scripts.
+ * Return hdata for javascript scripts.
  */
 
 struct t_hdata *
@@ -759,7 +759,7 @@ weechat_js_hdata_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns javascript info "javascript_eval".
+ * Return javascript info "javascript_eval".
  */
 
 char *
@@ -779,7 +779,7 @@ weechat_js_info_eval_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns infolist with javascript scripts.
+ * Return infolist with javascript scripts.
  */
 
 struct t_infolist *
@@ -805,7 +805,7 @@ weechat_js_infolist_cb (const void *pointer, void *data,
 }
 
 /*
- * Dumps javascript plugin data in Weechat log file.
+ * Dump javascript plugin data in Weechat log file.
  */
 
 int
@@ -916,7 +916,7 @@ weechat_js_signal_script_action_cb (const void *pointer, void *data,
 }
 
 /*
- * Initializes javascript plugin.
+ * Initialize javascript plugin.
  */
 
 EXPORT int
@@ -971,7 +971,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 }
 
 /*
- * Ends javascript plugin.
+ * End javascript plugin.
  */
 
 EXPORT int

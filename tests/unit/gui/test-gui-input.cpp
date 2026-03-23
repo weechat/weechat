@@ -39,7 +39,7 @@ TEST_GROUP(GuiInput)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_input_optimize_size
  */
 
@@ -49,7 +49,7 @@ TEST(GuiInput, OptimizeSize)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_input_replace_input
  *   gui_input_set_pos
  */
@@ -80,7 +80,7 @@ TEST(GuiInput, ReplaceInputSetPos)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_input_paste_pending_signal
  */
 
@@ -90,7 +90,7 @@ TEST(GuiInput, PastePendingSignal)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_input_text_changed_modifier_and_signal
  */
 
@@ -100,7 +100,7 @@ TEST(GuiInput, TextChangedModifierAndSignal)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_input_text_cursor_moved_signal
  */
 
@@ -110,7 +110,7 @@ TEST(GuiInput, TextCursorMovedSignal)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_input_search_signal
  */
 
@@ -120,7 +120,7 @@ TEST(GuiInput, SearchSignal)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_input_insert_string
  */
 
@@ -159,7 +159,7 @@ TEST(GuiInput, InsertString)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_input_clipboard_copy
  */
 
@@ -188,7 +188,7 @@ TEST(GuiInput, ClipboardCopy)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_input_clipboard_paste
  */
 
@@ -207,7 +207,7 @@ TEST(GuiInput, ClipboardPaste)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_input_return
  */
 
@@ -217,7 +217,7 @@ TEST(GuiInput, Return)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_input_complete
  *   gui_input_complete_next
  *   gui_input_complete_previous
@@ -251,7 +251,7 @@ TEST(GuiInput, Complete)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_input_search_text_here
  */
 
@@ -261,7 +261,7 @@ TEST(GuiInput, SearchTextHere)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_input_search_text
  */
 
@@ -271,7 +271,7 @@ TEST(GuiInput, SearchText)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_input_search_compile_regex
  */
 
@@ -281,7 +281,7 @@ TEST(GuiInput, SearchCompileRegex)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_input_search_switch_case
  */
 
@@ -291,7 +291,7 @@ TEST(GuiInput, SearchSwitchCase)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_input_search_switch_regex
  */
 
@@ -301,7 +301,7 @@ TEST(GuiInput, SearchSwitchRegex)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_input_search_switch_where
  */
 
@@ -311,7 +311,7 @@ TEST(GuiInput, SearchSwitchWhere)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_input_search_previous
  */
 
@@ -321,7 +321,7 @@ TEST(GuiInput, SearchPrevious)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_input_search_next
  */
 
@@ -331,7 +331,7 @@ TEST(GuiInput, SearchNext)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_input_search_stop_here
  */
 
@@ -341,7 +341,7 @@ TEST(GuiInput, SearchStopHere)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_input_search_stop
  */
 
@@ -351,7 +351,7 @@ TEST(GuiInput, SearchStop)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_input_delete_previous_char
  */
 
@@ -400,7 +400,7 @@ TEST(GuiInput, DeletePreviousChar)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_input_delete_next_char
  */
 
@@ -449,7 +449,7 @@ TEST(GuiInput, DeleteNextChar)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_input_delete_range
  */
 
@@ -487,7 +487,7 @@ TEST(GuiInput, DeleteRange)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_input_delete_previous_word
  */
 
@@ -542,7 +542,7 @@ TEST(GuiInput, DeletePreviousWord)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_input_delete_previous_word_whitespace
  */
 
@@ -591,7 +591,7 @@ TEST(GuiInput, DeletePreviousWordWhitespace)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_input_delete_next_word
  */
 
@@ -646,7 +646,7 @@ TEST(GuiInput, DeleteNextWord)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_input_delete_beginning_of_line
  */
 
@@ -671,7 +671,7 @@ TEST(GuiInput, DeleteBeginningOfLine)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_input_delete_end_of_line
  */
 
@@ -696,7 +696,7 @@ TEST(GuiInput, DeleteEndOfLine)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_input_delete_line
  */
 
@@ -713,7 +713,7 @@ TEST(GuiInput, DeleteLine)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_input_transpose_chars
  */
 
@@ -740,7 +740,7 @@ TEST(GuiInput, TransposeChars)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_input_move_beginning_of_line
  */
 
@@ -766,7 +766,7 @@ TEST(GuiInput, MoveBeginningOfLine)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_input_move_end_of_line
  */
 
@@ -792,7 +792,7 @@ TEST(GuiInput, MoveEndOfLine)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_input_move_previous_char
  */
 
@@ -825,7 +825,7 @@ TEST(GuiInput, MovePreviousChar)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_input_move_next_char
  */
 
@@ -859,7 +859,7 @@ TEST(GuiInput, MoveNextChar)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_input_move_previous_word
  */
 
@@ -893,7 +893,7 @@ TEST(GuiInput, MovePreviousWord)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_input_move_next_word
  */
 
@@ -927,7 +927,7 @@ TEST(GuiInput, MoveNextWord)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_input_history_previous
  */
 
@@ -937,7 +937,7 @@ TEST(GuiInput, HistoryPrevious)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_input_history_next
  */
 
@@ -947,7 +947,7 @@ TEST(GuiInput, HistoryNext)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_input_history_local_previous
  */
 
@@ -957,7 +957,7 @@ TEST(GuiInput, HistoryLocalPrevious)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_input_history_local_next
  */
 
@@ -967,7 +967,7 @@ TEST(GuiInput, HistoryLocalNext)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_input_history_global_previous
  */
 
@@ -977,7 +977,7 @@ TEST(GuiInput, HistoryGlobalPrevious)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_input_history_global_next
  */
 
@@ -987,7 +987,7 @@ TEST(GuiInput, HistoryGlobalNext)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_input_grab_key
  */
 
@@ -997,7 +997,7 @@ TEST(GuiInput, GrabKey)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_input_grab_mouse
  */
 
@@ -1007,7 +1007,7 @@ TEST(GuiInput, GrabMouse)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_input_insert
  */
 
@@ -1017,7 +1017,7 @@ TEST(GuiInput, Insert)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_input_undo_use
  */
 
@@ -1027,7 +1027,7 @@ TEST(GuiInput, UndoUse)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_input_undo
  */
 
@@ -1037,7 +1037,7 @@ TEST(GuiInput, Undo)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_input_redo
  */
 

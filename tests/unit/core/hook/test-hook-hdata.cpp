@@ -35,7 +35,7 @@ TEST_GROUP(HookHdata)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_hdata_get_description
  */
 
@@ -45,7 +45,7 @@ TEST(HookHdata, GetDescription)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_hdata
  */
 
@@ -55,7 +55,7 @@ TEST(HookHdata, Hdata)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_hdata_get
  */
 
@@ -65,7 +65,7 @@ TEST(HookHdata, Get)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_hdata_free_data
  */
 
@@ -75,7 +75,7 @@ TEST(HookHdata, FreeData)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_hdata_add_to_infolist
  */
 
@@ -85,7 +85,7 @@ TEST(HookHdata, AddToInfolist)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_hdata_print_log
  */
 

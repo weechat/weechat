@@ -39,7 +39,7 @@
 
 
 /*
- * Returns description of hook.
+ * Return description of hook.
  *
  * Note: result must be freed after use.
  */
@@ -51,9 +51,9 @@ hook_command_run_get_description (struct t_hook *hook)
 }
 
 /*
- * Hooks a command when it's run by WeeChat.
+ * Hook a command when it's run by WeeChat.
  *
- * Returns pointer to new hook, NULL if error.
+ * Return pointer to new hook, NULL if error.
  */
 
 struct t_hook *
@@ -98,7 +98,7 @@ hook_command_run (struct t_weechat_plugin *plugin,
 }
 
 /*
- * Executes a command_run hook.
+ * Execute a command_run hook.
  */
 
 int
@@ -185,7 +185,7 @@ hook_command_run_exec (struct t_gui_buffer *buffer, const char *command)
 }
 
 /*
- * Frees data in a command_run hook.
+ * Free data in a command_run hook.
  */
 
 void
@@ -205,7 +205,7 @@ hook_command_run_free_data (struct t_hook *hook)
 }
 
 /*
- * Returns hdata for command_run hook.
+ * Return hdata for command_run hook.
  */
 
 struct t_hdata *
@@ -229,9 +229,9 @@ hook_command_run_hdata_hook_command_run_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds command_run hook data in the infolist item.
+ * Add command_run hook data in the infolist item.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -254,7 +254,7 @@ hook_command_run_add_to_infolist (struct t_infolist_item *item,
 }
 
 /*
- * Prints command_run hook data in WeeChat log file (usually for crash dump).
+ * Print command_run hook data in WeeChat log file (usually for crash dump).
  */
 
 void

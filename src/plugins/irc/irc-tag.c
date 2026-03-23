@@ -32,7 +32,7 @@
 
 
 /*
- * Escapes a tag value, the following sequences are replaced:
+ * Escape a tag value, the following sequences are replaced:
  *
  *    character     | escaped value
  *   ---------------+-------------------------
@@ -104,7 +104,7 @@ irc_tag_escape_value (const char *string)
 }
 
 /*
- * Unescapes a tag value.
+ * Unescape a tag value.
  *
  * See: https://ircv3.net/specs/extensions/message-tags#escaping-values
  *
@@ -212,7 +212,7 @@ irc_tag_modifier_cb (const void *pointer, void *data,
 }
 
 /*
- * Parses tags received in an IRC message and returns the number of tags
+ * Parse tags received in an IRC message and return the number of tags
  * set in the hashtable "hashtable" (values are unescaped tag values).
  *
  * If prefix_key is not NULL, it is used as prefix before the name of keys.
@@ -286,8 +286,7 @@ irc_tag_parse (const char *tags,
 }
 
 /*
- * Adds tags to a dynamic string, separated by semicolons, with escaped
- * tag values.
+ * Add tags to a dynamic string, separated by semicolons, with escaped tag values.
  */
 
 void
@@ -320,7 +319,7 @@ irc_tag_add_to_string_cb (void *data,
 }
 
 /*
- * Converts hashtable with tags to a string (tags and values are escaped).
+ * Convert hashtable with tags to a string (tags and values are escaped).
  *
  * Note: result must be freed after use.
  */
@@ -343,7 +342,7 @@ irc_tag_hashtable_to_string (struct t_hashtable *tags)
 }
 
 /*
- * Adds tags to another hashtable.
+ * Add tags to another hashtable.
  */
 
 void
@@ -360,7 +359,7 @@ irc_tag_add_to_hashtable_cb (void *data,
 }
 
 /*
- * Adds tags to an IRC message.
+ * Add tags to an IRC message.
  * Existing tags in message are kept unchanged.
  *
  * Note: result must be freed after use.

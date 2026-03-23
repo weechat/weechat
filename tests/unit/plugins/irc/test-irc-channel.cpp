@@ -35,7 +35,7 @@ TEST_GROUP(IrcChannel)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_channel_valid
  */
 
@@ -45,7 +45,7 @@ TEST(IrcChannel, Valid)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_channel_is_channel
  */
 

@@ -656,9 +656,9 @@ Example:
 [source,c]
 ----
 /*
- * Checks if a string with boolean value is valid.
+ * Check if a string with boolean value is valid.
  *
- * Returns:
+ * Return:
  *   1: boolean value is valid
  *   0: boolean value is NOT valid
  */
@@ -933,9 +933,9 @@ Example: creation of a new window (from _src/gui/gui-window.c_):
 [source,c]
 ----
 /*
- * Creates a new window.
+ * Create a new window.
  *
- * Returns pointer to new window, NULL if error.
+ * Return pointer to new window, NULL if error.
  */
 
 struct t_gui_window *

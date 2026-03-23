@@ -158,7 +158,7 @@ weechat_ruby_hashtable_map_cb (void *data,
 }
 
 /*
- * Converts a WeeChat hashtable to a ruby hash.
+ * Convert a WeeChat hashtable to a ruby hash.
  */
 
 VALUE
@@ -210,7 +210,7 @@ weechat_ruby_hash_foreach_cb (VALUE key, VALUE value, VALUE arg)
 }
 
 /*
- * Converts a ruby hash to a WeeChat hashtable.
+ * Convert a ruby hash to a WeeChat hashtable.
  *
  * Note: hashtable must be freed after use.
  */
@@ -246,7 +246,7 @@ protect_funcall0 (VALUE arg)
 }
 
 /*
- * Calls function in protected mode.
+ * Call function in protected mode.
  */
 
 VALUE
@@ -262,7 +262,7 @@ rb_protect_funcall (VALUE recv, ID mid, int *state, int argc, VALUE *argv)
 }
 
 /*
- * Displays ruby exception.
+ * Display ruby exception.
  */
 
 int
@@ -346,7 +346,7 @@ weechat_ruby_output_flush_ruby (VALUE self)
 }
 
 /*
- * Flushes output.
+ * Flush output.
  */
 
 void
@@ -442,7 +442,7 @@ weechat_ruby_output (VALUE self, VALUE str)
 }
 
 /*
- * Executes a ruby function.
+ * Execute a ruby function.
  */
 
 void *
@@ -571,12 +571,12 @@ weechat_ruby_exec (struct t_plugin_script *script,
 }
 
 /*
- * Loads a ruby script.
+ * Load a ruby script.
  *
- * If code is NULL, the content of filename is read and executed.
- * If code is not NULL, it is executed (the file is not read).
+ * If code is NULL, read and execute the file content.
+ * If code is not NULL, execute it (the file is not read).
  *
- * Returns pointer to new registered script, NULL if error.
+ * Return pointer to new registered script, NULL if error.
  */
 
 struct t_plugin_script *
@@ -737,7 +737,7 @@ weechat_ruby_load_cb (void *data, const char *filename)
 }
 
 /*
- * Unloads a ruby script.
+ * Unload a ruby script.
  */
 
 void
@@ -782,7 +782,7 @@ weechat_ruby_unload (struct t_plugin_script *script)
 }
 
 /*
- * Unloads a ruby script by name.
+ * Unload a ruby script by name.
  */
 
 void
@@ -810,7 +810,7 @@ weechat_ruby_unload_name (const char *name)
 }
 
 /*
- * Reloads a ruby script by name.
+ * Reload a ruby script by name.
  */
 
 void
@@ -845,7 +845,7 @@ weechat_ruby_reload_name (const char *name)
 }
 
 /*
- * Unloads all ruby scripts.
+ * Unload all ruby scripts.
  */
 
 void
@@ -858,9 +858,9 @@ weechat_ruby_unload_all (void)
 }
 
 /*
- * Evaluates ruby source code.
+ * Evaluate ruby source code.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -1060,7 +1060,7 @@ weechat_ruby_command_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds ruby scripts to completion list.
+ * Add ruby scripts to completion list.
  */
 
 int
@@ -1081,7 +1081,7 @@ weechat_ruby_completion_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns hdata for ruby scripts.
+ * Return hdata for ruby scripts.
  */
 
 struct t_hdata *
@@ -1098,7 +1098,7 @@ weechat_ruby_hdata_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns ruby info "ruby_eval".
+ * Return ruby info "ruby_eval".
  */
 
 char *
@@ -1121,7 +1121,7 @@ weechat_ruby_info_eval_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns infolist with ruby scripts.
+ * Return infolist with ruby scripts.
  */
 
 struct t_infolist *
@@ -1147,7 +1147,7 @@ weechat_ruby_infolist_cb (const void *pointer, void *data,
 }
 
 /*
- * Dumps ruby plugin data in WeeChat log file.
+ * Dump ruby plugin data in WeeChat log file.
  */
 
 int
@@ -1257,7 +1257,7 @@ weechat_ruby_signal_script_action_cb (const void *pointer, void *data,
 }
 
 /*
- * Initializes ruby plugin.
+ * Initialize ruby plugin.
  */
 
 int
@@ -1426,7 +1426,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 }
 
 /*
- * Ends ruby plugin.
+ * End ruby plugin.
  */
 
 int

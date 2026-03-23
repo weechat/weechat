@@ -45,7 +45,7 @@ int hook_fd_pollfd_count = 0;          /* number of file descriptors        */
 
 
 /*
- * Returns description of hook.
+ * Return description of hook.
  *
  * Note: result must be freed after use.
  */
@@ -67,9 +67,9 @@ hook_fd_get_description (struct t_hook *hook)
 }
 
 /*
- * Searches for a fd hook in list.
+ * Search for a fd hook in list.
  *
- * Returns pointer to hook found, NULL if not found.
+ * Return pointer to hook found, NULL if not found.
  */
 
 struct t_hook *
@@ -89,7 +89,7 @@ hook_fd_search (int fd)
 }
 
 /*
- * Reallocates the "struct pollfd" array for poll().
+ * Reallocate the "struct pollfd" array for poll().
  */
 
 void
@@ -150,9 +150,9 @@ hook_fd_remove_cb (struct t_hook *hook)
 }
 
 /*
- * Hooks a fd event.
+ * Hook a fd event.
  *
- * Returns pointer to new hook, NULL if error.
+ * Return pointer to new hook, NULL if error.
  */
 
 struct t_hook *
@@ -199,9 +199,9 @@ hook_fd (struct t_weechat_plugin *plugin, int fd, int flag_read,
 }
 
 /*
- * Executes fd hooks:
- * - poll() on fie descriptors
- * - call of hook fd callbacks if needed.
+ * Execute fd hooks:
+ *   - poll() on fie descriptors
+ *   - call of hook fd callbacks if needed.
  */
 
 void
@@ -300,7 +300,7 @@ hook_fd_exec (void)
 }
 
 /*
- * Frees data in a fd hook.
+ * Free data in a fd hook.
  */
 
 void
@@ -314,7 +314,7 @@ hook_fd_free_data (struct t_hook *hook)
 }
 
 /*
- * Returns hdata for fd hook.
+ * Return hdata for fd hook.
  */
 
 struct t_hdata *
@@ -338,9 +338,9 @@ hook_fd_hdata_hook_fd_cb (const void *pointer, void *data, const char *hdata_nam
 }
 
 /*
- * Adds fd hook data in the infolist item.
+ * Add fd hook data in the infolist item.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -365,7 +365,7 @@ hook_fd_add_to_infolist (struct t_infolist_item *item,
 }
 
 /*
- * Prints fd hook data in WeeChat log file (usually for crash dump).
+ * Print fd hook data in WeeChat log file (usually for crash dump).
  */
 
 void

@@ -31,7 +31,7 @@
 
 
 /*
- * Adds triggers to completion list.
+ * Add triggers to completion list.
  */
 
 int
@@ -59,7 +59,7 @@ trigger_completion_triggers_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds default triggers to completion list.
+ * Add default triggers to completion list.
  */
 
 int
@@ -88,7 +88,7 @@ trigger_completion_triggers_default_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds disabled triggers to completion list.
+ * Add disabled triggers to completion list.
  */
 
 int
@@ -119,7 +119,7 @@ trigger_completion_triggers_disabled_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds enabled triggers to completion list.
+ * Add enabled triggers to completion list.
  */
 
 int
@@ -150,7 +150,7 @@ trigger_completion_triggers_enabled_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds options for triggers to completion list.
+ * Add options for triggers to completion list.
  */
 
 int
@@ -178,7 +178,7 @@ trigger_completion_options_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds value of a trigger option to completion list.
+ * Add value of a trigger option to completion list.
  */
 
 int
@@ -243,7 +243,7 @@ trigger_completion_option_value_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds hooks for triggers to completion list.
+ * Add hooks for triggers to completion list.
  */
 
 int
@@ -271,7 +271,7 @@ trigger_completion_hooks_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds hooks for filtering triggers to completion list.
+ * Add hooks for filtering triggers to completion list.
  */
 
 int
@@ -301,7 +301,7 @@ trigger_completion_hooks_filter_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds a word with quotes around to completion list.
+ * Add a word with quotes around to completion list.
  */
 
 void
@@ -318,7 +318,7 @@ trigger_completion_add_quoted_word (struct t_gui_completion *completion,
 }
 
 /*
- * Adds a default string to completion list, depending on hook type.
+ * Add a default string to completion list, depending on hook type.
  *
  * If split is not NULL, the default string found is split using this separator,
  * and therefore many words can be added to completion list.
@@ -382,7 +382,7 @@ trigger_completion_add_default_for_hook (struct t_gui_completion *completion,
 }
 
 /*
- * Adds default arguments for hook to completion list.
+ * Add default arguments for hook to completion list.
  */
 
 int
@@ -406,7 +406,7 @@ trigger_completion_hook_arguments_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds default conditions for hook to completion list.
+ * Add default conditions for hook to completion list.
  */
 
 int
@@ -431,7 +431,7 @@ trigger_completion_hook_conditions_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds default regular expression for hook to completion list.
+ * Add default regular expression for hook to completion list.
  */
 
 int
@@ -456,7 +456,7 @@ trigger_completion_hook_regex_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds default command for hook to completion list.
+ * Add default command for hook to completion list.
  */
 
 int
@@ -481,7 +481,7 @@ trigger_completion_hook_command_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds default return code(s) for hook to completion list.
+ * Add default return code(s) for hook to completion list.
  */
 
 int
@@ -504,7 +504,7 @@ trigger_completion_hook_rc_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds default post actions to completion list.
+ * Add default post actions to completion list.
  */
 
 int
@@ -531,7 +531,7 @@ trigger_completion_post_action_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds arguments for commands that add a trigger.
+ * Add arguments for commands that add a trigger.
  */
 
 int
@@ -602,7 +602,7 @@ trigger_completion_add_arguments_cb (const void *pointer, void *data,
 }
 
 /*
- * Hooks completions.
+ * Hook completions.
  */
 
 void

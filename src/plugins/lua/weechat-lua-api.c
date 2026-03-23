@@ -107,7 +107,7 @@
 
 
 /*
- * Registers a lua script.
+ * Register a lua script.
  */
 
 API_FUNC(register)

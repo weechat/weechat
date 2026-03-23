@@ -51,7 +51,7 @@ TEST_GROUP(IrcTag)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_tag_escape_value
  */
 
@@ -75,7 +75,7 @@ TEST(IrcTag, EscapeValue)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_tag_unescape_value
  */
 
@@ -101,7 +101,7 @@ TEST(IrcTag, UnescapeValue)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_tag_modifier_cb
  */
 
@@ -121,7 +121,7 @@ TEST(IrcTag, ModifierCallback)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_tag_parse
  */
 
@@ -169,7 +169,7 @@ TEST(IrcTag, Parse)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_tag_add_to_string_cb
  *   irc_tag_hashtable_to_string
  */
@@ -202,7 +202,7 @@ TEST(IrcTag, HashtableToString)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_tag_add_to_hashtable_cb
  *   irc_tag_add_tags_to_message
  */

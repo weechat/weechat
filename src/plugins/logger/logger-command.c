@@ -31,7 +31,7 @@
 
 
 /*
- * Displays logging status for buffers.
+ * Display logging status for buffers.
  */
 
 void
@@ -88,7 +88,7 @@ logger_list (void)
 }
 
 /*
- * Enables/disables logging on a buffer.
+ * Enable/disable logging on a buffer.
  */
 
 void
@@ -159,7 +159,7 @@ logger_command_cb (const void *pointer, void *data,
 }
 
 /*
- * Hooks logger commands.
+ * Hook logger commands.
  */
 
 void

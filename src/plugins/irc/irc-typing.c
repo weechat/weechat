@@ -91,7 +91,7 @@ irc_typing_signal_typing_self_cb (const void *pointer, void *data,
 }
 
 /*
- * Sends self typing status to channels/privates of a server.
+ * Send self typing status to channels/privates of a server.
  */
 
 void
@@ -135,7 +135,7 @@ irc_typing_send_to_targets (struct t_irc_server *server)
 }
 
 /*
- * Sets state of a nick on a channel.
+ * Set state of a nick on a channel.
  */
 
 void
@@ -156,7 +156,7 @@ irc_typing_channel_set_nick (struct t_irc_channel *channel, const char *nick,
 }
 
 /*
- * Resets all nicks state on a channel.
+ * Reset all nicks state on a channel.
  */
 
 void

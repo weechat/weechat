@@ -60,9 +60,9 @@ int relay_client_count = 0;            /* number of clients                 */
 
 
 /*
- * Checks if a client pointer is valid.
+ * Check if a client pointer is valid.
  *
- * Returns:
+ * Return:
  *   1: client exists
  *   0: client does not exist
  */
@@ -87,9 +87,9 @@ relay_client_valid (struct t_relay_client *client)
 }
 
 /*
- * Searches for a client by number (first client is 0).
+ * Search for a client by number (first client is 0).
  *
- * Returns pointer to client found, NULL if not found.
+ * Return pointer to client found, NULL if not found.
  */
 
 struct t_relay_client *
@@ -112,9 +112,9 @@ relay_client_search_by_number (int number)
 }
 
 /*
- * Searches for a client by id.
+ * Search for a client by id.
  *
- * Returns pointer to client found, NULL if not found.
+ * Return pointer to client found, NULL if not found.
  */
 
 struct t_relay_client *
@@ -134,7 +134,7 @@ relay_client_search_by_id (int id)
 }
 
 /*
- * Returns the number of active clients (connecting or connected) on a given
+ * Return the number of active clients (connecting or connected) on a given
  * server port.
  */
 
@@ -159,7 +159,7 @@ relay_client_count_active_by_port (int server_port)
 }
 
 /*
- * Sends a signal with the status of client ("relay_client_xxx").
+ * Send a signal with the status of client ("relay_client_xxx").
  */
 
 void
@@ -174,7 +174,7 @@ relay_client_send_signal (struct t_relay_client *client)
 }
 
 /*
- * Sets description for a client.
+ * Set description for a client.
  */
 
 void
@@ -289,8 +289,8 @@ relay_client_handshake_timer_cb (const void *pointer, void *data,
 }
 
 /*
- * Reads text data from a client (messages on a single line): splits data on
- * '\n' and keeps a partial message if data does not end with '\n'.
+ * Read text data from a client (messages on a single line): split data on
+ * '\n' and keep a partial message if data does not end with '\n'.
  */
 
 void
@@ -368,7 +368,7 @@ relay_client_recv_text_single_line (struct t_relay_client *client)
 }
 
 /*
- * Reads text data from a client (multi-line messages).
+ * Read text data from a client (multi-line messages).
  */
 
 void
@@ -409,7 +409,7 @@ relay_client_recv_text_multi_line (struct t_relay_client *client)
 }
 
 /*
- * Reads text data from a client: splits data on '\n' and keeps a partial
+ * Read text data from a client: split data on '\n' and keep a partial
  * message if data does not end with '\n'.
  */
 
@@ -441,7 +441,7 @@ relay_client_recv_text (struct t_relay_client *client, const char *data)
 }
 
 /*
- * Reads text buffer from a client.
+ * Read text buffer from a client.
  */
 
 void
@@ -518,7 +518,7 @@ relay_client_recv_text_buffer (struct t_relay_client *client,
 }
 
 /*
- * Reads websocket frames.
+ * Read websocket frames.
  */
 
 void
@@ -597,7 +597,7 @@ relay_client_read_websocket_frames (struct t_relay_client *client,
 }
 
 /*
- * Reads a buffer of bytes from a client.
+ * Read a buffer of bytes from a client.
  */
 
 void
@@ -707,7 +707,7 @@ relay_client_recv_buffer (struct t_relay_client *client,
 }
 
 /*
- * Reads data from a client.
+ * Read data from a client.
  */
 
 int
@@ -799,7 +799,7 @@ relay_client_recv_cb (const void *pointer, void *data, int fd)
 }
 
 /*
- * Frees a message in out queue.
+ * Free a message in out queue.
  */
 
 void
@@ -836,7 +836,7 @@ relay_client_outqueue_free (struct t_relay_client *client,
 }
 
 /*
- * Frees all messages in out queue.
+ * Free all messages in out queue.
  */
 
 void
@@ -849,9 +849,9 @@ relay_client_outqueue_free_all (struct t_relay_client *client)
 }
 
 /*
- * Sends data to a client.
+ * Send data to a client.
  *
- * Returns the number of bytes sent to the client.
+ * Return the number of bytes sent to the client.
  */
 
 int
@@ -873,7 +873,7 @@ relay_client_send_data (struct t_relay_client *client,
 }
 
 /*
- * Sends messages in outqueue for a client.
+ * Send messages in outqueue for a client.
  */
 
 void
@@ -1026,7 +1026,7 @@ relay_client_timer_send_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds a message in out queue.
+ * Add a message in out queue.
  */
 
 void
@@ -1093,12 +1093,12 @@ relay_client_outqueue_add (struct t_relay_client *client,
 }
 
 /*
- * Sends data to client (adds in out queue if it's impossible to send now).
+ * Send data to client (add in out queue if it's impossible to send now).
  *
  * If "message_raw_buffer" is not NULL, it is used for display in raw buffer
  * and replaces display of data, which is default.
  *
- * Returns number of bytes sent to client, -1 if error.
+ * Return number of bytes sent to client, -1 if error.
  */
 
 int
@@ -1353,9 +1353,9 @@ relay_client_timer (void)
 }
 
 /*
- * Creates a new client.
+ * Create a new client.
  *
- * Returns pointer to new client, NULL if error.
+ * Return pointer to new client, NULL if error.
  */
 
 struct t_relay_client *
@@ -1574,7 +1574,7 @@ relay_client_new (int sock, const char *address, struct t_relay_server *server)
 }
 
 /*
- * Creates a new client using an infolist.
+ * Create a new client using an infolist.
  *
  * This is called to restore clients after /upgrade.
  */
@@ -1749,7 +1749,7 @@ relay_client_new_with_infolist (struct t_infolist *infolist)
 }
 
 /*
- * Sets status for a client.
+ * Set status for a client.
  */
 
 void
@@ -1874,7 +1874,7 @@ relay_client_set_status (struct t_relay_client *client,
 }
 
 /*
- * Removes a client.
+ * Remove a client.
  */
 
 void
@@ -1946,7 +1946,7 @@ relay_client_free (struct t_relay_client *client)
 }
 
 /*
- * Removes all clients.
+ * Remove all clients.
  */
 
 void
@@ -1959,7 +1959,7 @@ relay_client_free_all (void)
 }
 
 /*
- * Disconnects one client.
+ * Disconnect one client.
  */
 
 void
@@ -1972,7 +1972,7 @@ relay_client_disconnect (struct t_relay_client *client)
 }
 
 /*
- * Disconnects all clients.
+ * Disconnect all clients.
  */
 
 void
@@ -1988,13 +1988,13 @@ relay_client_disconnect_all (void)
 }
 
 /*
- * Adds a client in an infolist.
+ * Add a client in an infolist.
  *
  * If force_disconnected_state == 1, the infolist contains the client
  * in a disconnected state (but the client is unchanged, still connected if it
  * was).
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -2170,7 +2170,7 @@ relay_client_add_to_infolist (struct t_infolist *infolist,
 }
 
 /*
- * Prints clients in WeeChat log file (usually for crash dump).
+ * Print clients in WeeChat log file (usually for crash dump).
  */
 
 void

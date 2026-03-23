@@ -51,10 +51,9 @@ char *gui_input_clipboard = NULL;      /* internal clipboard content        */
 
 
 /*
- * Optimizes input buffer size by adding or deleting data block (predefined
- * size).
+ * Optimize input buffer size by adding or deleting data block (predefined size).
  *
- * Returns:
+ * Return:
  *   1: input size optimized
  *   0: error (input and its size are not changed)
  */
@@ -87,7 +86,7 @@ gui_input_optimize_size (struct t_gui_buffer *buffer,
 }
 
 /*
- * Replaces full input by another string, trying to keep cursor position if new
+ * Replace full input by another string, trying to keep cursor position if new
  * string is long enough.
  */
 
@@ -121,7 +120,7 @@ gui_input_replace_input (struct t_gui_buffer *buffer, const char *new_input)
 }
 
 /*
- * Sends signal "input_paste_pending".
+ * Send signal "input_paste_pending".
  */
 
 void
@@ -138,7 +137,7 @@ gui_input_paste_pending_signal (void)
 }
 
 /*
- * Sends modifier and signal "input_text_changed".
+ * Send modifier and signal "input_text_changed".
  */
 
 void
@@ -188,7 +187,7 @@ gui_input_text_changed_modifier_and_signal (struct t_gui_buffer *buffer,
 }
 
 /*
- * Sends signal "input_text_cursor_moved".
+ * Send signal "input_text_cursor_moved".
  */
 
 void
@@ -205,7 +204,7 @@ gui_input_text_cursor_moved_signal (struct t_gui_buffer *buffer)
 }
 
 /*
- * Sends signal "input_search".
+ * Send signal "input_search".
  */
 
 void
@@ -221,7 +220,7 @@ gui_input_search_signal (struct t_gui_buffer *buffer)
 }
 
 /*
- * Sets position in input line.
+ * Set position in input line.
  */
 
 void
@@ -237,7 +236,7 @@ gui_input_set_pos (struct t_gui_buffer *buffer, int pos)
 }
 
 /*
- * Inserts a string into the input buffer at cursor position.
+ * Insert a string into the input buffer at cursor position.
  */
 
 void
@@ -278,7 +277,7 @@ gui_input_insert_string (struct t_gui_buffer *buffer, const char *string)
 }
 
 /*
- * Copies string into the internal clipboard.
+ * Copy string into the internal clipboard.
  */
 
 void
@@ -300,7 +299,7 @@ gui_input_clipboard_copy (const char *buffer, int size)
 }
 
 /*
- * Pastes the internal clipboard at cursor pos in input line
+ * Paste the internal clipboard at cursor pos in input line
  * (default key: ctrl-y).
  */
 
@@ -318,7 +317,7 @@ gui_input_clipboard_paste (struct t_gui_buffer *buffer)
 }
 
 /*
- * Sends data to buffer:
+ * Send data to buffer:
  *   - saves text in history
  *   - stops completion
  *   - frees all undos
@@ -340,7 +339,7 @@ gui_input_send_data_to_buffer (struct t_gui_buffer *buffer, char *data)
 }
 
 /*
- * Sends current input to buffer.
+ * Send current input to buffer.
  */
 
 void
@@ -374,7 +373,7 @@ gui_input_return (struct t_gui_buffer *buffer)
 }
 
 /*
- * Splits input on newlines then sends each line to buffer.
+ * Split input on newlines then sends each line to buffer.
  */
 
 void
@@ -406,7 +405,7 @@ gui_input_split_return (struct t_gui_buffer *buffer)
 }
 
 /*
- * Completes a word in input buffer.
+ * Complete a word in input buffer.
  */
 
 void
@@ -493,7 +492,7 @@ gui_input_complete (struct t_gui_buffer *buffer)
 }
 
 /*
- * Completes with next word (default key: tab).
+ * Complete with next word (default key: tab).
  */
 
 void
@@ -517,7 +516,7 @@ gui_input_complete_next (struct t_gui_buffer *buffer)
 }
 
 /*
- * Completes with previous word (default key: shift-tab).
+ * Complete with previous word (default key: shift-tab).
  */
 
 void
@@ -541,7 +540,7 @@ gui_input_complete_previous (struct t_gui_buffer *buffer)
 }
 
 /*
- * Searches for text in buffer at current position (default key: ctrl-r).
+ * Search for text in buffer at current position (default key: ctrl-r).
  */
 
 void
@@ -559,7 +558,7 @@ gui_input_search_text_here (struct t_gui_buffer *buffer)
 }
 
 /*
- * Searches for text in buffer.
+ * Search for text in buffer.
  */
 
 void
@@ -576,7 +575,7 @@ gui_input_search_text (struct t_gui_buffer *buffer)
 }
 
 /*
- * Searches for text in buffer/global command line history.
+ * Search for text in buffer/global command line history.
  */
 
 void
@@ -593,7 +592,7 @@ gui_input_search_history (struct t_gui_buffer *buffer)
 }
 
 /*
- * Compiles regex used to search text in buffer.
+ * Compile regex used to search text in buffer.
  */
 
 void
@@ -629,7 +628,7 @@ gui_input_search_compile_regex (struct t_gui_buffer *buffer)
 }
 
 /*
- * Switches case for search in buffer (default key: alt-c during search).
+ * Switch case for search in buffer (default key: alt-c during search).
  */
 
 void
@@ -647,7 +646,7 @@ gui_input_search_switch_case (struct t_gui_buffer *buffer)
 }
 
 /*
- * Switches string/regex for search in buffer (default key: ctrl-r during
+ * Switch string/regex for search in buffer (default key: ctrl-r during
  * search).
  */
 
@@ -666,7 +665,7 @@ gui_input_search_switch_regex (struct t_gui_buffer *buffer)
 }
 
 /*
- * Switches search in messages/prefixes (default key: tab during search).
+ * Switch search in messages/prefixes (default key: tab during search).
  */
 
 void
@@ -708,7 +707,7 @@ gui_input_search_switch_where (struct t_gui_buffer *buffer)
 }
 
 /*
- * Searches backward in buffer (default key: up during search).
+ * Search backward in buffer (default key: up during search).
  */
 
 void
@@ -739,7 +738,7 @@ gui_input_search_previous (struct t_gui_buffer *buffer)
 }
 
 /*
- * Searches forward in buffer (default key: down during search).
+ * Search forward in buffer (default key: down during search).
  */
 
 void
@@ -770,7 +769,7 @@ gui_input_search_next (struct t_gui_buffer *buffer)
 }
 
 /*
- * Stops text search at current position (default key: return during search).
+ * Stop text search at current position (default key: return during search).
  */
 
 void
@@ -797,7 +796,7 @@ gui_input_search_stop_here (struct t_gui_buffer *buffer)
 }
 
 /*
- * Stops text search (default key: ctrl-q during search).
+ * Stop text search (default key: ctrl-q during search).
  */
 
 void
@@ -824,7 +823,7 @@ gui_input_search_stop (struct t_gui_buffer *buffer)
 }
 
 /*
- * Deletes previous char (default key: backspace).
+ * Delete previous char (default key: backspace).
  */
 
 void
@@ -856,7 +855,7 @@ gui_input_delete_previous_char (struct t_gui_buffer *buffer)
 }
 
 /*
- * Deletes next char (default key: del).
+ * Delete next char (default key: del).
  */
 
 void
@@ -894,8 +893,7 @@ gui_input_delete_next_char (struct t_gui_buffer *buffer)
 }
 
 /*
- * Delete the range between two positions and copy the content to the
- * clipboard.
+ * Delete the range between two positions and copy the content to the clipboard.
  */
 
 void
@@ -930,7 +928,7 @@ gui_input_delete_range (struct t_gui_buffer *buffer,
 }
 
 /*
- * Deletes previous word (default key: alt-backspace).
+ * Delete previous word (default key: alt-backspace).
  */
 
 void
@@ -969,7 +967,7 @@ gui_input_delete_previous_word (struct t_gui_buffer *buffer)
 }
 
 /*
- * Deletes previous word until whitespace (default key: ctrl-w).
+ * Delete previous word until whitespace (default key: ctrl-w).
  */
 
 void
@@ -1008,7 +1006,7 @@ gui_input_delete_previous_word_whitespace (struct t_gui_buffer *buffer)
 }
 
 /*
- * Deletes next word (default key: alt-d).
+ * Delete next word (default key: alt-d).
  */
 
 void
@@ -1056,9 +1054,9 @@ gui_input_delete_next_word (struct t_gui_buffer *buffer)
 }
 
 /*
- * Deletes all from cursor pos to beginning of line (default key: ctrl-u).
+ * Delete all from cursor pos to beginning of line (default key: ctrl-u).
  *
- * If cursor is at beginning of line, deletes to beginning of previous line.
+ * If cursor is at beginning of line, delete to beginning of previous line.
  */
 
 void
@@ -1112,9 +1110,9 @@ gui_input_delete_beginning_of_line (struct t_gui_buffer *buffer)
 }
 
 /*
- * Deletes all from cursor pos to end of line (default key: ctrl-k).
+ * Delete all from cursor pos to end of line (default key: ctrl-k).
  *
- * If cursor is at end of line, deletes to end of next line.
+ * If cursor is at end of line, delete to end of next line.
  */
 
 void
@@ -1163,7 +1161,7 @@ gui_input_delete_end_of_line (struct t_gui_buffer *buffer)
 }
 
 /*
- * Deletes all from cursor pos to beginning of input (default key: alt-ctrl-u).
+ * Delete all from cursor pos to beginning of input (default key: alt-ctrl-u).
  */
 
 void
@@ -1199,7 +1197,7 @@ gui_input_delete_beginning_of_input (struct t_gui_buffer *buffer)
 }
 
 /*
- * Deletes all from cursor pos to end of input (default key: alt-ctrl-k).
+ * Delete all from cursor pos to end of input (default key: alt-ctrl-k).
  */
 
 void
@@ -1226,7 +1224,7 @@ gui_input_delete_end_of_input (struct t_gui_buffer *buffer)
 }
 
 /*
- * Deletes current line (default key: alt-r).
+ * Delete current line (default key: alt-r).
  */
 
 void
@@ -1271,7 +1269,7 @@ gui_input_delete_line (struct t_gui_buffer *buffer)
 }
 
 /*
- * Deletes entire input (default key: alt-R).
+ * Delete entire input (default key: alt-R).
  */
 
 void
@@ -1292,7 +1290,7 @@ gui_input_delete_input (struct t_gui_buffer *buffer)
 }
 
 /*
- * Transposes chars at cursor pos (default key: ctrl-t).
+ * Transpose chars at cursor pos (default key: ctrl-t).
  */
 
 void
@@ -1331,9 +1329,9 @@ gui_input_transpose_chars (struct t_gui_buffer *buffer)
 }
 
 /*
- * Moves cursor to beginning of line (default key: home).
+ * Move cursor to beginning of line (default key: home).
  *
- * If cursor is at beginning of line, moves to beginning of previous line.
+ * If cursor is at beginning of line, move to beginning of previous line.
  */
 
 void
@@ -1366,9 +1364,9 @@ gui_input_move_beginning_of_line (struct t_gui_buffer *buffer)
 }
 
 /*
- * Moves cursor to end of line (default key: end).
+ * Move cursor to end of line (default key: end).
  *
- * If cursor is at end of line, moves to end of next line.
+ * If cursor is at end of line, move to end of next line.
  */
 
 void
@@ -1401,7 +1399,7 @@ gui_input_move_end_of_line (struct t_gui_buffer *buffer)
 }
 
 /*
- * Moves cursor to beginning of input (default key: shift-home).
+ * Move cursor to beginning of input (default key: shift-home).
  */
 
 void
@@ -1415,7 +1413,7 @@ gui_input_move_beginning_of_input (struct t_gui_buffer *buffer)
 }
 
 /*
- * Moves cursor to end of input (default key: shift-end).
+ * Move cursor to end of input (default key: shift-end).
  */
 
 void
@@ -1432,7 +1430,7 @@ gui_input_move_end_of_input (struct t_gui_buffer *buffer)
 }
 
 /*
- * Moves cursor to previous char (default key: left).
+ * Move cursor to previous char (default key: left).
  */
 
 void
@@ -1446,7 +1444,7 @@ gui_input_move_previous_char (struct t_gui_buffer *buffer)
 }
 
 /*
- * Moves cursor to next char (default key: right).
+ * Move cursor to next char (default key: right).
  */
 
 void
@@ -1463,8 +1461,7 @@ gui_input_move_next_char (struct t_gui_buffer *buffer)
 }
 
 /*
- * Moves cursor to beginning of previous word (default key: alt-b or
- * ctrl-left).
+ * Move cursor to beginning of previous word (default key: alt-b or ctrl-left).
  */
 
 void
@@ -1503,8 +1500,7 @@ gui_input_move_previous_word (struct t_gui_buffer *buffer)
 }
 
 /*
- * Moves cursor to the beginning of next word (default key: alt-f or
- * ctrl-right).
+ * Move cursor to the beginning of next word (default key: alt-f or ctrl-right).
  */
 
 void
@@ -1546,7 +1542,7 @@ gui_input_move_next_word (struct t_gui_buffer *buffer)
 }
 
 /*
- * Moves cursor to previous line (default key: shift-up).
+ * Move cursor to previous line (default key: shift-up).
  */
 
 void
@@ -1595,7 +1591,7 @@ gui_input_move_previous_line (struct t_gui_buffer *buffer)
 }
 
 /*
- * Moves cursor to next line (default key: shift-down).
+ * Move cursor to next line (default key: shift-down).
  */
 
 void
@@ -1643,7 +1639,7 @@ gui_input_move_next_line (struct t_gui_buffer *buffer)
 }
 
 /*
- * Recalls previous command from local or global history.
+ * Recall previous command from local or global history.
  */
 
 void
@@ -1700,7 +1696,7 @@ gui_input_history_previous (struct t_gui_window *window,
 }
 
 /*
- * Recalls next command from local or global history.
+ * Recall next command from local or global history.
  */
 
 void
@@ -1777,7 +1773,7 @@ gui_input_history_next (struct t_gui_window *window,
 }
 
 /*
- * Recalls previous command from local history (default key: up).
+ * Recall previous command from local history (default key: up).
  */
 
 void
@@ -1795,7 +1791,7 @@ gui_input_history_local_previous (struct t_gui_buffer *buffer)
 }
 
 /*
- * Recalls next command from local history (default key: down).
+ * Recall next command from local history (default key: down).
  */
 
 void
@@ -1813,7 +1809,7 @@ gui_input_history_local_next (struct t_gui_buffer *buffer)
 }
 
 /*
- * Recalls previous command from global history (default key: ctrl-up).
+ * Recall previous command from global history (default key: ctrl-up).
  */
 
 void
@@ -1831,7 +1827,7 @@ gui_input_history_global_previous (struct t_gui_buffer *buffer)
 }
 
 /*
- * Recalls next command from global history (default key: ctrl-down).
+ * Recall next command from global history (default key: ctrl-down).
  */
 
 void
@@ -1849,8 +1845,8 @@ gui_input_history_global_next (struct t_gui_buffer *buffer)
 }
 
 /*
- * Sends the current history entry (found with search or recalled with
- * "up" key) and inserts the next one in the command line without sending it
+ * Send the current history entry (found with search or recalled with
+ * "up" key) and insert the next one in the command line without sending it
  * (default key: ctrl-o, in contexts "default" and "histsearch").
  */
 
@@ -1897,7 +1893,7 @@ gui_input_history_use_get_next (struct t_gui_buffer *buffer)
 }
 
 /*
- * Initializes "grab key mode" (next key will be inserted into input buffer)
+ * Initialize "grab key mode" (next key will be inserted into input buffer)
  * (default key: alt-k).
  */
 
@@ -1909,7 +1905,7 @@ gui_input_grab_key (struct t_gui_buffer *buffer, int command, const char *delay)
 }
 
 /*
- * Initializes "grab mouse mode" (next mouse event will be inserted into input
+ * Initialize "grab mouse mode" (next mouse event will be inserted into input
  * buffer) (default key: button2 of mouse in input bar).
  */
 
@@ -1921,7 +1917,7 @@ gui_input_grab_mouse (struct t_gui_buffer *buffer, int area)
 }
 
 /*
- * Inserts a string in command line.
+ * Insert a string in command line.
  */
 
 void
@@ -1942,7 +1938,7 @@ gui_input_insert (struct t_gui_buffer *buffer, const char *args)
 }
 
 /*
- * Uses a undo: replace input with undo content.
+ * Use a undo: replace input with undo content.
  */
 
 void
@@ -1959,7 +1955,7 @@ gui_input_undo_use (struct t_gui_buffer *buffer, struct t_gui_input_undo *undo)
 }
 
 /*
- * Undoes last action on input buffer (default key: ctrl-_).
+ * Undo last action on input buffer (default key: ctrl-_).
  */
 
 void
@@ -1990,7 +1986,7 @@ gui_input_undo (struct t_gui_buffer *buffer)
 }
 
 /*
- * Redoes last action on input buffer (default key: alt-_).
+ * Redo last action on input buffer (default key: alt-_).
  */
 
 void

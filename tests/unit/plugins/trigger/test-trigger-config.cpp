@@ -354,7 +354,7 @@ TEST(TriggerConfig, DefaultTriggerServerPass)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   trigger_config_change_enabled
  */
 
@@ -364,7 +364,7 @@ TEST(TriggerConfig, ChangeEnabled)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   trigger_config_change_trigger_enabled
  */
 
@@ -374,7 +374,7 @@ TEST(TriggerConfig, ChangeTriggerEnabled)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   trigger_config_change_trigger_hook
  */
 
@@ -384,7 +384,7 @@ TEST(TriggerConfig, ChangeTriggerHook)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   trigger_config_change_trigger_arguments
  */
 
@@ -394,7 +394,7 @@ TEST(TriggerConfig, ChangeTriggerArguments)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   trigger_config_change_trigger_regex
  */
 
@@ -404,7 +404,7 @@ TEST(TriggerConfig, ChangeTriggerRegex)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   trigger_config_change_trigger_command
  */
 
@@ -414,7 +414,7 @@ TEST(TriggerConfig, ChangeTriggerCommand)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   trigger_config_create_trigger_option
  */
 
@@ -424,7 +424,7 @@ TEST(TriggerConfig, ChangeTriggerOption)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   trigger_config_create_option_temp
  */
 
@@ -434,7 +434,7 @@ TEST(TriggerConfig, CreateOptionTemp)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   trigger_config_use_temp_triggers
  */
 
@@ -444,7 +444,7 @@ TEST(TriggerConfig, UseTempTriggers)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   trigger_config_trigger_read_cb
  */
 
@@ -454,7 +454,7 @@ TEST(TriggerConfig, TriggerReadCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   trigger_config_trigger_write_default_cb
  */
 
@@ -464,7 +464,7 @@ TEST(TriggerConfig, TriggerWriteDefaultCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   trigger_config_reload_cb
  */
 
@@ -474,7 +474,7 @@ TEST(TriggerConfig, ReloadCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   trigger_config_init
  */
 
@@ -484,7 +484,7 @@ TEST(TriggerConfig, Init)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   trigger_config_read
  */
 
@@ -494,7 +494,7 @@ TEST(TriggerConfig, Read)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   trigger_config_write
  */
 
@@ -504,7 +504,7 @@ TEST(TriggerConfig, Write)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   trigger_config_free
  */
 

@@ -105,7 +105,7 @@ TEST_GROUP(CoreInfolist)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   infolist_new
  *   infolist_new_item
  *   infolist_new_var_integer
@@ -237,7 +237,7 @@ TEST(CoreInfolist, New)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   infolist_valid
  *   infolist_free
  */
@@ -261,7 +261,7 @@ TEST(CoreInfolist, Valid)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   infolist_search_var
  */
 
@@ -305,7 +305,7 @@ TEST(CoreInfolist, Search)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   infolist_next
  *   infolist_prev
  *   infolist_reset_item_cursor
@@ -355,7 +355,7 @@ TEST(CoreInfolist, Move)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   infolist_get
  */
 
@@ -405,7 +405,7 @@ TEST(CoreInfolist, Get)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   infolist_integer
  *   infolist_string
  *   infolist_pointer
@@ -439,7 +439,7 @@ TEST(CoreInfolist, GetValues)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   infolist_fields
  */
 
@@ -468,7 +468,7 @@ TEST(CoreInfolist, Fields)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   infolist_print_log
  */
 

@@ -53,9 +53,9 @@ int typing_update_item = 0;
 
 
 /*
- * Sends a "typing" signal.
+ * Send a "typing" signal.
  *
- * Returns code of last callback executed.
+ * Return code of last callback executed.
  */
 
 int
@@ -480,7 +480,7 @@ typing_typing_reset_buffer_signal_cb (const void *pointer, void *data,
 }
 
 /*
- * Creates or removes hooks, according to options "typing.look.enabled_*".
+ * Create or remove hooks, according to options "typing.look.enabled_*".
  */
 
 void
@@ -582,7 +582,7 @@ typing_setup_hooks (void)
 }
 
 /*
- * Removes all hooks.
+ * Remove all hooks.
  */
 
 void
@@ -621,7 +621,7 @@ typing_remove_hooks (void)
 }
 
 /*
- * Initializes typing plugin.
+ * Initialize typing plugin.
  */
 
 int
@@ -646,7 +646,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 }
 
 /*
- * Ends typing plugin.
+ * End typing plugin.
  */
 
 int

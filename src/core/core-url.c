@@ -683,9 +683,9 @@ struct t_url_option url_options[] =
 
 
 /*
- * Searches for a constant in array of constants.
+ * Search for a constant in array of constants.
  *
- * Returns index of constant, -1 if not found.
+ * Return index of constant, -1 if not found.
  */
 
 int
@@ -709,7 +709,7 @@ weeurl_search_constant (struct t_url_constant *constants, const char *name)
 }
 
 /*
- * Gets value of mask using constants.
+ * Get value of mask using constants.
  *
  * Argument "string_mask" has format: "const1+const2+const3".
  */
@@ -752,9 +752,9 @@ weeurl_get_mask_value (struct t_url_constant *constants,
 }
 
 /*
- * Searches for an URL option in table of options.
+ * Search for an URL option in table of options.
  *
- * Returns index of option, -1 if not found.
+ * Return index of option, -1 if not found.
  */
 
 int
@@ -778,7 +778,7 @@ weeurl_search_option (const char *name)
 }
 
 /*
- * Reads data from a file (callback called to read a file).
+ * Read data from a file (callback called to read a file).
  */
 
 size_t
@@ -788,7 +788,7 @@ weeurl_read_stream (void *buffer, size_t size, size_t nmemb, void *stream)
 }
 
 /*
- * Writes data in a file (callback called to write a file).
+ * Write data in a file (callback called to write a file).
  */
 
 size_t
@@ -798,7 +798,7 @@ weeurl_write_stream (void *buffer, size_t size, size_t nmemb, void *stream)
 }
 
 /*
- * Adds data to a dynamic string (callback called to catch stdout).
+ * Add data to a dynamic string (callback called to catch stdout).
  */
 
 size_t
@@ -813,7 +813,7 @@ weeurl_write_string (void *buffer, size_t size, size_t nmemb, void *string)
 }
 
 /*
- * Sets option in CURL easy handle (callback called for each option in hashtable
+ * Set option in CURL easy handle (callback called for each option in hashtable
  * "options").
  */
 
@@ -920,7 +920,7 @@ weeurl_option_map_cb (void *data,
 }
 
 /*
- * Sets proxy in CURL easy handle.
+ * Set proxy in CURL easy handle.
  */
 
 void
@@ -968,7 +968,7 @@ weeurl_set_proxy (CURL *curl, struct t_proxy *proxy)
 }
 
 /*
- * Downloads URL using options.
+ * Download URL using options.
  *
  * If output is not NULL, it must be a hashtable with keys and values of type
  * "string". The following keys may be added in the hashtable,
@@ -982,7 +982,7 @@ weeurl_set_proxy (CURL *curl, struct t_proxy *proxy)
  *   error         | error message (set only in case of error)
  *
  * If timeout is 0, the function blocks until the end of the transfer.
- * If timeout (in milliseconds) is > 0, the function returns an error in the
+ * If timeout (in milliseconds) is > 0, the function return an error in the
  * output hashtable if the timeout is reached while the transfer is still
  * active.
  *
@@ -990,7 +990,7 @@ weeurl_set_proxy (CURL *curl, struct t_proxy *proxy)
  * pointed integer becomes different from 0 (set by the caller of this function),
  * the download is immediately stopped with an error.
  *
- * Returns:
+ * Return:
  *   0: OK
  *   1: invalid URL
  *   2: error downloading URL
@@ -1261,9 +1261,9 @@ end:
 }
 
 /*
- * Adds an URL option in an infolist.
+ * Add an URL option in an infolist.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -1319,7 +1319,7 @@ weeurl_option_add_to_infolist (struct t_infolist *infolist,
 }
 
 /*
- * Initializes URL.
+ * Initialize URL.
  */
 
 void
@@ -1329,7 +1329,7 @@ weeurl_init (void)
 }
 
 /*
- * Ends URL.
+ * End URL.
  */
 
 void

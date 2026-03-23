@@ -140,9 +140,9 @@ char *gui_buffer_properties_set[] =
 
 
 /*
- * Searches for buffer type.
+ * Search for buffer type.
  *
- * Returns index of buffer type found, -1 if not found.
+ * Return index of buffer type found, -1 if not found.
  */
 
 int
@@ -163,9 +163,9 @@ gui_buffer_search_type (const char *type)
 }
 
 /*
- * Searches for buffer notify level.
+ * Search for buffer notify level.
  *
- * Returns index of notify level, -1 if not found.
+ * Return index of notify level, -1 if not found.
  */
 
 int
@@ -186,7 +186,7 @@ gui_buffer_search_notify (const char *notify)
 }
 
 /*
- * Sends a buffer signal, only if the buffer is completely opened or if
+ * Send a buffer signal, only if the buffer is completely opened or if
  * the signal is "buffer_switch".
  */
 
@@ -202,7 +202,7 @@ gui_buffer_send_signal (struct t_gui_buffer *buffer,
 }
 
 /*
- * Gets plugin name of buffer.
+ * Get plugin name of buffer.
  *
  * Note: during upgrade process (at startup after /upgrade), the name of plugin
  * is retrieved in temporary variable "plugin_name_for_upgrade".
@@ -221,7 +221,7 @@ gui_buffer_get_plugin_name (struct t_gui_buffer *buffer)
 }
 
 /*
- * Builds "full_name" of buffer (for example after changing name or
+ * Build "full_name" of buffer (for example after changing name or
  * plugin_name_for_upgrade).
  */
 
@@ -239,7 +239,7 @@ gui_buffer_build_full_name (struct t_gui_buffer *buffer)
 }
 
 /*
- * Adds a new local variable in a buffer.
+ * Add a new local variable in a buffer.
  */
 
 void
@@ -264,7 +264,7 @@ gui_buffer_local_var_add (struct t_gui_buffer *buffer, const char *name,
 }
 
 /*
- * Removes a local variable in a buffer.
+ * Remove a local variable in a buffer.
  */
 
 void
@@ -286,7 +286,7 @@ gui_buffer_local_var_remove (struct t_gui_buffer *buffer, const char *name)
 }
 
 /*
- * Removes all local variables in a buffer.
+ * Remove all local variables in a buffer.
  */
 
 void
@@ -302,9 +302,9 @@ gui_buffer_local_var_remove_all (struct t_gui_buffer *buffer)
 }
 
 /*
- * Reads a notify level in configuration file.
+ * Read a notify level in configuration file.
  *
- * First tries with all arguments, then removes one by one to find notify level
+ * Try first with all arguments, then remove one by one to find notify level
  * (from specific to general notify).
  */
 
@@ -353,7 +353,7 @@ gui_buffer_notify_get (struct t_gui_buffer *buffer)
 }
 
 /*
- * Sets notify value on a buffer.
+ * Set notify value on a buffer.
  */
 
 void
@@ -385,7 +385,7 @@ gui_buffer_notify_set (struct t_gui_buffer *buffer)
 }
 
 /*
- * Sets notify values on all opened buffers.
+ * Set notify values on all opened buffers.
  */
 
 void
@@ -401,11 +401,11 @@ gui_buffer_notify_set_all (void)
 }
 
 /*
- * Searches for position of buffer in list using its layout number
+ * Search for position of buffer in list using its layout number
  * (to keep buffers sorted by number).
  *
- * Returns the pointer to the buffer that will be after the new buffer in list.
- * Returns NULL if position is undefined.
+ * Return the pointer to the buffer that will be after the new buffer in list.
+ * Return NULL if position is undefined.
  */
 
 struct t_gui_buffer *
@@ -442,7 +442,7 @@ gui_buffer_find_pos (struct t_gui_buffer *buffer)
 }
 
 /*
- * Shifts number of buffers (number + 1) until we find a gap (if auto renumber
+ * Shift number of buffers (number + 1) until we find a gap (if auto renumber
  * is OFF), or until last buffer.
  */
 
@@ -471,8 +471,7 @@ gui_buffer_shift_numbers (struct t_gui_buffer *buffer,
 }
 
 /*
- * Inserts a buffer in good position in list of buffers (keeping sort on
- * number).
+ * Insert a buffer in good position in list of buffers (keeping sort on number).
  */
 
 void
@@ -611,7 +610,7 @@ gui_buffer_insert (struct t_gui_buffer *buffer)
 }
 
 /*
- * Returns a new unique id for a buffer.
+ * Return a new unique id for a buffer.
  *
  * The id is the current time with microseconds precision.
  * The same time (including microseconds) can be used only one time, so that
@@ -639,7 +638,7 @@ gui_buffer_generate_id (void)
 }
 
 /*
- * Initializes input_buffer_* variables in a buffer.
+ * Initialize input_buffer_* variables in a buffer.
  */
 
 void
@@ -656,9 +655,9 @@ gui_buffer_input_buffer_init (struct t_gui_buffer *buffer)
 }
 
 /*
- * Checks if the name is reserved for WeeChat.
+ * Check if the name is reserved for WeeChat.
  *
- * Returns:
+ * Return:
  *   0: name is not reserved for WeeChat
  *   1: name is reserved for WeeChat
  */
@@ -681,7 +680,7 @@ gui_buffer_is_reserved_name (const char *name)
 }
 
 /*
- * Applies buffer properties (callback of hashtable_map).
+ * Apply buffer properties (callback of hashtable_map).
  */
 
 void
@@ -698,7 +697,7 @@ gui_buffer_apply_properties_cb (void *data,
 }
 
 /*
- * Applies a buffer property defined in an option "weechat.buffer.xxx".
+ * Apply a buffer property defined in an option "weechat.buffer.xxx".
  */
 
 void
@@ -763,7 +762,7 @@ gui_buffer_apply_config_option_property (struct t_gui_buffer *buffer,
 }
 
 /*
- * Applies buffer properties defined in options "weechat.buffer.*".
+ * Apply buffer properties defined in options "weechat.buffer.*".
  */
 
 void
@@ -779,10 +778,10 @@ gui_buffer_apply_config_properties (struct t_gui_buffer *buffer)
 }
 
 /*
- * Creates a new buffer in current window with some optional properties,
+ * Create a new buffer in current window with some optional properties,
  * using id (this function is for internal use only).
  *
- * Returns pointer to new buffer, NULL if error.
+ * Return pointer to new buffer, NULL if error.
  */
 
 struct t_gui_buffer *
@@ -1026,9 +1025,9 @@ gui_buffer_new_props_with_id (long long id,
 }
 
 /*
- * Creates a new buffer in current window with some optional properties.
+ * Create a new buffer in current window with some optional properties.
  *
- * Returns pointer to new buffer, NULL if error.
+ * Return pointer to new buffer, NULL if error.
  */
 
 struct t_gui_buffer *
@@ -1061,9 +1060,9 @@ gui_buffer_new_props (struct t_weechat_plugin *plugin,
 }
 
 /*
- * Creates a new buffer in current window.
+ * Create a new buffer in current window.
  *
- * Returns pointer to new buffer, NULL if error.
+ * Return pointer to new buffer, NULL if error.
  */
 
 struct t_gui_buffer *
@@ -1143,9 +1142,9 @@ gui_buffer_user_close_cb (const void *pointer, void *data,
 }
 
 /*
- * Creates a new user buffer in current window.
+ * Create a new user buffer in current window.
  *
- * Returns pointer to new buffer, NULL if error.
+ * Return pointer to new buffer, NULL if error.
  */
 
 struct t_gui_buffer *
@@ -1179,7 +1178,7 @@ gui_buffer_new_user (const char *name, enum t_gui_buffer_type buffer_type)
 }
 
 /*
- * Sets callbacks on user buffers.
+ * Set callbacks on user buffers.
  */
 
 void
@@ -1204,9 +1203,9 @@ gui_buffer_user_set_callbacks (void)
 }
 
 /*
- * Checks if a buffer pointer is valid.
+ * Check if a buffer pointer is valid.
  *
- * Returns:
+ * Return:
  *   1: buffer exists
  *   0: buffer does not exist
  */
@@ -1232,7 +1231,7 @@ gui_buffer_valid (struct t_gui_buffer *buffer)
 }
 
 /*
- * Replaces local variables ($var) in a string, using value of local variables.
+ * Replace local variables ($var) in a string, using value of local variables.
  *
  * Note: result must be freed after use.
  */
@@ -1322,7 +1321,7 @@ gui_buffer_string_replace_local_var (struct t_gui_buffer *buffer,
 }
 
 /*
- * Checks if full name of buffer marches list of buffers.
+ * Check if full name of buffer marches list of buffers.
  *
  * List is a comma-separated list of buffers, where exclusion is possible with
  * char '!', and "*" means all buffers.
@@ -1364,7 +1363,7 @@ gui_buffer_match_list (struct t_gui_buffer *buffer, const char *string)
 }
 
 /*
- * Sets plugin pointer for buffers with a given name (used after /upgrade).
+ * Set plugin pointer for buffers with a given name (used after /upgrade).
  */
 
 void
@@ -1391,7 +1390,7 @@ gui_buffer_set_plugin_for_upgrade (char *name, struct t_weechat_plugin *plugin)
 /*
  * Check if a property is in the list of properties.
  *
- * Returns:
+ * Return:
  *   1: property is in list
  *   0: property is not in list
  */
@@ -1415,7 +1414,7 @@ gui_buffer_property_in_list (char *properties[], char *property)
 }
 
 /*
- * Gets a buffer property as integer.
+ * Get a buffer property as integer.
  */
 
 int
@@ -1521,7 +1520,7 @@ gui_buffer_get_integer (struct t_gui_buffer *buffer, const char *property)
 }
 
 /*
- * Gets a buffer property as string.
+ * Get a buffer property as string.
  */
 
 const char *
@@ -1590,7 +1589,7 @@ gui_buffer_get_string (struct t_gui_buffer *buffer, const char *property)
 }
 
 /*
- * Gets a buffer property as pointer.
+ * Get a buffer property as pointer.
  */
 
 void *
@@ -1614,7 +1613,7 @@ gui_buffer_get_pointer (struct t_gui_buffer *buffer, const char *property)
 }
 
 /*
- * Sets flag "chat_refresh_needed".
+ * Set flag "chat_refresh_needed".
  */
 
 void
@@ -1628,7 +1627,7 @@ gui_buffer_ask_chat_refresh (struct t_gui_buffer *buffer, int refresh)
 }
 
 /*
- * Sets day_change for a buffer.
+ * Set day_change for a buffer.
  */
 
 void
@@ -1644,7 +1643,7 @@ gui_buffer_set_day_change (struct t_gui_buffer *buffer, int day_change)
 }
 
 /*
- * Sets filter for a buffer.
+ * Set filter for a buffer.
  */
 
 void
@@ -1660,7 +1659,7 @@ gui_buffer_set_filter (struct t_gui_buffer *buffer, int filter)
 }
 
 /*
- * Sets name for a buffer.
+ * Set name for a buffer.
  */
 
 void
@@ -1698,7 +1697,7 @@ gui_buffer_set_name (struct t_gui_buffer *buffer, const char *name)
 }
 
 /*
- * Sets short name for a buffer.
+ * Set short name for a buffer.
  */
 
 void
@@ -1723,7 +1722,7 @@ gui_buffer_set_short_name (struct t_gui_buffer *buffer, const char *short_name)
 }
 
 /*
- * Sets buffer type.
+ * Set buffer type.
  */
 
 void
@@ -1757,7 +1756,7 @@ gui_buffer_set_type (struct t_gui_buffer *buffer, enum t_gui_buffer_type type)
 }
 
 /*
- * Sets notify for a buffer.
+ * Set notify for a buffer.
  */
 
 void
@@ -1797,7 +1796,7 @@ gui_buffer_set_notify (struct t_gui_buffer *buffer, const char *notify)
 }
 
 /*
- * Sets title for a buffer.
+ * Set title for a buffer.
  */
 
 void
@@ -1815,7 +1814,7 @@ gui_buffer_set_title (struct t_gui_buffer *buffer, const char *new_title)
 }
 
 /*
- * Sets modes for a buffer.
+ * Set modes for a buffer.
  */
 
 void
@@ -1833,7 +1832,7 @@ gui_buffer_set_modes (struct t_gui_buffer *buffer, const char *modes)
 }
 
 /*
- * Sets flag "time for each line" for a buffer.
+ * Set flag "time for each line" for a buffer.
  */
 
 void
@@ -1854,7 +1853,7 @@ gui_buffer_set_time_for_each_line (struct t_gui_buffer *buffer,
 }
 
 /*
- * Sets nicklist for a buffer.
+ * Set nicklist for a buffer.
  */
 
 void
@@ -1870,7 +1869,7 @@ gui_buffer_set_nicklist (struct t_gui_buffer *buffer, int nicklist)
 }
 
 /*
- * Sets case_sensitive flag for a buffer.
+ * Set case_sensitive flag for a buffer.
  */
 
 void
@@ -1884,7 +1883,7 @@ gui_buffer_set_nicklist_case_sensitive (struct t_gui_buffer *buffer,
 }
 
 /*
- * Sets flag "display_groups" for a buffer.
+ * Set flag "display_groups" for a buffer.
  */
 
 void
@@ -1905,7 +1904,7 @@ gui_buffer_set_nicklist_display_groups (struct t_gui_buffer *buffer,
 }
 
 /*
- * Sets highlight words for a buffer.
+ * Set highlight words for a buffer.
  */
 
 void
@@ -1921,7 +1920,7 @@ gui_buffer_set_highlight_words (struct t_gui_buffer *buffer,
 }
 
 /*
- * Sets highlight words for a buffer with a list.
+ * Set highlight words for a buffer with a list.
  */
 
 void
@@ -1960,7 +1959,7 @@ gui_buffer_set_highlight_words_list (struct t_gui_buffer *buffer,
 }
 
 /*
- * Adds highlight words for a buffer.
+ * Add highlight words for a buffer.
  */
 
 void
@@ -2009,7 +2008,7 @@ gui_buffer_add_highlight_words (struct t_gui_buffer *buffer,
 }
 
 /*
- * Removes highlight words in a buffer.
+ * Remove highlight words in a buffer.
  */
 
 void
@@ -2063,7 +2062,7 @@ gui_buffer_remove_highlight_words (struct t_gui_buffer *buffer,
 }
 
 /*
- * Sets highlight disable regex for a buffer.
+ * Set highlight disable regex for a buffer.
  */
 
 void
@@ -2109,7 +2108,7 @@ gui_buffer_set_highlight_disable_regex (struct t_gui_buffer *buffer,
 }
 
 /*
- * Sets highlight regex for a buffer.
+ * Set highlight regex for a buffer.
  */
 
 void
@@ -2155,7 +2154,7 @@ gui_buffer_set_highlight_regex (struct t_gui_buffer *buffer,
 }
 
 /*
- * Sets tags to restrict highlights for a buffer.
+ * Set tags to restrict highlights for a buffer.
  */
 
 void
@@ -2190,7 +2189,7 @@ gui_buffer_set_highlight_tags_restrict (struct t_gui_buffer *buffer,
 }
 
 /*
- * Sets highlight tags for a buffer.
+ * Set highlight tags for a buffer.
  */
 
 void
@@ -2225,7 +2224,7 @@ gui_buffer_set_highlight_tags (struct t_gui_buffer *buffer,
 }
 
 /*
- * Sets hotlist_max_level_nicks for a buffer.
+ * Set hotlist_max_level_nicks for a buffer.
  */
 
 void
@@ -2272,7 +2271,7 @@ gui_buffer_set_hotlist_max_level_nicks (struct t_gui_buffer *buffer,
 }
 
 /*
- * Adds nicks to hotlist_max_level_nicks for a buffer.
+ * Add nicks to hotlist_max_level_nicks for a buffer.
  */
 
 void
@@ -2314,7 +2313,7 @@ gui_buffer_add_hotlist_max_level_nicks (struct t_gui_buffer *buffer,
 }
 
 /*
- * Removes nicks from hotlist_max_level_nicks in a buffer.
+ * Remove nicks from hotlist_max_level_nicks in a buffer.
  */
 
 void
@@ -2346,7 +2345,7 @@ gui_buffer_remove_hotlist_max_level_nicks (struct t_gui_buffer *buffer,
 }
 
 /*
- * Sets buffer input prompt.
+ * Set buffer input prompt.
  */
 
 void
@@ -2366,7 +2365,7 @@ gui_buffer_set_input_prompt (struct t_gui_buffer *buffer,
 }
 
 /*
- * Sets buffer input.
+ * Set buffer input.
  */
 
 void
@@ -2383,7 +2382,7 @@ gui_buffer_set_input (struct t_gui_buffer *buffer, const char *input)
 }
 
 /*
- * Sets flag "input_get_any_user_data" for a buffer.
+ * Set flag "input_get_any_user_data" for a buffer.
  */
 
 void
@@ -2397,7 +2396,7 @@ gui_buffer_set_input_get_any_user_data (struct t_gui_buffer *buffer,
 }
 
 /*
- * Sets flag "input_get_unknown_commands" for a buffer.
+ * Set flag "input_get_unknown_commands" for a buffer.
  */
 
 void
@@ -2412,7 +2411,7 @@ gui_buffer_set_input_get_unknown_commands (struct t_gui_buffer *buffer,
 }
 
 /*
- * Sets flag "input_get_empty" for a buffer.
+ * Set flag "input_get_empty" for a buffer.
  */
 
 void
@@ -2426,7 +2425,7 @@ gui_buffer_set_input_get_empty (struct t_gui_buffer *buffer,
 }
 
 /*
- * Sets flag "input_multiline" for a buffer.
+ * Set flag "input_multiline" for a buffer.
  */
 
 void
@@ -2440,7 +2439,7 @@ gui_buffer_set_input_multiline (struct t_gui_buffer *buffer,
 }
 
 /*
- * Sets unread marker for a buffer.
+ * Set unread marker for a buffer.
  *
  * Argument is a string that can be:
  *   - empty string or NULL: set unread marker after the last line
@@ -2562,7 +2561,7 @@ gui_buffer_set_unread (struct t_gui_buffer *buffer, const char *argument)
 }
 
 /*
- * Sets a buffer property (string).
+ * Set a buffer property (string).
  */
 
 void
@@ -2861,7 +2860,7 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
 }
 
 /*
- * Sets a buffer property (pointer).
+ * Set a buffer property (pointer).
  */
 
 void
@@ -2910,7 +2909,7 @@ gui_buffer_set_pointer (struct t_gui_buffer *buffer, const char *property,
 }
 
 /*
- * Computes "num_displayed" for all buffers.
+ * Compute "num_displayed" for all buffers.
  */
 
 void
@@ -2944,7 +2943,7 @@ gui_buffer_compute_num_displayed (void)
 }
 
 /*
- * Adds value to "num_displayed" variable for a buffer (value can be negative).
+ * Add value to "num_displayed" variable for a buffer (value can be negative).
  */
 
 void
@@ -2968,9 +2967,9 @@ gui_buffer_add_value_num_displayed (struct t_gui_buffer *buffer, int value)
 }
 
 /*
- * Checks if a buffer is the WeeChat core buffer.
+ * Check if a buffer is the WeeChat core buffer.
  *
- * Returns:
+ * Return:
  *   1: buffer is WeeChat core buffer
  *   0: buffer is another buffer
  */
@@ -2991,7 +2990,7 @@ gui_buffer_is_main (const char *plugin_name, const char *name)
 }
 
 /*
- * Gets main buffer (weechat one, created at startup).
+ * Get main buffer (weechat one, created at startup).
  */
 
 struct t_gui_buffer *
@@ -3013,7 +3012,7 @@ gui_buffer_search_main (void)
 }
 
 /*
- * Searches for a buffer by id (unique identifier).
+ * Search for a buffer by id (unique identifier).
  */
 
 struct t_gui_buffer *
@@ -3024,10 +3023,10 @@ gui_buffer_search_by_id (long long id)
 }
 
 /*
- * Searches for a buffer by full name (example: "irc.libera.#weechat").
+ * Search for a buffer by full name (example: "irc.libera.#weechat").
  *
- * If full_name starts with "(?i)", the search starts after this string
- * and the search is case-insensitive.
+ * If full_name starts with "(?i)", start search after this string and perform
+ * case-insensitive search.
  */
 
 struct t_gui_buffer *
@@ -3064,10 +3063,10 @@ gui_buffer_search_by_full_name (const char *full_name)
 }
 
 /*
- * Searches for a buffer by plugin and name, full name or id.
+ * Search for a buffer by plugin and name, full name or id.
  *
- * If plugin is "==", the name is used to search by full name.
- * If plugin is "==id", the name is used to search by id (which must be numeric).
+ * If plugin is "==", search by full name.
+ * If plugin is "==id", search by id (which must be numeric).
  */
 
 struct t_gui_buffer *
@@ -3140,10 +3139,10 @@ gui_buffer_search (const char *plugin, const char *name)
 }
 
 /*
- * Searches for a buffer by plugin and partial name.
+ * Search for a buffer by plugin and partial name.
  *
- * If plugin or name starts with "(?i)", the search starts after this string
- * and the search is case-insensitive.
+ * If plugin or name starts with "(?i)", start search after this string and
+ * perform case-insensitive search.
  */
 
 struct t_gui_buffer *
@@ -3260,7 +3259,7 @@ gui_buffer_search_by_partial_name (const char *plugin, const char *name)
 }
 
 /*
- * Searches for a buffer by number.
+ * Search for a buffer by number.
  */
 
 struct t_gui_buffer *
@@ -3280,7 +3279,7 @@ gui_buffer_search_by_number (int number)
 }
 
 /*
- * Searches for a buffer by id, number, full name or partial name.
+ * Search for a buffer by id, number, full name or partial name.
  */
 
 struct t_gui_buffer *
@@ -3314,7 +3313,7 @@ gui_buffer_search_by_id_number_name (const char *string)
 }
 
 /*
- * Searches a range of buffer between "number1" and  "number2" (both are
+ * Search a range of buffer between "number1" and  "number2" (both are
  * included in the range).
  *
  * Arguments "ptr_first_buffer" and "ptr_last_buffer" must NOT be NULL.
@@ -3370,7 +3369,7 @@ gui_buffer_search_range (int number1, int number2,
 }
 
 /*
- * Returns number of merged buffers (buffers with same number).
+ * Return number of merged buffers (buffers with same number).
  */
 
 int
@@ -3392,7 +3391,7 @@ gui_buffer_count_merged_buffers (int number)
 }
 
 /*
- * Clears content of buffer.
+ * Clear content of buffer.
  */
 
 void
@@ -3414,7 +3413,7 @@ gui_buffer_clear (struct t_gui_buffer *buffer)
 }
 
 /*
- * Clears content of all buffers.
+ * Clear content of all buffers.
  */
 
 void
@@ -3431,7 +3430,7 @@ gui_buffer_clear_all (void)
 }
 
 /*
- * Gets next active buffer (when many buffers are merged).
+ * Get next active buffer (when many buffers are merged).
  *
  * If "allow_hidden_buffer" == 1, an hidden buffer can be returned.
  * Otherwise an hidden buffer is never returned (if all other merged buffers are
@@ -3474,7 +3473,7 @@ gui_buffer_get_next_active_buffer (struct t_gui_buffer *buffer,
 }
 
 /*
- * Gets previous active buffer (when many buffers are merged).
+ * Get previous active buffer (when many buffers are merged).
  *
  * If "allow_hidden_buffer" == 1, an hidden buffer can be returned.
  * Otherwise an hidden buffer is never returned (if all other merged buffers are
@@ -3517,9 +3516,9 @@ gui_buffer_get_previous_active_buffer (struct t_gui_buffer *buffer,
 }
 
 /*
- * Gets index for previously visited buffer.
+ * Get index for previously visited buffer.
  *
- * Returns -1 if there's no previously buffer in history, starting from current
+ * Return -1 if there's no previously buffer in history, starting from current
  * index.
  */
 
@@ -3536,9 +3535,9 @@ gui_buffer_visited_get_index_previous (void)
 }
 
 /*
- * Gets index for next visited buffer.
+ * Get index for next visited buffer.
  *
- * Returns -1 if there's no next buffer in history, starting from current index.
+ * Return -1 if there's no next buffer in history, starting from current index.
  */
 
 int
@@ -3553,7 +3552,7 @@ gui_buffer_visited_get_index_next (void)
 }
 
 /*
- * Searches for a visited buffer in list of visited buffers.
+ * Search for a visited buffer in list of visited buffers.
  */
 
 struct t_gui_buffer_visited *
@@ -3576,7 +3575,7 @@ gui_buffer_visited_search (struct t_gui_buffer *buffer)
 }
 
 /*
- * Searches for a visited buffer in list of visited buffers (by number).
+ * Search for a visited buffer in list of visited buffers (by number).
  */
 
 struct t_gui_buffer_visited *
@@ -3602,7 +3601,7 @@ gui_buffer_visited_search_by_number (int number)
 }
 
 /*
- * Removes a visited buffer from list of visited buffers.
+ * Remove a visited buffer from list of visited buffers.
  */
 
 void
@@ -3631,7 +3630,7 @@ gui_buffer_visited_remove (struct t_gui_buffer_visited *buffer_visited)
 }
 
 /*
- * Removes a visited buffer from list of visited buffers.
+ * Remove a visited buffer from list of visited buffers.
  */
 
 void
@@ -3648,7 +3647,7 @@ gui_buffer_visited_remove_by_buffer (struct t_gui_buffer *buffer)
 }
 
 /*
- * Removes all visited buffers from list.
+ * Remove all visited buffers from list.
  */
 
 void
@@ -3661,7 +3660,7 @@ gui_buffer_visited_remove_all (void)
 }
 
 /*
- * Adds a visited buffer to list of visited buffers.
+ * Add a visited buffer to list of visited buffers.
  */
 
 struct t_gui_buffer_visited *
@@ -3703,7 +3702,7 @@ gui_buffer_visited_add (struct t_gui_buffer *buffer)
 }
 
 /*
- * Closes a buffer.
+ * Close a buffer.
  */
 
 void
@@ -3909,7 +3908,7 @@ gui_buffer_close (struct t_gui_buffer *buffer)
 }
 
 /*
- * Switches to another buffer with number.
+ * Switch to another buffer with number.
  */
 
 void
@@ -3937,7 +3936,7 @@ gui_buffer_switch_by_number (struct t_gui_window *window, int number)
 }
 
 /*
- * Sets active buffer (when many buffers are merged).
+ * Set active buffer (when many buffers are merged).
  */
 
 void
@@ -3982,7 +3981,7 @@ gui_buffer_set_active_buffer (struct t_gui_buffer *buffer)
 }
 
 /*
- * Switches active buffer to next buffer (when many buffers are merged).
+ * Switch active buffer to next buffer (when many buffers are merged).
  */
 
 void
@@ -4002,7 +4001,7 @@ gui_buffer_switch_active_buffer (struct t_gui_buffer *buffer)
 }
 
 /*
- * Switches active buffer to previous buffer (when many buffers are merged).
+ * Switch active buffer to previous buffer (when many buffers are merged).
  */
 
 void
@@ -4022,7 +4021,7 @@ gui_buffer_switch_active_buffer_previous (struct t_gui_buffer *buffer)
 }
 
 /*
- * Zooms on current active merged buffer, or display all merged buffers if zoom
+ * Zoom on current active merged buffer, or display all merged buffers if zoom
  * was active.
  */
 
@@ -4097,7 +4096,7 @@ gui_buffer_zoom (struct t_gui_buffer *buffer)
 }
 
 /*
- * Renumbers buffers with consecutive numbers between the range
+ * Renumber buffers with consecutive numbers between the range
  * number1 -> number2, starting with new number "start_number".
  *
  * If number1 < 1, then renumber starts at first buffer in list (with lowest
@@ -4209,7 +4208,7 @@ gui_buffer_renumber (int number1, int number2, int start_number)
 }
 
 /*
- * Moves a buffer to another number.
+ * Move a buffer to another number.
  */
 
 void
@@ -4357,7 +4356,7 @@ gui_buffer_move_to_number (struct t_gui_buffer *buffer, int number)
 }
 
 /*
- * Swaps two buffers (or merged buffers).
+ * Swap two buffers (or merged buffers).
  */
 
 void
@@ -4455,7 +4454,7 @@ gui_buffer_swap (int number1, int number2)
 }
 
 /*
- * Merges a buffer into another buffer.
+ * Merge a buffer into another buffer.
  */
 
 void
@@ -4582,9 +4581,9 @@ gui_buffer_merge (struct t_gui_buffer *buffer,
 }
 
 /*
- * Unmerges a buffer from group of merged buffers.
+ * Unmerge a buffer from group of merged buffers.
  *
- * If number >= 1, then moves buffer to this number, otherwise moves buffer to
+ * If number >= 1, move buffer to this number, otherwise move buffer to
  * buffer->number + 1.
  */
 
@@ -4719,7 +4718,7 @@ gui_buffer_unmerge (struct t_gui_buffer *buffer, int number)
 }
 
 /*
- * Unmerges all merged buffers.
+ * Unmerge all merged buffers.
  */
 
 void
@@ -4747,7 +4746,7 @@ gui_buffer_unmerge_all (void)
 }
 
 /*
- * Hides a buffer.
+ * Hide a buffer.
  */
 
 void
@@ -4764,7 +4763,7 @@ gui_buffer_hide (struct t_gui_buffer *buffer)
 }
 
 /*
- * Hides all buffers.
+ * Hide all buffers.
  */
 
 void
@@ -4780,7 +4779,7 @@ gui_buffer_hide_all (void)
 }
 
 /*
- * Unhides a buffer.
+ * Unhide a buffer.
  */
 
 void
@@ -4797,7 +4796,7 @@ gui_buffer_unhide (struct t_gui_buffer *buffer)
 }
 
 /*
- * Unhides all buffers.
+ * Unhide all buffers.
  */
 
 void
@@ -4813,7 +4812,7 @@ gui_buffer_unhide_all (void)
 }
 
 /*
- * Sorts buffers by layout number.
+ * Sort buffers by layout number.
  */
 
 void
@@ -4870,7 +4869,7 @@ gui_buffer_sort_by_layout_number (void)
 }
 
 /*
- * Makes a "snapshot" of buffer input (save content and position).
+ * Make a "snapshot" of buffer input (save content and position).
  */
 
 void
@@ -4895,7 +4894,7 @@ gui_buffer_undo_snap (struct t_gui_buffer *buffer)
 }
 
 /*
- * Frees "snapshot" of buffer input.
+ * Free "snapshot" of buffer input.
  */
 
 void
@@ -4913,9 +4912,9 @@ gui_buffer_undo_snap_free (struct t_gui_buffer *buffer)
 }
 
 /*
- * Adds undo in list, with current input buffer + position.
+ * Add undo in list, with current input buffer + position.
  *
- * If before_undo is not NULL, then adds undo before this undo, otherwise adds
+ * If before_undo is not NULL, add undo before this undo, otherwise add
  * to the end of list.
  */
 
@@ -5000,7 +4999,7 @@ end:
 }
 
 /*
- * Frees undo and removes it from list.
+ * Free undo and removes it from list.
  */
 
 void
@@ -5038,7 +5037,7 @@ gui_buffer_undo_free (struct t_gui_buffer *buffer,
 }
 
 /*
- * Frees all undos of a buffer.
+ * Free all undos of a buffer.
  */
 
 void
@@ -5056,7 +5055,7 @@ gui_buffer_undo_free_all (struct t_gui_buffer *buffer)
 }
 
 /*
- * Moves buffer input content and undo data to another buffer.
+ * Move buffer input content and undo data to another buffer.
  */
 
 void
@@ -5123,7 +5122,7 @@ gui_buffer_input_move_to_buffer (struct t_gui_buffer *from_buffer,
 }
 
 /*
- * Jumps to buffer with activity.
+ * Jump to buffer with activity.
  */
 
 void
@@ -5176,7 +5175,7 @@ gui_buffer_jump_smart (struct t_gui_window *window)
 }
 
 /*
- * Jumps to last buffer that is visible (not hidden).
+ * Jump to last buffer that is visible (not hidden).
  */
 
 void
@@ -5203,7 +5202,7 @@ gui_buffer_jump_last_visible_number (struct t_gui_window *window)
 }
 
 /*
- * Jumps to last buffer displayed (before last jump to a buffer).
+ * Jump to last buffer displayed (before last jump to a buffer).
  */
 
 void
@@ -5217,7 +5216,7 @@ gui_buffer_jump_last_buffer_displayed (struct t_gui_window *window)
 }
 
 /*
- * Jumps to a visited buffer by index (called by functions to jump to
+ * Jump to a visited buffer by index (called by functions to jump to
  * previously / next visited buffer).
  */
 
@@ -5243,7 +5242,7 @@ gui_buffer_jump_visited_by_index (struct t_gui_window *window, int index)
 }
 
 /*
- * Jumps to previously visited buffer (buffer displayed before current one).
+ * Jump to previously visited buffer (buffer displayed before current one).
  */
 
 void
@@ -5258,7 +5257,7 @@ gui_buffer_jump_previously_visited_buffer (struct t_gui_window *window)
 }
 
 /*
- * Jumps to next visited buffer (buffer displayed after current one).
+ * Jump to next visited buffer (buffer displayed after current one).
  */
 
 void
@@ -5273,7 +5272,7 @@ gui_buffer_jump_next_visited_buffer (struct t_gui_window *window)
 }
 
 /*
- * Returns hdata for buffer.
+ * Return hdata for buffer.
  */
 
 struct t_hdata *
@@ -5401,7 +5400,7 @@ gui_buffer_hdata_buffer_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns hdata for input undo.
+ * Return hdata for input undo.
  */
 
 struct t_hdata *
@@ -5427,7 +5426,7 @@ gui_buffer_hdata_input_undo_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns hdata for buffer visited.
+ * Return hdata for buffer visited.
  */
 
 struct t_hdata *
@@ -5454,9 +5453,9 @@ gui_buffer_hdata_buffer_visited_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds a buffer in an infolist.
+ * Add a buffer in an infolist.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -5647,7 +5646,7 @@ gui_buffer_add_to_infolist (struct t_infolist *infolist,
 }
 
 /*
- * Dumps content of buffer as hexa data in WeeChat log file.
+ * Dump content of buffer as hexa data in WeeChat log file.
  */
 
 void
@@ -5723,7 +5722,7 @@ gui_buffer_dump_hexa (struct t_gui_buffer *buffer)
 }
 
 /*
- * Prints buffer infos in WeeChat log file (usually for crash dump).
+ * Print buffer infos in WeeChat log file (usually for crash dump).
  */
 
 void

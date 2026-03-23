@@ -42,7 +42,7 @@ int script_buffer_detail_script_line_diff = -1;
 
 
 /*
- * Displays a line with script.
+ * Display a line with script.
  */
 
 void
@@ -335,9 +335,9 @@ script_buffer_display_line_script (int line, struct t_script_repo *script)
 }
 
 /*
- * Gets header of a line for detail of script.
+ * Get header of a line for detail of script.
  *
- * Returns a string aligned on the right.
+ * Return a string aligned on the right.
  */
 
 const char *
@@ -359,7 +359,7 @@ script_buffer_detail_label (const char *text, int max_length)
 }
 
 /*
- * Gets pointer to a script (to the script managed by the appropriate plugin,
+ * Get pointer to a script (to the script managed by the appropriate plugin,
  * for example python).
  */
 
@@ -398,7 +398,7 @@ script_buffer_get_script_pointer (struct t_script_repo *script,
 }
 
 /*
- * Gets a list with usage of the script (commands, config options...).
+ * Get a list with usage of the script (commands, config options...).
  */
 
 struct t_weelist *
@@ -592,7 +592,7 @@ script_buffer_get_script_usage (struct t_script_repo *script)
 }
 
 /*
- * Displays detail on a script.
+ * Display detail on a script.
  */
 
 void
@@ -751,7 +751,7 @@ script_buffer_display_detail_script (struct t_script_repo *script)
 }
 
 /*
- * Updates list of scripts in script buffer.
+ * Update list of scripts in script buffer.
  */
 
 void
@@ -813,7 +813,7 @@ script_buffer_refresh (int clear)
 }
 
 /*
- * Sets current selected line.
+ * Set current selected line.
  */
 
 void
@@ -837,7 +837,7 @@ script_buffer_set_current_line (int line)
 }
 
 /*
- * Shows detailed info on a script.
+ * Show detailed info on a script.
  */
 
 void
@@ -859,7 +859,7 @@ script_buffer_show_detail_script (struct t_script_repo *script)
 }
 
 /*
- * Gets info about a window.
+ * Get info about a window.
  */
 
 void
@@ -895,9 +895,9 @@ script_buffer_get_window_info (struct t_gui_window *window,
 }
 
 /*
- * Checks if current line is outside window.
+ * Check if current line is outside window.
  *
- * Returns:
+ * Return:
  *   1: line is outside window
  *   0: line is inside window
  */
@@ -1070,8 +1070,7 @@ script_buffer_close_cb (const void *pointer, void *data,
 }
 
 /*
- * Restore buffer callbacks (input and close) for buffer created by script
- * plugin.
+ * Restore buffer callbacks (input and close) for buffer created by script plugin.
  */
 
 void
@@ -1089,7 +1088,7 @@ script_buffer_set_callbacks (void)
 }
 
 /*
- * Sets keys on script buffer.
+ * Set keys on script buffer.
  *
  * If hashtable is not NULL, it is used to set keys, otherwise keys are directly
  * set in the script buffer.
@@ -1140,7 +1139,7 @@ script_buffer_set_keys (struct t_hashtable *hashtable)
 }
 
 /*
- * Sets the local variable "filter" in the script buffer.
+ * Set the local variable "filter" in the script buffer.
  */
 
 void
@@ -1154,7 +1153,7 @@ script_buffer_set_localvar_filter (void)
 }
 
 /*
- * Opens script buffer.
+ * Open script buffer.
  */
 
 void

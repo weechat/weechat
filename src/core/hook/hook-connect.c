@@ -42,7 +42,7 @@
 
 
 /*
- * Returns description of hook.
+ * Return description of hook.
  *
  * Note: result must be freed after use.
  */
@@ -63,9 +63,9 @@ hook_connect_get_description (struct t_hook *hook)
 }
 
 /*
- * Hooks a connection to a peer (using fork).
+ * Hook a connection to a peer (using fork).
  *
- * Returns pointer to new hook, NULL if error.
+ * Return pointer to new hook, NULL if error.
  */
 
 struct t_hook *
@@ -140,7 +140,7 @@ hook_connect (struct t_weechat_plugin *plugin, const char *proxy,
 }
 
 /*
- * Verifies certificates.
+ * Verify certificates.
  */
 
 int
@@ -173,7 +173,7 @@ hook_connect_gnutls_verify_certificates (gnutls_session_t tls_session)
 }
 
 /*
- * Sets certificates.
+ * Set certificates.
  */
 
 int
@@ -210,7 +210,7 @@ hook_connect_gnutls_set_certificates (gnutls_session_t tls_session,
 }
 
 /*
- * Frees data in a connect hook.
+ * Free data in a connect hook.
  */
 
 void
@@ -314,7 +314,7 @@ hook_connect_free_data (struct t_hook *hook)
 }
 
 /*
- * Returns hdata for connect hook.
+ * Return hdata for connect hook.
  */
 
 struct t_hdata *
@@ -360,9 +360,9 @@ hook_connect_hdata_hook_connect_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds connect hook data in the infolist item.
+ * Add connect hook data in the infolist item.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -421,7 +421,7 @@ hook_connect_add_to_infolist (struct t_infolist_item *item,
 }
 
 /*
- * Prints connect hook data in WeeChat log file (usually for crash dump).
+ * Print connect hook data in WeeChat log file (usually for crash dump).
  */
 
 void

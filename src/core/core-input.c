@@ -45,9 +45,9 @@ char **input_commands_allowed = NULL;
 
 
 /*
- * Sends data to buffer input callback.
+ * Send data to buffer input callback.
  *
- * Returns the return code of buffer callback, or WEECHAT_RC_ERROR if the
+ * Return the return code of buffer callback, or WEECHAT_RC_ERROR if the
  * buffer has no input callback.
  */
 
@@ -72,9 +72,9 @@ input_exec_data (struct t_gui_buffer *buffer, const char *data)
 }
 
 /*
- * Executes a command.
+ * Execute a command.
  *
- * Returns:
+ * Return:
  *   WEECHAT_RC_OK: command executed
  *   WEECHAT_RC_ERROR: error, command not executed
  */
@@ -228,12 +228,12 @@ end:
 }
 
 /*
- * Sends data to a buffer's callback.
+ * Send data to a buffer's callback.
  *
  * If split_newline = 1 and if buffer input_multiline = 0, the string
  * is split on "\n" and multiple commands can then be executed.
  *
- * Returns:
+ * Return:
  *   WEECHAT_RC_OK: data properly sent (or command executed successfully)
  *   WEECHAT_RC_ERROR: error
  */
@@ -399,12 +399,12 @@ input_data_timer_cb (const void *pointer, void *data, int remaining_calls)
 }
 
 /*
- * Sends data to a buffer's callback with an optional delay (in milliseconds).
+ * Send data to a buffer's callback with an optional delay (in milliseconds).
  *
  * If delay < 1, the command is executed immediately.
  * If delay >= 1, the command is scheduled for execution in this number of ms.
  *
- * Returns:
+ * Return:
  *   WEECHAT_RC_OK: data properly sent or scheduled for execution
  *   WEECHAT_RC_ERROR: error
  */

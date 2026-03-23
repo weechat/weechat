@@ -34,7 +34,7 @@ TEST_GROUP(IrcIgnore)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_ignore_new
  */
 
@@ -64,7 +64,7 @@ TEST(IrcIgnore, New)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_ignore_free
  *   irc_ignore_free_all
  */
@@ -105,7 +105,7 @@ TEST(IrcIgnore, Free)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_ignore_valid
  */
 
@@ -128,7 +128,7 @@ TEST(IrcIgnore, Valid)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_ignore_search
  *   irc_ignore_search_by_number
  */
@@ -171,7 +171,7 @@ TEST(IrcIgnore, Search)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_ignore_check_host
  */
 

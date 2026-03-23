@@ -59,7 +59,7 @@ TEST_GROUP(GuiChat)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_chat_init
  */
 
@@ -69,7 +69,7 @@ TEST(GuiChat, Init)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_chat_prefix_build
  */
 
@@ -79,7 +79,7 @@ TEST(GuiChat, PrefixBuild)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_chat_strlen
  */
 
@@ -115,7 +115,7 @@ TEST(GuiChat, Strlen)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_chat_strlen_screen
  */
 
@@ -151,7 +151,7 @@ TEST(GuiChat, StrlenScreen)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_chat_string_add_offset
  */
 
@@ -203,7 +203,7 @@ TEST(GuiChat, StringAddOffset)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_chat_string_add_offset_screen
  */
 
@@ -253,7 +253,7 @@ TEST(GuiChat, StringAddOffsetScreen)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_chat_string_real_pos
  */
 
@@ -295,7 +295,7 @@ TEST(GuiChat, StringRealPos)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_chat_string_pos
  */
 
@@ -333,7 +333,7 @@ TEST(GuiChat, StringPos)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_chat_get_word_info
  */
 
@@ -373,7 +373,7 @@ TEST(GuiChat, GetWordInfo)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_chat_get_time_string
  */
 
@@ -383,7 +383,7 @@ TEST(GuiChat, GetTimeString)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_chat_get_time_length
  */
 
@@ -393,7 +393,7 @@ TEST(GuiChat, GetTimeLength)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_chat_change_time_format
  */
 
@@ -403,7 +403,7 @@ TEST(GuiChat, ChangeTimeFormat)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_chat_buffer_valid
  */
 
@@ -413,7 +413,7 @@ TEST(GuiChat, BufferValid)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_chat_pipe_build_message
  */
 
@@ -456,7 +456,7 @@ TEST(GuiChat, PipeBuildMessage)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_chat_pipe_send_buffer_input
  */
 
@@ -466,7 +466,7 @@ TEST(GuiChat, PipeSendBufferInput)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_chat_pipe_handle_line
  */
 
@@ -476,7 +476,7 @@ TEST(GuiChat, PipeHandleLine)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_chat_pipe_end
  */
 
@@ -486,7 +486,7 @@ TEST(GuiChat, PipeEnd)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_chat_add_line_waiting_buffer
  */
 
@@ -496,7 +496,7 @@ TEST(GuiChat, AddLineWaitingBuffer)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_chat_print_lines_waiting_buffer
  */
 
@@ -506,7 +506,7 @@ TEST(GuiChat, PrintLinesWaitingBuffer)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_chat_printf_datetime_tags_internal
  *   gui_chat_printf_datetime_tags
  */
@@ -740,7 +740,7 @@ TEST(GuiChat, PrintDatetimeTags)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_chat_printf_y_datetime_tags
  */
 
@@ -924,7 +924,7 @@ TEST(GuiChat, PrintYDatetimeTags)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_chat_hsignal_quote_line_cb
  */
 
@@ -934,7 +934,7 @@ TEST(GuiChat, HsignalQuoteLineCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_chat_end
  */
 

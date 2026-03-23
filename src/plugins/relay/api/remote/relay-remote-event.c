@@ -65,9 +65,9 @@
 
 
 /*
- * Searches a buffer used for a remote.
+ * Search a buffer used for a remote.
  *
- * Returns pointer to buffer, NULL if not found.
+ * Return pointer to buffer, NULL if not found.
  */
 
 struct t_gui_buffer *
@@ -104,9 +104,9 @@ relay_remote_event_search_buffer (struct t_relay_remote *remote, long long id)
 }
 
 /*
- * Gets the remote buffer id.
+ * Get the remote buffer id.
  *
- * Returns id found, -1 if error.
+ * Return id found, -1 if error.
  */
 
 long long
@@ -132,9 +132,9 @@ relay_remote_event_get_buffer_id (struct t_gui_buffer *buffer)
 }
 
 /*
- * Builds a string with tags of a received line.
+ * Build a string with tags of a received line.
  *
- * Returns dynamically string built, NULL if error.
+ * Return dynamically string built, NULL if error.
  */
 
 char **
@@ -194,7 +194,7 @@ relay_remote_build_string_tags (cJSON *json_tags, int line_id, int highlight)
 }
 
 /*
- * Adds a new line in a buffer.
+ * Add a new line in a buffer.
  */
 
 void
@@ -257,10 +257,10 @@ relay_remote_event_line_add (struct t_relay_remote_event *event)
 }
 
 /*
- * Searches a line by its id in relay remote buffer (by searching tag
+ * Search a line by its id in relay remote buffer (by searching tag
  * "relay_remote_id_123456", where 123456 is the line id).
  *
- * Returns pointer to line found, NULL if not found.
+ * Return pointer to line found, NULL if not found.
  */
 
 struct t_gui_line *
@@ -307,7 +307,7 @@ relay_remote_event_search_line_by_id (struct t_gui_buffer *buffer, int id)
 }
 
 /*
- * Updates a line in a buffer.
+ * Update a line in a buffer.
  */
 
 void
@@ -405,7 +405,7 @@ RELAY_REMOTE_EVENT_CALLBACK(line)
 }
 
 /*
- * Adds or updates a nick on a buffer using JSON object.
+ * Add or update a nick on a buffer using JSON object.
  */
 
 void
@@ -465,7 +465,7 @@ relay_remote_event_handle_nick (struct t_gui_buffer *buffer, cJSON *json)
 }
 
 /*
- * Adds or updates a nick group on a buffer using JSON object.
+ * Add or update a nick group on a buffer using JSON object.
  */
 
 void
@@ -598,7 +598,7 @@ RELAY_REMOTE_EVENT_CALLBACK(nick)
 }
 
 /*
- * Applies properties to a buffer.
+ * Apply properties to a buffer.
  */
 
 void
@@ -678,7 +678,7 @@ error:
 }
 
 /*
- * Checks if a local variable received in JSON object "local_variables" can
+ * Check if a local variable received in JSON object "local_variables" can
  * be used.
  *
  * The following variables are ignored and must NOT be used:
@@ -687,7 +687,7 @@ error:
  *   - "relay_remote*": variables reserved for relay remote (in case of nested
  *     remotes, the variables are not propagated)
  *
- * Returns:
+ * Return:
  *   1: variable can be used
  *   0: variable must NOT be used (reserved)
  */
@@ -1079,7 +1079,7 @@ RELAY_REMOTE_EVENT_CALLBACK(input)
 }
 
 /*
- * Clears buffers lines/nicklist for a remote.
+ * Clear buffers lines/nicklist for a remote.
  */
 
 void
@@ -1105,7 +1105,7 @@ relay_remote_event_clear_buffers (struct t_relay_remote *remote)
 }
 
 /*
- * Synchronizes with remote by sending two requests:
+ * Synchronize with remote by sending two requests:
  *   - "GET /api/buffers": fetch buffers data
  *   - "POST /api/sync": synchronize with remote to receive events
  */
@@ -1242,7 +1242,7 @@ RELAY_REMOTE_EVENT_CALLBACK(quit)
 }
 
 /*
- * Reads an event from a remote.
+ * Read an event from a remote.
  */
 
 void

@@ -110,9 +110,9 @@
 
 
 /*
- * Sends JSON response to client (internal use).
+ * Send JSON response to client (internal use).
  *
- * Returns number of bytes sent to client, -1 if error.
+ * Return number of bytes sent to client, -1 if error.
  */
 
 int
@@ -208,9 +208,9 @@ relay_api_msg_send_json_internal (struct t_relay_client *client,
 }
 
 /*
- * Sends JSON response to client (internal use).
+ * Send JSON response to client (internal use).
  *
- * Returns number of bytes sent to client, -1 if error.
+ * Return number of bytes sent to client, -1 if error.
  */
 
 int
@@ -232,9 +232,9 @@ relay_api_msg_send_json (struct t_relay_client *client,
 }
 
 /*
- * Sends JSON error to client.
+ * Send JSON error to client.
  *
- * Returns number of bytes sent to client, -1 if error.
+ * Return number of bytes sent to client, -1 if error.
  */
 
 int
@@ -293,9 +293,9 @@ relay_api_msg_send_error_json (struct t_relay_client *client,
 }
 
 /*
- * Sends event to the client.
+ * Send event to the client.
  *
- * Returns number of bytes sent to client, -1 if error.
+ * Return number of bytes sent to client, -1 if error.
  */
 
 int
@@ -315,7 +315,7 @@ relay_api_msg_send_event (struct t_relay_client *client,
 }
 
 /*
- * Adds a buffer local variable into a JSON object.
+ * Add a buffer local variable into a JSON object.
  */
 
 void
@@ -338,7 +338,7 @@ relay_api_msg_buffer_add_local_vars_cb (void *data,
 }
 
 /*
- * Creates a JSON object with a buffer.
+ * Create a JSON object with a buffer.
  */
 
 cJSON *
@@ -420,7 +420,7 @@ relay_api_msg_buffer_to_json (struct t_gui_buffer *buffer,
 }
 
 /*
- * Creates a JSON object with a buffer key.
+ * Create a JSON object with a buffer key.
  */
 
 cJSON *
@@ -448,7 +448,7 @@ relay_api_msg_key_to_json (struct t_gui_key *key)
 }
 
 /*
- * Creates a JSON object with an array of buffer keys.
+ * Create a JSON object with an array of buffer keys.
  */
 
 cJSON *
@@ -472,7 +472,7 @@ relay_api_msg_keys_to_json (struct t_gui_buffer *buffer)
 }
 
 /*
- * Creates a JSON object with a buffer line data.
+ * Create a JSON object with a buffer line data.
  */
 
 cJSON *
@@ -526,7 +526,7 @@ relay_api_msg_line_data_to_json (struct t_gui_line_data *line_data,
 }
 
 /*
- * Creates a JSON object with an array of buffer lines.
+ * Create a JSON object with an array of buffer lines.
  */
 
 cJSON *
@@ -595,7 +595,7 @@ relay_api_msg_lines_to_json (struct t_gui_buffer *buffer,
 }
 
 /*
- * Creates a nick JSON object.
+ * Create a nick JSON object.
  */
 
 cJSON *
@@ -638,7 +638,7 @@ relay_api_msg_nick_to_json (struct t_gui_nick *nick,
 }
 
 /*
- * Creates a nick group JSON object.
+ * Create a nick group JSON object.
  */
 
 cJSON *
@@ -712,7 +712,7 @@ relay_api_msg_nick_group_to_json (struct t_gui_nick_group *nick_group,
 }
 
 /*
- * Creates a JSON object with a completion entry.
+ * Create a JSON object with a completion entry.
  */
 
 cJSON *
@@ -778,7 +778,7 @@ relay_api_msg_completion_to_json (struct t_gui_completion *completion)
 }
 
 /*
- * Creates a JSON object with a hotlist entry.
+ * Create a JSON object with a hotlist entry.
  */
 
 cJSON *

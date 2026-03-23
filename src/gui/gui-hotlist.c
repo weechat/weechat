@@ -61,7 +61,7 @@ char *gui_hotlist_priority_string[GUI_HOTLIST_NUM_PRIORITIES] =
 
 
 /*
- * Sends signal "hotlist_changed".
+ * Send signal "hotlist_changed".
  */
 
 void
@@ -72,9 +72,9 @@ gui_hotlist_changed_signal (struct t_gui_buffer *buffer)
 }
 
 /*
- * Searches for hotlist priority.
+ * Search for hotlist priority.
  *
- * Returns index of hotlist priority found, -1 if not found.
+ * Return index of hotlist priority found, -1 if not found.
  */
 
 int
@@ -95,9 +95,9 @@ gui_hotlist_search_priority (const char *priority)
 }
 
 /*
- * Searches for hotlist with buffer pointer.
+ * Search for hotlist with buffer pointer.
  *
- * Returns pointer to hotlist found, NULL if not found.
+ * Return pointer to hotlist found, NULL if not found.
  */
 
 struct t_gui_hotlist *
@@ -115,9 +115,9 @@ gui_hotlist_search (struct t_gui_hotlist *hotlist, struct t_gui_buffer *buffer)
 }
 
 /*
- * Duplicates a hotlist element.
+ * Duplicate a hotlist element.
  *
- * Returns pointer to new hotlist, NULL if error.
+ * Return pointer to new hotlist, NULL if error.
  */
 
 struct t_gui_hotlist *
@@ -141,7 +141,7 @@ gui_hotlist_dup (struct t_gui_hotlist *hotlist)
 }
 
 /*
- * Frees a hotlist and removes it from hotlist queue.
+ * Free a hotlist and removes it from hotlist queue.
  */
 
 void
@@ -184,7 +184,7 @@ gui_hotlist_free (struct t_gui_hotlist **hotlist,
 }
 
 /*
- * Frees all hotlists.
+ * Free all hotlists.
  */
 
 void
@@ -199,9 +199,9 @@ gui_hotlist_free_all (struct t_gui_hotlist **hotlist,
 }
 
 /*
- * Checks if a buffer must be added to hotlist, according to its notify level.
+ * Check if a buffer must be added to hotlist, according to its notify level.
  *
- * Returns:
+ * Return:
  *   1: buffer must be added to hotlist
  *   0: buffer must not be added to hotlist
  */
@@ -230,12 +230,12 @@ gui_hotlist_check_buffer_notify (struct t_gui_buffer *buffer,
 }
 
 /*
- * Compares two hotlists in order to add them in the sorted list.
+ * Compare two hotlists in order to add them in the sorted list.
  *
  * The comparison is made using the list of fields defined in the option
  * "weechat.look.hotlist_sort".
  *
- * Returns:
+ * Return:
  *   -1: hotlist1 < hotlist2
  *    0: hotlist1 == hotlist2
  *    1: hotlist1 > hotlist2
@@ -285,7 +285,7 @@ gui_hotlist_compare_hotlists (struct t_hdata *hdata_hotlist,
 }
 
 /*
- * Searches for position of hotlist (to keep hotlist sorted).
+ * Search for position of hotlist (to keep hotlist sorted).
  */
 
 struct t_gui_hotlist *
@@ -310,7 +310,7 @@ gui_hotlist_find_pos (struct t_gui_hotlist *hotlist,
 }
 
 /*
- * Adds new hotlist in list.
+ * Add new hotlist in list.
  */
 
 void
@@ -354,11 +354,11 @@ gui_hotlist_add_hotlist (struct t_gui_hotlist **hotlist,
 }
 
 /*
- * Adds a buffer to hotlist, with priority.
+ * Add a buffer to hotlist, with priority.
  *
- * If creation_time is NULL, current time is used.
+ * If creation_time is NULL, use current time.
  *
- * Returns pointer to hotlist created or changed, NULL if no hotlist was
+ * Return pointer to hotlist created or changed, NULL if no hotlist was
  * created/changed.
  */
 
@@ -495,7 +495,7 @@ gui_hotlist_add (struct t_gui_buffer *buffer,
 }
 
 /*
- * Restores a hotlist that was removed from a buffer.
+ * Restore a hotlist that was removed from a buffer.
  */
 
 void
@@ -523,7 +523,7 @@ gui_hotlist_restore_buffer (struct t_gui_buffer *buffer)
 }
 
 /*
- * Restores latest hotlist removed in all buffers.
+ * Restore latest hotlist removed in all buffers.
  */
 
 void
@@ -539,7 +539,7 @@ gui_hotlist_restore_all_buffers (void)
 }
 
 /*
- * Resorts hotlist.
+ * Resort hotlist.
  */
 
 void
@@ -577,7 +577,7 @@ gui_hotlist_resort (void)
 }
 
 /*
- * Clears hotlist with a level mask (integer).
+ * Clear hotlist with a level mask (integer).
  *
  * Argument "level_mask" is a combination of:
  *   1 = join/part
@@ -616,7 +616,7 @@ gui_hotlist_clear (int level_mask)
 }
 
 /*
- * Clears hotlist with a level mask (string).
+ * Clear hotlist with a level mask (string).
  */
 
 void
@@ -682,7 +682,7 @@ gui_hotlist_clear_level_string (struct t_gui_buffer *buffer,
 }
 
 /*
- * Removes a buffer from hotlist.
+ * Remove a buffer from hotlist.
  */
 
 void
@@ -734,7 +734,7 @@ gui_hotlist_remove_buffer (struct t_gui_buffer *buffer,
 }
 
 /*
- * Returns hdata for hotlist.
+ * Return hdata for hotlist.
  */
 
 struct t_hdata *
@@ -765,9 +765,9 @@ gui_hotlist_hdata_hotlist_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds a hotlist in an infolist.
+ * Add a hotlist in an infolist.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -839,7 +839,7 @@ gui_hotlist_add_to_infolist (struct t_infolist *infolist,
 }
 
 /*
- * Prints hotlist in WeeChat log file (usually for crash dump).
+ * Print hotlist in WeeChat log file (usually for crash dump).
  */
 
 void
@@ -867,7 +867,7 @@ gui_hotlist_print_log (void)
 }
 
 /*
- * Ends hotlist.
+ * End hotlist.
  */
 
 void

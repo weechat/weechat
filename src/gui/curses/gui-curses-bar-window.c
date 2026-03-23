@@ -49,9 +49,9 @@
 
 
 /*
- * Initializes Curses windows for bar window.
+ * Initialize Curses windows for bar window.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -76,7 +76,7 @@ gui_bar_window_objects_init (struct t_gui_bar_window *bar_window)
 }
 
 /*
- * Frees Curses windows for a bar window.
+ * Free Curses windows for a bar window.
  */
 
 void
@@ -98,7 +98,7 @@ gui_bar_window_objects_free (struct t_gui_bar_window *bar_window)
 }
 
 /*
- * Creates curses window for bar.
+ * Create curses window for bar.
  */
 
 void
@@ -160,9 +160,9 @@ gui_bar_window_create_win (struct t_gui_bar_window *bar_window)
 }
 
 /*
- * Prints a string text on a bar window.
+ * Print a string text on a bar window.
  *
- * Returns:
+ * Return:
  *   1: everything was printed
  *   0: some text was not displayed (wrapped due to bar window width)
  */
@@ -427,7 +427,7 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
 }
 
 /*
- * Expands spacers using the sizes computed, replacing them by 0 to N spaces.
+ * Expand spacers using the sizes computed, replacing them by 0 to N spaces.
  *
  * Note: result must be freed after use.
  */
@@ -532,7 +532,7 @@ gui_bar_window_expand_spacers (const char *string, int length_on_screen,
 }
 
 /*
- * Draws a bar for a window.
+ * Draw a bar for a window.
  */
 
 void
@@ -963,7 +963,7 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
 }
 
 /*
- * Prints bar window infos in WeeChat log file (usually for crash dump).
+ * Print bar window infos in WeeChat log file (usually for crash dump).
  */
 
 void

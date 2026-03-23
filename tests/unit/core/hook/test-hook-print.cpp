@@ -35,7 +35,7 @@ TEST_GROUP(HookPrint)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_print_get_description
  */
 
@@ -45,7 +45,7 @@ TEST(HookPrint, GetDescription)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_print
  */
 
@@ -55,7 +55,7 @@ TEST(HookPrint, Print)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_print_exec
  */
 
@@ -65,7 +65,7 @@ TEST(HookPrint, Exec)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_print_free_data
  */
 
@@ -75,7 +75,7 @@ TEST(HookPrint, FreeData)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_print_add_to_infolist
  */
 
@@ -85,7 +85,7 @@ TEST(HookPrint, AddToInfolist)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_print_print_log
  */
 

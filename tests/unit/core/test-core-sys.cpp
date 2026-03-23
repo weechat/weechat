@@ -40,7 +40,7 @@ TEST_GROUP(CoreSys)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   sys_setrlimit_resource
  */
 
@@ -50,7 +50,7 @@ TEST(CoreSys, SetrlimitResource)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   sys_setrlimit
  */
 
@@ -60,7 +60,7 @@ TEST(CoreSys, Setrlimit)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   sys_display_rlimit
  */
 
@@ -70,7 +70,7 @@ TEST(CoreSys, DisplayRlimit)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   sys_display_rusage
  */
 

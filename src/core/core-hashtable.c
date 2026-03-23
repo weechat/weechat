@@ -50,9 +50,9 @@ char *hashtable_type_string[HASHTABLE_NUM_TYPES] =
 
 
 /*
- * Searches for a hashtable type.
+ * Search for a hashtable type.
  *
- * Returns index of type in enum t_hashtable_type, -1 if type is not found.
+ * Return index of type in enum t_hashtable_type, -1 if type is not found.
  */
 
 int
@@ -74,9 +74,9 @@ hashtable_get_type (const char *type)
 }
 
 /*
- * Hashes a string using a variant of djb2 hash.
+ * Hash a string using a variant of djb2 hash.
  *
- * Returns the hash of the string.
+ * Return the hash of the string.
  */
 
 unsigned long long
@@ -98,9 +98,9 @@ hashtable_hash_key_djb2 (const char *string)
 }
 
 /*
- * Hashes a key (default callback).
+ * Hash a key (default callback).
  *
- * Returns the hash of the key, depending on the type.
+ * Return the hash of the key, depending on the type.
  */
 
 unsigned long long
@@ -135,9 +135,9 @@ hashtable_hash_key_default_cb (struct t_hashtable *hashtable, const void *key)
 }
 
 /*
- * Compares two keys (default callback).
+ * Compare two keys (default callback).
  *
- * Returns:
+ * Return:
  *   < 0: key1 < key2
  *     0: key1 == key2
  *   > 0: key1 > key2
@@ -200,14 +200,14 @@ hashtable_keycmp_default_cb (struct t_hashtable *hashtable,
 }
 
 /*
- * Creates a new hashtable.
+ * Create a new hashtable.
  *
  * The size is NOT a limit for number of items in hashtable. It is the size of
  * internal array to store hashed keys: a high value uses more memory, but has
  * better performance because this reduces the collisions of hashed keys and
- * then reduces length of linked lists.
+ * then reduce length of linked lists.
  *
- * Returns pointer to new hashtable, NULL if error.
+ * Return pointer to new hashtable, NULL if error.
  */
 
 struct t_hashtable *
@@ -266,7 +266,7 @@ hashtable_new (int size,
 }
 
 /*
- * Allocates space for a key or value.
+ * Allocate space for a key or value.
  */
 
 void
@@ -334,7 +334,7 @@ hashtable_alloc_type (enum t_hashtable_type type,
 }
 
 /*
- * Frees space used by a key.
+ * Free space used by a key.
  */
 
 void
@@ -366,7 +366,7 @@ hashtable_free_key (struct t_hashtable *hashtable,
 }
 
 /*
- * Frees space used by a value.
+ * Free space used by a value.
  */
 
 void
@@ -399,11 +399,11 @@ hashtable_free_value (struct t_hashtable *hashtable,
 }
 
 /*
- * Sets value for a key in hashtable.
+ * Set value for a key in hashtable.
  *
  * The size arguments are used only for type "buffer".
  *
- * Returns pointer to item created/updated, NULL if error.
+ * Return pointer to item created/updated, NULL if error.
  */
 
 struct t_hashtable_item *
@@ -490,12 +490,12 @@ hashtable_set_with_size (struct t_hashtable *hashtable,
 }
 
 /*
- * Sets value for a key in hashtable.
+ * Set value for a key in hashtable.
  *
  * Note: this function can be called *only* if key AND value are *not* of type
  * "buffer".
  *
- * Returns pointer to item created/updated, NULL if error.
+ * Return pointer to item created/updated, NULL if error.
  */
 
 struct t_hashtable_item *
@@ -506,9 +506,9 @@ hashtable_set (struct t_hashtable *hashtable,
 }
 
 /*
- * Searches for an item in hashtable.
+ * Search for an item in hashtable.
  *
- * If hash is non NULL, then it is set with hash value of key (even if key is
+ * If hash is non NULL, then set it with hash value of key (even if key is
  * not found).
  */
 
@@ -541,9 +541,9 @@ hashtable_get_item (struct t_hashtable *hashtable, const void *key,
 }
 
 /*
- * Gets value for a key in hashtable.
+ * Get value for a key in hashtable.
  *
- * Returns pointer to value for key, NULL if key is not found.
+ * Return pointer to value for key, NULL if key is not found.
  */
 
 void *
@@ -557,9 +557,9 @@ hashtable_get (struct t_hashtable *hashtable, const void *key)
 }
 
 /*
- * Checks if a key exists in the hashtable.
+ * Check if a key exists in the hashtable.
  *
- * Returns:
+ * Return:
  *   1: key exists
  *   0: key does not exist
  */
@@ -571,9 +571,9 @@ hashtable_has_key (struct t_hashtable *hashtable, const void *key)
 }
 
 /*
- * Converts a value (from any type) to a string.
+ * Convert a value (from any type) to a string.
  *
- * Returns pointer to a static buffer (for type string, returns pointer to
+ * Return pointer to a static buffer (for type string, return pointer to
  * string itself), which must be used immediately, it is overwritten by
  * subsequent calls to this function.
  */
@@ -611,7 +611,7 @@ hashtable_to_string (enum t_hashtable_type type, const void *value)
 }
 
 /*
- * Calls a function on all hashtable entries.
+ * Call a function on all hashtable entries.
  */
 
 void
@@ -639,7 +639,7 @@ hashtable_map (struct t_hashtable *hashtable,
 }
 
 /*
- * Calls a function on all hashtable entries (sends keys and values as strings).
+ * Call a function on all hashtable entries (sends keys and values as strings).
  */
 
 void
@@ -680,7 +680,7 @@ hashtable_map_string (struct t_hashtable *hashtable,
 }
 
 /*
- * Duplicates key/value in another hashtable (callback called for each variable
+ * Duplicate key/value in another hashtable (callback called for each variable
  * in hashtable).
  */
 
@@ -700,9 +700,9 @@ hashtable_duplicate_map_cb (void *data,
 }
 
 /*
- * Duplicates a hashtable.
+ * Duplicate a hashtable.
  *
- * Returns pointer to new hashtable, NULL if error.
+ * Return pointer to new hashtable, NULL if error.
  */
 
 struct t_hashtable *
@@ -731,7 +731,7 @@ hashtable_dup (struct t_hashtable *hashtable)
 }
 
 /*
- * Builds sorted list of keys (callback called for each variable in hashtable).
+ * Build sorted list of keys (callback called for each variable in hashtable).
  */
 
 void
@@ -752,7 +752,7 @@ hashtable_get_list_keys_map_cb (void *data,
 }
 
 /*
- * Gets list with sorted keys of hashtable.
+ * Get list with sorted keys of hashtable.
  *
  * Note: list must be freed after use.
  */
@@ -772,7 +772,7 @@ hashtable_get_list_keys (struct t_hashtable *hashtable)
 }
 
 /*
- * Gets a hashtable property as integer.
+ * Get a hashtable property as integer.
  */
 
 int
@@ -790,7 +790,7 @@ hashtable_get_integer (struct t_hashtable *hashtable, const char *property)
 }
 
 /*
- * Computes length of all keys (callback called for each variable in hashtable).
+ * Compute length of all keys (callback called for each variable in hashtable).
  */
 
 void
@@ -812,7 +812,7 @@ hashtable_compute_length_keys_cb (void *data,
 }
 
 /*
- * Computes length of all values (callback called for each variable in
+ * Compute length of all values (callback called for each variable in
  * hashtable).
  */
 
@@ -842,7 +842,7 @@ hashtable_compute_length_values_cb (void *data,
 }
 
 /*
- * Computes length of all keys + values (callback called for each variable in
+ * Compute length of all keys + values (callback called for each variable in
  * hashtable).
  */
 
@@ -856,7 +856,7 @@ hashtable_compute_length_keys_values_cb (void *data,
 }
 
 /*
- * Builds a string with all keys (callback called for each variable in
+ * Build a string with all keys (callback called for each variable in
  * hashtable).
  */
 
@@ -882,7 +882,7 @@ hashtable_build_string_keys_cb (void *data,
 }
 
 /*
- * Builds a string with all values (callback called for each variable in
+ * Build a string with all values (callback called for each variable in
  * hashtable).
  */
 
@@ -915,7 +915,7 @@ hashtable_build_string_values_cb (void *data,
 }
 
 /*
- * Builds a string with all keys + values (callback called for each variable in
+ * Build a string with all keys + values (callback called for each variable in
  * hashtable).
  */
 
@@ -951,9 +951,9 @@ hashtable_build_string_keys_values_cb (void *data,
 }
 
 /*
- * Gets keys and/or values of hashtable as string.
+ * Get keys and/or values of hashtable as string.
  *
- * Returns a string with one of these formats:
+ * Return a string with one of these formats:
  *   if keys == 1 and values == 0: "key1,key2,key3"
  *   if keys == 0 and values == 1: "value1,value2,value3"
  *   if keys == 1 and values == 1: "key1:value1,key2:value2,key3:value3"
@@ -1028,7 +1028,7 @@ hashtable_get_keys_values (struct t_hashtable *hashtable,
 }
 
 /*
- * Gets a hashtable property as string.
+ * Get a hashtable property as string.
  */
 
 const char *
@@ -1056,7 +1056,7 @@ hashtable_get_string (struct t_hashtable *hashtable, const char *property)
 }
 
 /*
- * Sets a hashtable property (pointer).
+ * Set a hashtable property (pointer).
  */
 
 void
@@ -1073,9 +1073,9 @@ hashtable_set_pointer (struct t_hashtable *hashtable, const char *property,
 }
 
 /*
- * Adds hashtable keys and values in an infolist.
+ * Add hashtable keys and values in an infolist.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -1148,9 +1148,9 @@ hashtable_add_to_infolist (struct t_hashtable *hashtable,
 }
 
 /*
- * Adds hashtable keys and values from an infolist.
+ * Add hashtable keys and values from an infolist.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -1238,7 +1238,7 @@ hashtable_add_from_infolist (struct t_hashtable *hashtable,
 }
 
 /*
- * Removes an item from hashtable.
+ * Remove an item from hashtable.
  */
 
 void
@@ -1277,7 +1277,7 @@ hashtable_remove_item (struct t_hashtable *hashtable,
 }
 
 /*
- * Removes an item from hashtable (searches it with key).
+ * Remove an item from hashtable (searches it with key).
  */
 
 void
@@ -1295,7 +1295,7 @@ hashtable_remove (struct t_hashtable *hashtable, const void *key)
 }
 
 /*
- * Removes all items from hashtable.
+ * Remove all items from hashtable.
  */
 
 void
@@ -1316,7 +1316,7 @@ hashtable_remove_all (struct t_hashtable *hashtable)
 }
 
 /*
- * Frees a hashtable: removes all items and frees hashtable.
+ * Free a hashtable: removes all items and frees hashtable.
  */
 
 void
@@ -1332,7 +1332,7 @@ hashtable_free (struct t_hashtable *hashtable)
 }
 
 /*
- * Prints hashtable in WeeChat log file (usually for crash dump).
+ * Print hashtable in WeeChat log file (usually for crash dump).
  */
 
 void

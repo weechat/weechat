@@ -46,7 +46,7 @@ TEST_GROUP(IrcServer)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_valid
  */
 
@@ -66,7 +66,7 @@ TEST(IrcServer, Valid)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_search
  */
 
@@ -90,7 +90,7 @@ TEST(IrcServer, Search)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_search_option
  */
 
@@ -107,7 +107,7 @@ TEST(IrcServer, SearchOption)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_search_casemapping
  */
 
@@ -124,7 +124,7 @@ TEST(IrcServer, SearchCasemapping)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_search_utf8mapping
  */
 
@@ -141,7 +141,7 @@ TEST(IrcServer, SearchUtf8mapping)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_strcasecmp
  *   irc_server_strncasecmp
  */
@@ -216,7 +216,7 @@ TEST(IrcServer, Strcasecmp)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_eval_expression
  */
 
@@ -247,7 +247,7 @@ TEST(IrcServer, EvalExpression)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_fingerprint_search_algo_with_size
  */
 
@@ -267,7 +267,7 @@ TEST(IrcServer, FingerprintSearchAlgoWithSize)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_eval_fingerprint
  */
 
@@ -335,7 +335,7 @@ TEST(IrcServer, EvalFingerprint)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_sasl_get_creds
  */
 
@@ -345,7 +345,7 @@ TEST(IrcServer, SaslGetCreds)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_sasl_enabled
  */
 
@@ -355,7 +355,7 @@ TEST(IrcServer, SaslEnabled)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_get_name_without_port
  */
 
@@ -371,7 +371,7 @@ TEST(IrcServer, GetNameWithoutPort)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_get_short_description
  *   irc_server_set_addresses
  */
@@ -466,7 +466,7 @@ TEST(IrcServer, SetAddresses)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_set_index_current_address
  */
 
@@ -476,7 +476,7 @@ TEST(IrcServer, SetIndexCurrentAddress)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_set_nicks
  */
 
@@ -486,7 +486,7 @@ TEST(IrcServer, SetNicks)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_set_nick
  */
 
@@ -496,7 +496,7 @@ TEST(IrcServer, SetNick)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_set_host
  */
 
@@ -506,7 +506,7 @@ TEST(IrcServer, SetHost)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_get_nick_index
  */
 
@@ -516,7 +516,7 @@ TEST(IrcServer, GetNickIndex)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_get_alternate_nick
  */
 
@@ -526,7 +526,7 @@ TEST(IrcServer, GetAlternateNick)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_get_isupport_value
  */
 
@@ -606,7 +606,7 @@ TEST(IrcServer, GetIsupportValue)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_set_prefix_modes_chars
  */
 
@@ -616,7 +616,7 @@ TEST(IrcServer, SetPrefixModesChars)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_set_clienttagdeny
  */
 
@@ -684,7 +684,7 @@ TEST(IrcServer, SetClienttagdeny)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_set_lag
  */
 
@@ -694,7 +694,7 @@ TEST(IrcServer, SetLag)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_get_prefix_modes
  */
 
@@ -704,7 +704,7 @@ TEST(IrcServer, GetPrefixModes)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_get_prefix_chars
  */
 
@@ -714,7 +714,7 @@ TEST(IrcServer, GetPrefixChars)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_get_prefix_mode_index
  */
 
@@ -724,7 +724,7 @@ TEST(IrcServer, GetPrefixModeIndex)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_get_prefix_char_index
  */
 
@@ -734,7 +734,7 @@ TEST(IrcServer, GetPrefixCharIndex)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_get_prefix_mode_for_char
  */
 
@@ -744,7 +744,7 @@ TEST(IrcServer, GetPrefixModeForChar)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_get_prefix_char_for_mode
  */
 
@@ -754,7 +754,7 @@ TEST(IrcServer, GetPrefixCharForMode)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_get_chanmodes
  */
 
@@ -764,7 +764,7 @@ TEST(IrcServer, GetChanmodes)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_prefix_char_statusmsg
  */
 
@@ -774,7 +774,7 @@ TEST(IrcServer, PrefixCharStatusmsg)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_get_max_modes
  */
 
@@ -784,7 +784,7 @@ TEST(IrcServer, GetMaxModes)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_get_default_msg
  */
 
@@ -794,7 +794,7 @@ TEST(IrcServer, GetDefaultMsg)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_has_channels
  */
 
@@ -804,7 +804,7 @@ TEST(IrcServer, HasChannels)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_alloc
  */
 
@@ -814,7 +814,7 @@ TEST(IrcServer, Alloc)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_alloc_with_url
  */
 
@@ -954,7 +954,7 @@ TEST(IrcServer, AllocWithUrl)
 
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_apply_command_line_options
  */
 
@@ -964,7 +964,7 @@ TEST(IrcServer, ApplyCommandLineOptions)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_outqueue_add
  */
 
@@ -974,7 +974,7 @@ TEST(IrcServer, OutqueueAdd)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_outqueue_free
  */
 
@@ -984,7 +984,7 @@ TEST(IrcServer, OutqueueFree)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_outqueue_free_all
  */
 
@@ -994,7 +994,7 @@ TEST(IrcServer, OutqueueFreeAll)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_free_data
  */
 
@@ -1004,7 +1004,7 @@ TEST(IrcServer, FreeData)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_free
  */
 
@@ -1014,7 +1014,7 @@ TEST(IrcServer, Free)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_free_all
  */
 
@@ -1024,7 +1024,7 @@ TEST(IrcServer, FreeAll)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_copy
  */
 
@@ -1034,7 +1034,7 @@ TEST(IrcServer, Copy)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_rename
  */
 
@@ -1044,7 +1044,7 @@ TEST(IrcServer, Rename)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_reorder
  */
 
@@ -1054,7 +1054,7 @@ TEST(IrcServer, Reorder)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_send_signal
  */
 
@@ -1064,7 +1064,7 @@ TEST(IrcServer, SendSignal)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_send
  */
 
@@ -1074,7 +1074,7 @@ TEST(IrcServer, Send)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_set_send_default_tags
  */
 
@@ -1084,7 +1084,7 @@ TEST(IrcServer, SetSendDefaultTags)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_get_tags_to_send
  */
 
@@ -1094,7 +1094,7 @@ TEST(IrcServer, GetTagsToSend)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_outqueue_all_empty
  */
 
@@ -1104,7 +1104,7 @@ TEST(IrcServer, OutqueueAllEmpty)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_outqueue_timer_cb
  */
 
@@ -1114,7 +1114,7 @@ TEST(IrcServer, OutqueueTimerCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_outqueue_timer_remove
  */
 
@@ -1124,7 +1124,7 @@ TEST(IrcServer, OutqueueTimerRemove)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_outqueue_timer_add
  */
 
@@ -1134,7 +1134,7 @@ TEST(IrcServer, OutqueueTimerAdd)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_outqueue_send_one_msg
  */
 
@@ -1144,7 +1144,7 @@ TEST(IrcServer, OutqueueSendOneMsg)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_outqueue_send
  */
 
@@ -1154,7 +1154,7 @@ TEST(IrcServer, OutqueueSend)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_send_one_msg
  */
 
@@ -1164,7 +1164,7 @@ TEST(IrcServer, SendOneMsg)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_sendf
  */
 
@@ -1174,7 +1174,7 @@ TEST(IrcServer, Sendf)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_msgq_add_msg
  */
 
@@ -1184,7 +1184,7 @@ TEST(IrcServer, MsgqAddMsg)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_msgq_add_unterminated
  */
 
@@ -1194,7 +1194,7 @@ TEST(IrcServer, MsgqAddUnterminated)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_msgq_add_buffer
  */
 
@@ -1204,7 +1204,7 @@ TEST(IrcServer, MsgqAddBuffer)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_msgq_flush
  */
 
@@ -1214,7 +1214,7 @@ TEST(IrcServer, MsgqFlush)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_recv_cb
  */
 
@@ -1224,7 +1224,7 @@ TEST(IrcServer, RecvCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_timer_connection_cb
  */
 
@@ -1234,7 +1234,7 @@ TEST(IrcServer, TimerConnectionCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_timer_sasl_cb
  */
 
@@ -1244,7 +1244,7 @@ TEST(IrcServer, TimerSaslCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_check_join_manual_cb
  */
 
@@ -1254,7 +1254,7 @@ TEST(IrcServer, CheckJoinManualCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_check_join_noswitch_cb
  */
 
@@ -1264,7 +1264,7 @@ TEST(IrcServer, CheckJoinNoswitchCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_check_join_smart_filtered_cb
  */
 
@@ -1274,7 +1274,7 @@ TEST(IrcServer, CheckJoinSmartFilteredCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_timer_cb
  */
 
@@ -1284,7 +1284,7 @@ TEST(IrcServer, TimerCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_close_connection
  */
 
@@ -1294,7 +1294,7 @@ TEST(IrcServer, CloseConnection)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_reconnect_schedule
  */
 
@@ -1304,7 +1304,7 @@ TEST(IrcServer, ReconnectSchedule)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_login
  */
 
@@ -1314,7 +1314,7 @@ TEST(IrcServer, Login)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_switch_address
  */
 
@@ -1324,7 +1324,7 @@ TEST(IrcServer, SwitchAddress)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_connect_cb
  */
 
@@ -1334,7 +1334,7 @@ TEST(IrcServer, ConnectCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_set_buffer_title
  */
 
@@ -1344,7 +1344,7 @@ TEST(IrcServer, SetBufferTitle)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_create_buffer
  */
 
@@ -1354,7 +1354,7 @@ TEST(IrcServer, CreateBuffer)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_fingerprint_str_sizes
  */
 
@@ -1364,7 +1364,7 @@ TEST(IrcServer, FingerprintStrSizes)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_compare_fingerprints
  */
 
@@ -1374,7 +1374,7 @@ TEST(IrcServer, CompareFingerprints)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_check_certificate_fingerprint
  */
 
@@ -1384,7 +1384,7 @@ TEST(IrcServer, CheckCertificateFingerprint)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_gnutls_callback
  */
 
@@ -1394,7 +1394,7 @@ TEST(IrcServer, GnutlsCallback)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_connect
  */
 
@@ -1404,7 +1404,7 @@ TEST(IrcServer, Connect)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_reconnect
  */
 
@@ -1414,7 +1414,7 @@ TEST(IrcServer, Reconnect)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_auto_connect_timer_cb
  */
 
@@ -1424,7 +1424,7 @@ TEST(IrcServer, AutoConnectTimerCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_auto_connect
  */
 
@@ -1434,7 +1434,7 @@ TEST(IrcServer, AutoConnect)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_disconnect
  */
 
@@ -1444,7 +1444,7 @@ TEST(IrcServer, Disconnect)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_disconnect_all
  */
 
@@ -1454,7 +1454,7 @@ TEST(IrcServer, DisconnectAll)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_execute_command
  */
 
@@ -1464,7 +1464,7 @@ TEST(IrcServer, ExecuteCommand)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_autojoin_create_buffers
  */
 
@@ -1474,7 +1474,7 @@ TEST(IrcServer, AutojoinCreateBuffers)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_autojoin_channels
  */
 
@@ -1484,7 +1484,7 @@ TEST(IrcServer, AutojoinChannels)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_get_channel_count
  */
 
@@ -1494,7 +1494,7 @@ TEST(IrcServer, GetChannelCount)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_get_pv_count
  */
 
@@ -1504,7 +1504,7 @@ TEST(IrcServer, GetPvCount)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_remove_away
  */
 
@@ -1514,7 +1514,7 @@ TEST(IrcServer, RemoveAway)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_check_away
  */
 
@@ -1524,7 +1524,7 @@ TEST(IrcServer, CheckAway)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_set_away
  */
 
@@ -1534,7 +1534,7 @@ TEST(IrcServer, SetAway)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_xfer_send_ready_cb
  */
 
@@ -1544,7 +1544,7 @@ TEST(IrcServer, XferSendReadyCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_xfer_resume_ready_cb
  */
 
@@ -1554,7 +1554,7 @@ TEST(IrcServer, XferResumeReadyCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_xfer_send_accept_resume_cb
  */
 
@@ -1564,7 +1564,7 @@ TEST(IrcServer, XferSendAcceptResumeCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_hdata_server_cb
  */
 
@@ -1574,7 +1574,7 @@ TEST(IrcServer, HdataServerCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_add_to_infolist
  */
 
@@ -1584,7 +1584,7 @@ TEST(IrcServer, AddToInfolist)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_print_log
  */
 
@@ -1631,7 +1631,7 @@ TEST_GROUP(IrcServerConnected)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_server_build_autojoin
  */
 

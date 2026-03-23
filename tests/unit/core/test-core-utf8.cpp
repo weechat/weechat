@@ -128,7 +128,7 @@ TEST_GROUP(CoreUtf8)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   utf8_has_8bits
  *   utf8_is_valid
  */
@@ -302,7 +302,7 @@ TEST(CoreUtf8, Validity)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   utf8_normalize
  */
 
@@ -323,7 +323,7 @@ TEST(CoreUtf8, Normalize)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   utf8_prev_char
  *   utf8_next_char
  *   utf8_beginning_of_line
@@ -434,7 +434,7 @@ TEST(CoreUtf8, Move)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   utf8_char_int
  *   utf8_int_string
  *   utf8_wide_char
@@ -500,7 +500,7 @@ TEST(CoreUtf8, Convert)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   utf8_char_size
  *   utf8_char_size_screen
  *   utf8_strlen
@@ -620,7 +620,7 @@ TEST(CoreUtf8, Size)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   utf8_strndup
  */
 
@@ -638,7 +638,7 @@ TEST(CoreUtf8, Duplicate)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   utf8_strncpy
  */
 

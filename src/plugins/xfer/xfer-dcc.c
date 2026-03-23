@@ -187,9 +187,9 @@ xfer_dcc_send_file_child (struct t_xfer *xfer)
 }
 
 /*
- * Sends ACK to sender using current position in file received.
+ * Send ACK to sender using current position in file received.
  *
- * Returns:
+ * Return:
  *   2: ACK sent successfully (the 4 bytes)
  *   1: ACK not sent, but we consider it's not a problem
  *   0: ACK not sent with socket error (DCC will be closed)
@@ -231,9 +231,9 @@ xfer_dcc_recv_file_send_ack (struct t_xfer *xfer)
 }
 
 /*
- * Reads a resumed xfer from disk for hashing.
+ * Read a resumed xfer from disk for hashing.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */

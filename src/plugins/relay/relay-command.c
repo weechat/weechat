@@ -38,7 +38,7 @@
 
 
 /*
- * Displays list of clients.
+ * Display list of clients.
  */
 
 void
@@ -124,7 +124,7 @@ relay_command_client_list (int full)
 }
 
 /*
- * Displays list of servers (list of ports on which we are listening).
+ * Display list of servers (list of ports on which we are listening).
  */
 
 void
@@ -421,7 +421,7 @@ relay_command_relay (const void *pointer, void *data,
 }
 
 /*
- * Displays a relay remote.
+ * Display a relay remote.
  */
 
 void
@@ -866,7 +866,7 @@ relay_command_remote (const void *pointer, void *data,
 }
 
 /*
- * Hooks command.
+ * Hook command.
  */
 
 void

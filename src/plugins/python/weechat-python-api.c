@@ -89,7 +89,7 @@
 
 
 /*
- * Registers a python script.
+ * Register a python script.
  */
 
 API_FUNC(register)
@@ -5639,7 +5639,7 @@ API_FUNC(upgrade_close)
 }
 
 /*
- * Initializes python functions.
+ * Initialize python functions.
  */
 
 PyMethodDef weechat_python_funcs[] =

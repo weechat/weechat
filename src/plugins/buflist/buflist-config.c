@@ -82,7 +82,7 @@ char *buflist_config_format_hotlist_eval = NULL;
 
 
 /*
- * Reloads buflist configuration file.
+ * Reload buflist configuration file.
  */
 
 int
@@ -103,7 +103,7 @@ buflist_config_reload (const void *pointer, void *data,
 }
 
 /*
- * Frees the signals hooked for refresh.
+ * Free the signals hooked for refresh.
  */
 
 void
@@ -126,9 +126,9 @@ buflist_config_free_signals_refresh (void)
 }
 
 /*
- * Compares two signals to add them in the sorted arraylist.
+ * Compare two signals to add them in the sorted arraylist.
  *
- * Returns:
+ * Return:
  *   -1: signal1 < signal2
  *    0: signal1 == signal2
  *    1: signal1 > signal2
@@ -167,7 +167,7 @@ buflist_config_signal_buffer_cb (const void *pointer, void *data,
 }
 
 /*
- * Hooks the signals for refresh.
+ * Hook the signals for refresh.
  */
 
 void
@@ -463,9 +463,9 @@ buflist_config_change_format (const void *pointer, void *data,
 }
 
 /*
- * Initializes buflist configuration file.
+ * Initialize buflist configuration file.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -803,7 +803,7 @@ buflist_config_init (void)
 }
 
 /*
- * Reads buflist configuration file.
+ * Read buflist configuration file.
  */
 
 int
@@ -824,7 +824,7 @@ buflist_config_read (void)
 }
 
 /*
- * Writes buflist configuration file.
+ * Write buflist configuration file.
  */
 
 int
@@ -834,7 +834,7 @@ buflist_config_write (void)
 }
 
 /*
- * Frees buflist configuration.
+ * Free buflist configuration.
  */
 
 void

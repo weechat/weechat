@@ -37,7 +37,7 @@ TEST_GROUP(PluginConfig)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   plugin_config_search
  *   plugin_config_set_internal
  *   plugin_config_set
@@ -92,7 +92,7 @@ TEST(PluginConfig, Set)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   plugin_config_reload
  */
 
@@ -102,7 +102,7 @@ TEST(PluginConfig, Reload)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   plugin_config_create_option
  */
 
@@ -112,7 +112,7 @@ TEST(PluginConfig, CreateOption)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   plugin_config_create_desc
  */
 
@@ -122,7 +122,7 @@ TEST(PluginConfig, CreateDesc)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   plugin_config_delete_desc
  */
 
@@ -132,7 +132,7 @@ TEST(PluginConfig, DeleteDesc)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   plugin_config_init
  */
 
@@ -142,7 +142,7 @@ TEST(PluginConfig, Init)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   plugin_config_read
  */
 
@@ -152,7 +152,7 @@ TEST(PluginConfig, Read)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   plugin_config_write
  */
 
@@ -162,7 +162,7 @@ TEST(PluginConfig, Write)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   plugin_config_end
  */
 

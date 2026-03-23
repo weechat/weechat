@@ -337,9 +337,9 @@ trigger_config_change_trigger_command (const void *pointer, void *data,
 }
 
 /*
- * Creates an option for a trigger.
+ * Create an option for a trigger.
  *
- * Returns pointer to new option, NULL if error.
+ * Return pointer to new option, NULL if error.
  */
 
 struct t_config_option *
@@ -464,7 +464,7 @@ trigger_config_create_trigger_option (const char *trigger_name, int index_option
 }
 
 /*
- * Creates option for a temporary trigger (when reading configuration file).
+ * Create option for a temporary trigger (when reading configuration file).
  */
 
 void
@@ -483,7 +483,7 @@ trigger_config_create_option_temp (struct t_trigger *temp_trigger,
 }
 
 /*
- * Uses temporary triggers (created by reading configuration file).
+ * Use temporary triggers (created by reading configuration file).
  */
 
 void
@@ -541,7 +541,7 @@ trigger_config_use_temp_triggers (void)
 }
 
 /*
- * Reads a trigger option in trigger configuration file.
+ * Read a trigger option in trigger configuration file.
  */
 
 int
@@ -613,7 +613,7 @@ trigger_config_trigger_read_cb (const void *pointer, void *data,
 }
 
 /*
- * Writes default triggers in trigger configuration file.
+ * Write default triggers in trigger configuration file.
  */
 
 int
@@ -655,7 +655,7 @@ trigger_config_trigger_write_default_cb (const void *pointer, void *data,
 }
 
 /*
- * Reloads trigger configuration file.
+ * Reload trigger configuration file.
  */
 
 int
@@ -678,9 +678,9 @@ trigger_config_reload_cb (const void *pointer, void *data,
 }
 
 /*
- * Initializes trigger configuration file.
+ * Initialize trigger configuration file.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -797,7 +797,7 @@ trigger_config_init (void)
 }
 
 /*
- * Reads trigger configuration file.
+ * Read trigger configuration file.
  */
 
 int
@@ -813,7 +813,7 @@ trigger_config_read (void)
 }
 
 /*
- * Writes trigger configuration file.
+ * Write trigger configuration file.
  */
 
 int
@@ -823,7 +823,7 @@ trigger_config_write (void)
 }
 
 /*
- * Frees trigger configuration.
+ * Free trigger configuration.
  */
 
 void

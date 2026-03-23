@@ -47,9 +47,9 @@ struct t_logger_buffer *last_logger_buffer = NULL;
 
 
 /*
- * Checks if a logger buffer pointer is valid.
+ * Check if a logger buffer pointer is valid.
  *
- * Returns:
+ * Return:
  *   1: logger buffer exists
  *   0: logger buffer does not exist
  */
@@ -74,9 +74,9 @@ logger_buffer_valid (struct t_logger_buffer *logger_buffer)
 }
 
 /*
- * Adds a new buffer for logging.
+ * Add a new buffer for logging.
  *
- * Returns pointer to new logger buffer, NULL if error.
+ * Return pointer to new logger buffer, NULL if error.
  */
 
 struct t_logger_buffer *
@@ -121,9 +121,9 @@ logger_buffer_add (struct t_gui_buffer *buffer, int log_level)
 }
 
 /*
- * Searches for logger buffer by buffer pointer.
+ * Search for logger buffer by buffer pointer.
  *
- * Returns pointer to logger buffer found, NULL if not found.
+ * Return pointer to logger buffer found, NULL if not found.
  */
 
 struct t_logger_buffer *
@@ -143,9 +143,9 @@ logger_buffer_search_buffer (struct t_gui_buffer *buffer)
 }
 
 /*
- * Searches for a logger buffer by log filename.
+ * Search for a logger buffer by log filename.
  *
- * Returns pointer to logger buffer found, NULL if not found.
+ * Return pointer to logger buffer found, NULL if not found.
  */
 
 struct t_logger_buffer *
@@ -171,7 +171,7 @@ logger_buffer_search_log_filename (const char *log_filename)
 }
 
 /*
- * Sets log filename for a logger buffer.
+ * Set log filename for a logger buffer.
  */
 
 void
@@ -228,9 +228,9 @@ logger_buffer_set_log_filename (struct t_logger_buffer *logger_buffer)
 }
 
 /*
- * Creates a log file.
+ * Create a log file.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -329,7 +329,7 @@ logger_buffer_create_log_file (struct t_logger_buffer *logger_buffer)
 }
 
 /*
- * Compresses a log file, in the child process.
+ * Compress a log file, in the child process.
  */
 
 void
@@ -414,7 +414,7 @@ logger_buffer_compress_cb (const void *pointer, void *data,
 }
 
 /*
- * Rotates a log file if needed (rotation enabled and max size reached).
+ * Rotate a log file if needed (rotation enabled and max size reached).
  *
  * For example if we have these log files:
  *
@@ -604,7 +604,7 @@ logger_buffer_rotate (struct t_logger_buffer *logger_buffer)
 }
 
 /*
- * Writes a line to log file.
+ * Write a line to log file.
  */
 
 void
@@ -643,7 +643,7 @@ logger_buffer_write_line (struct t_logger_buffer *logger_buffer,
 }
 
 /*
- * Stops log for a logger buffer.
+ * Stop log for a logger buffer.
  */
 
 void
@@ -674,7 +674,7 @@ logger_buffer_stop (struct t_logger_buffer *logger_buffer, int write_info_line)
 }
 
 /*
- * Ends log for all buffers.
+ * End log for all buffers.
  */
 
 void
@@ -687,7 +687,7 @@ logger_buffer_stop_all (int write_info_line)
 }
 
 /*
- * Starts logging for a buffer.
+ * Start logging for a buffer.
  */
 
 void
@@ -743,7 +743,7 @@ logger_buffer_start (struct t_gui_buffer *buffer, int write_info_line)
 }
 
 /*
- * Starts logging for all buffers.
+ * Start logging for all buffers.
  */
 
 void
@@ -765,7 +765,7 @@ logger_buffer_start_all (int write_info_line)
 }
 
 /*
- * Flushes all log files.
+ * Flush all log files.
  */
 
 void
@@ -795,7 +795,7 @@ logger_buffer_flush (void)
 }
 
 /*
- * Adjusts log filenames for all buffers.
+ * Adjust log filenames for all buffers.
  *
  * Filename can change if configuration option is changed, or if day of system
  * date has changed.
@@ -839,7 +839,7 @@ logger_buffer_adjust_log_filenames (void)
 }
 
 /*
- * Removes a logger buffer from list.
+ * Remove a logger buffer from list.
  */
 
 void
@@ -887,9 +887,9 @@ logger_buffer_free (struct t_logger_buffer *logger_buffer)
 }
 
 /*
- * Adds a logger buffer in an infolist.
+ * Add a logger buffer in an infolist.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */

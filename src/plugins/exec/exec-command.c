@@ -34,7 +34,7 @@
 
 
 /*
- * Displays a list of executed commands.
+ * Display a list of executed commands.
  */
 
 void
@@ -139,10 +139,10 @@ exec_command_list (void)
 }
 
 /*
- * Searches a running command by id, and displays an error if command is not
+ * Search a running command by id, and displays an error if command is not
  * found or not running anymore.
  *
- * Returns the command found, or NULL if not found or not running.
+ * Return the command found, or NULL if not found or not running.
  */
 
 struct t_exec_cmd *
@@ -175,7 +175,7 @@ exec_command_search_running_id (const char *id)
 /*
  * Parse command options.
  *
- * Returns:
+ * Return:
  *   1: options parsed successfully
  *   0: error parsing options
  */
@@ -396,9 +396,9 @@ exec_command_parse_options (struct t_exec_cmd_options *cmd_options,
 }
 
 /*
- * Runs a command.
+ * Run a command.
  *
- * Returns:
+ * Return:
  *   WEECHAT_RC_OK: command run successfully
  *   WEECHAT_RC_ERROR: error running command
  */
@@ -813,7 +813,7 @@ exec_command_exec (const void *pointer, void *data,
 }
 
 /*
- * Hooks exec commands.
+ * Hook exec commands.
  */
 
 void

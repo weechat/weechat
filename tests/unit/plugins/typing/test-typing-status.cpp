@@ -37,7 +37,7 @@ TEST_GROUP(TypingStatus)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   typing_status_search_state
  */
 
@@ -56,7 +56,7 @@ TEST(TypingStatus, SearchState)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   typing_status_self_free_value_cb
  *   typing_status_self_add
  *   typing_status_self_search
@@ -90,7 +90,7 @@ TEST(TypingStatus, SelfAddSearch)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   typing_status_nicks_free_value_cb
  *   typing_status_nick_free_value_cb
  *   typing_status_nick_add

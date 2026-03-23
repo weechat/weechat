@@ -32,7 +32,7 @@
 
 
 /*
- * Returns content of bar item "spell_dict": spell dictionary used on current
+ * Return content of bar item "spell_dict": spell dictionary used on current
  * buffer.
  */
 
@@ -61,7 +61,7 @@ spell_bar_item_dict (const void *pointer, void *data,
 }
 
 /*
- * Returns content of bar item "spell_suggest": spell checker suggestions.
+ * Return content of bar item "spell_suggest": spell checker suggestions.
  */
 
 char *
@@ -172,7 +172,7 @@ end:
 }
 
 /*
- * Initializes spell bar items.
+ * Initialize spell bar items.
  */
 
 void

@@ -56,9 +56,9 @@ int secure_data_encrypted = 0;
 
 
 /*
- * Derives a key from salt + passphrase (using a hash).
+ * Derive a key from salt + passphrase (using a hash).
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -101,9 +101,9 @@ secure_derive_key (const char *salt, const char *passphrase,
 }
 
 /*
- * Encrypts data using a hash algorithm + cipher + passphrase.
+ * Encrypt data using a hash algorithm + cipher + passphrase.
  *
- * Following actions are performed:
+ * The following actions are performed:
  *   1. derive a key from the passphrase (with optional salt)
  *   2. compute hash of data
  *   3. store hash + data in a buffer
@@ -124,7 +124,7 @@ secure_derive_key (const char *salt, const char *passphrase,
  *            \_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _/
  *                          encrypted data
  *
- * Returns:
+ * Return:
  *     0: OK
  *    -1: not enough memory
  *    -2: key derive error
@@ -260,13 +260,13 @@ encrypt_end:
 }
 
 /*
- * Decrypts data using a hash algorithm + cipher + passphrase.
+ * Decrypt data using a hash algorithm + cipher + passphrase.
  *
  * The buffer must contain:
  * - salt (8 bytes, used to derive a key from the passphrase)
  * - encrypted hash(data) + data
  *
- * Following actions are performed:
+ * The following actions are performed:
  *   1. check length of buffer (it must have at least salt + hash + some data)
  *   2. derive a key from the passphrase using salt (at beginning of buffer)
  *   3. decrypt hash + data in a buffer
@@ -274,7 +274,7 @@ encrypt_end:
  *   5. check that decrypted hash is equal to hash of data
  *   6. return decrypted data
  *
- * Returns:
+ * Return:
  *    0: OK
  *   -1: not enough memory
  *   -2: buffer is not long enough
@@ -410,10 +410,10 @@ decrypt_end:
 }
 
 /*
- * Decrypts data still encrypted (data that could not be decrypted when reading
+ * Decrypt data still encrypted (data that could not be decrypted when reading
  * secured data configuration file (because no passphrase was given).
  *
- * Returns:
+ * Return:
  *   >= 0: number of decrypted data
  *     -1: error decrypting data (bad passphrase)
  *     -2: unsupported hash algorithm
@@ -494,9 +494,9 @@ secure_decrypt_data_not_decrypted (const char *passphrase)
 }
 
 /*
- * Initializes secured data.
+ * Initialize secured data.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -539,7 +539,7 @@ secure_init (void)
 }
 
 /*
- * Frees all allocated data.
+ * Free all allocated data.
  */
 
 void

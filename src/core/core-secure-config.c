@@ -56,7 +56,7 @@ int secure_config_loading = 0;
 
 
 /*
- * Gets passphrase from user and puts it in variable "secure_passphrase".
+ * Get passphrase from user and put it in variable "secure_passphrase".
  */
 
 void
@@ -103,9 +103,9 @@ secure_config_get_passphrase_from_user (const char *error)
 }
 
 /*
- * Gets passphrase from a command.
+ * Get passphrase from a command.
  *
- * Returns passphrase from command output (only the first line with max length
+ * Return passphrase from command output (only the first line with max length
  * of SECURE_PASSPHRASE_MAX_LENGTH chars), or NULL if error.
  *
  * Note: result must be freed after use.
@@ -144,9 +144,9 @@ secure_config_get_passphrase_from_command (const char *command)
 }
 
 /*
- * Reloads secured data configuration file.
+ * Reload secured data configuration file.
  *
- * Returns:
+ * Return:
  *   WEECHAT_CONFIG_READ_OK: OK
  *   WEECHAT_CONFIG_READ_MEMORY_ERROR: not enough memory
  *   WEECHAT_CONFIG_READ_FILE_NOT_FOUND: file not found
@@ -212,7 +212,7 @@ secure_config_check_crypt_option_cb (const void *pointer, void *data,
 }
 
 /*
- * Reads a data option in secured data configuration file.
+ * Read a data option in secured data configuration file.
  */
 
 int
@@ -371,7 +371,7 @@ secure_config_data_read_cb (const void *pointer, void *data,
 }
 
 /*
- * Encrypts data and writes it in secured data configuration file.
+ * Encrypt data and write it in secured data configuration file.
  */
 
 void
@@ -464,7 +464,7 @@ secure_config_data_write_map_cb (void *data,
 }
 
 /*
- * Writes already encrypted data in secured data configuration file.
+ * Write already encrypted data in secured data configuration file.
  */
 
 void
@@ -484,7 +484,7 @@ secure_config_data_write_map_encrypted_cb (void *data,
 }
 
 /*
- * Writes section "data" in secured data configuration file.
+ * Write section "data" in secured data configuration file.
  */
 
 int
@@ -536,9 +536,9 @@ secure_config_data_write_cb (const void *pointer, void *data,
 }
 
 /*
- * Creates options in secured data configuration.
+ * Create options in secured data configuration.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -631,9 +631,9 @@ secure_config_init_options (void)
 }
 
 /*
- * Reads secured data configuration file.
+ * Read secured data configuration file.
  *
- * Returns:
+ * Return:
  *   WEECHAT_CONFIG_READ_OK: OK
  *   WEECHAT_CONFIG_READ_MEMORY_ERROR: not enough memory
  *   WEECHAT_CONFIG_READ_FILE_NOT_FOUND: file not found
@@ -654,9 +654,9 @@ secure_config_read (void)
 }
 
 /*
- * Writes secured data configuration file.
+ * Write secured data configuration file.
  *
- * Returns:
+ * Return:
  *   WEECHAT_CONFIG_WRITE_OK: OK
  *   WEECHAT_CONFIG_WRITE_ERROR: error
  *   WEECHAT_CONFIG_WRITE_MEMORY_ERROR: not enough memory
@@ -669,9 +669,9 @@ secure_config_write (void)
 }
 
 /*
- * Initializes secured data configuration.
+ * Initialize secured data configuration.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -693,7 +693,7 @@ secure_config_init (void)
 }
 
 /*
- * Frees secured data file and variables.
+ * Free secured data file and variables.
  */
 
 void

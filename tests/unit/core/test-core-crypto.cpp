@@ -224,7 +224,7 @@ TEST_GROUP(CoreCrypto)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   weecrypto_get_hash_algo
  */
 
@@ -260,7 +260,7 @@ TEST(CoreCrypto, GetHashAlgo)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   weecrypto_get_cipher
  */
 
@@ -276,7 +276,7 @@ TEST(CoreCrypto, GetCipher)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   weecrypto_hash
  */
 
@@ -320,7 +320,7 @@ TEST(CoreCrypto, Hash)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   weecrypto_hash_file
  */
 
@@ -372,7 +372,7 @@ TEST(CoreCrypto, HashFile)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   weecrypto_hash_pbkdf2
  */
 
@@ -416,7 +416,7 @@ TEST(CoreCrypto, HashPbkdf2)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   weecrypto_hmac
  */
 
@@ -455,7 +455,7 @@ TEST(CoreCrypto, Hmac)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   weecrypto_totp_generate
  */
 
@@ -497,7 +497,7 @@ TEST(CoreCrypto, TotpGenerate)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   weecrypto_totp_validate
  */
 

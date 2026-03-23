@@ -47,7 +47,7 @@ struct t_config_section *plugin_config_section_desc = NULL;
 
 
 /*
- * Searches for a plugin option.
+ * Search for a plugin option.
  */
 
 struct t_config_option *
@@ -75,7 +75,7 @@ plugin_config_search (const char *plugin_name, const char *option_name)
 }
 
 /*
- * Sets value for a plugin option (this function must not be called directly).
+ * Set value for a plugin option (this function must not be called directly).
  */
 
 int
@@ -105,7 +105,7 @@ plugin_config_set_internal (const char *option, const char *value)
 }
 
 /*
- * Sets value for a plugin option (option is created if not found).
+ * Set value for a plugin option (option is created if not found).
  */
 
 int
@@ -158,7 +158,7 @@ plugin_config_desc_changed_cb (const void *pointer, void *data,
 }
 
 /*
- * Sets description for a plugin option (this function must not be called
+ * Set description for a plugin option (this function must not be called
  * directly).
  */
 
@@ -190,7 +190,7 @@ plugin_config_set_desc_internal (const char *option, const char *value)
 }
 
 /*
- * Sets description for a plugin option.
+ * Set description for a plugin option.
  */
 
 void
@@ -209,7 +209,7 @@ plugin_config_set_desc (const char *plugin_name, const char *option_name,
 }
 
 /*
- * Reloads plugins configuration file.
+ * Reload plugins configuration file.
  */
 
 int
@@ -229,7 +229,7 @@ plugin_config_reload (const void *pointer, void *data,
 }
 
 /*
- * Sets a plugin option.
+ * Set a plugin option.
  */
 
 int
@@ -260,7 +260,7 @@ plugin_config_create_option (const void *pointer, void *data,
 }
 
 /*
- * Sets a plugin option description.
+ * Set a plugin option description.
  */
 
 int
@@ -302,7 +302,7 @@ plugin_config_create_desc (const void *pointer, void *data,
 }
 
 /*
- * Deletes a plugin option description.
+ * Delete a plugin option description.
  */
 
 int
@@ -336,7 +336,7 @@ plugin_config_delete_desc (const void *pointer, void *data,
 }
 
 /*
- * Initializes plugins configuration structure.
+ * Initialize plugins configuration structure.
  */
 
 void
@@ -364,7 +364,7 @@ plugin_config_init (void)
 }
 
 /*
- * Reads plugins configuration file.
+ * Read plugins configuration file.
  */
 
 int
@@ -374,7 +374,7 @@ plugin_config_read (void)
 }
 
 /*
- * Writes plugins configuration file.
+ * Write plugins configuration file.
  */
 
 int
@@ -384,7 +384,7 @@ plugin_config_write (void)
 }
 
 /*
- * Ends plugin configuration.
+ * End plugin configuration.
  */
 
 void

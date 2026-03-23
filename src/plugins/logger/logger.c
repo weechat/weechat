@@ -52,9 +52,9 @@ struct t_hook *logger_hook_print = NULL;
 
 
 /*
- * Checks conditions against a buffer.
+ * Check conditions against a buffer.
  *
- * Returns:
+ * Return:
  *   1: conditions OK
  *   0: conditions not OK
  */
@@ -105,7 +105,7 @@ logger_check_conditions (struct t_gui_buffer *buffer, const char *conditions)
 }
 
 /*
- * Gets logger file path option.
+ * Get logger file path option.
  *
  * Special vars are replaced:
  *   - with call to function string_eval_path_home
@@ -164,9 +164,9 @@ end:
 }
 
 /*
- * Creates logger directory.
+ * Create logger directory.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -201,7 +201,7 @@ logger_create_directory (void)
 }
 
 /*
- * Builds full name of buffer.
+ * Build full name of buffer.
  *
  * Note: result must be freed after use.
  */
@@ -224,9 +224,9 @@ logger_build_option_name (struct t_gui_buffer *buffer)
 }
 
 /*
- * Gets logging level for buffer.
+ * Get logging level for buffer.
  *
- * Returns level between 0 and 9 (0 = logging disabled).
+ * Return level between 0 and 9 (0 = logging disabled).
  */
 
 int
@@ -282,7 +282,7 @@ logger_get_level_for_buffer (struct t_gui_buffer *buffer)
 }
 
 /*
- * Gets filename mask for a buffer.
+ * Get filename mask for a buffer.
  *
  * First tries with all arguments, then removes one by one to find mask (from
  * specific to general mask).
@@ -340,7 +340,7 @@ logger_get_mask_for_buffer (struct t_gui_buffer *buffer)
 }
 
 /*
- * Gets expanded mask for a buffer.
+ * Get expanded mask for a buffer.
  *
  * Special vars are replaced:
  *   - local variables of buffer ($plugin, $name, ..)
@@ -443,7 +443,7 @@ end:
 }
 
 /*
- * Builds log filename for a buffer.
+ * Build log filename for a buffer.
  *
  * Note: result must be freed after use.
  */
@@ -627,7 +627,7 @@ logger_day_changed_signal_cb (const void *pointer, void *data,
 }
 
 /*
- * Gets info with tags of line: log level and if prefix is a nick.
+ * Get info with tags of line: log level and if prefix is a nick.
  */
 
 void
@@ -768,7 +768,7 @@ logger_timer_cb (const void *pointer, void *data, int remaining_calls)
 }
 
 /*
- * Initializes logger plugin.
+ * Initialize logger plugin.
  */
 
 int
@@ -812,7 +812,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 }
 
 /*
- * Ends logger plugin.
+ * End logger plugin.
  */
 
 int

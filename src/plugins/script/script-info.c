@@ -31,7 +31,7 @@
 
 
 /*
- * Returns script info "script_info".
+ * Return script info "script_info".
  */
 
 char *
@@ -109,7 +109,7 @@ end:
 }
 
 /*
- * Returns script info "script_loaded".
+ * Return script info "script_loaded".
  */
 
 char *
@@ -160,7 +160,7 @@ script_info_info_script_loaded_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns script infolist "script_script".
+ * Return script infolist "script_script".
  */
 
 struct t_infolist *
@@ -218,7 +218,7 @@ script_info_infolist_script_script_cb (const void *pointer, void *data,
 }
 
 /*
- * Hooks infolist and hdata.
+ * Hook infolist and hdata.
  */
 
 void

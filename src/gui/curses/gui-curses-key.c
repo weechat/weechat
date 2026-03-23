@@ -52,7 +52,7 @@
 
 
 /*
- * Creates key bind, only if it does not exist yet.
+ * Create key bind, only if it does not exist yet.
  */
 
 void
@@ -67,7 +67,7 @@ gui_key_default_bind (int context, const char *key, const char *command,
 }
 
 /*
- * Creates default key bindings for a given context.
+ * Create default key bindings for a given context.
  *
  * If create_option == 1, config options are created, otherwise keys are just
  * added to linked list (gui_keys[]).
@@ -292,7 +292,7 @@ gui_key_default_bindings (int context, int create_option)
 }
 
 /*
- * Flushes keyboard buffer.
+ * Flush keyboard buffer.
  */
 
 void
@@ -511,7 +511,7 @@ gui_key_flush (int paste)
 }
 
 /*
- * Reads keyboard chars.
+ * Read keyboard chars.
  */
 
 int

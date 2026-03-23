@@ -38,7 +38,7 @@
 
 
 /*
- * Returns description of hook.
+ * Return description of hook.
  *
  * Note: result must be freed after use.
  */
@@ -50,9 +50,9 @@ hook_info_hashtable_get_description (struct t_hook *hook)
 }
 
 /*
- * Hooks an info using hashtable.
+ * Hook an info using hashtable.
  *
- * Returns pointer to new hook, NULL if error.
+ * Return pointer to new hook, NULL if error.
  */
 
 struct t_hook *
@@ -102,7 +102,7 @@ hook_info_hashtable (struct t_weechat_plugin *plugin, const char *info_name,
 }
 
 /*
- * Gets info (as hashtable) via info hook.
+ * Get info (as hashtable) via info hook.
  */
 
 struct t_hashtable *
@@ -152,7 +152,7 @@ hook_info_get_hashtable (struct t_weechat_plugin *plugin, const char *info_name,
 }
 
 /*
- * Frees data in an info_hashtable hook.
+ * Free data in an info_hashtable hook.
  */
 
 void
@@ -187,7 +187,7 @@ hook_info_hashtable_free_data (struct t_hook *hook)
 }
 
 /*
- * Returns hdata for info_hashtable hook.
+ * Return hdata for info_hashtable hook.
  */
 
 struct t_hdata *
@@ -214,9 +214,9 @@ hook_info_hashtable_hdata_hook_info_hashtable_cb (const void *pointer,
 }
 
 /*
- * Adds info_hashtable hook data in the infolist item.
+ * Add info_hashtable hook data in the infolist item.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -258,7 +258,7 @@ hook_info_hashtable_add_to_infolist (struct t_infolist_item *item,
 }
 
 /*
- * Prints info_hashtable hook data in WeeChat log file (usually for crash dump).
+ * Print info_hashtable hook data in WeeChat log file (usually for crash dump).
  */
 
 void

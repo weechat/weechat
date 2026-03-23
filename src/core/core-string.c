@@ -72,13 +72,13 @@ char **string_concat_buffer[STRING_NUM_CONCAT_BUFFERS];
 
 
 /*
- * Formats a message in a string allocated by the function.
+ * Format a message in a string allocated by the function.
  *
  * This function is defined for systems where the GNU function `asprintf()`
  * is not available.
  * The behavior is almost the same except that `*result` is set to NULL on error.
  *
- * Returns the number of bytes in the resulting string, negative value in case
+ * Return the number of bytes in the resulting string, negative value in case
  * of error.
  *
  * Value of `*result` is allocated with the result string (NULL if error),
@@ -127,7 +127,7 @@ string_asprintf (char **result, const char *fmt, ...)
 }
 
 /*
- * Defines a "strndup" function for systems where this function does not exist
+ * Define a "strndup" function for systems where this function does not exist
  * (FreeBSD and maybe others).
  *
  * Note: result must be freed after use.
@@ -155,7 +155,7 @@ string_strndup (const char *string, int bytes)
 }
 
 /*
- * Cuts a string after max "length" chars, adds an optional suffix
+ * Cut a string after max "length" chars, adds an optional suffix
  * after the string if it is cut.
  *
  * If count_suffix == 1, the length of suffix is counted in the max length.
@@ -224,7 +224,7 @@ string_cut (const char *string, int length, int count_suffix, int screen,
 }
 
 /*
- * Reverses a string.
+ * Reverse a string.
  *
  * Note: result must be freed after use.
  */
@@ -266,7 +266,7 @@ string_reverse (const char *string)
 }
 
 /*
- * Reverses a string for screen: color codes are not reversed.
+ * Reverse a string for screen: color codes are not reversed.
  * For example: reverse of "<red>test" is "test<red>" where the color code
  * "<red>" is kept as-is, so it is still valid (this is not the case with
  * function string_reverse).
@@ -328,7 +328,7 @@ string_reverse_screen (const char *string)
 }
 
 /*
- * Repeats a string a given number of times.
+ * Repeat a string a given number of times.
  *
  * Note: result must be freed after use.
  */
@@ -371,7 +371,7 @@ string_repeat (const char *string, int count)
 }
 
 /*
- * Converts string to lowercase (locale dependent).
+ * Convert string to lowercase (locale dependent).
  */
 
 char *
@@ -414,7 +414,7 @@ string_tolower (const char *string)
 }
 
 /*
- * Converts string to uppercase (locale dependent).
+ * Convert string to uppercase (locale dependent).
  */
 
 char *
@@ -457,7 +457,7 @@ string_toupper (const char *string)
 }
 
 /*
- * Converts string to lower case (using a range of chars).
+ * Convert string to lower case (using a range of chars).
  *
  * Note: result must be freed after use.
  */
@@ -489,7 +489,7 @@ string_tolower_range (const char *string, int range)
 }
 
 /*
- * Converts string to upper case (using a range of char).
+ * Convert string to upper case (using a range of char).
  *
  * Note: result must be freed after use.
  */
@@ -521,9 +521,9 @@ string_toupper_range (const char *string, int range)
 }
 
 /*
- * Compares two chars (case-sensitive).
+ * Compare two chars (case-sensitive).
  *
- * Returns: arithmetic result of subtracting the first UTF-8 char in string2
+ * Return: arithmetic result of subtracting the first UTF-8 char in string2
  * from the first UTF-8 char in string1:
  *   < 0: string1 < string2
  *     0: string1 == string2
@@ -537,9 +537,9 @@ string_charcmp (const char *string1, const char *string2)
 }
 
 /*
- * Compares two chars (case-insensitive).
+ * Compare two chars (case-insensitive).
  *
- * Returns: arithmetic result of subtracting the first UTF-8 char in string2
+ * Return: arithmetic result of subtracting the first UTF-8 char in string2
  * (converted to lowercase) from the first UTF-8 char in string1 (converted
  * to lowercase):
  *   < 0: string1 < string2
@@ -576,7 +576,7 @@ string_charcasecmp (const char *string1, const char *string2)
 }
 
 /*
- * Compares two chars (case-insensitive using a range).
+ * Compare two chars (case-insensitive using a range).
  *
  * The range is the number of chars which can be converted from upper to lower
  * case. For example 26 = all letters of alphabet, 29 = all letters + 3 chars.
@@ -587,7 +587,7 @@ string_charcasecmp (const char *string1, const char *string2)
  *   - range = 30: A-Z [ \ ] ^ ==> a-z { | } ~
  *   (ranges 29 and 30 are used by some protocols like IRC)
  *
- * Returns: arithmetic result of subtracting the last compared UTF-8 char in
+ * Return: arithmetic result of subtracting the last compared UTF-8 char in
  * string2 (converted to lowercase) from the last compared UTF-8 char in
  * string1 (converted to lowercase):
  *   < 0: string1 < string2
@@ -612,9 +612,9 @@ string_charcasecmp_range (const char *string1, const char *string2, int range)
 }
 
 /*
- * Compares two strings (case-sensitive).
+ * Compare two strings (case-sensitive).
  *
- * Returns: arithmetic result of subtracting the last compared UTF-8 char in
+ * Return: arithmetic result of subtracting the last compared UTF-8 char in
  * string2 from the last compared UTF-8 char in string1:
  *   < 0: string1 < string2
  *     0: string1 == string2
@@ -646,9 +646,9 @@ string_strcmp (const char *string1, const char *string2)
 }
 
 /*
- * Compares two strings with max length (case-sensitive).
+ * Compare two strings with max length (case-sensitive).
  *
- * Returns: arithmetic result of subtracting the last compared UTF-8 char in
+ * Return: arithmetic result of subtracting the last compared UTF-8 char in
  * string2 from the last compared UTF-8 char in string1:
  *   < 0: string1 < string2
  *     0: string1 == string2
@@ -685,9 +685,9 @@ string_strncmp (const char *string1, const char *string2, int max)
 }
 
 /*
- * Compares two strings (case-insensitive).
+ * Compare two strings (case-insensitive).
  *
- * Returns: arithmetic result of subtracting the last compared UTF-8 char in
+ * Return: arithmetic result of subtracting the last compared UTF-8 char in
  * string2 (converted to lowercase) from the last compared UTF-8 char in
  * string1 (converted to lowercase):
  *   < 0: string1 < string2
@@ -720,7 +720,7 @@ string_strcasecmp (const char *string1, const char *string2)
 }
 
 /*
- * Compares two strings (case-insensitive using a range).
+ * Compare two strings (case-insensitive using a range).
  *
  * The range is the number of chars which can be converted from upper to lower
  * case. For example 26 = all letters of alphabet, 29 = all letters + 3 chars.
@@ -731,7 +731,7 @@ string_strcasecmp (const char *string1, const char *string2)
  *   - range = 30: A-Z [ \ ] ^ ==> a-z { | } ~
  *   (ranges 29 and 30 are used by some protocols like IRC)
  *
- * Returns: arithmetic result of subtracting the last compared UTF-8 char in
+ * Return: arithmetic result of subtracting the last compared UTF-8 char in
  * string2 (converted to lowercase) from the last compared UTF-8 char in
  * string1 (converted to lowercase):
  *   < 0: string1 < string2
@@ -764,9 +764,9 @@ string_strcasecmp_range (const char *string1, const char *string2, int range)
 }
 
 /*
- * Compares two strings with max length (case-insensitive).
+ * Compare two strings with max length (case-insensitive).
  *
- * Returns: arithmetic result of subtracting the last compared UTF-8 char in
+ * Return: arithmetic result of subtracting the last compared UTF-8 char in
  * string2 (converted to lowercase) from the last compared UTF-8 char in
  * string1 (converted to lowercase):
  *   < 0: string1 < string2
@@ -804,7 +804,7 @@ string_strncasecmp (const char *string1, const char *string2, int max)
 }
 
 /*
- * Compares two strings with max length (case-insensitive using a range).
+ * Compare two strings with max length (case-insensitive using a range).
  *
  * The range is the number of chars which can be converted from upper to lower
  * case. For example 26 = all letters of alphabet, 29 = all letters + 3 chars.
@@ -815,7 +815,7 @@ string_strncasecmp (const char *string1, const char *string2, int max)
  *   - range = 30: A-Z [ \ ] ^ ==> a-z { | } ~
  *   (ranges 29 and 30 are used by some protocols like IRC)
  *
- * Returns: arithmetic result of subtracting the last compared UTF-8 char in
+ * Return: arithmetic result of subtracting the last compared UTF-8 char in
  * string2 (converted to lowercase) from the last compared UTF-8 char in
  * string1 (converted to lowercase):
  *   < 0: string1 < string2
@@ -854,9 +854,9 @@ string_strncasecmp_range (const char *string1, const char *string2, int max,
 }
 
 /*
- * Compares two strings, ignoring some chars.
+ * Compare two strings, ignoring some chars.
  *
- * Returns: arithmetic result of subtracting the last compared UTF-8 char in
+ * Return: arithmetic result of subtracting the last compared UTF-8 char in
  * string2 (converted to lowercase if case_sensitive is set to 0) from the last
  * compared UTF-8 char in string1 (converted to lowercase if case_sensitive is
  * set to 0):
@@ -923,9 +923,9 @@ string_strcmp_ignore_chars (const char *string1, const char *string2,
 }
 
 /*
- * Searches for a string in another string (locale and case independent).
+ * Search for a string in another string (locale and case independent).
  *
- * Returns pointer to string found, or NULL if not found.
+ * Return pointer to string found, or NULL if not found.
  */
 
 const char *
@@ -950,12 +950,12 @@ string_strcasestr (const char *string, const char *search)
 }
 
 /*
- * Checks if a string matches a mask.
+ * Check if a string matches a mask.
  *
  * The mask can contain wildcards ("*"), each wildcard matches 0 or more chars
  * in the string.
  *
- * Returns:
+ * Return:
  *   1: string matches mask
  *   0: string does not match mask
  */
@@ -1080,7 +1080,7 @@ string_match (const char *string, const char *mask, int case_sensitive)
 }
 
 /*
- * Checks if a string matches a list of masks. Negative masks are allowed
+ * Check if a string matches a list of masks. Negative masks are allowed
  * with "!mask" to exclude this mask and have higher priority than standard
  * masks.
  *
@@ -1090,7 +1090,7 @@ string_match (const char *string, const char *mask, int case_sensitive)
  * forbidden:
  *   "*", "!toto", "!abc"
  *
- * Returns:
+ * Return:
  *   1: string matches list of masks
  *   0: string does not match list of masks
  */
@@ -1122,7 +1122,7 @@ string_match_list (const char *string, const char **masks, int case_sensitive)
 }
 
 /*
- * Expands home in a path.
+ * Expand home in a path.
  *
  * Example: "~/file.txt" => "/home/user/file.txt"
  *
@@ -1158,7 +1158,7 @@ string_expand_home (const char *path)
  *   2. "~" by user home directory (call to string_expand_home)
  *   3. evaluated variables (see /help eval)
  *
- * Returns the evaluated path, NULL if error.
+ * Return the evaluated path, NULL if error.
  *
  * Note: result must be freed after use.
  */
@@ -1225,7 +1225,7 @@ end:
 }
 
 /*
- * Removes quotes at beginning/end of string (ignores spaces if there are before
+ * Remove quotes at beginning/end of string (ignores spaces if there are before
  * first quote or after last quote).
  *
  * Note: result must be freed after use.
@@ -1268,7 +1268,7 @@ string_remove_quotes (const char *string, const char *quotes)
 }
 
 /*
- * Strips chars at beginning/end of string.
+ * Strip chars at beginning/end of string.
  *
  * Note: result must be freed after use.
  */
@@ -1311,7 +1311,7 @@ string_strip (const char *string, int left, int right, const char *chars)
 }
 
 /*
- * Converts escaped chars to their values.
+ * Convert escaped chars to their values.
  *
  * Following escaped chars are supported:
  *   \"         double quote
@@ -1472,9 +1472,9 @@ string_convert_escaped_chars (const char *string)
 }
 
 /*
- * Checks if first char of string is a whitespace (space, tab, newline or carriage return).
+ * Check if first char of string is a whitespace (space, tab, newline or carriage return).
  *
- * Returns:
+ * Return:
  *   1: first char is whitespace
  *   0: first char is not whitespace
  */
@@ -1490,11 +1490,11 @@ string_is_whitespace_char (const char *string)
 }
 
 /*
- * Checks if first char of string is a "word char".
+ * Check if first char of string is a "word char".
  *
  * The word chars are customizable with options "weechat.look.word_chars_*".
  *
- * Returns:
+ * Return:
  *   1: first char is a word char
  *   0: first char is not a word char
  */
@@ -1540,12 +1540,12 @@ string_is_word_char (const char *string,
 }
 
 /*
- * Checks if first char of string is a "word char" (for highlight).
+ * Check if first char of string is a "word char" (for highlight).
  *
  * The word chars for highlights are customizable with option
  * "weechat.look.word_chars_highlight".
  *
- * Returns:
+ * Return:
  *   1: first char is a word char
  *   0: first char is not a word char
  */
@@ -1559,12 +1559,12 @@ string_is_word_char_highlight (const char *string)
 }
 
 /*
- * Checks if first char of string is a "word char" (for input).
+ * Check if first char of string is a "word char" (for input).
  *
  * The word chars for input are customizable with option
  * "weechat.look.word_chars_input".
  *
- * Returns:
+ * Return:
  *   1: first char is a word char
  *   0: first char is not a word char
  */
@@ -1578,7 +1578,7 @@ string_is_word_char_input (const char *string)
 }
 
 /*
- * Converts a mask (string with only "*" as wildcard) to a regex, paying
+ * Convert a mask (string with only "*" as wildcard) to a regex, paying
  * attention to special chars in a regex.
  *
  * Note: result must be freed after use.
@@ -1630,7 +1630,7 @@ string_mask_to_regex (const char *mask)
 }
 
 /*
- * Extracts flags and regex from a string.
+ * Extract flags and regex from a string.
  *
  * Format of flags is: (?eins-eins)string
  * Flags are:
@@ -1706,10 +1706,10 @@ string_regex_flags (const char *regex, int default_flags, int *flags)
 }
 
 /*
- * Compiles a regex using optional flags at beginning of string (for format of
+ * Compile a regex using optional flags at beginning of string (for format of
  * flags in regex, see string_regex_flags()).
  *
- * Returns:
+ * Return:
  *   0: successful compilation
  *   other value: compilation failed
  *
@@ -1733,9 +1733,9 @@ string_regcomp (void *preg, const char *regex, int default_flags)
 }
 
 /*
- * Checks if a string has a highlight (using list of words to highlight).
+ * Check if a string has a highlight (using list of words to highlight).
  *
- * Returns:
+ * Return:
  *   1: string has a highlight
  *   0: string has no highlight
  */
@@ -1840,7 +1840,7 @@ string_has_highlight (const char *string, const char *highlight_words)
 }
 
 /*
- * Checks if a string has a highlight using a compiled regular expression (any
+ * Check if a string has a highlight using a compiled regular expression (any
  * match in string must be surrounded by delimiters).
  */
 
@@ -1889,7 +1889,7 @@ string_has_highlight_regex_compiled (const char *string, regex_t *regex)
 }
 
 /*
- * Checks if a string has a highlight using a regular expression (any match in
+ * Check if a string has a highlight using a regular expression (any match in
  * string must be surrounded by delimiters).
  */
 
@@ -1913,7 +1913,7 @@ string_has_highlight_regex (const char *string, const char *regex)
 }
 
 /*
- * Replaces a string by new one in a string.
+ * Replace a string by new one in a string.
  *
  * Note: result must be freed after use.
  */
@@ -2140,7 +2140,7 @@ string_replace_regex_get_replace (const char *string, regmatch_t *regex_match,
 }
 
 /*
- * Replaces text in a string using a regular expression and replacement text.
+ * Replace text in a string using a regular expression and replacement text.
  *
  * The argument "regex" is a pointer to a regex compiled with WeeChat function
  * string_regcomp (or function regcomp).
@@ -2262,7 +2262,7 @@ string_replace_regex (const char *string, void *regex, const char *replace,
 }
 
 /*
- * Translates chars by other ones in a string.
+ * Translate chars by other ones in a string.
  *
  * Note: result must be freed after use.
  */
@@ -2314,7 +2314,7 @@ string_translate_chars (const char *string,
 }
 
 /*
- * Splits a string according to separators.
+ * Split a string according to separators.
  *
  * This function must not be called directly (call string_split or
  * string_split_shared instead).
@@ -2607,7 +2607,7 @@ error:
 }
 
 /*
- * Splits a string according to separators.
+ * Split a string according to separators.
  *
  * For full description, see function string_split_internal.
  */
@@ -2622,7 +2622,7 @@ string_split (const char *string, const char *separators,
 }
 
 /*
- * Splits a string according to separators, and use shared strings for the
+ * Split a string according to separators, and use shared strings for the
  * strings in the array returned.
  *
  * For full description, see function string_split_internal.
@@ -2638,7 +2638,7 @@ string_split_shared (const char *string, const char *separators,
 }
 
 /*
- * Splits a string like the shell does for a command with arguments.
+ * Split a string like the shell does for a command with arguments.
  *
  * This function is a C conversion of Python class "shlex"
  * (file: Lib/shlex.py in Python repository)
@@ -2836,7 +2836,7 @@ string_split_shell (const char *string, int *num_items)
 }
 
 /*
- * Frees a split string.
+ * Free a split string.
  */
 
 void
@@ -2853,7 +2853,7 @@ string_free_split (char **split_string)
 }
 
 /*
- * Frees a split string (using shared strings).
+ * Free a split string (using shared strings).
  */
 
 void
@@ -2870,7 +2870,7 @@ string_free_split_shared (char **split_string)
 }
 
 /*
- * Rebuilds a split string using a delimiter and optional index of start/end
+ * Rebuild a split string using a delimiter and optional index of start/end
  * string.
  *
  * If index_end < 0, then all arguments are used until NULL is found.
@@ -2914,7 +2914,7 @@ string_rebuild_split_string (const char **split_string,
 }
 
 /*
- * Splits a list of commands separated by 'separator' and escaped with '\'.
+ * Split a list of commands separated by 'separator' and escaped with '\'.
  * Empty commands are removed, spaces on the left of each commands are stripped.
  *
  * Note: result must be freed after use with function
@@ -3005,7 +3005,7 @@ string_split_command (const char *command, char separator)
 }
 
 /*
- * Frees a command split.
+ * Free a command split.
  */
 
 void
@@ -3022,7 +3022,7 @@ string_free_split_command (char **split_command)
 }
 
 /*
- * Splits tags in an array of tags.
+ * Split tags in an array of tags.
  *
  * The format of tags is a list of tags separated by commas (logical OR),
  * and for each item, multiple tags can be separated by "+" (logical AND).
@@ -3074,7 +3074,7 @@ string_split_tags (const char *tags, int *num_tags)
 }
 
 /*
- * Frees tags split.
+ * Free tags split.
  */
 
 void
@@ -3091,7 +3091,7 @@ string_free_split_tags (char ***split_tags)
 }
 
 /*
- * Converts a string to another charset.
+ * Convert a string to another charset.
  *
  * Note: result must be freed after use.
  */
@@ -3207,7 +3207,7 @@ string_iconv (int from_utf8, const char *from_code, const char *to_code,
 }
 
 /*
- * Converts a string to WeeChat internal storage charset (UTF-8).
+ * Convert a string to WeeChat internal storage charset (UTF-8).
  *
  * Note: result must be freed after use.
  */
@@ -3247,7 +3247,7 @@ string_iconv_to_internal (const char *charset, const char *string)
 }
 
 /*
- * Converts internal string to terminal charset, for display or write of
+ * Convert internal string to terminal charset, for display or write of
  * configuration files.
  *
  * Note: result must be freed after use.
@@ -3289,9 +3289,9 @@ string_iconv_from_internal (const char *charset, const char *string)
 }
 
 /*
- * Encodes a string to terminal charset and calls fprintf.
+ * Encode a string to terminal charset and calls fprintf.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -3321,7 +3321,7 @@ string_fprintf (FILE *file, const char *data, ...)
 }
 
 /*
- * Formats a string with size and unit name (bytes, KB, MB, GB).
+ * Format a string with size and unit name (bytes, KB, MB, GB).
  *
  * Note: result must be freed after use.
  */
@@ -3375,7 +3375,7 @@ string_format_size (unsigned long long size)
 }
 
 /*
- * Parses a string with a size and returns the size in bytes.
+ * Parse a string with a size and return the size in bytes.
  *
  * The format is "123" or "123x" or "123 x"  where "123" is any positive
  * integer number and "x" the unit, which can be one of (lower or upper case
@@ -3387,7 +3387,7 @@ string_format_size (unsigned long long size)
  *   g  gigabytes (1g = 1000m = 1,000,000,000 bytes)
  *   t  terabytes (1t = 1000g = 1,000,000,000,000 bytes)
  *
- * Returns the parsed size, 0 if error.
+ * Return the parsed size, 0 if error.
  */
 
 unsigned long long
@@ -3465,12 +3465,12 @@ end:
 }
 
 /*
- * Encodes a string in base16 (hexadecimal).
+ * Encode a string in base16 (hexadecimal).
  *
  * Argument "length" is number of bytes in "from" to convert (commonly
  * strlen(from)).
  *
- * Returns length of string in "*to" (it does not count final \0),
+ * Return length of string in "*to" (it does not count final \0),
  * -1 if error.
  */
 
@@ -3496,9 +3496,9 @@ string_base16_encode (const char *from, int length, char *to)
 }
 
 /*
- * Decodes a base16 string (hexadecimal).
+ * Decode a base16 string (hexadecimal).
  *
- * Returns length of string in "*to" (it does not count final \0),
+ * Return length of string in "*to" (it does not count final \0),
  * -1 if error.
  */
 
@@ -3543,7 +3543,7 @@ string_base16_decode (const char *from, char *to)
 }
 
 /*
- * Encodes a string in base32.
+ * Encode a string in base32.
  *
  * Argument "length" is number of bytes in "from" to convert (commonly
  * strlen(from)).
@@ -3568,7 +3568,7 @@ string_base16_decode (const char *from, char *to)
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  *
- * Returns length of string in "*to" (it does not count final \0),
+ * Return length of string in "*to" (it does not count final \0),
  * -1 if error.
  */
 
@@ -3624,7 +3624,7 @@ string_base32_encode (const char *from, int length, char *to)
 }
 
 /*
- * Decodes a base32 string.
+ * Decode a base32 string.
  *
  * This function is inspired by:
  *   https://github.com/google/google-authenticator-libpam/blob/master/src/base32.c
@@ -3647,7 +3647,7 @@ string_base32_encode (const char *from, int length, char *to)
  *   limitations under the License.
  *
  *
- * Returns length of string in "*to" (it does not count final \0),
+ * Return length of string in "*to" (it does not count final \0),
  * -1 if error.
  */
 
@@ -3704,7 +3704,7 @@ string_base32_decode (const char *from, char *to)
 }
 
 /*
- * Converts 3 bytes of 8 bits in 4 bytes of 6 bits.
+ * Convert 3 bytes of 8 bits in 4 bytes of 6 bits.
  */
 
 void
@@ -3725,7 +3725,7 @@ string_convbase64_8x3_to_6x4 (int url, const char *from, char *to)
 }
 
 /*
- * Encodes a string in base64.
+ * Encode a string in base64.
  *
  * If url == 1, base64url is decoded, otherwise standard base64.
  *
@@ -3737,7 +3737,7 @@ string_convbase64_8x3_to_6x4 (int url, const char *from, char *to)
  * Argument "length" is number of bytes in "from" to convert (commonly
  * strlen(from)).
  *
- * Returns length of string in "*to" (it does not count final \0),
+ * Return length of string in "*to" (it does not count final \0),
  * -1 if error.
  */
 
@@ -3802,7 +3802,7 @@ string_base64_encode (int url, const char *from, int length, char *to)
 }
 
 /*
- * Converts 4 bytes of 6 bits to 3 bytes of 8 bits.
+ * Convert 4 bytes of 6 bits to 3 bytes of 8 bits.
  */
 
 void
@@ -3814,7 +3814,7 @@ string_convbase64_6x4_to_8x3 (const unsigned char *from, unsigned char *to)
 }
 
 /*
- * Decodes a base64 string.
+ * Decode a base64 string.
  *
  * If url == 1, base64url is decoded, otherwise standard base64.
  *
@@ -3823,7 +3823,7 @@ string_convbase64_6x4_to_8x3 (const unsigned char *from, unsigned char *to)
  *   "/" --> “_” (underline)
  *   no padding char ("=")
  *
- * Returns length of string in "*to" (it does not count final \0),
+ * Return length of string in "*to" (it does not count final \0),
  * -1 if error.
  */
 
@@ -3892,14 +3892,14 @@ string_base64_decode (int url, const char *from, char *to)
 }
 
 /*
- * Encodes a string, according to "base" parameter:
+ * Encode a string, according to "base" parameter:
  *   - "16": base16
  *   - "32": base32
  *   - "64": base64
  *   - "64url": base64url: same as base64 with no padding ("="), chars replaced:
  *              “+” --> “-” and "/" --> “_”
  *
- * Returns length of string in "*to" (it does not count final \0),
+ * Return length of string in "*to" (it does not count final \0),
  * -1 if error.
  */
 
@@ -3925,14 +3925,14 @@ string_base_encode (const char *base, const char *from, int length, char *to)
 }
 
 /*
- * Decodes a string, according to "base" parameter:
+ * Decode a string, according to "base" parameter:
  *   - "16": base16
  *   - "32": base32
  *   - "64": base64
  *   - "64url": base64url: same as base64 with no padding ("="), chars replaced:
  *              “+” --> “-” and "/" --> “_”
  *
- * Returns length of string in "*to" (it does not count final \0),
+ * Return length of string in "*to" (it does not count final \0),
  * -1 if error.
  */
 
@@ -3958,7 +3958,7 @@ string_base_decode (const char *base, const char *from, char *to)
 }
 
 /*
- * Dumps a data buffer as hexadecimal + ascii.
+ * Dump a data buffer as hexadecimal + ascii.
  *
  * Note: result must be freed after use.
  */
@@ -4059,9 +4059,9 @@ end:
 }
 
 /*
- * Checks if a string is a command.
+ * Check if a string is a command.
  *
- * Returns:
+ * Return:
  *   1: first char of string is a command char
  *   0: string is not a command
  */
@@ -4092,9 +4092,9 @@ string_is_command_char (const char *string)
 }
 
 /*
- * Gets pointer to input text for buffer.
+ * Get pointer to input text for buffer.
  *
- * Returns pointer inside "string" argument or NULL if it's a command (by
+ * Return pointer inside "string" argument or NULL if it's a command (by
  * default a command starts with a single '/').
  */
 
@@ -4159,7 +4159,7 @@ string_input_for_buffer (const char *string)
 }
 
 /*
- * Returns the number of bytes in common between two strings (this function
+ * Return the number of bytes in common between two strings (this function
  * works with bytes and not UTF-8 chars).
  */
 
@@ -4184,7 +4184,7 @@ string_get_common_bytes_count (const char *string1, const char *string2)
 }
 
 /*
- * Returns the distance between two strings using the Levenshtein algorithm.
+ * Return the distance between two strings using the Levenshtein algorithm.
  * See: https://en.wikipedia.org/wiki/Levenshtein_distance
  */
 
@@ -4244,7 +4244,7 @@ string_levenshtein (const char *string1, const char *string2,
 }
 
 /*
- * Replaces ${vars} using a callback that returns replacement value (this value
+ * Replace ${vars} using a callback that return replacement value (this value
  * must be newly allocated because it will be freed in this function).
  *
  * Nested variables are supported, for example: "${var1:${var2}}".
@@ -4425,7 +4425,7 @@ string_replace_with_callback (const char *string,
 }
 
 /*
- * Extracts priority and name from a string.
+ * Extract priority and name from a string.
  *
  * String can be:
  *   - a simple name like "test":
@@ -4471,10 +4471,10 @@ string_get_priority_and_name (const char *string,
 }
 
 /*
- * Hashes a shared string.
+ * Hash a shared string.
  * The string starts after the reference count, which is skipped.
  *
- * Returns the hash of the shared string (variant of djb2).
+ * Return the hash of the shared string (variant of djb2).
  */
 
 unsigned long long
@@ -4488,10 +4488,10 @@ string_shared_hash_key (struct t_hashtable *hashtable,
 }
 
 /*
- * Compares two shared strings.
+ * Compare two shared strings.
  * Each string starts after the reference count, which is skipped.
  *
- * Returns:
+ * Return:
  *   < 0: key1 < key2
  *     0: key1 == key2
  *   > 0: key1 > key2
@@ -4509,7 +4509,7 @@ string_shared_keycmp (struct t_hashtable *hashtable,
 }
 
 /*
- * Frees a shared string.
+ * Free a shared string.
  */
 
 void
@@ -4522,7 +4522,7 @@ string_shared_free_key (struct t_hashtable *hashtable, void *key)
 }
 
 /*
- * Gets a pointer to a shared string.
+ * Get a pointer to a shared string.
  *
  * A shared string is an entry in the hashtable "string_hashtable_shared", with:
  * - key: reference count (unsigned integer on 32 bits) + string
@@ -4531,7 +4531,7 @@ string_shared_free_key (struct t_hashtable *hashtable, void *key)
  * The initial reference count is set to 1 and is incremented each time this
  * function is called for a same string (string content, not the pointer).
  *
- * Returns the pointer to the shared string (start of string in key, after the
+ * Return the pointer to the shared string (start of string in key, after the
  * reference count), NULL if error.
  * The string returned has exactly same content as string received in argument,
  * but the pointer to the string is different.
@@ -4597,7 +4597,7 @@ string_shared_get (const char *string)
 }
 
 /*
- * Frees a shared string.
+ * Free a shared string.
  *
  * The reference count of the string is decremented. If it becomes 0, then the
  * shared string is removed from the hashtable (and then the string is really
@@ -4621,12 +4621,12 @@ string_shared_free (const char *string)
 }
 
 /*
- * Allocates a dynamic string (with a variable length).
+ * Allocate a dynamic string (with a variable length).
  *
  * The parameter size_alloc is the initial allocated size, which must be
  * greater than zero.
  *
- * Returns the pointer to the allocated string, which is initialized as empty
+ * Return the pointer to the allocated string, which is initialized as empty
  * string.
  *
  * The string returned can be used with following restrictions:
@@ -4667,14 +4667,14 @@ string_dyn_alloc (int size_alloc)
 }
 
 /*
- * Copies "new_string" into a dynamic string and replaces its current content
+ * Copy "new_string" into a dynamic string and replaces its current content
  * (adjusts its size accordingly).
  *
  * The string pointer (*string) is updated with the new allocated string
  * if the string had to be extended, or the same pointer if there was enough
  * size to copy the new string.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -4718,7 +4718,7 @@ string_dyn_copy (char **string, const char *new_string)
 }
 
 /*
- * Concatenates a string to a dynamic string and adjusts its size accordingly.
+ * Concatenate a string to a dynamic string and adjusts its size accordingly.
  *
  * The parameter "bytes" is the max number of bytes to concatenate
  * (a terminating null byte '\0' is automatically added); value -1 means
@@ -4728,7 +4728,7 @@ string_dyn_copy (char **string, const char *new_string)
  * if the string had to be extended, or the same pointer if there was enough
  * size to concatenate the new string.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -4783,7 +4783,7 @@ string_dyn_concat (char **string, const char *add, int bytes)
 }
 
 /*
- * Frees a dynamic string.
+ * Free a dynamic string.
  *
  * The argument "string" is a pointer on a string returned by function
  * string_dyn_alloc or a string pointer modified by string_dyn_concat.
@@ -4795,7 +4795,7 @@ string_dyn_concat (char **string, const char *add, int bytes)
  * Be careful, the pointer in *string may change after this call because
  * the string can be reallocated to its exact size.
  *
- * Returns the pointer to the string if "free_string" is 0 (string
+ * Return the pointer to the string if "free_string" is 0 (string
  * pointer is still valid), or NULL if "free_string" is 1 (string
  * has been freed).
  */
@@ -4835,7 +4835,7 @@ string_dyn_free (char **string, int free_string)
 }
 
 /*
- * Concatenates strings, using a separator (which can be NULL or empty string
+ * Concatenate strings, using a separator (which can be NULL or empty string
  * to not use any separator).
  *
  * Last argument must be NULL to terminate the variable list of arguments.
@@ -4882,7 +4882,7 @@ string_concat (const char *separator, ...)
 }
 
 /*
- * Initializes string.
+ * Initialize string.
  */
 
 void
@@ -4897,7 +4897,7 @@ string_init (void)
 }
 
 /*
- * Frees all allocated data.
+ * Free all allocated data.
  */
 
 void

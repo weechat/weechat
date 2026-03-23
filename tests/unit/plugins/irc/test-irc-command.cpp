@@ -37,7 +37,7 @@ TEST_GROUP(IrcCommand)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_mode_nicks
  */
 
@@ -47,7 +47,7 @@ TEST(IrcCommand, ModeNicks)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_mode_masks_convert_ranges
  */
 
@@ -98,7 +98,7 @@ TEST(IrcCommand, ModeMasksConvertRanges)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_mode_masks
  */
 
@@ -108,7 +108,7 @@ TEST(IrcCommand, ModeMasks)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_me_channel_message
  */
 
@@ -118,7 +118,7 @@ TEST(IrcCommand, MeChannelMessage)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_me_channel
  */
 
@@ -128,7 +128,7 @@ TEST(IrcCommand, MeChannel)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_me_all_channels
  */
 
@@ -138,7 +138,7 @@ TEST(IrcCommand, MeAllChannels)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_action
  */
 
@@ -148,7 +148,7 @@ TEST(IrcCommand, Action)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_admin
  */
 
@@ -158,7 +158,7 @@ TEST(IrcCommand, Admin)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_exec_buffers
  */
 
@@ -168,7 +168,7 @@ TEST(IrcCommand, ExecBuffers)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_exec_all_channels
  */
 
@@ -178,7 +178,7 @@ TEST(IrcCommand, ExecAllChannels)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_allchan
  */
 
@@ -188,7 +188,7 @@ TEST(IrcCommand, Allchan)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_allpv
  */
 
@@ -198,7 +198,7 @@ TEST(IrcCommand, Allpv)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_exec_all_servers
  */
 
@@ -208,7 +208,7 @@ TEST(IrcCommand, ExecAllServers)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_allserv
  */
 
@@ -218,7 +218,7 @@ TEST(IrcCommand, Allserv)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_auth
  */
 
@@ -228,7 +228,7 @@ TEST(IrcCommand, Auth)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_autojoin
  */
 
@@ -238,7 +238,7 @@ TEST(IrcCommand, Autojoin)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_display_away
  */
 
@@ -248,7 +248,7 @@ TEST(IrcCommand, DisplayAway)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_away_server
  */
 
@@ -258,7 +258,7 @@ TEST(IrcCommand, AwayServer)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_away
  */
 
@@ -268,7 +268,7 @@ TEST(IrcCommand, Away)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_run_away
  */
 
@@ -278,7 +278,7 @@ TEST(IrcCommand, RunAway)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_send_ban
  */
 
@@ -288,7 +288,7 @@ TEST(IrcCommand, SendBan)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_ban
  */
 
@@ -298,7 +298,7 @@ TEST(IrcCommand, Ban)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_cap
  */
 
@@ -308,7 +308,7 @@ TEST(IrcCommand, Cap)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_connect_one_server
  */
 
@@ -318,7 +318,7 @@ TEST(IrcCommand, ConnectOneServer)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_connect
  */
 
@@ -328,7 +328,7 @@ TEST(IrcCommand, Connect)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_ctcp
  */
 
@@ -338,7 +338,7 @@ TEST(IrcCommand, Ctcp)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_cycle
  */
 
@@ -348,7 +348,7 @@ TEST(IrcCommand, Cycle)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_dcc
  */
 
@@ -358,7 +358,7 @@ TEST(IrcCommand, Dcc)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_dehalfop
  */
 
@@ -368,7 +368,7 @@ TEST(IrcCommand, Dehalfop)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_deop
  */
 
@@ -378,7 +378,7 @@ TEST(IrcCommand, Deop)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_devoice
  */
 
@@ -388,7 +388,7 @@ TEST(IrcCommand, Devoice)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_die
  */
 
@@ -398,7 +398,7 @@ TEST(IrcCommand, Die)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_quit_server
  */
 
@@ -408,7 +408,7 @@ TEST(IrcCommand, QuitServer)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_disconnect_one_server
  */
 
@@ -418,7 +418,7 @@ TEST(IrcCommand, DisconnectOneServer)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_disconnect
  */
 
@@ -428,7 +428,7 @@ TEST(IrcCommand, Disconnect)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_halfop
  */
 
@@ -438,7 +438,7 @@ TEST(IrcCommand, Halfop)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_ignore_display
  */
 
@@ -448,7 +448,7 @@ TEST(IrcCommand, IgnoreDisplay)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_ignore
  */
 
@@ -458,7 +458,7 @@ TEST(IrcCommand, Ignore)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_info
  */
 
@@ -468,7 +468,7 @@ TEST(IrcCommand, Info)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_invite
  */
 
@@ -478,7 +478,7 @@ TEST(IrcCommand, Invite)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_ison
  */
 
@@ -488,7 +488,7 @@ TEST(IrcCommand, Ison)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_join_server
  */
 
@@ -498,7 +498,7 @@ TEST(IrcCommand, JoinServer)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_join
  */
 
@@ -508,7 +508,7 @@ TEST(IrcCommand, Join)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_kick_channel
  */
 
@@ -518,7 +518,7 @@ TEST(IrcCommand, KickChannel)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_kick
  */
 
@@ -528,7 +528,7 @@ TEST(IrcCommand, Kick)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_kickban
  */
 
@@ -538,7 +538,7 @@ TEST(IrcCommand, Kickban)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_kill
  */
 
@@ -548,7 +548,7 @@ TEST(IrcCommand, Kill)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_knock
  */
 
@@ -558,7 +558,7 @@ TEST(IrcCommand, Knock)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_links
  */
 
@@ -568,7 +568,7 @@ TEST(IrcCommand, Links)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_list_get_int_arg
  */
 
@@ -578,7 +578,7 @@ TEST(IrcCommand, ListGetIntArg)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_list
  */
 
@@ -588,7 +588,7 @@ TEST(IrcCommand, List)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_lusers
  */
 
@@ -598,7 +598,7 @@ TEST(IrcCommand, Lusers)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_map
  */
 
@@ -608,7 +608,7 @@ TEST(IrcCommand, Map)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_me
  */
 
@@ -618,7 +618,7 @@ TEST(IrcCommand, Me)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_mode_server
  */
 
@@ -628,7 +628,7 @@ TEST(IrcCommand, ModeServer)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_mode
  */
 
@@ -638,7 +638,7 @@ TEST(IrcCommand, Mode)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_motd
  */
 
@@ -648,7 +648,7 @@ TEST(IrcCommand, Motd)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_msg
  */
 
@@ -658,7 +658,7 @@ TEST(IrcCommand, Msg)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_names
  */
 
@@ -668,7 +668,7 @@ TEST(IrcCommand, Names)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_nick_server
  */
 
@@ -678,7 +678,7 @@ TEST(IrcCommand, NickServer)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_nick
  */
 
@@ -688,7 +688,7 @@ TEST(IrcCommand, Nick)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_notice
  */
 
@@ -698,7 +698,7 @@ TEST(IrcCommand, Notice)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_notify
  */
 
@@ -708,7 +708,7 @@ TEST(IrcCommand, Notify)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_op
  */
 
@@ -718,7 +718,7 @@ TEST(IrcCommand, Op)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_oper
  */
 
@@ -728,7 +728,7 @@ TEST(IrcCommand, Oper)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_part_channel
  */
 
@@ -738,7 +738,7 @@ TEST(IrcCommand, PartChannel)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_part
  */
 
@@ -748,7 +748,7 @@ TEST(IrcCommand, Part)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_ping
  */
 
@@ -758,7 +758,7 @@ TEST(IrcCommand, Ping)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_pong
  */
 
@@ -768,7 +768,7 @@ TEST(IrcCommand, Pong)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_query
  */
 
@@ -778,7 +778,7 @@ TEST(IrcCommand, Query)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_quiet
  */
 
@@ -788,7 +788,7 @@ TEST(IrcCommand, Quiet)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_quote
  */
 
@@ -798,7 +798,7 @@ TEST(IrcCommand, Quote)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_reconnect_one_server
  */
 
@@ -808,7 +808,7 @@ TEST(IrcCommand, ReconnectOneServer)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_reconnect
  */
 
@@ -818,7 +818,7 @@ TEST(IrcCommand, Reconnect)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_rehash
  */
 
@@ -828,7 +828,7 @@ TEST(IrcCommand, Rehash)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_remove
  */
 
@@ -838,7 +838,7 @@ TEST(IrcCommand, Remove)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_restart
  */
 
@@ -848,7 +848,7 @@ TEST(IrcCommand, Restart)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_rules
  */
 
@@ -858,7 +858,7 @@ TEST(IrcCommand, Rules)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_sajoin
  */
 
@@ -868,7 +868,7 @@ TEST(IrcCommand, Sajoin)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_samode
  */
 
@@ -878,7 +878,7 @@ TEST(IrcCommand, Samode)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_sanick
  */
 
@@ -888,7 +888,7 @@ TEST(IrcCommand, Sanick)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_sapart
  */
 
@@ -898,7 +898,7 @@ TEST(IrcCommand, Sapart)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_saquit
  */
 
@@ -908,7 +908,7 @@ TEST(IrcCommand, Saquit)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_display_server
  */
 
@@ -918,7 +918,7 @@ TEST(IrcCommand, DisplayServer)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_server
  */
 
@@ -928,7 +928,7 @@ TEST(IrcCommand, Server)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_service
  */
 
@@ -938,7 +938,7 @@ TEST(IrcCommand, Service)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_servlist
  */
 
@@ -948,7 +948,7 @@ TEST(IrcCommand, Servlist)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_squery
  */
 
@@ -958,7 +958,7 @@ TEST(IrcCommand, Squery)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_setname
  */
 
@@ -968,7 +968,7 @@ TEST(IrcCommand, Setname)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_squit
  */
 
@@ -978,7 +978,7 @@ TEST(IrcCommand, Squit)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_stats
  */
 
@@ -988,7 +988,7 @@ TEST(IrcCommand, Stats)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_summon
  */
 
@@ -998,7 +998,7 @@ TEST(IrcCommand, Summon)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_time
  */
 
@@ -1008,7 +1008,7 @@ TEST(IrcCommand, Time)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_topic
  */
 
@@ -1018,7 +1018,7 @@ TEST(IrcCommand, Topic)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_trace
  */
 
@@ -1028,7 +1028,7 @@ TEST(IrcCommand, Trace)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_unban
  */
 
@@ -1038,7 +1038,7 @@ TEST(IrcCommand, Unban)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_unquiet
  */
 
@@ -1048,7 +1048,7 @@ TEST(IrcCommand, Unquiet)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_userhost
  */
 
@@ -1058,7 +1058,7 @@ TEST(IrcCommand, Userhost)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_users
  */
 
@@ -1068,7 +1068,7 @@ TEST(IrcCommand, Users)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_version
  */
 
@@ -1078,7 +1078,7 @@ TEST(IrcCommand, Version)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_voice
  */
 
@@ -1088,7 +1088,7 @@ TEST(IrcCommand, Voice)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_wallchops
  */
 
@@ -1098,7 +1098,7 @@ TEST(IrcCommand, Wallchops)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_wallops
  */
 
@@ -1108,7 +1108,7 @@ TEST(IrcCommand, Wallops)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_who
  */
 
@@ -1118,7 +1118,7 @@ TEST(IrcCommand, Who)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_whois
  */
 
@@ -1128,7 +1128,7 @@ TEST(IrcCommand, Whois)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_whowas
  */
 
@@ -1138,7 +1138,7 @@ TEST(IrcCommand, Whowas)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_command_init
  */
 

@@ -33,7 +33,7 @@
 
 
 /*
- * Displays the status of triggers (global status).
+ * Display the status of triggers (global status).
  */
 
 void
@@ -45,7 +45,7 @@ trigger_command_display_status (void)
 }
 
 /*
- * Displays one trigger (internal function, must not be called directly).
+ * Display one trigger (internal function, must not be called directly).
  */
 
 void
@@ -237,7 +237,7 @@ trigger_command_display_trigger_internal (const char *name,
 }
 
 /*
- * Displays one trigger.
+ * Display one trigger.
  */
 
 void
@@ -262,7 +262,7 @@ trigger_command_display_trigger (struct t_trigger *trigger, int verbose)
 }
 
 /*
- * Displays a list of triggers.
+ * Display a list of triggers.
  */
 
 void
@@ -290,7 +290,7 @@ trigger_command_list (const char *message, int verbose)
 }
 
 /*
- * Sends the list of enabled triggers to the buffer.
+ * Send the list of enabled triggers to the buffer.
  */
 
 void
@@ -391,7 +391,7 @@ trigger_command_list_buffer (struct t_gui_buffer *buffer,
 }
 
 /*
- * Displays a list of default triggers.
+ * Display a list of default triggers.
  */
 
 void
@@ -442,7 +442,7 @@ trigger_command_list_default (int verbose)
 }
 
 /*
- * Displays an error if a trigger is running.
+ * Display an error if a trigger is running.
  */
 
 void
@@ -513,7 +513,7 @@ trigger_command_set_enabled (struct t_trigger *trigger,
 }
 
 /*
- * Renames a trigger and displays error if the rename is not possible.
+ * Rename a trigger and displays error if the rename is not possible.
  *
  * This function is called by commands:
  *   /trigger set OLD name NEW
@@ -574,7 +574,7 @@ end:
 }
 
 /*
- * Builds a string with the command to create the trigger.
+ * Build a string with the command to create the trigger.
  *
  * Note: result must be freed after use.
  */
@@ -587,8 +587,7 @@ trigger_command_build_string (const char *format, ...)
 }
 
 /*
- * Returns escaped argument for input by adding a backslash before each double
- * quote.
+ * Return escaped argument for input by adding a backslash before each double quote.
  */
 
 char *
@@ -1250,7 +1249,7 @@ end:
 }
 
 /*
- * Hooks trigger commands.
+ * Hook trigger commands.
  */
 
 void

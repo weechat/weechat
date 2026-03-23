@@ -48,9 +48,9 @@
 
 
 /*
- * Checks if a bar window pointer is valid.
+ * Check if a bar window pointer is valid.
  *
- * Returns:
+ * Return:
  *   1: bar window exists
  *   0: bar window does not exist
  */
@@ -89,9 +89,9 @@ gui_bar_window_valid (struct t_gui_bar_window *bar_window)
 }
 
 /*
- * Searches for a reference to a bar in a window.
+ * Search for a reference to a bar in a window.
  *
- * Returns pointer to bar window found, NULL if not found.
+ * Return pointer to bar window found, NULL if not found.
  */
 
 struct t_gui_bar_window *
@@ -114,10 +114,10 @@ gui_bar_window_search_bar (struct t_gui_window *window, struct t_gui_bar *bar)
 }
 
 /*
- * Gets bar_window pointer displayed at (x,y).
+ * Get bar_window pointer displayed at (x,y).
  *
- * If window is not NULL, search is done in bar windows of window.
- * If window is NULL, search is done in root bar windows.
+ * If window is not NULL, search in bar windows of window.
+ * If window is NULL, search in root bar windows.
  */
 
 void
@@ -276,9 +276,9 @@ gui_bar_window_search_by_xy (struct t_gui_window *window, int x, int y,
 }
 
 /*
- * Gets total bar size (window bars) for a position.
+ * Get total bar size (window bars) for a position.
  *
- * Bar is optional, if not NULL, computes size from bar 1 to bar # - 1.
+ * Bar is optional, if not NULL, compute size from bar 1 to bar # - 1.
  */
 
 int
@@ -328,7 +328,7 @@ gui_bar_window_get_size (struct t_gui_bar *bar, struct t_gui_window *window,
 }
 
 /*
- * Calculates position and size of a bar.
+ * Calculate position and size of a bar.
  */
 
 void
@@ -411,7 +411,7 @@ gui_bar_window_calculate_pos_size (struct t_gui_bar_window *bar_window,
 }
 
 /*
- * Searches for position of a bar window (to keep list sorted by bar priority).
+ * Search for position of a bar window (to keep list sorted by bar priority).
  */
 
 struct t_gui_bar_window *
@@ -435,7 +435,7 @@ gui_bar_window_find_pos (struct t_gui_bar *bar, struct t_gui_window *window)
 }
 
 /*
- * Allocates content for a bar window.
+ * Allocate content for a bar window.
  */
 
 void
@@ -544,7 +544,7 @@ error:
 }
 
 /*
- * Frees content of a bar window.
+ * Free content of a bar window.
  */
 
 void
@@ -583,7 +583,7 @@ gui_bar_window_content_free (struct t_gui_bar_window *bar_window)
 }
 
 /*
- * Builds content of an item for a bar window.
+ * Build content of an item for a bar window.
  */
 
 void
@@ -618,8 +618,8 @@ gui_bar_window_content_build_item (struct t_gui_bar_window *bar_window,
 }
 
 /*
- * Builds content of a bar window: calls callback for each item, then
- * concatenates values (according to bar position and filling).
+ * Build content of a bar window: call callback for each item, then
+ * concatenate values (according to bar position and filling).
  */
 
 void
@@ -644,7 +644,7 @@ gui_bar_window_content_build (struct t_gui_bar_window *bar_window,
 }
 
 /*
- * Gets item or subitem content (first rebuilds content if refresh is needed).
+ * Get item or subitem content (first rebuild content if refresh is needed).
  */
 
 const char *
@@ -667,9 +667,9 @@ gui_bar_window_content_get (struct t_gui_bar_window *bar_window,
 }
 
 /*
- * Checks if the item content is a spacer (bar item "spacer").
+ * Check if the item content is a spacer (bar item "spacer").
  *
- * Returns:
+ * Return:
  *    1: item is a spacer
  *    1: item is not a spacer
  */
@@ -685,7 +685,7 @@ gui_bar_window_item_is_spacer (const char *item)
 }
 
 /*
- * Gets content of a bar window, formatted for display, according to filling
+ * Get content of a bar window, formatted for display, according to filling
  * for bar position.
  *
  * The integer variable *num_spacers is set with the number of spacers found
@@ -989,10 +989,10 @@ gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window,
 }
 
 /*
- * Checks if spacer can be used in the bar according to its position, filling
+ * Check if spacer can be used in the bar according to its position, filling
  * and size.
  *
- * Returns:
+ * Return:
  *   1: spacers can be used
  *   0: spacers cannot be used
  */
@@ -1019,7 +1019,7 @@ gui_bar_window_can_use_spacer (struct t_gui_bar_window *bar_window)
 }
 
 /*
- * Computes size of each spacer in the bar.
+ * Compute size of each spacer in the bar.
  *
  * Note: result must be freed after use.
  */
@@ -1063,7 +1063,7 @@ gui_bar_window_compute_spacers_size (int length_on_screen,
 }
 
 /*
- * Adds coordinates (item index/subindex and x,y).
+ * Add coordinates (item index/subindex and x,y).
  */
 
 void
@@ -1107,7 +1107,7 @@ gui_bar_window_coords_add (struct t_gui_bar_window *bar_window,
 }
 
 /*
- * Frees coords of a bar window.
+ * Free coords of a bar window.
  */
 
 void
@@ -1131,7 +1131,7 @@ gui_bar_window_coords_free (struct t_gui_bar_window *bar_window)
 }
 
 /*
- * Inserts bar window in list of bar windows (at good position, according to
+ * Insert bar window in list of bar windows (at good position, according to
  * priority).
  */
 
@@ -1177,9 +1177,9 @@ gui_bar_window_insert (struct t_gui_bar_window *bar_window,
 }
 
 /*
- * Creates a new "window bar" for a bar, in screen or a window.
+ * Create a new "window bar" for a bar, in screen or a window.
  *
- * If window is not NULL, bar window will be in this window.
+ * If window is not NULL, create bar window in this window.
  */
 
 void
@@ -1245,9 +1245,9 @@ gui_bar_window_new (struct t_gui_bar *bar, struct t_gui_window *window)
 }
 
 /*
- * Gets current size of bar window.
+ * Get current size of bar window.
  *
- * Returns width or height, depending on bar position.
+ * Return width or height, depending on bar position.
  */
 
 int
@@ -1257,7 +1257,7 @@ gui_bar_window_get_current_size (struct t_gui_bar_window *bar_window)
 }
 
 /*
- * Returns max size for bar window in a window.
+ * Return max size for bar window in a window.
  */
 
 int
@@ -1289,7 +1289,7 @@ gui_bar_window_get_max_size_in_window (struct t_gui_bar_window *bar_window,
 }
 
 /*
- * Returns max size for bar window.
+ * Return max size for bar window.
  */
 
 int
@@ -1323,7 +1323,7 @@ gui_bar_window_get_max_size (struct t_gui_bar_window *bar_window,
 }
 
 /*
- * Sets current size of all bar windows for a bar.
+ * Set current size of all bar windows for a bar.
  */
 
 void
@@ -1370,7 +1370,7 @@ gui_bar_window_set_current_size (struct t_gui_bar_window *bar_window,
 }
 
 /*
- * Frees a bar window.
+ * Free a bar window.
  */
 
 void
@@ -1410,12 +1410,12 @@ gui_bar_window_free (struct t_gui_bar_window *bar_window,
 }
 
 /*
- * Removes unused bars, according to bars conditions.
+ * Remove unused bars, according to bars conditions.
  *
- * If window is NULL, unused root bars are removed.
- * If window is not NULL, unused window bars in this window are removed.
+ * If window is NULL, remove unused root bars.
+ * If window is not NULL, remove unused window bars in this window.
  *
- * Returns:
+ * Return:
  *   1: at least one bar was removed
  *   0: no bar was removed
  */
@@ -1466,12 +1466,12 @@ gui_bar_window_remove_unused_bars (struct t_gui_window *window)
 }
 
 /*
- * Adds missing bars, according to bars conditions.
+ * Add missing bars, according to bars conditions.
  *
- * If window is NULL, missing root bars are added.
- * If window is not NULL, missing window bars in this window are added.
+ * If window is NULL, add missing root bars.
+ * If window is not NULL, add missing window bars in this window.
  *
- * Returns:
+ * Return:
  *   1: at least one bar was created
  *   0: no bar was created
  */
@@ -1517,11 +1517,11 @@ gui_bar_window_add_missing_bars (struct t_gui_window *window)
 }
 
 /*
- * Scrolls a bar window with a value.
+ * Scroll a bar window with a value.
  *
- * If add == 1, then value is added (otherwise subtracted).
- * If add_x == 1, then value is added to scroll_x (otherwise scroll_y).
- * If percent == 1, then value is a percentage (otherwise number of chars).
+ * If add == 1, add value (otherwise subtract).
+ * If add_x == 1, add value to scroll_x (otherwise scroll_y).
+ * If percent == 1, value is a percentage (otherwise number of chars).
  */
 
 void
@@ -1633,7 +1633,7 @@ gui_bar_window_update_cb (void *data, struct t_hdata *hdata, void *pointer,
 }
 
 /*
- * Returns hdata for bar window.
+ * Return hdata for bar window.
  */
 
 struct t_hdata *
@@ -1677,9 +1677,9 @@ gui_bar_window_hdata_bar_window_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds a bar window in an infolist.
+ * Add a bar window in an infolist.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -1748,7 +1748,7 @@ gui_bar_window_add_to_infolist (struct t_infolist *infolist,
 }
 
 /*
- * Prints bar window infos in WeeChat log file (usually for crash dump).
+ * Print bar window infos in WeeChat log file (usually for crash dump).
  */
 
 void

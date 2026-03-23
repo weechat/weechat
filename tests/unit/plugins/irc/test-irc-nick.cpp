@@ -38,7 +38,7 @@ TEST_GROUP(IrcNick)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_nick_valid
  */
 
@@ -48,7 +48,7 @@ TEST(IrcNick, Valid)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_nick_is_nick
  */
 
@@ -179,7 +179,7 @@ TEST(IrcNick, IsNick)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_nick_find_color
  *   irc_nick_find_color_name
  */
@@ -190,7 +190,7 @@ TEST(IrcNick, FindColor)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_nick_set_current_prefix
  */
 
@@ -200,7 +200,7 @@ TEST(IrcNick, SetCurrentPrefix)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_nick_set_prefix
  */
 
@@ -210,7 +210,7 @@ TEST(IrcNick, SetPrefix)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_nick_set_prefixes
  */
 
@@ -220,7 +220,7 @@ TEST(IrcNick, SetPrefixes)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_nick_set_host
  */
 
@@ -230,7 +230,7 @@ TEST(IrcNick, SetHost)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_nick_is_op_or_higher
  */
 
@@ -240,7 +240,7 @@ TEST(IrcNick, IsOpOrHigher)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_nick_has_prefix_mode
  */
 
@@ -250,7 +250,7 @@ TEST(IrcNick, HasPrefixMode)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_nick_get_nicklist_group
  */
 
@@ -260,7 +260,7 @@ TEST(IrcNick, GetNicklistGroup)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_nick_get_prefix_color_name
  */
 
@@ -270,7 +270,7 @@ TEST(IrcNick, GetPrefixColorName)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_nick_get_color_for_nicklist
  */
 
@@ -280,7 +280,7 @@ TEST(IrcNick, GetColorForNicklist)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_nick_nicklist_add
  */
 
@@ -290,7 +290,7 @@ TEST(IrcNick, NicklistAdd)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_nick_nicklist_remove
  */
 
@@ -300,7 +300,7 @@ TEST(IrcNick, NicklistRemove)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_nick_nicklist_set
  */
 
@@ -310,7 +310,7 @@ TEST(IrcNick, NicklistSet)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_nick_nicklist_set_prefix_color_all
  */
 
@@ -320,7 +320,7 @@ TEST(IrcNick, NicklistSetPrefixColorAll)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_nick_nicklist_set_color_all
  */
 
@@ -330,7 +330,7 @@ TEST(IrcNick, NicklistSetColorAll)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_nick_new
  */
 
@@ -340,7 +340,7 @@ TEST(IrcNick, New)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_nick_change
  */
 
@@ -350,7 +350,7 @@ TEST(IrcNick, Change)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_nick_set_mode
  */
 
@@ -360,7 +360,7 @@ TEST(IrcNick, SetMode)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_nick_realloc_prefixes
  */
 
@@ -370,7 +370,7 @@ TEST(IrcNick, ReallocPrefixes)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_nick_free
  */
 
@@ -380,7 +380,7 @@ TEST(IrcNick, Free)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_nick_free_all
  */
 
@@ -390,7 +390,7 @@ TEST(IrcNick, FreeAll)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_nick_search
  */
 
@@ -400,7 +400,7 @@ TEST(IrcNick, Search)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_nick_count
  */
 
@@ -410,7 +410,7 @@ TEST(IrcNick, Count)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_nick_set_away
  */
 
@@ -420,7 +420,7 @@ TEST(IrcNick, SetAway)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_nick_mode_for_display
  */
 
@@ -430,7 +430,7 @@ TEST(IrcNick, ModeForDisplay)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_nick_as_prefix
  */
 
@@ -440,7 +440,7 @@ TEST(IrcNick, AsPrefix)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_nick_color_for_msg
  */
 
@@ -450,7 +450,7 @@ TEST(IrcNick, ColorForMsg)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_nick_color_for_pv
  */
 
@@ -460,7 +460,7 @@ TEST(IrcNick, ColorForPv)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_nick_default_ban_mask
  */
 
@@ -470,7 +470,7 @@ TEST(IrcNick, DefaultBanMask)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_nick_hdata_nick_cb
  */
 
@@ -480,7 +480,7 @@ TEST(IrcNick, HdataNickCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_nick_add_to_infolist
  */
 
@@ -490,7 +490,7 @@ TEST(IrcNick, AddToInfolist)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_nick_print_log
  */
 

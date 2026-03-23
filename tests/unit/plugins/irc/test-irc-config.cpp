@@ -33,7 +33,7 @@ TEST_GROUP(IrcConfig)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_config_notice_nick_notify
  */
 
@@ -53,7 +53,7 @@ TEST(IrcConfig, NoticeNickNotify)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_config_check_autojoin
  */
 

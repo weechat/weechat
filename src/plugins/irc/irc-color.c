@@ -88,9 +88,9 @@ char *irc_color_string_decoded[32];
 
 
 /*
- * Converts a RGB color to terminal color.
+ * Convert a RGB color to terminal color.
  *
- * Returns a terminal color (between 0 and 255), -1 if error.
+ * Return a terminal color (between 0 and 255), -1 if error.
  */
 
 int
@@ -125,9 +125,9 @@ irc_color_convert_rgb2term (long rgb)
 }
 
 /*
- * Converts a RGB color to IRC color.
+ * Convert a RGB color to IRC color.
  *
- * Returns a IRC color number (between 0 and 15), -1 if error.
+ * Return a IRC color number (between 0 and 15), -1 if error.
  */
 
 int
@@ -166,9 +166,9 @@ irc_color_convert_rgb2irc (long rgb)
 }
 
 /*
- * Converts a terminal color to IRC color.
+ * Convert a terminal color to IRC color.
  *
- * Returns a IRC color number (between 0 and 15), -1 if error.
+ * Return a IRC color number (between 0 and 15), -1 if error.
  */
 
 int
@@ -200,7 +200,7 @@ irc_color_convert_term2irc (int color)
 }
 
 /*
- * Replaces IRC colors by WeeChat colors.
+ * Replace IRC colors by WeeChat colors.
  *
  * If keep_colors == 0: removes any color/style in message otherwise keeps
  * colors.
@@ -501,7 +501,7 @@ irc_color_decode (const char *string, int keep_colors)
 }
 
 /*
- * Replaces IRC colors by WeeChat colors and returns a pointer to an allocated
+ * Replace IRC colors by WeeChat colors and return a pointer to an allocated
  * string that doesn't need to be freed by the caller.
  *
  * If keep_colors == 0: removes any color/style in message otherwise keeps
@@ -521,7 +521,7 @@ irc_color_decode_const (const char *string, int keep_colors)
 }
 
 /*
- * Replaces color codes in command line by IRC color codes.
+ * Replace color codes in command line by IRC color codes.
  *
  * If keep_colors == 0, remove any color/style in message, otherwise keeps
  * colors.
@@ -697,7 +697,7 @@ irc_color_encode (const char *string, int keep_colors)
 }
 
 /*
- * Replaces ANSI colors by IRC colors (or removes them).
+ * Replace ANSI colors by IRC colors (or removes them).
  *
  * This callback is called by irc_color_decode_ansi, it must not be called
  * directly.
@@ -982,7 +982,7 @@ end:
 }
 
 /*
- * Replaces ANSI colors by IRC colors.
+ * Replace ANSI colors by IRC colors.
  *
  * If keep_colors == 0: removes any color/style in message otherwise keeps
  * colors.
@@ -1062,7 +1062,7 @@ irc_color_modifier_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns color name for tags (replace "," by ":").
+ * Return color name for tags (replace "," by ":").
  *
  * Note: result must be freed after use.
  */
@@ -1077,9 +1077,9 @@ irc_color_for_tags (const char *color)
 }
 
 /*
- * Adds mapping between IRC color codes and WeeChat color names in an infolist.
+ * Add mapping between IRC color codes and WeeChat color names in an infolist.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -1111,7 +1111,7 @@ irc_color_weechat_add_to_infolist (struct t_infolist *infolist)
 }
 
 /*
- * Initializes IRC colors.
+ * Initialize IRC colors.
  */
 
 void
@@ -1122,7 +1122,7 @@ irc_color_init (void)
 }
 
 /*
- * Ends IRC colors.
+ * End IRC colors.
  */
 
 void

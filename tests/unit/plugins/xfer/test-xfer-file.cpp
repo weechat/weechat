@@ -33,7 +33,7 @@ TEST_GROUP(XferFile)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   xfer_file_search_crc32
  */
 
@@ -55,7 +55,7 @@ TEST(XferFile, SearchCrc32)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   xfer_file_resume
  */
 
@@ -65,7 +65,7 @@ TEST(XferFile, Resume)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   xfer_file_check_suffix
  */
 
@@ -75,7 +75,7 @@ TEST(XferFile, CheckSuffix)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   xfer_file_find_suffix
  */
 
@@ -85,7 +85,7 @@ TEST(XferFile, FindSuffix)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   xfer_file_find_filename
  */
 
@@ -95,7 +95,7 @@ TEST(XferFile, FindFilename)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   xfer_file_calculate_speed
  */
 

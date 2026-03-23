@@ -41,7 +41,7 @@ TEST_GROUP(GuiBarItem)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_item_valid
  */
 
@@ -56,7 +56,7 @@ TEST(GuiBarItem, Valid)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_item_search_default
  */
 
@@ -71,7 +71,7 @@ TEST(GuiBarItem, SearchDefault)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_item_search
  */
 
@@ -93,7 +93,7 @@ TEST(GuiBarItem, Search)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_item_search_with_plugin
  */
 
@@ -103,7 +103,7 @@ TEST(GuiBarItem, SearchWithPlugin)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_item_used_in_bar
  */
 
@@ -124,7 +124,7 @@ TEST(GuiBarItem, UsedInBar)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_item_used_in_at_least_one_bar
  */
 
@@ -134,7 +134,7 @@ TEST(GuiBarItem, UsedInAtLeastOneBar)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_item_get_vars
  */
 
@@ -144,7 +144,7 @@ TEST(GuiBarItem, GetVars)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_item_get_value
  */
 
@@ -154,7 +154,7 @@ TEST(GuiBarItem, GetValue)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_item_count_lines
  */
 
@@ -164,7 +164,7 @@ TEST(GuiBarItem, CountLines)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_item_new
  */
 
@@ -174,7 +174,7 @@ TEST(GuiBarItem, New)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_item_update
  */
 
@@ -184,7 +184,7 @@ TEST(GuiBarItem, Update)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_item_free
  */
 
@@ -195,7 +195,7 @@ TEST(GuiBarItem, Free)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_item_free_all
  */
 
@@ -205,7 +205,7 @@ TEST(GuiBarItem, FreeAll)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_item_free_all_plugin
  */
 
@@ -215,7 +215,7 @@ TEST(GuiBarItem, FreeAllPlugin)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_item_input_paste_cb
  */
 
@@ -225,7 +225,7 @@ TEST(GuiBarItem, InputPasteCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_item_input_prompt_cb
  */
 
@@ -235,7 +235,7 @@ TEST(GuiBarItem, InputPromptCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_item_input_search_cb
  */
 
@@ -245,7 +245,7 @@ TEST(GuiBarItem, InputSearchCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_item_input_text_cb
  */
 
@@ -255,7 +255,7 @@ TEST(GuiBarItem, InputTextCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_item_time_cb
  */
 
@@ -265,7 +265,7 @@ TEST(GuiBarItem, TimeCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_item_buffer_count_cb
  */
 
@@ -275,7 +275,7 @@ TEST(GuiBarItem, BufferCountCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_item_buffer_last_number_cb
  */
 
@@ -285,7 +285,7 @@ TEST(GuiBarItem, BufferLastNumberCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_item_buffer_plugin_cb
  */
 
@@ -295,7 +295,7 @@ TEST(GuiBarItem, BufferPluginCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_item_buffer_number_cb
  */
 
@@ -305,7 +305,7 @@ TEST(GuiBarItem, BufferNumberCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_item_buffer_name_cb
  */
 
@@ -315,7 +315,7 @@ TEST(GuiBarItem, BufferNameCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_item_buffer_short_name_cb
  */
 
@@ -325,7 +325,7 @@ TEST(GuiBarItem, BufferShortNameCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_item_buffer_modes_cb
  */
 
@@ -335,7 +335,7 @@ TEST(GuiBarItem, BufferModesCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_item_buffer_filter_cb
  */
 
@@ -345,7 +345,7 @@ TEST(GuiBarItem, BufferFilterCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_item_buffer_nicklist_count_cb
  */
 
@@ -355,7 +355,7 @@ TEST(GuiBarItem, BufferNicklistCountCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_item_buffer_nicklist_count_groups_cb
  */
 
@@ -365,7 +365,7 @@ TEST(GuiBarItem, BufferNicklistCountGroupsCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_item_buffer_nicklist_count_all_cb
  */
 
@@ -375,7 +375,7 @@ TEST(GuiBarItem, BufferNicklistCountAllCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_item_buffer_zoom_cb
  */
 
@@ -385,7 +385,7 @@ TEST(GuiBarItem, BufferZoomCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_item_scroll_cb
  */
 
@@ -395,7 +395,7 @@ TEST(GuiBarItem, ScrollCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_item_hotlist_cb
  */
 
@@ -405,7 +405,7 @@ TEST(GuiBarItem, HotlistCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_item_completion_cb
  */
 
@@ -415,7 +415,7 @@ TEST(GuiBarItem, CompletionCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_item_buffer_title_cb
  */
 
@@ -425,7 +425,7 @@ TEST(GuiBarItem, BufferTitleCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_item_buffer_nicklist_cb
  */
 
@@ -435,7 +435,7 @@ TEST(GuiBarItem, BufferNicklistCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_item_window_number_cb
  */
 
@@ -445,7 +445,7 @@ TEST(GuiBarItem, WindowNumberCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_item_mouse_status_cb
  */
 
@@ -455,7 +455,7 @@ TEST(GuiBarItem, MouseStatusCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_item_away_cb
  */
 
@@ -465,7 +465,7 @@ TEST(GuiBarItem, AwayCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_item_spacer_cb
  */
 
@@ -475,7 +475,7 @@ TEST(GuiBarItem, SpacerCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_item_focus_buffer_nicklist_cb
  */
 
@@ -485,7 +485,7 @@ TEST(GuiBarItem, FocusBufferNicklistCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_item_timer_cb
  */
 
@@ -495,7 +495,7 @@ TEST(GuiBarItem, TimerCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_item_signal_cb
  */
 
@@ -505,7 +505,7 @@ TEST(GuiBarItem, SignalCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_item_hook_signal
  */
 
@@ -515,7 +515,7 @@ TEST(GuiBarItem, HookSignal)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_item_init
  */
 
@@ -525,7 +525,7 @@ TEST(GuiBarItem, Init)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_item_end
  */
 
@@ -535,7 +535,7 @@ TEST(GuiBarItem, End)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_item_hdata_bar_item_cb
  */
 
@@ -545,7 +545,7 @@ TEST(GuiBarItem, HdataBarItemCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_item_add_to_infolist
  */
 
@@ -555,7 +555,7 @@ TEST(GuiBarItem, AddToInfolist)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_item_print_log
  */
 

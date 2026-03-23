@@ -49,7 +49,7 @@
 
 
 /*
- * Displays a backtrace line on standard error output and in WeeChat log.
+ * Display a backtrace line on standard error output and in WeeChat log.
  */
 
 void
@@ -65,7 +65,7 @@ weechat_backtrace_printf (const char *message, ...)
 }
 
 /*
- * Displays function name and line with a backtrace address.
+ * Display function name and line with a backtrace address.
  */
 
 void
@@ -147,7 +147,7 @@ weechat_backtrace_addr2line (int number, void *address, const char *symbol)
 }
 
 /*
- * Displays backtrace (function called when a SIGSEGV is received).
+ * Display backtrace (function called when a SIGSEGV is received).
  */
 
 void

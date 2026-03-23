@@ -39,7 +39,7 @@
 
 
 /*
- * Sets "eat_newline_glitch" variable.
+ * Set "eat_newline_glitch" variable.
  *
  * With value 0, this is used to not auto insert newline char at end of lines
  * displayed, so that long words like URLs are not cut when they are selected

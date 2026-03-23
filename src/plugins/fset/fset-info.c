@@ -31,7 +31,7 @@
 
 
 /*
- * Returns fset infolist "fset_option".
+ * Return fset infolist "fset_option".
  */
 
 struct t_infolist *
@@ -92,7 +92,7 @@ fset_info_infolist_fset_option_cb (const void *pointer, void *data,
 }
 
 /*
- * Hooks infolist and hdata.
+ * Hook infolist and hdata.
  */
 
 void

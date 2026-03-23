@@ -47,7 +47,7 @@ char *irc_sasl_mechanism_string[IRC_NUM_SASL_MECHANISMS] =
 
 
 /*
- * Builds answer for SASL authentication, using mechanism "PLAIN".
+ * Build answer for SASL authentication, using mechanism "PLAIN".
  *
  * Note: result must be freed after use.
  */
@@ -92,7 +92,7 @@ irc_sasl_mechanism_plain (const char *sasl_username, const char *sasl_password)
 }
 
 /*
- * Builds answer for SASL authentication, using mechanism
+ * Build answer for SASL authentication, using mechanism
  * "SCRAM-SHA-1", "SCRAM-SHA-256" or "SCRAM-SHA-512".
  *
  * If an error occurs or is received from the server, and if sasl_error is
@@ -448,7 +448,7 @@ end:
 }
 
 /*
- * Returns the content of file with SASL key.
+ * Return the content of file with SASL key.
  *
  * If the file is not found and sasl_error is not NULL, *sasl_error is set to
  * the error and must be freed after use.
@@ -494,7 +494,7 @@ irc_sasl_get_key_content (const char *sasl_key, char **sasl_error)
 }
 
 /*
- * Builds answer for SASL authentication, using mechanism
+ * Build answer for SASL authentication, using mechanism
  * "ECDSA-NIST256P-CHALLENGE".
  *
  * If an error occurs and if sasl_error is not NULL, *sasl_error is set to the
@@ -686,7 +686,7 @@ irc_sasl_mechanism_ecdsa_nist256p_challenge (struct t_irc_server *server,
 }
 
 /*
- * Builds answer for SASL authentication, using mechanism "EXTERNAL".
+ * Build answer for SASL authentication, using mechanism "EXTERNAL".
  *
  * Note: result must be freed after use.
  */

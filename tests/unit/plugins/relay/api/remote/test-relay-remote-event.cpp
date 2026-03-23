@@ -38,7 +38,7 @@ TEST_GROUP(RelayRemoteEvent)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_remote_event_search_buffer
  */
 
@@ -48,7 +48,7 @@ TEST(RelayRemoteEvent, SearchBuffer)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_remote_event_get_buffer_id
  */
 
@@ -58,7 +58,7 @@ TEST(RelayRemoteEvent, GetBufferId)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_remote_build_string_tags
  */
 
@@ -68,7 +68,7 @@ TEST(RelayRemoteEvent, BuildStringTags)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_remote_event_line_add
  */
 
@@ -78,7 +78,7 @@ TEST(RelayRemoteEvent, LineAdd)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_remote_event_search_line_by_id
  */
 
@@ -88,7 +88,7 @@ TEST(RelayRemoteEvent, SearchLineById)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_remote_event_line_update
  */
 
@@ -98,7 +98,7 @@ TEST(RelayRemoteEvent, LineUpdate)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_remote_event_cb_line
  */
 
@@ -108,7 +108,7 @@ TEST(RelayRemoteEvent, CbLine)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_remote_event_handle_nick
  */
 
@@ -118,7 +118,7 @@ TEST(RelayRemoteEvent, HandleNick)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_remote_event_handle_nick_group
  */
 
@@ -128,7 +128,7 @@ TEST(RelayRemoteEvent, HandleNickGroup)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_remote_event_cb_nick_group
  */
 
@@ -138,7 +138,7 @@ TEST(RelayRemoteEvent, CbNickGroup)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_remote_event_cb_nick
  */
 
@@ -148,7 +148,7 @@ TEST(RelayRemoteEvent, CbNick)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_remote_event_apply_props
  */
 
@@ -158,7 +158,7 @@ TEST(RelayRemoteEvent, ApplyProps)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_remote_event_buffer_input_cb
  */
 
@@ -168,7 +168,7 @@ TEST(RelayRemoteEvent, BufferInputCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_remote_event_check_local_var
  */
 
@@ -178,7 +178,7 @@ TEST(RelayRemoteEvent, CheckLocalVar)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_remote_event_remove_localvar_cb
  */
 
@@ -188,7 +188,7 @@ TEST(RelayRemoteEvent, RemoveLocalVarCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_remote_event_initial_sync_buffers
  */
 
@@ -198,7 +198,7 @@ TEST(RelayRemoteEvent, InitialSyncBuffers)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_remote_event_cb_buffer
  */
 
@@ -208,7 +208,7 @@ TEST(RelayRemoteEvent, CbBuffer)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_remote_event_cb_buffer_cleared
  */
 
@@ -218,7 +218,7 @@ TEST(RelayRemoteEvent, CbBufferCleared)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_remote_event_cb_buffer_closed
  */
 
@@ -228,7 +228,7 @@ TEST(RelayRemoteEvent, CbBufferClosed)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_remote_event_cb_vinput
  */
 
@@ -238,7 +238,7 @@ TEST(RelayRemoteEvent, CbInput)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_remote_event_clear_buffers
  */
 
@@ -248,7 +248,7 @@ TEST(RelayRemoteEvent, ClearBuffers)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_remote_event_sync_with_remote
  */
 
@@ -258,7 +258,7 @@ TEST(RelayRemoteEvent, SyncWithRemote)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_remote_event_cb_version
  */
 
@@ -268,7 +268,7 @@ TEST(RelayRemoteEvent, CbVersion)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_remote_event_cb_upgrade
  */
 
@@ -278,7 +278,7 @@ TEST(RelayRemoteEvent, CbUpgrade)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_remote_event_cb_quit
  */
 
@@ -288,7 +288,7 @@ TEST(RelayRemoteEvent, CbQuit)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_remote_event_recv
  */
 

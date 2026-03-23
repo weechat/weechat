@@ -38,7 +38,7 @@
 
 
 /*
- * Returns description of hook.
+ * Return description of hook.
  *
  * Note: result must be freed after use.
  */
@@ -50,9 +50,9 @@ hook_config_get_description (struct t_hook *hook)
 }
 
 /*
- * Hooks a configuration option.
+ * Hook a configuration option.
  *
- * Returns pointer to new hook, NULL if error.
+ * Return pointer to new hook, NULL if error.
  */
 
 struct t_hook *
@@ -95,7 +95,7 @@ hook_config (struct t_weechat_plugin *plugin, const char *option,
 }
 
 /*
- * Executes a config hook.
+ * Execute a config hook.
  */
 
 void
@@ -132,7 +132,7 @@ hook_config_exec (const char *option, const char *value)
 }
 
 /*
- * Frees data in a config hook.
+ * Free data in a config hook.
  */
 
 void
@@ -152,7 +152,7 @@ hook_config_free_data (struct t_hook *hook)
 }
 
 /*
- * Returns hdata for config hook.
+ * Return hdata for config hook.
  */
 
 struct t_hdata *
@@ -175,9 +175,9 @@ hook_config_hdata_hook_config_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds config hook data in the infolist item.
+ * Add config hook data in the infolist item.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -198,7 +198,7 @@ hook_config_add_to_infolist (struct t_infolist_item *item,
 }
 
 /*
- * Prints config hook data in WeeChat log file (usually for crash dump).
+ * Print config hook data in WeeChat log file (usually for crash dump).
  */
 
 void

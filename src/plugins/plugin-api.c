@@ -60,7 +60,7 @@
 
 
 /*
- * Sets plugin charset.
+ * Set plugin charset.
  */
 
 void
@@ -74,7 +74,7 @@ plugin_api_charset_set (struct t_weechat_plugin *plugin, const char *charset)
 }
 
 /*
- * Translates a string using gettext.
+ * Translate a string using gettext.
  */
 
 const char *
@@ -84,7 +84,7 @@ plugin_api_gettext (const char *string)
 }
 
 /*
- * Translates a string using gettext (with plural form).
+ * Translate a string using gettext (with plural form).
  */
 
 const char *
@@ -98,9 +98,9 @@ plugin_api_ngettext (const char *single, const char *plural, int count)
 }
 
 /*
- * Computes hash of data using the given algorithm.
+ * Compute hash of data using the given algorithm.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -128,9 +128,9 @@ plugin_api_crypto_hash (const void *data, int data_size, const char *hash_algo,
 }
 
 /*
- * Computes hash of a file using the given algorithm.
+ * Compute hash of a file using the given algorithm.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -158,10 +158,10 @@ plugin_api_crypto_hash_file (const char *filename, const char *hash_algo,
 }
 
 /*
- * Computes PKCS#5 Passphrase Based Key Derivation Function number 2 (PBKDF2)
+ * Compute PKCS#5 Passphrase Based Key Derivation Function number 2 (PBKDF2)
  * hash of data.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -193,9 +193,9 @@ plugin_api_crypto_hash_pbkdf2 (const void *data, int data_size,
 }
 
 /*
- * Computes HMAC of key + message using the given algorithm.
+ * Compute HMAC of key + message using the given algorithm.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -226,7 +226,7 @@ plugin_api_crypto_hmac (const void *key, int key_size,
 }
 
 /*
- * Frees an option.
+ * Free an option.
  */
 
 void
@@ -236,7 +236,7 @@ plugin_api_config_file_option_free (struct t_config_option *option)
 }
 
 /*
- * Gets pointer on an option.
+ * Get pointer on an option.
  */
 
 struct t_config_option *
@@ -250,7 +250,7 @@ plugin_api_config_get (const char *option_name)
 }
 
 /*
- * Gets value of a plugin option.
+ * Get value of a plugin option.
  */
 
 const char *
@@ -271,9 +271,9 @@ plugin_api_config_get_plugin (struct t_weechat_plugin *plugin,
 }
 
 /*
- * Checks if a plugin option is set.
+ * Check if a plugin option is set.
  *
- * Returns:
+ * Return:
  *   1: plugin option is set
  *   0: plugin option does not exist
  */
@@ -295,7 +295,7 @@ plugin_api_config_is_set_plugin (struct t_weechat_plugin *plugin,
 }
 
 /*
- * Sets value of a plugin option.
+ * Set value of a plugin option.
  */
 
 int
@@ -309,7 +309,7 @@ plugin_api_config_set_plugin (struct t_weechat_plugin *plugin,
 }
 
 /*
- * Sets description of a plugin option.
+ * Set description of a plugin option.
  */
 
 void
@@ -322,7 +322,7 @@ plugin_api_config_set_desc_plugin (struct t_weechat_plugin *plugin,
 }
 
 /*
- * Unsets a plugin option.
+ * Unset a plugin option.
  */
 
 int
@@ -342,7 +342,7 @@ plugin_api_config_unset_plugin (struct t_weechat_plugin *plugin,
 }
 
 /*
- * Returns a prefix for display with printf.
+ * Return a prefix for display with printf.
  */
 
 const char *
@@ -366,7 +366,7 @@ plugin_api_prefix (const char *prefix)
 }
 
 /*
- * Returns a WeeChat color for display with printf.
+ * Return a WeeChat color for display with printf.
  */
 
 const char *
@@ -386,7 +386,7 @@ plugin_api_color (const char *color_name)
 }
 
 /*
- * Executes a command on a buffer (simulates user entry) with options.
+ * Execute a command on a buffer (simulates user entry) with options.
  */
 
 int
@@ -439,7 +439,7 @@ plugin_api_command_options (struct t_weechat_plugin *plugin,
 }
 
 /*
- * Executes a command on a buffer (simulates user entry).
+ * Execute a command on a buffer (simulates user entry).
  */
 
 int
@@ -450,7 +450,7 @@ plugin_api_command (struct t_weechat_plugin *plugin,
 }
 
 /*
- * Modifier callback: decodes WeeChat colors: converts WeeChat color codes to
+ * Modifier callback: decode WeeChat colors: convert WeeChat color codes to
  * WeeChat a replacement string.
  */
 
@@ -469,7 +469,7 @@ plugin_api_modifier_color_decode_cb (const void *pointer, void *data,
 }
 
 /*
- * Modifier callback: decodes ANSI colors: converts ANSI color codes to WeeChat
+ * Modifier callback: decode ANSI colors: convert ANSI color codes to WeeChat
  * colors (or removes them).
  */
 
@@ -491,7 +491,7 @@ plugin_api_modifier_color_decode_ansi_cb (const void *pointer, void *data,
 }
 
 /*
- * Modifier callback: encodes ANSI colors: converts WeeChat colors to ANSI
+ * Modifier callback: encode ANSI colors: convert WeeChat colors to ANSI
  * color codes.
  */
 
@@ -511,7 +511,7 @@ plugin_api_modifier_color_encode_ansi_cb (const void *pointer, void *data,
 }
 
 /*
- * Modifier callback: evaluates a home path.
+ * Modifier callback: evaluate a home path.
  */
 
 char *
@@ -552,9 +552,9 @@ plugin_api_modifier_eval_path_home_cb (const void *pointer, void *data,
 }
 
 /*
- * Moves item pointer to next item in an infolist.
+ * Move item pointer to next item in an infolist.
  *
- * Returns:
+ * Return:
  *   1: pointer is still OK
  *   0: end of infolist was reached
  */
@@ -569,9 +569,9 @@ plugin_api_infolist_next (struct t_infolist *infolist)
 }
 
 /*
- * Moves pointer to previous item in an infolist.
+ * Move pointer to previous item in an infolist.
  *
- * Returns:
+ * Return:
  *   1: pointer is still OK
  *   0: beginning of infolist was reached
  */
@@ -586,7 +586,7 @@ plugin_api_infolist_prev (struct t_infolist *infolist)
 }
 
 /*
- * Resets item cursor in infolist.
+ * Reset item cursor in infolist.
  */
 
 void
@@ -599,7 +599,7 @@ plugin_api_infolist_reset_item_cursor (struct t_infolist *infolist)
 }
 
 /*
- * Gets list of fields for current infolist item.
+ * Get list of fields for current infolist item.
  */
 
 const char *
@@ -612,7 +612,7 @@ plugin_api_infolist_fields (struct t_infolist *infolist)
 }
 
 /*
- * Gets integer value for a variable in current infolist item.
+ * Get integer value for a variable in current infolist item.
  */
 
 int
@@ -625,7 +625,7 @@ plugin_api_infolist_integer (struct t_infolist *infolist, const char *var)
 }
 
 /*
- * Gets string value for a variable in current infolist item.
+ * Get string value for a variable in current infolist item.
  */
 
 const char *
@@ -638,7 +638,7 @@ plugin_api_infolist_string (struct t_infolist *infolist, const char *var)
 }
 
 /*
- * Gets pointer value for a variable in current infolist item.
+ * Get pointer value for a variable in current infolist item.
  */
 
 void *
@@ -651,7 +651,7 @@ plugin_api_infolist_pointer (struct t_infolist *infolist, const char *var)
 }
 
 /*
- * Gets buffer value for a variable in current infolist item.
+ * Get buffer value for a variable in current infolist item.
  *
  * Argument "size" is set with the size of buffer.
  */
@@ -667,7 +667,7 @@ plugin_api_infolist_buffer (struct t_infolist *infolist, const char *var,
 }
 
 /*
- * Gets time value for a variable in current infolist item.
+ * Get time value for a variable in current infolist item.
  */
 
 time_t
@@ -680,7 +680,7 @@ plugin_api_infolist_time (struct t_infolist *infolist, const char *var)
 }
 
 /*
- * Frees an infolist.
+ * Free an infolist.
  */
 
 void
@@ -691,7 +691,7 @@ plugin_api_infolist_free (struct t_infolist *infolist)
 }
 
 /*
- * Initializes plugin API.
+ * Initialize plugin API.
  */
 
 void

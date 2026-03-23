@@ -50,12 +50,12 @@
 
 
 /*
- * Parses an integer.
+ * Parse an integer.
  *
  * If result is not NULL, *result is set with the parsed integer in case
  * there is no error.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -88,12 +88,12 @@ util_parse_int (const char *string, int base, int *result)
 }
 
 /*
- * Parses a long integer.
+ * Parse a long integer.
  *
  * If result is not NULL, *result is set with the parsed long integer in case
  * there is no error.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -125,12 +125,12 @@ util_parse_long (const char *string, int base, long *result)
 }
 
 /*
- * Parses a long long integer.
+ * Parse a long long integer.
  *
  * If result is not NULL, *result is set with the parsed long integer in case
  * there is no error.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -162,9 +162,9 @@ util_parse_longlong (const char *string, int base, long long *result)
 }
 
 /*
- * Compares two timeval structures.
+ * Compare two timeval structures.
  *
- * Returns:
+ * Return:
  *   -1: tv1 < tv2
  *    0: tv1 == tv2
  *    1: tv1 > tv2
@@ -188,9 +188,9 @@ util_timeval_cmp (struct timeval *tv1, struct timeval *tv2)
 }
 
 /*
- * Calculates difference between two timeval structures.
+ * Calculate difference between two timeval structures.
  *
- * Returns difference in microseconds.
+ * Return difference in microseconds.
  */
 
 long long
@@ -208,7 +208,7 @@ util_timeval_diff (struct timeval *tv1, struct timeval *tv2)
 }
 
 /*
- * Adds interval (in microseconds) to a timeval structure.
+ * Add interval (in microseconds) to a timeval structure.
  */
 
 void
@@ -231,7 +231,7 @@ util_timeval_add (struct timeval *tv, long long interval)
 }
 
 /*
- * Converts microseconds to a string, using format: "H:MM:SS.mmmmmm"
+ * Convert microseconds to a string, using format: "H:MM:SS.mmmmmm"
  * where: H=hours, MM=minutes, SS=seconds, mmmmmm=microseconds
  *
  * Note: result must be freed after use.
@@ -256,7 +256,7 @@ util_get_microseconds_string (unsigned long long microseconds)
 }
 
 /*
- * Converts date to a string, using format of option "weechat.look.time_format"
+ * Convert date to a string, using format of option "weechat.look.time_format"
  * (can be localized).
  */
 
@@ -279,7 +279,7 @@ util_get_time_string (const time_t *date)
 }
 
 /*
- * Formats date and time like strftime (but with timeval structure as input)
+ * Format date and time like strftime (but with timeval structure as input)
  * and adds extra specifiers:
  *   - "%@": return the date expressed in Coordinated Universal Time (UTC)
  *           instead of date relative to the user's specified timezone
@@ -383,7 +383,7 @@ util_strftimeval (char *string, int max, const char *format, struct timeval *tv)
 }
 
 /*
- * Parses a date/time string, which can be one of these formats:
+ * Parse a date/time string, which can be one of these formats:
  *
  *   Format                               | Example
  *   -------------------------------------+----------------------------------
@@ -399,7 +399,7 @@ util_strftimeval (char *string, int max, const char *format, struct timeval *tv)
  *   UTC time                             | 19:04:55.123456Z
  *   Timestamp date                       | 1756580695.123456
  *
- * Notes :
+ * Notes:
  *
  * - For ISO 8601, characters `T' and `Z` can be used in lower case: `t` and `z`.
  * - The timezone offset format is `[+/-]hh:mm`, `[+/-]hhmm` or `[+/-]hh`.
@@ -408,7 +408,7 @@ util_strftimeval (char *string, int max, const char *format, struct timeval *tv)
  *   A dot (`.`) or comma (`,`) can be used to separate seconds from the other
  *   digits.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -676,7 +676,7 @@ util_parse_time (const char *datetime, struct timeval *tv)
 }
 
 /*
- * Returns difference between two times.
+ * Return difference between two times.
  *
  * The following variables are set, if pointer is not NULL:
  *   - number of total seconds between the two times (basic subtraction)
@@ -705,7 +705,7 @@ util_get_time_diff (time_t time1, time_t time2,
 }
 
 /*
- * Parses a string with a delay and optional unit, returns the delay in
+ * Parse a string with a delay and optional unit, return the delay in
  * microseconds.
  *
  * The delay is a number followed by a unit which can be:
@@ -722,7 +722,7 @@ util_get_time_diff (time_t time1, time_t time2,
  *   - 60000000: minutes
  *   - 3600000000: hours
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -794,7 +794,7 @@ util_parse_delay (const char *string_delay, unsigned long long default_factor,
 }
 
 /*
- * Gets version number (integer) with a version as string.
+ * Get version number (integer) with a version as string.
  *
  * Non-digit chars like "-dev" are ignored.
  *

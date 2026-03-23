@@ -49,8 +49,7 @@
 
 
 /*
- * Converts integer address (as string) to IPv4 string using notation
- * "a.b.c.d".
+ * Convert integer address (as string) to IPv4 string using notation "a.b.c.d".
  *
  * For example: "3232235778" -> "192.168.1.2"
  *
@@ -82,9 +81,9 @@ xfer_network_convert_integer_to_ipv4 (const char *str_address)
 }
 
 /*
- * Resolves address.
+ * Resolve address.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -154,9 +153,9 @@ xfer_network_resolve_addr (const char *str_address, const char *str_port,
 }
 
 /*
- * Creates pipe for communication with child process.
+ * Create pipe for communication with child process.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -184,7 +183,7 @@ xfer_network_create_pipe (struct t_xfer *xfer)
 }
 
 /*
- * Writes data into pipe.
+ * Write data into pipe.
  */
 
 void
@@ -200,7 +199,7 @@ xfer_network_write_pipe (struct t_xfer *xfer, int status, int error)
 }
 
 /*
- * Reads data from child via pipe.
+ * Read data from child via pipe.
  */
 
 int
@@ -321,7 +320,7 @@ xfer_network_child_read_cb (const void *pointer, void *data, int fd)
 }
 
 /*
- * Forks process for sending file.
+ * Fork process for sending file.
  */
 
 void
@@ -400,7 +399,7 @@ xfer_network_send_file_fork (struct t_xfer *xfer)
 }
 
 /*
- * Forks process for receiving file.
+ * Fork process for receiving file.
  */
 
 void
@@ -477,7 +476,7 @@ xfer_network_recv_file_fork (struct t_xfer *xfer)
 }
 
 /*
- * Kills child process and closes pipe.
+ * Kill child process and closes pipe.
  */
 
 void
@@ -815,9 +814,9 @@ xfer_network_connect_chat_recv_cb (const void *pointer, void *data,
 }
 
 /*
- * Connects to another host.
+ * Connect to another host.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -890,7 +889,7 @@ xfer_network_connect (struct t_xfer *xfer)
 }
 
 /*
- * Connects to sender and initializes file or chat.
+ * Connect to sender and initializes file or chat.
  */
 
 void
@@ -911,7 +910,7 @@ xfer_network_connect_init (struct t_xfer *xfer)
 }
 
 /*
- * Accepts a xfer file or chat request.
+ * Accept a xfer file or chat request.
  */
 
 void

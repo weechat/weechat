@@ -35,7 +35,7 @@ TEST_GROUP(HookInfo)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_info_get_description
  */
 
@@ -45,7 +45,7 @@ TEST(HookInfo, GetDescription)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_info
  */
 
@@ -55,7 +55,7 @@ TEST(HookInfo, Info)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_info_get
  */
 
@@ -65,7 +65,7 @@ TEST(HookInfo, Get)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_info_free_data
  */
 
@@ -75,7 +75,7 @@ TEST(HookInfo, FreeData)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_info_add_to_infolist
  */
 
@@ -85,7 +85,7 @@ TEST(HookInfo, AddToInfolist)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_info_print_log
  */
 

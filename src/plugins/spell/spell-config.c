@@ -220,7 +220,7 @@ spell_config_dict_delete_option (const void *pointer, void *data,
 }
 
 /*
- * Creates an option in section "dict".
+ * Create an option in section "dict".
  */
 
 int
@@ -411,7 +411,7 @@ spell_config_option_create_option (const void *pointer, void *data,
 }
 
 /*
- * Gets a list of dictionaries for a buffer.
+ * Get a list of dictionaries for a buffer.
  */
 
 struct t_config_option *
@@ -423,7 +423,7 @@ spell_config_get_dict (const char *name)
 }
 
 /*
- * Sets a list of dictionaries for a buffer.
+ * Set a list of dictionaries for a buffer.
  */
 
 int
@@ -437,9 +437,9 @@ spell_config_set_dict (const char *name, const char *value)
 }
 
 /*
- * Initializes spell configuration file.
+ * Initialize spell configuration file.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -620,7 +620,7 @@ spell_config_init (void)
 }
 
 /*
- * Reads spell configuration file.
+ * Read spell configuration file.
  */
 
 int
@@ -639,7 +639,7 @@ spell_config_read (void)
 }
 
 /*
- * Writes spell configuration file.
+ * Write spell configuration file.
  */
 
 int
@@ -649,7 +649,7 @@ spell_config_write (void)
 }
 
 /*
- * Frees spell configuration.
+ * Free spell configuration.
  */
 
 void

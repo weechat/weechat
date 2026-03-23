@@ -72,7 +72,7 @@ int gui_term_lines = 0;                /* number of lines in terminal       */
 
 
 /*
- * Gets a password from user (called on startup, when GUI is not initialized).
+ * Get a password from user (called on startup, when GUI is not initialized).
  *
  * The result is stored in "password" with max "size" bytes (including the
  * final '\0').
@@ -161,7 +161,7 @@ gui_main_signal_sigint (int signo)
 }
 
 /*
- * Initializes GUI.
+ * Initialize GUI.
  */
 
 void
@@ -262,7 +262,7 @@ gui_main_signal_sigwinch (int signo)
 }
 
 /*
- * Displays infos about ncurses lib.
+ * Display infos about ncurses lib.
  */
 
 void
@@ -277,7 +277,7 @@ gui_main_debug_libs (void)
 }
 
 /*
- * Refreshes for windows, buffers, bars.
+ * Refresh for windows, buffers, bars.
  */
 
 void
@@ -464,7 +464,7 @@ gui_main_loop (void)
 }
 
 /*
- * Ends GUI.
+ * End GUI.
  *
  * Argument "clean_exit" is 0 when WeeChat is crashing (we don't clean objects
  * because WeeChat can crash again during this cleanup...).

@@ -51,7 +51,7 @@ struct t_config_option *typing_config_look_item_text = NULL;
 
 
 /*
- * Reloads typing configuration file.
+ * Reload typing configuration file.
  */
 
 int
@@ -121,9 +121,9 @@ typing_config_change_item_text (const void *pointer, void *data,
 }
 
 /*
- * Initializes typing configuration file.
+ * Initialize typing configuration file.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -221,7 +221,7 @@ typing_config_init (void)
 }
 
 /*
- * Reads typing configuration file.
+ * Read typing configuration file.
  */
 
 int
@@ -231,7 +231,7 @@ typing_config_read (void)
 }
 
 /*
- * Writes typing configuration file.
+ * Write typing configuration file.
  */
 
 int
@@ -241,7 +241,7 @@ typing_config_write (void)
 }
 
 /*
- * Frees typing configuration.
+ * Free typing configuration.
  */
 
 void

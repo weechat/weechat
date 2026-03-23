@@ -40,7 +40,7 @@
 
 
 /*
- * Daemonizes the process.
+ * Daemonize the process.
  */
 
 void

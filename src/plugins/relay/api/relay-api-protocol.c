@@ -44,7 +44,7 @@ int relay_api_protocol_command_delay = 1; /* delay to execute command       */
 
 
 /*
- * Searches buffer by id or full name.
+ * Search buffer by id or full name.
  */
 
 struct t_gui_buffer *
@@ -1130,7 +1130,7 @@ RELAY_API_PROTOCOL_CALLBACK(sync)
 }
 
 /*
- * Reads one request from client.
+ * Read one request from client.
  */
 
 void
@@ -1197,7 +1197,7 @@ error:
 }
 
 /*
- * Reads JSON string from a client: when connected via websocket (persistent
+ * Read JSON string from a client: when connected via websocket (persistent
  * connection), the client is sending JSON data as a request, which is
  * converted to HTTP request by this function, before calling the function
  * relay_api_protocol_recv_http.
@@ -1269,7 +1269,7 @@ relay_api_protocol_recv_json (struct t_relay_client *client, const char *json)
 }
 
 /*
- * Reads a HTTP request from a client.
+ * Read a HTTP request from a client.
  */
 
 void

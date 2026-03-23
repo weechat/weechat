@@ -46,7 +46,7 @@ TEST_GROUP(LoggerBacklog)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   logger_backlog_display_line
  */
 
@@ -183,7 +183,7 @@ test_logger_backlog_msg_free_cb (void *data, struct t_arraylist *arraylist,
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   logger_backlog_msg_cmp_cb
  *   logger_backlog_msg_free_cb
  *   logger_backlog_group_messages
@@ -258,7 +258,7 @@ TEST(LoggerBacklog, GroupMessages)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   logger_backlog_file
  */
 
@@ -268,7 +268,7 @@ TEST(LoggerBacklog, File)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   logger_backlog_signal_cb
  */
 

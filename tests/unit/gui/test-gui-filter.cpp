@@ -40,7 +40,7 @@ TEST_GROUP(GuiFilter)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_filter_check_line
  */
 
@@ -82,7 +82,7 @@ TEST(GuiFilter, CheckLine)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_filter_buffer
  */
 
@@ -92,7 +92,7 @@ TEST(GuiFilter, Buffer)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_filter_all_buffers
  */
 
@@ -102,7 +102,7 @@ TEST(GuiFilter, AllBuffers)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_filter_global_enable
  *   gui_filter_global_disable
  */
@@ -117,7 +117,7 @@ TEST(GuiFilter, GlobalEnableDisable)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_filter_search_by_name
  */
 
@@ -146,7 +146,7 @@ TEST(GuiFilter, SearchByName)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_filter_new_error
  */
 
@@ -156,7 +156,7 @@ TEST(GuiFilter, NewError)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_filter_find_pos
  *   gui_filter_add_to_list
  *   gui_filter_remove_from_list
@@ -254,7 +254,7 @@ TEST(GuiFilter, New)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_filter_rename
  */
 
@@ -295,7 +295,7 @@ TEST(GuiFilter, Rename)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_filter_hdata_filter_cb
  */
 
@@ -305,7 +305,7 @@ TEST(GuiFilter, HdataFilterCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_filter_add_to_infolist
  */
 
@@ -315,7 +315,7 @@ TEST(GuiFilter, AddToInfolist)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_filter_print_log
  */
 

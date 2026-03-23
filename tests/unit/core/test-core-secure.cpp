@@ -45,7 +45,7 @@ TEST_GROUP(CoreSecure)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   secure_derive_key
  */
 
@@ -84,7 +84,7 @@ TEST(CoreSecure, DeriveKey)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   secure_encrypt_data
  *   secure_decrypt_data
  */

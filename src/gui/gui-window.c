@@ -76,9 +76,9 @@ struct t_hook *gui_window_bare_display_timer = NULL;
 
 
 /*
- * Searches for a window by number.
+ * Search for a window by number.
  *
- * Returns pointer to window found, NULL if error.
+ * Return pointer to window found, NULL if error.
  */
 
 struct t_gui_window *
@@ -97,7 +97,7 @@ gui_window_search_by_number (int number)
 }
 
 /*
- * Gets pointer of window displayed at (x,y).
+ * Get pointer of window displayed at (x,y).
  *
  * Return pointer to window found, NULL if not found.
  */
@@ -123,7 +123,7 @@ gui_window_search_by_xy (int x, int y)
 }
 
 /*
- * Returns following info:
+ * Return following info:
  *   - chat (0/1)
  *   - line
  *   - x in line
@@ -321,7 +321,7 @@ gui_window_get_context_at_xy (struct t_gui_window *window,
 }
 
 /*
- * Sets flag "gui_window_refresh_needed".
+ * Set flag "gui_window_refresh_needed".
  */
 
 void
@@ -332,9 +332,9 @@ gui_window_ask_refresh (int refresh)
 }
 
 /*
- * Creates first entry in windows tree.
+ * Create first entry in windows tree.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -355,7 +355,7 @@ gui_window_tree_init (struct t_gui_window *window)
 }
 
 /*
- * Converts a node to a leaf (free any leafs).
+ * Convert a node to a leaf (free any leafs).
  *
  * Called when 2 windows are merging into one.
  */
@@ -381,7 +381,7 @@ gui_window_tree_node_to_leaf (struct t_gui_window_tree *node,
 }
 
 /*
- * Deletes entire windows tree.
+ * Delete entire windows tree.
  */
 
 void
@@ -400,8 +400,7 @@ gui_window_tree_free (struct t_gui_window_tree **tree)
 }
 
 /*
- * Searches a parent window which is split on the given direction
- * ('h' or 'v').
+ * Search a parent window which is split on the given direction ('h' or 'v').
  */
 
 struct t_gui_window_tree *
@@ -421,9 +420,9 @@ gui_window_tree_get_split (struct t_gui_window_tree *tree,
 }
 
 /*
- * Searches for a scroll with buffer pointer.
+ * Search for a scroll with buffer pointer.
  *
- * Returns pointer to window scroll, NULL if not found.
+ * Return pointer to window scroll, NULL if not found.
  */
 
 struct t_gui_window_scroll *
@@ -447,7 +446,7 @@ gui_window_scroll_search (struct t_gui_window *window,
 }
 
 /*
- * Initializes a window scroll structure.
+ * Initialize a window scroll structure.
  */
 
 void
@@ -467,7 +466,7 @@ gui_window_scroll_init (struct t_gui_window_scroll *window_scroll,
 }
 
 /*
- * Frees a scroll structure in a window.
+ * Free a scroll structure in a window.
  */
 
 void
@@ -488,7 +487,7 @@ gui_window_scroll_free (struct t_gui_window *window,
 }
 
 /*
- * Frees all scroll structures in a window.
+ * Free all scroll structures in a window.
  */
 
 void
@@ -501,7 +500,7 @@ gui_window_scroll_free_all (struct t_gui_window *window)
 }
 
 /*
- * Removes all scroll structures which are empty (not scrolled).
+ * Remove all scroll structures which are empty (not scrolled).
  *
  * Note: the first scroll in list (current buffer) is NOT removed by this
  * function.
@@ -536,7 +535,7 @@ gui_window_scroll_remove_not_scrolled (struct t_gui_window *window)
 }
 
 /*
- * Switches scroll to a buffer.
+ * Switch scroll to a buffer.
  */
 
 void
@@ -583,7 +582,7 @@ gui_window_scroll_switch (struct t_gui_window *window,
 }
 
 /*
- * Removes buffer from scroll list in a window.
+ * Remove buffer from scroll list in a window.
  */
 
 void
@@ -601,9 +600,9 @@ gui_window_scroll_remove_buffer (struct t_gui_window *window,
 }
 
 /*
- * Creates a new window.
+ * Create a new window.
  *
- * Returns pointer to new window, NULL if error.
+ * Return pointer to new window, NULL if error.
  */
 
 struct t_gui_window *
@@ -755,9 +754,9 @@ gui_window_new (struct t_gui_window *parent_window, struct t_gui_buffer *buffer,
 }
 
 /*
- * Checks if a window pointer is valid.
+ * Check if a window pointer is valid.
  *
- * Returns:
+ * Return:
  *   1: window exists
  *   0: window does not exist
  */
@@ -782,9 +781,9 @@ gui_window_valid (struct t_gui_window *window)
 }
 
 /*
- * Searches for window displaying a buffer.
+ * Search for window displaying a buffer.
  *
- * Returns NULL if no window is displaying given buffer.
+ * Return NULL if no window is displaying given buffer.
  * If many windows are displaying this buffer, the first window in list is
  * returned (or current window if it is displaying this buffer).
  */
@@ -812,7 +811,7 @@ gui_window_search_with_buffer (struct t_gui_buffer *buffer)
 }
 
 /*
- * Gets a window property as integer.
+ * Get a window property as integer.
  */
 
 int
@@ -854,7 +853,7 @@ gui_window_get_integer (struct t_gui_window *window, const char *property)
 }
 
 /*
- * Gets a window property as string.
+ * Get a window property as string.
  */
 
 const char *
@@ -867,7 +866,7 @@ gui_window_get_string (struct t_gui_window *window, const char *property)
 }
 
 /*
- * Gets a window property as pointer.
+ * Get a window property as pointer.
  */
 
 void *
@@ -889,7 +888,7 @@ gui_window_get_pointer (struct t_gui_window *window, const char *property)
 }
 
 /*
- * Sets layout plugin name for window.
+ * Set layout plugin name for window.
  */
 
 void
@@ -910,7 +909,7 @@ gui_window_set_layout_plugin_name (struct t_gui_window *window,
 }
 
 /*
- * Sets layout buffer name for window.
+ * Set layout buffer name for window.
  */
 
 void
@@ -931,7 +930,7 @@ gui_window_set_layout_buffer_name (struct t_gui_window *window,
 }
 
 /*
- * Initializes a line in window coordinates.
+ * Initialize a line in window coordinates.
  */
 
 void
@@ -954,7 +953,7 @@ gui_window_coords_init_line (struct t_gui_window *window, int line)
 }
 
 /*
- * Removes a line from coordinates: each time the line is found in the array
+ * Remove a line from coordinates: each time the line is found in the array
  * "coords", it is reinitialized.
  */
 
@@ -975,7 +974,7 @@ gui_window_coords_remove_line (struct t_gui_window *window,
 }
 
 /*
- * Removes a line from coordinates: each time a line with data == line_data is
+ * Remove a line from coordinates: each time a line with data == line_data is
  * found in the array "coords", it is reinitialized.
  */
 
@@ -999,7 +998,7 @@ gui_window_coords_remove_line_data (struct t_gui_window *window,
 }
 
 /*
- * Allocates and initializes coordinates for window.
+ * Allocate and initializes coordinates for window.
  */
 
 void
@@ -1028,7 +1027,7 @@ gui_window_coords_alloc (struct t_gui_window *window)
 }
 
 /*
- * Deletes a window.
+ * Delete a window.
  */
 
 void
@@ -1105,7 +1104,7 @@ gui_window_free (struct t_gui_window *window)
 }
 
 /*
- * Switches to previous window.
+ * Switch to previous window.
  */
 
 void
@@ -1119,7 +1118,7 @@ gui_window_switch_previous (struct t_gui_window *window)
 }
 
 /*
- * Switches to next window.
+ * Switch to next window.
  */
 
 void
@@ -1133,7 +1132,7 @@ gui_window_switch_next (struct t_gui_window *window)
 }
 
 /*
- * Switches to window by number.
+ * Switch to window by number.
  */
 
 void
@@ -1150,7 +1149,7 @@ gui_window_switch_by_number (int number)
 }
 
 /*
- * Switches to next window displaying a buffer.
+ * Switch to next window displaying a buffer.
  */
 
 void
@@ -1174,7 +1173,7 @@ gui_window_switch_by_buffer (struct t_gui_window *window, int buffer_number)
 }
 
 /*
- * Scrolls window by a number of messages or time.
+ * Scroll window by a number of messages or time.
  */
 
 void
@@ -1425,7 +1424,7 @@ gui_window_scroll (struct t_gui_window *window, char *scroll)
 }
 
 /*
- * Horizontally scrolls window.
+ * Scroll window horizontally.
  */
 
 void
@@ -1494,7 +1493,7 @@ gui_window_scroll_horiz (struct t_gui_window *window, char *scroll)
 }
 
 /*
- * Scrolls to previous highlight.
+ * Scroll to previous highlight.
  */
 
 void
@@ -1531,7 +1530,7 @@ gui_window_scroll_previous_highlight (struct t_gui_window *window)
 }
 
 /*
- * Scrolls to next highlight.
+ * Scroll to next highlight.
  */
 
 void
@@ -1568,7 +1567,7 @@ gui_window_scroll_next_highlight (struct t_gui_window *window)
 }
 
 /*
- * Scrolls to first unread line of buffer.
+ * Scroll to first unread line of buffer.
  */
 
 void
@@ -1601,9 +1600,9 @@ gui_window_scroll_unread (struct t_gui_window *window)
 }
 
 /*
- * Searches for text in buffer lines or commands history.
+ * Search for text in buffer lines or commands history.
  *
- * Returns:
+ * Return:
  *   1: successful search
  *   0: no results found
  */
@@ -1680,7 +1679,7 @@ gui_window_search_text (struct t_gui_window *window)
 }
 
 /*
- * Starts search in a buffer at a given position
+ * Start search in a buffer at a given position
  * (or in whole buffer if text_search_start_line is NULL).
  */
 
@@ -1768,7 +1767,7 @@ gui_window_search_start (struct t_gui_window *window, int search,
 }
 
 /*
- * Restarts search (after input changes or exact flag (un)set).
+ * Restart search (after input changes or exact flag (un)set).
  */
 
 void
@@ -1828,7 +1827,7 @@ gui_window_search_restart (struct t_gui_window *window)
 }
 
 /*
- * Stops search in a buffer, at current position if stop_here == 1 or reset
+ * Stop search in a buffer, at current position if stop_here == 1 or reset
  * scroll to the initial value if stop_here == 0.
  */
 
@@ -1886,7 +1885,7 @@ gui_window_search_stop (struct t_gui_window *window, int stop_here)
 }
 
 /*
- * Zooms window (maximize it or restore layout before previous zoom).
+ * Zoom window (maximize it or restore layout before previous zoom).
  */
 
 void
@@ -1931,7 +1930,7 @@ gui_window_zoom (struct t_gui_window *window)
 }
 
 /*
- * Returns hdata for window.
+ * Return hdata for window.
  */
 
 struct t_hdata *
@@ -1981,7 +1980,7 @@ gui_window_hdata_window_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns hdata for window scroll.
+ * Return hdata for window scroll.
  */
 
 struct t_hdata *
@@ -2013,7 +2012,7 @@ gui_window_hdata_window_scroll_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns hdata for window tree.
+ * Return hdata for window tree.
  */
 
 struct t_hdata *
@@ -2041,9 +2040,9 @@ gui_window_hdata_window_tree_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds a window in an infolist.
+ * Add a window in an infolist.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -2100,7 +2099,7 @@ gui_window_add_to_infolist (struct t_infolist *infolist,
 }
 
 /*
- * Prints window infos in WeeChat log file (usually for crash dump).
+ * Print window infos in WeeChat log file (usually for crash dump).
  */
 
 void

@@ -48,7 +48,7 @@ struct t_relay_server *last_relay_server = NULL;
 
 
 /*
- * Extracts protocol, arguments and options from a string with format
+ * Extract protocol, arguments and options from a string with format
  * "options.protocol.args".
  *
  * Examples:
@@ -165,9 +165,9 @@ relay_server_get_protocol_args (const char *protocol_and_args,
 }
 
 /*
- * Searches for a server by protocol.args.
+ * Search for a server by protocol.args.
  *
- * Returns pointer to server, NULL if not found.
+ * Return pointer to server, NULL if not found.
  */
 
 struct t_relay_server *
@@ -189,9 +189,9 @@ relay_server_search (const char *protocol_and_args)
 }
 
 /*
- * Searches for a server by port.
+ * Search for a server by port.
  *
- * Returns pointer to new server, NULL if not found.
+ * Return pointer to new server, NULL if not found.
  */
 
 struct t_relay_server *
@@ -211,9 +211,9 @@ relay_server_search_port (int port)
 }
 
 /*
- * Searches for a server by path. Only returns servers using a UNIX socket.
+ * Search for a server by path. Only return servers that are using a UNIX socket.
  *
- * Returns pointer to new server, NULL if not found.
+ * Return pointer to new server, NULL if not found.
  */
 
 struct t_relay_server *
@@ -236,7 +236,7 @@ relay_server_search_path (const char *path)
     return NULL;
 }
 /*
- * Closes socket for a relay server.
+ * Close socket for a relay server.
  */
 
 void
@@ -266,7 +266,7 @@ relay_server_close_socket (struct t_relay_server *server)
 }
 
 /*
- * Reads data from a client which is connecting on socket.
+ * Read data from a client which is connecting on socket.
  */
 
 int
@@ -487,9 +487,9 @@ end:
 }
 
 /*
- * Creates socket and server on port.
+ * Create socket and server on port.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -788,9 +788,9 @@ relay_server_create_socket (struct t_relay_server *server)
 }
 
 /*
- * Adds a socket relaying on a port.
+ * Add a socket relaying on a port.
  *
- * Returns pointer to new server, NULL if error.
+ * Return pointer to new server, NULL if error.
  */
 
 struct t_relay_server *
@@ -884,7 +884,7 @@ relay_server_new (const char *protocol_string, enum t_relay_protocol protocol,
 }
 
 /*
- * Updates path in a server.
+ * Update path in a server.
  */
 
 void
@@ -918,7 +918,7 @@ relay_server_update_path (struct t_relay_server *server, const char *path)
 }
 
 /*
- * Updates port in a server.
+ * Update port in a server.
  */
 
 void
@@ -938,7 +938,7 @@ relay_server_update_port (struct t_relay_server *server, int port)
 }
 
 /*
- * Removes a server.
+ * Remove a server.
  */
 
 void
@@ -974,7 +974,7 @@ relay_server_free (struct t_relay_server *server)
 }
 
 /*
- * Removes all servers.
+ * Remove all servers.
  */
 
 void
@@ -987,9 +987,9 @@ relay_server_free_all (void)
 }
 
 /*
- * Adds a server in an infolist.
+ * Add a server in an infolist.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -1038,7 +1038,7 @@ relay_server_add_to_infolist (struct t_infolist *infolist,
 }
 
 /*
- * Prints servers in WeeChat log file (usually for crash dump).
+ * Print servers in WeeChat log file (usually for crash dump).
  */
 
 void

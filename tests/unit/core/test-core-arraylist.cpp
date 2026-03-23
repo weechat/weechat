@@ -57,7 +57,7 @@ TEST_GROUP(CoreArraylist)
  * Test callback comparing two arraylist elements.
  * Note: NULL element is considered lower than any other.
  *
- * Returns:
+ * Return:
  *   -1: element(pointer1) < element(pointer2)
  *    0: element(pointer1) == element(pointer2)
  *    1: element(pointer1) > element(pointer2)
@@ -467,7 +467,7 @@ test_arraylist (int initial_size, int sorted, int allow_duplicates)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   arraylist_new
  *   arraylist_size
  *   arraylist_get

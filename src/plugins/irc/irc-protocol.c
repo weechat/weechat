@@ -66,7 +66,7 @@
 
 
 /*
- * Frees data in structure t_irc_protocol_ctxt.
+ * Free data in structure t_irc_protocol_ctxt.
  */
 
 void
@@ -111,9 +111,9 @@ irc_protocol_ctxt_free_data (struct t_irc_protocol_ctxt *ctxt)
 }
 
 /*
- * Checks if a command is numeric.
+ * Check if a command is numeric.
  *
- * Returns:
+ * Return:
  *   1: all chars are numeric
  *   0: command has other chars (not numeric)
  */
@@ -135,7 +135,7 @@ irc_protocol_is_numeric_command (const char *command)
 }
 
 /*
- * Gets log level for IRC command.
+ * Get log level for IRC command.
  */
 
 int
@@ -161,7 +161,7 @@ irc_protocol_log_level_for_command (const char *command)
 }
 
 /*
- * Adds IRC tag key/value in a dynamic string.
+ * Add IRC tag key/value in a dynamic string.
  *
  * As commas are not allowed in WeeChat tags, they are replaced by semicolons.
  */
@@ -204,7 +204,7 @@ irc_protocol_tags_add_cb (void *data,
 }
 
 /*
- * Builds tags list with IRC command and optional tags and nick.
+ * Build tags list with IRC command and optional tags and nick.
  */
 
 const char *
@@ -323,13 +323,13 @@ irc_protocol_tags (struct t_irc_protocol_ctxt *ctxt, const char *extra_tags)
 }
 
 /*
- * Builds a string with nick and optional address.
+ * Build a string with nick and optional address.
  *
- * If server_message is 1, the nick is colored according to option
+ * If server_message is 1, color nick according to option
  * irc.look.color_nicks_in_server_messages.
  *
  * Argument nickname is mandatory, address can be NULL.
- * If nickname and address are NULL, an empty string is returned.
+ * If nickname and address are NULL, return an empty string.
  */
 
 const char *
@@ -372,7 +372,7 @@ irc_protocol_nick_address (struct t_irc_server *server,
 }
 
 /*
- * Builds a string with concatenation of IRC command parameters, from
+ * Build a string with concatenation of IRC command parameters, from
  * arg_start to arg_end.
  *
  * Note: result must be freed after use.
@@ -389,7 +389,7 @@ irc_protocol_string_params (char **params, int arg_start, int arg_end)
 }
 
 /*
- * Prints a FAIL/WARN/NOTE command.
+ * Print a FAIL/WARN/NOTE command.
  *
  * Called by callbacks for commands: FAIL, WARN, NOTE.
  *
@@ -797,7 +797,7 @@ irc_protocol_cap_to_enable (const char *capabilities, int sasl_requested)
 }
 
 /*
- * Requests capabilities for IRC server after synchronization.
+ * Request capabilities for IRC server after synchronization.
  */
 
 void
@@ -842,7 +842,7 @@ irc_protocol_cap_sync_req (struct t_irc_server *server,
 }
 
 /*
- * Synchronizes requested capabilities for IRC server.
+ * Synchronize requested capabilities for IRC server.
  */
 
 void
@@ -3017,8 +3017,7 @@ IRC_PROTOCOL_CALLBACK(pong)
 }
 
 /*
- * Displays a CTCP sent, that was received by PRIVMSG if the origin nick
- * is self.
+ * Display a CTCP sent, that was received by PRIVMSG if the origin nick is self.
  *
  * Parameter "arguments" is the message arguments, for example:
  *
@@ -6395,7 +6394,7 @@ IRC_PROTOCOL_CALLBACK(354)
 }
 
 /*
- * Returns a string with the list of nicks on a channel.
+ * Return a string with the list of nicks on a channel.
  *
  * If filter is NULL, all nicks are displayed.
  * Otherwise first char of filter is a mode:
@@ -6523,7 +6522,7 @@ irc_protocol_get_string_channel_nicks (struct t_irc_server *server,
 }
 
 /*
- * Returns a string with the count of nicks per mode on a channel.
+ * Return a string with the count of nicks per mode on a channel.
  *
  * Note: result must be freed after use.
  */
@@ -7881,7 +7880,7 @@ IRC_PROTOCOL_CALLBACK(sasl_end_fail)
 }
 
 /*
- * Executes action when an IRC command is received.
+ * Execute action when an IRC command is received.
  *
  * Argument "irc_message" is the full message without optional tags.
  *

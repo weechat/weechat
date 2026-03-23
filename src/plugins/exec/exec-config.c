@@ -78,7 +78,7 @@ exec_config_change_command_default_options (const void *pointer, void *data,
 }
 
 /*
- * Reloads exec configuration file.
+ * Reload exec configuration file.
  */
 
 int
@@ -93,9 +93,9 @@ exec_config_reload_cb (const void *pointer, void *data,
 }
 
 /*
- * Initializes exec configuration file.
+ * Initialize exec configuration file.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -179,7 +179,7 @@ exec_config_init (void)
 }
 
 /*
- * Reads exec configuration file.
+ * Read exec configuration file.
  */
 
 int
@@ -189,7 +189,7 @@ exec_config_read (void)
 }
 
 /*
- * Writes exec configuration file.
+ * Write exec configuration file.
  */
 
 int
@@ -199,7 +199,7 @@ exec_config_write (void)
 }
 
 /*
- * Frees exec configuration.
+ * Free exec configuration.
  */
 
 void

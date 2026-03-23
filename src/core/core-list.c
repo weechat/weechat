@@ -36,9 +36,9 @@
 
 
 /*
- * Creates a new list.
+ * Create a new list.
  *
- * Returns pointer to new list, NULL if error.
+ * Return pointer to new list, NULL if error.
  */
 
 struct t_weelist *
@@ -57,7 +57,7 @@ weelist_new (void)
 }
 
 /*
- * Searches for position of data (to keep list sorted).
+ * Search for position of data (to keep list sorted).
  */
 
 struct t_weelist_item *
@@ -79,7 +79,7 @@ weelist_find_pos (struct t_weelist *weelist, const char *data)
 }
 
 /*
- * Inserts an element in the list (keeping list sorted).
+ * Insert an element in the list (keeping list sorted).
  */
 
 void
@@ -140,9 +140,9 @@ weelist_insert (struct t_weelist *weelist, struct t_weelist_item *item,
 }
 
 /*
- * Creates new data and add it to the list.
+ * Create new data and add it to the list.
  *
- * Returns pointer to new item, NULL if error.
+ * Return pointer to new item, NULL if error.
  */
 
 struct t_weelist_item *
@@ -166,9 +166,9 @@ weelist_add (struct t_weelist *weelist, const char *data, const char *where,
 }
 
 /*
- * Searches for data in a list (case-sensitive).
+ * Search for data in a list (case-sensitive).
  *
- * Returns pointer to item found, NULL if not found.
+ * Return pointer to item found, NULL if not found.
  */
 
 struct t_weelist_item *
@@ -190,9 +190,9 @@ weelist_search (struct t_weelist *weelist, const char *data)
 }
 
 /*
- * Searches for data in a list (case-sensitive).
+ * Search for data in a list (case-sensitive).
  *
- * Returns position of item found (>= 0), -1 if not found.
+ * Return position of item found (>= 0), -1 if not found.
  */
 
 int
@@ -217,9 +217,9 @@ weelist_search_pos (struct t_weelist *weelist, const char *data)
 }
 
 /*
- * Searches for data in a list (case-insensitive).
+ * Search for data in a list (case-insensitive).
  *
- * Returns pointer to item found, NULL if not found.
+ * Return pointer to item found, NULL if not found.
  */
 
 struct t_weelist_item *
@@ -241,9 +241,9 @@ weelist_casesearch (struct t_weelist *weelist, const char *data)
 }
 
 /*
- * Searches for data in a list (case-insensitive).
+ * Search for data in a list (case-insensitive).
  *
- * Returns position of item found (>= 0), -1 if not found.
+ * Return position of item found (>= 0), -1 if not found.
  */
 
 int
@@ -268,7 +268,7 @@ weelist_casesearch_pos (struct t_weelist *weelist, const char *data)
 }
 
 /*
- * Gets an item in a list by position (0 is first element).
+ * Get an item in a list by position (0 is first element).
  */
 
 struct t_weelist_item *
@@ -294,7 +294,7 @@ weelist_get (struct t_weelist *weelist, int position)
 }
 
 /*
- * Sets a new value for an item.
+ * Set a new value for an item.
  */
 
 void
@@ -308,9 +308,9 @@ weelist_set (struct t_weelist_item *item, const char *value)
 }
 
 /*
- * Gets next item.
+ * Get next item.
  *
- * Returns NULL if end of list has been reached.
+ * Return NULL if end of list has been reached.
  */
 
 struct t_weelist_item *
@@ -323,9 +323,9 @@ weelist_next (struct t_weelist_item *item)
 }
 
 /*
- * Gets previous item.
+ * Get previous item.
  *
- * Returns NULL if beginning of list has been reached.
+ * Return NULL if beginning of list has been reached.
  */
 
 struct t_weelist_item *
@@ -338,7 +338,7 @@ weelist_prev (struct t_weelist_item *item)
 }
 
 /*
- * Gets string pointer to item data.
+ * Get string pointer to item data.
  */
 
 const char *
@@ -351,7 +351,7 @@ weelist_string (struct t_weelist_item *item)
 }
 
 /*
- * Gets user data pointer to item data.
+ * Get user data pointer to item data.
  */
 
 void *
@@ -364,7 +364,7 @@ weelist_user_data (struct t_weelist_item *item)
 }
 
 /*
- * Gets size of list.
+ * Get size of list.
  */
 
 int
@@ -377,7 +377,7 @@ weelist_size (struct t_weelist *weelist)
 }
 
 /*
- * Removes an item from a list.
+ * Remove an item from a list.
  */
 
 void
@@ -411,7 +411,7 @@ weelist_remove (struct t_weelist *weelist, struct t_weelist_item *item)
 }
 
 /*
- * Removes all items from a list.
+ * Remove all items from a list.
  */
 
 void
@@ -427,7 +427,7 @@ weelist_remove_all (struct t_weelist *weelist)
 }
 
 /*
- * Frees a list.
+ * Free a list.
  */
 
 void
@@ -441,7 +441,7 @@ weelist_free (struct t_weelist *weelist)
 }
 
 /*
- * Prints list in WeeChat log file (usually for crash dump).
+ * Print list in WeeChat log file (usually for crash dump).
  */
 
 void

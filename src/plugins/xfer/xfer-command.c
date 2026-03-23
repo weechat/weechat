@@ -80,7 +80,7 @@ xfer_command_me (const void *pointer, void *data,
 }
 
 /*
- * Displays a list of xfer.
+ * Display a list of xfer.
  */
 
 void
@@ -250,7 +250,7 @@ xfer_command_xfer (const void *pointer, void *data,
 }
 
 /*
- * Hooks commands.
+ * Hook commands.
  */
 
 void

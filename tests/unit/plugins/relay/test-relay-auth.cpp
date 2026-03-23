@@ -69,7 +69,7 @@ TEST_GROUP(RelayAuth)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_auth_password_hash_algo_search
  */
 
@@ -83,7 +83,7 @@ TEST(RelayAuth, PasswordHashAlgoSearch)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_auth_generate_nonce
  */
 
@@ -110,7 +110,7 @@ TEST(RelayAuth, GenerateNonce)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_auth_check_password_plain
  */
 
@@ -142,7 +142,7 @@ TEST(RelayAuth, CheckPasswordPlain)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_auth_parse_sha
  */
 
@@ -199,7 +199,7 @@ TEST(RelayAuth, ParseSha)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_auth_parse_pbkdf2
  */
 
@@ -283,7 +283,7 @@ TEST(RelayAuth, ParsePbkdf2)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_auth_check_salt
  */
 
@@ -334,7 +334,7 @@ TEST(RelayAuth, CheckSalt)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_auth_check_hash_sha
  */
 
@@ -402,7 +402,7 @@ TEST(RelayAuth, CheckHashSha)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_auth_check_hash_pbkdf2
  */
 
@@ -478,7 +478,7 @@ TEST(RelayAuth, CheckHashPbkdf2)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_auth_password_hash
  */
 

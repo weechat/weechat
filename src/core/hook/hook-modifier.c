@@ -38,7 +38,7 @@
 
 
 /*
- * Returns description of hook.
+ * Return description of hook.
  *
  * Note: result must be freed after use.
  */
@@ -50,9 +50,9 @@ hook_modifier_get_description (struct t_hook *hook)
 }
 
 /*
- * Hooks a modifier.
+ * Hook a modifier.
  *
- * Returns pointer to new hook, NULL if error.
+ * Return pointer to new hook, NULL if error.
  */
 
 struct t_hook *
@@ -94,7 +94,7 @@ hook_modifier (struct t_weechat_plugin *plugin, const char *modifier,
 }
 
 /*
- * Executes a modifier hook.
+ * Execute a modifier hook.
  *
  * Note: result must be freed after use.
  */
@@ -164,7 +164,7 @@ hook_modifier_exec (struct t_weechat_plugin *plugin, const char *modifier,
 }
 
 /*
- * Frees data in a modifier hook.
+ * Free data in a modifier hook.
  */
 
 void
@@ -184,7 +184,7 @@ hook_modifier_free_data (struct t_hook *hook)
 }
 
 /*
- * Returns hdata for modifier hook.
+ * Return hdata for modifier hook.
  */
 
 struct t_hdata *
@@ -207,9 +207,9 @@ hook_modifier_hdata_hook_modifier_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds modifier hook data in the infolist item.
+ * Add modifier hook data in the infolist item.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -230,7 +230,7 @@ hook_modifier_add_to_infolist (struct t_infolist_item *item,
 }
 
 /*
- * Prints modifier hook data in WeeChat log file (usually for crash dump).
+ * Print modifier hook data in WeeChat log file (usually for crash dump).
  */
 
 void

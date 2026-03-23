@@ -48,7 +48,7 @@ TEST_GROUP(RelayWebsocket)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_websocket_deflate_alloc
  *   relay_websocket_deflate_init_stream_deflate
  *   relay_websocket_deflate_free_stream_deflate
@@ -94,7 +94,7 @@ TEST(RelayWebsocket, DeflateAllocFree)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_websocket_is_valid_http_get
  */
 
@@ -120,7 +120,7 @@ TEST(RelayWebsocket, IsValidHttpGet)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_websocket_client_handshake_valid
  *   relay_websocket_build_handshake
  */
@@ -267,7 +267,7 @@ TEST(RelayWebsocket, ClientHandshakeValid)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_websocket_parse_extensions
  */
 
@@ -413,7 +413,7 @@ TEST(RelayWebsocket, ParseExtensions)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_websocket_deflate
  *   relay_websocket_inflate
  */
@@ -469,7 +469,7 @@ TEST(RelayWebsocket, Inflate)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_websocket_decode_frame
  */
 
@@ -479,7 +479,7 @@ TEST(RelayWebsocket, DecodeFrame)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_websocket_encode_frame
  */
 
@@ -489,7 +489,7 @@ TEST(RelayWebsocket, EncodeFrame)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_websocket_deflate_print_log
  */
 

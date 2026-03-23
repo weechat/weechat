@@ -44,7 +44,7 @@ void script_action_run_install (int quiet);
 
 
 /*
- * Lists loaded scripts (all languages).
+ * List loaded scripts (all languages).
  */
 
 void
@@ -95,9 +95,9 @@ script_action_run_list (void)
 }
 
 /*
- * Lists loaded scripts (all languages) in input.
+ * List loaded scripts (all languages) in input.
  *
- * Sends input to buffer if send_to_buffer == 1.
+ * Send input to buffer if send_to_buffer == 1.
  * String is translated if translated == 1 (otherwise it's English).
  */
 
@@ -178,7 +178,7 @@ script_action_run_list_input (struct t_gui_buffer *buffer,
 }
 
 /*
- * Loads a script.
+ * Load a script.
  */
 
 void
@@ -221,7 +221,7 @@ script_action_run_load (const char *name, int quiet)
 }
 
 /*
- * Unloads a script.
+ * Unload a script.
  */
 
 void
@@ -326,7 +326,7 @@ script_action_run_unload (const char *name, int quiet)
 }
 
 /*
- * Reloads a script.
+ * Reload a script.
  */
 
 void
@@ -431,7 +431,7 @@ script_action_run_reload (const char *name, int quiet)
 }
 
 /*
- * Enables/disables autoload for a script.
+ * Enable/disable autoload for a script.
  *
  * Argument "autoload" can be:
  *    0: disables autoload
@@ -542,7 +542,7 @@ script_action_run_autoload (const char *name, int quiet, int autoload)
 }
 
 /*
- * Installs next script.
+ * Install next script.
  */
 
 int
@@ -559,7 +559,7 @@ script_action_installnext_timer_cb (const void *pointer, void *data,
 }
 
 /*
- * Installs script (after download of script).
+ * Install script (after download of script).
  */
 
 int
@@ -644,7 +644,7 @@ script_action_install_url_cb (const void *pointer, void *data,
 }
 
 /*
- * Gets next script to install according to "install_order" in scripts.
+ * Get next script to install according to "install_order" in scripts.
  */
 
 struct t_script_repo *
@@ -669,7 +669,7 @@ script_action_get_next_script_to_install (void)
 }
 
 /*
- * Installs scrip(s) marked for install.
+ * Install scrip(s) marked for install.
  */
 
 void
@@ -745,7 +745,7 @@ script_action_run_install (int quiet)
 }
 
 /*
- * Removes a script.
+ * Remove a script.
  */
 
 void
@@ -820,9 +820,9 @@ script_action_run_remove (const char *name, int quiet)
 }
 
 /*
- * Un(hold)s a script.
+ * Un(hold) a script.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -873,7 +873,7 @@ script_action_run_hold (const char *name, int quiet)
 }
 
 /*
- * Shows a diff between script installed and script in repository (after
+ * Show a diff between script installed and script in repository (after
  * download of script).
  */
 
@@ -974,7 +974,7 @@ script_action_show_diff_process_cb (const void *pointer, void *data,
 }
 
 /*
- * Shows source code of script (after download of script).
+ * Show source code of script (after download of script).
  */
 
 int
@@ -1119,7 +1119,7 @@ script_action_show_source_url_cb (const void *pointer, void *data,
 }
 
 /*
- * Shows detailed info on a script.
+ * Show detailed info on a script.
  */
 
 void
@@ -1198,7 +1198,7 @@ script_action_run_show (const char *name, int quiet)
 }
 
 /*
- * Jumps to diff on buffer with detail of script.
+ * Jump to diff on buffer with detail of script.
  */
 
 void
@@ -1235,7 +1235,7 @@ script_action_run_showdiff (void)
 }
 
 /*
- * Adds an action to list of actions.
+ * Add an action to list of actions.
  */
 
 void
@@ -1261,7 +1261,7 @@ script_action_add (struct t_gui_buffer *buffer, const char *action)
 }
 
 /*
- * Clears list of actions.
+ * Clear list of actions.
  */
 
 void
@@ -1272,9 +1272,9 @@ script_action_clear (void)
 }
 
 /*
- * Runs planned actions.
+ * Run planned actions.
  *
- * Returns:
+ * Return:
  *   1: at least an action was executed
  *   0: no action executed
  */
@@ -1571,7 +1571,7 @@ script_action_run_all (void)
 }
 
 /*
- * Schedules an action.
+ * Schedule an action.
  *
  * If "need_repository" is 1:
  *   - if repository is up-to-date: action is executed
@@ -1621,7 +1621,7 @@ script_action_schedule (struct t_gui_buffer *buffer,
 }
 
 /*
- * Ends script action.
+ * End script action.
  */
 
 void

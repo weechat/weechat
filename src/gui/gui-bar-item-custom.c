@@ -55,10 +55,10 @@ struct t_gui_bar_item_custom *last_gui_temp_custom_bar_item = NULL;
 
 
 /*
- * Checks if a custom bar item name is valid: it must not have any
+ * Check if a custom bar item name is valid: it must not have any
  * space/period.
  *
- * Returns:
+ * Return:
  *   1: name is valid
  *   0: name is invalid
  */
@@ -82,9 +82,9 @@ gui_bar_item_custom_name_valid (const char *name)
 }
 
 /*
- * Searches for a custom bar item option name.
+ * Search for a custom bar item option name.
  *
- * Returns index of option in enum t_gui_bar_item_custom_option,
+ * Return index of option in enum t_gui_bar_item_custom_option,
  * -1 if not found.
  */
 
@@ -107,7 +107,7 @@ gui_bar_item_custom_search_option (const char *option_name)
 }
 
 /*
- * Searches for a custom bar item by name.
+ * Search for a custom bar item by name.
  */
 
 struct t_gui_bar_item_custom *
@@ -130,9 +130,9 @@ gui_bar_item_custom_search (const char *item_name)
 }
 
 /*
- * Searches for a custom bar item with name of option (like "name.content").
+ * Search for a custom bar item with name of option (like "name.content").
  *
- * Returns pointer to custom bar item found, NULL if not found.
+ * Return pointer to custom bar item found, NULL if not found.
  */
 
 struct t_gui_bar_item_custom *
@@ -185,9 +185,9 @@ gui_bar_item_custom_config_change (const void *pointer, void *data,
 }
 
 /*
- * Creates an option for a custom bar item.
+ * Create an option for a custom bar item.
  *
- * Returns pointer to new option, NULL if error.
+ * Return pointer to new option, NULL if error.
  */
 
 struct t_config_option *
@@ -240,7 +240,7 @@ gui_bar_item_custom_create_option (const char *item_name, int index_option,
 }
 
 /*
- * Creates option for a temporary custom bar item (when reading configuration
+ * Create option for a temporary custom bar item (when reading configuration
  * file).
  */
 
@@ -340,9 +340,9 @@ end:
 }
 
 /*
- * Allocates and initializes new custom bar item structure.
+ * Allocate and initialize new custom bar item structure.
  *
- * Returns pointer to new custom bar item, NULL if error.
+ * Return pointer to new custom bar item, NULL if error.
  */
 
 struct t_gui_bar_item_custom *
@@ -368,7 +368,7 @@ gui_bar_item_custom_alloc (const char *name)
 }
 
 /*
- * Creates bar item in a custom bar item.
+ * Create bar item in a custom bar item.
  */
 
 void
@@ -384,9 +384,9 @@ gui_bar_item_custom_create_bar_item (struct t_gui_bar_item_custom *item)
 }
 
 /*
- * Creates a new custom bar item with options.
+ * Create a new custom bar item with options.
  *
- * Returns pointer to new bar, NULL if error.
+ * Return pointer to new bar, NULL if error.
  */
 
 struct t_gui_bar_item_custom *
@@ -418,9 +418,9 @@ gui_bar_item_custom_new_with_options (const char *name,
 }
 
 /*
- * Creates a new custom bar item.
+ * Create a new custom bar item.
  *
- * Returns pointer to new custom bar item, NULL if not found.
+ * Return pointer to new custom bar item, NULL if not found.
  */
 
 struct t_gui_bar_item_custom *
@@ -486,7 +486,7 @@ error:
 }
 
 /*
- * Uses temporary custom bar items (created by reading configuration file).
+ * Use temporary custom bar items (created by reading configuration file).
  */
 
 void
@@ -538,9 +538,9 @@ gui_bar_item_custom_use_temp_items (void)
 }
 
 /*
- * Renames a custom bar item.
+ * Rename a custom bar item.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -598,7 +598,7 @@ gui_bar_item_custom_rename (struct t_gui_bar_item_custom *item,
 }
 
 /*
- * Frees data in a custom bar item.*
+ * Free data in a custom bar item.
  */
 
 void
@@ -614,7 +614,7 @@ gui_bar_item_custom_free_data (struct t_gui_bar_item_custom *item)
 }
 
 /*
- * Deletes a custom bar item.
+ * Delete a custom bar item.
  */
 
 void
@@ -651,7 +651,7 @@ gui_bar_item_custom_free (struct t_gui_bar_item_custom *item)
 }
 
 /*
- * Deletes all custom bar items.
+ * Delete all custom bar items.
  */
 
 void

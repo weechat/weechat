@@ -30,7 +30,7 @@
 
 
 /*
- * Returns spell info "spell_dict".
+ * Return spell info "spell_dict".
  */
 
 char *
@@ -80,7 +80,7 @@ spell_info_info_spell_dict_cb (const void *pointer, void *data,
 }
 
 /*
- * Hooks info for spell plugin.
+ * Hook info for spell plugin.
  */
 
 void

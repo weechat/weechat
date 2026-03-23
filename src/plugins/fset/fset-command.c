@@ -35,7 +35,7 @@
 
 
 /*
- * Gets the currently selected fset_option pointer and the associated
+ * Get the currently selected fset_option pointer and the associated
  * config_option pointer.
  */
 
@@ -53,7 +53,7 @@ fset_command_get_option (struct t_fset_option **fset_option,
 }
 
 /*
- * Gets an integer argument given to the /fset command.
+ * Get an integer argument given to the /fset command.
  */
 
 int
@@ -469,7 +469,7 @@ fset_command_fset (const void *pointer, void *data,
 }
 
 /*
- * Hooks execution of command "/set".
+ * Hook execution of command "/set".
  */
 
 int
@@ -598,7 +598,7 @@ end:
 }
 
 /*
- * Hooks execution of command "/key".
+ * Hook execution of command "/key".
  */
 
 int
@@ -636,7 +636,7 @@ fset_command_run_key_cb (const void *pointer, void *data,
 }
 
 /*
- * Hooks fset commands.
+ * Hook fset commands.
  */
 
 void

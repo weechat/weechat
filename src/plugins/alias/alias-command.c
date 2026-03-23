@@ -32,7 +32,7 @@
 
 
 /*
- * Adds a new alias.
+ * Add a new alias.
  */
 
 void
@@ -348,7 +348,7 @@ alias_command_cb (const void *pointer, void *data,
 }
 
 /*
- * Hooks alias command.
+ * Hook alias command.
  */
 
 void

@@ -28,9 +28,9 @@
 
 
 /*
- * Adds a buffer in an infolist.
+ * Add a buffer in an infolist.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -54,7 +54,7 @@ buflist_buffer_add_to_infolist (struct t_infolist *infolist, struct t_gui_buffer
 }
 
 /*
- * Returns infolist "buflist".
+ * Return infolist "buflist".
  */
 
 struct t_infolist *
@@ -112,7 +112,7 @@ buflist_info_infolist_buflist_cb (const void *pointer, void *data,
 }
 
 /*
- * Hooks infolist for buflist plugin.
+ * Hook infolist for buflist plugin.
  */
 
 void

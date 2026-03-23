@@ -49,7 +49,7 @@
 
 
 /*
- * Displays a line read from log file.
+ * Display a line read from log file.
  */
 
 void
@@ -135,7 +135,7 @@ logger_backlog_display_line (struct t_gui_buffer *buffer, const char *line)
 }
 
 /*
- * Compares two messages in arraylist.
+ * Compare two messages in arraylist.
  */
 
 int
@@ -152,7 +152,7 @@ logger_backlog_msg_cmp_cb (void *data,
 }
 
 /*
- * Frees a message in arraylist.
+ * Free a message in arraylist.
  */
 
 void
@@ -167,7 +167,7 @@ logger_backlog_msg_free_cb (void *data, struct t_arraylist *arraylist,
 }
 
 /*
- * Groups lines by messages: each line with a timestamp is considered the first
+ * Group lines by messages: each line with a timestamp is considered the first
  * line of a message, and subsequent lines without timestamp are the rest of
  * the message.
  *
@@ -262,7 +262,7 @@ error:
 }
 
 /*
- * Displays backlog for a buffer by reading end of log file.
+ * Display backlog for a buffer by reading end of log file.
  */
 
 void

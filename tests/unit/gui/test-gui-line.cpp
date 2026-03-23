@@ -75,7 +75,7 @@ TEST_GROUP(GuiLine)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_line_lines_alloc
  *   gui_line_lines_free
  */
@@ -103,7 +103,7 @@ TEST(GuiLine, LinesAlloc)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_line_tags_alloc
  *   gui_line_tags_free
  */
@@ -162,7 +162,7 @@ TEST(GuiLine, TagsAlloc)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_line_prefix_is_same_nick
  */
 
@@ -172,7 +172,7 @@ TEST(GuiLine, PrefixIsSameNick)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_line_get_prefix_for_display
  */
 
@@ -182,7 +182,7 @@ TEST(GuiLine, GetPrefixForDisplay)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_line_get_align
  */
 
@@ -192,7 +192,7 @@ TEST(GuiLine, GetAlign)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_line_build_string_prefix_message
  */
 
@@ -215,7 +215,7 @@ TEST(GuiLine, BuildStringPrefixMessage)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_line_build_string_message_nick_offline
  */
 
@@ -238,7 +238,7 @@ TEST(GuiLine, BuildStringMessageNickOffline)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_line_build_string_message_tags
  */
 
@@ -309,7 +309,7 @@ TEST(GuiLine, BuildStringMessageTags)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_line_is_displayed
  */
 
@@ -345,7 +345,7 @@ TEST(GuiLine, IsDisplayed)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_line_get_first_displayed
  */
 
@@ -355,7 +355,7 @@ TEST(GuiLine, GetFirstDisplayed)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_line_get_last_displayed
  */
 
@@ -365,7 +365,7 @@ TEST(GuiLine, GetLastDisplayed)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_line_get_prev_displayed
  */
 
@@ -375,7 +375,7 @@ TEST(GuiLine, GetPrevDisplayed)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_line_get_next_displayed
  */
 
@@ -385,7 +385,7 @@ TEST(GuiLine, GetNextDisplayed)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_line_search_by_id
  */
 
@@ -401,7 +401,7 @@ TEST(GuiLine, SearchById)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_line_search_text
  */
 
@@ -411,7 +411,7 @@ TEST(GuiLine, SearchText)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_line_match_regex
  */
 
@@ -421,7 +421,7 @@ TEST(GuiLine, MatchRegex)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_line_has_tag_no_filter
  */
 
@@ -448,7 +448,7 @@ TEST(GuiLine, HasTagNoFilter)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_line_match_tags
  */
 
@@ -489,7 +489,7 @@ TEST(GuiLine, MatchTags)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_line_search_tag_starting_with
  */
 
@@ -523,7 +523,7 @@ TEST(GuiLine, SearchTagStartingWith)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_line_get_nick_tag
  */
 
@@ -551,7 +551,7 @@ TEST(GuiLine, GetNickTag)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_line_has_highlight
  */
 
@@ -561,7 +561,7 @@ TEST(GuiLine, HasHighlight)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_line_has_offline_nick
  */
 
@@ -571,7 +571,7 @@ TEST(GuiLine, HasOfflineNick)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_line_is_action
  */
 
@@ -581,7 +581,7 @@ TEST(GuiLine, IsAction)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_line_compute_buffer_max_length
  */
 
@@ -591,7 +591,7 @@ TEST(GuiLine, ComputeBufferMaxLength)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_line_compute_prefix_max_length
  */
 
@@ -601,7 +601,7 @@ TEST(GuiLine, ComputePrefixMaxLength)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_line_add_to_list
  */
 
@@ -611,7 +611,7 @@ TEST(GuiLine, AddToList)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_line_free_data
  */
 
@@ -621,7 +621,7 @@ TEST(GuiLine, FreeData)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_line_remove_from_list
  */
 
@@ -631,7 +631,7 @@ TEST(GuiLine, RemoveFromList)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_line_mixed_add
  */
 
@@ -641,7 +641,7 @@ TEST(GuiLine, MixedAdd)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_line_mixed_free_buffer
  */
 
@@ -651,7 +651,7 @@ TEST(GuiLine, MixedFreeBuffer)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_line_mixed_free_all
  */
 
@@ -661,7 +661,7 @@ TEST(GuiLine, MixedFreeAll)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_line_free
  */
 
@@ -671,7 +671,7 @@ TEST(GuiLine, Free)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_line_free_all
  */
 
@@ -681,7 +681,7 @@ TEST(GuiLine, FreeAll)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_line_get_max_notify_level
  */
 
@@ -731,7 +731,7 @@ TEST(GuiLine, GetMaxNotifyLevel)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_line_set_notify_level
  */
 
@@ -808,7 +808,7 @@ TEST(GuiLine, SetNotifyLevel)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_line_set_highlight
  */
 
@@ -893,7 +893,7 @@ TEST(GuiLine, SetHighlight)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_line_new
  */
 
@@ -1077,7 +1077,7 @@ TEST(GuiLine, New)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_line_hook_update
  */
 
@@ -1087,7 +1087,7 @@ TEST(GuiLine, HookUpdate)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_line_add
  */
 
@@ -1097,7 +1097,7 @@ TEST(GuiLine, Add)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_line_add_y
  */
 
@@ -1107,7 +1107,7 @@ TEST(GuiLine, AddY)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_line_clear
  */
 
@@ -1117,7 +1117,7 @@ TEST(GuiLine, Clear)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_line_mix_buffers
  */
 
@@ -1127,7 +1127,7 @@ TEST(GuiLine, MixBuffers)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_line_hdata_lines_cb
  */
 
@@ -1137,7 +1137,7 @@ TEST(GuiLine, HdataLinesCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_line_hdata_line_cb
  */
 
@@ -1147,7 +1147,7 @@ TEST(GuiLine, HdataLineCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_line_hdata_line_data_update_cb
  */
 
@@ -1157,7 +1157,7 @@ TEST(GuiLine, HdataLineDataUpdateCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_line_hdata_line_data_cb
  */
 
@@ -1167,7 +1167,7 @@ TEST(GuiLine, HdataLineDataCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_line_add_to_infolist
  */
 
@@ -1177,7 +1177,7 @@ TEST(GuiLine, AddToInfolist)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_lines_print_log
  */
 

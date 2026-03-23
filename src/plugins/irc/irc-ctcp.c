@@ -55,7 +55,7 @@ struct t_irc_ctcp_reply irc_ctcp_default_reply[] =
 
 
 /*
- * Converts old CTCP format, by converting format "$xxx" to "${xxx}"
+ * Convert old CTCP format, by converting format "$xxx" to "${xxx}"
  * (new CTCP formats are evaluated).
  *
  * Note: result must be freed after use.
@@ -104,9 +104,9 @@ irc_ctcp_convert_legacy_format (const char *format)
 }
 
 /*
- * Gets default reply for a CTCP query.
+ * Get default reply for a CTCP query.
  *
- * Returns NULL if CTCP is unknown.
+ * Return NULL if CTCP is unknown.
  */
 
 const char *
@@ -125,7 +125,7 @@ irc_ctcp_get_default_reply (const char *ctcp)
 }
 
 /*
- * Gets reply for a CTCP query.
+ * Get reply for a CTCP query.
  */
 
 const char *
@@ -171,7 +171,7 @@ irc_ctcp_get_reply (struct t_irc_server *server, const char *ctcp)
 }
 
 /*
- * Extracts CTCP type and arguments from message, which format is:
+ * Extract CTCP type and arguments from message, which format is:
  *   \001TYPE arguments...\001
  *
  * Strings *type and *arguments are set with type and arguments parsed,
@@ -210,7 +210,7 @@ irc_ctcp_parse_type_arguments (const char *message,
 }
 
 /*
- * Displays CTCP requested by a nick.
+ * Display CTCP requested by a nick.
  */
 
 void
@@ -246,7 +246,7 @@ irc_ctcp_display_request (struct t_irc_protocol_ctxt *ctxt,
 }
 
 /*
- * Displays reply from a nick to a CTCP query.
+ * Display reply from a nick to a CTCP query.
  */
 
 void
@@ -359,7 +359,7 @@ irc_ctcp_display_reply_from_nick (struct t_irc_protocol_ctxt *ctxt,
 }
 
 /*
- * Displays CTCP reply to a nick (internal function).
+ * Display CTCP reply to a nick (internal function).
  */
 
 void
@@ -388,7 +388,7 @@ irc_ctcp_display_reply_to_nick_internal (struct t_irc_protocol_ctxt *ctxt,
 }
 
 /*
- * Displays CTCP reply to a nick.
+ * Display CTCP reply to a nick.
  */
 
 void
@@ -417,7 +417,7 @@ irc_ctcp_display_reply_to_nick (struct t_irc_protocol_ctxt *ctxt,
 }
 
 /*
- * Replies to CTCP from a nick and displays reply.
+ * Reply to CTCP from a nick and displays reply.
  */
 
 void
@@ -500,7 +500,7 @@ end:
 }
 
 /*
- * Compares two CTCPs in arraylist.
+ * Compare two CTCPs in arraylist.
  */
 
 int
@@ -515,7 +515,7 @@ irc_ctcp_list_ctcp_cmp_cb (void *data, struct t_arraylist *arraylist,
 }
 
 /*
- * Frees a CTCP in arraylist.
+ * Free a CTCP in arraylist.
  */
 
 void
@@ -530,7 +530,7 @@ irc_ctcp_list_ctcp_free_cb (void *data, struct t_arraylist *arraylist,
 }
 
 /*
- * Returns list of supported/configured CTCP replies, aggregation of these
+ * Return list of supported/configured CTCP replies, aggregation of these
  * lists:
  *
  *   - list of default CTCP replies (if not blocked)
@@ -617,7 +617,7 @@ irc_ctcp_get_supported_ctcp (struct t_irc_server *server)
 }
 
 /*
- * Evaluates CTCP reply format.
+ * Evaluate CTCP reply format.
  *
  * Note: result must be freed after use.
  */
@@ -788,7 +788,7 @@ irc_ctcp_eval_reply (struct t_irc_server *server, const char *format)
 }
 
 /*
- * Returns filename for DCC, without double quotes.
+ * Return filename for DCC, without double quotes.
  *
  * Note: result must be freed after use.
  */
@@ -808,7 +808,7 @@ irc_ctcp_dcc_filename_without_quotes (const char *filename)
 }
 
 /*
- * Parses CTCP DCC.
+ * Parse CTCP DCC.
  */
 
 void
@@ -1398,7 +1398,7 @@ irc_ctcp_recv_dcc (struct t_irc_protocol_ctxt *ctxt, const char *arguments)
 }
 
 /*
- * Receives a CTCP and if needed replies to query.
+ * Receive a CTCP and if needed replies to query.
  */
 
 void
@@ -1638,7 +1638,7 @@ irc_ctcp_recv (struct t_irc_protocol_ctxt *ctxt,
 }
 
 /*
- * Sends a CTCP to a target.
+ * Send a CTCP to a target.
  */
 
 void

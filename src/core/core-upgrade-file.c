@@ -48,7 +48,7 @@ struct t_upgrade_file *last_upgrade_file = NULL;
 
 
 /*
- * Displays an error with upgrade.
+ * Display an error with upgrade.
  */
 
 void
@@ -85,9 +85,9 @@ upgrade_file_error (struct t_upgrade_file *upgrade_file, char *message1,
 }
 
 /*
- * Writes an integer value in upgrade file.
+ * Write an integer value in upgrade file.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -102,9 +102,9 @@ upgrade_file_write_integer (struct t_upgrade_file *upgrade_file, int value)
 }
 
 /*
- * Writes a time value in upgrade file.
+ * Write a time value in upgrade file.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -119,9 +119,9 @@ upgrade_file_write_time (struct t_upgrade_file *upgrade_file, time_t date)
 }
 
 /*
- * Writes a string in upgrade file.
+ * Write a string in upgrade file.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -150,9 +150,9 @@ upgrade_file_write_string (struct t_upgrade_file *upgrade_file,
 }
 
 /*
- * Writes a buffer in upgrade file.
+ * Write a buffer in upgrade file.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -178,11 +178,11 @@ upgrade_file_write_buffer (struct t_upgrade_file *upgrade_file, void *pointer,
 }
 
 /*
- * Creates an upgrade file.
+ * Create an upgrade file.
  *
  * If write == 1, then opens in write mode, otherwise in read mode.
  *
- * Returns pointer to new upgrade file, NULL if error.
+ * Return pointer to new upgrade file, NULL if error.
  */
 
 struct t_upgrade_file *
@@ -255,9 +255,9 @@ upgrade_file_new (const char *filename,
 }
 
 /*
- * Writes an object in upgrade file.
+ * Write an object in upgrade file.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -414,9 +414,9 @@ upgrade_file_write_object (struct t_upgrade_file *upgrade_file, int object_id,
 }
 
 /*
- * Reads an integer in upgrade file.
+ * Read an integer in upgrade file.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -441,9 +441,9 @@ upgrade_file_read_integer (struct t_upgrade_file *upgrade_file, int *value)
 }
 
 /*
- * Reads a string in upgrade file.
+ * Read a string in upgrade file.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -491,9 +491,9 @@ upgrade_file_read_string (struct t_upgrade_file *upgrade_file, char **string)
 }
 
 /*
- * Reads a buffer in upgrade file.
+ * Read a buffer in upgrade file.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -537,9 +537,9 @@ upgrade_file_read_buffer (struct t_upgrade_file *upgrade_file,
 }
 
 /*
- * Reads time in upgrade file.
+ * Read time in upgrade file.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -565,9 +565,9 @@ upgrade_file_read_time (struct t_upgrade_file *upgrade_file, time_t *time)
 }
 
 /*
- * Reads an object in upgrade file and calls read callback.
+ * Read an object in upgrade file and calls read callback.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -716,9 +716,9 @@ end:
 }
 
 /*
- * Reads an upgrade file.
+ * Read an upgrade file.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -758,7 +758,7 @@ upgrade_file_read (struct t_upgrade_file *upgrade_file)
 }
 
 /*
- * Closes and frees an upgrade file.
+ * Close and frees an upgrade file.
  */
 
 void

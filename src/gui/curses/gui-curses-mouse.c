@@ -84,7 +84,7 @@ char *gui_mouse_button_utf8_codes[][2] =
 
 
 /*
- * Enables mouse.
+ * Enable mouse.
  */
 
 void
@@ -99,7 +99,7 @@ gui_mouse_enable (void)
 }
 
 /*
- * Disables mouse.
+ * Disable mouse.
  */
 
 void
@@ -114,7 +114,7 @@ gui_mouse_disable (void)
 }
 
 /*
- * Displays state of mouse.
+ * Display state of mouse.
  */
 
 void
@@ -126,7 +126,7 @@ gui_mouse_display_state (void)
 }
 
 /*
- * Initializes "grab mode".
+ * Initialize "grab mode".
  */
 
 void
@@ -136,7 +136,7 @@ gui_mouse_grab_init (int area)
 }
 
 /*
- * Gets area for input, according to (x,y) of mouse event.
+ * Get area for input, according to (x,y) of mouse event.
  *
  * For example: @item(buffer_nicklist)
  *              @bar(title)
@@ -181,7 +181,7 @@ gui_mouse_grab_event2input (void)
 }
 
 /*
- * Ends "grab mode".
+ * End "grab mode".
  */
 
 void
@@ -216,7 +216,7 @@ gui_mouse_grab_end (const char *mouse_key)
 }
 
 /*
- * Returns size of mouse event (SGR and UTF-8 events are supported):
+ * Return size of mouse event (SGR and UTF-8 events are supported):
  *     -1: not a mouse event
  *      0: incomplete mouse event
  *    > 0: complete mouse event
@@ -265,7 +265,7 @@ gui_mouse_event_size (const char *key)
 }
 
 /*
- * Concatenates the mouse event gesture in a key (containing the button name).
+ * Concatenate the mouse event gesture in a key (containing the button name).
  *
  * Note: *key must be long enough for the gesture added by this function
  * (see below).
@@ -349,7 +349,7 @@ gui_mouse_event_concat_gesture (char *key)
 }
 
 /*
- * Gets mouse event name with a SGR mouse event.
+ * Get mouse event name with a SGR mouse event.
  */
 
 const char *
@@ -482,7 +482,7 @@ error:
 }
 
 /*
- * Gets mouse event name with a UTF-8 mouse event: if the key is invalid UTF-8,
+ * Get mouse event name with a UTF-8 mouse event: if the key is invalid UTF-8,
  * use the 3 bytes, otherwise 3 UTF-8 chars.
  */
 
@@ -596,7 +596,7 @@ gui_mouse_event_name_utf8 (const char *key)
 }
 
 /*
- * Processes a mouse event.
+ * Process a mouse event.
  */
 
 void

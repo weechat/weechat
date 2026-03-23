@@ -54,7 +54,7 @@ struct t_hashtable *gui_nicklist_hsignal = NULL;
 
 
 /*
- * Sends a signal when something has changed in nicklist.
+ * Send a signal when something has changed in nicklist.
  */
 
 void
@@ -83,7 +83,7 @@ gui_nicklist_send_signal (const char *signal, struct t_gui_buffer *buffer,
 }
 
 /*
- * Sends a hsignal when something will change or has changed in nicklist.
+ * Send a hsignal when something will change or has changed in nicklist.
  */
 
 void
@@ -116,7 +116,7 @@ gui_nicklist_send_hsignal (const char *signal, struct t_gui_buffer *buffer,
 }
 
 /*
- * Searches for position of a group (to keep nicklist sorted).
+ * Search for position of a group (to keep nicklist sorted).
  */
 
 struct t_gui_nick_group *
@@ -136,7 +136,7 @@ gui_nicklist_find_pos_group (struct t_gui_nick_group *groups,
 }
 
 /*
- * Inserts group into sorted list.
+ * Insert group into sorted list.
  */
 
 void
@@ -180,10 +180,10 @@ gui_nicklist_insert_group_sorted (struct t_gui_nick_group **groups,
 }
 
 /*
- * Searches for a group in nicklist by id (this function must not be called
+ * Search for a group in nicklist by id (this function must not be called
  * directly).
  *
- * Returns pointer to group found, NULL if not found.
+ * Return pointer to group found, NULL if not found.
  */
 
 struct t_gui_nick_group *
@@ -218,10 +218,10 @@ gui_nicklist_search_group_id (struct t_gui_buffer *buffer,
 }
 
 /*
- * Searches for a group in nicklist by name (this function must not be called
+ * Search for a group in nicklist by name (this function must not be called
  * directly).
  *
- * Returns pointer to group found, NULL if not found.
+ * Return pointer to group found, NULL if not found.
  */
 
 struct t_gui_nick_group *
@@ -264,9 +264,9 @@ gui_nicklist_search_group_name (struct t_gui_buffer *buffer,
 }
 
 /*
- * Searches for a group in nicklist.
+ * Search for a group in nicklist.
  *
- * Returns pointer to group found, NULL if not found.
+ * Return pointer to group found, NULL if not found.
  */
 
 struct t_gui_nick_group *
@@ -298,7 +298,7 @@ gui_nicklist_search_group (struct t_gui_buffer *buffer,
 }
 
 /*
- * Returns a new unique id for a group/nick.
+ * Return a new unique id for a group/nick.
  *
  * The id is the current time with microseconds precision.
  * The same time (including microseconds) can be used only one time, so that
@@ -327,9 +327,9 @@ gui_nicklist_generate_id (struct t_gui_buffer *buffer)
 }
 
 /*
- * Adds a group to nicklist with identifier (internal use).
+ * Add a group to nicklist with identifier (internal use).
  *
- * Returns pointer to new group, NULL if error.
+ * Return pointer to new group, NULL if error.
  */
 
 struct t_gui_nick_group *
@@ -388,9 +388,9 @@ gui_nicklist_add_group_with_id (struct t_gui_buffer *buffer, long long id,
 }
 
 /*
- * Adds a group to nicklist.
+ * Add a group to nicklist.
  *
- * Returns pointer to new group, NULL if error.
+ * Return pointer to new group, NULL if error.
  */
 
 struct t_gui_nick_group *
@@ -411,7 +411,7 @@ gui_nicklist_add_group (struct t_gui_buffer *buffer,
 }
 
 /*
- * Searches for position of a nick (to keep nicklist sorted).
+ * Search for position of a nick (to keep nicklist sorted).
  */
 
 struct t_gui_nick *
@@ -434,7 +434,7 @@ gui_nicklist_find_pos_nick (struct t_gui_nick_group *group,
 }
 
 /*
- * Inserts nick into sorted list.
+ * Insert nick into sorted list.
  */
 
 void
@@ -477,10 +477,10 @@ gui_nicklist_insert_nick_sorted (struct t_gui_nick_group *group,
 }
 
 /*
- * Searches for a nick in nicklist by id (this function must not be called
+ * Search for a nick in nicklist by id (this function must not be called
  * directly).
  *
- * Returns pointer to nick found, NULL if not found.
+ * Return pointer to nick found, NULL if not found.
  */
 
 struct t_gui_nick *
@@ -512,10 +512,10 @@ gui_nicklist_search_nick_id (struct t_gui_buffer *buffer,
 }
 
 /*
- * Searches for a nick in nicklist by name (this function must not be called
+ * Search for a nick in nicklist by name (this function must not be called
  * directly).
  *
- * Returns pointer to nick found, NULL if not found.
+ * Return pointer to nick found, NULL if not found.
  */
 
 struct t_gui_nick *
@@ -559,9 +559,9 @@ gui_nicklist_search_nick_name (struct t_gui_buffer *buffer,
 }
 
 /*
- * Searches for a nick in nicklist.
+ * Search for a nick in nicklist.
  *
- * Returns pointer to nick found, NULL if not found.
+ * Return pointer to nick found, NULL if not found.
  */
 
 struct t_gui_nick *
@@ -590,9 +590,9 @@ gui_nicklist_search_nick (struct t_gui_buffer *buffer,
 }
 
 /*
- * Adds a nick to nicklist with identifier (internal use).
+ * Add a nick to nicklist with identifier (internal use).
  *
- * Returns pointer to new nick, NULL if error.
+ * Return pointer to new nick, NULL if error.
  */
 
 struct t_gui_nick *
@@ -642,9 +642,9 @@ gui_nicklist_add_nick_with_id (struct t_gui_buffer *buffer, long long id,
 }
 
 /*
- * Adds a nick to nicklist.
+ * Add a nick to nicklist.
  *
- * Returns pointer to new nick, NULL if error.
+ * Return pointer to new nick, NULL if error.
  */
 
 struct t_gui_nick *
@@ -669,7 +669,7 @@ gui_nicklist_add_nick (struct t_gui_buffer *buffer,
 }
 
 /*
- * Removes a nick from a group.
+ * Remove a nick from a group.
  */
 
 void
@@ -724,7 +724,7 @@ gui_nicklist_remove_nick (struct t_gui_buffer *buffer,
 }
 
 /*
- * Removes a group from nicklist.
+ * Remove a group from nicklist.
  */
 
 void
@@ -793,7 +793,7 @@ gui_nicklist_remove_group (struct t_gui_buffer *buffer,
 }
 
 /*
- * Removes all nicks in nicklist.
+ * Remove all nicks in nicklist.
  */
 
 void
@@ -816,7 +816,7 @@ gui_nicklist_remove_all (struct t_gui_buffer *buffer)
 }
 
 /*
- * Gets next item (group or nick) of a group/nick.
+ * Get next item (group or nick) of a group/nick.
  */
 
 void
@@ -896,10 +896,10 @@ gui_nicklist_get_next_item (struct t_gui_buffer *buffer,
 }
 
 /*
- * Returns first char of a group that will be displayed on screen.
+ * Return first char of a group that will be displayed on screen.
  *
- * If name begins with some digits followed by '|', then start is after '|',
- * otherwise it's beginning of name.
+ * If name begins with some digits followed by '|', start after '|',
+ * otherwise start at beginning of name.
  */
 
 const char *
@@ -921,7 +921,7 @@ gui_nicklist_get_group_start (const char *name)
 }
 
 /*
- * Computes visible_count variable for a nicklist.
+ * Compute visible_count variable for a nicklist.
  */
 
 void
@@ -960,7 +960,7 @@ gui_nicklist_compute_visible_count (struct t_gui_buffer *buffer,
 }
 
 /*
- * Gets a group property as integer.
+ * Get a group property as integer.
  */
 
 int
@@ -983,7 +983,7 @@ gui_nicklist_group_get_integer (struct t_gui_buffer *buffer,
 }
 
 /*
- * Gets a group property as string.
+ * Get a group property as string.
  */
 
 const char *
@@ -1006,7 +1006,7 @@ gui_nicklist_group_get_string (struct t_gui_buffer *buffer,
 }
 
 /*
- * Gets a group property as pointer.
+ * Get a group property as pointer.
  */
 
 void *
@@ -1027,7 +1027,7 @@ gui_nicklist_group_get_pointer (struct t_gui_buffer *buffer,
 }
 
 /*
- * Sets a group property (string).
+ * Set a group property (string).
  */
 
 void
@@ -1080,7 +1080,7 @@ gui_nicklist_group_set (struct t_gui_buffer *buffer,
 }
 
 /*
- * Gets a nick property as integer.
+ * Get a nick property as integer.
  */
 
 int
@@ -1101,7 +1101,7 @@ gui_nicklist_nick_get_integer (struct t_gui_buffer *buffer,
 }
 
 /*
- * Gets a nick property as string.
+ * Get a nick property as string.
  */
 
 const char *
@@ -1128,7 +1128,7 @@ gui_nicklist_nick_get_string (struct t_gui_buffer *buffer,
 }
 
 /*
- * Gets a nick property as pointer.
+ * Get a nick property as pointer.
  */
 
 void *
@@ -1149,7 +1149,7 @@ gui_nicklist_nick_get_pointer (struct t_gui_buffer *buffer,
 }
 
 /*
- * Sets a nick property (string).
+ * Set a nick property (string).
  */
 
 void
@@ -1214,7 +1214,7 @@ gui_nicklist_nick_set (struct t_gui_buffer *buffer,
 }
 
 /*
- * Returns hdata for nick_group.
+ * Return hdata for nick_group.
  */
 
 struct t_hdata *
@@ -1248,7 +1248,7 @@ gui_nicklist_hdata_nick_group_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns hdata for nick.
+ * Return hdata for nick.
  */
 
 struct t_hdata *
@@ -1279,9 +1279,9 @@ gui_nicklist_hdata_nick_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds a group in an infolist.
+ * Add a group in an infolist.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -1323,9 +1323,9 @@ gui_nicklist_add_group_to_infolist (struct t_infolist *infolist,
 }
 
 /*
- * Adds a nick in an infolist.
+ * Add a nick in an infolist.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -1369,9 +1369,9 @@ gui_nicklist_add_nick_to_infolist (struct t_infolist *infolist,
 }
 
 /*
- * Adds a nicklist in an infolist.
+ * Add a nicklist in an infolist.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -1422,7 +1422,7 @@ gui_nicklist_add_to_infolist (struct t_infolist *infolist,
 }
 
 /*
- * Prints nicklist infos in WeeChat log file (usually for crash dump).
+ * Print nicklist infos in WeeChat log file (usually for crash dump).
  */
 
 void
@@ -1539,7 +1539,7 @@ gui_nicklist_print_log (struct t_gui_nick_group *group, int indent)
 }
 
 /*
- * Frees all allocated data.
+ * Free all allocated data.
  */
 
 void

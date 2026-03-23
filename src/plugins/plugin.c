@@ -88,9 +88,9 @@ void plugin_remove (struct t_weechat_plugin *plugin);
 
 
 /*
- * Checks if a plugin pointer is valid.
+ * Check if a plugin pointer is valid.
  *
- * Returns:
+ * Return:
  *   1: plugin exists
  *   0: plugin does not exist
  */
@@ -115,9 +115,9 @@ plugin_valid (struct t_weechat_plugin *plugin)
 }
 
 /*
- * Searches for a plugin by name.
+ * Search for a plugin by name.
  *
- * Returns pointer to plugin found, NULL if not found.
+ * Return pointer to plugin found, NULL if not found.
  */
 
 struct t_weechat_plugin *
@@ -140,7 +140,7 @@ plugin_search (const char *name)
 }
 
 /*
- * Gets name of a plugin with a pointer.
+ * Get name of a plugin with a pointer.
  */
 
 const char *
@@ -152,10 +152,9 @@ plugin_get_name (struct t_weechat_plugin *plugin)
 }
 
 /*
- * Checks if extension of filename is allowed by option
- * "weechat.plugin.extension".
+ * Check if extension of filename is allowed by option "weechat.plugin.extension".
  *
- * Returns:
+ * Return:
  *   1: extension allowed
  *   0: extension not allowed
  */
@@ -192,11 +191,11 @@ plugin_check_extension_allowed (const char *filename)
 }
 
 /*
- * Checks if a plugin can be autoloaded.
+ * Check if a plugin can be autoloaded.
  *
  * List of autoloaded plugins is set in option "weechat.plugin.autoload".
  *
- * Returns:
+ * Return:
  *   1: plugin can be autoloaded
  *   0: plugin cannot be autoloaded
  */
@@ -270,7 +269,7 @@ plugin_check_autoload (const char *filename)
 }
 
 /*
- * Returns arguments for plugins (only the relevant arguments for plugins,
+ * Return arguments for plugins (only the relevant arguments for plugins,
  * arguments for WeeChat core not returned).
  *
  * Note: plugin_argv must be freed after use.
@@ -327,9 +326,9 @@ plugin_get_args (int argc, char **argv,
 }
 
 /*
- * Initializes a plugin by calling its init() function.
+ * Initialize a plugin by calling its init() function.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -391,12 +390,12 @@ plugin_call_init (struct t_weechat_plugin *plugin, int argc, char **argv)
 }
 
 /*
- * Loads a WeeChat plugin (a dynamic library).
+ * Load a WeeChat plugin (a dynamic library).
  *
  * If init_plugin == 1, then the init() function in plugin is called
  * (with argc/argv), otherwise the plugin is just loaded but not initialized.
  *
- * Returns a pointer to new WeeChat plugin, NULL if error.
+ * Return a pointer to new WeeChat plugin, NULL if error.
  */
 
 struct t_weechat_plugin *
@@ -1006,7 +1005,7 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
 }
 
 /*
- * Loads a file found by function plugin_auto_load, but only if this is really a
+ * Load a file found by function plugin_auto_load, but only if this is really a
  * dynamic library.
  */
 
@@ -1044,7 +1043,7 @@ plugin_arraylist_cmp_cb (void *data,
 }
 
 /*
- * Auto-loads WeeChat plugins, from user and system directories.
+ * Auto-load WeeChat plugins, from user and system directories.
  */
 
 void
@@ -1173,7 +1172,7 @@ plugin_auto_load (char *force_plugin_autoload,
 }
 
 /*
- * Removes a WeeChat plugin.
+ * Remove a WeeChat plugin.
  */
 
 void
@@ -1244,7 +1243,7 @@ plugin_remove (struct t_weechat_plugin *plugin)
 }
 
 /*
- * Unloads a WeeChat plugin.
+ * Unload a WeeChat plugin.
  */
 
 void
@@ -1276,7 +1275,7 @@ plugin_unload (struct t_weechat_plugin *plugin)
 }
 
 /*
- * Unloads a WeeChat plugin by name.
+ * Unload a WeeChat plugin by name.
  */
 
 void
@@ -1297,7 +1296,7 @@ plugin_unload_name (const char *name)
 }
 
 /*
- * Unloads all WeeChat plugins.
+ * Unload all WeeChat plugins.
  */
 
 void
@@ -1321,7 +1320,7 @@ plugin_unload_all (void)
 }
 
 /*
- * Reloads a WeeChat plugin by name.
+ * Reload a WeeChat plugin by name.
  */
 
 void
@@ -1351,7 +1350,7 @@ plugin_reload_name (const char *name, int argc, char **argv)
 }
 
 /*
- * Displays list of loaded plugins on one line.
+ * Display list of loaded plugins on one line.
  */
 
 void
@@ -1397,7 +1396,7 @@ plugin_display_short_list (void)
 }
 
 /*
- * Initializes plugin support.
+ * Initialize plugin support.
  */
 
 void
@@ -1415,7 +1414,7 @@ plugin_init (char *force_plugin_autoload, int argc, char *argv[])
 }
 
 /*
- * Ends plugin support.
+ * End plugin support.
  */
 
 void
@@ -1432,7 +1431,7 @@ plugin_end (void)
 }
 
 /*
- * Gets hdata for plugin.
+ * Get hdata for plugin.
  */
 
 struct t_hdata *
@@ -1472,9 +1471,9 @@ plugin_hdata_plugin_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds a plugin in an infolist.
+ * Add a plugin in an infolist.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -1531,7 +1530,7 @@ plugin_add_to_infolist (struct t_infolist *infolist,
 }
 
 /*
- * Prints plugins in WeeChat log file (usually for crash dump).
+ * Print plugins in WeeChat log file (usually for crash dump).
  */
 
 void

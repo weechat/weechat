@@ -40,7 +40,7 @@ TEST_GROUP(IrcMode)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_mode_get_arguments
  */
 

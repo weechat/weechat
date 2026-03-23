@@ -64,7 +64,7 @@ WeechatJsV8::~WeechatJsV8()
 }
 
 /*
- * Loads a javascript script.
+ * Load a javascript script.
  */
 
 bool
@@ -76,7 +76,7 @@ WeechatJsV8::load(Handle<String> source)
 }
 
 /*
- * Loads a javascript script.
+ * Load a javascript script.
  */
 
 bool
@@ -88,7 +88,7 @@ WeechatJsV8::load(const char *source)
 }
 
 /*
- * Executes a javascript script.
+ * Execute a javascript script.
  */
 
 bool
@@ -119,7 +119,7 @@ WeechatJsV8::execScript()
 }
 
 /*
- * Checks if a function with given name exists in script.
+ * Check if a function with given name exists in script.
  */
 
 bool
@@ -133,7 +133,7 @@ WeechatJsV8::functionExists(const char *function)
 }
 
 /*
- * Executes a function in a javascript script.
+ * Execute a function in a javascript script.
  */
 
 Handle<Value>
@@ -156,7 +156,7 @@ WeechatJsV8::execFunction(const char *function, int argc, Handle<Value> *argv)
 }
 
 /*
- * Sets something in the global.
+ * Set something in the global.
  */
 
 void
@@ -166,7 +166,7 @@ WeechatJsV8::addGlobal(Handle<String> key, Handle<Template> val)
 }
 
 /*
- * Sets something in the global.
+ * Set something in the global.
  */
 
 void

@@ -35,7 +35,7 @@ TEST_GROUP(IrcList)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_list_compare_cb
  */
 
@@ -45,7 +45,7 @@ TEST(IrcList, CompareCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_list_free_cb
  */
 
@@ -55,7 +55,7 @@ TEST(IrcList, FreeCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_list_buffer_set_localvar_filter
  */
 
@@ -65,7 +65,7 @@ TEST(IrcList, BufferSetLocalvarFilter)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_list_set_filter
  */
 
@@ -75,7 +75,7 @@ TEST(IrcList, SetFilter)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_list_set_sort
  */
 
@@ -85,7 +85,7 @@ TEST(IrcList, SetSort)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_list_add_channel_in_hashtable
  */
 
@@ -95,7 +95,7 @@ TEST(IrcList, AddChannelInHashtable)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_list_string_match
  */
 
@@ -105,7 +105,7 @@ TEST(IrcList, StringMatch)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_list_channel_match_filter
  */
 
@@ -115,7 +115,7 @@ TEST(IrcList, ChannelMatchFilter)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_list_filter_channels
  */
 
@@ -125,7 +125,7 @@ TEST(IrcList, FilterChannels)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_list_parse_messages
  */
 
@@ -135,7 +135,7 @@ TEST(IrcList, ParseMessages)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_list_buffer_set_title
  */
 
@@ -145,7 +145,7 @@ TEST(IrcList, BufferSetTitle)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_list_display_line
  */
 
@@ -155,7 +155,7 @@ TEST(IrcList, DisplayLine)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_list_buffer_refresh
  */
 
@@ -165,7 +165,7 @@ TEST(IrcList, BufferRefresh)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_list_set_current_line
  */
 
@@ -175,7 +175,7 @@ TEST(IrcList, SetCurrentLine)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_list_get_window_info
  */
 
@@ -185,7 +185,7 @@ TEST(IrcList, GetWindowInfo)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_list_check_line_outside_window
  */
 
@@ -195,7 +195,7 @@ TEST(IrcList, CheckLineOutsideWindow)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_list_window_scrolled_cb
  */
 
@@ -205,7 +205,7 @@ TEST(IrcList, WindowScrolledCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_list_move_line_relative
  */
 
@@ -215,7 +215,7 @@ TEST(IrcList, MoveLineRelative)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_list_move_line_absolute
  */
 
@@ -225,7 +225,7 @@ TEST(IrcList, MoveLineAbsolute)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_list_join_channel
  */
 
@@ -235,7 +235,7 @@ TEST(IrcList, JoinChannel)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_list_buffer_input_data_cb
  */
 
@@ -245,7 +245,7 @@ TEST(IrcList, BufferInputDataCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_list_create_buffer
  */
 
@@ -255,7 +255,7 @@ TEST(IrcList, CreateBuffer)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_list_hsignal_redirect_list_cb
  */
 
@@ -265,7 +265,7 @@ TEST(IrcList, HsignalRedirectListCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_list_export
  */
 
@@ -275,7 +275,7 @@ TEST(IrcList, Export)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_list_alloc
  */
 
@@ -297,7 +297,7 @@ TEST(IrcList, Alloc)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_list_free_data
  */
 
@@ -307,7 +307,7 @@ TEST(IrcList, FreeData)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_list_free
  */
 
@@ -317,7 +317,7 @@ TEST(IrcList, Free)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_list_hdata_list_channel_cb
  */
 
@@ -327,7 +327,7 @@ TEST(IrcList, HdataListChannelCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_list_hdata_list_cb
  */
 

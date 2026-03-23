@@ -35,7 +35,7 @@ TEST_GROUP(HookHsignal)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_hsignal_get_description
  */
 
@@ -45,7 +45,7 @@ TEST(HookHsignal, GetDescription)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_hsignal
  */
 
@@ -55,7 +55,7 @@ TEST(HookHsignal, Hsignal)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_hsignal_match
  */
 
@@ -65,7 +65,7 @@ TEST(HookHsignal, Match)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_hsignal_send
  */
 
@@ -75,7 +75,7 @@ TEST(HookHsignal, Send)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_hsignal_free_data
  */
 
@@ -85,7 +85,7 @@ TEST(HookHsignal, FreeData)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_hsignal_add_to_infolist
  */
 
@@ -95,7 +95,7 @@ TEST(HookHsignal, AddToInfolist)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_hsignal_print_log
  */
 

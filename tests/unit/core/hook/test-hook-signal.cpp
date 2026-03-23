@@ -36,7 +36,7 @@ TEST_GROUP(HookSignal)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_signal_get_description
  */
 
@@ -46,7 +46,7 @@ TEST(HookSignal, GetDescription)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_signal
  */
 
@@ -56,7 +56,7 @@ TEST(HookSignal, Signal)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_signal_match
  */
 
@@ -66,7 +66,7 @@ TEST(HookSignal, Match)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_signal_extract_flags
  */
 
@@ -143,7 +143,7 @@ TEST(HookSignal, ExtractFlags)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_signal_send
  */
 
@@ -153,7 +153,7 @@ TEST(HookSignal, Send)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_signal_free_data
  */
 
@@ -163,7 +163,7 @@ TEST(HookSignal, FreeData)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_signal_add_to_infolist
  */
 
@@ -173,7 +173,7 @@ TEST(HookSignal, AddToInfolist)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_signal_print_log
  */
 

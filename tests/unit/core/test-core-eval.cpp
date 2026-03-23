@@ -52,7 +52,7 @@ TEST_GROUP(CoreEval)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   eval_is_true
  */
 
@@ -71,7 +71,7 @@ TEST(CoreEval, IsTrue)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   eval_expression (condition)
  */
 
@@ -448,7 +448,7 @@ TEST(CoreEval, EvalCondition)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   eval_expression (expression)
  */
 
@@ -1124,7 +1124,7 @@ TEST(CoreEval, EvalExpression)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   eval_expression (replace with regex)
  */
 

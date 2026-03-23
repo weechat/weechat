@@ -32,7 +32,7 @@
 
 
 /*
- * Adds script languages (python, perl, ruby, ...) to completion list.
+ * Add script languages (python, perl, ruby, ...) to completion list.
  */
 
 int
@@ -60,7 +60,7 @@ script_completion_languages_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds script extensions (py, pl, rb, ...) to completion list.
+ * Add script extensions (py, pl, rb, ...) to completion list.
  */
 
 int
@@ -88,7 +88,7 @@ script_completion_extensions_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds scripts to completion list.
+ * Add scripts to completion list.
  */
 
 int
@@ -117,7 +117,7 @@ script_completion_scripts_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds installed scripts to completion list.
+ * Add installed scripts to completion list.
  */
 
 int
@@ -149,7 +149,7 @@ script_completion_scripts_installed_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds files in script directories to completion list.
+ * Add files in script directories to completion list.
  */
 
 void
@@ -182,7 +182,7 @@ script_completion_exec_file_cb (void *data, const char *filename)
 }
 
 /*
- * Adds files in script directories to completion list.
+ * Add files in script directories to completion list.
  */
 
 int
@@ -235,7 +235,7 @@ script_completion_scripts_files_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds tags from scripts in repository to completion list.
+ * Add tags from scripts in repository to completion list.
  */
 
 int
@@ -285,7 +285,7 @@ script_completion_tags_cb (const void *pointer, void *data,
 }
 
 /*
- * Hooks completions.
+ * Hook completions.
  */
 
 void

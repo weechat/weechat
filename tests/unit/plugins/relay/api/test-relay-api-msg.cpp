@@ -73,7 +73,7 @@ TEST_GROUP(RelayApiMsg)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_api_msg_send_json_internal
  */
 
@@ -83,7 +83,7 @@ TEST(RelayApiMsg, SendJsonInternal)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_api_msg_send_json
  */
 
@@ -93,7 +93,7 @@ TEST(RelayApiMsg, SendJson)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_api_msg_send_error_json
  */
 
@@ -103,7 +103,7 @@ TEST(RelayApiMsg, SendErrorJson)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_api_msg_send_event
  */
 
@@ -113,7 +113,7 @@ TEST(RelayApiMsg, SendEvent)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_api_msg_buffer_add_local_vars_cb
  *   relay_api_msg_buffer_to_json
  *   relay_api_msg_nick_to_json
@@ -383,7 +383,7 @@ TEST(RelayApiMsg, BufferToJson)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_api_msg_line_data_to_json
  *   relay_api_msg_lines_to_json
  */
@@ -518,7 +518,7 @@ TEST(RelayApiMsg, LinesToJson)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_api_msg_completion_to_json
  */
 
@@ -589,7 +589,7 @@ TEST(RelayApiMsg, CompletionToJson)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_api_msg_hotlist_to_json
  */
 

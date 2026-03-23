@@ -108,7 +108,7 @@
 
 
 /*
- * Converts a guile string into a C string.
+ * Convert a guile string into a C string.
  *
  * The result is stored in an array, and will be freed later by a call to
  * weechat_guile_free_strings().
@@ -136,7 +136,7 @@ weechat_guile_api_scm_to_string (SCM str,
 }
 
 /*
- * Frees all allocated strings in "guile_strings".
+ * Free all allocated strings in "guile_strings".
  */
 
 void
@@ -153,7 +153,7 @@ weechat_guile_api_free_strings (char *guile_strings[], int *guile_num_strings)
 }
 
 /*
- * Registers a guile script.
+ * Register a guile script.
  */
 
 SCM
@@ -5417,7 +5417,7 @@ weechat_guile_api_upgrade_close (SCM upgrade_file)
 }
 
 /*
- * Initializes guile functions and constants.
+ * Initialize guile functions and constants.
  */
 
 void

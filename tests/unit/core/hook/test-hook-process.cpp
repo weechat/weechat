@@ -35,7 +35,7 @@ TEST_GROUP(HookProcess)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_process_get_description
  */
 
@@ -45,7 +45,7 @@ TEST(HookProcess, GetDescription)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_process_hashtable
  */
 
@@ -55,7 +55,7 @@ TEST(HookProcess, Hashtable)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_process
  */
 
@@ -65,7 +65,7 @@ TEST(HookProcess, Process)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_process_child
  */
 
@@ -75,7 +75,7 @@ TEST(HookProcess, Child)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_process_send_buffers
  */
 
@@ -85,7 +85,7 @@ TEST(HookProcess, SendBuffers)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_process_add_to_buffer
  */
 
@@ -95,7 +95,7 @@ TEST(HookProcess, AddToBuffer)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_process_child_read
  */
 
@@ -105,7 +105,7 @@ TEST(HookProcess, ChildRead)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_process_child_read_stdout_cb
  */
 
@@ -115,7 +115,7 @@ TEST(HookProcess, ChildReadStdoutCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_process_child_read_stderr_cb
  */
 
@@ -125,7 +125,7 @@ TEST(HookProcess, ChildReadStderrCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_process_child_read_until_eof
  */
 
@@ -135,7 +135,7 @@ TEST(HookProcess, ChildReadUntilEof)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_process_timer_cb
  */
 
@@ -145,7 +145,7 @@ TEST(HookProcess, TimerCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_process_run
  */
 
@@ -155,7 +155,7 @@ TEST(HookProcess, Run)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_process_exec
  */
 
@@ -165,7 +165,7 @@ TEST(HookProcess, Exec)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_process_free_data
  */
 
@@ -175,7 +175,7 @@ TEST(HookProcess, FreeData)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_process_add_to_infolist
  */
 
@@ -185,7 +185,7 @@ TEST(HookProcess, AddToInfolist)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_process_print_log
  */
 

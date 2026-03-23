@@ -141,7 +141,7 @@ TEST_GROUP(CoreHdata)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   hdata_new
  */
 
@@ -193,7 +193,7 @@ TEST(CoreHdata, New)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hdata_new_var
  */
 
@@ -265,7 +265,7 @@ TEST(CoreHdata, NewVar)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hdata_new_list
  */
 
@@ -830,7 +830,7 @@ TEST_GROUP(CoreHdataWithList)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   hdata_get_var_offset
  */
 
@@ -850,7 +850,7 @@ TEST(CoreHdataWithList, GetVarOffset)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hdata_get_var_type
  */
 
@@ -888,7 +888,7 @@ TEST(CoreHdataWithList, GetVarType)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hdata_get_var_type_string
  */
 
@@ -926,7 +926,7 @@ TEST(CoreHdataWithList, GetVarTypeString)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hdata_get_var_array_size
  */
 
@@ -1043,7 +1043,7 @@ TEST(CoreHdataWithList, GetVarArraySize)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hdata_get_var_array_size_string
  */
 
@@ -1200,7 +1200,7 @@ TEST(CoreHdataWithList, GetVarArraySizeString)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hdata_get_var_hdata
  */
 
@@ -1220,7 +1220,7 @@ TEST(CoreHdataWithList, GetVarHdata)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hdata_get_var
  */
 
@@ -1253,7 +1253,7 @@ TEST(CoreHdataWithList, GetVar)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hdata_get_var_at_offset
  */
 
@@ -1299,7 +1299,7 @@ TEST(CoreHdataWithList, GetVarAtOffset)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hdata_get_list
  */
 
@@ -1315,7 +1315,7 @@ TEST(CoreHdataWithList, GetList)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hdata_check_pointer
  */
 
@@ -1337,7 +1337,7 @@ TEST(CoreHdataWithList, Check)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hdata_move
  */
 
@@ -1365,7 +1365,7 @@ TEST(CoreHdataWithList, Move)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hdata_search
  */
 
@@ -1725,7 +1725,7 @@ TEST(CoreHdataWithList, Search)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hdata_count
  */
 
@@ -1740,7 +1740,7 @@ TEST(CoreHdataWithList, Count)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hdata_get_index_and_name
  */
 
@@ -1785,7 +1785,7 @@ TEST(CoreHdataWithList, GetIndexAndName)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hdata_char
  */
 
@@ -1819,7 +1819,7 @@ TEST(CoreHdataWithList, Char)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hdata_integer
  */
 
@@ -1863,7 +1863,7 @@ TEST(CoreHdataWithList, Integer)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hdata_long
  */
 
@@ -1905,7 +1905,7 @@ TEST(CoreHdataWithList, Long)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hdata_longlong
  */
 
@@ -1947,7 +1947,7 @@ TEST(CoreHdataWithList, LongLong)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hdata_string
  */
 
@@ -2070,7 +2070,7 @@ TEST(CoreHdataWithList, String)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hdata_pointer
  */
 
@@ -2126,7 +2126,7 @@ TEST(CoreHdataWithList, Pointer)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hdata_time
  */
 
@@ -2175,7 +2175,7 @@ TEST(CoreHdataWithList, Time)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hdata_hashtable
  */
 
@@ -2247,7 +2247,7 @@ TEST(CoreHdataWithList, Hashtable)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hdata_compare
  */
 
@@ -2375,7 +2375,7 @@ TEST(CoreHdataWithList, Compare)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hdata_set
  *   hdata_update
  */
@@ -2596,7 +2596,7 @@ TEST(CoreHdataWithList, Update)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hdata_get_string
  */
 
@@ -2657,7 +2657,7 @@ TEST(CoreHdataWithList, GetString)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hdata_free
  *   hdata_free_all_plugin
  *   hdata_free_all
@@ -2669,7 +2669,7 @@ TEST(CoreHdataWithList, Free)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hdata_print_log
  */
 

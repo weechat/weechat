@@ -404,7 +404,7 @@ config_change_sys_rlimit (const void *pointer, void *data,
 }
 
 /*
- * Checks option "weechat.look.config_permissions".
+ * Check option "weechat.look.config_permissions".
  */
 
 int
@@ -507,7 +507,7 @@ config_change_window_title (const void *pointer, void *data,
 }
 
 /*
- * Sets word chars array with a word chars option.
+ * Set word chars array with a word chars option.
  */
 
 void
@@ -762,7 +762,7 @@ config_change_buffer_time_same (const void *pointer, void *data,
 }
 
 /*
- * Computes the "prefix_max_length" on all buffers.
+ * Compute the "prefix_max_length" on all buffers.
  */
 
 void
@@ -781,7 +781,7 @@ config_compute_prefix_max_length_all_buffers (void)
 }
 
 /*
- * Sets nick colors using option "weechat.color.chat_nick_colors".
+ * Set nick colors using option "weechat.color.chat_nick_colors".
  */
 
 void
@@ -859,8 +859,7 @@ config_change_look_nick_color_force (const void *pointer, void *data,
 }
 
 /*
- * Sets eval syntax highlighting colors using option
- * "weechat.color.eval_syntax_colors".
+ * Set eval syntax highlighting colors using option "weechat.color.eval_syntax_colors".
  */
 
 void
@@ -1176,7 +1175,7 @@ config_change_item_time_format (const void *pointer, void *data,
 }
 
 /*
- * Gets the current time formatted for the bar item status.
+ * Get the current time formatted for the bar item status.
  */
 
 void
@@ -1265,7 +1264,7 @@ config_change_prefix_align_min (const void *pointer, void *data,
 }
 
 /*
- * Checks option "weechat.look.prefix_align_more".
+ * Check option "weechat.look.prefix_align_more".
  */
 
 int
@@ -1282,7 +1281,7 @@ config_check_prefix_align_more (const void *pointer, void *data,
 }
 
 /*
- * Checks option "weechat.look.prefix_buffer_align_more".
+ * Check option "weechat.look.prefix_buffer_align_more".
  */
 
 int
@@ -1299,7 +1298,7 @@ config_check_prefix_buffer_align_more (const void *pointer, void *data,
 }
 
 /*
- * Checks options "weechat.look.separator_{horizontal|vertical}".
+ * Check options "weechat.look.separator_{horizontal|vertical}".
  */
 
 int
@@ -1316,7 +1315,7 @@ config_check_separator (const void *pointer, void *data,
 }
 
 /*
- * Checks options "weechat.look.whitespace_char" and
+ * Check options "weechat.look.whitespace_char" and
  * "weechat.look.tab_whitespace_char".
  */
 
@@ -1473,8 +1472,7 @@ config_change_completion_nick_ignore_words (const void *pointer,
 }
 
 /*
- * Callback for changes on option
- * "weechat.completion.partial_completion_templates".
+ * Callback for changes on option "weechat.completion.partial_completion_templates".
  */
 
 void
@@ -1542,7 +1540,7 @@ config_change_network_gnutls_ca (const void *pointer, void *data,
 }
 
 /*
- * Checks option "weechat.network.proxy_curl".
+ * Check option "weechat.network.proxy_curl".
  */
 
 int
@@ -1602,9 +1600,9 @@ config_change_plugin_extension (const void *pointer, void *data,
 }
 
 /*
- * Timer called each minute: checks if the day has changed, and if yes:
- * - refreshes screen (if needed)
- * - sends signal "day_changed"
+ * Timer called each minute: check if the day has changed, and if yes:
+ * - refresh screen (if needed)
+ * - send signal "day_changed"
  */
 
 int
@@ -1652,7 +1650,7 @@ config_day_change_timer_cb (const void *pointer, void *data,
 }
 
 /*
- * Initializes some things after reading/reloading WeeChat configuration file.
+ * Initialize some things after reading/reloading WeeChat configuration file.
  */
 
 void
@@ -1701,7 +1699,7 @@ config_weechat_init_after_read (void)
 }
 
 /*
- * Updates options in configuration file while reading the file.
+ * Update options in configuration file while reading the file.
  */
 
 struct t_hashtable *
@@ -1939,9 +1937,9 @@ config_weechat_update_cb (const void *pointer, void *data,
 }
 
 /*
- * Reloads WeeChat configuration file.
+ * Reload WeeChat configuration file.
  *
- * Returns:
+ * Return:
  *   WEECHAT_CONFIG_READ_OK: OK
  *   WEECHAT_CONFIG_READ_MEMORY_ERROR: not enough memory
  *   WEECHAT_CONFIG_READ_FILE_NOT_FOUND: file not found
@@ -1994,7 +1992,7 @@ config_weechat_reload_cb (const void *pointer, void *data,
 }
 
 /*
- * Gets debug level for a plugin (or "core").
+ * Get debug level for a plugin (or "core").
  */
 
 struct t_config_option *
@@ -2006,8 +2004,7 @@ config_weechat_debug_get (const char *plugin_name)
 }
 
 /*
- * Sets debug level for "core" and all plugins, using values from section
- * "debug".
+ * Set debug level for "core" and all plugins, using values from section "debug".
  */
 
 void
@@ -2129,7 +2126,7 @@ config_weechat_debug_delete_option_cb (const void *pointer, void *data,
 }
 
 /*
- * Sets debug level for a plugin (or "core").
+ * Set debug level for a plugin (or "core").
  */
 
 int
@@ -2266,7 +2263,7 @@ config_weechat_palette_delete_option_cb (const void *pointer, void *data,
 }
 
 /*
- * Reads a proxy option in WeeChat configuration file.
+ * Read a proxy option in WeeChat configuration file.
  */
 
 int
@@ -2345,7 +2342,7 @@ config_weechat_proxy_read_cb (const void *pointer, void *data,
 }
 
 /*
- * Reads a bar option in WeeChat configuration file.
+ * Read a bar option in WeeChat configuration file.
  */
 
 int
@@ -2425,7 +2422,7 @@ config_weechat_bar_read_cb (const void *pointer, void *data,
 }
 
 /*
- * Reads a custom bar item option in WeeChat configuration file.
+ * Read a custom bar item option in WeeChat configuration file.
  */
 
 int
@@ -2515,7 +2512,7 @@ config_weechat_custom_bar_item_read_cb (const void *pointer, void *data,
 }
 
 /*
- * Reads a layout option in WeeChat configuration file.
+ * Read a layout option in WeeChat configuration file.
  */
 
 int
@@ -2646,9 +2643,9 @@ config_weechat_layout_read_cb (const void *pointer, void *data,
 }
 
 /*
- * Writes layout of windows in WeeChat configuration file.
+ * Write layout of windows in WeeChat configuration file.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: write error
  */
@@ -2689,7 +2686,7 @@ config_weechat_layout_write_tree (struct t_config_file *config_file,
 }
 
 /*
- * Writes section "layout" in WeeChat configuration file.
+ * Write section "layout" in WeeChat configuration file.
  */
 
 int
@@ -2749,7 +2746,7 @@ config_weechat_layout_write_cb (const void *pointer, void *data,
 }
 
 /*
- * Applies a buffer option to all matching buffers.
+ * Apply a buffer option to all matching buffers.
  */
 
 void
@@ -2871,9 +2868,9 @@ config_weechat_buffer_create_option_cb (const void *pointer, void *data,
 }
 
 /*
- * Sets a buffer property.
+ * Set a buffer property.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -3024,12 +3021,12 @@ config_weechat_notify_delete_option_cb (const void *pointer, void *data,
 }
 
 /*
- * Sets a notify level for a buffer.
+ * Set a notify level for a buffer.
  *
  * A negative value resets notify for buffer to its default value (and
  * removes buffer from config file).
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -3054,7 +3051,7 @@ config_weechat_notify_set (struct t_gui_buffer *buffer, const char *notify)
 }
 
 /*
- * Reads a filter option in WeeChat configuration file.
+ * Read a filter option in WeeChat configuration file.
  */
 
 int
@@ -3098,7 +3095,7 @@ config_weechat_filter_read_cb (const void *pointer, void *data,
 }
 
 /*
- * Writes section "filter" in WeeChat configuration file.
+ * Write section "filter" in WeeChat configuration file.
  */
 
 int
@@ -3132,9 +3129,9 @@ config_weechat_filter_write_cb (const void *pointer, void *data,
 }
 
 /*
- * Searches key context with the section pointer.
+ * Search key context with the section pointer.
  *
- * Returns key context, -1 if not found.
+ * Return key context, -1 if not found.
  */
 
 int
@@ -3223,9 +3220,9 @@ config_weechat_key_delete_option_cb (const void *pointer, void *data,
 }
 
 /*
- * Creates options in WeeChat configuration.
+ * Create options in WeeChat configuration.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -5599,9 +5596,9 @@ config_weechat_init_options (void)
 }
 
 /*
- * Initializes WeeChat configuration.
+ * Initialize WeeChat configuration.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -5661,9 +5658,9 @@ config_weechat_init (void)
 }
 
 /*
- * Reads WeeChat configuration file.
+ * Read WeeChat configuration file.
  *
- * Returns:
+ * Return:
  *   WEECHAT_CONFIG_READ_OK: OK
  *   WEECHAT_CONFIG_READ_MEMORY_ERROR: not enough memory
  *   WEECHAT_CONFIG_READ_FILE_NOT_FOUND: file not found
@@ -5684,9 +5681,9 @@ config_weechat_read (void)
 }
 
 /*
- * Writes WeeChat configuration file.
+ * Write WeeChat configuration file.
  *
- * Returns:
+ * Return:
  *   WEECHAT_CONFIG_WRITE_OK: OK
  *   WEECHAT_CONFIG_WRITE_ERROR: error
  *   WEECHAT_CONFIG_WRITE_MEMORY_ERROR: not enough memory
@@ -5699,7 +5696,7 @@ config_weechat_write (void)
 }
 
 /*
- * Frees WeeChat configuration file and variables.
+ * Free WeeChat configuration file and variables.
  */
 
 void

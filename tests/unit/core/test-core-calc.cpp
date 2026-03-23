@@ -62,7 +62,7 @@ TEST_GROUP(CoreCalc)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   calc_operator_precedence
  */
 
@@ -83,7 +83,7 @@ TEST(CoreCalc, OperatorPrecedence)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   calc_pop_value
  *   calc_list_free_cb
  */
@@ -128,7 +128,7 @@ TEST(CoreCalc, PopValue)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   calc_operation
  */
 
@@ -149,7 +149,7 @@ TEST(CoreCalc, Operation)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   calc_operation_stacks
  */
 
@@ -194,7 +194,7 @@ TEST(CoreCalc, OperationStacks)
 
 
 /*
- * Tests functions:
+ * Test functions:
  *   calc_sanitize_decimal_number
  */
 
@@ -216,7 +216,7 @@ TEST(CoreCalc, SanitizeDecimalNumber)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   calc_format_result
  */
 
@@ -241,7 +241,7 @@ TEST(CoreCalc, FormatResult)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   calc_expression
  */
 

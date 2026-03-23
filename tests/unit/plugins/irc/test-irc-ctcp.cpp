@@ -43,7 +43,7 @@ TEST_GROUP(IrcCtcp)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_ctcp_convert_legacy_format
  */
 
@@ -65,7 +65,7 @@ TEST(IrcCtcp, ConvertLegacyFormat)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_ctcp_get_default_reply
  */
 
@@ -75,7 +75,7 @@ TEST(IrcCtcp, GetDefaultReply)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_ctcp_get_reply
  */
 
@@ -85,7 +85,7 @@ TEST(IrcCtcp, GetReply)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_ctcp_display_request
  */
 
@@ -95,7 +95,7 @@ TEST(IrcCtcp, DisplayRequest)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_ctcp_display_reply_from_nick
  */
 
@@ -105,7 +105,7 @@ TEST(IrcCtcp, DisplayReplyFromNick)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_ctcp_reply_to_nick
  */
 
@@ -115,7 +115,7 @@ TEST(IrcCtcp, ReplyToNick)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_ctcp_get_supported_ctcp
  */
 
@@ -153,7 +153,7 @@ TEST(IrcCtcp, GetSupportedCtcp)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_ctcp_eval_reply
  */
 
@@ -250,7 +250,7 @@ TEST(IrcCtcp, EvalReply)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_ctcp_dcc_filename_without_quotes
  */
 
@@ -260,7 +260,7 @@ TEST(IrcCtcp, DccFilenameWithoutQuotes)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_ctcp_recv_dcc
  */
 
@@ -270,7 +270,7 @@ TEST(IrcCtcp, RecvDcc)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_ctcp_recv
  */
 
@@ -280,7 +280,7 @@ TEST(IrcCtcp, Recv)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_ctcp_send
  */
 

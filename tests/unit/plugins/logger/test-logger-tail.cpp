@@ -43,7 +43,7 @@ TEST_GROUP(LoggerTail)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   logger_tail_last_eol
  */
 
@@ -73,7 +73,7 @@ TEST(LoggerTail, LastEol)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   logger_tail_lines_cmp_cb
  *   logger_tail_lines_free_cb
  *   logger_tail_file

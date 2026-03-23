@@ -194,7 +194,7 @@ int irc_config_num_nicks_hide_password = 0;
 
 
 /*
- * Gets server pointer with name of option.
+ * Get server pointer with name of option.
  */
 
 struct t_irc_server *
@@ -223,7 +223,7 @@ irc_config_get_server_from_option_name (const char *name)
 }
 
 /*
- * Computes nick colors for all servers and channels.
+ * Compute nick colors for all servers and channels.
  */
 
 void
@@ -263,10 +263,10 @@ irc_config_compute_nick_colors (void)
 }
 
 /*
- * Checks if channel modes arguments must be displayed or hidden
+ * Check if channel modes arguments must be displayed or hidden
  * (according to option irc.look.item_channel_modes_hide_args).
  *
- * Returns:
+ * Return:
  *   1: channel modes arguments must be displayed
  *   0: channel modes arguments must be hidden
  */
@@ -645,10 +645,9 @@ irc_config_change_look_nicks_hide_password (const void *pointer, void *data,
 }
 
 /*
- * Checks if we must notify for the notice message, according to the nick
- * who sent it.
+ * Check if we must notify for the notice message, according to the nick who sent it.
  *
- * Returns:
+ * Return:
  *   1: notification
  *   0: no notification
  */
@@ -1179,9 +1178,9 @@ irc_config_server_default_change_cb (const void *pointer, void *data,
 }
 
 /*
- * Checks string with GnuTLS priorities.
+ * Check string with GnuTLS priorities.
  *
- * Returns NULL if OK, or pointer to char with error in string.
+ * Return NULL if OK, or pointer to char with error in string.
  */
 
 const char *
@@ -1206,11 +1205,11 @@ irc_config_check_gnutls_priorities (const char *priorities)
 }
 
 /*
- * Checks autojoin value, which must respect the IRC JOIN syntax:
+ * Check autojoin value, which must respect the IRC JOIN syntax:
  *   #chan1,#chan2
  *   #chan1,#chan2,#chan3 key1,key2
  *
- * Returns:
+ * Return:
  *   1: value OK
  *   0: invalid value
  */
@@ -1478,13 +1477,12 @@ irc_config_server_change_cb (const void *pointer, void *data,
 }
 
 /*
- * Callback called when "notify" option from "server_default" section is
- * changed.
+ * Callback called when "notify" option from "server_default" section is changed.
  *
  * This function is used to reject any value in the option (this option is not
  * used, only values in servers are used for notify).
  *
- * Returns:
+ * Return:
  *   1: value is not set
  *   0: value is set
  */
@@ -1506,7 +1504,7 @@ irc_config_server_default_check_notify (const void *pointer, void *data,
 }
 
 /*
- * Reloads IRC configuration file.
+ * Reload IRC configuration file.
  */
 
 int
@@ -1567,7 +1565,7 @@ irc_config_reload (const void *pointer, void *data,
 }
 
 /*
- * Sets a message target buffer.
+ * Set a message target buffer.
  */
 
 int
@@ -1652,7 +1650,7 @@ irc_config_msgbuffer_create_option_cb (const void *pointer, void *data,
 }
 
 /*
- * Writes default ctcp reply formats.
+ * Write default ctcp reply formats.
  */
 
 int
@@ -1682,7 +1680,7 @@ irc_config_ctcp_write_default_cb (const void *pointer, void *data,
 }
 
 /*
- * Sets a ctcp reply format.
+ * Set a ctcp reply format.
  */
 
 int
@@ -1781,9 +1779,9 @@ irc_config_ctcp_create_option_cb (const void *pointer, void *data,
 }
 
 /*
- * Reads ignore option from configuration file.
+ * Read ignore option from configuration file.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -1839,7 +1837,7 @@ irc_config_ignore_read_cb (const void *pointer, void *data,
 }
 
 /*
- * Writes ignore section in IRC configuration file.
+ * Write ignore section in IRC configuration file.
  */
 
 int
@@ -1872,9 +1870,9 @@ irc_config_ignore_write_cb (const void *pointer, void *data,
 }
 
 /*
- * Creates a new option for a server.
+ * Create a new option for a server.
  *
- * Returns pointer to new option, NULL if error.
+ * Return pointer to new option, NULL if error.
  */
 
 struct t_config_option *
@@ -2802,7 +2800,7 @@ irc_config_server_new_option (struct t_config_file *config_file,
 }
 
 /*
- * Reads server option in IRC configuration file.
+ * Read server option in IRC configuration file.
  */
 
 int
@@ -2872,7 +2870,7 @@ irc_config_server_read_cb (const void *pointer, void *data,
 }
 
 /*
- * Writes server section in IRC configuration file.
+ * Write server section in IRC configuration file.
  */
 
 int
@@ -2905,7 +2903,7 @@ irc_config_server_write_cb (const void *pointer, void *data,
 }
 
 /*
- * Creates default options for servers.
+ * Create default options for servers.
  */
 
 void
@@ -2933,7 +2931,7 @@ irc_config_server_create_default_options (struct t_config_section *section)
 }
 
 /*
- * Updates options in configuration file while reading the file.
+ * Update options in configuration file while reading the file.
  */
 
 struct t_hashtable *
@@ -3169,9 +3167,9 @@ irc_config_update_cb (const void *pointer, void *data,
 }
 
 /*
- * Initializes IRC configuration file.
+ * Initialize IRC configuration file.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -4241,7 +4239,7 @@ irc_config_init (void)
 }
 
 /*
- * Reads IRC configuration file.
+ * Read IRC configuration file.
  */
 
 int
@@ -4269,7 +4267,7 @@ irc_config_read (void)
 }
 
 /*
- * Writes IRC configuration file.
+ * Write IRC configuration file.
  */
 
 int
@@ -4279,7 +4277,7 @@ irc_config_write (void)
 }
 
 /*
- * Frees IRC configuration.
+ * Free IRC configuration.
  */
 
 void

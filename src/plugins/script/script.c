@@ -59,9 +59,9 @@ struct t_hook *script_timer_refresh = NULL;
 
 
 /*
- * Searches for a language.
+ * Search for a language.
  *
- * Returns index of language, -1 if not found.
+ * Return index of language, -1 if not found.
  */
 
 int
@@ -83,9 +83,9 @@ script_language_search (const char *language)
 }
 
 /*
- * Searches for a language by extension.
+ * Search for a language by extension.
  *
- * Returns index of language, -1 if not found.
+ * Return index of language, -1 if not found.
  */
 
 int
@@ -107,9 +107,9 @@ script_language_search_by_extension (const char *extension)
 }
 
 /*
- * Checks if download of scripts is enabled.
+ * Check if download of scripts is enabled.
  *
- * Returns:
+ * Return:
  *   0: download NOT enabled (an error is displayed if display_error is 1)
  *   1: download enabled
  */
@@ -133,7 +133,7 @@ script_download_enabled (int display_error)
 }
 
 /*
- * Gets loaded plugins (in array of integers).
+ * Get loaded plugins (in array of integers).
  */
 
 void
@@ -161,7 +161,7 @@ script_get_loaded_plugins (void)
 }
 
 /*
- * Gets scripts (in hashtable).
+ * Get scripts (in hashtable).
  */
 
 void
@@ -326,7 +326,7 @@ script_signal_script_cb (const void *pointer, void *data,
 }
 
 /*
- * Initializes script plugin.
+ * Initialize script plugin.
  */
 
 int
@@ -379,7 +379,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 }
 
 /*
- * Ends script plugin.
+ * End script plugin.
  */
 
 int

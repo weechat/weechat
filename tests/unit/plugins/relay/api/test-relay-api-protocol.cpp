@@ -238,7 +238,7 @@ TEST_GROUP(RelayApiProtocolWithClient)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_api_protocol_signal_buffer_cb
  */
 
@@ -248,7 +248,7 @@ TEST(RelayApiProtocol, SignalBufferCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_api_protocol_hsignal_nicklist_cb
  */
 
@@ -258,7 +258,7 @@ TEST(RelayApiProtocol, HsignalNicklistCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_api_protocol_signal_upgrade_cb
  */
 
@@ -268,7 +268,7 @@ TEST(RelayApiProtocol, SignalUpgradeCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_api_protocol_cb_options
  */
 
@@ -288,7 +288,7 @@ TEST(RelayApiProtocolWithClient, CbOptions)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_api_protocol_cb_handshake
  */
 
@@ -357,7 +357,7 @@ TEST(RelayApiProtocolWithClient, CbHandshake)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_api_protocol_cb_version
  */
 
@@ -377,7 +377,7 @@ TEST(RelayApiProtocolWithClient, CbVersion)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_api_protocol_cb_buffers
  */
 
@@ -550,7 +550,7 @@ TEST(RelayApiProtocolWithClient, CbBuffers)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_api_protocol_cb_hotlist
  */
 
@@ -612,7 +612,7 @@ TEST(RelayApiProtocolWithClient, CbHotlist)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_api_protocol_cb_completion
  */
 
@@ -691,7 +691,7 @@ TEST(RelayApiProtocolWithClient, CbCompletion)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_api_protocol_cb_input
  */
 
@@ -764,7 +764,7 @@ TEST(RelayApiProtocolWithClient, CbInput)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_api_protocol_cb_ping
  */
 
@@ -789,7 +789,7 @@ TEST(RelayApiProtocolWithClient, CbPing)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_api_protocol_cb_sync
  */
 
@@ -807,7 +807,7 @@ TEST(RelayApiProtocolWithClient, CbSync)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_api_protocol_cb_sync (websocket)
  */
 
@@ -870,7 +870,7 @@ TEST(RelayApiProtocolWithClient, CbSyncWebsocket)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_api_protocol_recv_json_request
  *   relay_api_protocol_recv_json
  */
@@ -964,7 +964,7 @@ TEST(RelayApiProtocolWithClient, RecvJson)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_api_protocol_recv_http (error 404)
  */
 
@@ -1022,7 +1022,7 @@ TEST(RelayApiProtocolWithClient, RecvHttp404)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_api_protocol_recv_http (missing password)
  */
 
@@ -1041,7 +1041,7 @@ TEST(RelayApiProtocolWithClient, RecvHttpMissingPassword)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_api_protocol_recv_http (invalid password)
  */
 
@@ -1061,7 +1061,7 @@ TEST(RelayApiProtocolWithClient, RecvHttpInvalidPassword)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_api_protocol_recv_http (method not allowed)
  */
 

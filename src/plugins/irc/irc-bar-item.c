@@ -38,7 +38,7 @@
 
 
 /*
- * Returns content of bar item "buffer_plugin": bar item with buffer plugin.
+ * Return content of bar item "buffer_plugin": bar item with buffer plugin.
  */
 
 char *
@@ -112,7 +112,7 @@ irc_bar_item_buffer_plugin (const void *pointer, void *data,
 }
 
 /*
- * Returns content of bar item "buffer_name": bar item with buffer name.
+ * Return content of bar item "buffer_name": bar item with buffer name.
  */
 
 char *
@@ -199,7 +199,7 @@ irc_bar_item_buffer_name_content (struct t_gui_buffer *buffer, int short_name)
 }
 
 /*
- * Returns content of bar item "buffer_name": bar item with buffer name.
+ * Return content of bar item "buffer_name": bar item with buffer name.
  */
 
 char *
@@ -220,8 +220,7 @@ irc_bar_item_buffer_name (const void *pointer, void *data,
 }
 
 /*
- * Returns content of bar item "buffer_short_name": bar item with buffer short
- * name.
+ * Return content of bar item "buffer_short_name": bar item with buffer short name.
  */
 
 char *
@@ -242,8 +241,7 @@ irc_bar_item_buffer_short_name (const void *pointer, void *data,
 }
 
 /*
- * Returns content of bar item "irc_channel": bar item with channel name
- * (without modes).
+ * Return content of bar item "irc_channel": bar item with channel name (without modes).
  */
 
 char *
@@ -322,8 +320,7 @@ irc_bar_item_channel (const void *pointer, void *data,
 }
 
 /*
- * Returns content of bar item "irc_nick": bar item with nick name
- * (without modes).
+ * Return content of bar item "irc_nick": bar item with nick name (without modes).
  */
 
 char *
@@ -357,7 +354,7 @@ irc_bar_item_nick (const void *pointer, void *data,
 }
 
 /*
- * Returns content of bar item "irc_host": bar item with self host.
+ * Return content of bar item "irc_host": bar item with self host.
  */
 
 char *
@@ -386,7 +383,7 @@ irc_bar_item_host (const void *pointer, void *data,
 }
 
 /*
- * Returns content of bar item "irc_nick_host": bar item with nick and host.
+ * Return content of bar item "irc_nick_host": bar item with nick and host.
  */
 
 char *
@@ -422,7 +419,7 @@ irc_bar_item_nick_host (const void *pointer, void *data,
 }
 
 /*
- * Returns content of bar item "lag": bar item with lag value.
+ * Return content of bar item "lag": bar item with lag value.
  */
 
 char *
@@ -463,7 +460,7 @@ irc_bar_item_lag (const void *pointer, void *data,
 }
 
 /*
- * Returns content of bar item "tls_version": bar item with TLS version value.
+ * Return content of bar item "tls_version": bar item with TLS version value.
  */
 
 char *
@@ -531,7 +528,7 @@ irc_bar_item_tls_version (const void *pointer, void *data,
 }
 
 /*
- * Returns content of bar item "nick_modes": bar item with nick modes.
+ * Return content of bar item "nick_modes": bar item with nick modes.
  */
 
 char *
@@ -566,7 +563,7 @@ irc_bar_item_nick_modes (const void *pointer, void *data,
 }
 
 /*
- * Returns content of bar item "nick_prefix": bar item with nick prefix.
+ * Return content of bar item "nick_prefix": bar item with nick prefix.
  */
 
 char *
@@ -703,7 +700,7 @@ irc_bar_item_buffer_switch (const void *pointer, void *data,
 }
 
 /*
- * Updates bar items with the channel.
+ * Update bar items with the channel.
  */
 
 void
@@ -715,7 +712,7 @@ irc_bar_item_update_channel (void)
 }
 
 /*
- * Initializes IRC bar items.
+ * Initialize IRC bar items.
  */
 
 void

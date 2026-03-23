@@ -102,7 +102,7 @@ TEST_GROUP(GuiHotlist)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_hotlist_changed_signal
  */
 
@@ -112,7 +112,7 @@ TEST(GuiHotlist, ChangedSignal)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_hotlist_search_priority
  */
 
@@ -129,7 +129,7 @@ TEST(GuiHotlist, SearchPriority)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_hotlist_search
  */
 
@@ -139,7 +139,7 @@ TEST(GuiHotlist, Search)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_hotlist_dup
  */
 
@@ -177,7 +177,7 @@ TEST(GuiHotlist, Dup)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_hotlist_free
  */
 
@@ -187,7 +187,7 @@ TEST(GuiHotlist, Free)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_hotlist_free_all
  */
 
@@ -203,7 +203,7 @@ TEST(GuiHotlist, FreeAll)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_hotlist_check_buffer_notify
  */
 
@@ -213,7 +213,7 @@ TEST(GuiHotlist, CheckBufferNotify)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_hotlist_compare_hotlists
  */
 
@@ -239,7 +239,7 @@ TEST(GuiHotlist, CompareHotlists)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_hotlist_find_pos
  */
 
@@ -249,7 +249,7 @@ TEST(GuiHotlist, FindPos)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_hotlist_add_hotlist
  */
 
@@ -259,7 +259,7 @@ TEST(GuiHotlist, AddHotlist)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_hotlist_add
  */
 
@@ -287,7 +287,7 @@ TEST(GuiHotlist, Add)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_hotlist_remove_buffer
  *   gui_hotlist_restore_buffer
  */
@@ -326,7 +326,7 @@ TEST(GuiHotlist, RestoreBuffer)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_hotlist_restore_all_buffers
  */
 
@@ -353,7 +353,7 @@ TEST(GuiHotlist, RestoreAllBuffers)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_hotlist_resort
  */
 
@@ -404,7 +404,7 @@ TEST(GuiHotlist, Resort)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_hotlist_clear
  */
 
@@ -432,7 +432,7 @@ TEST(GuiHotlist, Clear)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_hotlist_clear_level_string
  */
 
@@ -469,7 +469,7 @@ TEST(GuiHotlist, ClearLevelString)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_hotlist_remove_buffer
  */
 
@@ -479,7 +479,7 @@ TEST(GuiHotlist, RemoveBuffer)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_hotlist_hdata_hotlist_cb
  */
 
@@ -489,7 +489,7 @@ TEST(GuiHotlist, HdataHotlistCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_hotlist_add_to_infolist
  */
 
@@ -499,7 +499,7 @@ TEST(GuiHotlist, AddToInfolist)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_hotlist_print_log
  */
 
@@ -509,7 +509,7 @@ TEST(GuiHotlist, PrintLog)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_hotlist_end
  */
 

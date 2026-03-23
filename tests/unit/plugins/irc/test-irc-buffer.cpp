@@ -41,7 +41,7 @@ TEST_GROUP(IrcBuffer)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_buffer_get_server_and_channel
  */
 
@@ -51,7 +51,7 @@ TEST(IrcBuffer, GetServerAndChannel)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_buffer_build_name
  */
 
@@ -75,7 +75,7 @@ TEST(IrcBuffer, BuildName)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_buffer_close_server_channels
  */
 
@@ -85,7 +85,7 @@ TEST(IrcBuffer, CloseServerChannels)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_buffer_search_server_lowest_number
  */
 
@@ -95,7 +95,7 @@ TEST(IrcBuffer, SearchServerLowestNumber)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_buffer_search_private_lowest_number
  */
 
@@ -105,7 +105,7 @@ TEST(IrcBuffer, SearchPrivateLowestNumber)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_buffer_move_near_server
  */
 

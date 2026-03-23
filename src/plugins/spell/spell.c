@@ -186,7 +186,7 @@ char *spell_url_prefix[] =
 
 
 /*
- * Displays a warning if the file aspell.conf is still present in WeeChat
+ * Display a warning if the file aspell.conf is still present in WeeChat
  * home directory and spell.conf not yet created (upgrade from a version ≤ 2.4
  * to a version ≥ 2.5).
  */
@@ -223,7 +223,7 @@ spell_warning_aspell_config (void)
 }
 
 /*
- * Builds full name of buffer.
+ * Build full name of buffer.
  *
  * Note: result must be freed after use.
  */
@@ -246,7 +246,7 @@ spell_build_option_name (struct t_gui_buffer *buffer)
 }
 
 /*
- * Gets dictionary list for a name of buffer.
+ * Get dictionary list for a name of buffer.
  *
  * First tries with all arguments, then removes one by one to find dict (from
  * specific to general dict).
@@ -301,7 +301,7 @@ spell_get_dict_with_buffer_name (const char *name)
 }
 
 /*
- * Gets dictionary list for a buffer.
+ * Get dictionary list for a buffer.
  *
  * First tries with all arguments, then removes one by one to find dict (from
  * specific to general dict).
@@ -325,9 +325,9 @@ spell_get_dict (struct t_gui_buffer *buffer)
 }
 
 /*
- * Checks if command is authorized for spell checking.
+ * Check if command is authorized for spell checking.
  *
- * Returns:
+ * Return:
  *   1: command authorized
  *   0: command not authorized
  */
@@ -357,9 +357,9 @@ spell_command_authorized (const char *command)
 }
 
 /*
- * Checks if a word is an URL.
+ * Check if a word is an URL.
  *
- * Returns:
+ * Return:
  *   1: word is an URL
  *   0: word is not an URL
  */
@@ -383,9 +383,9 @@ spell_string_is_url (const char *word)
 }
 
 /*
- * Checks if a word is a nick of nicklist.
+ * Check if a word is a nick of nicklist.
  *
- * Returns:
+ * Return:
  *   1: word is a nick of nicklist
  *   0: word is not a nick of nicklist
  */
@@ -460,9 +460,9 @@ spell_string_is_nick (struct t_gui_buffer *buffer, const char *word)
 }
 
 /*
- * Checks if a word is made of digits and punctuation.
+ * Check if a word is made of digits and punctuation.
  *
- * Returns:
+ * Return:
  *   1: word has only digits and punctuation
  *   0: word has some other chars (not digits neither punctuation)
  */
@@ -488,9 +488,9 @@ spell_string_is_simili_number (const char *word)
 }
 
 /*
- * Spell checks a word.
+ * Spell check a word.
  *
- * Returns:
+ * Return:
  *   1: word is OK
  *   0: word is misspelled
  */
@@ -529,9 +529,9 @@ spell_check_word (struct t_spell_speller_buffer *speller_buffer,
 }
 
 /*
- * Gets suggestions for a word.
+ * Get suggestions for a word.
  *
- * Returns a string with format: "suggest1,suggest2,suggest3".
+ * Return a string with format: "suggest1,suggest2,suggest3".
  *
  * Note: result must be freed after use (if not NULL).
  */
@@ -636,7 +636,7 @@ spell_get_suggestions (struct t_spell_speller_buffer *speller_buffer,
 }
 
 /*
- * Skips WeeChat and IRC color codes in *string and adds them to "result".
+ * Skip WeeChat and IRC color codes in *string and adds them to "result".
  */
 
 void
@@ -707,7 +707,7 @@ spell_skip_color_codes (char **string, char **result)
 }
 
 /*
- * Updates input text by adding color for misspelled words.
+ * Update input text by adding color for misspelled words.
  */
 
 char *
@@ -1044,7 +1044,7 @@ spell_modifier_cb (const void *pointer, void *data,
 }
 
 /*
- * Refreshes bar items on signal "buffer_switch".
+ * Refresh bar items on signal "buffer_switch".
  */
 
 int
@@ -1066,7 +1066,7 @@ spell_buffer_switch_cb (const void *pointer, void *data, const char *signal,
 }
 
 /*
- * Refreshes bar items on signal "window_switch".
+ * Refresh bar items on signal "window_switch".
  */
 
 int
@@ -1088,7 +1088,7 @@ spell_window_switch_cb (const void *pointer, void *data, const char *signal,
 }
 
 /*
- * Removes struct for buffer in hashtable "spell_speller_buffer" on
+ * Remove struct for buffer in hashtable "spell_speller_buffer" on
  * signal "buffer_closed".
  */
 
@@ -1160,7 +1160,7 @@ spell_config_change_nick_completer_cb (const void *pointer, void *data,
 }
 
 /*
- * Initializes spell plugin.
+ * Initialize spell plugin.
  */
 
 int
@@ -1234,7 +1234,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 }
 
 /*
- * Ends spell plugin.
+ * End spell plugin.
  */
 
 int

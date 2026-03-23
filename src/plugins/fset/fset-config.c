@@ -111,7 +111,7 @@ int fset_config_format_option_num_lines[2] = { 1, 1 };
 
 
 /*
- * Reloads fset configuration file.
+ * Reload fset configuration file.
  */
 
 int
@@ -258,9 +258,9 @@ fset_config_change_use_keys_cb (const void *pointer, void *data,
 }
 
 /*
- * Counts the number of "substring" in "string".
+ * Count the number of "substring" in "string".
  *
- * Returns the number of times substring is in string.
+ * Return the number of times substring is in string.
  */
 
 int
@@ -359,9 +359,9 @@ fset_config_change_title_color_cb (const void *pointer, void *data,
 }
 
 /*
- * Initializes fset configuration file.
+ * Initialize fset configuration file.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -1146,7 +1146,7 @@ fset_config_init (void)
 }
 
 /*
- * Reads fset configuration file.
+ * Read fset configuration file.
  */
 
 int
@@ -1167,7 +1167,7 @@ fset_config_read (void)
 }
 
 /*
- * Writes fset configuration file.
+ * Write fset configuration file.
  */
 
 int
@@ -1177,7 +1177,7 @@ fset_config_write (void)
 }
 
 /*
- * Frees fset configuration.
+ * Free fset configuration.
  */
 
 void

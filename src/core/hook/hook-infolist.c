@@ -38,7 +38,7 @@
 
 
 /*
- * Returns description of hook.
+ * Return description of hook.
  *
  * Note: result must be freed after use.
  */
@@ -50,9 +50,9 @@ hook_infolist_get_description (struct t_hook *hook)
 }
 
 /*
- * Hooks an infolist.
+ * Hook an infolist.
  *
- * Returns pointer to new hook, NULL if error.
+ * Return pointer to new hook, NULL if error.
  */
 
 struct t_hook *
@@ -102,7 +102,7 @@ hook_infolist (struct t_weechat_plugin *plugin, const char *infolist_name,
 }
 
 /*
- * Gets an infolist via infolist hook.
+ * Get an infolist via infolist hook.
  */
 
 struct t_infolist *
@@ -153,7 +153,7 @@ hook_infolist_get (struct t_weechat_plugin *plugin, const char *infolist_name,
 }
 
 /*
- * Frees data in an infolist hook.
+ * Free data in an infolist hook.
  */
 
 void
@@ -188,7 +188,7 @@ hook_infolist_free_data (struct t_hook *hook)
 }
 
 /*
- * Returns hdata for infolist hook.
+ * Return hdata for infolist hook.
  */
 
 struct t_hdata *
@@ -214,9 +214,9 @@ hook_infolist_hdata_hook_infolist_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds infolist hook data in the infolist item.
+ * Add infolist hook data in the infolist item.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -258,7 +258,7 @@ hook_infolist_add_to_infolist (struct t_infolist_item *item,
 }
 
 /*
- * Prints infolist hook data in WeeChat log file (usually for crash dump).
+ * Print infolist hook data in WeeChat log file (usually for crash dump).
  */
 
 void

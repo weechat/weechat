@@ -52,9 +52,9 @@ char *exec_color_string[EXEC_NUM_COLORS] =
 
 
 /*
- * Searches for a color action name.
+ * Search for a color action name.
  *
- * Returns index of color in enum t_exec_color, -1 if not found.
+ * Return index of color in enum t_exec_color, -1 if not found.
  */
 
 int
@@ -76,9 +76,9 @@ exec_search_color (const char *color)
 }
 
 /*
- * Searches for an executed command by id, which can be a number or a name.
+ * Search for an executed command by id, which can be a number or a name.
  *
- * Returns pointer to executed command found, NULL if not found.
+ * Return pointer to executed command found, NULL if not found.
  */
 
 struct t_exec_cmd *
@@ -113,7 +113,7 @@ exec_search_by_id (const char *id)
 }
 
 /*
- * Adds a command in list of executed commands.
+ * Add a command in list of executed commands.
  */
 
 struct t_exec_cmd *
@@ -195,9 +195,9 @@ exec_timer_delete_cb (const void *pointer, void *data, int remaining_calls)
 }
 
 /*
- * Decodes colors in a string (from stdout/stderr).
+ * Decode colors in a string (from stdout/stderr).
  *
- * Returns string with colors as-is, decoded or removed.
+ * Return string with colors as-is, decoded or removed.
  *
  * Note: result must be freed after use.
  */
@@ -237,7 +237,7 @@ exec_decode_color (struct t_exec_cmd *exec_cmd, const char *string)
 }
 
 /*
- * Displays a line of output.
+ * Display a line of output.
  */
 
 void
@@ -360,7 +360,7 @@ exec_display_line (struct t_exec_cmd *exec_cmd, struct t_gui_buffer *buffer,
 }
 
 /*
- * Concatenates some text to stdout/stderr of a command.
+ * Concatenate some text to stdout/stderr of a command.
  */
 
 void
@@ -430,7 +430,7 @@ exec_concat_output (struct t_exec_cmd *exec_cmd, struct t_gui_buffer *buffer,
 }
 
 /*
- * Ends a command.
+ * End a command.
  */
 
 void
@@ -601,7 +601,7 @@ exec_process_cb (const void *pointer, void *data, const char *command,
 }
 
 /*
- * Deletes a command.
+ * Delete a command.
  */
 
 void
@@ -640,7 +640,7 @@ exec_free (struct t_exec_cmd *exec_cmd)
 }
 
 /*
- * Deletes all commands.
+ * Delete all commands.
  */
 
 void
@@ -653,7 +653,7 @@ exec_free_all (void)
 }
 
 /*
- * Prints exec infos in WeeChat log file (usually for crash dump).
+ * Print exec infos in WeeChat log file (usually for crash dump).
  */
 
 void
@@ -725,7 +725,7 @@ exec_debug_dump_cb (const void *pointer, void *data,
 }
 
 /*
- * Initializes exec plugin.
+ * Initialize exec plugin.
  */
 
 int
@@ -757,7 +757,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 }
 
 /*
- * Ends exec plugin.
+ * End exec plugin.
  */
 
 int

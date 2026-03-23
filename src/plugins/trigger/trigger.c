@@ -89,9 +89,9 @@ int trigger_enabled = 1;                    /* 0 if triggers are disabled   */
 
 
 /*
- * Searches for a trigger option name.
+ * Search for a trigger option name.
  *
- * Returns index of option in enum t_trigger_option, -1 if not found.
+ * Return index of option in enum t_trigger_option, -1 if not found.
  */
 
 int
@@ -113,9 +113,9 @@ trigger_search_option (const char *option_name)
 }
 
 /*
- * Searches for trigger hook type.
+ * Search for trigger hook type.
  *
- * Returns index of hook type in enum t_trigger_hook_type, -1 if not found.
+ * Return index of hook type in enum t_trigger_hook_type, -1 if not found.
  */
 
 int
@@ -137,9 +137,9 @@ trigger_search_hook_type (const char *type)
 }
 
 /*
- * Searches for a regex command.
+ * Search for a regex command.
  *
- * Returns index of option in enum t_trigger_regex_command, -1 if not found.
+ * Return index of option in enum t_trigger_regex_command, -1 if not found.
  */
 
 int
@@ -158,9 +158,9 @@ trigger_search_regex_command (char command)
 }
 
 /*
- * Searches for trigger return code.
+ * Search for trigger return code.
  *
- * Returns index of return code in enum t_trigger_return_code, -1 if not found.
+ * Return index of return code in enum t_trigger_return_code, -1 if not found.
  */
 
 int
@@ -182,9 +182,9 @@ trigger_search_return_code (const char *return_code)
 }
 
 /*
- * Searches for trigger post action.
+ * Search for trigger post action.
  *
- * Returns index of post action in enum t_trigger_post_action, -1 if not found.
+ * Return index of post action in enum t_trigger_post_action, -1 if not found.
  */
 
 int
@@ -206,9 +206,9 @@ trigger_search_post_action (const char *post_action)
 }
 
 /*
- * Searches for a trigger by name.
+ * Search for a trigger by name.
  *
- * Returns pointer to trigger found, NULL if not found.
+ * Return pointer to trigger found, NULL if not found.
  */
 
 struct t_trigger *
@@ -231,9 +231,9 @@ trigger_search (const char *name)
 }
 
 /*
- * Searches for a trigger with a pointer to a trigger option.
+ * Search for a trigger with a pointer to a trigger option.
  *
- * Returns pointer to trigger found, NULL if not found.
+ * Return pointer to trigger found, NULL if not found.
  */
 
 struct t_trigger *
@@ -269,7 +269,7 @@ trigger_search_with_option (struct t_config_option *option)
 }
 
 /*
- * Unhooks things hooked in a trigger.
+ * Unhook things hooked in a trigger.
  */
 
 void
@@ -297,7 +297,7 @@ trigger_unhook (struct t_trigger *trigger)
 }
 
 /*
- * Creates hook(s) in a trigger.
+ * Create hook(s) in a trigger.
  */
 
 void
@@ -605,7 +605,7 @@ trigger_hook (struct t_trigger *trigger)
 }
 
 /*
- * Frees all the regex in a trigger.
+ * Free all the regex in a trigger.
  */
 
 void
@@ -637,9 +637,9 @@ trigger_regex_free (int *regex_count, struct t_trigger_regex **regex)
 }
 
 /*
- * Splits the regex in structures, with regex and replacement text.
+ * Split the regex in structures, with regex and replacement text.
  *
- * Returns:
+ * Return:
  *    0: OK
  *   -1: format error
  *   -2: regex compilation error
@@ -835,7 +835,7 @@ end:
 }
 
 /*
- * Splits command of a trigger.
+ * Split command of a trigger.
  */
 
 void
@@ -868,11 +868,11 @@ trigger_split_command (const char *command,
 }
 
 /*
- * Checks if a trigger name is valid:
+ * Check if a trigger name is valid:
  *   - it must not start with "-"
  *   - it must not have any space/period.
  *
- * Returns:
+ * Return:
  *   1: name is valid
  *   0: name is invalid
  */
@@ -896,9 +896,9 @@ trigger_name_valid (const char *name)
 }
 
 /*
- * Allocates and initializes new trigger structure.
+ * Allocate and initializes new trigger structure.
  *
- * Returns pointer to new trigger, NULL if error.
+ * Return pointer to new trigger, NULL if error.
  */
 
 struct t_trigger *
@@ -939,7 +939,7 @@ trigger_alloc (const char *name)
 }
 
 /*
- * Searches for position of trigger in list (to keep triggers sorted by name).
+ * Search for position of trigger in list (to keep triggers sorted by name).
  */
 
 struct t_trigger *
@@ -959,7 +959,7 @@ trigger_find_pos (struct t_trigger *trigger, struct t_trigger *list_triggers)
 }
 
 /*
- * Adds a trigger in a linked list.
+ * Add a trigger in a linked list.
  */
 
 void
@@ -995,9 +995,9 @@ trigger_add (struct t_trigger *trigger,
 }
 
 /*
- * Creates a new trigger with options.
+ * Create a new trigger with options.
  *
- * Returns pointer to new trigger, NULL if error.
+ * Return pointer to new trigger, NULL if error.
  */
 
 struct t_trigger *
@@ -1038,9 +1038,9 @@ trigger_new_with_options (const char *name, struct t_config_option **options)
 }
 
 /*
- * Creates a new trigger.
+ * Create a new trigger.
  *
- * Returns pointer to new trigger, NULL if error.
+ * Return pointer to new trigger, NULL if error.
  */
 
 struct t_trigger *
@@ -1099,7 +1099,7 @@ trigger_new (const char *name, const char *enabled, const char *hook,
 }
 
 /*
- * Creates default triggers.
+ * Create default triggers.
  */
 
 void
@@ -1122,9 +1122,9 @@ trigger_create_default (void)
 }
 
 /*
- * Renames a trigger.
+ * Rename a trigger.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error (trigger not renamed)
  */
@@ -1178,9 +1178,9 @@ trigger_rename (struct t_trigger *trigger, const char *name)
 }
 
 /*
- * Copies a trigger.
+ * Copy a trigger.
  *
- * Returns a pointer to the new trigger, NULL if error.
+ * Return a pointer to the new trigger, NULL if error.
  */
 
 struct t_trigger *
@@ -1205,7 +1205,7 @@ trigger_copy (struct t_trigger *trigger, const char *name)
 }
 
 /*
- * Deletes a trigger.
+ * Delete a trigger.
  */
 
 void
@@ -1242,7 +1242,7 @@ trigger_free (struct t_trigger *trigger)
 }
 
 /*
- * Deletes all triggers.
+ * Delete all triggers.
  */
 
 void
@@ -1255,7 +1255,7 @@ trigger_free_all (void)
 }
 
 /*
- * Prints trigger infos in WeeChat log file (usually for crash dump).
+ * Print trigger infos in WeeChat log file (usually for crash dump).
  */
 
 void
@@ -1362,7 +1362,7 @@ trigger_debug_dump_cb (const void *pointer, void *data,
 }
 
 /*
- * Initializes trigger plugin.
+ * Initialize trigger plugin.
  */
 
 int
@@ -1398,7 +1398,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 }
 
 /*
- * Ends trigger plugin.
+ * End trigger plugin.
  */
 
 int

@@ -35,7 +35,7 @@ TEST_GROUP(HookInfoHashtable)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_info_hashtable_get_description
  */
 
@@ -45,7 +45,7 @@ TEST(HookInfoHashtable, GetDescription)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_info_hashtable
  */
 
@@ -55,7 +55,7 @@ TEST(HookInfoHashtable, InfoHashtable)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_info_get_hashtable
  */
 
@@ -65,7 +65,7 @@ TEST(HookInfoHashtable, GetHashtable)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_info_hashtable_free_data
  */
 
@@ -75,7 +75,7 @@ TEST(HookInfoHashtable, FreeData)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_info_hashtable_add_to_infolist
  */
 
@@ -85,7 +85,7 @@ TEST(HookInfoHashtable, AddToInfolist)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_info_hashtable_print_log
  */
 

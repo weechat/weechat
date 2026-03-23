@@ -32,7 +32,7 @@
 
 
 /*
- * Converts an ISO lang code in its English full name.
+ * Convert an ISO lang code in its English full name.
  *
  * Note: result must be freed after use.
  */
@@ -53,7 +53,7 @@ spell_command_iso_to_lang (const char *code)
 }
 
 /*
- * Converts an ISO country code in its English full name.
+ * Convert an ISO country code in its English full name.
  *
  * Note: result must be freed after use.
  */
@@ -74,7 +74,7 @@ spell_command_iso_to_country (const char *code)
 }
 
 /*
- * Displays one dictionary when using enchant.
+ * Display one dictionary when using enchant.
  */
 
 #ifdef USE_ENCHANT
@@ -133,7 +133,7 @@ spell_enchant_dict_describe_cb (const char *lang_tag,
 #endif /* USE_ENCHANT */
 
 /*
- * Displays list of dictionaries installed on system.
+ * Display list of dictionaries installed on system.
  */
 
 void
@@ -211,7 +211,7 @@ spell_command_speller_list_dicts (void)
 }
 
 /*
- * Sets a list of dictionaries for a buffer.
+ * Set a list of dictionaries for a buffer.
  */
 
 void
@@ -246,7 +246,7 @@ spell_command_set_dict (struct t_gui_buffer *buffer, const char *value)
 }
 
 /*
- * Adds a word in personal dictionary.
+ * Add a word in personal dictionary.
  */
 
 void
@@ -480,7 +480,7 @@ spell_command_cb (const void *pointer, void *data,
 }
 
 /*
- * Hooks spell command.
+ * Hook spell command.
  */
 
 void

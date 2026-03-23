@@ -49,7 +49,7 @@ TEST_GROUP(GuiBarItemCustom)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_item_custom_name_valid
  */
 
@@ -74,7 +74,7 @@ TEST(GuiBarItemCustom, NameValid)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_item_custom_search_option
  */
 
@@ -89,7 +89,7 @@ TEST(GuiBarItemCustom, SearchOption)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_item_custom_search
  */
 
@@ -142,7 +142,7 @@ TEST(GuiBarItemCustom, Search)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_item_custom_search_with_option_name
  */
 
@@ -176,7 +176,7 @@ TEST(GuiBarItemCustom, SearchWithOptionName)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_item_custom_config_change
  */
 
@@ -206,7 +206,7 @@ TEST(GuiBarItemCustom, ConfigChange)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_item_custom_create_option_temp
  */
 
@@ -239,7 +239,7 @@ TEST(GuiBarItemCustom, CreateOptionTemp)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_item_custom_callback
  */
 
@@ -278,7 +278,7 @@ TEST(GuiBarItemCustom, Callback)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_item_custom_alloc
  *   gui_bar_item_custom_create_bar_item
  */
@@ -316,7 +316,7 @@ TEST(GuiBarItemCustom, Alloc)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_item_custom_new
  *   gui_bar_item_custom_new_with_options
  *   gui_bar_item_custom_create_option
@@ -388,7 +388,7 @@ TEST(GuiBarItemCustom, New)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_item_custom_use_temp_items
  */
 
@@ -421,7 +421,7 @@ TEST(GuiBarItemCustom, UseTempItems)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_item_custom_rename
  */
 
@@ -465,7 +465,7 @@ TEST(GuiBarItemCustom, Rename)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_item_custom_free_data
  *   gui_bar_item_custom_free
  *   gui_bar_item_custom_free_all

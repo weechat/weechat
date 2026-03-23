@@ -43,7 +43,7 @@
 
 
 /*
- * Creates a string with a pointer inside an IRC structure.
+ * Create a string with a pointer inside an IRC structure.
  */
 
 void
@@ -59,7 +59,7 @@ irc_info_create_string_with_pointer (char **string, void *pointer)
 }
 
 /*
- * Returns IRC info "irc_is_channel".
+ * Return IRC info "irc_is_channel".
  */
 
 char *
@@ -98,7 +98,7 @@ irc_info_info_irc_is_channel_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns IRC info "irc_is_nick".
+ * Return IRC info "irc_is_nick".
  */
 
 char *
@@ -136,7 +136,7 @@ irc_info_info_irc_is_nick_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns IRC info "irc_nick".
+ * Return IRC info "irc_nick".
  */
 
 char *
@@ -161,7 +161,7 @@ irc_info_info_irc_nick_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns IRC info "irc_nick_from_host".
+ * Return IRC info "irc_nick_from_host".
  */
 
 char *
@@ -185,7 +185,7 @@ irc_info_info_irc_nick_from_host_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns IRC info "irc_nick_color".
+ * Return IRC info "irc_nick_color".
  */
 
 char *
@@ -205,7 +205,7 @@ irc_info_info_irc_nick_color_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns IRC info "irc_nick_color_name".
+ * Return IRC info "irc_nick_color_name".
  */
 
 char *
@@ -225,7 +225,7 @@ irc_info_info_irc_nick_color_name_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns IRC info "irc_buffer".
+ * Return IRC info "irc_buffer".
  */
 
 char *
@@ -324,7 +324,7 @@ irc_info_info_irc_buffer_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns IRC info "irc_server_isupport".
+ * Return IRC info "irc_server_isupport".
  */
 
 char *
@@ -365,7 +365,7 @@ irc_info_info_irc_server_isupport_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns IRC info "irc_server_isupport_value".
+ * Return IRC info "irc_server_isupport_value".
  */
 
 char *
@@ -406,7 +406,7 @@ irc_info_info_irc_server_isupport_value_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns IRC info "irc_server_cap".
+ * Return IRC info "irc_server_cap".
  */
 
 char *
@@ -447,7 +447,7 @@ irc_info_info_irc_server_cap_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns IRC info "irc_server_cap_value".
+ * Return IRC info "irc_server_cap_value".
  */
 
 char *
@@ -488,7 +488,7 @@ irc_info_info_irc_server_cap_value_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns IRC info "irc_is_message_ignored".
+ * Return IRC info "irc_is_message_ignored".
  */
 
 char *
@@ -529,7 +529,7 @@ irc_info_info_irc_is_message_ignored_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns IRC info "irc_ptr_server".
+ * Return IRC info "irc_ptr_server".
  */
 
 char *
@@ -557,7 +557,7 @@ irc_info_info_irc_ptr_server_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns IRC info "irc_ptr_channel".
+ * Return IRC info "irc_ptr_channel".
  */
 
 char *
@@ -605,7 +605,7 @@ irc_info_info_irc_ptr_channel_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns IRC info "irc_ptr_nick".
+ * Return IRC info "irc_ptr_nick".
  */
 
 char *
@@ -659,7 +659,7 @@ irc_info_info_irc_ptr_nick_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns IRC info with hashtable "irc_message_parse".
+ * Return IRC info with hashtable "irc_message_parse".
  */
 
 struct t_hashtable *
@@ -692,7 +692,7 @@ irc_info_info_hashtable_irc_message_parse_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns IRC info with hashtable "irc_message_split".
+ * Return IRC info with hashtable "irc_message_split".
  */
 
 struct t_hashtable *
@@ -725,7 +725,7 @@ irc_info_info_hashtable_irc_message_split_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns IRC infolist "irc_server".
+ * Return IRC infolist "irc_server".
  */
 
 struct t_infolist *
@@ -781,7 +781,7 @@ irc_info_infolist_irc_server_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns IRC infolist "irc_channel".
+ * Return IRC infolist "irc_channel".
  */
 
 struct t_infolist *
@@ -872,7 +872,7 @@ irc_info_infolist_irc_channel_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns IRC infolist "irc_modelist".
+ * Return IRC infolist "irc_modelist".
  */
 
 struct t_infolist *
@@ -971,7 +971,7 @@ irc_info_infolist_irc_modelist_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns IRC infolist "irc_modelist_item".
+ * Return IRC infolist "irc_modelist_item".
  */
 
 struct t_infolist *
@@ -1085,7 +1085,7 @@ irc_info_infolist_irc_modelist_item_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns IRC infolist "irc_nick".
+ * Return IRC infolist "irc_nick".
  */
 
 struct t_infolist *
@@ -1186,7 +1186,7 @@ irc_info_infolist_irc_nick_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns IRC infolist "irc_ignore".
+ * Return IRC infolist "irc_ignore".
  */
 
 struct t_infolist *
@@ -1239,7 +1239,7 @@ irc_info_infolist_irc_ignore_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns IRC infolist "irc_notify".
+ * Return IRC infolist "irc_notify".
  */
 
 struct t_infolist *
@@ -1301,7 +1301,7 @@ irc_info_infolist_irc_notify_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns IRC infolist "irc_color_weechat".
+ * Return IRC infolist "irc_color_weechat".
  */
 
 struct t_infolist *
@@ -1333,7 +1333,7 @@ irc_info_infolist_irc_color_weechat_cb (const void *pointer, void *data,
 }
 
 /*
- * Hooks info, infolist and hdata for IRC plugin.
+ * Hook info, infolist and hdata for IRC plugin.
  */
 
 void

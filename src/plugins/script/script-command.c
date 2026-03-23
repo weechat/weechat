@@ -35,7 +35,7 @@
 
 
 /*
- * Runs an action.
+ * Run an action.
  */
 
 void
@@ -313,7 +313,7 @@ script_command_script (const void *pointer, void *data,
 }
 
 /*
- * Hooks script command.
+ * Hook script command.
  */
 
 void

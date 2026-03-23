@@ -35,7 +35,7 @@ TEST_GROUP(HookTimer)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_timer_get_description
  */
 
@@ -45,7 +45,7 @@ TEST(HookTimer, GetDescription)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_timer_init
  */
 
@@ -55,7 +55,7 @@ TEST(HookTimer, Init)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_timer
  */
 
@@ -65,7 +65,7 @@ TEST(HookTimer, Timer)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_timer_check_system_clock
  */
 
@@ -75,7 +75,7 @@ TEST(HookTimer, CheckSystemClock)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_timer_get_time_to_next
  */
 
@@ -85,7 +85,7 @@ TEST(HookTimer, GetTimeToNext)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_timer_exec
  */
 
@@ -95,7 +95,7 @@ TEST(HookTimer, Exec)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_timer_free_data
  */
 
@@ -105,7 +105,7 @@ TEST(HookTimer, FreeData)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_timer_add_to_infolist
  */
 
@@ -115,7 +115,7 @@ TEST(HookTimer, AddToInfolist)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_timer_print_log
  */
 

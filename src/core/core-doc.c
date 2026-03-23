@@ -61,7 +61,7 @@ char *string_escaped[32];
 
 
 /*
- * Escapes a string to display in a table: replace "|" by "\|".
+ * Escape a string to display in a table: replace "|" by "\|".
  */
 
 char *
@@ -74,7 +74,7 @@ doc_gen_escape_table (const char *message)
 }
 
 /*
- * Escapes a string to be used as anchor link: replace ",", "@" and "*" by "-".
+ * Escape a string to be used as anchor link: replace ",", "@" and "*" by "-".
  */
 
 char *
@@ -94,13 +94,13 @@ doc_gen_escape_anchor_link (const char *message)
 }
 
 /*
- * Opens a file for write using:
+ * Open a file for write using:
  *   - path
  *   - doc: "api" or "user"
  *   - name
  *   - language (eg: "fr")
  *
- * Returns the file opened, NULL if error.
+ * Return the file opened, NULL if error.
  */
 
 FILE *
@@ -135,13 +135,13 @@ doc_gen_open_file (const char *path, const char *doc, const char *name,
 }
 
 /*
- * Closes the file and renames it without ".temp" suffix, if the target name
+ * Close the file and rename it without ".temp" suffix, if the target name
  * does not exist or if it exists with a different (obsolete) content.
  *
- * If the target name exists with same content it's kept as-is (so the
- * timestamp does not change) and the temporary file is just deleted.
+ * If the target name exists with same content, keep it as-is (so the
+ * timestamp does not change) and just delete the temporary file.
  *
- * Returns:
+ * Return:
  *    1: target file has been updated
  *    0: target file unchanged
  *   -1: error
@@ -183,7 +183,7 @@ doc_gen_close_file (const char *path, const char *doc, const char *name,
 }
 
 /*
- * Checks if a command must be documented or not: all commands are documented
+ * Check if a command must be documented or not: all commands are documented
  * except the default aliases (that create commands).
  */
 
@@ -195,7 +195,7 @@ doc_gen_check_command (const char *plugin, const char *command)
 }
 
 /*
- * Compares two hooks "command" to sort by plugin / command.
+ * Compare two hooks "command" to sort by plugin / command.
  */
 
 int
@@ -221,9 +221,9 @@ doc_gen_hook_command_cmp_cb (void *data, struct t_arraylist *arraylist,
 }
 
 /*
- * Generates files with commands.
+ * Generate files with commands.
  *
- * Returns:
+ * Return:
  *    1: OK, target file updated
  *    0: OK, target file unchanged
  *   -1: error
@@ -366,7 +366,7 @@ doc_gen_user_commands (const char *path, const char *lang)
 }
 
 /*
- * Checks if an option must be documented or not.
+ * Check if an option must be documented or not.
  */
 
 int
@@ -395,7 +395,7 @@ doc_gen_check_option (struct t_config_option *option)
 }
 
 /*
- * Compares two options to sort by plugin / command.
+ * Compare two options to sort by plugin / command.
  */
 
 int
@@ -425,9 +425,9 @@ doc_gen_option_cmp_cb (void *data, struct t_arraylist *arraylist,
 }
 
 /*
- * Generates files with commands.
+ * Generate files with commands.
  *
- * Returns:
+ * Return:
  *    1: OK, target file updated
  *    0: OK, target file unchanged
  *   -1: error
@@ -588,9 +588,9 @@ doc_gen_user_options (const char *path, const char *lang)
 }
 
 /*
- * Generates files with default aliases.
+ * Generate files with default aliases.
  *
- * Returns:
+ * Return:
  *    1: OK, target file updated
  *    0: OK, target file unchanged
  *   -1: error
@@ -638,9 +638,9 @@ doc_gen_user_default_aliases (const char *path, const char *lang)
 }
 
 /*
- * Generates files with IRC colors.
+ * Generate files with IRC colors.
  *
- * Returns:
+ * Return:
  *    1: OK, target file updated
  *    0: OK, target file unchanged
  *   -1: error
@@ -684,7 +684,7 @@ doc_gen_user_irc_colors (const char *path, const char *lang)
 }
 
 /*
- * Compares two hooks "info" to sort by plugin / info.
+ * Compare two hooks "info" to sort by plugin / info.
  */
 
 int
@@ -710,9 +710,9 @@ doc_gen_hook_info_cmp_cb (void *data, struct t_arraylist *arraylist,
 }
 
 /*
- * Generates files with infos.
+ * Generate files with infos.
  *
- * Returns:
+ * Return:
  *    1: OK, target file updated
  *    0: OK, target file unchanged
  *   -1: error
@@ -773,7 +773,7 @@ doc_gen_api_infos (const char *path, const char *lang)
 }
 
 /*
- * Compares two hooks "info_hashtable" to sort by plugin / info.
+ * Compare two hooks "info_hashtable" to sort by plugin / info.
  */
 
 int
@@ -799,9 +799,9 @@ doc_gen_hook_info_hashtable_cmp_cb (void *data, struct t_arraylist *arraylist,
 }
 
 /*
- * Generates files with infos_hashtable.
+ * Generate files with infos_hashtable.
  *
- * Returns:
+ * Return:
  *    1: OK, target file updated
  *    0: OK, target file unchanged
  *   -1: error
@@ -864,7 +864,7 @@ doc_gen_api_infos_hashtable (const char *path, const char *lang)
 }
 
 /*
- * Compares two hooks "infolist" to sort by plugin / infolist.
+ * Compare two hooks "infolist" to sort by plugin / infolist.
  */
 
 int
@@ -890,9 +890,9 @@ doc_gen_hook_infolist_cmp_cb (void *data, struct t_arraylist *arraylist,
 }
 
 /*
- * Generates files with infolists.
+ * Generate files with infolists.
  *
- * Returns:
+ * Return:
  *    1: OK, target file updated
  *    0: OK, target file unchanged
  *   -1: error
@@ -955,7 +955,7 @@ doc_gen_api_infolists (const char *path, const char *lang)
 }
 
 /*
- * Compares two hooks "hdata" to sort by plugin / hdata.
+ * Compare two hooks "hdata" to sort by plugin / hdata.
  */
 
 int
@@ -981,7 +981,7 @@ doc_gen_hook_hdata_cmp_cb (void *data, struct t_arraylist *arraylist,
 }
 
 /*
- * Compares two hooks lists to sort by name (and lists beginning with "last_"
+ * Compare two hooks lists to sort by name (and lists beginning with "last_"
  * at the end).
  */
 
@@ -1009,7 +1009,7 @@ doc_gen_hdata_list_cmp_cb (void *data, struct t_arraylist *arraylist,
 }
 
 /*
- * Compares two hooks hdata keys to sort by offset.
+ * Compare two hooks hdata keys to sort by offset.
  */
 
 int
@@ -1030,7 +1030,7 @@ doc_gen_hdata_key_cmp_cb (void *data, struct t_arraylist *arraylist,
 }
 
 /*
- * Generates content of a hdata.
+ * Generate content of a hdata.
  */
 
 void
@@ -1172,9 +1172,9 @@ doc_gen_api_hdata_content (FILE *file, struct t_hdata *hdata)
 }
 
 /*
- * Generates files with hdata.
+ * Generate files with hdata.
  *
- * Returns:
+ * Return:
  *    1: OK, target file updated
  *    0: OK, target file unchanged
  *   -1: error
@@ -1250,7 +1250,7 @@ doc_gen_api_hdata (const char *path, const char *lang)
 }
 
 /*
- * Compares two hooks "completion" to sort by plugin / completion.
+ * Compare two hooks "completion" to sort by plugin / completion.
  */
 
 int
@@ -1276,9 +1276,9 @@ doc_gen_hook_completion_cmp_cb (void *data, struct t_arraylist *arraylist,
 }
 
 /*
- * Generates files with completions.
+ * Generate files with completions.
  *
- * Returns:
+ * Return:
  *    1: OK, target file updated
  *    0: OK, target file unchanged
  *   -1: error
@@ -1337,9 +1337,9 @@ doc_gen_api_completions (const char *path, const char *lang)
 }
 
 /*
- * Generates files with URL options.
+ * Generate files with URL options.
  *
- * Returns:
+ * Return:
  *    1: OK, target file updated
  *    0: OK, target file unchanged
  *   -1: error
@@ -1397,7 +1397,7 @@ doc_gen_api_url_options (const char *path, const char *lang)
 }
 
 /*
- * Compares two plugins to sort by priority (descending).
+ * Compare two plugins to sort by priority (descending).
  */
 
 int
@@ -1421,9 +1421,9 @@ doc_gen_plugin_cmp_cb (void *data, struct t_arraylist *arraylist,
 }
 
 /*
- * Generates files with plugins priority.
+ * Generate files with plugins priority.
  *
- * Returns:
+ * Return:
  *    1: OK, target file updated
  *    0: OK, target file unchanged
  *   -1: error
@@ -1483,7 +1483,7 @@ doc_gen_api_plugins_priority (const char *path, const char *lang)
 }
 
 /*
- * Compares two configurations to sort by priority (descending).
+ * Compare two configurations to sort by priority (descending).
  */
 
 int
@@ -1507,9 +1507,9 @@ doc_gen_config_cmp_cb (void *data, struct t_arraylist *arraylist,
 }
 
 /*
- * Generates files with config priority.
+ * Generate files with config priority.
  *
- * Returns:
+ * Return:
  *    1: OK, target file updated
  *    0: OK, target file unchanged
  *   -1: error
@@ -1569,9 +1569,9 @@ doc_gen_api_config_priority (const char *path, const char *lang)
 }
 
 /*
- * Generates files with scripting API functions.
+ * Generate files with scripting API functions.
  *
- * Returns:
+ * Return:
  *    1: OK, target file updated
  *    0: OK, target file unchanged
  *   -1: error
@@ -1602,9 +1602,9 @@ doc_gen_scripting_functions (const char *path, const char *lang)
 }
 
 /*
- * Generates files with scripting API constants.
+ * Generate files with scripting API constants.
  *
- * Returns:
+ * Return:
  *    1: OK, target file updated
  *    0: OK, target file unchanged
  *   -1: error
@@ -1664,9 +1664,9 @@ doc_gen_scripting_constants (const char *path, const char *lang)
 }
 
 /*
- * Generates WeeChat files used to build documentation.
+ * Generate WeeChat files used to build documentation.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */

@@ -29,9 +29,9 @@
 
 
 /*
- * Initializes script configuration.
+ * Initialize script configuration.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */

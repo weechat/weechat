@@ -123,7 +123,7 @@ weechat_lua_hashtable_map_cb (void *data,
 }
 
 /*
- * Converts a WeeChat hashtable to a lua hash (as lua table on the stack).
+ * Convert a WeeChat hashtable to a lua hash (as lua table on the stack).
  */
 
 void
@@ -137,7 +137,7 @@ weechat_lua_pushhashtable (lua_State *interpreter, struct t_hashtable *hashtable
 }
 
 /*
- * Converts a lua hash (on stack) to a WeeChat hashtable.
+ * Convert a lua hash (on stack) to a WeeChat hashtable.
  *
  * Note: hashtable must be freed after use.
  */
@@ -179,7 +179,7 @@ weechat_lua_tohashtable (lua_State *interpreter, int index, int size,
 }
 
 /*
- * Flushes output.
+ * Flush output.
  */
 
 void
@@ -291,7 +291,7 @@ weechat_lua_output (lua_State *L)
 }
 
 /*
- * Executes a lua function.
+ * Execute a lua function.
  */
 
 void *
@@ -444,7 +444,7 @@ weechat_lua_newindex (lua_State *L)
 }
 
 /*
- * Registers a library to use inside lua script.
+ * Register a library to use inside lua script.
  */
 
 void
@@ -489,12 +489,12 @@ weechat_lua_register_lib (lua_State *L, const char *libname,
 }
 
 /*
- * Loads a lua script.
+ * Load a lua script.
  *
- * If code is NULL, the content of filename is read and executed.
- * If code is not NULL, it is executed (the file is not read).
+ * If code is NULL, read and execute the file content.
+ * If code is not NULL, execute it (the file is not read).
  *
- * Returns pointer to new registered script, NULL if error.
+ * Return pointer to new registered script, NULL if error.
  */
 
 struct t_plugin_script *
@@ -700,7 +700,7 @@ weechat_lua_load_cb (void *data, const char *filename)
 }
 
 /*
- * Unloads a lua script.
+ * Unload a lua script.
  */
 
 void
@@ -747,7 +747,7 @@ weechat_lua_unload (struct t_plugin_script *script)
 }
 
 /*
- * Unloads a lua script by name.
+ * Unload a lua script by name.
  */
 
 void
@@ -775,7 +775,7 @@ weechat_lua_unload_name (const char *name)
 }
 
 /*
- * Reloads a lua script by name.
+ * Reload a lua script by name.
  */
 
 void
@@ -810,7 +810,7 @@ weechat_lua_reload_name (const char *name)
 }
 
 /*
- * Unloads all lua scripts.
+ * Unload all lua scripts.
  */
 
 void
@@ -823,9 +823,9 @@ weechat_lua_unload_all (void)
 }
 
 /*
- * Evaluates lua source code.
+ * Evaluate lua source code.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -1024,7 +1024,7 @@ weechat_lua_command_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds lua scripts to completion list.
+ * Add lua scripts to completion list.
  */
 
 int
@@ -1045,7 +1045,7 @@ weechat_lua_completion_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns hdata for lua scripts.
+ * Return hdata for lua scripts.
  */
 
 struct t_hdata *
@@ -1062,7 +1062,7 @@ weechat_lua_hdata_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns lua info "lua_eval".
+ * Return lua info "lua_eval".
  */
 
 char *
@@ -1085,7 +1085,7 @@ weechat_lua_info_eval_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns infolist with lua scripts.
+ * Return infolist with lua scripts.
  */
 
 struct t_infolist *
@@ -1111,7 +1111,7 @@ weechat_lua_infolist_cb (const void *pointer, void *data,
 }
 
 /*
- * Dumps lua plugin data in WeeChat log file.
+ * Dump lua plugin data in WeeChat log file.
  */
 
 int
@@ -1221,7 +1221,7 @@ weechat_lua_signal_script_action_cb (const void *pointer, void *data,
 }
 
 /*
- * Initializes lua plugin.
+ * Initialize lua plugin.
  */
 
 int
@@ -1280,7 +1280,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 }
 
 /*
- * Ends lua plugin.
+ * End lua plugin.
  */
 
 int

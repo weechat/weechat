@@ -50,7 +50,7 @@ int gui_cursor_y = 0;                  /* position of cursor in cursor mode */
 
 
 /*
- * Toggles cursor mode.
+ * Toggle cursor mode.
  */
 
 void
@@ -84,7 +84,7 @@ gui_cursor_mode_toggle (void)
 }
 
 /*
- * Stops cursor mode.
+ * Stop cursor mode.
  */
 
 void
@@ -95,7 +95,7 @@ gui_cursor_mode_stop (void)
 }
 
 /*
- * Sets debug for cursor mode.
+ * Set debug for cursor mode.
  */
 
 void
@@ -113,7 +113,7 @@ gui_cursor_debug_set (int debug)
 }
 
 /*
- * Displays debug info about (x,y) in input.
+ * Display debug info about (x,y) in input.
  */
 
 void
@@ -151,7 +151,7 @@ gui_cursor_display_debug_info (void)
 }
 
 /*
- * Sets cursor at position (x,y).
+ * Set cursor at position (x,y).
  */
 
 void
@@ -178,7 +178,7 @@ gui_cursor_move_xy (int x, int y)
 }
 
 /*
- * Moves cursor by adding values to (x,y).
+ * Move cursor by adding values to (x,y).
  */
 
 void
@@ -205,8 +205,7 @@ gui_cursor_move_add_xy (int add_x, int add_y)
 }
 
 /*
- * Moves cursor to the given position: top_left, top_right, bottom_left or
- * bottom_right.
+ * Move cursor to the given position: top_left, top_right, bottom_left or bottom_right.
  */
 
 void
@@ -303,7 +302,7 @@ end:
 }
 
 /*
- * Moves cursor to another area by adding values to (x,y).
+ * Move cursor to another area by adding values to (x,y).
  */
 
 void
@@ -384,12 +383,12 @@ gui_cursor_move_area_add_xy (int add_x, int add_y)
 }
 
 /*
- * Moves cursor to another area by name.
+ * Move cursor to another area by name.
  *
  * Parameter "position" can be "top_left", "top_right", "bottom_left" or
  * "bottom_right" (if NULL, top left is the default position).
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: area not found
  */

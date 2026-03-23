@@ -39,7 +39,7 @@
 
 
 /*
- * Returns description of hook.
+ * Return description of hook.
  *
  * Note: result must be freed after use.
  */
@@ -51,9 +51,9 @@ hook_completion_get_description (struct t_hook *hook)
 }
 
 /*
- * Hooks a completion.
+ * Hook a completion.
  *
- * Returns pointer to new hook, NULL if error.
+ * Return pointer to new hook, NULL if error.
  */
 
 struct t_hook *
@@ -101,7 +101,7 @@ hook_completion (struct t_weechat_plugin *plugin, const char *completion_item,
 }
 
 /*
- * Executes a completion hook.
+ * Execute a completion hook.
  */
 
 void
@@ -158,7 +158,7 @@ hook_completion_exec (struct t_weechat_plugin *plugin,
 }
 
 /*
- * Frees data in a completion hook.
+ * Free data in a completion hook.
  */
 
 void
@@ -183,7 +183,7 @@ hook_completion_free_data (struct t_hook *hook)
 }
 
 /*
- * Returns hdata for completion hook.
+ * Return hdata for completion hook.
  */
 
 struct t_hdata *
@@ -207,9 +207,9 @@ hook_completion_hdata_hook_completion_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds completion hook data in the infolist item.
+ * Add completion hook data in the infolist item.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -237,7 +237,7 @@ hook_completion_add_to_infolist (struct t_infolist_item *item,
 }
 
 /*
- * Prints completion hook data in WeeChat log file (usually for crash dump).
+ * Print completion hook data in WeeChat log file (usually for crash dump).
  */
 
 void

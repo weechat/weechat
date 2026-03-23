@@ -171,7 +171,7 @@ test_print_cb (const void *pointer, void *data, struct t_gui_buffer *buffer,
 }
 
 /*
- * Initializes GUI for tests.
+ * Initialize GUI for tests.
  */
 
 void
@@ -198,7 +198,7 @@ test_gui_init ()
 }
 
 /*
- * Displays and runs a command on a buffer.
+ * Display and run a command on a buffer.
  */
 
 void
@@ -209,7 +209,7 @@ run_cmd (const char *command)
 }
 
 /*
- * Runs a command on a buffer (do not display the command executed).
+ * Run a command on a buffer (do not display the command executed).
  */
 
 void
@@ -219,7 +219,7 @@ run_cmd_quiet (const char *command)
 }
 
 /*
- * Runs tests in WeeChat environment.
+ * Run tests in WeeChat environment.
  */
 
 int

@@ -96,7 +96,7 @@ char *eval_expression_condition (const char *expr,
 
 
 /*
- * Adds a debug message in the debug output.
+ * Add a debug message in the debug output.
  */
 
 void
@@ -142,7 +142,7 @@ eval_debug_message (struct t_eval_context *eval_context, int debug_id,
 
 
 /*
- * Adds a debug message in the debug output, with variable arguments.
+ * Add a debug message in the debug output, with variable arguments.
  */
 
 void
@@ -159,10 +159,10 @@ eval_debug_message_vargs (struct t_eval_context *eval_context, int debug_id,
 }
 
 /*
- * Checks if a value is true: a value is true if string is non-NULL, non-empty
+ * Check if a value is true: a value is true if string is non-NULL, non-empty
  * and different from "0".
  *
- * Returns:
+ * Return:
  *   1: value is true
  *   0: value is false
  */
@@ -174,7 +174,7 @@ eval_is_true (const char *value)
 }
 
 /*
- * Searches a string in another at same level (skip sub-expressions between
+ * Search a string in another at same level (skip sub-expressions between
  * prefix/suffix).
  *
  * If escape is 1, the prefix can be escaped with '\' (and then is ignored).
@@ -184,7 +184,7 @@ eval_is_true (const char *value)
  * will return a pointer on  "|| z" (because the first "||" is
  * in a sub-expression, which is skipped).
  *
- * Returns pointer to string found, or NULL if not found.
+ * Return pointer to string found, or NULL if not found.
  */
 
 const char *
@@ -267,7 +267,7 @@ end:
 }
 
 /*
- * Evaluates a condition and returns boolean result:
+ * Evaluate a condition and return boolean result:
  *   "0" if false
  *   "1" if true
  *
@@ -287,7 +287,7 @@ eval_string_eval_cond (const char *text, struct t_eval_context *eval_context)
 }
 
 /*
- * Adds range of chars.
+ * Add range of chars.
  *
  * Note: result must be freed after use.
  */
@@ -350,7 +350,7 @@ end:
 }
 
 /*
- * Hides chars in a string.
+ * Hide chars in a string.
  *
  * Note: result must be freed after use.
  */
@@ -391,7 +391,7 @@ eval_string_hide (const char *text)
 }
 
 /*
- * Cuts string.
+ * Cut string.
  *
  * Note: result must be freed after use.
  */
@@ -444,7 +444,7 @@ eval_string_cut (const char *text, int screen)
 }
 
 /*
- * Repeats string.
+ * Repeat string.
  *
  * Note: result must be freed after use.
  */
@@ -477,12 +477,12 @@ eval_string_repeat (const char *text)
 }
 
 /*
- * Splits string.
+ * Split string.
  *
  * Format: number,separators,flags,string
  *
- * If number == "count", returns the number of items after split.
- * If number == "random", returns a random item.
+ * If number == "count", return the number of items after split.
+ * If number == "random", return a random item.
  * If number > 0, return this index (empty string if not enough items).
  * If number < 0, return this index starting from the end (-1 = last item,
  * -2 = penultimate item, etc.).
@@ -642,12 +642,12 @@ end:
 }
 
 /*
- * Splits shell arguments.
+ * Split shell arguments.
  *
  * Format: number,string
  *
- * If number == "count", returns the number of arguments.
- * If number == "random", returns a random argument.
+ * If number == "count", return the number of arguments.
+ * If number == "random", return a random argument.
  * If number > 0, return this index (empty string if not enough arguments).
  * If number < 0, return this index starting from the end (-1 = last argument,
  * -2 = penultimate argument, etc.).
@@ -738,7 +738,7 @@ end:
 }
 
 /*
- * Returns a regex group captured.
+ * Return a regex group captured.
  *
  * Note: result must be freed after use.
  */
@@ -790,7 +790,7 @@ eval_string_regex_group (const char *text, struct t_eval_context *eval_context)
 }
 
 /*
- * Returns a string with color code.
+ * Return a string with color code.
  *
  * Note: result must be freed after use.
  */
@@ -809,7 +809,7 @@ eval_string_color (const char *text)
 }
 
 /*
- * Returns a string modified by a modifier.
+ * Return a string modified by a modifier.
  *
  * Note: result must be freed after use.
  */
@@ -844,7 +844,7 @@ eval_string_modifier (const char *text)
 }
 
 /*
- * Returns an info.
+ * Return an info.
  *
  * Note: result must be freed after use.
  */
@@ -878,7 +878,7 @@ eval_string_info (const char *text)
 }
 
 /*
- * Encodes a string in base 16, 32, or 64.
+ * Encode a string in base 16, 32, or 64.
  *
  * Note: result must be freed after use.
  */
@@ -921,7 +921,7 @@ end:
 }
 
 /*
- * Decodes a string encoded in base 16, 32, or 64.
+ * Decode a string encoded in base 16, 32, or 64.
  *
  * Note: result must be freed after use.
  */
@@ -962,7 +962,7 @@ end:
 }
 
 /*
- * Returns a date.
+ * Return a date.
  *
  * Note: result must be freed after use.
  */
@@ -982,7 +982,7 @@ eval_string_date (const char *text)
 }
 
 /*
- * Evaluates a condition and returns evaluated if/else clause.
+ * Evaluate a condition and return evaluated if/else clause.
  *
  * Note: result must be freed after use.
  */
@@ -1050,7 +1050,7 @@ eval_string_if (const char *text, struct t_eval_context *eval_context)
 }
 
 /*
- * Returns a random integer number.
+ * Return a random integer number.
  *
  * Note: result must be freed after use.
  */
@@ -1103,7 +1103,7 @@ error:
 }
 
 /*
- * Translates text.
+ * Translate text.
  *
  * Note: result must be freed after use.
  */
@@ -1122,7 +1122,7 @@ eval_string_translate (const char *text)
 }
 
 /*
- * Defines a variable.
+ * Define a variable.
  */
 
 void
@@ -1144,7 +1144,7 @@ eval_string_define (const char *text, struct t_eval_context *eval_context)
 }
 
 /*
- * Returns count of items in a hdata, as a string.
+ * Return count of items in a hdata, as a string.
  *
  * Note: result must be freed after use.
  */
@@ -1218,7 +1218,7 @@ end:
 }
 
 /*
- * Gets value of hdata using "path" to a variable.
+ * Get value of hdata using "path" to a variable.
  *
  * Note: result must be freed after use.
  */
@@ -1411,7 +1411,7 @@ end:
 }
 
 /*
- * Returns a string using hdata.
+ * Return a string using hdata.
  *
  * Note: result must be freed after use.
  */
@@ -1519,7 +1519,7 @@ end:
 }
 
 /*
- * Returns text with syntax highlighting (using markers, to be replaced by
+ * Return text with syntax highlighting (using markers, to be replaced by
  * colors later).
  *
  * Note: result must be freed after use.
@@ -1546,7 +1546,7 @@ eval_syntax_highlight_add_markers (const char *prefix, const char *text,
 }
 
 /*
- * Replaces raw highlight markers with color codes defined in option
+ * Replace raw highlight markers with color codes defined in option
  * weechat.color.eval_syntax_colors.
  *
  * Note: result must be freed after use.
@@ -1603,7 +1603,7 @@ eval_syntax_highlight_colorize (const char *value)
 }
 
 /*
- * Adds syntax highlighting in text.
+ * Add syntax highlighting in text.
  *
  * Note: result must be freed after use.
  */
@@ -1625,7 +1625,7 @@ eval_syntax_highlight (const char *text, struct t_eval_context *eval_context)
 }
 
 /*
- * Replaces variables, which can be, by order of priority:
+ * Replace variables, which can be, by order of priority:
  *   - ${raw_hl:string}: the string itself without evaluation but with syntax highlighting
  *   - ${raw:string}: the string itself without evaluation
  *   - ${hl:string}: the string with syntax highlighting
@@ -2088,7 +2088,7 @@ end:
 }
 
 /*
- * Replaces variables in a string.
+ * Replace variables in a string.
  *
  * Note: result must be freed after use.
  */
@@ -2131,15 +2131,15 @@ eval_replace_vars (const char *expr, struct t_eval_context *eval_context)
 }
 
 /*
- * Compares two expressions.
+ * Compare two expressions.
  *
- * Returns:
+ * Return:
  *   "1": comparison is true
  *   "0": comparison is false
  *
  * Examples:
- *   "15 > 2": returns "1"
- *   "abc == def": returns "0"
+ *   "15 > 2": return "1"
+ *   "abc == def": return "0"
  *
  * Note: result must be freed after use.
  */
@@ -2275,7 +2275,7 @@ end:
 }
 
 /*
- * Evaluates a condition (this function must not be called directly).
+ * Evaluate a condition (this function must not be called directly).
  *
  * For return value, see function eval_expression().
  *
@@ -2498,7 +2498,7 @@ end:
 }
 
 /*
- * Replaces text in a string using a regular expression and replacement text.
+ * Replace text in a string using a regular expression and replacement text.
  *
  * The argument "regex" is a pointer to a regex compiled with WeeChat function
  * string_regcomp (or function regcomp).
@@ -2637,7 +2637,7 @@ end:
 }
 
 /*
- * Evaluates an expression.
+ * Evaluate an expression.
  *
  * The hashtable "pointers" must have string for keys, pointer for values.
  * The hashtable "extra_vars" must have string for keys and values.

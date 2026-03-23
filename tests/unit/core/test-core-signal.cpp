@@ -39,7 +39,7 @@ TEST_GROUP(CoreSignal)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   signal_search_number
  */
 
@@ -86,7 +86,7 @@ TEST(CoreSignal, SearchNumber)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   signal_search_name
  */
 
@@ -113,7 +113,7 @@ TEST(CoreSignal, SearchName)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   signal_catch
  */
 
@@ -123,7 +123,7 @@ TEST(CoreSignal, Catch)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   signal_send_to_weechat
  */
 
@@ -133,7 +133,7 @@ TEST(CoreSignal, SentToWeechat)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   signal_exec_command
  */
 
@@ -143,7 +143,7 @@ TEST(CoreSignal, ExecCommand)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   signal_handle_number
  */
 
@@ -154,7 +154,7 @@ TEST(CoreSignal, HandleNumber)
 
 
 /*
- * Tests functions:
+ * Test functions:
  *   signal_handle
  */
 

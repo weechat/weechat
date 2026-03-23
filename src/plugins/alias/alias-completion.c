@@ -30,7 +30,7 @@
 
 
 /*
- * Adds list of aliases to completion list.
+ * Add list of aliases to completion list.
  */
 
 int
@@ -58,7 +58,7 @@ alias_completion_alias_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds value of an alias to completion list.
+ * Add value of an alias to completion list.
  */
 
 int
@@ -113,7 +113,7 @@ alias_completion_alias_value_cb (const void *pointer, void *data,
 }
 
 /*
- * Hooks completions.
+ * Hook completions.
  */
 
 void

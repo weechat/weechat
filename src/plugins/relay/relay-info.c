@@ -34,7 +34,7 @@
 
 
 /*
- * Returns WeeChat info "version".
+ * Return WeeChat info "version".
  */
 
 char *
@@ -61,7 +61,7 @@ relay_info_info_relay_api_version_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns WeeChat info "version_number".
+ * Return WeeChat info "version_number".
  */
 
 char *
@@ -89,7 +89,7 @@ relay_info_info_relay_api_version_number_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns relay info "relay_client_count".
+ * Return relay info "relay_client_count".
  */
 
 char *
@@ -172,7 +172,7 @@ end:
 }
 
 /*
- * Returns relay infolist "relay".
+ * Return relay infolist "relay".
  */
 
 struct t_infolist *
@@ -225,7 +225,7 @@ relay_info_infolist_relay_cb (const void *pointer, void *data,
 }
 
 /*
- * Hooks infolist for relay plugin.
+ * Hook infolist for relay plugin.
  */
 
 void

@@ -35,7 +35,7 @@ TEST_GROUP(HookFocus)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_focus_get_description
  */
 
@@ -45,7 +45,7 @@ TEST(HookFocus, GetDescription)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_focus
  */
 
@@ -55,7 +55,7 @@ TEST(HookFocus, Focus)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_focus_hashtable_map_cb
  */
 
@@ -65,7 +65,7 @@ TEST(HookFocus, HashtableMapCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_focus_hashtable_map2_cb
  */
 
@@ -75,7 +75,7 @@ TEST(HookFocus, HashtableMap2Cb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_focus_get_data
  */
 
@@ -85,7 +85,7 @@ TEST(HookFocus, GetData)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_focus_free_data
  */
 
@@ -95,7 +95,7 @@ TEST(HookFocus, FreeData)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_focus_add_to_infolist
  */
 
@@ -105,7 +105,7 @@ TEST(HookFocus, AddToInfolist)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_focus_print_log
  */
 

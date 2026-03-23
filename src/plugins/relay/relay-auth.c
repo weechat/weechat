@@ -45,9 +45,9 @@ char *relay_auth_password_hash_algo_name[RELAY_NUM_PASSWORD_HASH_ALGOS] =
 
 
 /*
- * Searches for a password hash algorithm.
+ * Search for a password hash algorithm.
  *
- * Returns index in enum t_relay_auth_password_hash_algo,
+ * Return index in enum t_relay_auth_password_hash_algo,
  * -1 if password hash algorithm is not found.
  */
 
@@ -70,7 +70,7 @@ relay_auth_password_hash_algo_search (const char *name)
 }
 
 /*
- * Generates a nonce: a buffer of unpredictable bytes.
+ * Generate a nonce: a buffer of unpredictable bytes.
  *
  * Note: result must be freed after use.
  */
@@ -103,9 +103,9 @@ relay_auth_generate_nonce (int size)
 }
 
 /*
- * Checks if password received as plain text is valid.
+ * Check if password received as plain text is valid.
  *
- * Returns:
+ * Return:
  *    0: password is valid
  *   -1: (plain-text password ("plain") is not allowed
  *   -2: password is not valid
@@ -131,7 +131,7 @@ relay_auth_check_password_plain (struct t_relay_client *client,
 }
 
 /*
- * Parses SHA256 or SHA512 parameters from string with format:
+ * Parse SHA256 or SHA512 parameters from string with format:
  *
  *   salt:hash
  *
@@ -202,7 +202,7 @@ relay_auth_parse_sha (const char *parameters,
 }
 
 /*
- * Parses PBKDF2 parameters from string with format:
+ * Parse PBKDF2 parameters from string with format:
  *
  *   salt:iterations:hash
  *
@@ -281,7 +281,7 @@ relay_auth_parse_pbkdf2 (const char *parameters,
 }
 
 /*
- * Checks if the salt received from the client is valid.
+ * Check if the salt received from the client is valid.
  *
  * For "api" protocol, it is valid if both conditions are true:
  *   1. the salt is a valid integer (unix timestamp)
@@ -293,7 +293,7 @@ relay_auth_parse_pbkdf2 (const char *parameters,
  *      client nonce
  *   2. the salt begins with the server nonce (client->nonce)
  *
- * Returns:
+ * Return:
  *   1: salt is valid
  *   0: salt is not valid
  */
@@ -333,9 +333,9 @@ relay_auth_check_salt (struct t_relay_client *client,
 }
 
 /*
- * Checks if password received as SHA256/SHA512 hash is valid.
+ * Check if password received as SHA256/SHA512 hash is valid.
  *
- * Returns:
+ * Return:
  *   1: password is valid
  *   0: password is not valid
  */
@@ -378,9 +378,9 @@ relay_auth_check_hash_sha (const char *hash_algo,
 }
 
 /*
- * Checks if password received as PBKDF2 hash is valid.
+ * Check if password received as PBKDF2 hash is valid.
  *
- * Returns:
+ * Return:
  *   1: password is valid
  *   0: password is not valid
  */
@@ -417,9 +417,9 @@ relay_auth_check_hash_pbkdf2 (const char *hash_pbkdf2_algo,
 }
 
 /*
- * Authenticates with password hash.
+ * Authenticate with password hash.
  *
- * Returns:
+ * Return:
  *    0: authentication OK
  *   -1: invalid hash algorithm
  *   -2: invalid salt

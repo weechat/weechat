@@ -37,9 +37,9 @@ char **trigger_buffer_filters = NULL;
 
 
 /*
- * Checks if a trigger matches the filters.
+ * Check if a trigger matches the filters.
  *
- * Returns:
+ * Return:
  *   1: trigger matches the filters
  *   0: trigger does NOT match the filters
  */
@@ -78,7 +78,7 @@ trigger_buffer_match_filters (struct t_trigger *trigger)
 }
 
 /*
- * Sets filter for trigger monitor buffer.
+ * Set filter for trigger monitor buffer.
  */
 
 void
@@ -103,7 +103,7 @@ trigger_buffer_set_filter (const char *filter)
 }
 
 /*
- * Sets title for trigger monitor buffer.
+ * Set title for trigger monitor buffer.
  */
 
 void
@@ -171,8 +171,7 @@ trigger_buffer_close_cb (const void *pointer, void *data,
 }
 
 /*
- * Restores buffer callbacks (input and close) for buffer created by trigger
- * plugin.
+ * Restore buffer callbacks (input and close) for buffer created by trigger plugin.
  */
 
 void
@@ -195,7 +194,7 @@ trigger_buffer_set_callbacks (void)
 }
 
 /*
- * Opens trigger buffer.
+ * Open trigger buffer.
  */
 
 void
@@ -302,7 +301,7 @@ trigger_buffer_hashtable_map_cb (void *data,
 }
 
 /*
- * Displays a hashtable on trigger buffer.
+ * Display a hashtable on trigger buffer.
  */
 
 void
@@ -325,9 +324,9 @@ trigger_buffer_display_hashtable (struct t_trigger_context *context,
 }
 
 /*
- * Displays a trigger in trigger buffer.
+ * Display a trigger in trigger buffer.
  *
- * Returns:
+ * Return:
  *   1: the trigger has been displayed
  *   0: the trigger has NOT been displayed (no buffer, or does not match filter)
  */
@@ -381,7 +380,7 @@ trigger_buffer_display_trigger (struct t_trigger *trigger,
 }
 
 /*
- * Ends trigger buffer.
+ * End trigger buffer.
  */
 
 void

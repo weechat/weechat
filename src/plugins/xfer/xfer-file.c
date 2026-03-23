@@ -40,7 +40,7 @@
 
 
 /*
- * Searches CRC32 in a filename.
+ * Search CRC32 in a filename.
  *
  * If more than one CRC32 are found, the last one is returned
  * (with the higher index in filename).
@@ -56,7 +56,7 @@
  *   1234abcd_12345678 => "12345678"
  *   123456781234abcd  => NULL (not found: missing delimiter around CRC32)
  *
- * Returns pointer to last CRC32 in string, NULL if no CRC32 was found.
+ * Return pointer to last CRC32 in string, NULL if no CRC32 was found.
  */
 
 const char *
@@ -93,9 +93,9 @@ xfer_file_search_crc32 (const char *filename)
 }
 
 /*
- * Resumes a download.
+ * Resume a download.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: not resumable
  */
@@ -127,10 +127,10 @@ xfer_file_resume (struct t_xfer *xfer, const char *filename)
 }
 
 /*
- * Checks if file can be downloaded with a given suffix index (if 0 the
+ * Check if file can be downloaded with a given suffix index (if 0 the
  * filename is unchanged, otherwise .1, .2, etc. are added to the filename).
  *
- * Returns 1 if the file can be downloaded with this suffix, 0 if it cannot.
+ * Return 1 if the file can be downloaded with this suffix, 0 if it cannot.
  */
 
 int
@@ -213,7 +213,7 @@ end:
 }
 
 /*
- * Finds the suffix needed for a file, if the file already exists.
+ * Find the suffix needed for a file, if the file already exists.
  *
  * If no suffix is needed, nothing is changed in the xfer.
  * If a suffix is needed, temp_local_filename and local_filename are changed
@@ -242,7 +242,7 @@ xfer_file_find_suffix (struct t_xfer *xfer)
 }
 
 /*
- * Searches for local filename for a xfer.
+ * Search for local filename for a xfer.
  *
  * If type is file/recv, adds a suffix (like .1) if needed.
  * If download is resumable, sets "start_resume" to good value.
@@ -301,7 +301,7 @@ xfer_file_find_filename (struct t_xfer *xfer)
 }
 
 /*
- * Calculates xfer speed (for files only).
+ * Calculate xfer speed (for files only).
  */
 
 void

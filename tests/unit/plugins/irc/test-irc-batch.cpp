@@ -39,7 +39,7 @@ TEST_GROUP(IrcBatch)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_batch_search
  */
 
@@ -83,7 +83,7 @@ TEST(IrcBatch, Search)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_batch_generate_random_ref
  */
 
@@ -108,7 +108,7 @@ TEST(IrcBatch, GenerateRandomRef)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_batch_add_to_list
  *   irc_batch_start_batch
  *   irc_batch_free
@@ -175,7 +175,7 @@ TEST(IrcBatch, StartBatch)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_batch_add_message
  *   irc_batch_free
  */
@@ -205,7 +205,7 @@ TEST(IrcBatch, AddMessage)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_batch_free_all
  */
 
@@ -236,7 +236,7 @@ TEST(IrcBatch, FreeAll)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_batch_process_messages
  */
 
@@ -246,7 +246,7 @@ TEST(IrcBatch, ProcessMessages)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_batch_end_batch
  */
 
@@ -256,7 +256,7 @@ TEST(IrcBatch, EndBatch)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_batch_process_multiline
  */
 
@@ -266,7 +266,7 @@ TEST(IrcBatch, ProcessMultiline)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_batch_hdata_batch_cb
  */
 
@@ -276,7 +276,7 @@ TEST(IrcBatch, HdataBatchCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_batch_print_log
  */
 

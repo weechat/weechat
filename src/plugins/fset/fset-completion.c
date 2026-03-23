@@ -28,7 +28,7 @@
 
 
 /*
- * Adds current server to completion list.
+ * Add current server to completion list.
  */
 
 int
@@ -113,7 +113,7 @@ fset_completion_option_cb (const void *pointer, void *data,
 }
 
 /*
- * Hooks completions.
+ * Hook completions.
  */
 
 void

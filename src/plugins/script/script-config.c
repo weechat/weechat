@@ -95,11 +95,11 @@ struct t_config_option *script_config_scripts_url = NULL;
 
 
 /*
- * Gets the diff command (option "script.look.diff_command").
+ * Get the diff command (option "script.look.diff_command").
  *
  * If option is "auto", try to find git, and fallbacks on "diff" if not found.
  *
- * Returns NULL if no diff command is set.
+ * Return NULL if no diff command is set.
  */
 
 const char *
@@ -155,7 +155,7 @@ script_config_get_diff_command (void)
 }
 
 /*
- * Gets filename with list of scripts.
+ * Get filename with list of scripts.
  *
  * Note: result must be freed after use.
  */
@@ -182,8 +182,8 @@ script_config_get_xml_filename (void)
 }
 
 /*
- * Gets filename for a script to download.
- * If suffix is not NULL, it is added to filename.
+ * Get filename for a script to download.
+ * If suffix is not NULL, add it to the filename.
  *
  * Note: result must be freed after use.
  */
@@ -289,7 +289,7 @@ script_config_change_hold_cb (const void *pointer, void *data,
 }
 
 /*
- * Holds a script.
+ * Hold a script.
  *
  * Note: the option is changed, but the status "held" in script is NOT updated
  * by this function.
@@ -337,7 +337,7 @@ script_config_hold (const char *name_with_extension)
 }
 
 /*
- * Unholds a script.
+ * Unhold a script.
  *
  * Note: the option is changed, but the status "held" in script is NOT updated
  * by this function.
@@ -382,7 +382,7 @@ script_config_unhold (const char *name_with_extension)
 }
 
 /*
- * Reloads script configuration file.
+ * Reload script configuration file.
  */
 
 int
@@ -397,9 +397,9 @@ script_config_reload (const void *pointer, void *data,
 }
 
 /*
- * Initializes script configuration file.
+ * Initialize script configuration file.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -796,7 +796,7 @@ script_config_init (void)
 }
 
 /*
- * Reads script configuration file.
+ * Read script configuration file.
  */
 
 int
@@ -806,7 +806,7 @@ script_config_read (void)
 }
 
 /*
- * Writes script configuration file.
+ * Write script configuration file.
  */
 
 int
@@ -816,7 +816,7 @@ script_config_write (void)
 }
 
 /*
- * Frees script configuration file.
+ * Free script configuration file.
  */
 
 void

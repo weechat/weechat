@@ -43,9 +43,9 @@
 
 
 /*
- * Gets info about what is pointed by cursor at (x,y).
+ * Get info about what is pointed by cursor at (x,y).
  *
- * Returns pointer to focus info, NULL if error.
+ * Return pointer to focus info, NULL if error.
  *
  * Note: focus info must be freed after use.
  */
@@ -96,7 +96,7 @@ gui_focus_get_info (int x, int y)
 }
 
 /*
- * Frees a focus info structure.
+ * Free a focus info structure.
  */
 
 void
@@ -116,7 +116,7 @@ gui_focus_free_info (struct t_gui_focus_info *focus_info)
 }
 
 /*
- * Adds local variables of buffer in hashtable.
+ * Add local variables of buffer in hashtable.
  */
 
 void
@@ -141,9 +141,9 @@ gui_focus_buffer_localvar_map_cb (void *data,
 }
 
 /*
- * Adds focus info into hashtable.
+ * Add focus info into hashtable.
  *
- * Returns pointer to new hashtable.
+ * Return pointer to new hashtable.
  *
  * Note: result must be freed after use.
  */
@@ -272,7 +272,7 @@ gui_focus_to_hashtable (struct t_gui_focus_info *focus_info, const char *key)
 }
 
 /*
- * Returns GUI focus info with hashtable "gui_focus_info".
+ * Return GUI focus info with hashtable "gui_focus_info".
  */
 
 struct t_hashtable *

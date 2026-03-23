@@ -173,7 +173,7 @@ TEST_GROUP(IrcColor)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_color_convert_rgb2term
  */
 
@@ -190,7 +190,7 @@ TEST(IrcColor, ConvertRgb2Term)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_color_convert_rgb2irc
  */
 
@@ -203,7 +203,7 @@ TEST(IrcColor, ConvertRgb2Irc)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_color_convert_term2irc
  */
 
@@ -216,7 +216,7 @@ TEST(IrcColor, ConvertTerm2Irc)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_color_decode
  */
 
@@ -377,7 +377,7 @@ TEST(IrcColor, Decode)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_color_encode
  */
 
@@ -510,7 +510,7 @@ TEST(IrcColor, Encode)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_color_decode_ansi
  */
 
@@ -672,7 +672,7 @@ TEST(IrcColor, DecodeAnsi)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_color_for_tags
  */
 
@@ -686,7 +686,7 @@ TEST(IrcColor, ForTags)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_color_modifier_cb
  */
 
@@ -730,7 +730,7 @@ TEST(IrcColor, ModifierCallback)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_color_weechat_add_to_infolist
  */
 

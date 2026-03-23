@@ -44,7 +44,7 @@ int local_utf8 = 0;
 
 
 /*
- * Initializes UTF-8 in WeeChat.
+ * Initialize UTF-8 in WeeChat.
  */
 
 void
@@ -54,9 +54,9 @@ utf8_init (void)
 }
 
 /*
- * Checks if a string has some 8-bit chars.
+ * Check if a string has some 8-bit chars.
  *
- * Returns:
+ * Return:
  *   1: string has 8-bit chars
  *   0: string has only 7-bit chars
  */
@@ -74,12 +74,12 @@ utf8_has_8bits (const char *string)
 }
 
 /*
- * Checks if a string is UTF-8 valid.
+ * Check if a string is UTF-8 valid.
  *
  * If length is <= 0, checks whole string.
  * If length is > 0, checks only this number of chars (not bytes).
  *
- * Returns:
+ * Return:
  *   1: string is UTF-8 valid
  *   0: string it not UTF-8 valid, and then if error is not NULL, it is set
  *      with first non valid UTF-8 char in string
@@ -167,7 +167,7 @@ invalid:
 }
 
 /*
- * Normalizes an string: removes non UTF-8 chars and replaces them by a
+ * Normalize an string: removes non UTF-8 chars and replaces them by a
  * "replacement" char.
  */
 
@@ -186,9 +186,9 @@ utf8_normalize (char *string, char replacement)
 }
 
 /*
- * Gets pointer to previous UTF-8 char in a string.
+ * Get pointer to previous UTF-8 char in a string.
  *
- * Returns pointer to previous UTF-8 char, NULL if not found (for example
+ * Return pointer to previous UTF-8 char, NULL if not found (for example
  * "string_start" was reached).
  */
 
@@ -234,9 +234,9 @@ utf8_prev_char (const char *string_start, const char *string)
 }
 
 /*
- * Gets pointer to next UTF-8 char in a string.
+ * Get pointer to next UTF-8 char in a string.
  *
- * Returns pointer to next UTF-8 char, NULL if string was NULL.
+ * Return pointer to next UTF-8 char, NULL if string was NULL.
  */
 
 const char *
@@ -277,9 +277,9 @@ utf8_next_char (const char *string)
 }
 
 /*
- * Gets pointer to the beginning of the UTF-8 line in a string.
+ * Get pointer to the beginning of the UTF-8 line in a string.
  *
- * Returns pointer to the beginning of the UTF-8 line, NULL if string was NULL.
+ * Return pointer to the beginning of the UTF-8 line, NULL if string was NULL.
  */
 
 const char *
@@ -300,9 +300,9 @@ utf8_beginning_of_line (const char *string_start, const char *string)
 }
 
 /*
- * Gets pointer to the end of the UTF-8 line in a string.
+ * Get pointer to the end of the UTF-8 line in a string.
  *
- * Returns pointer to the end of the UTF-8 line, NULL if string was NULL.
+ * Return pointer to the end of the UTF-8 line, NULL if string was NULL.
  */
 
 const char *
@@ -320,9 +320,9 @@ utf8_end_of_line (const char *string)
 }
 
 /*
- * Gets UTF-8 char as an integer.
+ * Get UTF-8 char as an integer.
  *
- * Returns the UTF-8 char as integer number.
+ * Return the UTF-8 char as integer number.
  */
 
 int
@@ -377,7 +377,7 @@ utf8_char_int (const char *string)
 }
 
 /*
- * Converts a unicode char (as unsigned integer) to a string.
+ * Convert a unicode char (as unsigned integer) to a string.
  *
  * The string must have a size >= 5
  * (4 bytes for the UTF-8 char + the final '\0').
@@ -385,7 +385,7 @@ utf8_char_int (const char *string)
  * In case of error (if unicode value is > 0x1FFFFF), the string is set to an
  * empty string (string[0] == '\0').
  *
- * Returns the number of bytes in the UTF-8 char (not counting the final '\0').
+ * Return the number of bytes in the UTF-8 char (not counting the final '\0').
  */
 
 int
@@ -443,9 +443,9 @@ utf8_int_string (unsigned int unicode_value, char *string)
 }
 
 /*
- * Gets size of UTF-8 char (in bytes).
+ * Get size of UTF-8 char (in bytes).
  *
- * Returns an integer between 0 and 4.
+ * Return an integer between 0 and 4.
  */
 
 int
@@ -464,10 +464,10 @@ utf8_char_size (const char *string)
 }
 
 /*
- * Gets length of an UTF-8 string in number of chars (not bytes).
+ * Get length of an UTF-8 string in number of chars (not bytes).
  * Result is <= strlen (string).
  *
- * Returns length of string (>= 0).
+ * Return length of string (>= 0).
  */
 
 int
@@ -488,9 +488,9 @@ utf8_strlen (const char *string)
 }
 
 /*
- * Gets length of an UTF-8 string for N bytes max in string.
+ * Get length of an UTF-8 string for N bytes max in string.
  *
- * Returns length of string (>= 0).
+ * Return length of string (>= 0).
  */
 
 int
@@ -513,9 +513,9 @@ utf8_strnlen (const char *string, int bytes)
 }
 
 /*
- * Gets number of chars needed on screen to display the UTF-8 char.
+ * Get number of chars needed on screen to display the UTF-8 char.
  *
- * Returns the number of chars (>= 0).
+ * Return the number of chars (>= 0).
  */
 
 int
@@ -552,9 +552,9 @@ utf8_char_size_screen (const char *string)
 }
 
 /*
- * Gets number of chars needed on screen to display the UTF-8 string.
+ * Get number of chars needed on screen to display the UTF-8 string.
  *
- * Returns the number of chars (>= 0).
+ * Return the number of chars (>= 0).
  */
 
 int
@@ -584,9 +584,9 @@ utf8_strlen_screen (const char *string)
 }
 
 /*
- * Moves forward N chars in an UTF-8 string.
+ * Move forward N chars in an UTF-8 string.
  *
- * Returns pointer to the new position in string.
+ * Return pointer to the new position in string.
  */
 
 const char *
@@ -604,13 +604,13 @@ utf8_add_offset (const char *string, int offset)
 }
 
 /*
- * Gets real position in UTF-8 string, in bytes.
+ * Get real position in UTF-8 string, in bytes.
  *
  * Argument "pos" is a number of chars (not bytes).
  *
- * Example: ("déca", 2) returns 3.
+ * Example: ("déca", 2) return 3.
  *
- * Returns the real position (>= 0).
+ * Return the real position (>= 0).
  */
 
 int
@@ -635,13 +635,13 @@ utf8_real_pos (const char *string, int pos)
 }
 
 /*
- * Gets position in UTF-8 string, in chars.
+ * Get position in UTF-8 string, in chars.
  *
  * Argument "real_pos" is a number of bytes (not chars).
  *
- * Example: ("déca", 3) returns 2.
+ * Example: ("déca", 3) return 2.
  *
- * Returns the position in string.
+ * Return the position in string.
  */
 
 int
@@ -664,7 +664,7 @@ utf8_pos (const char *string, int real_pos)
 }
 
 /*
- * Duplicates an UTF-8 string, with max N chars.
+ * Duplicate an UTF-8 string, with max N chars.
  *
  * Note: result must be freed after use.
  */
@@ -688,7 +688,7 @@ utf8_strndup (const char *string, int length)
 }
 
 /*
- * Copies max N chars from a string to another and adds null byte at the end.
+ * Copy max N chars from a string to another and adds null byte at the end.
  *
  * Note: the target string "dest" must be long enough.
  */

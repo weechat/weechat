@@ -38,7 +38,7 @@
 
 
 /*
- * Gets mode arguments: skips colons before arguments and converts IRC color
+ * Get mode arguments: skip colons before arguments and convert IRC color
  * codes into WeeChat color codes, so that the result can be displayed in a
  * buffer.
  */
@@ -81,7 +81,7 @@ irc_mode_get_arguments_colors (const char *arguments)
 }
 
 /*
- * Gets type of channel mode, which is a letter from 'A' to 'D':
+ * Get type of channel mode, which is a letter from 'A' to 'D':
  *   A = Mode that adds or removes a nick or address to a list. Always has a
  *       parameter.
  *   B = Mode that changes a setting and always has a parameter.
@@ -137,7 +137,7 @@ irc_mode_get_chanmode_type (struct t_irc_server *server, char chanmode)
 }
 
 /*
- * Updates channel modes using the mode and argument.
+ * Update channel modes using the mode and argument.
  *
  * Example:
  *   if channel modes are "+tn" and that we have:
@@ -324,10 +324,10 @@ end:
 }
 
 /*
- * Checks if a mode is smart filtered (according to option
+ * Check if a mode is smart filtered (according to option
  * irc.look.smart_filter_mode and server prefix modes).
  *
- * Returns:
+ * Return:
  *   1: the mode is smart filtered
  *   0: the mode is NOT smart filtered
  */
@@ -366,10 +366,10 @@ irc_mode_smart_filtered (struct t_irc_server *server, char mode)
 }
 
 /*
- * Sets channel modes using CHANMODES (from message 005) and update channel
+ * Set channel modes using CHANMODES (from message 005) and update channel
  * modes if needed.
  *
- * Returns:
+ * Return:
  *   1: the mode message can be "smart filtered"
  *   0: the mode message must NOT be "smart filtered"
  */
@@ -570,7 +570,7 @@ irc_mode_channel_set (struct t_irc_server *server,
 }
 
 /*
- * Adds a user mode.
+ * Add a user mode.
  */
 
 void
@@ -622,7 +622,7 @@ irc_mode_user_add (struct t_irc_server *server, char mode)
 }
 
 /*
- * Removes a user mode.
+ * Remove a user mode.
  */
 
 void
@@ -654,7 +654,7 @@ irc_mode_user_remove (struct t_irc_server *server, char mode)
 }
 
 /*
- * Sets user modes.
+ * Set user modes.
  */
 
 void
@@ -709,8 +709,7 @@ irc_mode_user_set (struct t_irc_server *server, const char *modes,
 }
 
 /*
- * Updates authentication_method when IRC_SERVER_OPTION_REGISTERED_MODE
- * changes.
+ * Update authentication_method when IRC_SERVER_OPTION_REGISTERED_MODE changes.
  */
 
 void

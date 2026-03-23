@@ -51,9 +51,9 @@ int gui_filters_enabled = 1;                       /* filters enabled?      */
 
 
 /*
- * Checks if a line must be displayed or not (filtered).
+ * Check if a line must be displayed or not (filtered).
  *
- * Returns:
+ * Return:
  *   1: line must be displayed (not filtered)
  *   0: line must be hidden (filtered)
  */
@@ -110,7 +110,7 @@ gui_filter_check_line (struct t_gui_line_data *line_data)
 }
 
 /*
- * Filters a buffer, using message filters.
+ * Filter a buffer, using message filters.
  *
  * If line_data is NULL, filters all lines in buffer.
  * If line_data is not NULL, filters only this line_data.
@@ -188,7 +188,7 @@ gui_filter_buffer (struct t_gui_buffer *buffer,
 }
 
 /*
- * Filters all buffers, using message filters.
+ * Filter all buffers, using message filters.
  *
  * If filter is NULL, filters all buffers.
  * If filter is not NULL, filters only buffers matched by this filter.
@@ -212,7 +212,7 @@ gui_filter_all_buffers (struct t_gui_filter *filter)
 }
 
 /*
- * Enables message filtering.
+ * Enable message filtering.
  */
 
 void
@@ -228,7 +228,7 @@ gui_filter_global_enable (void)
 }
 
 /*
- * Disables message filtering.
+ * Disable message filtering.
  */
 
 void
@@ -244,9 +244,9 @@ gui_filter_global_disable (void)
 }
 
 /*
- * Searches for a filter by name.
+ * Search for a filter by name.
  *
- * Returns pointer to filter found, NULL if not found.
+ * Return pointer to filter found, NULL if not found.
  */
 
 struct t_gui_filter *
@@ -269,7 +269,7 @@ gui_filter_search_by_name (const char *name)
 }
 
 /*
- * Displays an error when a new filter is created.
+ * Display an error when a new filter is created.
  */
 
 void
@@ -284,7 +284,7 @@ gui_filter_new_error (const char *name, const char *error)
 }
 
 /*
- * Searches for position of filter in list (to keep filters sorted by name).
+ * Search for position of filter in list (to keep filters sorted by name).
  */
 
 struct t_gui_filter *
@@ -304,7 +304,7 @@ gui_filter_find_pos (struct t_gui_filter *filter)
 }
 
 /*
- * Adds a filter to the list of filters (sorted by name).
+ * Add a filter to the list of filters (sorted by name).
  */
 
 void
@@ -338,7 +338,7 @@ gui_filter_add_to_list (struct t_gui_filter *filter)
 }
 
 /*
- * Removes a filter from list of filters.
+ * Remove a filter from list of filters.
  */
 
 void
@@ -355,9 +355,9 @@ gui_filter_remove_from_list (struct t_gui_filter *filter)
 }
 
 /*
- * Creates a new filter.
+ * Create a new filter.
  *
- * Returns pointer to new filter, NULL if error.
+ * Return pointer to new filter, NULL if error.
  */
 
 struct t_gui_filter *
@@ -500,9 +500,9 @@ gui_filter_new (int enabled, const char *name, const char *buffer_name,
 }
 
 /*
- * Renames a filter.
+ * Rename a filter.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -527,7 +527,7 @@ gui_filter_rename (struct t_gui_filter *filter, const char *new_name)
 }
 
 /*
- * Removes a filter.
+ * Remove a filter.
  */
 
 void
@@ -565,7 +565,7 @@ gui_filter_free (struct t_gui_filter *filter)
 }
 
 /*
- * Removes all filters.
+ * Remove all filters.
  */
 
 void
@@ -578,7 +578,7 @@ gui_filter_free_all (void)
 }
 
 /*
- * Returns hdata for filter.
+ * Return hdata for filter.
  */
 
 struct t_hdata *
@@ -615,9 +615,9 @@ gui_filter_hdata_filter_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds a filter in an infolist.
+ * Add a filter in an infolist.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -670,7 +670,7 @@ gui_filter_add_to_infolist (struct t_infolist *infolist,
 }
 
 /*
- * Prints filter infos in WeeChat log file (usually for crash dump).
+ * Print filter infos in WeeChat log file (usually for crash dump).
  */
 
 void

@@ -51,7 +51,7 @@ int num_gui_history = 0;
 
 
 /*
- * Removes oldest history entry in a buffer.
+ * Remove oldest history entry in a buffer.
  */
 
 void
@@ -78,7 +78,7 @@ gui_history_buffer_remove_oldest (struct t_gui_buffer *buffer)
 }
 
 /*
- * Adds a text/command to buffer's history.
+ * Add a text/command to buffer's history.
  */
 
 void
@@ -116,7 +116,7 @@ gui_history_buffer_add (struct t_gui_buffer *buffer, const char *string)
 }
 
 /*
- * Removes oldest global history entry.
+ * Remove oldest global history entry.
  */
 
 void
@@ -149,7 +149,7 @@ gui_history_global_remove_oldest (void)
 }
 
 /*
- * Adds a text/command to global history.
+ * Add a text/command to global history.
  */
 
 void
@@ -186,7 +186,7 @@ gui_history_global_add (const char *string)
 }
 
 /*
- * Adds a text/command to buffer's history + global history.
+ * Add a text/command to buffer's history + global history.
  */
 
 void
@@ -211,9 +211,9 @@ gui_history_add (struct t_gui_buffer *buffer, const char *string)
 }
 
 /*
- * Searches for text in a history entry.
+ * Search for text in a history entry.
  *
- * Returns:
+ * Return:
  *   1: text found in line
  *   0: text not found in line
  */
@@ -253,9 +253,9 @@ gui_history_search_text (struct t_gui_buffer *buffer,
 }
 
 /*
- * Searches in history using string in buffer input.
+ * Search in history using string in buffer input.
  *
- * Returns:
+ * Return:
  *   1: an history was found
  *   0: text not found
  */
@@ -298,7 +298,7 @@ gui_history_search (struct t_gui_buffer *buffer,
 }
 
 /*
- * Frees global history.
+ * Free global history.
  */
 
 void
@@ -321,7 +321,7 @@ gui_history_global_free (void)
 
 
 /*
- * Frees history for a buffer.
+ * Free history for a buffer.
  */
 
 void
@@ -402,7 +402,7 @@ gui_history_hdata_history_update_cb (void *data,
 }
 
 /*
- * Returns hdata for history.
+ * Return hdata for history.
  */
 
 struct t_hdata *
@@ -429,9 +429,9 @@ gui_history_hdata_history_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds history in an infolist.
+ * Add history in an infolist.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */

@@ -112,7 +112,7 @@ TEST_GROUP(CoreString)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   string_asprintf
  */
 
@@ -149,7 +149,7 @@ TEST(CoreString, Asprintf)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   string_strndup
  */
 
@@ -206,7 +206,7 @@ TEST(CoreString, Strndup)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   string_tolower
  */
 
@@ -225,7 +225,7 @@ TEST(CoreString, ToLower)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   string_toupper
  */
 
@@ -244,7 +244,7 @@ TEST(CoreString, ToUpper)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   string_tolower_range
  */
 
@@ -264,7 +264,7 @@ TEST(CoreString, ToLowerRange)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   string_toupper_range
  */
 
@@ -284,7 +284,7 @@ TEST(CoreString, ToUpperRange)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   string_cut
  */
 
@@ -409,7 +409,7 @@ TEST(CoreString, Cut)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   string_reverse
  */
 
@@ -451,7 +451,7 @@ TEST(CoreString, Reverse)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   string_reverse_screen
  */
 
@@ -502,7 +502,7 @@ TEST(CoreString, ReverseScreen)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   string_repeat
  */
 
@@ -522,7 +522,7 @@ TEST(CoreString, Repeat)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   string_charcmp
  *   string_charcasecmp
  *   string_charcasecmp_range
@@ -581,7 +581,7 @@ TEST(CoreString, CharComparison)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   string_strcmp
  *   string_strncmp
  *   string_strcasecmp
@@ -801,7 +801,7 @@ TEST(CoreString, StringComparison)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   string_strcasestr
  */
 
@@ -820,7 +820,7 @@ TEST(CoreString, Search)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   string_match
  */
 
@@ -886,7 +886,7 @@ TEST(CoreString, Match)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   string_match_list
  */
 
@@ -947,7 +947,7 @@ TEST(CoreString, MatchList)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   string_expand_home
  */
 
@@ -970,7 +970,7 @@ TEST(CoreString, ExpandHome)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   string_eval_path_home
  */
 
@@ -1125,7 +1125,7 @@ TEST(CoreString, EvalPathHome)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   string_remove_quotes
  */
 
@@ -1149,7 +1149,7 @@ TEST(CoreString, RemoveQuotes)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   string_strip
  */
 
@@ -1168,7 +1168,7 @@ TEST(CoreString, Strip)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   string_convert_escaped_chars
  */
 
@@ -1207,7 +1207,7 @@ TEST(CoreString, ConvertEscapedChars)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   string_is_whitespace_char
  */
 
@@ -1224,7 +1224,7 @@ TEST(CoreString, IsWhitespaceChar)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   string_is_word_char_highlight
  *   string_is_word_char_input
  */
@@ -1250,7 +1250,7 @@ TEST(CoreString, IsWordChar)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   string_mask_to_regex
  */
 
@@ -1269,7 +1269,7 @@ TEST(CoreString, MaskToRegex)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   string_regex_flags
  *   string_regcomp
  */
@@ -1329,7 +1329,7 @@ TEST(CoreString, Regex)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   string_has_highlight
  *   string_has_highlight_regex_compiled
  *   string_has_highlight_regex
@@ -1406,7 +1406,7 @@ test_replace_cb (void *data,
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   string_replace
  */
 
@@ -1429,7 +1429,7 @@ TEST(CoreString, Replace)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   string_replace_regex
  */
 
@@ -1453,7 +1453,7 @@ TEST(CoreString, ReplaceRegex)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   string_translate_chars
  */
 
@@ -1490,7 +1490,7 @@ TEST(CoreString, TranslateChars)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   string_replace_with_callback
  */
 
@@ -1558,7 +1558,7 @@ TEST(CoreString, ReplaceWithCallback)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   string_split
  *   string_free_split
  */
@@ -1867,7 +1867,7 @@ TEST(CoreString, Split)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   string_split_shared
  *   string_free_split_shared
  */
@@ -1911,7 +1911,7 @@ TEST(CoreString, SplitShared)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   string_split_shell
  *   string_free_split
  */
@@ -2007,7 +2007,7 @@ TEST(CoreString, SplitShell)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   string_split_command
  *   string_free_split_command
  */
@@ -2059,7 +2059,7 @@ TEST(CoreString, SplitCommand)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   string_split_tags
  *   string_free_split_tags
  */
@@ -2120,7 +2120,7 @@ TEST(CoreString, SplitTags)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   string_rebuild_split_string
  */
 
@@ -2274,7 +2274,7 @@ TEST(CoreString, RebuildSplitString)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   string_iconv
  *   string_iconv_to_internal
  *   string_iconv_from_internal
@@ -2318,7 +2318,7 @@ TEST(CoreString, Iconv)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   string_format_size
  */
 
@@ -2355,7 +2355,7 @@ TEST(CoreString, FormatSize)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   string_parse_size
  */
 
@@ -2425,7 +2425,7 @@ TEST(CoreString, ParseSize)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   string_base16_encode
  *   string_base16_decode
  */
@@ -2475,7 +2475,7 @@ TEST(CoreString, Base16)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   string_base32_encode
  *   string_base32_decode
  */
@@ -2533,7 +2533,7 @@ TEST(CoreString, Base32)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   string_base64_encode
  *   string_base64_decode
  */
@@ -2627,7 +2627,7 @@ TEST(CoreString, Base64)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   string_base_encode
  */
 
@@ -2663,7 +2663,7 @@ TEST(CoreString, BaseEncode)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   string_base_decode
  */
 
@@ -2699,7 +2699,7 @@ TEST(CoreString, BaseDecode)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   string_hex_dump
  */
 
@@ -2747,7 +2747,7 @@ TEST(CoreString, Hex_dump)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   string_is_command_char
  */
 
@@ -2779,7 +2779,7 @@ TEST(CoreString, IsCommandChar)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   string_input_for_buffer
  */
 
@@ -2864,7 +2864,7 @@ TEST(CoreString, InputForBuffer)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   string_get_common_bytes_count
  */
 
@@ -2886,7 +2886,7 @@ TEST(CoreString, GetCommonBytesCount)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   string_levenshtein
  */
 
@@ -2940,7 +2940,7 @@ TEST(CoreString, Levenshtein)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   string_get_priority_and_name
  */
 
@@ -3001,7 +3001,7 @@ TEST(CoreString, GetPriorityAndName)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   string_shared_get
  *   string_shared_free
  */
@@ -3048,7 +3048,7 @@ TEST(CoreString, Shared)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   string_dyn_alloc
  *   string_dyn_copy
  *   string_dyn_concat
@@ -3218,7 +3218,7 @@ TEST(CoreString, Dyn)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   string_concat
  */
 

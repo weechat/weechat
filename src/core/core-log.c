@@ -54,9 +54,9 @@ int weechat_log_use_time = 1;      /* 0 to temporary disable time in log,   */
 
 
 /*
- * Opens the WeeChat log file.
+ * Open the WeeChat log file.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -116,7 +116,7 @@ log_open (const char *filename, const char *mode)
 }
 
 /*
- * Initializes the WeeChat log file.
+ * Initialize the WeeChat log file.
  */
 
 void
@@ -140,7 +140,7 @@ log_init (void)
 }
 
 /*
- * Writes a message in WeeChat log file.
+ * Write a message in WeeChat log file.
  */
 
 void
@@ -193,7 +193,7 @@ log_printf (const char *message, ...)
 }
 
 /*
- * Dumps a string as hexa data in WeeChat log file.
+ * Dump a string as hexa data in WeeChat log file.
  */
 
 void
@@ -227,7 +227,7 @@ log_printf_hexa (const char *spaces, const char *string)
 }
 
 /*
- * Closes the WeeChat log file.
+ * Close the WeeChat log file.
  */
 
 void
@@ -252,7 +252,7 @@ log_close (void)
 }
 
 /*
- * Renames the WeeChat log file (when crashing).
+ * Rename the WeeChat log file (when crashing).
  *
  * The file "weechat.log" is renamed to "weechat_crash_YYYYMMDD_NNNN.log",
  * where YYYYMMDD is the current date and NNNN the PID of WeeChat process.

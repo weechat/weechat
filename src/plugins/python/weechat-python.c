@@ -133,7 +133,7 @@ char *python_action_autoload_list = NULL;
 
 
 /*
- * Converts a python unicode to a C UTF-8 string.
+ * Convert a python unicode to a C UTF-8 string.
  *
  * Note: result must be freed after use.
  */
@@ -195,7 +195,7 @@ weechat_python_hashtable_map_cb (void *data,
 }
 
 /*
- * Converts a WeeChat hashtable to a python dictionary.
+ * Convert a WeeChat hashtable to a python dictionary.
  */
 
 PyObject *
@@ -217,7 +217,7 @@ weechat_python_hashtable_to_dict (struct t_hashtable *hashtable)
 }
 
 /*
- * Converts a python dictionary to a WeeChat hashtable.
+ * Convert a python dictionary to a WeeChat hashtable.
  *
  * Note: hashtable must be freed after use.
  */
@@ -284,7 +284,7 @@ weechat_python_dict_to_hashtable (PyObject *dict, int size,
 }
 
 /*
- * Flushes output.
+ * Flush output.
  */
 
 void
@@ -387,7 +387,7 @@ weechat_python_output (PyObject *self, PyObject *args)
 }
 
 /*
- * Executes a python function.
+ * Execute a python function.
  */
 
 void *
@@ -601,7 +601,7 @@ end:
 }
 
 /*
- * Initializes the "weechat" module.
+ * Initialize the "weechat" module.
  */
 
 static PyObject *weechat_python_init_module_weechat (void)
@@ -643,7 +643,7 @@ static PyObject *weechat_python_init_module_weechat (void)
 }
 
 /*
- * Sets weechat output (to redirect stdout/stderr to WeeChat buffer).
+ * Set weechat output (to redirect stdout/stderr to WeeChat buffer).
  */
 
 void
@@ -678,12 +678,12 @@ weechat_python_set_output (void)
 }
 
 /*
- * Loads a python script.
+ * Load a python script.
  *
- * If code is NULL, the content of filename is read and executed.
- * If code is not NULL, it is executed (the file is not read).
+ * If code is NULL, read and execute the file content.
+ * If code is not NULL, execute it (the file is not read).
  *
- * Returns pointer to new registered script, NULL if error.
+ * Return pointer to new registered script, NULL if error.
  */
 
 struct t_plugin_script *
@@ -900,7 +900,7 @@ weechat_python_load_cb (void *data, const char *filename)
 }
 
 /*
- * Unloads a python script.
+ * Unload a python script.
  */
 
 void
@@ -951,7 +951,7 @@ weechat_python_unload (struct t_plugin_script *script)
 }
 
 /*
- * Unloads a python script by name.
+ * Unload a python script by name.
  */
 
 void
@@ -979,7 +979,7 @@ weechat_python_unload_name (const char *name)
 }
 
 /*
- * Unloads all python scripts.
+ * Unload all python scripts.
  */
 
 void
@@ -992,7 +992,7 @@ weechat_python_unload_all (void)
 }
 
 /*
- * Reloads a python script by name.
+ * Reload a python script by name.
  */
 
 void
@@ -1027,9 +1027,9 @@ weechat_python_reload_name (const char *name)
 }
 
 /*
- * Evaluates python source code.
+ * Evaluate python source code.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -1245,7 +1245,7 @@ weechat_python_command_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds python scripts to completion list.
+ * Add python scripts to completion list.
  */
 
 int
@@ -1266,7 +1266,7 @@ weechat_python_completion_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns hdata for python scripts.
+ * Return hdata for python scripts.
  */
 
 struct t_hdata *
@@ -1283,7 +1283,7 @@ weechat_python_hdata_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns python info "python_eval".
+ * Return python info "python_eval".
  */
 
 char *
@@ -1306,7 +1306,7 @@ weechat_python_info_eval_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns infolist with list of functions in python scripting API.
+ * Return infolist with list of functions in python scripting API.
  */
 
 struct t_infolist *
@@ -1338,7 +1338,7 @@ weechat_python_infolist_functions (void)
 }
 
 /*
- * Returns infolist with list of constants in python scripting API.
+ * Return infolist with list of constants in python scripting API.
  */
 
 struct t_infolist *
@@ -1382,7 +1382,7 @@ error:
 }
 
 /*
- * Returns infolist with python scripts.
+ * Return infolist with python scripts.
  */
 
 struct t_infolist *
@@ -1415,7 +1415,7 @@ weechat_python_infolist_cb (const void *pointer, void *data,
 }
 
 /*
- * Dumps python plugin data in WeeChat log file.
+ * Dump python plugin data in WeeChat log file.
  */
 
 int
@@ -1526,7 +1526,7 @@ weechat_python_signal_script_action_cb (const void *pointer, void *data,
 }
 
 /*
- * Initializes python plugin.
+ * Initialize python plugin.
  */
 
 int
@@ -1634,7 +1634,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 }
 
 /*
- * Ends python plugin.
+ * End python plugin.
  */
 
 int

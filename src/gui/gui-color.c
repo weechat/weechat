@@ -115,9 +115,9 @@ char *gui_color_ansi[16] =
 
 
 /*
- * Returns a color code from an option, which can be a color or a string.
+ * Return a color code from an option, which can be a color or a string.
  *
- * Returns NULL if the option has a wrong type.
+ * Return NULL if the option has a wrong type.
  */
 
 const char *
@@ -146,9 +146,9 @@ gui_color_from_option (struct t_config_option *option)
 }
 
 /*
- * Searches for a color with configuration option name.
+ * Search for a color with configuration option name.
  *
- * Returns color string, NULL if not found.
+ * Return color string, NULL if not found.
  */
 
 const char *
@@ -181,9 +181,9 @@ gui_color_search_config (const char *color_name)
 }
 
 /*
- * Returns flag for attribute char of a color.
+ * Return flag for attribute char of a color.
  *
- * Returns 0 if char is unknown.
+ * Return 0 if char is unknown.
  */
 
 int
@@ -214,7 +214,7 @@ gui_color_attr_get_flag (char c)
 }
 
 /*
- * Builds string with attributes of color.
+ * Build string with attributes of color.
  *
  * The str_attr must be at least 6 bytes long (5 for attributes + final '\0').
  */
@@ -245,7 +245,7 @@ gui_color_attr_build_string (int color, char *str_attr)
 }
 
 /*
- * Gets a custom color with a name.
+ * Get a custom color with a name.
  */
 
 const char *
@@ -539,9 +539,9 @@ gui_color_get_custom (const char *color_name)
 }
 
 /*
- * Converts a terminal color to its RGB value.
+ * Convert a terminal color to its RGB value.
  *
- * Returns a RGB color as integer.
+ * Return a RGB color as integer.
  */
 
 int
@@ -554,13 +554,13 @@ gui_color_convert_term_to_rgb (int color)
 }
 
 /*
- * Converts a RGB color to the closest terminal color.
+ * Convert a RGB color to the closest terminal color.
  *
  * Argument "limit" is the number of colors to check in the table of terminal
  * colors (starting from 0). So for example 256 will return any of the 256
  * colors, 16 will return a color between 0 and 15.
  *
- * Returns the closest terminal color (0-255).
+ * Return the closest terminal color (0-255).
  */
 
 int
@@ -601,14 +601,13 @@ gui_color_convert_rgb_to_term (int rgb, int limit)
 }
 
 /*
- * Returns the size (in bytes) of the WeeChat color code at the beginning
+ * Return the size (in bytes) of the WeeChat color code at the beginning
  * of "string".
  *
- * If "string" is NULL, empty or does not start with a color code,
- * it returns 0.
+ * Return 0 if "string" is NULL, empty or does not start with a color code.
  *
- * If "string" begins with multiple color codes, only the size of the first
- * one is returned.
+ * Return the size of the first color code if "string" begins with multiple
+ * color codes.
  */
 
 int
@@ -777,7 +776,7 @@ gui_color_code_size (const char *string)
 }
 
 /*
- * Removes WeeChat color codes from a message and optionally replaces them
+ * Remove WeeChat color codes from a message and optionally replaces them
  * by a string.
  *
  * Note: result must be freed after use.
@@ -965,7 +964,7 @@ gui_color_decode (const char *string, const char *replacement)
 }
 
 /*
- * Converts ANSI color codes to WeeChat colors (or removes them).
+ * Convert ANSI color codes to WeeChat colors (or removes them).
  *
  * This callback is called by gui_color_decode_ansi, it must not be called
  * directly.
@@ -1189,7 +1188,7 @@ end:
 }
 
 /*
- * Converts ANSI color codes to WeeChat colors (or removes them).
+ * Convert ANSI color codes to WeeChat colors (or removes them).
  *
  * Note: result must be freed after use.
  */
@@ -1220,7 +1219,7 @@ gui_color_decode_ansi (const char *string, int keep_colors)
 }
 
 /*
- * Adds an ANSI color code with a WeeChat attribute flag.
+ * Add an ANSI color code with a WeeChat attribute flag.
  */
 
 void
@@ -1253,9 +1252,9 @@ gui_color_add_ansi_flag (char **output, int flag)
 }
 
 /*
- * Converts a WeeChat color number to an ANSI color number.
+ * Convert a WeeChat color number to an ANSI color number.
  *
- * Returns -1 if the color is not found.
+ * Return -1 if the color is not found.
  */
 
 int
@@ -1279,7 +1278,7 @@ gui_color_weechat_to_ansi (int color)
 }
 
 /*
- * Replaces WeeChat colors by ANSI colors.
+ * Replace WeeChat colors by ANSI colors.
  *
  * Note: result must be freed after use.
  */
@@ -1726,12 +1725,12 @@ gui_color_encode_ansi (const char *string)
 }
 
 /*
- * Emphasizes a string or regular expression in a string (which can contain
+ * Emphasize a string or regular expression in a string (which can contain
  * colors).
  *
  * Argument "case_sensitive" is used only for "search", if the "regex" is NULL.
  *
- * Returns string with the search string/regex emphasized, NULL if error.
+ * Return string with the search string/regex emphasized, NULL if error.
  *
  * Note: result must be freed after use.
  */
@@ -1883,7 +1882,7 @@ gui_color_emphasize (const char *string,
 }
 
 /*
- * Frees a color.
+ * Free a color.
  */
 
 void
@@ -1916,7 +1915,7 @@ gui_color_palette_free_value_cb (struct t_hashtable *hashtable,
 }
 
 /*
- * Allocates hashtables and lists for palette.
+ * Allocate hashtables and lists for palette.
  */
 
 void
@@ -1946,9 +1945,9 @@ gui_color_palette_alloc_structs (void)
 }
 
 /*
- * Gets color pair number with alias.
+ * Get color pair number with alias.
  *
- * Returns -1 if alias is not found.
+ * Return -1 if alias is not found.
  */
 
 int
@@ -1968,7 +1967,7 @@ gui_color_palette_get_alias (const char *alias)
 }
 
 /*
- * Gets a color palette with number.
+ * Get a color palette with number.
  */
 
 struct t_gui_color_palette *
@@ -1982,7 +1981,7 @@ gui_color_palette_get (int number)
 }
 
 /*
- * Adds a color in palette.
+ * Add a color in palette.
  */
 
 void
@@ -2007,7 +2006,7 @@ gui_color_palette_add (int number, const char *value)
 }
 
 /*
- * Removes a color in palette.
+ * Remove a color in palette.
  */
 
 void
@@ -2032,7 +2031,7 @@ gui_color_palette_remove (int number)
 }
 
 /*
- * Frees hashtables and lists for palette.
+ * Free hashtables and lists for palette.
  */
 
 void
@@ -2044,7 +2043,7 @@ gui_color_palette_free_structs (void)
 }
 
 /*
- * Initializes colors.
+ * Initialize colors.
  */
 
 void
@@ -2059,7 +2058,7 @@ gui_color_init (void)
 }
 
 /*
- * Ends GUI colors.
+ * End GUI colors.
  */
 
 void

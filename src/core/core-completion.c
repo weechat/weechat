@@ -65,7 +65,7 @@ extern char **environ;
 
 
 /*
- * Adds a word with quotes around to completion list.
+ * Add a word with quotes around to completion list.
  */
 
 void
@@ -82,7 +82,7 @@ completion_list_add_quoted_word (struct t_gui_completion *completion,
 }
 
 /*
- * Adds bar names to completion list.
+ * Add bar names to completion list.
  */
 
 int
@@ -109,7 +109,7 @@ completion_list_add_bars_names_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds bar items to completion list.
+ * Add bar items to completion list.
  */
 
 int
@@ -137,7 +137,7 @@ completion_list_add_bars_items_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds custom bar items names to completion list.
+ * Add custom bar items names to completion list.
  */
 
 int
@@ -165,7 +165,7 @@ completion_list_add_custom_bar_items_names_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds custom bar item conditions to completion list.
+ * Add custom bar item conditions to completion list.
  */
 
 int
@@ -190,7 +190,7 @@ completion_list_add_custom_bar_item_conditions_cb (const void *pointer, void *da
 }
 
 /*
- * Adds custom bar item contents to completion list.
+ * Add custom bar item contents to completion list.
  */
 
 int
@@ -215,7 +215,7 @@ completion_list_add_custom_bar_item_contents_cb (const void *pointer, void *data
 }
 
 /*
- * Adds arguments for commands that add a custom bar item.
+ * Add arguments for commands that add a custom bar item.
  */
 
 int
@@ -283,7 +283,7 @@ completion_list_add_custom_bar_item_add_arguments_cb (const void *pointer, void 
 }
 
 /*
- * Adds bar options to completion list.
+ * Add bar options to completion list.
  */
 
 int
@@ -310,7 +310,7 @@ completion_list_add_bars_options_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds buffer names to completion list.
+ * Add buffer names to completion list.
  */
 
 int
@@ -338,7 +338,7 @@ completion_list_add_buffers_names_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds buffer numbers to completion list.
+ * Add buffer numbers to completion list.
  */
 
 int
@@ -368,7 +368,7 @@ completion_list_add_buffers_numbers_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds plugin+buffer names to completion list.
+ * Add plugin+buffer names to completion list.
  */
 
 int
@@ -396,7 +396,7 @@ completion_list_add_buffers_plugins_names_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds a buffer local variable to completions list.
+ * Add a buffer local variable to completions list.
  */
 
 void
@@ -414,7 +414,7 @@ completion_list_map_buffer_local_variable_cb (void *data,
 }
 
 /*
- * Adds buffer local variables to completion list.
+ * Add buffer local variables to completion list.
  */
 
 int
@@ -437,7 +437,7 @@ completion_list_add_buffer_local_variables_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds buffer local variable value to completion list.
+ * Add buffer local variable value to completion list.
  */
 
 int
@@ -487,7 +487,7 @@ completion_list_add_buffer_local_variable_value_cb (const void *pointer, void *d
 }
 
 /*
- * Adds buffer properties (that can be set) to completion list.
+ * Add buffer properties (that can be set) to completion list.
  */
 
 int
@@ -515,7 +515,7 @@ completion_list_add_buffer_properties_set_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds a buffer local variable to completions list (for `/buffer setauto`).
+ * Add a buffer local variable to completions list (for `/buffer setauto`).
  */
 
 void
@@ -538,7 +538,7 @@ completion_list_map_buffer_local_variable_setauto_cb (void *data,
 }
 
 /*
- * Adds buffer properties (that can be set), local variables and key bindings
+ * Add buffer properties (that can be set), local variables and key bindings
  * to completion list.
  */
 
@@ -585,7 +585,7 @@ completion_list_add_buffer_properties_setauto_cb (const void *pointer, void *dat
 }
 
 /*
- * Adds buffer properties (that can be read) to completion list.
+ * Add buffer properties (that can be read) to completion list.
  */
 
 int
@@ -625,7 +625,7 @@ completion_list_add_buffer_properties_get_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds window numbers to completion list.
+ * Add window numbers to completion list.
  */
 
 int
@@ -654,7 +654,7 @@ completion_list_add_windows_numbers_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds colors to completion list.
+ * Add colors to completion list.
  */
 
 int
@@ -711,7 +711,7 @@ completion_list_add_colors_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds a palette color to completion list.
+ * Add a palette color to completion list.
  */
 
 void
@@ -729,7 +729,7 @@ completion_list_map_add_palette_color_cb (void *data,
 }
 
 /*
- * Adds palette colors to completion list.
+ * Add palette colors to completion list.
  */
 
 int
@@ -752,7 +752,7 @@ completion_list_add_palette_colors_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds configuration files to completion list.
+ * Add configuration files to completion list.
  */
 
 int
@@ -780,7 +780,7 @@ completion_list_add_config_files_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds path/filename to completion list.
+ * Add path/filename to completion list.
  */
 
 int
@@ -923,7 +923,7 @@ end:
 }
 
 /*
- * Adds filter names to completion list.
+ * Add filter names to completion list.
  */
 
 int
@@ -951,7 +951,7 @@ completion_list_add_filters_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds disabled filter names to completion list.
+ * Add disabled filter names to completion list.
  */
 
 int
@@ -982,7 +982,7 @@ completion_list_add_filters_disabled_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds enabled filter names to completion list.
+ * Add enabled filter names to completion list.
  */
 
 int
@@ -1013,7 +1013,7 @@ completion_list_add_filters_enabled_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds command hook types to completion list.
+ * Add command hook types to completion list.
  */
 
 int
@@ -1040,7 +1040,7 @@ completion_list_add_hook_types_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds command hooks to completion list.
+ * Add command hooks to completion list.
  */
 
 int
@@ -1091,7 +1091,7 @@ completion_list_add_commands_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds info hooks to completion list.
+ * Add info hooks to completion list.
  */
 
 int
@@ -1123,7 +1123,7 @@ completion_list_add_infos_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds infolist hooks to completion list.
+ * Add infolist hooks to completion list.
  */
 
 int
@@ -1155,7 +1155,7 @@ completion_list_add_infolists_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds nicks to completion list.
+ * Add nicks to completion list.
  */
 
 int
@@ -1206,7 +1206,7 @@ completion_list_add_nicks_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds configuration options to completion list.
+ * Add configuration options to completion list.
  */
 
 int
@@ -1254,7 +1254,7 @@ completion_list_add_config_options_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds plugin names to completion list.
+ * Add plugin names to completion list.
  */
 
 int
@@ -1282,7 +1282,7 @@ completion_list_add_plugins_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds a plugin installed to completion list.
+ * Add a plugin installed to completion list.
  */
 
 void
@@ -1317,7 +1317,7 @@ completion_list_add_plugins_installed_exec_cb (void *data,
 }
 
 /*
- * Adds plugins installed to completion list.
+ * Add plugins installed to completion list.
  */
 
 int
@@ -1384,7 +1384,7 @@ completion_list_add_plugins_installed_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds plugin commands to completion list.
+ * Add plugin commands to completion list.
  *
  * The plugin name is read in previous argument.
  */
@@ -1472,7 +1472,7 @@ completion_list_add_plugins_commands_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds value of option to completion list.
+ * Add value of option to completion list.
  *
  * The option name is read in previous argument.
  */
@@ -1688,7 +1688,7 @@ completion_list_add_config_option_values_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds WeeChat commands to completion list.
+ * Add WeeChat commands to completion list.
  */
 
 int
@@ -1740,7 +1740,7 @@ completion_list_add_weechat_commands_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds proxy names to completion list.
+ * Add proxy names to completion list.
  */
 
 int
@@ -1768,7 +1768,7 @@ completion_list_add_proxies_names_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds proxy options to completion list.
+ * Add proxy options to completion list.
  */
 
 int
@@ -1795,7 +1795,7 @@ completion_list_add_proxies_options_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds key contexts to completion list.
+ * Add key contexts to completion list.
  */
 
 int
@@ -1822,7 +1822,7 @@ completion_list_add_keys_contexts_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds keys to completion list.
+ * Add keys to completion list.
  */
 
 int
@@ -1853,7 +1853,7 @@ completion_list_add_keys_codes_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds keys that can be reset (keys added, redefined or removed) to completion
+ * Add keys that can be reset (keys added, redefined or removed) to completion
  * list.
  */
 
@@ -1905,7 +1905,7 @@ completion_list_add_keys_codes_for_reset_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds areas for free cursor movement ("chat" and bar names) to completion
+ * Add areas for free cursor movement ("chat" and bar names) to completion
  * list.
  */
 
@@ -1947,7 +1947,7 @@ completion_list_add_cursor_areas_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds layout names to completion list.
+ * Add layout names to completion list.
  */
 
 int
@@ -1975,7 +1975,7 @@ completion_list_add_layouts_names_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds a secured data to completion list.
+ * Add a secured data to completion list.
  */
 
 void
@@ -1993,7 +1993,7 @@ completion_list_map_add_secured_data_cb (void *data,
 }
 
 /*
- * Adds secured data to completion list.
+ * Add secured data to completion list.
  */
 
 int
@@ -2016,7 +2016,7 @@ completion_list_add_secured_data_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds environment variables to completion list.
+ * Add environment variables to completion list.
  */
 
 int
@@ -2052,7 +2052,7 @@ completion_list_add_env_vars_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds value of an environment variable to completion list.
+ * Add value of an environment variable to completion list.
  */
 
 int
@@ -2099,7 +2099,7 @@ completion_list_add_env_value_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds a buffer local variable for /eval to completions list.
+ * Add a buffer local variable for /eval to completions list.
  */
 
 void
@@ -2122,7 +2122,7 @@ completion_list_map_eval_buffer_local_variable_cb (void *data,
 }
 
 /*
- * Adds /eval variables to completion list.
+ * Add /eval variables to completion list.
  */
 
 int
@@ -2225,7 +2225,7 @@ completion_list_add_eval_variables_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds hooks for completions done by WeeChat core.
+ * Add hooks for completions done by WeeChat core.
  */
 
 void

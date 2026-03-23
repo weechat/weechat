@@ -108,8 +108,7 @@ exec_buffer_close_cb (const void *pointer, void *data,
 }
 
 /*
- * Restore buffer callbacks (input and close) for buffers created by exec
- * plugin.
+ * Restore buffer callbacks (input and close) for buffers created by exec plugin.
  */
 
 void
@@ -140,7 +139,7 @@ exec_buffer_set_callbacks (void)
 }
 
 /*
- * Creates a new exec buffer for a command.
+ * Create a new exec buffer for a command.
  */
 
 struct t_gui_buffer *

@@ -46,9 +46,9 @@ struct t_hashtable *trigger_callback_hashtable_options_conditions = NULL;
 
 
 /*
- * Parses an IRC message.
+ * Parse an IRC message.
  *
- * Returns a hashtable with the parsed message, or NULL if error.
+ * Return a hashtable with the parsed message, or NULL if error.
  *
  * Note: hashtable must be freed after use.
  */
@@ -78,9 +78,9 @@ trigger_callback_irc_message_parse (const char *irc_message,
 }
 
 /*
- * Gets the pointer to IRC server with its name.
+ * Get the pointer to IRC server with its name.
  *
- * Returns pointer to IRC server, or NULL if not found.
+ * Return pointer to IRC server, or NULL if not found.
  */
 
 void
@@ -134,7 +134,7 @@ trigger_callback_get_irc_server_channel (const char *irc_server_name,
 }
 
 /*
- * Sets variables common to all triggers in a hashtable:
+ * Set variables common to all triggers in a hashtable:
  * - tg_trigger_name
  */
 
@@ -153,9 +153,9 @@ trigger_callback_set_common_vars (struct t_trigger *trigger,
 }
 
 /*
- * Sets variables in "extra_vars" hashtable using tags from message.
+ * Set variables in "extra_vars" hashtable using tags from message.
  *
- * Returns:
+ * Return:
  *   0: tag "no_trigger" was in tags, callback must NOT be executed
  *   1: no tag "no_trigger", callback can be executed
  */
@@ -247,9 +247,9 @@ trigger_callback_set_tags (struct t_gui_buffer *buffer,
 }
 
 /*
- * Checks conditions for a trigger.
+ * Check conditions for a trigger.
  *
- * Returns:
+ * Return:
  *   1: conditions are true (or no condition set in trigger)
  *   0: conditions are false
  */
@@ -279,9 +279,9 @@ trigger_callback_check_conditions (struct t_trigger *trigger,
 }
 
 /*
- * Replaces text using regex.
+ * Replace text using regex.
  *
- * Returns: text replaced.
+ * Return: text replaced.
  *
  * Note: result must be freed after use.
  */
@@ -320,9 +320,9 @@ trigger_callback_regex_replace (struct t_trigger_context *context,
 }
 
 /*
- * Translates chars.
+ * Translate chars.
  *
- * Returns: text with translated chars.
+ * Return: text with translated chars.
  *
  * Note: result must be freed after use.
  */
@@ -355,7 +355,7 @@ trigger_callback_regex_translate_chars (struct t_trigger_context *context,
 }
 
 /*
- * Executes regex commands.
+ * Execute regex commands.
  */
 
 void
@@ -491,7 +491,7 @@ trigger_callback_regex (struct t_trigger *trigger,
 }
 
 /*
- * Executes the trigger command(s).
+ * Execute the trigger command(s).
  */
 
 void
@@ -550,7 +550,7 @@ trigger_callback_run_command (struct t_trigger *trigger,
 }
 
 /*
- * Executes a trigger.
+ * Execute a trigger.
  *
  * Following actions are executed:
  *   1. display debug info on trigger buffer
@@ -558,7 +558,7 @@ trigger_callback_run_command (struct t_trigger *trigger,
  *   3. replace text with regex
  *   4. execute command(s)
  *
- * Returns:
+ * Return:
  *   1: conditions were true (or no condition set in trigger)
  *   0: conditions were false
  */
@@ -1482,7 +1482,7 @@ end:
 }
 
 /*
- * Initializes trigger callback.
+ * Initialize trigger callback.
  */
 
 void
@@ -1501,7 +1501,7 @@ trigger_callback_init (void)
 }
 
 /*
- * Ends trigger callback.
+ * End trigger callback.
  */
 
 void

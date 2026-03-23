@@ -59,9 +59,9 @@ struct t_relay_remote *last_relay_remote_temp = NULL; /* last temp. remote  */
 
 
 /*
- * Searches for a remote option name.
+ * Search for a remote option name.
  *
- * Returns index of option in enum t_relay_remote_option, -1 if not found.
+ * Return index of option in enum t_relay_remote_option, -1 if not found.
  */
 
 int
@@ -83,9 +83,9 @@ relay_remote_search_option (const char *option_name)
 }
 
 /*
- * Checks if a remote pointer is valid.
+ * Check if a remote pointer is valid.
  *
- * Returns:
+ * Return:
  *   1: remote exists
  *   0: remote does not exist
  */
@@ -110,9 +110,9 @@ relay_remote_valid (struct t_relay_remote *remote)
 }
 
 /*
- * Searches for a remote by name.
+ * Search for a remote by name.
  *
- * Returns pointer to remote found, NULL if not found.
+ * Return pointer to remote found, NULL if not found.
  */
 
 struct t_relay_remote *
@@ -135,9 +135,9 @@ relay_remote_search (const char *name)
 }
 
 /*
- * Searches for a remote by number (first remote is 0).
+ * Search for a remote by number (first remote is 0).
  *
- * Returns pointer to remote found, NULL if not found.
+ * Return pointer to remote found, NULL if not found.
  */
 
 struct t_relay_remote *
@@ -160,10 +160,10 @@ relay_remote_search_by_number (int number)
 }
 
 /*
- * Checks if a remote name is valid: it must contain only alphabetic chars
+ * Check if a remote name is valid: it must contain only alphabetic chars
  * or digits.
  *
- * Returns:
+ * Return:
  *   1: name is valid
  *   0: name is invalid
  */
@@ -189,11 +189,11 @@ relay_remote_name_valid (const char *name)
 }
 
 /*
- * Extracts TLS, address and port from remote URL.
+ * Extract TLS, address and port from remote URL.
  *
  * If address is an IPv6 like "[::1]", the square brackets are removed.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error, invalid URL
  */
@@ -289,9 +289,9 @@ relay_remote_parse_url (const char *url,
 }
 
 /*
- * Checks if a remote URL is valid.
+ * Check if a remote URL is valid.
  *
- * Returns:
+ * Return:
  *   1: URL is valid
  *   0: URL is invalid
  */
@@ -303,7 +303,7 @@ relay_remote_url_valid (const char *url)
 }
 
 /*
- * Sends a signal with the status of remote ("relay_remote_xxx").
+ * Send a signal with the status of remote ("relay_remote_xxx").
  */
 
 void
@@ -318,9 +318,9 @@ relay_remote_send_signal (struct t_relay_remote *remote)
 }
 
 /*
- * Allocates and initializes new remote structure.
+ * Allocate and initialize new remote structure.
  *
- * Returns pointer to new remote, NULL if error.
+ * Return pointer to new remote, NULL if error.
  */
 
 struct t_relay_remote *
@@ -371,7 +371,7 @@ relay_remote_alloc (const char *name)
 }
 
 /*
- * Searches for position of remote in list (to keep remotes sorted by name).
+ * Search for position of remote in list (to keep remotes sorted by name).
  */
 
 struct t_relay_remote *
@@ -392,7 +392,7 @@ relay_remote_find_pos (struct t_relay_remote *remote,
 }
 
 /*
- * Adds a remote in a linked list.
+ * Add a remote in a linked list.
  */
 
 void
@@ -428,7 +428,7 @@ relay_remote_add (struct t_relay_remote *remote,
 }
 
 /*
- * Sets URL in a remote.
+ * Set URL in a remote.
  */
 
 void
@@ -439,9 +439,9 @@ relay_remote_set_url (struct t_relay_remote *remote, const char *url)
 }
 
 /*
- * Creates a new remote with options.
+ * Create a new remote with options.
  *
- * Returns pointer to new remote, NULL if error.
+ * Return pointer to new remote, NULL if error.
  */
 
 struct t_relay_remote *
@@ -477,9 +477,9 @@ relay_remote_new_with_options (const char *name, struct t_config_option **option
 }
 
 /*
- * Creates a new remote.
+ * Create a new remote.
  *
- * Returns pointer to new remote, NULL if error.
+ * Return pointer to new remote, NULL if error.
  */
 
 struct t_relay_remote *
@@ -529,7 +529,7 @@ relay_remote_new (const char *name,
 }
 
 /*
- * Creates a new remote using an infolist.
+ * Create a new remote using an infolist.
  *
  * This is called to restore remotes after /upgrade.
  */
@@ -632,7 +632,7 @@ relay_remote_new_with_infolist (struct t_infolist *infolist)
 }
 
 /*
- * Sets status for a remote.
+ * Set status for a remote.
  */
 
 void
@@ -656,9 +656,9 @@ relay_remote_set_status (struct t_relay_remote *remote,
 }
 
 /*
- * Connects to a remote WeeChat relay/api.
+ * Connect to a remote WeeChat relay/api.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -706,7 +706,7 @@ relay_remote_auto_connect_timer_cb (const void *pointer, void *data,
 }
 
 /*
- * Auto-connects to all remotes with option autoconnect to "on".
+ * Auto-connect to all remotes with option autoconnect to "on".
  */
 
 void
@@ -717,9 +717,9 @@ relay_remote_auto_connect (void)
 }
 
 /*
- * Sends JSON data to a remote WeeChat relay/api.
+ * Send JSON data to a remote WeeChat relay/api.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -742,9 +742,9 @@ relay_remote_send (struct t_relay_remote *remote, const char *json)
 }
 
 /*
- * Renames a remote.
+ * Rename a remote.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error (remote not renamed)
  */
@@ -798,9 +798,9 @@ relay_remote_rename (struct t_relay_remote *remote, const char *name)
 }
 
 /*
- * Disconnects one remote.
+ * Disconnect one remote.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -821,7 +821,7 @@ relay_remote_disconnect (struct t_relay_remote *remote)
 }
 
 /*
- * Schedules reconnection to remote.
+ * Schedule reconnection to remote.
  */
 
 void
@@ -883,9 +883,9 @@ relay_remote_reconnect_schedule (struct t_relay_remote *remote)
 }
 
 /*
- * Reconnects to a remote WeeChat relay/api.
+ * Reconnect to a remote WeeChat relay/api.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -947,7 +947,7 @@ relay_remote_timer (void)
 }
 
 /*
- * Disconnects all remotes.
+ * Disconnect all remotes.
  */
 
 void
@@ -978,7 +978,7 @@ relay_remote_buffer_input (struct t_gui_buffer *buffer, const char *input_data)
 }
 
 /*
- * Deletes a remote.
+ * Delete a remote.
  */
 
 void
@@ -1019,7 +1019,7 @@ relay_remote_free (struct t_relay_remote *remote)
 }
 
 /*
- * Removes all remotes.
+ * Remove all remotes.
  */
 
 void
@@ -1032,13 +1032,13 @@ relay_remote_free_all (void)
 }
 
 /*
- * Adds a remote in an infolist.
+ * Add a remote in an infolist.
  *
  * If force_disconnected_state == 1, the infolist contains the remote
  * in a disconnected state (but the remote is unchanged, still connected if it
  * was).
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -1133,7 +1133,7 @@ relay_remote_add_to_infolist (struct t_infolist *infolist,
 }
 
 /*
- * Prints remotes in WeeChat log file (usually for crash dump).
+ * Print remotes in WeeChat log file (usually for crash dump).
  */
 
 void

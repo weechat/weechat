@@ -128,10 +128,10 @@ signal_sigusr2_cb (int signo)
 }
 
 /*
- * Gets a signal index with a signal number; only some commonly used signal
+ * Get a signal index with a signal number; only some commonly used signal
  * names are supported here (see declaration of signal_list[]).
  *
- * Returns the index of signal in structure string_signal, -1 if not found.
+ * Return the index of signal in structure string_signal, -1 if not found.
  */
 
 int
@@ -150,10 +150,10 @@ signal_search_number (int signal_number)
 }
 
 /*
- * Gets a signal number with a name; only some commonly used signal names are
+ * Get a signal number with a name; only some commonly used signal names are
  * supported here (see declaration of signal_list[]).
  *
- * Returns the signal number, -1 if not found.
+ * Return the signal number, -1 if not found.
  */
 
 int
@@ -175,7 +175,7 @@ signal_search_name (const char *name)
 }
 
 /*
- * Catches a system signal.
+ * Catch a system signal.
  */
 
 void
@@ -190,9 +190,9 @@ signal_catch (int signum, void (*handler)(int))
 }
 
 /*
- * Sends a WeeChat signal on a system signal received.
+ * Send a WeeChat signal on a system signal received.
  *
- * Returns:
+ * Return:
  *   WEECHAT_RC_OK: the WeeChat handler must be executed
  *   WEECHAT_RC_OK_EAT: signal eaten, the WeeChat handler must NOT be executed
  */
@@ -215,7 +215,7 @@ signal_send_to_weechat (int signal_index)
 }
 
 /*
- * Evaluates and executes the command bound to a signal.
+ * Evaluate and execute the command bound to a signal.
  */
 
 void
@@ -253,7 +253,7 @@ signal_exec_command (int signal_index, const char *command)
 }
 
 /*
- * Handles a specific signal received:
+ * Handle a specific signal received.
  */
 
 void
@@ -278,7 +278,7 @@ signal_handle_number (int signal_number, int count, const char *command)
 }
 
 /*
- * Handles signals received: sends WeeChat signal and executes the configured
+ * Handle signals received: sends WeeChat signal and execute the configured
  * command (is signal not eaten).
  */
 
@@ -312,7 +312,7 @@ signal_handle (void)
 }
 
 /*
- * Suspends WeeChat process.
+ * Suspend WeeChat process.
  */
 
 void
@@ -323,7 +323,7 @@ signal_suspend (void)
 }
 
 /*
- * Initializes signal.
+ * Initialize signal.
  */
 
 void

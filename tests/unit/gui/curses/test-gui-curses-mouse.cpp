@@ -66,7 +66,7 @@ TEST_GROUP(GuiCursesMouse)
 
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_mouse_enable
  */
 
@@ -76,7 +76,7 @@ TEST(GuiCursesMouse, Enable)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_mouse_disable
  */
 
@@ -86,7 +86,7 @@ TEST(GuiCursesMouse, Disable)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_mouse_display_state
  */
 
@@ -96,7 +96,7 @@ TEST(GuiCursesMouse, DisplayState)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_mouse_grab_init
  */
 
@@ -106,7 +106,7 @@ TEST(GuiCursesMouse, GrabInit)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_mouse_grab_event2input
  */
 
@@ -116,7 +116,7 @@ TEST(GuiCursesMouse, GrabEvent2input)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_mouse_grab_end
  */
 
@@ -126,7 +126,7 @@ TEST(GuiCursesMouse, GrabEnd)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_mouse_event_size
  */
 
@@ -157,7 +157,7 @@ TEST(GuiCursesMouse, EventSize)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_mouse_event_concat_gesture
  */
 
@@ -195,7 +195,7 @@ TEST(GuiCursesMouse, EventConcatGesture)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_mouse_event_name_sgr
  */
 
@@ -291,7 +291,7 @@ TEST(GuiCursesMouse, EventNameSgr)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_mouse_event_name_utf8
  */
 
@@ -372,7 +372,7 @@ TEST(GuiCursesMouse, EventNameUtf8)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_mouse_event_process
  */
 

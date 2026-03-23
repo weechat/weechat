@@ -158,7 +158,7 @@ t_callback_hook *hook_callback_print_log[HOOK_NUM_TYPES] =
 
 
 /*
- * Initializes hooks.
+ * Initialize hooks.
  */
 
 void
@@ -214,9 +214,9 @@ hook_init (void)
 }
 
 /*
- * Searches for a hook type.
+ * Search for a hook type.
  *
- * Returns index of type in enum t_hook_type, -1 if type is not found.
+ * Return index of type in enum t_hook_type, -1 if type is not found.
  */
 
 int
@@ -238,7 +238,7 @@ hook_search_type (const char *type)
 }
 
 /*
- * Searches for position of hook in list (to keep hooks sorted).
+ * Search for position of hook in list (to keep hooks sorted).
  *
  * Hooks are sorted by priority, except commands which are sorted by command
  * name, and then priority.
@@ -283,7 +283,7 @@ hook_find_pos (struct t_hook *hook)
 }
 
 /*
- * Adds a hook to list.
+ * Add a hook to list.
  */
 
 void
@@ -330,7 +330,7 @@ hook_add_to_list (struct t_hook *new_hook)
 }
 
 /*
- * Removes a hook from list.
+ * Remove a hook from list.
  */
 
 void
@@ -366,7 +366,7 @@ hook_remove_from_list (struct t_hook *hook)
 }
 
 /*
- * Removes hooks marked as "deleted" from list.
+ * Remove hooks marked as "deleted" from list.
  */
 
 void
@@ -395,7 +395,7 @@ hook_remove_deleted (void)
 }
 
 /*
- * Initializes a new hook with default values.
+ * Initialize a new hook with default values.
  */
 
 void
@@ -426,9 +426,9 @@ hook_init_data (struct t_hook *hook, struct t_weechat_plugin *plugin,
 }
 
 /*
- * Checks if a hook pointer is valid.
+ * Check if a hook pointer is valid.
  *
- * Returns:
+ * Return:
  *   1: hook exists
  *   0: hook does not exist
  */
@@ -457,7 +457,7 @@ hook_valid (struct t_hook *hook)
 }
 
 /*
- * Starts a hook exec.
+ * Start a hook exec.
  */
 
 void
@@ -467,7 +467,7 @@ hook_exec_start (void)
 }
 
 /*
- * Ends a hook_exec.
+ * End a hook_exec.
  */
 
 void
@@ -481,7 +481,7 @@ hook_exec_end (void)
 }
 
 /*
- * Starts execution of a hook callback.
+ * Start execution of a hook callback.
  */
 
 void
@@ -504,7 +504,7 @@ hook_callback_start (struct t_hook *hook, struct t_hook_exec_cb *hook_exec_cb)
 }
 
 /*
- * Ends execution of a hook callback.
+ * End execution of a hook callback.
  */
 
 void
@@ -541,7 +541,7 @@ hook_callback_end (struct t_hook *hook, struct t_hook_exec_cb *hook_exec_cb)
 }
 
 /*
- * Returns description of hook.
+ * Return description of hook.
  *
  * Note: result must be freed after use.
  */
@@ -553,7 +553,7 @@ hook_get_description (struct t_hook *hook)
 }
 
 /*
- * Sets a hook property (string).
+ * Set a hook property (string).
  */
 
 void
@@ -691,7 +691,7 @@ hook_schedule_clean_process (pid_t pid)
 }
 
 /*
- * Unhooks something.
+ * Unhook something.
  */
 
 void
@@ -743,7 +743,7 @@ unhook (struct t_hook *hook)
 }
 
 /*
- * Unhooks everything for a plugin/subplugin.
+ * Unhook everything for a plugin/subplugin.
  */
 
 void
@@ -773,7 +773,7 @@ unhook_all_plugin (struct t_weechat_plugin *plugin, const char *subplugin)
 }
 
 /*
- * Unhooks everything.
+ * Unhook everything.
  */
 
 void
@@ -795,7 +795,7 @@ unhook_all (void)
 }
 
 /*
- * Returns hdata for hook.
+ * Return hdata for hook.
  */
 
 struct t_hdata *
@@ -839,9 +839,9 @@ hook_hdata_hook_cb (const void *pointer, void *data, const char *hdata_name)
 }
 
 /*
- * Adds a hook in an infolist.
+ * Add a hook in an infolist.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -890,9 +890,9 @@ hook_add_to_infolist_pointer (struct t_infolist *infolist, struct t_hook *hook)
 }
 
 /*
- * Adds hooks of a type in an infolist.
+ * Add hooks of a type in an infolist.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -930,11 +930,11 @@ hook_add_to_infolist_type (struct t_infolist *infolist, int type,
 }
 
 /*
- * Adds hooks in an infolist.
+ * Add hooks in an infolist.
  *
  * Argument "arguments" can be a hook type with optional comma + name after.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -982,7 +982,7 @@ hook_add_to_infolist (struct t_infolist *infolist, struct t_hook *pointer,
 }
 
 /*
- * Prints hooks in WeeChat log file (usually for crash dump).
+ * Print hooks in WeeChat log file (usually for crash dump).
  */
 
 void

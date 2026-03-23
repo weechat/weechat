@@ -109,7 +109,7 @@ time_t gui_key_last_activity_time = 0; /* last activity time (key)          */
 
 
 /*
- * Initializes keyboard.
+ * Initialize keyboard.
  */
 
 void
@@ -142,9 +142,9 @@ gui_key_init (void)
 }
 
 /*
- * Searches for a context by name.
+ * Search for a context by name.
  *
- * Returns index of context in enum t_gui_key_context, -1 if not found.
+ * Return index of context in enum t_gui_key_context, -1 if not found.
  */
 
 int
@@ -166,7 +166,7 @@ gui_key_search_context (const char *context)
 }
 
 /*
- * Gets current context.
+ * Get current context.
  */
 
 int
@@ -187,7 +187,7 @@ gui_key_get_current_context (void)
 }
 
 /*
- * Initializes "grab" mode.
+ * Initialize "grab" mode.
  */
 
 void
@@ -215,7 +215,7 @@ gui_key_grab_init (int grab_command, const char *delay)
 }
 
 /*
- * Inserts grabbed key in input buffer.
+ * Insert grabbed key in input buffer.
  */
 
 int
@@ -303,7 +303,7 @@ gui_key_grab_end_timer_cb (const void *pointer, void *data, int remaining_calls)
 }
 
 /*
- * Gets internal code from user key name.
+ * Get internal code from user key name.
  *
  * Note: this function works with legacy keys (WeeChat < 4.0.0) and should not
  * be used anymore.
@@ -384,7 +384,7 @@ gui_key_legacy_internal_code (const char *key)
 }
 
 /*
- * Expands raw key code to its name and name using aliases (human readable
+ * Expand raw key code to its name and name using aliases (human readable
  * key name).
  *
  * Examples (return: rc, key name, key name with alias):
@@ -397,7 +397,7 @@ gui_key_legacy_internal_code (const char *key)
  *   "\001[[1;3D"       => 1, "meta-[1;3D",        "meta-left"
  *   "\001[w\001[[1;3A" => 1, "meta-w,meta-[1;3A", "meta-w,meta-up"
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error: incomplete/invalid raw key
  *
@@ -827,7 +827,7 @@ error:
 }
 
 /*
- * Converts a legacy key to the new key name (using comma separator and alias).
+ * Convert a legacy key to the new key name (using comma separator and alias).
  *
  * Examples:
  *   "ctrl-"            => NULL
@@ -875,7 +875,7 @@ gui_key_legacy_to_alias (const char *key)
 }
 
 /*
- * Attempts to fix a key in mouse context (starting with "@area:"):
+ * Attempt to fix a key in mouse context (starting with "@area:"):
  *   - transform "ctrl-alt-" to "alt-ctrl-"
  *
  * Example:
@@ -916,7 +916,7 @@ gui_key_fix_mouse (const char *key)
 }
 
 /*
- * Attempts to fix key:
+ * Attempt to fix key:
  *   - transform upper case ctrl keys to lower case ("ctrl-A" -> "ctrl-a")
  *   - replace " " by "space"
  *   - replace "meta2-" by "meta-["
@@ -993,7 +993,7 @@ gui_key_fix (const char *key)
 }
 
 /*
- * Searches for position of a key (to keep keys sorted).
+ * Search for position of a key (to keep keys sorted).
  */
 
 struct t_gui_key *
@@ -1014,7 +1014,7 @@ gui_key_find_pos (struct t_gui_key *keys, struct t_gui_key *key)
 }
 
 /*
- * Inserts key into sorted list.
+ * Insert key into sorted list.
  */
 
 void
@@ -1062,7 +1062,7 @@ gui_key_insert_sorted (struct t_gui_key **keys,
 }
 
 /*
- * Sets area type and name.
+ * Set area type and name.
  *
  * For example: "bar(nicklist)" returns:
  *   type: 2 (bar)
@@ -1111,7 +1111,7 @@ gui_key_set_area_type_name (const char *area,
 }
 
 /*
- * Sets areas types (any, chat, bar or item) and names for a key.
+ * Set areas types (any, chat, bar or item) and names for a key.
  */
 
 void
@@ -1166,7 +1166,7 @@ gui_key_set_areas (struct t_gui_key *key)
 }
 
 /*
- * Computes a score key for sorting keys and set it in key (high score == at the
+ * Compute a score key for sorting keys and set it in key (high score == at the
  * end of list).
  */
 
@@ -1215,10 +1215,10 @@ gui_key_set_score (struct t_gui_key *key)
 }
 
 /*
- * Checks if a key is safe or not: a safe key should begin with the "meta" or
+ * Check if a key is safe or not: a safe key should begin with the "meta" or
  * "ctrl" code (there are exceptions).
  *
- * Returns:
+ * Return:
  *   1: key is safe for the given context
  *   0: key is NOT safe for the given context
  */
@@ -1270,7 +1270,7 @@ gui_key_is_safe (int context, const char *key)
 }
 
 /*
- * Checks if the key chunk seems valid.
+ * Check if the key chunk seems valid.
  *
  * Example of valid key chunk:
  *   "meta-a"
@@ -1283,7 +1283,7 @@ gui_key_is_safe (int context, const char *key)
  *   "meta-[A"  (raw code)
  *   "ctrl-cb"  (invalid: missing comma)
  *
- * Returns:
+ * Return:
  *   1: key chunk seems valid
  *   0: key chunk seems either invalid or a raw code
  */
@@ -1335,7 +1335,7 @@ gui_key_chunk_seems_valid (const char *chunk)
 }
 
 /*
- * Checks if the key seems valid: not a raw code, and no comma is missing.
+ * Check if the key seems valid: not a raw code, and no comma is missing.
  *
  * Example of valid keys:
  *   "meta-a"
@@ -1348,7 +1348,7 @@ gui_key_chunk_seems_valid (const char *chunk)
  *   "meta-[A"  (raw code)
  *   "ctrl-cb"  (invalid: missing comma)
  *
- * Returns:
+ * Return:
  *   1: key seems valid
  *   0: key seems either invalid or a raw code
  */
@@ -1416,9 +1416,9 @@ gui_key_option_change_cb (const void *pointer, void *data,
 }
 
 /*
- * Creates a new key option.
+ * Create a new key option.
  *
- * Returns pointer to existing or new option.
+ * Return pointer to existing or new option.
  */
 
 struct t_config_option *
@@ -1462,14 +1462,14 @@ gui_key_new_option (int context, const char *name, const char *value)
 }
 
 /*
- * Adds a new key in keys list.
+ * Add a new key in keys list.
  *
  * If buffer is not null, then key is specific to buffer, otherwise it's general
  * key (for most keys).
  *
  * If create_option == 1, a config option is created as well.
  *
- * Returns pointer to new key, NULL if error.
+ * Return pointer to new key, NULL if error.
  */
 
 struct t_gui_key *
@@ -1571,9 +1571,9 @@ error:
 }
 
 /*
- * Searches for a key.
+ * Search for a key.
  *
- * Returns pointer to key found, NULL if not found.
+ * Return pointer to key found, NULL if not found.
  */
 
 struct t_gui_key *
@@ -1597,7 +1597,7 @@ gui_key_search (struct t_gui_key *keys, const char *key)
 /*
  * Compare chunks with key chunks.
  *
- * Returns:
+ * Return:
  *   2: exact match
  *   1: partial match (key_chunks starts with chunks but is longer)
  *   0: no match
@@ -1621,14 +1621,14 @@ gui_key_compare_chunks (const char **chunks, int chunks_count,
 }
 
 /*
- * Searches key chunks for context default, search or cursor (not for mouse).
+ * Search key chunks for context default, search or cursor (not for mouse).
  * It can be part of key chunks or exact match.
  *
  * Parameter "chunks1" is the raw key split into chunks, and "chunks2" is the
  * key with alias split into chunks (at least one of the chunks must be non
  * NULL).
  *
- * Returns pointer to key found, NULL if not found.
+ * Return pointer to key found, NULL if not found.
  * In case of exact match, *exact_match is set to 1, otherwise 0.
  */
 
@@ -1701,7 +1701,7 @@ gui_key_search_part (struct t_gui_buffer *buffer, int context,
 }
 
 /*
- * Binds a key to a command.
+ * Bind a key to a command.
  *
  * If buffer is not null, then key is specific to buffer otherwise it's general
  * key (for most keys).
@@ -1710,7 +1710,7 @@ gui_key_search_part (struct t_gui_buffer *buffer, int context,
  *
  * If key already exists, it is removed then added again with new value.
  *
- * Returns pointer to new key, NULL if error.
+ * Return pointer to new key, NULL if error.
  */
 
 struct t_gui_key *
@@ -1756,7 +1756,7 @@ gui_key_bind (struct t_gui_buffer *buffer, int context, const char *key,
 }
 
 /*
- * Binds keys in hashtable.
+ * Bind keys in hashtable.
  */
 
 void
@@ -1800,12 +1800,12 @@ gui_key_bind_plugin_hashtable_map_cb (void *data,
 }
 
 /*
- * Creates many keys using a hashtable (used by plugins only).
+ * Create many keys using a hashtable (used by plugins only).
  *
  * If key already exists, it is NOT changed (plugins should never overwrite user
  * keys).
  *
- * Returns number of keys added.
+ * Return number of keys added.
  */
 
 int
@@ -1831,9 +1831,9 @@ gui_key_bind_plugin (const char *context, struct t_hashtable *keys)
 }
 
 /*
- * Removes one key binding.
+ * Remove one key binding.
  *
- * Returns:
+ * Return:
  *   1: key removed
  *   0: key not removed
  */
@@ -1883,9 +1883,9 @@ gui_key_unbind (struct t_gui_buffer *buffer, int context, const char *key)
 }
 
 /*
- * Removes one or more key binding(s) (used by plugins only).
+ * Remove one or more key binding(s) (used by plugins only).
  *
- * Returns number of keys removed.
+ * Return number of keys removed.
  */
 
 int
@@ -1947,9 +1947,9 @@ gui_key_unbind_plugin (const char *context, const char *key)
 }
 
 /*
- * Checks if area in key is matching focus area on screen (cursor/mouse).
+ * Check if area in key is matching focus area on screen (cursor/mouse).
  *
- * Returns:
+ * Return:
  *   1: area in key is matching focus area
  *   0: area in key is not matching focus area
  */
@@ -2006,7 +2006,7 @@ gui_key_focus_matching (struct t_gui_key *key,
 }
 
 /*
- * Displays focus hashtable (for debug).
+ * Display focus hashtable (for debug).
  */
 
 void
@@ -2031,9 +2031,9 @@ gui_key_focus_display_hashtable (struct t_hashtable *hashtable)
 }
 
 /*
- * Runs command according to focus.
+ * Run command according to focus.
  *
- * Returns:
+ * Return:
  *   1: command was executed
  *   0: command was not executed
  */
@@ -2183,10 +2183,10 @@ gui_key_focus_command (const char *key, int context,
 }
 
 /*
- * Processes key pressed in cursor or mouse mode, looking for keys: "{area}key"
+ * Process key pressed in cursor or mouse mode, looking for keys: "{area}key"
  * in context "cursor" or "mouse".
  *
- * Returns:
+ * Return:
  *   1: command was executed
  *   0: command was not executed
  */
@@ -2254,7 +2254,7 @@ end:
 }
 
 /*
- * Prints a key in debug mode:
+ * Print a key in debug mode:
  *   - raw combo (eg: "^[[A")
  *   - for keyboard:
  *     - key name (eg: "meta-[A")
@@ -2333,9 +2333,9 @@ gui_key_debug_print_key (const char *combo, const char *key_name,
 }
 
 /*
- * Processes a new key pressed.
+ * Process a new key pressed.
  *
- * Returns:
+ * Return:
  *   1: key must be added to input buffer
  *   0: key must not be added to input buffer
  */
@@ -2610,7 +2610,7 @@ end:
 }
 
 /*
- * Deletes a key binding.
+ * Delete a key binding.
  *
  * If delete_option == 1, the config option is deleted.
  */
@@ -2661,7 +2661,7 @@ gui_key_free (int context,
 }
 
 /*
- * Deletes all key bindings.
+ * Delete all key bindings.
  *
  * If delete_option == 1, the config options are deleted.
  */
@@ -2679,7 +2679,7 @@ gui_key_free_all (int context, struct t_gui_key **keys,
 }
 
 /*
- * Optimizes keyboard buffer size.
+ * Optimize keyboard buffer size.
  */
 
 void
@@ -2710,7 +2710,7 @@ gui_key_buffer_optimize (void)
 }
 
 /*
- * Resets keyboard buffer (create empty if never created before).
+ * Reset keyboard buffer (create empty if never created before).
  */
 
 void
@@ -2732,7 +2732,7 @@ gui_key_buffer_reset (void)
 }
 
 /*
- * Adds a key to keyboard buffer.
+ * Add a key to keyboard buffer.
  */
 
 void
@@ -2763,12 +2763,12 @@ gui_key_buffer_add (unsigned char key)
 }
 
 /*
- * Searches for a string in gui_key_buffer (array of integers).
+ * Search for a string in gui_key_buffer (array of integers).
  *
  * Argument start_index must be >= 0.
  * If max_index is negative, the search is until end of buffer.
  *
- * Returns index for string found in gui_key_buffer (not from "start_index" but
+ * Return index for string found in gui_key_buffer (not from "start_index" but
  * from beginning of gui_key_buffer), or -1 if string is not found.
  */
 
@@ -2810,7 +2810,7 @@ gui_key_buffer_search (int start_index, int max_index, const char *string)
 }
 
 /*
- * Removes some chars from gui_key_buffer.
+ * Remove some chars from gui_key_buffer.
  */
 
 void
@@ -2826,7 +2826,7 @@ gui_key_buffer_remove (int index, int number)
 }
 
 /*
- * Removes final newline at end of paste.
+ * Remove final newline at end of paste.
  */
 
 void
@@ -2842,7 +2842,7 @@ gui_key_paste_remove_newline (void)
 }
 
 /*
- * Replaces tabs by spaces in paste.
+ * Replace tabs by spaces in paste.
  */
 
 void
@@ -2858,7 +2858,7 @@ gui_key_paste_replace_tabs (void)
 }
 
 /*
- * Starts paste of text.
+ * Start paste of text.
  */
 
 void
@@ -2869,7 +2869,7 @@ gui_key_paste_start (void)
 }
 
 /*
- * Finishes paste of text. Does necessary modifications before flush of text.
+ * Finish paste of text, do necessary modifications before flush of text.
  */
 
 void
@@ -2880,9 +2880,9 @@ gui_key_paste_finish (void)
 }
 
 /*
- * Returns real number of lines in buffer.
+ * Return real number of lines in buffer.
  *
- * Returns number of lines (lines+1 if last key is not return).
+ * Return number of lines (lines+1 if last key is not return).
  */
 
 int
@@ -2910,11 +2910,11 @@ gui_key_get_paste_lines (void)
 }
 
 /*
- * Checks pasted lines: if more than N lines, then enables paste mode and ask
+ * Check pasted lines: if more than N lines, then enables paste mode and ask
  * confirmation to user (ctrl-y=paste, ctrl-n=cancel) (N is option
  * weechat.look.paste_max_lines).
  *
- * Returns:
+ * Return:
  *   1: paste mode has been enabled
  *   0: paste mode has not been enabled
  */
@@ -2967,7 +2967,7 @@ gui_key_paste_bracketed_timer_cb (const void *pointer, void *data,
 }
 
 /*
- * Removes timer for bracketed paste.
+ * Remove timer for bracketed paste.
  */
 
 void
@@ -2981,7 +2981,7 @@ gui_key_paste_bracketed_timer_remove (void)
 }
 
 /*
- * Adds timer for bracketed paste.
+ * Add timer for bracketed paste.
  */
 
 void
@@ -2996,7 +2996,7 @@ gui_key_paste_bracketed_timer_add (void)
 }
 
 /*
- * Starts bracketed paste of text (ESC[200~ detected).
+ * Start bracketed paste of text (ESC[200~ detected).
  */
 
 void
@@ -3007,7 +3007,7 @@ gui_key_paste_bracketed_start (void)
 }
 
 /*
- * Stops bracketed paste of text (ESC[201~ detected or timeout while waiting for
+ * Stop bracketed paste of text (ESC[201~ detected or timeout while waiting for
  * this code).
  */
 
@@ -3019,7 +3019,7 @@ gui_key_paste_bracketed_stop (void)
 }
 
 /*
- * Accepts paste from user.
+ * Accept paste from user.
  */
 
 void
@@ -3031,7 +3031,7 @@ gui_key_paste_accept (void)
 }
 
 /*
- * Cancels paste from user (resets buffer).
+ * Cancel paste from user (resets buffer).
  */
 
 void
@@ -3043,7 +3043,7 @@ gui_key_paste_cancel (void)
 }
 
 /*
- * Ends keyboard (frees some data).
+ * End keyboard (frees some data).
  */
 
 void
@@ -3072,7 +3072,7 @@ gui_key_end (void)
 }
 
 /*
- * Returns hdata for key.
+ * Return hdata for key.
  */
 
 struct t_hdata *
@@ -3131,9 +3131,9 @@ gui_key_hdata_key_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds a key in an infolist.
+ * Add a key in an infolist.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -3171,7 +3171,7 @@ gui_key_add_to_infolist (struct t_infolist *infolist, struct t_gui_key *key)
 }
 
 /*
- * Prints a key info in WeeChat log file (usually for crash dump).
+ * Print a key info in WeeChat log file (usually for crash dump).
  */
 
 void
@@ -3197,7 +3197,7 @@ gui_key_print_log_key (struct t_gui_key *key, const char *prefix)
 }
 
 /*
- * Prints key infos in WeeChat log file (usually for crash dump).
+ * Print key infos in WeeChat log file (usually for crash dump).
  */
 
 void

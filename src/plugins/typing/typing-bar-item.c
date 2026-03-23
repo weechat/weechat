@@ -67,7 +67,7 @@ typing_bar_item_nicks_map_cb (void *data,
 }
 
 /*
- * Returns content of bar item "typing": users currently typing on the buffer.
+ * Return content of bar item "typing": users currently typing on the buffer.
  */
 
 char *
@@ -127,7 +127,7 @@ typing_bar_item_typing (const void *pointer, void *data,
 }
 
 /*
- * Initializes typing bar items.
+ * Initialize typing bar items.
  */
 
 void

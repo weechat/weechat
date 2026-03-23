@@ -60,7 +60,7 @@ TEST_GROUP(PluginApiInfo)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   plugin_api_info_version_cb
  */
 
@@ -74,7 +74,7 @@ TEST(PluginApiInfo, VersionCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   plugin_api_info_version_number_cb
  */
 
@@ -93,7 +93,7 @@ TEST(PluginApiInfo, VersionNumberCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   plugin_api_info_version_git_cb
  */
 
@@ -107,7 +107,7 @@ TEST(PluginApiInfo, VersionGitCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   plugin_api_info_date_cb
  */
 
@@ -121,7 +121,7 @@ TEST(PluginApiInfo, DateCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   plugin_api_info_pid_cb
  */
 
@@ -134,7 +134,7 @@ TEST(PluginApiInfo, PidCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   plugin_api_info_dir_separator_cb
  */
 
@@ -146,7 +146,7 @@ TEST(PluginApiInfo, DirSeparatorCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   plugin_api_info_absolute_path
  */
 
@@ -162,7 +162,7 @@ TEST(PluginApiInfo, AbsolutePath)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   plugin_api_info_absolute_path
  *   plugin_api_info_weechat_config_dir_cb
  *   plugin_api_info_weechat_data_dir_cb
@@ -212,7 +212,7 @@ TEST(PluginApiInfo, WeechatDir)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   plugin_api_info_weechat_libdir_cb
  */
 
@@ -224,7 +224,7 @@ TEST(PluginApiInfo, WeechatLibdirCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   plugin_api_info_weechat_sharedir_cb
  */
 
@@ -237,7 +237,7 @@ TEST(PluginApiInfo, WeechatSharedirCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   plugin_api_info_weechat_localedir_cb
  */
 
@@ -249,7 +249,7 @@ TEST(PluginApiInfo, WeechatLocaledirCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   plugin_api_info_weechat_site_cb
  */
 
@@ -261,7 +261,7 @@ TEST(PluginApiInfo, WeechatSiteCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   plugin_api_info_weechat_site_download_cb
  */
 
@@ -274,7 +274,7 @@ TEST(PluginApiInfo, WeechatSiteDownloadCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   plugin_api_info_weechat_upgrading_cb
  */
 
@@ -286,7 +286,7 @@ TEST(PluginApiInfo, WeechatUpgradingCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   plugin_api_info_weechat_headless_cb
  */
 
@@ -298,7 +298,7 @@ TEST(PluginApiInfo, WeechatHeadlessCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   plugin_api_info_weechat_daemon_cb
  */
 
@@ -310,7 +310,7 @@ TEST(PluginApiInfo, WeechatDaemonCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   plugin_api_info_auto_connect_cb
  */
 
@@ -322,7 +322,7 @@ TEST(PluginApiInfo, AutoConnectCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   plugin_api_info_auto_load_scripts_cb
  */
 
@@ -334,7 +334,7 @@ TEST(PluginApiInfo, AutoLoadScriptsCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   plugin_api_info_buffer_cb
  */
 
@@ -352,7 +352,7 @@ TEST(PluginApiInfo, BufferCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   plugin_api_info_charset_terminal_cb
  */
 
@@ -365,7 +365,7 @@ TEST(PluginApiInfo, CharsetTerminalCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   plugin_api_info_charset_internal_cb
  */
 
@@ -378,7 +378,7 @@ TEST(PluginApiInfo, CharsetInternalCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   plugin_api_info_locale_cb
  */
 
@@ -391,7 +391,7 @@ TEST(PluginApiInfo, LocaleCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   plugin_api_info_inactivity_cb
  */
 
@@ -408,7 +408,7 @@ TEST(PluginApiInfo, InactivityCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   plugin_api_info_filters_enabled_cb
  */
 
@@ -426,7 +426,7 @@ TEST(PluginApiInfo, FiltersEnabledCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   plugin_api_info_cursor_mode_cb
  */
 
@@ -438,7 +438,7 @@ TEST(PluginApiInfo, CursorModeCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   plugin_api_info_mouse_cb
  */
 
@@ -456,7 +456,7 @@ TEST(PluginApiInfo, MouseCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   plugin_api_info_term_width_cb
  */
 
@@ -469,7 +469,7 @@ TEST(PluginApiInfo, TermWidthCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   plugin_api_info_term_height_cb
  */
 
@@ -482,7 +482,7 @@ TEST(PluginApiInfo, TermHeightCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   plugin_api_info_term_colors_cb
  */
 
@@ -496,7 +496,7 @@ TEST(PluginApiInfo, TermColorsCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   plugin_api_info_term_color_pairs_cb
  */
 
@@ -510,7 +510,7 @@ TEST(PluginApiInfo, TermColorPairsCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   plugin_api_info_color_ansi_regex_cb
  */
 
@@ -523,7 +523,7 @@ TEST(PluginApiInfo, ColorAnsiRegexCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   plugin_api_info_color_term2rgb_cb
  */
 
@@ -539,7 +539,7 @@ TEST(PluginApiInfo, ColorTerm2rgbCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   plugin_api_info_color_rgb2term_cb
  */
 
@@ -556,7 +556,7 @@ TEST(PluginApiInfo, ColorRgb2termCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   plugin_api_info_nick_color_cb
  *   plugin_api_info_nick_color_name_cb
  *   plugin_api_info_nick_color_ignore_case_cb
@@ -599,7 +599,7 @@ TEST(PluginApiInfo, NickColor)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   plugin_api_info_build_uptime
  *   plugin_api_info_uptime_cb
  *   plugin_api_info_uptime_current_cb
@@ -633,7 +633,7 @@ TEST(PluginApiInfo, Uptime)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   plugin_api_info_totp_generate_cb
  *   plugin_api_info_totp_validate_cb
  */
@@ -674,7 +674,7 @@ TEST(PluginApiInfo, TotpGenerateCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   plugin_api_info_plugin_loaded_cb
  */
 
@@ -692,7 +692,7 @@ TEST(PluginApiInfo, PluginLoadedCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   plugin_api_info_hashtable_secured_data_cb
  */
 
@@ -715,7 +715,7 @@ TEST(PluginApiInfo, HashtableSecuredDataCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   plugin_api_infolist_bar_cb
  */
 
@@ -754,7 +754,7 @@ TEST(PluginApiInfo, InfolistBarCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   plugin_api_infolist_bar_item_cb
  */
 
@@ -793,7 +793,7 @@ TEST(PluginApiInfo, InfolistBarItemCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   plugin_api_infolist_bar_window_cb
  */
 
@@ -831,7 +831,7 @@ TEST(PluginApiInfo, InfolistBarWindowCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   plugin_api_infolist_buffer_cb
  */
 
@@ -868,7 +868,7 @@ TEST(PluginApiInfo, InfolistBufferCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   plugin_api_infolist_buffer_lines_cb
  */
 
@@ -899,7 +899,7 @@ TEST(PluginApiInfo, InfolistBufferLinesCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   plugin_api_infolist_filter_cb
  */
 
@@ -949,7 +949,7 @@ TEST(PluginApiInfo, InfolistFilterCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   plugin_api_infolist_history_cb
  */
 
@@ -980,7 +980,7 @@ TEST(PluginApiInfo, InfolistHistoryCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   plugin_api_infolist_hook_cb
  */
 
@@ -1037,7 +1037,7 @@ TEST(PluginApiInfo, InfolistHookCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   plugin_api_infolist_hotlist_cb
  */
 
@@ -1067,7 +1067,7 @@ TEST(PluginApiInfo, InfolistHotlistCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   plugin_api_infolist_key_cb
  */
 
@@ -1096,7 +1096,7 @@ TEST(PluginApiInfo, InfolistKeyCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   plugin_api_infolist_layout_cb
  */
 
@@ -1128,7 +1128,7 @@ TEST(PluginApiInfo, InfolistLayoutCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   plugin_api_infolist_nicklist_cb
  */
 
@@ -1153,7 +1153,7 @@ TEST(PluginApiInfo, InfolistNicklistCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   plugin_api_infolist_option_cb
  */
 
@@ -1186,7 +1186,7 @@ TEST(PluginApiInfo, InfolistOptionCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   plugin_api_infolist_plugin_cb
  */
 
@@ -1232,7 +1232,7 @@ TEST(PluginApiInfo, InfolistPluginCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   plugin_api_infolist_proxy_cb
  */
 
@@ -1280,7 +1280,7 @@ TEST(PluginApiInfo, InfolistProxyCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   plugin_api_infolist_url_options_cb
  */
 
@@ -1298,7 +1298,7 @@ TEST(PluginApiInfo, InfolistUrlOptionsCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   plugin_api_infolist_window_cb
  */
 
@@ -1346,7 +1346,7 @@ TEST(PluginApiInfo, InfolistWindowCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   plugin_api_info_init
  */
 

@@ -197,7 +197,7 @@ irc_signal_upgrade_cb (const void *pointer, void *data,
 }
 
 /*
- * Initializes IRC plugin.
+ * Initialize IRC plugin.
  */
 
 int
@@ -322,7 +322,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 }
 
 /*
- * Ends IRC plugin.
+ * End IRC plugin.
  */
 
 int

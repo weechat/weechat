@@ -35,7 +35,7 @@
 
 
 /*
- * Compares two join channels: name and key.
+ * Compare two join channels: name and key.
  */
 
 int
@@ -61,7 +61,7 @@ irc_join_compare_join_channel (struct t_irc_server *server,
 }
 
 /*
- * Compares two join channels: no sort, keyed channels first.
+ * Compare two join channels: no sort, keyed channels first.
  */
 
 int
@@ -99,7 +99,7 @@ irc_join_compare_cb (void *data, struct t_arraylist *arraylist,
 }
 
 /*
- * Compares two join channels: alphabetic sort, keyed channels first.
+ * Compare two join channels: alphabetic sort, keyed channels first.
  */
 
 int
@@ -137,8 +137,7 @@ irc_join_compare_sort_alpha_cb (void *data, struct t_arraylist *arraylist,
 }
 
 /*
- * Compares two join channels: buffer sort, then alphabetic,
- * keyed channels first.
+ * Compare two join channels: buffer sort, then alphabetic, keyed channels first.
  */
 
 int
@@ -190,7 +189,7 @@ irc_join_compare_sort_buffer_cb (void *data, struct t_arraylist *arraylist,
 }
 
 /*
- * Frees a join channel.
+ * Free a join channel.
  */
 
 void
@@ -220,10 +219,10 @@ irc_join_free_cb (void *data, struct t_arraylist *arraylist, void *pointer)
 }
 
 /*
- * Removes all occurrences of a channel from the array list then adds the
+ * Remove all occurrences of a channel from the array list then adds the
  * join channel (channel + key).
  *
- * Returns:
+ * Return:
  *   1: join channel added to the list
  *   0: join channel NOT added to the list
  *      (the caller must then free it if needed)
@@ -286,8 +285,7 @@ irc_join_arraylist_add (struct t_arraylist *arraylist,
 }
 
 /*
- * Splits join string and returns an array list with a list of
- * channels/keys.
+ * Split join string and return an array list with a list of channels/keys.
  *
  * The format of channels/keys is the one specified by RFC 1459 for the JOIN
  * command (channels with key first in list), for example:
@@ -384,7 +382,7 @@ end:
 }
 
 /*
- * Builds string with a list of channels/keys.
+ * Build string with a list of channels/keys.
  *
  * Note: result must be freed after use.
  */
@@ -441,9 +439,9 @@ end:
 }
 
 /*
- * Checks if a channel is in a join string.
+ * Check if a channel is in a join string.
  *
- * Returns:
+ * Return:
  *   1: channel found in join string (case-insensitive comparison)
  *   0: channel NOT found in join string
  */
@@ -482,7 +480,7 @@ irc_join_has_channel (struct t_irc_server *server,
 }
 
 /*
- * Adds a channel with optional key to the join string.
+ * Add a channel with optional key to the join string.
  *
  * Channels with a key are first in list, so for example:
  *
@@ -525,7 +523,7 @@ irc_join_add_channel (struct t_irc_server *server,
 }
 
 /*
- * Adds channels with optional keys to the join string.
+ * Add channels with optional keys to the join string.
  *
  * Channels with a key are first in list, so for example:
  *
@@ -579,11 +577,11 @@ irc_join_add_channels (struct t_irc_server *server,
 }
 
 /*
- * Sets the server autojoin option to a new value.
+ * Set the server autojoin option to a new value.
  *
  * If the autojoin contains a link to secure data (eg: "${sec.data.xxx}" with
- * nothing before "${" and nothing after "}"), then the content of secure data
- * is updated and the server autojoin option is kept as-is.
+ * nothing before "${" and nothing after "}"), update the content of secure data
+ * and keep the server autojoin option as-is.
  */
 
 void
@@ -627,7 +625,7 @@ irc_join_set_autojoin_option (struct t_irc_server *server,
 }
 
 /*
- * Adds a channel with optional key to the autojoin option of a server.
+ * Add a channel with optional key to the autojoin option of a server.
  */
 
 void
@@ -654,7 +652,7 @@ irc_join_add_channel_to_autojoin (struct t_irc_server *server,
 }
 
 /*
- * Adds channels with optional keys to the autojoin option of a server.
+ * Add channels with optional keys to the autojoin option of a server.
  */
 
 void
@@ -678,7 +676,7 @@ irc_join_add_channels_to_autojoin (struct t_irc_server *server,
 }
 
 /*
- * Removes a channel from a join string.
+ * Remove a channel from a join string.
  *
  * Channels with a key are first in list, so for example:
  *
@@ -725,7 +723,7 @@ irc_join_remove_channel (struct t_irc_server *server,
 }
 
 /*
- * Removes a channel from server autojoin option.
+ * Remove a channel from server autojoin option.
  */
 
 void
@@ -752,7 +750,7 @@ irc_join_remove_channel_from_autojoin (struct t_irc_server *server,
 }
 
 /*
- * Renames a channel in a join string: removes the channel then adds it (with
+ * Rename a channel in a join string: removes the channel then adds it (with
  * its key, if set).
  *
  * Channels with a key are first in list, so for example:
@@ -842,7 +840,7 @@ irc_join_rename_channel (struct t_irc_server *server,
 }
 
 /*
- * Renames a channel in a server autojoin option.
+ * Rename a channel in a server autojoin option.
  */
 
 void
@@ -871,7 +869,7 @@ irc_join_rename_channel_in_autojoin (struct t_irc_server *server,
 }
 
 /*
- * Saves currently joined channels in the autojoin option of a server.
+ * Save currently joined channels in the autojoin option of a server.
  */
 
 void
@@ -918,7 +916,7 @@ irc_join_save_channels_to_autojoin (struct t_irc_server *server)
 }
 
 /*
- * Sorts channels.
+ * Sort channels.
  */
 
 char *
@@ -940,7 +938,7 @@ irc_join_sort_channels (struct t_irc_server *server, const char *join,
 }
 
 /*
- * Sorts channels in autojoin option of a server.
+ * Sort channels in autojoin option of a server.
  */
 
 void

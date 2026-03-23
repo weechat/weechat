@@ -37,7 +37,7 @@
 
 
 /*
- * Allocates a t_relay_websocket_deflate structure.
+ * Allocate a t_relay_websocket_deflate structure.
  */
 
 struct t_relay_websocket_deflate *
@@ -63,9 +63,9 @@ relay_websocket_deflate_alloc (void)
 }
 
 /*
- * Initializes stream for deflate (compression).
+ * Initialize stream for deflate (compression).
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -92,7 +92,7 @@ relay_websocket_deflate_init_stream_deflate (struct t_relay_websocket_deflate *w
 }
 
 /*
- * Frees a deflate stream in a deflate structure.
+ * Free a deflate stream in a deflate structure.
  */
 
 void
@@ -107,9 +107,9 @@ relay_websocket_deflate_free_stream_deflate (struct t_relay_websocket_deflate *w
 }
 
 /*
- * Initializes stream for inflate (decompression).
+ * Initialize stream for inflate (decompression).
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -126,7 +126,7 @@ relay_websocket_deflate_init_stream_inflate (struct t_relay_websocket_deflate *w
 }
 
 /*
- * Frees an inflate stream in a deflate structure.
+ * Free an inflate stream in a deflate structure.
  */
 
 void
@@ -141,7 +141,7 @@ relay_websocket_deflate_free_stream_inflate (struct t_relay_websocket_deflate *w
 }
 
 /*
- * Reinitializes a t_relay_websocket_deflate structure.
+ * Reinitialize a t_relay_websocket_deflate structure.
  */
 
 void
@@ -159,7 +159,7 @@ relay_websocket_deflate_reinit (struct t_relay_websocket_deflate *ws_deflate)
 }
 
 /*
- * Frees a websocket deflate structure.
+ * Free a websocket deflate structure.
  */
 
 void
@@ -174,10 +174,10 @@ relay_websocket_deflate_free (struct t_relay_websocket_deflate *ws_deflate)
 }
 
 /*
- * Checks if a message is a HTTP GET with resource "/weechat" (for weechat
+ * Check if a message is a HTTP GET with resource "/weechat" (for weechat
  * protocol) or "/api" (for api protocol).
  *
- * Returns:
+ * Return:
  *   1: message is a HTTP GET with appropriate resource
  *   0: message is NOT a HTTP GET with appropriate resource
  */
@@ -212,7 +212,7 @@ relay_websocket_is_valid_http_get (enum t_relay_protocol protocol,
 }
 
 /*
- * Checks if a client handshake is valid.
+ * Check if a client handshake is valid.
  *
  * A websocket query looks like (weechat protocol):
  *   GET /weechat HTTP/1.1
@@ -252,7 +252,7 @@ relay_websocket_is_valid_http_get (enum t_relay_protocol protocol,
  * "Origin" is checked against this regex. If header "Origin" is not set or does
  * not match regex, the handshake is considered as invalid.
  *
- * Returns:
+ * Return:
  *    0: handshake is valid
  *   -1: handshake is invalid (headers missing or with bad value)
  *   -2: origin is not allowed (option relay.network.websocket_allowed_origins)
@@ -295,7 +295,7 @@ relay_websocket_client_handshake_valid (struct t_relay_http_request *request)
 }
 
 /*
- * Parses websocket extensions (header "Sec-WebSocket-Extensions").
+ * Parse websocket extensions (header "Sec-WebSocket-Extensions").
  *
  * Header is for example:
  *   Sec-WebSocket-Extensions: permessage-deflate; client_max_window_bits
@@ -387,10 +387,10 @@ relay_websocket_parse_extensions (const char *extensions,
 }
 
 /*
- * Builds the handshake that will be returned to client, to initialize and use
+ * Build the handshake that will be returned to client, to initialize and use
  * the websocket.
  *
- * Returns a string with content of handshake to send to client, it looks like:
+ * Return a string with content of handshake to send to client, it looks like:
  *   HTTP/1.1 101 Switching Protocols
  *   Upgrade: websocket
  *   Connection: Upgrade
@@ -516,13 +516,13 @@ relay_websocket_build_handshake (struct t_relay_http_request *request)
 }
 
 /*
- * Decompresses a decoded and compressed websocket frame compressed with
+ * Decompress a decoded and compressed websocket frame compressed with
  * "deflate" (when websocket extension "permessage-deflate" is enabled).
  *
  * A final '\0' is added after the decompressed data (the size_decompressed
  * does not count this final '\0').
  *
- * Returns pointer to decompressed data, NULL if error.
+ * Return pointer to decompressed data, NULL if error.
  */
 
 char *
@@ -609,14 +609,14 @@ error:
 }
 
 /*
- * Decodes a websocket frame and return a list of frames in "*frames" (each
+ * Decode a websocket frame and return a list of frames in "*frames" (each
  * frame is first decompressed if "permessage-deflate" websocket extension
  * is used).
  *
- * If argument "expect_masked_frame" is 1 and a frame is not masked,
- * the function returns an error.
+ * Return an error if argument "expect_masked_frame" is 1 and a frame is not
+ * masked.
  *
- * Returns:
+ * Return:
  *   1: frame(s) decoded successfully
  *   0: error decoding frame (connection must be closed if it happens)
  */
@@ -815,10 +815,10 @@ missing_data:
 }
 
 /*
- * Compresses data to send in a websocket frame (when websocket extension
+ * Compress data to send in a websocket frame (when websocket extension
  * "permessage-deflate" is enabled).
  *
- * Returns pointer to compressed data, NULL if error.
+ * Return pointer to compressed data, NULL if error.
  */
 
 char *
@@ -859,9 +859,9 @@ relay_websocket_deflate (const void *data, size_t size, z_stream *strm,
 }
 
 /*
- * Encodes data in a websocket frame.
+ * Encode data in a websocket frame.
  *
- * Returns websocket frame, NULL if error.
+ * Return websocket frame, NULL if error.
  * Argument "length_frame" is set with the length of frame built.
  *
  * Argument "mask_frame" must be 1 when sending to server (remote) and 0 when
@@ -1001,7 +1001,7 @@ relay_websocket_encode_frame (struct t_relay_websocket_deflate *ws_deflate,
 }
 
 /*
- * Prints websocket deflate data in WeeChat log file (usually for crash dump).
+ * Print websocket deflate data in WeeChat log file (usually for crash dump).
  */
 
 void

@@ -366,9 +366,9 @@ relay_config_change_network_tls_cert_key (const void *pointer, void *data,
 }
 
 /*
- * Checks if option "relay.network.totp_secret" is valid.
+ * Check if option "relay.network.totp_secret" is valid.
  *
- * Returns:
+ * Return:
  *   1: value is valid
  *   0: value is not valid
  */
@@ -419,9 +419,9 @@ end:
 }
 
 /*
- * Checks if option "relay.network.tls_priorities" is valid.
+ * Check if option "relay.network.tls_priorities" is valid.
  *
- * Returns:
+ * Return:
  *   1: value is valid
  *   0: value is not valid
  */
@@ -521,9 +521,9 @@ relay_config_change_network_websocket_allowed_origins (const void *pointer, void
 }
 
 /*
- * Checks if IRC backlog tags are valid.
+ * Check if IRC backlog tags are valid.
  *
- * Returns:
+ * Return:
  *   1: IRC backlog tags are valid
  *   0: IRC backlog tags are not valid
  */
@@ -618,9 +618,9 @@ relay_config_change_irc_backlog_tags (const void *pointer, void *data,
 }
 
 /*
- * Checks if a port is valid.
+ * Check if a port is valid.
  *
- * Returns:
+ * Return:
  *   1: port is valid
  *   0: port is not valid
  */
@@ -654,9 +654,9 @@ relay_config_check_port_cb (const void *pointer, void *data,
 }
 
 /*
- * Checks if a UNIX path is too long or empty.
+ * Check if a UNIX path is too long or empty.
  *
- * Returns:
+ * Return:
  *   1: path is valid
  *   0: path is empty or too long
  */
@@ -689,10 +689,10 @@ relay_config_check_path_length (const char *path)
 }
 
 /*
- * Checks if a UNIX path is available: it is available if not existing, or
+ * Check if a UNIX path is available: it is available if not existing, or
  * if a file of type socket already exists.
  *
- * Returns:
+ * Return:
  *    0: path is available
  *   -1: path already exists and is not a socket
  *   -2: invalid path
@@ -723,9 +723,9 @@ relay_config_check_path_available (const char *path)
 }
 
 /*
- * Checks if a path is valid.
+ * Check if a path is valid.
  *
- * Returns:
+ * Return:
  *   1: path is valid
  *   0: path is not valid
  */
@@ -970,7 +970,7 @@ relay_config_create_option_port_path (const void *pointer, void *data,
 }
 
 /*
- * Gets remote pointer with name of option.
+ * Get remote pointer with name of option.
  */
 
 struct t_relay_remote *
@@ -1037,9 +1037,9 @@ relay_config_remote_url_change_cb (const void *pointer, void *data,
 }
 
 /*
- * Creates an option for a remote.
+ * Create an option for a remote.
  *
- * Returns pointer to new option, NULL if error.
+ * Return pointer to new option, NULL if error.
  */
 
 struct t_config_option *
@@ -1135,7 +1135,7 @@ relay_config_create_remote_option (const char *remote_name, int index_option,
 }
 
 /*
- * Creates option for a temporary remote (when reading configuration file).
+ * Create option for a temporary remote (when reading configuration file).
  */
 
 void
@@ -1154,7 +1154,7 @@ relay_config_create_option_temp (struct t_relay_remote *temp_remote,
 }
 
 /*
- * Uses temporary remotes (created by reading configuration file).
+ * Use temporary remotes (created by reading configuration file).
  */
 
 void
@@ -1213,7 +1213,7 @@ relay_config_use_temp_remotes (void)
 }
 
 /*
- * Reads a remote option in relay configuration file.
+ * Read a remote option in relay configuration file.
  */
 
 int
@@ -1285,7 +1285,7 @@ relay_config_remote_read_cb (const void *pointer, void *data,
 }
 
 /*
- * Reloads relay configuration file.
+ * Reload relay configuration file.
  */
 
 int
@@ -1303,7 +1303,7 @@ relay_config_reload (const void *pointer, void *data,
 }
 
 /*
- * Updates options in configuration file while reading the file.
+ * Update options in configuration file while reading the file.
  */
 
 struct t_hashtable *
@@ -1408,9 +1408,9 @@ relay_config_update_cb (const void *pointer, void *data,
 }
 
 /*
- * Initializes relay configuration file.
+ * Initialize relay configuration file.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -1929,7 +1929,7 @@ relay_config_init (void)
 }
 
 /*
- * Reads relay configuration file.
+ * Read relay configuration file.
  */
 
 int
@@ -1951,7 +1951,7 @@ relay_config_read (void)
 }
 
 /*
- * Writes relay configuration file.
+ * Write relay configuration file.
  */
 
 int
@@ -1961,7 +1961,7 @@ relay_config_write (void)
 }
 
 /*
- * Frees relay configuration.
+ * Free relay configuration.
  */
 
 void

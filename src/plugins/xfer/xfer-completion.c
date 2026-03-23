@@ -31,7 +31,7 @@
 
 
 /*
- * Adds nicks to completion list.
+ * Add nicks to completion list.
  */
 
 int
@@ -66,7 +66,7 @@ xfer_completion_nick_cb (const void *pointer, void *data,
 }
 
 /*
- * Hooks completions.
+ * Hook completions.
  */
 
 void

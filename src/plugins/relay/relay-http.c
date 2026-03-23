@@ -49,7 +49,7 @@
 
 
 /*
- * Reinitializes the HTTP request status.
+ * Reinitialize the HTTP request status.
  */
 
 void
@@ -80,7 +80,7 @@ relay_http_request_reinit (struct t_relay_http_request *request)
 }
 
 /*
- * Allocates a t_relay_http_request structure.
+ * Allocate a t_relay_http_request structure.
  */
 
 struct t_relay_http_request *
@@ -170,10 +170,10 @@ relay_http_url_decode (const char *url)
 }
 
 /*
- * Reads value of a query string parameter as boolean (0 or 1) into *value.
- * If the parameter is not in URL, the default value is used.
+ * Read value of a query string parameter as boolean (0 or 1) into *value.
+ * If the parameter is not in URL, use the default value.
  *
- * Returns:
+ * Return:
  *   1: OK, *value is set
  *   0: error (query string parameter has invalid format)
  */
@@ -198,10 +198,10 @@ relay_http_get_param_boolean (struct t_relay_http_request *request,
 }
 
 /*
- * Reads value of a query string parameter as long into *value.
- * If the parameter is not in URL, the default value is used.
+ * Read value of a query string parameter as long into *value.
+ * If the parameter is not in URL, use the default value.
  *
- * Returns:
+ * Return:
  *   1: OK, *value is set
  *   0: error (URL parameter has invalid format)
  */
@@ -336,9 +336,9 @@ relay_http_parse_path (const char *path,
 }
 
 /*
- * Parses and saves method and path.
+ * Parse and save method and path.
  *
- * Returns:
+ * Return:
  *   1: OK, method and path saved
  *   0: error: invalid format
  */
@@ -394,13 +394,13 @@ error:
 }
 
 /*
- * Parses and saves a HTTP header in hashtable "headers".
+ * Parse and save a HTTP header in hashtable "headers".
  *
  * The parameter "ws_deflate_allowed" controls whether the websocket extension
  * "permessage-deflate" is allowed or not (it is allowed only with "api"
  * protocol).
  *
- * Returns:
+ * Return:
  *   1: OK, header saved
  *   0: error: invalid format
  */
@@ -499,7 +499,7 @@ relay_http_parse_header (struct t_relay_http_request *request,
 }
 
 /*
- * Adds bytes to HTTP body, changes the status to RELAY_HTTP_END if the body
+ * Add bytes to HTTP body, change the status to RELAY_HTTP_END if the body
  * is complete.
  */
 
@@ -573,9 +573,9 @@ relay_http_add_to_body (struct t_relay_http_request *request,
 }
 
 /*
- * Gets authentication status according to headers in the request.
+ * Get authentication status according to headers in the request.
  *
- * Returns:
+ * Return:
  *    0: authentication OK (password + TOTP if enabled)
  *   -1: missing password
  *   -2: invalid password
@@ -790,9 +790,9 @@ end:
 }
 
 /*
- * Checks authentication in HTTP request.
+ * Check authentication in HTTP request.
  *
- * Returns:
+ * Return:
  *   1: authentication OK
  *   0: authentication failed
  */
@@ -852,7 +852,7 @@ relay_http_check_auth (struct t_relay_client *client)
 }
 
 /*
- * Processes HTTP websocket request.
+ * Process HTTP websocket request.
  */
 
 void
@@ -951,7 +951,7 @@ relay_http_process_websocket (struct t_relay_client *client)
 }
 
 /*
- * Processes HTTP request.
+ * Process HTTP request.
  */
 
 void
@@ -980,7 +980,7 @@ relay_http_process_request (struct t_relay_client *client)
 }
 
 /*
- * Reads HTTP data from a client.
+ * Read HTTP data from a client.
  */
 
 void
@@ -1077,7 +1077,7 @@ relay_http_recv (struct t_relay_client *client, const char *data, int size)
 }
 
 /*
- * Compresses body of HTTP request with gzip or zstd, if all conditions are met:
+ * Compress body of HTTP request with gzip or zstd, if all conditions are met:
  *   - body is not empty
  *   - gzip or zstd is allowed by client (header "Accept-Encoding")
  *     (for zstd, WeeChat must be compiled with zstd support)
@@ -1089,7 +1089,7 @@ relay_http_recv (struct t_relay_client *client, const char *data, int size)
  * the HTTP header "Content-Encoding", if the compression is successful
  * (for example: "Content-Encoding: gzip").
  *
- * Returns pointer to compressed data or NULL if error.
+ * Return pointer to compressed data or NULL if error.
  *
  * Note: result must be freed after use.
  */
@@ -1234,12 +1234,12 @@ relay_http_compress (struct t_relay_http_request *request,
 }
 
 /*
- * Sends a HTTP message to client.
+ * Send a HTTP message to client.
  *
  * Argument "http" is a HTTP code + message, for example:
  * "403 Forbidden".
  *
- * Returns number of bytes sent to client, -1 if error.
+ * Return number of bytes sent to client, -1 if error.
  */
 
 int
@@ -1327,9 +1327,9 @@ relay_http_send (struct t_relay_client *client,
 }
 
 /*
- * Sends JSON string to client.
+ * Send JSON string to client.
  *
- * Returns number of bytes sent to client, -1 if error.
+ * Return number of bytes sent to client, -1 if error.
  */
 
 int
@@ -1366,9 +1366,9 @@ relay_http_send_json (struct t_relay_client *client,
 }
 
 /*
- * Sends JSON error to client.
+ * Send JSON error to client.
  *
- * Returns number of bytes sent to client, -1 if error.
+ * Return number of bytes sent to client, -1 if error.
  */
 
 int
@@ -1410,7 +1410,7 @@ end:
 }
 
 /*
- * Frees a HTTP request.
+ * Free a HTTP request.
  */
 
 void
@@ -1432,7 +1432,7 @@ relay_http_request_free (struct t_relay_http_request *request)
 }
 
 /*
- * Allocates a t_relay_http_response structure.
+ * Allocate a t_relay_http_response structure.
  */
 
 struct t_relay_http_response *
@@ -1461,9 +1461,9 @@ relay_http_response_alloc (void)
 }
 
 /*
- * Parses and saves response code.
+ * Parse and saves response code.
  *
- * Returns:
+ * Return:
  *   1: OK, response code and HTTP version saved
  *   0: error: invalid format
  */
@@ -1532,9 +1532,9 @@ error:
 }
 
 /*
- * Parses and saves a header of a HTTP response in hashtable "headers".
+ * Parse and saves a header of a HTTP response in hashtable "headers".
  *
- * Returns:
+ * Return:
  *   1: OK, header saved
  *   0: error: invalid format
  */
@@ -1598,9 +1598,9 @@ relay_http_parse_response_header (struct t_relay_http_response *response,
 }
 
 /*
- * Parses HTTP response with a string.
+ * Parse HTTP response with a string.
  *
- * Returns HTTP request structure, NULL if error.
+ * Return HTTP request structure, NULL if error.
  */
 
 struct t_relay_http_response *
@@ -1660,7 +1660,7 @@ relay_http_parse_response (const char *data)
 }
 
 /*
- * Frees a HTTP response.
+ * Free a HTTP response.
  */
 
 void
@@ -1678,7 +1678,7 @@ relay_http_response_free (struct t_relay_http_response *response)
 }
 
 /*
- * Prints HTTP request in WeeChat log file (usually for crash dump).
+ * Print HTTP request in WeeChat log file (usually for crash dump).
  */
 
 void
@@ -1720,7 +1720,7 @@ relay_http_print_log_request (struct t_relay_http_request *request)
 }
 
 /*
- * Prints HTTP response in WeeChat log file (usually for crash dump).
+ * Print HTTP response in WeeChat log file (usually for crash dump).
  */
 
 void

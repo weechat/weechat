@@ -41,7 +41,7 @@
 
 
 /*
- * Searches for last EOL in a string.
+ * Search for last EOL in a string.
  */
 
 const char *
@@ -62,7 +62,7 @@ logger_tail_last_eol (const char *string_start, const char *string_ptr)
 }
 
 /*
- * Compares two lines in arraylist.
+ * Compare two lines in arraylist.
  */
 
 int
@@ -79,7 +79,7 @@ logger_tail_lines_cmp_cb (void *data,
 }
 
 /*
- * Frees a line in arraylist.
+ * Free a line in arraylist.
  */
 
 void
@@ -94,7 +94,7 @@ logger_tail_lines_free_cb (void *data, struct t_arraylist *arraylist,
 }
 
 /*
- * Returns last lines of a file.
+ * Return last lines of a file.
  *
  * Note: result must be freed after use.
  */

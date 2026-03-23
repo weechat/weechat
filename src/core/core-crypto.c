@@ -123,7 +123,7 @@ int weecrypto_cipher[] = {
 
 
 /*
- * Returns the hash algorithm with the name, or GCRY_MD_NONE if not found.
+ * Return the hash algorithm with the name, or GCRY_MD_NONE if not found.
  */
 
 int
@@ -144,7 +144,7 @@ weecrypto_get_hash_algo (const char *hash_algo)
 }
 
 /*
- * Returns the cipher with the name, or GCRY_CIPHER_NONE if not found.
+ * Return the cipher with the name, or GCRY_CIPHER_NONE if not found.
  */
 
 int
@@ -165,7 +165,7 @@ weecrypto_get_cipher (const char *cipher)
 }
 
 /*
- * Computes hash of data using the given hash algorithm.
+ * Compute hash of data using the given hash algorithm.
  *
  * The hash size depends on the algorithm, common ones are:
  *
@@ -196,7 +196,7 @@ weecrypto_get_cipher (const char *cipher)
  * If hash_size is not NULL, the length of hash is stored in *hash_size
  * (in bytes).
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -255,7 +255,7 @@ hash_end:
 }
 
 /*
- * Computes hash of file using the given hash algorithm.
+ * Compute hash of file using the given hash algorithm.
  *
  * The hash size depends on the algorithm, common ones are:
  *
@@ -286,7 +286,7 @@ hash_end:
  * If hash_size is not NULL, the length of hash is stored in *hash_size
  * (in bytes).
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -361,7 +361,7 @@ hash_end:
 }
 
 /*
- * Computes PKCS#5 Passphrase Based Key Derivation Function number 2 (PBKDF2)
+ * Compute PKCS#5 Passphrase Based Key Derivation Function number 2 (PBKDF2)
  * hash of data.
  *
  * The hash size depends on the algorithm, common ones are:
@@ -375,7 +375,7 @@ hash_end:
  * If hash_size is not NULL, the length of hash is stored in *hash_size
  * (in bytes).
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -419,7 +419,7 @@ hash_pbkdf2_end:
 }
 
 /*
- * Computes keyed-hash message authentication code (HMAC).
+ * Compute keyed-hash message authentication code (HMAC).
  *
  * The hash size depends on the algorithm, common ones are:
  *
@@ -450,7 +450,7 @@ hash_pbkdf2_end:
  * If hash_size is not NULL, the length of hash is stored in *hash_size
  * (in bytes).
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -514,10 +514,10 @@ hmac_end:
 }
 
 /*
- * Generates a Time-based One-Time Password (TOTP), as described
+ * Generate a Time-based One-Time Password (TOTP), as described
  * in the RFC 6238.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -556,10 +556,10 @@ weecrypto_totp_generate_internal (const char *secret, int length_secret,
 }
 
 /*
- * Generates a Time-based One-Time Password (TOTP), as described
+ * Generate a Time-based One-Time Password (TOTP), as described
  * in the RFC 6238.
  *
- * Returns the password as string, NULL if error.
+ * Return the password as string, NULL if error.
  *
  * Note: result must be freed after use.
  */
@@ -615,9 +615,9 @@ error:
 }
 
 /*
- * Validates a Time-based One-Time Password (TOTP).
+ * Validate a Time-based One-Time Password (TOTP).
  *
- * Returns:
+ * Return:
  *   1: OTP is OK
  *   0: OTP is invalid
  */

@@ -39,7 +39,7 @@
 
 
 /*
- * Hashes a string with a variant of djb2 hash, using 64-bit integer.
+ * Hash a string with a variant of djb2 hash, using 64-bit integer.
  *
  * Number pointed by *color_64 is updated by the function.
  */
@@ -56,7 +56,7 @@ gui_nick_hash_djb2_64 (const char *nickname, uint64_t *color_64)
 }
 
 /*
- * Hashes a string with a variant of djb2 hash, using 32-bit integer.
+ * Hash a string with a variant of djb2 hash, using 32-bit integer.
  *
  * Number pointed by *color_32 is updated by the function.
  */
@@ -73,7 +73,7 @@ gui_nick_hash_djb2_32 (const char *nickname, uint32_t *color_32)
 }
 
 /*
- * Hashes a string with sum of letters, using 64-bit integer.
+ * Hash a string with sum of letters, using 64-bit integer.
  *
  * Number pointed by *color_64 is updated by the function.
  */
@@ -89,7 +89,7 @@ gui_nick_hash_sum_64 (const char *nickname, uint64_t *color_64)
 }
 
 /*
- * Hashes a string with sum of letters, using 32-bit integer.
+ * Hash a string with sum of letters, using 32-bit integer.
  *
  * Number pointed by *color_32 is updated by the function.
  */
@@ -105,9 +105,9 @@ gui_nick_hash_sum_32 (const char *nickname, uint32_t *color_32)
 }
 
 /*
- * Hashes a nickname to find color.
+ * Hash a nickname to find color.
  *
- * Returns a number which is between 0 and num_colors - 1 (inclusive).
+ * Return a number which is between 0 and num_colors - 1 (inclusive).
  *
  * num_colors is commonly the number of colors in the option
  * "weechat.color.chat_nick_colors".
@@ -165,9 +165,9 @@ gui_nick_hash_color (const char *nickname, int num_colors)
 }
 
 /*
- * Gets forced color for a nick.
+ * Get forced color for a nick.
  *
- * Returns the name of color (for example: "green"), NULL if no color is forced
+ * Return the name of color (for example: "green"), NULL if no color is forced
  * for nick.
  */
 
@@ -196,7 +196,7 @@ gui_nick_get_forced_color (const char *nickname)
 }
 
 /*
- * Duplicates a nick and stops at first char in list (using option
+ * Duplicate a nick and stops at first char in list (using option
  * weechat.look.nick_color_stop_chars).
  *
  * Note: result must be freed after use.
@@ -243,7 +243,7 @@ gui_nick_strdup_for_color (const char *nickname)
 }
 
 /*
- * Finds a color name for a nick (according to nick letters).
+ * Find a color name for a nick (according to nick letters).
  *
  * If case_range < 0, nick is case-sensitive.
  * If case_range == 0, nick is converted to lower case (with string_tolower).
@@ -258,7 +258,7 @@ gui_nick_strdup_for_color (const char *nickname)
  * allowed with format "fg:bg", for example: "blue,yellow:red" for blue and
  * yellow on red).
  *
- * Returns the name of a color (for example: "green").
+ * Return the name of a color (for example: "green").
  *
  * Note: result must be freed after use.
  */
@@ -333,7 +333,7 @@ end:
 }
 
 /*
- * Finds a color code for a nick (according to nick letters).
+ * Find a color code for a nick (according to nick letters).
  *
  * If case_range < 0, nick is case-sensitive.
  * If case_range == 0, nick is converted to lower case (with string_tolower).
@@ -348,7 +348,7 @@ end:
  * allowed with format "fg:bg", for example: "blue,yellow:red" for blue and
  * yellow on red).
  *
- * Returns a WeeChat color code (that can be used for display).
+ * Return a WeeChat color code (that can be used for display).
  *
  * Note: result must be freed after use.
  */

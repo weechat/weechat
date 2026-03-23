@@ -35,7 +35,7 @@ TEST_GROUP(HookConnect)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_connect_get_description
  */
 
@@ -45,7 +45,7 @@ TEST(HookConnect, GetDescription)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_connect
  */
 
@@ -55,7 +55,7 @@ TEST(HookConnect, Connect)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_connect_gnutls_verify_certificates
  */
 
@@ -65,7 +65,7 @@ TEST(HookConnect, GnutlsVerifyCertificates)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_connect_gnutls_set_certificates
  */
 
@@ -75,7 +75,7 @@ TEST(HookConnect, GnutlsSetCertificates)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_connect_free_data
  */
 
@@ -85,7 +85,7 @@ TEST(HookConnect, FreeData)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_connect_add_to_infolist
  */
 
@@ -95,7 +95,7 @@ TEST(HookConnect, AddToInfolist)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_connect_print_log
  */
 

@@ -49,7 +49,7 @@ int secure_buffer_display_values = 0;
 
 
 /*
- * Displays a secured data.
+ * Display a secured data.
  */
 
 void
@@ -83,7 +83,7 @@ secure_buffer_display_data (void *data,
 }
 
 /*
- * Displays content of secured data buffer.
+ * Display content of secured data buffer.
  */
 
 void
@@ -195,7 +195,7 @@ secure_buffer_close_cb (const void *pointer, void *data,
 }
 
 /*
- * Assigns secured data buffer to pointer if it is not yet set.
+ * Assign secured data buffer to pointer if it is not yet set.
  */
 
 void
@@ -213,7 +213,7 @@ secure_buffer_assign (void)
 }
 
 /*
- * Opens a buffer to display secured data.
+ * Open a buffer to display secured data.
  */
 
 void

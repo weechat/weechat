@@ -37,7 +37,7 @@ TEST_GROUP(Alias)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   alias_valid
  */
 
@@ -57,7 +57,7 @@ TEST(Alias, Valid)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   alias_search
  */
 
@@ -77,7 +77,7 @@ TEST(Alias, Search)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   alias_string_add_word_range
  *   alias_string_add_arguments
  *   alias_replace_args
@@ -154,7 +154,7 @@ TEST(Alias, ReplaceArgs)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   alias_run_command
  */
 
@@ -164,7 +164,7 @@ TEST(Alias, RunCommand)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   alias_cb
  */
 
@@ -174,7 +174,7 @@ TEST(Alias, Cb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   alias_hook_command
  */
 
@@ -184,7 +184,7 @@ TEST(Alias, HookCommand)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   alias_find_pos
  */
 
@@ -194,7 +194,7 @@ TEST(Alias, FindPos)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   alias_insert
  */
 
@@ -204,7 +204,7 @@ TEST(Alias, Insert)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   alias_remove_from_list
  */
 
@@ -214,7 +214,7 @@ TEST(Alias, RemoveFromList)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   alias_rename
  */
 
@@ -224,7 +224,7 @@ TEST(Alias, Rename)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   alias_free
  */
 
@@ -235,7 +235,7 @@ TEST(Alias, Free)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   alias_free_all
  */
 
@@ -245,7 +245,7 @@ TEST(Alias, FreeAll)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   alias_update_completion
  */
 
@@ -255,7 +255,7 @@ TEST(Alias, UpdateCompletion)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   alias_name_valid
  */
 
@@ -265,7 +265,7 @@ TEST(Alias, NameValid)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   alias_new
  */
 
@@ -275,7 +275,7 @@ TEST(Alias, New)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   alias_add_to_infolist
  */
 

@@ -81,9 +81,9 @@ fifo_config_change_file_path (const void *pointer, void *data,
 }
 
 /*
- * Initializes fifo configuration file.
+ * Initialize fifo configuration file.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -132,7 +132,7 @@ fifo_config_init (void)
 }
 
 /*
- * Reads fifo configuration file.
+ * Read fifo configuration file.
  */
 
 int
@@ -142,7 +142,7 @@ fifo_config_read (void)
 }
 
 /*
- * Writes fifo configuration file.
+ * Write fifo configuration file.
  */
 
 int
@@ -152,7 +152,7 @@ fifo_config_write (void)
 }
 
 /*
- * Frees fifo configuration.
+ * Free fifo configuration.
  */
 
 void

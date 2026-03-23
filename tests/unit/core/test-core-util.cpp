@@ -84,7 +84,7 @@ TEST_GROUP(CoreUtil)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   util_parse_int
  *   util_parse_long
  *   util_parse_longlong
@@ -179,7 +179,7 @@ TEST(CoreUtil, ParseNumber)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   util_timeval_cmp
  *   util_timeval_diff
  *   util_timeval_add
@@ -230,7 +230,7 @@ TEST(CoreUtil, Timeval)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   util_get_microseconds_string
  */
 
@@ -267,7 +267,7 @@ TEST(CoreUtil, GetMicrosecondsString)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   util_get_time_string
  */
 
@@ -282,7 +282,7 @@ TEST(CoreUtil, GetTimeString)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   util_strftimeval
  */
 
@@ -402,7 +402,7 @@ TEST(CoreUtil, Strftimeval)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   util_parse_time
  */
 
@@ -622,7 +622,7 @@ TEST(CoreUtil, ParseTime)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   util_get_time_diff
  */
 
@@ -691,7 +691,7 @@ TEST(CoreUtil, GetTimeDiff)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   util_parse_delay
  */
 
@@ -758,7 +758,7 @@ TEST(CoreUtil, ParseDelay)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   util_version_number
  */
 

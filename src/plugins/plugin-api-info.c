@@ -64,7 +64,7 @@
 
 
 /*
- * Returns WeeChat info "version".
+ * Return WeeChat info "version".
  */
 
 char *
@@ -85,7 +85,7 @@ plugin_api_info_version_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns WeeChat info "version_number".
+ * Return WeeChat info "version_number".
  */
 
 char *
@@ -109,7 +109,7 @@ plugin_api_info_version_number_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns WeeChat info "version_git".
+ * Return WeeChat info "version_git".
  */
 
 char *
@@ -130,7 +130,7 @@ plugin_api_info_version_git_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns WeeChat info "date".
+ * Return WeeChat info "date".
  */
 
 char *
@@ -151,7 +151,7 @@ plugin_api_info_date_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns WeeChat info "pid".
+ * Return WeeChat info "pid".
  */
 
 char *
@@ -172,7 +172,7 @@ plugin_api_info_pid_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns WeeChat info "dir_separator".
+ * Return WeeChat info "dir_separator".
  */
 
 char *
@@ -190,7 +190,7 @@ plugin_api_info_dir_separator_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns an absolute path to directory.
+ * Return an absolute path to directory.
  *
  * Note: result must be freed after use.
  */
@@ -206,7 +206,7 @@ plugin_api_info_absolute_path (const char *directory)
 }
 
 /*
- * Returns WeeChat info "weechat_config_dir".
+ * Return WeeChat info "weechat_config_dir".
  */
 
 char *
@@ -224,7 +224,7 @@ plugin_api_info_weechat_config_dir_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns WeeChat info "weechat_data_dir".
+ * Return WeeChat info "weechat_data_dir".
  */
 
 char *
@@ -242,7 +242,7 @@ plugin_api_info_weechat_data_dir_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns WeeChat info "weechat_state_dir".
+ * Return WeeChat info "weechat_state_dir".
  */
 
 char *
@@ -260,7 +260,7 @@ plugin_api_info_weechat_state_dir_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns WeeChat info "weechat_cache_dir".
+ * Return WeeChat info "weechat_cache_dir".
  */
 
 char *
@@ -278,7 +278,7 @@ plugin_api_info_weechat_cache_dir_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns WeeChat info "weechat_runtime_dir".
+ * Return WeeChat info "weechat_runtime_dir".
  */
 
 char *
@@ -296,7 +296,7 @@ plugin_api_info_weechat_runtime_dir_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns WeeChat info "weechat_libdir".
+ * Return WeeChat info "weechat_libdir".
  */
 
 char *
@@ -314,7 +314,7 @@ plugin_api_info_weechat_libdir_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns WeeChat info "weechat_sharedir".
+ * Return WeeChat info "weechat_sharedir".
  */
 
 char *
@@ -332,7 +332,7 @@ plugin_api_info_weechat_sharedir_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns WeeChat info "weechat_localedir".
+ * Return WeeChat info "weechat_localedir".
  */
 
 char *
@@ -350,7 +350,7 @@ plugin_api_info_weechat_localedir_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns WeeChat info "weechat_site".
+ * Return WeeChat info "weechat_site".
  */
 
 char *
@@ -368,7 +368,7 @@ plugin_api_info_weechat_site_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns WeeChat info "weechat_site_download".
+ * Return WeeChat info "weechat_site_download".
  */
 
 char *
@@ -386,7 +386,7 @@ plugin_api_info_weechat_site_download_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns WeeChat info "weechat_upgrading".
+ * Return WeeChat info "weechat_upgrading".
  */
 
 char *
@@ -407,7 +407,7 @@ plugin_api_info_weechat_upgrading_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns WeeChat info "weechat_headless".
+ * Return WeeChat info "weechat_headless".
  */
 
 char *
@@ -428,7 +428,7 @@ plugin_api_info_weechat_headless_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns WeeChat info "weechat_daemon".
+ * Return WeeChat info "weechat_daemon".
  */
 
 char *
@@ -449,7 +449,7 @@ plugin_api_info_weechat_daemon_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns WeeChat info "auto_connect".
+ * Return WeeChat info "auto_connect".
  */
 
 char *
@@ -470,7 +470,7 @@ plugin_api_info_auto_connect_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns WeeChat info "auto_load_scripts".
+ * Return WeeChat info "auto_load_scripts".
  */
 
 char *
@@ -491,7 +491,7 @@ plugin_api_info_auto_load_scripts_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns WeeChat info "buffer".
+ * Return WeeChat info "buffer".
  */
 
 char *
@@ -519,7 +519,7 @@ plugin_api_info_buffer_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns WeeChat info "charset_terminal".
+ * Return WeeChat info "charset_terminal".
  */
 
 char *
@@ -537,7 +537,7 @@ plugin_api_info_charset_terminal_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns WeeChat info "charset_internal".
+ * Return WeeChat info "charset_internal".
  */
 
 char *
@@ -555,7 +555,7 @@ plugin_api_info_charset_internal_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns WeeChat info "locale".
+ * Return WeeChat info "locale".
  */
 
 char *
@@ -576,7 +576,7 @@ plugin_api_info_locale_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns WeeChat info "inactivity".
+ * Return WeeChat info "inactivity".
  */
 
 char *
@@ -604,7 +604,7 @@ plugin_api_info_inactivity_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns WeeChat info "filters_enabled".
+ * Return WeeChat info "filters_enabled".
  */
 
 char *
@@ -625,7 +625,7 @@ plugin_api_info_filters_enabled_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns WeeChat info "cursor_mode".
+ * Return WeeChat info "cursor_mode".
  */
 
 char *
@@ -646,7 +646,7 @@ plugin_api_info_cursor_mode_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns WeeChat info "mouse".
+ * Return WeeChat info "mouse".
  */
 
 char *
@@ -667,7 +667,7 @@ plugin_api_info_mouse_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns WeeChat info "term_width".
+ * Return WeeChat info "term_width".
  */
 
 char *
@@ -688,7 +688,7 @@ plugin_api_info_term_width_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns WeeChat info "term_height".
+ * Return WeeChat info "term_height".
  */
 
 char *
@@ -709,7 +709,7 @@ plugin_api_info_term_height_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns WeeChat info "term_colors".
+ * Return WeeChat info "term_colors".
  */
 
 char *
@@ -730,7 +730,7 @@ plugin_api_info_term_colors_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns WeeChat info "term_color_pairs".
+ * Return WeeChat info "term_color_pairs".
  */
 
 char *
@@ -751,7 +751,7 @@ plugin_api_info_term_color_pairs_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns WeeChat info "color_ansi_regex".
+ * Return WeeChat info "color_ansi_regex".
  */
 
 char *
@@ -769,7 +769,7 @@ plugin_api_info_color_ansi_regex_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns WeeChat info "color_term2rgb".
+ * Return WeeChat info "color_term2rgb".
  */
 
 char *
@@ -794,7 +794,7 @@ plugin_api_info_color_term2rgb_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns WeeChat info "color_rgb2term".
+ * Return WeeChat info "color_rgb2term".
  */
 
 char *
@@ -837,7 +837,7 @@ plugin_api_info_color_rgb2term_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns nick color code for a nickname.
+ * Return nick color code for a nickname.
  */
 
 char *
@@ -866,7 +866,7 @@ plugin_api_info_nick_color_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns nick color name for a nickname.
+ * Return nick color name for a nickname.
  */
 
 char *
@@ -895,7 +895,7 @@ plugin_api_info_nick_color_name_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns nick color code for a nickname (case ignored using a range of chars).
+ * Return nick color code for a nickname (case ignored using a range of chars).
  */
 
 char *
@@ -934,7 +934,7 @@ plugin_api_info_nick_color_ignore_case_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns nick color name for a nickname (case ignored using a range of chars).
+ * Return nick color name for a nickname (case ignored using a range of chars).
  */
 
 char *
@@ -973,7 +973,7 @@ plugin_api_info_nick_color_name_ignore_case_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns uptime according to the start date and arguments.
+ * Return uptime according to the start date and arguments.
  */
 
 char *
@@ -1015,7 +1015,7 @@ plugin_api_info_build_uptime (time_t start_time, const char *arguments)
 }
 
 /*
- * Returns WeeChat info "uptime".
+ * Return WeeChat info "uptime".
  */
 
 char *
@@ -1032,7 +1032,7 @@ plugin_api_info_uptime_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns WeeChat info "uptime_current" (current run: from last start,
+ * Return WeeChat info "uptime_current" (current run: from last start,
  * upgrades are ignored).
  */
 
@@ -1052,7 +1052,7 @@ plugin_api_info_uptime_current_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns WeeChat info "totp_generate": generates a Time-based One-Time
+ * Return WeeChat info "totp_generate": generates a Time-based One-Time
  * Password (TOTP).
  *
  * Arguments: "secret,timestamp,digits" (timestamp and digits are optional).
@@ -1123,7 +1123,7 @@ error:
 }
 
 /*
- * Returns WeeChat info "totp_validate": validates a Time-based One-Time
+ * Return WeeChat info "totp_validate": validates a Time-based One-Time
  * Password (TOTP).
  *
  * Arguments: "secret,otp,timestamp,window" (timestamp and window are optional).
@@ -1193,7 +1193,7 @@ error:
 }
 
 /*
- * Returns WeeChat info "plugin_loaded".
+ * Return WeeChat info "plugin_loaded".
  */
 
 char *
@@ -1226,7 +1226,7 @@ plugin_api_info_plugin_loaded_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns WeeChat info "window".
+ * Return WeeChat info "window".
  */
 
 char *
@@ -1260,7 +1260,7 @@ plugin_api_info_window_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns secured data hashtable.
+ * Return secured data hashtable.
  */
 
 struct t_hashtable *
@@ -1278,7 +1278,7 @@ plugin_api_info_hashtable_secured_data_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns WeeChat infolist "bar".
+ * Return WeeChat infolist "bar".
  *
  * Note: result must be freed after use with function weechat_infolist_free().
  */
@@ -1336,7 +1336,7 @@ plugin_api_infolist_bar_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns WeeChat infolist "bar_item".
+ * Return WeeChat infolist "bar_item".
  *
  * Note: result must be freed after use with function weechat_infolist_free().
  */
@@ -1395,7 +1395,7 @@ plugin_api_infolist_bar_item_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns WeeChat infolist "bar_window".
+ * Return WeeChat infolist "bar_window".
  *
  * Note: result must be freed after use with function weechat_infolist_free().
  */
@@ -1469,7 +1469,7 @@ plugin_api_infolist_bar_window_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns WeeChat infolist "buffer".
+ * Return WeeChat infolist "buffer".
  *
  * Note: result must be freed after use with function weechat_infolist_free().
  */
@@ -1528,7 +1528,7 @@ plugin_api_infolist_buffer_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns WeeChat infolist "buffer_lines".
+ * Return WeeChat infolist "buffer_lines".
  *
  * Note: result must be freed after use with function weechat_infolist_free().
  */
@@ -1575,7 +1575,7 @@ plugin_api_infolist_buffer_lines_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns WeeChat infolist "filter".
+ * Return WeeChat infolist "filter".
  *
  * Note: result must be freed after use with function weechat_infolist_free().
  */
@@ -1615,7 +1615,7 @@ plugin_api_infolist_filter_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns WeeChat infolist "history".
+ * Return WeeChat infolist "history".
  *
  * Note: result must be freed after use with function weechat_infolist_free().
  */
@@ -1656,7 +1656,7 @@ plugin_api_infolist_history_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns WeeChat infolist "hook".
+ * Return WeeChat infolist "hook".
  *
  * Note: result must be freed after use with function weechat_infolist_free().
  */
@@ -1690,7 +1690,7 @@ plugin_api_infolist_hook_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns WeeChat infolist "hotlist".
+ * Return WeeChat infolist "hotlist".
  *
  * Note: result must be freed after use with function weechat_infolist_free().
  */
@@ -1727,7 +1727,7 @@ plugin_api_infolist_hotlist_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns WeeChat infolist "key".
+ * Return WeeChat infolist "key".
  *
  * Note: result must be freed after use with function weechat_infolist_free().
  */
@@ -1771,7 +1771,7 @@ plugin_api_infolist_key_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns WeeChat infolist "layout".
+ * Return WeeChat infolist "layout".
  *
  * Note: result must be freed after use with function weechat_infolist_free().
  */
@@ -1808,7 +1808,7 @@ plugin_api_infolist_layout_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns WeeChat infolist "nicklist".
+ * Return WeeChat infolist "nicklist".
  *
  * Note: result must be freed after use with function weechat_infolist_free().
  */
@@ -1842,7 +1842,7 @@ plugin_api_infolist_nicklist_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns WeeChat infolist "option".
+ * Return WeeChat infolist "option".
  *
  * Note: result must be freed after use with function weechat_infolist_free().
  */
@@ -1873,7 +1873,7 @@ plugin_api_infolist_option_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns WeeChat infolist "plugin".
+ * Return WeeChat infolist "plugin".
  *
  * Note: result must be freed after use with function weechat_infolist_free().
  */
@@ -1932,7 +1932,7 @@ plugin_api_infolist_plugin_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns WeeChat infolist "proxy".
+ * Return WeeChat infolist "proxy".
  *
  * Note: result must be freed after use with function weechat_infolist_free().
  */
@@ -1991,7 +1991,7 @@ plugin_api_infolist_proxy_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns WeeChat infolist "url_options".
+ * Return WeeChat infolist "url_options".
  *
  * Note: result must be freed after use with function weechat_infolist_free().
  */
@@ -2027,7 +2027,7 @@ plugin_api_infolist_url_options_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns WeeChat infolist "window".
+ * Return WeeChat infolist "window".
  *
  * Note: result must be freed after use with function weechat_infolist_free().
  */
@@ -2123,7 +2123,7 @@ plugin_api_infolist_window_cb (const void *pointer, void *data,
 }
 
 /*
- * Initializes info/infolist plugin API.
+ * Initialize info/infolist plugin API.
  */
 
 void

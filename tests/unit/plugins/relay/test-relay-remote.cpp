@@ -52,7 +52,7 @@ TEST_GROUP(RelayRemote)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_remote_search_option
  */
 
@@ -66,7 +66,7 @@ TEST(RelayRemote, SearchOption)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_remote_valid
  */
 
@@ -76,7 +76,7 @@ TEST(RelayRemote, Valid)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_remote_search
  */
 
@@ -86,7 +86,7 @@ TEST(RelayRemote, Search)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_remote_search_by_number
  */
 
@@ -96,7 +96,7 @@ TEST(RelayRemote, SearchByNumber)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_remote_name_valid
  */
 
@@ -106,7 +106,7 @@ TEST(RelayRemote, NameValid)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_remote_parse_url
  */
 
@@ -157,7 +157,7 @@ TEST(RelayRemote, ParseUrl)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_remote_url_valid
  */
 
@@ -167,7 +167,7 @@ TEST(RelayRemote, UrlValid)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_remote_send_signal
  */
 
@@ -177,7 +177,7 @@ TEST(RelayRemote, SendSignal)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_remote_alloc
  */
 
@@ -187,7 +187,7 @@ TEST(RelayRemote, Alloc)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_remote_find_pos
  */
 
@@ -197,7 +197,7 @@ TEST(RelayRemote, FindPos)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_remote_add
  */
 
@@ -207,7 +207,7 @@ TEST(RelayRemote, Add)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_remote_new_with_options
  */
 
@@ -217,7 +217,7 @@ TEST(RelayRemote, NewWithOptions)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_remote_new
  */
 
@@ -227,7 +227,7 @@ TEST(RelayRemote, New)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_remote_new_with_infolist
  */
 
@@ -237,7 +237,7 @@ TEST(RelayRemote, NewWithInfolist)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_remote_set_status
  */
 
@@ -247,7 +247,7 @@ TEST(RelayRemote, SetStatus)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_remote_connect
  */
 
@@ -257,7 +257,7 @@ TEST(RelayRemote, Connect)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_remote_rename
  */
 
@@ -267,7 +267,7 @@ TEST(RelayRemote, Rename)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_remote_disconnect
  */
 
@@ -277,7 +277,7 @@ TEST(RelayRemote, Disconnect)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_remote_reconnect_schedule
  */
 
@@ -287,7 +287,7 @@ TEST(RelayRemote, ReconnectSchedule)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_remote_reconnect
  */
 
@@ -297,7 +297,7 @@ TEST(RelayRemote, Reconnect)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_remote_timer
  */
 
@@ -307,7 +307,7 @@ TEST(RelayRemote, Timer)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_remote_disconnect_all
  */
 
@@ -317,7 +317,7 @@ TEST(RelayRemote, DisconnectAll)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_remote_free
  */
 
@@ -327,7 +327,7 @@ TEST(RelayRemote, Free)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_remote_free_all
  */
 
@@ -337,7 +337,7 @@ TEST(RelayRemote, FreeAll)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_remote_add_to_infolist
  */
 
@@ -347,7 +347,7 @@ TEST(RelayRemote, AddToInfolist)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_remote_print_log
  */
 

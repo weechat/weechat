@@ -59,10 +59,10 @@ struct t_gui_layout *upgrade_layout = NULL;
 
 
 /*
- * Saves history in WeeChat upgrade file (from last to first, to restore it in
+ * Save history in WeeChat upgrade file (from last to first, to restore it in
  * good order).
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -113,9 +113,9 @@ upgrade_weechat_save_history (struct t_upgrade_file *upgrade_file,
 }
 
 /*
- * Saves buffers in WeeChat upgrade file.
+ * Save buffers in WeeChat upgrade file.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -202,9 +202,9 @@ upgrade_weechat_save_buffers (struct t_upgrade_file *upgrade_file)
 }
 
 /*
- * Saves miscellaneous info in WeeChat upgrade file.
+ * Save miscellaneous info in WeeChat upgrade file.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -251,9 +251,9 @@ upgrade_weechat_save_misc (struct t_upgrade_file *upgrade_file)
 }
 
 /*
- * Saves hotlist in WeeChat upgrade file.
+ * Save hotlist in WeeChat upgrade file.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -288,9 +288,9 @@ upgrade_weechat_save_hotlist (struct t_upgrade_file *upgrade_file)
 }
 
 /*
- * Saves tree with layout for windows in WeeChat upgrade file.
+ * Save tree with layout for windows in WeeChat upgrade file.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -338,9 +338,9 @@ upgrade_weechat_save_layout_window_tree (struct t_upgrade_file *upgrade_file,
 }
 
 /*
- * Saves layout for windows in WeeChat upgrade file.
+ * Save layout for windows in WeeChat upgrade file.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -370,9 +370,9 @@ upgrade_weechat_save_layout_window (struct t_upgrade_file *upgrade_file)
 }
 
 /*
- * Saves WeeChat upgrade file.
+ * Save WeeChat upgrade file.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -401,7 +401,7 @@ upgrade_weechat_save (void)
 }
 
 /*
- * Reads a buffer from infolist.
+ * Read a buffer from infolist.
  */
 
 void
@@ -647,7 +647,7 @@ upgrade_weechat_read_buffer (struct t_infolist *infolist)
 }
 
 /*
- * Reads a buffer line from infolist.
+ * Read a buffer line from infolist.
  */
 
 void
@@ -704,7 +704,7 @@ upgrade_weechat_read_buffer_line (struct t_infolist *infolist)
 }
 
 /*
- * Reads a nicklist from infolist.
+ * Read a nicklist from infolist.
  */
 
 void
@@ -781,7 +781,7 @@ upgrade_weechat_read_nicklist (struct t_infolist *infolist)
 }
 
 /*
- * Reads hotlist from infolist.
+ * Read hotlist from infolist.
  */
 
 void
@@ -832,7 +832,7 @@ upgrade_weechat_read_hotlist (struct t_infolist *infolist)
 }
 
 /*
- * Reads WeeChat upgrade file.
+ * Read WeeChat upgrade file.
  */
 
 int
@@ -898,9 +898,9 @@ upgrade_weechat_read_cb (const void *pointer, void *data,
 }
 
 /*
- * Loads WeeChat upgrade file.
+ * Load WeeChat upgrade file.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -956,7 +956,7 @@ upgrade_weechat_load (void)
 }
 
 /*
- * Removes a .upgrade file (callback called for each .upgrade file in WeeChat
+ * Remove a .upgrade file (callback called for each .upgrade file in WeeChat
  * home directory).
  */
 
@@ -975,7 +975,7 @@ upgrade_weechat_remove_file_cb (void *data, const char *filename)
 }
 
 /*
- * Removes *.upgrade files after upgrade and send signal "weechat_upgrade_done".
+ * Remove *.upgrade files after upgrade and send signal "weechat_upgrade_done".
  */
 
 void

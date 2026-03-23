@@ -35,7 +35,7 @@ TEST_GROUP(HookConfig)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_config_get_description
  */
 
@@ -45,7 +45,7 @@ TEST(HookConfig, GetDescription)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_config
  */
 
@@ -55,7 +55,7 @@ TEST(HookConfig, Config)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_config_exec
  */
 
@@ -65,7 +65,7 @@ TEST(HookConfig, Exec)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_config_free_data
  */
 
@@ -75,7 +75,7 @@ TEST(HookConfig, FreeData)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_config_add_to_infolist
  */
 
@@ -85,7 +85,7 @@ TEST(HookConfig, AddToInfolist)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_config_print_log
  */
 

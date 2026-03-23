@@ -393,7 +393,7 @@ weechat_php_hashtable_to_array_cb (void *data,
 }
 
 /*
- * Converts a WeeChat hashtable to a PHP array.
+ * Convert a WeeChat hashtable to a PHP array.
  */
 
 void
@@ -406,7 +406,7 @@ weechat_php_hashtable_to_array (struct t_hashtable *hashtable, zval *arr)
 }
 
 /*
- * Converts a PHP array to a WeeChat hashtable.
+ * Convert a PHP array to a WeeChat hashtable.
  *
  * Note: hashtable must be freed after use.
  */
@@ -507,7 +507,7 @@ weechat_php_func_map_add (zval *ofunc)
 }
 
 /*
- * Executes a PHP function.
+ * Execute a PHP function.
  */
 
 void *
@@ -646,12 +646,12 @@ weechat_php_exec (struct t_plugin_script *script, int ret_type,
 }
 
 /*
- * Loads a PHP script.
+ * Load a PHP script.
  *
- * If code is NULL, the content of filename is read and executed.
- * If code is not NULL, it is executed (the file is not read).
+ * If code is NULL, read and execute the file content.
+ * If code is not NULL, execute it (the file is not read).
  *
- * Returns pointer to new registered script, NULL if error.
+ * Return pointer to new registered script, NULL if error.
  */
 
 struct t_plugin_script *
@@ -729,7 +729,7 @@ weechat_php_load_cb (void *data, const char *filename)
 }
 
 /*
- * Unloads a PHP script.
+ * Unload a PHP script.
  */
 
 void
@@ -768,7 +768,7 @@ weechat_php_unload (struct t_plugin_script *script)
 }
 
 /*
- * Unloads a PHP script by name.
+ * Unload a PHP script by name.
  */
 
 void
@@ -796,7 +796,7 @@ weechat_php_unload_name (const char *name)
 }
 
 /*
- * Unloads all PHP scripts.
+ * Unload all PHP scripts.
  */
 
 void
@@ -809,7 +809,7 @@ weechat_php_unload_all (void)
 }
 
 /*
- * Reloads a PHP script by name.
+ * Reload a PHP script by name.
  */
 
 void
@@ -844,9 +844,9 @@ weechat_php_reload_name (const char *name)
 }
 
 /*
- * Evaluates PHP source code.
+ * Evaluate PHP source code.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -1011,7 +1011,7 @@ weechat_php_command_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds PHP scripts to completion list.
+ * Add PHP scripts to completion list.
  */
 
 int
@@ -1032,7 +1032,7 @@ weechat_php_completion_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns hdata for PHP scripts.
+ * Return hdata for PHP scripts.
  */
 
 struct t_hdata *
@@ -1049,7 +1049,7 @@ weechat_php_hdata_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns PHP info "php_eval".
+ * Return PHP info "php_eval".
  */
 
 char *
@@ -1069,7 +1069,7 @@ weechat_php_info_eval_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns infolist with PHP scripts.
+ * Return infolist with PHP scripts.
  */
 
 struct t_infolist *
@@ -1095,7 +1095,7 @@ weechat_php_infolist_cb (const void *pointer, void *data,
 }
 
 /*
- * Dumps PHP plugin data in WeeChat log file.
+ * Dump PHP plugin data in WeeChat log file.
  */
 
 int
@@ -1266,7 +1266,7 @@ php_weechat_log_message (char *message)
 #endif
 
 /*
- * Initializes PHP plugin.
+ * Initialize PHP plugin.
  */
 
 int
@@ -1335,7 +1335,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 }
 
 /*
- * Ends PHP plugin.
+ * End PHP plugin.
  */
 
 int

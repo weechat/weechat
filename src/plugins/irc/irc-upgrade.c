@@ -48,9 +48,9 @@ int irc_upgrading = 0;
 
 
 /*
- * Saves servers/channels/nicks info to irc upgrade file.
+ * Save servers/channels/nicks info to irc upgrade file.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -264,9 +264,9 @@ irc_upgrade_save_all_data (struct t_upgrade_file *upgrade_file,
 }
 
 /*
- * Saves irc upgrade file.
+ * Save irc upgrade file.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -290,8 +290,7 @@ irc_upgrade_save (int force_disconnected_state)
 }
 
 /*
- * Restores buffers callbacks (input and close) for buffers created by irc
- * plugin.
+ * Restore buffers callbacks (input and close) for buffers created by irc plugin.
  */
 
 void
@@ -348,7 +347,7 @@ irc_upgrade_set_buffer_callbacks (void)
 }
 
 /*
- * Reads callback for irc upgrade.
+ * Read callback for irc upgrade.
  */
 
 int
@@ -1013,9 +1012,9 @@ irc_upgrade_set_buffer_properties (void)
 }
 
 /*
- * Loads irc upgrade file.
+ * Load irc upgrade file.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */

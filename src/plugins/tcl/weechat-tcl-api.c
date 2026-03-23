@@ -140,7 +140,7 @@
 
 
 /*
- * Registers a tcl script.
+ * Register a tcl script.
  */
 
 API_FUNC(register)
@@ -5685,7 +5685,7 @@ API_FUNC(upgrade_close)
 }
 
 /*
- * Initializes tcl functions and constants.
+ * Initialize tcl functions and constants.
  */
 
 void weechat_tcl_api_init (Tcl_Interp *interp)

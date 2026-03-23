@@ -35,10 +35,9 @@
 
 
 /*
- * Compares two arraylist entries (default comparator).
- * It just compares pointers.
+ * Compare two arraylist entries (default comparator: compare pointers only).
  *
- * Returns:
+ * Return:
  *   -1: pointer1 < pointer2
  *    0: pointer1 == pointer2
  *    1: pointer1 > pointer2
@@ -60,9 +59,9 @@ arraylist_cmp_default_cb (void *data, struct t_arraylist *arraylist,
 }
 
 /*
- * Creates a new arraylist.
+ * Create a new arraylist.
  *
- * Returns pointer to arraylist, NULL if error.
+ * Return pointer to arraylist, NULL if error.
  */
 
 struct t_arraylist *
@@ -114,7 +113,7 @@ arraylist_new (int initial_size,
 }
 
 /*
- * Returns the size of an arraylist (number of elements).
+ * Return the size of an arraylist (number of elements).
  */
 
 int
@@ -127,7 +126,7 @@ arraylist_size (struct t_arraylist *arraylist)
 }
 
 /*
- * Returns the pointer to an arraylist element, by index.
+ * Return the pointer to an arraylist element, by index.
  */
 
 void *
@@ -140,11 +139,11 @@ arraylist_get (struct t_arraylist *arraylist, int index)
 }
 
 /*
- * Adjusts the allocated size of arraylist to add one element (if needed),
+ * Adjust the allocated size of arraylist to add one element (if needed),
  * so that the list has enough allocated data to store (current_size + 1)
  * elements.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -180,11 +179,11 @@ arraylist_grow (struct t_arraylist *arraylist)
 }
 
 /*
- * Adjusts the allocated size of arraylist to remove one element (if needed),
+ * Adjust the allocated size of arraylist to remove one element (if needed),
  * so that the list has enough allocated data to store (current size - 1)
  * elements.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -230,7 +229,7 @@ arraylist_shrink (struct t_arraylist *arraylist)
 }
 
 /*
- * Performs a binary search in the arraylist to find an element
+ * Perform a binary search in the arraylist to find an element
  * (this function must be called only if the arraylist is sorted).
  *
  * If "index" is not NULL, it is set with the index of element found (or -1 if
@@ -239,7 +238,7 @@ arraylist_shrink (struct t_arraylist *arraylist)
  * If "index_insert" is not NULL, it is set with the index that must be used to
  * insert the element in the arraylist (to keep arraylist sorted).
  *
- * Returns pointer to element found, NULL if not found.
+ * Return pointer to element found, NULL if not found.
  */
 
 void *
@@ -398,7 +397,7 @@ end:
 }
 
 /*
- * Performs a standard search in the arraylist to find an element
+ * Perform a standard search in the arraylist to find an element
  * (this function must be called only if the arraylist is NOT sorted).
  *
  * If "index" is not NULL, it is set with the index of element found (or -1 if
@@ -407,7 +406,7 @@ end:
  * If "index_insert" is not NULL, it is set to -1 (elements are always added
  * at the end of list when it is not sorted).
  *
- * Returns pointer to element found, NULL if not found.
+ * Return pointer to element found, NULL if not found.
  */
 
 void *
@@ -442,7 +441,7 @@ end:
 }
 
 /*
- * Searches an element in the arraylist.
+ * Search an element in the arraylist.
  *
  * If "index" is not NULL, it is set with the index of element found (or -1 if
  * element was not found).
@@ -450,7 +449,7 @@ end:
  * If "index_insert" is not NULL, it is set with the index that must be used to
  * insert the element in the arraylist (to keep arraylist sorted).
  *
- * Returns pointer to element found, NULL if not found.
+ * Return pointer to element found, NULL if not found.
  */
 
 void *
@@ -478,7 +477,7 @@ arraylist_search (struct t_arraylist *arraylist, void *pointer,
 }
 
 /*
- * Inserts an element at a given index (and shifts next elements by one
+ * Insert an element at a given index (and shifts next elements by one
  * position), or at automatic index if the arraylist is sorted.
  *
  * If the index is negative and that the arraylist is not sorted, the element
@@ -487,7 +486,7 @@ arraylist_search (struct t_arraylist *arraylist, void *pointer,
  * If the arraylist is sorted, the argument "index" is ignored (the element
  * will be inserted at appropriate position, to keep arraylist sorted).
  *
- * Returns the index of the new element (>= 0) or -1 if error.
+ * Return the index of the new element (>= 0) or -1 if error.
  */
 
 int
@@ -559,10 +558,10 @@ arraylist_insert (struct t_arraylist *arraylist, int index, void *pointer)
 }
 
 /*
- * Adds an element at the end of arraylist (or in the middle if the arraylist
+ * Add an element at the end of arraylist (or in the middle if the arraylist
  * is sorted).
  *
- * Returns the index of the new element (>= 0) or -1 if error.
+ * Return the index of the new element (>= 0) or -1 if error.
  */
 
 int
@@ -575,9 +574,9 @@ arraylist_add (struct t_arraylist *arraylist, void *pointer)
 }
 
 /*
- * Removes one element from the arraylist.
+ * Remove one element from the arraylist.
  *
- * Returns the index removed or -1 if error.
+ * Return the index removed or -1 if error.
  */
 
 int
@@ -614,9 +613,9 @@ arraylist_remove (struct t_arraylist *arraylist, int index)
 }
 
 /*
- * Removes all elements in the arraylist.
+ * Remove all elements in the arraylist.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -669,7 +668,7 @@ arraylist_clear (struct t_arraylist *arraylist)
 }
 
 /*
- * Frees an arraylist.
+ * Free an arraylist.
  */
 
 void
@@ -694,7 +693,7 @@ arraylist_free (struct t_arraylist *arraylist)
 }
 
 /*
- * Prints an arraylist in WeeChat log file (usually for crash dump).
+ * Print an arraylist in WeeChat log file (usually for crash dump).
  */
 
 void

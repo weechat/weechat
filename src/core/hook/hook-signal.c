@@ -38,7 +38,7 @@
 
 
 /*
- * Returns description of hook.
+ * Return description of hook.
  *
  * Note: result must be freed after use.
  */
@@ -51,9 +51,9 @@ hook_signal_get_description (struct t_hook *hook)
 }
 
 /*
- * Hooks a signal.
+ * Hook a signal.
  *
- * Returns pointer to new hook, NULL if error.
+ * Return pointer to new hook, NULL if error.
  */
 
 struct t_hook *
@@ -102,10 +102,10 @@ hook_signal (struct t_weechat_plugin *plugin, const char *signal,
 }
 
 /*
- * Checks if a hooked signal matches a signal sent: it matches if at least
+ * Check if a hooked signal matches a signal sent: it matches if at least
  * one of the signal masks are matching the signal sent.
  *
- * Returns:
+ * Return:
  *   1: hook matches signal sent
  *   0: hook does not match signal sent
  */
@@ -125,7 +125,7 @@ hook_signal_match (const char *signal, struct t_hook *hook)
 }
 
 /*
- * Extracts flags from signal and returns flags and pointer to start of signal.
+ * Extract flags from signal and return flags and pointer to start of signal.
  */
 
 void
@@ -176,7 +176,7 @@ hook_signal_extract_flags (const char *signal, const char **ptr_signal,
 }
 
 /*
- * Sends a signal.
+ * Send a signal.
  */
 
 int
@@ -236,7 +236,7 @@ hook_signal_send (const char *signal, const char *type_data, void *signal_data)
 }
 
 /*
- * Frees data in a signal hook.
+ * Free data in a signal hook.
  */
 
 void
@@ -257,7 +257,7 @@ hook_signal_free_data (struct t_hook *hook)
 }
 
 /*
- * Returns hdata for signal hook.
+ * Return hdata for signal hook.
  */
 
 struct t_hdata *
@@ -281,9 +281,9 @@ hook_signal_hdata_hook_signal_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds signal hook data in the infolist item.
+ * Add signal hook data in the infolist item.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -315,7 +315,7 @@ hook_signal_add_to_infolist (struct t_infolist_item *item,
 }
 
 /*
- * Prints signal hook data in WeeChat log file (usually for crash dump).
+ * Print signal hook data in WeeChat log file (usually for crash dump).
  */
 
 void

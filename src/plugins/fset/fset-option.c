@@ -58,9 +58,9 @@ char *fset_option_type_string_tiny[FSET_OPTION_NUM_TYPES] =
 
 
 /*
- * Checks if a fset option pointer is valid.
+ * Check if a fset option pointer is valid.
  *
- * Returns:
+ * Return:
  *   1: option exists
  *   0: option does not exist
  */
@@ -87,12 +87,12 @@ fset_option_valid (struct t_fset_option *fset_option)
 }
 
 /*
- * Searches for an option by name.
+ * Search for an option by name.
  *
  * If line is not NULL, *line is set with the line number of option found
  * (-1 if line is not found).
  *
- * Returns pointer to option found, NULL if not found.
+ * Return pointer to option found, NULL if not found.
  */
 
 struct t_fset_option *
@@ -124,9 +124,9 @@ fset_option_search_by_name (const char *name, int *line)
 }
 
 /*
- * Checks if the option value is changed (different from the default value).
+ * Check if the option value is changed (different from the default value).
  *
- * Returns:
+ * Return:
  *   1: value has been changed
  *   0: value is the same as default value
  */
@@ -148,7 +148,7 @@ fset_option_value_is_changed (struct t_fset_option *fset_option)
 }
 
 /*
- * Sets the value in option, according to its type.
+ * Set the value in option, according to its type.
  */
 
 void
@@ -203,13 +203,12 @@ fset_option_set_value_string (struct t_config_option *option,
 }
 
 /*
- * Checks if a string matches a mask.
+ * Check if a string matches a mask.
  *
- * If mask has no "*" inside, it just checks if "mask" is inside the "string".
- * If mask has at least one "*" inside, the function weechat_string_match is
- * used.
+ * If mask has no "*" inside, just check if "mask" is inside the "string".
+ * If mask has at least one "*" inside, use the function weechat_string_match.
  *
- * Returns:
+ * Return:
  *   1: string matches mask
  *   0: string does not match mask
  */
@@ -224,7 +223,7 @@ fset_option_string_match (const char *string, const char *mask)
 }
 
 /*
- * Adds the properties of an fset option in a hashtable
+ * Add the properties of an fset option in a hashtable
  * (keys and values must be strings).
  */
 
@@ -295,9 +294,9 @@ fset_option_add_option_in_hashtable (struct t_hashtable *hashtable,
 }
 
 /*
- * Checks if an option is matching current filter(s).
+ * Check if an option is matching current filter(s).
  *
- * Returns:
+ * Return:
  *   1: option is matching filter(s)
  *   0: option does not match filter(s)
  */
@@ -415,7 +414,7 @@ fset_option_match_filter (struct t_fset_option *fset_option, const char *filter)
 }
 
 /*
- * Sets (or sets again) values (except name) in an fset option.
+ * Set (or sets again) values (except name) in an fset option.
  */
 
 void
@@ -573,7 +572,7 @@ fset_option_set_values (struct t_fset_option *fset_option,
 }
 
 /*
- * Sets max length for fields, for one option.
+ * Set max length for fields, for one option.
  */
 
 void
@@ -731,7 +730,7 @@ fset_option_set_max_length_fields_option (struct t_fset_option *fset_option)
 }
 
 /*
- * Initializes max length for fields.
+ * Initialize max length for fields.
  */
 
 void
@@ -741,7 +740,7 @@ fset_option_init_max_length (struct t_fset_option_max_length *max_length)
 }
 
 /*
- * Sets max length for fields, for all options.
+ * Set max length for fields, for all options.
  */
 
 void
@@ -764,10 +763,9 @@ fset_option_set_max_length_fields_all (void)
 }
 
 /*
- * Allocates an fset option structure using a pointer to a
- * WeeChat/plugin option.
+ * Allocate an fset option structure using a pointer to a WeeChat/plugin option.
  *
- * Returns pointer to new fset option, NULL if error.
+ * Return pointer to new fset option, NULL if error.
  */
 
 struct t_fset_option *
@@ -802,10 +800,9 @@ fset_option_alloc (struct t_config_option *option)
 }
 
 /*
- * Allocates an fset option structure using a pointer to a
- * WeeChat/plugin option.
+ * Allocate an fset option structure using a pointer to a WeeChat/plugin option.
  *
- * Returns pointer to new fset option, NULL if the option does not match
+ * Return pointer to new fset option, NULL if the option does not match
  * filters or if error.
  */
 
@@ -839,7 +836,7 @@ fset_option_add (struct t_config_option *option)
 }
 
 /*
- * Compares two options to sort them by name.
+ * Compare two options to sort them by name.
  */
 
 int
@@ -882,7 +879,7 @@ fset_option_compare_options_cb (void *data, struct t_arraylist *arraylist,
 }
 
 /*
- * Frees an fset option.
+ * Free an fset option.
  */
 
 void
@@ -909,7 +906,7 @@ fset_option_free (struct t_fset_option *fset_option)
 }
 
 /*
- * Frees an fset option (arraylist callback).
+ * Free an fset option (arraylist callback).
  */
 
 void
@@ -927,7 +924,7 @@ fset_option_free_cb (void *data, struct t_arraylist *arraylist, void *pointer)
 }
 
 /*
- * Allocates and returns the arraylist to store options.
+ * Allocate and return the arraylist to store options.
  */
 
 struct t_arraylist *
@@ -939,7 +936,7 @@ fset_option_get_arraylist_options (void)
 }
 
 /*
- * Allocates and returns the structure to store max length of fields.
+ * Allocate and return the structure to store max length of fields.
  */
 
 struct t_fset_option_max_length *
@@ -955,7 +952,7 @@ fset_option_get_max_length (void)
 }
 
 /*
- * Gets all options to display in fset buffer.
+ * Get all options to display in fset buffer.
  */
 
 void
@@ -1053,7 +1050,7 @@ fset_option_get_options (void)
 }
 
 /*
- * Sets the filter.
+ * Set the filter.
  */
 
 void
@@ -1065,7 +1062,7 @@ fset_option_set_filter (const char *filter)
 }
 
 /*
- * Filters options.
+ * Filter options.
  */
 
 void
@@ -1083,7 +1080,7 @@ fset_option_filter_options (const char *filter)
 }
 
 /*
- * Toggles a boolean option.
+ * Toggle a boolean option.
  */
 
 void
@@ -1098,7 +1095,7 @@ fset_option_toggle_value (struct t_fset_option *fset_option,
 }
 
 /*
- * Adds a value to an integer/enum/color option.
+ * Add a value to an integer/enum/color option.
  */
 
 void
@@ -1122,7 +1119,7 @@ fset_option_add_value (struct t_fset_option *fset_option,
 }
 
 /*
- * Resets the value of an option.
+ * Reset the value of an option.
  */
 
 void
@@ -1139,7 +1136,7 @@ fset_option_reset_value (struct t_fset_option *fset_option,
 }
 
 /*
- * Unsets the value of an option.
+ * Unset the value of an option.
  */
 
 void
@@ -1156,7 +1153,7 @@ fset_option_unset_value (struct t_fset_option *fset_option,
 }
 
 /*
- * Sets the value of an option.
+ * Set the value of an option.
  *
  * If set_mode == -1, edit an empty value.
  * If set_mode == 0, edit the current value.
@@ -1212,7 +1209,7 @@ fset_option_set (struct t_fset_option *fset_option,
 }
 
 /*
- * Marks/unmarks an option.
+ * Mark/unmark an option.
  */
 
 void
@@ -1276,7 +1273,7 @@ fset_option_mark_options_matching_filter (const char *filter, int mark)
 }
 
 /*
- * Unmarks all options.
+ * Unmark all options.
  */
 
 void
@@ -1309,12 +1306,12 @@ fset_option_unmark_all (void)
 }
 
 /*
- * Exports options currently displayed in fset buffer.
+ * Export options currently displayed in fset buffer.
  *
  * If with_help == 1, the help is displayed above each option
  * and options are separated by an empty line.
  *
- * Returns:
+ * Return:
  *   1: export OK
  *   0: error
  */
@@ -1398,9 +1395,9 @@ fset_option_export (const char *filename, int with_help)
 }
 
 /*
- * Imports options from a file: all lines starting with "/" are executed.
+ * Import options from a file: all lines starting with "/" are executed.
  *
- * Returns:
+ * Return:
  *     -2: not enough memory
  *     -1: file not found
  *   >= 0: number of commands executed in file
@@ -1462,7 +1459,7 @@ fset_option_import (const char *filename)
 }
 
 /*
- * Refreshes the fset buffer after the change of an option.
+ * Refresh the fset buffer after the change of an option.
  */
 
 void
@@ -1671,7 +1668,7 @@ fset_option_config_cb (const void *pointer,
 }
 
 /*
- * Returns hdata for option.
+ * Return hdata for option.
  */
 
 struct t_hdata *
@@ -1707,9 +1704,9 @@ fset_option_hdata_option_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds a fset option in an infolist.
+ * Add a fset option in an infolist.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -1770,7 +1767,7 @@ fset_option_add_to_infolist (struct t_infolist *infolist,
 }
 
 /*
- * Prints fset options in WeeChat log file (usually for crash dump).
+ * Print fset options in WeeChat log file (usually for crash dump).
  */
 
 void
@@ -1809,9 +1806,9 @@ fset_option_print_log (void)
 }
 
 /*
- * Initializes fset list of options.
+ * Initialize fset list of options.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -1889,7 +1886,7 @@ fset_option_init (void)
 }
 
 /*
- * Ends fset list of options.
+ * End fset list of options.
  */
 
 void

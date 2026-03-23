@@ -57,7 +57,7 @@ TEST_GROUP(GuiColor)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_color_get_custom
  */
 
@@ -276,7 +276,7 @@ TEST(GuiColor, GetCustom)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_color_code_size
  */
 
@@ -373,7 +373,7 @@ TEST(GuiColor, CodeSize)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_color_decode
  */
 
@@ -562,7 +562,7 @@ TEST(GuiColor, Decode)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_color_decode_ansi
  */
 
@@ -734,7 +734,7 @@ TEST(GuiColor, DecodeAnsi)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_color_encode_ansi
  */
 
@@ -910,7 +910,7 @@ TEST(GuiColor, EncodeAnsi)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_color_emphasize
  */
 

@@ -44,7 +44,7 @@ int old_line_number_current_buffer[BUFLIST_BAR_NUM_ITEMS] =
 
 
 /*
- * Returns the bar item name with an index.
+ * Return the bar item name with an index.
  */
 
 const char *
@@ -67,7 +67,7 @@ buflist_bar_item_get_name (int index)
 }
 
 /*
- * Returns the bar item index with an item name, -1 if not found.
+ * Return the bar item index with an item name, -1 if not found.
  */
 
 int
@@ -90,7 +90,7 @@ buflist_bar_item_get_index (const char *item_name)
 }
 
 /*
- * Returns the bar item index with a bar item pointer, -1 if not found.
+ * Return the bar item index with a bar item pointer, -1 if not found.
  */
 
 int
@@ -108,7 +108,7 @@ buflist_bar_item_get_index_with_pointer (struct t_gui_bar_item *item)
 }
 
 /*
- * Updates buflist bar item if buflist is enabled (or if force argument is 1).
+ * Update buflist bar item if buflist is enabled (or if force argument is 1).
  *
  * If index == -1, all bar items (or all bar items used) are refreshed,
  * otherwise only this bar item is refreshed.
@@ -143,12 +143,12 @@ buflist_bar_item_update (int index, int force)
 }
 
 /*
- * Checks if the bar can be scrolled, the bar must have:
+ * Check if the bar can be scrolled, the bar must have:
  * - a position "left" or "right"
  * - a filling "vertical"
  * - the item_name as first item.
  *
- * Returns:
+ * Return:
  *   1: bar can be scrolled
  *   0: bar must not be scrolled
  */
@@ -207,7 +207,7 @@ buflist_bar_item_bar_can_scroll (struct t_gui_bar *bar, const char *item_name)
 }
 
 /*
- * Auto-scrolls a bar window displaying buflist item.
+ * Auto-scroll a bar window displaying buflist item.
  */
 
 void
@@ -249,7 +249,7 @@ buflist_bar_item_auto_scroll_bar_window (struct t_gui_bar_window *bar_window,
 }
 
 /*
- * Auto-scrolls all bars with a given buflist item as first item.
+ * Auto-scroll all bars with a given buflist item as first item.
  */
 
 void
@@ -300,7 +300,7 @@ buflist_bar_item_auto_scroll (const char *item_name, int line_number)
 }
 
 /*
- * Returns the content of the bar item.
+ * Return the content of the bar item.
  */
 
 char *
@@ -713,9 +713,9 @@ end:
 }
 
 /*
- * Initializes buflist bar items.
+ * Initialize buflist bar items.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -776,7 +776,7 @@ buflist_bar_item_init (void)
 }
 
 /*
- * Ends buflist bar items.
+ * End buflist bar items.
  */
 
 void

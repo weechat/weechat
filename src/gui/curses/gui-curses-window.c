@@ -76,7 +76,7 @@ int gui_window_saved_style_index = 0;  /* index in list of savec styles     */
 
 
 /*
- * Gets screen width (terminal width in chars for Curses).
+ * Get screen width (terminal width in chars for Curses).
  */
 
 int
@@ -86,7 +86,7 @@ gui_window_get_width (void)
 }
 
 /*
- * Gets screen height (terminal height in chars for Curses).
+ * Get screen height (terminal height in chars for Curses).
  */
 
 int
@@ -96,7 +96,7 @@ gui_window_get_height (void)
 }
 
 /*
- * Reads terminal size.
+ * Read terminal size.
  */
 
 void
@@ -120,9 +120,9 @@ gui_window_read_terminal_size (void)
 }
 
 /*
- * Initializes Curses windows.
+ * Initialize Curses windows.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -145,7 +145,7 @@ gui_window_objects_init (struct t_gui_window *window)
 }
 
 /*
- * Frees Curses windows for a window.
+ * Free Curses windows for a window.
  */
 
 void
@@ -175,7 +175,7 @@ gui_window_objects_free (struct t_gui_window *window, int free_separators)
 }
 
 /*
- * Clears a Curses window.
+ * Clear a Curses window.
  */
 
 void
@@ -210,7 +210,7 @@ gui_window_clear (WINDOW *window, int fg, int bg)
 }
 
 /*
- * Clears until end of line with current background.
+ * Clear until end of line with current background.
  */
 
 void
@@ -230,7 +230,7 @@ gui_window_clrtoeol (WINDOW *window)
 }
 
 /*
- * Saves current style.
+ * Save current style.
  */
 
 void
@@ -259,7 +259,7 @@ gui_window_save_style (WINDOW *window)
 }
 
 /*
- * Restores style values.
+ * Restore style values.
  */
 
 void
@@ -290,7 +290,7 @@ gui_window_restore_style (WINDOW *window)
 }
 
 /*
- * Resets style (color and attr) with a WeeChat color for a window.
+ * Reset style (color and attr) with a WeeChat color for a window.
  */
 
 void
@@ -305,7 +305,7 @@ gui_window_reset_style (WINDOW *window, int weechat_color)
 }
 
 /*
- * Resets color with a WeeChat color for a window.
+ * Reset color with a WeeChat color for a window.
  */
 
 void
@@ -319,7 +319,7 @@ gui_window_reset_color (WINDOW *window, int weechat_color)
 }
 
 /*
- * Sets style for color.
+ * Set style for color.
  */
 
 void
@@ -330,7 +330,7 @@ gui_window_set_color_style (WINDOW *window, int style)
 }
 
 /*
- * Removes style for color.
+ * Remove style for color.
  */
 
 void
@@ -341,7 +341,7 @@ gui_window_remove_color_style (WINDOW *window, int style)
 }
 
 /*
- * Sets color for a window.
+ * Set color for a window.
  */
 
 void
@@ -354,7 +354,7 @@ gui_window_set_color (WINDOW *window, int fg, int bg)
 }
 
 /*
- * Sets WeeChat color for window.
+ * Set WeeChat color for window.
  */
 
 void
@@ -387,7 +387,7 @@ gui_window_set_weechat_color (WINDOW *window, int num_color)
 }
 
 /*
- * Sets a custom color for a window (foreground only).
+ * Set a custom color for a window (foreground only).
  */
 
 void
@@ -454,7 +454,7 @@ gui_window_set_custom_color_fg (WINDOW *window, int fg)
 }
 
 /*
- * Sets a custom color for a window (background only).
+ * Set a custom color for a window (background only).
  */
 
 void
@@ -483,7 +483,7 @@ gui_window_set_custom_color_bg (WINDOW *window, int bg)
 }
 
 /*
- * Sets a custom color for a window (foreground and background).
+ * Set a custom color for a window (foreground and background).
  */
 
 void
@@ -556,7 +556,7 @@ gui_window_set_custom_color_fg_bg (WINDOW *window, int fg, int bg,
 }
 
 /*
- * Sets a custom color for a window (pair number).
+ * Set a custom color for a window (pair number).
  */
 
 void
@@ -570,7 +570,7 @@ gui_window_set_custom_color_pair (WINDOW *window, int pair)
 }
 
 /*
- * Toggles text emphasis.
+ * Toggle text emphasis.
  */
 
 void
@@ -580,7 +580,7 @@ gui_window_toggle_emphasis (void)
 }
 
 /*
- * Emphasizes some chars already displayed in a window, either using a color
+ * Emphasize some chars already displayed in a window, either using a color
  * (from config options), or by doing an exclusive or (XOR) with attributes
  * (like reverse video).
  *
@@ -628,10 +628,10 @@ gui_window_emphasize (WINDOW *window, int x, int y, int count)
 }
 
 /*
- * Applies foreground color code in string and moves string pointer after color
+ * Apply foreground color code in string and moves string pointer after color
  * in string.
  *
- * If window is NULL, no color is applied but string pointer is moved anyway.
+ * If window is NULL, do not apply colors but still move string pointer.
  */
 
 void
@@ -700,10 +700,10 @@ gui_window_string_apply_color_fg (unsigned char **string, WINDOW *window)
 }
 
 /*
- * Applies background color code in string and moves string pointer after color
+ * Apply background color code in string and moves string pointer after color
  * in string.
  *
- * If window is NULL, no color is applied but string pointer is moved anyway.
+ * If window is NULL, do not apply colors but still move string pointer.
  */
 
 void
@@ -759,10 +759,10 @@ gui_window_string_apply_color_bg (unsigned char **string, WINDOW *window)
 }
 
 /*
- * Applies foreground + background color code in string and moves string pointer
+ * Apply foreground + background color code in string and moves string pointer
  * after color in string.
  *
- * If window is NULL, no color is applied but string pointer is moved anyway.
+ * If window is NULL, do not apply colors but still move string pointer.
  */
 
 void
@@ -883,10 +883,10 @@ gui_window_string_apply_color_fg_bg (unsigned char **string, WINDOW *window)
 }
 
 /*
- * Applies pair color code in string and moves string pointer after color in
+ * Apply pair color code in string and moves string pointer after color in
  * string.
  *
- * If window is NULL, no color is applied but string pointer is moved anyway.
+ * If window is NULL, do not apply colors but still move string pointer.
  */
 
 void
@@ -920,10 +920,10 @@ gui_window_string_apply_color_pair (unsigned char **string, WINDOW *window)
 }
 
 /*
- * Applies weechat color code in string and moves string pointer after color in
+ * Apply weechat color code in string and moves string pointer after color in
  * string.
  *
- * If window is NULL, no color is applied but string pointer is moved anyway.
+ * If window is NULL, do not apply colors but still move string pointer.
  */
 
 void
@@ -957,10 +957,10 @@ gui_window_string_apply_color_weechat (unsigned char **string, WINDOW *window)
 }
 
 /*
- * Applies "set attribute" color code in string and moves string pointer after
+ * Apply "set attribute" color code in string and moves string pointer after
  * color in string.
  *
- * If window is NULL, no color is applied but string pointer is moved anyway.
+ * If window is NULL, do not apply colors but still move string pointer.
  */
 
 void
@@ -1008,10 +1008,10 @@ gui_window_string_apply_color_set_attr (unsigned char **string, WINDOW *window)
 }
 
 /*
- * Applies "remove attribute" color code in string and moves string pointer
+ * Apply "remove attribute" color code in string and moves string pointer
  * after color in string.
  *
- * If window is NULL, no color is applied but string pointer is moved anyway.
+ * If window is NULL, do not apply colors but still move string pointer.
  */
 
 void
@@ -1059,7 +1059,7 @@ gui_window_string_apply_color_remove_attr (unsigned char **string, WINDOW *windo
 }
 
 /*
- * Calculates position and size for a buffer and subwindows.
+ * Calculate position and size for a buffer and subwindows.
  */
 
 void
@@ -1100,10 +1100,10 @@ gui_window_calculate_pos_size (struct t_gui_window *window)
 }
 
 /*
- * Draws a horizontal line (like ncurses function "mvwhline", but UTF-8 chars
+ * Draw a horizontal line (like ncurses function "mvwhline", but UTF-8 chars
  * are supported).
  *
- * If "string" is NULL or empty, the ACS_HLINE char is used (plain line).
+ * If "string" is NULL or empty, use the ACS_HLINE char (plain line).
  * If "string" is not NULL and not empty, its width on screen must be exactly
  * one char.
  */
@@ -1127,10 +1127,10 @@ gui_window_hline (WINDOW *window, int x, int y, int width, const char *string)
 }
 
 /*
- * Draws a vertical line (like ncurses function "mvwvline", but UTF-8 chars
+ * Draw a vertical line (like ncurses function "mvwvline", but UTF-8 chars
  * are supported).
  *
- * If "string" is NULL or empty, the ACS_VLINE char is used (plain line).
+ * If "string" is NULL or empty, use the ACS_VLINE char (plain line).
  * If "string" is not NULL and not empty, its width on screen must be exactly
  * one char.
  */
@@ -1154,7 +1154,7 @@ gui_window_vline (WINDOW *window, int x, int y, int height, const char *string)
 }
 
 /*
- * Draws window separators.
+ * Draw window separators.
  */
 
 void
@@ -1246,7 +1246,7 @@ gui_window_draw_separators (struct t_gui_window *window)
 }
 
 /*
- * Switches to another buffer in a window.
+ * Switch to another buffer in a window.
  */
 
 void
@@ -1381,7 +1381,7 @@ gui_window_switch_to_buffer (struct t_gui_window *window,
 }
 
 /*
- * Switches to another window.
+ * Switch to another window.
  */
 
 void
@@ -1420,7 +1420,7 @@ gui_window_switch (struct t_gui_window *window)
 }
 
 /*
- * Displays previous page on buffer.
+ * Display previous page on buffer.
  */
 
 void
@@ -1471,7 +1471,7 @@ gui_window_page_up (struct t_gui_window *window)
 }
 
 /*
- * Displays next page on buffer.
+ * Display next page on buffer.
  */
 
 void
@@ -1530,7 +1530,7 @@ gui_window_page_down (struct t_gui_window *window)
 }
 
 /*
- * Displays previous few lines in buffer.
+ * Display previous few lines in buffer.
  */
 
 void
@@ -1575,7 +1575,7 @@ gui_window_scroll_up (struct t_gui_window *window)
 }
 
 /*
- * Displays next few lines in buffer.
+ * Display next few lines in buffer.
  */
 
 void
@@ -1628,7 +1628,7 @@ gui_window_scroll_down (struct t_gui_window *window)
 }
 
 /*
- * Scrolls to top of buffer.
+ * Scroll to top of buffer.
  */
 
 void
@@ -1662,7 +1662,7 @@ gui_window_scroll_top (struct t_gui_window *window)
 }
 
 /*
- * Scrolls to bottom of buffer.
+ * Scroll to bottom of buffer.
  */
 
 void
@@ -1704,7 +1704,7 @@ gui_window_scroll_bottom (struct t_gui_window *window)
 }
 
 /*
- * Scrolls beyond the end of buffer (so that all lines become "hidden" above the
+ * Scroll beyond the end of buffer (so that all lines become "hidden" above the
  * top of window).
  */
 
@@ -1724,11 +1724,11 @@ gui_window_scroll_beyond_end (struct t_gui_window *window)
 }
 
 /*
- * Auto-resizes all windows, according to % of global size.
+ * Auto-resize all windows, according to % of global size.
  *
  * This function is called after a terminal resize.
  *
- * Returns:
+ * Return:
  *    0: OK
  *   -1: all windows must be merged (not enough space)
  */
@@ -1806,7 +1806,7 @@ gui_window_auto_resize (struct t_gui_window_tree *tree,
 }
 
 /*
- * Auto-resizes and refreshes all windows.
+ * Auto-resize and refreshes all windows.
  */
 
 void
@@ -1876,9 +1876,9 @@ gui_window_refresh_windows (void)
 }
 
 /*
- * Horizontally splits a window.
+ * Split a window horizontally.
  *
- * Returns pointer to new window, NULL if error.
+ * Return pointer to new window, NULL if error.
  */
 
 struct t_gui_window *
@@ -1929,9 +1929,9 @@ gui_window_split_horizontal (struct t_gui_window *window, int percentage)
 }
 
 /*
- * Vertically splits a window.
+ * Split a window vertically.
  *
- * Returns pointer to new window, NULL if error.
+ * Return pointer to new window, NULL if error.
  */
 
 struct t_gui_window *
@@ -1981,7 +1981,7 @@ gui_window_split_vertical (struct t_gui_window *window, int percentage)
 }
 
 /*
- * Resizes a window.
+ * Resize a window.
  */
 
 void
@@ -2018,7 +2018,7 @@ gui_window_resize (struct t_gui_window_tree *tree, int percentage)
 }
 
 /*
- * Resizes window using delta percentage.
+ * Resize a window using delta percentage.
  */
 
 void
@@ -2059,9 +2059,9 @@ gui_window_resize_delta (struct t_gui_window_tree *tree, int delta_percentage)
 }
 
 /*
- * Merges window with its sister.
+ * Merge a window with its sister.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -2112,7 +2112,7 @@ gui_window_merge (struct t_gui_window *window)
 }
 
 /*
- * Merges all windows into only one.
+ * Merge all windows into only one.
  */
 
 void
@@ -2154,9 +2154,9 @@ gui_window_merge_all (struct t_gui_window *window)
 }
 
 /*
- * Closes a window.
+ * Close a window.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -2182,7 +2182,7 @@ gui_window_close (struct t_gui_window *window)
 }
 
 /*
- * Returns a code about position of 2 windows:
+ * Return a code about position of 2 windows:
  *   0 = they're not side by side
  *   1 = side by side: win2 is over the win1
  *   2 = side by side: win2 on the right
@@ -2245,7 +2245,7 @@ gui_window_side_by_side (struct t_gui_window *win1, struct t_gui_window *win2)
 }
 
 /*
- * Searches and switches to a window over current window.
+ * Search and switch to a window over current window.
  */
 
 void
@@ -2269,7 +2269,7 @@ gui_window_switch_up (struct t_gui_window *window)
 }
 
 /*
- * Searches and switches to a window below current window.
+ * Search and switch to a window below current window.
  */
 
 void
@@ -2293,7 +2293,7 @@ gui_window_switch_down (struct t_gui_window *window)
 }
 
 /*
- * Searches and switches to a window on the left of current window.
+ * Search and switch to a window on the left of current window.
  */
 
 void
@@ -2317,7 +2317,7 @@ gui_window_switch_left (struct t_gui_window *window)
 }
 
 /*
- * Searches and switches to a window on the right of current window.
+ * Search and switch to a window on the right of current window.
  */
 
 void
@@ -2341,7 +2341,7 @@ gui_window_switch_right (struct t_gui_window *window)
 }
 
 /*
- * Counts number of windows in a tree with a given split, for balancing windows.
+ * Count number of windows in a tree with a given split, for balancing windows.
  */
 
 int
@@ -2367,9 +2367,9 @@ gui_window_balance_count (struct t_gui_window_tree *tree, int split_horizontal)
 }
 
 /*
- * Balances windows (set all splits to 50%).
+ * Balance windows (set all splits to 50%).
  *
- * Returns:
+ * Return:
  *   1: some windows have been balanced
  *   0: nothing was changed
  */
@@ -2407,7 +2407,7 @@ gui_window_balance (struct t_gui_window_tree *tree)
 }
 
 /*
- * Swaps buffers of two windows.
+ * Swap buffers of two windows.
  *
  * Argument "direction" can be:
  *   0 = auto (swap with sister)
@@ -2510,7 +2510,7 @@ gui_window_bare_display_timer_cb (const void *pointer, void *data,
 }
 
 /*
- * Toggles bare display.
+ * Toggle bare display.
  */
 
 void
@@ -2562,7 +2562,7 @@ gui_window_bare_display_toggle (const char *delay)
 }
 
 /*
- * Sets terminal title.
+ * Set terminal title.
  *
  * Note: the content of "title" (if not NULL) is evaluated, so variables like
  * "${info:version}" can be used inside.
@@ -2635,7 +2635,7 @@ gui_window_set_title (const char *title)
 }
 
 /*
- * Copies text to clipboard (sent to terminal).
+ * Copy text to clipboard (sent to terminal).
  */
 
 void
@@ -2660,7 +2660,7 @@ gui_window_send_clipboard (const char *storage_unit, const char *text)
 }
 
 /*
- * Enables/disables bracketed paste mode.
+ * Toggle bracketed paste mode.
  */
 
 void
@@ -2683,7 +2683,7 @@ gui_window_set_bracketed_paste_mode (int enable)
 }
 
 /*
- * Moves cursor on screen (for cursor mode).
+ * Move cursor on screen (for cursor mode).
  */
 
 void
@@ -2697,7 +2697,7 @@ gui_window_move_cursor (void)
 }
 
 /*
- * Displays some infos about terminal and colors.
+ * Display some infos about terminal and colors.
  */
 
 void
@@ -2710,8 +2710,7 @@ gui_window_term_display_infos (void)
 }
 
 /*
- * Prints window Curses objects infos in WeeChat log file (usually for crash
- * dump).
+ * Print window Curses objects infos in WeeChat log file (usually for crash dump).
  */
 
 void

@@ -37,9 +37,9 @@ struct t_irc_ignore *last_irc_ignore = NULL; /* last ignore in list         */
 
 
 /*
- * Checks if an ignore pointer is valid.
+ * Check if an ignore pointer is valid.
  *
- * Returns:
+ * Return:
  *   1: ignore exists
  *   0: ignore does not exist
  */
@@ -64,9 +64,9 @@ irc_ignore_valid (struct t_irc_ignore *ignore)
 }
 
 /*
- * Searches for an ignore.
+ * Search for an ignore.
  *
- * Returns pointer to ignore found, NULL if not found.
+ * Return pointer to ignore found, NULL if not found.
  */
 
 struct t_irc_ignore *
@@ -99,9 +99,9 @@ irc_ignore_search (const char *mask, const char *server, const char *channel)
 }
 
 /*
- * Searches for an ignore by number (first is #1).
+ * Search for an ignore by number (first is #1).
  *
- * Returns pointer to ignore found, NULL if not found.
+ * Return pointer to ignore found, NULL if not found.
  */
 
 struct t_irc_ignore *
@@ -121,9 +121,9 @@ irc_ignore_search_by_number (int number)
 }
 
 /*
- * Adds a new ignore.
+ * Add a new ignore.
  *
- * Returns pointer to new ignore, NULL if error.
+ * Return pointer to new ignore, NULL if error.
  */
 
 struct t_irc_ignore *
@@ -169,9 +169,9 @@ irc_ignore_new (const char *mask, const char *server, const char *channel)
 }
 
 /*
- * Checks if an ignore matches a server name.
+ * Check if an ignore matches a server name.
  *
- * Returns:
+ * Return:
  *   1: ignore matches the server name
  *   0: ignore does not match the server name
  */
@@ -186,10 +186,10 @@ irc_ignore_check_server (struct t_irc_ignore *ignore, const char *server)
 }
 
 /*
- * Checks if an ignore matches a channel name (or a nick if the channel name
+ * Check if an ignore matches a channel name (or a nick if the channel name
  * is not a valid channel name).
  *
- * Returns:
+ * Return:
  *   1: ignore matches the channel name
  *   0: ignore does not match the channel name
  */
@@ -212,9 +212,9 @@ irc_ignore_check_channel (struct t_irc_ignore *ignore,
 }
 
 /*
- * Checks if an ignore matches a host.
+ * Check if an ignore matches a host.
  *
- * Returns:
+ * Return:
  *   1: ignore matches the host
  *   0: ignore does not match the host
  */
@@ -248,9 +248,9 @@ irc_ignore_check_host (struct t_irc_ignore *ignore,
 }
 
 /*
- * Checks if a message (from an IRC server) should be ignored or not.
+ * Check if a message (from an IRC server) should be ignored or not.
  *
- * Returns:
+ * Return:
  *   1: message must be ignored
  *   0: message must not be ignored
  */
@@ -289,7 +289,7 @@ irc_ignore_check (struct t_irc_server *server, const char *channel,
 }
 
 /*
- * Removes an ignore.
+ * Remove an ignore.
  */
 
 void
@@ -337,7 +337,7 @@ irc_ignore_free (struct t_irc_ignore *ignore)
 }
 
 /*
- * Removes all ignores.
+ * Remove all ignores.
  */
 
 void
@@ -350,7 +350,7 @@ irc_ignore_free_all (void)
 }
 
 /*
- * Returns hdata for ignore.
+ * Return hdata for ignore.
  */
 
 struct t_hdata *
@@ -381,9 +381,9 @@ irc_ignore_hdata_ignore_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds an ignore in an infolist.
+ * Add an ignore in an infolist.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -412,7 +412,7 @@ irc_ignore_add_to_infolist (struct t_infolist *infolist,
 }
 
 /*
- * Prints ignore infos in WeeChat log file (usually for crash dump).
+ * Print ignore infos in WeeChat log file (usually for crash dump).
  */
 
 void

@@ -164,7 +164,7 @@ alias_config_completion_delete_cb (const void *pointer, void *data,
 }
 
 /*
- * Reloads alias configuration file.
+ * Reload alias configuration file.
  */
 
 int
@@ -183,7 +183,7 @@ alias_config_reload (const void *pointer, void *data,
 }
 
 /*
- * Writes default aliases in configuration file in section "cmd" (command).
+ * Write default aliases in configuration file in section "cmd" (command).
  */
 
 int
@@ -212,7 +212,7 @@ alias_config_cmd_write_default_cb (const void *pointer, void *data,
 }
 
 /*
- * Creates a new option in section "cmd" (command).
+ * Create a new option in section "cmd" (command).
  */
 
 void
@@ -269,7 +269,7 @@ alias_config_cmd_create_option_cb (const void *pointer, void *data,
 }
 
 /*
- * Writes default completions in configuration file in section "completion".
+ * Write default completions in configuration file in section "completion".
  */
 
 int
@@ -301,7 +301,7 @@ alias_config_completion_write_default_cb (const void *pointer, void *data,
 }
 
 /*
- * Creates a new option in section "completion".
+ * Create a new option in section "completion".
  */
 
 void
@@ -356,7 +356,7 @@ alias_config_completion_create_option_cb (const void *pointer, void *data,
 }
 
 /*
- * Updates options in configuration file while reading the file.
+ * Update options in configuration file while reading the file.
  */
 
 struct t_hashtable *
@@ -421,9 +421,9 @@ alias_config_update_cb (const void *pointer, void *data,
 }
 
 /*
- * Initializes alias configuration file.
+ * Initialize alias configuration file.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -468,7 +468,7 @@ alias_config_init (void)
 }
 
 /*
- * Reads alias configuration file.
+ * Read alias configuration file.
  */
 
 int
@@ -478,7 +478,7 @@ alias_config_read (void)
 }
 
 /*
- * Writes alias configuration file.
+ * Write alias configuration file.
  */
 
 int

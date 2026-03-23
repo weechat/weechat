@@ -59,7 +59,7 @@
 
 
 /*
- * Sends mode change for many nicks on a channel.
+ * Send mode change for many nicks on a channel.
  *
  * Argument "set" is "+" or "-", mode can be "o", "h", "v", or any other mode
  * supported by server.
@@ -223,7 +223,7 @@ irc_command_mode_nicks (struct t_irc_server *server,
 }
 
 /*
- * Returns arguments with ranges of numbers converted to individual numbers.
+ * Return arguments with ranges of numbers converted to individual numbers.
  * Arguments that are not range (format: "N1-N2") are kept as-is.
  *
  * For example: ["2" "5-8" "abc"] -> ["2" "5" "6" "7" "8" "abc"]
@@ -294,7 +294,7 @@ irc_command_mode_masks_convert_ranges (char **argv, int arg_start)
 }
 
 /*
- * Sends mode change for many masks on a channel.
+ * Send mode change for many masks on a channel.
  *
  * Argument "set" is "+" or "-", mode can be "b", "q", or any other mode
  * supported by server.
@@ -431,7 +431,7 @@ irc_command_mode_masks (struct t_irc_server *server,
 }
 
 /*
- * Sends a CTCP ACTION to a channel for a single message
+ * Send a CTCP ACTION to a channel for a single message
  * (internal function called by irc_command_me_channel).
  */
 
@@ -478,7 +478,7 @@ irc_command_me_channel_message (struct t_irc_server *server,
 }
 
 /*
- * Sends a CTCP ACTION to a channel.
+ * Send a CTCP ACTION to a channel.
  */
 
 void
@@ -508,7 +508,7 @@ irc_command_me_channel (struct t_irc_server *server,
 }
 
 /*
- * Sends a CTCP ACTION to all channels of a server.
+ * Send a CTCP ACTION to all channels of a server.
  */
 
 void
@@ -525,7 +525,7 @@ irc_command_me_all_channels (struct t_irc_server *server, const char *arguments)
 }
 
 /*
- * Callback for command "/action": sends an action message to a nick or channel.
+ * Callback for command "/action": send an action message to a nick or channel.
  */
 
 IRC_COMMAND_CALLBACK(action)
@@ -594,7 +594,7 @@ IRC_COMMAND_CALLBACK(action)
 }
 
 /*
- * Callback for command "/admin": finds information about the administrator of
+ * Callback for command "/admin": find information about the administrator of
  * the server.
  */
 
@@ -623,7 +623,7 @@ IRC_COMMAND_CALLBACK(admin)
 }
 
 /*
- * Executes a command on a list of IRC buffers.
+ * Execute a command on a list of IRC buffers.
  */
 
 void
@@ -687,7 +687,7 @@ irc_command_exec_buffers (struct t_weelist *list_buffers,
 }
 
 /*
- * Executes a command on all channels (or queries).
+ * Execute a command on all channels (or queries).
  *
  * If server is NULL, executes command on all channels of all connected servers.
  * Special variables $server/$channel/$nick are replaced in command.
@@ -785,7 +785,7 @@ irc_command_exec_all_channels (struct t_irc_server *server,
 }
 
 /*
- * Callback for command "/allchan": executes a command on all channels of all
+ * Callback for command "/allchan": execute a command on all channels of all
  * connected servers.
  */
 
@@ -870,7 +870,7 @@ IRC_COMMAND_CALLBACK(allchan)
 }
 
 /*
- * Callback for command "/allpv": executes a command on all privates of all
+ * Callback for command "/allpv": execute a command on all privates of all
  * connected servers.
  */
 
@@ -941,7 +941,7 @@ IRC_COMMAND_CALLBACK(allpv)
 }
 
 /*
- * Executes a command on all connected channels.
+ * Execute a command on all connected channels.
  *
  * Special variables $server/$channel/$nick are replaced in command.
  */
@@ -1010,7 +1010,7 @@ irc_command_exec_all_servers (int inclusive, const char *str_servers, const char
 }
 
 /*
- * Callback for command "/allserv": executes a command on all connected servers.
+ * Callback for command "/allserv": execute a command on all connected servers.
  */
 
 IRC_COMMAND_CALLBACK(allserv)
@@ -1057,7 +1057,7 @@ IRC_COMMAND_CALLBACK(allserv)
 }
 
 /*
- * Callback for command "/auth": authenticates with SASL.
+ * Callback for command "/auth": authenticate with SASL.
  */
 
 IRC_COMMAND_CALLBACK(auth)
@@ -1311,7 +1311,7 @@ end:
 }
 
 /*
- * Displays away on all channels of all servers.
+ * Display away on all channels of all servers.
  */
 
 void
@@ -1342,7 +1342,7 @@ irc_command_display_away (struct t_irc_server *server, const char *string1,
 }
 
 /*
- * Toggles away status for one server.
+ * Toggle away status for one server.
  */
 
 void
@@ -1479,7 +1479,7 @@ irc_command_away_server (struct t_irc_server *server, const char *arguments,
 }
 
 /*
- * Callback for command "/away": toggles away status.
+ * Callback for command "/away": toggle away status.
  */
 
 IRC_COMMAND_CALLBACK(away)
@@ -1550,7 +1550,7 @@ irc_command_run_away (const void *pointer, void *data,
 }
 
 /*
- * Sends a ban/unban command to the server, as "MODE [+/-]b nick".
+ * Send a ban/unban command to the server, as "MODE [+/-]b nick".
  *
  * Argument "mode" can be "+b" for ban or "-b" for unban.
  */
@@ -1588,7 +1588,7 @@ irc_command_send_ban (struct t_irc_server *server,
 }
 
 /*
- * Callback for command "/ban": bans nicks or hosts.
+ * Callback for command "/ban": ban nicks or hosts.
  */
 
 IRC_COMMAND_CALLBACK(ban)
@@ -1721,9 +1721,9 @@ IRC_COMMAND_CALLBACK(cap)
 }
 
 /*
- * Connects to one server.
+ * Connect to one server.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -1768,7 +1768,7 @@ irc_command_connect_one_server (struct t_irc_server *server,
 }
 
 /*
- * Callback for command "/connect": connects to server(s).
+ * Callback for command "/connect": connect to server(s).
  */
 
 IRC_COMMAND_CALLBACK(connect)
@@ -1945,7 +1945,7 @@ IRC_COMMAND_CALLBACK(connect)
 }
 
 /*
- * Callback for command "/ctcp": sends a CTCP message.
+ * Callback for command "/ctcp": send a CTCP message.
  */
 
 IRC_COMMAND_CALLBACK(ctcp)
@@ -2055,7 +2055,7 @@ IRC_COMMAND_CALLBACK(ctcp)
 }
 
 /*
- * Callback for command "/cycle": leaves and rejoins a channel.
+ * Callback for command "/cycle": leave and rejoin a channel.
  */
 
 IRC_COMMAND_CALLBACK(cycle)
@@ -2263,7 +2263,7 @@ end:
 }
 
 /*
- * Callback for command "/dehalfop": removes half operator privileges from
+ * Callback for command "/dehalfop": remove half operator privileges from
  * nickname(s).
  */
 
@@ -2303,7 +2303,7 @@ IRC_COMMAND_CALLBACK(dehalfop)
 }
 
 /*
- * Callback for command "/deop": removes operator privileges from nickname(s).
+ * Callback for command "/deop": remove operator privileges from nickname(s).
  */
 
 IRC_COMMAND_CALLBACK(deop)
@@ -2342,7 +2342,7 @@ IRC_COMMAND_CALLBACK(deop)
 }
 
 /*
- * Callback for command "/devoice": removes voice from nickname(s).
+ * Callback for command "/devoice": remove voice from nickname(s).
  */
 
 IRC_COMMAND_CALLBACK(devoice)
@@ -2381,7 +2381,7 @@ IRC_COMMAND_CALLBACK(devoice)
 }
 
 /*
- * Callback for command "/die": shutdowns the server.
+ * Callback for command "/die": shut down the server.
  */
 
 IRC_COMMAND_CALLBACK(die)
@@ -2409,7 +2409,7 @@ IRC_COMMAND_CALLBACK(die)
 }
 
 /*
- * Sends QUIT to a server.
+ * Send QUIT to a server.
  */
 
 void
@@ -2441,9 +2441,9 @@ irc_command_quit_server (struct t_irc_server *server, const char *arguments)
 }
 
 /*
- * Disconnects from a server.
+ * Disconnect from a server.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -2482,7 +2482,7 @@ irc_command_disconnect_one_server (struct t_irc_server *server,
 }
 
 /*
- * Callback for command "/disconnect": disconnects from server(s).
+ * Callback for command "/disconnect": disconnect from server(s).
  */
 
 IRC_COMMAND_CALLBACK(disconnect)
@@ -2556,7 +2556,7 @@ IRC_COMMAND_CALLBACK(disconnect)
 }
 
 /*
- * Callback for command "/halfop": gives half operator privileges to
+ * Callback for command "/halfop": give half operator privileges to
  * nickname(s).
  */
 
@@ -2596,7 +2596,7 @@ IRC_COMMAND_CALLBACK(halfop)
 }
 
 /*
- * Displays an ignore.
+ * Display an ignore.
  */
 
 void
@@ -2616,7 +2616,7 @@ irc_command_ignore_display (struct t_irc_ignore *ignore)
 }
 
 /*
- * Callback for command "/ignore": adds or removes ignore.
+ * Callback for command "/ignore": add or remove ignore.
  */
 
 IRC_COMMAND_CALLBACK(ignore)
@@ -2804,7 +2804,7 @@ IRC_COMMAND_CALLBACK(ignore)
 }
 
 /*
- * Callback for command "/info": gets information describing the server.
+ * Callback for command "/info": get information describing the server.
  */
 
 IRC_COMMAND_CALLBACK(info)
@@ -2832,7 +2832,7 @@ IRC_COMMAND_CALLBACK(info)
 }
 
 /*
- * Callback for command "/invite": invites a nick on a channel.
+ * Callback for command "/invite": invite a nick on a channel.
  */
 
 IRC_COMMAND_CALLBACK(invite)
@@ -2896,7 +2896,7 @@ error:
 }
 
 /*
- * Callback for command "/ison": checks if a nickname is currently on IRC.
+ * Callback for command "/ison": check if a nickname is currently on IRC.
  */
 
 IRC_COMMAND_CALLBACK(ison)
@@ -2918,7 +2918,7 @@ IRC_COMMAND_CALLBACK(ison)
 }
 
 /*
- * Sends JOIN command to a server.
+ * Send JOIN command to a server.
  */
 
 void
@@ -3073,7 +3073,7 @@ irc_command_join_server (struct t_irc_server *server, const char *arguments,
 }
 
 /*
- * Callback for command "/join": joins a new channel.
+ * Callback for command "/join": join a new channel.
  */
 
 IRC_COMMAND_CALLBACK(join)
@@ -3162,7 +3162,7 @@ IRC_COMMAND_CALLBACK(join)
 }
 
 /*
- * Sends a kick message to a channel.
+ * Send a kick message to a channel.
  */
 
 void
@@ -3196,7 +3196,7 @@ irc_command_kick_channel (struct t_irc_server *server,
 }
 
 /*
- * Callback for command "/kick": forcibly removes a user from a channel.
+ * Callback for command "/kick": forcibly remove a user from a channel.
  */
 
 IRC_COMMAND_CALLBACK(kick)
@@ -3242,7 +3242,7 @@ IRC_COMMAND_CALLBACK(kick)
 }
 
 /*
- * Callback for command "/kickban": forcibly removes a user from a channel and
+ * Callback for command "/kickban": forcibly remove a user from a channel and
  * bans it.
  */
 
@@ -3334,7 +3334,7 @@ IRC_COMMAND_CALLBACK(kickban)
 }
 
 /*
- * Callback for command "/kill": closes client-server connection.
+ * Callback for command "/kill": close client-server connection.
  */
 
 IRC_COMMAND_CALLBACK(kill)
@@ -3363,7 +3363,7 @@ IRC_COMMAND_CALLBACK(kill)
 }
 
 /*
- * Callback for command "/knock": sends a notice to an invitation-only channel,
+ * Callback for command "/knock": send a notice to an invitation-only channel,
  * requesting an invite.
  */
 
@@ -3393,7 +3393,7 @@ IRC_COMMAND_CALLBACK(knock)
 }
 
 /*
- * Callback for command "/links": lists all server names which are known by the
+ * Callback for command "/links": list all server names which are known by the
  * server answering the query.
  */
 
@@ -3422,7 +3422,7 @@ IRC_COMMAND_CALLBACK(links)
 }
 
 /*
- * Gets an integer argument given to the /list command.
+ * Get an integer argument given to the /list command.
  */
 
 int
@@ -3444,7 +3444,7 @@ irc_command_list_get_int_arg (int argc, char **argv, int arg_number,
 }
 
 /*
- * Callback for command "/list": lists channels and their topics.
+ * Callback for command "/list": list channels and their topics.
  */
 
 IRC_COMMAND_CALLBACK(list)
@@ -3673,8 +3673,7 @@ IRC_COMMAND_CALLBACK(list)
 }
 
 /*
- * Callback for command "/lusers": gets statistics about the size of the IRC
- * network.
+ * Callback for command "/lusers": get statistics about the size of the IRC network.
  */
 
 IRC_COMMAND_CALLBACK(lusers)
@@ -3702,7 +3701,7 @@ IRC_COMMAND_CALLBACK(lusers)
 }
 
 /*
- * Callback for command "/map": shows a graphical map of the IRC network.
+ * Callback for command "/map": show a graphical map of the IRC network.
  */
 
 IRC_COMMAND_CALLBACK(map)
@@ -3730,7 +3729,7 @@ IRC_COMMAND_CALLBACK(map)
 }
 
 /*
- * Callback for command "/me": sends a CTCP ACTION to the current channel.
+ * Callback for command "/me": send a CTCP ACTION to the current channel.
  */
 
 IRC_COMMAND_CALLBACK(me)
@@ -3759,7 +3758,7 @@ IRC_COMMAND_CALLBACK(me)
 }
 
 /*
- * Sends MODE command on a server.
+ * Send MODE command on a server.
  */
 
 void
@@ -3788,7 +3787,7 @@ irc_command_mode_server (struct t_irc_server *server,
 }
 
 /*
- * Callback for command "/mode": changes mode for channel/nickname.
+ * Callback for command "/mode": change mode for channel/nickname.
  */
 
 IRC_COMMAND_CALLBACK(mode)
@@ -3844,7 +3843,7 @@ IRC_COMMAND_CALLBACK(mode)
 }
 
 /*
- * Callback for command "/motd": gets the "Message Of The Day".
+ * Callback for command "/motd": get the "Message Of The Day".
  */
 
 IRC_COMMAND_CALLBACK(motd)
@@ -3872,7 +3871,7 @@ IRC_COMMAND_CALLBACK(motd)
 }
 
 /*
- * Callback for command "/msg": sends a message to a nick or channel.
+ * Callback for command "/msg": send a message to a nick or channel.
  */
 
 IRC_COMMAND_CALLBACK(msg)
@@ -3980,7 +3979,7 @@ IRC_COMMAND_CALLBACK(msg)
 }
 
 /*
- * Callback for command "/names": lists nicknames on channels.
+ * Callback for command "/names": list nicknames on channels.
  */
 
 IRC_COMMAND_CALLBACK(names)
@@ -4059,7 +4058,7 @@ IRC_COMMAND_CALLBACK(names)
 }
 
 /*
- * Changes nickname on a server.
+ * Change nickname on a server.
  */
 
 void
@@ -4080,7 +4079,7 @@ irc_send_nick_server (struct t_irc_server *server, const char *nickname)
 }
 
 /*
- * Callback for command "/nick": changes nickname.
+ * Callback for command "/nick": change nickname.
  */
 
 IRC_COMMAND_CALLBACK(nick)
@@ -4112,7 +4111,7 @@ IRC_COMMAND_CALLBACK(nick)
 }
 
 /*
- * Callback for command "/notice": sends notice message.
+ * Callback for command "/notice": send notice message.
  */
 
 IRC_COMMAND_CALLBACK(notice)
@@ -4176,7 +4175,7 @@ IRC_COMMAND_CALLBACK(notice)
 }
 
 /*
- * Callback for command "/notify": adds or removes notify.
+ * Callback for command "/notify": add or remove notify.
  */
 
 IRC_COMMAND_CALLBACK(notify)
@@ -4376,7 +4375,7 @@ IRC_COMMAND_CALLBACK(notify)
 }
 
 /*
- * Callback for command "/op": gives operator privileges to nickname(s).
+ * Callback for command "/op": give operator privileges to nickname(s).
  */
 
 IRC_COMMAND_CALLBACK(op)
@@ -4415,7 +4414,7 @@ IRC_COMMAND_CALLBACK(op)
 }
 
 /*
- * Callback for command "/oper": gets oper privileges.
+ * Callback for command "/oper": get oper privileges.
  */
 
 IRC_COMMAND_CALLBACK(oper)
@@ -4437,7 +4436,7 @@ IRC_COMMAND_CALLBACK(oper)
 }
 
 /*
- * Sends a part message for a channel.
+ * Send a part message for a channel.
  */
 
 void
@@ -4467,7 +4466,7 @@ irc_command_part_channel (struct t_irc_server *server, const char *channel_name,
 }
 
 /*
- * Callback for command "/part": leaves a channel or close a private buffer.
+ * Callback for command "/part": leave a channel or close a private buffer.
  */
 
 IRC_COMMAND_CALLBACK(part)
@@ -4553,7 +4552,7 @@ IRC_COMMAND_CALLBACK(part)
 }
 
 /*
- * Callback for command "/ping": pings a server.
+ * Callback for command "/ping": ping a server.
  */
 
 IRC_COMMAND_CALLBACK(ping)
@@ -4575,7 +4574,7 @@ IRC_COMMAND_CALLBACK(ping)
 }
 
 /*
- * Callback for command "/pong": sends pong answer to a daemon.
+ * Callback for command "/pong": send pong answer to a daemon.
  */
 
 IRC_COMMAND_CALLBACK(pong)
@@ -4597,7 +4596,7 @@ IRC_COMMAND_CALLBACK(pong)
 }
 
 /*
- * Callback for command "/query": starts private conversation with a nick.
+ * Callback for command "/query": start private conversation with a nick.
  */
 
 IRC_COMMAND_CALLBACK(query)
@@ -4729,7 +4728,7 @@ IRC_COMMAND_CALLBACK(query)
 }
 
 /*
- * Callback for command "/quiet": quiets nicks or hosts.
+ * Callback for command "/quiet": quiet nicks or hosts.
  */
 
 IRC_COMMAND_CALLBACK(quiet)
@@ -4806,7 +4805,7 @@ IRC_COMMAND_CALLBACK(quiet)
 }
 
 /*
- * Callback for command "/quote": sends raw data to server.
+ * Callback for command "/quote": send raw data to server.
  */
 
 IRC_COMMAND_CALLBACK(quote)
@@ -4845,9 +4844,9 @@ IRC_COMMAND_CALLBACK(quote)
 }
 
 /*
- * Reconnects to a server.
+ * Reconnect to a server.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -4887,7 +4886,7 @@ irc_command_reconnect_one_server (struct t_irc_server *server,
 }
 
 /*
- * Callback for command "/reconnect": reconnects to server(s).
+ * Callback for command "/reconnect": reconnect to server(s).
  */
 
 IRC_COMMAND_CALLBACK(reconnect)
@@ -4975,7 +4974,7 @@ IRC_COMMAND_CALLBACK(reconnect)
 }
 
 /*
- * Callback for command "/rehash": tells the server to reload its config file.
+ * Callback for command "/rehash": tell the server to reload its config file.
  */
 
 IRC_COMMAND_CALLBACK(rehash)
@@ -5064,7 +5063,7 @@ IRC_COMMAND_CALLBACK(remove)
 }
 
 /*
- * Callback for command "/restart": tells the server to restart itself.
+ * Callback for command "/restart": tell the server to restart itself.
  */
 
 IRC_COMMAND_CALLBACK(restart)
@@ -5092,7 +5091,7 @@ IRC_COMMAND_CALLBACK(restart)
 }
 
 /*
- * Callback for command "/rules": requests the server rules
+ * Callback for command "/rules": request the server rules
  */
 
 IRC_COMMAND_CALLBACK(rules)
@@ -5114,7 +5113,7 @@ IRC_COMMAND_CALLBACK(rules)
 }
 
 /*
- * Callback for command "/sajoin": forces a user to join channel(s).
+ * Callback for command "/sajoin": force a user to join channel(s).
  */
 
 IRC_COMMAND_CALLBACK(sajoin)
@@ -5135,7 +5134,7 @@ IRC_COMMAND_CALLBACK(sajoin)
 }
 
 /*
- * Callback for command "/samode": changes mode on channel, without having
+ * Callback for command "/samode": change mode on channel, without having
  * operator status.
  */
 
@@ -5195,7 +5194,7 @@ IRC_COMMAND_CALLBACK(samode)
 }
 
 /*
- * Callback for command "/sanick": forces a user to use another nick.
+ * Callback for command "/sanick": force a user to use another nick.
  */
 
 IRC_COMMAND_CALLBACK(sanick)
@@ -5216,7 +5215,7 @@ IRC_COMMAND_CALLBACK(sanick)
 }
 
 /*
- * Callback for command "/sapart": forces a user to leave channel(s).
+ * Callback for command "/sapart": force a user to leave channel(s).
  */
 
 IRC_COMMAND_CALLBACK(sapart)
@@ -5237,7 +5236,7 @@ IRC_COMMAND_CALLBACK(sapart)
 }
 
 /*
- * Callback for command "/saquit": forces a user to quit server with a reason.
+ * Callback for command "/saquit": force a user to quit server with a reason.
  */
 
 IRC_COMMAND_CALLBACK(saquit)
@@ -5258,7 +5257,7 @@ IRC_COMMAND_CALLBACK(saquit)
 }
 
 /*
- * Displays server options.
+ * Display server options.
  */
 
 void
@@ -5735,7 +5734,7 @@ irc_command_display_server (struct t_irc_server *server, int with_detail)
 }
 
 /*
- * Callback for command "/server": manages IRC servers.
+ * Callback for command "/server": manage IRC servers.
  */
 
 IRC_COMMAND_CALLBACK(server)
@@ -6169,7 +6168,7 @@ IRC_COMMAND_CALLBACK(server)
 }
 
 /*
- * Callback for command "/service": registers a new service.
+ * Callback for command "/service": register a new service.
  */
 
 IRC_COMMAND_CALLBACK(service)
@@ -6191,7 +6190,7 @@ IRC_COMMAND_CALLBACK(service)
 }
 
 /*
- * Callback for command "/servlist": lists services currently connected to the
+ * Callback for command "/servlist": list services currently connected to the
  * network.
  */
 
@@ -6220,7 +6219,7 @@ IRC_COMMAND_CALLBACK(servlist)
 }
 
 /*
- * Callback for command "/squery": delivers a message to a service.
+ * Callback for command "/squery": deliver a message to a service.
  */
 
 IRC_COMMAND_CALLBACK(squery)
@@ -6270,7 +6269,7 @@ IRC_COMMAND_CALLBACK(setname)
 }
 
 /*
- * Callback for command "/squit": disconnects server links.
+ * Callback for command "/squit": disconnect server links.
  */
 
 IRC_COMMAND_CALLBACK(squit)
@@ -6292,7 +6291,7 @@ IRC_COMMAND_CALLBACK(squit)
 }
 
 /*
- * Callback for command "/stats": queries statistics about server.
+ * Callback for command "/stats": query statistics about server.
  */
 
 IRC_COMMAND_CALLBACK(stats)
@@ -6320,7 +6319,7 @@ IRC_COMMAND_CALLBACK(stats)
 }
 
 /*
- * Callback for command "/summon": gives users who are on a host running an IRC
+ * Callback for command "/summon": give users who are on a host running an IRC
  * server a message asking them to please join IRC.
  */
 
@@ -6343,7 +6342,7 @@ IRC_COMMAND_CALLBACK(summon)
 }
 
 /*
- * Callback for command "/time": queries local time from server.
+ * Callback for command "/time": query local time from server.
  */
 
 IRC_COMMAND_CALLBACK(time)
@@ -6371,7 +6370,7 @@ IRC_COMMAND_CALLBACK(time)
 }
 
 /*
- * Callback for command "/topic": gets/sets topic for a channel.
+ * Callback for command "/topic": get/set topic for a channel.
  */
 
 IRC_COMMAND_CALLBACK(topic)
@@ -6447,7 +6446,7 @@ IRC_COMMAND_CALLBACK(topic)
 }
 
 /*
- * Callback for command "/trace": finds the route to specific server.
+ * Callback for command "/trace": find the route to specific server.
  */
 
 IRC_COMMAND_CALLBACK(trace)
@@ -6475,7 +6474,7 @@ IRC_COMMAND_CALLBACK(trace)
 }
 
 /*
- * Callback for command "/unban": unbans nicks or hosts.
+ * Callback for command "/unban": unban nicks or hosts.
  */
 
 IRC_COMMAND_CALLBACK(unban)
@@ -6533,7 +6532,7 @@ IRC_COMMAND_CALLBACK(unban)
 }
 
 /*
- * Callback for command "/unquiet": unquiets nicks or hosts.
+ * Callback for command "/unquiet": unquiet nicks or hosts.
  */
 
 IRC_COMMAND_CALLBACK(unquiet)
@@ -6600,8 +6599,7 @@ IRC_COMMAND_CALLBACK(unquiet)
 }
 
 /*
- * Callback for command "/userhost": returns a list of information about
- * nicknames.
+ * Callback for command "/userhost": return a list of information about nicknames.
  */
 
 IRC_COMMAND_CALLBACK(userhost)
@@ -6623,7 +6621,7 @@ IRC_COMMAND_CALLBACK(userhost)
 }
 
 /*
- * Callback for command "/users": list of users logged into the server.
+ * Callback for command "/users": list users logged into the server.
  */
 
 IRC_COMMAND_CALLBACK(users)
@@ -6651,7 +6649,7 @@ IRC_COMMAND_CALLBACK(users)
 }
 
 /*
- * Callback for command "/version": gives the version info of nick or server
+ * Callback for command "/version": give the version info of nick or server
  * (current or specified).
  */
 
@@ -6689,7 +6687,7 @@ IRC_COMMAND_CALLBACK(version)
 }
 
 /*
- * Callback for command "/voice": gives voice to nickname(s).
+ * Callback for command "/voice": give voice to nickname(s).
  */
 
 IRC_COMMAND_CALLBACK(voice)
@@ -6728,7 +6726,7 @@ IRC_COMMAND_CALLBACK(voice)
 }
 
 /*
- * Callback for command "/wallchops": sends a notice to channel ops.
+ * Callback for command "/wallchops": send a notice to channel ops.
  */
 
 IRC_COMMAND_CALLBACK(wallchops)
@@ -6843,7 +6841,7 @@ IRC_COMMAND_CALLBACK(wallchops)
 }
 
 /*
- * Callback for command "/wallops": sends a message to all currently connected
+ * Callback for command "/wallops": send a message to all currently connected
  * users who have set the 'w' user mode for themselves.
  */
 
@@ -6866,8 +6864,7 @@ IRC_COMMAND_CALLBACK(wallops)
 }
 
 /*
- * Callback for command "/who": generates a query which returns a list of
- * information.
+ * Callback for command "/who": query a list of information.
  */
 
 IRC_COMMAND_CALLBACK(who)
@@ -6895,7 +6892,7 @@ IRC_COMMAND_CALLBACK(who)
 }
 
 /*
- * Callback for command "/whois": queries information about user(s).
+ * Callback for command "/whois": query information about user(s).
  */
 
 IRC_COMMAND_CALLBACK(whois)
@@ -6945,7 +6942,7 @@ IRC_COMMAND_CALLBACK(whois)
 }
 
 /*
- * Callback for command "/whowas": asks for information about a nickname which
+ * Callback for command "/whowas": ask for information about a nickname which
  * no longer exists.
  */
 
@@ -6968,7 +6965,7 @@ IRC_COMMAND_CALLBACK(whowas)
 }
 
 /*
- * Hooks IRC commands.
+ * Hook IRC commands.
  */
 
 void

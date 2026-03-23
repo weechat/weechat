@@ -246,7 +246,7 @@ TEST_GROUP(IrcMessage)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_message_parse_params
  */
 
@@ -397,7 +397,7 @@ TEST(IrcMessage, ParseParams)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_message_parse
  */
 
@@ -700,7 +700,7 @@ TEST(IrcMessage, Parse)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_message_parse_to_hashtable
  */
 
@@ -787,7 +787,7 @@ TEST(IrcMessage, ParseToHashtable)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_message_parse_cap_value
  */
 
@@ -812,7 +812,7 @@ TEST(IrcMessage, ParseCapValue)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_message_parse_multiline_value
  */
 
@@ -886,7 +886,7 @@ convert_irc_charset_cb (const void *pointer, void *data,
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_message_is_empty
  */
 
@@ -904,7 +904,7 @@ TEST(IrcMessage, IsEmpty)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_message_convert_charset
  */
 
@@ -929,7 +929,7 @@ TEST(IrcMessage, ConvertCharset)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_message_get_nick_from_host
  */
 
@@ -950,7 +950,7 @@ TEST(IrcMessage, GetNickFromHost)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_message_get_address_from_host
  */
 
@@ -968,7 +968,7 @@ TEST(IrcMessage, GetAddressFromHost)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_message_ignored
  */
 
@@ -1008,7 +1008,7 @@ TEST(IrcMessage, Ignored)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_message_replace_vars
  */
 
@@ -1061,7 +1061,7 @@ TEST(IrcMessage, ReplaceVars)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_message_split_add
  *   irc_message_split_string
  *   irc_message_split_join

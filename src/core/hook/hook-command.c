@@ -44,7 +44,7 @@
 
 
 /*
- * Returns description of hook.
+ * Return description of hook.
  *
  * Note: result must be freed after use.
  */
@@ -56,9 +56,9 @@ hook_command_get_description (struct t_hook *hook)
 }
 
 /*
- * Searches for a command hook in list.
+ * Search for a command hook in list.
  *
- * Returns pointer to hook found, NULL if not found.
+ * Return pointer to hook found, NULL if not found.
  */
 
 struct t_hook *
@@ -83,7 +83,7 @@ hook_command_search (struct t_weechat_plugin *plugin, const char *command)
 }
 
 /*
- * Builds variables/arrays that will be used for completion of commands
+ * Build variables/arrays that will be used for completion of commands
  * arguments.
  */
 
@@ -273,7 +273,7 @@ hook_command_build_completion (struct t_hook_command *hook_command)
 }
 
 /*
- * Removes all raw markers from a string: converts "raw[xxx]" to "xxx".
+ * Remove all raw markers from a string: converts "raw[xxx]" to "xxx".
  *
  * Note: result must be freed after use.
  */
@@ -318,7 +318,7 @@ hook_command_remove_raw_markers (const char *string)
 }
 
 /*
- * Frees an argument description.
+ * Free an argument description.
  */
 
 void
@@ -333,7 +333,7 @@ hook_command_arraylist_arg_desc_free (void *data, struct t_arraylist *arraylist,
 }
 
 /*
- * Formats and translates arguments description of a command.
+ * Format and translates arguments description of a command.
  *
  * Note: result must be freed after use.
  */
@@ -500,9 +500,9 @@ error:
 }
 
 /*
- * Hooks a command.
+ * Hook a command.
  *
- * Returns pointer to new hook, NULL if error.
+ * Return pointer to new hook, NULL if error.
  */
 
 struct t_hook *
@@ -576,9 +576,9 @@ hook_command (struct t_weechat_plugin *plugin, const char *command,
 }
 
 /*
- * Executes a command hook.
+ * Execute a command hook.
  *
- * Returns:
+ * Return:
  *   HOOK_COMMAND_EXEC_OK: command executed successfully
  *   HOOK_COMMAND_EXEC_ERROR: command executed and failed
  *   HOOK_COMMAND_EXEC_NOT_FOUND: command not found
@@ -768,12 +768,12 @@ end:
 }
 
 /*
- * Gets relevance for cmd2 (existing command) compared to cmd1 (non-existing
+ * Get relevance for cmd2 (existing command) compared to cmd1 (non-existing
  * command).
  *
  * Both commands are in lower case.
  *
- * Returns a number based on the Levenshtein distance between two commands,
+ * Return a number based on the Levenshtein distance between two commands,
  * lower is better.
  */
 
@@ -812,7 +812,7 @@ hook_command_similar_get_relevance (const char *cmd1, int length_cmd1,
 }
 
 /*
- * Compares similar commands to sort them by relevance (lower number first:
+ * Compare similar commands to sort them by relevance (lower number first:
  * best relevance).
  */
 
@@ -839,7 +839,7 @@ hook_command_similar_cmp_cb (void *data, struct t_arraylist *arraylist,
 }
 
 /*
- * Frees a similar command.
+ * Free a similar command.
  */
 
 void
@@ -854,7 +854,7 @@ hook_command_similar_free_cb (void *data, struct t_arraylist *arraylist,
 }
 
 /*
- * Builds an arraylist with similar commands.
+ * Build an arraylist with similar commands.
  *
  * Note: result must be freed after use.
  */
@@ -906,7 +906,7 @@ hook_command_build_list_similar_commands (const char *command)
 }
 
 /*
- * Displays an error on unknown command, with a list of existing similar
+ * Display an error on unknown command, with a list of existing similar
  * command names.
  */
 
@@ -971,7 +971,7 @@ hook_command_display_error_unknown (const char *command)
 }
 
 /*
- * Frees data in a command hook.
+ * Free data in a command hook.
  */
 
 void
@@ -1049,7 +1049,7 @@ hook_command_free_data (struct t_hook *hook)
 }
 
 /*
- * Returns hdata for command hook.
+ * Return hdata for command hook.
  */
 
 struct t_hdata *
@@ -1084,9 +1084,9 @@ hook_command_hdata_hook_command_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds command hook data in the infolist item.
+ * Add command hook data in the infolist item.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -1141,7 +1141,7 @@ hook_command_add_to_infolist (struct t_infolist_item *item,
 }
 
 /*
- * Prints command hook data in WeeChat log file (usually for crash dump).
+ * Print command hook data in WeeChat log file (usually for crash dump).
  */
 
 void

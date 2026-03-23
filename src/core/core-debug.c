@@ -91,7 +91,7 @@ long long debug_long_callbacks = 0;    /* callbacks taking more than        */
 
 
 /*
- * Displays build information on stdout.
+ * Display build information on stdout.
  */
 
 void
@@ -149,7 +149,7 @@ debug_build_info (void)
 }
 
 /*
- * Writes dump of data to WeeChat log file.
+ * Write dump of data to WeeChat log file.
  */
 
 void
@@ -226,7 +226,7 @@ debug_dump_cb (const void *pointer, void *data,
 /*
  * Callback for system signal SIGSEGV handler.
  *
- * Writes dump of data and backtrace to WeeChat log file, then exit.
+ * Write dump of data and backtrace to WeeChat log file, then exit.
  */
 
 void
@@ -271,7 +271,7 @@ debug_sigsegv_cb (int signo)
 }
 
 /*
- * Displays tree of windows (this function must not be called directly).
+ * Display tree of windows (this function must not be called directly).
  */
 
 void
@@ -341,7 +341,7 @@ debug_windows_tree_display (struct t_gui_window_tree *tree, int indent)
 }
 
 /*
- * Displays tree of windows.
+ * Display tree of windows.
  */
 
 void
@@ -353,7 +353,7 @@ debug_windows_tree (void)
 }
 
 /*
- * Displays information about dynamic memory allocation.
+ * Display information about dynamic memory allocation.
  */
 
 void
@@ -499,7 +499,7 @@ debug_hdata_map_cb (void *data,
 }
 
 /*
- * Displays a list of hdata in memory.
+ * Display a list of hdata in memory.
  */
 
 void
@@ -517,7 +517,7 @@ debug_hdata (void)
 }
 
 /*
- * Displays info about hooks.
+ * Display info about hooks.
  */
 
 void
@@ -538,7 +538,7 @@ debug_hooks (void)
 }
 
 /*
- * Displays info about hooks for one or multiple plugins matching a mask.
+ * Display info about hooks for one or multiple plugins matching a mask.
  */
 
 void
@@ -657,7 +657,7 @@ debug_hooks_plugin_types (const char *plugin_mask, const char **hook_types)
 }
 
 /*
- * Displays a list of infolists in memory.
+ * Display a list of infolists in memory.
  */
 
 void
@@ -748,7 +748,7 @@ debug_infolists (void)
 }
 
 /*
- * Callback for signal "debug_libs": displays infos about external libraries
+ * Callback for signal "debug_libs": display infos about external libraries
  * used (called when command "/debug libs" is issued).
  *
  * Note: this function displays libraries for WeeChat core only: plugins can
@@ -821,7 +821,7 @@ debug_libs_cb (const void *pointer, void *data,
 }
 
 /*
- * Displays WeeChat directories.
+ * Display WeeChat directories.
  */
 
 void
@@ -859,8 +859,7 @@ debug_directories (void)
 /*
  * Display time elapsed between two times.
  *
- * If display is 1, the message is displayed in core buffer, otherwise it's
- * written in log file.
+ * If display is 1, display message in core buffer, otherwise write in log file.
  */
 
 void
@@ -1032,7 +1031,7 @@ debug_unicode (const char *string)
 }
 
 /*
- * Initializes debug.
+ * Initialize debug.
  */
 
 void
@@ -1048,7 +1047,7 @@ debug_init (void)
 }
 
 /*
- * Ends debug.
+ * End debug.
  */
 
 void

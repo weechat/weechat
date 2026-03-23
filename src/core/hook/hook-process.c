@@ -53,7 +53,7 @@ void hook_process_run (struct t_hook *hook_process);
 
 
 /*
- * Returns description of hook.
+ * Return description of hook.
  *
  * Note: result must be freed after use.
  */
@@ -72,9 +72,9 @@ hook_process_get_description (struct t_hook *hook)
 }
 
 /*
- * Hooks a process (using fork) with options in hashtable.
+ * Hook a process (using fork) with options in hashtable.
  *
- * Returns pointer to new hook, NULL if error.
+ * Return pointer to new hook, NULL if error.
  */
 
 struct t_hook *
@@ -188,9 +188,9 @@ error:
 }
 
 /*
- * Hooks a process (using fork).
+ * Hook a process (using fork).
  *
- * Returns pointer to new hook, NULL if error.
+ * Return pointer to new hook, NULL if error.
  */
 
 struct t_hook *
@@ -206,7 +206,7 @@ hook_process (struct t_weechat_plugin *plugin,
 }
 
 /*
- * Child process for hook process: executes command and returns string result
+ * Child process for hook process: execute command and return string result
  * into pipe for WeeChat process.
  */
 
@@ -379,7 +379,7 @@ hook_process_child (struct t_hook *hook_process)
 }
 
 /*
- * Sends buffers (stdout/stderr) to callback.
+ * Send buffers (stdout/stderr) to callback.
  */
 
 void
@@ -412,7 +412,7 @@ hook_process_send_buffers (struct t_hook *hook_process, int callback_rc)
 }
 
 /*
- * Adds some data to buffer (stdout or stderr).
+ * Add some data to buffer (stdout or stderr).
  */
 
 void
@@ -429,7 +429,7 @@ hook_process_add_to_buffer (struct t_hook *hook_process, int index_buffer,
 }
 
 /*
- * Reads process output (stdout or stderr) from child process.
+ * Read process output (stdout or stderr) from child process.
  */
 
 void
@@ -462,7 +462,7 @@ hook_process_child_read (struct t_hook *hook_process, int fd,
 }
 
 /*
- * Reads process output (stdout) from child process.
+ * Read process output (stdout) from child process.
  */
 
 int
@@ -481,7 +481,7 @@ hook_process_child_read_stdout_cb (const void *pointer, void *data, int fd)
 }
 
 /*
- * Reads process output (stderr) from child process.
+ * Read process output (stderr) from child process.
  */
 
 int
@@ -500,7 +500,7 @@ hook_process_child_read_stderr_cb (const void *pointer, void *data, int fd)
 }
 
 /*
- * Reads process output from child process until EOF
+ * Read process output from child process until EOF
  * (called when the child process has ended).
  */
 
@@ -576,7 +576,7 @@ hook_process_child_read_until_eof (struct t_hook *hook_process)
 }
 
 /*
- * Checks if child process is still alive.
+ * Check if child process is still alive.
  */
 
 int
@@ -635,8 +635,7 @@ hook_process_timer_cb (const void *pointer, void *data, int remaining_calls)
 }
 
 /*
- * Executes process command in child, and read data in current process,
- * with fd hook.
+ * Execute process command in child, and read data in current process, with fd hook.
  */
 
 void
@@ -788,7 +787,7 @@ error:
 }
 
 /*
- * Executes all process commands pending.
+ * Execute all process commands pending.
  */
 
 void
@@ -822,7 +821,7 @@ hook_process_exec (void)
 }
 
 /*
- * Frees data in a process hook.
+ * Free data in a process hook.
  */
 
 void
@@ -918,7 +917,7 @@ hook_process_free_data (struct t_hook *hook)
 }
 
 /*
- * Returns hdata for process hook.
+ * Return hdata for process hook.
  */
 
 struct t_hdata *
@@ -952,9 +951,9 @@ hook_process_hdata_hook_process_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds process hook data in the infolist item.
+ * Add process hook data in the infolist item.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -1003,7 +1002,7 @@ hook_process_add_to_infolist (struct t_infolist_item *item,
 }
 
 /*
- * Prints process hook data in WeeChat log file (usually for crash dump).
+ * Print process hook data in WeeChat log file (usually for crash dump).
  */
 
 void

@@ -39,7 +39,7 @@
 
 
 /*
- * Gets IRC server and channel pointers with a buffer pointer (buffer may be a
+ * Get IRC server and channel pointers with a buffer pointer (buffer may be a
  * server or a channel).
  */
 
@@ -95,7 +95,7 @@ irc_buffer_get_server_and_channel (struct t_gui_buffer *buffer,
 }
 
 /*
- * Builds buffer name with a server and a channel.
+ * Build buffer name with a server and a channel.
  *
  * Note: result must be freed after use.
  */
@@ -131,7 +131,7 @@ end:
 }
 
 /*
- * Closes all channels/privates of a given server.
+ * Close all channels/privates of a given server.
  */
 
 void
@@ -267,7 +267,7 @@ irc_buffer_close_cb (const void *pointer, void *data,
  * nicklist).
  * The "casemapping" of server is used in comparison.
  *
- * Returns:
+ * Return:
  *  -1: nick1 < nick2
  *   0: nick1 == nick2
  *   1: nick2 > nick2
@@ -301,9 +301,9 @@ irc_buffer_nickcmp_cb (const void *pointer, void *data,
 }
 
 /*
- * Searches for the server buffer with the lowest number.
+ * Search for the server buffer with the lowest number.
  *
- * Returns pointer to buffer found, NULL if not found.
+ * Return pointer to buffer found, NULL if not found.
  */
 
 struct t_gui_buffer *
@@ -333,10 +333,10 @@ irc_buffer_search_server_lowest_number (void)
 }
 
 /*
- * Searches for the private buffer with the lowest number.
+ * Search for the private buffer with the lowest number.
  * If server is not NULL, searches only for this server.
  *
- * Returns pointer to buffer found, NULL if not found.
+ * Return pointer to buffer found, NULL if not found.
  */
 
 struct t_gui_buffer *
@@ -375,7 +375,7 @@ irc_buffer_search_private_lowest_number (struct t_irc_server *server)
 }
 
 /*
- * Moves new channel/pv or list buffer near server.
+ * Move new channel/pv or list buffer near server.
  *
  * Parameters:
  *   list_buffer: 1 if it is a /list buffer, 0 otherwise

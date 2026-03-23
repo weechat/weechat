@@ -40,7 +40,7 @@ struct t_hashtable *fset_buffer_hashtable_extra_vars = NULL;
 
 
 /*
- * Sets title of fset buffer.
+ * Set title of fset buffer.
  */
 
 void
@@ -105,10 +105,10 @@ fset_buffer_set_title (void)
 }
 
 /*
- * Fills a field with spaces (according to max length for this field).
+ * Fill a field with spaces (according to max length for this field).
  *
- * If fill_right == 1, fills with spaces on the right. Otherwise
- * fills with spaces on the left before the value.
+ * If fill_right == 1, fill with spaces on the right. Otherwise
+ * fill with spaces on the left before the value.
  *
  * If skip_colors == 1, the field value may contain color codes, so
  * weechat_strlen_screen() is used instead of weechat_utf8_strlen_screen()
@@ -158,9 +158,9 @@ fset_buffer_fills_field (char *field, char *field_spaces,
 }
 
 /*
- * Displays a line with an fset option using an evaluated format.
+ * Display a line with an fset option using an evaluated format.
  *
- * Returns the index of last line displayed in buffer (this depends on the
+ * Return the index of last line displayed in buffer (this depends on the
  * format number used), -1 if no option was displayed.
  */
 
@@ -887,10 +887,10 @@ fset_buffer_display_option_eval (struct t_fset_option *fset_option)
 }
 
 /*
- * Displays a line with an fset option using a predefined format
+ * Display a line with an fset option using a predefined format
  * (much faster because there is no eval).
  *
- * Returns the index of last line displayed in buffer (this depends on the
+ * Return the index of last line displayed in buffer (this depends on the
  * format number used), -1 if no option was displayed.
  */
 
@@ -1075,9 +1075,9 @@ fset_buffer_display_option_predefined_format (struct t_fset_option *fset_option)
 }
 
 /*
- * Displays a line with an fset option.
+ * Display a line with an fset option.
  *
- * Returns the index of last line displayed in buffer (this depends on the
+ * Return the index of last line displayed in buffer (this depends on the
  * format number used), -1 if no option was displayed.
  */
 
@@ -1097,7 +1097,7 @@ fset_buffer_display_option (struct t_fset_option *fset_option)
 }
 
 /*
- * Returns the last line index (y) for a buffer with free content,
+ * Return the last line index (y) for a buffer with free content,
  * -1 if buffer is empty.
  */
 
@@ -1127,7 +1127,7 @@ fset_buffer_get_last_y (struct t_gui_buffer *buffer)
 }
 
 /*
- * Updates list of options in fset buffer.
+ * Update list of options in fset buffer.
  */
 
 void
@@ -1172,7 +1172,7 @@ fset_buffer_refresh (int clear)
 }
 
 /*
- * Sets current selected line.
+ * Set current selected line.
  */
 
 void
@@ -1199,7 +1199,7 @@ fset_buffer_set_current_line (int line)
 }
 
 /*
- * Gets info about a window.
+ * Get info about a window.
  */
 
 void
@@ -1235,7 +1235,7 @@ fset_buffer_get_window_info (struct t_gui_window *window,
 }
 
 /*
- * Checks if current line is outside window and adjusts scroll if needed.
+ * Check if current line is outside window and adjusts scroll if needed.
  */
 
 void
@@ -1474,8 +1474,7 @@ fset_buffer_close_cb (const void *pointer, void *data,
 }
 
 /*
- * Restore buffer callbacks (input and close) for buffer created by fset
- * plugin.
+ * Restore buffer callbacks (input and close) for buffer created by fset plugin.
  */
 
 void
@@ -1493,10 +1492,9 @@ fset_buffer_set_callbacks (void)
 }
 
 /*
- * Sets keys on fset buffer.
+ * Set keys on fset buffer.
  *
- * If hashtable is not NULL, it is used to set keys, otherwise keys are directly
- * set in the fset buffer.
+ * If hashtable is not NULL, set keys inside instead of the fset buffer.
  */
 
 void
@@ -1551,7 +1549,7 @@ fset_buffer_set_keys (struct t_hashtable *hashtable)
 }
 
 /*
- * Sets the local variable "filter" in the fset buffer.
+ * Set the local variable "filter" in the fset buffer.
  */
 
 void
@@ -1565,7 +1563,7 @@ fset_buffer_set_localvar_filter (void)
 }
 
 /*
- * Opens fset buffer.
+ * Open fset buffer.
  */
 
 void
@@ -1606,9 +1604,9 @@ fset_buffer_open (void)
 }
 
 /*
- * Initializes fset buffer.
+ * Initialize fset buffer.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -1644,7 +1642,7 @@ fset_buffer_init (void)
 }
 
 /*
- * Ends fset buffer.
+ * End fset buffer.
  */
 
 void

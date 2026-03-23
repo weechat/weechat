@@ -30,7 +30,7 @@
 
 
 /*
- * Adds all buflist items to completion list.
+ * Add all buflist items to completion list.
  */
 
 int
@@ -58,7 +58,7 @@ buflist_completion_items_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds used buflist items to completion list.
+ * Add used buflist items to completion list.
  */
 
 int
@@ -86,7 +86,7 @@ buflist_completion_items_used_cb (const void *pointer, void *data,
 }
 
 /*
- * Hooks completions.
+ * Hook completions.
  */
 
 void

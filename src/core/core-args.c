@@ -167,7 +167,7 @@ char *weechat_args_debug[][2] = {
 
 
 /*
- * Displays WeeChat copyright on standard output.
+ * Display WeeChat copyright on standard output.
  */
 
 void
@@ -217,7 +217,7 @@ args_display_list_args (char *args[][2])
 }
 
 /*
- * Displays WeeChat help on standard output.
+ * Display WeeChat help on standard output.
  */
 
 void
@@ -251,7 +251,7 @@ args_display_help (void)
 }
 
 /*
- * Parses command line arguments.
+ * Parse command line arguments.
  *
  * Arguments argc and argv come from main() function.
  */

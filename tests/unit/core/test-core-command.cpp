@@ -173,7 +173,7 @@ TEST_GROUP(CoreCommand)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   command_allbuf
  */
 
@@ -186,7 +186,7 @@ TEST(CoreCommand, Allbuf)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   command_away
  */
 
@@ -196,7 +196,7 @@ TEST(CoreCommand, Away)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   command_bar
  */
 
@@ -290,7 +290,7 @@ TEST(CoreCommand, Bar)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   command_buffer
  */
 
@@ -499,7 +499,7 @@ TEST(CoreCommand, Buffer)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   command_color
  */
 
@@ -572,7 +572,7 @@ TEST(CoreCommand, Color)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   command_command
  */
 
@@ -599,7 +599,7 @@ TEST(CoreCommand, Command)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   command_cursor
  */
 
@@ -647,7 +647,7 @@ TEST(CoreCommand, Cursor)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   command_debug
  */
 
@@ -828,7 +828,7 @@ TEST(CoreCommand, Debug)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   command_eval
  */
 
@@ -874,7 +874,7 @@ TEST(CoreCommand, Eval)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   command_filter
  */
 
@@ -971,7 +971,7 @@ TEST(CoreCommand, Filter)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   command_help
  */
 
@@ -1032,7 +1032,7 @@ TEST(CoreCommand, Help)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   command_history
  */
 
@@ -1046,7 +1046,7 @@ TEST(CoreCommand, History)
 
 
 /*
- * Tests functions:
+ * Test functions:
  *   command_hotlist
  */
 
@@ -1101,7 +1101,7 @@ TEST(CoreCommand, Hotlist)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   command_input
  */
 
@@ -1111,7 +1111,7 @@ TEST(CoreCommand, Input)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   command_item
  */
 
@@ -1121,7 +1121,7 @@ TEST(CoreCommand, Item)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   command_key
  */
 
@@ -1131,7 +1131,7 @@ TEST(CoreCommand, Key)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   command_layout
  */
 
@@ -1141,7 +1141,7 @@ TEST(CoreCommand, Layout)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   command_mouse
  */
 
@@ -1151,7 +1151,7 @@ TEST(CoreCommand, Mouse)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   command_mute
  */
 
@@ -1161,7 +1161,7 @@ TEST(CoreCommand, Mute)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   command_pipe
  */
 
@@ -1171,7 +1171,7 @@ TEST(CoreCommand, Pipe)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   command_plugin
  */
 
@@ -1181,7 +1181,7 @@ TEST(CoreCommand, Plugin)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   command_print
  */
 
@@ -1282,7 +1282,7 @@ TEST(CoreCommand, Print)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   command_proxy
  */
 
@@ -1341,7 +1341,7 @@ TEST(CoreCommand, Proxy)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   command_quit
  */
 
@@ -1351,7 +1351,7 @@ TEST(CoreCommand, Quit)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   command_reload
  */
 
@@ -1366,7 +1366,7 @@ TEST(CoreCommand, Reload)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   command_repeat
  */
 
@@ -1392,7 +1392,7 @@ TEST(CoreCommand, Repeat)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   command_reset
  */
 
@@ -1402,7 +1402,7 @@ TEST(CoreCommand, Reset)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   command_save
  */
 
@@ -1412,7 +1412,7 @@ TEST(CoreCommand, Save)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   command_secure
  */
 
@@ -1422,7 +1422,7 @@ TEST(CoreCommand, Secure)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   command_set
  */
 
@@ -1464,7 +1464,7 @@ TEST(CoreCommand, Sys)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   command_toggle
  */
 
@@ -1474,7 +1474,7 @@ TEST(CoreCommand, Toggle)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   command_unset
  */
 
@@ -1484,7 +1484,7 @@ TEST(CoreCommand, Unset)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   command_upgrade
  */
 
@@ -1494,7 +1494,7 @@ TEST(CoreCommand, Upgrade)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   command_uptime
  */
 
@@ -1504,7 +1504,7 @@ TEST(CoreCommand, Uptime)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   command_version
  */
 
@@ -1514,7 +1514,7 @@ TEST(CoreCommand, Version)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   command_wait
  */
 
@@ -1524,7 +1524,7 @@ TEST(CoreCommand, Wait)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   command_window
  */
 

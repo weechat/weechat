@@ -30,7 +30,7 @@
 
 
 /*
- * Adds spell langs (all langs, even for dictionaries not installed) to
+ * Add spell langs (all langs, even for dictionaries not installed) to
  * completion list.
  */
 
@@ -59,7 +59,7 @@ spell_completion_langs_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds a dictionary to completion when using enchant.
+ * Add a dictionary to completion when using enchant.
  */
 
 #ifdef USE_ENCHANT
@@ -81,7 +81,7 @@ spell_completion_enchant_add_dict_cb (const char *lang_tag,
 #endif /* USE_ENCHANT */
 
 /*
- * Adds spell dictionaries (only installed dictionaries) to completion list.
+ * Add spell dictionaries (only installed dictionaries) to completion list.
  */
 
 int
@@ -132,7 +132,7 @@ spell_completion_dicts_cb (const void *pointer, void *data,
 }
 
 /*
- * Hooks completions.
+ * Hook completions.
  */
 
 void

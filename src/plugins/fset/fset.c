@@ -84,7 +84,7 @@ fset_debug_dump_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds the fset bar.
+ * Add the fset bar.
  */
 
 void
@@ -99,7 +99,7 @@ fset_add_bar (void)
 }
 
 /*
- * Initializes fset plugin.
+ * Initialize fset plugin.
  */
 
 int
@@ -160,7 +160,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 }
 
 /*
- * Ends fset plugin.
+ * End fset plugin.
  */
 
 int

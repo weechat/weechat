@@ -187,7 +187,7 @@ TEST_GROUP(CoreConfigFileWithNewOptions)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   config_file_valid
  */
 
@@ -201,7 +201,7 @@ TEST(CoreConfigFile, Valid)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   config_file_search
  */
 
@@ -216,7 +216,7 @@ TEST(CoreConfigFile, Search)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   config_file_find_pos
  */
 
@@ -229,7 +229,7 @@ TEST(CoreConfigFile, FindPos)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   config_file_config_insert
  */
 
@@ -239,7 +239,7 @@ TEST(CoreConfigFile, ConfigInsert)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   config_file_new
  */
 
@@ -249,7 +249,7 @@ TEST(CoreConfigFile, New)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   config_file_set_version
  */
 
@@ -259,7 +259,7 @@ TEST(CoreConfigFile, SetVersion)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   config_file_arraylist_cmp_config_cb
  *   config_file_get_configs_by_priority
  */
@@ -305,7 +305,7 @@ TEST(CoreConfigFile, GetConfigsByPriority)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   config_file_section_find_pos
  */
 
@@ -315,7 +315,7 @@ TEST(CoreConfigFile, SectionFindPos)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   config_file_new_section
  */
 
@@ -325,7 +325,7 @@ TEST(CoreConfigFile, NewSection)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   config_file_search_section
  */
 
@@ -340,7 +340,7 @@ TEST(CoreConfigFile, SearchSection)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   config_file_option_full_name
  */
 
@@ -355,7 +355,7 @@ TEST(CoreConfigFile, OptionFullName)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   config_file_hook_config_exec
  */
 
@@ -365,7 +365,7 @@ TEST(CoreConfigFile, HookConfigExec)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   config_file_option_find_pos
  */
 
@@ -375,7 +375,7 @@ TEST(CoreConfigFile, OptionFindPos)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   config_file_option_insert_in_section
  */
 
@@ -385,7 +385,7 @@ TEST(CoreConfigFile, OptionInsertInSection)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   config_file_option_malloc
  */
 
@@ -395,7 +395,7 @@ TEST(CoreConfigFile, OptionMalloc)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   config_file_new_option
  */
 
@@ -405,7 +405,7 @@ TEST(CoreConfigFile, NewOption)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   config_file_search_option
  */
 
@@ -447,7 +447,7 @@ TEST(CoreConfigFile, SearchOption)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   config_file_search_section_option
  */
 
@@ -517,7 +517,7 @@ TEST(CoreConfigFile, SearchSectionOption)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   config_file_search_with_string
  */
 
@@ -585,7 +585,7 @@ TEST(CoreConfigFile, SearchWithString)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   config_file_string_boolean_is_valid
  */
 
@@ -611,7 +611,7 @@ TEST(CoreConfigFile, StringBooleanIsValid)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   config_file_string_to_boolean
  */
 
@@ -637,7 +637,7 @@ TEST(CoreConfigFile, StringToBoolean)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   config_file_option_set
  *   config_file_option_reset
  */
@@ -771,7 +771,7 @@ TEST(CoreConfigFileWithNewOptions, OptionSetReset)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   config_file_option_toggle
  */
 
@@ -955,7 +955,7 @@ TEST(CoreConfigFileWithNewOptions, OptionToggle)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   config_file_option_set_null
  */
 
@@ -965,7 +965,7 @@ TEST(CoreConfigFile, OptionSetNull)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   config_file_option_set_default
  */
 
@@ -1086,7 +1086,7 @@ TEST(CoreConfigFileWithNewOptions, OptionSetDefault)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   config_file_option_unset
  */
 
@@ -1096,7 +1096,7 @@ TEST(CoreConfigFile, OptionUnset)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   config_file_option_rename
  */
 
@@ -1106,7 +1106,7 @@ TEST(CoreConfigFile, OptionRename)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   config_file_option_value_to_string
  */
 
@@ -1116,7 +1116,7 @@ TEST(CoreConfigFile, OptionValueToString)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   config_file_option_get_string
  */
 
@@ -1126,7 +1126,7 @@ TEST(CoreConfigFile, OptionGetString)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   config_file_option_get_pointer
  */
 
@@ -1136,7 +1136,7 @@ TEST(CoreConfigFile, OptionGetPointer)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   config_file_option_is_null
  */
 
@@ -1146,7 +1146,7 @@ TEST(CoreConfigFile, OptionIsNull)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   config_file_option_default_is_null
  */
 
@@ -1156,7 +1156,7 @@ TEST(CoreConfigFile, OptionDefaultIsNull)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   config_file_option_has_changed
  */
 
@@ -1166,7 +1166,7 @@ TEST(CoreConfigFile, OptionHasChanged)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   config_file_option_set_with_string
  */
 
@@ -1176,7 +1176,7 @@ TEST(CoreConfigFile, OptionSetWithString)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   config_file_option_boolean
  *   config_file_option_boolean_default
  */
@@ -1209,7 +1209,7 @@ TEST(CoreConfigFileWithNewOptions, OptionBoolean)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   config_file_option_boolean_inherited
  */
 
@@ -1225,7 +1225,7 @@ TEST(CoreConfigFileWithNewOptions, OptionBooleanInherited)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   config_file_option_integer
  *   config_file_option_integer_default
  */
@@ -1262,7 +1262,7 @@ TEST(CoreConfigFileWithNewOptions, OptionInteger)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   config_file_option_integer_inherited
  */
 
@@ -1278,7 +1278,7 @@ TEST(CoreConfigFileWithNewOptions, OptionIntegerInherited)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   config_file_option_string
  *   config_file_option_string_default
  */
@@ -1321,7 +1321,7 @@ TEST(CoreConfigFileWithNewOptions, OptionString)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   config_file_option_string_inherited
  */
 
@@ -1343,7 +1343,7 @@ TEST(CoreConfigFileWithNewOptions, OptionStringInherited)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   config_file_option_color
  *   config_file_option_color_default
  */
@@ -1376,7 +1376,7 @@ TEST(CoreConfigFileWithNewOptions, OptionColor)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   config_file_option_color_inherited
  */
 
@@ -1392,7 +1392,7 @@ TEST(CoreConfigFileWithNewOptions, OptionColorInherited)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   config_file_option_enum
  *   config_file_option_enum_default
  */
@@ -1431,7 +1431,7 @@ TEST(CoreConfigFileWithNewOptions, OptionEnum)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   config_file_option_enum_inherited
  */
 
@@ -1447,7 +1447,7 @@ TEST(CoreConfigFileWithNewOptions, OptionEnumInherited)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   config_file_option_escape
  */
 
@@ -1466,7 +1466,7 @@ TEST(CoreConfigFile, OptionEscape)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   config_file_write_option
  */
 
@@ -1476,7 +1476,7 @@ TEST(CoreConfigFile, WriteOption)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   config_file_write_line
  */
 
@@ -1486,7 +1486,7 @@ TEST(CoreConfigFile, WriteLine)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   config_file_write_internal
  */
 
@@ -1496,7 +1496,7 @@ TEST(CoreConfigFile, WriteInternal)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   config_file_write
  */
 
@@ -1506,7 +1506,7 @@ TEST(CoreConfigFile, Write)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   config_file_read
  */
 
@@ -1516,7 +1516,7 @@ TEST(CoreConfigFile, Read)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   config_file_reload
  */
 
@@ -1526,7 +1526,7 @@ TEST(CoreConfigFile, Reload)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   config_file_option_free_data
  */
 
@@ -1536,7 +1536,7 @@ TEST(CoreConfigFile, OptionFreeData)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   config_file_option_free
  */
 
@@ -1547,7 +1547,7 @@ TEST(CoreConfigFile, OptionFree)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   config_file_section_free_options
  */
 
@@ -1557,7 +1557,7 @@ TEST(CoreConfigFile, SectionFreeOptions)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   config_file_section_free
  */
 
@@ -1567,7 +1567,7 @@ TEST(CoreConfigFile, SectionFree)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   config_file_free
  */
 
@@ -1577,7 +1577,7 @@ TEST(CoreConfigFile, Free)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   config_file_free_all
  */
 
@@ -1587,7 +1587,7 @@ TEST(CoreConfigFile, FreeAll)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   config_file_free_all_plugin
  */
 
@@ -1597,7 +1597,7 @@ TEST(CoreConfigFile, FreeAllPlugin)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   config_file_hdata_config_file_cb
  */
 
@@ -1607,7 +1607,7 @@ TEST(CoreConfigFile, HdataConfigFileCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   config_file_hdata_config_section_cb
  */
 
@@ -1617,7 +1617,7 @@ TEST(CoreConfigFile, HdataConfigSectionCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   config_file_hdata_config_option_cb
  */
 
@@ -1627,7 +1627,7 @@ TEST(CoreConfigFile, HdataConfigOptionCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   config_file_add_option_to_infolist
  */
 
@@ -1637,7 +1637,7 @@ TEST(CoreConfigFile, AddOptionToInfolist)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   config_file_add_to_infolist
  */
 
@@ -1647,7 +1647,7 @@ TEST(CoreConfigFile, AddToInfolist)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   config_file_print_log
  */
 

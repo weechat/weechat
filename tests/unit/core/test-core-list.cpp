@@ -63,7 +63,7 @@ test_list_new ()
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   weelist_new
  */
 
@@ -84,7 +84,7 @@ TEST(CoreList, New)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   weelist_add
  *   weelist_free
  */
@@ -150,7 +150,7 @@ TEST(CoreList, Add)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   weelist_search
  *   weelist_search_pos
  *   weelist_casesearch
@@ -240,7 +240,7 @@ TEST(CoreList, Search)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   weelist_get
  *   weelist_string
  *   weelist_user_data
@@ -303,7 +303,7 @@ TEST(CoreList, Get)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   weelist_set
  */
 
@@ -330,7 +330,7 @@ TEST(CoreList, Set)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   weelist_next
  *   weelist_prev
  */
@@ -367,7 +367,7 @@ TEST(CoreList, Move)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   weelist_remove
  *   weelist_remove_all
  */
@@ -407,7 +407,7 @@ TEST(CoreList, Free)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   weelist_print_log
  */
 

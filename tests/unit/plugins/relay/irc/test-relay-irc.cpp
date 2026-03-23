@@ -356,7 +356,7 @@ TEST_GROUP(RelayIrcWithClient)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_irc_command_relayed
  */
 
@@ -373,7 +373,7 @@ TEST(RelayIrc, CommandRelayed)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_irc_command_ignored
  */
 
@@ -391,7 +391,7 @@ TEST(RelayIrc, CommandIgnored)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_irc_search_backlog_commands_tags
  */
 
@@ -407,7 +407,7 @@ TEST(RelayIrc, SearchBacklogCommandsTags)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_irc_search_server_capability
  */
 
@@ -422,7 +422,7 @@ TEST(RelayIrc, SearchServerCapability)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_irc_message_parse
  */
 
@@ -476,7 +476,7 @@ TEST(RelayIrc, MessageParse)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_irc_sendf
  */
 
@@ -494,7 +494,7 @@ TEST(RelayIrcWithClient, Sendf)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_irc_parse_cap_message
  */
 
@@ -530,7 +530,7 @@ TEST(RelayIrcWithClient, ParseCapMessage)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_irc_signal_irc_in2_cb
  */
 
@@ -540,7 +540,7 @@ TEST(RelayIrc, SignalIrcIn2Cb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_irc_tag_relay_client_id
  */
 
@@ -556,7 +556,7 @@ TEST(RelayIrc, TagRelayClientId)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_irc_signal_irc_outtags_cb
  */
 
@@ -566,7 +566,7 @@ TEST(RelayIrc, SignalIrcOuttagsCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_irc_signal_irc_disc_cb
  */
 
@@ -576,7 +576,7 @@ TEST(RelayIrc, SignalIrcDiscCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_irc_hsignal_irc_redir_cb
  */
 
@@ -586,7 +586,7 @@ TEST(RelayIrc, HsignalIrcRedirCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_irc_get_line_info
  */
 
@@ -596,7 +596,7 @@ TEST(RelayIrc, GetLineInfo)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_irc_send_channel_backlog
  */
 
@@ -606,7 +606,7 @@ TEST(RelayIrc, SendChannelBacklog)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_irc_send_join
  */
 
@@ -616,7 +616,7 @@ TEST(RelayIrc, SendJoin)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_irc_send_join_channels
  */
 
@@ -626,7 +626,7 @@ TEST(RelayIrc, SendJoinChannels)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_irc_input_send
  */
 
@@ -639,7 +639,7 @@ TEST(RelayIrcWithClient, InputSend)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_irc_hook_signals
  */
 
@@ -649,7 +649,7 @@ TEST(RelayIrc, HookSignals)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_irc_capability_compare_cb
  */
 
@@ -659,7 +659,7 @@ TEST(RelayIrc, CapabilityCompareCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_irc_capability_free_db
  */
 
@@ -669,7 +669,7 @@ TEST(RelayIrc, CapabilityFreeDb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_irc_cap_enabled
  */
 
@@ -690,7 +690,7 @@ TEST(RelayIrcWithClient, CapEnabled)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_irc_get_supported_caps
  */
 
@@ -710,7 +710,7 @@ TEST(RelayIrcWithClient, GetSupportedCaps)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_irc_get_list_caps
  */
 
@@ -735,7 +735,7 @@ TEST(RelayIrc, RelayGetListCaps)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_irc_recv_command_capab
  */
 
@@ -808,7 +808,7 @@ TEST(RelayIrcWithClient, RecvCommandCapab)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_irc_parse_ctcp
  */
 
@@ -874,7 +874,7 @@ TEST(RelayIrcWithClient, ParseCtcp)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_irc_recv
  */
 
@@ -953,7 +953,7 @@ TEST(RelayIrcWithClient, Recv)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_irc_close_connection
  */
 
@@ -963,7 +963,7 @@ TEST(RelayIrc, CloseConnection)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_irc_alloc
  */
 
@@ -973,7 +973,7 @@ TEST(RelayIrc, Alloc)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_irc_alloc_with_infolist
  */
 
@@ -983,7 +983,7 @@ TEST(RelayIrc, AllocWithInfolist)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_irc_get_initial_status
  */
 
@@ -993,7 +993,7 @@ TEST(RelayIrc, GetInitialStatus)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_irc_free
  */
 
@@ -1003,7 +1003,7 @@ TEST(RelayIrc, Free)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_irc_add_to_infolist
  */
 
@@ -1013,7 +1013,7 @@ TEST(RelayIrc, AddToInfolist)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_irc_print_log
  */
 

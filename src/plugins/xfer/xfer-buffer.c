@@ -39,7 +39,7 @@ int xfer_buffer_selected_line = 0;
 
 
 /*
- * Updates a xfer in buffer and updates hotlist for xfer buffer.
+ * Update a xfer in buffer and updates hotlist for xfer buffer.
  */
 
 void
@@ -354,7 +354,7 @@ xfer_buffer_close_cb (const void *pointer, void *data,
 }
 
 /*
- * Opens xfer buffer (to display list of xfer).
+ * Open xfer buffer (to display list of xfer).
  */
 
 void

@@ -44,7 +44,7 @@
 
 
 /*
- * Returns buffer id.
+ * Return buffer id.
  */
 
 long long
@@ -70,7 +70,7 @@ relay_api_get_buffer_id (struct t_gui_buffer *buffer)
 }
 
 /*
- * Returns value of "colors" URL parameter, an enum with one of these values:
+ * Return value of "colors" URL parameter, an enum with one of these values:
  *   - RELAY_API_COLORS_ANSI (default)
  *   - RELAY_API_COLORS_WEECHAT
  *   - RELAY_API_COLORS_STRIP
@@ -93,7 +93,7 @@ relay_api_search_colors (const char *colors)
 }
 
 /*
- * Hooks signals for a client.
+ * Hook signals for a client.
  */
 
 void
@@ -154,7 +154,7 @@ relay_api_hook_signals (struct t_relay_client *client)
 }
 
 /*
- * Unhooks signals for a client.
+ * Unhook signals for a client.
  */
 
 void
@@ -183,7 +183,7 @@ relay_api_unhook_signals (struct t_relay_client *client)
 }
 
 /*
- * Reads HTTP request from a client.
+ * Read HTTP request from a client.
  */
 
 void
@@ -193,7 +193,7 @@ relay_api_recv_http (struct t_relay_client *client)
 }
 
 /*
- * Reads JSON string from a client.
+ * Read JSON string from a client.
  */
 
 void
@@ -203,7 +203,7 @@ relay_api_recv_json (struct t_relay_client *client, const char *json)
 }
 
 /*
- * Closes connection with a client.
+ * Close connection with a client.
  */
 
 void
@@ -220,7 +220,7 @@ relay_api_close_connection (struct t_relay_client *client)
 }
 
 /*
- * Initializes relay data specific to API protocol.
+ * Initialize relay data specific to API protocol.
  */
 
 void
@@ -247,7 +247,7 @@ relay_api_alloc (struct t_relay_client *client)
 }
 
 /*
- * Initializes relay data specific to API protocol with an infolist.
+ * Initialize relay data specific to API protocol with an infolist.
  *
  * This is called after /upgrade.
  */
@@ -287,7 +287,7 @@ relay_api_alloc_with_infolist (struct t_relay_client *client,
 }
 
 /*
- * Returns the client initial status: it is always "authenticating" for API
+ * Return the client initial status: it is always "authenticating" for API
  * protocol because we always expect the client to authenticate.
  */
 
@@ -301,7 +301,7 @@ relay_api_get_initial_status (struct t_relay_client *client)
 }
 
 /*
- * Frees relay data specific to API protocol.
+ * Free relay data specific to API protocol.
  */
 
 void
@@ -325,13 +325,13 @@ relay_api_free (struct t_relay_client *client)
 }
 
 /*
- * Adds client API data in an infolist.
+ * Add client API data in an infolist.
  *
  * If force_disconnected_state == 1, the infolist contains the client
  * in a disconnected state (but the client is unchanged, still connected if it
  * was).
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -368,7 +368,7 @@ relay_api_add_to_infolist (struct t_infolist_item *item,
 }
 
 /*
- * Prints client API data in WeeChat log file (usually for crash dump).
+ * Print client API data in WeeChat log file (usually for crash dump).
  */
 
 void

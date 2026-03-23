@@ -72,7 +72,7 @@ gnutls_certificate_credentials_t gnutls_xcred; /* GnuTLS client credentials */
 
 
 /*
- * Initializes gcrypt.
+ * Initialize gcrypt.
  */
 
 void
@@ -87,7 +87,7 @@ network_init_gcrypt (void)
 }
 
 /*
- * Allocates credentials structure.
+ * Allocate credentials structure.
  */
 
 void
@@ -101,9 +101,9 @@ network_allocate_credentials (void)
 }
 
 /*
- * Loads system's default trusted certificate authorities.
+ * Load system's default trusted certificate authorities.
  *
- * Returns the number of certificates loaded.
+ * Return the number of certificates loaded.
  */
 
 int
@@ -143,7 +143,7 @@ network_load_system_ca_file (int force_display)
 }
 
 /*
- * Loads user's trusted certificate authorities.
+ * Load user's trusted certificate authorities.
  */
 
 int
@@ -229,7 +229,7 @@ end:
 }
 
 /*
- * Loads system's default and user's trusted certificate authorities.
+ * Load system's default and user's trusted certificate authorities.
  */
 
 void
@@ -247,7 +247,7 @@ network_load_ca_files (int force_display)
 }
 
 /*
- * Reloads system's default and user's trusted certificate authorities.
+ * Reload system's default and user's trusted certificate authorities.
  */
 
 void
@@ -271,7 +271,7 @@ network_reload_ca_files (int force_display)
 }
 
 /*
- * Initializes GnuTLS.
+ * Initialize GnuTLS.
  */
 
 void
@@ -288,7 +288,7 @@ network_init_gnutls (void)
 }
 
 /*
- * Ends network.
+ * End network.
  */
 
 void
@@ -306,9 +306,9 @@ network_end (void)
 }
 
 /*
- * Checks if a string contains a valid IP address (IPv4 or IPv6).
+ * Check if a string contains a valid IP address (IPv4 or IPv6).
  *
- * Returns:
+ * Return:
  *   1: string is a valid IPv4 or IPv6
  *   0: string is not a valid IP address
  */
@@ -335,12 +335,12 @@ network_is_ip_address (const char *address)
 }
 
 /*
- * Sends data on a socket with retry.
+ * Send data on a socket with retry.
  *
  * WARNING: this function is blocking, it must be called only in a forked
  * process.
  *
- * Returns number of bytes sent, -1 if error.
+ * Return number of bytes sent, -1 if error.
  */
 
 int
@@ -367,12 +367,12 @@ network_send_with_retry (int sock, const void *buffer, int length, int flags)
 }
 
 /*
- * Receives data on a socket with retry.
+ * Receive data on a socket with retry.
  *
  * WARNING: this function is blocking, it must be called only in a forked
  * process.
  *
- * Returns number of bytes received, -1 if error.
+ * Return number of bytes received, -1 if error.
  */
 
 int
@@ -399,12 +399,12 @@ network_recv_with_retry (int sock, void *buffer, int length, int flags)
 }
 
 /*
- * Establishes a connection and authenticates with a HTTP proxy.
+ * Establish a connection and authenticates with a HTTP proxy.
  *
  * WARNING: this function is blocking, it must be called only in a forked
  * process.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -463,9 +463,9 @@ network_pass_httpproxy (struct t_proxy *proxy, int sock, const char *address,
 }
 
 /*
- * Resolves a hostname to its IP address (works with IPv4 and IPv6).
+ * Resolve a hostname to its IP address (works with IPv4 and IPv6).
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -510,14 +510,14 @@ network_resolve (const char *hostname, char *ip, int *version)
 }
 
 /*
- * Establishes a connection and authenticates with a socks4 proxy.
+ * Establish a connection and authenticates with a socks4 proxy.
  *
  * The socks4 protocol is explained here: https://en.wikipedia.org/wiki/SOCKS
  *
  * WARNING: this function is blocking, it must be called only in a forked
  * process.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -563,7 +563,7 @@ network_pass_socks4proxy (struct t_proxy *proxy, int sock, const char *address,
 }
 
 /*
- * Establishes a connection and authenticates with a socks5 proxy.
+ * Establish a connection and authenticates with a socks5 proxy.
  *
  * The socks5 protocol is explained in RFC 1928.
  * The socks5 authentication with username/pass is explained in RFC 1929.
@@ -571,7 +571,7 @@ network_pass_socks4proxy (struct t_proxy *proxy, int sock, const char *address,
  * WARNING: this function is blocking, it must be called only in a forked
  * process.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -734,12 +734,12 @@ network_pass_socks5proxy (struct t_proxy *proxy, int sock, const char *address,
 }
 
 /*
- * Establishes a connection and authenticates with a proxy.
+ * Establish a connection and authenticates with a proxy.
  *
  * WARNING: this function is blocking, it must be called only in a forked
  * process.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -772,12 +772,12 @@ network_pass_proxy (const char *proxy, int sock, const char *address, int port)
 }
 
 /*
- * Connects to a remote host and wait for connection if socket is non blocking.
+ * Connect to a remote host and wait for connection if socket is non blocking.
  *
  * WARNING: this function is blocking, it must be called only in a forked
  * process.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -822,12 +822,12 @@ network_connect (int sock, const struct sockaddr *addr, socklen_t addrlen)
 }
 
 /*
- * Connects to a remote host.
+ * Connect to a remote host.
  *
  * WARNING: this function is blocking, it must be called only in a forked
  * process.
  *
- * Returns:
+ * Return:
  *   >= 0: connected socket fd
  *     -1: error
  */
@@ -913,7 +913,7 @@ error:
 }
 
 /*
- * Connects to peer in a child process.
+ * Connect to peer in a child process.
  */
 
 void
@@ -1563,7 +1563,7 @@ network_connect_gnutls_handshake_timer_cb (const void *pointer,
 }
 
 /*
- * Reads connection progress from child process.
+ * Read connection progress from child process.
  */
 
 int
@@ -1784,7 +1784,7 @@ network_connect_child_read_cb (const void *pointer, void *data, int fd)
 }
 
 /*
- * Connects with fork (called by hook_connect() only!).
+ * Connect with fork (called by hook_connect() only!).
  */
 
 void

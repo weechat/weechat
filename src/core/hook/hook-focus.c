@@ -39,7 +39,7 @@
 
 
 /*
- * Returns description of hook.
+ * Return description of hook.
  *
  * Note: result must be freed after use.
  */
@@ -51,9 +51,9 @@ hook_focus_get_description (struct t_hook *hook)
 }
 
 /*
- * Hooks a focus.
+ * Hook a focus.
  *
- * Returns pointer to new hook, NULL if error.
+ * Return pointer to new hook, NULL if error.
  */
 
 struct t_hook *
@@ -96,7 +96,7 @@ hook_focus (struct t_weechat_plugin *plugin,
 }
 
 /*
- * Adds keys of a hashtable into another.
+ * Add keys of a hashtable into another.
  */
 
 void
@@ -116,7 +116,7 @@ hook_focus_hashtable_map_cb (void *data,
 }
 
 /*
- * Adds keys of a hashtable into another (adding suffix "2" to keys).
+ * Add keys of a hashtable into another (adding suffix "2" to keys).
  */
 
 void
@@ -143,7 +143,7 @@ hook_focus_hashtable_map2_cb (void *data,
 }
 
 /*
- * Gets data for focus on (x,y) on screen.
+ * Get data for focus on (x,y) on screen.
  *
  * Argument hashtable_focus2 is not NULL only for a mouse gesture (it's for
  * point where mouse button has been released).
@@ -276,7 +276,7 @@ hook_focus_get_data (struct t_hashtable *hashtable_focus1,
 }
 
 /*
- * Frees data in a focus hook.
+ * Free data in a focus hook.
  */
 
 void
@@ -296,7 +296,7 @@ hook_focus_free_data (struct t_hook *hook)
 }
 
 /*
- * Returns hdata for focus hook.
+ * Return hdata for focus hook.
  */
 
 struct t_hdata *
@@ -319,9 +319,9 @@ hook_focus_hdata_hook_focus_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds focus hook data in the infolist item.
+ * Add focus hook data in the infolist item.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -342,7 +342,7 @@ hook_focus_add_to_infolist (struct t_infolist_item *item,
 }
 
 /*
- * Prints focus hook data in WeeChat log file (usually for crash dump).
+ * Print focus hook data in WeeChat log file (usually for crash dump).
  */
 
 void

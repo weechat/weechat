@@ -39,7 +39,7 @@
 
 
 /*
- * Returns description of hook.
+ * Return description of hook.
  *
  * Note: result must be freed after use.
  */
@@ -52,9 +52,9 @@ hook_hsignal_get_description (struct t_hook *hook)
 }
 
 /*
- * Hooks a hsignal (signal with hashtable).
+ * Hook a hsignal (signal with hashtable).
  *
- * Returns pointer to new hook, NULL if error.
+ * Return pointer to new hook, NULL if error.
  */
 
 struct t_hook *
@@ -103,10 +103,10 @@ hook_hsignal (struct t_weechat_plugin *plugin, const char *signal,
 }
 
 /*
- * Checks if a hooked hsignal matches a signal sent: it matches if at least
+ * Check if a hooked hsignal matches a signal sent: it matches if at least
  * one of the signal masks are matching the signal sent.
  *
- * Returns:
+ * Return:
  *   1: hook matches signal sent
  *   0: hook does not match signal sent
  */
@@ -126,7 +126,7 @@ hook_hsignal_match (const char *signal, struct t_hook *hook)
 }
 
 /*
- * Sends a hsignal (signal with hashtable).
+ * Send a hsignal (signal with hashtable).
  */
 
 int
@@ -185,7 +185,7 @@ hook_hsignal_send (const char *signal, struct t_hashtable *hashtable)
 }
 
 /*
- * Frees data in a hsignal hook.
+ * Free data in a hsignal hook.
  */
 
 void
@@ -206,7 +206,7 @@ hook_hsignal_free_data (struct t_hook *hook)
 }
 
 /*
- * Returns hdata for hsignal hook.
+ * Return hdata for hsignal hook.
  */
 
 struct t_hdata *
@@ -230,9 +230,9 @@ hook_hsignal_hdata_hook_hsignal_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds hsignal hook data in the infolist item.
+ * Add hsignal hook data in the infolist item.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -264,7 +264,7 @@ hook_hsignal_add_to_infolist (struct t_infolist_item *item,
 }
 
 /*
- * Prints hsignal hook data in WeeChat log file (usually for crash dump).
+ * Print hsignal hook data in WeeChat log file (usually for crash dump).
  */
 
 void

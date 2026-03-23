@@ -32,7 +32,7 @@ TEST_GROUP(CoreHook)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_init
  */
 
@@ -42,7 +42,7 @@ TEST(CoreHook, Init)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_search_type
  */
 
@@ -52,7 +52,7 @@ TEST(CoreHook, SearchType)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_find_pos
  */
 
@@ -62,7 +62,7 @@ TEST(CoreHook, FindPos)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_add_to_list
  */
 
@@ -72,7 +72,7 @@ TEST(CoreHook, AddToList)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_remove_from_list
  */
 
@@ -82,7 +82,7 @@ TEST(CoreHook, RemoveFromList)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_remove_deleted
  */
 
@@ -92,7 +92,7 @@ TEST(CoreHook, RemoveDeleted)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_init_data
  */
 
@@ -102,7 +102,7 @@ TEST(CoreHook, InitData)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_valid
  */
 
@@ -112,7 +112,7 @@ TEST(CoreHook, Valid)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_exec_start
  */
 
@@ -122,7 +122,7 @@ TEST(CoreHook, ExecStart)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_exec_end
  */
 
@@ -132,7 +132,7 @@ TEST(CoreHook, ExecEnd)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_callback_start
  */
 
@@ -142,7 +142,7 @@ TEST(CoreHook, CallbackStart)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_callback_end
  */
 
@@ -152,7 +152,7 @@ TEST(CoreHook, CallbackEnd)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_get_description
  */
 
@@ -162,7 +162,7 @@ TEST(CoreHook, GetDescription)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_set
  */
 
@@ -172,7 +172,7 @@ TEST(CoreHook, Set)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_timer_clean_process_cb
  */
 
@@ -182,7 +182,7 @@ TEST(CoreHook, TimerCleanProcessCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_schedule_clean_process
  */
 
@@ -192,7 +192,7 @@ TEST(CoreHook, ScheduleCleanProcess)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   unhook
  */
 
@@ -202,7 +202,7 @@ TEST(CoreHook, Unhook)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   unhook_all_plugin
  */
 
@@ -212,7 +212,7 @@ TEST(CoreHook, UnhookAllPlugin)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   unhook_all
  */
 
@@ -222,7 +222,7 @@ TEST(CoreHook, UnhookAll)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_add_to_infolist_pointer
  */
 
@@ -232,7 +232,7 @@ TEST(CoreHook, AddToInfolistPointer)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_add_to_infolist_type
  */
 
@@ -242,7 +242,7 @@ TEST(CoreHook, AddToInfolistType)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_add_to_infolist
  */
 
@@ -252,7 +252,7 @@ TEST(CoreHook, AddToInfolist)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_print_log
  */
 

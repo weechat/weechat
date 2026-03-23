@@ -31,7 +31,7 @@
 
 
 /*
- * Returns info "logger_log_file".
+ * Return info "logger_log_file".
  */
 
 char *
@@ -82,7 +82,7 @@ logger_info_log_file_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns logger infolist "logger_buffer".
+ * Return logger infolist "logger_buffer".
  */
 
 struct t_infolist *
@@ -138,7 +138,7 @@ logger_info_infolist_logger_buffer_cb (const void *pointer, void *data,
 
 
 /*
- * Hooks infolist for logger plugin.
+ * Hook infolist for logger plugin.
  */
 
 void

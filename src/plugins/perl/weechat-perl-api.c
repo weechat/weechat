@@ -101,7 +101,7 @@ extern void boot_DynaLoader (pTHX_ CV* cv);
 
 
 /*
- * Registers a perl script.
+ * Register a perl script.
  */
 
 API_FUNC(register)
@@ -5702,7 +5702,7 @@ API_FUNC(upgrade_close)
 }
 
 /*
- * Initializes perl functions and constants.
+ * Initialize perl functions and constants.
  */
 
 void

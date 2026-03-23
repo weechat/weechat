@@ -40,7 +40,7 @@ TEST_GROUP(CoreDir)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   dir_get_temp_dir
  */
 
@@ -50,7 +50,7 @@ TEST(CoreDir, GetTempDir)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   dir_mkdir_home
  *   dir_mkdir
  *   dir_mkdir_parents
@@ -62,7 +62,7 @@ TEST(CoreDir, Mkdir)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   dir_unlink_cb
  *   dir_rmtree
  */
@@ -73,7 +73,7 @@ TEST(CoreDir, Rmtree)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   dir_set_home_path
  */
 
@@ -83,7 +83,7 @@ TEST(CoreDir, SetHomePath)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   dir_create_home_temp_dir
  */
 
@@ -93,7 +93,7 @@ TEST(CoreDir, CreateHomeTempDir)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   dir_find_xdg_dirs
  */
 
@@ -103,7 +103,7 @@ TEST(CoreDir, FindXdgDirs)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   dir_find_home_dirs
  */
 
@@ -113,7 +113,7 @@ TEST(CoreDir, FindHomeDirs)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   dir_remove_trailing_separators
  */
 
@@ -149,7 +149,7 @@ TEST(CoreDir, RemoveTrailingSeparators)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   dir_create_home_dir
  */
 
@@ -159,7 +159,7 @@ TEST(CoreDir, CreateHomeDir)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   dir_create_home_dirs
  */
 
@@ -169,7 +169,7 @@ TEST(CoreDir, CreateHomeDirs)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   dir_remove_home_dirs
  */
 
@@ -179,7 +179,7 @@ TEST(CoreDir, RemoveHomeDirs)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   dir_get_string_home_dirs
  */
 
@@ -189,7 +189,7 @@ TEST(CoreDir, GetStringHomeDirs)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   dir_exec_on_files
  */
 
@@ -199,7 +199,7 @@ TEST(CoreDir, ExecOnFiles)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   dir_search_full_lib_name_ext
  *   dir_search_full_lib_name
  */
@@ -210,7 +210,7 @@ TEST(CoreDir, SearchFullLibName)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   dir_file_get_content
  *   dir_file_copy
  */
@@ -273,7 +273,7 @@ TEST(CoreDir, FileGetContentCopy)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   dir_file_compress_gzip
  */
 
@@ -283,7 +283,7 @@ TEST(CoreDir, FileCompressGzip)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   dir_file_compress_zstd
  */
 
@@ -293,7 +293,7 @@ TEST(CoreDir, FileCompressZstd)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   dir_file_compress
  */
 
@@ -303,7 +303,7 @@ TEST(CoreDir, FileCompress)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   dir_file_compare
  */
 

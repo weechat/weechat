@@ -46,7 +46,7 @@
 
 
 /*
- * Gets URL to an API resource.
+ * Get URL to an API resource.
  *
  * For example if remote URL is "https://localhost:9000" and the resource is
  * "handshake", it returns: "https://localhost:9000/api/handshake".
@@ -122,7 +122,7 @@ relay_remote_network_close_connection (struct t_relay_remote *remote)
 }
 
 /*
- * Disconnects from remote.
+ * Disconnect from remote.
  */
 
 void
@@ -138,9 +138,9 @@ relay_remote_network_disconnect (struct t_relay_remote *remote)
 }
 
 /*
- * Checks if authentication via websocket handshake was successful.
+ * Check if authentication via websocket handshake was successful.
  *
- * Returns:
+ * Return:
  *   1: authentication successful
  *   0: authentication has failed
  */
@@ -248,9 +248,9 @@ error:
 }
 
 /*
- * Sends data to the remote.
+ * Send data to the remote.
  *
- * Returns the number of bytes sent to the remote.
+ * Return the number of bytes sent to the remote.
  */
 
 int
@@ -276,10 +276,10 @@ relay_remote_network_send_data (struct t_relay_remote *remote,
 }
 
 /*
- * Sends data to the remote.
+ * Send data to the remote.
  * If the remote is connected, encapsulate data in a websocket frame.
  *
- * Returns the number of bytes sent to the remote.
+ * Return the number of bytes sent to the remote.
  */
 
 int
@@ -345,9 +345,9 @@ relay_remote_network_send (struct t_relay_remote *remote,
 }
 
 /*
- * Sends JSON data to the remote.
+ * Send JSON data to the remote.
  *
- * Returns the number of bytes sent to the remote.
+ * Return the number of bytes sent to the remote.
  */
 
 int
@@ -373,7 +373,7 @@ relay_remote_network_send_json (struct t_relay_remote *remote, cJSON *json)
 }
 
 /*
- * Reads text buffer from a remote.
+ * Read text buffer from a remote.
  */
 
 void
@@ -408,7 +408,7 @@ relay_remote_network_recv_text (struct t_relay_remote *remote,
 }
 
 /*
- * Reads websocket frames.
+ * Read websocket frames.
  */
 
 void
@@ -478,7 +478,7 @@ relay_remote_network_read_websocket_frames (struct t_relay_remote *remote,
 }
 
 /*
- * Reads a buffer of bytes from a remote.
+ * Read a buffer of bytes from a remote.
  */
 
 void
@@ -651,7 +651,7 @@ relay_remote_network_recv_cb (const void *pointer, void *data, int fd)
 }
 
 /*
- * Connects to remote using websocket, with authentication.
+ * Connect to remote using websocket, with authentication.
  */
 
 void
@@ -967,7 +967,7 @@ relay_remote_network_connect_cb (const void *pointer, void *data, int status,
 /*
  * GnuTLS callback called during handshake.
  *
- * Returns:
+ * Return:
  *    0: certificate OK
  *   -1: error in certificate
  */
@@ -1390,7 +1390,7 @@ end:
 }
 
 /*
- * Builds a string with the API HTTP handshake request.
+ * Build a string with the API HTTP handshake request.
  *
  * Note: result must be freed after use.
  */
@@ -1430,9 +1430,9 @@ relay_remote_network_get_handshake_request (void)
 }
 
 /*
- * Connects to a remote WeeChat relay/api.
+ * Connect to a remote WeeChat relay/api.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */

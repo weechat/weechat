@@ -48,9 +48,9 @@ struct t_gui_layout *gui_layout_current = NULL;
 
 
 /*
- * Searches a layout by name.
+ * Search a layout by name.
  *
- * Returns pointer to layout found, NULL if not found.
+ * Return pointer to layout found, NULL if not found.
  */
 
 struct t_gui_layout *
@@ -73,12 +73,12 @@ gui_layout_search (const char *name)
 }
 
 /*
- * Allocates a new layout.
+ * Allocate a new layout.
  *
  * Note: the layout is not added to the list (a call to gui_layout_add() will do
  * that).
  *
- * Returns pointer to new layout, NULL if error.
+ * Return pointer to new layout, NULL if error.
  */
 
 struct t_gui_layout *
@@ -107,9 +107,9 @@ gui_layout_alloc (const char *name)
 }
 
 /*
- * Adds a layout in "gui_layouts".
+ * Add a layout in "gui_layouts".
  *
- * Returns:
+ * Return:
  *   1: layout added
  *   0: layout not added (another layout exists with same name)
  */
@@ -138,7 +138,7 @@ gui_layout_add (struct t_gui_layout *layout)
 }
 
 /*
- * Renames a layout.
+ * Rename a layout.
  */
 
 void
@@ -152,7 +152,7 @@ gui_layout_rename (struct t_gui_layout *layout, const char *new_name)
 }
 
 /*
- * Removes a buffer layout from a layout.
+ * Remove a buffer layout from a layout.
  */
 
 void
@@ -180,7 +180,7 @@ gui_layout_buffer_remove (struct t_gui_layout *layout,
 }
 
 /*
- * Removes all buffer layouts from a layout.
+ * Remove all buffer layouts from a layout.
  */
 
 void
@@ -196,7 +196,7 @@ gui_layout_buffer_remove_all (struct t_gui_layout *layout)
 }
 
 /*
- * Resets layout_number in all buffers.
+ * Reset layout_number in all buffers.
  */
 
 void
@@ -212,9 +212,9 @@ gui_layout_buffer_reset (void)
 }
 
 /*
- * Adds a buffer layout in a layout.
+ * Add a buffer layout in a layout.
  *
- * Returns pointer to buffer layout, NULL if error.
+ * Return pointer to buffer layout, NULL if error.
  */
 
 struct t_gui_layout_buffer *
@@ -249,7 +249,7 @@ gui_layout_buffer_add (struct t_gui_layout *layout,
 }
 
 /*
- * Gets layout number for a plugin/buffer.
+ * Get layout number for a plugin/buffer.
  */
 
 void
@@ -292,7 +292,7 @@ gui_layout_buffer_get_number (struct t_gui_layout *layout,
 }
 
 /*
- * Gets layout numbers for all buffers.
+ * Get layout numbers for all buffers.
  */
 
 void
@@ -312,7 +312,7 @@ gui_layout_buffer_get_number_all (struct t_gui_layout *layout)
 }
 
 /*
- * Stores current layout for buffers in a layout.
+ * Store current layout for buffers in a layout.
  */
 
 void
@@ -339,7 +339,7 @@ gui_layout_buffer_store (struct t_gui_layout *layout)
 }
 
 /*
- * Applies a layout for buffers.
+ * Applie a layout for buffers.
  */
 
 void
@@ -376,7 +376,7 @@ gui_layout_buffer_apply (struct t_gui_layout *layout)
 }
 
 /*
- * Removes a window layout.
+ * Remove a window layout.
  */
 
 void
@@ -399,7 +399,7 @@ gui_layout_window_remove (struct t_gui_layout_window *layout_window)
 }
 
 /*
- * Removes all window layouts from a layout.
+ * Remove all window layouts from a layout.
  */
 
 void
@@ -417,7 +417,7 @@ gui_layout_window_remove_all (struct t_gui_layout *layout)
 
 
 /*
- * Resets layout for windows.
+ * Reset layout for windows.
  */
 
 void
@@ -441,9 +441,9 @@ gui_layout_window_reset (void)
 }
 
 /*
- * Searches for a window layout by internal id.
+ * Searche for a window layout by internal id.
  *
- * Returns pointer to window layout found, NULL if not found.
+ * Return pointer to window layout found, NULL if not found.
  */
 
 struct t_gui_layout_window *
@@ -476,9 +476,9 @@ gui_layout_window_search_by_id (struct t_gui_layout_window *layout_window,
 }
 
 /*
- * Adds a window layout.
+ * Add a window layout.
  *
- * Returns pointer to new window layout, NULL if not found.
+ * Return pointer to new window layout, NULL if not found.
  */
 
 struct t_gui_layout_window *
@@ -525,7 +525,7 @@ gui_layout_window_add (struct t_gui_layout_window **layout_window,
 }
 
 /*
- * Stores tree of windows.
+ * Store tree of windows.
  */
 
 void
@@ -575,9 +575,9 @@ gui_layout_window_store_tree (struct t_gui_layout *layout,
 }
 
 /*
- * Stores current layout for windows in a layout.
+ * Store current layout for windows in a layout.
  *
- * Returns internal id of current window.
+ * Return internal id of current window.
  */
 
 void
@@ -596,9 +596,9 @@ gui_layout_window_store (struct t_gui_layout *layout)
 }
 
 /*
- * Checks whether a window has its layout buffer displayed or not.
+ * Check whether a window has its layout buffer displayed or not.
  *
- * Returns:
+ * Return:
  *    1: the window has layout info and the proper buffer displayed
  *    0: the window has layout info but NOT the proper buffer displayed
  *   -1: the window has no layout info
@@ -624,7 +624,7 @@ gui_layout_window_check_buffer (struct t_gui_window *window)
 }
 
 /*
- * Assigns a buffer to windows.
+ * Assign a buffer to windows.
  */
 
 void
@@ -649,8 +649,8 @@ gui_layout_window_assign_buffer (struct t_gui_buffer *buffer)
 }
 
 /*
- * For each window, checks if another buffer should be assigned, and if yes,
- * assigns it.
+ * For each window, check if another buffer should be assigned, and if yes,
+ * assign it.
  */
 
 void
@@ -678,7 +678,7 @@ gui_layout_window_assign_all_buffers (void)
 }
 
 /*
- * Applies tree windows (re-splits screen according to windows tree and assigns
+ * Apply tree windows (re-split screen according to windows tree and assign
  * buffer to windows).
  */
 
@@ -736,7 +736,7 @@ gui_layout_window_apply_tree (struct t_gui_layout_window *layout_window,
 }
 
 /*
- * Applies current layout for windows.
+ * Apply current layout for windows.
  */
 
 void
@@ -766,7 +766,7 @@ gui_layout_window_apply (struct t_gui_layout *layout,
 }
 
 /*
- * Stores layout according to option "store_layout_on_exit".
+ * Store layout according to option "store_layout_on_exit".
  */
 
 void
@@ -813,7 +813,7 @@ gui_layout_store_on_exit (void)
 }
 
 /*
- * Frees a layout.
+ * Free a layout.
  */
 
 void
@@ -837,7 +837,7 @@ gui_layout_free (struct t_gui_layout *layout)
 }
 
 /*
- * Removes a layout from hashtable "gui_layouts".
+ * Remove a layout from hashtable "gui_layouts".
  */
 
 void
@@ -872,7 +872,7 @@ gui_layout_remove (struct t_gui_layout *layout)
 }
 
 /*
- * Removes all layouts from "gui_layouts".
+ * Remove all layouts from "gui_layouts".
  */
 
 void
@@ -885,7 +885,7 @@ gui_layout_remove_all (void)
 }
 
 /*
- * Returns hdata for buffer layout.
+ * Return hdata for buffer layout.
  */
 
 struct t_hdata *
@@ -912,7 +912,7 @@ gui_layout_hdata_layout_buffer_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns hdata for window layout.
+ * Return hdata for window layout.
  */
 
 struct t_hdata *
@@ -941,7 +941,7 @@ gui_layout_hdata_layout_window_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns hdata for layout.
+ * Return hdata for layout.
  */
 
 struct t_hdata *
@@ -974,9 +974,9 @@ gui_layout_hdata_layout_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds a buffer layout in an infolist.
+ * Add a buffer layout in an infolist.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -1005,9 +1005,9 @@ gui_layout_buffer_add_to_infolist (struct t_infolist *infolist,
 }
 
 /*
- * Adds a window layout in an infolist.
+ * Add a window layout in an infolist.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -1050,9 +1050,9 @@ gui_layout_window_add_to_infolist (struct t_infolist *infolist,
 }
 
 /*
- * Adds a layout in an infolist.
+ * Add a layout in an infolist.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -1084,7 +1084,7 @@ gui_layout_add_to_infolist (struct t_infolist *infolist,
 }
 
 /*
- * Prints windows layout infos in WeeChat log file (usually for crash dump).
+ * Print windows layout infos in WeeChat log file (usually for crash dump).
  */
 
 void
@@ -1114,7 +1114,7 @@ gui_layout_print_log_window (struct t_gui_layout_window *layout_window,
 }
 
 /*
- * Prints layouts in WeeChat log file (usually for crash dump).
+ * Print layouts in WeeChat log file (usually for crash dump).
  */
 
 void

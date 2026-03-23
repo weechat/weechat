@@ -40,9 +40,9 @@ int relay_buffer_selected_line = 0;
 
 
 /*
- * Checks if the buffer pointer is a relay buffer (relay raw/list).
+ * Check if the buffer pointer is a relay buffer (relay raw/list).
  *
- * Returns:
+ * Return:
  *   1: buffer is a relay buffer (raw/list)
  *   0: buffer is NOT a relay buffer
  */
@@ -55,7 +55,7 @@ relay_buffer_is_relay (struct t_gui_buffer *buffer)
 }
 
 /*
- * Updates a client in buffer and updates hotlist for relay buffer.
+ * Update a client in buffer and updates hotlist for relay buffer.
  */
 
 void
@@ -274,7 +274,7 @@ relay_buffer_close_cb (const void *pointer, void *data,
 }
 
 /*
- * Opens relay buffer.
+ * Open relay buffer.
  */
 
 void

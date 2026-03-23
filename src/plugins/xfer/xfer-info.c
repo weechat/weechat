@@ -29,7 +29,7 @@
 
 
 /*
- * Returns xfer infolist "xfer".
+ * Return xfer infolist "xfer".
  */
 
 struct t_infolist *
@@ -82,7 +82,7 @@ xfer_info_infolist_xfer_cb (const void *pointer, void *data,
 }
 
 /*
- * Hooks infolist.
+ * Hook infolist.
  */
 
 void

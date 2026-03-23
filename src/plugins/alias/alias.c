@@ -49,9 +49,9 @@ struct t_alias *last_alias = NULL;
 
 
 /*
- * Checks if an alias pointer is valid.
+ * Check if an alias pointer is valid.
  *
- * Returns:
+ * Return:
  *   1: alias exists
  *   0; alias does not exist
  */
@@ -76,9 +76,9 @@ alias_valid (struct t_alias *alias)
 }
 
 /*
- * Searches for an alias by name.
+ * Search for an alias by name.
  *
- * Returns pointer to alias found, NULL if not found.
+ * Return pointer to alias found, NULL if not found.
  */
 
 struct t_alias *
@@ -99,7 +99,7 @@ alias_search (const char *alias_name)
 }
 
 /*
- * Adds word (in range) to alias string.
+ * Add word (in range) to alias string.
  */
 
 void
@@ -116,7 +116,7 @@ alias_string_add_word_range (char **alias, const char *start, const char *end)
 }
 
 /*
- * Adds some arguments to alias string.
+ * Add some arguments to alias string.
  */
 
 void
@@ -134,7 +134,7 @@ alias_string_add_arguments (char **alias, char **argv,
 }
 
 /*
- * Replaces arguments in alias.
+ * Replace arguments in alias.
  *
  * Arguments replaced are (n and m in 1..9):
  *   $n   argument n
@@ -285,7 +285,7 @@ alias_replace_args (const char *alias_args, const char *user_args)
 }
 
 /*
- * Replaces local buffer variables in string, then runs command on buffer.
+ * Replace local buffer variables in string, then runs command on buffer.
  */
 
 void
@@ -413,7 +413,7 @@ alias_cb (const void *pointer, void *data,
 }
 
 /*
- * Hooks command for an alias.
+ * Hook command for an alias.
  */
 
 void
@@ -462,7 +462,7 @@ alias_hook_command (struct t_alias *alias)
 }
 
 /*
- * Searches for position of alias (to keep aliases sorted by name).
+ * Search for position of alias (to keep aliases sorted by name).
  */
 
 struct t_alias *
@@ -481,7 +481,7 @@ alias_find_pos (const char *name)
 }
 
 /*
- * Inserts alias in list of aliases.
+ * Insert alias in list of aliases.
  */
 
 void
@@ -522,7 +522,7 @@ alias_insert (struct t_alias *alias)
 }
 
 /*
- * Removes alias from list of aliases.
+ * Remove alias from list of aliases.
  */
 
 void
@@ -539,9 +539,9 @@ alias_remove_from_list (struct t_alias *alias)
 }
 
 /*
- * Renames an alias.
+ * Rename an alias.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -583,7 +583,7 @@ alias_rename (struct t_alias *alias, const char *new_name)
 }
 
 /*
- * Frees an alias and remove it from list.
+ * Free an alias and remove it from list.
  */
 
 void
@@ -604,7 +604,7 @@ alias_free (struct t_alias *alias)
 }
 
 /*
- * Frees all aliases.
+ * Free all aliases.
  */
 
 void
@@ -617,7 +617,7 @@ alias_free_all (void)
 }
 
 /*
- * Updates completion for an alias.
+ * Update completion for an alias.
  */
 
 void
@@ -632,10 +632,9 @@ alias_update_completion (struct t_alias *alias, const char *completion)
 }
 
 /*
- * Checks if an alias name is valid: it must contain neither slashes nor
- * spaces.
+ * Check if an alias name is valid: it must contain neither slashes nor spaces.
  *
- * Returns:
+ * Return:
  *   1: name is valid
  *   0: name is invalid
  */
@@ -659,9 +658,9 @@ alias_name_valid (const char *name)
 }
 
 /*
- * Creates a new alias and adds it to alias list.
+ * Create a new alias and adds it to alias list.
  *
- * Returns pointer to new alias, NULL if error.
+ * Return pointer to new alias, NULL if error.
  */
 
 struct t_alias *
@@ -716,9 +715,9 @@ alias_new (const char *name, const char *command, const char *completion)
 }
 
 /*
- * Adds an alias in an infolist.
+ * Add an alias in an infolist.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -750,7 +749,7 @@ alias_add_to_infolist (struct t_infolist *infolist, struct t_alias *alias)
 }
 
 /*
- * Initializes alias plugin.
+ * Initialize alias plugin.
  */
 
 int
@@ -777,7 +776,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 }
 
 /*
- * Ends alias plugin.
+ * End alias plugin.
  */
 
 int

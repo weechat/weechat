@@ -37,7 +37,7 @@ struct t_gui_bar_item *fset_bar_item_fset = NULL;
 
 
 /*
- * Updates fset bar item if fset is enabled.
+ * Update fset bar item if fset is enabled.
  */
 
 void
@@ -47,7 +47,7 @@ fset_bar_item_update (void)
 }
 
 /*
- * Returns content of bar item "fset": help on currently selected option.
+ * Return content of bar item "fset": help on currently selected option.
  */
 
 char *
@@ -225,9 +225,9 @@ fset_bar_item_fset_cb (const void *pointer, void *data,
 }
 
 /*
- * Initializes fset bar items.
+ * Initialize fset bar items.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -243,7 +243,7 @@ fset_bar_item_init (void)
 }
 
 /*
- * Ends fset bar items.
+ * End fset bar items.
  */
 
 void

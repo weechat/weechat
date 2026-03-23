@@ -37,9 +37,9 @@
 
 
 /*
- * Gets pointer to option with IRC message.
+ * Get pointer to option with IRC message.
  *
- * Returns pointer to option found, NULL if not found.
+ * Return pointer to option found, NULL if not found.
  */
 
 struct t_config_option *
@@ -73,7 +73,7 @@ irc_msgbuffer_get_option (struct t_irc_server *server, const char *message)
 }
 
 /*
- * Gets target for IRC message.
+ * Get target for IRC message.
  *
  * Arguments:
  *   message: IRC message (for example: "invite", "312")
@@ -81,7 +81,7 @@ irc_msgbuffer_get_option (struct t_irc_server *server, const char *message)
  *   default_buffer: used if no target is defined (optional, by default server
  *                   buffer is used).
  *
- * Returns pointer to buffer found, NULL if not found.
+ * Return pointer to buffer found, NULL if not found.
  */
 
 struct t_gui_buffer *

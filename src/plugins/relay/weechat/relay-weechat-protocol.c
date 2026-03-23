@@ -39,12 +39,12 @@
 
 
 /*
- * Gets buffer pointer with argument from a command.
+ * Get buffer pointer with argument from a command.
  *
  * The argument "arg" can be a pointer ("0x12345678") or a full name
  * ("irc.libera.#weechat").
  *
- * Returns pointer to buffer found, NULL if not found.
+ * Return pointer to buffer found, NULL if not found.
  */
 
 struct t_gui_buffer *
@@ -80,7 +80,7 @@ relay_weechat_protocol_get_buffer (const char *arg)
 }
 
 /*
- * Gets integer value of a synchronization flag.
+ * Get integer value of a synchronization flag.
  */
 
 int
@@ -100,7 +100,7 @@ relay_weechat_protocol_sync_flag (const char *flag)
 }
 
 /*
- * Checks if buffer is synchronized with at least one of the flags given.
+ * Check if buffer is synchronized with at least one of the flags given.
  *
  * First searches buffer with full_name in hashtable "buffers_sync" (if buffer
  * is not NULL).
@@ -112,7 +112,7 @@ relay_weechat_protocol_sync_flag (const char *flag)
  *   RELAY_WEECHAT_PROTOCOL_SYNC_BUFFERS
  *   RELAY_WEECHAT_PROTOCOL_SYNC_UPGRADE
  *
- * Returns:
+ * Return:
  *   1: buffer is synchronized with at least one flag given
  *   0: buffer is NOT synchronized with any of the flags given
  */
@@ -146,7 +146,7 @@ relay_weechat_protocol_is_sync (struct t_relay_client *ptr_client,
 }
 
 /*
- * Replies to a client handshake command.
+ * Reply to a client handshake command.
  */
 
 void
@@ -1734,7 +1734,7 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(quit)
 }
 
 /*
- * Reads a command from a client.
+ * Read a command from a client.
  */
 
 void

@@ -41,7 +41,7 @@
 
 
 /*
- * Displays user message.
+ * Display user message.
  *
  * If ctcp_type == "action", then message is displayed as an action
  * (like command /me), for example:
@@ -281,8 +281,7 @@ irc_input_user_message_display (struct t_irc_server *server,
 }
 
 /*
- * Sends a PRIVMSG message, and split it if message size is > 512 bytes
- * (by default).
+ * Send a PRIVMSG message, and split it if message size is > 512 bytes (by default).
  *
  * Warning: this function makes temporary changes in "message".
  */

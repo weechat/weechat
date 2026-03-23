@@ -31,9 +31,9 @@
 
 
 /*
- * Builds a new nicklist structure (to store nicklist diffs).
+ * Build a new nicklist structure (to store nicklist diffs).
  *
- * Returns pointer to new nicklist structure, NULL if error.
+ * Return pointer to new nicklist structure, NULL if error.
  */
 
 struct t_relay_weechat_nicklist *
@@ -53,7 +53,7 @@ relay_weechat_nicklist_new (void)
 }
 
 /*
- * Adds a nicklist item in nicklist structure.
+ * Add a nicklist item in nicklist structure.
  */
 
 void
@@ -118,7 +118,7 @@ relay_weechat_nicklist_add_item (struct t_relay_weechat_nicklist *nicklist,
 }
 
 /*
- * Frees a nicklist_item structure.
+ * Free a nicklist_item structure.
  */
 
 void
@@ -134,7 +134,7 @@ relay_weechat_nicklist_item_free (struct t_relay_weechat_nicklist_item *item)
 }
 
 /*
- * Frees a new nicklist structure.
+ * Free a new nicklist structure.
  */
 
 void

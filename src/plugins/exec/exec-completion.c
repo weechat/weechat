@@ -30,7 +30,7 @@
 
 
 /*
- * Adds executed commands ids to completion list.
+ * Add executed commands ids to completion list.
  */
 
 int
@@ -66,7 +66,7 @@ exec_completion_commands_ids_cb (const void *pointer, void *data,
 }
 
 /*
- * Hooks completions.
+ * Hook completions.
  */
 
 void

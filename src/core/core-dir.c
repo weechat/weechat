@@ -57,7 +57,7 @@
 
 
 /*
- * Returns the path to a temporary directory, the first valid directory in
+ * Return the path to a temporary directory, the first valid directory in
  * this list:
  *   - content of environment variable "TMPDIR"
  *   - P_tmpdir (from stdio.h)
@@ -100,9 +100,9 @@ dir_get_temp_dir (void)
 }
 
 /*
- * Creates a directory in WeeChat home.
+ * Create a directory in WeeChat home.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -175,9 +175,9 @@ end:
 }
 
 /*
- * Creates a directory.
+ * Create a directory.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -198,9 +198,9 @@ dir_mkdir (const char *directory, int mode)
 }
 
 /*
- * Creates a directory and makes parent directories as needed.
+ * Create a directory and make parent directories as needed.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -257,9 +257,9 @@ dir_mkdir_parents (const char *directory, int mode)
 }
 
 /*
- * Unlinks a file or directory; callback called by function dir_rmtree().
+ * Unlink a file or directory; callback called by function dir_rmtree().
  *
- * Returns the return code of remove():
+ * Return the return code of remove():
  *   0: OK
  *   -1: error
  */
@@ -277,9 +277,9 @@ dir_unlink_cb (const char *fpath, const struct stat *sb, int typeflag,
 }
 
 /*
- * Removes a directory and all files inside recursively.
+ * Remove a directory and all files inside recursively.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -298,12 +298,12 @@ dir_rmtree (const char *directory)
 }
 
 /*
- * Uses one or four different paths for WeeChat home directories.
+ * Use one or four different paths for WeeChat home directories.
  *
  * If 4 paths are given, they must be separated by colons and given in this
  * order: config, data, cache, runtime.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -374,9 +374,9 @@ end:
 }
 
 /*
- * Creates WeeChat temporary home directory (deleted on exit).
+ * Create WeeChat temporary home directory (deleted on exit).
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -435,9 +435,9 @@ end:
 }
 
 /*
- * Finds XDG directories.
+ * Find XDG directories.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -592,10 +592,10 @@ error:
 }
 
 /*
- * Finds WeeChat home directories: it can be either XDG directories or the
+ * Find WeeChat home directories: it can be either XDG directories or the
  * same directory for all files (like the legacy directory ~/.weechat).
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -673,7 +673,7 @@ use_xdg:
 }
 
 /*
- * Removes trailing separators in path, which is modified in place
+ * Remove trailing separators in path, which is modified in place
  * (each trailing separator is replaced by NUL char).
  *
  * Example on Linux: "/home/xxx/" => "/home/xxx".
@@ -696,9 +696,9 @@ dir_remove_trailing_separators (char *path)
 }
 
 /*
- * Creates a home directory.
+ * Create a home directory.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -733,7 +733,7 @@ dir_create_home_dir (char *path)
 }
 
 /*
- * Creates WeeChat home directories.
+ * Create WeeChat home directories.
  *
  * Any error in this function (or a sub function called) is fatal: WeeChat
  * cannot run at all without the home directories.
@@ -770,7 +770,7 @@ error:
 }
 
 /*
- * Removes WeeChat home directories (called when -t / --temp-dir is given).
+ * Remove WeeChat home directories (called when -t / --temp-dir is given).
  */
 
 void
@@ -788,7 +788,7 @@ dir_remove_home_dirs (void)
 }
 
 /*
- * Returns a string with home directories separated by colons, in this order:
+ * Return a string with home directories separated by colons, in this order:
  * config_dir, data_dir, state_dir, cache_dir, runtime_dir.
  *
  * Example of value returned:
@@ -815,7 +815,7 @@ dir_get_string_home_dirs (void)
 }
 
 /*
- * Finds files in a directory and executes a function on each file.
+ * Find files in a directory and execute a function on each file.
  */
 
 void
@@ -863,10 +863,10 @@ dir_exec_on_files (const char *directory, int recurse_subdirs,
 }
 
 /*
- * Searches for the full name of a WeeChat library with name and extension
+ * Search for the full name of a WeeChat library with name and extension
  * (searches first in WeeChat user's dir, then WeeChat global lib directory).
  *
- * Returns name of library found, NULL if not found.
+ * Return name of library found, NULL if not found.
  *
  * Note: result must be freed after use (if not NULL).
  */
@@ -933,7 +933,7 @@ dir_search_full_lib_name_ext (const char *filename, const char *extension,
 }
 
 /*
- * Searches for the full name of a WeeChat library with name.
+ * Search for the full name of a WeeChat library with name.
  *
  * All extensions listed in option "weechat.plugin.extension" are tested.
  *
@@ -986,9 +986,9 @@ dir_search_full_lib_name (const char *filename, const char *plugins_dir)
 }
 
 /*
- * Reads content of a file.
+ * Read content of a file.
  *
- * Returns an allocated buffer with the content of file, NULL if error.
+ * Return an allocated buffer with the content of file, NULL if error.
  *
  * Note: result must be freed after use.
  */
@@ -1042,9 +1042,9 @@ error:
 }
 
 /*
- * Copies a file to another location.
+ * Copy a file to another location.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -1097,13 +1097,13 @@ end:
 }
 
 /*
- * Compresses a file with gzip.
+ * Compress a file with gzip.
  *
  * Notes:
  *   - the output file must not exist
  *   - compression_level is an integer between 1 and 9
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -1203,13 +1203,13 @@ end:
 }
 
 /*
- * Compresses a file with zstandard.
+ * Compress a file with zstandard.
  *
  * Notes:
  *   - the output file must not exist
  *   - compression_level is an integer between 1 and 19
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -1387,7 +1387,7 @@ end:
 }
 
 /*
- * Compresses a file with gzip or zstandard.
+ * Compress a file with gzip or zstandard.
  *
  * The output file must not exist.
  *
@@ -1398,7 +1398,7 @@ end:
  * Parameter "compression_level" is the compression level as percentage:
  * from 1 (fast, low compression) to 100 (slow, best compression).
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -1433,14 +1433,14 @@ dir_file_compress (const char *filename_input,
 }
 
 /*
- * Compares the content of two files (the attributes of the files like the
+ * Compare the content of two files (the attributes of the files like the
  * permissions or timestamp are ignored).
  *
  * Comparison is done like this:
  *   1. if sizes are different, return 1 (different content)
  *   2. if sizes are the same, read both files until a difference is found
  *
- * Returns:
+ * Return:
  *   0: both files exist and their content is exactly the same
  *   1: content is different
  *   2: other error (file not found, read error)

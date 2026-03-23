@@ -35,7 +35,7 @@ TEST_GROUP(Typing)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   typing_send_signal
  */
 
@@ -45,7 +45,7 @@ TEST(Typing, SendSignal)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   typing_buffer_closing_signal_cb
  */
 
@@ -55,7 +55,7 @@ TEST(Typing, BufferClosingSignalCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   typing_input_text_changed_signal_cb
  */
 
@@ -65,7 +65,7 @@ TEST(Typing, InputTextChangedSignalCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   typing_input_text_for_buffer_modifier_cb
  */
 
@@ -75,7 +75,7 @@ TEST(Typing, InputTextForBufferModifierCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   typing_status_self_status_map_cb
  */
 
@@ -85,7 +85,7 @@ TEST(Typing, StatusSelfStatusMapCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   typing_status_nicks_status_map_cb
  */
 
@@ -95,7 +95,7 @@ TEST(Typing, StatusNicksStatusMapCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   typing_status_nicks_hash_map_cb
  */
 
@@ -105,7 +105,7 @@ TEST(Typing, StatusNicksHashMapCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   typing_timer_cb
  */
 
@@ -115,7 +115,7 @@ TEST(Typing, TimerCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   typing_typing_set_nick_signal_cb
  */
 
@@ -125,7 +125,7 @@ TEST(Typing, TypingSetNickSignalCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   typing_typing_reset_buffer_signal_cb
  */
 
@@ -135,7 +135,7 @@ TEST(Typing, TypingResetBufferSignalCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   typing_setup_hooks
  */
 

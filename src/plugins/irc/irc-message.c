@@ -39,7 +39,7 @@
 
 
 /*
- * Parses command arguments and returns:
+ * Parse command arguments and return:
  *   - params (array of strings)
  *   - num_params (integer)
  *
@@ -135,7 +135,7 @@ irc_message_parse_params (const char *parameters,
 }
 
 /*
- * Parses an IRC message and returns:
+ * Parse an IRC message and return:
  *   - tags (string)
  *   - message without tags (string)
  *   - nick (string)
@@ -435,7 +435,7 @@ irc_message_parse (struct t_irc_server *server, const char *message,
 }
 
 /*
- * Parses an IRC message and returns hashtable with keys:
+ * Parse an IRC message and return hashtable with keys:
  *   - tags
  *   - tag_xxx (one key per tag, with unescaped value)
  *   - message_without_tags
@@ -528,7 +528,7 @@ irc_message_parse_to_hashtable (struct t_irc_server *server,
 }
 
 /*
- * Parses capability value.
+ * Parse capability value.
  *
  * For example for this capability:
  *   draft/multiline=max-bytes=4096,max-lines=24
@@ -587,7 +587,7 @@ irc_message_parse_cap_value (const char *value)
 }
 
 /*
- * Parses "draft/multiline" cap value and extract:
+ * Parse "draft/multiline" cap value and extract:
  *   - max-bytes: maximum allowed total byte length of multiline batched content
  *   - max-lines: maximum allowed number of lines in a multiline batch content
  */
@@ -636,9 +636,9 @@ irc_message_parse_cap_multiline_value (struct t_irc_server *server,
 }
 
 /*
- * Checks if a message is empty: either empty string or contains only newlines.
+ * Check if a message is empty: either empty string or contains only newlines.
  *
- * Returns:
+ * Return:
  *   1: message is empty
  *   0: message is NOT empty
  */
@@ -664,7 +664,7 @@ irc_message_is_empty (const char *message)
 }
 
 /*
- * Encodes/decodes an IRC message using a charset.
+ * Encode/decode an IRC message using a charset.
  *
  * Note: result must be freed after use.
  */
@@ -700,7 +700,7 @@ irc_message_convert_charset (const char *message, int pos_start,
 }
 
 /*
- * Gets nick from host in an IRC message.
+ * Get nick from host in an IRC message.
  */
 
 const char *
@@ -749,7 +749,7 @@ irc_message_get_nick_from_host (const char *host)
 }
 
 /*
- * Gets address from host in an IRC message.
+ * Get address from host in an IRC message.
  */
 
 const char *
@@ -788,9 +788,9 @@ irc_message_get_address_from_host (const char *host)
 }
 
 /*
- * Checks if a raw message is ignored (nick ignored on this server/channel).
+ * Check if a raw message is ignored (nick ignored on this server/channel).
  *
- * Returns:
+ * Return:
  *   0: message not ignored (displayed)
  *   1: message ignored (not displayed)
  */
@@ -846,7 +846,7 @@ irc_message_ignored (struct t_irc_server *server, const char *message)
 }
 
 /*
- * Replaces special IRC vars ($nick, $channel, $server) in a string.
+ * Replace special IRC vars ($nick, $channel, $server) in a string.
  *
  * Note: result must be freed after use.
  */
@@ -888,7 +888,7 @@ irc_message_replace_vars (struct t_irc_server *server,
 }
 
 /*
- * Hides password in text, if the target is a nick configured in option
+ * Hide password in text, if the target is a nick configured in option
  * irc.look.nicks_hide_password.
  *
  * Note: result must be freed after use.
@@ -929,7 +929,7 @@ irc_message_hide_password (struct t_irc_server *server, const char *target,
 }
 
 /*
- * Adds a message + arguments in hashtable.
+ * Add a message + arguments in hashtable.
  */
 
 void
@@ -979,7 +979,7 @@ irc_message_split_add (struct t_irc_message_split_context *context,
 }
 
 /*
- * Splits "arguments" using delimiter and max length.
+ * Split "arguments" using delimiter and max length.
  *
  * Examples of arguments for this function:
  *
@@ -1005,7 +1005,7 @@ irc_message_split_add (struct t_irc_message_split_context *context,
  *   host + command + target + prefix + XXX + suffix
  * (where XXX is part of "arguments")
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -1113,10 +1113,10 @@ irc_message_split_string (struct t_irc_message_split_context *context,
 }
 
 /*
- * Splits a AUTHENTICATE message: in 400-byte chunks, and adds an extra
+ * Split a AUTHENTICATE message: in 400-byte chunks, and add an extra
  * message "AUTHENTICATE +" if the last message has exactly 400 bytes.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -1167,10 +1167,9 @@ irc_message_split_authenticate (struct t_irc_message_split_context *context,
 }
 
 /*
- * Splits a JOIN message, taking care of keeping channel keys with channel
- * names.
+ * Split a JOIN message, taking care of keeping channel keys with channel names.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -1289,7 +1288,7 @@ irc_message_split_join (struct t_irc_message_split_context *context,
 }
 
 /*
- * Starts batch for multiline message.
+ * Start batch for multiline message.
  */
 
 void
@@ -1311,7 +1310,7 @@ irc_message_start_batch (struct t_irc_message_split_context *context,
 }
 
 /*
- * Ends batch for multiline message.
+ * End batch for multiline message.
  */
 
 void
@@ -1331,13 +1330,13 @@ irc_message_end_batch (struct t_irc_message_split_context *context,
 }
 
 /*
- * Splits a PRIVMSG or NOTICE message, taking care of keeping the '\001' char
+ * Split a PRIVMSG or NOTICE message, taking care of keeping the '\001' char
  * used in CTCP messages.
  *
  * If multiline == 1, the message is split on newline chars ('\n') and is sent
  * using BATCH command (to group messages together).
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -1501,9 +1500,9 @@ irc_message_split_privmsg_notice (struct t_irc_message_split_context *context,
 }
 
 /*
- * Splits a 005 message (isupport).
+ * Split a 005 message (isupport).
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -1539,7 +1538,7 @@ irc_message_split_005 (struct t_irc_message_split_context *context,
 }
 
 /*
- * Splits an IRC message about to be sent to IRC server.
+ * Split an IRC message about to be sent to IRC server.
  *
  * The maximum length of an IRC message is 510 bytes for user data + final
  * "\r\n", so full size is 512 bytes (the user data does not include the
@@ -1561,7 +1560,7 @@ irc_message_split_005 (struct t_irc_message_split_context *context,
  * Each message ("msgN") in hashtable has command and arguments, and then is
  * ready to be sent to IRC server.
  *
- * Returns hashtable with split message.
+ * Return hashtable with split message.
  *
  * Note: result must be freed after use.
  */

@@ -133,7 +133,7 @@ int weechat_auto_load_scripts = 1;     /* auto-load scripts                 */
 
 
 /*
- * Displays WeeChat startup message.
+ * Display WeeChat startup message.
  */
 
 void
@@ -205,10 +205,10 @@ weechat_startup_message (void)
 }
 
 /*
- * Displays warnings about $TERM if it is detected as wrong.
+ * Display warnings about $TERM if it is detected as wrong.
  *
  * If $TERM is different from "screen" or "screen-256color" and that $STY is
- * set (GNU screen) or $TMUX is set (tmux), then a warning is displayed.
+ * set (GNU screen) or $TMUX is set (tmux), then display a warning.
  */
 
 void
@@ -275,8 +275,8 @@ weechat_term_check (void)
 }
 
 /*
- * Displays warning about wrong locale ($LANG and $LC_*) if they are detected
- * as wrong.
+ * Display warning about wrong locale ($LANG and $LC_*) if they are detected as
+ * wrong.
  */
 
 void
@@ -293,7 +293,7 @@ weechat_locale_check (void)
 }
 
 /*
- * Shutdowns WeeChat.
+ * Shut down WeeChat.
  */
 
 void
@@ -332,7 +332,7 @@ weechat_shutdown (int return_code, int crash)
 }
 
 /*
- * Initializes gettext.
+ * Initialize gettext.
  */
 
 void
@@ -354,7 +354,7 @@ weechat_init_gettext (void)
 }
 
 /*
- * Initializes WeeChat.
+ * Initialize WeeChat.
  */
 
 void
@@ -426,7 +426,7 @@ weechat_init (int argc, char *argv[], void (*gui_init_cb)(void))
 }
 
 /*
- * Ends WeeChat.
+ * End WeeChat.
  */
 
 void

@@ -45,7 +45,7 @@ struct t_hashtable *irc_list_filter_hashtable_options = NULL;
 
 
 /*
- * Compares two channels in list.
+ * Compare two channels in list.
  */
 
 int
@@ -89,7 +89,7 @@ irc_list_compare_cb (void *data, struct t_arraylist *arraylist,
 }
 
 /*
- * Frees a channel in list.
+ * Free a channel in list.
  */
 
 void
@@ -112,7 +112,7 @@ irc_list_free_cb (void *data, struct t_arraylist *arraylist, void *pointer)
 }
 
 /*
- * Sets the local variable "filter" in the list buffer.
+ * Set the local variable "filter" in the list buffer.
  */
 
 void
@@ -127,7 +127,7 @@ irc_list_buffer_set_localvar_filter (struct t_gui_buffer *buffer,
 }
 
 /*
- * Sets filter for list of channels.
+ * Set filter for list of channels.
  */
 
 void
@@ -146,7 +146,7 @@ irc_list_set_filter (struct t_irc_server *server, const char *filter)
 }
 
 /*
- * Sets sort for list of channels.
+ * Set sort for list of channels.
  *
  */
 
@@ -184,7 +184,7 @@ irc_list_set_sort (struct t_irc_server *server, const char *sort)
 }
 
 /*
- * Adds the properties of an irc list channel in a hashtable
+ * Add the properties of an irc list channel in a hashtable
  * (keys and values must be strings).
  */
 
@@ -202,13 +202,13 @@ irc_list_add_channel_in_hashtable (struct t_hashtable *hashtable,
 }
 
 /*
- * Checks if a string matches a mask.
+ * Check if a string matches a mask.
  *
  * If mask has no "*" inside, it just checks if "mask" is inside the "string".
  * If mask has at least one "*" inside, the function weechat_string_match is
  * used.
  *
- * Returns:
+ * Return:
  *   1: string matches mask
  *   0: string does not match mask
  */
@@ -223,7 +223,7 @@ irc_list_string_match (const char *string, const char *mask)
 }
 
 /*
- * Checks if a channel matches filter.
+ * Check if a channel matches filter.
  *
  * Return:
  *   1: channel matches filter
@@ -319,7 +319,7 @@ irc_list_channel_match_filter (struct t_irc_server *server,
 }
 
 /*
- * Filters channels: apply filter and use sort to build the list
+ * Filter channels: apply filter and use sort to build the list
  * "filter_channels" that are pointers to t_irc_list_channel structs
  * stored in main list "channels".
  */
@@ -362,11 +362,11 @@ irc_list_filter_channels (struct t_irc_server *server)
 }
 
 /*
- * Parses output of redirected /list (string with raw IRC messages separated
- * by newlines) and returns an arraylist of parsed channels, or NULL if no
+ * Parse output of redirected /list (string with raw IRC messages separated
+ * by newlines) and return an arraylist of parsed channels, or NULL if no
  * valid message (322) was found in output.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -462,7 +462,7 @@ irc_list_parse_messages (struct t_irc_server *server, const char *output)
 }
 
 /*
- * Sets title of list buffer.
+ * Set title of list buffer.
  */
 
 void
@@ -494,7 +494,7 @@ irc_list_buffer_set_title (struct t_irc_server *server)
 }
 
 /*
- * Displays a line.
+ * Display a line.
  */
 
 void
@@ -553,7 +553,7 @@ irc_list_display_line (struct t_irc_server *server, int line)
 }
 
 /*
- * Updates list of channels in list buffer.
+ * Update list of channels in list buffer.
  */
 
 void
@@ -592,7 +592,7 @@ irc_list_buffer_refresh (struct t_irc_server *server, int clear)
 }
 
 /*
- * Sets current selected line.
+ * Set current selected line.
  */
 
 void
@@ -614,7 +614,7 @@ irc_list_set_current_line (struct t_irc_server *server, int line)
 }
 
 /*
- * Gets info about a window.
+ * Get info about a window.
  */
 
 void
@@ -650,7 +650,7 @@ irc_list_get_window_info (struct t_gui_window *window,
 }
 
 /*
- * Checks if current line is outside window and adjusts scroll if needed.
+ * Check if current line is outside window and adjusts scroll if needed.
  */
 
 void
@@ -737,7 +737,7 @@ irc_list_window_scrolled_cb (const void *pointer, void *data,
 }
 
 /*
- * Moves N lines up/down in buffer
+ * Move N lines up/down in buffer
  * (negative lines = move up, positive lines = move down).
  */
 
@@ -763,7 +763,7 @@ irc_list_move_line_relative (struct t_irc_server *server, int num_lines)
 }
 
 /*
- * Moves to line N (0 = first line, -1 = last line).
+ * Move to line N (0 = first line, -1 = last line).
  */
 
 void
@@ -788,7 +788,7 @@ irc_list_move_line_absolute (struct t_irc_server *server, int line_number)
 }
 
 /*
- * Scrolls horizontally with percent
+ * Scroll horizontally with percent
  * (negative: scroll to the left, positive: scroll to the right).
  */
 
@@ -815,7 +815,7 @@ irc_list_scroll_horizontal (struct t_irc_server *server, int percent)
 }
 
 /*
- * Joins channel on current selected line.
+ * Join channel on current selected line.
  */
 
 void
@@ -927,9 +927,9 @@ irc_list_buffer_input_data (struct t_gui_buffer *buffer, const char *input_data)
 }
 
 /*
- * Creates buffer with list of channels for a server.
+ * Create buffer with list of channels for a server.
  *
- * Returns pointer to newly created buffer, NULL if error.
+ * Return pointer to newly created buffer, NULL if error.
  */
 
 struct t_gui_buffer *
@@ -1064,9 +1064,9 @@ irc_list_hsignal_redirect_list_cb (const void *pointer,
 }
 
 /*
- * Exports channels currently displayed in /list buffer.
+ * Export channels currently displayed in /list buffer.
  *
- * Returns:
+ * Return:
  *   1: export OK
  *   0: error
  */
@@ -1141,7 +1141,7 @@ irc_list_export (struct t_irc_server *server, const char *filename)
 }
 
 /*
- * Resets lists used by list buffer.
+ * Reset lists used by list buffer.
  */
 
 void
@@ -1165,7 +1165,7 @@ irc_list_reset (struct t_irc_server *server)
 }
 
 /*
- * Frees a list structure in a server.
+ * Free a list structure in a server.
  */
 
 struct t_irc_list *
@@ -1191,7 +1191,7 @@ irc_list_alloc (void)
 }
 
 /*
- * Frees data in a list structure.
+ * Free data in a list structure.
  */
 
 void
@@ -1231,7 +1231,7 @@ irc_list_free_data (struct t_irc_server *server)
 }
 
 /*
- * Frees a list structure in a server.
+ * Free a list structure in a server.
  */
 
 void
@@ -1250,7 +1250,7 @@ irc_list_free (struct t_irc_server *server)
 }
 
 /*
- * Returns hdata for irc_list_channel.
+ * Return hdata for irc_list_channel.
  */
 
 struct t_hdata *
@@ -1275,7 +1275,7 @@ irc_list_hdata_list_channel_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns hdata for irc_list.
+ * Return hdata for irc_list.
  */
 
 struct t_hdata *
@@ -1348,7 +1348,7 @@ irc_list_mouse_hsignal_cb (const void *pointer, void *data, const char *signal,
 }
 
 /*
- * Initializes irc list.
+ * Initialize IRC list.
  */
 
 void
@@ -1409,7 +1409,7 @@ irc_list_init (void)
 }
 
 /*
- * Ends irc list.
+ * End IRC list.
  */
 
 void

@@ -165,9 +165,9 @@ void irc_server_autojoin_create_buffers (struct t_irc_server *server);
 
 
 /*
- * Checks if a server pointer is valid.
+ * Check if a server pointer is valid.
  *
- * Returns:
+ * Return:
  *   1: server exists
  *   0: server does not exist
  */
@@ -192,9 +192,9 @@ irc_server_valid (struct t_irc_server *server)
 }
 
 /*
- * Searches for a server by name.
+ * Search for a server by name.
  *
- * Returns pointer to server found, NULL if not found.
+ * Return pointer to server found, NULL if not found.
  */
 
 struct t_irc_server *
@@ -217,9 +217,9 @@ irc_server_search (const char *server_name)
 }
 
 /*
- * Searches for a server option name.
+ * Search for a server option name.
  *
- * Returns index of option in array "irc_server_option_string", -1 if not found.
+ * Return index of option in array "irc_server_option_string", -1 if not found.
  */
 
 int
@@ -241,9 +241,9 @@ irc_server_search_option (const char *option_name)
 }
 
 /*
- * Searches for a casemapping.
+ * Search for a casemapping.
  *
- * Returns index of casemapping in array "irc_server_casemapping_string",
+ * Return index of casemapping in array "irc_server_casemapping_string",
  * -1 if not found.
  */
 
@@ -266,9 +266,9 @@ irc_server_search_casemapping (const char *casemapping)
 }
 
 /*
- * Searches for a utf8mapping.
+ * Search for a utf8mapping.
  *
- * Returns index of utf8mapping in array "irc_server_utf8mapping_string",
+ * Return index of utf8mapping in array "irc_server_utf8mapping_string",
  * -1 if not found.
  */
 
@@ -291,9 +291,9 @@ irc_server_search_utf8mapping (const char *utf8mapping)
 }
 
 /*
- * Compares two strings on server (case-insensitive, depends on casemapping).
+ * Compare two strings on server (case-insensitive, depends on casemapping).
  *
- * Returns:
+ * Return:
  *   < 0: string1 < string2
  *     0: string1 == string2
  *   > 0: string1 > string2
@@ -315,10 +315,10 @@ irc_server_strcasecmp (struct t_irc_server *server,
 }
 
 /*
- * Compares two strings on server (case-insensitive, depends on casemapping)
+ * Compare two strings on server (case-insensitive, depends on casemapping)
  * for max chars.
  *
- * Returns:
+ * Return:
  *   < 0: string1 < string2
  *     0: string1 == string2
  *   > 0: string1 > string2
@@ -340,11 +340,11 @@ irc_server_strncasecmp (struct t_irc_server *server,
 }
 
 /*
- * Evaluates a string using the server as context:
+ * Evaluate a string using the server as context:
  * ${irc_server.xxx} and ${server} are replaced by a server option and the
  * server name.
  *
- * Returns the evaluated string.
+ * Return the evaluated string.
  *
  * Note: result must be freed after use.
  */
@@ -390,9 +390,9 @@ irc_server_eval_expression (struct t_irc_server *server, const char *string)
 }
 
 /*
- * Searches for a fingerprint digest algorithm with the size (in bits).
+ * Search for a fingerprint digest algorithm with the size (in bits).
  *
- * Returns index of algo in enum t_irc_fingerprint_digest_algo,
+ * Return index of algo in enum t_irc_fingerprint_digest_algo,
  * -1 if not found.
  */
 
@@ -412,9 +412,9 @@ irc_server_fingerprint_search_algo_with_size (int size)
 }
 
 /*
- * Evaluates and returns the fingerprint.
+ * Evaluate and return the fingerprint.
  *
- * Returns the evaluated fingerprint, NULL if the fingerprint option is
+ * Return the evaluated fingerprint, NULL if the fingerprint option is
  * invalid.
  *
  * Note: result must be freed after use.
@@ -513,7 +513,7 @@ irc_server_eval_fingerprint (struct t_irc_server *server)
 }
 
 /*
- * Gets SASL credentials on server (uses temporary SASL username/password if
+ * Get SASL credentials on server (uses temporary SASL username/password if
  * set by the command /auth <user> <pass>).
  */
 
@@ -540,9 +540,9 @@ irc_server_sasl_get_creds (struct t_irc_server *server,
 }
 
 /*
- * Checks if SASL is enabled on server.
+ * Check if SASL is enabled on server.
  *
- * Returns:
+ * Return:
  *   1: SASL is enabled
  *   0: SASL is disabled
  */
@@ -580,7 +580,7 @@ irc_server_sasl_enabled (struct t_irc_server *server)
 }
 
 /*
- * Gets name of server without port (ends before first '/' if found).
+ * Get name of server without port (ends before first '/' if found).
  *
  * Note: result must be freed after use.
  */
@@ -601,7 +601,7 @@ irc_server_get_name_without_port (const char *name)
 }
 
 /*
- * Gets a string with description of server, that includes:
+ * Get a string with description of server, that includes:
  *   - addresses + ports
  *   - fake server?
  *   - TLS option (enabled/disabled).
@@ -660,14 +660,14 @@ irc_server_get_short_description (struct t_irc_server *server)
 }
 
 /*
- * Sets addresses for server.
+ * Set addresses for server.
  *
  * The "tls" is the boolean value of option ".tls" in server, used to find the
  * default port if not specified in the address:
  *   - 6697 if tls is 1
  *   - 6667 if tls is 0
  *
- * Returns:
+ * Return:
  *   1: addresses have been set (changed)
  *   0: nothing set (addresses unchanged)
  */
@@ -774,7 +774,7 @@ irc_server_set_addresses (struct t_irc_server *server, const char *addresses,
 }
 
 /*
- * Sets index of current address for server.
+ * Set index of current address for server.
  */
 
 void
@@ -819,7 +819,7 @@ irc_server_set_index_current_address (struct t_irc_server *server, int index)
 }
 
 /*
- * Sets nicks for server.
+ * Set nicks for server.
  */
 
 void
@@ -853,7 +853,7 @@ irc_server_set_nicks (struct t_irc_server *server, const char *nicks)
 }
 
 /*
- * Sets nickname for server.
+ * Set nickname for server.
  */
 
 void
@@ -883,7 +883,7 @@ irc_server_set_nick (struct t_irc_server *server, const char *nick)
 }
 
 /*
- * Sets host for server.
+ * Set host for server.
  */
 
 void
@@ -916,9 +916,9 @@ irc_server_set_host (struct t_irc_server *server, const char *host)
 }
 
 /*
- * Gets index of nick in array "nicks_array".
+ * Get index of nick in array "nicks_array".
  *
- * Returns index of nick in array, -1 if nick is not set or not found in
+ * Return index of nick in array, -1 if nick is not set or not found in
  * "nicks_array".
  */
 
@@ -943,7 +943,7 @@ irc_server_get_nick_index (struct t_irc_server *server)
 }
 
 /*
- * Gets an alternate nick when the nick is already used on server.
+ * Get an alternate nick when the nick is already used on server.
  *
  * First tries all declared nicks, then builds nicks by adding "_", until
  * length of 9.
@@ -964,7 +964,7 @@ irc_server_get_nick_index (struct t_irc_server *server)
  *                          ...
  *                          abcde__99
  *
- * Returns NULL if no more alternate nick is available.
+ * Return NULL if no more alternate nick is available.
  */
 
 const char *
@@ -1042,9 +1042,9 @@ irc_server_get_alternate_nick (struct t_irc_server *server)
 }
 
 /*
- * Gets value of a feature item in "isupport" (copy of IRC message 005).
+ * Get value of a feature item in "isupport" (copy of IRC message 005).
  *
- * Returns value of feature (empty string if feature has no value, NULL if
+ * Return value of feature (empty string if feature has no value, NULL if
  * feature is not found).
  */
 
@@ -1103,9 +1103,9 @@ irc_server_get_isupport_value (struct t_irc_server *server, const char *feature)
 }
 
 /*
- * Gets "chantypes" for the server:
- *   - if server is NULL, returns pointer to irc_channel_default_chantypes
- *   - if server is not NULL, returns either chantypes in the server or
+ * Get "chantypes" for the server:
+ *   - if server is NULL, return pointer to irc_channel_default_chantypes
+ *   - if server is not NULL, return either chantypes in the server or
  *     server option "default_chantypes"
  */
 
@@ -1122,7 +1122,7 @@ irc_server_get_chantypes (struct t_irc_server *server)
 }
 
 /*
- * Sets "prefix_modes" and "prefix_chars" in server using value of PREFIX in IRC
+ * Set "prefix_modes" and "prefix_chars" in server using value of PREFIX in IRC
  * message 005.
  *
  * For example, if prefix is "(ohv)@%+":
@@ -1193,7 +1193,7 @@ irc_server_set_prefix_modes_chars (struct t_irc_server *server,
 }
 
 /*
- * Sets "clienttagdeny", "clienttagdeny_count", "clienttagdeny_array" and
+ * Set "clienttagdeny", "clienttagdeny_count", "clienttagdeny_array" and
  * "typing_allowed" in server using value of CLIENTTAGDENY in IRC message 005.
  * The masks in array start with "!" for a tag that is allowed (not denied).
  *
@@ -1259,7 +1259,7 @@ irc_server_set_clienttagdeny (struct t_irc_server *server,
 }
 
 /*
- * Sets lag in server buffer (local variable), update bar item "lag"
+ * Set lag in server buffer (local variable), update bar item "lag"
  * and send signal "irc_server_lag_changed" for the server.
  */
 
@@ -1304,7 +1304,7 @@ irc_server_set_lag (struct t_irc_server *server)
 }
 
 /*
- * Sets tls_version in server buffer (local variable), update bar item
+ * Set tls_version in server buffer (local variable), update bar item
  * "tls_version".
  */
 
@@ -1343,9 +1343,9 @@ irc_server_set_tls_version (struct t_irc_server *server)
 }
 
 /*
- * Gets prefix_modes for server (for example: "ohv").
+ * Get prefix_modes for server (for example: "ohv").
  *
- * Returns default modes if prefix_modes is not set in server.
+ * Return default modes if prefix_modes is not set in server.
  */
 
 const char *
@@ -1356,9 +1356,9 @@ irc_server_get_prefix_modes (struct t_irc_server *server)
 }
 
 /*
- * Gets prefix_chars for server (for example: "@%+").
+ * Get prefix_chars for server (for example: "@%+").
  *
- * Returns default chars if prefix_chars is not set in server.
+ * Return default chars if prefix_chars is not set in server.
  */
 
 const char *
@@ -1369,11 +1369,11 @@ irc_server_get_prefix_chars (struct t_irc_server *server)
 }
 
 /*
- * Gets index of mode in prefix_modes.
+ * Get index of mode in prefix_modes.
  *
  * The mode is for example 'o' or 'v'.
  *
- * Returns -1 if mode does not exist in server.
+ * Return -1 if mode does not exist in server.
  */
 
 int
@@ -1394,11 +1394,11 @@ irc_server_get_prefix_mode_index (struct t_irc_server *server, char mode)
 }
 
 /*
- * Gets index of prefix_char in prefix_chars.
+ * Get index of prefix_char in prefix_chars.
  *
  * The prefix char is for example '@' or '+'.
  *
- * Returns -1 if prefix_char does not exist in server.
+ * Return -1 if prefix_char does not exist in server.
  */
 
 int
@@ -1420,11 +1420,11 @@ irc_server_get_prefix_char_index (struct t_irc_server *server,
 }
 
 /*
- * Gets mode for prefix char.
+ * Get mode for prefix char.
  *
  * For example prefix_char '@' can return 'o'.
  *
- * Returns ' ' (space) if prefix char is not found.
+ * Return ' ' (space) if prefix char is not found.
  */
 
 char
@@ -1446,11 +1446,11 @@ irc_server_get_prefix_mode_for_char (struct t_irc_server *server,
 }
 
 /*
- * Gets prefix char for mode.
+ * Get prefix char for mode.
  *
  * For example mode 'o' can return '@'.
  *
- * Returns a space if mode is not found.
+ * Return a space if mode is not found.
  */
 
 char
@@ -1471,9 +1471,9 @@ irc_server_get_prefix_char_for_mode (struct t_irc_server *server, char mode)
 }
 
 /*
- * Gets chanmodes for server (for example: "eIb,k,l,imnpstS").
+ * Get chanmodes for server (for example: "eIb,k,l,imnpstS").
  *
- * Returns default chanmodes if chanmodes is not set in server.
+ * Return default chanmodes if chanmodes is not set in server.
  */
 
 const char *
@@ -1484,13 +1484,13 @@ irc_server_get_chanmodes (struct t_irc_server *server)
 }
 
 /*
- * Checks if a prefix char is valid for a status message
+ * Check if a prefix char is valid for a status message
  * (message sent for example to ops/voiced).
  *
  * The prefix (for example '@' or '+') must be in STATUSMSG,
  * or in "prefix_chars" if STATUSMSG is not defined.
  *
- * Returns:
+ * Return:
  *   1: prefix is valid for a status message
  *   0: prefix is NOT valid for a status message
  */
@@ -1545,8 +1545,8 @@ irc_server_get_max_modes (struct t_irc_server *server)
 }
 
 /*
- * Gets an evaluated default_msg server option: replaces "%v" by WeeChat
- * version if there's no ${...} in string, or just evaluates the string.
+ * Get an evaluated default_msg server option: replace "%v" by WeeChat
+ * version if there's no ${...} in string, or just evaluate the string.
  *
  * Note: result must be freed after use.
  */
@@ -1598,7 +1598,7 @@ irc_server_get_default_msg (const char *default_msg,
 }
 
 /*
- * Sets input prompt on server, channels and private buffers.
+ * Set input prompt on server, channels and private buffers.
  */
 
 void
@@ -1645,7 +1645,7 @@ irc_server_set_buffer_input_prompt (struct t_irc_server *server)
 }
 
 /*
- * Sets "input_multiline" to 1 or 0, according to capability draft/multiline
+ * Set "input_multiline" to 1 or 0, according to capability draft/multiline
  * on all channels and private buffers.
  */
 
@@ -1671,7 +1671,7 @@ irc_server_set_buffer_input_multiline (struct t_irc_server *server,
 }
 
 /*
- * Checks if a server has channels opened.
+ * Check if a server has channels opened.
  */
 
 int
@@ -1693,9 +1693,9 @@ irc_server_has_channels (struct t_irc_server *server)
 }
 
 /*
- * Allocates a new server and adds it to the servers queue.
+ * Allocate a new server and add it to the servers queue.
  *
- * Returns pointer to new server, NULL if error.
+ * Return pointer to new server, NULL if error.
  */
 
 struct t_irc_server *
@@ -1905,7 +1905,7 @@ irc_server_alloc (const char *name)
 }
 
 /*
- * Initializes a server with URL, using this format:
+ * Initialize a server with URL, using this format:
  *
  *   irc[6][s]://[[nick][:pass]@]server[:port][/#chan1[,#chan2...]]
  *
@@ -1920,7 +1920,7 @@ irc_server_alloc (const char *name)
  *   - "port": port (default is 6697 with TLS, 6667 otherwise)
  *   - "#chan1": channel to auto-join
  *
- * Returns pointer to new server, NULL if error.
+ * Return pointer to new server, NULL if error.
  */
 
 struct t_irc_server *
@@ -2119,7 +2119,7 @@ irc_server_alloc_with_url (const char *irc_url)
 }
 
 /*
- * Applies command line options to a server.
+ * Apply command line options to a server.
  *
  * For example: -tls -notls -password=test -proxy=myproxy
  */
@@ -2188,7 +2188,7 @@ irc_server_apply_command_line_options (struct t_irc_server *server,
 }
 
 /*
- * Adds a message in out queue.
+ * Add a message in out queue.
  */
 
 void
@@ -2220,7 +2220,7 @@ irc_server_outqueue_add (struct t_irc_server *server, int priority,
 }
 
 /*
- * Frees a message in out queue.
+ * Free a message in out queue.
  */
 
 void
@@ -2259,7 +2259,7 @@ irc_server_outqueue_free (struct t_irc_server *server,
 }
 
 /*
- * Frees all messages in out queue.
+ * Free all messages in out queue.
  */
 
 void
@@ -2273,7 +2273,7 @@ irc_server_outqueue_free_all (struct t_irc_server *server, int priority)
 }
 
 /*
- * Frees SASL data in server.
+ * Free SASL data in server.
  */
 
 void
@@ -2308,7 +2308,7 @@ irc_server_free_sasl_data (struct t_irc_server *server)
 }
 
 /*
- * Frees server data.
+ * Free server data.
  */
 
 void
@@ -2380,7 +2380,7 @@ irc_server_free_data (struct t_irc_server *server)
 }
 
 /*
- * Frees a server and remove it from list of servers.
+ * Free a server and remove it from list of servers.
  */
 
 void
@@ -2419,7 +2419,7 @@ irc_server_free (struct t_irc_server *server)
 }
 
 /*
- * Frees all servers.
+ * Free all servers.
  */
 
 void
@@ -2433,9 +2433,9 @@ irc_server_free_all (void)
 }
 
 /*
- * Copies a server.
+ * Copy a server.
  *
- * Returns pointer to new server, NULL if error.
+ * Return pointer to new server, NULL if error.
  */
 
 struct t_irc_server *
@@ -2492,9 +2492,9 @@ irc_server_copy (struct t_irc_server *server, const char *new_name)
 }
 
 /*
- * Renames a server (internal name).
+ * Rename a server (internal name).
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -2586,9 +2586,9 @@ irc_server_rename (struct t_irc_server *server, const char *new_name)
 }
 
 /*
- * Reorders list of servers.
+ * Reorder list of servers.
  *
- * Returns the number of servers moved in the list (>= 0).
+ * Return the number of servers moved in the list (>= 0).
  */
 
 int
@@ -2645,7 +2645,7 @@ irc_server_reorder (const char **servers, int num_servers)
 }
 
 /*
- * Sends a signal for an IRC message (received or sent).
+ * Send a signal for an IRC message (received or sent).
  */
 
 int
@@ -2689,9 +2689,9 @@ irc_server_send_signal (struct t_irc_server *server, const char *signal,
 }
 
 /*
- * Sends data to IRC server.
+ * Send data to IRC server.
  *
- * Returns number of bytes sent, -1 if error.
+ * Return number of bytes sent, -1 if error.
  */
 
 int
@@ -2757,7 +2757,7 @@ irc_server_send (struct t_irc_server *server, const char *buffer, int size_buf)
 }
 
 /*
- * Sets default tags used when sending message.
+ * Set default tags used when sending message.
  */
 
 void
@@ -2767,7 +2767,7 @@ irc_server_set_send_default_tags (const char *tags)
 }
 
 /*
- * Gets tags to send by concatenation of tags and irc_server_send_default_tags
+ * Get tags to send by concatenation of tags and irc_server_send_default_tags
  * (if set).
  *
  * Note: result must be freed after use.
@@ -2793,9 +2793,9 @@ irc_server_get_tags_to_send (const char *tags)
 }
 
 /*
- * Checks if all out queues are empty.
+ * Check if all out queues are empty.
  *
- * Returns:
+ * Return:
  *   1: all out queues are empty
  *   0: at least one out queue contains a message
  */
@@ -2834,7 +2834,7 @@ irc_server_outqueue_timer_cb (const void *pointer, void *data, int remaining_cal
 }
 
 /*
- * Removes anti-flood timer form a server (if set).
+ * Remove anti-flood timer form a server (if set).
  */
 
 void
@@ -2851,7 +2851,7 @@ irc_server_outqueue_timer_remove (struct t_irc_server *server)
 }
 
 /*
- * Adds anti-flood timer in a server (removes it first if already set).
+ * Add anti-flood timer in a server (removes it first if already set).
  */
 
 void
@@ -2871,7 +2871,7 @@ irc_server_outqueue_timer_add (struct t_irc_server *server)
 }
 
 /*
- * Sends one message from out queue.
+ * Send one message from out queue.
  */
 
 void
@@ -2938,7 +2938,7 @@ irc_server_outqueue_send_one_msg (struct t_irc_server *server,
 }
 
 /*
- * Sends one or multiple message from out queues, by order of priority
+ * Send one or multiple message from out queues, by order of priority
  * (immediate/high/low), then from oldest message to newest in queue.
  */
 
@@ -2983,7 +2983,7 @@ irc_server_outqueue_send (struct t_irc_server *server)
 }
 
 /*
- * Sends one message to IRC server.
+ * Send one message to IRC server.
  *
  * If flag contains outqueue priority value, then messages are in a queue and
  * sent slowly (to be sure there will not be any "excess flood"), value of
@@ -3177,7 +3177,7 @@ irc_server_arraylist_free_string_cb (void *data, struct t_arraylist *arraylist,
 }
 
 /*
- * Sends a message to IRC server.
+ * Send a message to IRC server.
  *
  * If flags contains "IRC_SERVER_SEND_RETURN_LIST", then an arraylist with
  * the list of messages to display is returned
@@ -3343,7 +3343,7 @@ irc_server_sendf (struct t_irc_server *server, int flags, const char *tags,
 }
 
 /*
- * Adds a message to received messages queue (at the end).
+ * Add a message to received messages queue (at the end).
  */
 
 void
@@ -3395,7 +3395,7 @@ irc_server_msgq_add_msg (struct t_irc_server *server, const char *msg)
 }
 
 /*
- * Adds an unterminated message to queue.
+ * Add an unterminated message to queue.
  */
 
 void
@@ -3438,7 +3438,7 @@ irc_server_msgq_add_unterminated (struct t_irc_server *server,
 }
 
 /*
- * Splits received buffer, creating queued messages.
+ * Split received buffer, creating queued messages.
  */
 
 void
@@ -3476,7 +3476,7 @@ irc_server_msgq_add_buffer (struct t_irc_server *server, const char *buffer)
 }
 
 /*
- * Flushes message queue.
+ * Flush message queue.
  */
 
 void
@@ -3737,9 +3737,9 @@ irc_server_msgq_flush (void)
 }
 
 /*
- * Receives data from a server.
+ * Receive data from a server.
  *
- * Returns:
+ * Return:
  *   WEECHAT_RC_OK: OK
  *   WEECHAT_RC_ERROR: error
  */
@@ -4189,7 +4189,7 @@ irc_server_timer_cb (const void *pointer, void *data, int remaining_calls)
 }
 
 /*
- * Closes server connection.
+ * Close server connection.
  */
 
 void
@@ -4303,7 +4303,7 @@ irc_server_close_connection (struct t_irc_server *server)
 }
 
 /*
- * Schedules reconnection to server.
+ * Schedule reconnection to server.
  */
 
 void
@@ -4367,7 +4367,7 @@ irc_server_reconnect_schedule (struct t_irc_server *server)
 }
 
 /*
- * Logins to server.
+ * Login to server.
  */
 
 void
@@ -4443,8 +4443,7 @@ irc_server_login (struct t_irc_server *server)
 }
 
 /*
- * Switches address and tries another (called if connection failed with an
- * address/port).
+ * Switch address and try another (called if connection failed with an address/port).
  */
 
 void
@@ -4478,7 +4477,7 @@ irc_server_switch_address (struct t_irc_server *server, int connection)
 }
 
 /*
- * Reads connection status.
+ * Read connection status.
  */
 
 int
@@ -4711,7 +4710,7 @@ irc_server_connect_cb (const void *pointer, void *data,
 }
 
 /*
- * Sets the title for a server buffer.
+ * Set the title for a server buffer.
  */
 
 void
@@ -4742,9 +4741,9 @@ irc_server_set_buffer_title (struct t_irc_server *server)
 }
 
 /*
- * Creates a buffer for a server.
+ * Create a buffer for a server.
  *
- * Returns pointer to buffer, NULL if error.
+ * Return pointer to buffer, NULL if error.
  */
 
 struct t_gui_buffer *
@@ -4840,7 +4839,7 @@ irc_server_create_buffer (struct t_irc_server *server)
 }
 
 /*
- * Returns a string with sizes of allowed fingerprint,
+ * Return a string with sizes of allowed fingerprint,
  * in number of hexadecimal digits (== bits / 4).
  *
  * Example of output: "128=SHA-512, 64=SHA-256, 40=SHA-1".
@@ -4870,10 +4869,10 @@ irc_server_fingerprint_str_sizes (void)
 }
 
 /*
- * Compares two fingerprints: one hexadecimal (given by user), the second binary
+ * Compare two fingerprints: one hexadecimal (given by user), the second binary
  * (received from IRC server).
  *
- * Returns:
+ * Return:
  *    0: fingerprints are the same
  *   -1: fingerprints are different
  */
@@ -4902,9 +4901,9 @@ irc_server_compare_fingerprints (const char *fingerprint,
 }
 
 /*
- * Checks if a GnuTLS session uses the certificate with a given fingerprint.
+ * Check if a GnuTLS session uses the certificate with a given fingerprint.
  *
- * Returns:
+ * Return:
  *   1: certificate has the good fingerprint
  *   0: certificate does NOT have the good fingerprint
  */
@@ -5002,7 +5001,7 @@ irc_server_check_certificate_fingerprint (struct t_irc_server *server,
 /*
  * GnuTLS callback called during handshake.
  *
- * Returns:
+ * Return:
  *    0: certificate OK
  *   -1: error in certificate
  */
@@ -5372,9 +5371,9 @@ end:
 }
 
 /*
- * Connects to a server.
+ * Connect to a server.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -5588,7 +5587,7 @@ irc_server_connect (struct t_irc_server *server)
 }
 
 /*
- * Reconnects to a server (after disconnection).
+ * Reconnect to a server (after disconnection).
  */
 
 void
@@ -5637,7 +5636,7 @@ irc_server_auto_connect_timer_cb (const void *pointer, void *data,
 }
 
 /*
- * Auto-connects to servers (called at startup).
+ * Auto-connect to servers (called at startup).
  *
  * If auto_connect == 1, auto-connects to all servers with flag "autoconnect".
  */
@@ -5652,7 +5651,7 @@ irc_server_auto_connect (int auto_connect)
 }
 
 /*
- * Disconnects from a server.
+ * Disconnect from a server.
  */
 
 void
@@ -5814,7 +5813,7 @@ irc_server_disconnect (struct t_irc_server *server, int switch_address,
 }
 
 /*
- * Disconnects from all servers.
+ * Disconnect from all servers.
  */
 
 void
@@ -5830,7 +5829,7 @@ irc_server_disconnect_all (void)
 }
 
 /*
- * Executes command on server (using server option ".command").
+ * Execute command on server (using server option ".command").
  */
 
 void
@@ -5878,7 +5877,7 @@ irc_server_execute_command (struct t_irc_server *server)
 }
 
 /*
- * Creates buffers for auto-joined channels on a server.
+ * Create buffers for auto-joined channels on a server.
  */
 
 void
@@ -5944,7 +5943,7 @@ irc_server_autojoin_create_buffers (struct t_irc_server *server)
  *
  *   #channel1,#channel2,#channel3 key1,key2
  *
- * Returns NULL if no channels have been found.
+ * Return NULL if no channels have been found.
  *
  * Note: result must be freed after use.
  */
@@ -6035,7 +6034,7 @@ error:
 }
 
 /*
- * Autojoins (or auto-rejoins) channels.
+ * Autojoin (or auto-rejoins) channels.
  */
 
 void
@@ -6078,7 +6077,7 @@ irc_server_autojoin_channels (struct t_irc_server *server)
 }
 
 /*
- * Returns number of channels for server.
+ * Return number of channels for server.
  */
 
 int
@@ -6098,7 +6097,7 @@ irc_server_get_channel_count (struct t_irc_server *server)
 }
 
 /*
- * Returns number of pv for server.
+ * Return number of pv for server.
  */
 
 int
@@ -6118,7 +6117,7 @@ irc_server_get_pv_count (struct t_irc_server *server)
 }
 
 /*
- * Removes away for all channels/nicks (for all servers).
+ * Remove away for all channels/nicks (for all servers).
  */
 
 void
@@ -6139,7 +6138,7 @@ irc_server_remove_away (struct t_irc_server *server)
 }
 
 /*
- * Checks for away on all channels of a server.
+ * Check for away on all channels of a server.
  */
 
 void
@@ -6160,7 +6159,7 @@ irc_server_check_away (struct t_irc_server *server)
 }
 
 /*
- * Sets/unsets away status for a server (all channels).
+ * Set/unset away status for a server (all channels).
  */
 
 void
@@ -6455,7 +6454,7 @@ irc_server_xfer_send_accept_resume_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns hdata for server.
+ * Return hdata for server.
  */
 
 struct t_hdata *
@@ -6583,13 +6582,13 @@ irc_server_hdata_server_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds a server in an infolist.
+ * Add a server in an infolist.
  *
  * If force_disconnected_state == 1, the infolist contains the server
  * in a disconnected state (but the server is unchanged, still connected if it
  * was).
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -6940,7 +6939,7 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
 }
 
 /*
- * Prints server infos in WeeChat log file (usually for crash dump).
+ * Print server infos in WeeChat log file (usually for crash dump).
  */
 
 void

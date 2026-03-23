@@ -43,7 +43,7 @@ time_t hook_last_system_time = 0;      /* used to detect system clock skew  */
 
 
 /*
- * Returns description of hook.
+ * Return description of hook.
  *
  * Note: result must be freed after use.
  */
@@ -80,7 +80,7 @@ hook_timer_get_description (struct t_hook *hook)
 }
 
 /*
- * Initializes a timer hook.
+ * Initialize a timer hook.
  */
 
 void
@@ -136,9 +136,9 @@ hook_timer_init (struct t_hook *hook)
 }
 
 /*
- * Hooks a timer.
+ * Hook a timer.
  *
- * Returns pointer to new hook, NULL if error.
+ * Return pointer to new hook, NULL if error.
  */
 
 struct t_hook *
@@ -180,8 +180,8 @@ hook_timer (struct t_weechat_plugin *plugin, long interval, int align_second,
 }
 
 /*
- * Checks if system clock is older than previous call to this function (that
- * means new time is lower than in past). If yes, adjusts all timers to current
+ * Check if system clock is older than previous call to this function (that
+ * means new time is lower than in past). If yes, adjust all timers to current
  * time.
  */
 
@@ -222,7 +222,7 @@ hook_timer_check_system_clock (void)
 }
 
 /*
- * Returns time until next timeout (in milliseconds).
+ * Return time until next timeout (in milliseconds).
  */
 
 int
@@ -300,7 +300,7 @@ end:
 }
 
 /*
- * Executes timer hooks.
+ * Execute timer hooks.
  */
 
 void
@@ -361,7 +361,7 @@ hook_timer_exec (void)
 }
 
 /*
- * Frees data in a timer hook.
+ * Free data in a timer hook.
  */
 
 void
@@ -375,7 +375,7 @@ hook_timer_free_data (struct t_hook *hook)
 }
 
 /*
- * Returns hdata for timer hook.
+ * Return hdata for timer hook.
  */
 
 struct t_hdata *
@@ -404,9 +404,9 @@ hook_timer_hdata_hook_timer_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds timer hook data in the infolist item.
+ * Add timer hook data in the infolist item.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -442,7 +442,7 @@ hook_timer_add_to_infolist (struct t_infolist_item *item,
 }
 
 /*
- * Prints timer hook data in WeeChat log file (usually for crash dump).
+ * Print timer hook data in WeeChat log file (usually for crash dump).
  */
 
 void

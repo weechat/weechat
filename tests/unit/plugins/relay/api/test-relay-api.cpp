@@ -35,7 +35,7 @@ TEST_GROUP(RelayApi)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_api_search_colors
  */
 
@@ -54,7 +54,7 @@ TEST(RelayApi, SearchColors)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_api_hook_signals
  */
 
@@ -64,7 +64,7 @@ TEST(RelayApi, HookSignals)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_api_unhook_signals
  */
 
@@ -74,7 +74,7 @@ TEST(RelayApi, UnhookSignals)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_api_recv_http
  */
 
@@ -84,7 +84,7 @@ TEST(RelayApi, RecvHttp)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_api_recv_json
  */
 
@@ -94,7 +94,7 @@ TEST(RelayApi, RecvJson)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_api_close_connection
  */
 
@@ -104,7 +104,7 @@ TEST(RelayApi, CloseConnection)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_api_alloc
  */
 
@@ -114,7 +114,7 @@ TEST(RelayApi, Alloc)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_api_alloc_with_infolist
  */
 
@@ -124,7 +124,7 @@ TEST(RelayApi, AllocWithInfolist)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_api_get_initial_status
  */
 
@@ -134,7 +134,7 @@ TEST(RelayApi, GetInitialStatus)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_api_free
  */
 
@@ -144,7 +144,7 @@ TEST(RelayApi, Free)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_api_add_to_infolist
  */
 
@@ -154,7 +154,7 @@ TEST(RelayApi, AddToInfolist)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_api_print_log
  */
 

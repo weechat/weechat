@@ -116,9 +116,9 @@ int gui_color_timer = 0;                      /* timer in seconds           */
 
 
 /*
- * Searches for a color by name.
+ * Search for a color by name.
  *
- * Returns index of color in WeeChat colors table, -1 if not found.
+ * Return index of color in WeeChat colors table, -1 if not found.
  */
 
 int
@@ -140,9 +140,9 @@ gui_color_search (const char *color_name)
 }
 
 /*
- * Searches for a color by index.
+ * Search for a color by index.
  *
- * Returns name of color in WeeChat colors table, NULL if not found.
+ * Return name of color in WeeChat colors table, NULL if not found.
  */
 
 const char *
@@ -214,9 +214,9 @@ gui_color_get_extended_flags (int attrs)
 }
 
 /*
- * Assigns a WeeChat color (read from configuration).
+ * Assign a WeeChat color (read from configuration).
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -270,12 +270,12 @@ gui_color_assign (int *color, const char *color_name)
 }
 
 /*
- * Assigns color by difference.
+ * Assign color by difference.
  *
  * It is called when a color option is set with value ++X or --X, to search
  * another color (for example ++1 is next color/alias in list).
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -323,7 +323,7 @@ gui_color_assign_by_diff (int *color, const char *color_name, int diff)
 }
 
 /*
- * Gets number of WeeChat colors.
+ * Get number of WeeChat colors.
  */
 
 int
@@ -333,7 +333,7 @@ gui_color_get_weechat_colors_number (void)
 }
 
 /*
- * Gets number of colors supported by terminal.
+ * Get number of colors supported by terminal.
  */
 
 int
@@ -343,7 +343,7 @@ gui_color_get_term_colors (void)
 }
 
 /*
- * Gets number of color pairs supported by terminal.
+ * Get number of color pairs supported by terminal.
  */
 
 int
@@ -353,8 +353,7 @@ gui_color_get_term_color_pairs (void)
 }
 
 /*
- * Gets current pairs as arrays (one array for foregrounds, another for
- * backgrounds).
+ * Get current pairs as arrays (one array for foregrounds, another for backgrounds).
  *
  * Each array has "gui_color_num_pairs+1" entries. Pairs not used have value -2
  * in both arrays.
@@ -414,7 +413,7 @@ error:
 }
 
 /*
- * Displays a warning when no more pair is available in table.
+ * Display a warning when no more pair is available in table.
  */
 
 int
@@ -435,11 +434,11 @@ gui_color_timer_warning_pairs_full (const void *pointer, void *data,
 }
 
 /*
- * Gets a pair with given foreground/background colors.
+ * Get a pair with given foreground/background colors.
  *
  * If no pair is found for fg/bg, a new pair is created.
  *
- * Returns a value between 0 and COLOR_PAIRS-1.
+ * Return a value between 0 and COLOR_PAIRS-1.
  */
 
 int
@@ -517,7 +516,7 @@ gui_color_get_pair (int fg, int bg)
 }
 
 /*
- * Gets color pair with a WeeChat color number.
+ * Get color pair with a WeeChat color number.
  */
 
 int
@@ -545,7 +544,7 @@ gui_color_weechat_get_pair (int weechat_color)
 }
 
 /*
- * Gets color name.
+ * Get color name.
  */
 
 const char *
@@ -592,7 +591,7 @@ gui_color_get_name (int num_color)
 }
 
 /*
- * Builds a WeeChat color with foreground and background.
+ * Build a WeeChat color with foreground and background.
  *
  * Foreground and background must be >= 0 and can be a WeeChat or extended
  * color, with optional attributes for foreground.
@@ -643,7 +642,7 @@ gui_color_build (int number, int foreground, int background)
 }
 
 /*
- * Initializes color variables using terminal infos.
+ * Initialize color variables using terminal infos.
  */
 
 void
@@ -703,7 +702,7 @@ gui_color_init_vars (void)
 }
 
 /*
- * Frees color variables.
+ * Free color variables.
  */
 
 void
@@ -722,7 +721,7 @@ gui_color_free_vars (void)
 }
 
 /*
- * Initializes color pairs with terminal colors.
+ * Initialize color pairs with terminal colors.
  */
 
 void
@@ -740,7 +739,7 @@ gui_color_init_pairs_terminal (void)
 }
 
 /*
- * Initializes color pairs with WeeChat colors.
+ * Initialize color pairs with WeeChat colors.
  *
  * Pairs defined by WeeChat are set with their values (from pair 1 to pair N),
  * and other pairs are set with terminal color and default background (-1).
@@ -771,7 +770,7 @@ gui_color_init_pairs_weechat (void)
 }
 
 /*
- * Displays terminal colors.
+ * Display terminal colors.
  *
  * This is called by command line option "-c" / "--colors".
  */
@@ -830,7 +829,7 @@ gui_color_display_terminal_colors (void)
 }
 
 /*
- * Displays line with terminal colors and timer (remaining time for display of
+ * Display line with terminal colors and timer (remaining time for display of
  * terminal colors).
  */
 
@@ -864,7 +863,7 @@ gui_color_info_term_colors (char *buffer, int size)
 }
 
 /*
- * Displays content of color buffer.
+ * Display content of color buffer.
  */
 
 void
@@ -1168,7 +1167,7 @@ gui_color_timer_cb (const void *pointer, void *data, int remaining_calls)
 }
 
 /*
- * Switches between WeeChat and terminal colors.
+ * Switch between WeeChat and terminal colors.
  */
 
 void
@@ -1215,7 +1214,7 @@ gui_color_switch_colors (void)
 }
 
 /*
- * Resets all color pairs (the next refresh will auto reallocate needed pairs).
+ * Reset all color pairs (the next refresh will auto reallocate needed pairs).
  *
  * It is useful when color pairs table is full, to remove non used pairs.
  */
@@ -1289,7 +1288,7 @@ gui_color_buffer_close_cb (const void *pointer, void *data,
 }
 
 /*
- * Assigns color buffer to pointer if it is not yet set.
+ * Assign color buffer to pointer if it is not yet set.
  */
 
 void
@@ -1307,7 +1306,7 @@ gui_color_buffer_assign (void)
 }
 
 /*
- * Opens a buffer to display colors.
+ * Open a buffer to display colors.
  */
 
 void
@@ -1349,7 +1348,7 @@ gui_color_buffer_open (void)
 }
 
 /*
- * Adds an alias in hashtable with aliases.
+ * Add an alias in hashtable with aliases.
  */
 
 void
@@ -1381,7 +1380,7 @@ gui_color_palette_add_alias_cb (void *data,
 }
 
 /*
- * Builds aliases for palette.
+ * Build aliases for palette.
  */
 
 void
@@ -1431,7 +1430,7 @@ gui_color_palette_build_aliases (void)
 }
 
 /*
- * Creates a new color in palette.
+ * Create a new color in palette.
  */
 
 struct t_gui_color_palette *
@@ -1523,7 +1522,7 @@ gui_color_palette_new (int number, const char *value)
 }
 
 /*
- * Frees a color in palette.
+ * Free a color in palette.
  */
 
 void
@@ -1538,7 +1537,7 @@ gui_color_palette_free (struct t_gui_color_palette *color_palette)
 }
 
 /*
- * Initializes WeeChat colors.
+ * Initialize WeeChat colors.
  */
 
 void
@@ -1612,7 +1611,7 @@ gui_color_init_weechat (void)
 }
 
 /*
- * Allocates GUI colors.
+ * Allocate GUI colors.
  */
 
 void
@@ -1630,7 +1629,7 @@ gui_color_alloc (void)
 }
 
 /*
- * Dumps colors.
+ * Dump colors.
  */
 
 void

@@ -39,7 +39,7 @@ TEST_GROUP(CoreUrl)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   weeurl_search_constant
  */
 
@@ -60,7 +60,7 @@ TEST(CoreUrl, SearchConstant)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   weeurl_get_mask_value
  */
 
@@ -70,7 +70,7 @@ TEST(CoreUrl, GetMaskValue)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   weeurl_search_option
  */
 
@@ -102,7 +102,7 @@ TEST(CoreUrl, SearchOption)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   weeurl_read
  */
 
@@ -112,7 +112,7 @@ TEST(CoreUrl, Read)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   weeurl_write
  */
 
@@ -122,7 +122,7 @@ TEST(CoreUrl, Write)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   weeurl_option_map_cb
  */
 
@@ -132,7 +132,7 @@ TEST(CoreUrl, OptionMapCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   weeurl_set_proxy
  */
 
@@ -142,7 +142,7 @@ TEST(CoreUrl, SetProxy)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   weeurl_download
  */
 
@@ -152,7 +152,7 @@ TEST(CoreUrl, Download)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   weeurl_option_add_to_infolist
  */
 

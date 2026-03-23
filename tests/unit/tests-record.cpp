@@ -112,7 +112,7 @@ record_hook_line_cb (const void *pointer, void *data, struct t_hashtable *line)
 }
 
 /*
- * Starts recording of messages displayed.
+ * Start recording of messages displayed.
  */
 
 void
@@ -138,7 +138,7 @@ record_start ()
 }
 
 /*
- * Stops recording of messages displayed.
+ * Stop recording of messages displayed.
  */
 
 void
@@ -154,9 +154,9 @@ record_stop ()
 }
 
 /*
- * Checks if a recorded message field matches a value.
+ * Check if a recorded message field matches a value.
  *
- * Returns:
+ * Return:
  *   1: value matches
  *   0: value does NOT match
  */
@@ -174,9 +174,9 @@ record_match (struct t_hashtable *recorded_msg,
 }
 
 /*
- * Checks if a recorded message field matches a regular expression.
+ * Check if a recorded message field matches a regular expression.
  *
- * Returns:
+ * Return:
  *   1: value matches the regex
  *   0: value does NOT match the regex
  */
@@ -194,9 +194,9 @@ record_match_regex (struct t_hashtable *recorded_msg,
 }
 
 /*
- * Searches if a prefix/message has been displayed in a buffer.
+ * Search if a prefix/message has been displayed in a buffer.
  *
- * Returns pointer to hashtable with the message found, NULL if the message
+ * Return pointer to hashtable with the message found, NULL if the message
  * has NOT been displayed.
  */
 
@@ -228,10 +228,10 @@ record_search (const char *buffer, const char *prefix, const char *message,
 }
 
 /*
- * Searches if a message has been displayed in a buffer using a regular
+ * Search if a message has been displayed in a buffer using a regular
  * expression.
  *
- * Returns pointer to hashtable with the first message found, NULL if no
+ * Return pointer to hashtable with the first message found, NULL if no
  * message is matching the regular expression.
  */
 
@@ -267,7 +267,7 @@ record_search_msg_regex (const char *buffer, const char *regex)
 }
 
 /*
- * Returns the number of messages displayed during the recording.
+ * Return the number of messages displayed during the recording.
  */
 
 int
@@ -277,7 +277,7 @@ record_count_messages ()
 }
 
 /*
- * Adds all recorded messages to the dynamic string "msg".
+ * Add all recorded messages to the dynamic string "msg".
  */
 
 void

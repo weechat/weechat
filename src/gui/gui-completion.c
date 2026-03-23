@@ -59,7 +59,7 @@ int gui_completion_freeze = 0;         /* 1 to freeze completions (do not   */
 
 
 /*
- * Compares two words in completion list.
+ * Compare two words in completion list.
  */
 
 int
@@ -85,7 +85,7 @@ gui_completion_word_compare_cb (void *data,
 }
 
 /*
- * Frees a word in completion list.
+ * Free a word in completion list.
  */
 
 void
@@ -107,7 +107,7 @@ gui_completion_word_free_cb (void *data,
 }
 
 /*
- * Initializes completion.
+ * Initialize completion.
  */
 
 void
@@ -148,9 +148,9 @@ gui_completion_init (struct t_gui_completion *completion,
 }
 
 /*
- * Creates a new completion.
+ * Create a new completion.
  *
- * Returns pointer to completion, NULL if error.
+ * Return pointer to completion, NULL if error.
  */
 
 struct t_gui_completion *
@@ -181,9 +181,9 @@ gui_completion_new (struct t_weechat_plugin *plugin,
 }
 
 /*
- * Adds an item to partial completion list.
+ * Add an item to partial completion list.
  *
- * Returns pointer to new item, NULL if error.
+ * Return pointer to new item, NULL if error.
  */
 
 struct t_gui_completion_word *
@@ -206,7 +206,7 @@ gui_completion_partial_list_add (struct t_gui_completion *completion,
 }
 
 /*
- * Frees data in completion.
+ * Free data in completion.
  */
 
 void
@@ -238,7 +238,7 @@ gui_completion_free_data (struct t_gui_completion *completion)
 }
 
 /*
- * Frees completion.
+ * Free completion.
  */
 
 void
@@ -270,7 +270,7 @@ gui_completion_free (struct t_gui_completion *completion)
 }
 
 /*
- * Frees all completions created by a plugin.
+ * Free all completions created by a plugin.
  */
 
 void
@@ -289,7 +289,7 @@ gui_completion_free_all_plugin (struct t_weechat_plugin *plugin)
 }
 
 /*
- * Stops completion (for example after 1 argument of command with 1 argument).
+ * Stop completion (for example after 1 argument of command with 1 argument).
  */
 
 void
@@ -310,9 +310,9 @@ gui_completion_stop (struct t_gui_completion *completion)
 }
 
 /*
- * Checks if nick has one or more ignored chars (for nick comparison).
+ * Check if nick has one or more ignored chars (for nick comparison).
  *
- * Returns:
+ * Return:
  *   1: nick has one or more ignored chars
  *   0: nick has no ignored chars
  */
@@ -341,7 +341,7 @@ gui_completion_nick_has_ignored_chars (const char *string)
 }
 
 /*
- * Duplicates a nick and ignores some chars.
+ * Duplicate a nick and ignores some chars.
  *
  * Note: result must be freed after use.
  */
@@ -379,7 +379,7 @@ gui_completion_nick_strdup_ignore_chars (const char *string)
  * Locale and case independent string comparison with max length for nicks
  * (alpha or digits only).
  *
- * Returns:
+ * Return:
  *   < 0: base_word < nick
  *     0: base_word == nick
  *   > 0: base_word > nick
@@ -417,9 +417,9 @@ gui_completion_nickncmp (const char *base_word, const char *nick, int max)
 }
 
 /*
- * Compares two strings (follows case-sensitive flag in completion structure).
+ * Compare two strings (follows case-sensitive flag in completion structure).
  *
- * Returns:
+ * Return:
  *   < 0: string1 < string2
  *     0: string1 == string2
  *   > 0: string1 > string2
@@ -437,10 +437,10 @@ gui_completion_strcmp (struct t_gui_completion *completion,
 }
 
 /*
- * Compares two strings with max length (follows case-sensitive flag in
+ * Compare two strings with max length (follows case-sensitive flag in
  * completion structure).
  *
- * Returns:
+ * Return:
  *   < 0: string1 < string2
  *     0: string1 == string2
  *   > 0: string1 > string2
@@ -459,9 +459,9 @@ gui_completion_strncmp (struct t_gui_completion *completion,
 }
 
 /*
- * Checks if a nick is ignored from completion (no completion with this nick).
+ * Check if a nick is ignored from completion (no completion with this nick).
  *
- * Returns:
+ * Return:
  *   1: nick ignored
  *   0: nick NOT ignored (can be used in completion)
  */
@@ -497,7 +497,7 @@ gui_completion_nick_ignored (const char *nick)
 }
 
 /*
- * Adds a word to completion list.
+ * Add a word to completion list.
  */
 
 void
@@ -573,7 +573,7 @@ gui_completion_custom (struct t_gui_completion *completion,
 }
 
 /*
- * Builds data list according to a template.
+ * Build data list according to a template.
  */
 
 void
@@ -657,7 +657,7 @@ gui_completion_build_list_template (struct t_gui_completion *completion,
 }
 
 /*
- * Gets template matching arguments for command.
+ * Get template matching arguments for command.
  */
 
 int
@@ -718,9 +718,9 @@ gui_completion_get_matching_template (struct t_gui_completion *completion,
 }
 
 /*
- * Searches for a command hook.
+ * Search for a command hook.
  *
- * Returns pointer to hook found, NULL if not found.
+ * Return pointer to hook found, NULL if not found.
  */
 
 struct t_hook *
@@ -773,7 +773,7 @@ gui_completion_search_command (struct t_gui_completion *completion,
 }
 
 /*
- * Gets template according to user arguments for command.
+ * Get template according to user arguments for command.
  */
 
 char *
@@ -821,7 +821,7 @@ gui_completion_get_template_for_args (struct t_gui_completion *completion,
 }
 
 /*
- * Builds data list according to command and argument index.
+ * Build data list according to command and argument index.
  */
 
 void
@@ -896,7 +896,7 @@ gui_completion_build_list (struct t_gui_completion *completion)
 }
 
 /*
- * Finds context for completion.
+ * Find context for completion.
  */
 
 void
@@ -1102,9 +1102,9 @@ gui_completion_find_context (struct t_gui_completion *completion,
 }
 
 /*
- * Finds common prefix size in matching items (case is ignored).
+ * Find common prefix size in matching items (case is ignored).
  *
- * If utf_char is not null, only words beginning with this char are compared
+ * If utf_char is not null, compare only words beginning with this char
  * (all other words are ignored).
  *
  * For example with items:
@@ -1151,7 +1151,7 @@ gui_completion_common_prefix_size (struct t_arraylist *list,
 }
 
 /*
- * Builds list with possible completions when a partial completion occurs.
+ * Build list with possible completions when a partial completion occurs.
  */
 
 void
@@ -1233,7 +1233,7 @@ gui_completion_partial_build_list (struct t_gui_completion *completion,
 }
 
 /*
- * Completes word using matching items.
+ * Complete word using matching items.
  */
 
 void
@@ -1395,7 +1395,7 @@ gui_completion_complete (struct t_gui_completion *completion)
 }
 
 /*
- * Completes a command.
+ * Complete a command.
  */
 
 void
@@ -1423,7 +1423,7 @@ gui_completion_command (struct t_gui_completion *completion)
 }
 
 /*
- * Gets default completion template: from buffer local variable
+ * Get default completion template: from buffer local variable
  * "completion_default_template" if defined, or the value of option
  * "weechat.completion.default_template".
  *
@@ -1495,7 +1495,7 @@ gui_completion_auto (struct t_gui_completion *completion)
 }
 
 /*
- * Completes word according to context.
+ * Complete word according to context.
  */
 
 int
@@ -1630,7 +1630,7 @@ gui_completion_search (struct t_gui_completion *completion, const char *data,
 }
 
 /*
- * Gets a completion property as string.
+ * Get a completion property as string.
  */
 
 const char *
@@ -1651,7 +1651,7 @@ gui_completion_get_string (struct t_gui_completion *completion,
 }
 
 /*
- * Sets a completion property.
+ * Set a completion property.
  */
 
 void
@@ -1668,7 +1668,7 @@ gui_completion_set (struct t_gui_completion *completion,
 }
 
 /*
- * Returns hdata for completion.
+ * Return hdata for completion.
  */
 
 struct t_hdata *
@@ -1715,7 +1715,7 @@ gui_completion_hdata_completion_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns hdata for completion word.
+ * Return hdata for completion word.
  */
 
 struct t_hdata *
@@ -1739,7 +1739,7 @@ gui_completion_hdata_completion_word_cb (const void *pointer, void *data,
 }
 
 /*
- * Prints list of completion words in WeeChat log file (usually for crash dump).
+ * Print list of completion words in WeeChat log file (usually for crash dump).
  */
 
 void
@@ -1760,7 +1760,7 @@ gui_completion_list_words_print_log (struct t_arraylist *list,
 }
 
 /*
- * Prints completion list in WeeChat log file (usually for crash dump).
+ * Print completion list in WeeChat log file (usually for crash dump).
  */
 
 void

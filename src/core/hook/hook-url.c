@@ -47,7 +47,7 @@
 
 
 /*
- * Returns description of hook.
+ * Return description of hook.
  *
  * Note: result must be freed after use.
  */
@@ -66,7 +66,7 @@ hook_url_get_description (struct t_hook *hook)
 }
 
 /*
- * Displays keys and values of a hashtable.
+ * Display keys and values of a hashtable.
  */
 
 void
@@ -83,7 +83,7 @@ hook_url_hashtable_map_cb (void *data, struct t_hashtable *hashtable,
 }
 
 /*
- * Runs callback of url hook.
+ * Run callback of url hook.
  */
 
 void
@@ -154,7 +154,7 @@ hook_url_transfer_thread (void *hook_pointer)
 }
 
 /*
- * Checks if thread is still alive.
+ * Check if thread is still alive.
  */
 
 int
@@ -218,7 +218,7 @@ hook_url_timer_cb (const void *pointer, void *data, int remaining_calls)
 }
 
 /*
- * Starts transfer for an URL hook.
+ * Start transfer for an URL hook.
  */
 
 void
@@ -286,9 +286,9 @@ hook_url_transfer (struct t_hook *hook)
 }
 
 /*
- * Hooks a URL.
+ * Hook a URL.
  *
- * Returns pointer to new hook, NULL if error.
+ * Return pointer to new hook, NULL if error.
  */
 
 struct t_hook *
@@ -358,7 +358,7 @@ error:
 }
 
 /*
- * Frees data in a url hook.
+ * Free data in a url hook.
  */
 
 void
@@ -422,7 +422,7 @@ hook_url_free_data (struct t_hook *hook)
 }
 
 /*
- * Returns hdata for url hook.
+ * Return hdata for url hook.
  */
 
 struct t_hdata *
@@ -452,9 +452,9 @@ hook_url_hdata_hook_url_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds url hook data in the infolist item.
+ * Add url hook data in the infolist item.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -489,7 +489,7 @@ hook_url_add_to_infolist (struct t_infolist_item *item,
 }
 
 /*
- * Prints url hook data in WeeChat log file (usually for crash dump).
+ * Print url hook data in WeeChat log file (usually for crash dump).
  */
 
 void

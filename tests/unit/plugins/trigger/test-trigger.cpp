@@ -55,7 +55,7 @@ TEST_GROUP(Trigger)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   trigger_search_option
  */
 
@@ -74,7 +74,7 @@ TEST(Trigger, SearchOption)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   trigger_search_hook_type
  */
 
@@ -94,7 +94,7 @@ TEST(Trigger, SearchHookType)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   trigger_search_regex_command
  */
 
@@ -116,7 +116,7 @@ TEST(Trigger, SearchRegexCommand)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   trigger_search_return_code
  */
 
@@ -136,7 +136,7 @@ TEST(Trigger, SearchReturnCode)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   trigger_search_post_action
  */
 
@@ -156,7 +156,7 @@ TEST(Trigger, SearchPostAction)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   trigger_unhook
  */
 
@@ -166,7 +166,7 @@ TEST(Trigger, Unhook)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   trigger_hook
  */
 
@@ -176,7 +176,7 @@ TEST(Trigger, Hook)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   trigger_regex_split
  *   trigger_regex_free
  */
@@ -392,7 +392,7 @@ TEST(Trigger, RegexSplit)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   trigger_split_command
  */
 
@@ -444,7 +444,7 @@ TEST(Trigger, SplitCommand)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   trigger_name_valid
  */
 
@@ -466,7 +466,7 @@ TEST(Trigger, NameValid)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   trigger_search
  *   trigger_search_with_option
  *   trigger_alloc
@@ -636,7 +636,7 @@ TEST(Trigger, New)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   trigger_create_default
  */
 
@@ -646,7 +646,7 @@ TEST(Trigger, CreateDefault)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   trigger_rename
  */
 
@@ -670,7 +670,7 @@ TEST(Trigger, Rename)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   trigger_copy
  */
 
@@ -698,7 +698,7 @@ TEST(Trigger, Copy)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   trigger_free_all
  */
 
@@ -708,7 +708,7 @@ TEST(Trigger, FreeAll)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   trigger_print_log
  */
 
@@ -718,7 +718,7 @@ TEST(Trigger, PrintLog)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   trigger_debug_dump_cb
  */
 

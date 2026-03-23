@@ -29,7 +29,7 @@
 
 
 /*
- * Returns FIFO info "fifo_filename".
+ * Return FIFO info "fifo_filename".
  */
 
 char *
@@ -47,7 +47,7 @@ fifo_info_info_fifo_filename_cb (const void *pointer, void *data,
 }
 
 /*
- * Hooks info for fifo plugin.
+ * Hook info for fifo plugin.
  */
 
 void

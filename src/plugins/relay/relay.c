@@ -80,9 +80,9 @@ struct t_hook *relay_hook_timer = NULL;
 
 
 /*
- * Searches for a protocol.
+ * Search for a protocol.
  *
- * Returns index of protocol in enum t_relay_protocol, -1 if protocol is not
+ * Return index of protocol in enum t_relay_protocol, -1 if protocol is not
  * found.
  */
 
@@ -105,9 +105,9 @@ relay_protocol_search (const char *name)
 }
 
 /*
- * Searches for a status.
+ * Search for a status.
  *
- * Returns index of status in enum t_relay_status, -1 if status is not found.
+ * Return index of status in enum t_relay_status, -1 if status is not found.
  */
 
 int
@@ -255,7 +255,7 @@ relay_debug_dump_cb (const void *pointer, void *data,
 }
 
 /*
- * Updates input text by adding local/remote command indicator, only on
+ * Update input text by adding local/remote command indicator, only on
  * buffers with remote (relay api).
  */
 
@@ -346,7 +346,7 @@ relay_timer_cb (const void *pointer, void *data, int remaining_calls)
 }
 
 /*
- * Initializes relay plugin.
+ * Initialize relay plugin.
  */
 
 int
@@ -418,7 +418,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 }
 
 /*
- * Ends relay plugin.
+ * End relay plugin.
  */
 
 int

@@ -41,7 +41,7 @@
 
 
 /*
- * Adds current server to completion list.
+ * Add current server to completion list.
  */
 
 int
@@ -67,7 +67,7 @@ irc_completion_server_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds self nick of current server to completion list.
+ * Add self nick of current server to completion list.
  */
 
 int
@@ -93,7 +93,7 @@ irc_completion_server_nick_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds channels of current server to completion list.
+ * Add channels of current server to completion list.
  */
 
 int
@@ -135,7 +135,7 @@ irc_completion_server_channels_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds privates of current server to completion list.
+ * Add privates of current server to completion list.
  */
 
 int
@@ -170,7 +170,7 @@ irc_completion_server_privates_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds nicks of current server to completion list.
+ * Add nicks of current server to completion list.
  */
 
 int
@@ -214,7 +214,7 @@ irc_completion_server_nicks_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds prefix modes filters to completion list.
+ * Add prefix modes filters to completion list.
  */
 
 int
@@ -253,7 +253,7 @@ irc_completion_server_prefix_modes_filter_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds servers to completion list.
+ * Add servers to completion list.
  */
 
 int
@@ -281,7 +281,7 @@ irc_completion_servers_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds current channel to completion list.
+ * Add current channel to completion list.
  */
 
 int
@@ -307,7 +307,7 @@ irc_completion_channel_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds recent speakers to completion list.
+ * Add recent speakers to completion list.
  */
 
 void
@@ -338,7 +338,7 @@ irc_completion_channel_nicks_add_speakers (struct t_gui_completion *completion,
 }
 
 /*
- * Adds nicks of current channel to completion list.
+ * Add nicks of current channel to completion list.
  */
 
 int
@@ -405,7 +405,7 @@ irc_completion_channel_nicks_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds nicks and hosts of current channel to completion list.
+ * Add nicks and hosts of current channel to completion list.
  */
 
 int
@@ -461,7 +461,7 @@ irc_completion_channel_nicks_hosts_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds modelist masks of current channel to completion list.
+ * Add modelist masks of current channel to completion list.
  */
 
 int
@@ -503,7 +503,7 @@ irc_completion_modelist_masks_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds modelist numbers of current channel to completion list.
+ * Add modelist numbers of current channel to completion list.
  */
 
 int
@@ -547,7 +547,7 @@ irc_completion_modelist_numbers_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds topic of current channel to completion list.
+ * Add topic of current channel to completion list.
  */
 
 int
@@ -600,7 +600,7 @@ irc_completion_channel_topic_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds channels of all servers to completion list.
+ * Add channels of all servers to completion list.
  */
 
 int
@@ -673,8 +673,7 @@ irc_completion_channels_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds channels automatically joined on the current server
- * (option "autojoin").
+ * Add channels automatically joined on the current server (option "autojoin").
  */
 
 int
@@ -721,7 +720,7 @@ irc_completion_channels_autojoin_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds privates of all servers to completion list.
+ * Add privates of all servers to completion list.
  */
 
 int
@@ -757,7 +756,7 @@ irc_completion_privates_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds default kick message to completion list.
+ * Add default kick message to completion list.
  */
 
 int
@@ -790,7 +789,7 @@ irc_completion_msg_kick_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds default part message to completion list.
+ * Add default part message to completion list.
  */
 
 int
@@ -823,7 +822,7 @@ irc_completion_msg_part_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds ignore numbers to completion list.
+ * Add ignore numbers to completion list.
  */
 
 int
@@ -853,7 +852,7 @@ irc_completion_ignores_numbers_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds nicks in notify list to completion list.
+ * Add nicks in notify list to completion list.
  */
 
 int
@@ -898,7 +897,7 @@ irc_completion_notify_nicks_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds filters for raw buffer to completion list.
+ * Add filters for raw buffer to completion list.
  */
 
 int
@@ -954,7 +953,7 @@ irc_completion_raw_filters_cb (const void *pointer, void *data,
 }
 
 /*
- * Hooks completions.
+ * Hook completions.
  */
 
 void

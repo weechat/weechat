@@ -76,7 +76,7 @@ TEST_GROUP(RelayHttp)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_http_request_alloc
  *   relay_http_request_reinit
  *   relay_http_request_free
@@ -162,7 +162,7 @@ TEST(RelayHttp, RequestAllocReinitFree)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_http_url_decode
  */
 
@@ -186,7 +186,7 @@ TEST(RelayHttp, UrlDecode)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_http_get_param_boolean
  */
 
@@ -223,7 +223,7 @@ TEST(RelayHttp, GetParamBoolean)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_http_get_param_long
  */
 
@@ -251,7 +251,7 @@ TEST(RelayHttp, GetParamLong)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_http_parse_path
  */
 
@@ -366,7 +366,7 @@ TEST(RelayHttp, ParsePath)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_http_parse_method_path
  */
 
@@ -493,7 +493,7 @@ TEST(RelayHttp, ParseMethodPath)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_http_parse_header
  */
 
@@ -619,7 +619,7 @@ TEST(RelayHttp, ParseHeader)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_http_add_to_body
  */
 
@@ -686,7 +686,7 @@ TEST(RelayHttp, AddToBody)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_http_get_auth_status
  */
 
@@ -953,7 +953,7 @@ TEST(RelayHttp, GetAuthStatus)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_http_check_auth
  */
 
@@ -963,7 +963,7 @@ TEST(RelayHttp, CheckAuth)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_http_process_websocket
  */
 
@@ -973,7 +973,7 @@ TEST(RelayHttp, ProcessWebsocket)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_http_process_request
  */
 
@@ -983,7 +983,7 @@ TEST(RelayHttp, ProcessRequest)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_http_recv
  */
 
@@ -993,7 +993,7 @@ TEST(RelayHttp, Recv)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_http_compress
  */
 
@@ -1064,7 +1064,7 @@ TEST(RelayHttp, Compress)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_http_send
  */
 
@@ -1074,7 +1074,7 @@ TEST(RelayHttp, Send)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_http_send_json
  */
 
@@ -1084,7 +1084,7 @@ TEST(RelayHttp, SendJson)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_http_send_error_json
  */
 
@@ -1094,7 +1094,7 @@ TEST(RelayHttp, SendErrorJson)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_http_response_alloc
  *   relay_http_response_free
  */
@@ -1123,7 +1123,7 @@ TEST(RelayHttp, ResponseAllocFree)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_http_parse_response_code
  */
 
@@ -1233,7 +1233,7 @@ TEST(RelayHttp, ParseResponseCode)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_http_parse_response_header
  */
 
@@ -1300,7 +1300,7 @@ TEST(RelayHttp, ParseResponseHeader)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_http_parse_response
  */
 
@@ -1360,7 +1360,7 @@ TEST(RelayHttp, ParseResponse)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_http_print_log_request
  */
 
@@ -1370,7 +1370,7 @@ TEST(RelayHttp, PrintLogRequest)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_http_print_log_response
  */
 

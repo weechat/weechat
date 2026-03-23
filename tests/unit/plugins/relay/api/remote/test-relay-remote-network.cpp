@@ -77,7 +77,7 @@ TEST_GROUP(RelayRemoteNetworkWithRemote)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_remote_network_get_url_resource
  */
 
@@ -98,7 +98,7 @@ TEST(RelayRemoteNetworkWithRemote, GetUrlResource)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_remote_network_close_connection
  */
 
@@ -108,7 +108,7 @@ TEST(RelayRemoteNetwork, CloseConnection)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_remote_network_disconnect
  */
 
@@ -118,7 +118,7 @@ TEST(RelayRemoteNetwork, Disconnect)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_remote_network_check_auth
  */
 
@@ -128,7 +128,7 @@ TEST(RelayRemoteNetwork, CheckAuth)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_remote_network_send_data
  */
 
@@ -138,7 +138,7 @@ TEST(RelayRemoteNetwork, SendData)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_remote_network_send
  */
 
@@ -148,7 +148,7 @@ TEST(RelayRemoteNetwork, Send)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_remote_network_send_json
  */
 
@@ -158,7 +158,7 @@ TEST(RelayRemoteNetwork, SendJson)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_remote_network_recv_text
  */
 
@@ -168,7 +168,7 @@ TEST(RelayRemoteNetwork, RecvText)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_remote_network_read_websocket_frames
  */
 
@@ -178,7 +178,7 @@ TEST(RelayRemoteNetwork, ReadWebsocketFrames)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_remote_network_recv_buffer
  */
 
@@ -188,7 +188,7 @@ TEST(RelayRemoteNetwork, RecvBuffer)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_remote_network_recv_cb
  */
 
@@ -198,7 +198,7 @@ TEST(RelayRemoteNetwork, RecvCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_remote_network_connect_ws_auth
  */
 
@@ -208,7 +208,7 @@ TEST(RelayRemoteNetwork, ConnectWsAuth)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_remote_network_connect_cb
  */
 
@@ -218,7 +218,7 @@ TEST(RelayRemoteNetwork, ConnectCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_remote_network_url_handshake_cb
  */
 
@@ -228,7 +228,7 @@ TEST(RelayRemoteNetwork, UrlHandshakeCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_remote_network_get_handshake_request
  */
 
@@ -247,7 +247,7 @@ TEST(RelayRemoteNetwork, GetHandshakeRequest)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_remote_network_connect
  */
 

@@ -29,7 +29,7 @@
 
 
 /*
- * Returns infolist "alias".
+ * Return infolist "alias".
  */
 
 struct t_infolist *
@@ -85,7 +85,7 @@ alias_info_infolist_alias_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns infolist "alias_default".
+ * Return infolist "alias_default".
  */
 
 struct t_infolist *
@@ -137,7 +137,7 @@ alias_info_infolist_alias_default_cb (const void *pointer, void *data,
 }
 
 /*
- * Hooks infolist for alias plugin.
+ * Hook infolist for alias plugin.
  */
 
 void

@@ -60,7 +60,7 @@ int fifo_fd_cb (const void *pointer, void *data, int fd);
 
 
 /*
- * Creates FIFO pipe for remote control.
+ * Create FIFO pipe for remote control.
  */
 
 void
@@ -144,7 +144,7 @@ fifo_create (void)
 }
 
 /*
- * Removes FIFO pipe.
+ * Remove FIFO pipe.
  */
 
 void
@@ -189,7 +189,7 @@ fifo_remove (void)
 }
 
 /*
- * Executes a command/text received in FIFO pipe.
+ * Execute a command/text received in FIFO pipe.
  */
 
 void
@@ -262,7 +262,7 @@ fifo_exec (const char *text)
 }
 
 /*
- * Reads data in FIFO pipe.
+ * Read data in FIFO pipe.
  */
 
 int
@@ -345,7 +345,7 @@ fifo_fd_cb (const void *pointer, void *data, int fd)
 }
 
 /*
- * Initializes fifo plugin.
+ * Initialize fifo plugin.
  */
 
 int
@@ -378,7 +378,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 }
 
 /*
- * Ends fifo plugin.
+ * End fifo plugin.
  */
 
 int

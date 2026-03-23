@@ -64,7 +64,7 @@ TEST_GROUP(GuiKey)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_key_init
  */
 
@@ -74,7 +74,7 @@ TEST(GuiKey, Init)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_key_search_context
  */
 
@@ -92,7 +92,7 @@ TEST(GuiKey, SearchContext)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_key_get_current_context
  */
 
@@ -123,7 +123,7 @@ TEST(GuiKey, GetCurrentContext)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_key_grab_init
  */
 
@@ -133,7 +133,7 @@ TEST(GuiKey, GrabInit)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_key_grab_end_timer_cb
  */
 
@@ -143,7 +143,7 @@ TEST(GuiKey, GrabEndTimerCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_key_legacy_internal_code
  */
 
@@ -172,7 +172,7 @@ TEST(GuiKey, LegacyInternalCode)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_key_expand
  */
 
@@ -815,7 +815,7 @@ TEST(GuiKey, Expand)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_key_legacy_to_alias
  */
 
@@ -848,7 +848,7 @@ TEST(GuiKey, LegacyToAlias)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_key_fix_mouse
  *   gui_key_fix
  */
@@ -882,7 +882,7 @@ TEST(GuiKey, Fix)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_key_find_pos
  */
 
@@ -892,7 +892,7 @@ TEST(GuiKey, FindPos)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_key_insert_sorted
  */
 
@@ -902,7 +902,7 @@ TEST(GuiKey, InsertSorted)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_key_set_area_type_name
  */
 
@@ -912,7 +912,7 @@ TEST(GuiKey, SetAreaTypeName)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_key_set_areas
  */
 
@@ -922,7 +922,7 @@ TEST(GuiKey, SetAreas)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_key_set_score
  */
 
@@ -932,7 +932,7 @@ TEST(GuiKey, SetScore)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_key_is_safe
  */
 
@@ -1026,7 +1026,7 @@ TEST(GuiKey, IsSafe)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_key_chunk_seems_valid
  *   gui_key_seems_valid
  */
@@ -1078,7 +1078,7 @@ TEST(GuiKey, SeemsValid)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_key_option_change_cb
  */
 
@@ -1088,7 +1088,7 @@ TEST(GuiKey, OptionChangeCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_key_new_option
  */
 
@@ -1125,7 +1125,7 @@ TEST(GuiKey, NewOption)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_key_new
  */
 
@@ -1216,7 +1216,7 @@ TEST(GuiKey, New)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_key_search
  */
 
@@ -1261,7 +1261,7 @@ TEST(GuiKey, Search)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_key_compare_chunks
  */
 
@@ -1298,7 +1298,7 @@ TEST(GuiKey, CompareChunks)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_key_search_part
  */
 
@@ -1453,7 +1453,7 @@ TEST(GuiKey, SearchPart)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_key_bind
  */
 
@@ -1463,7 +1463,7 @@ TEST(GuiKey, Bind)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_key_bind_plugin_hashtable_map_cb
  */
 
@@ -1473,7 +1473,7 @@ TEST(GuiKey, BindPluginHashtableMapCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_key_bind_plugin
  */
 
@@ -1483,7 +1483,7 @@ TEST(GuiKey, BindPlugin)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_key_unbind
  */
 
@@ -1493,7 +1493,7 @@ TEST(GuiKey, Unbind)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_key_unbind_plugin
  */
 
@@ -1503,7 +1503,7 @@ TEST(GuiKey, UnbindPlugin)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_key_focus_matching
  */
 
@@ -1513,7 +1513,7 @@ TEST(GuiKey, FocusMatching)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_key_focus_command
  */
 
@@ -1523,7 +1523,7 @@ TEST(GuiKey, FocusCommand)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_key_focus
  */
 
@@ -1533,7 +1533,7 @@ TEST(GuiKey, Focus)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_key_debug_print_key
  */
 
@@ -1543,7 +1543,7 @@ TEST(GuiKey, DebugPrintKey)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_key_pressed
  */
 
@@ -1553,7 +1553,7 @@ TEST(GuiKey, Pressed)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_key_free
  */
 
@@ -1563,7 +1563,7 @@ TEST(GuiKey, Free)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_key_free_all
  */
 
@@ -1573,7 +1573,7 @@ TEST(GuiKey, FreeAll)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_key_buffer_optimize
  */
 
@@ -1583,7 +1583,7 @@ TEST(GuiKey, BufferOptimize)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_key_buffer_reset
  */
 
@@ -1593,7 +1593,7 @@ TEST(GuiKey, BufferReset)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_key_buffer_add
  */
 
@@ -1603,7 +1603,7 @@ TEST(GuiKey, BufferAdd)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_key_buffer_search
  */
 
@@ -1613,7 +1613,7 @@ TEST(GuiKey, BufferSearch)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_key_buffer_remove
  */
 
@@ -1623,7 +1623,7 @@ TEST(GuiKey, BufferRemove)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_key_paste_remove_newline
  */
 
@@ -1633,7 +1633,7 @@ TEST(GuiKey, PasteRemoveNewline)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_key_paste_replace_tabs
  */
 
@@ -1643,7 +1643,7 @@ TEST(GuiKey, PasteReplaceTabs)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_key_paste_start
  */
 
@@ -1653,7 +1653,7 @@ TEST(GuiKey, PasteStart)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_key_paste_finish
  */
 
@@ -1663,7 +1663,7 @@ TEST(GuiKey, PasteFinish)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_key_get_paste_lines
  */
 
@@ -1673,7 +1673,7 @@ TEST(GuiKey, GetPasteLines)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_key_paste_check
  */
 
@@ -1683,7 +1683,7 @@ TEST(GuiKey, PasteCheck)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_key_paste_bracketed_timer_cb
  */
 
@@ -1693,7 +1693,7 @@ TEST(GuiKey, PasteBracketedTimerCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_key_paste_bracketed_timer_remove
  */
 
@@ -1703,7 +1703,7 @@ TEST(GuiKey, PasteBracketedTimerRemove)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_key_paste_bracketed_timer_add
  */
 
@@ -1713,7 +1713,7 @@ TEST(GuiKey, PasteBracketedTimerAdd)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_key_paste_bracketed_start
  */
 
@@ -1723,7 +1723,7 @@ TEST(GuiKey, PasteBracketedStart)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_key_paste_bracketed_stop
  */
 
@@ -1733,7 +1733,7 @@ TEST(GuiKey, PasteBracketedStop)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_key_paste_accept
  */
 
@@ -1743,7 +1743,7 @@ TEST(GuiKey, PasteAccept)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_key_paste_cancel
  */
 
@@ -1753,7 +1753,7 @@ TEST(GuiKey, PasteCancel)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_key_end
  */
 
@@ -1763,7 +1763,7 @@ TEST(GuiKey, End)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_key_hdata_key_cb
  */
 
@@ -1773,7 +1773,7 @@ TEST(GuiKey, HdataKeyCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_key_add_to_infolist
  */
 
@@ -1783,7 +1783,7 @@ TEST(GuiKey, AddToInfolist)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_key_print_log_key
  */
 
@@ -1793,7 +1793,7 @@ TEST(GuiKey, PrintLogKey)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_key_print_log
  */
 

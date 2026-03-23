@@ -113,9 +113,9 @@ script_mouse_focus_chat_cb (const void *pointer, void *data,
 }
 
 /*
- * Initializes mouse.
+ * Initialize mouse.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -161,7 +161,7 @@ script_mouse_init (void)
 }
 
 /*
- * Ends mouse.
+ * End mouse.
  */
 
 void

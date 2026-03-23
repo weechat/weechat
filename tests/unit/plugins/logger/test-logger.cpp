@@ -36,7 +36,7 @@ TEST_GROUP(Logger)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   logger_check_conditions
  */
 
@@ -56,7 +56,7 @@ TEST(Logger, CheckConditions)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   logger_get_file_path
  */
 
@@ -66,7 +66,7 @@ TEST(Logger, GetFilePath)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   logger_create_directory
  */
 
@@ -76,7 +76,7 @@ TEST(Logger, CreateDirectory)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   logger_build_option_name
  */
 
@@ -86,7 +86,7 @@ TEST(Logger, BuildOptionName)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   logger_get_level_for_buffer
  */
 
@@ -96,7 +96,7 @@ TEST(Logger, GetLevelForBuffer)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   logger_get_mask_for_buffer
  */
 
@@ -106,7 +106,7 @@ TEST(Logger, GetMaskForBuffer)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   logger_get_mask_expanded
  */
 
@@ -116,7 +116,7 @@ TEST(Logger, GetMaskExpanded)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   logger_get_filename
  */
 
@@ -126,7 +126,7 @@ TEST(Logger, GetFilename)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   logger_buffer_opened_signal_cb
  */
 
@@ -136,7 +136,7 @@ TEST(Logger, BufferOpenedSignalCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   logger_buffer_closing_signal_cb
  */
 
@@ -146,7 +146,7 @@ TEST(Logger, BufferClosingSignalCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   logger_buffer_renamed_signal_cb
  */
 
@@ -156,7 +156,7 @@ TEST(Logger, BufferRenamedSignalCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   logger_start_signal_cb
  */
 
@@ -166,7 +166,7 @@ TEST(Logger, StartSignalCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   logger_stop_signal_cb
  */
 
@@ -176,7 +176,7 @@ TEST(Logger, StopSignalCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   logger_day_changed_signal_cb
  */
 
@@ -186,7 +186,7 @@ TEST(Logger, DayChangedSignalCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   logger_get_line_tag_info
  */
 
@@ -196,7 +196,7 @@ TEST(Logger, GetLineTagInfo)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   logger_print_cb
  */
 
@@ -206,7 +206,7 @@ TEST(Logger, PrintCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   logger_timer_cb
  */
 

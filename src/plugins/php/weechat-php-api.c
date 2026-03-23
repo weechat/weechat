@@ -101,7 +101,7 @@ static char weechat_php_empty_arg[1] = { '\0' };
 
 
 /*
- * Registers a PHP script.
+ * Register a PHP script.
  */
 
 API_FUNC(register)

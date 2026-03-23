@@ -32,7 +32,7 @@
 
 
 /*
- * Returns content of bar item "input_prompt".
+ * Return content of bar item "input_prompt".
  */
 
 char *
@@ -91,7 +91,7 @@ relay_bar_item_input_prompt (const void *pointer, void *data,
 }
 
 /*
- * Initializes relay bar items.
+ * Initialize relay bar items.
  */
 
 void

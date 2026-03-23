@@ -39,7 +39,7 @@ TEST_GROUP(IrcSasl)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_sasl_mechanism_plain
  */
 
@@ -67,7 +67,7 @@ TEST(IrcSasl, MechanismPlain)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_sasl_mechanism_scram
  */
 
@@ -96,7 +96,7 @@ TEST(IrcSasl, MechanismScram)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_sasl_get_key_content
  */
 
@@ -106,7 +106,7 @@ TEST(IrcSasl, GetKeyContent)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_sasl_mechanism_ecdsa_nist256p_challenge
  */
 
@@ -116,7 +116,7 @@ TEST(IrcSasl, MechanismEcdsaNist256pChallenge)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_sasl_mechanism_external
  */
 

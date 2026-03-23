@@ -45,9 +45,9 @@ struct t_hashtable *spell_speller_buffer = NULL;
 
 
 /*
- * Checks if a spelling dictionary is supported (installed on system).
+ * Check if a spelling dictionary is supported (installed on system).
  *
- * Returns:
+ * Return:
  *   1: spell dict is supported
  *   0: spell dict is NOT supported
  */
@@ -90,7 +90,7 @@ spell_speller_dict_supported (const char *lang)
 }
 
 /*
- * Checks if dictionaries are valid (called when user creates/changes
+ * Check if dictionaries are valid (called when user creates/changes
  * dictionaries for a buffer).
  *
  * An error is displayed for each invalid dictionary found.
@@ -134,9 +134,9 @@ spell_speller_check_dictionaries (const char *dict_list)
 }
 
 /*
- * Creates and adds a new speller instance in the hashtable.
+ * Create and add a new speller instance in the hashtable.
  *
- * Returns pointer to new speller, NULL if error.
+ * Return pointer to new speller, NULL if error.
  */
 
 #ifdef USE_ENCHANT
@@ -229,7 +229,7 @@ spell_speller_new (const char *lang)
 }
 
 /*
- * Creates hashtable entries with a string containing a list of dicts.
+ * Create hashtable entries with a string containing a list of dicts.
  */
 
 void
@@ -258,7 +258,7 @@ spell_speller_add_dicts_to_hash (struct t_hashtable *hashtable,
 }
 
 /*
- * Removes a speller if it is NOT in hashtable "used_spellers".
+ * Remove a speller if it is NOT in hashtable "used_spellers".
  */
 
 void
@@ -279,7 +279,7 @@ spell_speller_remove_unused_cb (void *data,
 }
 
 /*
- * Removes unused spellers from hashtable "spell_spellers".
+ * Remove unused spellers from hashtable "spell_spellers".
  */
 
 void
@@ -364,7 +364,7 @@ spell_speller_free_value_cb (struct t_hashtable *hashtable,
 }
 
 /*
- * Creates a structure for buffer speller info in hashtable
+ * Create a structure for buffer speller info in hashtable
  * "spell_buffer_spellers".
  */
 
@@ -461,9 +461,9 @@ spell_speller_buffer_free_value_cb (struct t_hashtable *hashtable,
 }
 
 /*
- * Initializes spellers (creates hashtables).
+ * Initialize spellers (creates hashtables).
  *
- * Returns:
+ * Return:
  *   1: OK (hashtables created)
  *   0: error (not enough memory)
  */
@@ -498,7 +498,7 @@ spell_speller_init (void)
 }
 
 /*
- * Ends spellers (removes hashtables).
+ * End spellers (removes hashtables).
  */
 
 void

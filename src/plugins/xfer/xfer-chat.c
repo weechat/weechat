@@ -36,7 +36,7 @@
 
 
 /*
- * Returns color name for tags (replace "," by ":").
+ * Return color name for tags (replace "," by ":").
  *
  * Note: result must be freed after use.
  */
@@ -51,7 +51,7 @@ xfer_chat_color_for_tags (const char *color)
 }
 
 /*
- * Sends data to remote host via xfer chat.
+ * Send data to remote host via xfer chat.
  */
 
 int
@@ -64,7 +64,7 @@ xfer_chat_send (struct t_xfer *xfer, const char *buffer, int size_buf)
 }
 
 /*
- * Sends formatted data to remote host via DCC CHAT.
+ * Send formatted data to remote host via DCC CHAT.
  */
 
 void
@@ -101,7 +101,7 @@ xfer_chat_sendf (struct t_xfer *xfer, const char *format, ...)
 }
 
 /*
- * Receives data from xfer chat remote host.
+ * Receive data from xfer chat remote host.
  */
 
 int
@@ -338,7 +338,7 @@ xfer_chat_buffer_close_cb (const void *pointer, void *data,
 }
 
 /*
- * Applies properties to a buffer.
+ * Apply properties to a buffer.
  */
 
 void
@@ -356,7 +356,7 @@ xfer_chat_apply_props (void *data,
 }
 
 /*
- * Creates buffer for DCC chat.
+ * Create buffer for DCC chat.
  */
 
 void

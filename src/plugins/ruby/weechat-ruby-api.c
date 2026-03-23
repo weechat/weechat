@@ -84,7 +84,7 @@
 
 
 /*
- * Registers a ruby script.
+ * Register a ruby script.
  */
 
 static VALUE
@@ -6973,7 +6973,7 @@ weechat_ruby_api_upgrade_close (VALUE class, VALUE upgrade_file)
 }
 
 /*
- * Initializes ruby functions and constants.
+ * Initialize ruby functions and constants.
  */
 
 void

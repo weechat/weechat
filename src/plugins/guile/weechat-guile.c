@@ -114,7 +114,7 @@ char *guile_action_autoload_list = NULL;
 
 
 /*
- * Flushes output.
+ * Flush output.
  */
 
 void
@@ -181,7 +181,7 @@ weechat_guile_output_flush (void)
 }
 
 /*
- * Executes scheme procedure with internal catch and returns value.
+ * Execute scheme procedure with internal catch and return value.
  */
 
 SCM
@@ -198,7 +198,7 @@ weechat_guile_catch (void *procedure, void *data)
 }
 
 /*
- * Encapsulates call to scm_call_n (to give arguments).
+ * Encapsulate call to scm_call_n (to give arguments).
  */
 
 SCM
@@ -213,7 +213,7 @@ weechat_guile_scm_call_n (void *proc)
 }
 
 /*
- * Executes scheme function (with optional args) and returns value.
+ * Execute scheme function (with optional args) and return value.
  */
 
 SCM
@@ -265,7 +265,7 @@ weechat_guile_hashtable_map_cb (void *data,
 }
 
 /*
- * Converts a WeeChat hashtable to a guile alist.
+ * Convert a WeeChat hashtable to a guile alist.
  */
 
 SCM
@@ -283,7 +283,7 @@ weechat_guile_hashtable_to_alist (struct t_hashtable *hashtable)
 }
 
 /*
- * Converts a guile alist to a WeeChat hashtable.
+ * Convert a guile alist to a WeeChat hashtable.
  *
  * Note: hashtable must be freed after use.
  */
@@ -330,7 +330,7 @@ weechat_guile_alist_to_hashtable (SCM alist, int size, const char *type_keys,
 }
 
 /*
- * Executes a guile function.
+ * Execute a guile function.
  */
 
 void *
@@ -449,7 +449,7 @@ weechat_guile_exec (struct t_plugin_script *script,
 }
 
 /*
- * Initializes guile module for a script file.
+ * Initialize guile module for a script file.
  */
 
 void
@@ -476,7 +476,7 @@ weechat_guile_module_init_file (void *filename)
 }
 
 /*
- * Initializes guile module for a string with guile code.
+ * Initialize guile module for a string with guile code.
  */
 
 void
@@ -503,12 +503,12 @@ weechat_guile_module_init_code (void *code)
 }
 
 /*
- * Loads a guile script.
+ * Load a guile script.
  *
- * If code is NULL, the content of filename is read and executed.
- * If code is not NULL, it is executed (the file is not read).
+ * If code is NULL, read and execute the file content.
+ * If code is not NULL, execute it (do not read the file).
  *
- * Returns pointer to new registered script, NULL if error.
+ * Return pointer to new registered script, NULL if error.
  */
 
 struct t_plugin_script *
@@ -608,7 +608,7 @@ weechat_guile_load_cb (void *data, const char *filename)
 }
 
 /*
- * Unloads a guile script.
+ * Unload a guile script.
  */
 
 void
@@ -654,7 +654,7 @@ weechat_guile_unload (struct t_plugin_script *script)
 }
 
 /*
- * Unloads a guile script by name.
+ * Unload a guile script by name.
  */
 
 void
@@ -682,7 +682,7 @@ weechat_guile_unload_name (const char *name)
 }
 
 /*
- * Unloads all guile scripts.
+ * Unload all guile scripts.
  */
 
 void
@@ -695,7 +695,7 @@ weechat_guile_unload_all (void)
 }
 
 /*
- * Reloads a guile script by name.
+ * Reload a guile script by name.
  */
 
 void
@@ -730,9 +730,9 @@ weechat_guile_reload_name (const char *name)
 }
 
 /*
- * Evaluates guile source code.
+ * Evaluate guile source code.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -931,7 +931,7 @@ weechat_guile_command_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds guile scripts to completion list.
+ * Add guile scripts to completion list.
  */
 
 int
@@ -952,7 +952,7 @@ weechat_guile_completion_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns hdata for guile scripts.
+ * Return hdata for guile scripts.
  */
 
 struct t_hdata *
@@ -969,7 +969,7 @@ weechat_guile_hdata_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns guile info "guile_eval".
+ * Return guile info "guile_eval".
  */
 
 char *
@@ -992,7 +992,7 @@ weechat_guile_info_eval_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns infolist with guile scripts.
+ * Return infolist with guile scripts.
  */
 
 struct t_infolist *
@@ -1018,7 +1018,7 @@ weechat_guile_infolist_cb (const void *pointer, void *data,
 }
 
 /*
- * Dumps guile plugin data in WeeChat log file.
+ * Dump guile plugin data in WeeChat log file.
  */
 
 int
@@ -1128,7 +1128,7 @@ weechat_guile_signal_script_action_cb (const void *pointer, void *data,
 }
 
 /*
- * Fills input.
+ * Fill input.
  */
 
 #if SCM_MAJOR_VERSION >= 3 || (SCM_MAJOR_VERSION == 2 && SCM_MINOR_VERSION >= 2)
@@ -1240,7 +1240,7 @@ weechat_guile_init (void *data)
 }
 
 /*
- * Initializes guile plugin.
+ * Initialize guile plugin.
  */
 
 int
@@ -1337,7 +1337,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 }
 
 /*
- * Ends guile plugin.
+ * End guile plugin.
  */
 
 int

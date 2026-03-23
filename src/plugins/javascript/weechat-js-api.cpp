@@ -116,7 +116,7 @@ extern "C"
 
 
 /*
- * Registers a javascript script.
+ * Register a javascript script.
  */
 
 API_FUNC(register)

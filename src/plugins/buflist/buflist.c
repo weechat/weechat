@@ -54,7 +54,7 @@ struct t_hdata *buflist_hdata_bar_window = NULL;
 
 
 /*
- * Adds the buflist bar.
+ * Add the buflist bar.
  */
 
 void
@@ -70,7 +70,7 @@ buflist_add_bar (void)
 }
 
 /*
- * Gets IRC server and channel pointers for a buffer.
+ * Get IRC server and channel pointers for a buffer.
  *
  * According to buffer:
  * - non IRC buffer: both are NULL
@@ -139,7 +139,7 @@ buflist_buffer_get_irc_pointers (struct t_gui_buffer *buffer,
 }
 
 /*
- * Compares two inactive merged buffers.
+ * Compare two inactive merged buffers.
  *
  * Buffers are sorted so that the active buffer and buffers immediately after
  * this one are first in list, followed by the buffers before the active one.
@@ -162,7 +162,7 @@ buflist_buffer_get_irc_pointers (struct t_gui_buffer *buffer,
  *     weechat
  *     libera
  *
- * Returns:
+ * Return:
  *   -1: buffer1 must be sorted before buffer2
  *    0: no sort (buffer2 will be after buffer1 by default)
  *    1: buffer2 must be sorted after buffer1
@@ -212,12 +212,12 @@ buflist_compare_inactive_merged_buffers (struct t_gui_buffer *buffer1,
 }
 
 /*
- * Compares two buffers in order to add them in the sorted arraylist.
+ * Compare two buffers in order to add them in the sorted arraylist.
  *
  * The comparison is made using the list of fields defined in the option
  * "buflist.look.sort".
  *
- * Returns:
+ * Return:
  *   -1: buffer1 < buffer2
  *    0: buffer1 == buffer2
  *    1: buffer1 > buffer2
@@ -341,10 +341,10 @@ buflist_compare_buffers (void *data, struct t_arraylist *arraylist,
 }
 
 /*
- * Builds a list of pointers to buffers, sorted according to option
+ * Build a list of pointers to buffers, sorted according to option
  * "buflist.look.sort".
  *
- * Returns an arraylist that must be freed by weechat_arraylist_free after use.
+ * Return an arraylist that must be freed by weechat_arraylist_free after use.
  */
 
 struct t_arraylist *
@@ -417,7 +417,7 @@ buflist_script_loaded_cb (const void *pointer, void *data, const char *signal,
 }
 
 /*
- * Initializes buflist plugin.
+ * Initialize buflist plugin.
  */
 
 int
@@ -520,7 +520,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 }
 
 /*
- * Ends buflist plugin.
+ * End buflist plugin.
  */
 
 int

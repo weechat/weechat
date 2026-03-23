@@ -37,7 +37,7 @@ TEST_GROUP(GuiNicklist)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_nicklist_send_signal
  */
 
@@ -47,7 +47,7 @@ TEST(GuiNicklist, SendSignal)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_nicklist_send_hsignal
  */
 
@@ -57,7 +57,7 @@ TEST(GuiNicklist, SendHsignal)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_nicklist_generate_id
  */
 
@@ -84,7 +84,7 @@ TEST(GuiNicklist, GenerateId)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_nicklist_find_pos_group
  *   gui_nicklist_insert_group_sorted
  *   gui_nicklist_add_group_with_id
@@ -267,7 +267,7 @@ TEST(GuiNicklist, AddGroup)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_nicklist_find_pos_nick
  *   gui_nicklist_insert_nick_sorted
  *   gui_nicklist_add_nick_with_id
@@ -421,7 +421,7 @@ TEST(GuiNicklist, AddNick)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_nicklist_get_next_item
  */
 
@@ -505,7 +505,7 @@ TEST(GuiNicklist, GetNextItem)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_nicklist_get_group_start
  */
 
@@ -522,7 +522,7 @@ TEST(GuiNicklist, GetGroupStart)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_nicklist_compute_visible_count
  */
 
@@ -605,7 +605,7 @@ TEST(GuiNicklist, ComputeVisibleCount)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_nicklist_group_get_integer
  */
 
@@ -637,7 +637,7 @@ TEST(GuiNicklist, GroupGetInteger)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_nicklist_group_get_string
  */
 
@@ -669,7 +669,7 @@ TEST(GuiNicklist, GroupGetString)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_nicklist_group_get_pointer
  */
 
@@ -699,7 +699,7 @@ TEST(GuiNicklist, GroupGetPointer)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_nicklist_group_set
  */
 
@@ -742,7 +742,7 @@ TEST(GuiNicklist, GroupSet)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_nicklist_nick_get_integer
  */
 
@@ -770,7 +770,7 @@ TEST(GuiNicklist, NickGetInteger)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_nicklist_nick_get_string
  */
 
@@ -801,7 +801,7 @@ TEST(GuiNicklist, NickGetString)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_nicklist_nick_get_pointer
  */
 
@@ -829,7 +829,7 @@ TEST(GuiNicklist, NickGetPointer)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_nicklist_nick_set
  */
 
@@ -880,7 +880,7 @@ TEST(GuiNicklist, NickSet)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_nicklist_hdata_nick_group_cb
  */
 
@@ -890,7 +890,7 @@ TEST(GuiNicklist, HdataNickGroupCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_nicklist_hdata_nick_cb
  */
 
@@ -900,7 +900,7 @@ TEST(GuiNicklist, HdataNickCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_nicklist_add_group_to_infolist
  */
 
@@ -910,7 +910,7 @@ TEST(GuiNicklist, AddGroupToInfolist)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_nicklist_add_nick_to_infolist
  */
 
@@ -920,7 +920,7 @@ TEST(GuiNicklist, AddNickToInfolist)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_nicklist_add_to_infolist
  */
 
@@ -930,7 +930,7 @@ TEST(GuiNicklist, AddToInfolist)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_nicklist_print_log
  */
 
@@ -940,7 +940,7 @@ TEST(GuiNicklist, PrintLog)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_nicklist_end
  */
 

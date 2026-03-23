@@ -56,9 +56,9 @@ struct t_proxy *last_weechat_temp_proxy = NULL; /* reading configuration    */
 
 
 /*
- * Searches for a proxy option.
+ * Search for a proxy option.
  *
- * Returns index of option in enum t_proxy_option, -1 if option is not found.
+ * Return index of option in enum t_proxy_option, -1 if option is not found.
  */
 
 int
@@ -80,9 +80,9 @@ proxy_search_option (const char *option_name)
 }
 
 /*
- * Searches for a proxy type.
+ * Search for a proxy type.
  *
- * Returns index of option in enum t_proxy_type, -1 if type is not found.
+ * Return index of option in enum t_proxy_type, -1 if type is not found.
  */
 
 int
@@ -104,9 +104,9 @@ proxy_search_type (const char *type)
 }
 
 /*
- * Checks if a proxy pointer is valid.
+ * Check if a proxy pointer is valid.
  *
- * Returns:
+ * Return:
  *   1: proxy exists
  *   0: proxy does not exist
  */
@@ -131,9 +131,9 @@ proxy_valid (struct t_proxy *proxy)
 }
 
 /*
- * Searches for a proxy by name.
+ * Search for a proxy by name.
  *
- * Returns pointer to proxy found, NULL if not found.
+ * Return pointer to proxy found, NULL if not found.
  */
 
 struct t_proxy *
@@ -156,7 +156,7 @@ proxy_search (const char *name)
 }
 
 /*
- * Sets name for a proxy.
+ * Set name for a proxy.
  */
 
 void
@@ -193,9 +193,9 @@ proxy_set_name (struct t_proxy *proxy, const char *name)
 }
 
 /*
- * Sets a property for a proxy.
+ * Set a property for a proxy.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -246,9 +246,9 @@ proxy_set (struct t_proxy *proxy, const char *property, const char *value)
 }
 
 /*
- * Creates an option for a proxy.
+ * Create an option for a proxy.
  *
- * Returns pointer to new option, NULL if error.
+ * Return pointer to new option, NULL if error.
  */
 
 struct t_config_option *
@@ -330,7 +330,7 @@ proxy_create_option (const char *proxy_name, int index_option,
 }
 
 /*
- * Creates an option for a temporary proxy (when reading configuration file).
+ * Create an option for a temporary proxy (when reading configuration file).
  */
 
 void
@@ -347,9 +347,9 @@ proxy_create_option_temp (struct t_proxy *temp_proxy, int index_option,
 }
 
 /*
- * Allocates and initializes a new proxy structure.
+ * Allocate and initialize a new proxy structure.
  *
- * Returns pointer to new proxy, NULL if error.
+ * Return pointer to new proxy, NULL if error.
  */
 
 struct t_proxy *
@@ -374,9 +374,9 @@ proxy_alloc (const char *name)
 }
 
 /*
- * Adds a new proxy with options.
+ * Add a new proxy with options.
  *
- * Returns pointer to new proxy, NULL if error.
+ * Return pointer to new proxy, NULL if error.
  */
 
 struct t_proxy *
@@ -415,9 +415,9 @@ proxy_new_with_options (const char *name,
 }
 
 /*
- * Adds a new proxy.
+ * Add a new proxy.
  *
- * Returns pointer to new proxy, NULL if error.
+ * Return pointer to new proxy, NULL if error.
  */
 
 struct t_proxy *
@@ -470,7 +470,7 @@ proxy_new (const char *name, const char *type, const char *ipv6,
 }
 
 /*
- * Uses temporary proxies (added by reading configuration file).
+ * Use temporary proxies (added by reading configuration file).
  */
 
 void
@@ -532,7 +532,7 @@ proxy_use_temp_proxies (void)
 }
 
 /*
- * Frees a proxy.
+ * Free a proxy.
  */
 
 void
@@ -564,7 +564,7 @@ proxy_free (struct t_proxy *proxy)
 }
 
 /*
- * Frees all proxies.
+ * Free all proxies.
  */
 
 void
@@ -577,7 +577,7 @@ proxy_free_all (void)
 }
 
 /*
- * Returns hdata for proxy.
+ * Return hdata for proxy.
  */
 
 struct t_hdata *
@@ -605,9 +605,9 @@ proxy_hdata_proxy_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds a proxy in an infolist.
+ * Add a proxy in an infolist.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -645,7 +645,7 @@ proxy_add_to_infolist (struct t_infolist *infolist, struct t_proxy *proxy)
 }
 
 /*
- * Prints proxies in WeeChat log file (usually for crash dump).
+ * Print proxies in WeeChat log file (usually for crash dump).
  */
 
 void

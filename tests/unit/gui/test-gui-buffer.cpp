@@ -116,7 +116,7 @@ TEST_GROUP(GuiBuffer)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_search_type
  */
 
@@ -131,7 +131,7 @@ TEST(GuiBuffer, SearchType)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_search_notify
  */
 
@@ -148,7 +148,7 @@ TEST(GuiBuffer, SearchNotify)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_get_plugin_name
  */
 
@@ -172,7 +172,7 @@ TEST(GuiBuffer, GetPluginName)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_build_full_name
  */
 
@@ -202,7 +202,7 @@ TEST(GuiBuffer, BuildFullName)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_local_var_add
  *   gui_buffer_local_var_remove
  *   gui_buffer_local_var_remove_all
@@ -252,7 +252,7 @@ TEST(GuiBuffer, LocalVarAddRemove)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_notify_get
  */
 
@@ -299,7 +299,7 @@ TEST(GuiBuffer, NotifyGet)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_find_pos
  */
 
@@ -309,7 +309,7 @@ TEST(GuiBuffer, FindPos)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_shift_numbers
  */
 
@@ -319,7 +319,7 @@ TEST(GuiBuffer, ShiftNumbers)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_insert
  */
 
@@ -329,7 +329,7 @@ TEST(GuiBuffer, Insert)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_generate_id
  */
 
@@ -346,7 +346,7 @@ TEST(GuiBuffer, GenerateId)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_input_buffer_init
  */
 
@@ -356,7 +356,7 @@ TEST(GuiBuffer, InputBufferInit)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_is_reserved_name
  */
 
@@ -372,7 +372,7 @@ TEST(GuiBuffer, IsReservedName)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_apply_properties_cb
  */
 
@@ -382,7 +382,7 @@ TEST(GuiBuffer, ApplyPropertiesCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_apply_config_properties
  */
 
@@ -452,7 +452,7 @@ test_buffer_close_cb (const void *pointer, void *data,
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_new_props_with_id
  *   gui_buffer_new_props
  */
@@ -614,7 +614,7 @@ TEST(GuiBuffer, NewProps)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_new
  */
 
@@ -639,7 +639,7 @@ TEST(GuiBuffer, New)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_user_input_cb
  *   gui_buffer_user_close_cb
  *   gui_buffer_new_user
@@ -718,7 +718,7 @@ TEST(GuiBuffer, NewUser)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_user_set_callbacks
  */
 
@@ -728,7 +728,7 @@ TEST(GuiBuffer, UserSetCallbacks)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_valid
  */
 
@@ -753,7 +753,7 @@ TEST(GuiBuffer, Valid)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_string_replace_local_var
  */
 
@@ -763,7 +763,7 @@ TEST(GuiBuffer, StringReplaceLocalVar)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_match_list
  */
 
@@ -785,7 +785,7 @@ TEST(GuiBuffer, MatchList)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_set_plugin_for_upgrade
  */
 
@@ -795,7 +795,7 @@ TEST(GuiBuffer, SetPluginForUpgrade)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_property_in_list
  */
 
@@ -805,7 +805,7 @@ TEST(GuiBuffer, PropertyInList)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_get_integer
  */
 
@@ -863,7 +863,7 @@ TEST(GuiBuffer, GetInteger)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_get_string
  */
 
@@ -893,7 +893,7 @@ TEST(GuiBuffer, GetString)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_get_pointer
  */
 
@@ -911,7 +911,7 @@ TEST(GuiBuffer, GetPointer)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_ask_chat_refresh
  */
 
@@ -921,7 +921,7 @@ TEST(GuiBuffer, AskChatRefresh)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_set
  *   gui_buffer_set_unread
  *   gui_buffer_set_day_change
@@ -1352,7 +1352,7 @@ TEST(GuiBuffer, Set)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_set_pointer
  */
 
@@ -1362,7 +1362,7 @@ TEST(GuiBuffer, SetPointer)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_compute_num_displayed
  */
 
@@ -1372,7 +1372,7 @@ TEST(GuiBuffer, ComputeNumDisplayed)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_add_value_num_displayed
  */
 
@@ -1382,7 +1382,7 @@ TEST(GuiBuffer, AddValueNumDisplayed)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_is_main
  */
 
@@ -1401,7 +1401,7 @@ TEST(GuiBuffer, IsMain)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_search_main
  */
 
@@ -1428,7 +1428,7 @@ TEST(GuiBuffer, SearchMain)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_search_by_id
  */
 
@@ -1454,7 +1454,7 @@ TEST(GuiBuffer, SearchById)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_search_by_full_name
  */
 
@@ -1485,7 +1485,7 @@ TEST(GuiBuffer, SearchByFullName)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_search
  */
 
@@ -1538,7 +1538,7 @@ TEST(GuiBuffer, Search)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_search_by_partial_name
  */
 
@@ -1578,7 +1578,7 @@ TEST(GuiBuffer, SearchByPartialName)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_search_by_number
  */
 
@@ -1602,7 +1602,7 @@ TEST(GuiBuffer, SearchByNumber)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_search_by_id_number_name
  */
 
@@ -1648,7 +1648,7 @@ TEST(GuiBuffer, SearchByIdNumberName)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_search_range
  */
 
@@ -1658,7 +1658,7 @@ TEST(GuiBuffer, SearchRange)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_count_merged_buffers
  */
 
@@ -1668,7 +1668,7 @@ TEST(GuiBuffer, CountMergedBuffers)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_clear
  */
 
@@ -1678,7 +1678,7 @@ TEST(GuiBuffer, Clear)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_clear_all
  */
 
@@ -1688,7 +1688,7 @@ TEST(GuiBuffer, ClearAll)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_get_next_active_buffer
  */
 
@@ -1698,7 +1698,7 @@ TEST(GuiBuffer, GetNextActiveBuffer)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_get_previous_active_buffer
  */
 
@@ -1708,7 +1708,7 @@ TEST(GuiBuffer, GetPreviousActiveBuffer)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_visited_get_index_previous
  */
 
@@ -1718,7 +1718,7 @@ TEST(GuiBuffer, VisitedGetIndexPrevious)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_visited_get_index_next
  */
 
@@ -1728,7 +1728,7 @@ TEST(GuiBuffer, VisitedGetIndexNext)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_visited_search
  */
 
@@ -1738,7 +1738,7 @@ TEST(GuiBuffer, VisitedSearch)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_visited_search_by_number
  */
 
@@ -1748,7 +1748,7 @@ TEST(GuiBuffer, VisitedSearchByNumber)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_visited_remove
  */
 
@@ -1758,7 +1758,7 @@ TEST(GuiBuffer, VisitedRemove)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_visited_remove_by_buffer
  */
 
@@ -1768,7 +1768,7 @@ TEST(GuiBuffer, VisitedRemoveByBuffer)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_visited_remove_all
  */
 
@@ -1778,7 +1778,7 @@ TEST(GuiBuffer, VisitedRemoveAll)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_visited_add
  */
 
@@ -1788,7 +1788,7 @@ TEST(GuiBuffer, VisitedAdd)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_close
  */
 
@@ -1798,7 +1798,7 @@ TEST(GuiBuffer, Close)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_switch_by_number
  */
 
@@ -1808,7 +1808,7 @@ TEST(GuiBuffer, SwitchByNumber)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_set_active_buffer
  */
 
@@ -1818,7 +1818,7 @@ TEST(GuiBuffer, SetActiveBuffer)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_switch_active_buffer
  */
 
@@ -1828,7 +1828,7 @@ TEST(GuiBuffer, SwitchActiveBuffer)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_switch_active_buffer_previous
  */
 
@@ -1838,7 +1838,7 @@ TEST(GuiBuffer, SwitchActiveBufferPrevious)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_zoom
  */
 
@@ -1848,7 +1848,7 @@ TEST(GuiBuffer, Zoom)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_renumber
  */
 
@@ -1858,7 +1858,7 @@ TEST(GuiBuffer, Renumber)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_move_to_number
  */
 
@@ -1868,7 +1868,7 @@ TEST(GuiBuffer, MoveToNumber)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_swap
  */
 
@@ -1878,7 +1878,7 @@ TEST(GuiBuffer, Swap)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_merge
  */
 
@@ -1888,7 +1888,7 @@ TEST(GuiBuffer, Merge)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_unmerge
  */
 
@@ -1898,7 +1898,7 @@ TEST(GuiBuffer, Unmerge)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_unmerge_all
  */
 
@@ -1908,7 +1908,7 @@ TEST(GuiBuffer, UnmergeAll)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_hide
  */
 
@@ -1918,7 +1918,7 @@ TEST(GuiBuffer, Hide)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_hide_all
  */
 
@@ -1928,7 +1928,7 @@ TEST(GuiBuffer, HideAll)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_unhide
  */
 
@@ -1938,7 +1938,7 @@ TEST(GuiBuffer, Unhide)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_unhide_all
  */
 
@@ -1948,7 +1948,7 @@ TEST(GuiBuffer, UnhideAll)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_sort_by_layout_number
  */
 
@@ -1958,7 +1958,7 @@ TEST(GuiBuffer, SortByLayoutNumber)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_undo_snap
  */
 
@@ -1968,7 +1968,7 @@ TEST(GuiBuffer, UndoSnap)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_undo_snap_free
  */
 
@@ -1978,7 +1978,7 @@ TEST(GuiBuffer, UndoSnapFree)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_undo_add
  */
 
@@ -1988,7 +1988,7 @@ TEST(GuiBuffer, UndoAdd)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_undo_free
  */
 
@@ -1998,7 +1998,7 @@ TEST(GuiBuffer, UndoFree)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_undo_free_all
  */
 
@@ -2008,7 +2008,7 @@ TEST(GuiBuffer, UndoFreeAll)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_input_move_to_buffer
  */
 
@@ -2018,7 +2018,7 @@ TEST(GuiBuffer, InputMoveToBuffer)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_jump_smart
  */
 
@@ -2028,7 +2028,7 @@ TEST(GuiBuffer, JumpSmart)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_jump_last_visible_number
  */
 
@@ -2038,7 +2038,7 @@ TEST(GuiBuffer, JumpLastVisibleNumber)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_jump_last_buffer_displayed
  */
 
@@ -2048,7 +2048,7 @@ TEST(GuiBuffer, JumpLastBufferDisplayed)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_jump_visited_by_index
  */
 
@@ -2058,7 +2058,7 @@ TEST(GuiBuffer, JumpVisitedByIndex)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_jump_previously_visited_buffer
  */
 
@@ -2068,7 +2068,7 @@ TEST(GuiBuffer, JumpPreviouslyVisitedBuffer)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_jump_next_visited_buffer
  */
 
@@ -2078,7 +2078,7 @@ TEST(GuiBuffer, JumpNextVisitedBuffer)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_hdata_buffer_cb
  */
 
@@ -2088,7 +2088,7 @@ TEST(GuiBuffer, HdataBufferCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_hdata_input_undo_cb
  */
 
@@ -2098,7 +2098,7 @@ TEST(GuiBuffer, HdataInputUndoCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_hdata_buffer_visited_cb
  */
 
@@ -2108,7 +2108,7 @@ TEST(GuiBuffer, HdataBufferVisitedCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_add_to_infolist
  */
 
@@ -2118,7 +2118,7 @@ TEST(GuiBuffer, AddToInfolist)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_dump_hexa
  */
 
@@ -2128,7 +2128,7 @@ TEST(GuiBuffer, DumpHexa)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_buffer_print_log
  */
 

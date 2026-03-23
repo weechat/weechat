@@ -42,7 +42,7 @@ TEST_GROUP(HookCommand)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_command_get_description
  */
 
@@ -52,7 +52,7 @@ TEST(HookCommand, GetDescription)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_command_search
  */
 
@@ -62,7 +62,7 @@ TEST(HookCommand, Search)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_command_build_completion
  */
 
@@ -72,7 +72,7 @@ TEST(HookCommand, BuildCompletion)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_command_remove_raw_markers
  */
 
@@ -95,7 +95,7 @@ TEST(HookCommand, RemoveRawMarkers)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_command_arraylist_arg_desc_free
  *   hook_command_format_args_description
  */
@@ -142,7 +142,7 @@ TEST(HookCommand, FormatArgsDescription)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_command
  */
 
@@ -152,7 +152,7 @@ TEST(HookCommand, Command)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_command_exec
  */
 
@@ -162,7 +162,7 @@ TEST(HookCommand, CommandExec)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_command_similar_get_relevance
  */
 
@@ -172,7 +172,7 @@ TEST(HookCommand, CommandSimilarGetRelevance)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_command_similar_cmp_cb
  */
 
@@ -182,7 +182,7 @@ TEST(HookCommand, CommandSimilarCmpCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_command_similar_free_cb
  */
 
@@ -192,7 +192,7 @@ TEST(HookCommand, CommandSimilarFreeCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_command_build_list_similar_commands
  */
 
@@ -202,7 +202,7 @@ TEST(HookCommand, CommandBuildListSimilarCommands)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_command_display_error_unknown
  */
 
@@ -212,7 +212,7 @@ TEST(HookCommand, CommandDisplayErrorUnknown)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_command_free_data
  */
 
@@ -222,7 +222,7 @@ TEST(HookCommand, CommandFreeData)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_command_add_to_infolist
  */
 
@@ -232,7 +232,7 @@ TEST(HookCommand, CommandAddToInfolist)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_command_print_log
  */
 

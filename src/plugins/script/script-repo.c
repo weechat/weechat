@@ -56,9 +56,9 @@ char *script_repo_filter = NULL;
 
 
 /*
- * Checks if a script pointer is valid.
+ * Check if a script pointer is valid.
  *
- * Returns:
+ * Return:
  *   1: script exists
  *   0: script does not exist
  */
@@ -83,9 +83,9 @@ script_repo_script_valid (struct t_script_repo *script)
 }
 
 /*
- * Searches for a script displayed by number (first script displayed is 0).
+ * Search for a script displayed by number (first script displayed is 0).
  *
- * Returns pointer to script found, NULL if not found.
+ * Return pointer to script found, NULL if not found.
  */
 
 struct t_script_repo *
@@ -114,9 +114,9 @@ script_repo_search_displayed_by_number (int number)
 }
 
 /*
- * Searches for a script by name (example: "go").
+ * Search for a script by name (example: "go").
  *
- * Returns pointer to script found, NULL if not found.
+ * Return pointer to script found, NULL if not found.
  */
 
 struct t_script_repo *
@@ -139,9 +139,9 @@ script_repo_search_by_name (const char *name)
 }
 
 /*
- * Searches for a script by name/extension (example: "go.py").
+ * Search for a script by name/extension (example: "go.py").
  *
- * Returns pointer to script found, NULL if not found.
+ * Return pointer to script found, NULL if not found.
  */
 
 struct t_script_repo *
@@ -164,8 +164,8 @@ script_repo_search_by_name_ext (const char *name_with_extension)
 }
 
 /*
- * Gets filename of a loaded script (returns name of file and not the link, if
- * there is a symbolic to file).
+ * Get filename of a loaded script: return name of file and not the link, if
+ * there is a symbolic to file.
  *
  * Note: result must be freed after use.
  */
@@ -223,7 +223,7 @@ script_repo_get_filename_loaded (struct t_script_repo *script)
 }
 
 /*
- * Gets status for display.
+ * Get status for display.
  *
  * Argument "list" is the codes of status to display:
  *   *  popular
@@ -288,7 +288,7 @@ script_repo_get_status_for_display (struct t_script_repo *script,
 }
 
 /*
- * Gets status description for display.
+ * Get status description for display.
  *
  * Argument "list" is the codes of status to display (see function
  * script_repo_get_status_for_display() above).
@@ -371,9 +371,9 @@ script_repo_get_status_desc_for_display (struct t_script_repo *script,
 }
 
 /*
- * Allocates a script structure.
+ * Allocate a script structure.
  *
- * Returns pointer to new script, NULL if error.
+ * Return pointer to new script, NULL if error.
  */
 
 struct t_script_repo *
@@ -413,9 +413,9 @@ script_repo_alloc (void)
 }
 
 /*
- * Compares two scripts using sort key(s) (from option script.look.sort).
+ * Compare two scripts using sort key(s) (from option script.look.sort).
  *
- * Returns:
+ * Return:
  *   < 0: script1 < script2
  *     0: script1 == script2
  *   > 0: script1 > script2
@@ -515,7 +515,7 @@ script_repo_compare_scripts (struct t_script_repo *script1,
 }
 
 /*
- * Searches for position for script in list (to keep list sorted).
+ * Search for position for script in list (to keep list sorted).
  */
 
 struct t_script_repo *
@@ -535,7 +535,7 @@ script_repo_find_pos (struct t_script_repo *script)
 }
 
 /*
- * Sets max length for a field in hashtable "script_repo_max_length_field".
+ * Set max length for a field in hashtable "script_repo_max_length_field".
  */
 
 void
@@ -549,7 +549,7 @@ script_repo_set_max_length_field (const char *field, int length)
 }
 
 /*
- * Adds a script to list of scripts.
+ * Add a script to list of scripts.
  */
 
 void
@@ -616,7 +616,7 @@ script_repo_add (struct t_script_repo *script)
 }
 
 /*
- * Frees data in a script.
+ * Free data in a script.
  */
 
 void
@@ -644,7 +644,7 @@ script_repo_free (struct t_script_repo *script)
  }
 
 /*
- * Removes a script from list.
+ * Remove a script from list.
  */
 
 void
@@ -686,7 +686,7 @@ script_repo_remove (struct t_script_repo *script)
 }
 
 /*
- * Removes all scripts from list.
+ * Remove all scripts from list.
  */
 
 void
@@ -704,9 +704,9 @@ script_repo_remove_all (void)
 }
 
 /*
- * Checks if a script is held.
+ * Check if a script is held.
  *
- * Returns:
+ * Return:
  *   1: script is held
  *   0: script is not held
  */
@@ -737,7 +737,7 @@ script_repo_script_is_held (struct t_script_repo *script)
 }
 
 /*
- * Computes SHA-512 checksum for the content of a file.
+ * Compute SHA-512 checksum for the content of a file.
  *
  * Note: result must be freed after use.
  */
@@ -757,7 +757,7 @@ script_repo_sha512sum_file (const char *filename)
 }
 
 /*
- * Updates following status of a script:
+ * Update following status of a script:
  *   - script installed?
  *   - script running?
  *   - new version available?
@@ -853,7 +853,7 @@ script_repo_update_status (struct t_script_repo *script)
 }
 
 /*
- * Updates status of all scripts.
+ * Update status of all scripts.
  */
 
 void
@@ -869,7 +869,7 @@ script_repo_update_status_all (void)
 }
 
 /*
- * Sets filter for scripts.
+ * Set filter for scripts.
  */
 
 void
@@ -882,9 +882,9 @@ script_repo_set_filter (const char *filter)
 }
 
 /*
- * Checks if a script is matching a filter string.
+ * Check if a script is matching a filter string.
  *
- * Returns:
+ * Return:
  *   1: script is matching filter string
  *   0: script does not match filter string
  */
@@ -975,7 +975,7 @@ script_repo_match_filter (struct t_script_repo *script)
 }
 
 /*
- * Filters scripts (search string in name/description/tags) and marks scripts
+ * Filter scripts (search string in name/description/tags) and marks scripts
  * found as "displayed" (0 in displayed for non-matching scripts).
  */
 
@@ -1000,9 +1000,9 @@ script_repo_filter_scripts (const char *search)
 }
 
 /*
- * Checks if repository file (plugins.xml.gz) exists.
+ * Check if repository file (plugins.xml.gz) exists.
  *
- * Returns:
+ * Return:
  *   1: repository file exists
  *   0: repository file does not exist
  */
@@ -1028,10 +1028,10 @@ script_repo_file_exists (void)
 }
 
 /*
- * Checks if repository file (plugins.xml.gz) is up-to-date (file exists and it
+ * Check if repository file (plugins.xml.gz) is up-to-date (file exists and it
  * not outdated).
  *
- * Returns:
+ * Return:
  *   1: repository file is up-to-date
  *   0: repository file does not exist or is outdated
  *      (file has to be downloaded)
@@ -1093,9 +1093,9 @@ script_repo_file_is_uptodate (void)
 }
 
 /*
- * Reads scripts in repository file (plugins.xml.gz).
+ * Read scripts in repository file (plugins.xml.gz).
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -1433,9 +1433,9 @@ script_repo_file_update_url_cb (const void *pointer, void *data,
 }
 
 /*
- * Updates repository file and reads it.
+ * Update repository file and reads it.
  *
- * Returns:
+ * Return:
  *   0: error
  *   1: OK
  */
@@ -1484,7 +1484,7 @@ script_repo_file_update (int quiet)
 }
 
 /*
- * Returns hdata for script.
+ * Return hdata for script.
  */
 
 struct t_hdata *
@@ -1531,9 +1531,9 @@ script_repo_hdata_script_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds a script in an infolist.
+ * Add a script in an infolist.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -1598,7 +1598,7 @@ script_repo_add_to_infolist (struct t_infolist *infolist,
 }
 
 /*
- * Prints scripts in WeeChat log file (usually for crash dump).
+ * Print scripts in WeeChat log file (usually for crash dump).
  */
 
 void

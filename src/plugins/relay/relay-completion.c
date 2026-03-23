@@ -32,7 +32,7 @@
 
 
 /*
- * Adds protocol and name to completion list.
+ * Add protocol and name to completion list.
  */
 
 int
@@ -102,7 +102,7 @@ relay_completion_protocol_name_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds protocol and name of current relays to completion list.
+ * Add protocol and name of current relays to completion list.
  */
 
 int
@@ -131,7 +131,7 @@ relay_completion_relays_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds free ports to completion list.
+ * Add free ports to completion list.
  */
 
 int
@@ -168,7 +168,7 @@ relay_completion_free_port_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds relay remotes to completion list.
+ * Add relay remotes to completion list.
  */
 
 int
@@ -197,7 +197,7 @@ relay_completion_remotes_cb (const void *pointer, void *data,
 }
 
 /*
- * Hooks completions.
+ * Hook completions.
  */
 
 void

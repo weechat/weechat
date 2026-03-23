@@ -35,7 +35,7 @@ TEST_GROUP(HookFd)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_fd_get_description
  */
 
@@ -45,7 +45,7 @@ TEST(HookFd, GetDescription)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_fd_search
  */
 
@@ -55,7 +55,7 @@ TEST(HookFd, Search)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_fd_realloc_pollfd
  */
 
@@ -65,7 +65,7 @@ TEST(HookFd, ReallocPollfd)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_fd_add_cb
  */
 
@@ -75,7 +75,7 @@ TEST(HookFd, AddCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_fd_remove_cb
  */
 
@@ -85,7 +85,7 @@ TEST(HookFd, RemoveCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_fd
  */
 
@@ -95,7 +95,7 @@ TEST(HookFd, Fd)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_fd_exec
  */
 
@@ -105,7 +105,7 @@ TEST(HookFd, Exec)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_fd_free_data
  */
 
@@ -115,7 +115,7 @@ TEST(HookFd, FreeData)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_fd_add_to_infolist
  */
 
@@ -125,7 +125,7 @@ TEST(HookFd, AddToInfolist)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_fd_print_log
  */
 

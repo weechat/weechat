@@ -53,9 +53,9 @@ char *relay_weechat_compression_string[RELAY_WEECHAT_NUM_COMPRESSIONS] = {
 
 
 /*
- * Searches for a compression.
+ * Search for a compression.
  *
- * Returns index of compression in enum t_relay_weechat_compression, -1 if
+ * Return index of compression in enum t_relay_weechat_compression, -1 if
  * compression is not found.
  */
 
@@ -78,7 +78,7 @@ relay_weechat_compression_search (const char *compression)
 }
 
 /*
- * Hooks signals for a client.
+ * Hook signals for a client.
  */
 
 void
@@ -99,7 +99,7 @@ relay_weechat_hook_signals (struct t_relay_client *client)
 }
 
 /*
- * Unhooks signals for a client.
+ * Unhook signals for a client.
  */
 
 void
@@ -128,7 +128,7 @@ relay_weechat_unhook_signals (struct t_relay_client *client)
 }
 
 /*
- * Hooks timer to update nicklist.
+ * Hook timer to update nicklist.
  */
 
 void
@@ -141,7 +141,7 @@ relay_weechat_hook_timer_nicklist (struct t_relay_client *client)
 }
 
 /*
- * Reads data from a client.
+ * Read data from a client.
  */
 
 void
@@ -151,7 +151,7 @@ relay_weechat_recv (struct t_relay_client *client, const char *data)
 }
 
 /*
- * Closes connection with a client.
+ * Close connection with a client.
  */
 
 void
@@ -168,7 +168,7 @@ relay_weechat_close_connection (struct t_relay_client *client)
 }
 
 /*
- * Frees a value of hashtable "buffers_nicklist".
+ * Free a value of hashtable "buffers_nicklist".
  */
 
 void
@@ -183,7 +183,7 @@ relay_weechat_free_buffers_nicklist (struct t_hashtable *hashtable,
 }
 
 /*
- * Initializes relay data specific to WeeChat protocol.
+ * Initialize relay data specific to WeeChat protocol.
  */
 
 void
@@ -220,7 +220,7 @@ relay_weechat_alloc (struct t_relay_client *client)
 }
 
 /*
- * Initializes relay data specific to WeeChat protocol with an infolist.
+ * Initialize relay data specific to WeeChat protocol with an infolist.
  *
  * This is called after /upgrade.
  */
@@ -293,7 +293,7 @@ relay_weechat_alloc_with_infolist (struct t_relay_client *client,
 }
 
 /*
- * Returns the client initial status: it is always "authenticating" for weechat
+ * Return the client initial status: it is always "authenticating" for weechat
  * protocol because we always expect the "init" command, even without any
  * password.
  */
@@ -308,7 +308,7 @@ relay_weechat_get_initial_status (struct t_relay_client *client)
 }
 
 /*
- * Frees relay data specific to WeeChat protocol.
+ * Free relay data specific to WeeChat protocol.
  */
 
 void
@@ -333,13 +333,13 @@ relay_weechat_free (struct t_relay_client *client)
 }
 
 /*
- * Adds client WeeChat data in an infolist.
+ * Add client WeeChat data in an infolist.
  *
  * If force_disconnected_state == 1, the infolist contains the client
  * in a disconnected state (but the client is unchanged, still connected if it
  * was).
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -372,7 +372,7 @@ relay_weechat_add_to_infolist (struct t_infolist_item *item,
 }
 
 /*
- * Prints client WeeChat data in WeeChat log file (usually for crash dump).
+ * Print client WeeChat data in WeeChat log file (usually for crash dump).
  */
 
 void

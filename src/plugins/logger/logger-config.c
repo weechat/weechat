@@ -78,8 +78,7 @@ unsigned long long logger_config_rotation_size_max = 0;
 
 
 /*
- * Callback for changes on option that require a restart of logging for all
- * buffers.
+ * Callback for changes on option that require a restart of logging for all buffers.
  */
 
 void
@@ -193,7 +192,7 @@ logger_config_flush_delay_change (const void *pointer, void *data,
  * Callback called when option "logger.file.rotation_size_max" is changed,
  * to check if value is valid.
  *
- * Returns:
+ * Return:
  *   1: value is OK
  *   0: value is invalid
  */
@@ -224,7 +223,7 @@ logger_config_rotation_size_max_check (const void *pointer, void *data,
 /*
  * Callback called when option "logger.file.rotation_size_max" is changed.
  *
- * Returns:
+ * Return:
  *   1: value is OK
  *   0: value is invalid
  */
@@ -344,7 +343,7 @@ logger_config_level_create_option (const void *pointer, void *data,
 }
 
 /*
- * Gets a level option.
+ * Get a level option.
  */
 
 struct t_config_option *
@@ -356,7 +355,7 @@ logger_config_get_level (const char *name)
 }
 
 /*
- * Sets a level option.
+ * Set a level option.
  */
 
 int
@@ -471,7 +470,7 @@ logger_config_mask_create_option (const void *pointer, void *data,
 }
 
 /*
- * Gets a mask option.
+ * Get a mask option.
  */
 
 struct t_config_option *
@@ -483,9 +482,9 @@ logger_config_get_mask (const char *name)
 }
 
 /*
- * Initializes logger configuration file.
+ * Initialize logger configuration file.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -746,7 +745,7 @@ logger_config_init (void)
 }
 
 /*
- * Reads logger configuration file.
+ * Read logger configuration file.
  */
 
 int
@@ -764,7 +763,7 @@ logger_config_read (void)
 }
 
 /*
- * Writes logger configuration file.
+ * Write logger configuration file.
  */
 
 int
@@ -774,7 +773,7 @@ logger_config_write (void)
 }
 
 /*
- * Frees logger configuration.
+ * Free logger configuration.
  */
 
 void

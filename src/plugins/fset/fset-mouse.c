@@ -127,7 +127,7 @@ fset_mouse_get_distance_x (int x, int x2)
 }
 
 /*
- * Returns an integer value from the hashtable (where value is a string).
+ * Return an integer value from the hashtable (where value is a string).
  * If value is invalid, "default_value" is returned.
  */
 
@@ -152,7 +152,7 @@ fset_mouse_get_hashtable_int (struct t_hashtable *hashtable,
 }
 
 /*
- * Gets coordinates from hashtable.
+ * Get coordinates from hashtable.
  */
 
 void
@@ -310,9 +310,9 @@ fset_mouse_hsignal_cb (const void *pointer, void *data, const char *signal,
 }
 
 /*
- * Initializes mouse.
+ * Initialize mouse.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -359,7 +359,7 @@ fset_mouse_init (void)
 }
 
 /*
- * Ends mouse.
+ * End mouse.
  */
 
 void

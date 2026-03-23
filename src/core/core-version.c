@@ -30,7 +30,7 @@
 
 
 /*
- * Returns package name ("weechat").
+ * Return package name ("weechat").
  */
 
 const char *
@@ -40,7 +40,7 @@ version_get_name (void)
 }
 
 /*
- * Returns the WeeChat version.
+ * Return the WeeChat version.
  *
  * Examples:
  *   0.3.9-dev
@@ -55,7 +55,7 @@ version_get_version (void)
 }
 
 /*
- * Returns the package name ("weechat") + WeeChat version.
+ * Return the package name ("weechat") + WeeChat version.
  *
  * Examples:
  *   weechat 0.3.9-dev
@@ -70,7 +70,7 @@ version_get_name_version (void)
 }
 
 /*
- * Returns the output of "git describe" (non-empty only for a devel version,
+ * Return the output of "git describe" (non-empty only for a devel version,
  * if compilation was made using the git repository, if git command was found).
  *
  * Example:
@@ -84,7 +84,7 @@ version_get_git (void)
 }
 
 /*
- * Returns the WeeChat version + the git version (between brackets, and only if
+ * Return the WeeChat version + the git version (between brackets, and only if
  * it is not empty).
  *
  * Examples:
@@ -112,7 +112,7 @@ version_get_version_with_git (void)
 }
 
 /*
- * Returns date of WeeChat compilation.
+ * Return date of WeeChat compilation.
  *
  * Example:
  *   Dec 16 2012
@@ -125,7 +125,7 @@ version_get_compilation_date (void)
 }
 
 /*
- * Returns time of WeeChat compilation.
+ * Return time of WeeChat compilation.
  *
  * Example:
  *   18:10:22
@@ -138,7 +138,7 @@ version_get_compilation_time (void)
 }
 
 /*
- * Returns date/time of WeeChat compilation.
+ * Return date/time of WeeChat compilation.
  *
  * Example:
  *   Dec 16 2012 18:10:22

@@ -49,9 +49,9 @@ char *relay_irc_server_capabilities[RELAY_IRC_NUM_CAPAB] =
 
 
 /*
- * Checks if IRC command has to be relayed to client.
+ * Check if IRC command has to be relayed to client.
  *
- * Returns:
+ * Return:
  *   1: command must be relayed
  *   0: command must not be relayed
  */
@@ -75,9 +75,9 @@ relay_irc_command_relayed (const char *irc_command)
 }
 
 /*
- * Checks if an IRC command from client must be ignored.
+ * Check if an IRC command from client must be ignored.
  *
- * Returns:
+ * Return:
  *   1: command must be ignored
  *   0: command must not be ignored
  */
@@ -101,9 +101,9 @@ relay_irc_command_ignored (const char *irc_command)
 }
 
 /*
- * Searches for a tag of a command (in backlog).
+ * Search for a tag of a command (in backlog).
  *
- * Returns index of tag in enum t_relay_irc_command, -1 if tag is not found.
+ * Return index of tag in enum t_relay_irc_command, -1 if tag is not found.
  */
 
 int
@@ -125,9 +125,9 @@ relay_irc_search_backlog_commands_tags (const char *tag)
 }
 
 /*
- * Searches for a server capability.
+ * Search for a server capability.
  *
- * Returns index of server capability in enum t_relay_irc_server_capab, -1 if
+ * Return index of server capability in enum t_relay_irc_server_capab, -1 if
  * server capability is not found.
  */
 
@@ -150,9 +150,9 @@ relay_irc_search_server_capability (const char *capability)
 }
 
 /*
- * Parses an IRC message.
+ * Parse an IRC message.
  *
- * Returns hashtable with parsed message, NULL if error.
+ * Return hashtable with parsed message, NULL if error.
  */
 
 struct t_hashtable *
@@ -194,7 +194,7 @@ end:
 }
 
 /*
- * Sends formatted data to client.
+ * Send formatted data to client.
  */
 
 void
@@ -294,7 +294,7 @@ end:
 }
 
 /*
- * Parses CAP command received from IRC server.
+ * Parse CAP command received from IRC server.
  */
 
 void
@@ -410,10 +410,10 @@ relay_irc_signal_irc_in2_cb (const void *pointer, void *data,
 }
 
 /*
- * Gets id of client by looking for tag "relay_client_NNN" in list of tags
+ * Get id of client by looking for tag "relay_client_NNN" in list of tags
  * (comma separated list).
  *
- * Returns number found (NNN), -1 if not found.
+ * Return number found (NNN), -1 if not found.
  */
 
 int
@@ -683,7 +683,7 @@ relay_irc_hsignal_irc_redir_cb (const void *pointer, void *data,
 }
 
 /*
- * Gets info about a line in a buffer:
+ * Get info about a line in a buffer:
  *   - irc command
  *   - date
  *   - nick
@@ -861,7 +861,7 @@ relay_irc_get_line_info (struct t_relay_client *client,
 }
 
 /*
- * Sends channel backlog to client.
+ * Send channel backlog to client.
  */
 
 void
@@ -1054,7 +1054,7 @@ relay_irc_send_channel_backlog (struct t_relay_client *client,
 }
 
 /*
- * Sends IRC "JOIN" for a channel to client.
+ * Send IRC "JOIN" for a channel to client.
  */
 
 void
@@ -1157,7 +1157,7 @@ relay_irc_send_join (struct t_relay_client *client,
 }
 
 /*
- * Sends IRC "JOIN" for all channels of an IRC server to client.
+ * Send IRC "JOIN" for all channels of an IRC server to client.
  */
 
 void
@@ -1197,7 +1197,7 @@ relay_irc_send_join_channels (struct t_relay_client *client)
 }
 
 /*
- * Sends text or command on an IRC buffer.
+ * Send text or command on an IRC buffer.
  */
 
 void
@@ -1241,7 +1241,7 @@ relay_irc_input_send (struct t_relay_client *client, const char *irc_channel,
 }
 
 /*
- * Hooks signals for a client.
+ * Hook signals for a client.
  */
 
 void
@@ -1296,9 +1296,9 @@ relay_irc_hook_signals (struct t_relay_client *client)
 }
 
 /*
- * Compares two capabilities.
+ * Compare two capabilities.
  *
- * Returns:
+ * Return:
  *   < 0: capability 1 < capability 2
  *     0: capability 1 == capability 2
  *   > 0: capability 1 > capability 2
@@ -1318,7 +1318,7 @@ relay_irc_capability_compare_cb (void *data,
 }
 
 /*
- * Frees a capability in list.
+ * Free a capability in list.
  */
 
 void
@@ -1334,9 +1334,9 @@ relay_irc_capability_free_db (void *data,
 }
 
 /*
- * Checks if a capability is currently enabled in IRC server.
+ * Check if a capability is currently enabled in IRC server.
  *
- * Returns:
+ * Return:
  *   1: capability is enabled in server
  *   0: capability is NOT enabled in server
  */
@@ -1362,7 +1362,7 @@ relay_irc_cap_enabled (struct t_relay_client *client, const char *capability)
 }
 
 /*
- * Returns an integer with bits set for each supported capability (ie that
+ * Return an integer with bits set for each supported capability (ie that
  * is either always supported, or enabled in the IRC server).
  */
 
@@ -1386,7 +1386,7 @@ relay_irc_get_supported_caps (struct t_relay_client *client)
 }
 
 /*
- * Returns a sorted list of supported all server capabilities by relay (even
+ * Return a sorted list of supported all server capabilities by relay (even
  * those that should not be sent to clients when the IRC server doesn't
  * support them).
  *
@@ -1414,7 +1414,7 @@ relay_irc_get_list_caps (void)
 }
 
 /*
- * Processes the "CAP" irc command (received from client)
+ * Process the "CAP" irc command (received from client)
  */
 
 void
@@ -1538,7 +1538,7 @@ relay_irc_recv_command_capab (struct t_relay_client *client,
 }
 
 /*
- * Parses CTCP message and return CTCP type and parameters.
+ * Parse CTCP message and return CTCP type and parameters.
  * If message is not a valid CTCP format, type and parameters are set to NULL.
  *
  * Examples:
@@ -1585,7 +1585,7 @@ relay_irc_parse_ctcp (const char *message, char **ctcp_type, char **ctcp_params)
 }
 
 /*
- * Reads one message from client.
+ * Read one message from client.
  */
 
 void
@@ -2138,7 +2138,7 @@ end:
 }
 
 /*
- * Closes connection with client.
+ * Close connection with client.
  */
 
 void
@@ -2169,7 +2169,7 @@ relay_irc_close_connection (struct t_relay_client *client)
 }
 
 /*
- * Initializes relay data specific to IRC protocol.
+ * Initialize relay data specific to IRC protocol.
  */
 
 void
@@ -2202,7 +2202,7 @@ relay_irc_alloc (struct t_relay_client *client)
 }
 
 /*
- * Initializes relay data specific to IRC protocol using an infolist.
+ * Initialize relay data specific to IRC protocol using an infolist.
  *
  * This is called after /upgrade.
  */
@@ -2241,7 +2241,7 @@ relay_irc_alloc_with_infolist (struct t_relay_client *client,
 }
 
 /*
- * Returns the client initial status: it can be "authenticating" or "connected",
+ * Return the client initial status: it can be "authenticating" or "connected",
  * depending if a password is expected or not.
  */
 
@@ -2253,7 +2253,7 @@ relay_irc_get_initial_status (struct t_relay_client *client)
 }
 
 /*
- * Frees relay data specific to IRC protocol.
+ * Free relay data specific to IRC protocol.
  */
 
 void
@@ -2278,13 +2278,13 @@ relay_irc_free (struct t_relay_client *client)
 }
 
 /*
- * Adds client IRC data in an infolist.
+ * Add client IRC data in an infolist.
  *
  * If force_disconnected_state == 1, the infolist contains the client
  * in a disconnected state (but the client is unchanged, still connected if it
  * was).
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -2336,7 +2336,7 @@ relay_irc_add_to_infolist (struct t_infolist_item *item,
 }
 
 /*
- * Prints client IRC data in WeeChat log file (usually for crash dump).
+ * Print client IRC data in WeeChat log file (usually for crash dump).
  */
 
 void

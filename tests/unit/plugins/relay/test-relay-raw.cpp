@@ -38,7 +38,7 @@ TEST_GROUP(RelayRaw)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_raw_message_print
  */
 
@@ -48,7 +48,7 @@ TEST(RelayRaw, MessagePrint)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_raw_open
  */
 
@@ -58,7 +58,7 @@ TEST(RelayRaw, Open)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_raw_message_free
  */
 
@@ -68,7 +68,7 @@ TEST(RelayRaw, MessageFree)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_raw_message_free_all
  */
 
@@ -78,7 +78,7 @@ TEST(RelayRaw, MessageFreeAll)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_raw_message_remove_old
  */
 
@@ -88,7 +88,7 @@ TEST(RelayRaw, MessageRemoveOld)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_raw_message_add_to_list
  */
 
@@ -98,7 +98,7 @@ TEST(RelayRaw, MessageAddToList)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_raw_convert_binary_message
  */
 
@@ -108,7 +108,7 @@ TEST(RelayRaw, ConvertBinaryMessage)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_raw_convert_text_message
  */
 
@@ -118,7 +118,7 @@ TEST(RelayRaw, ConvertTextMessage)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_raw_message_add
  */
 
@@ -128,7 +128,7 @@ TEST(RelayRaw, MessageAdd)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_raw_print_client
  */
 
@@ -138,7 +138,7 @@ TEST(RelayRaw, PrintClient)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_raw_print_remote
  */
 
@@ -148,7 +148,7 @@ TEST(RelayRaw, PrintRemote)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_raw_add_to_infolist
  */
 

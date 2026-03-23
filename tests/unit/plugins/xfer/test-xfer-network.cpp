@@ -37,7 +37,7 @@ TEST_GROUP(XferNetwork)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   xfer_network_convert_integer_to_ipv4
  */
 

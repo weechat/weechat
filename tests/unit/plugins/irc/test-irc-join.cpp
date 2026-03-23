@@ -75,7 +75,7 @@ TEST_GROUP(IrcJoin)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_join_compare_join_channel
  */
 
@@ -117,7 +117,7 @@ TEST(IrcJoin, CompareJoinChannel)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_join_compare_cb
  *   irc_join_free_join_channel
  *   irc_join_free_cb
@@ -355,7 +355,7 @@ TEST(IrcJoin, SplitBuildString)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_join_has_channel
  */
 
@@ -387,7 +387,7 @@ TEST(IrcJoin, HasChannel)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_join_add_channel
  */
 
@@ -418,7 +418,7 @@ TEST(IrcJoin, AddChannel)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_join_add_channels
  */
 
@@ -452,7 +452,7 @@ TEST(IrcJoin, AddChannels)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_join_remove_channel
  */
 
@@ -488,7 +488,7 @@ TEST(IrcJoin, RemoveChannel)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_join_rename_channel
  */
 
@@ -531,7 +531,7 @@ TEST(IrcJoin, RenameChannel)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_join_sort_channels
  */
 
@@ -554,7 +554,7 @@ TEST(IrcJoin, SortChannels)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_join_set_autojoin_option
  *   irc_join_add_channel_to_autojoin
  *   irc_join_add_channels_to_autojoin
@@ -747,7 +747,7 @@ TEST(IrcJoin, AddRemoveChannelsAutojoin)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_join_save_channels_to_autojoin
  */
 
@@ -790,7 +790,7 @@ TEST(IrcJoin, SaveChannelsToAutojoin)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_join_sort_autojoin_channels
  */
 

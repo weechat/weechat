@@ -469,7 +469,7 @@ TEST_GROUP(IrcProtocolWithServer)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_is_numeric_command
  */
 
@@ -486,7 +486,7 @@ TEST(IrcProtocol, IsNumericCommand)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_log_level_for_command
  */
 
@@ -512,7 +512,7 @@ TEST(IrcProtocol, LogLevelForCommand)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_tags
  */
 
@@ -642,7 +642,7 @@ TEST(IrcProtocolWithServer, Tags)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_string_params
  */
 
@@ -1113,7 +1113,7 @@ TEST(IrcProtocolWithServer, SendMessagesWithEchoMessage)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_nick_address
  */
 
@@ -1183,7 +1183,7 @@ TEST(IrcProtocolWithServer, NickAddress)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_recv_command (command not found)
  */
 
@@ -1209,7 +1209,7 @@ TEST(IrcProtocolWithServer, recv_command_not_found)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_recv_command (invalid message)
  */
 
@@ -1240,7 +1240,7 @@ TEST(IrcProtocolWithServer, recv_command_invalid_message)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_account (without account-notify capability)
  */
 
@@ -1292,7 +1292,7 @@ TEST(IrcProtocolWithServer, account_without_account_notify_cap)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_account (with account-notify capability)
  */
 
@@ -1338,7 +1338,7 @@ TEST(IrcProtocolWithServer, account_with_account_notify_cap)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_authenticate
  */
 
@@ -1361,7 +1361,7 @@ TEST(IrcProtocolWithServer, authenticate)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_away
  */
 
@@ -1393,7 +1393,7 @@ TEST(IrcProtocolWithServer, away)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_batch (without batch cap)
  */
 
@@ -1541,7 +1541,7 @@ TEST(IrcProtocolWithServer, batch_without_batch_cap)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_batch (with batch cap)
  */
 
@@ -1786,7 +1786,7 @@ TEST(IrcProtocolWithServer, batch_with_batch_cap)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cap_to_enable
  */
 
@@ -1805,7 +1805,7 @@ TEST(IrcProtocol, cap_to_enable)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_cap
  */
 
@@ -1877,7 +1877,7 @@ TEST(IrcProtocolWithServer, cap)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_chghost
  */
 
@@ -1937,7 +1937,7 @@ TEST(IrcProtocolWithServer, chghost)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_error
  */
 
@@ -1957,7 +1957,7 @@ TEST(IrcProtocolWithServer, error)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_fail
  */
 
@@ -1996,7 +1996,7 @@ TEST(IrcProtocolWithServer, fail)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_invite
  */
 
@@ -2023,7 +2023,7 @@ TEST(IrcProtocolWithServer, invite)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_join
  */
 
@@ -2147,7 +2147,7 @@ TEST(IrcProtocolWithServer, join)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_kick
  */
 
@@ -2220,7 +2220,7 @@ TEST(IrcProtocolWithServer, kick)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_kill
  */
 
@@ -2269,7 +2269,7 @@ TEST(IrcProtocolWithServer, kill)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_mode
  */
 
@@ -2384,7 +2384,7 @@ TEST(IrcProtocolWithServer, mode)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_nick
  */
 
@@ -2463,7 +2463,7 @@ TEST(IrcProtocolWithServer, nick)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_note
  */
 
@@ -2500,7 +2500,7 @@ TEST(IrcProtocolWithServer, note)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_notice
  */
 
@@ -2745,7 +2745,7 @@ TEST(IrcProtocolWithServer, notice)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_part
  */
 
@@ -2815,7 +2815,7 @@ TEST(IrcProtocolWithServer, part)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_ping
  */
 
@@ -2834,7 +2834,7 @@ TEST(IrcProtocolWithServer, ping)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_pong
  */
 
@@ -2853,7 +2853,7 @@ TEST(IrcProtocolWithServer, pong)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_privmsg
  */
 
@@ -3413,7 +3413,7 @@ TEST(IrcProtocolWithServer, privmsg)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_quit
  */
 
@@ -3484,7 +3484,7 @@ TEST(IrcProtocolWithServer, quit)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_setname (without setname capability)
  */
 
@@ -3522,7 +3522,7 @@ TEST(IrcProtocolWithServer, setname_without_setname_cap)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_setname (with setname capability)
  */
 
@@ -3562,7 +3562,7 @@ TEST(IrcProtocolWithServer, setname_with_setname_cap)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_tagmsg
  */
 
@@ -3615,7 +3615,7 @@ TEST(IrcProtocolWithServer, tagmsg)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_topic
  */
 
@@ -3678,7 +3678,7 @@ TEST(IrcProtocolWithServer, topic)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_wallops
  */
 
@@ -3707,7 +3707,7 @@ TEST(IrcProtocolWithServer, wallops)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_warn
  */
 
@@ -3744,7 +3744,7 @@ TEST(IrcProtocolWithServer, warn)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_001 (connected to IRC server, empty)
  */
 
@@ -3764,7 +3764,7 @@ TEST(IrcProtocolWithServer, 001_empty)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_001 (connected to IRC server, welcome message)
  */
 
@@ -3787,7 +3787,7 @@ TEST(IrcProtocolWithServer, 001_welcome)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_005 (infos from server, empty)
  */
 
@@ -3806,7 +3806,7 @@ TEST(IrcProtocolWithServer, 005_empty)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_005 (infos from server, full)
  */
 
@@ -3867,7 +3867,7 @@ TEST(IrcProtocolWithServer, 005_full)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_005 (infos from server, multiple messages)
  */
 
@@ -3895,7 +3895,7 @@ TEST(IrcProtocolWithServer, 005_multiple_messages)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_008 (server notice mask)
  */
 
@@ -3916,7 +3916,7 @@ TEST(IrcProtocolWithServer, 008)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_221 (user mode string)
  */
 
@@ -3944,7 +3944,7 @@ TEST(IrcProtocolWithServer, 221)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_whois_nick_msg
  *
  * Messages:
@@ -4112,7 +4112,7 @@ TEST(IrcProtocolWithServer, whois_nick_msg)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_whowas_nick_msg
  *
  * Messages:
@@ -4138,7 +4138,7 @@ TEST(IrcProtocolWithServer, whowas_nick_msg)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_301 (away message)
  */
 
@@ -4168,7 +4168,7 @@ TEST(IrcProtocolWithServer, 301)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_303 (ison)
  */
 
@@ -4188,7 +4188,7 @@ TEST(IrcProtocolWithServer, 303)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_305 (unaway)
  *   irc_protocol_cb_306 (away)
  */
@@ -4229,7 +4229,7 @@ TEST(IrcProtocolWithServer, 305_306)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_311 (whois, user)
  */
 
@@ -4257,7 +4257,7 @@ TEST(IrcProtocolWithServer, 311)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_312 (whois, server)
  */
 
@@ -4284,7 +4284,7 @@ TEST(IrcProtocolWithServer, 312)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_314 (whowas)
  */
 
@@ -4311,7 +4311,7 @@ TEST(IrcProtocolWithServer, 314)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_315 (end of /who)
  */
 
@@ -4337,7 +4337,7 @@ TEST(IrcProtocolWithServer, 315)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_317 (whois, idle)
  */
 
@@ -4380,7 +4380,7 @@ TEST(IrcProtocolWithServer, 317)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_321 (/list start)
  */
 
@@ -4403,7 +4403,7 @@ TEST(IrcProtocolWithServer, 321)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_322 (channel for /list)
  */
 
@@ -4443,7 +4443,7 @@ TEST(IrcProtocolWithServer, 322)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_323 (end of /list)
  */
 
@@ -4464,7 +4464,7 @@ TEST(IrcProtocolWithServer, 323)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_324 (channel mode)
  */
 
@@ -4494,7 +4494,7 @@ TEST(IrcProtocolWithServer, 324)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_327 (whois, host)
  */
 
@@ -4523,7 +4523,7 @@ TEST(IrcProtocolWithServer, 327)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_328 (channel URL)
  */
 
@@ -4548,7 +4548,7 @@ TEST(IrcProtocolWithServer, 328)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_329 (channel creation date)
  */
 
@@ -4581,7 +4581,7 @@ TEST(IrcProtocolWithServer, 329)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_330 (whois, is logged in as)
  *   irc_protocol_cb_343 (whois, is opered as)
  */
@@ -4620,7 +4620,7 @@ TEST(IrcProtocolWithServer, 330_343)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_331 (no topic for channel)
  */
 
@@ -4645,7 +4645,7 @@ TEST(IrcProtocolWithServer, 331)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_332 (topic of channel)
  */
 
@@ -4673,7 +4673,7 @@ TEST(IrcProtocolWithServer, 332)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_333 (infos about topic (nick / date))
  */
 
@@ -4713,7 +4713,7 @@ TEST(IrcProtocolWithServer, 333)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_338 (whois, host)
  */
 
@@ -4740,7 +4740,7 @@ TEST(IrcProtocolWithServer, 338)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_341 (inviting)
  */
 
@@ -4765,7 +4765,7 @@ TEST(IrcProtocolWithServer, 341)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_344 (channel reop / whois (geo info))
  */
 
@@ -4809,7 +4809,7 @@ TEST(IrcProtocolWithServer, 344)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_345 (end of channel reop)
  */
 
@@ -4840,7 +4840,7 @@ TEST(IrcProtocolWithServer, 345)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_346 (channel invite list)
  */
 
@@ -4883,7 +4883,7 @@ TEST(IrcProtocolWithServer, 346)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_347 (end of channel invite list)
  */
 
@@ -4916,7 +4916,7 @@ TEST(IrcProtocolWithServer, 347)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_348 (channel exception list)
  */
 
@@ -4967,7 +4967,7 @@ TEST(IrcProtocolWithServer, 348)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_349 (end of channel exception list)
  */
 
@@ -5000,7 +5000,7 @@ TEST(IrcProtocolWithServer, 349)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_350 (whois, gateway)
  */
 
@@ -5043,7 +5043,7 @@ TEST(IrcProtocolWithServer, 350)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_351 (server version)
  */
 
@@ -5068,7 +5068,7 @@ TEST(IrcProtocolWithServer, 351)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_352 (who)
  */
 
@@ -5190,7 +5190,7 @@ TEST(IrcProtocolWithServer, 352)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_353 (list of users on a channel)
  */
 
@@ -5292,7 +5292,7 @@ TEST(IrcProtocolWithServer, 353)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_354 (WHOX output)
  */
 
@@ -5479,7 +5479,7 @@ TEST(IrcProtocolWithServer, 354)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_get_string_channel_nicks
  *   irc_protocol_get_string_channel_nicks_count
  *   irc_protocol_cb_366 (end of /names list)
@@ -5603,7 +5603,7 @@ TEST(IrcProtocolWithServer, 366)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_367 (banlist)
  */
 
@@ -5650,7 +5650,7 @@ TEST(IrcProtocolWithServer, 367)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_368 (end of banlist)
  */
 
@@ -5683,7 +5683,7 @@ TEST(IrcProtocolWithServer, 368)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_401 (no such nick/channel)
  */
 
@@ -5709,7 +5709,7 @@ TEST(IrcProtocolWithServer, 401)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_402 (no such server)
  */
 
@@ -5731,7 +5731,7 @@ TEST(IrcProtocolWithServer, 402)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_403 (no such channel)
  */
 
@@ -5753,7 +5753,7 @@ TEST(IrcProtocolWithServer, 403)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_404 (cannot send to channel)
  */
 
@@ -5778,7 +5778,7 @@ TEST(IrcProtocolWithServer, 404)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_405 (too many channels)
  */
 
@@ -5800,7 +5800,7 @@ TEST(IrcProtocolWithServer, 405)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_406 (was no such nick)
  */
 
@@ -5822,7 +5822,7 @@ TEST(IrcProtocolWithServer, 406)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_407 (too many targets)
  */
 
@@ -5844,7 +5844,7 @@ TEST(IrcProtocolWithServer, 407)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_409 (no origin)
  */
 
@@ -5864,7 +5864,7 @@ TEST(IrcProtocolWithServer, 409)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_411 (no recipient)
  */
 
@@ -5884,7 +5884,7 @@ TEST(IrcProtocolWithServer, 411)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_412 (no text to send)
  */
 
@@ -5904,7 +5904,7 @@ TEST(IrcProtocolWithServer, 412)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_413 (no toplevel)
  */
 
@@ -5926,7 +5926,7 @@ TEST(IrcProtocolWithServer, 413)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_414 (wildcard in toplevel domain)
  */
 
@@ -5948,7 +5948,7 @@ TEST(IrcProtocolWithServer, 414)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_415 (cannot send to channel)
  */
 
@@ -5973,7 +5973,7 @@ TEST(IrcProtocolWithServer, 415)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_421 (unknown command)
  */
 
@@ -5995,7 +5995,7 @@ TEST(IrcProtocolWithServer, 421)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_422 (MOTD is missing)
  */
 
@@ -6015,7 +6015,7 @@ TEST(IrcProtocolWithServer, 422)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_423 (no administrative info)
  */
 
@@ -6037,7 +6037,7 @@ TEST(IrcProtocolWithServer, 423)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_424 (file error)
  */
 
@@ -6057,7 +6057,7 @@ TEST(IrcProtocolWithServer, 424)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_431 (no nickname given)
  */
 
@@ -6077,7 +6077,7 @@ TEST(IrcProtocolWithServer, 431)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_432 (erroneous nickname, not connected)
  */
 
@@ -6110,7 +6110,7 @@ TEST(IrcProtocolWithServer, 432_not_connected)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_432 (erroneous nickname, connected)
  */
 
@@ -6142,7 +6142,7 @@ TEST(IrcProtocolWithServer, 432_connected)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_433 (nickname already in use, not connected)
  */
 
@@ -6168,7 +6168,7 @@ TEST(IrcProtocolWithServer, 433_not_connected)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_433 (nickname already in use, connected)
  */
 
@@ -6201,7 +6201,7 @@ TEST(IrcProtocolWithServer, 433_connected)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_436 (nickname collision)
  */
 
@@ -6225,7 +6225,7 @@ TEST(IrcProtocolWithServer, 436)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_437 (nick/channel temporarily unavailable, not connected)
  */
 
@@ -6242,7 +6242,7 @@ TEST(IrcProtocolWithServer, 437_not_connected)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_437 (nick/channel temporarily unavailable, connected)
  */
 
@@ -6269,7 +6269,7 @@ TEST(IrcProtocolWithServer, 437_connected)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_438 (not authorized to change nickname)
  */
 
@@ -6296,7 +6296,7 @@ TEST(IrcProtocolWithServer, 438)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_441 (user not in channel)
  */
 
@@ -6320,7 +6320,7 @@ TEST(IrcProtocolWithServer, 441)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_442 (not on channel)
  */
 
@@ -6342,7 +6342,7 @@ TEST(IrcProtocolWithServer, 442)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_443 (user already on channel)
  */
 
@@ -6366,7 +6366,7 @@ TEST(IrcProtocolWithServer, 443)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_444 (user not logged in)
  */
 
@@ -6390,7 +6390,7 @@ TEST(IrcProtocolWithServer, 444)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_445 (SUMMON has been disabled)
  */
 
@@ -6410,7 +6410,7 @@ TEST(IrcProtocolWithServer, 445)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_446 (USERS has been disabled)
  */
 
@@ -6430,7 +6430,7 @@ TEST(IrcProtocolWithServer, 446)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_451 (you are not registered)
  */
 
@@ -6450,7 +6450,7 @@ TEST(IrcProtocolWithServer, 451)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_461 (not enough parameters)
  */
 
@@ -6472,7 +6472,7 @@ TEST(IrcProtocolWithServer, 461)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_462 (you may not register)
  */
 
@@ -6492,7 +6492,7 @@ TEST(IrcProtocolWithServer, 462)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_463 (host not privileged)
  */
 
@@ -6512,7 +6512,7 @@ TEST(IrcProtocolWithServer, 463)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_464 (password incorrect)
  */
 
@@ -6532,7 +6532,7 @@ TEST(IrcProtocolWithServer, 464)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_465 (banned from this server)
  */
 
@@ -6552,7 +6552,7 @@ TEST(IrcProtocolWithServer, 465)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_467 (channel key already set)
  */
 
@@ -6574,7 +6574,7 @@ TEST(IrcProtocolWithServer, 467)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_470 (forwarding to another channel)
  */
 
@@ -6601,7 +6601,7 @@ TEST(IrcProtocolWithServer, 470)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_471 (channel is already full)
  */
 
@@ -6623,7 +6623,7 @@ TEST(IrcProtocolWithServer, 471)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_472 (unknown mode char to me)
  */
 
@@ -6645,7 +6645,7 @@ TEST(IrcProtocolWithServer, 472)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_473 (cannot join (invite only))
  */
 
@@ -6667,7 +6667,7 @@ TEST(IrcProtocolWithServer, 473)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_474 (cannot join (banned))
  */
 
@@ -6689,7 +6689,7 @@ TEST(IrcProtocolWithServer, 474)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_475 (cannot join (bad key))
  */
 
@@ -6711,7 +6711,7 @@ TEST(IrcProtocolWithServer, 475)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_476 (bad channel mask)
  */
 
@@ -6733,7 +6733,7 @@ TEST(IrcProtocolWithServer, 476)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_477 (channel doesn't support modes)
  */
 
@@ -6755,7 +6755,7 @@ TEST(IrcProtocolWithServer, 477)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_481 (you're not an IRC operator)
  */
 
@@ -6775,7 +6775,7 @@ TEST(IrcProtocolWithServer, 481)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_482 (you're not channel operator)
  */
 
@@ -6797,7 +6797,7 @@ TEST(IrcProtocolWithServer, 482)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_483 (you can't kill a server!)
  */
 
@@ -6817,7 +6817,7 @@ TEST(IrcProtocolWithServer, 483)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_484 (your connection is restricted!)
  */
 
@@ -6837,7 +6837,7 @@ TEST(IrcProtocolWithServer, 484)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_485 (not the original channel operator)
  */
 
@@ -6857,7 +6857,7 @@ TEST(IrcProtocolWithServer, 485)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_491 (no O-lines for your host)
  */
 
@@ -6877,7 +6877,7 @@ TEST(IrcProtocolWithServer, 491)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_501 (unknown mode flag)
  */
 
@@ -6897,7 +6897,7 @@ TEST(IrcProtocolWithServer, 501)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_502 (can't change mode for other users)
  */
 
@@ -6917,7 +6917,7 @@ TEST(IrcProtocolWithServer, 502)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_524 (help not found)
  */
 
@@ -6939,7 +6939,7 @@ TEST(IrcProtocolWithServer, 524)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_569 (whois, connecting from)
  */
 
@@ -6965,7 +6965,7 @@ TEST(IrcProtocolWithServer, 569)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_704 (start of HELP/HELPOP)
  */
 
@@ -6988,7 +6988,7 @@ TEST(IrcProtocolWithServer, 704)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_705 (body of HELP/HELPOP)
  */
 
@@ -7010,7 +7010,7 @@ TEST(IrcProtocolWithServer, 705)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_706 (end of HELP/HELPOP)
  */
 
@@ -7032,7 +7032,7 @@ TEST(IrcProtocolWithServer, 706)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_710 (knock: has asked for an invite)
  */
 
@@ -7063,7 +7063,7 @@ TEST(IrcProtocolWithServer, 710)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_711 (knock: has been delivered)
  */
 
@@ -7085,7 +7085,7 @@ TEST(IrcProtocolWithServer, 711)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_712 (knock: too many knocks)
  */
 
@@ -7107,7 +7107,7 @@ TEST(IrcProtocolWithServer, 712)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_713 (knock: channel is open)
  */
 
@@ -7129,7 +7129,7 @@ TEST(IrcProtocolWithServer, 713)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_714 (knock: already on that channel)
  */
 
@@ -7151,7 +7151,7 @@ TEST(IrcProtocolWithServer, 714)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_716 (nick is in +g mode)
  */
 
@@ -7184,7 +7184,7 @@ TEST(IrcProtocolWithServer, 716)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_717 (nick has been informed that you messaged them)
  */
 
@@ -7211,7 +7211,7 @@ TEST(IrcProtocolWithServer, 717)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_728 (quietlist)
  */
 
@@ -7258,7 +7258,7 @@ TEST(IrcProtocolWithServer, 728)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_729 (end of quietlist)
  */
 
@@ -7293,7 +7293,7 @@ TEST(IrcProtocolWithServer, 729)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_730 (monitored nicks are online (RPL_MONONLINE))
  *   irc_protocol_cb_731 (monitored nicks are offline (RPL_MONOFFLINE))
  */
@@ -7391,7 +7391,7 @@ TEST(IrcProtocolWithServer, 730)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_732 (list of monitored nicks (RPL_MONLIST))
  */
 
@@ -7411,7 +7411,7 @@ TEST(IrcProtocolWithServer, 732)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_733 (end of a monitor list (RPL_ENDOFMONLIST))
  */
 
@@ -7432,7 +7432,7 @@ TEST(IrcProtocolWithServer, 733)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_734 (monitor list is full (ERR_MONLISTFULL))
  */
 
@@ -7458,7 +7458,7 @@ TEST(IrcProtocolWithServer, 734)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_742 (mode cannot be set)
  */
 
@@ -7489,7 +7489,7 @@ TEST(IrcProtocolWithServer, 742)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_900 (logged in as (SASL))
  */
 
@@ -7520,7 +7520,7 @@ TEST(IrcProtocolWithServer, 900)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_901 (you are now logged out)
  */
 
@@ -7544,7 +7544,7 @@ TEST(IrcProtocolWithServer, 901)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_903 (SASL OK)
  *   irc_protocol_cb_907 (SASL OK)
  */
@@ -7579,7 +7579,7 @@ TEST(IrcProtocolWithServer, 903_907)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_902 (SASL failed)
  *   irc_protocol_cb_904 (SASL failed)
  *   irc_protocol_cb_905 (SASL failed)
@@ -7632,7 +7632,7 @@ TEST(IrcProtocolWithServer, 902_904_905_906)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_936 (censored word)
  */
 
@@ -7657,7 +7657,7 @@ TEST(IrcProtocolWithServer, 936)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_protocol_cb_server_mode_reason
  *
  * Messages:

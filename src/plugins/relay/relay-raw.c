@@ -44,7 +44,7 @@ struct t_relay_raw_message *last_relay_raw_message = NULL;
 
 
 /*
- * Prints a relay raw message.
+ * Print a relay raw message.
  */
 
 void
@@ -63,7 +63,7 @@ relay_raw_message_print (struct t_relay_raw_message *raw_message)
 }
 
 /*
- * Opens relay raw buffer.
+ * Open relay raw buffer.
  */
 
 void
@@ -125,7 +125,7 @@ relay_raw_open (int switch_to_buffer)
 }
 
 /*
- * Frees a raw message and remove it from list.
+ * Free a raw message and remove it from list.
  */
 
 void
@@ -162,7 +162,7 @@ relay_raw_message_free (struct t_relay_raw_message *raw_message)
 }
 
 /*
- * Frees all raw messages.
+ * Free all raw messages.
  */
 
 void
@@ -175,7 +175,7 @@ relay_raw_message_free_all (void)
 }
 
 /*
- * Removes old raw messages if limit has been reached.
+ * Remove old raw messages if limit has been reached.
  */
 
 void
@@ -191,9 +191,9 @@ relay_raw_message_remove_old (void)
 }
 
 /*
- * Adds a new raw message to list.
+ * Add a new raw message to list.
  *
- * Returns pointer to new raw message, NULL if error.
+ * Return pointer to new raw message, NULL if error.
  */
 
 struct t_relay_raw_message *
@@ -231,7 +231,7 @@ relay_raw_message_add_to_list (time_t date, int date_usec,
 }
 
 /*
- * Converts a binary message for raw display.
+ * Convert a binary message for raw display.
  */
 
 char *
@@ -241,7 +241,7 @@ relay_raw_convert_binary_message (const char *data, int data_size)
 }
 
 /*
- * Converts a text message for raw display.
+ * Convert a text message for raw display.
  */
 
 char *
@@ -292,7 +292,7 @@ relay_raw_convert_text_message (const char *data)
 }
 
 /*
- * Adds a new raw message to list.
+ * Add a new raw message to list.
  */
 
 void
@@ -381,7 +381,7 @@ relay_raw_message_add (enum t_relay_msg_type msg_type,
 }
 
 /*
- * Prints a message for a client on relay raw buffer.
+ * Print a message for a client on relay raw buffer.
  */
 
 void
@@ -417,7 +417,7 @@ relay_raw_print_client (struct t_relay_client *client,
 }
 
 /*
- * Prints a message for a remote on relay raw buffer.
+ * Print a message for a remote on relay raw buffer.
  */
 
 void
@@ -450,9 +450,9 @@ relay_raw_print_remote (struct t_relay_remote *remote,
 }
 
 /*
- * Adds a raw message in an infolist.
+ * Add a raw message in an infolist.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */

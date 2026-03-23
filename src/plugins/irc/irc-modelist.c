@@ -36,9 +36,9 @@
 
 
 /*
- * Checks if a modelist pointer is valid for a channel.
+ * Check if a modelist pointer is valid for a channel.
  *
- * Returns:
+ * Return:
  *   1: modelist exists for channel
  *   0: modelist does not exist for channel
  */
@@ -64,9 +64,9 @@ irc_modelist_valid (struct t_irc_channel *channel,
 }
 
 /*
- * Searches for a modelist by type.
+ * Search for a modelist by type.
  *
- * Returns pointer to modelist found, NULL if not found.
+ * Return pointer to modelist found, NULL if not found.
  */
 
 struct t_irc_modelist *
@@ -87,9 +87,9 @@ irc_modelist_search (struct t_irc_channel *channel, char type)
 }
 
 /*
- * Creates a new modelist in a channel.
+ * Create a new modelist in a channel.
  *
- * Returns pointer to new modelist, NULL if error.
+ * Return pointer to new modelist, NULL if error.
  */
 
 struct t_irc_modelist *
@@ -126,7 +126,7 @@ irc_modelist_new (struct t_irc_channel *channel, char type)
 }
 
 /*
- * Frees a modelist and remove it from channel.
+ * Free a modelist and remove it from channel.
  */
 
 void
@@ -161,7 +161,7 @@ irc_modelist_free (struct t_irc_channel *channel,
 }
 
 /*
- * Frees all modelists for a channel.
+ * Free all modelists for a channel.
  */
 
 void
@@ -174,9 +174,9 @@ irc_modelist_free_all (struct t_irc_channel *channel)
 }
 
 /*
- * Checks if a modelist item pointer is valid for a modelist.
+ * Check if a modelist item pointer is valid for a modelist.
  *
- * Returns:
+ * Return:
  *   1: item exists for modelist
  *   0: item does not exist for modelist
  */
@@ -202,9 +202,9 @@ irc_modelist_item_valid (struct t_irc_modelist *modelist,
 }
 
 /*
- * Searches for an item by mask.
+ * Search for an item by mask.
  *
- * Returns pointer to item found, NULL if not found.
+ * Return pointer to item found, NULL if not found.
  */
 
 struct t_irc_modelist_item *
@@ -225,9 +225,9 @@ irc_modelist_item_search_mask (struct t_irc_modelist *modelist, const char *mask
 }
 
 /*
- * Searches for an item by number.
+ * Search for an item by number.
  *
- * Returns pointer to item found, NULL if not found.
+ * Return pointer to item found, NULL if not found.
  */
 
 struct t_irc_modelist_item *
@@ -248,9 +248,9 @@ irc_modelist_item_search_number (struct t_irc_modelist *modelist, int number)
 }
 
 /*
- * Creates a new item in a modelist.
+ * Create a new item in a modelist.
  *
- * Returns pointer to new item, NULL if error.
+ * Return pointer to new item, NULL if error.
  */
 
 struct t_irc_modelist_item *
@@ -298,7 +298,7 @@ irc_modelist_item_new (struct t_irc_modelist *modelist,
 }
 
 /*
- * Frees an item and remove it from modelist.
+ * Free an item and remove it from modelist.
  */
 
 void
@@ -336,7 +336,7 @@ irc_modelist_item_free (struct t_irc_modelist *modelist,
 }
 
 /*
- * Frees all items for a modelist.
+ * Free all items for a modelist.
  */
 
 void
@@ -350,7 +350,7 @@ irc_modelist_item_free_all (struct t_irc_modelist *modelist)
 }
 
 /*
- * Returns hdata for modelist item.
+ * Return hdata for modelist item.
  */
 
 struct t_hdata *
@@ -378,7 +378,7 @@ irc_modelist_hdata_item_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns hdata for modelist.
+ * Return hdata for modelist.
  */
 
 struct t_hdata *
@@ -405,9 +405,9 @@ irc_modelist_hdata_modelist_cb (const void *pointer, void *data, const char *hda
 }
 
 /*
- * Adds a modelist item in an infolist.
+ * Add a modelist item in an infolist.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -438,9 +438,9 @@ irc_modelist_item_add_to_infolist (struct t_infolist *infolist,
 }
 
 /*
- * Adds a modelist in an infolist.
+ * Add a modelist in an infolist.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -471,7 +471,7 @@ irc_modelist_add_to_infolist (struct t_infolist *infolist,
 }
 
 /*
- * Prints modelist item infos in WeeChat log file (usually for crash dump).
+ * Print modelist item infos in WeeChat log file (usually for crash dump).
  */
 
 void
@@ -488,7 +488,7 @@ irc_modelist_item_print_log (struct t_irc_modelist_item *item)
 }
 
 /*
- * Prints modelist infos in WeeChat log file (usually for crash dump).
+ * Print modelist infos in WeeChat log file (usually for crash dump).
  */
 
 void

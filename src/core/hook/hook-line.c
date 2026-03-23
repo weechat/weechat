@@ -41,7 +41,7 @@
 
 
 /*
- * Returns description of hook.
+ * Return description of hook.
  *
  * Note: result must be freed after use.
  */
@@ -61,9 +61,9 @@ hook_line_get_description (struct t_hook *hook)
 }
 
 /*
- * Hooks a line added in a buffer.
+ * Hook a line added in a buffer.
  *
- * Returns pointer to new hook, NULL if error.
+ * Return pointer to new hook, NULL if error.
  */
 
 struct t_hook *
@@ -121,7 +121,7 @@ hook_line (struct t_weechat_plugin *plugin, const char *buffer_type,
 }
 
 /*
- * Executes a line hook and updates the line data.
+ * Execute a line hook and updates the line data.
  */
 
 void
@@ -212,7 +212,7 @@ hook_line_exec (struct t_gui_line *line)
 }
 
 /*
- * Frees data in a line hook.
+ * Free data in a line hook.
  */
 
 void
@@ -237,7 +237,7 @@ hook_line_free_data (struct t_hook *hook)
 }
 
 /*
- * Returns hdata for line hook.
+ * Return hdata for line hook.
  */
 
 struct t_hdata *
@@ -264,9 +264,9 @@ hook_line_hdata_hook_line_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds line hook data in the infolist item.
+ * Add line hook data in the infolist item.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -295,7 +295,7 @@ hook_line_add_to_infolist (struct t_infolist_item *item,
 }
 
 /*
- * Prints line hook data in WeeChat log file (usually for crash dump).
+ * Print line hook data in WeeChat log file (usually for crash dump).
  */
 
 void

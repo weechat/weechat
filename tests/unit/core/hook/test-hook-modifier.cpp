@@ -46,7 +46,7 @@ TEST_GROUP(HookModifier)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_modifier_get_description
  */
 
@@ -162,7 +162,7 @@ error:
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_modifier
  */
 
@@ -259,7 +259,7 @@ TEST(HookModifier, Modifier)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_modifier_exec
  */
 
@@ -269,7 +269,7 @@ TEST(HookModifier, Exec)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_modifier_free_data
  */
 
@@ -279,7 +279,7 @@ TEST(HookModifier, FreeData)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_modifier_add_to_infolist
  */
 
@@ -289,7 +289,7 @@ TEST(HookModifier, AddToInfolist)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_modifier_print_log
  */
 

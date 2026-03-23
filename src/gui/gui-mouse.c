@@ -47,7 +47,7 @@ char gui_mouse_event_button = '#';     /* button pressed (or wheel)         */
 
 
 /*
- * Sets debug for mouse events.
+ * Set debug for mouse events.
  */
 
 void
@@ -65,7 +65,7 @@ gui_mouse_debug_set (int debug)
 }
 
 /*
- * Resets event values.
+ * Reset event values.
  */
 
 void

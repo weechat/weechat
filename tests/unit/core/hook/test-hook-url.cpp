@@ -35,7 +35,7 @@ TEST_GROUP(HookUrl)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_url_get_description
  */
 
@@ -45,7 +45,7 @@ TEST(HookUrl, GetDescription)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_url_hashtable_map_cb
  */
 
@@ -55,7 +55,7 @@ TEST(HookUrl, HashtableMapCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_url_run_callback
  */
 
@@ -65,7 +65,7 @@ TEST(HookUrl, RunCallback)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_url_thread_cleanup
  */
 
@@ -75,7 +75,7 @@ TEST(HookUrl, ThreadCleanup)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_url_transfer_thread
  */
 
@@ -85,7 +85,7 @@ TEST(HookUrl, TransferThread)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_url_timer_cb
  */
 
@@ -95,7 +95,7 @@ TEST(HookUrl, TimerCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_url_transfer
  */
 
@@ -105,7 +105,7 @@ TEST(HookUrl, Transfer)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_url
  */
 
@@ -115,7 +115,7 @@ TEST(HookUrl, Url)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_url_free_data
  */
 
@@ -125,7 +125,7 @@ TEST(HookUrl, FreeData)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_url_add_to_infolist
  */
 
@@ -135,7 +135,7 @@ TEST(HookUrl, AddToInfolist)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_url_print_log
  */
 

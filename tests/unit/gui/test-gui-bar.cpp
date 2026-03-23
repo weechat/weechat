@@ -33,7 +33,7 @@ TEST_GROUP(GuiBar)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_valid
  */
 
@@ -48,7 +48,7 @@ TEST(GuiBar, Valid)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_search_default_bar
  */
 
@@ -67,7 +67,7 @@ TEST(GuiBar, SearchDefaultBar)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_search_option
  */
 
@@ -86,7 +86,7 @@ TEST(GuiBar, SearchOption)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_search_type
  */
 
@@ -105,7 +105,7 @@ TEST(GuiBar, SearchType)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_search_position
  */
 
@@ -124,7 +124,7 @@ TEST(GuiBar, SearchPosition)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_check_size_add
  */
 
@@ -134,7 +134,7 @@ TEST(GuiBar, CheckSizeAdd)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_get_filling
  */
 
@@ -144,7 +144,7 @@ TEST(GuiBar, GetFilling)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_find_pos
  */
 
@@ -154,7 +154,7 @@ TEST(GuiBar, FindPos)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_insert
  */
 
@@ -164,7 +164,7 @@ TEST(GuiBar, Insert)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_check_conditions
  */
 
@@ -174,7 +174,7 @@ TEST(GuiBar, CheckConditions)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_root_get_size
  */
 
@@ -184,7 +184,7 @@ TEST(GuiBar, RootGetSize)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_search
  */
 
@@ -194,7 +194,7 @@ TEST(GuiBar, Search)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_search_with_option_name
  */
 
@@ -204,7 +204,7 @@ TEST(GuiBar, SearchWithOptionName)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_content_build_bar_windows
  */
 
@@ -214,7 +214,7 @@ TEST(GuiBar, ContentBuildBarWindows)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_ask_refresh
  */
 
@@ -224,7 +224,7 @@ TEST(GuiBar, AskRefresh)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_refresh
  */
 
@@ -234,7 +234,7 @@ TEST(GuiBar, Refresh)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_draw
  */
 
@@ -244,7 +244,7 @@ TEST(GuiBar, Draw)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_apply_current_size
  */
 
@@ -254,7 +254,7 @@ TEST(GuiBar, ApplyCurrentSize)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_free_items_arrays
  */
 
@@ -264,7 +264,7 @@ TEST(GuiBar, FreeItemsArrays)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_set_items_array
  */
 
@@ -274,7 +274,7 @@ TEST(GuiBar, SetItemsArray)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_config_check_type
  */
 
@@ -284,7 +284,7 @@ TEST(GuiBar, ConfigCheckType)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_config_change_hidden
  */
 
@@ -294,7 +294,7 @@ TEST(GuiBar, ConfigChangeHidden)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_config_change_priority
  */
 
@@ -304,7 +304,7 @@ TEST(GuiBar, ConfigChangePriority)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_config_change_conditions
  */
 
@@ -314,7 +314,7 @@ TEST(GuiBar, ConfigChangeConditions)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_config_change_position
  */
 
@@ -324,7 +324,7 @@ TEST(GuiBar, ConfigChangePosition)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_config_change_filling
  */
 
@@ -334,7 +334,7 @@ TEST(GuiBar, ConfigChangeFilling)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_config_check_size
  */
 
@@ -344,7 +344,7 @@ TEST(GuiBar, ConfigCheckSize)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_config_change_size
  */
 
@@ -354,7 +354,7 @@ TEST(GuiBar, ConfigChangeSize)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_config_change_size_max
  */
 
@@ -364,7 +364,7 @@ TEST(GuiBar, ConfigChangeSizeMax)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_config_change_color
  */
 
@@ -374,7 +374,7 @@ TEST(GuiBar, ConfigChangeColor)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_config_change_separator
  */
 
@@ -384,7 +384,7 @@ TEST(GuiBar, ConfigChangeSeparator)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_config_change_items
  */
 
@@ -394,7 +394,7 @@ TEST(GuiBar, ConfigChangeItems)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_set_name
  */
 
@@ -404,7 +404,7 @@ TEST(GuiBar, SetName)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_set
  */
 
@@ -414,7 +414,7 @@ TEST(GuiBar, BarSet)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_create_option
  */
 
@@ -424,7 +424,7 @@ TEST(GuiBar, BarCreateOption)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_create_option_temp
  */
 
@@ -434,7 +434,7 @@ TEST(GuiBar, CreateOptionTemp)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_alloc
  */
 
@@ -444,7 +444,7 @@ TEST(GuiBar, Alloc)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_set_default_value
  */
 
@@ -454,7 +454,7 @@ TEST(GuiBar, SetDefaultValue)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_new_with_options
  */
 
@@ -464,7 +464,7 @@ TEST(GuiBar, NewWithOptions)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_new
  */
 
@@ -474,7 +474,7 @@ TEST(GuiBar, New)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_new_default
  */
 
@@ -484,7 +484,7 @@ TEST(GuiBar, NewDefault)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_use_temp_bars
  */
 
@@ -494,7 +494,7 @@ TEST(GuiBar, UseTempBars)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_create_default_input
  */
 
@@ -504,7 +504,7 @@ TEST(GuiBar, CreateDefaultInput)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_create_default_title
  */
 
@@ -514,7 +514,7 @@ TEST(GuiBar, CreateDefaultTitle)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_create_default_status
  */
 
@@ -524,7 +524,7 @@ TEST(GuiBar, CreateDefaultStatus)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_create_default_nicklist
  */
 
@@ -534,7 +534,7 @@ TEST(GuiBar, CreateDefaultNicklist)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_create_default
  */
 
@@ -544,7 +544,7 @@ TEST(GuiBar, CreateDefault)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_update
  */
 
@@ -554,7 +554,7 @@ TEST(GuiBar, Update)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_scroll
  */
 
@@ -564,7 +564,7 @@ TEST(GuiBar, Scroll)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_free
  */
 
@@ -574,7 +574,7 @@ TEST(GuiBar, Free)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_free_all
  */
 
@@ -584,7 +584,7 @@ TEST(GuiBar, FreeAll)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_free_bar_windows
  */
 
@@ -594,7 +594,7 @@ TEST(GuiBar, FreeBarWindows)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_hdata_bar_cb
  */
 
@@ -604,7 +604,7 @@ TEST(GuiBar, HdataBarCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_add_to_infolist
  */
 
@@ -614,7 +614,7 @@ TEST(GuiBar, AddToInfolist)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_print_log
  */
 

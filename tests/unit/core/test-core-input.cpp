@@ -48,7 +48,7 @@ TEST_GROUP(CoreInput)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   input_exec_data
  */
 
@@ -58,7 +58,7 @@ TEST(CoreInput, ExecData)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   input_exec_command
  */
 
@@ -86,7 +86,7 @@ test_core_input_buffer_input_cb (const void *pointer, void *data,
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   input_data
  */
 
@@ -197,7 +197,7 @@ TEST(CoreInput, Data)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   input_data_timer_cb
  */
 
@@ -207,7 +207,7 @@ TEST(CoreInput, DataTimerCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   input_data_delayed
  */
 

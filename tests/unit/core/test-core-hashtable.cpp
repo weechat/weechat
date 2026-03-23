@@ -64,7 +64,7 @@ TEST_GROUP(CoreHashtable)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   hashtable_hash_key_djb2
  */
 
@@ -111,7 +111,7 @@ test_hashtable_keycmp_cb (struct t_hashtable *hashtable,
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hashtable_new
  */
 
@@ -158,7 +158,7 @@ TEST(CoreHashtable, New)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hashtable_set_with_size
  *   hashtable_set
  *   hashtable_get_item
@@ -576,7 +576,7 @@ test_hashtable_map_string_cb (void *data,
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hashtable_map_string
  */
 
@@ -635,7 +635,7 @@ TEST(CoreHashtable, MapString)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hashtable_map
  *   hashtable_dup
  */
@@ -673,7 +673,7 @@ TEST(CoreHashtable, Dup)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hashtable_get_list_keys
  */
 
@@ -699,7 +699,7 @@ TEST(CoreHashtable, GetListKeys)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hashtable_get_integer
  */
 
@@ -721,7 +721,7 @@ TEST(CoreHashtable, GetInteger)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hashtable_get_string
  */
 
@@ -781,7 +781,7 @@ test_hashtable_free_value (struct t_hashtable *hashtable,
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hashtable_set_pointer
  */
 
@@ -807,7 +807,7 @@ TEST(CoreHashtable, SetPointer)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hashtable_add_to_infolist
  *   hashtable_add_from_infolist
  */
@@ -847,7 +847,7 @@ TEST(CoreHashtable, Infolist)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hashtable_print_log
  */
 

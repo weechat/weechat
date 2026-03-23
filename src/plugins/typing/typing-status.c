@@ -45,9 +45,9 @@ struct t_hashtable *typing_status_nicks = NULL;
 
 
 /*
- * Searches a state by name.
+ * Search a state by name.
  *
- * Returns index of stats in enum t_typing_status_state, -1 if not found.
+ * Return index of stats in enum t_typing_status_state, -1 if not found.
  */
 
 int
@@ -68,7 +68,7 @@ typing_status_search_state (const char *state)
 }
 
 /*
- * Removes self typing status for a buffer: key is a buffer pointer, value
+ * Remove self typing status for a buffer: key is a buffer pointer, value
  * is a t_typing_status pointer.
  */
 
@@ -101,9 +101,9 @@ typing_status_self_free_value_cb (struct t_hashtable *hashtable,
 }
 
 /*
- * Adds a new self typing status.
+ * Add a new self typing status.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -156,9 +156,9 @@ typing_status_self_add (struct t_gui_buffer *buffer, int state, int last_typed)
 }
 
 /*
- * Searches a self typing status for a buffer.
+ * Search a self typing status for a buffer.
  *
- * Returns pointer to t_typing_status found, NULL if not found.
+ * Return pointer to t_typing_status found, NULL if not found.
  */
 
 struct t_typing_status *
@@ -171,7 +171,7 @@ typing_status_self_search (struct t_gui_buffer *buffer)
 }
 
 /*
- * Removes nicks typing status: key is a buffer pointer, value is a hashtable
+ * Remove nicks typing status: key is a buffer pointer, value is a hashtable
  * pointer.
  */
 
@@ -204,7 +204,7 @@ typing_status_nicks_free_value_cb (struct t_hashtable *hashtable,
 }
 
 /*
- * Removes a nick typing status: key is a nick (string), value is a
+ * Remove a nick typing status: key is a nick (string), value is a
  * t_typing_status pointer.
  */
 
@@ -228,9 +228,9 @@ typing_status_nick_free_value_cb (struct t_hashtable *hashtable,
 }
 
 /*
- * Adds a nick typing status for a buffer.
+ * Add a nick typing status for a buffer.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -303,9 +303,9 @@ typing_status_nick_add (struct t_gui_buffer *buffer, const char *nick,
 }
 
 /*
- * Searches a nick typing status for a buffer.
+ * Search a nick typing status for a buffer.
  *
- * Returns pointer to t_typing_status found, NULL if not found.
+ * Return pointer to t_typing_status found, NULL if not found.
  */
 
 struct t_typing_status *
@@ -324,9 +324,9 @@ typing_status_nick_search (struct t_gui_buffer *buffer, const char *nick)
 }
 
 /*
- * Removes a nick typing status from a buffer.
+ * Remove a nick typing status from a buffer.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -347,7 +347,7 @@ typing_status_nick_remove (struct t_gui_buffer *buffer, const char *nick)
 }
 
 /*
- * Ends typing status.
+ * End typing status.
  */
 
 void

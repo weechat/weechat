@@ -48,13 +48,12 @@ struct t_hashtable *irc_raw_filter_hashtable_options = NULL;
 
 
 /*
- * Checks if a string matches a mask.
+ * Check if a string matches a mask.
  *
- * If mask has no "*" inside, it just checks if "mask" is inside the "string".
- * If mask has at least one "*" inside, the function weechat_string_match is
- * used.
+ * If mask has no "*" inside, check if "mask" is inside the "string".
+ * If mask has at least one "*" inside, use the function weechat_string_match.
  *
- * Returns:
+ * Return:
  *   1: string matches mask
  *   0: string does not match mask
  */
@@ -69,9 +68,9 @@ irc_raw_message_string_match (const char *string, const char *mask)
 }
 
 /*
- * Checks if a messages is matching current filter(s).
+ * Check if a messages is matching current filter(s).
  *
- * Returns:
+ * Return:
  *   1: message is matching filter(s)
  *   0: message does not match filter(s)
  */
@@ -189,7 +188,7 @@ irc_raw_message_match_filter (struct t_irc_raw_message *raw_message,
 }
 
 /*
- * Prints an irc raw message.
+ * Print an irc raw message.
  */
 
 void
@@ -313,7 +312,7 @@ irc_raw_message_print (struct t_irc_raw_message *raw_message)
 }
 
 /*
- * Sets the local variable "filter" in the irc raw buffer.
+ * Set the local variable "filter" in the irc raw buffer.
  */
 
 void
@@ -327,7 +326,7 @@ irc_raw_set_localvar_filter (void)
 }
 
 /*
- * Sets title of irc raw buffer.
+ * Set title of irc raw buffer.
  */
 
 void
@@ -346,7 +345,7 @@ irc_raw_set_title (void)
 }
 
 /*
- * Updates list of messages in raw buffer.
+ * Update list of messages in raw buffer.
  */
 
 void
@@ -371,7 +370,7 @@ irc_raw_refresh (int clear)
 }
 
 /*
- * Opens IRC raw buffer.
+ * Open IRC raw buffer.
  */
 
 void
@@ -427,7 +426,7 @@ irc_raw_open (int switch_to_buffer)
 }
 
 /*
- * Sets the raw messages filter.
+ * Set the raw messages filter.
  */
 
 void
@@ -440,7 +439,7 @@ irc_raw_set_filter (const char *filter)
 }
 
 /*
- * Filters raw messages.
+ * Filter raw messages.
  */
 
 void
@@ -452,7 +451,7 @@ irc_raw_filter_options (const char *filter)
 }
 
 /*
- * Frees a raw message and removes it from list.
+ * Free a raw message and removes it from list.
  */
 
 void
@@ -488,7 +487,7 @@ irc_raw_message_free (struct t_irc_raw_message *raw_message)
 }
 
 /*
- * Frees all raw messages.
+ * Free all raw messages.
  */
 
 void
@@ -501,7 +500,7 @@ irc_raw_message_free_all (void)
 }
 
 /*
- * Removes old raw messages if limit has been reached.
+ * Remove old raw messages if limit has been reached.
  */
 
 void
@@ -517,9 +516,9 @@ irc_raw_message_remove_old (void)
 }
 
 /*
- * Adds a new raw message to list.
+ * Add a new raw message to list.
  *
- * Returns pointer to new raw message, NULL if error.
+ * Return pointer to new raw message, NULL if error.
  */
 
 struct t_irc_raw_message *
@@ -559,7 +558,7 @@ irc_raw_message_add_to_list (time_t date, int date_usec,
 }
 
 /*
- * Prints a message on IRC raw buffer.
+ * Print a message on IRC raw buffer.
  */
 
 void
@@ -606,9 +605,9 @@ irc_raw_print (struct t_irc_server *server, int flags,
 }
 
 /*
- * Adds a raw message in an infolist.
+ * Add a raw message in an infolist.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -641,7 +640,7 @@ irc_raw_add_to_infolist (struct t_infolist *infolist,
 }
 
 /*
- * Initializes irc raw.
+ * Initialize IRC raw.
  */
 
 void
@@ -660,7 +659,7 @@ irc_raw_init (void)
 }
 
 /*
- * Ends irc raw.
+ * End IRC raw.
  */
 
 void

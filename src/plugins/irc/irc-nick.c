@@ -38,9 +38,9 @@
 
 
 /*
- * Checks if a nick pointer is valid.
+ * Check if a nick pointer is valid.
  *
- * Returns:
+ * Return:
  *   1: nick exists in channel
  *   0: nick does not exist in channel
  */
@@ -64,9 +64,9 @@ irc_nick_valid (struct t_irc_channel *channel, struct t_irc_nick *nick)
 }
 
 /*
- * Checks if string is a valid nick string, using server UTF8MAPPING.
+ * Check if string is a valid nick string, using server UTF8MAPPING.
  *
- * Returns:
+ * Return:
  *   1: string is a valid nick on this server
  *   0: string is not a valid nick on this server
  */
@@ -135,9 +135,9 @@ irc_nick_is_nick (struct t_irc_server *server, const char *string)
 }
 
 /*
- * Finds a color code for a nick (according to nick letters).
+ * Find a color code for a nick (according to nick letters).
  *
- * Returns a WeeChat color code (that can be used for display).
+ * Return a WeeChat color code (that can be used for display).
  */
 
 char *
@@ -147,9 +147,9 @@ irc_nick_find_color (const char *nickname)
 }
 
 /*
- * Finds a color name for a nick (according to nick letters).
+ * Find a color name for a nick (according to nick letters).
  *
- * Returns the name of a color (for example: "green").
+ * Return the name of a color (for example: "green").
  */
 
 char *
@@ -159,7 +159,7 @@ irc_nick_find_color_name (const char *nickname)
 }
 
 /*
- * Sets current prefix, using higher prefix set in prefixes.
+ * Set current prefix, using higher prefix set in prefixes.
  */
 
 void
@@ -182,7 +182,7 @@ irc_nick_set_current_prefix (struct t_irc_nick *nick)
 }
 
 /*
- * Sets/unsets a prefix in prefixes.
+ * Set/unset a prefix in prefixes.
  *
  * If set == 1, sets prefix (prefix is used).
  * If set == 0, unsets prefix (space is used).
@@ -206,7 +206,7 @@ irc_nick_set_prefix (struct t_irc_server *server, struct t_irc_nick *nick,
 }
 
 /*
- * Sets prefixes for nick.
+ * Set prefixes for nick.
  */
 
 void
@@ -235,7 +235,7 @@ irc_nick_set_prefixes (struct t_irc_server *server, struct t_irc_nick *nick,
 }
 
 /*
- * Sets host for nick.
+ * Set host for nick.
  */
 
 void
@@ -257,9 +257,9 @@ irc_nick_set_host (struct t_irc_nick *nick, const char *host)
 }
 
 /*
- * Checks if nick is "op" or above "op", like channel admin/owner.
+ * Check if nick is "op" or above "op", like channel admin/owner.
  *
- * Returns:
+ * Return:
  *   1: nick is "op" or above
  *   0: nick is not op
  */
@@ -280,11 +280,11 @@ irc_nick_is_op_or_higher (struct t_irc_server *server, struct t_irc_nick *nick)
 }
 
 /*
- * Checks if nick prefixes contains prefix for a given mode.
+ * Check if nick prefixes contains prefix for a given mode.
  *
  * For example if prefix_mode is 'o', searches for '@' in nick prefixes.
  *
- * Returns:
+ * Return:
  *   1: prefixes contains prefix for the given mode
  *   0: prefixes does not contain prefix for the given mode.
  */
@@ -303,7 +303,7 @@ irc_nick_has_prefix_mode (struct t_irc_server *server, struct t_irc_nick *nick,
 }
 
 /*
- * Gets nicklist group for a nick.
+ * Get nicklist group for a nick.
  */
 
 struct t_gui_nick_group *
@@ -338,7 +338,7 @@ irc_nick_get_nicklist_group (struct t_irc_server *server,
 }
 
 /*
- * Gets name of prefix color for a nick.
+ * Get name of prefix color for a nick.
  */
 
 const char *
@@ -378,7 +378,7 @@ irc_nick_get_prefix_color_name (struct t_irc_server *server, char prefix)
 }
 
 /*
- * Gets nick color for nicklist.
+ * Get nick color for nicklist.
  */
 
 char *
@@ -404,7 +404,7 @@ irc_nick_get_color_for_nicklist (struct t_irc_server *server,
 }
 
 /*
- * Adds a nick to buffer nicklist.
+ * Add a nick to buffer nicklist.
  */
 
 void
@@ -427,7 +427,7 @@ irc_nick_nicklist_add (struct t_irc_server *server,
 }
 
 /*
- * Removes a nick from buffer nicklist.
+ * Remove a nick from buffer nicklist.
  */
 
 void
@@ -445,7 +445,7 @@ irc_nick_nicklist_remove (struct t_irc_server *server,
 }
 
 /*
- * Sets a property for nick in buffer nicklist.
+ * Set a property for nick in buffer nicklist.
  */
 
 void
@@ -463,7 +463,7 @@ irc_nick_nicklist_set (struct t_irc_channel *channel,
 }
 
 /*
- * Sets nick prefix colors in nicklist for all servers/channels.
+ * Set nick prefix colors in nicklist for all servers/channels.
  */
 
 void
@@ -491,7 +491,7 @@ irc_nick_nicklist_set_prefix_color_all (void)
 }
 
 /*
- * Sets nick colors in nicklist for all servers/channels.
+ * Set nick colors in nicklist for all servers/channels.
  */
 
 void
@@ -520,13 +520,13 @@ irc_nick_nicklist_set_color_all (void)
 }
 
 /*
- * Adds a new nick in channel, but do not update the buffer nicklist.
+ * Add a new nick in channel, but do not update the buffer nicklist.
  * This function is only called by the function `irc_nick_new` (below) and
  * when restoring nicks after upgrade: in this case we want to just add nick
  * in channel nicks without changing anything in the buffer nicklist,
  * to preserve same identifiers).
  *
- * Returns pointer to new nick, NULL if error.
+ * Return pointer to new nick, NULL if error.
  */
 
 struct t_irc_nick *
@@ -590,9 +590,9 @@ irc_nick_new_in_channel (struct t_irc_server *server,
 }
 
 /*
- * Adds a new nick in channel.
+ * Add a new nick in channel.
  *
- * Returns pointer to new nick, NULL if error.
+ * Return pointer to new nick, NULL if error.
  */
 
 struct t_irc_nick *
@@ -637,7 +637,7 @@ irc_nick_new (struct t_irc_server *server, struct t_irc_channel *channel,
 }
 
 /*
- * Changes nickname.
+ * Change nickname.
  */
 
 void
@@ -668,7 +668,7 @@ irc_nick_change (struct t_irc_server *server, struct t_irc_channel *channel,
 }
 
 /*
- * Sets a mode for a nick.
+ * Set a mode for a nick.
  */
 
 void
@@ -701,7 +701,7 @@ irc_nick_set_mode (struct t_irc_server *server, struct t_irc_channel *channel,
 }
 
 /*
- * Reallocates the "prefixes" string in all nicks of all channels on the server
+ * Reallocate the "prefixes" string in all nicks of all channels on the server
  * (after 005 has been received).
  */
 
@@ -748,7 +748,7 @@ irc_nick_realloc_prefixes (struct t_irc_server *server,
 }
 
 /*
- * Removes a nick from a channel.
+ * Remove a nick from a channel.
  */
 
 void
@@ -795,7 +795,7 @@ irc_nick_free (struct t_irc_server *server, struct t_irc_channel *channel,
 }
 
 /*
- * Removes all nicks from a channel.
+ * Remove all nicks from a channel.
  */
 
 void
@@ -821,9 +821,9 @@ irc_nick_free_all (struct t_irc_server *server, struct t_irc_channel *channel)
 }
 
 /*
- * Searches for a nick in a channel.
+ * Search for a nick in a channel.
  *
- * Returns pointer to nick found, NULL if error.
+ * Return pointer to nick found, NULL if error.
  */
 
 struct t_irc_nick *
@@ -847,7 +847,7 @@ irc_nick_search (struct t_irc_server *server, struct t_irc_channel *channel,
 }
 
 /*
- * Returns number of nicks per mode on a channel, as an array of integers
+ * Return number of nicks per mode on a channel, as an array of integers
  * whose size is the number of modes + 1 (for regular users).
  *
  * For example if modes == "ohv", the array returned has a size of 4, with:
@@ -910,7 +910,7 @@ irc_nick_count (struct t_irc_server *server, struct t_irc_channel *channel,
 }
 
 /*
- * Sets/unsets away status for a nick.
+ * Set/unset away status for a nick.
  */
 
 void
@@ -929,9 +929,9 @@ irc_nick_set_away (struct t_irc_server *server, struct t_irc_channel *channel,
 }
 
 /*
- * Gets nick mode for display (color + mode).
+ * Get nick mode for display (color + mode).
  *
- * If prefix == 1, returns string for display in prefix, otherwise returns
+ * If prefix == 1, return string for display in prefix, otherwise return
  * string for display in action message (/me).
  */
 
@@ -982,7 +982,7 @@ irc_nick_mode_for_display (struct t_irc_server *server, struct t_irc_nick *nick,
 }
 
 /*
- * Returns string with nick to display as prefix on buffer (returned string ends
+ * Return string with nick to display as prefix on buffer (returned string ends
  * by a tab).
  */
 
@@ -1013,7 +1013,7 @@ irc_nick_as_prefix (struct t_irc_server *server, struct t_irc_nick *nick,
 }
 
 /*
- * Returns WeeChat color code for a nick.
+ * Return WeeChat color code for a nick.
  */
 
 const char *
@@ -1053,7 +1053,7 @@ irc_nick_color_for_msg (struct t_irc_server *server, int server_message,
 }
 
 /*
- * Returns string with color of nick for private.
+ * Return string with color of nick for private.
  */
 
 const char *
@@ -1071,7 +1071,7 @@ irc_nick_color_for_pv (struct t_irc_channel *channel, const char *nickname)
 }
 
 /*
- * Returns default ban mask for the nick.
+ * Return default ban mask for the nick.
  *
  * Note: result must be freed after use (if not NULL).
  */
@@ -1131,7 +1131,7 @@ irc_nick_default_ban_mask (struct t_irc_nick *nick)
 }
 
 /*
- * Returns hdata for nick.
+ * Return hdata for nick.
  */
 
 struct t_hdata *
@@ -1163,9 +1163,9 @@ irc_nick_hdata_nick_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds a nick in an infolist.
+ * Add a nick in an infolist.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -1204,7 +1204,7 @@ irc_nick_add_to_infolist (struct t_infolist *infolist,
 }
 
 /*
- * Prints nick infos in WeeChat log file (usually for crash dump).
+ * Print nick infos in WeeChat log file (usually for crash dump).
  */
 
 void

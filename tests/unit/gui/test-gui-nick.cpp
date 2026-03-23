@@ -74,7 +74,7 @@ TEST_GROUP(GuiNick)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_nick_hash_djb2_64
  */
 
@@ -106,7 +106,7 @@ TEST(GuiNick, HashDbj264)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_nick_hash_djb2_32
  */
 
@@ -133,7 +133,7 @@ TEST(GuiNick, HashDbj232)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_nick_hash_sum_64
  */
 
@@ -165,7 +165,7 @@ TEST(GuiNick, HashSum64)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_nick_hash_sum_32
  */
 
@@ -197,7 +197,7 @@ TEST(GuiNick, HashSum32)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_nick_hash_color
  */
 
@@ -305,7 +305,7 @@ TEST(GuiNick, HashColor)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_nick_get_forced_color
  */
 
@@ -331,7 +331,7 @@ TEST(GuiNick, GetForcedColor)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_nick_strdup_for_color
  */
 
@@ -347,7 +347,7 @@ TEST(GuiNick, StrdupForColor)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_nick_find_color
  *   gui_nick_find_color_name
  */

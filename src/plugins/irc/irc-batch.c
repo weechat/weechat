@@ -38,9 +38,9 @@
 
 
 /*
- * Searches a batch reference.
+ * Search a batch reference.
  *
- * Returns pointer to batch, NULL if not found.
+ * Return pointer to batch, NULL if not found.
  */
 
 struct t_irc_batch *
@@ -63,7 +63,7 @@ irc_batch_search (struct t_irc_server *server, const char *reference)
 }
 
 /*
- * Generates a random batch reference with `size` chars (the next one is the
+ * Generate a random batch reference with `size` chars (the next one is the
  * final '\0', so the string must be at least size + 1 bytes long).
  */
 
@@ -88,7 +88,7 @@ irc_batch_generate_random_ref (char *string, int size)
 }
 
 /*
- * Adds a batch to list of batched events.
+ * Add a batch to list of batched events.
  */
 
 void
@@ -104,9 +104,9 @@ irc_batch_add_to_list (struct t_irc_server *server, struct t_irc_batch *batch)
 }
 
 /*
- * Starts a batch.
+ * Start a batch.
  *
- * Returns pointer to new batch, NULL if error.
+ * Return pointer to new batch, NULL if error.
  */
 
 struct t_irc_batch *
@@ -144,9 +144,9 @@ irc_batch_start_batch (struct t_irc_server *server, const char *reference,
 }
 
 /*
- * Adds an IRC message to a batch reference.
+ * Add an IRC message to a batch reference.
  *
- * Returns:
+ * Return:
  *   1: OK, message added
  *   0: error, message not added
  */
@@ -177,7 +177,7 @@ irc_batch_add_message (struct t_irc_server *server, const char *reference,
 }
 
 /*
- * Frees a batch.
+ * Free a batch.
  */
 
 void
@@ -204,7 +204,7 @@ irc_batch_free (struct t_irc_server *server, struct t_irc_batch *batch)
 }
 
 /*
- * Frees all batches from server.
+ * Free all batches from server.
  */
 
 void
@@ -217,7 +217,7 @@ irc_batch_free_all (struct t_irc_server *server)
 }
 
 /*
- * Processes messages in a batch.
+ * Process messages in a batch.
  */
 
 void
@@ -302,7 +302,7 @@ irc_batch_process_messages (struct t_irc_server *server,
 }
 
 /*
- * Ends a batch reference.
+ * End a batch reference.
  */
 
 void
@@ -357,7 +357,7 @@ irc_batch_end_batch (struct t_irc_server *server, const char *reference)
 }
 
 /*
- * Processes multiline batch: convert multiple messages into a single one,
+ * Process multiline batch: convert multiple messages into a single one,
  * that can include newline chars ("\r" that are converted later to "\n").
  *
  * Parameter "target" is the batch target (channel or nick name).
@@ -506,7 +506,7 @@ irc_batch_modifier_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns hdata for batch.
+ * Return hdata for batch.
  */
 
 struct t_hdata *
@@ -538,7 +538,7 @@ irc_batch_hdata_batch_cb (const void *pointer, void *data,
 }
 
 /*
- * Prints batch infos in WeeChat log file (usually for crash dump).
+ * Print batch infos in WeeChat log file (usually for crash dump).
  */
 
 void

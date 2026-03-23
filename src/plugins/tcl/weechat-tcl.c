@@ -119,7 +119,7 @@ weechat_tcl_hashtable_map_cb (void *data,
 }
 
 /*
- * Converts a WeeChat hashtable to a tcl dict.
+ * Convert a WeeChat hashtable to a tcl dict.
  */
 
 Tcl_Obj *
@@ -143,7 +143,7 @@ weechat_tcl_hashtable_to_dict (Tcl_Interp *interp,
 }
 
 /*
- * Converts a tcl dict to a WeeChat hashtable.
+ * Convert a tcl dict to a WeeChat hashtable.
  *
  * Note: hashtable must be freed after use.
  */
@@ -191,7 +191,7 @@ weechat_tcl_dict_to_hashtable (Tcl_Interp *interp, Tcl_Obj *dict,
 }
 
 /*
- * Executes a tcl function.
+ * Execute a tcl function.
  */
 
 void *
@@ -314,12 +314,12 @@ weechat_tcl_exec (struct t_plugin_script *script,
 }
 
 /*
- * Loads a tcl script.
+ * Load a tcl script.
  *
- * If code is NULL, the content of filename is read and executed.
- * If code is not NULL, it is executed (the file is not read).
+ * If code is NULL, read and execute the file content.
+ * If code is not NULL, execute it (the file is not read).
  *
- * Returns pointer to new registered script, NULL if error.
+ * Return pointer to new registered script, NULL if error.
  */
 
 struct t_plugin_script *
@@ -427,7 +427,7 @@ weechat_tcl_load_cb (void *data, const char *filename)
 }
 
 /*
- * Unloads a tcl script.
+ * Unload a tcl script.
  */
 
 void
@@ -470,7 +470,7 @@ weechat_tcl_unload (struct t_plugin_script *script)
 }
 
 /*
- * Unloads a tcl script by name.
+ * Unload a tcl script by name.
  */
 
 void
@@ -498,7 +498,7 @@ weechat_tcl_unload_name (const char *name)
 }
 
 /*
- * Unloads all tcl scripts.
+ * Unload all tcl scripts.
  */
 
 void
@@ -511,7 +511,7 @@ weechat_tcl_unload_all (void)
 }
 
 /*
- * Reloads a tcl script by name.
+ * Reload a tcl script by name.
  */
 
 void
@@ -546,9 +546,9 @@ weechat_tcl_reload_name (const char *name)
 }
 
 /*
- * Evaluates TCL source code.
+ * Evaluate TCL source code.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -713,7 +713,7 @@ weechat_tcl_command_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds tcl scripts to completion list.
+ * Add tcl scripts to completion list.
  */
 
 int
@@ -734,7 +734,7 @@ weechat_tcl_completion_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns hdata for tcl scripts.
+ * Return hdata for tcl scripts.
  */
 
 struct t_hdata *
@@ -751,7 +751,7 @@ weechat_tcl_hdata_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns tcl info "tcl_eval".
+ * Return tcl info "tcl_eval".
  */
 
 char *
@@ -771,7 +771,7 @@ weechat_tcl_info_eval_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns infolist with tcl scripts.
+ * Return infolist with tcl scripts.
  */
 
 struct t_infolist *
@@ -797,7 +797,7 @@ weechat_tcl_infolist_cb (const void *pointer, void *data,
 }
 
 /*
- * Dumps tcl plugin data in WeeChat log file.
+ * Dump tcl plugin data in WeeChat log file.
  */
 
 int
@@ -907,7 +907,7 @@ weechat_tcl_signal_script_action_cb (const void *pointer, void *data,
 }
 
 /*
- * Initializes tcl plugin.
+ * Initialize tcl plugin.
  */
 
 int
@@ -966,7 +966,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 }
 
 /*
- * Ends tcl plugin.
+ * End tcl plugin.
  */
 
 int

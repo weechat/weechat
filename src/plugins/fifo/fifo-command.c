@@ -88,7 +88,7 @@ fifo_command_fifo (const void *pointer, void *data,
 }
 
 /*
- * Hooks fifo command.
+ * Hook fifo command.
  */
 
 void

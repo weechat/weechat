@@ -165,7 +165,7 @@ weechat_perl_hashtable_map_cb (void *data,
 }
 
 /*
- * Converts a WeeChat hashtable to a perl hash.
+ * Convert a WeeChat hashtable to a perl hash.
  */
 
 HV *
@@ -184,7 +184,7 @@ weechat_perl_hashtable_to_hash (struct t_hashtable *hashtable)
 }
 
 /*
- * Converts a perl hash to a WeeChat hashtable.
+ * Convert a perl hash to a WeeChat hashtable.
  *
  * Note: hashtable must be freed after use.
  */
@@ -231,7 +231,7 @@ weechat_perl_hash_to_hashtable (SV *hash, int size, const char *type_keys,
 }
 
 /*
- * Flushes output.
+ * Flush output.
  */
 
 void
@@ -323,7 +323,7 @@ XS (weechat_perl_output)
 }
 
 /*
- * Executes a perl function.
+ * Execute a perl function.
  */
 
 void *
@@ -499,12 +499,12 @@ weechat_perl_exec (struct t_plugin_script *script,
 }
 
 /*
- * Loads a perl script.
+ * Load a perl script.
  *
- * If code is NULL, the content of filename is read and executed.
- * If code is not NULL, it is executed (the file is not read).
+ * If code is NULL, read and execute the file content.
+ * If code is not NULL, execute it (the file is not read).
  *
- * Returns pointer to new registered script, NULL if error.
+ * Return pointer to new registered script, NULL if error.
  */
 
 struct t_plugin_script *
@@ -692,7 +692,7 @@ weechat_perl_load_cb (void *data, const char *filename)
 }
 
 /*
- * Unloads a perl script.
+ * Unload a perl script.
  */
 
 void
@@ -754,7 +754,7 @@ weechat_perl_unload (struct t_plugin_script *script)
 }
 
 /*
- * Unloads a perl script by name.
+ * Unload a perl script by name.
  */
 
 void
@@ -782,7 +782,7 @@ weechat_perl_unload_name (const char *name)
 }
 
 /*
- * Unloads all perl scripts.
+ * Unload all perl scripts.
  */
 
 void
@@ -795,7 +795,7 @@ weechat_perl_unload_all (void)
 }
 
 /*
- * Reloads a perl script by name.
+ * Reload a perl script by name.
  */
 
 void
@@ -830,9 +830,9 @@ weechat_perl_reload_name (const char *name)
 }
 
 /*
- * Evaluates perl source code.
+ * Evaluate perl source code.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -1031,7 +1031,7 @@ weechat_perl_command_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds perl scripts to completion list.
+ * Add perl scripts to completion list.
  */
 
 int
@@ -1052,7 +1052,7 @@ weechat_perl_completion_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns hdata for perl scripts.
+ * Return hdata for perl scripts.
  */
 
 struct t_hdata *
@@ -1069,7 +1069,7 @@ weechat_perl_hdata_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns perl info "perl_eval".
+ * Return perl info "perl_eval".
  */
 
 char *
@@ -1092,7 +1092,7 @@ weechat_perl_info_eval_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns infolist with perl scripts.
+ * Return infolist with perl scripts.
  */
 
 struct t_infolist *
@@ -1118,7 +1118,7 @@ weechat_perl_infolist_cb (const void *pointer, void *data,
 }
 
 /*
- * Dumps perl plugin data in WeeChat log file.
+ * Dump perl plugin data in WeeChat log file.
  */
 
 int
@@ -1251,7 +1251,7 @@ weechat_perl_signal_quit_upgrade_cb (const void *pointer, void *data,
 }
 
 /*
- * Initializes perl plugin.
+ * Initialize perl plugin.
  */
 
 int
@@ -1360,7 +1360,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 }
 
 /*
- * Ends perl plugin.
+ * End perl plugin.
  */
 
 int

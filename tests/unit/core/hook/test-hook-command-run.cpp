@@ -35,7 +35,7 @@ TEST_GROUP(HookCommandRun)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_command_run_get_description
  */
 
@@ -45,7 +45,7 @@ TEST(HookCommandRun, GetDescription)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_command_run
  */
 
@@ -55,7 +55,7 @@ TEST(HookCommandRun, CommandRun)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_command_run_exec
  */
 
@@ -65,7 +65,7 @@ TEST(HookCommandRun, Exec)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_command_run_free_data
  */
 
@@ -75,7 +75,7 @@ TEST(HookCommandRun, FreeData)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_command_run_add_to_infolist
  */
 
@@ -85,7 +85,7 @@ TEST(HookCommandRun, AddToInfolist)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_command_run_print_log
  */
 

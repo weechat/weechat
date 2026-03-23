@@ -41,7 +41,7 @@ gnutls_dh_params_t *relay_gnutls_dh_params = NULL;
 
 
 /*
- * Sets TLS certificate/key file.
+ * Set TLS certificate/key file.
  *
  * If verbose == 1, a message is displayed if successful, otherwise a warning
  * (if no cert/key found in file).
@@ -140,7 +140,7 @@ relay_network_set_tls_cert_key (int verbose)
 }
 
 /*
- * Sets gnutls priority cache.
+ * Set gnutls priority cache.
  */
 
 void
@@ -160,7 +160,7 @@ relay_network_set_priority (void)
 }
 
 /*
- * Initializes network for relay.
+ * Initialize network for relay.
  */
 
 void
@@ -182,7 +182,7 @@ relay_network_init (void)
 }
 
 /*
- * Ends network for relay.
+ * End network for relay.
  */
 
 void

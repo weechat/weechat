@@ -97,7 +97,7 @@ buflist_command_buflist (const void *pointer, void *data,
 }
 
 /*
- * Hooks buflist commands.
+ * Hook buflist commands.
  */
 
 void

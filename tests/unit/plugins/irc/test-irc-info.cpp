@@ -49,7 +49,7 @@ TEST_GROUP(IrcInfo)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_info_create_string_with_pointer
  */
 
@@ -68,7 +68,7 @@ TEST(IrcInfo, CreateStringWithPointer)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_info_info_irc_is_channel_cb
  */
 
@@ -103,7 +103,7 @@ TEST(IrcInfo, InfoIrcIsChannelCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_info_info_irc_is_nick_cb
  */
 
@@ -138,7 +138,7 @@ TEST(IrcInfo, InfoIrcIsNickCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_info_info_irc_nick_cb
  */
 
@@ -166,7 +166,7 @@ TEST(IrcInfo, InfoIrcNickCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_info_info_irc_nick_from_host_cb
  */
 
@@ -185,7 +185,7 @@ TEST(IrcInfo, InfoIrcNickFromHostCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_info_info_irc_nick_color_cb
  *   irc_info_info_irc_nick_color_name_cb
  */
@@ -206,7 +206,7 @@ TEST(IrcInfo, InfoIrcNickColorCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_info_info_irc_buffer_cb
  */
 
@@ -258,7 +258,7 @@ TEST(IrcInfo, InfoIrcBufferCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_info_info_irc_server_isupport_cb
  *   irc_info_info_irc_server_isupport_value_cb
  */
@@ -294,7 +294,7 @@ TEST(IrcInfo, InfoIrcServerIsupportCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_info_info_irc_server_cap_cb
  *   irc_info_info_irc_server_cap_value_cb
  */
@@ -325,7 +325,7 @@ TEST(IrcInfo, InfoIrcServerCapCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_info_info_irc_is_message_ignored_cb
  */
 
@@ -358,7 +358,7 @@ TEST(IrcInfo, InfoIrcIsMessageIgnoredCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_info_info_hashtable_irc_message_parse_cb
  */
 
@@ -401,7 +401,7 @@ TEST(IrcInfo, InfoHashtableIrcMessageParseCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_info_info_hashtable_irc_message_split_cb
  */
 
@@ -433,7 +433,7 @@ TEST(IrcInfo, InfoHashtableIrcMessageSplitCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_info_infolist_irc_server_cb
  */
 
@@ -476,7 +476,7 @@ TEST(IrcInfo, InfolistIrcServerCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_info_infolist_irc_channel_cb
  */
 
@@ -533,7 +533,7 @@ TEST(IrcInfo, InfolistIrcChannelCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_info_infolist_irc_modelist_cb
  *   irc_info_infolist_irc_modelist_item_cb
  */
@@ -617,7 +617,7 @@ TEST(IrcInfo, InfolistIrcModelistCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_info_infolist_irc_nick_cb
  */
 
@@ -680,7 +680,7 @@ TEST(IrcInfo, InfolistIrcNickCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_info_infolist_irc_ignore_cb
  */
 
@@ -729,7 +729,7 @@ TEST(IrcInfo, InfolistIrcIgnoreCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_info_infolist_irc_notify_cb
  */
 
@@ -822,7 +822,7 @@ TEST(IrcInfo, InfolistIrcNotifyCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_info_infolist_irc_color_weechat_cb
  */
 
@@ -849,7 +849,7 @@ TEST(IrcInfo, InfolistIrcColorWeechatCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   irc_info_init
  */
 

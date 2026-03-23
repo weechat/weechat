@@ -38,7 +38,7 @@ TEST_GROUP(GuiBarWindow)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_window_valid
  */
 
@@ -53,7 +53,7 @@ TEST(GuiBarWindow, Valid)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_window_search_bar
  */
 
@@ -63,7 +63,7 @@ TEST(GuiBarWindow, SearchBar)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_window_search_by_xy
  */
 
@@ -73,7 +73,7 @@ TEST(GuiBarWindow, SearchByXy)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_window_get_size
  */
 
@@ -83,7 +83,7 @@ TEST(GuiBarWindow, GetSize)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_window_calculate_pos_size
  */
 
@@ -93,7 +93,7 @@ TEST(GuiBarWindow, CalculatePosSize)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_window_find_pos
  */
 
@@ -103,7 +103,7 @@ TEST(GuiBarWindow, FindPos)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_window_content_alloc
  */
 
@@ -113,7 +113,7 @@ TEST(GuiBarWindow, ContentAlloc)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_window_content_free
  */
 
@@ -123,7 +123,7 @@ TEST(GuiBarWindow, ContentFree)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_window_content_build_item
  */
 
@@ -133,7 +133,7 @@ TEST(GuiBarWindow, ContentBuildItem)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_window_content_build
  */
 
@@ -143,7 +143,7 @@ TEST(GuiBarWindow, ContentBuild)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_window_content_get
  */
 
@@ -153,7 +153,7 @@ TEST(GuiBarWindow, ContentGet)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_window_item_is_spacer
  */
 
@@ -191,7 +191,7 @@ TEST(GuiBarWindow, ItemIsSpacer)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_window_content_get_with_filling
  */
 
@@ -201,7 +201,7 @@ TEST(GuiBarWindow, ContentGetWithFilling)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_window_can_use_spacer
  */
 
@@ -230,7 +230,7 @@ TEST(GuiBarWindow, CanUseSpacer)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_window_compute_spacers_size
  */
 
@@ -298,7 +298,7 @@ TEST(GuiBarWindow, ComputeSpacersSize)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_window_coords_add
  */
 
@@ -308,7 +308,7 @@ TEST(GuiBarWindow, CoordsAdd)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_window_coords_free
  */
 
@@ -318,7 +318,7 @@ TEST(GuiBarWindow, CoordsFree)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_window_insert
  */
 
@@ -328,7 +328,7 @@ TEST(GuiBarWindow, Insert)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_window_new
  */
 
@@ -338,7 +338,7 @@ TEST(GuiBarWindow, New)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_window_get_current_size
  */
 
@@ -348,7 +348,7 @@ TEST(GuiBarWindow, GetCurrentSize)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_window_get_max_size_in_window
  */
 
@@ -358,7 +358,7 @@ TEST(GuiBarWindow, GetMaxSizeInWindow)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_window_get_max_size
  */
 
@@ -368,7 +368,7 @@ TEST(GuiBarWindow, GetMaxSize)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_window_set_current_size
  */
 
@@ -378,7 +378,7 @@ TEST(GuiBarWindow, SetCurrentSize)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_window_free
  */
 
@@ -390,7 +390,7 @@ TEST(GuiBarWindow, Free)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_window_remove_unused_bars
  */
 
@@ -400,7 +400,7 @@ TEST(GuiBarWindow, RemoveUnusedBars)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_window_add_missing_bars
  */
 
@@ -410,7 +410,7 @@ TEST(GuiBarWindow, AddMissingBars)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_window_scroll
  */
 
@@ -420,7 +420,7 @@ TEST(GuiBarWindow, Scroll)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_window_update_cb
  */
 
@@ -430,7 +430,7 @@ TEST(GuiBarWindow, UpdateCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_window_hdata_bar_window_cb
  */
 
@@ -440,7 +440,7 @@ TEST(GuiBarWindow, HdataBarWindowCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_window_add_to_infolist
  */
 
@@ -450,7 +450,7 @@ TEST(GuiBarWindow, AddToInfolist)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   gui_bar_window_print_log
  */
 

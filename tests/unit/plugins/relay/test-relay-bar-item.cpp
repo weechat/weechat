@@ -36,7 +36,7 @@ TEST_GROUP(RelayBarItem)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_bar_item_input_prompt
  */
 
@@ -46,7 +46,7 @@ TEST(RelayBarItem, InputPrompt)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   relay_bar_item_init
  */
 

@@ -104,7 +104,7 @@ struct t_rlimit_resource rlimit_resource[] =
 
 
 /*
- * Sets resource limit.
+ * Set resource limit.
  */
 
 #ifdef HAVE_SYS_RESOURCE_H
@@ -174,7 +174,7 @@ sys_setrlimit_resource (const char *resource_name, long long limit)
 #endif /* HAVE_SYS_RESOURCE_H */
 
 /*
- * Sets resource limits using value of option "weechat.startup.sys_rlimit".
+ * Set resource limits using value of option "weechat.startup.sys_rlimit".
  */
 
 void
@@ -220,7 +220,7 @@ sys_setrlimit (void)
 }
 
 /*
- * Displays resource limits.
+ * Display resource limits.
  */
 
 void
@@ -278,7 +278,7 @@ sys_display_rlimit (void)
 }
 
 /*
- * Displays resource usage.
+ * Display resource usage.
  */
 
 void
@@ -346,7 +346,7 @@ sys_display_rusage (void)
 }
 
 /*
- * Calls waitpid() to acknowledge the end of forked processes, thus preventing
+ * Call waitpid() to acknowledge the end of forked processes, thus preventing
  * them to become zombies.
  */
 

@@ -43,9 +43,9 @@ char *infolist_type_char_string[INFOLIST_NUM_TYPES] = {
 
 
 /*
- * Creates a new infolist.
+ * Create a new infolist.
  *
- * Returns pointer to infolist, NULL if error.
+ * Return pointer to infolist, NULL if error.
  */
 
 struct t_infolist *
@@ -74,9 +74,9 @@ infolist_new (struct t_weechat_plugin *plugin)
 }
 
 /*
- * Checks if an infolist pointer is valid.
+ * Check if an infolist pointer is valid.
  *
- * Returns:
+ * Return:
  *   1: infolist exists
  *   0: infolist is not found
  */
@@ -101,9 +101,9 @@ infolist_valid (struct t_infolist *infolist)
 }
 
 /*
- * Creates a new item in an infolist.
+ * Create a new item in an infolist.
  *
- * Returns pointer to new item, NULL if error.
+ * Return pointer to new item, NULL if error.
  */
 
 struct t_infolist_item *
@@ -131,9 +131,9 @@ infolist_new_item (struct t_infolist *infolist)
 }
 
 /*
- * Creates a new integer variable in an item.
+ * Create a new integer variable in an item.
  *
- * Returns pointer to new variable, NULL if error.
+ * Return pointer to new variable, NULL if error.
  */
 
 struct t_infolist_var *
@@ -168,9 +168,9 @@ infolist_new_var_integer (struct t_infolist_item *item,
 }
 
 /*
- * Creates a new string variable in an item.
+ * Create a new string variable in an item.
  *
- * Returns pointer to new variable, NULL if error.
+ * Return pointer to new variable, NULL if error.
  */
 
 struct t_infolist_var *
@@ -203,9 +203,9 @@ infolist_new_var_string (struct t_infolist_item *item,
 }
 
 /*
- * Creates a new pointer variable in an item.
+ * Create a new pointer variable in an item.
  *
- * Returns pointer to new variable, NULL if error.
+ * Return pointer to new variable, NULL if error.
  */
 
 struct t_infolist_var *
@@ -238,9 +238,9 @@ infolist_new_var_pointer (struct t_infolist_item *item,
 }
 
 /*
- * Creates a new buffer variable in an item.
+ * Create a new buffer variable in an item.
  *
- * Returns pointer to new variable, NULL if error.
+ * Return pointer to new variable, NULL if error.
  */
 
 struct t_infolist_var *
@@ -285,9 +285,9 @@ infolist_new_var_buffer (struct t_infolist_item *item,
 }
 
 /*
- * Creates a new time variable in an item.
+ * Create a new time variable in an item.
  *
- * Returns pointer to new variable, NULL if error.
+ * Return pointer to new variable, NULL if error.
  */
 
 struct t_infolist_var *
@@ -322,9 +322,9 @@ infolist_new_var_time (struct t_infolist_item *item,
 }
 
 /*
- * Gets next item for an infolist.
+ * Get next item for an infolist.
  *
- * If pointer is NULL, returns first item of infolist.
+ * If pointer is NULL, return first item of infolist.
  */
 
 struct t_infolist_item *
@@ -343,9 +343,9 @@ infolist_next (struct t_infolist *infolist)
 }
 
 /*
- * Gets previous item for an infolist.
+ * Get previous item for an infolist.
  *
- * If pointer is NULL, returns last item of infolist.
+ * If pointer is NULL, return last item of infolist.
  */
 
 struct t_infolist_item *
@@ -364,7 +364,7 @@ infolist_prev (struct t_infolist *infolist)
 }
 
 /*
- * Resets pointer to current item in infolist.
+ * Reset pointer to current item in infolist.
  */
 
 void
@@ -377,7 +377,7 @@ infolist_reset_item_cursor (struct t_infolist *infolist)
 }
 
 /*
- * Searches for a variable in current infolist item.
+ * Search for a variable in current infolist item.
  */
 
 struct t_infolist_var *
@@ -400,7 +400,7 @@ infolist_search_var (struct t_infolist *infolist, const char *name)
 }
 
 /*
- * Gets list of fields for current infolist item.
+ * Get list of fields for current infolist item.
  */
 
 const char *
@@ -434,7 +434,7 @@ infolist_fields (struct t_infolist *infolist)
 }
 
 /*
- * Gets integer value for a variable in current infolist item.
+ * Get integer value for a variable in current infolist item.
  */
 
 int
@@ -462,7 +462,7 @@ infolist_integer (struct t_infolist *infolist, const char *var)
 }
 
 /*
- * Gets string value for a variable in current infolist item.
+ * Get string value for a variable in current infolist item.
  */
 
 const char *
@@ -490,7 +490,7 @@ infolist_string (struct t_infolist *infolist, const char *var)
 }
 
 /*
- * Gets pointer value for a variable in current infolist item.
+ * Get pointer value for a variable in current infolist item.
  */
 
 void *
@@ -518,7 +518,7 @@ infolist_pointer (struct t_infolist *infolist, const char *var)
 }
 
 /*
- * Gets buffer value for a variable in current infolist item.
+ * Get buffer value for a variable in current infolist item.
  *
  * Argument "size" is set with the size of buffer.
  */
@@ -552,7 +552,7 @@ infolist_buffer (struct t_infolist *infolist, const char *var,
 }
 
 /*
- * Gets time value for a variable in current infolist item.
+ * Get time value for a variable in current infolist item.
  */
 
 time_t
@@ -580,7 +580,7 @@ infolist_time (struct t_infolist *infolist, const char *var)
 }
 
 /*
- * Frees a variable in item.
+ * Free a variable in item.
  */
 
 void
@@ -623,7 +623,7 @@ infolist_var_free (struct t_infolist_item *item,
 }
 
 /*
- * Frees an item in infolist.
+ * Free an item in infolist.
  */
 
 void
@@ -662,7 +662,7 @@ infolist_item_free (struct t_infolist *infolist,
 }
 
 /*
- * Frees an infolist.
+ * Free an infolist.
  */
 
 void
@@ -699,7 +699,7 @@ infolist_free (struct t_infolist *infolist)
 }
 
 /*
- * Frees all infolists created by a plugin.
+ * Free all infolists created by a plugin.
  */
 
 void
@@ -718,7 +718,7 @@ infolist_free_all_plugin (struct t_weechat_plugin *plugin)
 }
 
 /*
- * Prints infolists in WeeChat log file (usually for crash dump).
+ * Print infolists in WeeChat log file (usually for crash dump).
  */
 
 void

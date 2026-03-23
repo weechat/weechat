@@ -182,7 +182,7 @@ end:
 }
 
 /*
- * Moves a buffer after a mouse gesture in buflist bar.
+ * Move a buffer after a mouse gesture in buflist bar.
  */
 
 void
@@ -223,7 +223,7 @@ buflist_mouse_move_buffer (const char *key, struct t_gui_buffer *buffer,
 }
 
 /*
- * Switches to previous/next buffer displayed in an item, starting from
+ * Switch to previous/next buffer displayed in an item, starting from
  * current buffer.
  */
 
@@ -433,9 +433,9 @@ buflist_hsignal_cb (const void *pointer, void *data, const char *signal,
 }
 
 /*
- * Initializes mouse.
+ * Initialize mouse.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -458,7 +458,7 @@ buflist_mouse_init (void)
 }
 
 /*
- * Ends mouse.
+ * End mouse.
  */
 
 void

@@ -32,9 +32,9 @@
 
 
 /*
- * Saves xfers info to upgrade file.
+ * Save xfers info to upgrade file.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -48,9 +48,9 @@ xfer_upgrade_save_xfers (struct t_upgrade_file *upgrade_file)
 }
 
 /*
- * Saves upgrade file.
+ * Save upgrade file.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -74,8 +74,7 @@ xfer_upgrade_save (void)
 }
 
 /*
- * Restores buffers callbacks (input and close) for buffers created by xfer
- * plugin.
+ * Restore buffers callbacks (input and close) for buffers created by xfer plugin.
  */
 
 void
@@ -117,7 +116,7 @@ xfer_upgrade_set_buffer_callbacks (void)
 }
 
 /*
- * Reads callback for xfer upgrade file.
+ * Read callback for xfer upgrade file.
  */
 
 int
@@ -138,9 +137,9 @@ xfer_upgrade_read_cb (const void *pointer, void *data,
 }
 
 /*
- * Loads upgrade file.
+ * Load upgrade file.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */

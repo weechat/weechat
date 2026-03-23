@@ -41,7 +41,7 @@
 
 
 /*
- * Returns description of hook.
+ * Return description of hook.
  *
  * Note: result must be freed after use.
  */
@@ -73,9 +73,9 @@ hook_print_get_description (struct t_hook *hook)
 }
 
 /*
- * Hooks a message printed by WeeChat.
+ * Hook a message printed by WeeChat.
  *
- * Returns pointer to new hook, NULL if error.
+ * Return pointer to new hook, NULL if error.
  */
 
 struct t_hook *
@@ -118,7 +118,7 @@ hook_print (struct t_weechat_plugin *plugin, struct t_gui_buffer *buffer,
 }
 
 /*
- * Executes a print hook.
+ * Execute a print hook.
  */
 
 void
@@ -190,7 +190,7 @@ hook_print_exec (struct t_gui_buffer *buffer, struct t_gui_line *line)
 }
 
 /*
- * Frees data in a print hook.
+ * Free data in a print hook.
  */
 
 void
@@ -215,7 +215,7 @@ hook_print_free_data (struct t_hook *hook)
 }
 
 /*
- * Returns hdata for print hook.
+ * Return hdata for print hook.
  */
 
 struct t_hdata *
@@ -242,9 +242,9 @@ hook_print_hdata_hook_print_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds print hook data in the infolist item.
+ * Add print hook data in the infolist item.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -273,7 +273,7 @@ hook_print_add_to_infolist (struct t_infolist_item *item,
 }
 
 /*
- * Prints print hook data in WeeChat log file (usually for crash dump).
+ * Print print hook data in WeeChat log file (usually for crash dump).
  */
 
 void

@@ -35,7 +35,7 @@ TEST_GROUP(HookCompletion)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_completion_get_description
  */
 
@@ -45,7 +45,7 @@ TEST(HookCompletion, GetDescription)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_completion
  */
 
@@ -55,7 +55,7 @@ TEST(HookCompletion, Completion)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_completion_exec
  */
 
@@ -65,7 +65,7 @@ TEST(HookCompletion, Exec)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_completion_free_data
  */
 
@@ -75,7 +75,7 @@ TEST(HookCompletion, FreeData)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_completion_add_to_infolist
  */
 
@@ -85,7 +85,7 @@ TEST(HookCompletion, AddToInfolist)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   hook_completion_print_log
  */
 

@@ -98,7 +98,7 @@ xfer_config_refresh_cb (const void *pointer, void *data,
 }
 
 /*
- * Reloads xfer configuration file.
+ * Reload xfer configuration file.
  */
 
 int
@@ -113,9 +113,9 @@ xfer_config_reload (const void *pointer, void *data,
 }
 
 /*
- * Initializes xfer configuration file.
+ * Initialize xfer configuration file.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -417,7 +417,7 @@ xfer_config_init (void)
 }
 
 /*
- * Reads xfer configuration file.
+ * Read xfer configuration file.
  */
 
 int
@@ -427,7 +427,7 @@ xfer_config_read (void)
 }
 
 /*
- * Writes xfer configuration file.
+ * Write xfer configuration file.
  */
 
 int

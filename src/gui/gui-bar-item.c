@@ -77,9 +77,9 @@ struct t_hook *gui_bar_item_timer_hotlist_resort = NULL;
 
 
 /*
- * Checks if a bar item pointer is valid.
+ * Check if a bar item pointer is valid.
  *
- * Returns:
+ * Return:
  *   1: bar item exists
  *   0: bar item does not exist
  */
@@ -104,9 +104,9 @@ gui_bar_item_valid (struct t_gui_bar_item *bar_item)
 }
 
 /*
- * Searches for a default bar item by name.
+ * Search for a default bar item by name.
  *
- * Returns index in gui_bar_item_names[], -1 if not found.
+ * Return index in gui_bar_item_names[], -1 if not found.
  */
 
 int
@@ -128,7 +128,7 @@ gui_bar_item_search_default (const char *item_name)
 }
 
 /*
- * Searches for a bar item by name.
+ * Search for a bar item by name.
  */
 
 struct t_gui_bar_item *
@@ -150,12 +150,12 @@ gui_bar_item_search (const char *item_name)
 }
 
 /*
- * Searches for a bar item in a plugin.
+ * Search for a bar item in a plugin.
  *
- * If exact_plugin == 1, then searches only for this plugin, otherwise, if
+ * If exact_plugin == 1, search only for this plugin, otherwise, if
  * plugin is not found, function may return item for core (plugin == NULL).
  *
- * Returns pointer to bar item found, NULL if not found.
+ * Return pointer to bar item found, NULL if not found.
  */
 
 struct t_gui_bar_item *
@@ -197,9 +197,9 @@ gui_bar_item_search_with_plugin (struct t_weechat_plugin *plugin,
 /*
  * Check if an item is used in a bar.
  *
- * If partial_name == 1, then searches if an item begins with "item_name".
+ * If partial_name == 1, search if an item begins with "item_name".
  *
- * Returns:
+ * Return:
  *   1: bar item is used in the bar
  *   0: bar item is not used in the bar
  */
@@ -239,12 +239,11 @@ gui_bar_item_used_in_bar (struct t_gui_bar *bar, const char *item_name,
 }
 
 /*
- * Checks if a bar item is used in at least one bar.
+ * Check if a bar item is used in at least one bar.
  *
- * If partial_name == 1, then searches a bar that contains item beginning with
- * "item_name".
+ * If partial_name == 1, search a bar that contains item beginning with "item_name".
  *
- * Returns:
+ * Return:
  *   1: bar item is used in at least one bar
  *   0: bar item is not used in a bar
  */
@@ -295,7 +294,7 @@ gui_bar_item_used_in_at_least_one_bar (const char *item_name, int partial_name,
 }
 
 /*
- * Gets buffer, prefix, name and suffix for an item.
+ * Get buffer, prefix, name and suffix for an item.
  *
  * Examples:
  *   - item name "[time]" returns:
@@ -372,14 +371,14 @@ gui_bar_item_get_vars (const char *item_name,
 }
 
 /*
- * Returns value of a bar item.
+ * Return value of a bar item.
  *
- * Run callbacks if a name exists, then concatenates:
+ * Run callbacks if a name exists, then concatenate:
  * prefix + return of callback + suffix
  *
  * For example:  if item == "[time]"
- *               returns: color(delimiter) + "[" +
- *                        (value of item "time") + color(delimiter) + "]"
+ *               return: color(delimiter) + "[" +
+ *                       (value of item "time") + color(delimiter) + "]"
  *
  * Note: result must be freed after use.
  */
@@ -539,7 +538,7 @@ gui_bar_item_get_value (struct t_gui_bar *bar, struct t_gui_window *window,
 }
 
 /*
- * Counts number of lines in item.
+ * Count number of lines in item.
  */
 
 int
@@ -563,9 +562,9 @@ gui_bar_item_count_lines (char *string)
 }
 
 /*
- * Creates a new bar item.
+ * Create a new bar item.
  *
- * Returns pointer to new bar item, NULL if not found.
+ * Return pointer to new bar item, NULL if not found.
  */
 
 struct t_gui_bar_item *
@@ -615,7 +614,7 @@ gui_bar_item_new (struct t_weechat_plugin *plugin, const char *name,
 }
 
 /*
- * Updates an item on all bars displayed on screen.
+ * Update an item on all bars displayed on screen.
  */
 
 void
@@ -707,7 +706,7 @@ gui_bar_item_update (const char *item_name)
 }
 
 /*
- * Deletes a bar item.
+ * Delete a bar item.
  */
 
 void
@@ -737,7 +736,7 @@ gui_bar_item_free (struct t_gui_bar_item *item)
 }
 
 /*
- * Deletes all bar items.
+ * Delete all bar items.
  */
 
 void
@@ -750,7 +749,7 @@ gui_bar_item_free_all (void)
 }
 
 /*
- * Deletes all bar items for a plugin.
+ * Delete all bar items for a plugin.
  */
 
 void
@@ -2285,7 +2284,7 @@ gui_bar_item_timer_hotlist_resort_cb (const void *pointer, void *data,
     return WEECHAT_RC_OK;
 }
 /*
- * Callback when a signal is received: rebuilds an item.
+ * Callback when a signal is received: rebuild an item.
  */
 
 int
@@ -2322,7 +2321,7 @@ gui_bar_item_signal_cb (const void *pointer, void *data,
 }
 
 /*
- * Hooks a signal to update bar items.
+ * Hook a signal to update bar items.
  */
 
 void
@@ -2342,7 +2341,7 @@ gui_bar_item_hook_signal (const char *signal, const char *item)
 }
 
 /*
- * Initializes default items in WeeChat.
+ * Initialize default items in WeeChat.
  */
 
 void
@@ -2554,7 +2553,7 @@ gui_bar_item_init (void)
 }
 
 /*
- * Removes bar items and hooks.
+ * Remove bar items and hooks.
  */
 
 void
@@ -2609,9 +2608,9 @@ gui_bar_item_hdata_bar_item_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds a bar item in an infolist.
+ * Add a bar item in an infolist.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -2644,7 +2643,7 @@ gui_bar_item_add_to_infolist (struct t_infolist *infolist,
 }
 
 /*
- * Prints bar items infos in WeeChat log file (usually for crash dump).
+ * Print bar items infos in WeeChat log file (usually for crash dump).
  */
 
 void

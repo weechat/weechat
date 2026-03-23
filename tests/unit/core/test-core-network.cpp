@@ -35,7 +35,7 @@ TEST_GROUP(CoreNetwork)
 };
 
 /*
- * Tests functions:
+ * Test functions:
  *   network_init_gcrypt
  */
 
@@ -45,7 +45,7 @@ TEST(CoreNetwork, InitGcrypt)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   network_load_system_ca_file
  */
 
@@ -55,7 +55,7 @@ TEST(CoreNetwork, LoadSystemCaFile)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   network_load_user_ca_files
  */
 
@@ -65,7 +65,7 @@ TEST(CoreNetwork, LoadUserCaFiles)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   network_load_ca_files
  */
 
@@ -75,7 +75,7 @@ TEST(CoreNetwork, LoadCaFiles)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   network_reload_ca_files
  */
 
@@ -85,7 +85,7 @@ TEST(CoreNetwork, ReloadCaFiles)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   network_init_gnutls
  */
 
@@ -95,7 +95,7 @@ TEST(CoreNetwork, InitGnutls)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   network_end
  */
 
@@ -105,7 +105,7 @@ TEST(CoreNetwork, End)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   network_is_ip_address
  */
 
@@ -134,7 +134,7 @@ TEST(CoreNetwork, IsIpAddress)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   network_send_with_retry
  */
 
@@ -144,7 +144,7 @@ TEST(CoreNetwork, SendWithRetry)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   network_recv_with_retry
  */
 
@@ -154,7 +154,7 @@ TEST(CoreNetwork, RecvWithRetry)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   network_pass_httpproxy
  */
 
@@ -164,7 +164,7 @@ TEST(CoreNetwork, PassHttpproxy)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   network_resolve
  */
 
@@ -174,7 +174,7 @@ TEST(CoreNetwork, Resolve)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   network_pass_socks4proxy
  */
 
@@ -184,7 +184,7 @@ TEST(CoreNetwork, PassSock4proxy)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   network_pass_socks5proxy
  */
 
@@ -194,7 +194,7 @@ TEST(CoreNetwork, PassSocks5proxy)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   network_pass_proxy
  */
 
@@ -204,7 +204,7 @@ TEST(CoreNetwork, PassProxy)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   network_connect
  */
 
@@ -214,7 +214,7 @@ TEST(CoreNetwork, Connect)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   network_connect_to
  */
 
@@ -224,7 +224,7 @@ TEST(CoreNetwork, ConnectTo)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   network_connect_child
  */
 
@@ -234,7 +234,7 @@ TEST(CoreNetwork, ConnectChild)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   network_connect_child_timer_cb
  */
 
@@ -244,7 +244,7 @@ TEST(CoreNetwork, ConnectChildTimerCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   network_connect_gnutls_handshake_fd_cb
  */
 
@@ -254,7 +254,7 @@ TEST(CoreNetwork, ConnectGnutlsHandshakeFdCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   network_connect_gnutls_handshake_timer_cb
  */
 
@@ -264,7 +264,7 @@ TEST(CoreNetwork, ConnectGnutlsHandshakeTimerCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   network_connect_child_read_cb
  */
 
@@ -274,7 +274,7 @@ TEST(CoreNetwork, ConnectChildReadCb)
 }
 
 /*
- * Tests functions:
+ * Test functions:
  *   network_connect_with_fork
  */
 

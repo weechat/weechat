@@ -253,9 +253,9 @@ struct t_irc_redirect_pattern irc_redirect_patterns_default[] =
 
 
 /*
- * Searches for a redirect pattern in list of patterns.
+ * Search for a redirect pattern in list of patterns.
  *
- * Returns pointer to redirect pattern found, NULL if not found.
+ * Return pointer to redirect pattern found, NULL if not found.
  */
 
 struct t_irc_redirect_pattern *
@@ -278,9 +278,9 @@ irc_redirect_pattern_search (const char *name)
 }
 
 /*
- * Creates a new redirect pattern.
+ * Create a new redirect pattern.
  *
- * Returns pointer to new redirect pattern, NULL if error.
+ * Return pointer to new redirect pattern, NULL if error.
  */
 
 struct t_irc_redirect_pattern *
@@ -338,7 +338,7 @@ irc_redirect_pattern_new (const char *name, int temp_pattern, int timeout,
 }
 
 /*
- * Frees a redirect pattern and removes it from list.
+ * Free a redirect pattern and removes it from list.
  */
 
 void
@@ -375,7 +375,7 @@ irc_redirect_pattern_free (struct t_irc_redirect_pattern *redirect_pattern)
 }
 
 /*
- * Frees all redirect patterns.
+ * Free all redirect patterns.
  */
 
 void
@@ -388,10 +388,10 @@ irc_redirect_pattern_free_all (void)
 }
 
 /*
- * Creates a new redirect for a command on a server (with start/stop/extra
+ * Create a new redirect for a command on a server (with start/stop/extra
  * commands in arguments).
  *
- * Returns pointer to new redirect, NULL if error.
+ * Return pointer to new redirect, NULL if error.
  */
 
 struct t_irc_redirect *
@@ -514,9 +514,9 @@ irc_redirect_new_with_commands (struct t_irc_server *server,
 }
 
 /*
- * Creates a new redirect for a command on a server.
+ * Create a new redirect for a command on a server.
  *
- * Returns pointer to new redirect, NULL if error.
+ * Return pointer to new redirect, NULL if error.
  */
 
 struct t_irc_redirect *
@@ -584,9 +584,9 @@ irc_redirect_new (struct t_irc_server *server,
 }
 
 /*
- * Searches for first redirect available for server.
+ * Search for first redirect available for server.
  *
- * Returns pointer to redirect found, NULL if not found.
+ * Return pointer to redirect found, NULL if not found.
  */
 
 struct t_irc_redirect *
@@ -609,7 +609,7 @@ irc_redirect_search_available (struct t_irc_server *server)
 }
 
 /*
- * Initializes a redirect with IRC command sent to server.
+ * Initialize a redirect with IRC command sent to server.
  */
 
 void
@@ -649,9 +649,9 @@ irc_redirect_init_command (struct t_irc_redirect *redirect,
 }
 
 /*
- * Checks if a message matches hashtable with commands.
+ * Check if a message matches hashtable with commands.
  *
- * Returns:
+ * Return:
  *   1: message matches hashtable
  *   0: message does not match hashtable
  */
@@ -685,7 +685,7 @@ irc_redirect_message_match_hash (struct t_irc_redirect *redirect,
 }
 
 /*
- * Adds a message to redirect output.
+ * Add a message to redirect output.
  */
 
 void
@@ -729,7 +729,7 @@ irc_redirect_message_add (struct t_irc_redirect *redirect, const char *message,
 }
 
 /*
- * Ends a redirection: sends data to callback and frees redirect (if count has
+ * End a redirection: sends data to callback and frees redirect (if count has
  * been reached).
  */
 
@@ -788,10 +788,9 @@ irc_redirect_stop (struct t_irc_redirect *redirect, const char *error)
 }
 
 /*
- * Tries to redirect a received message (from IRC server) to a redirect in
- * server.
+ * Try to redirect a received message (from IRC server) to a redirect in server.
  *
- * Returns:
+ * Return:
  *   1: message has been redirected (irc plugin will discard message)
  *   0: no matching redirect was found
  */
@@ -930,7 +929,7 @@ end:
 }
 
 /*
- * Frees a redirect and removes it from list.
+ * Free a redirect and removes it from list.
  */
 
 void
@@ -988,7 +987,7 @@ irc_redirect_free (struct t_irc_redirect *redirect)
 }
 
 /*
- * Frees all redirects in list.
+ * Free all redirects in list.
  */
 
 void
@@ -1001,7 +1000,7 @@ irc_redirect_free_all (struct t_irc_server *server)
 }
 
 /*
- * Returns hdata for redirect pattern.
+ * Return hdata for redirect pattern.
  */
 
 struct t_hdata *
@@ -1033,7 +1032,7 @@ irc_redirect_hdata_redirect_pattern_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns hdata for redirect.
+ * Return hdata for redirect.
  */
 
 struct t_hdata *
@@ -1075,9 +1074,9 @@ irc_redirect_hdata_redirect_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds a redirect pattern in an infolist.
+ * Add a redirect pattern in an infolist.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -1112,9 +1111,9 @@ irc_redirect_pattern_add_to_infolist (struct t_infolist *infolist,
 }
 
 /*
- * Adds a redirect in an infolist.
+ * Add a redirect in an infolist.
  *
- * Returns:
+ * Return:
  *   1: OK
  *   0: error
  */
@@ -1175,7 +1174,7 @@ irc_redirect_add_to_infolist (struct t_infolist *infolist,
 }
 
 /*
- * Prints redirect infos in WeeChat log file (usually for crash dump).
+ * Print redirect infos in WeeChat log file (usually for crash dump).
  */
 
 void
@@ -1200,7 +1199,7 @@ irc_redirect_pattern_print_log (void)
 }
 
 /*
- * Prints redirect infos in WeeChat log file (usually for crash dump).
+ * Print redirect infos in WeeChat log file (usually for crash dump).
  */
 
 void
@@ -1389,7 +1388,7 @@ irc_redirect_command_hsignal_cb (const void *pointer, void *data,
 }
 
 /*
- * Creates default redirect patterns.
+ * Create default redirect patterns.
  */
 
 void
@@ -1409,7 +1408,7 @@ irc_redirect_init (void)
 }
 
 /*
- * Frees all redirect patterns.
+ * Free all redirect patterns.
  */
 
 void

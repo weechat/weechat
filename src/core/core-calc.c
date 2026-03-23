@@ -60,7 +60,7 @@ calc_list_free_cb (void *data, struct t_arraylist *arraylist, void *pointer)
 }
 
 /*
- * Returns the precedence of an operator:
+ * Return the precedence of an operator:
  *   - '*' and '/': 2
  *   - '+' and '-': 1
  *   - any other: 0
@@ -91,7 +91,7 @@ calc_operator_precedence (const char *oper)
 }
 
 /*
- * Pops an integer value from the stack of values.
+ * Pop an integer value from the stack of values.
  */
 
 double
@@ -117,7 +117,7 @@ calc_pop_value (struct t_arraylist *list_values)
 }
 
 /*
- * Calculates result of an operation using an operator and two values.
+ * Calculate result of an operation using an operator and two values.
  */
 
 double
@@ -151,7 +151,7 @@ calc_operation (const char *oper, double value1, double value2)
 }
 
 /*
- * Calculates result of an operation using the operator on the operators stack
+ * Calculate result of an operation using the operator on the operators stack
  * and the two values on the values stack.
  *
  * The result is pushed on values stack.
@@ -187,7 +187,7 @@ calc_operation_stacks (struct t_arraylist *list_values,
 }
 
 /*
- * Sanitizes a decimal number: removes any thousands separator and replaces
+ * Sanitize a decimal number: remove any thousands separator and replace
  * the decimal separator by a dot.
  *
  * The string is updated in-place, the result has always a length shorter or
@@ -203,7 +203,7 @@ calc_operation_stacks (struct t_arraylist *list_values,
  *   1,234,567.89  -->  1234567.89
  *   -2.345,67     -->  -2345.67
  *
- * Returns:
+ * Return:
  *   1: the number has decimal part
  *   0: the number has no decimal part
  */
@@ -279,7 +279,7 @@ calc_sanitize_decimal_number (char *string)
 }
 
 /*
- * Formats the result as a decimal number (locale independent): remove any
+ * Format the result as a decimal number (locale independent): remove any
  * extra "0" at the and the decimal point if needed.
  */
 
@@ -314,7 +314,7 @@ calc_format_result (double value, char *result, int max_size)
 }
 
 /*
- * Calculates an expression, which can contain:
+ * Calculate an expression, which can contain:
  *   - integer and decimal numbers (ie 2 or 2.5)
  *   - operators:
  *        +: addition
