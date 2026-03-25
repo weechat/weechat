@@ -24,7 +24,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2026-04-05 21:48+0200\n"
-"PO-Revision-Date: 2026-03-24 23:00+0100\n"
+"PO-Revision-Date: 2026-04-15 13:19+0200\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: tr\n"
@@ -3308,16 +3308,12 @@ msgstr ""
 msgid "raw[set]: set a value for a proxy property"
 msgstr ""
 
-#, fuzzy
-#| msgid ""
-#| "option: option to change (for options list, look at /set weechat.bar."
-#| "<barname>.*)"
 msgid ""
 "option: option to change (for options list, look at /set weechat.proxy."
 "<proxy_name>.*)"
 msgstr ""
-"seçenek: değiştirilecek seçenek (seçenekler listesi için /set "
-"weechat.bar<çubukadı>.* komutunu çalıştırın)"
+"seçenek: değiştirilecek seçenek (seçenekler listesi için /set weechat.proxy."
+"<vekil_adı>.* bölümüne bakın)"
 
 msgid "  add a http proxy, running on local host, port 8888:"
 msgstr ""
@@ -4194,18 +4190,14 @@ msgstr ""
 msgid "names of filters"
 msgstr "süzgeçlerin adları"
 
-#, fuzzy
-#| msgid "names of filters"
 msgid "names of disabled filters"
-msgstr "süzgeçlerin adları"
+msgstr "devre dışı bırakılmış süzgeçlerin adları"
 
-#, fuzzy
-#| msgid "names of filters"
 msgid "names of enabled filters"
-msgstr "süzgeçlerin adları"
+msgstr "etkinleştirilmiş süzgeçlerin adları"
 
 msgid "hook types"
-msgstr ""
+msgstr "kanca türleri"
 
 msgid ""
 "commands (weechat and plugins); optional argument: prefix to add before the "
@@ -6012,12 +6004,10 @@ msgstr "ONULMAZ: Yapılandırma seçenekleri ilklendirilirken hata"
 #. TRANSLATORS: "%s %s" after "compiled on" is date and time
 #, c-format
 msgid "WeeChat %s, compiled on %s %s\n"
-msgstr ""
+msgstr "WeeChat %s, derlenme: %s %s\n"
 
-#, fuzzy
-#| msgid "(old options?)"
 msgid "Build options:\n"
-msgstr "(eski seçenekler?)"
+msgstr "Yapı seçenekleri:\n"
 
 msgid "Windows tree:"
 msgstr "Pencereler ağacı:"
@@ -6029,12 +6019,10 @@ msgid "Memory usage not available (function \"mallinfo\" not found)"
 msgstr "Bellek kullanımı mevcut değil (\"mallinfo\" işlevi bulunamadı)"
 
 msgid "not initialized"
-msgstr ""
+msgstr "ilklendirilmedi"
 
-#, fuzzy
-#| msgid "no variable"
 msgid "not available"
-msgstr "değişken yok"
+msgstr "kullanılamıyor"
 
 msgid "TEMPORARY, deleted on exit"
 msgstr "GEÇİCİ, çıkışta silinir"
@@ -6143,13 +6131,13 @@ msgid "Constants"
 msgstr "Sabitler"
 
 msgid "Rank"
-msgstr ""
+msgstr "Derece"
 
 msgid "Priority"
-msgstr ""
+msgstr "Öncelik"
 
 msgid "File"
-msgstr ""
+msgstr "Dosya"
 
 #, fuzzy
 #| msgid "Constants"
@@ -6308,10 +6296,8 @@ msgstr ""
 "(parolayı atlamak için boşluk düğmesine bir kez basın; ancak bu tüm güvenli "
 "veriyi DEVRE DIŞI bırakacaktır!)"
 
-#, fuzzy
-#| msgid "(press ctrl-C to exit WeeChat now)"
 msgid "(press ctrl-c to exit WeeChat now)"
-msgstr "(WeeChat'ten şimdi çıkmak için ctrl-C düğmesine basın)"
+msgstr "(WeeChat'ten şimdi çıkmak için ctrl-c yapın)"
 
 msgid ""
 "To recover your secured data, you can use /secure decrypt (see /help secure)"
@@ -6368,10 +6354,9 @@ msgid ""
 "version is too old?)"
 msgstr ""
 
-#, fuzzy, c-format
-#| msgid "%sError encrypting data \"%s\" (%d)"
+#, c-format
 msgid "%sFailed to encrypt data \"%s\" (%d)"
-msgstr "%s\"%s\" verisi şifrelenirken hata (%d)"
+msgstr "%s\"%s\" verisi şifrelenemedi (%d)"
 
 msgid ""
 "cipher used to crypt data (the number after algorithm is the size of the key "
@@ -6451,25 +6436,19 @@ msgid "%sUnknown resource limit \"%s\" (see /help weechat.startup.sys_rlimit)"
 msgstr ""
 "%sBilinmeyen kaynak limiti \"%s\" (bkz. /help weechat.startup.sys_rlimit)"
 
-#, fuzzy
-#| msgid "Memory usage (see \"man mallinfo\" for help):"
 msgid "Resource limits (see \"man getrlimit\" for help):"
-msgstr "Bellek kullanımı (yardım için bkz. \"man mallinfo\"):"
+msgstr "Özkaynak sınırları (yardım için bkz. \"man getrlimit\"):"
 
-#, fuzzy, c-format
-#| msgid "%sUnable to set resource limit \"%s\" to %s: error %d %s"
+#, c-format
 msgid "%sUnable to get resource limit \"%s\": error %d %s"
-msgstr "%sKaynak limiti \"%s\", %s olarak ayarlanamadı: Hata %d %s"
+msgstr "%sÖzkaynak sınırı \"%s\" alınamıyor: Hata %d %s"
 
-#, fuzzy, c-format
-#| msgid "%s: error: dictionary \"%s\" is not available on your system"
+#, c-format
 msgid "System function \"%s\" is not available"
-msgstr "%s: Hata: \"%s\" sözlüğü sisteminizde yok"
+msgstr "Sistem işlevi \"%s\" kullanılabilir değil"
 
-#, fuzzy
-#| msgid "Memory usage (see \"man mallinfo\" for help):"
 msgid "Resource usage (see \"man getrusage\" for help):"
-msgstr "Bellek kullanımı (yardım için bkz. \"man mallinfo\"):"
+msgstr "Özkaynak kullanımı (yardım için bkz. \"man getrusage\"):"
 
 #, c-format
 msgid "%sError upgrading WeeChat with file \"%s\":"
@@ -6550,95 +6529,84 @@ msgid "Upgrade done (%.02fs)"
 msgstr "Yükseltme bitti (%.02fs)"
 
 msgid "invalid URL"
-msgstr ""
+msgstr "geçersiz URL"
 
 msgid "not enough memory"
 msgstr "yetersiz bellek"
 
-#, fuzzy, c-format
-#| msgid "%sFilter \"%s\" not found"
+#, c-format
 msgid "file \"%s\" not found"
-msgstr "%s\"%s\" süzgeci bulunamadı"
+msgstr "\"%s\" dosyası bulunamadı"
 
-#, fuzzy, c-format
-#| msgid "%sCannot create file \"%s\""
+#, c-format
 msgid "cannot write file \"%s\""
-msgstr "%s\"%s\" dosyası oluşturulamıyor"
+msgstr "\"%s\" dosyası yazılamıyor"
 
-#, fuzzy
-#| msgid "fork error"
 msgid "transfer error"
-msgstr "çatal hatası"
+msgstr "aktarım hatası"
 
 #, c-format
 msgid "curl error %d (%s) (URL: \"%s\")\n"
 msgstr "curl hatası %d (%s) (URL: \"%s\")\n"
 
-#, fuzzy, c-format
-#| msgid "curl error %d (%s) (URL: \"%s\")\n"
+#, c-format
 msgid "transfer stopped (URL: \"%s\")\n"
-msgstr "curl hatası %d (%s) (URL: \"%s\")\n"
+msgstr "aktarım durduruldu (URL: \"%s\")\n"
 
-#, fuzzy, c-format
-#| msgid "End of command '%s', timeout reached (%.1fs)"
+#, c-format
 msgid "transfer timeout reached (%.3fs) (URL: \"%s\")\n"
-msgstr "'%s' komutu sonu, zaman aşımına ulaşıldı (%.1fs)"
+msgstr "aktarım zaman aşımına ulaşıldı (%.3fs) (URL: \"%s\")\n"
 
 #, c-format
 msgid "%sAnother command \"%s\" already exists for plugin \"%s\""
 msgstr "%sŞu eklenti için başka bir komut (\"%s\") halihazırda var: \"%s\""
 
-#, fuzzy, c-format
-#| msgid "%sUnknown command \"%s\" (type /help for help)"
+#, c-format
 msgid ""
 "%sUnknown command \"%s\" (commands are case-sensitive, type /help for help), "
 "commands with similar name: %s"
-msgstr "%s Bilinmeyen komut \"%s\" (yardım için /help yazın)"
+msgstr ""
+"%sBilinmeyen komut \"%s\" (komutlar BÜYÜK/küçük harf duyarlıdır; yardım "
+"için /help yazın); benzer adlı komutlar: %s"
 
-#, fuzzy, c-format
-#| msgid "%sUnknown command \"%s\" (type /help for help)"
+#, c-format
 msgid ""
 "%sUnknown command \"%s\" (type /help for help), commands with similar name: "
 "%s"
-msgstr "%s Bilinmeyen komut \"%s\" (yardım için /help yazın)"
+msgstr ""
+"%sBilinmeyen komut \"%s\" (yardım için /help yazın); benzer adlı komutlar: %s"
 
 #, c-format
 msgid "%sBad file descriptor (%d) used in hook_fd"
 msgstr "%sHatalı dosya açıklayıcısı (%d) hook_fd içinde kullanılmış"
 
-#, fuzzy, c-format
-#| msgid "End of command '%s', timeout reached (%.1fs)"
+#, c-format
 msgid "End of command '%s', timeout reached (%.3fs)"
-msgstr "'%s' komutu sonu, zaman aşımına ulaşıldı (%.1fs)"
+msgstr "\"%s\" komutunun sonu; zaman aşımına ulaşıldı (%.3fs)"
 
 #, c-format
 msgid "System clock skew detected (%+ld seconds), reinitializing all timers"
 msgstr ""
 "Sistem saati hatalı (%+ld saniye), tüm zamanlayıcılar yeniden başlatılıyor"
 
-#, fuzzy, c-format
-#| msgid "curl error %d (%s) (URL: \"%s\")\n"
+#, c-format
 msgid "%sURL transfer error: %s (URL: \"%s\")"
-msgstr "curl hatası %d (%s) (URL: \"%s\")\n"
+msgstr "%sURL aktarım hatası: %s (URL: \"%s\")"
 
-#, fuzzy, c-format
-#| msgid "End of command '%s', timeout reached (%.1fs)"
+#, c-format
 msgid "End of URL transfer '%s', timeout reached (%.3fs)"
-msgstr "'%s' komutu sonu, zaman aşımına ulaşıldı (%.1fs)"
+msgstr "\"%s\" URL aktarımının sonu; zaman aşımına ulaşıldı (%.3fs)"
 
 #, c-format
 msgid "%sError running thread in hook_url: %s (URL: \"%s\")"
-msgstr ""
+msgstr "%shook_url içinde iş parçacığı çalıştırılırken hata: %s (URL: \"%s\")"
 
-#, fuzzy, c-format
-#| msgid "End of command '%s', timeout reached (%.1fs)"
+#, c-format
 msgid "End of URL transfer '%s', transfer stopped"
-msgstr "'%s' komutu sonu, zaman aşımına ulaşıldı (%.1fs)"
+msgstr "\"%s\" URL aktarımının sonu; aktarım durduruldu"
 
-#, fuzzy
-#| msgid "WeeChat is running in headless mode (Ctrl-C to quit)."
 msgid "WeeChat is running in headless mode (ctrl-c to quit)."
-msgstr "WeeChat başsız kipte çalışıyor (çıkmak için Ctrl-C)."
+msgstr "WeeChat başsız kipte çalışıyor (çıkmak için ctrl-c yapın)."
 
 msgid ""
 "Welcome to WeeChat!\n"
@@ -6737,7 +6705,7 @@ msgid "Nick colors:"
 msgstr "Takma ad renkleri:"
 
 msgid "Syntax highlighting colors in evaluated strings:"
-msgstr ""
+msgstr "Değerlendirilen dizilerdeki sözdizim vurgulama renkleri:"
 
 msgid "Color aliases:"
 msgstr "Renk armaları:"
@@ -6781,35 +6749,30 @@ msgstr "çubuk ögesinin içeriği (değerlendirilir, bkz. /help eval)"
 #, c-format
 msgid "debug: long callback: bar: %s, item: %s, plugin: %s, time elapsed: %s"
 msgstr ""
+"hata ayıkla: uzun geri çağrı: çubuk: %s, öge: %s, eklenti: %s, geçen süre: %s"
 
-#, fuzzy, c-format
-#| msgid "%sPaste %d line? [ctrl-Y] Yes [ctrl-N] No"
-#| msgid_plural "%sPaste %d lines? [ctrl-Y] Yes [ctrl-N] No"
+#, c-format
 msgid "%sPaste %d line? [ctrl-y] Yes [ctrl-n] No"
 msgid_plural "%sPaste %d lines? [ctrl-y] Yes [ctrl-n] No"
-msgstr[0] "%s%d satır yapıştırılsın mı? [ctrl-Y] Evet [ctrl-N] Hayır"
-msgstr[1] "%s%d satır yapıştırılsın mı? [ctrl-Y] Evet [ctrl-N] Hayır"
+msgstr[0] "%s%d satır yapıştırılsın mı? [ctrl-y] Evet [ctrl-n] Hayır"
+msgstr[1] "%s%d satır yapıştırılsın mı? [ctrl-y] Evet [ctrl-n] Hayır"
 
 #. TRANSLATORS: search in "local" history
 msgid "local"
-msgstr ""
+msgstr "yerel"
 
 #. TRANSLATORS: search in "global" history
 msgid "global"
-msgstr ""
+msgstr "global"
 
-#, fuzzy
-#| msgid "Search"
 msgid "Search lines"
-msgstr "Arama"
+msgstr "Satırlar ara"
 
-#, fuzzy
-#| msgid "default command:"
 msgid "Search command"
-msgstr "öntanımlı komut:"
+msgstr "Arama komutu"
 
 msgid "keyboard and mouse debug ('q' to quit debug mode)"
-msgstr ""
+msgstr "klavye ve fare hata ayıklaması (bu kipten çıkmak için \"q\"ya basın)"
 
 #, c-format
 msgid "%s-MORE(%d)-"
@@ -6968,10 +6931,9 @@ msgstr ""
 msgid "New key binding (context \"%s\"): %s%s => %s%s"
 msgstr "Yeni düğme bağıntısı (bağlam: \"%s\"): %s%s => %s%s"
 
-#, fuzzy, c-format
-#| msgid "%sUnable to bind key \"%s\""
+#, c-format
 msgid "%sUnable to bind key \"%s\" in context \"%s\" (see /help key)"
-msgstr "%s\"%s\" düğmesi bağlanamıyor"
+msgstr "%s\"%s\" düğmesi, \"%s\" bağlamında bağıntılanamıyor (bkz. /help key)"
 
 #, c-format
 msgid ""
@@ -6988,6 +6950,8 @@ msgid ""
 "%sWarning: key \"%s\" seems either a raw code or invalid, it may not work "
 "(see /help key)"
 msgstr ""
+"%sUyarı: \"%s\" düğmesi ya bir ham kod ya da geçersiz, çalışmayabilir (bkz. /"
+"help key)"
 
 #, c-format
 msgid "Key \"%s\" unbound (context: \"%s\")"
@@ -7008,16 +6972,14 @@ msgstr "hsignal gönderiliyor: \"%s\""
 msgid "Executing command: \"%s\" on buffer \"%s\""
 msgstr "Komut yürütülüyor: \"%s\", \"%s\" arabelleğinde"
 
-#, fuzzy
-#| msgid "list of key bindings"
 msgid "no key binding"
-msgstr "düğme bağıntılarının listesi"
+msgstr "düğme bağıntısı yok"
 
 msgid "debug:"
-msgstr ""
+msgstr "hata ayıkla:"
 
 msgid "mouse"
-msgstr ""
+msgstr "fare"
 
 #, c-format
 msgid "Debug enabled for mouse (%s)"
@@ -7030,15 +6992,13 @@ msgstr "Fare için hata ayıklaması devre dışı"
 msgid "%s%s: error creating alias \"%s\" => \"%s\""
 msgstr "%s%s: \"%s\" => \"%s\" arması oluşturulurken hata"
 
-#, fuzzy, c-format
-#| msgid "Alias \"%s\" => \"%s\" created"
+#, c-format
 msgid "Alias updated: \"%s\" => \"%s\""
-msgstr "\"%s\" => \"%s\" arması oluşturuldu"
+msgstr "Arma güncellendi: \"%s\" => \"%s\""
 
-#, fuzzy, c-format
-#| msgid "Alias \"%s\" => \"%s\" created"
+#, c-format
 msgid "Alias created: \"%s\" => \"%s\""
-msgstr "\"%s\" => \"%s\" arması oluşturuldu"
+msgstr "Arma oluşturuldu: \"%s\" => \"%s\""
 
 #, c-format
 msgid "Aliases with \"%s\":"
@@ -7305,16 +7265,12 @@ msgid ""
 "    - ${number_displayed}: \"1\" if the number is displayed, otherwise \"0\""
 msgstr ""
 
-#, fuzzy
-#| msgid ""
-#| "string displayed to indent channel and private buffers (note: content is "
-#| "evaluated, see /help buflist)"
 msgid ""
 "    - ${indent}: indentation for name (channel, private and list buffers are "
 "indented) (evaluation of option buflist.format.indent)"
 msgstr ""
-"kanal ve özel arabellekleri girintilendirmek için görüntülenen dizi (not: "
-"içerik değerlendirilir, bkz. /help buflist)"
+"    - ${indent}: Ad için girintileme (kanal, özel ve liste arabellekleri "
+"girintilenir) (buflist.format.indent seçeneğinin değerlendirmesi)"
 
 msgid ""
 "    - ${format_nick_prefix}: colored nick prefix for a channel (evaluation "
