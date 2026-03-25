@@ -24,7 +24,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2026-03-21 17:24+0100\n"
-"PO-Revision-Date: 2026-03-16 13:23+0100\n"
+"PO-Revision-Date: 2026-03-24 23:00+0100\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: tr\n"
@@ -34,18 +34,16 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. TRANSLATORS: command line option "-a", "--no-connect"
-#, fuzzy
-#| msgid "%s%s: unable to connect to sender"
 msgid "disable auto-connect to servers at startup"
-msgstr "%s%s: Göndericiye bağlanılamıyor"
+msgstr "başlangıçta sunuculara otomatik bağlanmayı devre dışı bırak"
 
 #. TRANSLATORS: command line option "-c", "--colors"
 msgid "display default colors in terminal and exit"
-msgstr ""
+msgstr "uçbirimde öntanımlı renkleri görüntüle ve çık"
 
 #. TRANSLATORS: only "<path>" may be translated
 msgid "-d, --dir <path>"
-msgstr ""
+msgstr "-d, --dir <yol>"
 
 #. TRANSLATORS: command line option "-d", "--dir <path>"
 msgid ""
@@ -53,94 +51,82 @@ msgid ""
 "by colons (in this order: config, data, state, cache, runtime) (environment "
 "variable WEECHAT_HOME is read if this option is not given)"
 msgstr ""
+"tek bir WeeChat ana dizinini veya iki nokta ile ayrılmış 5 ayrı dizini zorla "
+"(şu sırada: config, daha, state, cache, runtime) (bu seçenek verilmezse "
+"WEECHAT_HOME çevre değişkeni okunur)"
 
 #. TRANSLATORS: command line option "-t", "--temp-dir"
 msgid ""
 "create a temporary WeeChat home directory and delete it on exit "
 "(incompatible with option \"-d\")"
 msgstr ""
+"geçici bir WeeChat ana dizini oluştur ve çıkışta sil (\"-d\" seçeneği ile "
+"uyumsuz)"
 
 #. TRANSLATORS: command line option "-h", "--help"
-#, fuzzy
-#| msgid "display nick change in private"
 msgid "display this help and exit"
-msgstr "takma ad değişikliğini özelde görüntüle"
+msgstr "bu yardımı görüntüle ve çık"
 
 #. TRANSLATORS: command line option "-i", "--build-info"
 msgid "display build information and exit"
-msgstr ""
+msgstr "yapı bilgisini görüntüle ve çık"
 
 #. TRANSLATORS: command line option "-l", "--license"
-#, fuzzy
-#| msgid "display WeeChat logo at startup"
 msgid "display WeeChat license and exit"
-msgstr "başlangıçta WeeChat logosunu görüntüle"
+msgstr "WeeChat lisansını görüntüle ve çık"
 
 #. TRANSLATORS: command line option "-p", "--no-plugin"
-#, fuzzy
-#| msgid "display WeeChat logo at startup"
 msgid "don't load any plugin at startup"
-msgstr "başlangıçta WeeChat logosunu görüntüle"
+msgstr "başlangıçta hiçbir eklentiyi yükleme"
 
 #. TRANSLATORS: only "<plugins>" may be translated
 msgid "-P, --plugins <plugins>"
-msgstr ""
+msgstr "-P, --plugins <eklenti>"
 
 #. TRANSLATORS: command line option "-P", "--plugins <plugins>"
 msgid "load only these plugins at startup (see /help weechat.plugin.autoload)"
-msgstr ""
+msgstr "başlangıçta yalnızca bu üç eklentiyi yükle "
+"(bkz. /help weechat.plugin.autoload)"
 
 #. TRANSLATORS: only "<cmd>" may be translated (please keep it short)
 msgid "-r, --run-command <cmd>"
-msgstr ""
+msgstr "-r, --run-command <komut>"
 
 #. TRANSLATORS: command line option "-r", "--run-command <cmd>"
-#, fuzzy
-#| msgid ""
-#| "command executed when WeeChat starts, after loading plugins; multiple "
-#| "commands can be separated by semicolons (note: commands are evaluated, "
-#| "see /help eval)"
 msgid ""
 "run command(s) after startup; many commands can be separated by semicolons "
 "and are evaluated, this option can be given multiple times"
 msgstr ""
-"WeeChat başladığında ve eklentiler yüklendikten sonra yürütülecek komut; "
-"çoklu komutlar noktalı virgül ile ayrılabilir (not: komutlar "
-"değerlendirilir, bkz. /help eval)"
+"başlangıçtan sonra komut(lar) çalıştır; bırçok komut noktalı virgül ile "
+"ayrılabilir ve değerlendirilirler; bu seçenek birden çok kez verilebilir"
 
 #. TRANSLATORS: command line option "-s", "--no-script"
 msgid "don't load any script at startup"
-msgstr ""
+msgstr "başlangıçta hiçbir betiği yükleme"
 
 #. TRANSLATORS: command line option "--upgrade"
-#, fuzzy
-#| msgid "  silently save WeeChat session at midnight (see /help upgrade):"
 msgid "upgrade WeeChat using session files (see /help upgrade in WeeChat)"
-msgstr "  WeeChat oturumunu geceyarısı sessizce kaydet (bkz. /help upgrade):"
+msgstr "WeeChat'i oturum dosyalarını kullanarak yükselt (bkz. /help upgrade)"
 
 #. TRANSLATORS: command line option "-v", "--version"
-#, fuzzy
-#| msgid "display WeeChat version at startup"
 msgid "display WeeChat version and exit"
-msgstr "başlangıçta WeeChat sürümünü görüntüle"
+msgstr "WeeChat sürümünü görüntüle ve çık"
 
 #. TRANSLATORS: command line option: "plugin" and "option" may be translated
-#, fuzzy
-#| msgid "plugin pointer (optional)"
 msgid "plugin:option"
-msgstr "eklenti işaretçisi (isteğe bağlı)"
+msgstr "eklenti:seçenek"
 
 #. TRANSLATORS: command line option "plugin:option"
 msgid "option for plugin (see man weechat)"
-msgstr ""
+msgstr "eklenti seçeneği (bkz. man weechat)"
 
 #. TRANSLATORS: only "<path>" may be translated
 msgid "--doc-gen <path>"
-msgstr ""
+msgstr "--doc-gen <yol>"
 
 #. TRANSLATORS: command line option "--doc-gen <path>"
 msgid "generate files to build documentation and exit"
-msgstr ""
+msgstr "belgelendirmeyi yapmak için dosyaları üret ve çık"
 
 #. TRANSLATORS: command line option "--daemon"
 msgid ""
@@ -148,7 +134,7 @@ msgid ""
 "by default in headless mode WeeChat is blocking and does not run in "
 "background"
 msgstr ""
-"WeeChat'i arka plan süreci olarak çalıştır (çatal, yeni işlem grubu, "
+"WeeChat'i ardalan süreci olarak çalıştır (çatal, yeni işlem grubu, "
 "açıklayıcılar kapalı); öntanımlı olarak başsız kipte WeeChat engeller ve "
 "arka planda çalışmaz"
 
@@ -162,7 +148,7 @@ msgstr ""
 
 #. TRANSLATORS: command line option "--no-dlclose"
 msgid "do not call function dlclose after plugins are unloaded"
-msgstr "işlev dlclose'u eklenti yüklemesi bittikten sonra çağırmayın"
+msgstr "işlev dlclose'u eklenti yüklemesi bittikten sonra çağırma"
 
 #. TRANSLATORS: command line option "--no-gnutls"
 msgid "disable init/deinit of gnutls"
@@ -1241,16 +1227,12 @@ msgstr "maske: \"*\" jokerine izin verilen ad"
 msgid "raw[set]: set a value for a bar property"
 msgstr "raw[set]: bir çubuk özelliği için değer ayarla"
 
-#, fuzzy
-#| msgid ""
-#| "option: option to change (for options list, look at /set weechat.bar."
-#| "<barname>.*)"
 msgid ""
 "option: option to change (for options list, look at /set weechat.bar."
 "<bar_name>.*)"
 msgstr ""
 "seçenek: değiştirilecek seçenek (seçenekler listesi için /set "
-"weechat.bar<çubukadı>.* komutunu çalıştırın)"
+"weechat.bar<çubuk-adı>.* komutunu çalıştırın)"
 
 msgid "value: new value for option"
 msgstr "değer: seçeneğin yeni değeri"
@@ -1785,14 +1767,12 @@ msgid "evaluate expression"
 msgstr "ifadeyi değerlendir"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
-#, fuzzy
-#| msgid ""
-#| "[-n|-s] [-d] <expression> || [-n] [-d [-d]] -c <expression1> <operator> "
-#| "<expression2>"
 msgid ""
 "[-n|-s] [-e] [-d] <expression> || [-n] [-d [-d]] -c <expression1> <operator> "
 "<expression2>"
-msgstr "[-n|-s] [-d] <ifade> || [-n] [-d] -c <ifade1> <işleç> <ifade2>"
+msgstr ""
+"[-n|-s] [-e] [-d] <ifade> || [-n] [-d [-d]] -c <ifade1> <işleç> "
+"<ifade2>"
 
 msgid "raw[-n]: display result without sending it to buffer (debug mode)"
 msgstr "raw[-n]: Arabelleğe göndermeden sonucu görüntüle (hata ayıklama kipi)"
@@ -1805,7 +1785,7 @@ msgstr ""
 "virgülle ayrılabilir)"
 
 msgid "raw[-e]: evaluate all commands before executing them"
-msgstr ""
+msgstr "raw[-e]: yürütme öncesi tüm komutları değerlendir"
 
 msgid ""
 "raw[-d]: display debug output after evaluation (with two -d: more verbose "
@@ -2390,20 +2370,21 @@ msgid "  filter all IRC join/part/quit messages:"
 msgstr "  tüm IRC katıl/ayrıl/çık iletilerini süz:"
 
 msgid "  filter nicks displayed when joining channels or with /names:"
-msgstr ""
+msgstr "  kanallara katılırken veya /names ile takma adları süz:"
 
 msgid "  filter nick \"toto\" on IRC channel #weechat:"
-msgstr ""
+msgstr "  #weechat IRC kanalında \"toto\" takma adını süz:"
 
 msgid "  filter IRC join/action messages from nick \"toto\":"
-msgstr ""
+msgstr "  \"toto\" takma adından gelen IRC katılma/eylem iletilerini süz:"
 
 msgid "  filter lines containing \"weechat sucks\" on IRC channel #weechat:"
-msgstr ""
+msgstr "  #weechat kanalında \"weechat sucks\" yazan satırları süz:"
 
 msgid ""
 "  filter lines that are strictly equal to \"WeeChat sucks\" on all buffers:"
 msgstr ""
+"  tüm arabelleklerde \"WeeChat sucks\" satırıyla eşdeğer tüm satırları süz:"
 
 msgid "display help about commands and options"
 msgstr "komutlar ve seçenekler hakkında yardım göster"
@@ -2415,10 +2396,11 @@ msgstr "-list|-listfull [<eklenti>...] || <komut> || <seçenek>"
 msgid ""
 "raw[-list]: list commands, by plugin (without argument, this list is "
 "displayed)"
-msgstr ""
+msgstr "raw[-list]: Eklentiye göre komutları listele (argümansız bu liste "
+"görüntülenir)"
 
 msgid "raw[-listfull]: list commands with description, by plugin"
-msgstr ""
+msgstr "raw[-listfull]: Eklentiye göre komutları açıklamalarıyla listele"
 
 msgid "plugin: list commands for this plugin"
 msgstr "eklenti: Bu eklenti için olan komutları listele"
@@ -2450,55 +2432,66 @@ msgid ""
 "add [low|message|private|highlight] || clear [<level>] || remove || restore "
 "[-all]"
 msgstr ""
+"add [low|message|private|highlight] || clear [<düzey>] || remove || restore "
+"[-all]"
 
 msgid ""
 "raw[add]: add current buffer in hotlist (default level: \"low\", conditions "
 "defined in option weechat.look.hotlist_add_conditions are NOT checked)"
 msgstr ""
+"raw[add]: Sıcak listeye geçerli arabelleği ekle (öntanımlı düzey: \"low\", "
+"weechat.look.hotlist_add_conditions içinde tanımlı koşullar DENETLENMEZ)"
 
 msgid "raw[clear]: clear hotlist"
-msgstr ""
+msgstr "raw[clear]: Sıcak listeyi temizle"
 
 msgid ""
 "level: \"lowest\" to clear only lowest level in hotlist, \"highest\" to "
 "clear only highest level in hotlist, or level mask: integer which is a "
 "combination of 1=join/part, 2=message, 4=private, 8=highlight"
 msgstr ""
+"düzey: Sıcak listede yalnızca en düşük düzeyi temizlemek için \"lowest\", "
+"en yüksek düzey için \"highest\" veya düzey maskesi olarak tamsayı; şunların "
+"bir kombinasyonudur: 1=katıl/ayrıl, 2=ileti, 4=özel, 8=vurgula"
 
 msgid "raw[remove]: remove current buffer from hotlist"
-msgstr ""
+msgstr "raw[remove]: Sıcak listeden geçerli arabelleği kaldır"
 
 msgid ""
 "raw[restore]: restore latest hotlist removed in the current buffer (or all "
 "buffers with \"-all\")"
 msgstr ""
+"raw[restore]: Geçerli arabellekten en son kaldırılan sıcak listeyi geri "
+"yükle (veya \"-all\" ile tüm arabellekleri)"
 
 msgid "functions for command line"
-msgstr "komut satırı için fonksiyonlar"
+msgstr "komut satırı için işlevler"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid "<action> [<arguments>]"
 msgstr "<eylem> [<argümanlar>]"
 
 msgid "action: the action, one of:"
-msgstr ""
+msgstr "eylem: Şunların arasından bir eylem:"
 
 msgid "> raw[return]: simulate key \"enter\""
-msgstr ""
+msgstr "> raw[return]: \"Giriş\" düğmesini benzet"
 
 msgid ""
 "> raw[split_return]: split input on newlines then simulate key \"enter\" for "
 "each line"
 msgstr ""
+"> raw[split_return]: Yeni satırlarda girişi böl ve her bir satır için "
+"\"Giriş\" düğmesini benzet"
 
 msgid "> raw[complete_next]: complete word with next completion"
-msgstr ""
+msgstr "> raw[complete_next]: Bir sonraki tamamlama ile sözcüğü tamamla"
 
 msgid "> raw[complete_previous]: complete word with previous completion"
-msgstr ""
+msgstr "> raw[complete_previous]: Bir önceki tamamlama ile sözcüğü tamamla"
 
 msgid "> raw[search_text_here]: search text in buffer at current position"
-msgstr ""
+msgstr "> raw[search_text_here]: Arabellekteki geçerli konumda metin ara"
 
 msgid "> raw[search_text]: search text in buffer"
 msgstr "> raw[search_text]: Arabellekte metin ara"
@@ -2512,150 +2505,166 @@ msgstr "> raw[search_switch_case]: Arama için tam biçimi değiştir"
 msgid ""
 "> raw[search_switch_regex]: switch search type: string/regular expression"
 msgstr ""
+"> raw[search_switch_regex]: Arama türünü değiştir: Dizi veya düzenli ifade"
 
 msgid "> raw[search_switch_where]: switch search in messages/prefixes"
-msgstr ""
+msgstr "> raw[search_switch_where]: İletilerde/öneklerde aramayı değiştir"
 
 msgid "> raw[search_previous]: search previous line"
-msgstr ""
+msgstr "> raw[search_previous]: Önceki satırda ara"
 
 msgid "> raw[search_next]: search next line"
-msgstr ""
+msgstr "> raw[search_next]: Sonraki satırda ara"
 
 msgid "> raw[search_stop_here]: stop search at current position"
-msgstr ""
+msgstr "raw[search_stop_here]: Aramayı geçerli konumda durdur"
 
 msgid "> raw[search_stop]: stop search"
-msgstr ""
+msgstr "> raw[search_stop]: Aramayı durdur"
 
 msgid "> raw[delete_previous_char]: delete previous char"
-msgstr ""
+msgstr "> raw[delete_previous_char]: Önceki karakteri sil"
 
 msgid "> raw[delete_next_char]: delete next char"
-msgstr ""
+msgstr "> raw[delete_next_char]: Sonraki karakteri sil"
 
 msgid "> raw[delete_previous_word]: delete previous word"
-msgstr ""
+msgstr "> raw[delete_previous_word]: Önceki sözcüğü sil"
 
 msgid ""
 "> raw[delete_previous_word_whitespace]: delete previous word (until "
 "whitespace)"
 msgstr ""
+"> raw[delete_previous_word_whitespace]: Önceki sözcüğü sil (boşluğa kadar)"
 
 msgid "> raw[delete_next_word]: delete next word"
-msgstr ""
+msgstr "> raw[delete_next_word]: Sonraki sözcüğü sil"
 
 msgid ""
 "> raw[delete_beginning_of_line]: delete from beginning of line until cursor"
 msgstr ""
+"> raw[delete_beginning_of_line]: Satırın başından imlece kadar sil"
 
 msgid ""
 "> raw[delete_beginning_of_input]: delete from beginning of input until cursor"
 msgstr ""
+"> raw[delete_beginning_of_input]: Girişin başından imlece kadar sil"
 
 msgid "> raw[delete_end_of_line]: delete from cursor until end of line"
-msgstr ""
+msgstr "> raw[delete_end_of_line]: İmleçten satırın sonuna kadar sil"
 
 msgid "> raw[delete_end_of_input]: delete from cursor until end of input"
-msgstr ""
+msgstr "> raw[delete_end_of_input]: İmleçten girişin sonuna kadar sil"
 
 msgid "> raw[delete_line]: delete current line"
-msgstr ""
+msgstr "> raw[delete_line]: Geçerli satırı sil"
 
 msgid "> raw[delete_input]: delete entire input"
-msgstr ""
+msgstr "> raw[delete_input]: Tüm girişi sil"
 
 msgid "> raw[clipboard_paste]: paste from the internal clipboard"
-msgstr ""
+msgstr "> raw[clipboard_paste]: İçsel panodan yapıştır"
 
 msgid "> raw[transpose_chars]: transpose two chars"
-msgstr ""
+msgstr "> raw[transpose_chars]: İki karakterin yerlerini değiştir"
 
 msgid "> raw[undo]: undo last command line action"
-msgstr ""
+msgstr "> raw[undo]: Son komut satırı eylemini geri al"
 
 msgid "> raw[redo]: redo last command line action"
-msgstr ""
+msgstr "> raw[redo]: Son komut satırı eylemini yinele"
 
 msgid "> raw[move_beginning_of_line]: move cursor to beginning of line"
-msgstr ""
+msgstr "> raw[move_beginning_of_line]: İmleci satırın başına taşı"
 
 msgid "> raw[move_beginning_of_input]: move cursor to beginning of input"
-msgstr ""
+msgstr "> raw[move_beginning_of_input]: İmleci girişin başına taşı"
 
 msgid "> raw[move_end_of_line]: move cursor to end of line"
-msgstr ""
+msgstr "> raw[move_end_of_line]: İmleci satırın sonuna taşı"
 
 msgid "> raw[move_end_of_input]: move cursor to end of input"
-msgstr ""
+msgstr "> raw[move_end_of_input]: İmleci girişin sonuna taşı"
 
 msgid "> raw[move_previous_char]: move cursor to previous char"
-msgstr ""
+msgstr "> raw[move_previous_char]: İmleci bir önceki karaktere taşı"
 
 msgid "> raw[move_next_char]: move cursor to next char"
-msgstr ""
+msgstr "> raw[move_next_char]: İmleci bir sonraki karaktere taşı"
 
 msgid "> raw[move_previous_word]: move cursor to previous word"
-msgstr ""
+msgstr "> raw[move_previous_word]: İmleci önceki sözcüğe taşı"
 
 msgid "> raw[move_next_word]: move cursor to next word"
-msgstr ""
+msgstr "> raw[move_next_word]: İmleci sonraki sözcüğe taşı"
 
 msgid "> raw[move_previous_line]: move cursor to previous line"
-msgstr ""
+msgstr "> raw[move_previous_line]: İmleci bir önceki satıra taşı"
 
 msgid "> raw[move_next_line]: move cursor to next line"
-msgstr ""
+msgstr "> raw[move_next_line]: İmleci bir sonraki satıra taşı"
 
 msgid ""
 "> raw[history_previous]: recall previous command in current buffer history"
 msgstr ""
+"> raw[history_previous]: Geçerli önbellek geçmişinde önceki komutu geri çağır"
 
 msgid "> raw[history_next]: recall next command in current buffer history"
 msgstr ""
+"> raw[history_next]: Geçerli önbellek geçmişinde sonraki komutu geri çağır"
 
 msgid ""
 "> raw[history_global_previous]: recall previous command in global history"
 msgstr ""
+"> raw[history_global_previous]: Global geçmişte önceki komutu geri çağır"
 
 msgid "> raw[history_global_next]: recall next command in global history"
-msgstr ""
+msgstr "> raw[history_global_next]: Global geçmişte sonraki komutu geri çağır"
 
 msgid ""
 "> raw[history_use_get_next]: send the current history entry (found with "
 "search or recalled with \"up\"key) and insert the next history entry in the "
 "command line without sending it"
 msgstr ""
+"> raw[history_use_get_next]: Geçerli geçmiş girdisini gönder (arama ile "
+"bulunan veya \"yukarı\" düğmesiyle geri çağrılan) ve komut satırındaki bir "
+"sonraki geçmiş girdisini onu göndermeden gir"
 
 msgid ""
 "> raw[grab_key]: grab a key (optional argument: delay for end of grab, "
 "default is 500 milliseconds)"
 msgstr ""
+"> raw[grab_key]: Bir düğmeyi yakala (isteğe bağlı argüman: Yakalama sonu "
+"için gecikme; öntanımlı değer 500 milisaniyedir)"
 
 msgid ""
 "> raw[grab_key_command]: grab a key with its associated command (optional "
 "argument: delay for end of grab, default is 500 milliseconds)"
 msgstr ""
+"> raw[grab_key_command]: İlgili komutuyla bir düğmeyi yakala (isteğe bağlı "
+"argüman: Yakalama sonu için gecikme; öntanımlı değer 500 milisaniyedir)"
 
 msgid "> raw[grab_mouse]: grab mouse event code"
-msgstr ""
+msgstr "> raw[grab_mouse]: Fare olayı kodunu yakala"
 
 msgid "> raw[grab_mouse_area]: grab mouse event code with area"
-msgstr ""
+msgstr "> raw[grab_mouse_area]: Fare olayı kodunu alanıyla yakala"
 
 msgid ""
 "> raw[insert]: insert text in command line (escaped chars are allowed, see /"
 "help print)"
 msgstr ""
+"> raw[insert]: Komut satırına metin gir (kaçırılan karakterlere izin verilir; "
+"bkz. /help print)"
 
 msgid "> raw[send]: send text to the buffer"
-msgstr ""
+msgstr "> raw [send]: Arabelleğe metin gönder"
 
 msgid "arguments: optional arguments for the action"
-msgstr ""
+msgstr "argümanlar: Eylem için isteğe bağlı argümanlar"
 
 msgid "This command is used by key bindings or plugins."
-msgstr ""
+msgstr "Bu komut, düğme bağıntıları veya eklentiler tarafından kullanılır."
 
 msgid "manage custom bar items"
 msgstr "özel çubuk ögelerini yönet"
@@ -2698,10 +2707,13 @@ msgid ""
 "raw[refresh]: update content of item in all bars where the item is "
 "displayed; any item can be refreshed: default/plugin/custom bar items"
 msgstr ""
+"raw[refresh]: Ögenin görüntülendiği tüm çubuklardaki içeriği yenile; "
+"herhangi bir öge yenilenebilir: Öntanımlı/eklenti/özel çubuk ögeleri"
 
 msgid ""
 "raw[recreate]: set input with the command used to edit the custom bar item"
 msgstr ""
+"raw[recreate]: Özel çubuk ögesini düzenlemede kullanılan komutla girişi ayarla"
 
 msgid "raw[del]: delete custom bar items"
 msgstr "raw[del]: Özel çubuk ögesini sil"
@@ -2709,6 +2721,7 @@ msgstr "raw[del]: Özel çubuk ögesini sil"
 msgid ""
 "  add item with terminal size, displayed only in buffers with number = 1:"
 msgstr ""
+"  uçbirim boyutunda öge ekle, yalnızca = 1 numaralı arabellekte görüntülenir:"
 
 msgid "  add item with buffer info:"
 msgstr "  arabellek bilgisiyle öge ekle:"
@@ -2717,6 +2730,7 @@ msgid ""
 "  add item with date/time using format \"Dec 25, 12:34 +0100\", refreshed "
 "every minute:"
 msgstr ""
+"  \"Ara 25, 12:34 +0300\" tarih/zaman biçimli öge ekle; her dakika yenilenir:"
 
 msgid ""
 "  add item with number of lines in buffer (displayed/total), refreshed each "
@@ -2888,7 +2902,7 @@ msgid ""
 "leave || del [<name>] [buffers|windows] || rename <name> <new_name>"
 msgstr ""
 "store [<ad>] [buffers|windows] || apply [<ad>] [buffers|windows] || leave || "
-"del [<ad>] [buffers|windows] || rename <ad> <yeniad>"
+"del [<ad>] [buffers|windows] || rename <ad> <yeni_ad>"
 
 msgid "raw[store]: store current buffers/windows in a layout"
 msgstr "raw[store]: Bir yerleşimde geçerli arabellekleri/pencereleri depola"
@@ -3258,7 +3272,7 @@ msgid ""
 "list || add|addreplace <name> <type> <address> <port> [<username> "
 "[<password>]] || del <name>|<mask>... || set <name> <option> <value>"
 msgstr ""
-"list || add|addreplace <ad> <tür> <adres> <kap> [<kullanıcı-adı> [<parola>]] "
+"list || add|addreplace <ad> <tür> <adres> <kap> [<kullanıcı_adı> [<parola>]] "
 "|| del <ad>|<maske>... || set <ad> <seçenek> <değer>"
 
 msgid "raw[list]: list all proxies"
@@ -3294,16 +3308,12 @@ msgstr ""
 msgid "raw[set]: set a value for a proxy property"
 msgstr ""
 
-#, fuzzy
-#| msgid ""
-#| "option: option to change (for options list, look at /set weechat.bar."
-#| "<barname>.*)"
 msgid ""
 "option: option to change (for options list, look at /set weechat.proxy."
 "<proxy_name>.*)"
 msgstr ""
 "seçenek: değiştirilecek seçenek (seçenekler listesi için /set "
-"weechat.bar<çubukadı>.* komutunu çalıştırın)"
+"weechat.proxy.<vekil_adı>.* bölümüne bakın)"
 
 msgid "  add a http proxy, running on local host, port 8888:"
 msgstr ""
@@ -3762,10 +3772,8 @@ msgstr ""
 "yeniden yükle"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
-#, fuzzy
-#| msgid "[-yes] [<path_to_binary>|-save|-quit]"
 msgid "[-yes] [<path_to_binary>|-save|-quit] || -o|-ol"
-msgstr "[-yes] [<ikili_yolu>|-save|-quit]"
+msgstr "[-yes] [<ikiliye_olan_yol>|-save|-quit] || -o|-ol"
 
 msgid ""
 "raw[-yes]: required if option \"weechat.look.confirm_upgrade\" is enabled"
@@ -4182,18 +4190,14 @@ msgstr ""
 msgid "names of filters"
 msgstr "süzgeçlerin adları"
 
-#, fuzzy
-#| msgid "names of filters"
 msgid "names of disabled filters"
-msgstr "süzgeçlerin adları"
+msgstr "devre dışı bırakılmış süzgeçlerin adları"
 
-#, fuzzy
-#| msgid "names of filters"
 msgid "names of enabled filters"
-msgstr "süzgeçlerin adları"
+msgstr "etkinleştirilmiş süzgeçlerin adları"
 
 msgid "hook types"
-msgstr ""
+msgstr "kanca türleri"
 
 msgid ""
 "commands (weechat and plugins); optional argument: prefix to add before the "
@@ -6000,12 +6004,10 @@ msgstr "ONULMAZ: Yapılandırma seçenekleri ilklendirilirken hata"
 #. TRANSLATORS: "%s %s" after "compiled on" is date and time
 #, c-format
 msgid "WeeChat %s, compiled on %s %s\n"
-msgstr ""
+msgstr "WeeChat %s, derlenme: %s %s\n"
 
-#, fuzzy
-#| msgid "(old options?)"
 msgid "Build options:\n"
-msgstr "(eski seçenekler?)"
+msgstr "Yapı seçenekleri:\n"
 
 msgid "Windows tree:"
 msgstr "Pencereler ağacı:"
@@ -6017,12 +6019,10 @@ msgid "Memory usage not available (function \"mallinfo\" not found)"
 msgstr "Bellek kullanımı mevcut değil (\"mallinfo\" işlevi bulunamadı)"
 
 msgid "not initialized"
-msgstr ""
+msgstr "ilklendirilmedi"
 
-#, fuzzy
-#| msgid "no variable"
 msgid "not available"
-msgstr "değişken yok"
+msgstr "kullanılamıyor"
 
 msgid "TEMPORARY, deleted on exit"
 msgstr "GEÇİCİ, çıkışta silinir"
@@ -6131,13 +6131,13 @@ msgid "Constants"
 msgstr "Sabitler"
 
 msgid "Rank"
-msgstr ""
+msgstr "Derece"
 
 msgid "Priority"
-msgstr ""
+msgstr "Öncelik"
 
 msgid "File"
-msgstr ""
+msgstr "Dosya"
 
 #, fuzzy
 #| msgid "Constants"
@@ -6296,10 +6296,8 @@ msgstr ""
 "(parolayı atlamak için boşluk düğmesine bir kez basın; ancak bu tüm güvenli "
 "veriyi DEVRE DIŞI bırakacaktır!)"
 
-#, fuzzy
-#| msgid "(press ctrl-C to exit WeeChat now)"
 msgid "(press ctrl-c to exit WeeChat now)"
-msgstr "(WeeChat'ten şimdi çıkmak için ctrl-C düğmesine basın)"
+msgstr "(WeeChat'ten şimdi çıkmak için ctrl-c yapın)"
 
 msgid ""
 "To recover your secured data, you can use /secure decrypt (see /help secure)"
@@ -6356,10 +6354,9 @@ msgid ""
 "version is too old?)"
 msgstr ""
 
-#, fuzzy, c-format
-#| msgid "%sError encrypting data \"%s\" (%d)"
+#, c-format
 msgid "%sFailed to encrypt data \"%s\" (%d)"
-msgstr "%s\"%s\" verisi şifrelenirken hata (%d)"
+msgstr "%s\"%s\" verisi şifrelenemedi (%d)"
 
 msgid ""
 "cipher used to crypt data (the number after algorithm is the size of the key "
@@ -6439,25 +6436,19 @@ msgid "%sUnknown resource limit \"%s\" (see /help weechat.startup.sys_rlimit)"
 msgstr ""
 "%sBilinmeyen kaynak limiti \"%s\" (bkz. /help weechat.startup.sys_rlimit)"
 
-#, fuzzy
-#| msgid "Memory usage (see \"man mallinfo\" for help):"
 msgid "Resource limits (see \"man getrlimit\" for help):"
-msgstr "Bellek kullanımı (yardım için bkz. \"man mallinfo\"):"
+msgstr "Özkaynak sınırları (yardım için bkz. \"man getrlimit\"):"
 
-#, fuzzy, c-format
-#| msgid "%sUnable to set resource limit \"%s\" to %s: error %d %s"
+#, c-format
 msgid "%sUnable to get resource limit \"%s\": error %d %s"
-msgstr "%sKaynak limiti \"%s\", %s olarak ayarlanamadı: Hata %d %s"
+msgstr "%sÖzkaynak sınırı \"%s\" alınamıyor: Hata %d %s"
 
-#, fuzzy, c-format
-#| msgid "%s: error: dictionary \"%s\" is not available on your system"
+#, c-format
 msgid "System function \"%s\" is not available"
-msgstr "%s: Hata: \"%s\" sözlüğü sisteminizde yok"
+msgstr "Sistem işlevi \"%s\" kullanılabilir değil"
 
-#, fuzzy
-#| msgid "Memory usage (see \"man mallinfo\" for help):"
 msgid "Resource usage (see \"man getrusage\" for help):"
-msgstr "Bellek kullanımı (yardım için bkz. \"man mallinfo\"):"
+msgstr "Özkaynak kullanımı (yardım için bkz. \"man getrusage\"):"
 
 #, c-format
 msgid "%sError upgrading WeeChat with file \"%s\":"
@@ -6538,95 +6529,83 @@ msgid "Upgrade done (%.02fs)"
 msgstr "Yükseltme bitti (%.02fs)"
 
 msgid "invalid URL"
-msgstr ""
+msgstr "geçersiz URL"
 
 msgid "not enough memory"
 msgstr "yetersiz bellek"
 
-#, fuzzy, c-format
-#| msgid "%sFilter \"%s\" not found"
+#, c-format
 msgid "file \"%s\" not found"
-msgstr "%s\"%s\" süzgeci bulunamadı"
+msgstr "\"%s\" dosyası bulunamadı"
 
-#, fuzzy, c-format
-#| msgid "%sCannot create file \"%s\""
+#, c-format
 msgid "cannot write file \"%s\""
-msgstr "%s\"%s\" dosyası oluşturulamıyor"
+msgstr "\"%s\" dosyası yazılamıyor"
 
-#, fuzzy
-#| msgid "fork error"
 msgid "transfer error"
-msgstr "çatal hatası"
+msgstr "aktarım hatası"
 
 #, c-format
 msgid "curl error %d (%s) (URL: \"%s\")\n"
 msgstr "curl hatası %d (%s) (URL: \"%s\")\n"
 
-#, fuzzy, c-format
-#| msgid "curl error %d (%s) (URL: \"%s\")\n"
+#, c-format
 msgid "transfer stopped (URL: \"%s\")\n"
-msgstr "curl hatası %d (%s) (URL: \"%s\")\n"
+msgstr "aktarım durduruldu (URL: \"%s\")\n"
 
-#, fuzzy, c-format
-#| msgid "End of command '%s', timeout reached (%.1fs)"
+#, c-format
 msgid "transfer timeout reached (%.3fs) (URL: \"%s\")\n"
-msgstr "'%s' komutu sonu, zaman aşımına ulaşıldı (%.1fs)"
+msgstr "aktarım zaman aşımına ulaşıldı (%.3fs) (URL: \"%s\")\n"
 
 #, c-format
 msgid "%sAnother command \"%s\" already exists for plugin \"%s\""
 msgstr "%sŞu eklenti için başka bir komut (\"%s\") halihazırda var: \"%s\""
 
-#, fuzzy, c-format
-#| msgid "%sUnknown command \"%s\" (type /help for help)"
+#, c-format
 msgid ""
 "%sUnknown command \"%s\" (commands are case-sensitive, type /help for help), "
 "commands with similar name: %s"
-msgstr "%s Bilinmeyen komut \"%s\" (yardım için /help yazın)"
+msgstr "%sBilinmeyen komut \"%s\" (komutlar BÜYÜK/küçük harf duyarlıdır; "
+"yardım için /help yazın); benzer adlı komutlar: %s"
 
-#, fuzzy, c-format
-#| msgid "%sUnknown command \"%s\" (type /help for help)"
+#, c-format
 msgid ""
 "%sUnknown command \"%s\" (type /help for help), commands with similar name: "
 "%s"
-msgstr "%s Bilinmeyen komut \"%s\" (yardım için /help yazın)"
+msgstr "%sBilinmeyen komut \"%s\" (yardım için /help yazın); benzer adlı "
+"komutlar: %s"
 
 #, c-format
 msgid "%sBad file descriptor (%d) used in hook_fd"
 msgstr "%sHatalı dosya açıklayıcısı (%d) hook_fd içinde kullanılmış"
 
-#, fuzzy, c-format
-#| msgid "End of command '%s', timeout reached (%.1fs)"
+#, c-format
 msgid "End of command '%s', timeout reached (%.3fs)"
-msgstr "'%s' komutu sonu, zaman aşımına ulaşıldı (%.1fs)"
+msgstr "\"%s\" komutunun sonu; zaman aşımına ulaşıldı (%.3fs)"
 
 #, c-format
 msgid "System clock skew detected (%+ld seconds), reinitializing all timers"
 msgstr ""
 "Sistem saati hatalı (%+ld saniye), tüm zamanlayıcılar yeniden başlatılıyor"
 
-#, fuzzy, c-format
-#| msgid "curl error %d (%s) (URL: \"%s\")\n"
+#, c-format
 msgid "%sURL transfer error: %s (URL: \"%s\")"
-msgstr "curl hatası %d (%s) (URL: \"%s\")\n"
+msgstr "%sURL aktarım hatası: %s (URL: \"%s\")"
 
-#, fuzzy, c-format
-#| msgid "End of command '%s', timeout reached (%.1fs)"
+#, c-format
 msgid "End of URL transfer '%s', timeout reached (%.3fs)"
-msgstr "'%s' komutu sonu, zaman aşımına ulaşıldı (%.1fs)"
+msgstr "\"%s\" URL aktarımının sonu; zaman aşımına ulaşıldı (%.3fs)"
 
 #, c-format
 msgid "%sError running thread in hook_url: %s (URL: \"%s\")"
-msgstr ""
+msgstr "%shook_url içinde iş parçacığı çalıştırılırken hata: %s (URL: \"%s\")"
 
-#, fuzzy, c-format
-#| msgid "End of command '%s', timeout reached (%.1fs)"
+#, c-format
 msgid "End of URL transfer '%s', transfer stopped"
-msgstr "'%s' komutu sonu, zaman aşımına ulaşıldı (%.1fs)"
+msgstr "\"%s\" URL aktarımının sonu; aktarım durduruldu"
 
-#, fuzzy
-#| msgid "WeeChat is running in headless mode (Ctrl-C to quit)."
 msgid "WeeChat is running in headless mode (ctrl-c to quit)."
-msgstr "WeeChat başsız kipte çalışıyor (çıkmak için Ctrl-C)."
+msgstr "WeeChat başsız kipte çalışıyor (çıkmak için ctrl-c yapın)."
 
 msgid ""
 "Welcome to WeeChat!\n"
@@ -6725,7 +6704,7 @@ msgid "Nick colors:"
 msgstr "Takma ad renkleri:"
 
 msgid "Syntax highlighting colors in evaluated strings:"
-msgstr ""
+msgstr "Değerlendirilen dizilerdeki sözdizim vurgulama renkleri:"
 
 msgid "Color aliases:"
 msgstr "Renk armaları:"
@@ -6768,36 +6747,31 @@ msgstr "çubuk ögesinin içeriği (değerlendirilir, bkz. /help eval)"
 
 #, c-format
 msgid "debug: long callback: bar: %s, item: %s, plugin: %s, time elapsed: %s"
-msgstr ""
+msgstr "hata ayıkla: uzun geri çağrı: çubuk: %s, öge: %s, eklenti: %s, "
+"geçen süre: %s"
 
-#, fuzzy, c-format
-#| msgid "%sPaste %d line? [ctrl-Y] Yes [ctrl-N] No"
-#| msgid_plural "%sPaste %d lines? [ctrl-Y] Yes [ctrl-N] No"
+#, c-format
 msgid "%sPaste %d line? [ctrl-y] Yes [ctrl-n] No"
 msgid_plural "%sPaste %d lines? [ctrl-y] Yes [ctrl-n] No"
-msgstr[0] "%s%d satır yapıştırılsın mı? [ctrl-Y] Evet [ctrl-N] Hayır"
-msgstr[1] "%s%d satır yapıştırılsın mı? [ctrl-Y] Evet [ctrl-N] Hayır"
+msgstr[0] "%s%d satır yapıştırılsın mı? [ctrl-y] Evet [ctrl-n] Hayır"
+msgstr[1] "%s%d satır yapıştırılsın mı? [ctrl-y] Evet [ctrl-n] Hayır"
 
 #. TRANSLATORS: search in "local" history
 msgid "local"
-msgstr ""
+msgstr "yerel"
 
 #. TRANSLATORS: search in "global" history
 msgid "global"
-msgstr ""
+msgstr "global"
 
-#, fuzzy
-#| msgid "Search"
 msgid "Search lines"
-msgstr "Arama"
+msgstr "Satırlar ara"
 
-#, fuzzy
-#| msgid "default command:"
 msgid "Search command"
-msgstr "öntanımlı komut:"
+msgstr "Arama komutu"
 
 msgid "keyboard and mouse debug ('q' to quit debug mode)"
-msgstr ""
+msgstr "klavye ve fare hata ayıklaması (bu kipten çıkmak için \"q\"ya basın)"
 
 #, c-format
 msgid "%s-MORE(%d)-"
@@ -6956,10 +6930,9 @@ msgstr ""
 msgid "New key binding (context \"%s\"): %s%s => %s%s"
 msgstr "Yeni düğme bağıntısı (bağlam: \"%s\"): %s%s => %s%s"
 
-#, fuzzy, c-format
-#| msgid "%sUnable to bind key \"%s\""
+#, c-format
 msgid "%sUnable to bind key \"%s\" in context \"%s\" (see /help key)"
-msgstr "%s\"%s\" düğmesi bağlanamıyor"
+msgstr "%s\"%s\" düğmesi, \"%s\" bağlamında bağıntılanamıyor (bkz. /help key)"
 
 #, c-format
 msgid ""
@@ -6976,6 +6949,8 @@ msgid ""
 "%sWarning: key \"%s\" seems either a raw code or invalid, it may not work "
 "(see /help key)"
 msgstr ""
+"%sUyarı: \"%s\" düğmesi ya bir ham kod ya da geçersiz, çalışmayabilir (bkz. "
+"/help key)"
 
 #, c-format
 msgid "Key \"%s\" unbound (context: \"%s\")"
@@ -6996,16 +6971,14 @@ msgstr "hsignal gönderiliyor: \"%s\""
 msgid "Executing command: \"%s\" on buffer \"%s\""
 msgstr "Komut yürütülüyor: \"%s\", \"%s\" arabelleğinde"
 
-#, fuzzy
-#| msgid "list of key bindings"
 msgid "no key binding"
-msgstr "düğme bağıntılarının listesi"
+msgstr "düğme bağıntısı yok"
 
 msgid "debug:"
-msgstr ""
+msgstr "hata ayıkla:"
 
 msgid "mouse"
-msgstr ""
+msgstr "fare"
 
 #, c-format
 msgid "Debug enabled for mouse (%s)"
@@ -7018,15 +6991,13 @@ msgstr "Fare için hata ayıklaması devre dışı"
 msgid "%s%s: error creating alias \"%s\" => \"%s\""
 msgstr "%s%s: \"%s\" => \"%s\" arması oluşturulurken hata"
 
-#, fuzzy, c-format
-#| msgid "Alias \"%s\" => \"%s\" created"
+#, c-format
 msgid "Alias updated: \"%s\" => \"%s\""
-msgstr "\"%s\" => \"%s\" arması oluşturuldu"
+msgstr "Arma güncellendi: \"%s\" => \"%s\""
 
-#, fuzzy, c-format
-#| msgid "Alias \"%s\" => \"%s\" created"
+#, c-format
 msgid "Alias created: \"%s\" => \"%s\""
-msgstr "\"%s\" => \"%s\" arması oluşturuldu"
+msgstr "Arma oluşturuldu: \"%s\" => \"%s\""
 
 #, c-format
 msgid "Aliases with \"%s\":"
@@ -7045,10 +7016,9 @@ msgstr "\"%s\" ile eşleşen bir arma bulunamadı"
 msgid "No alias defined"
 msgstr "Bir arma tanımlı değil"
 
-#, fuzzy, c-format
-#| msgid "%s%s: trigger \"%s\" already exists"
+#, c-format
 msgid "%sAlias \"%s\" already exists"
-msgstr "%s%s: \"%s\" tetiği halihazırda mevcut"
+msgstr "%s:\"%s\" arması halihazırda var"
 
 #, c-format
 msgid "Alias \"%s\" removed"
@@ -7058,27 +7028,22 @@ msgstr "\"%s\" arması kaldırıldı"
 msgid "%sAlias \"%s\" not found"
 msgstr "%s\"%s\" arması bulunamadı"
 
-#, fuzzy, c-format
-#| msgid "Layout \"%s\" has been renamed to \"%s\""
+#, c-format
 msgid "Alias \"%s\" has been renamed to \"%s\""
-msgstr "\"%s\" diziliminin adı \"%s\" olarak değiştirildi"
+msgstr "\"%s\" armasının adı \"%s\" olarak değiştirildi"
 
 msgid "list, add or remove command aliases"
 msgstr "komut armalarını listele, ekle veya kaldır"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
-#, fuzzy
-#| msgid ""
-#| "list [<alias>] || add <alias> [<command>[;<command>...]] || addcompletion "
-#| "<completion> <alias> [<command>[;<command>...]] || del <alias> "
-#| "[<alias>...]"
 msgid ""
 "list [<name>] || add|addreplace <name> [<command>[;<command>...]] || "
 "addcompletion|addreplacecompletion <completion> <name> [<command>[;"
 "<command>...]] || del <name>|<mask>... || rename <name> <new_name> || missing"
 msgstr ""
-"list [<arma>] || add <arma> [<komut>[;<komut>...]] || addcompletion "
-"<tamamlama> <arma> [<komut>[;<komut>...]] || del <arma> [<arma>...]"
+"list [<ad>] || add|addreplace <ad> [<komut>[;<komut>...]] || "
+"addcompletion|addreplacecompletion <tamamlama> <ad> [<komut>[;"
+"<komut>...]] || del <ad>|<maske>... || rename <ad> <yeni_ad> || missing"
 
 msgid "raw[list]: list aliases (without argument, this list is displayed)"
 msgstr ""
@@ -7097,10 +7062,8 @@ msgid ""
 "completion"
 msgstr ""
 
-#, fuzzy
-#| msgid "value of alias"
 msgid "name: name of alias"
-msgstr "arma değeri"
+msgstr "ad: armanın adı"
 
 #, c-format
 msgid ""
@@ -7109,31 +7072,27 @@ msgid ""
 "command)"
 msgstr ""
 
-#, fuzzy
-#| msgid ""
-#| "command(s) to run if conditions are OK, after regex replacements (many "
-#| "commands can be separated by semicolons)"
 msgid ""
 "command: command name with arguments (many commands can be separated by "
 "semicolons)"
 msgstr ""
-"düzenli ifade değiştirmelerinden sonra koşullar sağlanırsa çalıştırılacak "
-"komutlar (birden çok komut noktalı virgül ile ayrılabilir)"
+"komut: argümanlar ile komut adı (birden çok komut noktalı virgül ile "
+"ayrılabilir)"
 
 msgid "raw[del]: delete aliases"
-msgstr ""
+msgstr "raw[del]: Armaları sil"
 
 msgid "raw[rename]: rename an alias"
-msgstr ""
+msgstr "raw[rename]: Bir armayı yeniden adlandır"
 
 msgid "raw[missing]: add missing aliases (using default aliases)"
-msgstr ""
+msgstr "raw[missing]: Eksik armaları ekle (öntanımlı armaları kullanarak)"
 
 msgid "In command, special variables are replaced:"
-msgstr ""
+msgstr "Komutta, özel değişkenler değiştirilir:"
 
 msgid "  $n: argument \"n\" (between 1 and 9)"
-msgstr ""
+msgstr "  $n: argüman \"n\" (1 ile 9 arası)"
 
 msgid "  $-m: arguments from 1 to \"m\""
 msgstr ""
@@ -7305,16 +7264,12 @@ msgid ""
 "    - ${number_displayed}: \"1\" if the number is displayed, otherwise \"0\""
 msgstr ""
 
-#, fuzzy
-#| msgid ""
-#| "string displayed to indent channel and private buffers (note: content is "
-#| "evaluated, see /help buflist)"
 msgid ""
 "    - ${indent}: indentation for name (channel, private and list buffers are "
 "indented) (evaluation of option buflist.format.indent)"
 msgstr ""
-"kanal ve özel arabellekleri girintilendirmek için görüntülenen dizi (not: "
-"içerik değerlendirilir, bkz. /help buflist)"
+"    - ${indent}: Ad için girintileme (kanal, özel ve liste arabellekleri "
+"girintilenir) (buflist.format.indent seçeneğinin değerlendirmesi)"
 
 msgid ""
 "    - ${format_nick_prefix}: colored nick prefix for a channel (evaluation "
@@ -16728,31 +16683,24 @@ msgstr ""
 msgid "Scripts"
 msgstr "Betikler"
 
-#, fuzzy, c-format
-#| msgid "%s: downloading list of scripts..."
+#, c-format
 msgid "%s: download of scripts enabled"
-msgstr "%s: Betik listesi indiriliyor..."
+msgstr "%s: Betiklerin indirilmesi etkin"
 
 msgid "WeeChat script manager"
 msgstr "WeeChat betik yöneticisi"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
-#, fuzzy
-#| msgid ""
-#| "list [-o|-ol|-i|-il] || search <text> || show <script> || load|unload|"
-#| "reload <script> [<script>...] || autoload|noautoload|toggleautoload "
-#| "<script> [<script>...] || install|remove|installremove|hold [-q] <script> "
-#| "[<script>...] || upgrade || update"
 msgid ""
 "enable || list [-o|-ol|-i|-il] || search <text> || show <script> || load|"
 "unload|reload <script>... || autoload|noautoload|toggleautoload <script>... "
 "|| install|remove|installremove|hold [-q] <script>... || upgrade || update "
 "|| -up|-down [<number>] || -go <line>|end"
 msgstr ""
-"list [-o|-ol|-i|-il] || search <metin> || show <betik> || load|unload|reload "
-"<betik> [<betik>...] || autoload|noautoload|toggleautoload <betik> "
-"[<betik>...] || install|remove|installremove|hold [-q] <betik> [<betik>...] "
-"|| upgrade || update"
+"enable || list [-o|-ol|-i|-il] || search <metin> || show <betik> || load|"
+"unload|reload <betik>... || autoload|noautoload|toggleautoload <betik>... "
+"|| install|remove|installremove|hold [-q] <betik>... || upgrade || update "
+"|| -up|-down [<sayı>] || -go <satır>|end"
 
 #, fuzzy
 #| msgid ""
@@ -17896,11 +17844,14 @@ msgstr "  5. İşlem sonrası eylemleri gerçekleştirilir"
 msgid ""
 "Examples (you can also look at default triggers with /trigger listdefault):"
 msgstr ""
+"Örnekler (/trigger listdefault ile öntanımlı tetiklere bakabilirsiniz):"
 
 msgid ""
 "  add text attributes *bold*, _underline_ and /italic/ (only in user "
 "messages):"
 msgstr ""
+"  *kalın*, _altı çizili_ ve /eğik/ metin özniteliklerini ekle (yalnızca "
+"kullanıcı iletilerinde):"
 
 msgid "  hide nicklist bar on small terminals:"
 msgstr "  küçük uçbirimlerde takma ad listesini gizle:"
@@ -17915,6 +17866,8 @@ msgid ""
 "  open trigger monitor and show only modifiers and triggers whose name "
 "starts with \"resize\":"
 msgstr ""
+"  tetik monitörünü aç ve yalnızca adı \"resize\" ile başlayan niteleyicileri "
+"ve tetikleri göster:"
 
 msgid "triggers"
 msgstr "tetikler"
@@ -18140,6 +18093,8 @@ msgid ""
 "text to display before the nicks in the bar item \"typing\"; if set, it is "
 "used instead of the translated string \"Typing: \" which is used by default"
 msgstr ""
+"\"typing\" çubuk ögesinde takma adlardan önce görüntülenecek metin; ayarlıysa "
+"öntanımlı olarak görüntülenen \"Yazıyar: \" metni yerine kullanılır"
 
 msgid "Typing status of users"
 msgstr "Kullanıcıların metin yazma durumu"
@@ -18154,10 +18109,10 @@ msgid "xfer chat"
 msgstr "xfer sohbeti"
 
 msgid "time left:"
-msgstr ""
+msgstr "kalan zaman:"
 
 msgid "time left: unknown"
-msgstr ""
+msgstr "kalan zaman: Bilinmiyor"
 
 msgid "Xfer list"
 msgstr "Xfer listesi"
@@ -18230,20 +18185,10 @@ msgid "raw[list]: list xfer"
 msgstr "raw[list]: xfer listesi"
 
 msgid "raw[listfull]: list xfer (verbose)"
-msgstr ""
+msgstr "raw[listfull]: xfer'i listele (ayrıntılı)"
 
-#, fuzzy
-#| msgid ""
-#| "    list: list xfer\n"
-#| "listfull: list xfer (verbose)\n"
-#| "\n"
-#| "Without argument, this command opens buffer with xfer list."
 msgid "Without argument, this command opens buffer with xfer list."
-msgstr ""
-"    list: xfer listele\n"
-"listfull: xfer listele (ayrıntılı)\n"
-"\n"
-"Bu komut, argüman olmadan verilirse xfer listeli arabellek açar."
+msgstr "Argüman olmadan bu komut, xfer listeli arabelleği açar."
 
 msgid "nicks of DCC chat"
 msgstr "DCC sohbetin takma adları"
