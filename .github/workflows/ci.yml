@@ -11,6 +11,14 @@ on:
     - cron: '22 9 * * 2'
 
 env:
+  CHECK_DEPS_UBUNTU: >-
+    curl
+    gettext
+    hunspell
+    hunspell-en-us
+    hunspell-fr
+    pipx
+    shellcheck
   WEECHAT_DEPS_UBUNTU: >-
     asciidoctor
     build-essential
@@ -121,11 +129,15 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update -qq
-        sudo apt-get --yes --no-install-recommends install curl gettext pipx shellcheck
+        sudo apt-get --yes --no-install-recommends install ${{ env.CHECK_DEPS_UBUNTU }}
         pipx install msgcheck ruff
+        cargo install --version 0.0.8 poexam
 
-    - name: Check gettext files
+    - name: Check gettext files (msgcheck)
       run: msgcheck po/*.po
+
+    - name: Check gettext files (poexam)
+      run: poexam check --file-stats --rule-stats
 
     - name: Check shell and Python scripts
       run: ./tools/check_scripts.sh
