@@ -7253,6 +7253,7 @@ irc_command_init (void)
             AI("  /connect irc.oftc.net"),
             AI("  /connect irc.oftc.net/6667 -notls"),
             AI("  /connect irc6.oftc.net/9999 -ipv6=force"),
+            AI("  /connect irc.scuttled.net"),
             AI("  /connect my.server.org -password=test"),
             AI("  /connect irc://nick@irc.oftc.net/#channel"),
             AI("  /connect -switch")),
@@ -7956,6 +7957,8 @@ irc_command_init (void)
             AI("  /server add libera irc.libera.chat/6667 -notls -autoconnect"),
             AI("  /server add chatspike irc.chatspike.net/6667,"
                "irc.duckspike.net/6667 -notls"),
+            AI("  /server add 2600net irc.scuttled.net/6697,"
+               "irc.2600.net/6667 -notls"),
             AI("  /server copy libera libera-test"),
             AI("  /server rename libera-test libera2"),
             AI("  /server reorder libera2 libera"),
