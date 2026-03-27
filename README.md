@@ -11,7 +11,6 @@ SPDX-License-Identifier: GPL-3.0-or-later
 </p>
 
 [![Mastodon](https://img.shields.io/badge/mastodon-follow-blue.svg)](https://hostux.social/@weechat)
-[![Diaspora*](https://img.shields.io/badge/diaspora*-follow-blue.svg)](https://diasp.eu/u/weechat)
 [![X](https://img.shields.io/badge/x-follow-blue.svg)](https://x.com/WeeChatClient)
 [![Devel blog](https://img.shields.io/badge/devel%20blog-follow-blue.svg)](https://blog.weechat.org/)
 [![Donate](https://img.shields.io/badge/help-donate%20%E2%9D%A4-ff69b4.svg)](https://weechat.org/donate/)
