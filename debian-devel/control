@@ -1,6 +1,5 @@
 Source: weechat-devel
 Section: net
-Priority: optional
 Maintainer: Sébastien Helleu <flashcode@flashtux.org>
 Build-Depends:
     asciidoctor (>= 1.5.4),

@@ -1,6 +1,5 @@
 Source: weechat
 Section: net
-Priority: optional
 Maintainer: Emmanuel Bouthenot <kolter@debian.org>
 Build-Depends:
     asciidoctor (>= 1.5.4),
