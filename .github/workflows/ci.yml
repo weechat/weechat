@@ -51,7 +51,7 @@ env:
     ruby-pygments.rb
     tcl8.6-dev
     zlib1g-dev
-  WEECHAT_DEPS_ROCKYLINUX: >-
+  WEECHAT_DEPS_REDHAT: >-
     asciidoctor
     aspell-devel
     cjson-devel
@@ -253,6 +253,52 @@ jobs:
         lcov --list coverage.info
         bash <(curl -s https://codecov.io/bash) -f coverage.info || echo 'Codecov error'
 
+  install_fedora:
+
+    strategy:
+      matrix:
+        os:
+          - ubuntu-24.04
+        config:
+          - name: "gcc"
+            cc: "gcc"
+            cxx: "g++"
+            buildargs: "-DENABLE_MAN=ON -DENABLE_DOC=ON -DENABLE_TESTS=ON"
+          - name: "clang"
+            cc: "clang"
+            cxx: "clang++"
+            buildargs: "-DENABLE_MAN=ON -DENABLE_DOC=ON -DENABLE_TESTS=ON -DENABLE_CODE_COVERAGE=ON -DENABLE_FUZZ=ON"
+
+    name: "install (fedora:43, ${{ matrix.config.name }})"
+    runs-on: ${{ matrix.os }}
+    container:
+      image: fedora:43
+
+    steps:
+
+    - uses: actions/checkout@v6
+
+    - name: Install dependencies
+      run: dnf install -y ${{ env.WEECHAT_DEPS_REDHAT }}
+
+    - name: Build and run tests
+      env:
+        CC: ${{ matrix.config.cc }}
+        CXX: ${{ matrix.config.cxx }}
+      run: ./tools/build_test.sh ${{ matrix.config.buildargs }}
+
+    - name: Run WeeChat
+      env:
+        TERM: xterm-256color
+      run: |
+        weechat --help
+        weechat-curses --help
+        weechat --version
+        weechat --build-info
+        weechat --colors
+        weechat --license
+        weechat --run-command "/debug dirs;/debug libs" --run-command "/quit"
+
   install_rockylinux:
 
     strategy:
@@ -282,7 +328,7 @@ jobs:
       run: |
         dnf install -y epel-release
         dnf config-manager --set-enabled crb
-        dnf install -y ${{ env.WEECHAT_DEPS_ROCKYLINUX }}
+        dnf install -y ${{ env.WEECHAT_DEPS_REDHAT }}
 
     - name: Build and run tests
       env:
