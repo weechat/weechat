@@ -6,6 +6,12 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 # WeeChat ChangeLog
 
+## Version 4.10.0 (under dev)
+
+### Changed
+
+- core: add `/mute` in default command for key `Alt`+`=` (toggle filters)
+
 ## Version 4.9.0 (2026-03-29)
 
 ### Changed

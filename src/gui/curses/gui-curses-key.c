@@ -186,7 +186,7 @@ gui_key_default_bindings (int context, int create_option)
         BIND("meta-w,meta-b",     "/window balance");
         BIND("meta-w,meta-s",     "/window swap");
         BIND("meta-z",            "/window zoom");
-        BIND("meta-=",            "/filter toggle");
+        BIND("meta-=",            "/mute /filter toggle");
         BIND("meta--",            "/filter toggle @");
         BIND("meta-0",            "/buffer *10");
         BIND("meta-1",            "/buffer *1");
