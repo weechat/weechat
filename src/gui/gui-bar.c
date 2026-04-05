@@ -39,6 +39,7 @@
 #include "../core/core-infolist.h"
 #include "../core/core-log.h"
 #include "../core/core-string.h"
+#include "../core/core-util.h"
 #include "../plugins/plugin.h"
 #include "gui-bar.h"
 #include "gui-bar-item.h"
@@ -1018,9 +1019,7 @@ gui_bar_config_check_size (const void *pointer, void *data,
                            const char *value)
 {
     struct t_gui_bar *ptr_bar;
-    long number;
-    char *error;
-    int new_value, current_size;
+    int new_value, current_size, number;
 
     /* make C compiler happy */
     (void) pointer;
@@ -1032,30 +1031,26 @@ gui_bar_config_check_size (const void *pointer, void *data,
         new_value = -1;
         if (strncmp (value, "++", 2) == 0)
         {
-            error = NULL;
-            number = strtol (value + 2, &error, 10);
-            if (error && !error[0])
+            if (util_parse_int (value + 2, 10, &number))
             {
+                if ((number < 0) || (CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_SIZE]) > INT_MAX - number))
+                    return 0;
                 new_value = CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_SIZE]) + number;
             }
         }
         else if (strncmp (value, "--", 2) == 0)
         {
-            error = NULL;
-            number = strtol (value + 2, &error, 10);
-            if (error && !error[0])
+            if (util_parse_int (value + 2, 10, &number))
             {
+                if ((number < 0) || (CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_SIZE]) < INT_MIN + number))
+                    return 0;
                 new_value = CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_SIZE]) - number;
             }
         }
         else
         {
-            error = NULL;
-            number = strtol (value, &error, 10);
-            if (error && !error[0])
-            {
+            if (util_parse_int (value, 10, &number))
                 new_value = number;
-            }
         }
         if (new_value < 0)
             return 0;
@@ -2062,9 +2057,8 @@ gui_bar_scroll (struct t_gui_bar *bar, struct t_gui_window *window,
                 const char *scroll)
 {
     struct t_gui_bar_window *ptr_bar_win;
-    long number;
-    char *str, *error;
-    int length, add_x, add, percent, scroll_beginning, scroll_end;
+    char *str;
+    int length, add_x, add, percent, scroll_beginning, scroll_end, number;
 
     if (!bar)
         return 0;
@@ -2132,10 +2126,7 @@ gui_bar_scroll (struct t_gui_bar *bar, struct t_gui_window *window,
         if (!str)
             return 0;
 
-        error = NULL;
-        number = strtol (str, &error, 10);
-
-        if (!error || error[0] || (number <= 0))
+        if (!util_parse_int (str, 10, &number) || (number <= 0))
         {
             free (str);
             return 0;
