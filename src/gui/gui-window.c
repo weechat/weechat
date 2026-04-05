@@ -43,6 +43,7 @@
 #include "../core/core-log.h"
 #include "../core/core-string.h"
 #include "../core/core-utf8.h"
+#include "../core/core-util.h"
 #include "../plugins/plugin.h"
 #include "gui-window.h"
 #include "gui-bar.h"
@@ -1182,7 +1183,7 @@ gui_window_scroll (struct t_gui_window *window, char *scroll)
     int direction, stop, count_msg, scroll_from_end_free_buffer;
     char time_letter, saved_char;
     time_t old_date, diff_date;
-    char *pos, *error;
+    char *pos;
     long number;
     struct t_gui_line *ptr_line;
     struct tm *date_tmp, line_date, old_line_date;
@@ -1231,9 +1232,7 @@ gui_window_scroll (struct t_gui_window *window, char *scroll)
                 time_letter = pos[0];
             saved_char = pos[0];
             pos[0] = '\0';
-            error = NULL;
-            number = strtol (scroll, &error, 10);
-            if (!error || error[0])
+            if (!util_parse_long (scroll, 10, &number))
                 number = 0;
             pos[0] = saved_char;
         }
@@ -1430,9 +1429,8 @@ gui_window_scroll (struct t_gui_window *window, char *scroll)
 void
 gui_window_scroll_horiz (struct t_gui_window *window, char *scroll)
 {
-    int direction, percentage, start_col;
-    char saved_char, *pos, *error;
-    long number;
+    int direction, percentage, start_col, number;
+    char saved_char, *pos;
 
     if (!window || !window->buffer->lines->first_line)
         return;
@@ -1464,9 +1462,7 @@ gui_window_scroll_horiz (struct t_gui_window *window, char *scroll)
         percentage = (pos[0] == '%') ? 1 : 0;
         saved_char = pos[0];
         pos[0] = '\0';
-        error = NULL;
-        number = strtol (scroll, &error, 10);
-        if (!error || error[0])
+        if (!util_parse_int (scroll, 10, &number))
             number = 0;
         pos[0] = saved_char;
     }
