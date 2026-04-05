@@ -39,6 +39,7 @@
 #include "../core/core-infolist.h"
 #include "../core/core-log.h"
 #include "../core/core-string.h"
+#include "../core/core-util.h"
 #include "../plugins/plugin.h"
 #include "gui-line.h"
 #include "gui-buffer.h"
@@ -1674,10 +1675,10 @@ gui_line_hook_update (struct t_gui_line *line,
     const char *ptr_value, *ptr_value2;
     struct t_gui_buffer *ptr_buffer;
     unsigned long value_pointer;
-    long value;
-    char *error, *new_message, *pos_newline;
+    long long value_longlong;
+    char *new_message, *pos_newline;
     int rc, tags_updated, notify_level_updated, highlight_updated;
-    int max_notify_level;
+    int max_notify_level, value;
 
     tags_updated = 0;
     notify_level_updated = 0;
@@ -1730,9 +1731,7 @@ gui_line_hook_update (struct t_gui_line *line,
         ptr_value = hashtable_get (hashtable2, "y");
         if (ptr_value)
         {
-            error = NULL;
-            value = strtol (ptr_value, &error, 10);
-            if (error && !error[0] && (value >= 0))
+            if (util_parse_int (ptr_value, 10, &value) && (value >= 0))
                 line->data->y = value;
         }
     }
@@ -1740,9 +1739,8 @@ gui_line_hook_update (struct t_gui_line *line,
     ptr_value2 = hashtable_get (hashtable2, "notify_level");
     if (ptr_value2)
     {
-        error = NULL;
-        value = strtol (ptr_value2, &error, 10);
-        if (error && !error[0] && (value >= -1) && (value <= GUI_HOTLIST_MAX))
+        if (util_parse_int (ptr_value2, 10, &value)
+            && (value >= -1) && (value <= GUI_HOTLIST_MAX))
         {
             notify_level_updated = 1;
             line->data->notify_level = value;
@@ -1752,9 +1750,7 @@ gui_line_hook_update (struct t_gui_line *line,
     ptr_value2 = hashtable_get (hashtable2, "highlight");
     if (ptr_value2)
     {
-        error = NULL;
-        value = strtol (ptr_value2, &error, 10);
-        if (error && !error[0])
+        if (util_parse_int (ptr_value2, 10, &value))
         {
             highlight_updated = 1;
             line->data->highlight = (value) ? 1 : 0;
@@ -1764,11 +1760,10 @@ gui_line_hook_update (struct t_gui_line *line,
     ptr_value2 = hashtable_get (hashtable2, "date");
     if (ptr_value2)
     {
-        error = NULL;
-        value = strtol (ptr_value2, &error, 10);
-        if (error && !error[0] && (value >= 0))
+        if (util_parse_longlong (ptr_value2, 10, &value_longlong)
+            && (value_longlong >= 0))
         {
-            line->data->date = (time_t)value;
+            line->data->date = (time_t)value_longlong;
             free (line->data->str_time);
             line->data->str_time = gui_chat_get_time_string (
                 line->data->date,
@@ -1780,11 +1775,10 @@ gui_line_hook_update (struct t_gui_line *line,
     ptr_value2 = hashtable_get (hashtable2, "date_usec");
     if (ptr_value2)
     {
-        error = NULL;
-        value = strtol (ptr_value2, &error, 10);
-        if (error && !error[0] && (value >= 0) && (value <= 999999))
+        if (util_parse_int (ptr_value2, 10, &value)
+            && (value >= 0) && (value <= 999999))
         {
-            line->data->date_usec = (int)value;
+            line->data->date_usec = value;
             free (line->data->str_time);
             line->data->str_time = gui_chat_get_time_string (
                 line->data->date,
@@ -1796,19 +1790,21 @@ gui_line_hook_update (struct t_gui_line *line,
     ptr_value2 = hashtable_get (hashtable2, "date_printed");
     if (ptr_value2)
     {
-        error = NULL;
-        value = strtol (ptr_value2, &error, 10);
-        if (error && !error[0] && (value >= 0))
-            line->data->date_printed = (time_t)value;
+        if (util_parse_longlong (ptr_value2, 10, &value_longlong)
+            && (value_longlong >= 0))
+        {
+            line->data->date_printed = (time_t)value_longlong;
+        }
     }
 
     ptr_value2 = hashtable_get (hashtable2, "date_usec_printed");
     if (ptr_value2)
     {
-        error = NULL;
-        value = strtol (ptr_value2, &error, 10);
-        if (error && !error[0] && (value >= 0) && (value <= 999999))
-            line->data->date_usec_printed = (int)value;
+        if (util_parse_int (ptr_value2, 10, &value)
+            && (value >= 0) && (value <= 999999))
+        {
+            line->data->date_usec_printed = value;
+        }
     }
 
     ptr_value = hashtable_get (hashtable, "str_time");
