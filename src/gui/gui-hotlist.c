@@ -623,10 +623,8 @@ void
 gui_hotlist_clear_level_string (struct t_gui_buffer *buffer,
                                 const char *str_level_mask)
 {
-    long level_mask;
-    char *error;
     struct t_gui_hotlist *ptr_hotlist;
-    int priority;
+    int level_mask, priority;
 
     if (str_level_mask)
     {
@@ -665,11 +663,9 @@ gui_hotlist_clear_level_string (struct t_gui_buffer *buffer,
         else
         {
             /* clear hotlist using a mask of levels */
-            error = NULL;
-            level_mask = strtol (str_level_mask, &error, 10);
-            if (error && !error[0] && (level_mask > 0))
+            if (util_parse_int (str_level_mask, 10, &level_mask) && (level_mask > 0))
             {
-                gui_hotlist_clear ((int)level_mask);
+                gui_hotlist_clear (level_mask);
                 gui_hotlist_initial_buffer = buffer;
             }
         }
