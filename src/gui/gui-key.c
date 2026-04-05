@@ -44,6 +44,7 @@
 #include "../core/core-log.h"
 #include "../core/core-string.h"
 #include "../core/core-utf8.h"
+#include "../core/core-util.h"
 #include "../plugins/plugin.h"
 #include "gui-key.h"
 #include "gui-bar.h"
@@ -193,8 +194,7 @@ gui_key_get_current_context (void)
 void
 gui_key_grab_init (int grab_command, const char *delay)
 {
-    long milliseconds;
-    char *error;
+    int milliseconds;
 
     gui_key_grab = 1;
     gui_key_grab_count = 0;
@@ -203,9 +203,7 @@ gui_key_grab_init (int grab_command, const char *delay)
     gui_key_grab_delay = CONFIG_INTEGER(config_look_key_grab_delay);
     if (delay != NULL)
     {
-        error = NULL;
-        milliseconds = strtol (delay, &error, 10);
-        if (error && !error[0] && (milliseconds >= 0))
+        if (util_parse_int (delay, 10, &milliseconds) && (milliseconds >= 0))
         {
             gui_key_grab_delay = milliseconds;
             if (gui_key_grab_delay == 0)
