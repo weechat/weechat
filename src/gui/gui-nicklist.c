@@ -44,6 +44,7 @@
 #include "../core/core-log.h"
 #include "../core/core-string.h"
 #include "../core/core-utf8.h"
+#include "../core/core-util.h"
 #include "../plugins/plugin.h"
 #include "gui-nicklist.h"
 #include "gui-buffer.h"
@@ -275,7 +276,6 @@ gui_nicklist_search_group (struct t_gui_buffer *buffer,
                            const char *name)
 {
     const char *ptr_name;
-    char *error;
     long long id;
 
     if ((!buffer && !from_group)
@@ -287,8 +287,7 @@ gui_nicklist_search_group (struct t_gui_buffer *buffer,
 
     if (strncmp (name, "==id:", 5) == 0)
     {
-        id = strtoll (name + 5, &error, 10);
-        if (error && !error[0])
+        if (util_parse_longlong (name + 5, 10, &id))
             return gui_nicklist_search_group_id (buffer, from_group, id);
     }
 
@@ -570,7 +569,6 @@ gui_nicklist_search_nick (struct t_gui_buffer *buffer,
                           const char *name)
 {
     long long id;
-    char *error;
 
     if ((!buffer && !from_group)
         || !name
@@ -581,8 +579,7 @@ gui_nicklist_search_nick (struct t_gui_buffer *buffer,
 
     if (strncmp (name, "==id:", 5) == 0)
     {
-        id = strtoll (name + 5, &error, 10);
-        if (error && !error[0])
+        if (util_parse_longlong (name + 5, 10, &id))
             return gui_nicklist_search_nick_id (buffer, from_group, id);
     }
 
@@ -1036,9 +1033,7 @@ gui_nicklist_group_set (struct t_gui_buffer *buffer,
                         const char *property, const char *value)
 {
     long long id;
-    long number;
-    char *error;
-    int group_changed;
+    int group_changed, number;
 
     if (!buffer || !group || !property || !value)
         return;
@@ -1047,8 +1042,7 @@ gui_nicklist_group_set (struct t_gui_buffer *buffer,
 
     if (strcmp (property, "id") == 0)
     {
-        id = strtoll (value, &error, 10);
-        if (error && !error[0]
+        if (util_parse_longlong (value, 10, &id)
             && (id != group->id)
             && !gui_nicklist_search_group_id (buffer, NULL, id))
         {
@@ -1064,9 +1058,7 @@ gui_nicklist_group_set (struct t_gui_buffer *buffer,
     }
     else if (strcmp (property, "visible") == 0)
     {
-        error = NULL;
-        number = strtol (value, &error, 10);
-        if (error && !error[0])
+        if (util_parse_int (value, 10, &number))
             group->visible = (number) ? 1 : 0;
         group_changed = 1;
     }
@@ -1158,9 +1150,7 @@ gui_nicklist_nick_set (struct t_gui_buffer *buffer,
                        const char *property, const char *value)
 {
     long long id;
-    long number;
-    char *error;
-    int nick_changed;
+    int nick_changed, number;
 
     if (!buffer || !nick || !property || !value)
         return;
@@ -1169,8 +1159,7 @@ gui_nicklist_nick_set (struct t_gui_buffer *buffer,
 
     if (strcmp (property, "id") == 0)
     {
-        id = strtoll (value, &error, 10);
-        if (error && !error[0]
+        if (util_parse_longlong (value, 10, &id)
             && (id != nick->id)
             && !gui_nicklist_search_nick_id (buffer, NULL, id))
         {
@@ -1198,9 +1187,7 @@ gui_nicklist_nick_set (struct t_gui_buffer *buffer,
     }
     else if (strcmp (property, "visible") == 0)
     {
-        error = NULL;
-        number = strtol (value, &error, 10);
-        if (error && !error[0])
+        if (util_parse_int (value, 10, &number))
             nick->visible = (number) ? 1 : 0;
         nick_changed = 1;
     }
