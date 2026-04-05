@@ -41,6 +41,7 @@
 #include "../core/core-list.h"
 #include "../core/core-string.h"
 #include "../core/core-utf8.h"
+#include "../core/core-util.h"
 #include "../plugins/plugin.h"
 #include "gui-color.h"
 #include "gui-chat.h"
@@ -254,7 +255,7 @@ gui_color_get_custom (const char *color_name)
     static char color[32][96];
     static int index_color = 0;
     char color_fg[32], color_bg[32];
-    char *str_fg, *error, *color_attr;
+    char *str_fg, *color_attr;
     const char *ptr_color_name, *pos_delim, *pos_bg;
 
     /* attribute or other color name (GUI dependent) */
@@ -438,9 +439,7 @@ gui_color_get_custom (const char *color_name)
             fg_term = gui_color_palette_get_alias (str_fg);
             if (fg_term < 0)
             {
-                error = NULL;
-                term_color = (int)strtol (str_fg, &error, 10);
-                if (error && !error[0])
+                if (util_parse_int (str_fg, 10, &term_color))
                 {
                     fg_term = term_color;
                     if (fg_term < 0)
@@ -457,9 +456,7 @@ gui_color_get_custom (const char *color_name)
             bg_term = gui_color_palette_get_alias (pos_bg);
             if (bg_term < 0)
             {
-                error = NULL;
-                term_color = (int)strtol (pos_bg, &error, 10);
-                if (error && !error[0])
+                if (util_parse_int (pos_bg, 10, &term_color))
                 {
                     bg_term = term_color;
                     if (bg_term < 0)
@@ -1286,7 +1283,7 @@ char *
 gui_color_encode_ansi (const char *string)
 {
     const unsigned char *ptr_string;
-    char **out, str_concat[128], str_color[8], *error;
+    char **out, str_concat[128], str_color[8];
     int flag, color, length, ansi_color, fg, bg, attrs;
 
     if (!string)
@@ -1320,9 +1317,7 @@ gui_color_encode_ansi (const char *string)
                             {
                                 memcpy (str_color, ptr_string, 5);
                                 str_color[5] = '\0';
-                                error = NULL;
-                                color = (int)strtol (str_color, &error, 10);
-                                if (error && !error[0])
+                                if (util_parse_int (str_color, 10, &color))
                                 {
                                     snprintf (str_concat, sizeof (str_concat),
                                               "\x1B[38;5;%dm",
@@ -1343,9 +1338,7 @@ gui_color_encode_ansi (const char *string)
                             {
                                 memcpy (str_color, ptr_string, 2);
                                 str_color[2] = '\0';
-                                error = NULL;
-                                color = (int)strtol (str_color, &error, 10);
-                                if (error && !error[0])
+                                if (util_parse_int (str_color, 10, &color))
                                 {
                                     ansi_color = gui_color_weechat_to_ansi (color);
                                     snprintf (str_concat, sizeof (str_concat),
@@ -1370,9 +1363,7 @@ gui_color_encode_ansi (const char *string)
                             {
                                 memcpy (str_color, ptr_string, 5);
                                 str_color[5] = '\0';
-                                error = NULL;
-                                color = (int)strtol (str_color, &error, 10);
-                                if (error && !error[0])
+                                if (util_parse_int (str_color, 10, &color))
                                 {
                                     snprintf (str_concat, sizeof (str_concat),
                                               "\x1B[48;5;%dm",
@@ -1388,9 +1379,7 @@ gui_color_encode_ansi (const char *string)
                             {
                                 memcpy (str_color, ptr_string, 2);
                                 str_color[2] = '\0';
-                                error = NULL;
-                                color = (int)strtol (str_color, &error, 10);
-                                if (error && !error[0])
+                                if (util_parse_int (str_color, 10, &color))
                                 {
                                     ansi_color = gui_color_weechat_to_ansi (color);
                                     snprintf (str_concat, sizeof (str_concat),
@@ -1420,9 +1409,7 @@ gui_color_encode_ansi (const char *string)
                             {
                                 memcpy (str_color, ptr_string, 5);
                                 str_color[5] = '\0';
-                                error = NULL;
-                                color = (int)strtol (str_color, &error, 10);
-                                if (error && !error[0])
+                                if (util_parse_int (str_color, 10, &color))
                                 {
                                     snprintf (str_concat, sizeof (str_concat),
                                               "\x1B[38;5;%dm",
@@ -1443,9 +1430,7 @@ gui_color_encode_ansi (const char *string)
                             {
                                 memcpy (str_color, ptr_string, 2);
                                 str_color[2] = '\0';
-                                error = NULL;
-                                color = (int)strtol (str_color, &error, 10);
-                                if (error && !error[0])
+                                if (util_parse_int (str_color, 10, &color))
                                 {
                                     ansi_color = gui_color_weechat_to_ansi (color);
                                     snprintf (str_concat, sizeof (str_concat),
@@ -1476,9 +1461,7 @@ gui_color_encode_ansi (const char *string)
                                 {
                                     memcpy (str_color, ptr_string, 5);
                                     str_color[5] = '\0';
-                                    error = NULL;
-                                    color = (int)strtol (str_color, &error, 10);
-                                    if (error && !error[0])
+                                    if (util_parse_int (str_color, 10, &color))
                                     {
                                         snprintf (str_concat, sizeof (str_concat),
                                                   "\x1B[48;5;%dm",
@@ -1495,9 +1478,7 @@ gui_color_encode_ansi (const char *string)
                                 {
                                     memcpy (str_color, ptr_string, 2);
                                     str_color[2] = '\0';
-                                    error = NULL;
-                                    color = (int)strtol (str_color, &error, 10);
-                                    if (error && !error[0])
+                                    if (util_parse_int (str_color, 10, &color))
                                     {
                                         ansi_color = gui_color_weechat_to_ansi (color);
                                         snprintf (str_concat, sizeof (str_concat),
@@ -1521,9 +1502,7 @@ gui_color_encode_ansi (const char *string)
                         {
                             memcpy (str_color, ptr_string, 5);
                             str_color[5] = '\0';
-                            error = NULL;
-                            color = (int)strtol (str_color, &error, 10);
-                            if (error && !error[0])
+                            if (util_parse_int (str_color, 10, &color))
                             {
                                 snprintf (str_concat, sizeof (str_concat),
                                           "\x1B[38;5;%dm",
@@ -1595,9 +1574,7 @@ gui_color_encode_ansi (const char *string)
                         {
                             memcpy (str_color, ptr_string, 2);
                             str_color[2] = '\0';
-                            error = NULL;
-                            color = (int)strtol (str_color, &error, 10);
-                            if (error && !error[0]
+                            if (util_parse_int (str_color, 10, &color)
                                 && (color >= 0)
                                 && (color < GUI_COLOR_NUM_COLORS))
                             {
