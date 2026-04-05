@@ -1400,7 +1400,7 @@ gui_chat_hsignal_quote_line_cb (const void *pointer, void *data,
     struct timeval tv;
     struct t_gui_line *ptr_line;
     int is_nick, rc;
-    char str_time[128], *str, *error;
+    char str_time[128], *str;
 
     /* make C compiler happy */
     (void) pointer;
@@ -1415,9 +1415,7 @@ gui_chat_hsignal_quote_line_cb (const void *pointer, void *data,
         hashtable_get (hashtable, "_chat_line_date") : NULL;
     if (ptr_date)
     {
-        error = NULL;
-        number = strtoll (ptr_date, &error, 10);
-        if (error && !error[0])
+        if (util_parse_longlong (ptr_date, 10, &number))
         {
             tv.tv_sec = (time_t)number;
             tv.tv_usec = 0;
@@ -1425,9 +1423,7 @@ gui_chat_hsignal_quote_line_cb (const void *pointer, void *data,
                 hashtable_get (hashtable, "_chat_line_date_usec") : NULL;
             if (ptr_date_usec)
             {
-                error = NULL;
-                number = strtoll (ptr_date_usec, &error, 10);
-                if (error && !error[0])
+                if (util_parse_longlong (ptr_date_usec, 10, &number))
                     tv.tv_usec = (long)number;
             }
             util_strftimeval (str_time, sizeof (str_time),
