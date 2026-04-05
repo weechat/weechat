@@ -32,6 +32,7 @@
 #include "../core/core-hashtable.h"
 #include "../core/core-hook.h"
 #include "../core/core-string.h"
+#include "../core/core-util.h"
 #include "../plugins/plugin.h"
 #include "gui-bar.h"
 #include "gui-bar-window.h"
@@ -280,11 +281,10 @@ gui_focus_info_hashtable_gui_focus_info_cb (const void *pointer, void *data,
                                             const char *info_name,
                                             struct t_hashtable *hashtable)
 {
-    char *error;
-    const char *ptr_value;
-    int x, y;
     struct t_gui_focus_info *focus_info;
     struct t_hashtable *focus_hashtable, *ret_hashtable;
+    const char *ptr_value;
+    int x, y;
 
     /* make C compiler happy */
     (void) pointer;
@@ -298,17 +298,13 @@ gui_focus_info_hashtable_gui_focus_info_cb (const void *pointer, void *data,
     ptr_value = hashtable_get (hashtable, "x");
     if (!ptr_value)
         return NULL;
-    error = NULL;
-    x = (int)strtol (ptr_value, &error, 10);
-    if (!error || error[0])
+    if (!util_parse_int (ptr_value, 10, &x))
         return NULL;
 
     ptr_value = hashtable_get (hashtable, "y");
     if (!ptr_value)
         return NULL;
-    error = NULL;
-    y = (int)strtol (ptr_value, &error, 10);
-    if (!error || error[0])
+    if (!util_parse_int (ptr_value, 10, &y))
         return NULL;
 
     /* get focus info */
