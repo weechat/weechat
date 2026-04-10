@@ -41,6 +41,7 @@
 #include "../../core/core-hook.h"
 #include "../../core/core-log.h"
 #include "../../core/core-string.h"
+#include "../../core/core-util.h"
 #include "../../plugins/plugin.h"
 #include "../gui-window.h"
 #include "../gui-bar.h"
@@ -638,7 +639,7 @@ void
 gui_window_string_apply_color_fg (unsigned char **string, WINDOW *window)
 {
     unsigned char *ptr_string;
-    char str_fg[6], *error;
+    char str_fg[6];
     int fg, extra_attr, flag;
 
     ptr_string = *string;
@@ -659,9 +660,7 @@ gui_window_string_apply_color_fg (unsigned char **string, WINDOW *window)
             {
                 memcpy (str_fg, ptr_string, 5);
                 str_fg[5] = '\0';
-                error = NULL;
-                fg = (int)strtol (str_fg, &error, 10);
-                if (error && !error[0])
+                if (util_parse_int (str_fg, 10, &fg))
                 {
                     gui_window_set_custom_color_fg (window,
                                                     fg | GUI_COLOR_EXTENDED_FLAG | extra_attr);
@@ -685,9 +684,7 @@ gui_window_string_apply_color_fg (unsigned char **string, WINDOW *window)
                 str_fg[0] = ptr_string[0];
                 str_fg[1] = ptr_string[1];
                 str_fg[2] = '\0';
-                error = NULL;
-                fg = (int)strtol (str_fg, &error, 10);
-                if (error && !error[0])
+                if (util_parse_int (str_fg, 10, &fg))
                 {
                     gui_window_set_custom_color_fg (window, fg | extra_attr);
                 }
@@ -710,7 +707,7 @@ void
 gui_window_string_apply_color_bg (unsigned char **string, WINDOW *window)
 {
     unsigned char *ptr_string;
-    char str_bg[6], *error;
+    char str_bg[6];
     int bg;
 
     ptr_string = *string;
@@ -724,9 +721,7 @@ gui_window_string_apply_color_bg (unsigned char **string, WINDOW *window)
             {
                 memcpy (str_bg, ptr_string + 1, 5);
                 str_bg[5] = '\0';
-                error = NULL;
-                bg = (int)strtol (str_bg, &error, 10);
-                if (error && !error[0])
+                if (util_parse_int (str_bg, 10, &bg))
                 {
                     gui_window_set_custom_color_bg (window,
                                                     bg | GUI_COLOR_EXTENDED_FLAG);
@@ -744,9 +739,7 @@ gui_window_string_apply_color_bg (unsigned char **string, WINDOW *window)
                 str_bg[0] = ptr_string[0];
                 str_bg[1] = ptr_string[1];
                 str_bg[2] = '\0';
-                error = NULL;
-                bg = (int)strtol (str_bg, &error, 10);
-                if (error && !error[0])
+                if (util_parse_int (str_bg, 10, &bg))
                 {
                     gui_window_set_custom_color_bg (window, bg);
                 }
@@ -769,7 +762,7 @@ void
 gui_window_string_apply_color_fg_bg (unsigned char **string, WINDOW *window)
 {
     unsigned char *ptr_string;
-    char str_fg[6], str_bg[6], *error;
+    char str_fg[6], str_bg[6];
     int fg, bg, extra_attr, flag;
 
     ptr_string = *string;
@@ -794,12 +787,10 @@ gui_window_string_apply_color_fg_bg (unsigned char **string, WINDOW *window)
             {
                 memcpy (str_fg, ptr_string, 5);
                 str_fg[5] = '\0';
-                error = NULL;
-                fg = (int)strtol (str_fg, &error, 10);
-                if (!error || error[0])
-                    fg = -1;
-                else
+                if (util_parse_int (str_fg, 10, &fg))
                     fg |= GUI_COLOR_EXTENDED_FLAG | extra_attr;
+                else
+                    fg = -1;
             }
             ptr_string += 5;
         }
@@ -819,12 +810,10 @@ gui_window_string_apply_color_fg_bg (unsigned char **string, WINDOW *window)
                 str_fg[0] = ptr_string[0];
                 str_fg[1] = ptr_string[1];
                 str_fg[2] = '\0';
-                error = NULL;
-                fg = (int)strtol (str_fg, &error, 10);
-                if (!error || error[0])
-                    fg = -1;
-                else
+                if (util_parse_int (str_fg, 10, &fg))
                     fg |= extra_attr;
+                else
+                    fg = -1;
             }
             ptr_string += 2;
         }
@@ -846,12 +835,10 @@ gui_window_string_apply_color_fg_bg (unsigned char **string, WINDOW *window)
                 {
                     memcpy (str_bg, ptr_string + 1, 5);
                     str_bg[5] = '\0';
-                    error = NULL;
-                    bg = (int)strtol (str_bg, &error, 10);
-                    if (!error || error[0])
-                        bg = -1;
-                    else
+                    if (util_parse_int (str_bg, 10, &bg))
                         bg |= GUI_COLOR_EXTENDED_FLAG;
+                    else
+                        bg = -1;
                 }
                 ptr_string += 6;
             }
@@ -865,9 +852,7 @@ gui_window_string_apply_color_fg_bg (unsigned char **string, WINDOW *window)
                     str_bg[0] = ptr_string[0];
                     str_bg[1] = ptr_string[1];
                     str_bg[2] = '\0';
-                    error = NULL;
-                    bg = (int)strtol (str_bg, &error, 10);
-                    if (!error || error[0])
+                    if (!util_parse_int (str_bg, 10, &bg))
                         bg = -1;
                 }
                 ptr_string += 2;
@@ -893,7 +878,7 @@ void
 gui_window_string_apply_color_pair (unsigned char **string, WINDOW *window)
 {
     unsigned char *ptr_string;
-    char str_pair[6], *error;
+    char str_pair[6];
     int pair;
 
     ptr_string = *string;
@@ -906,12 +891,8 @@ gui_window_string_apply_color_pair (unsigned char **string, WINDOW *window)
         {
             memcpy (str_pair, ptr_string, 5);
             str_pair[5] = '\0';
-            error = NULL;
-            pair = (int)strtol (str_pair, &error, 10);
-            if (error && !error[0])
-            {
+            if (util_parse_int (str_pair, 10, &pair))
                 gui_window_set_custom_color_pair (window, pair);
-            }
         }
         ptr_string += 5;
     }
@@ -930,7 +911,7 @@ void
 gui_window_string_apply_color_weechat (unsigned char **string, WINDOW *window)
 {
     unsigned char *ptr_string;
-    char str_number[3], *error;
+    char str_number[3];
     int weechat_color;
 
     ptr_string = *string;
@@ -942,13 +923,8 @@ gui_window_string_apply_color_weechat (unsigned char **string, WINDOW *window)
             str_number[0] = ptr_string[0];
             str_number[1] = ptr_string[1];
             str_number[2] = '\0';
-            error = NULL;
-            weechat_color = (int)strtol (str_number, &error, 10);
-            if (error && !error[0])
-            {
-                gui_window_set_weechat_color (window,
-                                              weechat_color);
-            }
+            if (util_parse_int (str_number, 10, &weechat_color))
+                gui_window_set_weechat_color (window, weechat_color);
         }
         ptr_string += 2;
     }
@@ -2517,7 +2493,6 @@ void
 gui_window_bare_display_toggle (const char *delay)
 {
     long seconds;
-    char *error;
 
     gui_window_bare_display ^= 1;
 
@@ -2529,9 +2504,7 @@ gui_window_bare_display_toggle (const char *delay)
             gui_mouse_disable ();
         if (delay)
         {
-            error = NULL;
-            seconds = strtol (delay, &error, 10);
-            if (error && !error[0] && (seconds >= 0))
+            if (util_parse_long (delay, 10, &seconds) && (seconds >= 0))
             {
                 if (gui_window_bare_display_timer)
                 {

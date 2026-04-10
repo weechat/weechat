@@ -417,7 +417,7 @@ int
 util_parse_time (const char *datetime, struct timeval *tv)
 {
     char *string, *pos, *pos2, *pos_colon, *pos_hyphen, *pos_dot;
-    char str_usec[16], *error, str_date[128];
+    char str_usec[16], str_date[128];
     struct tm tm_date, tm_date_gm, tm_date_local, *local_time;
     time_t time_now, time_gm, time_local;
     long long value;
@@ -488,9 +488,7 @@ util_parse_time (const char *datetime, struct timeval *tv)
             {
                 strcat (str_usec, "0");
             }
-            error = NULL;
-            value = strtoll (str_usec, &error, 10);
-            if (error && !error[0])
+            if (util_parse_longlong (str_usec, 10, &value))
             {
                 /*
                  * just in case: this should not happen as minus is not
@@ -655,9 +653,7 @@ util_parse_time (const char *datetime, struct timeval *tv)
     else
     {
         /* timestamp format: "1704402062" */
-        error = NULL;
-        value = strtoll (string, &error, 10);
-        if (error && !error[0] && (value >= 0))
+        if (util_parse_longlong (string, 10, &value) && (value >= 0))
         {
             tv->tv_sec = (time_t)value;
             rc = 1;
@@ -777,9 +773,10 @@ util_parse_delay (const char *string_delay, unsigned long long default_factor,
     if (!str_number)
         return 0;
 
+    errno = 0;
     error = NULL;
     *delay = strtoull (str_number, &error, 10);
-    if (!error || error[0])
+    if ((errno == ERANGE) || !error || error[0])
     {
         free (str_number);
         *delay = 0;
@@ -846,9 +843,10 @@ util_version_number (const char *version)
             buf[index_buf] = '\0';
             if (buf[0])
             {
+                errno = 0;
                 error = NULL;
                 number = strtoul (buf, &error, 10);
-                if (error && !error[0])
+                if ((errno != ERANGE) && error && !error[0])
                 {
                     if (number > 0xFF)
                         number = 0xFF;

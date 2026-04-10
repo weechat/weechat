@@ -698,6 +698,7 @@ TEST(CoreUtil, GetTimeDiff)
 TEST(CoreUtil, ParseDelay)
 {
     unsigned long long delay;
+    char str_delay[128];
 
     /* error: no delay */
     LONGS_EQUAL(0, util_parse_delay ("123", 1ULL, NULL));
@@ -721,8 +722,10 @@ TEST(CoreUtil, ParseDelay)
     /* error: bad number */
     WEE_PARSE_DELAY(0, 0ULL, "abcd", 1LL);
 
-    /* error: bad delay */
+    /* invalid unsigned long long: outside range (0, ULLONG_MAX) */
     WEE_PARSE_DELAY(0, 0ULL, "-123", 1LL);
+    snprintf (str_delay, sizeof (str_delay), "%llu1", ULLONG_MAX);
+    LONGS_EQUAL(0, util_parse_delay (str_delay, 10, &delay));
 
     /* tests with delay == 0 */
     WEE_PARSE_DELAY(1, 0ULL, "0", 1ULL);
@@ -764,9 +767,15 @@ TEST(CoreUtil, ParseDelay)
 
 TEST(CoreUtil, VersionNumber)
 {
+    char str_version[256];
+
     CHECK(util_version_number (NULL) == 0);
     CHECK(util_version_number ("") == 0);
     CHECK(util_version_number ("abc") == 0);
+
+    /* invalid unsigned long: outside range (0, ULONG_MAX) */
+    snprintf (str_version, sizeof (str_version), "0.0.%lu1", ULONG_MAX);
+    CHECK(util_version_number (str_version) == 0);
 
     CHECK(util_version_number ("0.3.2-dev") == 0x00030200);
     CHECK(util_version_number ("0.3.2-rc1") == 0x00030200);

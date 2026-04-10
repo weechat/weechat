@@ -2522,7 +2522,8 @@ IRC_PROTOCOL_CALLBACK(notice)
                                                       "echo-message");
         msg_already_received = weechat_hashtable_has_key (
             ctxt->server->echo_msg_recv, ctxt->irc_message);
-        if (!msg_already_received && cap_echo_message)
+        if (!msg_already_received && cap_echo_message
+            && (strcmp (ctxt->nick, pos_target) == 0))
         {
             time_now = time (NULL);
             weechat_hashtable_set (ctxt->server->echo_msg_recv,
@@ -3228,7 +3229,8 @@ IRC_PROTOCOL_CALLBACK(privmsg)
         {
             msg_already_received = weechat_hashtable_has_key (
                 ctxt->server->echo_msg_recv, ctxt->irc_message);
-            if (!msg_already_received && cap_echo_message)
+            if (!msg_already_received && cap_echo_message
+                && (strcmp (ctxt->nick, remote_nick) == 0))
             {
                 time_now = time (NULL);
                 weechat_hashtable_set (ctxt->server->echo_msg_recv,

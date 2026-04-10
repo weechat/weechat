@@ -1,3 +1,12 @@
+weechat (4.8.1-1) unstable; urgency=medium
+
+  * New upstream release
+  * Bump Standards-Version to 4.7.3
+  * Update debian/copyright file (new year)
+  * Remove redundant priority optional field from debian/control
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Fri, 23 Jan 2026 22:02:31 +0000
+
 weechat (4.7.2-1) unstable; urgency=medium
 
   * New upstream release (Closes: #1119787)
@@ -40,6 +49,12 @@ weechat (4.4.2-1) unstable; urgency=medium
   * New upstream release
     - fix crash where exiting (Closes: #1076532)
     - fix a minor security issue (Closes: #1081942)
+  * Fix possible privacy breach with html documentation which includes
+    stylesheets and fonts (font-awesome) hosted on remote CDN (Cloudflare)
+    by replacing them during build process by the ones provided in
+    fonts-font-awesome package (also added as dependency on weechat-doc).
+  * Refresh weechat-doc with minor changes and add some documentation in
+    Serbian and Czech.
   * Bump Standards-Version to 4.7.0
 
  -- Emmanuel Bouthenot <kolter@debian.org>  Sun, 22 Sep 2024 13:08:28 +0000

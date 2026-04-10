@@ -41,6 +41,7 @@
 #include "../core-log.h"
 #include "../core-string.h"
 #include "../core-url.h"
+#include "../core-util.h"
 #include "../../gui/gui-chat.h"
 #include "../../plugins/plugin.h"
 
@@ -88,9 +89,9 @@ hook_process_hashtable (struct t_weechat_plugin *plugin,
 {
     struct t_hook *new_hook;
     struct t_hook_process *new_hook_process;
-    char *stdout_buffer, *stderr_buffer, *error;
+    char *stdout_buffer, *stderr_buffer;
     const char *ptr_value;
-    long number;
+    int number;
 
     stdout_buffer = NULL;
     stderr_buffer = NULL;
@@ -149,12 +150,10 @@ hook_process_hashtable (struct t_weechat_plugin *plugin,
         ptr_value = hashtable_get (options, "buffer_flush");
         if (ptr_value && ptr_value[0])
         {
-            error = NULL;
-            number = strtol (ptr_value, &error, 10);
-            if (error && !error[0]
+            if (util_parse_int (ptr_value, 10, &number)
                 && (number >= 1) && (number <= HOOK_PROCESS_BUFFER_SIZE))
             {
-                new_hook_process->buffer_flush = (int)number;
+                new_hook_process->buffer_flush = number;
             }
         }
     }

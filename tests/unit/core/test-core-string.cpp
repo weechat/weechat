@@ -2971,11 +2971,11 @@ TEST(CoreString, GetPriorityAndName)
     LONGS_EQUAL(500, priority);
     STRCMP_EQUAL("", ptr_name);
 
-    /* "|" => (0, "") */
+    /* "|" => (default_priority, "") */
     priority = -1;
     ptr_name = NULL;
     string_get_priority_and_name (delimiter, &priority, &ptr_name, 500);
-    LONGS_EQUAL(0, priority);
+    LONGS_EQUAL(500, priority);
     STRCMP_EQUAL("", ptr_name);
 
     /* "test" => (default_priority, "test") */
@@ -2985,11 +2985,11 @@ TEST(CoreString, GetPriorityAndName)
     LONGS_EQUAL(500, priority);
     STRCMP_EQUAL("test", ptr_name);
 
-    /* "|test" => (0, "test") */
+    /* "|test" => (default_priority, "test") */
     priority = -1;
     ptr_name = NULL;
     string_get_priority_and_name (name_prio_empty, &priority, &ptr_name, 500);
-    LONGS_EQUAL(0, priority);
+    LONGS_EQUAL(500, priority);
     STRCMP_EQUAL("test", ptr_name);
 
     /* "1234|test" => (1234, "test") */

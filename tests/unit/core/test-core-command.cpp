@@ -296,7 +296,7 @@ TEST(CoreCommand, Bar)
 
 TEST(CoreCommand, Buffer)
 {
-    char string[1024];
+    char command[1024], string[1024];
 
     WEE_CMD_CORE_ERROR_GENERIC("/buffer xxx");
 
@@ -336,11 +336,57 @@ TEST(CoreCommand, Buffer)
     /* /buffer move */
     WEE_CMD_CORE_MIN_ARGS("/buffer move", "/buffer move");
     WEE_CMD_CORE_ERROR_MSG("/buffer move xxx", "Invalid buffer number: \"xxx\"");
+    snprintf (command, sizeof (command), "/buffer move +%d", INT_MAX - 1);
+    snprintf (string, sizeof (string), "Invalid buffer number: \"+%d\"", INT_MAX - 1);
+    WEE_CMD_CORE_ERROR_MSG(command, string);
+    snprintf (command, sizeof (command), "/buffer move -%d", INT_MAX - 1);
+    snprintf (string, sizeof (string), "Invalid buffer number: \"-%d\"", INT_MAX - 1);
+    WEE_CMD_CORE_ERROR_MSG(command, string);
+    snprintf (command, sizeof (command), "/buffer move +%d", INT_MAX);
+    snprintf (string, sizeof (string), "Invalid buffer number: \"+%d\"", INT_MAX);
+    WEE_CMD_CORE_ERROR_MSG(command, string);
+    snprintf (command, sizeof (command), "/buffer move -%d", INT_MAX);
+    snprintf (string, sizeof (string), "Invalid buffer number: \"-%d\"", INT_MAX);
+    WEE_CMD_CORE_ERROR_MSG(command, string);
+    snprintf (command, sizeof (command), "/buffer move +%ld", ((long)INT_MAX) + 1);
+    snprintf (string, sizeof (string), "Invalid buffer number: \"+%ld\"", ((long)INT_MAX) + 1);
+    WEE_CMD_CORE_ERROR_MSG(command, string);
+    snprintf (command, sizeof (command), "/buffer move -%ld", ((long)INT_MAX) + 1);
+    snprintf (string, sizeof (string), "Invalid buffer number: \"-%ld\"", ((long)INT_MAX) + 1);
+    WEE_CMD_CORE_ERROR_MSG(command, string);
+    snprintf (command, sizeof (command), "/buffer move +%d", GUI_BUFFER_NUMBER_MAX - 1);
+    WEE_CMD_CORE(command);
+    snprintf (command, sizeof (command), "/buffer move -%d", GUI_BUFFER_NUMBER_MAX - 1);
+    snprintf (string, sizeof (string),
+              "Buffer number %d is out of range (it must be between 1 and %d)",
+              gui_buffers->number - (GUI_BUFFER_NUMBER_MAX - 1),
+              GUI_BUFFER_NUMBER_MAX);
+    WEE_CMD_CORE_ERROR_MSG(command, string);
+    snprintf (command, sizeof (command), "/buffer move +%d", GUI_BUFFER_NUMBER_MAX);
+    snprintf (string, sizeof (string),
+              "Buffer number %d is out of range (it must be between 1 and %d)",
+              gui_buffers->number + GUI_BUFFER_NUMBER_MAX,
+              GUI_BUFFER_NUMBER_MAX);
+    WEE_CMD_CORE_ERROR_MSG(command, string);
+    snprintf (command, sizeof (command), "/buffer move -%d", GUI_BUFFER_NUMBER_MAX);
+    snprintf (string, sizeof (string),
+              "Buffer number %d is out of range (it must be between 1 and %d)",
+              gui_buffers->number - GUI_BUFFER_NUMBER_MAX,
+              GUI_BUFFER_NUMBER_MAX);
+    WEE_CMD_CORE_ERROR_MSG(command, string);
+    snprintf (command, sizeof (command), "/buffer move +%d", GUI_BUFFER_NUMBER_MAX + 1);
+    snprintf (string, sizeof (string),
+              "Invalid buffer number: \"+%d\"", GUI_BUFFER_NUMBER_MAX + 1);
+    WEE_CMD_CORE_ERROR_MSG(command, string);
+    snprintf (command, sizeof (command), "/buffer move -%d", GUI_BUFFER_NUMBER_MAX + 1);
+    snprintf (string, sizeof (string),
+              "Invalid buffer number: \"-%d\"", GUI_BUFFER_NUMBER_MAX + 1);
+    WEE_CMD_CORE_ERROR_MSG(command, string);
     WEE_CMD_CORE("/buffer move -");
     WEE_CMD_CORE("/buffer move +");
-    WEE_CMD_CORE("/buffer add -switch test");
-    WEE_CMD_CORE("/buffer move -1");
+    WEE_CMD_CORE("/buffer add test");
     WEE_CMD_CORE("/buffer move +1");
+    WEE_CMD_CORE("/buffer move -1");
     WEE_CMD_CORE("/buffer close core.test");
 
     /* /buffer swap */
@@ -484,7 +530,7 @@ TEST(CoreCommand, Buffer)
 
     /* smart jump */
     WEE_CMD_CORE_ERROR_MSG("/buffer *xxx", "Invalid buffer number: \"xxx\"");
-    WEE_CMD_CORE("/buffer *");
+    WEE_CMD_CORE_ERROR_GENERIC("/buffer *");
     WEE_CMD_CORE("/buffer *2");
 
     /* jump by id, number or name */
@@ -493,8 +539,8 @@ TEST(CoreCommand, Buffer)
     WEE_CMD_CORE("/buffer 1");
     WEE_CMD_CORE("/buffer core.test");
     WEE_CMD_CORE("/buffer core.weechat");
-    snprintf (string, sizeof (string), "/buffer %lld", gui_buffers->id);
-    WEE_CMD_CORE(string);
+    snprintf (command, sizeof (command), "/buffer %lld", gui_buffers->id);
+    WEE_CMD_CORE(command);
     WEE_CMD_CORE("/buffer close core.test");
 }
 

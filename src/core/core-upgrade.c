@@ -410,7 +410,7 @@ upgrade_weechat_read_buffer (struct t_infolist *infolist)
     struct t_gui_buffer *ptr_buffer;
     const char *key, *var_name, *name, *plugin_name, *ptr_id;
     const char *str;
-    char option_name[64], *option_key, *option_var, *error;
+    char option_name[64], *option_key, *option_var;
     int index, main_buffer;
     long long id;
 
@@ -421,9 +421,7 @@ upgrade_weechat_read_buffer (struct t_infolist *infolist)
         ptr_id = infolist_string (infolist, "id");
         if (ptr_id)
         {
-            error = NULL;
-            id = strtoll (ptr_id, &error, 10);
-            if (!error || error[0])
+            if (!util_parse_longlong (ptr_id, 10, &id))
                 id = -1;
         }
     }
@@ -712,7 +710,6 @@ upgrade_weechat_read_nicklist (struct t_infolist *infolist)
 {
     struct t_gui_nick_group *ptr_group;
     const char *type, *name, *group_name, *ptr_id;
-    char *error;
     long long id;
 
     if (!upgrade_current_buffer)
@@ -731,9 +728,7 @@ upgrade_weechat_read_nicklist (struct t_infolist *infolist)
         ptr_id = infolist_string (infolist, "id");
         if (ptr_id)
         {
-            error = NULL;
-            id = strtoll (ptr_id, &error, 10);
-            if (!error || error[0])
+            if (!util_parse_longlong (ptr_id, 10, &id))
                 id = -1;
         }
     }

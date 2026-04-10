@@ -560,9 +560,7 @@ void
 hook_set (struct t_hook *hook, const char *property, const char *value)
 {
     ssize_t num_written;
-    char *error;
-    long number;
-    int rc;
+    int rc, number;
 
     /* invalid hook? */
     if (!hook_valid (hook))
@@ -605,22 +603,20 @@ hook_set (struct t_hook *hook, const char *property, const char *value)
             && (hook->type == HOOK_TYPE_PROCESS)
             && (HOOK_PROCESS(hook, child_pid) > 0))
         {
-            error = NULL;
-            number = strtol (value, &error, 10);
-            if (!error || error[0])
+            if (!util_parse_int (value, 10, &number))
             {
                 /* not a number? look for signal by name */
                 number = signal_search_name (value);
             }
             if (number >= 0)
             {
-                rc = kill (HOOK_PROCESS(hook, child_pid), (int)number);
+                rc = kill (HOOK_PROCESS(hook, child_pid), number);
                 if (rc < 0)
                 {
                     gui_chat_printf (NULL,
                                      _("%sError sending signal %d to pid %d: %s"),
                                      gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                     (int)number,
+                                     number,
                                      HOOK_PROCESS(hook, child_pid),
                                      strerror (errno));
                 }
@@ -633,9 +629,7 @@ hook_set (struct t_hook *hook, const char *property, const char *value)
             && ((hook->type == HOOK_TYPE_COMMAND)
                 || (hook->type == HOOK_TYPE_COMMAND_RUN)))
         {
-            error = NULL;
-            number = strtol (value, &error, 10);
-            if (error && !error[0])
+            if (util_parse_int (value, 10, &number))
             {
                 switch (hook->type)
                 {

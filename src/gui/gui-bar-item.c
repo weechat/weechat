@@ -2153,7 +2153,6 @@ gui_bar_item_focus_buffer_nicklist_cb (const void *pointer,
     const char *str_window, *str_buffer, *str_bar_item_line;
     struct t_gui_window *window;
     struct t_gui_buffer *buffer;
-    char *error;
 
     /* make C compiler happy */
     (void) pointer;
@@ -2161,6 +2160,8 @@ gui_bar_item_focus_buffer_nicklist_cb (const void *pointer,
 
     str_bar_item_line = hashtable_get (info, "_bar_item_line");
     if (!str_bar_item_line || !str_bar_item_line[0])
+        return NULL;
+    if (!util_parse_int (str_bar_item_line, 10, &bar_item_line))
         return NULL;
 
     /* get window */
@@ -2191,11 +2192,6 @@ gui_bar_item_focus_buffer_nicklist_cb (const void *pointer,
         buffer = (struct t_gui_buffer *)value;
     }
     if (!buffer)
-        return NULL;
-
-    error = NULL;
-    bar_item_line = (int) strtol (str_bar_item_line, &error, 10);
-    if (!error || error[0])
         return NULL;
 
     i = 0;

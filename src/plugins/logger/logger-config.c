@@ -703,7 +703,7 @@ logger_config_init (void)
                ".1; an integer number with a suffix is allowed: b = bytes "
                "(default if no unit given), k = kilobytes, m = megabytes, "
                "g = gigabytes, t = terabytes; example: \"2g\" causes a rotation "
-               "if the file size is > 2,000,000,000 bytes; if set to \"0\", "
+               "if the file size is greater than 2 GB; if set to \"0\", "
                "no rotation is performed (unlimited log size); WARNING: before "
                "changing this option, you should first set the compression type "
                "via option logger.file.rotation_compression_type"),

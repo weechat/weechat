@@ -46,6 +46,7 @@
 #include "core-infolist.h"
 #include "core-log.h"
 #include "core-string.h"
+#include "core-util.h"
 #include "core-version.h"
 #include "../gui/gui-color.h"
 #include "../gui/gui-chat.h"
@@ -703,9 +704,8 @@ config_file_new_option (struct t_config_file *config_file,
                         void *callback_delete_data)
 {
     struct t_config_option *new_option;
-    int var_type, int_value, argc, i, index_value;
-    long number;
-    char *error, *pos, *option_name, *parent_name;
+    int var_type, int_value, argc, i, index_value, number;
+    char *pos, *option_name, *parent_name;
 
     new_option = NULL;
     option_name = NULL;
@@ -818,9 +818,7 @@ config_file_new_option (struct t_config_file *config_file,
                 new_option->max = max;
                 if (default_value)
                 {
-                    error = NULL;
-                    number = strtol (default_value, &error, 10);
-                    if (!error || error[0])
+                    if (!util_parse_int (default_value, 10, &number))
                         number = 0;
                     if (number < min)
                         number = min;
@@ -833,9 +831,7 @@ config_file_new_option (struct t_config_file *config_file,
                 }
                 if (value)
                 {
-                    error = NULL;
-                    number = strtol (value, &error, 10);
-                    if (!error || error[0])
+                    if (!util_parse_int (value, 10, &number))
                         number = 0;
                     if (number < min)
                         number = min;
@@ -1404,9 +1400,7 @@ int
 config_file_option_set (struct t_config_option *option, const char *value,
                         int run_callback)
 {
-    int value_int, i, rc, new_value_ok, old_value_was_null, old_value;
-    long number;
-    char *error;
+    int value_int, i, rc, new_value_ok, old_value_was_null, old_value, number;
 
     if (!option)
         return WEECHAT_CONFIG_OPTION_SET_ERROR;
@@ -1493,10 +1487,8 @@ config_file_option_set (struct t_config_option *option, const char *value,
                     new_value_ok = 0;
                     if (strncmp (value, "++", 2) == 0)
                     {
-                        error = NULL;
-                        number = strtol (value + 2, &error, 10);
-                        if (error && !error[0]
-                            && (long)old_value + number <= (long)(option->max))
+                        if (util_parse_int (value + 2, 10, &number)
+                            && ((long)old_value + (long)number <= (long)(option->max)))
                         {
                             value_int = old_value + number;
                             new_value_ok = 1;
@@ -1504,10 +1496,8 @@ config_file_option_set (struct t_config_option *option, const char *value,
                     }
                     else if (strncmp (value, "--", 2) == 0)
                     {
-                        error = NULL;
-                        number = strtol (value + 2, &error, 10);
-                        if (error && !error[0]
-                            && (long)old_value - number >= (long)(option->min))
+                        if (util_parse_int (value + 2, 10, &number)
+                            && ((long)old_value - (long)number >= (long)(option->min)))
                         {
                             value_int = old_value - number;
                             new_value_ok = 1;
@@ -1515,20 +1505,16 @@ config_file_option_set (struct t_config_option *option, const char *value,
                     }
                     else
                     {
-                        error = NULL;
-                        number = strtol (value, &error, 10);
-                        if (error && !error[0])
+                        if (util_parse_int (value, 10, &number))
                         {
                             value_int = number;
-                            if ((value_int >= option->min)
-                                && (value_int <= option->max))
+                            if ((value_int >= option->min) && (value_int <= option->max))
                                 new_value_ok = 1;
                         }
                     }
                     if (new_value_ok)
                     {
-                        if (old_value_was_null
-                            || (value_int != old_value))
+                        if (old_value_was_null || (value_int != old_value))
                         {
                             CONFIG_INTEGER(option) = value_int;
                             rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
@@ -1572,9 +1558,7 @@ config_file_option_set (struct t_config_option *option, const char *value,
                     new_value_ok = 0;
                     if (strncmp (value, "++", 2) == 0)
                     {
-                        error = NULL;
-                        number = strtol (value + 2, &error, 10);
-                        if (error && !error[0])
+                        if (util_parse_int (value + 2, 10, &number))
                         {
                             if (gui_color_assign_by_diff (&value_int,
                                                           gui_color_get_name (old_value),
@@ -1584,9 +1568,7 @@ config_file_option_set (struct t_config_option *option, const char *value,
                     }
                     else if (strncmp (value, "--", 2) == 0)
                     {
-                        error = NULL;
-                        number = strtol (value + 2, &error, 10);
-                        if (error && !error[0])
+                        if (util_parse_int (value + 2, 10, &number))
                         {
                             if (gui_color_assign_by_diff (&value_int,
                                                           gui_color_get_name (old_value),
@@ -1601,8 +1583,7 @@ config_file_option_set (struct t_config_option *option, const char *value,
                     }
                     if (new_value_ok)
                     {
-                        if (old_value_was_null
-                            || (value_int != old_value))
+                        if (old_value_was_null || (value_int != old_value))
                         {
                             CONFIG_COLOR(option) = value_int;
                             rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
@@ -1631,9 +1612,7 @@ config_file_option_set (struct t_config_option *option, const char *value,
                     value_int = -1;
                     if (strncmp (value, "++", 2) == 0)
                     {
-                        error = NULL;
-                        number = strtol (value + 2, &error, 10);
-                        if (error && !error[0])
+                        if (util_parse_int (value + 2, 10, &number))
                         {
                             number = number % (option->max + 1);
                             value_int = (old_value + number) %
@@ -1642,9 +1621,7 @@ config_file_option_set (struct t_config_option *option, const char *value,
                     }
                     else if (strncmp (value, "--", 2) == 0)
                     {
-                        error = NULL;
-                        number = strtol (value + 2, &error, 10);
-                        if (error && !error[0])
+                        if (util_parse_int (value + 2, 10, &number))
                         {
                             number = number % (option->max + 1);
                             value_int = (old_value + (option->max + 1) - number) %
@@ -1664,8 +1641,7 @@ config_file_option_set (struct t_config_option *option, const char *value,
                     }
                     if (value_int >= 0)
                     {
-                        if (old_value_was_null
-                            || (value_int != old_value))
+                        if (old_value_was_null || (value_int != old_value))
                         {
                             CONFIG_ENUM(option) = value_int;
                             rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
@@ -1888,9 +1864,7 @@ config_file_option_set_default (struct t_config_option *option,
                                 const char *value,
                                 int run_callback)
 {
-    int value_int, i, rc, new_value_ok, old_value_was_null, old_value;
-    long number;
-    char *error;
+    int value_int, i, rc, new_value_ok, old_value_was_null, old_value, number;
 
     if (!option)
         return WEECHAT_CONFIG_OPTION_SET_ERROR;
@@ -1965,42 +1939,34 @@ config_file_option_set_default (struct t_config_option *option,
                     new_value_ok = 0;
                     if (strncmp (value, "++", 2) == 0)
                     {
-                        error = NULL;
-                        number = strtol (value + 2, &error, 10);
-                        if (error && !error[0])
+                        if (util_parse_int (value + 2, 10, &number)
+                            && ((long)old_value + (long)number <= (long)(option->max)))
                         {
                             value_int = old_value + number;
-                            if (value_int <= option->max)
-                                new_value_ok = 1;
+                            new_value_ok = 1;
                         }
                     }
                     else if (strncmp (value, "--", 2) == 0)
                     {
-                        error = NULL;
-                        number = strtol (value + 2, &error, 10);
-                        if (error && !error[0])
+                        if (util_parse_int (value + 2, 10, &number)
+                            && ((long)old_value - (long)number >= (long)(option->min)))
                         {
                             value_int = old_value - number;
-                            if (value_int >= option->min)
-                                new_value_ok = 1;
+                            new_value_ok = 1;
                         }
                     }
                     else
                     {
-                        error = NULL;
-                        number = strtol (value, &error, 10);
-                        if (error && !error[0])
+                        if (util_parse_int (value, 10, &number))
                         {
                             value_int = number;
-                            if ((value_int >= option->min)
-                                && (value_int <= option->max))
+                            if ((value_int >= option->min) && (value_int <= option->max))
                                 new_value_ok = 1;
                         }
                     }
                     if (new_value_ok)
                     {
-                        if (old_value_was_null
-                            || (value_int != old_value))
+                        if (old_value_was_null || (value_int != old_value))
                         {
                             CONFIG_INTEGER_DEFAULT(option) = value_int;
                             rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
@@ -2044,9 +2010,7 @@ config_file_option_set_default (struct t_config_option *option,
                     new_value_ok = 0;
                     if (strncmp (value, "++", 2) == 0)
                     {
-                        error = NULL;
-                        number = strtol (value + 2, &error, 10);
-                        if (error && !error[0])
+                        if (util_parse_int (value + 2, 10, &number))
                         {
                             if (gui_color_assign_by_diff (&value_int,
                                                           gui_color_get_name (old_value),
@@ -2056,9 +2020,7 @@ config_file_option_set_default (struct t_config_option *option,
                     }
                     else if (strncmp (value, "--", 2) == 0)
                     {
-                        error = NULL;
-                        number = strtol (value + 2, &error, 10);
-                        if (error && !error[0])
+                        if (util_parse_int (value + 2, 10, &number))
                         {
                             if (gui_color_assign_by_diff (&value_int,
                                                           gui_color_get_name (old_value),
@@ -2073,8 +2035,7 @@ config_file_option_set_default (struct t_config_option *option,
                     }
                     if (new_value_ok)
                     {
-                        if (old_value_was_null
-                            || (value_int != old_value))
+                        if (old_value_was_null || (value_int != old_value))
                         {
                             CONFIG_COLOR_DEFAULT(option) = value_int;
                             rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
@@ -2103,9 +2064,7 @@ config_file_option_set_default (struct t_config_option *option,
                     value_int = -1;
                     if (strncmp (value, "++", 2) == 0)
                     {
-                        error = NULL;
-                        number = strtol (value + 2, &error, 10);
-                        if (error && !error[0])
+                        if (util_parse_int (value + 2, 10, &number))
                         {
                             number = number % (option->max + 1);
                             value_int = (old_value + number) %
@@ -2114,9 +2073,7 @@ config_file_option_set_default (struct t_config_option *option,
                     }
                     else if (strncmp (value, "--", 2) == 0)
                     {
-                        error = NULL;
-                        number = strtol (value + 2, &error, 10);
-                        if (error && !error[0])
+                        if (util_parse_int (value + 2, 10, &number))
                         {
                             number = number % (option->max + 1);
                             value_int = (old_value + (option->max + 1) - number) %
@@ -2136,8 +2093,7 @@ config_file_option_set_default (struct t_config_option *option,
                     }
                     if (value_int >= 0)
                     {
-                        if (old_value_was_null
-                            || (value_int != old_value))
+                        if (old_value_was_null || (value_int != old_value))
                         {
                             CONFIG_ENUM_DEFAULT(option) = value_int;
                             rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
@@ -3156,7 +3112,7 @@ config_file_write_internal (struct t_config_file *config_file,
 {
     int rc;
     long file_perms;
-    char *filename, *filename2, resolved_path[PATH_MAX], *error;
+    char *filename, *filename2, resolved_path[PATH_MAX];
     struct t_config_section *ptr_section;
     struct t_config_option *ptr_option;
 
@@ -3307,9 +3263,7 @@ config_file_write_internal (struct t_config_file *config_file,
     config_file->file = NULL;
 
     /* update file mode */
-    error = NULL;
-    file_perms = strtol (CONFIG_STRING(config_look_config_permissions), &error, 8);
-    if (!error || error[0])
+    if (!util_parse_long (CONFIG_STRING(config_look_config_permissions), 8, &file_perms))
         file_perms = 0600;
     if (chmod (filename2, file_perms) < 0)
     {
@@ -3382,18 +3336,15 @@ config_file_write (struct t_config_file *config_file)
 int
 config_file_parse_version (const char *version)
 {
-    long number;
-    char *error;
+    int number;
 
     if (!version)
         return -1;
 
-    error = NULL;
-    number = strtoll (version, &error, 10);
-    if (!error || error[0])
+    if (!util_parse_int (version, 10, &number) || (number < 1))
         return -1;
 
-    return (number < 1) ? -1 : (int)number;
+    return number;
 }
 
 /*

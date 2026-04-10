@@ -50,6 +50,7 @@
 #include "core-proxy.h"
 #include "core-string.h"
 #include "core-sys.h"
+#include "core-util.h"
 #include "core-version.h"
 #include "../gui/gui-bar.h"
 #include "../gui/gui-bar-item.h"
@@ -2147,19 +2148,14 @@ void
 config_weechat_palette_change_cb (const void *pointer, void *data,
                                   struct t_config_option *option)
 {
-    char *error;
     int number;
 
     /* make C compiler happy */
     (void) pointer;
     (void) data;
 
-    error = NULL;
-    number = (int)strtol (option->name, &error, 10);
-    if (error && !error[0])
-    {
+    if (util_parse_int (option->name, 10, &number))
         gui_color_palette_add (number, CONFIG_STRING(option));
-    }
 }
 
 /*
@@ -2174,7 +2170,6 @@ config_weechat_palette_create_option_cb (const void *pointer, void *data,
                                          const char *value)
 {
     struct t_config_option *ptr_option;
-    char *error;
     int rc, number;
 
     /* make C compiler happy */
@@ -2183,9 +2178,7 @@ config_weechat_palette_create_option_cb (const void *pointer, void *data,
 
     rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
 
-    error = NULL;
-    number = (int)strtol (option_name, &error, 10);
-    if (error && !error[0])
+    if (util_parse_int (option_name, 10, &number))
     {
         if (option_name)
         {
@@ -2243,7 +2236,6 @@ config_weechat_palette_delete_option_cb (const void *pointer, void *data,
                                          struct t_config_section *section,
                                          struct t_config_option *option)
 {
-    char *error;
     int number;
 
     /* make C compiler happy */
@@ -2252,9 +2244,7 @@ config_weechat_palette_delete_option_cb (const void *pointer, void *data,
     (void) config_file;
     (void) section;
 
-    error = NULL;
-    number = (int)strtol (option->name, &error, 10);
-    if (error && !error[0])
+    if (util_parse_int (option->name, 10, &number))
         gui_color_palette_remove (number);
 
     config_file_option_free (option, 1);
@@ -2521,10 +2511,9 @@ config_weechat_layout_read_cb (const void *pointer, void *data,
                                struct t_config_section *section,
                                const char *option_name, const char *value)
 {
-    int argc, force_current_layout;
-    char **argv, *pos, *layout_name, *error1, *error2, *error3, *error4;
+    int argc, force_current_layout, number1, number2, number3, number4;
+    char **argv, *pos, *layout_name;
     const char *ptr_option_name;
-    long number1, number2, number3, number4;
     struct t_gui_layout *ptr_layout;
     struct t_gui_layout_window *parent;
 
@@ -2582,9 +2571,7 @@ config_weechat_layout_read_cb (const void *pointer, void *data,
         {
             if (argc >= 3)
             {
-                error1 = NULL;
-                number1 = strtol (argv[2], &error1, 10);
-                if (error1 && !error1[0])
+                if (util_parse_int (argv[2], 10, &number1))
                     gui_layout_buffer_add (ptr_layout, argv[0], argv[1], number1);
             }
             string_free_split (argv);
@@ -2601,16 +2588,10 @@ config_weechat_layout_read_cb (const void *pointer, void *data,
         {
             if (argc >= 6)
             {
-                error1 = NULL;
-                number1 = strtol (argv[0], &error1, 10);
-                error2 = NULL;
-                number2 = strtol (argv[1], &error2, 10);
-                error3 = NULL;
-                number3 = strtol (argv[2], &error3, 10);
-                error4 = NULL;
-                number4 = strtol (argv[3], &error4, 10);
-                if (error1 && !error1[0] && error2 && !error2[0]
-                    && error3 && !error3[0] && error4 && !error4[0])
+                if (util_parse_int (argv[0], 10, &number1)
+                    && util_parse_int (argv[1], 10, &number2)
+                    && util_parse_int (argv[2], 10, &number3)
+                    && util_parse_int (argv[3], 10, &number4))
                 {
                     parent = gui_layout_window_search_by_id (ptr_layout->layout_windows,
                                                              number2);

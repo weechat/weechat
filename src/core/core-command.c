@@ -240,8 +240,7 @@ command_bar_list (int full)
 COMMAND_CALLBACK(bar)
 {
     int i, type, position, number, update;
-    long value;
-    char *error, *str_type, *pos_condition, *name;
+    char *str_type, *pos_condition, *name;
     struct t_gui_bar *ptr_bar, *ptr_bar2, *ptr_next_bar;
     struct t_gui_bar_item *ptr_item;
     struct t_gui_window *ptr_window;
@@ -331,10 +330,7 @@ COMMAND_CALLBACK(bar)
             free (str_type);
             return WEECHAT_RC_ERROR;
         }
-        error = NULL;
-        value = strtol (argv[5], &error, 10);
-        (void) value;
-        if (!error || error[0])
+        if (!util_parse_int (argv[5], 10, NULL))
         {
             gui_chat_printf (NULL,
                              _("%sInvalid size \"%s\" for bar \"%s\""),
@@ -572,9 +568,7 @@ COMMAND_CALLBACK(bar)
         else
         {
             ptr_window = NULL;
-            error = NULL;
-            number = (int)strtol (argv[3], &error, 10);
-            if (error && !error[0])
+            if (util_parse_int (argv[3], 10, &number))
                 ptr_window = gui_window_search_by_number (number);
         }
         if (!ptr_window)
@@ -609,7 +603,7 @@ COMMAND_CALLBACK(bar)
  */
 
 int
-command_buffer_check_number (long number)
+command_buffer_check_number (int number)
 {
     if ((number < 1) || (number > GUI_BUFFER_NUMBER_MAX))
     {
@@ -667,11 +661,11 @@ COMMAND_CALLBACK(buffer)
     struct t_gui_buffer *ptr_buffer, *ptr_buffer1, *ptr_buffer2;
     struct t_gui_buffer *weechat_buffer;
     struct t_arraylist *buffers_to_close;
-    long number, number1, number2, numbers[3];
-    long long number_id;
-    char *error, *value, *pos, *str_number1, *pos_number2;
-    int i, count, prev_number, clear_number, list_size;
+    char *value, *pos, *str_number1, *pos_number2;
+    int i, count, prev_number, clear_by_number, list_size;
     int buffer_found, arg_name, type_free, switch_to_buffer, rc;
+    int number, number1, number2, numbers[3];
+    long long number_id;
 
     /* make C compiler happy */
     (void) pointer;
@@ -752,7 +746,9 @@ COMMAND_CALLBACK(buffer)
         if (argc > 2)
         {
             if (string_strcmp (argv[2], "-all") == 0)
+            {
                 gui_buffer_clear_all ();
+            }
             else
             {
                 for (i = 2; i < argc; i++)
@@ -760,18 +756,19 @@ COMMAND_CALLBACK(buffer)
                     if (string_strcmp (argv[i], "-merged") == 0)
                     {
                         ptr_buffer = buffer;
-                        clear_number = 1;
+                        clear_by_number = 1;
                     }
                     else
                     {
                         ptr_buffer = gui_buffer_search_by_id_number_name (argv[i]);
-                        error = NULL;
-                        (void) strtol (argv[i], &error, 10);
-                        clear_number = (error && !error[0]);
+                        clear_by_number = (util_parse_int (argv[i], 10, &number)
+                                           && ptr_buffer
+                                           && (ptr_buffer->number == number)) ?
+                            1 : 0;
                     }
                     if (ptr_buffer)
                     {
-                        if (clear_number)
+                        if (clear_by_number)
                         {
                             for (ptr_buffer2 = gui_buffers; ptr_buffer2;
                                  ptr_buffer2 = ptr_buffer2->next_buffer)
@@ -817,20 +814,21 @@ COMMAND_CALLBACK(buffer)
         }
         else
         {
-            error = NULL;
-            number = strtol (((argv[2][0] == '+') || (argv[2][0] == '-')) ?
-                             argv[2] + 1 : argv[2],
-                             &error, 10);
-            if (error && !error[0]
-                && (number >= INT_MIN) && (number <= INT_MAX))
+            pos = ((argv[2][0] == '+') || (argv[2][0] == '-')) ?
+                argv[2] + 1 : argv[2];
+            if (util_parse_int (pos, 10, &number)
+                && (number >= 1)
+                && (number <= GUI_BUFFER_NUMBER_MAX)
+                && ((argv[2][0] != '+') || (number <= INT_MAX - buffer->number))
+                && ((argv[2][0] != '-') || (buffer->number >= INT_MIN + number)))
             {
                 if (argv[2][0] == '+')
                     number = buffer->number + number;
                 else if (argv[2][0] == '-')
                     number = buffer->number - number;
-                number = (int)number;
-                if (command_buffer_check_number (number))
-                    gui_buffer_move_to_number (buffer, number);
+                if (!command_buffer_check_number (number))
+                    return WEECHAT_RC_ERROR;
+                gui_buffer_move_to_number (buffer, number);
             }
             else
             {
@@ -940,7 +938,6 @@ COMMAND_CALLBACK(buffer)
     if (string_strcmp (argv[1], "merge") == 0)
     {
         COMMAND_MIN_ARGS(3, argv[1]);
-        error = NULL;
         ptr_buffer = gui_buffer_search_by_id_number_name (argv[2]);
         if (!ptr_buffer)
         {
@@ -967,9 +964,7 @@ COMMAND_CALLBACK(buffer)
             }
             else
             {
-                error = NULL;
-                number = strtol (argv[2], &error, 10);
-                if (!error || error[0])
+                if (!util_parse_int (argv[2], 10, &number))
                 {
                     /* invalid number */
                     gui_chat_printf (NULL,
@@ -978,11 +973,11 @@ COMMAND_CALLBACK(buffer)
                                      argv[2]);
                     return WEECHAT_RC_ERROR;
                 }
-                if (!command_buffer_check_number ((int)number))
+                if (!command_buffer_check_number (number))
                     COMMAND_ERROR;
             }
         }
-        gui_buffer_unmerge (buffer, (int)number);
+        gui_buffer_unmerge (buffer, number);
 
         return WEECHAT_RC_OK;
     }
@@ -998,23 +993,26 @@ COMMAND_CALLBACK(buffer)
             {
                 for (i = 2; i < argc; i++)
                 {
-                    ptr_buffer = gui_buffer_search_by_id_number_name (argv[i]);
+                    ptr_buffer = NULL;
+                    if (util_parse_int (argv[i], 10, &number))
+                        ptr_buffer = gui_buffer_search_by_number (number);
                     if (ptr_buffer)
                     {
-                        error = NULL;
-                        (void) strtol (argv[i], &error, 10);
-                        if (error && !error[0])
+                        /* hide by number */
+                        for (ptr_buffer2 = gui_buffers; ptr_buffer2;
+                             ptr_buffer2 = ptr_buffer2->next_buffer)
                         {
-                            for (ptr_buffer2 = gui_buffers; ptr_buffer2;
-                                 ptr_buffer2 = ptr_buffer2->next_buffer)
+                            if (ptr_buffer2->number == ptr_buffer->number)
                             {
-                                if (ptr_buffer2->number == ptr_buffer->number)
-                                {
-                                    gui_buffer_hide (ptr_buffer2);
-                                }
+                                gui_buffer_hide (ptr_buffer2);
                             }
                         }
-                        else
+                    }
+                    else
+                    {
+                        /* hide by id or name */
+                        ptr_buffer = gui_buffer_search_by_id_name (argv[i]);
+                        if (ptr_buffer)
                             gui_buffer_hide (ptr_buffer);
                     }
                 }
@@ -1037,23 +1035,25 @@ COMMAND_CALLBACK(buffer)
             {
                 for (i = 2; i < argc; i++)
                 {
-                    ptr_buffer = gui_buffer_search_by_id_number_name (argv[i]);
+                    ptr_buffer = NULL;
+                    if (util_parse_int (argv[i], 10, &number))
+                        ptr_buffer = gui_buffer_search_by_number (number);
                     if (ptr_buffer)
                     {
-                        error = NULL;
-                        (void) strtol (argv[i], &error, 10);
-                        if (error && !error[0])
+                        /* unhide by number */
+                        for (ptr_buffer2 = gui_buffers; ptr_buffer2;
+                             ptr_buffer2 = ptr_buffer2->next_buffer)
                         {
-                            for (ptr_buffer2 = gui_buffers; ptr_buffer2;
-                                 ptr_buffer2 = ptr_buffer2->next_buffer)
+                            if (ptr_buffer2->number == ptr_buffer->number)
                             {
-                                if (ptr_buffer2->number == ptr_buffer->number)
-                                {
-                                    gui_buffer_unhide (ptr_buffer2);
-                                }
+                                gui_buffer_unhide (ptr_buffer2);
                             }
                         }
-                        else
+                    }
+                    else
+                    {
+                        ptr_buffer = gui_buffer_search_by_id_name (argv[i]);
+                        if (ptr_buffer)
                             gui_buffer_unhide (ptr_buffer);
                     }
                 }
@@ -1098,9 +1098,7 @@ COMMAND_CALLBACK(buffer)
         {
             if (argc >= i + 3)
             {
-                error = NULL;
-                numbers[i] = strtol (argv[i + 2], &error, 10);
-                if (!error || error[0])
+                if (!util_parse_int (argv[i + 2], 10, &numbers[i]))
                 {
                     /* invalid number */
                     gui_chat_printf (NULL,
@@ -1109,7 +1107,7 @@ COMMAND_CALLBACK(buffer)
                                      argv[i + 2]);
                     return WEECHAT_RC_ERROR;
                 }
-                if ((i == 2) && !command_buffer_check_number ((int)numbers[i]))
+                if ((i == 2) && !command_buffer_check_number (numbers[i]))
                     return WEECHAT_RC_ERROR;
             }
             else
@@ -1120,8 +1118,8 @@ COMMAND_CALLBACK(buffer)
          * renumber the buffers; if we are renumbering all buffers (no numbers
          * given), start at number 1
          */
-        gui_buffer_renumber ((int)numbers[0], (int)numbers[1],
-                             (argc == 2) ? 1 : (int)numbers[2]);
+        gui_buffer_renumber (numbers[0], numbers[1],
+                             (argc == 2) ? 1 : numbers[2]);
 
         return WEECHAT_RC_OK;
     }
@@ -1159,15 +1157,11 @@ COMMAND_CALLBACK(buffer)
                     }
                     if (str_number1)
                     {
-                        error = NULL;
-                        number1 = strtol (str_number1, &error, 10);
-                        if (error && !error[0])
+                        if (util_parse_int (str_number1, 10, &number1))
                         {
                             if (pos_number2)
                             {
-                                error = NULL;
-                                number2 = strtol (pos_number2, &error, 10);
-                                if (!error || error[0])
+                                if (!util_parse_int (pos_number2, 10, &number2))
                                 {
                                     free (str_number1);
                                     COMMAND_ERROR;
@@ -1189,10 +1183,7 @@ COMMAND_CALLBACK(buffer)
                         while (ptr_buffer && (ptr_buffer->number <= number2))
                         {
                             if (ptr_buffer->number >= number1)
-                            {
-                                arraylist_add (buffers_to_close,
-                                               ptr_buffer);
-                            }
+                                arraylist_add (buffers_to_close, ptr_buffer);
                             ptr_buffer = ptr_buffer->next_buffer;
                         }
                     }
@@ -1201,10 +1192,7 @@ COMMAND_CALLBACK(buffer)
                 {
                     ptr_buffer = gui_buffer_search_by_full_name (argv[i]);
                     if (!ptr_buffer)
-                    {
-                        ptr_buffer = gui_buffer_search_by_partial_name (
-                            NULL, argv[i]);
-                    }
+                        ptr_buffer = gui_buffer_search_by_partial_name (NULL, argv[i]);
                     if (ptr_buffer)
                         arraylist_add (buffers_to_close, ptr_buffer);
                 }
@@ -1470,9 +1458,7 @@ COMMAND_CALLBACK(buffer)
         }
         else
         {
-            error = NULL;
-            number = strtol (argv[1] + 1, &error, 10);
-            if (error && !error[0] && (number > 0))
+            if (util_parse_int (argv[1] + 1, 10, &number) && (number > 0))
             {
                 count = 0;
                 prev_number = gui_current_window->buffer->number;
@@ -1531,9 +1517,7 @@ COMMAND_CALLBACK(buffer)
         }
         else
         {
-            error = NULL;
-            number = strtol (argv[1] + 1, &error, 10);
-            if (error && !error[0] && (number > 0))
+            if (util_parse_int (argv[1] + 1, 10, &number) && (number > 0))
             {
                 count = 0;
                 prev_number = gui_current_window->buffer->number;
@@ -1586,9 +1570,9 @@ COMMAND_CALLBACK(buffer)
     /* smart jump (jump to previous buffer for current number) */
     if (argv[1][0] == '*')
     {
-        error = NULL;
-        number = strtol (argv[1] + 1, &error, 10);
-        if (error && !error[0])
+        if (!argv[1][1])
+            COMMAND_ERROR;
+        if (util_parse_int (argv[1] + 1, 10, &number))
         {
             /* buffer is currently displayed ? then jump to previous buffer */
             if ((number == buffer->number)
@@ -1619,9 +1603,7 @@ COMMAND_CALLBACK(buffer)
     }
 
     /* jump to buffer by id, number or name */
-    error = NULL;
-    number_id = strtoll (argv[1], &error, 10);
-    if (error && !error[0])
+    if (util_parse_longlong (argv[1], 10, &number_id))
     {
         ptr_buffer = gui_buffer_search_by_id (number_id);
         if (ptr_buffer)
@@ -1652,11 +1634,10 @@ COMMAND_CALLBACK(buffer)
 
 COMMAND_CALLBACK(color)
 {
-    char *str_alias, *str_rgb, *pos, *error;
+    char *str_alias, *str_rgb, *pos;
     char str_color[1024], str_command[2048];
-    long number, limit;
     unsigned int rgb;
-    int i;
+    int i, number, limit;
     struct t_gui_color_palette *color_palette;
 
     /* make C compiler happy */
@@ -1688,9 +1669,7 @@ COMMAND_CALLBACK(color)
         COMMAND_MIN_ARGS(4, argv[1]);
 
         /* check color number */
-        error = NULL;
-        number = strtol (argv[2], &error, 10);
-        if (error && !error[0])
+        if (util_parse_int (argv[2], 10, &number))
         {
             if ((number < 0) || (number > gui_color_get_term_colors ()))
                 number = -1;
@@ -1735,7 +1714,7 @@ COMMAND_CALLBACK(color)
         /* add color alias */
         snprintf (str_command, sizeof (str_command),
                   "/set weechat.palette.%d \"%s\"",
-                  (int)number,
+                  number,
                   (str_color[0]) ? str_color + 1 : "");
         (void) input_exec_command (buffer, 1, NULL, str_command, NULL);
 
@@ -1748,9 +1727,7 @@ COMMAND_CALLBACK(color)
         COMMAND_MIN_ARGS(3, argv[1]);
 
         /* check color number */
-        error = NULL;
-        number = strtol (argv[2], &error, 10);
-        if (error && !error[0])
+        if (util_parse_int (argv[2], 10, &number))
         {
             if ((number < 0) || (number > gui_color_get_term_colors ()))
                 number = -1;
@@ -1770,7 +1747,7 @@ COMMAND_CALLBACK(color)
         }
 
         /* search color */
-        color_palette = gui_color_palette_get ((int)number);
+        color_palette = gui_color_palette_get (number);
         if (!color_palette)
         {
             gui_chat_printf (NULL,
@@ -1783,7 +1760,7 @@ COMMAND_CALLBACK(color)
         /* delete color alias */
         snprintf (str_command, sizeof (str_command),
                   "/unset weechat.palette.%d",
-                  (int)number);
+                  number);
         (void) input_exec_command (buffer, 1, NULL, str_command, NULL);
 
         return WEECHAT_RC_OK;
@@ -1807,12 +1784,10 @@ COMMAND_CALLBACK(color)
     if (string_strcmp (argv[1], "term2rgb") == 0)
     {
         COMMAND_MIN_ARGS(3, argv[1]);
-        error = NULL;
-        number = strtol (argv[2], &error, 10);
-        if (!error || error[0] || (number < 0) || (number > 255))
+        if (!util_parse_int (argv[2], 10, &number) || (number < 0) || (number > 255))
             COMMAND_ERROR;
         gui_chat_printf (NULL,
-                         "%ld -> #%06x",
+                         "%d -> #%06x",
                          number,
                          gui_color_convert_term_to_rgb (number));
         return WEECHAT_RC_OK;
@@ -1829,9 +1804,7 @@ COMMAND_CALLBACK(color)
         limit = 256;
         if (argc > 3)
         {
-            error = NULL;
-            limit = strtol (argv[3], &error, 10);
-            if (!error || error[0] || (limit < 1) || (limit > 256))
+            if (!util_parse_int (argv[3], 10, &limit) || (limit < 1) || (limit > 256))
                 COMMAND_ERROR;
         }
         gui_chat_printf (NULL,
@@ -1938,7 +1911,7 @@ COMMAND_CALLBACK(command)
 
 COMMAND_CALLBACK(cursor)
 {
-    char *pos, *str_x, *error;
+    char *pos, *str_x;
     int x, y;
 
     /* make C compiler happy */
@@ -1966,18 +1939,12 @@ COMMAND_CALLBACK(cursor)
             pos++;
             if (str_x)
             {
-                error = NULL;
-                x = (int) strtol (str_x, &error, 10);
-                if (error && !error[0])
+                if (util_parse_int (str_x, 10, &x)
+                    && util_parse_int (pos, 10, &y))
                 {
-                    error = NULL;
-                    y = (int) strtol (pos, &error, 10);
-                    if (error && !error[0])
-                    {
-                        gui_cursor_move_xy (x, y);
-                        free (str_x);
-                        return WEECHAT_RC_OK;
-                    }
+                    gui_cursor_move_xy (x, y);
+                    free (str_x);
+                    return WEECHAT_RC_OK;
                 }
                 free (str_x);
             }
@@ -3531,7 +3498,6 @@ COMMAND_CALLBACK(history)
 {
     struct t_gui_history *ptr_history;
     int n, n_total, n_user, displayed;
-    char *error;
 
     /* make C compiler happy */
     (void) pointer;
@@ -3549,9 +3515,7 @@ COMMAND_CALLBACK(history)
         }
         else
         {
-            error = NULL;
-            n_user = (int)strtol (argv[1], &error, 10);
-            if (!error || error[0] || (n_user < 0))
+            if (!util_parse_int (argv[1], 10, &n_user) || (n_user < 0))
                 COMMAND_ERROR;
         }
     }
@@ -4872,11 +4836,8 @@ void
 command_mouse_timer (const char *delay)
 {
     long seconds;
-    char *error;
 
-    error = NULL;
-    seconds = strtol (delay, &error, 10);
-    if (error && !error[0] && (seconds > 0))
+    if (util_parse_long (delay, 10, &seconds) && (seconds > 0))
     {
         hook_timer (NULL, seconds * 1000, 0, 1,
                     &command_mouse_timer_cb, NULL, NULL);
@@ -5573,7 +5534,7 @@ COMMAND_CALLBACK(print)
     int i, y, escape, to_stdout, to_stderr, arg_new_buffer_name;
     int new_buffer_type_free, free_content, switch_to_buffer;
     struct timeval tv_date;
-    char *tags, *pos, *text, *text2, *error, empty_string[1] = { '\0' };
+    char *tags, *pos, *text, *text2, empty_string[1] = { '\0' };
     const char *prefix, *ptr_text;
     long value;
 
@@ -5638,11 +5599,8 @@ COMMAND_CALLBACK(print)
             if (i + 1 >= argc)
                 COMMAND_ERROR;
             i++;
-            error = NULL;
-            value = strtol (argv[i], &error, 10);
-            if (!error || error[0])
+            if (!util_parse_int (argv[i], 10, &y))
                 COMMAND_ERROR;
-            y = (int)value;
         }
         else if (string_strcmp (argv[i], "-date") == 0)
         {
@@ -5651,9 +5609,7 @@ COMMAND_CALLBACK(print)
             i++;
             if ((argv[i][0] == '-') || (argv[i][0] == '+'))
             {
-                error = NULL;
-                value = strtol (argv[i] + 1, &error, 10);
-                if (!error || error[0])
+                if (!util_parse_long (argv[i] + 1, 10, &value))
                     COMMAND_ERROR;
                 gettimeofday (&tv_date, NULL);
                 tv_date.tv_sec += (argv[i][0] == '+') ? value : value * -1;
@@ -5877,9 +5833,8 @@ command_proxy_list (void)
 COMMAND_CALLBACK(proxy)
 {
     struct t_proxy *ptr_proxy, *ptr_next_proxy;
-    char *error, *name;
+    char *name;
     int type, i, update;
-    long value;
 
     /* make C compiler happy */
     (void) pointer;
@@ -5925,10 +5880,7 @@ COMMAND_CALLBACK(proxy)
                              argv[3], argv[2]);
             return WEECHAT_RC_ERROR;
         }
-        error = NULL;
-        value = strtol (argv[5], &error, 10);
-        (void) value;
-        if (error && !error[0])
+        if (util_parse_int (argv[5], 10, NULL))
         {
             /* add proxy */
             if (proxy_new (argv[2], argv[3], "auto", argv[4], argv[5],
@@ -6256,7 +6208,6 @@ COMMAND_CALLBACK(repeat)
 {
     int arg_count, count, i;
     unsigned long long interval;
-    char *error;
     struct t_command_repeat *cmd_repeat;
 
     /* make C compiler happy */
@@ -6276,9 +6227,7 @@ COMMAND_CALLBACK(repeat)
         arg_count = 3;
     }
 
-    error = NULL;
-    count = (int)strtol (argv[arg_count], &error, 10);
-    if (!error || error[0] || (count < 1))
+    if (!util_parse_int (argv[arg_count], 10, &count) || (count < 1))
     {
         /* invalid count */
         gui_chat_printf (NULL,
@@ -7171,8 +7120,8 @@ COMMAND_CALLBACK(set)
 
 COMMAND_CALLBACK(sys)
 {
-    long value;
-    char *error;
+    long size;
+    int num_processes;
 
     /* make C compiler happy */
     (void) pointer;
@@ -7202,15 +7151,13 @@ COMMAND_CALLBACK(sys)
     if (string_strcmp (argv[1], "malloc_trim") == 0)
     {
 #ifdef HAVE_MALLOC_TRIM
-        error = NULL;
-        value = 0;
+        size = 0;
         if (argc > 2)
         {
-            value = strtol (argv[2], &error, 10);
-            if (!error || error[0] || (value < 0))
+            if (!util_parse_long (argv[2], 10, &size) || (size < 0))
                 COMMAND_ERROR;
         }
-        malloc_trim ((size_t)value);
+        malloc_trim ((size_t)size);
         return WEECHAT_RC_OK;
 #else
         gui_chat_printf (NULL,
@@ -7225,13 +7172,10 @@ COMMAND_CALLBACK(sys)
     if (string_strcmp (argv[1], "waitpid") == 0)
     {
         COMMAND_MIN_ARGS(3, argv[1]);
-        error = NULL;
-        value = strtol (argv[2], &error, 10);
-        if (!error || error[0])
+        if (!util_parse_int (argv[2], 10, &num_processes) || (num_processes < 1))
             COMMAND_ERROR;
-        sys_waitpid ((int)value);
+        sys_waitpid (num_processes);
         return WEECHAT_RC_OK;
-
     }
     COMMAND_ERROR;
 }
@@ -7980,9 +7924,8 @@ COMMAND_CALLBACK(window)
 {
     struct t_gui_window *ptr_win;
     struct t_gui_window_tree *ptr_tree;
-    char *error, *ptr_sizearg, sign;
-    long number;
-    int win_args;
+    char *ptr_sizearg, sign;
+    int number, win_args;
 
     /* make C compiler happy */
     (void) pointer;
@@ -8043,9 +7986,7 @@ COMMAND_CALLBACK(window)
     win_args = 2;
     if ((argc > 3) && (string_strcmp (argv[2], "-window") == 0))
     {
-        error = NULL;
-        number = strtol (argv[3], &error, 10);
-        if (error && !error[0] && (number >= 1))
+        if (util_parse_int (argv[3], 10, &number) && (number >= 1))
         {
             ptr_win = gui_window_search_by_number (number);
             if (!ptr_win)
@@ -8164,9 +8105,7 @@ COMMAND_CALLBACK(window)
     {
         if (argc > win_args)
         {
-            error = NULL;
-            number = strtol (argv[win_args], &error, 10);
-            if (error && !error[0]
+            if (util_parse_int (argv[win_args], 10, &number)
                 && (number > 0) && (number < 100))
             {
                 gui_window_split_horizontal (ptr_win, number);
@@ -8175,7 +8114,9 @@ COMMAND_CALLBACK(window)
                 COMMAND_ERROR;
         }
         else
+        {
             gui_window_split_horizontal (ptr_win, 50);
+        }
         return WEECHAT_RC_OK;
     }
 
@@ -8184,9 +8125,7 @@ COMMAND_CALLBACK(window)
     {
         if (argc > win_args)
         {
-            error = NULL;
-            number = strtol (argv[win_args], &error, 10);
-            if (error && !error[0]
+            if (util_parse_int (argv[win_args], 10, &number)
                 && (number > 0) && (number < 100))
             {
                 gui_window_split_vertical (ptr_win, number);
@@ -8195,7 +8134,9 @@ COMMAND_CALLBACK(window)
                 COMMAND_ERROR;
         }
         else
+        {
             gui_window_split_vertical (ptr_win, 50);
+        }
         return WEECHAT_RC_OK;
     }
 
@@ -8220,9 +8161,7 @@ COMMAND_CALLBACK(window)
             sign = ptr_sizearg[0];
             ptr_sizearg++;
         }
-        error = NULL;
-        number = strtol (ptr_sizearg, &error, 10);
-        if (error && !error[0])
+        if (util_parse_int (ptr_sizearg, 10, &number))
         {
             if (sign)
             {
@@ -8360,9 +8299,7 @@ COMMAND_CALLBACK(window)
     /* jump to window by buffer number */
     if (string_strncmp (argv[1], "b", 1) == 0)
     {
-        error = NULL;
-        number = strtol (argv[1] + 1, &error, 10);
-        if (error && !error[0])
+        if (util_parse_int (argv[1] + 1, 10, &number))
         {
             gui_window_switch_by_buffer (ptr_win, number);
             return WEECHAT_RC_OK;
@@ -8370,9 +8307,7 @@ COMMAND_CALLBACK(window)
     }
 
     /* jump to window by number */
-    error = NULL;
-    number = strtol (argv[1], &error, 10);
-    if (error && !error[0])
+    if (util_parse_int (argv[1], 10, &number))
     {
         gui_window_switch_by_number (number);
         return WEECHAT_RC_OK;

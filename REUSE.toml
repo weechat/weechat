@@ -19,3 +19,11 @@ path = [
 precedence = "override"
 SPDX-FileCopyrightText = "2003-2026 Sébastien Helleu <flashcode@flashtux.org>"
 SPDX-License-Identifier = "GPL-3.0-or-later"
+
+[[annotations]]
+path = [
+    ".poexam/*.dic",
+]
+precedence = "override"
+SPDX-FileCopyrightText = "2026 Sébastien Helleu <flashcode@flashtux.org>"
+SPDX-License-Identifier = "GPL-3.0-or-later"

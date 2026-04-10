@@ -28,6 +28,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdarg.h>
+#include <errno.h>
 #include <regex.h>
 #include <time.h>
 #include <sys/time.h>
@@ -400,7 +401,7 @@ char *
 eval_string_cut (const char *text, int screen)
 {
     const char *pos, *pos2;
-    char *tmp, *error, *value;
+    char *tmp, *value;
     int count_suffix;
     long number;
 
@@ -423,9 +424,7 @@ eval_string_cut (const char *text, int screen)
     if (!tmp)
         return strdup ("");
 
-    error = NULL;
-    number = strtol (tmp, &error, 10);
-    if (!error || error[0] || (number < 0))
+    if (!util_parse_long (tmp, 10, &number) || (number < 0))
     {
         free (tmp);
         return strdup ("");
@@ -453,7 +452,7 @@ char *
 eval_string_repeat (const char *text)
 {
     const char *pos;
-    char *tmp, *error;
+    char *tmp;
     long number;
 
     pos = strchr (text, ',');
@@ -464,9 +463,7 @@ eval_string_repeat (const char *text)
     if (!tmp)
         return strdup ("");
 
-    error = NULL;
-    number = strtol (tmp, &error, 10);
-    if (!error || error[0] || (number < 0))
+    if (!util_parse_long (tmp, 10, &number) || (number < 0))
     {
         free (tmp);
         return strdup ("");
@@ -514,7 +511,7 @@ eval_string_repeat (const char *text)
 char *
 eval_string_split (const char *text)
 {
-    char *pos, *pos2, *pos3, *str_number, *separators, **items, *value, *error;
+    char *pos, *pos2, *pos3, *str_number, *separators, **items, *value;
     char str_value[32], *str_flags, **list_flags, *strip_items, **ptr_flag;
     int num_items, count_items, random_item, flags;
     long number, max_items;
@@ -550,9 +547,7 @@ eval_string_split (const char *text)
     }
     else
     {
-        error = NULL;
-        number = strtol (str_number, &error, 10);
-        if (!error || error[0] || (number == 0))
+        if (!util_parse_long (str_number, 10, &number) || (number == 0))
             goto end;
     }
 
@@ -590,9 +585,8 @@ eval_string_split (const char *text)
             }
             else if (strncmp (*ptr_flag, "max_items=", 10) == 0)
             {
-                error = NULL;
-                max_items = strtol (*ptr_flag + 10, &error, 10);
-                if (!error || error[0] || (max_items < 0))
+                if (!util_parse_long (*ptr_flag + 10, 10, &max_items)
+                    || (max_items < 0))
                     goto end;
             }
         }
@@ -664,7 +658,7 @@ end:
 char *
 eval_string_split_shell (const char *text)
 {
-    char *pos, *str_number, **items, *value, *error, str_value[32];
+    char *pos, *str_number, **items, *value, str_value[32];
     int num_items, count_items, random_item;
     long number;
 
@@ -693,9 +687,7 @@ eval_string_split_shell (const char *text)
     }
     else
     {
-        error = NULL;
-        number = strtol (str_number, &error, 10);
-        if (!error || error[0] || (number == 0))
+        if (!util_parse_long (str_number, 10, &number) || (number == 0))
             goto end;
     }
 
@@ -746,11 +738,11 @@ end:
 char *
 eval_string_regex_group (const char *text, struct t_eval_context *eval_context)
 {
-    char str_value[64], *error;
+    char str_value[64];
     long number;
 
     if (!eval_context->regex || !eval_context->regex->result)
-        return strdup ("");
+        goto end;
 
     if (strcmp (text, "#") == 0)
     {
@@ -772,10 +764,8 @@ eval_string_regex_group (const char *text, struct t_eval_context *eval_context)
     }
     else
     {
-        error = NULL;
-        number = strtol (text, &error, 10);
-        if (!error || error[0])
-            number = -1;
+        if (!util_parse_long (text, 10, &number))
+            goto end;
     }
     if ((number >= 0) && (number <= eval_context->regex->last_match))
     {
@@ -786,6 +776,7 @@ eval_string_regex_group (const char *text, struct t_eval_context *eval_context)
             eval_context->regex->match[number].rm_so);
     }
 
+end:
     return strdup ("");
 }
 
@@ -1058,7 +1049,7 @@ eval_string_if (const char *text, struct t_eval_context *eval_context)
 char *
 eval_string_random (const char *text)
 {
-    char *pos, *error, *tmp, result[128];
+    char *pos, *tmp, result[128];
     long long min_number, max_number;
 
     if (!text || !text[0])
@@ -1071,18 +1062,14 @@ eval_string_random (const char *text)
     tmp = string_strndup (text, pos - text);
     if (!tmp)
         goto error;
-    error = NULL;
-    min_number = strtoll (tmp, &error, 10);
-    if (!error || error[0])
+    if (!util_parse_longlong (tmp, 10, &min_number))
     {
         free (tmp);
         goto error;
     }
     free (tmp);
 
-    error = NULL;
-    max_number = strtoll (pos + 1, &error, 10);
-    if (!error || error[0])
+    if (!util_parse_longlong (pos + 1, 10, &max_number))
         goto error;
 
     if (min_number > max_number)
@@ -2224,17 +2211,20 @@ eval_compare (const char *expr1, int comparison, const char *expr2,
 
     if (!string_compare)
     {
+        errno = 0;
+        error = NULL;
         value1 = strtod (expr1, &error);
-        if (!error || error[0])
-        {
+        if (!error || error[0] || (errno == ERANGE))
             string_compare = 1;
-        }
-        else
-        {
-            value2 = strtod (expr2, &error);
-            if (!error || error[0])
-                string_compare = 1;
-        }
+    }
+
+    if (!string_compare)
+    {
+        errno = 0;
+        error = NULL;
+        value2 = strtod (expr2, &error);
+        if (!error || error[0] || (errno == ERANGE))
+            string_compare = 1;
     }
 
     if (string_compare)
@@ -2683,10 +2673,9 @@ eval_expression (const char *expr, struct t_hashtable *pointers,
 {
     struct t_eval_context context, *eval_context;
     struct t_hashtable *user_vars;
-    int condition, rc, pointers_allocated, regex_allocated, debug_id;
+    int condition, rc, pointers_allocated, regex_allocated, debug_id, debug_level;
     int ptr_window_added, ptr_buffer_added;
-    long number;
-    char *value, *error;
+    char *value;
     const char *default_prefix = EVAL_DEFAULT_PREFIX;
     const char *default_suffix = EVAL_DEFAULT_SUFFIX;
     const char *ptr_value, *regex_replace;
@@ -2826,11 +2815,9 @@ eval_expression (const char *expr, struct t_hashtable *pointers,
         ptr_value = hashtable_get (options, "debug");
         if (ptr_value && ptr_value[0])
         {
-            error = NULL;
-            number = strtol (ptr_value, &error, 10);
-            if (error && !error[0] && (number >= 1))
+            if (util_parse_int (ptr_value, 10, &debug_level) && (debug_level >= 1))
             {
-                eval_context->debug_level = (int)number;
+                eval_context->debug_level = debug_level;
                 eval_context->debug_output = string_dyn_alloc (256);
             }
         }
