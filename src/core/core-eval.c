@@ -400,8 +400,7 @@ eval_string_cut (const char *text, int screen)
 {
     const char *pos, *pos2;
     char *tmp, *value;
-    int count_suffix;
-    long number;
+    int count_suffix, number;
 
     count_suffix = 0;
     if (text[0] == '+')
@@ -422,7 +421,7 @@ eval_string_cut (const char *text, int screen)
     if (!tmp)
         return strdup ("");
 
-    if (!util_parse_long (tmp, 10, &number) || (number < 0))
+    if (!util_parse_int (tmp, 10, &number) || (number < 0))
     {
         free (tmp);
         return strdup ("");
@@ -451,7 +450,7 @@ eval_string_repeat (const char *text)
 {
     const char *pos;
     char *tmp;
-    long number;
+    int number;
 
     pos = strchr (text, ',');
     if (!pos)
@@ -461,7 +460,7 @@ eval_string_repeat (const char *text)
     if (!tmp)
         return strdup ("");
 
-    if (!util_parse_long (tmp, 10, &number) || (number < 0))
+    if (!util_parse_int (tmp, 10, &number) || (number < 0))
     {
         free (tmp);
         return strdup ("");
