@@ -315,8 +315,6 @@ eval_string_range_chars (const char *range)
     char1 = utf8_char_int (range);
 
     /* next char must be '-' */
-    if (!range[0])
-        goto end;
     ptr_char = utf8_next_char (range);
     if (!ptr_char || !ptr_char[0] || (ptr_char[0] != '-'))
         goto end;
