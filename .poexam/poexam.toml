@@ -9,7 +9,10 @@ select = [
 ignore = [
     "brackets",
     "double-quotes",
+    "double-words",
+    "paths",
     "unchanged",
+    "urls",
 ]
 path_words = "."
 langs = [

@@ -131,7 +131,7 @@ jobs:
         sudo apt-get update -qq
         sudo apt-get --yes --no-install-recommends install ${{ env.CHECK_DEPS_UBUNTU }}
         pipx install msgcheck ruff
-        cargo install --version 0.0.8 poexam
+        cargo install --version 0.0.9 poexam
 
     - name: Check gettext files (msgcheck)
       run: msgcheck po/*.po
