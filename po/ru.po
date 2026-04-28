@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-04-05 21:48+0200\n"
+"POT-Creation-Date: 2026-04-28 21:16+0200\n"
 "PO-Revision-Date: 2026-03-08 08:59+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -14748,7 +14748,7 @@ msgstr ""
 msgid "%s%s: not enough memory for listening on new port"
 msgstr "%s недостаточно памяти для нового DCC\n"
 
-msgid "Relay WeeChat data to remote application (irc/weechat protocols)"
+msgid "Relay WeeChat data to remote applications"
 msgstr ""
 
 #, fuzzy
