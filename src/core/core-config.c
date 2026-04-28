@@ -3762,6 +3762,7 @@ config_weechat_init_options (void)
             NULL, 0, 0,
             "${away} "
             "|| ${buffer.num_displayed} == 0 "
+            "|| ${info:relay_client_count,api,connected} > 0 "
             "|| ${info:relay_client_count,weechat,connected} > 0",
             NULL, 0,
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
