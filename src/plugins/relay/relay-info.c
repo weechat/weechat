@@ -247,7 +247,7 @@ relay_info_init (void)
         N_("number of clients for relay"),
         /* TRANSLATORS: please do not translate the status names, they must be used in English */
         N_("protocol,status (both are optional, for each argument \"*\" "
-           "means all; protocols: irc, weechat; statuses: connecting, "
+           "means all; protocols: api, irc, weechat; statuses: connecting, "
            "waiting_auth, connected, auth_failed, disconnected)"),
         &relay_info_info_relay_client_count_cb, NULL, NULL);
     /* infolist hooks */
