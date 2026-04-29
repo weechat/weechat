@@ -36,7 +36,7 @@ env:
     libcurl4-gnutls-dev
     libgcrypt20-dev
     libgnutls28-dev
-    liblua5.3-dev
+    liblua5.4-dev
     libncurses-dev
     libperl-dev
     libphp-embed
