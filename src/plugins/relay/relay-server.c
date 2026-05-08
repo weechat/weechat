@@ -691,9 +691,9 @@ relay_server_create_socket (struct t_relay_server *server)
         return 0;
     }
 
-    /* change permissions: only the owner can use the unix socket */
+    /* change permissions: only the owner/group can use the unix socket */
     if (server->unix_socket)
-        chmod (server->path, 0700);
+        chmod (server->path, 0770);
 
 #ifdef SOMAXCONN
     if (listen (server->sock, SOMAXCONN) != 0)
