@@ -498,6 +498,7 @@ int
 relay_server_create_socket (struct t_relay_server *server)
 {
     int domain, set, max_clients, addr_size, rc;
+    long unix_socket_perms;
     struct sockaddr_in server_addr;
     struct sockaddr_in6 server_addr6;
     struct sockaddr_un server_addr_unix;
@@ -691,9 +692,27 @@ relay_server_create_socket (struct t_relay_server *server)
         return 0;
     }
 
-    /* change permissions: only the owner can use the unix socket */
+    /* change permissions on the unix socket */
     if (server->unix_socket)
-        chmod (server->path, 0700);
+    {
+        if (!weechat_util_parse_long (
+                weechat_config_string (relay_config_network_unix_socket_permissions),
+                8, &unix_socket_perms))
+        {
+            /* default: owner only (rwx------) */
+            unix_socket_perms = 0700;
+        }
+        if (chmod (server->path, unix_socket_perms) < 0)
+        {
+            weechat_printf (
+                NULL,
+                _("%s%s: warning: failed to set permissions on path %s (%s): "
+                  "error %d %s"),
+                weechat_prefix ("error"), RELAY_PLUGIN_NAME,
+                server->path, server->protocol_string,
+                errno, strerror (errno));
+        }
+    }
 
 #ifdef SOMAXCONN
     if (listen (server->sock, SOMAXCONN) != 0)

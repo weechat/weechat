@@ -13,6 +13,10 @@ SPDX-License-Identifier: GPL-3.0-or-later
 - core: add condition on connected relay api clients in default value of option weechat.look.hotlist_add_conditions
 - core: add `/mute` in default command for key `Alt`+`=` (toggle filters)
 
+### Added
+
+- relay: add option relay.network.unix_socket_permissions ([#2317](https://github.com/weechat/weechat/issues/2317))
+
 ## Version 4.9.0 (2026-03-29)
 
 ### Changed

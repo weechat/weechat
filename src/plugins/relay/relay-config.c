@@ -93,6 +93,7 @@ struct t_config_option *relay_config_network_tls_cert_key = NULL;
 struct t_config_option *relay_config_network_tls_priorities = NULL;
 struct t_config_option *relay_config_network_totp_secret = NULL;
 struct t_config_option *relay_config_network_totp_window = NULL;
+struct t_config_option *relay_config_network_unix_socket_permissions = NULL;
 struct t_config_option *relay_config_network_websocket_allowed_origins = NULL;
 struct t_config_option *relay_config_network_websocket_permessage_deflate = NULL;
 
@@ -479,6 +480,27 @@ relay_config_change_network_tls_priorities (const void *pointer, void *data,
         gnutls_priority_deinit (*relay_gnutls_priority_cache);
         relay_network_set_priority ();
     }
+}
+
+/*
+ * Check if option "relay.network.unix_socket_permissions" is valid.
+ *
+ * Return:
+ *   1: value is valid
+ *   0: value is not valid
+ */
+
+int
+relay_config_check_network_unix_socket_permissions (const void *pointer, void *data,
+                                                    struct t_config_option *option,
+                                                    const char *value)
+{
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) option;
+
+    return value && (strlen (value) == 3) && weechat_util_parse_long (value, 8, NULL);
 }
 
 /*
@@ -1757,6 +1779,15 @@ relay_config_init (void)
                "(0 or 1 are recommended values)"),
             NULL, 0, 256, "0", NULL, 0,
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        relay_config_network_unix_socket_permissions = weechat_config_new_option (
+            relay_config_file, relay_config_section_network,
+            "unix_socket_permissions", "string",
+            N_("permissions for the Unix socket, as octal value (see man chmod); "
+               "it must be a number with 3 digits, each between 0 and 7"),
+            NULL, 0, 0, "700", NULL, 0,
+            &relay_config_check_network_unix_socket_permissions, NULL, NULL,
+            NULL, NULL, NULL,
+            NULL, NULL, NULL);
         relay_config_network_websocket_allowed_origins = weechat_config_new_option (
             relay_config_file, relay_config_section_network,
             "websocket_allowed_origins", "string",

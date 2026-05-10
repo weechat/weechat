@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-05-04 18:45+0200\n"
+"POT-Creation-Date: 2026-05-10 19:14+0200\n"
 "PO-Revision-Date: 2026-04-28 21:21+0200\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: Serbian <weechat-dev@nongnu.org>\n"
@@ -15772,6 +15772,11 @@ msgstr ""
 "или 1)"
 
 msgid ""
+"permissions for the Unix socket, as octal value (see man chmod); it must be "
+"a number with 3 digits, each between 0 and 7"
+msgstr ""
+
+msgid ""
 "POSIX extended regular expression with origins allowed in websockets (case-"
 "insensitive, use \"(?-i)\" at beginning to make it case-sensitive), example: "
 "\"^https?://(www\\.)?example\\.(com|org)\""
@@ -16032,6 +16037,11 @@ msgstr "%s%s: „bind” не може да се изврши на путању 
 #, c-format
 msgid "%s%s: cannot \"bind\" on port %d (%s): error %d %s"
 msgstr "%s%s: „bind” не може да се изврши на порт %d (%s): грешка %d %s"
+
+#, fuzzy, c-format
+#| msgid "%s%s: cannot \"listen\" on path %s (%s): error %d %s"
+msgid "%s%s: warning: failed to set permissions on path %s (%s): error %d %s"
+msgstr "%s%s: „listen” не може да се покрене на путањи %s (%s): грешка%d %s"
 
 #, c-format
 msgid "%s%s: cannot \"listen\" on path %s (%s): error %d %s"

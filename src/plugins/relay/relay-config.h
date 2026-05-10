@@ -62,6 +62,7 @@ extern struct t_config_option *relay_config_network_tls_cert_key;
 extern struct t_config_option *relay_config_network_tls_priorities;
 extern struct t_config_option *relay_config_network_totp_secret;
 extern struct t_config_option *relay_config_network_totp_window;
+extern struct t_config_option *relay_config_network_unix_socket_permissions;
 extern struct t_config_option *relay_config_network_websocket_allowed_origins;
 extern struct t_config_option *relay_config_network_websocket_permessage_deflate;
 

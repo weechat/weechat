@@ -24,7 +24,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-05-04 18:45+0200\n"
+"POT-Creation-Date: 2026-05-10 19:14+0200\n"
 "PO-Revision-Date: 2026-03-12 20:24+0100\n"
 "Last-Translator: Santiago Forero <santiago@forero.xyz>\n"
 "Language-Team: Spanish - Spain <weechat-dev@nongnu.org>\n"
@@ -15448,6 +15448,11 @@ msgid ""
 "1 are recommended values)"
 msgstr ""
 
+msgid ""
+"permissions for the Unix socket, as octal value (see man chmod); it must be "
+"a number with 3 digits, each between 0 and 7"
+msgstr ""
+
 # why is case insensitive important? ips use numbers and urls are case insensible.
 #, fuzzy
 msgid ""
@@ -15684,6 +15689,10 @@ msgstr "%s%s: error con \"bind\" en el puerto %d (%s)"
 #, fuzzy, c-format
 msgid "%s%s: cannot \"bind\" on port %d (%s): error %d %s"
 msgstr "%s%s: error con \"bind\" en el puerto %d (%s)"
+
+#, fuzzy, c-format
+msgid "%s%s: warning: failed to set permissions on path %s (%s): error %d %s"
+msgstr "%s%s: no se puede aceptar el cliente en el puerto %d (%s)"
 
 #, fuzzy, c-format
 msgid "%s%s: cannot \"listen\" on path %s (%s): error %d %s"

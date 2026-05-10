@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-05-04 18:45+0200\n"
+"POT-Creation-Date: 2026-05-10 19:14+0200\n"
 "PO-Revision-Date: 2026-03-08 08:59+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: Russian <weechat-dev@nongnu.org>\n"
@@ -14500,6 +14500,11 @@ msgid ""
 msgstr ""
 
 msgid ""
+"permissions for the Unix socket, as octal value (see man chmod); it must be "
+"a number with 3 digits, each between 0 and 7"
+msgstr ""
+
+msgid ""
 "POSIX extended regular expression with origins allowed in websockets (case-"
 "insensitive, use \"(?-i)\" at beginning to make it case-sensitive), example: "
 "\"^https?://(www\\.)?example\\.(com|org)\""
@@ -14718,6 +14723,10 @@ msgstr "%s невозможно создать сокет\n"
 
 #, fuzzy, c-format
 msgid "%s%s: cannot \"bind\" on port %d (%s): error %d %s"
+msgstr "%s невозможно создать сокет\n"
+
+#, fuzzy, c-format
+msgid "%s%s: warning: failed to set permissions on path %s (%s): error %d %s"
 msgstr "%s невозможно создать сокет\n"
 
 #, fuzzy, c-format

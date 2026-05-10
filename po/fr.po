@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-05-04 18:45+0200\n"
-"PO-Revision-Date: 2026-05-04 18:46+0200\n"
+"POT-Creation-Date: 2026-05-10 19:14+0200\n"
+"PO-Revision-Date: 2026-05-10 19:15+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: French - France <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -16217,6 +16217,13 @@ msgstr ""
 "élevé réduit le niveau de sécurité (0 ou 1 sont les valeurs recommandées)"
 
 msgid ""
+"permissions for the Unix socket, as octal value (see man chmod); it must be "
+"a number with 3 digits, each between 0 and 7"
+msgstr ""
+"permissions pour le socket Unix, sous forme de valeur octale (voir man "
+"chmod) ; doit être un nombre avec 3 chiffres, chacun compris entre 0 et 7"
+
+msgid ""
 "POSIX extended regular expression with origins allowed in websockets (case-"
 "insensitive, use \"(?-i)\" at beginning to make it case-sensitive), example: "
 "\"^https?://(www\\.)?example\\.(com|org)\""
@@ -16479,6 +16486,12 @@ msgstr "%s%s : \"bind\" impossible sur le chemin %s (%s) : erreur %d %s"
 #, c-format
 msgid "%s%s: cannot \"bind\" on port %d (%s): error %d %s"
 msgstr "%s%s : \"bind\" impossible sur le port %d (%s) : erreur %d %s"
+
+#, c-format
+msgid "%s%s: warning: failed to set permissions on path %s (%s): error %d %s"
+msgstr ""
+"%s%s : attention : échec de changement des permissions sur le chemin %s "
+"(%s) : erreur %d %s"
 
 #, c-format
 msgid "%s%s: cannot \"listen\" on path %s (%s): error %d %s"

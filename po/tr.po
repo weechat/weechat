@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-05-04 18:45+0200\n"
+"POT-Creation-Date: 2026-05-10 19:14+0200\n"
 "PO-Revision-Date: 2026-04-28 21:22+0200\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <weechat-dev@nongnu.org>\n"
@@ -16122,6 +16122,11 @@ msgstr ""
 "parola, geçerli parola ve sonrasında iki parola kabul et, ..., yüksek sayı "
 "güvenlik düzeyini düşürür (0 ve 1 önerilir)"
 
+msgid ""
+"permissions for the Unix socket, as octal value (see man chmod); it must be "
+"a number with 3 digits, each between 0 and 7"
+msgstr ""
+
 #, fuzzy
 #| msgid ""
 #| "POSIX extended regular expression with origins allowed in websockets "
@@ -16403,6 +16408,11 @@ msgstr "%s%s: %s yolunda \"bağlama\" yapılamıyor (%s): hata %d %s"
 #, c-format
 msgid "%s%s: cannot \"bind\" on port %d (%s): error %d %s"
 msgstr "%s%s: %d kapısında \"bağlama\" yapılamıyor (%s): hata %d %s"
+
+#, fuzzy, c-format
+#| msgid "%s%s: cannot \"listen\" on path %s (%s): error %d %s"
+msgid "%s%s: warning: failed to set permissions on path %s (%s): error %d %s"
+msgstr "%s%s: %s yolunda \"dinleme\" yapılamıyor (%s): error %d %s"
 
 #, c-format
 msgid "%s%s: cannot \"listen\" on path %s (%s): error %d %s"

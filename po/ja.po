@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-05-04 18:45+0200\n"
+"POT-Creation-Date: 2026-05-10 19:14+0200\n"
 "PO-Revision-Date: 2026-04-28 21:20+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <weechat-dev@nongnu.org>\n"
@@ -16022,6 +16022,11 @@ msgstr ""
 "のパスワードを考慮、...; この値を大きくするとセキュリティレベルが低下します "
 "(0 または 1 を推奨します)"
 
+msgid ""
+"permissions for the Unix socket, as octal value (see man chmod); it must be "
+"a number with 3 digits, each between 0 and 7"
+msgstr ""
+
 #, fuzzy
 #| msgid ""
 #| "POSIX extended regular expression with origins allowed in websockets "
@@ -16304,6 +16309,11 @@ msgstr "%s%s: パス %s (%s) に \"bind\" できません: エラー %d %s"
 #, c-format
 msgid "%s%s: cannot \"bind\" on port %d (%s): error %d %s"
 msgstr "%s%s: ポート %d (%s) に \"bind\" できません: エラー %d %s"
+
+#, fuzzy, c-format
+#| msgid "%s%s: cannot \"listen\" on path %s (%s): error %d %s"
+msgid "%s%s: warning: failed to set permissions on path %s (%s): error %d %s"
+msgstr "%s%s: パス %s (%s) ではリッスンできません: エラー %d %s"
 
 #, c-format
 msgid "%s%s: cannot \"listen\" on path %s (%s): error %d %s"

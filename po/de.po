@@ -29,7 +29,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-05-04 18:45+0200\n"
+"POT-Creation-Date: 2026-05-10 19:14+0200\n"
 "PO-Revision-Date: 2026-05-06 15:58+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German - Germany <weechat-dev@nongnu.org>\n"
@@ -1178,9 +1178,6 @@ msgstr ""
 "Standardmäßig wird der Abwesenheitsstatus durch die IRC-Erweiterung nur "
 "lokal angezeigt (siehe /help irc.look.display_away)."
 
-#| msgid ""
-#| "  - ${color:name}: the color (see \"Plugin API reference\", function "
-#| "\"color\")"
 msgid ""
 "This command can be caught by other plugins and scripts (see \"Plugin API "
 "reference\", function \"hook_command_run\")."
@@ -16525,6 +16522,11 @@ msgstr ""
 "oder 1 sind empfohlene Werte)"
 
 msgid ""
+"permissions for the Unix socket, as octal value (see man chmod); it must be "
+"a number with 3 digits, each between 0 and 7"
+msgstr ""
+
+msgid ""
 "POSIX extended regular expression with origins allowed in websockets (case-"
 "insensitive, use \"(?-i)\" at beginning to make it case-sensitive), example: "
 "\"^https?://(www\\.)?example\\.(com|org)\""
@@ -16790,6 +16792,11 @@ msgstr "%s%s: \"bind\" an Pfad %s (%s) nicht möglich: Fehler %d %s"
 #, c-format
 msgid "%s%s: cannot \"bind\" on port %d (%s): error %d %s"
 msgstr "%s%s: \"bind\" an Port %d (%s) nicht möglich: Fehler %d %s"
+
+#, fuzzy, c-format
+#| msgid "%s%s: cannot \"listen\" on path %s (%s): error %d %s"
+msgid "%s%s: warning: failed to set permissions on path %s (%s): error %d %s"
+msgstr "%s%s: kann nicht an Pfad %s (%s) lauschen: Fehler %d %s"
 
 #, c-format
 msgid "%s%s: cannot \"listen\" on path %s (%s): error %d %s"
