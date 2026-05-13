@@ -10,6 +10,7 @@ ignore = [
     "brackets",
     "double-quotes",
     "double-words",
+    "html-tags",
     "paths",
     "unchanged",
     "urls",
