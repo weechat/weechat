@@ -1704,8 +1704,8 @@ relay_config_init (void)
             relay_config_file, relay_config_section_network,
             "password_hash_algo", "string",
             N_("comma separated list of hash algorithms used for password "
-               "authentication in weechat protocol, among these values: "
-               "\"plain\" (password in plain text, not hashed), \"sha256\", "
+               "authentication in \"api\" and \"weechat\" protocols, among these "
+               "values: \"plain\" (password in plain text, not hashed), \"sha256\", "
                "\"sha512\", \"pbkdf2+sha256\", \"pbkdf2+sha512\"), \"*\" means "
                "all algorithms, a name beginning with \"!\" is a negative "
                "value to prevent an algorithm from being used, wildcard \"*\" "
@@ -1718,8 +1718,8 @@ relay_config_init (void)
         relay_config_network_password_hash_iterations = weechat_config_new_option (
             relay_config_file, relay_config_section_network,
             "password_hash_iterations", "integer",
-            N_("number of iterations asked to the client in weechat protocol "
-               "when a hashed password with algorithm PBKDF2 is used for "
+            N_("number of iterations asked to the client in \"api\" and \"weechat\" "
+               "protocols when a hashed password with algorithm PBKDF2 is used for "
                "authentication; more iterations is better in term of security "
                "but is slower to compute; this number should not be too high "
                "if your CPU is slow"),
