@@ -208,7 +208,8 @@ irc_protocol_tags_add_cb (void *data,
  */
 
 const char *
-irc_protocol_tags (struct t_irc_protocol_ctxt *ctxt, const char *extra_tags)
+irc_protocol_tags_cmd (struct t_irc_protocol_ctxt *ctxt, const char *command,
+                       const char *extra_tags)
 {
     static char string[4096];
     const char *ptr_tag_batch, *ptr_nick, *ptr_address;
@@ -222,7 +223,7 @@ irc_protocol_tags (struct t_irc_protocol_ctxt *ctxt, const char *extra_tags)
     ptr_nick = NULL;
     ptr_address = NULL;
 
-    is_numeric = irc_protocol_is_numeric_command (ctxt->command);
+    is_numeric = irc_protocol_is_numeric_command (command);
     has_irc_tags = (ctxt->tags
                     && weechat_hashtable_get_integer (ctxt->tags,
                                                       "items_count") > 0);
@@ -287,9 +288,9 @@ irc_protocol_tags (struct t_irc_protocol_ctxt *ctxt, const char *extra_tags)
         }
     }
 
-    if (ctxt->command && ctxt->command[0])
+    if (command && command[0])
     {
-        log_level = irc_protocol_log_level_for_command (ctxt->command);
+        log_level = irc_protocol_log_level_for_command (command);
         if (log_level > 0)
         {
             snprintf (str_log_level, sizeof (str_log_level),
@@ -299,8 +300,8 @@ irc_protocol_tags (struct t_irc_protocol_ctxt *ctxt, const char *extra_tags)
 
     snprintf (string, sizeof (string),
               "%s%s%s%s%s%s%s%s%s%s%s%s%s%s",
-              (ctxt->command && ctxt->command[0]) ? "irc_" : "",
-              (ctxt->command && ctxt->command[0]) ? ctxt->command : "",
+              (command && command[0]) ? "irc_" : "",
+              (command && command[0]) ? command : "",
               (is_numeric) ? "," : "",
               (is_numeric) ? "irc_numeric" : "",
               (str_irc_tags && (*str_irc_tags)[0]) ? "," : "",
@@ -320,6 +321,16 @@ irc_protocol_tags (struct t_irc_protocol_ctxt *ctxt, const char *extra_tags)
         return NULL;
 
     return (string[0] == ',') ? string + 1 : string;
+}
+
+/*
+ * Build tags list with IRC command and optional tags and nick.
+ */
+
+const char *
+irc_protocol_tags (struct t_irc_protocol_ctxt *ctxt, const char *extra_tags)
+{
+    return irc_protocol_tags_cmd (ctxt, ctxt->command, extra_tags);
 }
 
 /*
@@ -6659,7 +6670,7 @@ IRC_PROTOCOL_CALLBACK(366)
                         ctxt->server, NULL, ctxt->command, "names", ptr_channel->buffer),
                     ctxt->date,
                     ctxt->date_usec,
-                    irc_protocol_tags (ctxt, NULL),
+                    irc_protocol_tags_cmd (ctxt, "353", NULL),
                     _("%sNicks %s%s%s%s: %s[%s%s]"),
                     weechat_prefix ("network"),
                     IRC_COLOR_CHAT_CHANNEL,

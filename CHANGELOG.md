@@ -6,6 +6,12 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 # WeeChat ChangeLog
 
+## Version 4.9.1 (under dev)
+
+### Fixed
+
+- irc: fix tag in message with list of names when joining a channel
+
 ## Version 4.9.0 (2026-03-29)
 
 ### Changed
