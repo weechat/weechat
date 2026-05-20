@@ -24,7 +24,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2026-05-20 20:17+0200\n"
-"PO-Revision-Date: 2026-05-20 20:18+0200\n"
+"PO-Revision-Date: 2026-05-20 21:54+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: French - France <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -184,7 +184,7 @@ msgstr "Options supplémentaires en mode sans interface (« headless ») :"
 
 msgid "Debug options (for tools like valgrind, DO NOT USE IN PRODUCTION):"
 msgstr ""
-"Options de debug (pour des outils comme Valgrind, NE PAS UTILISER EN "
+"Options de debug (pour des outils comme valgrind, NE PAS UTILISER EN "
 "PRODUCTION) :"
 
 #, c-format
@@ -3066,7 +3066,7 @@ msgid ""
 "as argument."
 msgstr ""
 "Une valeur spéciale pour la commande avec le format \"hsignal:nom\" peut "
-"être utilisée dans le contexte \"mouse\", cela enverra le signal \"nom\" "
+"être utilisée dans le contexte \"mouse\", cela enverra le hsignal \"nom\" "
 "avec la table de hachage du focus comme paramètre."
 
 msgid ""
@@ -11200,7 +11200,7 @@ msgid ""
 msgstr ""
 "filtre : définir un nouveau filtre pour voir seulement les messages "
 "correspondants (ce filtre peut aussi être utilisé en entrée du tampon des "
-"données brutes) ; les formats autorisés sont :"
+"données brutes IRC) ; les formats autorisés sont :"
 
 msgid "> `*`: show all messages (no filter)"
 msgstr "> `*` : afficher tous les messages (pas de filtre)"
@@ -15346,7 +15346,8 @@ msgstr "%sremote[%s] : impossible de créer le socket"
 
 #, c-format
 msgid "%sremote[%s]: gnutls: failed to initialize certificate structure"
-msgstr "%sremote[%s] : échec d'initialisation de la structure du certificat"
+msgstr ""
+"%sremote[%s] : gnutls : échec d'initialisation de la structure du certificat"
 
 #, c-format
 msgid "remote[%s]: gnutls: receiving %d certificate"
@@ -17803,7 +17804,7 @@ msgid "> type `signal`: name(s) of signal (required)"
 msgstr "> type `signal` : nom(s) de signal (obligatoire)"
 
 msgid "> type `hsignal`: name(s) of hsignal (required)"
-msgstr "> type `hsignal` : nom(s) de signal (obligatoire)"
+msgstr "> type `hsignal` : nom(s) de hsignal (obligatoire)"
 
 msgid "> type `modifier`: name(s) of modifier (required)"
 msgstr "> type `modifier` : nom(s) de modificateur (obligatoire)"
