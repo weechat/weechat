@@ -337,7 +337,7 @@ fset_mouse_init (void)
     weechat_hashtable_set (
         keys,
         "@chat(" FSET_PLUGIN_NAME "." FSET_BUFFER_NAME "):button1",
-        "/window ${_window_number};/fset -go ${fset_option_index}");
+        "/window ${_window_number};/mute /fset -go ${fset_option_index}");
     weechat_hashtable_set (
         keys,
         "@chat(" FSET_PLUGIN_NAME "." FSET_BUFFER_NAME "):button2*",

@@ -13,6 +13,19 @@ When upgrading from version X to Y, please read and apply all instructions from 
 
 For a list of all changes in each version, please see [CHANGELOG.md](CHANGELOG.md).
 
+## Version 4.10.0
+
+### Command on mouse click in fset buffer
+
+The command executed when clicking in the fset buffer has been updated to prevent
+errors on the core buffer when the click is done below the last option.
+
+To reset the key and use the new default command:
+
+```text
+/reset weechat.key_mouse.@chat(fset.fset):button1
+```
+
 ## Version 4.8.0
 
 ### IRC temporary servers

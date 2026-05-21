@@ -17,6 +17,10 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 - relay: add option relay.network.unix_socket_permissions ([#2317](https://github.com/weechat/weechat/issues/2317))
 
+### Fixed
+
+- fset: remove error displayed in core buffer when clicking with the mouse below the last option displayed
+
 ## Version 4.9.0 (2026-03-29)
 
 ### Changed
