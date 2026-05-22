@@ -481,10 +481,9 @@ irc_list_buffer_set_title (struct t_irc_server *server)
 
     snprintf (str_title, sizeof (str_title),
               _("%d channels (total: %d) | Filter: %s | Sort: %s | "
-                "Key(input): "
-                "ctrl+j=join channel, "
-                "($)=refresh, "
-                "(q)=close buffer"),
+                "Keys: ctrl+j=join channel | "
+                "Input: $=refresh, s:x,y=sort, words=filter, *=reset filter, "
+                "q=close buffer"),
               num_channels,
               num_channels_total,
               (server->list->filter) ? server->list->filter : "*",

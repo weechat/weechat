@@ -779,11 +779,12 @@ script_buffer_refresh (int clear)
     else
     {
         snprintf (str_title, sizeof (str_title),
-                  _("%d/%d scripts (filter: %s) | Sort: %s | "
+                  _("%d/%d scripts | Filter: %s | Sort: %s | "
                     "Alt+key/input: i=install, r=remove, l=load, L=reload, "
                     "u=unload, A=autoload, h=(un)hold, v=view script | "
-                    "Input: q=close, $=refresh, s:x,y=sort, words=filter, "
-                    "*=reset filter | Mouse: left=select, right=install/remove"),
+                    "Input: $=refresh, s:x,y=sort, words=filter, *=reset filter, "
+                    "q=close buffer | "
+                    "Mouse: left=select, right=install/remove"),
                   script_repo_count_displayed,
                   script_repo_count,
                   (script_repo_filter) ? script_repo_filter : "*",

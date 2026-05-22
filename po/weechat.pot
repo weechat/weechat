@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-05-20 20:17+0200\n"
+"POT-Creation-Date: 2026-05-22 07:53+0200\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -10481,8 +10481,8 @@ msgstr ""
 
 #, c-format
 msgid ""
-"%d channels (total: %d) | Filter: %s | Sort: %s | Key(input): ctrl+j=join "
-"channel, ($)=refresh, (q)=close buffer"
+"%d channels (total: %d) | Filter: %s | Sort: %s | Keys: ctrl+j=join channel "
+"| Input: $=refresh, s:x,y=sort, words=filter, *=reset filter, q=close buffer"
 msgstr ""
 
 msgid "Empty list of channels, try \"$\" to refresh list"
@@ -13698,9 +13698,9 @@ msgstr ""
 
 #, c-format
 msgid ""
-"%d/%d scripts (filter: %s) | Sort: %s | Alt+key/input: i=install, r=remove, "
+"%d/%d scripts | Filter: %s | Sort: %s | Alt+key/input: i=install, r=remove, "
 "l=load, L=reload, u=unload, A=autoload, h=(un)hold, v=view script | Input: "
-"q=close, $=refresh, s:x,y=sort, words=filter, *=reset filter | Mouse: "
+"$=refresh, s:x,y=sort, words=filter, *=reset filter, q=close buffer | Mouse: "
 "left=select, right=install/remove"
 msgstr ""
 
