@@ -20,6 +20,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 ### Fixed
 
 - core: fix option weechat.look.color_real_white not applied when color is "white" on 16+ colors terminals ([#1742](https://github.com/weechat/weechat/issues/1742))
+- irc: fix tag in message with list of names when joining a channel
 - fset: remove error displayed in core buffer when clicking with the mouse below the last option displayed
 
 ## Version 4.9.0 (2026-03-29)
