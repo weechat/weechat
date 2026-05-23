@@ -372,7 +372,8 @@ gui_window_set_weechat_color (WINDOW *window, int num_color)
          * if not real white, we use default terminal foreground instead of
          * white if bold attribute is set
          */
-        if ((fg == COLOR_WHITE) && (gui_color[num_color]->attributes & A_BOLD)
+        if (((fg == COLOR_WHITE + 8)
+             || ((fg == COLOR_WHITE) && (gui_color[num_color]->attributes & A_BOLD)))
             && !CONFIG_BOOLEAN(config_look_color_real_white))
         {
             fg = -1;
@@ -442,7 +443,8 @@ gui_window_set_custom_color_fg (WINDOW *window, int fg)
              * if not real white, we use default terminal foreground instead of
              * white if bold attribute is set
              */
-            if ((fg == COLOR_WHITE) && (attributes & A_BOLD)
+            if (((fg == COLOR_WHITE + 8)
+                 || ((fg == COLOR_WHITE) && (attributes & A_BOLD)))
                 && !CONFIG_BOOLEAN(config_look_color_real_white))
             {
                 fg = -1;
@@ -535,7 +537,8 @@ gui_window_set_custom_color_fg_bg (WINDOW *window, int fg, int bg,
              * if not real white, we use default terminal foreground instead of
              * white if bold attribute is set
              */
-            if ((fg == COLOR_WHITE) && (attributes & A_BOLD)
+            if (((fg == COLOR_WHITE + 8)
+                 || ((fg == COLOR_WHITE) && (attributes & A_BOLD)))
                 && !CONFIG_BOOLEAN(config_look_color_real_white))
             {
                 fg = -1;
