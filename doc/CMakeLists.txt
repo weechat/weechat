@@ -40,14 +40,20 @@ if(ENABLE_MAN OR ENABLE_DOC)
     # is generated below and scoped via @media in docinfo.html.in.
     set(PYGMENTS_LIGHT_STYLE "default")
     set(PYGMENTS_DARK_STYLE "monokai")
-    find_program(PYGMENTIZE_EXECUTABLE pygmentize REQUIRED)
-    execute_process(
-      COMMAND "${PYGMENTIZE_EXECUTABLE}" -O "classprefix=tok-" -f html -a "pre.pygments" -S "${PYGMENTS_DARK_STYLE}"
-      OUTPUT_VARIABLE PYGMENTS_DARK_CSS
-      RESULT_VARIABLE _pygmentize_result
-    )
-    if(NOT _pygmentize_result EQUAL 0)
-      message(SEND_ERROR "Failed to generate pygments CSS for dark theme (style: ${PYGMENTS_DARK_STYLE})")
+    find_program(PYGMENTIZE_EXECUTABLE pygmentize)
+    set(PYGMENTS_DARK_CSS "")
+    if(PYGMENTIZE_EXECUTABLE)
+      execute_process(
+        COMMAND "${PYGMENTIZE_EXECUTABLE}" -O "classprefix=tok-" -f html -a "pre.pygments" -S "${PYGMENTS_DARK_STYLE}"
+        OUTPUT_VARIABLE PYGMENTS_DARK_CSS
+        RESULT_VARIABLE _pygmentize_result
+      )
+      if(NOT _pygmentize_result EQUAL 0)
+        message(WARNING "Failed to generate pygments CSS for dark theme (style: ${PYGMENTS_DARK_STYLE}); doc will be built without dark theme syntax highlighting")
+        set(PYGMENTS_DARK_CSS "")
+      endif()
+    else()
+      message(WARNING "pygmentize not found (install python3-pygments); doc will be built without syntax highlighting colors")
     endif()
     configure_file(
       "${CMAKE_CURRENT_SOURCE_DIR}/docinfo.html.in"
