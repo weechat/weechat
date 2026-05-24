@@ -36,6 +36,25 @@ if(ENABLE_MAN OR ENABLE_DOC)
 
   find_package(Asciidoctor)
   if(ASCIIDOCTOR_FOUND)
+    # Asciidoctor embeds the light style automatically; the dark stylesheet
+    # is generated below and scoped via @media in docinfo.html.in.
+    set(PYGMENTS_LIGHT_STYLE "default")
+    set(PYGMENTS_DARK_STYLE "monokai")
+    find_program(PYGMENTIZE_EXECUTABLE pygmentize REQUIRED)
+    execute_process(
+      COMMAND "${PYGMENTIZE_EXECUTABLE}" -O "classprefix=tok-" -f html -a "pre.pygments" -S "${PYGMENTS_DARK_STYLE}"
+      OUTPUT_VARIABLE PYGMENTS_DARK_CSS
+      RESULT_VARIABLE _pygmentize_result
+    )
+    if(NOT _pygmentize_result EQUAL 0)
+      message(SEND_ERROR "Failed to generate pygments CSS for dark theme (style: ${PYGMENTS_DARK_STYLE})")
+    endif()
+    configure_file(
+      "${CMAKE_CURRENT_SOURCE_DIR}/docinfo.html.in"
+      "${CMAKE_CURRENT_BINARY_DIR}/docinfo.html"
+      @ONLY
+    )
+
     # common asciidoctor arguments
     set(ASCIIDOCTOR_ARGS
       -v
@@ -46,8 +65,8 @@ if(ENABLE_MAN OR ENABLE_DOC)
       -a revnumber="${VERSION}"
       -a sectanchors
       -a source-highlighter=pygments
-      -a pygments-style=native
-      -a docinfodir="${CMAKE_CURRENT_SOURCE_DIR}"
+      -a pygments-style=${PYGMENTS_LIGHT_STYLE}
+      -a docinfodir="${CMAKE_CURRENT_BINARY_DIR}"
       -a autogendir="${CMAKE_CURRENT_BINARY_DIR}/autogen"
     )
 
@@ -205,7 +224,7 @@ if(ENABLE_MAN OR ENABLE_DOC)
           OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/weechat_user.${lang}.html"
           COMMAND "${ASCIIDOCTOR_EXECUTABLE}" ARGS ${ASCIIDOCTOR_ARGS} ${ASCIIDOCTOR_USER_ARGS} -o "weechat_user.${lang}.html" "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/weechat_user.${lang}.adoc"
           DEPENDS
-          "${CMAKE_CURRENT_SOURCE_DIR}/docinfo.html"
+          "${CMAKE_CURRENT_BINARY_DIR}/docinfo.html"
           "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/weechat_user.${lang}.adoc"
           "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/includes/attributes-${lang}.adoc"
           "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/includes/cmdline_options.${lang}.adoc"
@@ -226,7 +245,7 @@ if(ENABLE_MAN OR ENABLE_DOC)
           OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/weechat_plugin_api.${lang}.html"
           COMMAND "${ASCIIDOCTOR_EXECUTABLE}" ARGS ${ASCIIDOCTOR_ARGS} ${ASCIIDOCTOR_PLUGIN_API_ARGS} -o "weechat_plugin_api.${lang}.html" "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/weechat_plugin_api.${lang}.adoc"
           DEPENDS
-          "${CMAKE_CURRENT_SOURCE_DIR}/docinfo.html"
+          "${CMAKE_CURRENT_BINARY_DIR}/docinfo.html"
           "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/weechat_plugin_api.${lang}.adoc"
           "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/includes/attributes-${lang}.adoc"
           doc-autogen
@@ -250,7 +269,7 @@ if(ENABLE_MAN OR ENABLE_DOC)
           OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/weechat_scripting.${lang}.html"
           COMMAND "${ASCIIDOCTOR_EXECUTABLE}" ARGS ${ASCIIDOCTOR_ARGS} ${ASCIIDOCTOR_SCRIPTING_ARGS} -o "weechat_scripting.${lang}.html" "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/weechat_scripting.${lang}.adoc"
           DEPENDS
-          "${CMAKE_CURRENT_SOURCE_DIR}/docinfo.html"
+          "${CMAKE_CURRENT_BINARY_DIR}/docinfo.html"
           "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/weechat_scripting.${lang}.adoc"
           "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/includes/attributes-${lang}.adoc"
           doc-autogen
@@ -268,7 +287,7 @@ if(ENABLE_MAN OR ENABLE_DOC)
           OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/weechat_faq.${lang}.html"
           COMMAND "${ASCIIDOCTOR_EXECUTABLE}" ARGS ${ASCIIDOCTOR_ARGS} ${ASCIIDOCTOR_FAQ_ARGS} -o "weechat_faq.${lang}.html" "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/weechat_faq.${lang}.adoc"
           DEPENDS
-          "${CMAKE_CURRENT_SOURCE_DIR}/docinfo.html"
+          "${CMAKE_CURRENT_BINARY_DIR}/docinfo.html"
           "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/weechat_faq.${lang}.adoc"
           "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/includes/attributes-${lang}.adoc"
           WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
@@ -283,7 +302,7 @@ if(ENABLE_MAN OR ENABLE_DOC)
           OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.${lang}.html"
           COMMAND "${ASCIIDOCTOR_EXECUTABLE}" ARGS ${ASCIIDOCTOR_ARGS} ${ASCIIDOCTOR_QUICKSTART_ARGS} -o "weechat_quickstart.${lang}.html" "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/weechat_quickstart.${lang}.adoc"
           DEPENDS
-          "${CMAKE_CURRENT_SOURCE_DIR}/docinfo.html"
+          "${CMAKE_CURRENT_BINARY_DIR}/docinfo.html"
           "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/weechat_quickstart.${lang}.adoc"
           "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/includes/attributes-${lang}.adoc"
           WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
@@ -298,7 +317,7 @@ if(ENABLE_MAN OR ENABLE_DOC)
           OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/weechat_relay_api.${lang}.html"
           COMMAND "${ASCIIDOCTOR_EXECUTABLE}" ARGS ${ASCIIDOCTOR_ARGS} ${ASCIIDOCTOR_RELAY_API_ARGS} -o "weechat_relay_api.${lang}.html" "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/weechat_relay_api.${lang}.adoc"
           DEPENDS
-          "${CMAKE_CURRENT_SOURCE_DIR}/docinfo.html"
+          "${CMAKE_CURRENT_BINARY_DIR}/docinfo.html"
           "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/weechat_relay_api.${lang}.adoc"
           "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/includes/attributes-${lang}.adoc"
           "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/includes/relay.${lang}.adoc"
@@ -314,7 +333,7 @@ if(ENABLE_MAN OR ENABLE_DOC)
           OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/weechat_relay_weechat.${lang}.html"
           COMMAND "${ASCIIDOCTOR_EXECUTABLE}" ARGS ${ASCIIDOCTOR_ARGS} ${ASCIIDOCTOR_RELAY_WEECHAT_ARGS} -o "weechat_relay_weechat.${lang}.html" "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/weechat_relay_weechat.${lang}.adoc"
           DEPENDS
-          "${CMAKE_CURRENT_SOURCE_DIR}/docinfo.html"
+          "${CMAKE_CURRENT_BINARY_DIR}/docinfo.html"
           "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/weechat_relay_weechat.${lang}.adoc"
           "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/includes/attributes-${lang}.adoc"
           "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/includes/relay.${lang}.adoc"
@@ -330,7 +349,7 @@ if(ENABLE_MAN OR ENABLE_DOC)
           OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/weechat_dev.${lang}.html"
           COMMAND "${ASCIIDOCTOR_EXECUTABLE}" ARGS ${ASCIIDOCTOR_ARGS} ${ASCIIDOCTOR_DEV_ARGS} -o "weechat_dev.${lang}.html" "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/weechat_dev.${lang}.adoc"
           DEPENDS
-          "${CMAKE_CURRENT_SOURCE_DIR}/docinfo.html"
+          "${CMAKE_CURRENT_BINARY_DIR}/docinfo.html"
           "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/weechat_dev.${lang}.adoc"
           "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/includes/attributes-${lang}.adoc"
           WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"

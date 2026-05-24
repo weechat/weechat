@@ -229,7 +229,7 @@ WeeChat:
 | man ページと文書のビルド
 
 // TRANSLATION MISSING
-| ruby-pygments.rb |
+| python3-pygments, ruby-pygments.rb |
 | Build documentation.
 
 | libcpputest-dev | 3.4 以上

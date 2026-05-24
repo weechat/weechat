@@ -203,7 +203,7 @@ WeeChat мора да се изгради са CMake.
 | asciidoctor | ≥ 1.5.4
 | Изградња man странице и документације.
 
-| ruby-pygments.rb |
+| python3-pygments, ruby-pygments.rb |
 | Документација изградње.
 
 | libcpputest-dev | ≥ 3.4

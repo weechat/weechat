@@ -26,9 +26,6 @@ SPDX-License-Identifier: GPL-3.0-or-later
     --header-details-color: #aaa;
     --border: 1px solid #444;
     --code-bg-color: #252525;
-    --pre-color: #ddd;
-    --pre-bg-color: #202020;
-    --pre-code-bg-color: #202020;
     --keyseq-color: #777;
     --kbd-bg-color: #252525;
     --kbd-border: 1px solid #333;
@@ -39,7 +36,11 @@ SPDX-License-Identifier: GPL-3.0-or-later
     --icon-caution-color: #bf3400;
     --icon-important-color: #f44336;
     --mark-bg-color: #007;
+    --pre-bevel-light: #3e3e3e;
+    --pre-bevel-dark: #2a2a2a;
+    --pre-bevel-bg: #1f1f1f;
   }
+  @PYGMENTS_DARK_CSS@
 }
 
 @media (not (prefers-color-scheme: dark)), (prefers-color-scheme: light)  {
@@ -59,9 +60,6 @@ SPDX-License-Identifier: GPL-3.0-or-later
     --border: 1px solid #dddddf;
     --code-bg-color: #f7f7f8;
     --keyseq-color: #333c;
-    --pre-color: #353535;
-    --pre-bg-color: #f7f7f8;
-    --pre-code-bg-color: #202020;
     --kbd-bg-color: #f7f7f7;
     --kbd-border: 1px solid #ccc;
     --kbd-box-shadow: 0 1px 0 rgba(0, 0, 0, .2), inset 0 0 0 .1em #fff;
@@ -71,6 +69,9 @@ SPDX-License-Identifier: GPL-3.0-or-later
     --icon-caution-color: #ff0000;
     --icon-important-color: #bf0000;
     --mark-bg-color: #9df;
+    --pre-bevel-light: #e5e5e7;
+    --pre-bevel-dark: #b4b4b8;
+    --pre-bevel-bg: #f6f6f7;
   }
 }
 
@@ -145,6 +146,10 @@ code, .prettyprint {
 
 pre {
   color: var(--pre-color) !important;
+  border: 1px solid;
+  border-color: var(--pre-bevel-light) var(--pre-bevel-dark) var(--pre-bevel-dark) var(--pre-bevel-light);
+  border-radius: 3px;
+  line-height: 1.25;
 }
 
 pre > code {
@@ -162,8 +167,8 @@ kbd {
   color: var(--body-color);
 }
 
-.literalblock pre, .listingblock > .content > pre:not(.highlight), .listingblock > .content > pre[class="highlight"], .listingblock > .content > pre[class^="highlight "] {
-  background-color: var(--pre-bg-color);
+.literalblock pre, .listingblock > .content > pre:not(.highlight), .listingblock > .content > pre[class="highlight"], .listingblock > .content > pre[class^="highlight "], pre.pygments {
+  background-color: var(--pre-bg-color, var(--pre-bevel-bg));
   color: var(--body-color);
 }
 
@@ -198,24 +203,6 @@ kbd {
 mark {
   background-color: var(--mark-bg-color);
   color: var(--body-color);
-}
-
-/* syntax highlighting tuning */
-
-pre.pygments {
-  color: #ddd !important;
-}
-
-pre.pygments .tok-cp {
-  color: #44cfaf;
-}
-
-pre.pygments .tok-nc, pre.pygments .tok-nf {
-  color: #649fef;
-}
-
-pre.pygments .tok-gu, pre.pygments .tok-nc, pre.pygments .tok-nn {
-  text-decoration: none;
 }
 
 /* asciidoctor styles tuning */

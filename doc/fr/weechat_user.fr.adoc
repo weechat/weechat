@@ -208,7 +208,7 @@ Le tableau suivant liste les paquets optionnels pour compiler WeeChat :
 | asciidoctor | ≥ 1.5.4
 | Construction de la page man et de la documentation.
 
-| ruby-pygments.rb |
+| python3-pygments, ruby-pygments.rb |
 | Construction de la documentation.
 
 | libcpputest-dev | ≥ 3.4

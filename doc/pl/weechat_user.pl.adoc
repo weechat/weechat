@@ -210,7 +210,7 @@ WeeChat:
 | asciidoctor | ≥ 1.5.4
 | Tworzenie strony man i dokumentacji.
 
-| ruby-pygments.rb |
+| python3-pygments, ruby-pygments.rb |
 | Dokumentacja budowania.
 
 | libcpputest-dev | ≥ 3.4

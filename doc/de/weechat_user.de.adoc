@@ -212,7 +212,7 @@ WeeChat optional sind:
 | asciidoctor | ≥ 1.5.4
 | zum Erstellen der man page und der Dokumentation.
 
-| ruby-pygments.rb |
+| python3-pygments, ruby-pygments.rb |
 | Build Dokumentation.
 
 | libcpputest-dev | ≥ 3.4
