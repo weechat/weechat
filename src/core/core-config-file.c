@@ -648,6 +648,7 @@ config_file_option_malloc (void)
         new_option->name = NULL;
         new_option->parent_name = NULL;
         new_option->type = 0;
+        new_option->themable = 0;
         new_option->description = NULL;
         new_option->string_values = NULL;
         new_option->min = 0;
@@ -704,16 +705,36 @@ config_file_new_option (struct t_config_file *config_file,
                         void *callback_delete_data)
 {
     struct t_config_option *new_option;
-    int var_type, int_value, argc, i, index_value, number;
-    const char *pos;
-    char *option_name, *parent_name;
+    int var_type, int_value, argc, i, index_value, number, themable;
+    const char *pos, *ptr_type;
+    char *option_name, *parent_name, *type_name;
 
     new_option = NULL;
     option_name = NULL;
     parent_name = NULL;
+    type_name = NULL;
+    themable = 0;
 
     if (!name || !type)
         goto error;
+
+    /*
+     * extract optional "|themable" suffix from type
+     * (e.g.: "string|themable" for a string option that contains color names)
+     */
+    pos = strchr (type, '|');
+    if (pos && (strcmp (pos, "|themable") == 0))
+    {
+        type_name = string_strndup (type, pos - type);
+        if (!type_name)
+            goto error;
+        ptr_type = type_name;
+        themable = 1;
+    }
+    else
+    {
+        ptr_type = type;
+    }
 
     pos = strstr (name, " << ");
     if (pos)
@@ -735,7 +756,7 @@ config_file_new_option (struct t_config_file *config_file,
     var_type = -1;
     for (i = 0; i < CONFIG_NUM_OPTION_TYPES; i++)
     {
-        if (strcmp (type, config_option_type_string[i]) == 0)
+        if (strcmp (ptr_type, config_option_type_string[i]) == 0)
         {
             var_type = i;
             break;
@@ -745,9 +766,13 @@ config_file_new_option (struct t_config_file *config_file,
     {
         gui_chat_printf (NULL, "%sUnknown option type \"%s\"",
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                         type);
+                         ptr_type);
         goto error;
     }
+
+    /* color options are always themable */
+    if (var_type == CONFIG_OPTION_TYPE_COLOR)
+        themable = 1;
 
     /*
      * compatibility with versions < 4.1.0: force enum type for an integer
@@ -785,6 +810,7 @@ config_file_new_option (struct t_config_file *config_file,
             goto error;
         new_option->parent_name = (parent_name) ? strdup (parent_name) : NULL;
         new_option->type = var_type;
+        new_option->themable = themable;
         if (description)
         {
             new_option->description = strdup (description);
@@ -970,6 +996,7 @@ error:
 end:
     free (option_name);
     free (parent_name);
+    free (type_name);
     return new_option;
 }
 
@@ -2440,6 +2467,8 @@ config_file_option_get_pointer (struct t_config_option *option,
         return option->parent_name;
     else if (strcmp (property, "type") == 0)
         return &option->type;
+    else if (strcmp (property, "themable") == 0)
+        return &option->themable;
     else if (strcmp (property, "description") == 0)
         return option->description;
     else if (strcmp (property, "string_values") == 0)
@@ -4249,6 +4278,7 @@ config_file_hdata_config_option_cb (const void *pointer, void *data,
         HDATA_VAR(struct t_config_option, name, STRING, 0, NULL, NULL);
         HDATA_VAR(struct t_config_option, parent_name, STRING, 0, NULL, NULL);
         HDATA_VAR(struct t_config_option, type, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_config_option, themable, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_config_option, description, STRING, 0, NULL, NULL);
         HDATA_VAR(struct t_config_option, string_values, STRING, 0, "*,*", NULL);
         HDATA_VAR(struct t_config_option, min, INTEGER, 0, NULL, NULL);
@@ -4361,6 +4391,8 @@ config_file_add_option_to_infolist (struct t_infolist *infolist,
     {
         goto error;
     }
+    if (!infolist_new_var_integer (ptr_item, "themable", option->themable))
+        goto error;
     if (option->value)
     {
         value = config_file_option_value_to_string (option, 0, 0, 0);
@@ -4525,6 +4557,7 @@ config_file_print_log (void)
                 log_printf ("        name . . . . . . . . . . . . : '%s'", ptr_option->name);
                 log_printf ("        parent_name. . . . . . . . . : '%s'", ptr_option->parent_name);
                 log_printf ("        type . . . . . . . . . . . . : %d", ptr_option->type);
+                log_printf ("        themable . . . . . . . . . . : %d", ptr_option->themable);
                 log_printf ("        description. . . . . . . . . : '%s'", ptr_option->description);
                 log_printf ("        string_values. . . . . . . . : %p", ptr_option->string_values);
                 log_printf ("        min. . . . . . . . . . . . . : %d", ptr_option->min);
