@@ -46,6 +46,7 @@ struct t_fset_option
     char *name;                          /* option full name: file.sect.opt */
     char *parent_name;                   /* parent option name              */
     enum t_fset_option_type type;        /* option type                     */
+    int themable;                        /* 1 if option is themable         */
     char *default_value;                 /* option default value            */
     char *value;                         /* option value                    */
     char *parent_value;                  /* parent option value             */
