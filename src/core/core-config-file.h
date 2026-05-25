@@ -154,6 +154,8 @@ struct t_config_option
     char *parent_name;                     /* parent name (to inherit the   */
                                            /* value from another option)    */
     enum t_config_option_type type;        /* type                          */
+    int themable;                          /* 1 if option is themable       */
+                                           /* (color, or string with color) */
     char *description;                     /* description                   */
     char **string_values;                  /* allowed string values         */
     int min, max;                          /* min and max for value         */

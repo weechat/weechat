@@ -3957,7 +3957,7 @@ irc_config_init (void)
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
         irc_config_color_mirc_remap = weechat_config_new_option (
             irc_config_file, irc_config_section_color,
-            "mirc_remap", "string",
+            "mirc_remap", "string|themable",
             /* TRANSLATORS: please do not translate the list of WeeChat color names at the end of string */
             N_("remap mirc colors in messages using a hashtable (used only "
                "for standard colors, not RGB colors): keys are \"fg,bg\" as "
@@ -3975,7 +3975,7 @@ irc_config_init (void)
             NULL, NULL, NULL);
         irc_config_color_nick_prefixes = weechat_config_new_option (
             irc_config_file, irc_config_section_color,
-            "nick_prefixes", "string",
+            "nick_prefixes", "string|themable",
             N_("color for nick prefixes using mode char (o=op, h=halfop, "
                "v=voice, ..), format is: \"o:color1;h:color2;v:color3\" (if a "
                "mode is not found, WeeChat will try with next modes received "
@@ -4006,7 +4006,7 @@ irc_config_init (void)
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
         irc_config_color_term_remap = weechat_config_new_option (
             irc_config_file, irc_config_section_color,
-            "term_remap", "string",
+            "term_remap", "string|themable",
             N_("remap terminal color numbers in messages using a hashtable "
                "(used only for RGB colors as hexadecimal, which are first "
                "translated to terminal color numbers): keys are \"fg,bg\" as "

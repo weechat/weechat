@@ -572,7 +572,7 @@ fset_config_init (void)
             NULL, NULL, NULL);
         fset_config_format_option[1] = weechat_config_new_option (
             fset_config_file, fset_config_section_format,
-            "option2", "string",
+            "option2", "string|themable",
             N_("second format of each line, used when option "
                "fset.look.format_number is set to 2 "
                "(note: content is evaluated, see /help fset); "

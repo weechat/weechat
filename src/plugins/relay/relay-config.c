@@ -1934,7 +1934,7 @@ relay_config_init (void)
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
         relay_config_api_remote_input_cmd_local = weechat_config_new_option (
             relay_config_file, relay_config_section_api,
-            "remote_input_cmd_local", "string",
+            "remote_input_cmd_local", "string|themable",
             N_("text displayed after user input when the command would be "
                "executed locally (NOT sent to the remote WeeChat) "
                "(note: content is evaluated, see /help eval)"),
@@ -1942,7 +1942,7 @@ relay_config_init (void)
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
         relay_config_api_remote_input_cmd_remote = weechat_config_new_option (
             relay_config_file, relay_config_section_api,
-            "remote_input_cmd_remote", "string",
+            "remote_input_cmd_remote", "string|themable",
             N_("text displayed after user input when the command would be "
                "executed on the remote WeeChat (NOT executed locally) "
                "(note: content is evaluated, see /help eval)"),
