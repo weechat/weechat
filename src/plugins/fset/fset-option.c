@@ -335,6 +335,10 @@ fset_option_match_filter (struct t_fset_option *fset_option, const char *filter)
     }
     else if (strncmp (filter, "t:", 2) == 0)
     {
+        /* virtual cross-type value: match themable flag (any option type) */
+        if (weechat_strcasecmp (filter + 2, "themable") == 0)
+            return (fset_option->themable) ? 1 : 0;
+
         /* filter by type */
         return (
             (weechat_strcasecmp (
@@ -426,7 +430,7 @@ fset_option_set_values (struct t_fset_option *fset_option,
     const char **ptr_string_values;
     void *ptr_default_value, *ptr_value;
     struct t_config_option *ptr_parent_option;
-    int *ptr_type, *ptr_min, *ptr_max;
+    int *ptr_type, *ptr_themable, *ptr_min, *ptr_max;
     char str_value[64], str_allowed_values[4096];
 
     /* file */
@@ -465,6 +469,10 @@ fset_option_set_values (struct t_fset_option *fset_option,
     /* type */
     ptr_type = weechat_config_option_get_pointer (option, "type");
     fset_option->type = *ptr_type;
+
+    /* themable */
+    ptr_themable = weechat_config_option_get_pointer (option, "themable");
+    fset_option->themable = (ptr_themable) ? *ptr_themable : 0;
 
     /* default value */
     free (fset_option->default_value);
@@ -784,6 +792,7 @@ fset_option_alloc (struct t_config_option *option)
     new_fset_option->name = NULL;
     new_fset_option->parent_name = NULL;
     new_fset_option->type = 0;
+    new_fset_option->themable = 0;
     new_fset_option->default_value = NULL;
     new_fset_option->value = NULL;
     new_fset_option->parent_value = NULL;
@@ -1691,6 +1700,7 @@ fset_option_hdata_option_cb (const void *pointer, void *data,
         WEECHAT_HDATA_VAR(struct t_fset_option, name, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_fset_option, parent_name, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_fset_option, type, INTEGER, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_fset_option, themable, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_fset_option, default_value, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_fset_option, value, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_fset_option, parent_value, STRING, 0, NULL, NULL);
@@ -1739,6 +1749,8 @@ fset_option_add_to_infolist (struct t_infolist *infolist,
     if (!weechat_infolist_new_var_string (ptr_item, "type", _(fset_option_type_string[fset_option->type])))
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "type_en", fset_option_type_string[fset_option->type]))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "themable", fset_option->themable))
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "default_value", fset_option->default_value))
         return 0;
@@ -1793,6 +1805,7 @@ fset_option_print_log (void)
         weechat_log_printf ("  type. . . . . . . . . : %d ('%s')",
                             ptr_fset_option->type,
                             fset_option_type_string[ptr_fset_option->type]);
+        weechat_log_printf ("  themable. . . . . . . : %d", ptr_fset_option->themable);
         weechat_log_printf ("  default_value . . . . : '%s'", ptr_fset_option->default_value);
         weechat_log_printf ("  value . . . . . . . . : '%s'", ptr_fset_option->value);
         weechat_log_printf ("  parent_value. . . . . : '%s'", ptr_fset_option->parent_value);
