@@ -50,6 +50,7 @@
 #include "core-proxy.h"
 #include "core-string.h"
 #include "core-sys.h"
+#include "core-theme.h"
 #include "core-util.h"
 #include "core-version.h"
 #include "../gui/gui-bar.h"
@@ -222,6 +223,7 @@ struct t_config_option *config_look_separator_horizontal = NULL;
 struct t_config_option *config_look_separator_vertical = NULL;
 struct t_config_option *config_look_tab_whitespace_char = NULL;
 struct t_config_option *config_look_tab_width = NULL;
+struct t_config_option *config_look_theme = NULL;
 struct t_config_option *config_look_time_format = NULL;
 struct t_config_option *config_look_whitespace_char = NULL;
 struct t_config_option *config_look_window_auto_zoom = NULL;
@@ -1381,7 +1383,7 @@ config_change_color (const void *pointer, void *data,
     (void) data;
     (void) option;
 
-    if (gui_init_ok)
+    if (gui_init_ok && !theme_applying)
     {
         gui_color_init_weechat ();
         gui_window_ask_refresh (1);
@@ -4427,6 +4429,14 @@ config_weechat_init_options (void)
             NULL, NULL, NULL,
             &config_change_tab, NULL, NULL,
             NULL, NULL, NULL);
+        config_look_theme = config_file_new_option (
+            weechat_config_file, weechat_config_section_look,
+            "theme", "string",
+            N_("name of the last theme applied with command /theme "
+               "(set automatically, do not change manually); informational "
+               "only, the theme is not re-applied at startup"),
+            NULL, 0, 0, "", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
         config_look_time_format = config_file_new_option (
             weechat_config_file, weechat_config_section_look,
             "time_format", "string",

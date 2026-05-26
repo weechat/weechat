@@ -277,6 +277,7 @@ extern struct t_config_option *config_look_separator_horizontal;
 extern struct t_config_option *config_look_separator_vertical;
 extern struct t_config_option *config_look_tab_whitespace_char;
 extern struct t_config_option *config_look_tab_width;
+extern struct t_config_option *config_look_theme;
 extern struct t_config_option *config_look_time_format;
 extern struct t_config_option *config_look_whitespace_char;
 extern struct t_config_option *config_look_window_auto_zoom;
