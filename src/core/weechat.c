@@ -75,6 +75,7 @@
 #include "core-secure-config.h"
 #include "core-signal.h"
 #include "core-string.h"
+#include "core-theme.h"
 #include "core-upgrade.h"
 #include "core-url.h"
 #include "core-utf8.h"
@@ -384,6 +385,7 @@ weechat_init (int argc, char *argv[], void (*gui_init_cb)(void))
         weechat_shutdown (EXIT_FAILURE, 0);
     if (!secure_config_init ())         /* init secured data options (sec.*)*/
         weechat_shutdown (EXIT_FAILURE, 0);
+    theme_init ();                      /* initialize theme registry        */
     if (!config_weechat_init ())        /* init WeeChat options (weechat.*) */
         weechat_shutdown (EXIT_FAILURE, 0);
     args_parse (argc, argv);            /* parse command line args          */
@@ -449,6 +451,7 @@ weechat_end (void (*gui_end_cb)(int clean_exit))
     unhook_all ();                      /* remove all hooks                 */
     hdata_end ();                       /* end hdata                        */
     secure_end ();                      /* end secured data                 */
+    theme_end ();                       /* end theme registry               */
     string_end ();                      /* end string                       */
     weeurl_end ();
     weechat_shutdown (-1, 0);           /* end other things                 */
