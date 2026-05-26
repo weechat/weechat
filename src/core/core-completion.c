@@ -46,6 +46,7 @@
 #include "core-proxy.h"
 #include "core-secure.h"
 #include "core-string.h"
+#include "core-theme.h"
 #include "../gui/gui-completion.h"
 #include "../gui/gui-bar.h"
 #include "../gui/gui-bar-item.h"
@@ -1975,6 +1976,117 @@ completion_list_add_layouts_names_cb (const void *pointer, void *data,
 }
 
 /*
+ * Add filename (without ".theme" suffix) to completion list if it ends
+ * with ".theme"; skips "backup-*.theme" entries unless data is non-NULL.
+ *
+ * Callback for dir_exec_on_files; "data" carries a pair of pointers:
+ *   data[0] = struct t_gui_completion *completion (target)
+ *   data[1] = int *show_backups
+ */
+
+struct t_completion_theme_dir
+{
+    struct t_gui_completion *completion;
+    int show_backups;
+};
+
+void
+completion_theme_add_file_cb (void *data, const char *filename)
+{
+    struct t_completion_theme_dir *ctx;
+    const char *base;
+    char *name;
+    size_t len;
+
+    ctx = (struct t_completion_theme_dir *)data;
+    base = strrchr (filename, '/');
+    base = (base) ? base + 1 : filename;
+    len = strlen (base);
+    if ((len < 7) || (strcmp (base + len - 6, ".theme") != 0))
+        return;
+    if (!ctx->show_backups && (strncmp (base, "backup-", 7) == 0))
+        return;
+    name = string_strndup (base, len - 6);
+    if (!name)
+        return;
+    gui_completion_list_add (ctx->completion, name, 0, WEECHAT_LIST_POS_SORT);
+    free (name);
+}
+
+/*
+ * Add theme names to completion list: in-memory built-ins plus any
+ * "*.theme" files in <weechat_config_dir>/themes/ (including backups).
+ */
+
+int
+completion_list_add_theme_themes_all_cb (const void *pointer, void *data,
+                                         const char *completion_item,
+                                         struct t_gui_buffer *buffer,
+                                         struct t_gui_completion *completion)
+{
+    struct t_theme *ptr_theme;
+    struct t_completion_theme_dir ctx;
+    char *dir;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) completion_item;
+    (void) buffer;
+
+    for (ptr_theme = themes; ptr_theme; ptr_theme = ptr_theme->next_theme)
+    {
+        gui_completion_list_add (completion, ptr_theme->name,
+                                 0, WEECHAT_LIST_POS_SORT);
+    }
+
+    dir = NULL;
+    string_asprintf (&dir, "%s/themes", weechat_config_dir);
+    if (dir)
+    {
+        ctx.completion = completion;
+        ctx.show_backups = 1;
+        dir_exec_on_files (dir, 0, 0, &completion_theme_add_file_cb, &ctx);
+        free (dir);
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * Add user theme file names (excluding built-ins and backups) to the
+ * completion list; suitable for /theme save and /theme delete.
+ */
+
+int
+completion_list_add_theme_themes_user_cb (const void *pointer, void *data,
+                                          const char *completion_item,
+                                          struct t_gui_buffer *buffer,
+                                          struct t_gui_completion *completion)
+{
+    struct t_completion_theme_dir ctx;
+    char *dir;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) completion_item;
+    (void) buffer;
+
+    dir = NULL;
+    string_asprintf (&dir, "%s/themes", weechat_config_dir);
+    if (dir)
+    {
+        ctx.completion = completion;
+        ctx.show_backups = 0;
+        dir_exec_on_files (dir, 0, 0, &completion_theme_add_file_cb, &ctx);
+        free (dir);
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Add a secured data to completion list.
  */
 
@@ -2365,6 +2477,12 @@ completion_init (void)
     hook_completion (NULL, "layouts_names",
                      N_("names of layouts"),
                      &completion_list_add_layouts_names_cb, NULL, NULL);
+    hook_completion (NULL, "theme_themes_all",
+                     N_("names of themes (built-ins + user files + backups)"),
+                     &completion_list_add_theme_themes_all_cb, NULL, NULL);
+    hook_completion (NULL, "theme_themes_user",
+                     N_("names of user theme files (excludes built-ins and backups)"),
+                     &completion_list_add_theme_themes_user_cb, NULL, NULL);
     hook_completion (NULL, "secured_data",
                      N_("names of secured data (file sec.conf, section data)"),
                      &completion_list_add_secured_data_cb, NULL, NULL);
