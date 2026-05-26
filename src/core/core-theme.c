@@ -30,6 +30,7 @@
 #include <string.h>
 #include <sys/time.h>
 #include <time.h>
+#include <unistd.h>
 
 #include "weechat.h"
 #include "core-arraylist.h"
@@ -449,6 +450,216 @@ theme_apply_set_option_cb (void *data,
 }
 
 /*
+ * Strips one optional pair of matching surrounding quotes (' or ") from
+ * the in-place string; returns a pointer that may differ from the input
+ * (advances past an opening quote).
+ */
+
+char *
+theme_file_strip_quotes (char *value)
+{
+    size_t len;
+
+    if (!value)
+        return value;
+    len = strlen (value);
+    if ((len >= 2)
+        && (((value[0] == '"') && (value[len - 1] == '"'))
+            || ((value[0] == '\'') && (value[len - 1] == '\''))))
+    {
+        value[len - 1] = '\0';
+        return value + 1;
+    }
+    return value;
+}
+
+/*
+ * Parses a .theme file into a transient t_theme.
+ *
+ * The file uses two INI-like sections: [info] (keys: name, description,
+ * date, weechat) and [options] (key = full option name like
+ * "irc.color.input_nick", value = string). Unknown [info] keys produce a
+ * warning and are ignored; unknown sections produce a warning and the
+ * lines in them are skipped.
+ *
+ * Returns a heap-allocated t_theme (caller frees with theme_free), or
+ * NULL if the file cannot be opened.
+ */
+
+struct t_theme *
+theme_file_parse (const char *path)
+{
+    FILE *file;
+    char line[8192], *ptr, *end, *eq, *key, *value;
+    int line_number, in_options;
+    struct t_theme *theme;
+
+    if (!path)
+        return NULL;
+
+    file = fopen (path, "r");
+    if (!file)
+        return NULL;
+
+    theme = theme_alloc ("");
+    if (!theme)
+    {
+        fclose (file);
+        return NULL;
+    }
+    /* clear the placeholder name; the file should provide it */
+    free (theme->name);
+    theme->name = NULL;
+    /* description/date/weechat_version come from the file too */
+    free (theme->description);
+    theme->description = NULL;
+    free (theme->date);
+    theme->date = NULL;
+    free (theme->weechat_version);
+    theme->weechat_version = NULL;
+
+    line_number = 0;
+    in_options = 0;
+    while (fgets (line, sizeof (line) - 1, file))
+    {
+        line_number++;
+
+        /* trim trailing CR / LF */
+        end = strchr (line, '\r');
+        if (end)
+            *end = '\0';
+        end = strchr (line, '\n');
+        if (end)
+            *end = '\0';
+
+        /* skip leading whitespace */
+        ptr = line;
+        while ((ptr[0] == ' ') || (ptr[0] == '\t'))
+            ptr++;
+
+        /* skip empty lines and comments */
+        if (!ptr[0] || (ptr[0] == '#'))
+            continue;
+
+        /* section header */
+        if (ptr[0] == '[')
+        {
+            end = strchr (ptr, ']');
+            if (!end)
+            {
+                gui_chat_printf (
+                    NULL,
+                    _("%s%s: line %d: malformed section header"),
+                    gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                    path, line_number);
+                continue;
+            }
+            *end = '\0';
+            if (strcmp (ptr + 1, "info") == 0)
+            {
+                in_options = 0;
+            }
+            else if (strcmp (ptr + 1, "options") == 0)
+            {
+                in_options = 1;
+            }
+            else
+            {
+                gui_chat_printf (
+                    NULL,
+                    _("%s%s: line %d: ignoring unknown section \"%s\""),
+                    gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                    path, line_number, ptr + 1);
+                in_options = -1;  /* skip lines until next known section */
+            }
+            continue;
+        }
+
+        if (in_options < 0)
+            continue;
+
+        /* "key = value" */
+        eq = strchr (ptr, '=');
+        if (!eq)
+        {
+            gui_chat_printf (
+                NULL,
+                _("%s%s: line %d: missing '=' separator"),
+                gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                path, line_number);
+            continue;
+        }
+
+        /* trim key */
+        key = ptr;
+        end = eq - 1;
+        while ((end > key) && ((end[0] == ' ') || (end[0] == '\t')))
+            end--;
+        end[1] = '\0';
+
+        /* trim value */
+        value = eq + 1;
+        while ((value[0] == ' ') || (value[0] == '\t'))
+            value++;
+        end = value + strlen (value) - 1;
+        while ((end > value) && ((end[0] == ' ') || (end[0] == '\t')))
+            end--;
+        end[1] = '\0';
+
+        value = theme_file_strip_quotes (value);
+
+        if (in_options)
+        {
+            hashtable_set (theme->overrides, key, value);
+        }
+        else
+        {
+            /* [info] section */
+            if (strcmp (key, "name") == 0)
+            {
+                free (theme->name);
+                theme->name = strdup (value);
+            }
+            else if (strcmp (key, "description") == 0)
+            {
+                free (theme->description);
+                theme->description = strdup (value);
+            }
+            else if (strcmp (key, "date") == 0)
+            {
+                free (theme->date);
+                theme->date = strdup (value);
+            }
+            else if (strcmp (key, "weechat") == 0)
+            {
+                free (theme->weechat_version);
+                theme->weechat_version = strdup (value);
+            }
+            else
+            {
+                gui_chat_printf (
+                    NULL,
+                    _("%s%s: line %d: ignoring unknown [info] key \"%s\""),
+                    gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                    path, line_number, key);
+            }
+        }
+    }
+    fclose (file);
+
+    if (!theme->name)
+        theme->name = strdup ("");
+    if (!theme->description)
+        theme->description = strdup ("");
+    if (!theme->date)
+        theme->date = strdup ("");
+    if (!theme->weechat_version)
+        theme->weechat_version = strdup ("");
+
+    return theme;
+}
+
+/*
  * Applies a theme registered in memory.
  *
  * If weechat.look.theme_backup is on (and the target name does not begin
@@ -466,21 +677,48 @@ theme_apply_set_option_cb (void *data,
 int
 theme_apply (const char *name)
 {
-    struct t_theme *theme;
+    struct t_theme *file_theme = NULL;
+    struct t_theme *registry_theme = NULL;
+    struct t_hashtable *overrides = NULL;
+    char *path = NULL;
     char *backup_name = NULL;
 
     if (!name || !name[0])
         return WEECHAT_RC_ERROR;
 
-    theme = theme_search (name);
-    if (!theme)
+    /* Resolution: a user file with the given name shadows any built-in
+       of the same name. Read the file transiently (parse, apply, free)
+       so user themes have no steady-state memory footprint. */
+    path = theme_user_file_path (name);
+    if (path && (access (path, R_OK) == 0))
     {
-        gui_chat_printf (NULL,
-                         _("%sTheme \"%s\" not found"),
-                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                         name);
-        return WEECHAT_RC_ERROR;
+        file_theme = theme_file_parse (path);
+        if (!file_theme)
+        {
+            gui_chat_printf (NULL,
+                             _("%sFailed to parse theme file \"%s\""),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             path);
+            free (path);
+            return WEECHAT_RC_ERROR;
+        }
+        overrides = file_theme->overrides;
     }
+    else
+    {
+        registry_theme = theme_search (name);
+        if (!registry_theme)
+        {
+            gui_chat_printf (NULL,
+                             _("%sTheme \"%s\" not found"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             name);
+            free (path);
+            return WEECHAT_RC_ERROR;
+        }
+        overrides = registry_theme->overrides;
+    }
+    free (path);
 
     /* create a backup of current themable state, if enabled */
     if (CONFIG_BOOLEAN(config_look_theme_backup)
@@ -489,6 +727,7 @@ theme_apply (const char *name)
         backup_name = theme_make_backup ();
         if (!backup_name)
         {
+            theme_free (file_theme);
             gui_chat_printf (
                 NULL,
                 _("%sUnable to create theme backup; aborting apply "
@@ -501,8 +740,11 @@ theme_apply (const char *name)
     /* apply each override; per-option refreshes are suppressed via the
        theme_applying flag (see config_change_color) */
     theme_applying = 1;
-    hashtable_map (theme->overrides, &theme_apply_set_option_cb, NULL);
+    hashtable_map (overrides, &theme_apply_set_option_cb, NULL);
     theme_applying = 0;
+
+    /* file_theme (if any) is transient: discard now */
+    theme_free (file_theme);
 
     /* single refresh at the end */
     if (gui_init_ok)
