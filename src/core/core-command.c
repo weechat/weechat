@@ -7231,6 +7231,13 @@ COMMAND_CALLBACK(theme)
         return WEECHAT_RC_OK;
     }
 
+    /* "/theme apply <name>": apply a theme */
+    if (string_strcmp (argv[1], "apply") == 0)
+    {
+        COMMAND_MIN_ARGS(3, "apply");
+        return theme_apply (argv[2]);
+    }
+
     /* "/theme info <name>": show details about a theme */
     if (string_strcmp (argv[1], "info") == 0)
     {
@@ -9927,10 +9934,13 @@ command_init (void)
         N_("manage color themes"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated */
         N_("[list]"
+           " || apply <name>"
            " || info <name>"),
         CMD_ARGS_DESC(
             N_("raw[list]: list registered themes (default action with no "
                "argument); active theme is marked with \"->\""),
+            N_("raw[apply]: apply a theme (set every themable option to the "
+               "value from the theme)"),
             N_("raw[info]: display details on a theme (name, description, "
                "creation date, WeeChat version, number of option overrides)"),
             N_("name: name of a theme"),
@@ -9939,8 +9949,16 @@ command_init (void)
                "option overrides. Built-in themes are registered in memory "
                "by core/plugins/scripts; user themes are read from files "
                "in directory \"themes\" inside the WeeChat configuration "
-               "directory.")),
+               "directory."),
+            "",
+            N_("By default, /theme apply creates a backup of current "
+               "themable values in directory \"themes\" before applying "
+               "(file name: \"backup-<timestamp>.theme\"); the previous "
+               "state can be restored with: /theme apply "
+               "backup-<timestamp>. This is controlled by the option "
+               "weechat.look.theme_backup.")),
         "list"
+        " || apply"
         " || info",
         &command_theme, NULL, NULL);
     hook_command (
