@@ -75,6 +75,7 @@ set(LIB_WEECHAT_UNIT_TESTS_CORE_SRC
   core/test-core-secure.cpp
   core/test-core-signal.cpp
   core/test-core-string.cpp
+  core/test-core-theme.cpp
   core/test-core-url.cpp
   core/test-core-utf8.cpp
   core/test-core-util.cpp
