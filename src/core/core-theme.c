@@ -308,18 +308,22 @@ theme_make_backup_name (void)
 }
 
 /*
- * Writes a full snapshot of every themable option to a .theme file at
+ * Writes a snapshot of themable options to a .theme file at
  * "<weechat_config_dir>/themes/<name>.theme".
  *
  * The themes directory is created if missing. The file contains an
  * [info] section (name, description, date, weechat version) followed by
- * an [options] section listing every themable option's current value.
+ * an [options] section.
+ *
+ * If "diff_only" is non-zero, only options whose value differs from
+ * their default (config_file_option_has_changed) are written. If zero,
+ * every themable option is written (full snapshot).
  *
  * Returns 1 on success, 0 on error.
  */
 
 int
-theme_write_file_full (const char *name, const char *description)
+theme_write_file (const char *name, const char *description, int diff_only)
 {
     char *path, *dir, *value, *now;
     FILE *file;
@@ -368,8 +372,10 @@ theme_write_file_full (const char *name, const char *description)
             {
                 if (!ptr_option->themable)
                     continue;
+                if (diff_only && !config_file_option_has_changed (ptr_option))
+                    continue;
                 value = config_file_option_value_to_string (
-                    ptr_option, 0, 1, 0);
+                    ptr_option, 0, 0, 1);
                 fprintf (file, "%s.%s.%s = %s\n",
                          ptr_config->name, ptr_section->name,
                          ptr_option->name,
@@ -397,9 +403,10 @@ theme_make_backup (void)
     name = theme_make_backup_name ();
     if (!name)
         return NULL;
-    if (!theme_write_file_full (
+    if (!theme_write_file (
             name,
-            _("Automatic backup written before /theme apply")))
+            _("Automatic backup written before /theme apply"),
+            0))  /* full snapshot: backups must round-trip exactly */
     {
         free (name);
         return NULL;
@@ -770,6 +777,105 @@ theme_apply (const char *name)
     hook_signal_send ("theme_applied",
                       WEECHAT_HOOK_SIGNAL_STRING, (char *)name);
 
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * Saves the current themable options to a user theme file.
+ *
+ * Refuses names that match a built-in theme (registered via API) or
+ * that start with "backup-" (reserved for automatic backups). If
+ * "full" is non-zero, every themable option is written; otherwise
+ * only options whose value differs from their default are written.
+ *
+ * Returns WEECHAT_RC_OK on success, WEECHAT_RC_ERROR on validation or
+ * I/O failure.
+ */
+
+int
+theme_save (const char *name, int full)
+{
+    if (!name || !name[0])
+        return WEECHAT_RC_ERROR;
+
+    if (strncmp (name, "backup-", 7) == 0)
+    {
+        gui_chat_printf (
+            NULL,
+            _("%sName \"%s\" is reserved for automatic backups"),
+            gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+            name);
+        return WEECHAT_RC_ERROR;
+    }
+
+    if (theme_search (name))
+    {
+        gui_chat_printf (
+            NULL,
+            _("%sName \"%s\" is reserved for a built-in theme"),
+            gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+            name);
+        return WEECHAT_RC_ERROR;
+    }
+
+    if (!theme_write_file (name, NULL, (full) ? 0 : 1))
+    {
+        gui_chat_printf (NULL,
+                         _("%sFailed to save theme \"%s\""),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                         name);
+        return WEECHAT_RC_ERROR;
+    }
+
+    gui_chat_printf (NULL,
+                     _("Theme saved: %s"),
+                     name);
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * Deletes a user theme file.
+ *
+ * Refuses names registered as built-in themes (they have no file).
+ * Returns WEECHAT_RC_OK on success, WEECHAT_RC_ERROR otherwise.
+ */
+
+int
+theme_delete (const char *name)
+{
+    char *path;
+
+    if (!name || !name[0])
+        return WEECHAT_RC_ERROR;
+
+    if (theme_search (name))
+    {
+        gui_chat_printf (
+            NULL,
+            _("%sCannot delete built-in theme \"%s\""),
+            gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+            name);
+        return WEECHAT_RC_ERROR;
+    }
+
+    path = theme_user_file_path (name);
+    if (!path)
+        return WEECHAT_RC_ERROR;
+
+    if (unlink (path) != 0)
+    {
+        gui_chat_printf (NULL,
+                         _("%sFailed to delete theme \"%s\""),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                         name);
+        free (path);
+        return WEECHAT_RC_ERROR;
+    }
+
+    gui_chat_printf (NULL,
+                     _("Theme deleted: %s"),
+                     name);
+    free (path);
     return WEECHAT_RC_OK;
 }
 

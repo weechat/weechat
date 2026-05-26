@@ -7333,6 +7333,23 @@ COMMAND_CALLBACK(theme)
         return theme_apply (argv[2]);
     }
 
+    /* "/theme save <name> [-full]": write a user theme file */
+    if (string_strcmp (argv[1], "save") == 0)
+    {
+        COMMAND_MIN_ARGS(3, "save");
+        return theme_save (argv[2],
+                           ((argc >= 4)
+                            && (string_strcmp (argv[3], "-full") == 0))
+                           ? 1 : 0);
+    }
+
+    /* "/theme delete <name>": remove a user theme file */
+    if (string_strcmp (argv[1], "delete") == 0)
+    {
+        COMMAND_MIN_ARGS(3, "delete");
+        return theme_delete (argv[2]);
+    }
+
     /* "/theme info <name>": show details about a theme */
     if (string_strcmp (argv[1], "info") == 0)
     {
@@ -10057,6 +10074,8 @@ command_init (void)
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated */
         N_("[list [-backups]]"
            " || apply <name>"
+           " || save <name> [-full]"
+           " || delete <name>"
            " || info <name>"),
         CMD_ARGS_DESC(
             N_("raw[list]: list registered themes and any *.theme files in "
@@ -10068,6 +10087,14 @@ command_init (void)
                "value from the theme); if a file named <name>.theme "
                "exists in directory \"themes\" it shadows any built-in "
                "theme of the same name"),
+            N_("raw[save]: save current themable options to a file "
+               "<name>.theme in directory \"themes\"; by default only "
+               "options whose value differs from their default are "
+               "written, use \"-full\" to write every themable option; "
+               "the name must not match a built-in theme or start with "
+               "\"backup-\""),
+            N_("raw[delete]: delete a user theme file (refuses to delete "
+               "built-in themes, which have no file)"),
             N_("raw[info]: display details on a theme (name, description, "
                "creation date, WeeChat version, number of option overrides)"),
             N_("name: name of a theme"),
@@ -10086,6 +10113,8 @@ command_init (void)
                "weechat.look.theme_backup.")),
         "list -backups"
         " || apply"
+        " || save -full"
+        " || delete"
         " || info",
         &command_theme, NULL, NULL);
     hook_command (
