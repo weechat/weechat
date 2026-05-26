@@ -10112,10 +10112,10 @@ command_init (void)
                "backup-<timestamp>. This is controlled by the option "
                "weechat.look.theme_backup.")),
         "list -backups"
-        " || apply"
-        " || save -full"
-        " || delete"
-        " || info",
+        " || apply %(theme_themes_all)"
+        " || save %(theme_themes_user) -full"
+        " || delete %(theme_themes_user)"
+        " || info %(theme_themes_all)",
         &command_theme, NULL, NULL);
     hook_command (
         NULL, "toggle",
