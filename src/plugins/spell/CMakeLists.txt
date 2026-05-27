@@ -34,6 +34,7 @@ add_library(spell MODULE
   spell-config.c spell-config.h
   spell-info.c spell-info.h
   spell-speller.c spell-speller.h
+  spell-theme.c spell-theme.h
 )
 set_target_properties(spell PROPERTIES PREFIX "")
 
