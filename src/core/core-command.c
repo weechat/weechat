@@ -7406,8 +7406,7 @@ COMMAND_CALLBACK(theme)
                              ? ptr_theme->weechat_version : "");
         gui_chat_printf (NULL,
                          _("  overrides      : %d"),
-                         (ptr_theme->overrides)
-                             ? ptr_theme->overrides->items_count : 0);
+                         theme_overrides_count (ptr_theme));
         free (path);
         theme_free (file_theme);
         return WEECHAT_RC_OK;

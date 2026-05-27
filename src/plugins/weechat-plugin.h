@@ -730,7 +730,9 @@ struct t_weechat_plugin
                                 const char *option_name);
 
     /* themes */
-    struct t_theme *(*theme_register) (const char *name,
+    struct t_theme *(*theme_register) (struct t_weechat_plugin *plugin,
+                                       const void *script,
+                                       const char *name,
                                        struct t_hashtable *overrides);
 
     /* key bindings */
@@ -1862,7 +1864,8 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
 
 /* themes */
 #define weechat_theme_register(__name, __overrides)                     \
-    (weechat_plugin->theme_register)(__name, __overrides)
+    (weechat_plugin->theme_register)(weechat_plugin, NULL,              \
+                                     __name, __overrides)
 
 /* key bindings */
 #define weechat_key_bind(__context, __keys)                             \
