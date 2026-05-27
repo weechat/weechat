@@ -2019,8 +2019,10 @@ weechat_guile_api_theme_register (SCM name, SCM overrides)
                                                     WEECHAT_HASHTABLE_STRING,
                                                     WEECHAT_HASHTABLE_STRING);
 
-    result = API_PTR2STR(weechat_theme_register (API_SCM_TO_STRING(name),
-                                                 c_overrides));
+    result = API_PTR2STR(plugin_script_api_theme_register (
+                             weechat_guile_plugin,
+                             guile_current_script,
+                             API_SCM_TO_STRING(name), c_overrides));
 
     weechat_hashtable_free (c_overrides);
 

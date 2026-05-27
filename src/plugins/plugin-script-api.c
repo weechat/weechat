@@ -1569,6 +1569,28 @@ plugin_script_api_config_unset_plugin (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
+ * Register theme overrides on behalf of a script.
+ *
+ * Forwards to weechat_plugin->theme_register with the script pointer
+ * as the owner, so the contribution can be auto-purged when the
+ * script unloads (see plugin_script_remove_themes).
+ */
+
+struct t_theme *
+plugin_script_api_theme_register (struct t_weechat_plugin *weechat_plugin,
+                                  struct t_plugin_script *script,
+                                  const char *name,
+                                  struct t_hashtable *overrides)
+{
+    if (!script)
+        return NULL;
+    return (weechat_plugin->theme_register) (weechat_plugin,
+                                             script,
+                                             name,
+                                             overrides);
+}
+
+/*
  * Create an upgrade file.
  *
  * Return:

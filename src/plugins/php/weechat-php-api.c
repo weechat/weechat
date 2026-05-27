@@ -2194,8 +2194,10 @@ API_FUNC(theme_register)
                                                 WEECHAT_HASHTABLE_STRING,
                                                 WEECHAT_HASHTABLE_STRING);
 
-    result = API_PTR2STR(weechat_theme_register ((const char *)name,
-                                                 overrides));
+    result = API_PTR2STR(plugin_script_api_theme_register (
+                             weechat_php_plugin,
+                             php_current_script,
+                             (const char *)name, overrides));
 
     weechat_hashtable_free (overrides);
 

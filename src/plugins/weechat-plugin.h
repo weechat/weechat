@@ -77,7 +77,7 @@ struct t_weelist_item;
  * please change the date with current one; for a second change at same
  * date, increment the 01, otherwise please keep 01.
  */
-#define WEECHAT_PLUGIN_API_VERSION "20260701-01"
+#define WEECHAT_PLUGIN_API_VERSION "20260701-02"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -734,6 +734,8 @@ struct t_weechat_plugin
                                        const void *script,
                                        const char *name,
                                        struct t_hashtable *overrides);
+    void (*theme_unregister_script) (struct t_weechat_plugin *plugin,
+                                     const void *script);
 
     /* key bindings */
     int (*key_bind) (const char *context, struct t_hashtable *keys);
@@ -1866,6 +1868,8 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
 #define weechat_theme_register(__name, __overrides)                     \
     (weechat_plugin->theme_register)(weechat_plugin, NULL,              \
                                      __name, __overrides)
+#define weechat_theme_unregister_script(__script)                       \
+    (weechat_plugin->theme_unregister_script)(weechat_plugin, __script)
 
 /* key bindings */
 #define weechat_key_bind(__context, __keys)                             \

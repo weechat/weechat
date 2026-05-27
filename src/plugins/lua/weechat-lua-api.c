@@ -2097,7 +2097,10 @@ API_FUNC(theme_register)
                                          WEECHAT_HASHTABLE_STRING,
                                          WEECHAT_HASHTABLE_STRING);
 
-    result = API_PTR2STR(weechat_theme_register (name, hashtable));
+    result = API_PTR2STR(plugin_script_api_theme_register (
+                             weechat_lua_plugin,
+                             lua_current_script,
+                             name, hashtable));
 
     weechat_hashtable_free (hashtable);
 
