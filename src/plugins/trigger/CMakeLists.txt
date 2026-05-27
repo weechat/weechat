@@ -26,6 +26,7 @@ add_library(trigger MODULE
   trigger-command.c trigger-command.h
   trigger-completion.c trigger-completion.h
   trigger-config.c trigger-config.h
+  trigger-theme.c trigger-theme.h
 )
 set_target_properties(trigger PROPERTIES PREFIX "")
 
