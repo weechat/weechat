@@ -37,6 +37,7 @@
 #include "script-info.h"
 #include "script-mouse.h"
 #include "script-repo.h"
+#include "script-theme.h"
 
 
 WEECHAT_PLUGIN_NAME(SCRIPT_PLUGIN_NAME);
@@ -351,6 +352,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
         return WEECHAT_RC_ERROR;
 
     script_config_read ();
+
+    script_theme_init ();
 
     weechat_mkdir_home ("${weechat_cache_dir}/" SCRIPT_PLUGIN_NAME, 0755);
 
