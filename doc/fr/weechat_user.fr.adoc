@@ -2227,6 +2227,141 @@ Exemple de gras avec la couleur de texte du terminal :
 /set weechat.color.status_time *99999
 ----
 
+[[themes]]
+=== Thèmes
+
+Un thème est un ensemble nommé de surcharges d'options qui peut être
+appliqué par la commande <<command_weechat_theme,/theme>>. WeeChat est
+livré avec un thème intégré `"light"` adapté aux terminaux à fond clair
+et permet de charger temporairement des thèmes utilisateur depuis des
+fichiers.
+
+[[themes_themable_options]]
+==== Options modifiables par un thème
+
+Les thèmes ne peuvent modifier que les options marquées comme
+_themable_ (modifiables par un thème). Toutes les options `*.color.*`
+le sont par défaut ; certaines options de type chaîne contenant des
+références `+${color:...}+` (par exemple
+`+weechat.color.chat_nick_colors+`, `+weechat.look.prefix_error+` ou les
+formats `+buflist.format.*+`) sont explicitement déclarées comme
+modifiables.
+
+La liste complète des options modifiables peut être affichée depuis le
+tampon <<command_fset_fset,/fset>> avec le filtre `+t:themable+`.
+
+[[themes_apply]]
+==== Appliquer un thème
+
+Pour basculer vers le thème intégré pour fond clair :
+
+----
+/theme apply light
+----
+
+L'état actuel de toutes les options modifiables est sauvegardé au
+préalable dans un fichier de sauvegarde nommé
+`+backup-AAAAMMJJ-HHMMSS-uuuuuu+` dans le répertoire `+themes+` du
+répertoire de configuration de WeeChat. L'apparence précédente peut
+ainsi être restaurée à tout moment avec :
+
+----
+/theme apply backup-AAAAMMJJ-HHMMSS-uuuuuu
+----
+
+La création de la sauvegarde peut être désactivée (déconseillé) :
+
+----
+/set weechat.look.theme_backup off
+----
+
+Si la sauvegarde est activée et que le fichier ne peut pas être écrit,
+l'application est annulée avant qu'aucune option ne soit modifiée.
+
+Le nom du dernier thème appliqué est conservé dans
+`+weechat.look.theme+` (à titre informatif uniquement ; il n'est pas
+ré-appliqué au démarrage).
+
+[[themes_save_delete]]
+==== Sauvegarder et supprimer des thèmes utilisateur
+
+Sauvegarder l'état actuel des options modifiables en tant que nouveau
+thème utilisateur :
+
+----
+/theme save monTheme
+----
+
+Par défaut, seules les options dont la valeur diffère de la valeur par
+défaut codée en dur sont écrites, ce qui garde le fichier compact et
+ciblé. Pour capturer toutes les options modifiables :
+
+----
+/theme save monTheme -full
+----
+
+Les noms réservés (noms de thèmes intégrés comme `+light+` et tout nom
+commençant par `+backup-+`) sont refusés. Les fichiers sont placés
+dans `+${weechat_config_dir}/themes/<nom>.theme+`.
+
+Supprimer un thème utilisateur :
+
+----
+/theme delete monTheme
+----
+
+Cela supprime le fichier sur le disque ; les thèmes intégrés ne
+peuvent pas être supprimés.
+
+[[themes_file_format]]
+==== Format du fichier de thème
+
+Un fichier de thème est de type INI avec deux sections :
+
+----
+[info]
+name = "solarized_light"
+description = "Thème fond clair inspiré de Solarized"
+date = "2026-05-25 09:42:10"
+weechat = "4.10.0-dev"
+
+[options]
+weechat.color.chat = "darkgray"
+weechat.color.separator = "blue"
+irc.color.input_nick = "magenta"
+buflist.format.number = "${color:28}${number}${if:${number_displayed}?.: }"
+----
+
+`+[info]+` est une section de métadonnées informatives affichées par
+`/theme info`. `+[options]+` contient les surcharges réelles ; les clés
+sont les noms complets d'options tels qu'affichés par `/set`. Les
+valeurs de type chaîne peuvent être encadrées par des guillemets
+simples ou doubles ; les guillemets sont retirés à l'analyse. Les
+options non modifiables par un thème listées dans un fichier sont
+refusées au moment de l'application et signalées sur le tampon _core_
+(ainsi, un fichier `.theme` importé depuis une source non fiable ne
+peut pas écraser des mots de passe, des listes d'auto-chargement ou
+des commandes de démarrage).
+
+Les fichiers de thème utilisateur ne sont jamais mis en cache : à
+chaque `/theme apply <nom>`, le fichier est analysé, appliqué, puis
+libéré.
+
+[[themes_resolution]]
+==== Ordre de résolution
+
+Lors de l'exécution de `+/theme apply <nom>+` :
+
+* Si `+${weechat_config_dir}/themes/<nom>.theme+` existe, le fichier
+  est analysé et utilisé (il masque tout thème intégré du même nom).
+* Sinon, le registre des thèmes intégrés est consulté ; les thèmes
+  intégrés sont enregistrés par programmation par le cœur, les
+  extensions et les scripts (voir la documentation des extensions et
+  des scripts pour `+weechat_theme_register+`).
+
+Si aucune des deux sources ne fournit le nom, l'application est
+refusée.
+
 [[charset]]
 === Charset
 

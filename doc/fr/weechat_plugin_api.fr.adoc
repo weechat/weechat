@@ -9771,6 +9771,95 @@ elif rc == weechat.WEECHAT_CONFIG_OPTION_UNSET_ERROR:
     # ...
 ----
 
+[[themes]]
+=== Thèmes
+
+Fonctions permettant de contribuer des surcharges d'options de couleur
+(et autres options modifiables par un thème) à des thèmes intégrés.
+Voir la section
+link:weechat_user.fr.html#themes[guide utilisateur / Thèmes] pour le
+côté utilisateur final et la commande `+/theme+`.
+
+==== theme_register
+
+_WeeChat ≥ 4.10.0._
+
+Enregistrer une contribution de surcharges d'options sous un thème
+nommé. L'extension appelante est le propriétaire de la contribution ;
+les appels suivants avec le même nom de thème depuis la même extension
+sont fusionnés dans la contribution existante (en cas de doublons, les
+dernières clés gagnent).
+
+Lorsque l'extension appelante est déchargée, toutes ses contributions
+sont automatiquement retirées de tous les thèmes.
+
+Prototype :
+
+[source,c]
+----
+struct t_theme *weechat_theme_register (const char *name,
+                                        struct t_hashtable *overrides);
+----
+
+Paramètres :
+
+* _name_ : nom du thème (par exemple `+light+` ou un nom personnalisé)
+* _overrides_ : table de hachage associant des noms d'options complets
+  (par exemple `+irc.color.input_nick+`) à leurs valeurs chaîne ;
+  l'appelant en conserve la propriété et peut la libérer juste après
+  l'appel
+
+Valeur de retour :
+
+* pointeur vers le thème enregistré (existant ou nouvellement créé),
+  NULL en cas d'erreur
+
+Exemple en C :
+
+[source,c]
+----
+struct t_hashtable *overrides = weechat_hashtable_new (
+    8,
+    WEECHAT_HASHTABLE_STRING,
+    WEECHAT_HASHTABLE_STRING,
+    NULL, NULL);
+if (overrides)
+{
+    weechat_hashtable_set (overrides, "irc.color.input_nick", "cyan");
+    weechat_hashtable_set (overrides, "irc.color.topic_old",  "darkgray");
+    weechat_theme_register ("light", overrides);
+    weechat_hashtable_free (overrides);
+}
+----
+
+Script (Python) :
+
+[source,python]
+----
+# prototype
+def theme_register(name: str, overrides: Dict[str, str]) -> str: ...
+
+# exemple
+weechat.theme_register("light", {
+    "irc.color.input_nick": "cyan",
+    "irc.color.topic_old": "darkgray",
+})
+----
+
+[NOTE]
+Seules les options possédant le flag _themable_ seront modifiées par
+`/theme apply`. Toutes les options `*.color.*` sont modifiables par
+défaut ; les options de type chaîne contenant des références
+`+${color:...}+` sont explicitement déclarées comme modifiables. Les
+entrées ciblant des options non modifiables sont silencieusement
+ignorées au moment de l'application avec un avertissement écrit sur
+le tampon _core_.
+
+[NOTE]
+Lorsqu'elle est appelée depuis un script, la contribution est
+automatiquement retirée lorsque le script est déchargé (aucun nettoyage
+manuel n'est nécessaire).
+
 [[key_bindings]]
 === Associations de touches
 
