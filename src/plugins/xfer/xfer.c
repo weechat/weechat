@@ -45,6 +45,7 @@
 #include "xfer-file.h"
 #include "xfer-info.h"
 #include "xfer-network.h"
+#include "xfer-theme.h"
 #include "xfer-upgrade.h"
 
 
@@ -1838,6 +1839,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
         return WEECHAT_RC_ERROR;
 
     xfer_config_read ();
+
+    xfer_theme_init ();
 
     xfer_create_directories ();
 

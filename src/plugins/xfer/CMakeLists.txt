@@ -30,6 +30,7 @@ add_library(xfer MODULE
   xfer-file.c xfer-file.h
   xfer-info.c xfer-info.h
   xfer-network.c xfer-network.h
+  xfer-theme.c xfer-theme.h
   xfer-upgrade.c xfer-upgrade.h
 )
 set_target_properties(xfer PROPERTIES PREFIX "")
