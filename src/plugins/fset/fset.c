@@ -35,6 +35,7 @@
 #include "fset-info.h"
 #include "fset-mouse.h"
 #include "fset-option.h"
+#include "fset-theme.h"
 
 
 WEECHAT_PLUGIN_NAME(FSET_PLUGIN_NAME);
@@ -125,6 +126,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
         return WEECHAT_RC_ERROR;
 
     fset_config_read ();
+
+    fset_theme_init ();
 
     if (!fset_bar_item_init ())
         return WEECHAT_RC_ERROR;

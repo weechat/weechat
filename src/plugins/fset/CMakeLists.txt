@@ -29,6 +29,7 @@ add_library(fset MODULE
   fset-info.c fset-info.h
   fset-mouse.c fset-mouse.h
   fset-option.c fset-option.h
+  fset-theme.c fset-theme.h
 )
 set_target_properties(fset PROPERTIES PREFIX "")
 
