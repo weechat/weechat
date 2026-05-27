@@ -29,6 +29,7 @@ add_library(script MODULE
   script-info.c script-info.h
   script-mouse.c script-mouse.h
   script-repo.c script-repo.h
+  script-theme.c script-theme.h
 )
 set_target_properties(script PROPERTIES PREFIX "")
 
