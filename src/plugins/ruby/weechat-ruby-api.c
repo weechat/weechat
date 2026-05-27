@@ -2498,7 +2498,10 @@ weechat_ruby_api_theme_register (VALUE class, VALUE name, VALUE overrides)
                                                   WEECHAT_HASHTABLE_STRING,
                                                   WEECHAT_HASHTABLE_STRING);
 
-    result = API_PTR2STR(weechat_theme_register (c_name, c_overrides));
+    result = API_PTR2STR(plugin_script_api_theme_register (
+                             weechat_ruby_plugin,
+                             ruby_current_script,
+                             c_name, c_overrides));
 
     weechat_hashtable_free (c_overrides);
 
