@@ -1217,6 +1217,9 @@ plugin_remove (struct t_weechat_plugin *plugin)
     /* remove all configuration files */
     config_file_free_all_plugin (plugin);
 
+    /* remove all theme contributions registered by this plugin */
+    theme_unregister_plugin (plugin);
+
     /* remove all hooks */
     unhook_all_plugin (plugin, NULL);
 
