@@ -55,4 +55,7 @@ extern void theme_free (struct t_theme *theme);
 extern void theme_init (void);
 extern void theme_end (void);
 
+/* implemented in core-theme-builtin.c */
+extern void theme_builtin_init (void);
+
 #endif /* WEECHAT_THEME_H */

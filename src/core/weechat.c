@@ -386,6 +386,7 @@ weechat_init (int argc, char *argv[], void (*gui_init_cb)(void))
     if (!secure_config_init ())         /* init secured data options (sec.*)*/
         weechat_shutdown (EXIT_FAILURE, 0);
     theme_init ();                      /* initialize theme registry        */
+    theme_builtin_init ();              /* register built-in themes         */
     if (!config_weechat_init ())        /* init WeeChat options (weechat.*) */
         weechat_shutdown (EXIT_FAILURE, 0);
     args_parse (argc, argv);            /* parse command line args          */
