@@ -7333,6 +7333,12 @@ COMMAND_CALLBACK(theme)
         return theme_apply (argv[2]);
     }
 
+    /* "/theme reset": reset every themable option to its default value */
+    if (string_strcmp (argv[1], "reset") == 0)
+    {
+        return theme_reset ();
+    }
+
     /* "/theme save <name> [-full]": write a user theme file */
     if (string_strcmp (argv[1], "save") == 0)
     {
@@ -10073,6 +10079,7 @@ command_init (void)
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated */
         N_("[list [-backups]]"
            " || apply <name>"
+           " || reset"
            " || save <name> [-full]"
            " || delete <name>"
            " || info <name>"),
@@ -10086,6 +10093,8 @@ command_init (void)
                "value from the theme); if a file named <name>.theme "
                "exists in directory \"themes\" it shadows any built-in "
                "theme of the same name"),
+            N_("raw[reset]: reset every themable option to its default "
+               "value (restores the original look shipped with WeeChat)"),
             N_("raw[save]: save current themable options to a file "
                "<name>.theme in directory \"themes\"; by default only "
                "options whose value differs from their default are "
@@ -10112,6 +10121,7 @@ command_init (void)
                "weechat.look.theme_backup.")),
         "list -backups"
         " || apply %(theme_themes_all)"
+        " || reset"
         " || save %(theme_themes_user) -full"
         " || delete %(theme_themes_user)"
         " || info %(theme_themes_all)",
