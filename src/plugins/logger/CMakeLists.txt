@@ -27,6 +27,7 @@ add_library(logger MODULE
   logger-config.c logger-config.h
   logger-info.c logger-info.h
   logger-tail.c logger-tail.h
+  logger-theme.c logger-theme.h
 )
 set_target_properties(logger PROPERTIES PREFIX "")
 

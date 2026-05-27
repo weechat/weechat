@@ -36,6 +36,7 @@
 #include "logger-command.h"
 #include "logger-config.h"
 #include "logger-info.h"
+#include "logger-theme.h"
 
 
 WEECHAT_PLUGIN_NAME(LOGGER_PLUGIN_NAME);
@@ -784,6 +785,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
         return WEECHAT_RC_ERROR;
 
     logger_config_read ();
+
+    logger_theme_init ();
 
     logger_command_init ();
 
