@@ -1026,6 +1026,84 @@ theme_apply (const char *name)
 }
 
 /*
+ * Resets every themable option to its default value.
+ *
+ * Same backup-first safety as theme_apply: if weechat.look.theme_backup
+ * is on, a backup file is written before any option is touched, and the
+ * reset is aborted if the backup cannot be written. The active-theme
+ * label (weechat.look.theme) is reset to its default (empty string).
+ *
+ * Returns WEECHAT_RC_OK on success, WEECHAT_RC_ERROR if the backup is
+ * required but failed.
+ */
+
+int
+theme_reset (void)
+{
+    struct t_config_file *ptr_config;
+    struct t_config_section *ptr_section;
+    struct t_config_option *ptr_option;
+    char *backup_name = NULL;
+
+    if (CONFIG_BOOLEAN(config_look_theme_backup))
+    {
+        backup_name = theme_make_backup ();
+        if (!backup_name)
+        {
+            gui_chat_printf (
+                NULL,
+                _("%sUnable to create theme backup; aborting reset "
+                  "(disable option weechat.look.theme_backup to force)"),
+                gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+            return WEECHAT_RC_ERROR;
+        }
+    }
+
+    /* reset every themable option to its default value; per-option gui
+       refreshes are suppressed via theme_applying */
+    theme_applying = 1;
+    for (ptr_config = config_files; ptr_config;
+         ptr_config = ptr_config->next_config)
+    {
+        for (ptr_section = ptr_config->sections; ptr_section;
+             ptr_section = ptr_section->next_section)
+        {
+            for (ptr_option = ptr_section->options; ptr_option;
+                 ptr_option = ptr_option->next_option)
+            {
+                if (ptr_option->themable)
+                    config_file_option_reset (ptr_option, 1);
+            }
+        }
+    }
+    theme_applying = 0;
+
+    if (gui_init_ok)
+    {
+        gui_color_init_weechat ();
+        gui_window_ask_refresh (1);
+    }
+
+    /* clear active-theme label */
+    config_file_option_reset (config_look_theme, 1);
+
+    if (backup_name)
+    {
+        gui_chat_printf (
+            NULL,
+            _("Previous state saved as theme \"%s\"; to restore: "
+              "/theme apply %s"),
+            backup_name, backup_name);
+        free (backup_name);
+    }
+
+    hook_signal_send ("theme_applied",
+                      WEECHAT_HOOK_SIGNAL_STRING, (char *)"");
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Saves the current themable options to a user theme file.
  *
  * Refuses names that match a built-in theme (registered via API) or
