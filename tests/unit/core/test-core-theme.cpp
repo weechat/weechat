@@ -29,6 +29,7 @@
 extern "C"
 {
 #include <ctype.h>
+#include <dirent.h>
 #include <stdio.h>
 #include <string.h>
 #include <sys/stat.h>
@@ -490,6 +491,177 @@ TEST(CoreTheme, Apply)
 
     free (saved_prefix_error);
     free (saved_theme_label);
+}
+
+/*
+ * Test that /theme apply with a "backup-" prefix skips the backup
+ * recursion guard (no backup file is written).
+ */
+
+TEST(CoreTheme, ApplyBackupRecursionGuard)
+{
+    struct t_hashtable *overrides;
+    int saved_backup;
+    char *path;
+    struct stat st;
+
+    /* enable backup so the guard's effect is observable */
+    saved_backup = CONFIG_BOOLEAN(config_look_theme_backup);
+    config_file_option_set (config_look_theme_backup, "on", 1);
+
+    /* register a theme whose name begins with "backup-" */
+    overrides = make_overrides ("weechat.color.separator", "default",
+                                NULL, NULL);
+    theme_register (NULL, NULL, "backup-recursion-test", overrides);
+    hashtable_free (overrides);
+
+    /* before apply: count *.theme files in the themes directory */
+    /* (we just verify no NEW backup-2* file appears for this apply) */
+    LONGS_EQUAL(WEECHAT_RC_OK, theme_apply ("backup-recursion-test"));
+
+    /* the only file that should exist is the one we are restoring;
+       no fresh backup of state-before-apply should have been made */
+    path = NULL;
+    string_asprintf (&path, "%s/themes", weechat_config_dir);
+    if (path)
+    {
+        int new_backups = 0;
+        DIR *d = opendir (path);
+        struct dirent *ent;
+        if (d)
+        {
+            while ((ent = readdir (d)))
+            {
+                /* count entries that look like fresh backups
+                   (any backup-* file other than our test theme) */
+                if ((strncmp (ent->d_name, "backup-", 7) == 0)
+                    && (strcmp (ent->d_name,
+                                "backup-recursion-test.theme") != 0)
+                    && (strncmp (ent->d_name, ".", 1) != 0))
+                {
+                    new_backups++;
+                }
+            }
+            closedir (d);
+        }
+        LONGS_EQUAL(0, new_backups);
+        free (path);
+    }
+
+    /* clean up the test theme file if it was written by the recursion
+       guard test (which only happens if test_themes/<name>.theme was
+       created earlier in this run) */
+    path = theme_user_file_path ("backup-recursion-test");
+    if (path && stat (path, &st) == 0)
+        unlink (path);
+    free (path);
+
+    /* restore option */
+    config_file_option_set (config_look_theme_backup,
+                            (saved_backup) ? "on" : "off", 1);
+}
+
+/*
+ * Test that a user file with the same name as a built-in theme
+ * shadows the built-in at /theme apply time.
+ */
+
+TEST(CoreTheme, ApplyFileShadowsBuiltin)
+{
+    struct t_hashtable *overrides;
+    struct t_config_option *opt_prefix_error;
+    char *saved_prefix_error, *saved_theme_label, *path;
+    int saved_backup;
+    FILE *f;
+
+    /* snapshot mutable state */
+    opt_prefix_error = NULL;
+    config_file_search_with_string ("weechat.look.prefix_error",
+                                    NULL, NULL, &opt_prefix_error, NULL);
+    CHECK(opt_prefix_error != NULL);
+    saved_prefix_error = strdup (CONFIG_STRING(opt_prefix_error));
+    saved_theme_label = strdup (CONFIG_STRING(config_look_theme));
+    saved_backup = CONFIG_BOOLEAN(config_look_theme_backup);
+    config_file_option_set (config_look_theme_backup, "off", 1);
+
+    /* register an in-memory theme "shadow_test" with one value */
+    overrides = make_overrides ("weechat.look.prefix_error", "FROM_REG",
+                                NULL, NULL);
+    theme_register (NULL, NULL, "shadow_test", overrides);
+    hashtable_free (overrides);
+
+    /* drop a same-named user file with a DIFFERENT value */
+    LONGS_EQUAL(WEECHAT_RC_OK, theme_save ("user_throwaway", 0));  /* ensures themes dir exists */
+    path = theme_user_file_path ("shadow_test");
+    CHECK(path != NULL);
+    f = fopen (path, "w");
+    CHECK(f != NULL);
+    fprintf (f,
+             "[info]\nname = \"shadow_test\"\n\n"
+             "[options]\nweechat.look.prefix_error = \"FROM_FILE\"\n");
+    fclose (f);
+
+    /* apply: the file value must win over the registry value */
+    LONGS_EQUAL(WEECHAT_RC_OK, theme_apply ("shadow_test"));
+    STRCMP_EQUAL("FROM_FILE", CONFIG_STRING(opt_prefix_error));
+
+    /* clean up */
+    unlink (path);
+    free (path);
+    path = theme_user_file_path ("user_throwaway");
+    unlink (path);
+    free (path);
+
+    config_file_option_set (opt_prefix_error, saved_prefix_error, 1);
+    config_file_option_set (config_look_theme, saved_theme_label, 1);
+    config_file_option_set (config_look_theme_backup,
+                            (saved_backup) ? "on" : "off", 1);
+    free (saved_prefix_error);
+    free (saved_theme_label);
+}
+
+/*
+ * Test that multiple contributions to the same theme are applied in
+ * insertion order; later contributions override earlier ones for the
+ * same key.
+ */
+
+TEST(CoreTheme, ApplyMergeAcrossContributions)
+{
+    struct t_weechat_plugin fake_plugin_a, fake_plugin_b;
+    struct t_hashtable *o1, *o2;
+    struct t_config_option *opt;
+    char *saved_value;
+    int saved_backup;
+
+    opt = NULL;
+    config_file_search_with_string ("weechat.look.prefix_error",
+                                    NULL, NULL, &opt, NULL);
+    CHECK(opt != NULL);
+    saved_value = strdup (CONFIG_STRING(opt));
+    saved_backup = CONFIG_BOOLEAN(config_look_theme_backup);
+    config_file_option_set (config_look_theme_backup, "off", 1);
+
+    /* plugin A contributes first */
+    o1 = make_overrides ("weechat.look.prefix_error", "FROM_A",
+                         NULL, NULL);
+    theme_register (&fake_plugin_a, NULL, "merge_test", o1);
+    hashtable_free (o1);
+
+    /* plugin B contributes after */
+    o2 = make_overrides ("weechat.look.prefix_error", "FROM_B",
+                         NULL, NULL);
+    theme_register (&fake_plugin_b, NULL, "merge_test", o2);
+    hashtable_free (o2);
+
+    LONGS_EQUAL(WEECHAT_RC_OK, theme_apply ("merge_test"));
+    /* later contribution wins */
+    STRCMP_EQUAL("FROM_B", CONFIG_STRING(opt));
+
+    config_file_option_set (opt, saved_value, 1);
+    config_file_option_set (config_look_theme_backup,
+                            (saved_backup) ? "on" : "off", 1);
+    free (saved_value);
 }
 
 /*
