@@ -62,6 +62,7 @@ struct t_hashtable;
 struct t_hdata;
 struct t_infolist;
 struct t_infolist_item;
+struct t_theme;
 struct t_upgrade_file;
 struct t_weelist;
 struct t_weelist_item;
@@ -76,7 +77,7 @@ struct t_weelist_item;
  * please change the date with current one; for a second change at same
  * date, increment the 01, otherwise please keep 01.
  */
-#define WEECHAT_PLUGIN_API_VERSION "20260614-01"
+#define WEECHAT_PLUGIN_API_VERSION "20260701-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -727,6 +728,10 @@ struct t_weechat_plugin
                                     const char *description);
     int (*config_unset_plugin) (struct t_weechat_plugin *plugin,
                                 const char *option_name);
+
+    /* themes */
+    struct t_theme *(*theme_register) (const char *name,
+                                       struct t_hashtable *overrides);
 
     /* key bindings */
     int (*key_bind) (const char *context, struct t_hashtable *keys);
@@ -1854,6 +1859,10 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
                                              __description)
 #define weechat_config_unset_plugin(__option)                           \
     (weechat_plugin->config_unset_plugin)(weechat_plugin, __option)
+
+/* themes */
+#define weechat_theme_register(__name, __overrides)                     \
+    (weechat_plugin->theme_register)(__name, __overrides)
 
 /* key bindings */
 #define weechat_key_bind(__context, __keys)                             \

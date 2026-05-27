@@ -50,6 +50,7 @@
 #include "../core/core-log.h"
 #include "../core/core-network.h"
 #include "../core/core-string.h"
+#include "../core/core-theme.h"
 #include "../core/core-upgrade-file.h"
 #include "../core/core-utf8.h"
 #include "../core/core-util.h"
@@ -798,6 +799,8 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
         new_plugin->config_set_plugin = &plugin_api_config_set_plugin;
         new_plugin->config_set_desc_plugin = &plugin_api_config_set_desc_plugin;
         new_plugin->config_unset_plugin = &plugin_api_config_unset_plugin;
+
+        new_plugin->theme_register = &theme_register;
 
         new_plugin->key_bind = &gui_key_bind_plugin;
         new_plugin->key_unbind = &gui_key_unbind_plugin;
