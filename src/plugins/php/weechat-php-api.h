@@ -132,6 +132,7 @@ PHP_FUNCTION(weechat_config_is_set_plugin);
 PHP_FUNCTION(weechat_config_set_plugin);
 PHP_FUNCTION(weechat_config_set_desc_plugin);
 PHP_FUNCTION(weechat_config_unset_plugin);
+PHP_FUNCTION(weechat_theme_register);
 PHP_FUNCTION(weechat_key_bind);
 PHP_FUNCTION(weechat_key_unbind);
 PHP_FUNCTION(weechat_prefix);

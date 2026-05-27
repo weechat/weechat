@@ -1143,6 +1143,19 @@ def config_unset_plugin(option_name: str) -> int:
     ...
 
 
+def theme_register(name: str, overrides: Dict[str, str]) -> str:
+    """`theme_register in WeeChat plugin API reference <https://weechat.org/doc/weechat/api/#_theme_register>`_
+    ::
+
+        # example
+        weechat.theme_register("light", {
+            "irc.color.input_nick": "cyan",
+            "irc.color.topic_old": "darkgray",
+        })
+    """
+    ...
+
+
 def key_bind(context: str, keys: Dict[str, str]) -> int:
     """`key_bind in WeeChat plugin API reference <https://weechat.org/doc/weechat/api/#_key_bind>`_
     ::

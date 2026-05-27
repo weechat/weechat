@@ -2081,6 +2081,29 @@ API_FUNC(config_unset_plugin)
     API_RETURN_INT(rc);
 }
 
+API_FUNC(theme_register)
+{
+    const char *name;
+    struct t_hashtable *hashtable;
+    const char *result;
+
+    API_INIT_FUNC(1, "theme_register", API_RETURN_EMPTY);
+    if (lua_gettop (L) < 2)
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    name = lua_tostring (L, -2);
+    hashtable = weechat_lua_tohashtable (L, -1,
+                                         WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                         WEECHAT_HASHTABLE_STRING,
+                                         WEECHAT_HASHTABLE_STRING);
+
+    result = API_PTR2STR(weechat_theme_register (name, hashtable));
+
+    weechat_hashtable_free (hashtable);
+
+    API_RETURN_STRING(result);
+}
+
 API_FUNC(key_bind)
 {
     const char *context;
@@ -5849,6 +5872,7 @@ const struct luaL_Reg weechat_lua_api_funcs[] = {
     API_DEF_FUNC(config_set_plugin),
     API_DEF_FUNC(config_set_desc_plugin),
     API_DEF_FUNC(config_unset_plugin),
+    API_DEF_FUNC(theme_register),
     API_DEF_FUNC(key_bind),
     API_DEF_FUNC(key_unbind),
     API_DEF_FUNC(prefix),

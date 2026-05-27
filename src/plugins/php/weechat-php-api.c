@@ -2175,6 +2175,33 @@ API_FUNC(config_unset_plugin)
     API_RETURN_INT(result);
 }
 
+API_FUNC(theme_register)
+{
+    zend_string *z_name;
+    zval *z_overrides;
+    char *name;
+    struct t_hashtable *overrides;
+    const char *result;
+
+    API_INIT_FUNC(1, "theme_register", API_RETURN_EMPTY);
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "Sa", &z_name,
+                               &z_overrides) == FAILURE)
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    name = ZSTR_VAL(z_name);
+    overrides = weechat_php_array_to_hashtable (z_overrides,
+                                                WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                                WEECHAT_HASHTABLE_STRING,
+                                                WEECHAT_HASHTABLE_STRING);
+
+    result = API_PTR2STR(weechat_theme_register ((const char *)name,
+                                                 overrides));
+
+    weechat_hashtable_free (overrides);
+
+    API_RETURN_STRING(result);
+}
+
 API_FUNC(key_bind)
 {
     zend_string *z_context;

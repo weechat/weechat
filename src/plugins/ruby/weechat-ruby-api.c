@@ -2479,6 +2479,33 @@ weechat_ruby_api_config_unset_plugin (VALUE class, VALUE option)
 }
 
 static VALUE
+weechat_ruby_api_theme_register (VALUE class, VALUE name, VALUE overrides)
+{
+    char *c_name;
+    struct t_hashtable *c_overrides;
+    const char *result;
+
+    API_INIT_FUNC(1, "theme_register", API_RETURN_EMPTY);
+    if (NIL_P (name) || NIL_P (overrides))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    Check_Type (name, T_STRING);
+    Check_Type (overrides, T_HASH);
+
+    c_name = StringValuePtr (name);
+    c_overrides = weechat_ruby_hash_to_hashtable (overrides,
+                                                  WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                                  WEECHAT_HASHTABLE_STRING,
+                                                  WEECHAT_HASHTABLE_STRING);
+
+    result = API_PTR2STR(weechat_theme_register (c_name, c_overrides));
+
+    weechat_hashtable_free (c_overrides);
+
+    API_RETURN_STRING(result);
+}
+
+static VALUE
 weechat_ruby_api_key_bind (VALUE class, VALUE context, VALUE keys)
 {
     char *c_context;
@@ -7078,6 +7105,7 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     API_DEF_FUNC(config_set_plugin, 2);
     API_DEF_FUNC(config_set_desc_plugin, 2);
     API_DEF_FUNC(config_unset_plugin, 1);
+    API_DEF_FUNC(theme_register, 2);
     API_DEF_FUNC(key_bind, 2);
     API_DEF_FUNC(key_unbind, 2);
     API_DEF_FUNC(prefix, 1);

@@ -2001,6 +2001,31 @@ API_FUNC(config_unset_plugin)
     API_RETURN_INT(rc);
 }
 
+API_FUNC(theme_register)
+{
+    char *name;
+    PyObject *dict;
+    struct t_hashtable *hashtable;
+    const char *result;
+
+    API_INIT_FUNC(1, "theme_register", API_RETURN_EMPTY);
+    name = NULL;
+    dict = NULL;
+    if (!PyArg_ParseTuple (args, "sO", &name, &dict))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    hashtable = weechat_python_dict_to_hashtable (dict,
+                                                  WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                                  WEECHAT_HASHTABLE_STRING,
+                                                  WEECHAT_HASHTABLE_STRING);
+
+    result = API_PTR2STR(weechat_theme_register (name, hashtable));
+
+    weechat_hashtable_free (hashtable);
+
+    API_RETURN_STRING(result);
+}
+
 API_FUNC(key_bind)
 {
     char *context;
@@ -5727,6 +5752,7 @@ PyMethodDef weechat_python_funcs[] =
     API_DEF_FUNC(config_set_plugin),
     API_DEF_FUNC(config_set_desc_plugin),
     API_DEF_FUNC(config_unset_plugin),
+    API_DEF_FUNC(theme_register),
     API_DEF_FUNC(key_bind),
     API_DEF_FUNC(key_unbind),
     API_DEF_FUNC(prefix),
