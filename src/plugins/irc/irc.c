@@ -47,6 +47,7 @@
 #include "irc-redirect.h"
 #include "irc-server.h"
 #include "irc-tag.h"
+#include "irc-theme.h"
 #include "irc-typing.h"
 #include "irc-upgrade.h"
 
@@ -216,6 +217,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
         return WEECHAT_RC_ERROR;
 
     irc_config_read ();
+
+    irc_theme_init ();
 
     irc_list_init ();
 
