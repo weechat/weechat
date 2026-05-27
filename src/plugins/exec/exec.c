@@ -32,6 +32,7 @@
 #include "exec-command.h"
 #include "exec-completion.h"
 #include "exec-config.h"
+#include "exec-theme.h"
 
 
 WEECHAT_PLUGIN_NAME(EXEC_PLUGIN_NAME);
@@ -738,6 +739,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     if (!exec_config_init ())
         return WEECHAT_RC_ERROR;
+
+    exec_theme_init ();
 
     exec_config_read ();
 

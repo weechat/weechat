@@ -25,6 +25,7 @@ add_library(exec MODULE
   exec-command.c exec-command.h
   exec-completion.c exec-completion.h
   exec-config.c exec-config.h
+  exec-theme.c exec-theme.h
 )
 set_target_properties(exec PROPERTIES PREFIX "")
 
