@@ -34,6 +34,7 @@
 #include "buflist-config.h"
 #include "buflist-info.h"
 #include "buflist-mouse.h"
+#include "buflist-theme.h"
 
 
 WEECHAT_PLUGIN_NAME(BUFLIST_PLUGIN_NAME);
@@ -454,6 +455,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
         return WEECHAT_RC_ERROR;
 
     buflist_config_read ();
+
+    buflist_theme_init ();
 
     if (!buflist_bar_item_init ())
         return WEECHAT_RC_ERROR;

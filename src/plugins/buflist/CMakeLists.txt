@@ -27,6 +27,7 @@ add_library(buflist MODULE
   buflist-config.c buflist-config.h
   buflist-info.c buflist-info.h
   buflist-mouse.c buflist-mouse.h
+  buflist-theme.c buflist-theme.h
 )
 set_target_properties(buflist PROPERTIES PREFIX "")
 
