@@ -34,6 +34,7 @@ set(RELAY_SRC
   relay-raw.c relay-raw.h
   relay-remote.c relay-remote.h
   relay-server.c relay-server.h
+  relay-theme.c relay-theme.h
   relay-upgrade.c relay-upgrade.h
   relay-websocket.c relay-websocket.h
   # irc relay

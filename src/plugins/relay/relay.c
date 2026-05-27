@@ -38,6 +38,7 @@
 #include "relay-raw.h"
 #include "relay-remote.h"
 #include "relay-server.h"
+#include "relay-theme.h"
 #include "relay-upgrade.h"
 
 
@@ -375,6 +376,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
         return WEECHAT_RC_ERROR;
 
     relay_config_read ();
+
+    relay_theme_init ();
 
     relay_network_init ();
 
