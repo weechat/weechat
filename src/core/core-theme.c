@@ -641,7 +641,7 @@ theme_make_backup (void)
         return NULL;
     path = theme_write_file (
         name,
-        _("Automatic backup written before /theme apply"),
+        _("Automatic backup"),
         0);  /* full snapshot: backups must round-trip exactly */
     if (!path)
     {
