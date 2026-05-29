@@ -7349,6 +7349,13 @@ COMMAND_CALLBACK(theme)
                            ? 1 : 0);
     }
 
+    /* "/theme rename <old> <new>": rename a user theme file */
+    if (string_strcmp (argv[1], "rename") == 0)
+    {
+        COMMAND_MIN_ARGS(4, "rename");
+        return theme_rename (argv[2], argv[3]);
+    }
+
     /* "/theme delete <name>": remove a user theme file */
     if (string_strcmp (argv[1], "delete") == 0)
     {
@@ -10081,6 +10088,7 @@ command_init (void)
            " || apply <name>"
            " || reset"
            " || save <name> [-full]"
+           " || rename <old> <new>"
            " || delete <name>"
            " || info <name>"),
         CMD_ARGS_DESC(
@@ -10101,6 +10109,11 @@ command_init (void)
                "written, use \"-full\" to write every themable option; "
                "the name must not match a built-in theme or start with "
                "\"backup-\""),
+            N_("raw[rename]: rename a user theme file (typically to "
+               "give an automatic backup a meaningful name); refuses to "
+               "rename built-in themes, refuses target names matching a "
+               "built-in or starting with \"backup-\", and refuses if "
+               "the target file already exists"),
             N_("raw[delete]: delete a user theme file (refuses to delete "
                "built-in themes, which have no file)"),
             N_("raw[info]: display details on a theme (name, description, "
@@ -10123,6 +10136,7 @@ command_init (void)
         " || apply %(theme_themes_all)"
         " || reset"
         " || save %(theme_themes_user) -full"
+        " || rename %(theme_themes_files)"
         " || delete %(theme_themes_user)"
         " || info %(theme_themes_all)",
         &command_theme, NULL, NULL);
