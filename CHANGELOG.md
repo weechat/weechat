@@ -18,6 +18,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 ### Added
 
 - core: add `/theme` command with subcommands `list`, `apply`, `reset`, `save`, `delete`, `info`, automatic backup of current themable options before apply, and built-in "light" theme
+- core: detect terminal background on first start and automatically apply the built-in "light" theme when a light terminal is detected
 - core: add `themable` flag on configuration options (auto-set for color options; explicit opt-in for string options containing `${color:...}` references via the `type|themable` syntax)
 - core: add option weechat.look.theme (informational, set by `/theme apply`)
 - core: add option weechat.look.theme_backup (boolean, default `on`)

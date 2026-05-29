@@ -98,6 +98,7 @@ char *weechat_argv0 = NULL;            /* WeeChat binary file name (argv[0])*/
 int weechat_upgrading = 0;             /* =1 if WeeChat is upgrading        */
 int weechat_first_start = 0;           /* first start of WeeChat?           */
 time_t weechat_first_start_time = 0;   /* start time (used by /uptime cmd)  */
+int weechat_term_theme_light = 0;      /* 1 if light theme detected         */
 int weechat_upgrade_count = 0;         /* number of /upgrade done           */
 struct timeval weechat_current_start_timeval; /* start time used to display */
                                        /* duration of /upgrade              */
@@ -183,22 +184,34 @@ weechat_startup_message (void)
     if (weechat_first_start)
     {
         /* message on first run (when weechat.conf is created) */
-        gui_chat_printf (NULL, "");
+        gui_chat_printf (NULL, _("Welcome to WeeChat!"));
         gui_chat_printf (
             NULL,
-            _("Welcome to WeeChat!\n"
-              "\n"
-              "If you are discovering WeeChat, it is recommended to read at "
-              "least the quickstart guide, and the user's guide if you have "
-              "some time; they explain main WeeChat concepts.\n"
-              "All WeeChat docs are available at: https://weechat.org/doc/\n"
-              "\n"
-              "Moreover, there is inline help with /help on all commands and "
-              "options (use Tab key to complete the name).\n"
-              "The command /fset can help to customize WeeChat.\n"
-              "\n"
-              "You can add and connect to an IRC server with /server and "
+            _("If you are discovering WeeChat, it is recommended to "
+              "read at least the quickstart guide, and the user's guide if "
+              "you have some time; they explain main WeeChat concepts."));
+        gui_chat_printf (
+            NULL,
+            _("All WeeChat docs are available at: %s"),
+            WEECHAT_WEBSITE_DOC);
+        gui_chat_printf (
+            NULL,
+            _("Moreover, there is inline help with /help on all commands and "
+              "options (use Tab key to complete the name)."));
+        gui_chat_printf (
+            NULL,
+            _("The command /fset can help to customize WeeChat."));
+        gui_chat_printf (
+            NULL,
+            _("You can add and connect to an IRC server with /server and "
               "/connect commands (see /help server)."));
+        if (weechat_term_theme_light)
+        {
+            gui_chat_printf (
+                NULL,
+                _("The \"light\" theme will be automatically applied. "
+                "Use /theme reset to switch back to the default dark theme."));
+        }
         gui_chat_printf (NULL, "");
         gui_chat_printf (NULL, "---");
         gui_chat_printf (NULL, "");
@@ -369,6 +382,9 @@ weechat_init (int argc, char *argv[], void (*gui_init_cb)(void))
             * weechat_current_start_timeval.tv_usec)
            ^ getpid ());
 
+    /* detect the terminal theme, before initializing the GUI */
+    weechat_term_theme_light = gui_term_theme_is_light ();
+
     weeurl_init ();                     /* initialize URL                   */
     string_init ();                     /* initialize string                */
     signal_init ();                     /* initialize signals               */
@@ -425,6 +441,13 @@ weechat_init (int argc, char *argv[], void (*gui_init_cb)(void))
     {
         weechat_doc_gen_ok = doc_generate (weechat_doc_gen_path);
         weechat_quit = 1;
+    }
+
+    if (weechat_first_start && isatty (STDOUT_FILENO) && !weechat_headless && !weechat_doc_gen)
+    {
+        /* switch to "light" theme if terminal background was detected as "light" */
+        if (weechat_term_theme_light)
+            theme_apply ("light");
     }
 }
 

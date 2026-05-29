@@ -31,5 +31,6 @@ extern void gui_main_end (int clean_exit);
 
 /* terminal functions (GUI dependent) */
 extern void gui_term_set_eat_newline_glitch (int value);
+extern int gui_term_theme_is_light (void);
 
 #endif /* WEECHAT_GUI_MAIN_H */
