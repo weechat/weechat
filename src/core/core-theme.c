@@ -54,9 +54,9 @@ int theme_applying = 0;
 
 
 /*
- * Searches for a theme by name in the in-memory registry.
+ * Search for a theme by name in the in-memory registry.
  *
- * Returns pointer to theme found, NULL if not found.
+ * Return pointer to theme found, NULL if not found.
  */
 
 struct t_theme *
@@ -76,9 +76,9 @@ theme_search (const char *name)
 }
 
 /*
- * Builds a "YYYY-MM-DD HH:MM:SS" timestamp string for "now" (local time).
+ * Build a "YYYY-MM-DD HH:MM:SS" timestamp string for "now" (local time).
  *
- * Returned string is allocated; caller frees.
+ * Note: result must be freed after use.
  */
 
 char *
@@ -98,10 +98,10 @@ theme_format_now (void)
 }
 
 /*
- * Allocates a new theme with name and empty metadata; does not link it
+ * Allocate a new theme with name and empty metadata; does not link it
  * into the registry.
  *
- * Returns the new theme, NULL on error.
+ * Return the new theme, NULL on error.
  */
 
 struct t_theme *
@@ -130,7 +130,7 @@ theme_alloc (const char *name)
 }
 
 /*
- * Frees one contribution (does not unlink from the parent theme list).
+ * Free one contribution (do not unlink from the parent theme list).
  */
 
 void
@@ -143,7 +143,7 @@ theme_contribution_free (struct t_theme_contribution *contribution)
 }
 
 /*
- * Frees a theme (does not unlink from registry; caller handles that).
+ * Free a theme without unlinking from registry.
  */
 
 void
@@ -168,7 +168,7 @@ theme_free (struct t_theme *theme)
 }
 
 /*
- * Merges entries from src into dst (overwrites duplicate keys).
+ * Merge entries from src into dst (overwrite duplicate keys).
  */
 
 void
@@ -186,8 +186,8 @@ theme_merge_overrides_cb (void *data,
 }
 
 /*
- * Searches the contribution belonging to the given (plugin, script) pair
- * in a theme's contribution list. Returns NULL if not found.
+ * Search the contribution belonging to the given (plugin, script) pair
+ * in a theme's contribution list. Return NULL if not found.
  */
 
 struct t_theme_contribution *
@@ -208,9 +208,9 @@ theme_search_contribution (struct t_theme *theme,
 }
 
 /*
- * Allocates a new contribution and appends it to a theme's list.
+ * Allocate a new contribution and appends it to a theme's list.
  *
- * Returns the new contribution, NULL on error.
+ * Return the new contribution, NULL on error.
  */
 
 struct t_theme_contribution *
@@ -245,7 +245,7 @@ theme_contribution_new (struct t_theme *theme,
 }
 
 /*
- * Registers a contribution to a theme.
+ * Register a contribution to a theme.
  *
  * Identity is the (plugin, script) pair:
  *   - plugin == NULL && script == NULL  => core
@@ -261,8 +261,7 @@ theme_contribution_new (struct t_theme *theme,
  * The "overrides" hashtable passed in is read-only here; the caller
  * retains ownership and may free it after the call.
  *
- * Returns pointer to the theme (existing or newly created), NULL on
- * error.
+ * Return pointer to the theme (existing or newly created), NULL on error.
  */
 
 struct t_theme *
@@ -310,7 +309,7 @@ theme_register (struct t_weechat_plugin *plugin,
 }
 
 /*
- * Drops one contribution from a theme (unlinks and frees it).
+ * Drop one contribution from a theme (unlink and free it).
  */
 
 void
@@ -341,8 +340,8 @@ theme_drop_contribution (struct t_theme *theme,
 }
 
 /*
- * Drops all contributions owned by a given plugin (across every theme).
- * Called from the plugin-unload lifecycle (next commit).
+ * Drop all contributions owned by a given plugin (across every theme).
+ * Called from the plugin-unload lifecycle.
  *
  * Contributions whose script is non-NULL are kept (they belong to
  * individual scripts and are cleaned up separately on script unload).
@@ -373,8 +372,8 @@ theme_unregister_plugin (struct t_weechat_plugin *plugin)
 }
 
 /*
- * Drops all contributions owned by a given script (across every theme).
- * Called from the script-unload lifecycle (a later commit).
+ * Drop all contributions owned by a given script (across every theme).
+ * Called from the script-unload lifecycle.
  */
 
 void
@@ -403,7 +402,7 @@ theme_unregister_script (struct t_weechat_plugin *plugin,
 }
 
 /*
- * Returns the total number of overrides across all contributions of a
+ * Return the total number of overrides across all contributions of a
  * theme. Duplicate keys (across contributions) are counted multiple
  * times; the actual merged-unique count is at most this number.
  */
@@ -423,8 +422,8 @@ theme_overrides_count (struct t_theme *theme)
 }
 
 /*
- * Returns the effective value of an option override across the theme's
- * contributions (later contributions win). Returns NULL if no
+ * Return the effective value of an option override across the theme's
+ * contributions (later contributions win). Return NULL if no
  * contribution provides the key.
  */
 
@@ -447,9 +446,9 @@ theme_get_override (struct t_theme *theme, const char *option_name)
 }
 
 /*
- * Compares two themes by name (callback used by arraylist sort).
+ * Compare two themes by name (callback used by arraylist sort).
  *
- * Returns negative, zero, or positive value (like strcmp).
+ * Return negative, zero, or positive value (like strcmp).
  */
 
 int
@@ -465,10 +464,10 @@ theme_list_cmp_cb (void *data, struct t_arraylist *arraylist,
 }
 
 /*
- * Returns an arraylist of t_theme * for all registered themes (built-ins).
+ * Return an arraylist of t_theme * for all registered themes (built-ins).
  *
  * The returned arraylist owns no data; callers must not free its items.
- * Returns NULL on allocation failure.
+ * Return NULL on allocation failure.
  */
 
 struct t_arraylist *
@@ -488,10 +487,10 @@ theme_list (void)
 }
 
 /*
- * Builds the on-disk path for a user theme:
- * "<weechat_config_dir>/themes/<name>.theme".
+ * Build the on-disk path for a user theme: "<weechat_config_dir>/themes/<name>.theme".
+ * Return NULL on error.
  *
- * Returned string is allocated; caller frees. Returns NULL on error.
+ * Note: result must be freed after use.
  */
 
 char *
@@ -507,9 +506,10 @@ theme_user_file_path (const char *name)
 }
 
 /*
- * Builds a unique backup theme name "backup-YYYYMMDD-HHMMSS-uuuuuu".
+ * Build a unique backup theme name "backup-YYYYMMDD-HHMMSS-uuuuuu".
+ * Return NULL on error.
  *
- * Returned string is allocated; caller frees. Returns NULL on error.
+ * Note: result must be freed after use.
  */
 
 char *
@@ -537,18 +537,19 @@ theme_make_backup_name (void)
 }
 
 /*
- * Writes a snapshot of themable options to a .theme file at
+ * Write a snapshot of themable options to a .theme file at
  * "<weechat_config_dir>/themes/<name>.theme".
  *
- * The themes directory is created if missing. The file contains an
- * [info] section (name, description, date, weechat version) followed by
- * an [options] section.
+ * The themes directory is created if missing.
+ *
+ * The file contains an [info] section (name, description, date, weechat version)
+ * followed by an [options] section.
  *
  * If "diff_only" is non-zero, only options whose value differs from
  * their default (config_file_option_has_changed) are written. If zero,
  * every themable option is written (full snapshot).
  *
- * Returns path to saved file on success, NULL on error.
+ * Return path to saved file on success, NULL on error.
  *
  * Note: result must be freed after use.
  */
@@ -623,9 +624,11 @@ theme_write_file (const char *name, const char *description, int diff_only)
 }
 
 /*
- * Creates a timestamped backup theme file with the current themable state.
+ * Create a timestamped backup theme file with the current themable state.
  *
- * Returned string is the backup name (caller frees), NULL on failure.
+ * Return backup name, NULL on error.
+ *
+ * Note: result must be freed after use.
  */
 
 char *
@@ -650,9 +653,9 @@ theme_make_backup (void)
 }
 
 /*
- * Applies one override entry (callback for hashtable_map during apply).
+ * Apply one override entry (callback for hashtable_map during apply).
  *
- * Refuses entries pointing to options that do not exist or that are not
+ * Refuse entries pointing to options that do not exist or that are not
  * themable, logging a warning to the core buffer; the apply itself still
  * proceeds with the remaining entries.
  */
@@ -692,8 +695,8 @@ theme_apply_set_option_cb (void *data,
 }
 
 /*
- * Strips one optional pair of matching surrounding quotes (' or ") from
- * the in-place string; returns a pointer that may differ from the input
+ * Strip one optional pair of matching surrounding quotes (' or ") from
+ * the in-place string; return a pointer that may differ from the input
  * (advances past an opening quote).
  */
 
@@ -716,7 +719,7 @@ theme_file_strip_quotes (char *value)
 }
 
 /*
- * Parses a .theme file into a transient t_theme.
+ * Parse a .theme file into a transient t_theme.
  *
  * The file uses two INI-like sections: [info] (keys: name, description,
  * date, weechat) and [options] (key = full option name like
@@ -724,7 +727,7 @@ theme_file_strip_quotes (char *value)
  * warning and are ignored; unknown sections produce a warning and the
  * lines in them are skipped.
  *
- * Returns a heap-allocated t_theme (caller frees with theme_free), or
+ * Return a heap-allocated t_theme (caller frees with theme_free), or
  * NULL if the file cannot be opened.
  */
 
@@ -750,8 +753,10 @@ theme_file_parse (const char *path)
         fclose (file);
         return NULL;
     }
-    /* file themes carry a single anonymous (plugin=NULL, script=NULL)
-       contribution holding everything in the [options] section */
+    /*
+     * file themes carry a single anonymous (plugin=NULL, script=NULL)
+     * contribution holding everything in the [options] section
+     */
     contribution = theme_contribution_new (theme, NULL, NULL);
     if (!contribution)
     {
@@ -912,17 +917,17 @@ theme_file_parse (const char *path)
 }
 
 /*
- * Applies a theme registered in memory.
+ * Apply a theme registered in memory.
  *
  * If weechat.look.theme_backup is on (and the target name does not begin
  * with "backup-"), a backup file is written first; on backup failure the
  * apply is aborted before any option is changed.
  *
- * Iterates the theme's overrides with theme_applying=1 so the per-option
+ * Iterate the theme's overrides with theme_applying=1 so the per-option
  * change callbacks skip their gui refresh; a single refresh is performed
  * at the end.
  *
- * Returns WEECHAT_RC_OK on success, WEECHAT_RC_ERROR if the theme name
+ * Return WEECHAT_RC_OK on success, WEECHAT_RC_ERROR if the theme name
  * is unknown or the backup could not be created.
  */
 
@@ -938,9 +943,11 @@ theme_apply (const char *name)
     if (!name || !name[0])
         return WEECHAT_RC_ERROR;
 
-    /* Resolution: a user file with the given name shadows any built-in
-       of the same name. Read the file transiently (parse, apply, free)
-       so user themes have no steady-state memory footprint. */
+    /*
+     * Resolution: a user file with the given name shadows any built-in
+     * of the same name. Read the file transiently (parse, apply, free)
+     * so user themes have no steady-state memory footprint.
+     */
     path = theme_user_file_path (name);
     if (path && (access (path, R_OK) == 0))
     {
@@ -988,10 +995,12 @@ theme_apply (const char *name)
         }
     }
 
-    /* Apply each contribution in order; per-option refreshes are
-       suppressed via the theme_applying flag (see config_change_color).
-       Later contributions naturally win for duplicate keys because
-       config_file_option_set is called for each in sequence. */
+    /*
+     * Apply each contribution in order; per-option refreshes are
+     * suppressed via the theme_applying flag (see config_change_color).
+     * Later contributions naturally win for duplicate keys because
+     * config_file_option_set is called for each in sequence.
+     */
     theme_applying = 1;
     for (ptr_contribution = theme->contributions; ptr_contribution;
          ptr_contribution = ptr_contribution->next_contribution)
@@ -1032,14 +1041,14 @@ theme_apply (const char *name)
 }
 
 /*
- * Resets every themable option to its default value.
+ * Reset every themable option to its default value.
  *
  * Same backup-first safety as theme_apply: if weechat.look.theme_backup
  * is on, a backup file is written before any option is touched, and the
  * reset is aborted if the backup cannot be written. The active-theme
  * label (weechat.look.theme) is reset to its default (empty string).
  *
- * Returns WEECHAT_RC_OK on success, WEECHAT_RC_ERROR if the backup is
+ * Return WEECHAT_RC_OK on success, WEECHAT_RC_ERROR if the backup is
  * required but failed.
  */
 
@@ -1065,8 +1074,10 @@ theme_reset (void)
         }
     }
 
-    /* reset every themable option to its default value; per-option gui
-       refreshes are suppressed via theme_applying */
+    /*
+     * reset every themable option to its default value; per-option gui
+     * refreshes are suppressed via theme_applying
+     */
     theme_applying = 1;
     for (ptr_config = config_files; ptr_config;
          ptr_config = ptr_config->next_config)
@@ -1110,14 +1121,14 @@ theme_reset (void)
 }
 
 /*
- * Saves the current themable options to a user theme file.
+ * Save the current themable options to a user theme file.
  *
- * Refuses names that match a built-in theme (registered via API) or
+ * Refuse names that match a built-in theme (registered via API) or
  * that start with "backup-" (reserved for automatic backups). If
  * "full" is non-zero, every themable option is written; otherwise
  * only options whose value differs from their default are written.
  *
- * Returns WEECHAT_RC_OK on success, WEECHAT_RC_ERROR on validation or
+ * Return WEECHAT_RC_OK on success, WEECHAT_RC_ERROR on validation or
  * I/O failure.
  */
 
@@ -1165,10 +1176,10 @@ theme_save (const char *name, int full)
 }
 
 /*
- * Deletes a user theme file.
+ * Delete a user theme file.
  *
- * Refuses names registered as built-in themes (they have no file).
- * Returns WEECHAT_RC_OK on success, WEECHAT_RC_ERROR otherwise.
+ * Refuse names registered as built-in themes (they have no file).
+ * Return WEECHAT_RC_OK on success, WEECHAT_RC_ERROR otherwise.
  */
 
 int
@@ -1211,7 +1222,7 @@ theme_delete (const char *name)
 }
 
 /*
- * Initializes the theme subsystem.
+ * Initialize the theme subsystem.
  *
  * The registry starts empty; built-in themes are registered later (by
  * core and by plugins/scripts at their own init time).
@@ -1226,7 +1237,7 @@ theme_init (void)
 }
 
 /*
- * Frees all registered themes and clears the registry.
+ * Free all registered themes and clear the registry.
  */
 
 void
