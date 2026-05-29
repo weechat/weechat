@@ -2307,13 +2307,9 @@ thème utilisateur :
 /theme save monTheme
 ----
 
-Par défaut, seules les options dont la valeur diffère de la valeur par
-défaut codée en dur sont écrites, ce qui garde le fichier compact et
-ciblé. Pour capturer toutes les options modifiables :
-
-----
-/theme save monTheme -full
-----
+Toutes les options modifiables sont écrites, donc le fichier est
+autonome et applique exactement le même aspect sur n'importe quel
+WeeChat, quelle que soit sa configuration actuelle.
 
 Les noms réservés (noms de thèmes intégrés comme `+light+` et tout nom
 commençant par `+backup-+`) sont refusés. Les fichiers sont placés

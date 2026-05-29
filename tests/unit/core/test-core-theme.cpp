@@ -48,7 +48,7 @@ extern struct t_theme *theme_alloc (const char *name);
 extern void theme_free (struct t_theme *theme);
 extern char *theme_user_file_path (const char *name);
 extern char *theme_make_backup_name (void);
-extern char * theme_write_file (const char *name, const char *description, int diff_only);
+extern char *theme_write_file (const char *name, const char *description);
 extern char *theme_file_strip_quotes (char *value);
 extern struct t_theme *theme_file_parse (const char *path);
 }
@@ -340,18 +340,18 @@ TEST(CoreTheme, WriteFile)
     char *path, *expected_path, line[8192];
     FILE *file;
     int saw_info, saw_name, saw_description, saw_date, saw_weechat;
-    int saw_options_section, full_options, diff_options;
+    int saw_options_section, full_options;
 
     /* refuse empty/NULL */
-    POINTERS_EQUAL(NULL, theme_write_file (NULL, NULL, 0));
-    POINTERS_EQUAL(NULL, theme_write_file ("", NULL, 0));
+    POINTERS_EQUAL(NULL, theme_write_file (NULL, NULL));
+    POINTERS_EQUAL(NULL, theme_write_file ("", NULL));
 
     /* full snapshot: every themable option is written; the returned
        path matches the expected theme file path */
     expected_path = theme_user_file_path ("test_wrt");
     CHECK(expected_path != NULL);
 
-    path = theme_write_file ("test_wrt", "a description", 0);
+    path = theme_write_file ("test_wrt", "a description");
     CHECK(path != NULL);
     STRCMP_EQUAL(expected_path, path);
     free (path);
@@ -391,34 +391,6 @@ TEST(CoreTheme, WriteFile)
     LONGS_EQUAL(1, saw_weechat);
     LONGS_EQUAL(1, saw_options_section);
     CHECK(full_options > 10);  /* core has many themable options */
-
-    unlink (path);
-
-    /* diff-only snapshot in a freshly initialized config writes very
-       few (typically zero) [options] entries — never more than the
-       full snapshot */
-    path = theme_write_file ("test_wrt", NULL, 1);
-    CHECK(path != NULL);
-    STRCMP_EQUAL(expected_path, path);
-    free (path);
-
-    path = expected_path;
-
-    file = fopen (path, "r");
-    CHECK(file != NULL);
-    diff_options = 0;
-    saw_options_section = 0;
-    while (fgets (line, sizeof (line) - 1, file))
-    {
-        if (strncmp (line, "[options]", 9) == 0)
-            saw_options_section = 1;
-        else if (saw_options_section
-                 && (strchr (line, '=') != NULL)
-                 && (strchr (line, '.') != NULL))
-            diff_options++;
-    }
-    fclose (file);
-    CHECK(diff_options < full_options);
 
     unlink (path);
     free (path);
@@ -601,7 +573,7 @@ TEST(CoreTheme, ApplyFileShadowsBuiltin)
     hashtable_free (overrides);
 
     /* drop a same-named user file with a DIFFERENT value */
-    LONGS_EQUAL(WEECHAT_RC_OK, theme_save ("user_throwaway", 0));  /* ensures themes dir exists */
+    LONGS_EQUAL(WEECHAT_RC_OK, theme_save ("user_throwaway"));  /* ensures themes dir exists */
     path = theme_user_file_path ("shadow_test");
     CHECK(path != NULL);
     f = fopen (path, "w");
@@ -886,28 +858,18 @@ TEST(CoreTheme, Save)
     struct stat st;
 
     /* NULL / empty => error, no file */
-    LONGS_EQUAL(WEECHAT_RC_ERROR, theme_save (NULL, 0));
-    LONGS_EQUAL(WEECHAT_RC_ERROR, theme_save ("", 0));
+    LONGS_EQUAL(WEECHAT_RC_ERROR, theme_save (NULL));
+    LONGS_EQUAL(WEECHAT_RC_ERROR, theme_save (""));
 
     /* reserved "backup-" prefix => error */
-    LONGS_EQUAL(WEECHAT_RC_ERROR, theme_save ("backup-anything", 0));
-    LONGS_EQUAL(WEECHAT_RC_ERROR, theme_save ("backup-anything", 1));
+    LONGS_EQUAL(WEECHAT_RC_ERROR, theme_save ("backup-anything"));
 
     /* name colliding with a built-in is refused */
     theme_register (NULL, NULL, "dark", NULL);
-    LONGS_EQUAL(WEECHAT_RC_ERROR, theme_save ("dark", 0));
-    LONGS_EQUAL(WEECHAT_RC_ERROR, theme_save ("dark", 1));
+    LONGS_EQUAL(WEECHAT_RC_ERROR, theme_save ("dark"));
 
-    /* happy path: sparse save => file exists */
-    LONGS_EQUAL(WEECHAT_RC_OK, theme_save ("save_test", 0));
-    path = theme_user_file_path ("save_test");
-    CHECK(path != NULL);
-    LONGS_EQUAL(0, stat (path, &st));
-    unlink (path);
-    free (path);
-
-    /* happy path: full snapshot => file exists, bigger than sparse */
-    LONGS_EQUAL(WEECHAT_RC_OK, theme_save ("save_test", 1));
+    /* happy path: full snapshot => file exists, with options written */
+    LONGS_EQUAL(WEECHAT_RC_OK, theme_save ("save_test"));
     path = theme_user_file_path ("save_test");
     CHECK(path != NULL);
     LONGS_EQUAL(0, stat (path, &st));
@@ -939,7 +901,7 @@ TEST(CoreTheme, Delete)
 
     /* happy path: write a file via theme_save (also ensures the themes
        directory exists), delete it, confirm it is gone */
-    LONGS_EQUAL(WEECHAT_RC_OK, theme_save ("del_test", 0));
+    LONGS_EQUAL(WEECHAT_RC_OK, theme_save ("del_test"));
     path = theme_user_file_path ("del_test");
     CHECK(path != NULL);
     LONGS_EQUAL(0, stat (path, &st));
@@ -973,7 +935,7 @@ TEST(CoreTheme, Rename)
     LONGS_EQUAL(WEECHAT_RC_ERROR, theme_rename ("dark", "renamed"));
 
     /* refuses target == reserved "backup-" prefix */
-    LONGS_EQUAL(WEECHAT_RC_OK, theme_save ("rn_src", 0));
+    LONGS_EQUAL(WEECHAT_RC_OK, theme_save ("rn_src"));
     LONGS_EQUAL(WEECHAT_RC_ERROR, theme_rename ("rn_src", "backup-foo"));
 
     /* refuses target == built-in name */
@@ -986,7 +948,7 @@ TEST(CoreTheme, Rename)
     LONGS_EQUAL(WEECHAT_RC_ERROR, theme_rename ("does_not_exist", "rn_dst"));
 
     /* refuses target that already exists */
-    LONGS_EQUAL(WEECHAT_RC_OK, theme_save ("rn_dst", 0));
+    LONGS_EQUAL(WEECHAT_RC_OK, theme_save ("rn_dst"));
     LONGS_EQUAL(WEECHAT_RC_ERROR, theme_rename ("rn_src", "rn_dst"));
     LONGS_EQUAL(WEECHAT_RC_OK, theme_delete ("rn_dst"));
 
@@ -1012,7 +974,7 @@ TEST(CoreTheme, Rename)
     CHECK(strstr (buf, "name = \"rn_src\"") == NULL);
 
     /* if weechat.look.theme pointed at the old name, the label moves too */
-    LONGS_EQUAL(WEECHAT_RC_OK, theme_save ("rn_active", 0));
+    LONGS_EQUAL(WEECHAT_RC_OK, theme_save ("rn_active"));
     config_file_option_set (config_look_theme, "rn_active", 1);
     LONGS_EQUAL(WEECHAT_RC_OK, theme_rename ("rn_active", "rn_moved"));
     STRCMP_EQUAL("rn_moved", CONFIG_STRING(config_look_theme));

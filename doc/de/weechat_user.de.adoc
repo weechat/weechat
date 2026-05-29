@@ -2271,13 +2271,9 @@ Save the current themable options as a new user theme file:
 /theme save mytheme
 ----
 
-By default only options whose value differs from their hardcoded
-default are written, keeping the file small and focused. To capture
-every themable option:
-
-----
-/theme save mytheme -full
-----
+Every themable option is written, so the file is self-contained and
+applies the exact same look on any WeeChat, regardless of its current
+configuration.
 
 Reserved names (built-in theme names like `+light+` and any name
 starting with `+backup-+`) are refused. Files live at
