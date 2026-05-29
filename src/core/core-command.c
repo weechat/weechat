@@ -7339,14 +7339,11 @@ COMMAND_CALLBACK(theme)
         return theme_reset ();
     }
 
-    /* "/theme save <name> [-full]": write a user theme file */
+    /* "/theme save <name>": write a user theme file */
     if (string_strcmp (argv[1], "save") == 0)
     {
         COMMAND_MIN_ARGS(3, "save");
-        return theme_save (argv[2],
-                           ((argc >= 4)
-                            && (string_strcmp (argv[3], "-full") == 0))
-                           ? 1 : 0);
+        return theme_save (argv[2]);
     }
 
     /* "/theme rename <old> <new>": rename a user theme file */
@@ -10087,7 +10084,7 @@ command_init (void)
         N_("[list [-backups]]"
            " || apply <name>"
            " || reset"
-           " || save <name> [-full]"
+           " || save <name>"
            " || rename <old> <new>"
            " || delete <name>"
            " || info <name>"),
@@ -10104,10 +10101,9 @@ command_init (void)
             N_("raw[reset]: reset every themable option to its default "
                "value (restores the original look shipped with WeeChat)"),
             N_("raw[save]: save current themable options to a file "
-               "<name>.theme in directory \"themes\"; by default only "
-               "options whose value differs from their default are "
-               "written, use \"-full\" to write every themable option; "
-               "the name must not match a built-in theme or start with "
+               "<name>.theme in directory \"themes\"; every themable "
+               "option is written, so the file is self-contained; the "
+               "name must not match a built-in theme or start with "
                "\"backup-\""),
             N_("raw[rename]: rename a user theme file (typically to "
                "give an automatic backup a meaningful name); refuses to "
@@ -10135,7 +10131,7 @@ command_init (void)
         "list -backups"
         " || apply %(theme_themes_all)"
         " || reset"
-        " || save %(theme_themes_user) -full"
+        " || save %(theme_themes_user)"
         " || rename %(theme_themes_files)"
         " || delete %(theme_themes_user)"
         " || info %(theme_themes_all)",
