@@ -548,10 +548,12 @@ theme_make_backup_name (void)
  * their default (config_file_option_has_changed) are written. If zero,
  * every themable option is written (full snapshot).
  *
- * Returns 1 on success, 0 on error.
+ * Returns path to saved file on success, NULL on error.
+ *
+ * Note: result must be freed after use.
  */
 
-int
+char *
 theme_write_file (const char *name, const char *description, int diff_only)
 {
     char *path, *dir, *value, *now;
@@ -561,24 +563,26 @@ theme_write_file (const char *name, const char *description, int diff_only)
     struct t_config_option *ptr_option;
 
     if (!name || !name[0])
-        return 0;
+        return NULL;
 
     path = NULL;
     dir = NULL;
     string_asprintf (&dir, "%s/themes", weechat_config_dir);
     if (!dir)
-        return 0;
+        return NULL;
     dir_mkdir (dir, 0755);
     free (dir);
 
     path = theme_user_file_path (name);
     if (!path)
-        return 0;
+        return NULL;
 
     file = fopen (path, "w");
-    free (path);
     if (!file)
-        return 0;
+    {
+        free (path);
+        return NULL;
+    }
 
     now = theme_format_now ();
     fprintf (file, "[info]\n");
@@ -615,7 +619,7 @@ theme_write_file (const char *name, const char *description, int diff_only)
     }
 
     fclose (file);
-    return 1;
+    return path;
 }
 
 /*
@@ -627,19 +631,21 @@ theme_write_file (const char *name, const char *description, int diff_only)
 char *
 theme_make_backup (void)
 {
-    char *name;
+    char *name, *path;
 
     name = theme_make_backup_name ();
     if (!name)
         return NULL;
-    if (!theme_write_file (
-            name,
-            _("Automatic backup written before /theme apply"),
-            0))  /* full snapshot: backups must round-trip exactly */
+    path = theme_write_file (
+        name,
+        _("Automatic backup written before /theme apply"),
+        0);  /* full snapshot: backups must round-trip exactly */
+    if (!path)
     {
         free (name);
         return NULL;
     }
+    free (path);
     return name;
 }
 
@@ -1118,6 +1124,8 @@ theme_reset (void)
 int
 theme_save (const char *name, int full)
 {
+    char *path;
+
     if (!name || !name[0])
         return WEECHAT_RC_ERROR;
 
@@ -1141,7 +1149,8 @@ theme_save (const char *name, int full)
         return WEECHAT_RC_ERROR;
     }
 
-    if (!theme_write_file (name, NULL, (full) ? 0 : 1))
+    path = theme_write_file (name, NULL, (full) ? 0 : 1);
+    if (!path)
     {
         gui_chat_printf (NULL,
                          _("%sFailed to save theme \"%s\""),
@@ -1150,9 +1159,8 @@ theme_save (const char *name, int full)
         return WEECHAT_RC_ERROR;
     }
 
-    gui_chat_printf (NULL,
-                     _("Theme saved: %s"),
-                     name);
+    gui_chat_printf (NULL, _("Theme saved to: %s"), path);
+    free (path);
     return WEECHAT_RC_OK;
 }
 
