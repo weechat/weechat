@@ -119,6 +119,7 @@ IMPORT_TEST_GROUP(GuiNick);
 IMPORT_TEST_GROUP(GuiNicklist);
 /* GUI - Curses */
 IMPORT_TEST_GROUP(GuiCursesMouse);
+IMPORT_TEST_GROUP(GuiCursesTerm);
 /* scripts */
 IMPORT_TEST_GROUP(Scripts);
 
