@@ -74,7 +74,7 @@ struct t_weelist_item;
  * please change the date with current one; for a second change at same
  * date, increment the 01, otherwise please keep 01.
  */
-#define WEECHAT_PLUGIN_API_VERSION "20250215-01"
+#define WEECHAT_PLUGIN_API_VERSION "20260530-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -346,6 +346,8 @@ struct t_weechat_plugin
                               int max, int range);
     int (*strcmp_ignore_chars) (const char *string1, const char *string2,
                                 const char *chars_ignored, int case_sensitive);
+    int (*string_memcmp_constant_time) (const void *area1, const void *area2,
+                                        size_t size);
     const char *(*strcasestr) (const char *string, const char *search);
     int (*strlen_screen) (const char *string);
     int (*string_match) (const char *string, const char *mask,
@@ -1342,6 +1344,9 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     (weechat_plugin->strcmp_ignore_chars)(__string1, __string2,         \
                                           __chars_ignored,              \
                                           __case_sensitive)
+#define weechat_string_memcmp_constant_time(__area1, __area2, __size)   \
+    (weechat_plugin->string_memcmp_constant_time)(__area1, __area2,     \
+                                                  __size)
 #define weechat_strcasestr(__string, __search)                          \
     (weechat_plugin->strcasestr)(__string, __search)
 #define weechat_strlen_screen(__string)                                 \

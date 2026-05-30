@@ -800,6 +800,38 @@ TEST(CoreString, StringComparison)
 
 /*
  * Tests functions:
+ *   string_memcmp_constant_time
+ */
+
+TEST(CoreString, MemcmpConstantTime)
+{
+    /* NULL handling */
+    LONGS_EQUAL(0, string_memcmp_constant_time (NULL, NULL, 0));
+    LONGS_EQUAL(0, string_memcmp_constant_time (NULL, NULL, 4));
+    LONGS_EQUAL(1, string_memcmp_constant_time (NULL, "abcd", 4));
+    LONGS_EQUAL(1, string_memcmp_constant_time ("abcd", NULL, 4));
+
+    /* zero-size compare always equal */
+    LONGS_EQUAL(0, string_memcmp_constant_time ("", "", 0));
+    LONGS_EQUAL(0, string_memcmp_constant_time ("abc", "xyz", 0));
+
+    /* equal areas */
+    LONGS_EQUAL(0, string_memcmp_constant_time ("abcd", "abcd", 4));
+    LONGS_EQUAL(0, string_memcmp_constant_time ("\x00\x01\x02\xff",
+                                                "\x00\x01\x02\xff", 4));
+
+    /* differing areas (first / middle / last byte) */
+    LONGS_EQUAL(1, string_memcmp_constant_time ("Xbcd", "abcd", 4));
+    LONGS_EQUAL(1, string_memcmp_constant_time ("aXcd", "abcd", 4));
+    LONGS_EQUAL(1, string_memcmp_constant_time ("abcX", "abcd", 4));
+    LONGS_EQUAL(1, string_memcmp_constant_time ("abcd", "abce", 4));
+
+    /* only compares "size" bytes, ignores trailing content */
+    LONGS_EQUAL(0, string_memcmp_constant_time ("abcd", "abcz", 3));
+}
+
+/*
+ * Tests functions:
  *   string_strcasestr
  */
 
