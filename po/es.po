@@ -25,7 +25,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2026-05-30 13:34+0200\n"
-"PO-Revision-Date: 2026-03-12 20:24+0100\n"
+"PO-Revision-Date: 2026-05-30 13:56+0200\n"
 "Last-Translator: Santiago Forero <santiago@forero.xyz>\n"
 "Language-Team: Spanish - Spain <weechat-dev@nongnu.org>\n"
 "Language: es\n"
@@ -181,16 +181,13 @@ msgid "disable init/deinit of gcrypt"
 msgstr ""
 
 #. TRANSLATORS: "%s %s" after "compiled on" is date and time
-#, fuzzy, c-format
-#| msgid ""
-#| "WeeChat %s Copyright %s, compiled on %s %s\n"
-#| "Developed by Sébastien Helleu <flashcode@flashtux.org> - %s"
+#, c-format
 msgid ""
 "WeeChat %s Copyright %s, compiled on %s %s\n"
 "Developed by %s <%s> - %s"
 msgstr ""
 "WeeChat %s Copyright %s, compilado en %s %s\n"
-"Desarrollado por Sébastien Helleu <flashcode@flashtux.org> - %s"
+"Desarrollado por %s <%s> - %s"
 
 msgid "Usage:"
 msgstr ""
