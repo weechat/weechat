@@ -37,6 +37,8 @@ extern char *relay_auth_password_hash_algo_name[];
 
 extern int relay_auth_password_hash_algo_search (const char *name);
 extern char *relay_auth_generate_nonce (int size);
+extern int relay_auth_password_equals (const char *password1,
+                                       const char *password2);
 extern int relay_auth_check_password_plain (struct t_relay_client *client,
                                             const char *password,
                                             const char *relay_password);
