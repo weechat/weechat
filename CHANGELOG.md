@@ -8,6 +8,7 @@
 
 ### Fixed
 
+- relay: limit size of decompressed websocket frame with permessage-deflate to prevent memory exhaustion ([GHSA-v2v4-45wm-5cr3](https://github.com/weechat/weechat/security/advisories/GHSA-v2v4-45wm-5cr3))
 - relay/weechat: fix empty buffers in client when WeeChat is running on Solaris/illumos
 - build: fix build on Solaris/illumos (issue #2251)
 

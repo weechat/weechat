@@ -464,6 +464,41 @@ TEST(RelayWebsocket, Inflate)
     free (payload_comp);
 
     relay_websocket_deflate_free (ws_deflate);
+
+    /*
+     * protection against "deflate bomb": a small compressed frame that
+     * decompresses to more than WEBSOCKET_INFLATE_MAX_SIZE must be rejected
+     * (relay_websocket_inflate returns NULL)
+     */
+    ws_deflate = relay_websocket_deflate_alloc ();
+    CHECK(ws_deflate);
+    ws_deflate->window_bits_deflate = 15;
+    ws_deflate->window_bits_inflate = 15;
+    ws_deflate->strm_deflate = (z_stream *)calloc (1, sizeof (*ws_deflate->strm_deflate));
+    CHECK(ws_deflate->strm_deflate);
+    LONGS_EQUAL(1, relay_websocket_deflate_init_stream_deflate (ws_deflate));
+    ws_deflate->strm_inflate = (z_stream *)calloc (1, sizeof (*ws_deflate->strm_inflate));
+    CHECK(ws_deflate->strm_inflate);
+    LONGS_EQUAL(1, relay_websocket_deflate_init_stream_inflate (ws_deflate));
+
+    /* highly compressible payload that decompresses past the maximum size */
+    size_t bomb_size = WEBSOCKET_INFLATE_MAX_SIZE + (1024 * 1024);
+    char *bomb = (char *)calloc (1, bomb_size);
+    CHECK(bomb);
+
+    payload_comp = (char *)relay_websocket_deflate (bomb, bomb_size,
+                                                    ws_deflate->strm_deflate, &size_comp);
+    CHECK(payload_comp);
+    CHECK(size_comp < bomb_size);
+
+    payload_decomp = (char *)relay_websocket_inflate (payload_comp, size_comp,
+                                                      ws_deflate->strm_inflate, &size_decomp);
+    POINTERS_EQUAL(NULL, payload_decomp);
+
+    free (payload_comp);
+    free (bomb);
+
+    relay_websocket_deflate_free (ws_deflate);
 }
 
 /*
