@@ -41,6 +41,13 @@
 
 #define WEBSOCKET_SUB_PROTOCOL_API_WEECHAT "api.weechat"
 
+/*
+ * maximum size of a decompressed websocket frame (with "permessage-deflate"):
+ * used as an upper bound when inflating, to prevent a small compressed frame
+ * from decompressing to an unbounded amount of data ("deflate bomb")
+ */
+#define WEBSOCKET_INFLATE_MAX_SIZE (8 * 1024 * 1024)
+
 struct t_relay_client;
 struct t_relay_http_request;
 
