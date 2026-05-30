@@ -660,15 +660,18 @@ weecrypto_totp_validate (const char *secret_base32, time_t totp_time,
 
     otp_ok = 0;
 
+    /*
+     * Compare in constant time and never break early: a non-constant
+     * compare and an early exit on match would let an observer measure
+     * how many digits of the expected OTP they got right and which
+     * time-window offset matched.
+     */
     for (i = moving_factor - window; i <= moving_factor + window; i++)
     {
         rc = weecrypto_totp_generate_internal (secret, length_secret,
                                                i, digits, str_otp);
-        if (rc && (strcmp (str_otp, otp) == 0))
-        {
+        if (rc && (string_memcmp_constant_time (str_otp, otp, digits) == 0))
             otp_ok = 1;
-            break;
-        }
     }
 
     free (secret);
