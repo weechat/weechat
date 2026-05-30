@@ -1358,7 +1358,7 @@ irc_info_init (void)
     weechat_hook_info (
         "irc_nick_from_host",
         N_("get nick from IRC host"),
-        N_("IRC host (like `:nick!name@server.com`)"),
+        N_("IRC host (like `:nick!name@server`)"),
         &irc_info_info_irc_nick_from_host_cb, NULL, NULL);
     weechat_hook_info (
         "irc_nick_color",
