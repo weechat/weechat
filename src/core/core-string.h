@@ -69,6 +69,8 @@ extern int string_strcmp_ignore_chars (const char *string1,
                                        const char *string2,
                                        const char *chars_ignored,
                                        int case_sensitive);
+extern int string_memcmp_constant_time (const void *area1, const void *area2,
+                                        size_t size);
 extern const char *string_strcasestr (const char *string, const char *search);
 extern int string_match (const char *string, const char *mask,
                          int case_sensitive);
