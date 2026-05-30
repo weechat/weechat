@@ -33,6 +33,7 @@
 #include "../../weechat-plugin.h"
 #include "../relay.h"
 #include "relay-irc.h"
+#include "../relay-auth.h"
 #include "../relay-buffer.h"
 #include "../relay-client.h"
 #include "../relay-config.h"
@@ -1701,7 +1702,7 @@ relay_irc_recv (struct t_relay_client *client, const char *data)
                         NULL, NULL, NULL);
                     if (password)
                     {
-                        if (strcmp (password, pos_password) == 0)
+                        if (relay_auth_password_equals (password, pos_password))
                         {
                             RELAY_IRC_DATA(client, password_ok) = 1;
                             weechat_hook_signal_send ("relay_client_auth_ok",

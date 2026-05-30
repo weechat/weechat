@@ -111,6 +111,31 @@ TEST(RelayAuth, GenerateNonce)
 
 /*
  * Test functions:
+ *   relay_auth_password_equals
+ */
+
+TEST(RelayAuth, PasswordEquals)
+{
+    /* invalid arguments */
+    LONGS_EQUAL(0, relay_auth_password_equals (NULL, NULL));
+    LONGS_EQUAL(0, relay_auth_password_equals ("abcd", NULL));
+    LONGS_EQUAL(0, relay_auth_password_equals (NULL, "abcd"));
+
+    /* different passwords */
+    LONGS_EQUAL(0, relay_auth_password_equals ("test", "password"));
+    LONGS_EQUAL(0, relay_auth_password_equals ("Password", "password"));
+    LONGS_EQUAL(0, relay_auth_password_equals ("", "password"));
+    LONGS_EQUAL(0, relay_auth_password_equals ("password", ""));
+
+    /* equal passwords */
+    LONGS_EQUAL(1, relay_auth_password_equals ("", ""));
+    LONGS_EQUAL(1, relay_auth_password_equals ("password", "password"));
+    LONGS_EQUAL(1, relay_auth_password_equals ("a really long password with spaces",
+                                               "a really long password with spaces"));
+}
+
+/*
+ * Test functions:
  *   relay_auth_check_password_plain
  */
 
