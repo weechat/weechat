@@ -532,7 +532,7 @@ relay_websocket_inflate (const void *data, size_t size, z_stream *strm,
     int rc;
     unsigned char append_bytes[4] = { 0x00, 0x00, 0xFF, 0xFF };
     Bytef *data2, *dest, *dest2;
-    uLongf size2, dest_size;
+    uLongf size2, dest_size, new_size;
 
     if (!data || (size == 0) || !strm || !size_decompressed)
         return NULL;
@@ -549,8 +549,13 @@ relay_websocket_inflate (const void *data, size_t size, z_stream *strm,
     memcpy (data2, data, size);
     memcpy (data2 + size, append_bytes, sizeof (append_bytes));
 
-    /* estimate the decompressed size, by default 10 * size */
-    dest_size = 10 * size2;
+    /*
+     * estimate the decompressed size, by default 10 * size, capped to the
+     * maximum allowed size (also prevents an integer overflow on the
+     * multiplication)
+     */
+    dest_size = (size2 > WEBSOCKET_INFLATE_MAX_SIZE / 10) ?
+        WEBSOCKET_INFLATE_MAX_SIZE : 10 * size2;
     dest = malloc (dest_size);
     if (!dest)
         goto error;
@@ -579,8 +584,19 @@ relay_websocket_inflate (const void *data, size_t size, z_stream *strm,
                 && (strm->avail_in > 0)))
         {
             /* output buffer is not large enough */
-            strm->avail_out += dest_size;
-            dest_size *= 2;
+            if (dest_size >= WEBSOCKET_INFLATE_MAX_SIZE)
+            {
+                /*
+                 * decompressed data is too large: reject the frame
+                 * (protection against a "deflate bomb")
+                 */
+                goto error;
+            }
+            /* double the buffer, capped to the maximum allowed size */
+            new_size = (dest_size > WEBSOCKET_INFLATE_MAX_SIZE / 2) ?
+                WEBSOCKET_INFLATE_MAX_SIZE : dest_size * 2;
+            strm->avail_out += (uInt)(new_size - dest_size);
+            dest_size = new_size;
             dest2 = realloc (dest, dest_size);
             if (!dest2)
                 goto error;

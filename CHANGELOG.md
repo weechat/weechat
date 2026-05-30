@@ -12,6 +12,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 - core: fix option weechat.look.color_real_white not applied when color is "white" on 16+ colors terminals ([#1742](https://github.com/weechat/weechat/issues/1742))
 - irc: fix tag in message with list of names when joining a channel
+- relay: limit size of decompressed websocket frame with permessage-deflate to prevent memory exhaustion ([GHSA-v2v4-45wm-5cr3](https://github.com/weechat/weechat/security/advisories/GHSA-v2v4-45wm-5cr3))
 
 ## Version 4.9.0 (2026-03-29)
 
