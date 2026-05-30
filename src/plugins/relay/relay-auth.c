@@ -116,6 +116,12 @@ relay_auth_check_password_plain (struct t_relay_client *client,
                                  const char *password,
                                  const char *relay_password)
 {
+    unsigned char key[32];
+    char hmac_password[64], hmac_relay[64];
+    char *buf_password, *buf_relay;
+    int buf_password_size, buf_relay_size;
+    int hmac_password_size, hmac_relay_size, rc;
+
     if (!client || !password || !relay_password)
         return -2;
 
@@ -127,7 +133,47 @@ relay_auth_check_password_plain (struct t_relay_client *client,
         return -1;
     }
 
-    return (strcmp (password, relay_password) == 0) ? 0 : -2;
+    /*
+     * Compare passwords in constant time to defeat timing attacks: HMAC
+     * both sides with a fresh random key, then compare the fixed-size
+     * MACs. This hides both the per-byte comparison and the password
+     * length from the attacker.
+     *
+     * Both messages are prefixed with a zero byte so that empty
+     * passwords still produce a valid HMAC (the underlying crypto API
+     * rejects zero-length messages); the prefix is identical on both
+     * sides so equal inputs still yield equal MACs.
+     */
+    rc = -2;
+    buf_password_size = strlen (password) + 1;
+    buf_relay_size = strlen (relay_password) + 1;
+    buf_password = malloc (buf_password_size);
+    buf_relay = malloc (buf_relay_size);
+    if (buf_password && buf_relay)
+    {
+        buf_password[0] = 0;
+        memcpy (buf_password + 1, password, buf_password_size - 1);
+        buf_relay[0] = 0;
+        memcpy (buf_relay + 1, relay_password, buf_relay_size - 1);
+        gcry_create_nonce (key, sizeof (key));
+        if (weechat_crypto_hmac (key, sizeof (key),
+                                 buf_password, buf_password_size,
+                                 "sha256",
+                                 hmac_password, &hmac_password_size)
+            && weechat_crypto_hmac (key, sizeof (key),
+                                    buf_relay, buf_relay_size,
+                                    "sha256",
+                                    hmac_relay, &hmac_relay_size)
+            && (hmac_password_size == hmac_relay_size)
+            && (weechat_string_memcmp_constant_time (
+                    hmac_password, hmac_relay, hmac_password_size) == 0))
+        {
+            rc = 0;
+        }
+    }
+    free (buf_password);
+    free (buf_relay);
+    return rc;
 }
 
 /*
@@ -347,8 +393,9 @@ relay_auth_check_hash_sha (const char *hash_algo,
                            const char *hash_sha,
                            const char *relay_password)
 {
-    char *salt_password, hash[512 / 8], hash_hexa[((512 / 8) * 2) + 1];
-    int rc, length, hash_size;
+    char *salt_password, *hash_sha_upper, hash[512 / 8];
+    char hash_hexa[((512 / 8) * 2) + 1];
+    int rc, length, hash_size, hash_hexa_len;
 
     rc = 0;
 
@@ -366,10 +413,23 @@ relay_auth_check_hash_sha (const char *hash_algo,
                                  hash_algo,
                                  hash, &hash_size))
         {
-            weechat_string_base_encode ("16", hash, hash_size,
-                                        hash_hexa);
-            if (weechat_strcasecmp (hash_hexa, hash_sha) == 0)
+            hash_hexa_len = weechat_string_base_encode ("16", hash, hash_size,
+                                                        hash_hexa);
+            /*
+             * Compare in constant time to defeat timing attacks: the
+             * client-supplied hash is normalized to uppercase to match
+             * the output of base16 encoding, then compared byte-for-byte
+             * with no early exit.
+             */
+            hash_sha_upper = weechat_string_toupper (hash_sha);
+            if (hash_sha_upper
+                && ((int)strlen (hash_sha_upper) == hash_hexa_len)
+                && (weechat_string_memcmp_constant_time (
+                        hash_hexa, hash_sha_upper, hash_hexa_len) == 0))
+            {
                 rc = 1;
+            }
+            free (hash_sha_upper);
         }
         free (salt_password);
     }
@@ -393,8 +453,8 @@ relay_auth_check_hash_pbkdf2 (const char *hash_pbkdf2_algo,
                               const char *hash_pbkdf2,
                               const char *relay_password)
 {
-    char hash[512 / 8], hash_hexa[((512 / 8) * 2) + 1];
-    int rc, hash_size;
+    char *hash_pbkdf2_upper, hash[512 / 8], hash_hexa[((512 / 8) * 2) + 1];
+    int rc, hash_size, hash_hexa_len;
 
     rc = 0;
 
@@ -407,9 +467,18 @@ relay_auth_check_hash_pbkdf2 (const char *hash_pbkdf2_algo,
                                         iterations,
                                         hash, &hash_size))
         {
-            weechat_string_base_encode ("16", hash, hash_size, hash_hexa);
-            if (weechat_strcasecmp (hash_hexa, hash_pbkdf2) == 0)
+            hash_hexa_len = weechat_string_base_encode ("16", hash, hash_size,
+                                                        hash_hexa);
+            /* see relay_auth_check_hash_sha for rationale */
+            hash_pbkdf2_upper = weechat_string_toupper (hash_pbkdf2);
+            if (hash_pbkdf2_upper
+                && ((int)strlen (hash_pbkdf2_upper) == hash_hexa_len)
+                && (weechat_string_memcmp_constant_time (
+                        hash_hexa, hash_pbkdf2_upper, hash_hexa_len) == 0))
+            {
                 rc = 1;
+            }
+            free (hash_pbkdf2_upper);
         }
     }
 

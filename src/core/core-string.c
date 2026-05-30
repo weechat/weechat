@@ -924,6 +924,43 @@ string_strcmp_ignore_chars (const char *string1, const char *string2,
 }
 
 /*
+ * Compare two memory areas of the same size in constant time.
+ *
+ * Use to compare secrets (e.g. password hashes, MACs) without leaking
+ * information through the comparison's running time. The loop always
+ * walks the full "size" bytes and uses only bitwise operations on the
+ * data, so the execution time depends on "size" alone, not on the
+ * position of the first differing byte.
+ *
+ * If either pointer is NULL, the areas are considered different (the
+ * NULL check itself is not constant time but does not look at any
+ * secret content).
+ *
+ * Return:
+ *   0: areas are equal
+ *   1: areas differ
+ */
+
+int
+string_memcmp_constant_time (const void *area1, const void *area2, size_t size)
+{
+    const unsigned char *p1, *p2;
+    unsigned char diff;
+    size_t i;
+
+    if (!area1 || !area2)
+        return (area1 == area2) ? 0 : 1;
+
+    p1 = (const unsigned char *)area1;
+    p2 = (const unsigned char *)area2;
+    diff = 0;
+    for (i = 0; i < size; i++)
+        diff |= p1[i] ^ p2[i];
+
+    return (diff == 0) ? 0 : 1;
+}
+
+/*
  * Search for a string in another string (locale and case independent).
  *
  * Return pointer to string found, or NULL if not found.
