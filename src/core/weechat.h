@@ -56,6 +56,8 @@
 #define WEECHAT_COPYRIGHT_DATE   "(C) 2003-2026"
 #define WEECHAT_WEBSITE          "https://weechat.org/"
 #define WEECHAT_WEBSITE_DOWNLOAD "https://weechat.org/download/"
+#define WEECHAT_AUTHOR_NAME      "Sébastien Helleu"
+#define WEECHAT_AUTHOR_EMAIL     "flashcode@flashtux.org"
 
 /* log file */
 #define WEECHAT_LOG_NAME "weechat.log"

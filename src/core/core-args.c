@@ -178,12 +178,14 @@ args_display_copyright (void)
         stdout,
         /* TRANSLATORS: "%s %s" after "compiled on" is date and time */
         _("WeeChat %s Copyright %s, compiled on %s %s\n"
-          "Developed by Sébastien Helleu <flashcode@flashtux.org> "
+          "Developed by %s <%s> "
           "- %s"),
         version_get_version_with_git (),
         WEECHAT_COPYRIGHT_DATE,
         version_get_compilation_date (),
         version_get_compilation_time (),
+        WEECHAT_AUTHOR_NAME,
+        WEECHAT_AUTHOR_EMAIL,
         WEECHAT_WEBSITE);
     string_fprintf (stdout, "\n");
 }
