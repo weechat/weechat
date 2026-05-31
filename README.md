@@ -49,7 +49,7 @@ For detailed instructions, please check the [WeeChat user's guide](https://weech
 
 ## Semantic versioning
 
-WeeChat is following a "practical" semantic versioning, see file [CONTRIBUTING.md](CONTRIBUTING.md#semantic-versioning).
+WeeChat follows "practical" semantic versioning; see [CONTRIBUTING.md](CONTRIBUTING.md#semantic-versioning).
 
 ## Copyright
 
