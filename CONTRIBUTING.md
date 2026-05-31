@@ -19,8 +19,7 @@ First, some basic things:
 
 ### Security reports
 
-Please **DO NOT** file a GitHub issue for security related problems, but send an
-email to [security@weechat.org](mailto:security@weechat.org) instead.
+Please **DO NOT** file a GitHub issue for security related problems; see [SECURITY.md](SECURITY.md) instead.
 
 ### Required info
 
