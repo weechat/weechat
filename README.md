@@ -27,7 +27,7 @@ Homepage: [https://weechat.org/](https://weechat.org/)
 ## Features
 
 - **Modular chat client**: WeeChat has a lightweight core and optional [plugins](https://weechat.org/doc/weechat/user/#plugins). All plugins (including [IRC](https://weechat.org/doc/weechat/user/#irc)) are independent and can be unloaded.
-- **Multi-platform**: WeeChat runs on GNU/Linux, *BSD, GNU/Hurd, Haiku, macOS and Windows (Bash/Ubuntu and Cygwin).
+- **Multi-platform**: WeeChat runs on GNU/Linux, *BSD, GNU/Hurd, Haiku, macOS and Windows (WSL and Cygwin).
 - **Multi-protocol**: WeeChat is designed to support multiple protocols via plugins, like IRC.
 - **Standards-compliant**: the IRC plugin is compliant with RFCs [1459](https://datatracker.ietf.org/doc/html/rfc1459), [2810](https://datatracker.ietf.org/doc/html/rfc2810), [2811](https://datatracker.ietf.org/doc/html/rfc2811), [2812](https://datatracker.ietf.org/doc/html/rfc2812), [2813](https://datatracker.ietf.org/doc/html/rfc2813) and [7194](https://datatracker.ietf.org/doc/html/rfc7194).
 - **Small, fast, and very light**: the core is and should stay as light and fast as possible.
