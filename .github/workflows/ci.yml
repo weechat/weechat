@@ -326,7 +326,7 @@ jobs:
 
     - name: Install dependencies
       run: |
-        dnf install -y epel-release
+        dnf install -y epel-release dnf-plugins-core
         dnf config-manager --set-enabled crb
         dnf install -y ${{ env.WEECHAT_DEPS_REDHAT }}
 
