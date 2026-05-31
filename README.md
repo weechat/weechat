@@ -28,7 +28,7 @@ Homepage: [https://weechat.org/](https://weechat.org/)
 
 - **Modular chat client**: WeeChat has a lightweight core and optional [plugins](https://weechat.org/doc/weechat/user/#plugins). All plugins (including [IRC](https://weechat.org/doc/weechat/user/#irc)) are independent and can be unloaded.
 - **Multi-platform**: WeeChat runs on GNU/Linux, *BSD, GNU/Hurd, Haiku, macOS and Windows (Bash/Ubuntu and Cygwin).
-- **Multi-protocols**: WeeChat is designed to support multiple protocols by plugins, like IRC.
+- **Multi-protocol**: WeeChat is designed to support multiple protocols via plugins, like IRC.
 - **Standards-compliant**: the IRC plugin is compliant with RFCs [1459](https://datatracker.ietf.org/doc/html/rfc1459), [2810](https://datatracker.ietf.org/doc/html/rfc2810), [2811](https://datatracker.ietf.org/doc/html/rfc2811), [2812](https://datatracker.ietf.org/doc/html/rfc2812), [2813](https://datatracker.ietf.org/doc/html/rfc2813) and [7194](https://datatracker.ietf.org/doc/html/rfc7194).
 - **Small, fast, and very light**: the core is and should stay as light and fast as possible.
 - **Customizable and extensible**: there are a lot of options to customize WeeChat, and it is extensible with C plugins and [scripts](https://weechat.org/scripts/) ([Perl](https://weechat.org/scripts/language/perl/), [Python](https://weechat.org/scripts/language/python/), [Ruby](https://weechat.org/scripts/language/ruby), [Lua](https://weechat.org/scripts/language/lua/), [Tcl](https://weechat.org/scripts/language/tcl/), [Scheme](https://weechat.org/scripts/language/guile/), [JavaScript](https://weechat.org/scripts/language/javascript/) and [PHP](https://weechat.org/scripts/language/php/)).
