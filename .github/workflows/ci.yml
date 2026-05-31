@@ -282,6 +282,8 @@ jobs:
       run: |
         dnf install -y epel-release dnf-plugins-core
         dnf config-manager --set-enabled crb
+        # pin a working ruby stream (ruby:4.0 has broken module metadata on Rocky 9.8)
+        dnf module enable -y ruby:3.3
         dnf install -y ${{ env.WEECHAT_DEPS_ROCKYLINUX }}
 
     - name: Build and run tests
