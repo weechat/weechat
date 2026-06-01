@@ -508,7 +508,44 @@ TEST(RelayWebsocket, Inflate)
 
 TEST(RelayWebsocket, DecodeFrame)
 {
-    /* TODO: write tests */
+    struct t_relay_websocket_frame *frames;
+    char *partial_ws_frame;
+    int num_frames, partial_ws_frame_size;
+    /* small unmasked binary frame with payload "hello" */
+    unsigned char frame_ok[7] = { 0x82, 0x05, 'h', 'e', 'l', 'l', 'o' };
+    /* masked frame announcing a 1 GB payload (64-bit length field) */
+    unsigned char frame_too_big[10] = {
+        0x82, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00,
+    };
+
+    /* a valid small frame is decoded */
+    frames = NULL;
+    num_frames = 0;
+    partial_ws_frame = NULL;
+    partial_ws_frame_size = 0;
+    LONGS_EQUAL(1, relay_websocket_decode_frame (
+                    frame_ok, sizeof (frame_ok), 0, NULL,
+                    &frames, &num_frames, &partial_ws_frame,
+                    &partial_ws_frame_size));
+    LONGS_EQUAL(1, num_frames);
+    CHECK(frames);
+    LONGS_EQUAL(5, frames[0].payload_size);
+    MEMCMP_EQUAL("hello", frames[0].payload, 5);
+    free (frames[0].payload);
+    free (frames);
+    free (partial_ws_frame);
+
+    /* a frame announcing an oversized payload is rejected (return 0) */
+    frames = NULL;
+    num_frames = 0;
+    partial_ws_frame = NULL;
+    partial_ws_frame_size = 0;
+    LONGS_EQUAL(0, relay_websocket_decode_frame (
+                    frame_too_big, sizeof (frame_too_big), 1, NULL,
+                    &frames, &num_frames, &partial_ws_frame,
+                    &partial_ws_frame_size));
+    free (frames);
+    free (partial_ws_frame);
 }
 
 /*
