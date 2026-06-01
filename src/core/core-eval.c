@@ -510,8 +510,8 @@ eval_string_split (const char *text)
 {
     char *pos, *pos2, *pos3, *str_number, *separators, **items, *value;
     char str_value[32], *str_flags, **list_flags, *strip_items, **ptr_flag;
-    int num_items, count_items, random_item, flags;
-    long number, max_items;
+    int num_items, count_items, random_item, flags, max_items;
+    long number;
 
     str_number = NULL;
     separators = NULL;
@@ -582,7 +582,7 @@ eval_string_split (const char *text)
             }
             else if (strncmp (*ptr_flag, "max_items=", 10) == 0)
             {
-                if (!util_parse_long (*ptr_flag + 10, 10, &max_items)
+                if (!util_parse_int (*ptr_flag + 10, 10, &max_items)
                     || (max_items < 0))
                     goto end;
             }
