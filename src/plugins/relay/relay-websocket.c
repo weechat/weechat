@@ -703,6 +703,14 @@ relay_websocket_decode_frame (const unsigned char *buffer,
             index_buffer += length_frame_size;
         }
 
+        /*
+         * reject the frame if its announced length is too big: this prevents
+         * a client from forcing an unbounded allocation (and unbounded
+         * accumulation of partial frames) by announcing a huge frame
+         */
+        if (length_frame > WEBSOCKET_FRAME_MAX_LENGTH)
+            return 0;
+
         if (masked_frame)
         {
             /* read mask (4 bytes) */

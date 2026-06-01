@@ -513,6 +513,19 @@ relay_http_add_to_body (struct t_relay_http_request *request,
     if (!partial_message || !*partial_message)
         return;
 
+    /*
+     * reject the body if its announced length is too big: this prevents a
+     * client from forcing an unbounded allocation by announcing a huge
+     * "Content-Length"
+     */
+    if (request->content_length > RELAY_HTTP_BODY_MAX_LENGTH)
+    {
+        free (*partial_message);
+        *partial_message = NULL;
+        request->status = RELAY_HTTP_END;
+        return;
+    }
+
     num_bytes_missing = request->content_length
         - request->body_size;
     if (num_bytes_missing <= 0)
