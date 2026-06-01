@@ -67,6 +67,49 @@ TEST(IrcServer, Valid)
 
 /*
  * Test functions:
+ *   irc_server_msgq_add_unterminated (via irc_server_msgq_add_buffer)
+ *
+ * Check that data received without any end-of-line does not grow the
+ * unterminated message buffer without limit.
+ */
+
+TEST(IrcServer, MsgqAddBufferLimit)
+{
+    struct t_irc_server *server;
+    char chunk[4097];
+    int i;
+    size_t length1, length2;
+
+    server = irc_server_alloc ("server_msgq");
+    CHECK(server);
+
+    memset (chunk, 'a', sizeof (chunk) - 1);
+    chunk[sizeof (chunk) - 1] = '\0';
+
+    /* feed a lot of data with no end-of-line */
+    for (i = 0; i < 100; i++)
+    {
+        irc_server_msgq_add_buffer (server, chunk);
+    }
+    CHECK(server->unterminated_message);
+    length1 = strlen (server->unterminated_message);
+
+    /* the buffer must be bounded (not ~400 KB) */
+    CHECK(length1 <= IRC_SERVER_RECV_MSG_MAX_LENGTH + sizeof (chunk));
+
+    /* feeding more data must not grow the buffer any further */
+    for (i = 0; i < 100; i++)
+    {
+        irc_server_msgq_add_buffer (server, chunk);
+    }
+    length2 = strlen (server->unterminated_message);
+    LONGS_EQUAL(length1, length2);
+
+    irc_server_free (server);
+}
+
+/*
+ * Test functions:
  *   irc_server_search
  */
 

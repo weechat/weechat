@@ -6,6 +6,12 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 # WeeChat ChangeLog
 
+## Version 4.9.2 (under dev)
+
+### Fixed
+
+- irc: limit size of data received from the server to prevent memory exhaustion
+
 ## Version 4.9.1 (2026-05-31)
 
 ### Fixed
