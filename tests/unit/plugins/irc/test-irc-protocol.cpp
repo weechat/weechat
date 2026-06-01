@@ -3868,6 +3868,44 @@ TEST(IrcProtocolWithServer, 005_full)
 
 /*
  * Test functions:
+ *   irc_protocol_cb_005 (accumulated ISUPPORT is bounded)
+ */
+
+TEST(IrcProtocolWithServer, 005_limit)
+{
+    char str_msg[4096], str_value[3500];
+    size_t length1, length2;
+    int i;
+
+    SRV_INIT;
+
+    memset (str_value, 'X', sizeof (str_value) - 1);
+    str_value[sizeof (str_value) - 1] = '\0';
+    snprintf (str_msg, sizeof (str_msg),
+              ":server 005 alice TEST=%s :are supported", str_value);
+
+    /* flood the server with "005" messages */
+    for (i = 0; i < 100; i++)
+    {
+        server_recv (str_msg);
+    }
+    CHECK(ptr_server->isupport);
+    length1 = strlen (ptr_server->isupport);
+
+    /* the accumulated ISUPPORT data must be bounded */
+    CHECK(length1 <= IRC_SERVER_ISUPPORT_MAX_LENGTH + sizeof (str_value));
+
+    /* receiving more "005" messages must not grow it any further */
+    for (i = 0; i < 100; i++)
+    {
+        server_recv (str_msg);
+    }
+    length2 = strlen (ptr_server->isupport);
+    LONGS_EQUAL(length1, length2);
+}
+
+/*
+ * Test functions:
  *   irc_protocol_cb_005 (infos from server, multiple messages)
  */
 
