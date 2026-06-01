@@ -163,6 +163,35 @@ TEST(RelayHttp, RequestAllocReinitFree)
 
 /*
  * Test functions:
+ *   relay_http_add_to_body (body too large is rejected)
+ */
+
+TEST(RelayHttp, AddToBodyLimit)
+{
+    struct t_relay_http_request *request;
+    char *partial;
+
+    request = relay_http_request_alloc ();
+    CHECK(request);
+
+    /* announce a body larger than the maximum allowed */
+    request->status = RELAY_HTTP_BODY;
+    request->content_length = RELAY_HTTP_BODY_MAX_LENGTH + 1;
+    partial = strdup ("some body data");
+
+    relay_http_add_to_body (request, &partial);
+
+    /* the body must be rejected: nothing allocated, request ended */
+    POINTERS_EQUAL(NULL, request->body);
+    LONGS_EQUAL(0, request->body_size);
+    POINTERS_EQUAL(NULL, partial);
+    LONGS_EQUAL(RELAY_HTTP_END, request->status);
+
+    relay_http_request_free (request);
+}
+
+/*
+ * Test functions:
  *   relay_http_url_decode
  */
 

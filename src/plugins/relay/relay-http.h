@@ -57,6 +57,13 @@ enum t_relay_client_http_status
 #define RELAY_HTTP_ERROR_METHOD_NOT_ALLOWED   "Method Not Allowed"
 #define RELAY_HTTP_ERROR_OUT_OF_MEMORY        "Out of memory"
 
+/*
+ * maximum length of an HTTP request body: used as an upper bound on the
+ * "Content-Length" accepted from a client, to prevent a client from forcing
+ * an unbounded allocation by announcing a huge body
+ */
+#define RELAY_HTTP_BODY_MAX_LENGTH (8 * 1024 * 1024)
+
 struct t_relay_http_request
 {
     enum t_relay_client_http_status status; /* HTTP status                  */
