@@ -142,6 +142,15 @@ enum t_irc_server_option
 #define IRC_SERVER_MULTILINE_DEFAULT_MAX_BYTES 4096
 #define IRC_SERVER_MULTILINE_DEFAULT_MAX_LINES 24
 
+/*
+ * maximum length of an unterminated message (a received line without
+ * end-of-line) and of the accumulated "005" (ISUPPORT) data; these limits
+ * protect against a server sending a huge amount of data without end-of-line
+ * (or a flood of "005" messages), which would consume all the memory
+ */
+#define IRC_SERVER_RECV_MSG_MAX_LENGTH (64 * 1024)
+#define IRC_SERVER_ISUPPORT_MAX_LENGTH (64 * 1024)
+
 /* casemapping (string comparisons for nicks/channels) */
 enum t_irc_server_casemapping
 {

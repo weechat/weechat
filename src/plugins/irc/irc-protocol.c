@@ -4143,16 +4143,25 @@ IRC_PROTOCOL_CALLBACK(005)
         if (ctxt->server->isupport)
         {
             length_isupport = strlen (ctxt->server->isupport);
-            isupport2 = realloc (ctxt->server->isupport,
-                                 length_isupport +  /* existing */
-                                 1 +  /* space */
-                                 length +  /* new */
-                                 1);
-            if (isupport2)
+            /*
+             * limit the size of the accumulated ISUPPORT data: once the
+             * maximum is reached, ignore the extra data (protection against a
+             * server flooding "005" messages, which would consume all the
+             * memory)
+             */
+            if (length_isupport + 1 + length < IRC_SERVER_ISUPPORT_MAX_LENGTH)
             {
-                ctxt->server->isupport = isupport2;
-                strcat (ctxt->server->isupport, " ");
-                strcat (ctxt->server->isupport, str_info);
+                isupport2 = realloc (ctxt->server->isupport,
+                                     length_isupport +  /* existing */
+                                     1 +  /* space */
+                                     length +  /* new */
+                                     1);
+                if (isupport2)
+                {
+                    ctxt->server->isupport = isupport2;
+                    strcat (ctxt->server->isupport, " ");
+                    strcat (ctxt->server->isupport, str_info);
+                }
             }
         }
         else

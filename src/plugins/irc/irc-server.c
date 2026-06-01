@@ -3409,6 +3409,14 @@ irc_server_msgq_add_unterminated (struct t_irc_server *server,
 
     if (server->unterminated_message)
     {
+        /*
+         * limit the size of the unterminated message: once the maximum is
+         * reached, ignore the extra data (protection against a server sending
+         * a very long line without end-of-line, which would consume all the
+         * memory)
+         */
+        if (strlen (server->unterminated_message) >= IRC_SERVER_RECV_MSG_MAX_LENGTH)
+            return;
         unterminated_message2 =
             realloc (server->unterminated_message,
                      (strlen (server->unterminated_message) +
