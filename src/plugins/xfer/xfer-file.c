@@ -251,7 +251,7 @@ xfer_file_find_suffix (struct t_xfer *xfer)
 void
 xfer_file_find_filename (struct t_xfer *xfer)
 {
-    char *dir_separator, *path;
+    char *dir_separator, *path, *nick;
     struct t_hashtable *options;
 
     if (!XFER_IS_FILE(xfer->type))
@@ -287,12 +287,20 @@ xfer_file_find_filename (struct t_xfer *xfer)
     {
         strcat (xfer->local_filename, dir_separator);
     }
-    free (dir_separator);
     if (weechat_config_boolean (xfer_config_file_use_nick_in_filename))
     {
-        strcat (xfer->local_filename, xfer->remote_nick);
+        /*
+         * the remote nick comes from the server and can contain a directory
+         * separator: replace it so the nick cannot make the file be written
+         * outside the download directory
+         */
+        nick = (dir_separator) ?
+            weechat_string_replace (xfer->remote_nick, dir_separator, "_") : NULL;
+        strcat (xfer->local_filename, (nick) ? nick : xfer->remote_nick);
+        free (nick);
         strcat (xfer->local_filename, ".");
     }
+    free (dir_separator);
     strcat (xfer->local_filename, xfer->filename);
 
     free (path);
