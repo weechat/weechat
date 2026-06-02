@@ -28,6 +28,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 - relay: limit size of received websocket frame and HTTP body to prevent memory exhaustion
 - relay: fix timing attack on password authentication ([GHSA-vhv8-g2r9-cwcc](https://github.com/weechat/weechat/security/advisories/GHSA-vhv8-g2r9-cwcc))
 - api, relay: fix timing attack on TOTP validation ([GHSA-vhv8-g2r9-cwcc](https://github.com/weechat/weechat/security/advisories/GHSA-vhv8-g2r9-cwcc))
+- xfer: replace directory separator in remote nick by underscore in download filename to prevent writing the file outside the download directory
 
 ## Version 4.9.1 (2026-05-31)
 
