@@ -1454,6 +1454,8 @@ TEST(CoreString, Replace)
     WEE_TEST_STR(NULL, string_replace ("string", NULL, "replace"));
     WEE_TEST_STR(NULL, string_replace (NULL, "search", "replace"));
 
+    WEE_TEST_STR("test abc def", string_replace("test abc def", "", "xxx"));
+
     WEE_TEST_STR("test abc def", string_replace("test abc def", "xyz", "xxx"));
     WEE_TEST_STR("test xxx def", string_replace("test abc def", "abc", "xxx"));
     WEE_TEST_STR("xxx test xxx def xxx",

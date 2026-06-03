@@ -1966,6 +1966,9 @@ string_replace (const char *string, const char *search, const char *replace)
     if (!string || !search || !replace)
         return NULL;
 
+    if (!search[0])
+        return strdup (string);
+
     length1 = strlen (search);
     length2 = strlen (replace);
 
