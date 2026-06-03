@@ -8,6 +8,7 @@
 
 ### Fixed
 
+- api: fix infinite loop in function string_replace when the search string is empty
 - irc: limit size of data received from the server to prevent memory exhaustion
 - relay: limit size of received websocket frame and HTTP body to prevent memory exhaustion
 - relay: fix timing attack on password authentication ([GHSA-vhv8-g2r9-cwcc](https://github.com/weechat/weechat/security/advisories/GHSA-vhv8-g2r9-cwcc))
