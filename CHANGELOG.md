@@ -10,6 +10,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 ### Fixed
 
+- api: fix infinite loop in function string_replace when the search string is empty
 - irc: limit size of data received from the server to prevent memory exhaustion
 - relay: limit size of received websocket frame and HTTP body to prevent memory exhaustion
 
