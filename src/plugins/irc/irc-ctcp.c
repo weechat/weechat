@@ -855,7 +855,7 @@ irc_ctcp_recv_dcc (struct t_irc_protocol_ctxt *ctxt, const char *arguments)
              * double-quote
              */
             pos = strrchr (pos_file, '"');
-            if (!pos || (pos == pos_file))
+            if (!pos || (pos == pos_file) || !pos[1])
             {
                 weechat_printf (
                     ctxt->server->buffer,
@@ -1030,7 +1030,7 @@ irc_ctcp_recv_dcc (struct t_irc_protocol_ctxt *ctxt, const char *arguments)
              * double-quote
              */
             pos = strrchr (pos_file, '"');
-            if (!pos || (pos == pos_file))
+            if (!pos || (pos == pos_file) || !pos[1])
             {
                 weechat_printf (
                     ctxt->server->buffer,
@@ -1174,7 +1174,7 @@ irc_ctcp_recv_dcc (struct t_irc_protocol_ctxt *ctxt, const char *arguments)
              * double-quote
              */
             pos = strrchr (pos_file, '"');
-            if (!pos || (pos == pos_file))
+            if (!pos || (pos == pos_file) || !pos[1])
             {
                 weechat_printf (
                     ctxt->server->buffer,
