@@ -24,6 +24,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 - irc: fix tag in message with list of names when joining a channel
 - fset: remove error displayed in core buffer when clicking with the mouse below the last option displayed
 - irc: limit size of data received from the server to prevent memory exhaustion
+- irc: fix out-of-bounds read on incoming DCC command with a quoted filename ending the message
 - relay: limit size of decompressed websocket frame with permessage-deflate to prevent memory exhaustion ([GHSA-v2v4-45wm-5cr3](https://github.com/weechat/weechat/security/advisories/GHSA-v2v4-45wm-5cr3))
 - relay: limit size of received websocket frame and HTTP body to prevent memory exhaustion
 - relay: fix timing attack on password authentication ([GHSA-vhv8-g2r9-cwcc](https://github.com/weechat/weechat/security/advisories/GHSA-vhv8-g2r9-cwcc))
