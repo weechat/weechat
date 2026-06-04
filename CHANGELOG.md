@@ -12,6 +12,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 - api: fix infinite loop in function string_replace when the search string is empty
 - irc: limit size of data received from the server to prevent memory exhaustion
+- irc: fix out-of-bounds read on incoming DCC command with a quoted filename ending the message
 - relay: limit size of received websocket frame and HTTP body to prevent memory exhaustion
 - xfer: replace directory separator in remote nick by underscore in download filename to prevent writing the file outside the download directory
 
