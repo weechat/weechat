@@ -15,6 +15,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 - irc: fix out-of-bounds read on incoming DCC command with a quoted filename ending the message ([#2322](https://github.com/weechat/weechat/issues/2322))
 - relay: limit size of received websocket frame and HTTP body to prevent memory exhaustion
 - relay: limit size of partial message received while reading an HTTP request to prevent memory exhaustion
+- relay: fix out-of-bounds read in dump of data ([#2324](https://github.com/weechat/weechat/issues/2324))
 - xfer: replace directory separator in remote nick by underscore in download filename to prevent writing the file outside the download directory ([#2321](https://github.com/weechat/weechat/issues/2321))
 - xfer: fix out-of-bounds read when receiving empty line in DCC chat ([#2323](https://github.com/weechat/weechat/issues/2323))
 
