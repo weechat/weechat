@@ -30,7 +30,7 @@ if(ENABLE_MAN OR ENABLE_DOC)
   set(SCRIPTING_LANG de en fr it ja pl sr)
   set(FAQ_LANG de en es fr it ja pl sr)
   set(QUICKSTART_LANG cs de en es fr it ja pl ru sr)
-  set(RELAY_API_LANG en fr)
+  set(RELAY_API_LANG en fr sr)
   set(RELAY_WEECHAT_LANG en fr ja sr)
   set(DEV_LANG en fr ja sr)
 
