@@ -64,6 +64,15 @@ enum t_relay_client_http_status
  */
 #define RELAY_HTTP_BODY_MAX_LENGTH (8 * 1024 * 1024)
 
+/*
+ * maximum length of the partial message accumulated while reading an HTTP
+ * request: once this limit is reached, the extra data is ignored; this
+ * protects against a client sending a huge amount of data without any
+ * end-of-line (an unterminated method or header line), which would consume
+ * all the memory
+ */
+#define RELAY_HTTP_PARTIAL_MESSAGE_MAX_LENGTH (8 * 1024 * 1024)
+
 struct t_relay_http_request
 {
     enum t_relay_client_http_status status; /* HTTP status                  */

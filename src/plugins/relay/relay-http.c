@@ -1006,6 +1006,14 @@ relay_http_recv (struct t_relay_client *client, const char *data, int size)
 
     if (client->partial_message)
     {
+        /*
+         * limit the size of the partial message: once the maximum is reached,
+         * ignore the extra data (protection against a client sending a huge
+         * amount of data without any end-of-line and dribbling it, which would
+         * consume all the memory)
+         */
+        if (strlen (client->partial_message) >= RELAY_HTTP_PARTIAL_MESSAGE_MAX_LENGTH)
+            return;
         new_partial = realloc (client->partial_message,
                                strlen (client->partial_message) +
                                strlen (data) + 1);

@@ -41,6 +41,7 @@ extern "C"
 #include "src/plugins/relay/relay-client.h"
 #include "src/plugins/relay/relay-config.h"
 #include "src/plugins/relay/relay-http.h"
+#include "src/plugins/relay/relay-server.h"
 #include "src/plugins/relay/relay-websocket.h"
 #include "src/plugins/weechat-plugin.h"
 
@@ -1019,6 +1020,69 @@ TEST(RelayHttp, ProcessRequest)
 TEST(RelayHttp, Recv)
 {
     /* TODO: write tests */
+}
+
+/*
+ * Test functions:
+ *   relay_http_recv (partial message accumulated is bounded)
+ *
+ * Check that data received without any end-of-line does not grow the partial
+ * message buffer without limit.
+ */
+
+TEST(RelayHttp, RecvLimit)
+{
+    struct t_relay_server *server;
+    struct t_relay_client *client;
+    char *chunk;
+    int chunk_size, i;
+    size_t length1, length2;
+
+    /* disable auto-open of relay buffer (it would pollute other tests) */
+    config_file_option_set (relay_config_look_auto_open_buffer, "off", 1);
+
+    server = relay_server_new ("weechat", RELAY_PROTOCOL_WEECHAT, NULL,
+                               9000,
+                               NULL,  /* path */
+                               1,  /* ipv4 */
+                               0,  /* ipv6 */
+                               0,  /* tls */
+                               0);  /* unix_socket */
+    CHECK(server);
+    client = relay_client_new (-1, "test", server);
+    CHECK(client);
+
+    chunk_size = 1024 * 1024;
+    chunk = (char *)malloc (chunk_size + 1);
+    CHECK(chunk);
+    memset (chunk, 'a', chunk_size);
+    chunk[chunk_size] = '\0';
+
+    /* feed more than the maximum, with no end-of-line (16 MB) */
+    for (i = 0; i < 16; i++)
+    {
+        relay_http_recv (client, chunk, chunk_size);
+    }
+    CHECK(client->partial_message);
+    length1 = strlen (client->partial_message);
+
+    /* the partial message must be bounded (not ~16 MB) */
+    CHECK(length1 <= RELAY_HTTP_PARTIAL_MESSAGE_MAX_LENGTH + (size_t)chunk_size);
+
+    /* feeding more data must not grow it any further */
+    for (i = 0; i < 16; i++)
+    {
+        relay_http_recv (client, chunk, chunk_size);
+    }
+    length2 = strlen (client->partial_message);
+    LONGS_EQUAL(length1, length2);
+
+    free (chunk);
+    relay_client_free (client);
+    relay_server_free (server);
+
+    /* restore auto-open of relay buffer */
+    config_file_option_reset (relay_config_look_auto_open_buffer, 1);
 }
 
 /*
