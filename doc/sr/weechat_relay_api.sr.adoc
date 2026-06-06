@@ -543,7 +543,8 @@ HTTP/1.1 200 OK
             "plugin": "core",
             "name": "weechat"
         },
-        "keys": []
+        "keys": [],
+        "last_read_line_id": -1
     },
     {
         "id": 1709932823423765,
@@ -573,7 +574,8 @@ HTTP/1.1 200 OK
             "tls_version": "TLS1.3",
             "host": "~alice@example.com"
         },
-        "keys": []
+        "keys": [],
+        "last_read_line_id": -1
     },
     {
         "id": 1709932823649069,
@@ -601,7 +603,8 @@ HTTP/1.1 200 OK
             "nick": "alice",
             "host": "~alice@example.com"
         },
-        "keys": []
+        "keys": [],
+        "last_read_line_id": -1
     }
 ]
 ----
@@ -657,7 +660,8 @@ HTTP/1.1 200 OK
             "message": "Учитани додаци: alias, buflist, charset, exec, fifo, fset, guile, irc, javascript, logger, lua, perl, php, python, relay, ruby, script, spell, tcl, trigger, typing, xfer",
             "tags": []
         }
-    ]
+    ],
+    "last_read_line_id": -1
 }
 ----
 
@@ -704,6 +708,7 @@ HTTP/1.1 200 OK
         "host": "~alice@example.com"
     },
     "keys": [],
+    "last_read_line_id": -1,
     "nicklist_root": {
         "id": 0,
         "parent_group_id": -1,
@@ -902,7 +907,8 @@ HTTP/1.1 200 OK
             "key": "up",
             "command": "/fset -up"
         }
-    ]
+    ],
+    "last_read_line_id": -1
 }
 ----
 

@@ -350,9 +350,13 @@ relay_api_msg_buffer_to_json (struct t_gui_buffer *buffer,
 {
     struct t_hdata *hdata;
     struct t_gui_buffer *pointer;
+    struct t_gui_lines *ptr_lines;
+    struct t_gui_line *ptr_line;
+    struct t_gui_line_data *ptr_line_data;
     cJSON *json, *json_local_vars, *json_lines, *json_nicklist_root;
     const char *ptr_string;
     char *string;
+    int last_read_line_id;
 
     hdata = relay_hdata_buffer;
     pointer = buffer;
@@ -405,6 +409,24 @@ relay_api_msg_buffer_to_json (struct t_gui_buffer *buffer,
         if (json_lines)
             cJSON_AddItemToObject (json, "lines", json_lines);
     }
+    last_read_line_id = -1;
+    ptr_lines = weechat_hdata_pointer (relay_hdata_buffer, buffer, "own_lines");
+    if (ptr_lines)
+    {
+        ptr_line = weechat_hdata_pointer (relay_hdata_lines, ptr_lines, "last_read_line");
+        if (ptr_line)
+        {
+            ptr_line_data = weechat_hdata_pointer (relay_hdata_line, ptr_line, "data");
+            if (ptr_line_data)
+            {
+                last_read_line_id = weechat_hdata_integer (relay_hdata_line_data,
+                                                           ptr_line_data, "id");
+            }
+        }
+    }
+    cJSON_AddItemToObject (
+        json, "last_read_line_id",
+        cJSON_CreateNumber (last_read_line_id));
 
     /* nicks */
     if (nicks)

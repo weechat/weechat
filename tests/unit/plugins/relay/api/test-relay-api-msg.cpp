@@ -177,6 +177,7 @@ TEST(RelayApiMsg, BufferToJson)
     WEE_CHECK_OBJ_STR("core", json_local_vars, "plugin");
     WEE_CHECK_OBJ_STR("weechat", json_local_vars, "name");
     POINTERS_EQUAL(NULL, cJSON_GetObjectItem (json, "lines"));
+    WEE_CHECK_OBJ_NUM(-1, json, "last_read_line_id");
     POINTERS_EQUAL(NULL, cJSON_GetObjectItem (json, "nicks"));
     cJSON_Delete (json);
 

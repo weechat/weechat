@@ -17,7 +17,7 @@ info:
   license:
     name: CC BY-NC-SA 4.0
     url: https://creativecommons.org/licenses/by-nc-sa/4.0/
-  version: 0.4.1
+  version: 0.5.0
 
 externalDocs:
   url: https://weechat.org/doc/
@@ -1043,6 +1043,11 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Line'
+        last_read_line_id:
+          type: integer
+          format: int64
+          description: identifier of the last line read in the buffer (-1 if read marker is not displayed)
+          example: -1
         nicklist_root:
           $ref: '#/components/schemas/NickGroup'
       required:
