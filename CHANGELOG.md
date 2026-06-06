@@ -25,12 +25,12 @@ SPDX-License-Identifier: GPL-3.0-or-later
 - irc: fix tag in message with list of names when joining a channel
 - fset: remove error displayed in core buffer when clicking with the mouse below the last option displayed
 - irc: limit size of data received from the server to prevent memory exhaustion
-- irc: fix out-of-bounds read on incoming DCC command with a quoted filename ending the message
+- irc: fix out-of-bounds read on incoming DCC command with a quoted filename ending the message ([#2322](https://github.com/weechat/weechat/issues/2322))
 - relay: limit size of decompressed websocket frame with permessage-deflate to prevent memory exhaustion ([GHSA-v2v4-45wm-5cr3](https://github.com/weechat/weechat/security/advisories/GHSA-v2v4-45wm-5cr3))
 - relay: limit size of received websocket frame and HTTP body to prevent memory exhaustion
 - relay: fix timing attack on password authentication ([GHSA-vhv8-g2r9-cwcc](https://github.com/weechat/weechat/security/advisories/GHSA-vhv8-g2r9-cwcc))
 - api, relay: fix timing attack on TOTP validation ([GHSA-vhv8-g2r9-cwcc](https://github.com/weechat/weechat/security/advisories/GHSA-vhv8-g2r9-cwcc))
-- xfer: replace directory separator in remote nick by underscore in download filename to prevent writing the file outside the download directory
+- xfer: replace directory separator in remote nick by underscore in download filename to prevent writing the file outside the download directory ([#2321](https://github.com/weechat/weechat/issues/2321))
 - xfer: fix out-of-bounds read when receiving empty line in DCC chat ([#2323](https://github.com/weechat/weechat/issues/2323))
 
 ## Version 4.9.1 (2026-05-31)
