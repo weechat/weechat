@@ -160,7 +160,7 @@ xfer_chat_recv_cb (const void *pointer, void *data, int fd)
             {
                 ctcp_action = 0;
                 length = strlen (ptr_buf);
-                if (ptr_buf[length - 1] == '\r')
+                if ((length > 0) && (ptr_buf[length - 1] == '\r'))
                 {
                     ptr_buf[length - 1] = '\0';
                     length--;
