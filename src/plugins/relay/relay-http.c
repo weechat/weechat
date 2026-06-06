@@ -1660,7 +1660,7 @@ relay_http_print_log_request (struct t_relay_http_request *request)
     weechat_log_printf ("    path_items. . . . . . . : %p", request->path_items);
     if (request->path_items)
     {
-        for (i = 0; request->path_items[0]; i++)
+        for (i = 0; request->path_items[i]; i++)
         {
             weechat_log_printf ("      '%s'", request->path_items[i]);
         }
