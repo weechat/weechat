@@ -303,7 +303,7 @@ TEST_GROUP(IrcProtocolWithServer)
 
     void server_recv (const char *command)
     {
-        char str_command[4096];
+        char str_command[8192];
 
         record_start ();
         arraylist_clear (sent_messages);
