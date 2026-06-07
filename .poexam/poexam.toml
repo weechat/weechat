@@ -7,9 +7,11 @@ select = [
     "checks",
 ]
 ignore = [
+    "acronyms",
     "brackets",
     "double-quotes",
     "double-words",
+    "functions",
     "html-tags",
     "paths",
     "unchanged",
