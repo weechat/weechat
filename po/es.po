@@ -24,7 +24,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-05-30 14:00+0200\n"
+"POT-Creation-Date: 2026-06-08 22:23+0200\n"
 "PO-Revision-Date: 2026-05-30 14:01+0200\n"
 "Last-Translator: Santiago Forero <santiago@forero.xyz>\n"
 "Language-Team: Spanish - Spain <weechat-dev@nongnu.org>\n"
@@ -16345,6 +16345,11 @@ msgstr "scripts en %s cargados:"
 #, fuzzy
 msgid "script name with extension"
 msgstr "lista de scripts"
+
+#, fuzzy
+#| msgid "comma separated list of file name extensions for plugins"
+msgid "comma-separated list of plugin:extension with supported languages"
+msgstr "lista separada por comas de extensiones de archivo para plugins"
 
 #, fuzzy
 msgid "script name with extension (wildcard \"*\" is allowed) (optional)"
