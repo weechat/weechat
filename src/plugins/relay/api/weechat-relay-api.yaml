@@ -588,12 +588,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        '400':
-          description: Bad request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
         '503':
           description: Out of memory
           content:
