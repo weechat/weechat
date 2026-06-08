@@ -160,6 +160,37 @@ script_info_info_script_loaded_cb (const void *pointer, void *data,
 }
 
 /*
+ * Return script info "script_languages".
+ */
+
+char *
+script_info_info_languages_cb (const void *pointer, void *data,
+                               const char *info_name,
+                               const char *arguments)
+{
+    char **output;
+    int i;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) info_name;
+    (void) arguments;
+
+    output = weechat_string_dyn_alloc (256);
+    for (i = 0; i < SCRIPT_NUM_LANGUAGES; i++)
+    {
+        if (i > 0)
+            weechat_string_dyn_concat (output, ",", -1);
+        weechat_string_dyn_concat (output, script_language[i], -1);
+        weechat_string_dyn_concat (output, ":", -1);
+        weechat_string_dyn_concat (output, script_extension[i], -1);
+    }
+
+    return weechat_string_dyn_free (output, 0);
+}
+
+/*
  * Return script infolist "script_script".
  */
 
@@ -235,6 +266,11 @@ script_info_init (void)
         N_("1 if script is loaded"),
         N_("script name with extension"),
         &script_info_info_script_loaded_cb, NULL, NULL);
+    weechat_hook_info (
+        "script_languages",
+        N_("comma-separated list of plugin:extension with supported languages"),
+        NULL,
+        &script_info_info_languages_cb, NULL, NULL);
 
     /* infolist hooks */
     weechat_hook_infolist (

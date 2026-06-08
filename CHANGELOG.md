@@ -17,6 +17,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 ### Added
 
 - relay: add option relay.network.unix_socket_permissions ([#2317](https://github.com/weechat/weechat/issues/2317))
+- script: add info "script_languages"
 
 ### Fixed
 
