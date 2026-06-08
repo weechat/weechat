@@ -1179,6 +1179,51 @@ HTTP/1.1 200 OK
 ]
 ----
 
+[[resource_scripts]]
+=== Scripts
+
+Return loaded scripts (all languages).
+
+Endpoint:
+
+----
+GET /api/scripts
+----
+
+Request example:
+
+[source,shell]
+----
+curl -L -u 'plain:secret_password' 'https://localhost:9000/api/scripts'
+----
+
+Response:
+
+[source,http]
+----
+HTTP/1.1 200 OK
+----
+
+[source,json]
+----
+[
+    {
+        "name": "highmon.pl",
+        "version": "2.7",
+        "description": "Highlight Monitor",
+        "author": "KenjiE20",
+        "license": "GPL3"
+    },
+    {
+        "name": "go.py",
+        "version": "3.1.1",
+        "description": "Quick jump to buffers",
+        "author": "Sébastien Helleu <flashcode@flashtux.org>",
+        "license": "GPL3"
+    }
+]
+----
+
 [[resource_input]]
 === Input
 
@@ -1510,6 +1555,7 @@ Body types that can be returned:
 * `nick_group` (object)
 * `nick` (object)
 * `hotlist` (object)
+* `scripts` (array)
 * `ping` (object)
 
 [TIP]

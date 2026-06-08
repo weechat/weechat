@@ -23,13 +23,17 @@
 
 #include "CppUTest/TestHarness.h"
 
+#include "tests.h"
+
 extern "C"
 {
 #include <time.h>
 #include <sys/time.h>
 #include <cjson/cJSON.h>
 #include "src/core/core-hdata.h"
+#include "src/core/core-hook.h"
 #include "src/core/core-util.h"
+#include "src/core/weechat.h"
 #include "src/gui/gui-buffer.h"
 #include "src/gui/gui-chat.h"
 #include "src/gui/gui-color.h"
@@ -652,4 +656,64 @@ TEST(RelayApiMsg, HotlistToJson)
     cJSON_Delete (json);
 
     gui_hotlist_remove_buffer (gui_buffers, 1);
+}
+
+/*
+ * Test functions:
+ *   relay_api_msg_script_to_json
+ */
+
+TEST(RelayApiMsg, ScriptToJson)
+{
+    struct t_hdata *ptr_hdata;
+    void *ptr_script;
+    cJSON *json, *json_obj;
+    char path_testapigen[PATH_MAX], path_testapi[PATH_MAX];
+    char *test_scripts_dir, str_command[(PATH_MAX * 2) + 128];
+    const char *ptr_test_scripts_dir;
+
+    POINTERS_EQUAL(NULL, relay_api_msg_script_to_json (NULL, NULL, NULL));
+
+    ptr_hdata = hook_hdata_get (NULL, "python_script");
+
+    json = relay_api_msg_script_to_json (ptr_hdata, NULL, NULL);
+    CHECK(json);
+    CHECK(cJSON_IsObject (json));
+    cJSON_Delete (json);
+
+    /* load a python script for this test */
+    ptr_test_scripts_dir = getenv ("WEECHAT_TESTS_SCRIPTS_DIR");
+    test_scripts_dir = strdup (
+        (ptr_test_scripts_dir) ?
+        ptr_test_scripts_dir : "./scripts/python");
+    snprintf (path_testapigen, sizeof (path_testapigen),
+              "%s%s%s",
+              test_scripts_dir,
+              DIR_SEPARATOR,
+              "testapigen.py");
+    snprintf (path_testapi, sizeof (path_testapi),
+              "%s%s%s",
+              test_scripts_dir,
+              DIR_SEPARATOR,
+              "testapi.py");
+    snprintf (str_command, sizeof (str_command),
+              "/script load %s", path_testapigen);
+    run_cmd (str_command);
+
+    ptr_script = hdata_get_list (ptr_hdata, "scripts");
+    CHECK(ptr_script);
+    json = relay_api_msg_script_to_json (ptr_hdata, ptr_script, "py");
+    CHECK(json);
+    CHECK(cJSON_IsObject (json));
+    WEE_CHECK_OBJ_STR("testapigen.py", json, "name");
+    WEE_CHECK_OBJ_STR("0.1", json, "version");
+    WEE_CHECK_OBJ_STR("Generate scripting API test scripts", json, "description");
+    WEE_CHECK_OBJ_STR("Sébastien Helleu <flashcode@flashtux.org>", json, "author");
+    WEE_CHECK_OBJ_STR("GPL3", json, "license");
+    cJSON_Delete (json);
+
+    /* unload script */
+    snprintf (str_command, sizeof (str_command),
+              "/script unload -q weechat_testapi.py");
+    run_cmd (str_command);
 }

@@ -1191,6 +1191,51 @@ HTTP/1.1 200 OK
 ]
 ----
 
+[[resource_scripts]]
+=== Scripts
+
+Retourner la liste des scripts chargés (tous les langages).
+
+Point de terminaison :
+
+----
+GET /api/scripts
+----
+
+Exemple de requête :
+
+[source,shell]
+----
+curl -L -u 'plain:secret_password' 'https://localhost:9000/api/scripts'
+----
+
+Réponse :
+
+[source,http]
+----
+HTTP/1.1 200 OK
+----
+
+[source,json]
+----
+[
+    {
+        "name": "highmon.pl",
+        "version": "2.7",
+        "description": "Highlight Monitor",
+        "author": "KenjiE20",
+        "license": "GPL3"
+    },
+    {
+        "name": "go.py",
+        "version": "3.1.1",
+        "description": "Quick jump to buffers",
+        "author": "Sébastien Helleu <flashcode@flashtux.org>",
+        "license": "GPL3"
+    }
+]
+----
+
 [[resource_input]]
 === Entrée
 
@@ -1530,6 +1575,7 @@ Les types de corps qui peuvent être retournés :
 * `nick_group` (objet)
 * `nick` (objet)
 * `hotlist` (objet)
+* `scripts` (tableau)
 * `ping` (objet)
 
 [TIP]

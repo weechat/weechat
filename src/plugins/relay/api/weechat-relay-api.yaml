@@ -17,7 +17,7 @@ info:
   license:
     name: CC BY-NC-SA 4.0
     url: https://creativecommons.org/licenses/by-nc-sa/4.0/
-  version: 0.5.0
+  version: 0.6.0
 
 externalDocs:
   url: https://weechat.org/doc/
@@ -32,6 +32,7 @@ tags:
   - name: version
   - name: buffers
   - name: hotlist
+  - name: scripts
   - name: input
   - name: completion
   - name: ping
@@ -96,7 +97,7 @@ paths:
     get:
       tags:
         - version
-      description: Get the WeeChat and API versions
+      description: Get the WeeChat and API versions.
       parameters:
         - $ref: '#/components/parameters/totp'
       operationId: getVersion
@@ -531,7 +532,7 @@ paths:
     get:
       tags:
         - hotlist
-      description: Get hotlist
+      description: Get hotlist.
       operationId: getHotlist
       parameters:
         - $ref: '#/components/parameters/totp'
@@ -544,6 +545,43 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Hotlist'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Out of memory
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - password: []
+  /scripts:
+    get:
+      tags:
+        - scripts
+      description: Get list of loaded scripts.
+      operationId: getScripts
+      parameters:
+        - $ref: '#/components/parameters/totp'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Script'
         '401':
           description: Unauthorized
           content:
@@ -1336,6 +1374,19 @@ components:
         - date
         - buffer_id
         - count
+    Script:
+      type: object
+      properties:
+        name:
+          type: string
+          description: script name
+          example: 'go.py'
+        version:
+          type: string
+          example: '3.1.1'
+      required:
+        - name
+        - version
     Completion:
       type: object
       properties:

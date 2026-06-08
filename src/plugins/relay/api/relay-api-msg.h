@@ -58,5 +58,7 @@ extern cJSON *relay_api_msg_nick_group_to_json (struct t_gui_nick_group *nick_gr
                                                 enum t_relay_api_colors colors);
 extern cJSON *relay_api_msg_completion_to_json (struct t_gui_completion *completion);
 extern cJSON *relay_api_msg_hotlist_to_json (struct t_gui_hotlist *hotlist);
+extern cJSON *relay_api_msg_script_to_json (struct t_hdata *hdata, void *script,
+                                            const char *extension);
 
 #endif /* WEECHAT_PLUGIN_RELAY_API_MSG_H */

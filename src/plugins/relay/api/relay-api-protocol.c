@@ -765,6 +765,64 @@ RELAY_API_PROTOCOL_CALLBACK(hotlist)
 }
 
 /*
+ * Callback for resource "scripts".
+ *
+ * Routes:
+ *   GET /api/scripts
+ */
+
+RELAY_API_PROTOCOL_CALLBACK(scripts)
+{
+    cJSON *json;
+    char *info_languages, **languages, hdata_name[256], *pos;
+    int num_languages, i;
+    struct t_hdata *ptr_hdata;
+    void *ptr_script;
+
+    json = cJSON_CreateArray ();
+    if (!json)
+        return RELAY_API_PROTOCOL_RC_MEMORY;
+
+    info_languages = weechat_info_get ("script_languages", NULL);
+    if (info_languages)
+    {
+        languages = weechat_string_split (info_languages, ",", NULL,
+                                          WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                          | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                          | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                          0, &num_languages);
+        if (languages)
+        {
+            for (i = 0; i < num_languages; i++)
+            {
+                pos = strchr (languages[i], ':');
+                if (pos)
+                {
+                    pos[0] = '\0';
+                    snprintf (hdata_name, sizeof (hdata_name),
+                              "%s_script", languages[i]);
+                    ptr_hdata = weechat_hdata_get (hdata_name);
+                    ptr_script = weechat_hdata_get_list (ptr_hdata, "scripts");
+                    while (ptr_script)
+                    {
+                        cJSON_AddItemToArray (
+                            json,
+                            relay_api_msg_script_to_json (ptr_hdata, ptr_script, pos + 1));
+                        ptr_script = weechat_hdata_move (ptr_hdata, ptr_script, 1);
+                    }
+                }
+            }
+            weechat_string_free_split (languages);
+        }
+        free (info_languages);
+    }
+
+    relay_api_msg_send_json (client, RELAY_HTTP_200_OK, NULL, "scripts", json);
+    cJSON_Delete (json);
+    return RELAY_API_PROTOCOL_RC_OK;
+}
+
+/*
  * Callback for resource "input".
  *
  * Routes:
@@ -1286,6 +1344,7 @@ relay_api_protocol_recv_http (struct t_relay_client *client)
         { "GET",     "version",    1,    0,  0,  RELAY_API_CB(version)    },
         { "GET",     "buffers",    1,    0,  3,  RELAY_API_CB(buffers)    },
         { "GET",     "hotlist",    1,    0,  3,  RELAY_API_CB(hotlist)    },
+        { "GET",     "scripts",    1,    0,  0,  RELAY_API_CB(scripts)    },
         { "POST",    "input",      1,    0,  0,  RELAY_API_CB(input)      },
         { "POST",    "completion", 1,    0,  0,  RELAY_API_CB(completion) },
         { "POST",    "ping",       1,    0,  0,  RELAY_API_CB(ping)       },

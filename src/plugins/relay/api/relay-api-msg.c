@@ -848,3 +848,40 @@ relay_api_msg_hotlist_to_json (struct t_gui_hotlist *hotlist)
 
     return json;
 }
+
+/*
+ * Create a JSON object with a script.
+ */
+
+cJSON *
+relay_api_msg_script_to_json (struct t_hdata *hdata, void *script, const char *extension)
+{
+    cJSON *json;
+    void *pointer;
+    const char *ptr_string;
+    char name[1024];
+
+    if (!hdata)
+        return NULL;
+
+    pointer = script;
+
+    json = cJSON_CreateObject ();
+    if (!json)
+        return NULL;
+
+    if (!script)
+        return json;
+
+    snprintf (name, sizeof (name),
+              "%s.%s",
+              weechat_hdata_string (hdata, script, "name"),
+              extension);
+    MSG_ADD_STR_BUF("name", name);
+    MSG_ADD_HDATA_STR("version", "version");
+    MSG_ADD_HDATA_STR("description", "description");
+    MSG_ADD_HDATA_STR("author", "author");
+    MSG_ADD_HDATA_STR("license", "license");
+
+    return json;
+}
