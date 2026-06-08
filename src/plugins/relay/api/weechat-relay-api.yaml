@@ -1384,9 +1384,21 @@ components:
         version:
           type: string
           example: '3.1.1'
+        description:
+          type: string
+          example: 'Quick jump to buffers'
+        author:
+          type: string
+          example: 'Sébastien Helleu <flashcode@flashtux.org>'
+        license:
+          type: string
+          example: 'GPL3'
       required:
         - name
         - version
+        - description
+        - author
+        - license
     Completion:
       type: object
       properties:
