@@ -12,9 +12,9 @@
 - irc: limit size of data received from the server to prevent memory exhaustion
 - irc: fix out-of-bounds read on incoming DCC command with a quoted filename ending the message ([#2322](https://github.com/weechat/weechat/issues/2322))
 - relay: limit size of received websocket frame and HTTP body to prevent memory exhaustion
-- relay: fix timing attack on password authentication ([GHSA-vhv8-g2r9-cwcc](https://github.com/weechat/weechat/security/advisories/GHSA-vhv8-g2r9-cwcc))
-- api, relay: fix timing attack on TOTP validation ([GHSA-vhv8-g2r9-cwcc](https://github.com/weechat/weechat/security/advisories/GHSA-vhv8-g2r9-cwcc))
-- relay: limit size of decompressed websocket frame with permessage-deflate to prevent memory exhaustion ([GHSA-v2v4-45wm-5cr3](https://github.com/weechat/weechat/security/advisories/GHSA-v2v4-45wm-5cr3))
+- relay: fix timing attack on password authentication ([GHSA-vhv8-g2r9-cwcc](https://github.com/weechat/weechat/security/advisories/GHSA-vhv8-g2r9-cwcc), [CVE-2026-53525](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-53525))
+- api, relay: fix timing attack on TOTP validation ([GHSA-vhv8-g2r9-cwcc](https://github.com/weechat/weechat/security/advisories/GHSA-vhv8-g2r9-cwcc), [CVE-2026-53525](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-53525))
+- relay: limit size of decompressed websocket frame with permessage-deflate to prevent memory exhaustion ([GHSA-v2v4-45wm-5cr3](https://github.com/weechat/weechat/security/advisories/GHSA-v2v4-45wm-5cr3), [CVE-2026-53524](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-53524))
 - relay/weechat: fix empty buffers in client when WeeChat is running on Solaris/illumos
 - relay: limit size of partial message received while reading an HTTP request to prevent memory exhaustion
 - relay: fix out-of-bounds read in dump of data ([#2324](https://github.com/weechat/weechat/issues/2324))
