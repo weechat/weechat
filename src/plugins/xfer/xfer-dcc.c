@@ -242,8 +242,8 @@ int
 xfer_dcc_resume_hash (struct t_xfer *xfer)
 {
     char *buf;
-    unsigned long long total_read;
-    ssize_t length_buf, to_read, num_read;
+    unsigned long long total_read, length_buf, to_read;
+    ssize_t num_read;
     int ret, fd;
 
     total_read = 0;
