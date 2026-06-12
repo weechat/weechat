@@ -582,7 +582,13 @@ network_pass_socks5proxy (struct t_proxy *proxy, int sock, const char *address,
                           int port)
 {
     struct t_network_socks5 socks5;
-    unsigned char buffer[288];
+    /*
+     * buffer must be large enough for the username/password authentication
+     * request, which is the longest message sent/received here; according to
+     * RFC 1929 it is: version (1) + username length (1) + username (max 255)
+     * + password length (1) + password (max 255)
+     */
+    unsigned char buffer[2 + 255 + 1 + 255];
     int username_len, password_len, addr_len, addr_buffer_len;
     unsigned char *addr_buffer;
     char *username, *password;
@@ -630,6 +636,18 @@ network_pass_socks5proxy (struct t_proxy *proxy, int sock, const char *address,
         }
         username_len = strlen (username);
         password_len = strlen (password);
+
+        /*
+         * username and password length are each stored on a single byte
+         * (RFC 1929), so they cannot exceed 255 bytes: reject longer values,
+         * otherwise the memcpy calls below would overflow the buffer
+         */
+        if ((username_len > 255) || (password_len > 255))
+        {
+            free (username);
+            free (password);
+            return 0;
+        }
 
         /* make username/password buffer */
         buffer[0] = 1;
