@@ -6,6 +6,12 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 # WeeChat ChangeLog
 
+## Version 4.9.3 (under dev)
+
+### Fixed
+
+- core: fix buffer overflow in connection to SOCKS5 proxy ([#2325](https://github.com/weechat/weechat/issues/2325))
+
 ## Version 4.9.2 (2026-06-07)
 
 ### Fixed
