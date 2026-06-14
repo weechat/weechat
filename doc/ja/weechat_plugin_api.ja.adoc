@@ -7816,7 +7816,7 @@ void weechat_config_search_with_string (const char *option_name,
                                         struct t_config_file **config_file,
                                         struct t_config_section **section,
                                         struct t_config_option **option,
-                                        char **pos_option_name);
+                                        const char **pos_option_name);
 ----
 
 引数:
@@ -7838,7 +7838,7 @@ C 言語での使用例:
 struct t_config_file *ptr_config_file;
 struct t_config_section *ptr_section;
 struct t_config_option *ptr_option;
-char *option_name;
+const char *option_name;
 
 weechat_config_search_with_string ("file.section.option",
                                    &ptr_config_file,

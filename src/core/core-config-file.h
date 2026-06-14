@@ -286,7 +286,7 @@ extern void config_file_search_with_string (const char *option_name,
                                             struct t_config_file **config_file,
                                             struct t_config_section **section,
                                             struct t_config_option **option,
-                                            char **pos_option_name);
+                                            const char **pos_option_name);
 extern int config_file_string_to_boolean (const char *text);
 extern int config_file_option_reset (struct t_config_option *option,
                                      int run_callback);

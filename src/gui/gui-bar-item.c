@@ -1880,9 +1880,9 @@ gui_bar_item_buffer_nicklist_cb (const void *pointer, void *data,
                 {
                     if (strchr (ptr_nick->prefix_color, '.'))
                     {
-                        config_file_search_with_string (ptr_nick->prefix_color,
-                                                        NULL, NULL, &ptr_option,
-                                                            NULL);
+                        config_file_search_with_string (
+                            ptr_nick->prefix_color,
+                            NULL, NULL, &ptr_option, NULL);
                         if (ptr_option)
                         {
                             string_dyn_concat (
@@ -1907,9 +1907,9 @@ gui_bar_item_buffer_nicklist_cb (const void *pointer, void *data,
                 {
                     if (strchr (ptr_nick->color, '.'))
                     {
-                        config_file_search_with_string (ptr_nick->color,
-                                                        NULL, NULL, &ptr_option,
-                                                        NULL);
+                        config_file_search_with_string (
+                            ptr_nick->color,
+                            NULL, NULL, &ptr_option, NULL);
                         if (ptr_option)
                         {
                             string_dyn_concat (
@@ -1940,9 +1940,9 @@ gui_bar_item_buffer_nicklist_cb (const void *pointer, void *data,
                 {
                     if (strchr (ptr_group->color, '.'))
                     {
-                        config_file_search_with_string (ptr_group->color,
-                                                        NULL, NULL, &ptr_option,
-                                                        NULL);
+                        config_file_search_with_string (
+                            ptr_group->color,
+                            NULL, NULL, &ptr_option, NULL);
                         if (ptr_option)
                         {
                             string_dyn_concat (

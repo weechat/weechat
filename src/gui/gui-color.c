@@ -170,8 +170,7 @@ gui_color_search_config (const char *color_name)
     /* search in any configuration file (example: "irc.color.message_quit") */
     if (strchr (color_name, '.'))
     {
-        config_file_search_with_string (color_name, NULL, NULL, &ptr_option,
-                                        NULL);
+        config_file_search_with_string (color_name, NULL, NULL, &ptr_option, NULL);
         if (ptr_option)
             return gui_color_from_option (ptr_option);
     }

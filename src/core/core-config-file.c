@@ -1095,12 +1095,13 @@ config_file_search_with_string (const char *option_name,
                                 struct t_config_file **config_file,
                                 struct t_config_section **section,
                                 struct t_config_option **option,
-                                char **pos_option_name)
+                                const char **pos_option_name)
 {
     struct t_config_file *ptr_config;
     struct t_config_section *ptr_section;
     struct t_config_option *ptr_option;
-    char *file_name, *pos_section, *section_name, *pos_option;
+    const char *pos_section, *pos_option;
+    char *file_name, *section_name;
 
     if (config_file)
         *config_file = NULL;
@@ -2553,7 +2554,7 @@ config_file_option_set_with_string (const char *option_name, const char *value)
     struct t_config_file *ptr_config;
     struct t_config_section *ptr_section;
     struct t_config_option *ptr_option;
-    char *pos_option;
+    const char *pos_option;
 
     rc = WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND;
 

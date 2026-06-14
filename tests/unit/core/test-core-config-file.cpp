@@ -526,7 +526,7 @@ TEST(CoreConfigFile, SearchWithString)
     struct t_config_file *ptr_config;
     struct t_config_section *ptr_section;
     struct t_config_option *ptr_option;
-    char *pos_option_name;
+    const char *pos_option_name;
 
     ptr_config = (struct t_config_file *)0x1;
     ptr_section = (struct t_config_section *)0x1;
