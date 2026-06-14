@@ -4477,7 +4477,7 @@ WeeChat ホームディレクトリの下にディレクトリを作成。
 
 [source,c]
 ----
-int weechat_mkdir_home (char *directory, int mode);
+int weechat_mkdir_home (const char *directory, int mode);
 ----
 
 引数:
@@ -4525,7 +4525,7 @@ weechat.mkdir_home("${weechat_cache_dir}/temp", 0755)
 
 [source,c]
 ----
-int weechat_mkdir (char *directory, int mode);
+int weechat_mkdir (const char *directory, int mode);
 ----
 
 引数:
@@ -4566,7 +4566,7 @@ weechat.mkdir("/tmp/mydir", 0755)
 
 [source,c]
 ----
-int weechat_mkdir_parents (char *directory, int mode);
+int weechat_mkdir_parents (const char *directory, int mode);
 ----
 
 引数:

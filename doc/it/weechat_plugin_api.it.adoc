@@ -4549,7 +4549,7 @@ Prototipo:
 
 [source,c]
 ----
-int weechat_mkdir_home (char *directory, int mode);
+int weechat_mkdir_home (const char *directory, int mode);
 ----
 
 Argomenti:
@@ -4597,7 +4597,7 @@ Prototipo:
 
 [source,c]
 ----
-int weechat_mkdir (char *directory, int mode);
+int weechat_mkdir (const char *directory, int mode);
 ----
 
 Argomenti:
@@ -4638,7 +4638,7 @@ Prototipo:
 
 [source,c]
 ----
-int weechat_mkdir_parents (char *directory, int mode);
+int weechat_mkdir_parents (const char *directory, int mode);
 ----
 
 Argomenti:
