@@ -118,7 +118,7 @@ jobs:
     strategy:
       matrix:
         os:
-          - ubuntu-24.04
+          - ubuntu-26.04
 
     runs-on: ${{ matrix.os }}
 
@@ -153,7 +153,7 @@ jobs:
     strategy:
       matrix:
         os:
-          - ubuntu-24.04
+          - ubuntu-26.04
         config:
           - name: "gcc"
             cc: "gcc"
@@ -194,6 +194,8 @@ jobs:
 
     name: "install (${{ matrix.os }}, ${{ matrix.config.name }})"
     runs-on: ${{ matrix.os }}
+    env:
+      PHP_INI_SCAN_DIR: /tmp/php-noscan  # embed PHP loads no add-on extensions (see #2009)
 
     steps:
 
@@ -203,8 +205,7 @@ jobs:
       run: |
         sudo apt-get update -qq
         sudo apt-get --yes --no-install-recommends install ${{ env.WEECHAT_DEPS_UBUNTU }}
-        # uninstall php imagick as is causes a crash when loading php plugin (see #2009)
-        sudo apt-get --yes purge php8.3-imagick
+        mkdir -p /tmp/php-noscan
         pipx install schemathesis
 
     - name: Build and run tests
@@ -258,7 +259,7 @@ jobs:
     strategy:
       matrix:
         os:
-          - ubuntu-24.04
+          - ubuntu-26.04
         config:
           - name: "gcc"
             cc: "gcc"
@@ -304,7 +305,7 @@ jobs:
     strategy:
       matrix:
         os:
-          - ubuntu-24.04
+          - ubuntu-26.04
         config:
           - name: "gcc"
             cc: "gcc"
@@ -355,7 +356,7 @@ jobs:
     strategy:
       matrix:
         os:
-          - ubuntu-24.04
+          - ubuntu-26.04
         config:
           # - name: "gcc"
           # cc: "gcc"
@@ -450,7 +451,7 @@ jobs:
     strategy:
       matrix:
         os:
-          - ubuntu-24.04
+          - ubuntu-26.04
 
     runs-on: ${{ matrix.os }}
 
@@ -487,7 +488,7 @@ jobs:
     strategy:
       matrix:
         os:
-          - ubuntu-24.04
+          - ubuntu-26.04
 
     runs-on: ${{ matrix.os }}
 
@@ -505,8 +506,6 @@ jobs:
       run: |
         sudo apt-get update -qq
         sudo apt-get --yes --no-install-recommends install ${{ env.WEECHAT_DEPS_UBUNTU }}
-        # uninstall php imagick as is causes a crash when loading php plugin (see #2009)
-        sudo apt-get --yes purge php8.3-imagick
 
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v3
