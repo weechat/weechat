@@ -391,7 +391,7 @@ spell_string_is_url (const char *word)
  */
 
 int
-spell_string_is_nick (struct t_gui_buffer *buffer, const char *word)
+spell_string_is_nick (struct t_gui_buffer *buffer, char *word)
 {
     char *pos, *pos_nick_completer, *pos_space, saved_char;
     const char *buffer_type, *buffer_nick, *buffer_channel;

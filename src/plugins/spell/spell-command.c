@@ -140,7 +140,8 @@ void
 spell_command_speller_list_dicts (void)
 {
 #ifndef USE_ENCHANT
-    char *country, *lang, *pos, *iso;
+    const char *pos;
+    char *country, *lang, *iso;
     char str_dict[256], str_country[128];
     struct AspellConfig *config;
     AspellDictInfoList *list;
