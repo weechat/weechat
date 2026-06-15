@@ -1076,7 +1076,7 @@ gui_key_set_area_type_name (const char *area,
                             int *area_type, char **area_name)
 {
     int focus, length;
-    char *pos_end;
+    const char *pos_end;
 
     for (focus = 0; focus < GUI_KEY_NUM_FOCUS; focus++)
     {

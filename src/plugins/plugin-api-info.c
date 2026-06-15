@@ -802,7 +802,8 @@ plugin_api_info_color_rgb2term_cb (const void *pointer, void *data,
                                    const char *info_name,
                                    const char *arguments)
 {
-    char value[32], *pos, *color;
+    const char *pos;
+    char value[32], *color;
     int rgb, limit;
 
     /* make C compiler happy */

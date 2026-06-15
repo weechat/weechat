@@ -597,8 +597,8 @@ hook_command_exec (struct t_gui_buffer *buffer, int any_plugin,
     struct t_hook *hook_plugin, *hook_other_plugin, *hook_other_plugin2;
     struct t_hook *hook_incomplete_command;
     struct t_hook_exec_cb hook_exec_cb;
-    char **argv, **argv_eol, *command_name, *pos;
-    const char *ptr_string;
+    char **argv, **argv_eol, *command_name;
+    const char *ptr_string, *pos;
     int argc, rc, length_command_name, allow_incomplete_commands;
     int count_other_plugin, count_incomplete_commands, flags;
 

@@ -132,7 +132,8 @@ void
 hook_signal_extract_flags (const char *signal, const char **ptr_signal,
                            int *stop_on_error, int *ignore_eat)
 {
-    char *pos, *str_flags, **flags;
+    const char *pos;
+    char *str_flags, **flags;
     int i, num_flags;
 
     if (!signal || !ptr_signal || !stop_on_error || !ignore_eat)

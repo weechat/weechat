@@ -118,8 +118,8 @@ gui_chat_init (void)
 void
 gui_chat_prefix_build (void)
 {
-    const char *ptr_prefix;
-    char prefix[512], *pos_color;
+    const char *ptr_prefix, *pos_color;
+    char prefix[512];
     int prefix_color[GUI_CHAT_NUM_PREFIXES] =
         { GUI_COLOR_CHAT_PREFIX_ERROR, GUI_COLOR_CHAT_PREFIX_NETWORK,
           GUI_COLOR_CHAT_PREFIX_ACTION, GUI_COLOR_CHAT_PREFIX_JOIN,

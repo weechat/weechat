@@ -515,7 +515,8 @@ gui_bar_search (const char *name)
 struct t_gui_bar *
 gui_bar_search_with_option_name (const char *option_name)
 {
-    char *bar_name, *pos_option;
+    const char *pos_option;
+    char *bar_name;
     struct t_gui_bar *ptr_bar;
 
     if (!option_name)

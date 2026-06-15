@@ -1686,9 +1686,8 @@ string_mask_to_regex (const char *mask)
 const char *
 string_regex_flags (const char *regex, int default_flags, int *flags)
 {
-    const char *ptr_regex, *ptr_flags;
+    const char *ptr_regex, *ptr_flags, *pos;
     int set_flag, flag;
-    char *pos;
 
     if (flags)
         *flags = default_flags;
@@ -2966,8 +2965,9 @@ char **
 string_split_command (const char *command, char separator)
 {
     int nb_substr, arr_idx, str_idx, type;
+    const char *p;
     char **array, **array2;
-    char *buffer, *p;
+    char *buffer;
     const char *ptr;
 
     if (!command || !command[0])
@@ -4138,8 +4138,7 @@ string_is_command_char (const char *string)
 const char *
 string_input_for_buffer (const char *string)
 {
-    char *pos_slash, *pos_space, *pos_newline;
-    const char *next_char;
+    const char *pos_slash, *pos_space, *pos_newline, *next_char;
 
     if (!string)
         return NULL;
@@ -4476,7 +4475,8 @@ string_get_priority_and_name (const char *string,
                               int *priority, const char **name,
                               int default_priority)
 {
-    char *pos, *str_priority;
+    const char *pos;
+    char *str_priority;
     int number;
 
     if (priority)

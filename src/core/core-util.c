@@ -416,8 +416,8 @@ util_strftimeval (char *string, int max, const char *format, struct timeval *tv)
 int
 util_parse_time (const char *datetime, struct timeval *tv)
 {
-    char *string, *pos, *pos2, *pos_colon, *pos_hyphen, *pos_dot;
-    char str_usec[16], str_date[128];
+    const char *pos_colon, *pos_hyphen, *pos_dot;
+    char *pos, *pos2, *string, str_usec[16], str_date[128];
     struct tm tm_date, tm_date_gm, tm_date_local, *local_time;
     time_t time_now, time_gm, time_local;
     long long value;

@@ -254,8 +254,8 @@ gui_color_get_custom (const char *color_name)
     static char color[32][96];
     static int index_color = 0;
     char color_fg[32], color_bg[32];
-    char *pos_delim, *str_fg, *pos_bg, *error, *color_attr;
-    const char *ptr_color_name;
+    char *str_fg, *error, *color_attr;
+    const char *ptr_color_name, *pos_delim, *pos_bg;
 
     /* attribute or other color name (GUI dependent) */
     index_color = (index_color + 1) % 32;

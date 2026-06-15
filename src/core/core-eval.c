@@ -508,7 +508,8 @@ eval_string_repeat (const char *text)
 char *
 eval_string_split (const char *text)
 {
-    char *pos, *pos2, *pos3, *str_number, *separators, **items, *value;
+    const char *pos, *pos2, *pos3;
+    char *str_number, *separators, **items, *value;
     char str_value[32], *str_flags, **list_flags, *strip_items, **ptr_flag;
     int num_items, count_items, random_item, flags, max_items;
     long number;
@@ -655,7 +656,8 @@ end:
 char *
 eval_string_split_shell (const char *text)
 {
-    char *pos, *str_number, **items, *value, str_value[32];
+    const char *pos;
+    char *str_number, **items, *value, str_value[32];
     int num_items, count_items, random_item;
     long number;
 
@@ -1046,7 +1048,8 @@ eval_string_if (const char *text, struct t_eval_context *eval_context)
 char *
 eval_string_random (const char *text)
 {
-    char *pos, *tmp, result[128];
+    const char *pos;
+    char *tmp, result[128];
     long long min_number, max_number;
 
     if (!text || !text[0])
@@ -1112,7 +1115,8 @@ eval_string_translate (const char *text)
 void
 eval_string_define (const char *text, struct t_eval_context *eval_context)
 {
-    char *pos, *name;
+    const char *pos;
+    char *name;
 
     pos = strchr (text, ',');
     if (!pos)
@@ -1139,7 +1143,8 @@ eval_hdata_count (const char *text, struct t_eval_context *eval_context)
     struct t_hdata *hdata;
     unsigned long ptr_value;
     void *pointer;
-    char *pos1, *pos2, *value, *hdata_name, *pointer_name, str_count[64];
+    const char *pos1, *pos2;
+    char *value, *hdata_name, *pointer_name, str_count[64];
     int rc, count;
 
     value = NULL;
@@ -1211,8 +1216,8 @@ char *
 eval_hdata_get_value (struct t_hdata *hdata, void *pointer, const char *path,
                       struct t_eval_context *eval_context)
 {
-    char *value, *var_name, str_value[128], *pos, *property;
-    const char *ptr_value, *hdata_name, *ptr_var_name, *pos_open_paren;
+    char *value, *var_name, str_value[128], *property;
+    const char *ptr_value, *hdata_name, *ptr_var_name, *pos, *pos_open_paren;
     int type, debug_id;
     struct t_hashtable *hashtable;
 
@@ -1539,8 +1544,8 @@ eval_syntax_highlight_add_markers (const char *prefix, const char *text,
 char *
 eval_syntax_highlight_colorize (const char *value)
 {
-    const char *ptr_value;
-    char **result, *pos;
+    const char *ptr_value, *pos;
+    char **result;
     int color;
 
     if (!value)

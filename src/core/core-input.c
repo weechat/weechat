@@ -242,8 +242,8 @@ int
 input_data (struct t_gui_buffer *buffer, const char *data,
             const char *commands_allowed, int split_newline, int user_data)
 {
-    char *pos, str_buffer[128], *new_data, *buffer_full_name;
-    const char *ptr_data, *ptr_data_for_buffer;
+    const char *ptr_data_for_buffer;
+    char *pos, str_buffer[128], *new_data, *buffer_full_name, *ptr_data;
     int first_command, rc;
 
     if (!buffer || !gui_buffer_valid (buffer) || !data)
@@ -272,8 +272,13 @@ input_data (struct t_gui_buffer *buffer, const char *data,
     if (data[0] && new_data && !new_data[0])
         goto end;
 
+    if (!new_data)
+        new_data = strdup (data);
+    if (!new_data)
+        goto end;
+
     first_command = 1;
-    ptr_data = (new_data) ? new_data : data;
+    ptr_data = new_data;
     while (ptr_data)
     {
         /*

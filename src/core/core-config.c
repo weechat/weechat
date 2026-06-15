@@ -1709,7 +1709,7 @@ config_weechat_update_cb (const void *pointer, void *data,
                           int version_read,
                           struct t_hashtable *data_read)
 {
-    const char *ptr_config, *ptr_section, *ptr_option, *ptr_value;
+    const char *ptr_config, *ptr_section, *ptr_option, *ptr_value, *pos_option;
     char *new_commands[][2] = {
         /* old command, new command */
         { "/input jump_smart", "/buffer jump smart" },
@@ -1739,7 +1739,7 @@ config_weechat_update_cb (const void *pointer, void *data,
         { "number_desc" "-buffer.number" },
         { NULL, NULL },
     };
-    char *new_option, *new_value, *pos_option;
+    char *new_option, *new_value;
     int changes, i;
 
     /* make C compiler happy */
@@ -2262,7 +2262,8 @@ config_weechat_proxy_read_cb (const void *pointer, void *data,
                               struct t_config_section *section,
                               const char *option_name, const char *value)
 {
-    char *pos_option, *proxy_name;
+    const char *pos_option;
+    char *proxy_name;
     struct t_proxy *ptr_temp_proxy;
     int index_option;
 
@@ -2341,7 +2342,8 @@ config_weechat_bar_read_cb (const void *pointer, void *data,
                             struct t_config_section *section,
                             const char *option_name, const char *value)
 {
-    char *pos_option, *bar_name;
+    const char *pos_option;
+    char *bar_name;
     struct t_gui_bar *ptr_temp_bar;
     int index_option;
 
@@ -2421,7 +2423,8 @@ config_weechat_custom_bar_item_read_cb (const void *pointer, void *data,
                                         struct t_config_section *section,
                                         const char *option_name, const char *value)
 {
-    char *pos_option, *item_name;
+    const char *pos_option;
+    char *item_name;
     struct t_gui_bar_item_custom *ptr_temp_item;
     int index_option;
 
@@ -2512,7 +2515,8 @@ config_weechat_layout_read_cb (const void *pointer, void *data,
                                const char *option_name, const char *value)
 {
     int argc, force_current_layout, number1, number2, number3, number4;
-    char **argv, *pos, *layout_name;
+    const char *pos;
+    char **argv, *layout_name;
     const char *ptr_option_name;
     struct t_gui_layout *ptr_layout;
     struct t_gui_layout_window *parent;

@@ -688,7 +688,8 @@ hdata_count (struct t_hdata *hdata, void *pointer)
 void
 hdata_get_index_and_name (const char *name, int *index, const char **ptr_name)
 {
-    char *pos, *str_index;
+    const char *pos;
+    char *str_index;
     int number;
 
     if (index)

@@ -705,7 +705,8 @@ config_file_new_option (struct t_config_file *config_file,
 {
     struct t_config_option *new_option;
     int var_type, int_value, argc, i, index_value, number;
-    char *pos, *option_name, *parent_name;
+    const char *pos;
+    char *option_name, *parent_name;
 
     new_option = NULL;
     option_name = NULL;

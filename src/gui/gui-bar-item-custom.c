@@ -138,7 +138,8 @@ gui_bar_item_custom_search (const char *item_name)
 struct t_gui_bar_item_custom *
 gui_bar_item_custom_search_with_option_name (const char *option_name)
 {
-    char *item_name, *pos_option;
+    const char *pos_option;
+    char *item_name;
     struct t_gui_bar_item_custom *ptr_item;
 
     if (!option_name)
