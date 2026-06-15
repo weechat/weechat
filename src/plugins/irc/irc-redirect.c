@@ -616,7 +616,7 @@ void
 irc_redirect_init_command (struct t_irc_redirect *redirect,
                            const char *command)
 {
-    char *pos;
+    const char *pos;
 
     if (!redirect)
         return;

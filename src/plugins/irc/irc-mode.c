@@ -104,8 +104,8 @@ irc_mode_get_arguments_colors (const char *arguments)
 char
 irc_mode_get_chanmode_type (struct t_irc_server *server, char chanmode)
 {
-    char chanmode_type, *pos;
-    const char *chanmodes, *ptr_chanmodes;
+    char chanmode_type;
+    const char *chanmodes, *ptr_chanmodes, *pos;
 
     /*
      * assume it is type 'B' if mode is in prefix

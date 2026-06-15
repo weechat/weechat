@@ -2499,8 +2499,8 @@ IRC_PROTOCOL_CALLBACK(note)
 
 IRC_PROTOCOL_CALLBACK(notice)
 {
-    char *notice_args, *pos, end_char, *channel, str_tags[1024];
-    const char *pos_target, *pos_args, *nick_address;
+    char *notice_args, end_char, *channel, str_tags[1024];
+    const char *pos, *pos_target, *pos_args, *nick_address;
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
     int notify_private, is_channel, is_channel_orig, display_host;
@@ -7921,12 +7921,11 @@ irc_protocol_recv_command (struct t_irc_server *server,
                            int ignore_batch_tag)
 {
     int i, cmd_found, return_code, ignored;
-    char *pos_space, *tags;
     struct t_irc_channel *ptr_channel;
     t_irc_recv_func *cmd_recv_func;
     const char *ptr_msg_after_tags, *ptr_batch_ref, *ptr_tag_time;
-    const char *nick1, *address1, *host1;
-    char *host, *host_no_color;
+    const char *pos_space, *nick1, *address1, *host1;
+    char *tags, *host, *host_no_color, *pos_space_host;
     struct t_irc_protocol_ctxt ctxt;
     struct timeval tv;
 
@@ -8198,9 +8197,9 @@ irc_protocol_recv_command (struct t_irc_server *server,
     host = (host1) ? strdup (host1) : NULL;
     if (host)
     {
-        pos_space = strchr (host, ' ');
-        if (pos_space)
-            pos_space[0] = '\0';
+        pos_space_host = strchr (host, ' ');
+        if (pos_space_host)
+            pos_space_host[0] = '\0';
     }
     host_no_color = (host) ? irc_color_decode (host, 0) : NULL;
     ctxt.host = (host) ?

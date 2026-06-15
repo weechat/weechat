@@ -2925,7 +2925,8 @@ void
 irc_command_join_server (struct t_irc_server *server, const char *arguments,
                          int manual_join, int noswitch)
 {
-    char *new_args, **channels, **keys, *pos_space, *pos_keys, *pos_channel;
+    const char *pos_space, *pos_keys;
+    char *new_args, **channels, **keys, *pos_channel;
     char *channel_name_lower;
     int i, num_channels, num_keys, length;
     time_t time_now;

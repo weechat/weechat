@@ -785,9 +785,8 @@ int
 irc_notify_hsignal_cb (const void *pointer, void *data, const char *signal,
                        struct t_hashtable *hashtable)
 {
-    const char *error, *server, *pattern, *command, *output;
-    char **messages, **nicks_sent, **nicks_recv, *irc_cmd, *arguments;
-    char *ptr_args, *pos;
+    const char *error, *server, *pattern, *command, *output, *ptr_args;
+    char **messages, **nicks_sent, **nicks_recv, *irc_cmd, *arguments, *pos;
     int i, j, num_messages, num_nicks_sent, num_nicks_recv, nick_was_sent;
     int away_message_updated, no_such_nick;
     struct t_irc_server *ptr_server;

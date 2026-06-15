@@ -588,7 +588,7 @@ irc_server_sasl_enabled (struct t_irc_server *server)
 char *
 irc_server_get_name_without_port (const char *name)
 {
-    char *pos;
+    const char *pos;
 
     if (!name)
         return NULL;
@@ -1134,7 +1134,7 @@ void
 irc_server_set_prefix_modes_chars (struct t_irc_server *server,
                                    const char *prefix)
 {
-    char *pos;
+    const char *pos;
     int i, old_length_chars, length_modes, length_chars;
 
     if (!server || !prefix)
@@ -1379,8 +1379,7 @@ irc_server_get_prefix_chars (struct t_irc_server *server)
 int
 irc_server_get_prefix_mode_index (struct t_irc_server *server, char mode)
 {
-    const char *prefix_modes;
-    char *pos;
+    const char *prefix_modes, *pos;
 
     if (server)
     {
@@ -1405,8 +1404,7 @@ int
 irc_server_get_prefix_char_index (struct t_irc_server *server,
                                   char prefix_char)
 {
-    const char *prefix_chars;
-    char *pos;
+    const char *prefix_chars, *pos;
 
     if (server)
     {
@@ -2443,8 +2441,8 @@ irc_server_copy (struct t_irc_server *server, const char *new_name)
 {
     struct t_irc_server *new_server;
     struct t_infolist *infolist;
-    char *mask, *pos;
-    const char *option_name;
+    const char *option_name, *pos;
+    char *mask;
     int index_option;
 
     /* check if another server exists with this name */
@@ -2502,9 +2500,9 @@ irc_server_copy (struct t_irc_server *server, const char *new_name)
 int
 irc_server_rename (struct t_irc_server *server, const char *new_name)
 {
-    char *mask, *pos_option, *new_option_name, charset_modifier[1024];
+    char *mask, *new_option_name, charset_modifier[1024];
     char *buffer_name;
-    const char *option_name;
+    const char *option_name, *pos_option;
     struct t_infolist *infolist;
     struct t_config_option *ptr_option;
     struct t_irc_channel *ptr_channel;
@@ -2999,8 +2997,8 @@ irc_server_send_one_msg (struct t_irc_server *server, int flags,
                          const char *tags)
 {
     static char buffer[4096];
-    const char *ptr_msg, *ptr_chan_nick;
-    char *new_msg, *pos, *tags_to_send, *msg_encoded;
+    const char *ptr_chan_nick;
+    char *new_msg, *ptr_msg, *pos, *tags_to_send, *msg_encoded;
     char str_modifier[128], modifier_data[1024];
     int first_message, queue_msg, pos_channel, pos_text, pos_encode;
     struct t_irc_redirect *ptr_redirect;
@@ -3013,149 +3011,147 @@ irc_server_send_one_msg (struct t_irc_server *server, int flags,
                                           server->name,
                                           message);
 
-    /* no changes in new message */
-    if (new_msg && (strcmp (message, new_msg) == 0))
-    {
-        free (new_msg);
-        new_msg = NULL;
-    }
-
-    /* message not dropped? */
-    if (!new_msg || new_msg[0])
-    {
-        first_message = 1;
-        ptr_msg = (new_msg) ? new_msg : message;
-
-        msg_encoded = NULL;
-        irc_message_parse (server,
-                           ptr_msg,
-                           NULL,  /* tags */
-                           NULL,  /* message_without_tags */
-                           NULL,  /* nick */
-                           NULL,  /* user */
-                           NULL,  /* host */
-                           NULL,  /* command */
-                           NULL,  /* channel */
-                           NULL,  /* arguments */
-                           NULL,  /* text */
-                           NULL,  /* params */
-                           NULL,  /* num_params */
-                           NULL,  /* pos_command */
-                           NULL,  /* pos_arguments */
-                           &pos_channel,
-                           &pos_text);
-        switch (IRC_SERVER_OPTION_ENUM(server,
-                                       IRC_SERVER_OPTION_CHARSET_MESSAGE))
-        {
-            case IRC_SERVER_CHARSET_MESSAGE_MESSAGE:
-                pos_encode = 0;
-                break;
-            case IRC_SERVER_CHARSET_MESSAGE_CHANNEL:
-                pos_encode = (pos_channel >= 0) ? pos_channel : pos_text;
-                break;
-            case IRC_SERVER_CHARSET_MESSAGE_TEXT:
-                pos_encode = pos_text;
-                break;
-            default:
-                pos_encode = 0;
-                break;
-        }
-        if (pos_encode >= 0)
-        {
-            ptr_chan_nick = (channel) ? channel : nick;
-            if (ptr_chan_nick)
-            {
-                snprintf (modifier_data, sizeof (modifier_data),
-                          "%s.%s.%s",
-                          weechat_plugin->name,
-                          server->name,
-                          ptr_chan_nick);
-            }
-            else
-            {
-                snprintf (modifier_data, sizeof (modifier_data),
-                          "%s.%s",
-                          weechat_plugin->name,
-                          server->name);
-            }
-
-            /*
-             * when UTF8ONLY is enabled, clients must not send non-UTF-8 data
-             * to the server; the charset encoding below is then done only if
-             * UTF8ONLY is *NOT* enabled
-             * (see: https://ircv3.net/specs/extensions/utf8-only)
-             */
-            if (!server->utf8only)
-            {
-                msg_encoded = irc_message_convert_charset (ptr_msg, pos_encode,
-                                                           "charset_encode",
-                                                           modifier_data);
-            }
-        }
-
-        if (msg_encoded)
-            ptr_msg = msg_encoded;
-
-        while (ptr_msg && ptr_msg[0])
-        {
-            pos = strchr (ptr_msg, '\n');
-            if (pos)
-                pos[0] = '\0';
-
-            snprintf (buffer, sizeof (buffer), "%s\r\n", ptr_msg);
-
-            if (flags & IRC_SERVER_SEND_OUTQ_PRIO_IMMEDIATE)
-                queue_msg = 0;
-            else if (flags & IRC_SERVER_SEND_OUTQ_PRIO_HIGH)
-                queue_msg = 1;
-            else if (flags & IRC_SERVER_SEND_OUTQ_PRIO_LOW)
-                queue_msg = 2;
-            else
-            {
-                /*
-                 * if connected to server (message 001 received), consider
-                 * it's low priority (otherwise send immediately)
-                 */
-                queue_msg = (server->is_connected) ? 2 : 0;
-            }
-
-            tags_to_send = irc_server_get_tags_to_send (tags);
-
-            ptr_redirect = irc_redirect_search_available (server);
-
-            /* queue message (do not send anything now) */
-            irc_server_outqueue_add (server,
-                                     queue_msg,
-                                     command,
-                                     (new_msg && first_message) ? message : NULL,
-                                     buffer,
-                                     (new_msg) ? 1 : 0,
-                                     tags_to_send,
-                                     ptr_redirect);
-
-            /* mark redirect as "used" */
-            if (ptr_redirect)
-                ptr_redirect->assigned_to_command = 1;
-
-            free (tags_to_send);
-
-            if (pos)
-            {
-                pos[0] = '\n';
-                ptr_msg = pos + 1;
-            }
-            else
-                ptr_msg = NULL;
-
-            first_message = 0;
-        }
-        free (msg_encoded);
-    }
-    else
+    /* message dropped? */
+    if (new_msg && !new_msg[0])
     {
         irc_raw_print (server, IRC_RAW_FLAG_SEND | IRC_RAW_FLAG_MODIFIED,
                        _("(message dropped)"));
+        free (new_msg);
+        return;
     }
+
+    if (!new_msg)
+        new_msg = strdup (message);
+    if (!new_msg)
+        return;
+
+    first_message = 1;
+    ptr_msg = new_msg;
+
+    msg_encoded = NULL;
+    irc_message_parse (server,
+                       ptr_msg,
+                       NULL,  /* tags */
+                       NULL,  /* message_without_tags */
+                       NULL,  /* nick */
+                       NULL,  /* user */
+                       NULL,  /* host */
+                       NULL,  /* command */
+                       NULL,  /* channel */
+                       NULL,  /* arguments */
+                       NULL,  /* text */
+                       NULL,  /* params */
+                       NULL,  /* num_params */
+                       NULL,  /* pos_command */
+                       NULL,  /* pos_arguments */
+                       &pos_channel,
+                       &pos_text);
+    switch (IRC_SERVER_OPTION_ENUM(server,
+                                   IRC_SERVER_OPTION_CHARSET_MESSAGE))
+    {
+        case IRC_SERVER_CHARSET_MESSAGE_MESSAGE:
+            pos_encode = 0;
+            break;
+        case IRC_SERVER_CHARSET_MESSAGE_CHANNEL:
+            pos_encode = (pos_channel >= 0) ? pos_channel : pos_text;
+            break;
+        case IRC_SERVER_CHARSET_MESSAGE_TEXT:
+            pos_encode = pos_text;
+            break;
+        default:
+            pos_encode = 0;
+            break;
+    }
+    if (pos_encode >= 0)
+    {
+        ptr_chan_nick = (channel) ? channel : nick;
+        if (ptr_chan_nick)
+        {
+            snprintf (modifier_data, sizeof (modifier_data),
+                      "%s.%s.%s",
+                      weechat_plugin->name,
+                      server->name,
+                      ptr_chan_nick);
+        }
+        else
+        {
+            snprintf (modifier_data, sizeof (modifier_data),
+                      "%s.%s",
+                      weechat_plugin->name,
+                      server->name);
+        }
+
+        /*
+         * when UTF8ONLY is enabled, clients must not send non-UTF-8 data
+         * to the server; the charset encoding below is then done only if
+         * UTF8ONLY is *NOT* enabled
+         * (see: https://ircv3.net/specs/extensions/utf8-only)
+         */
+        if (!server->utf8only)
+        {
+            msg_encoded = irc_message_convert_charset (ptr_msg, pos_encode,
+                                                       "charset_encode",
+                                                       modifier_data);
+        }
+    }
+
+    if (msg_encoded)
+        ptr_msg = msg_encoded;
+
+    while (ptr_msg && ptr_msg[0])
+    {
+        pos = strchr (ptr_msg, '\n');
+        if (pos)
+            pos[0] = '\0';
+
+        snprintf (buffer, sizeof (buffer), "%s\r\n", ptr_msg);
+
+        if (flags & IRC_SERVER_SEND_OUTQ_PRIO_IMMEDIATE)
+            queue_msg = 0;
+        else if (flags & IRC_SERVER_SEND_OUTQ_PRIO_HIGH)
+            queue_msg = 1;
+        else if (flags & IRC_SERVER_SEND_OUTQ_PRIO_LOW)
+            queue_msg = 2;
+        else
+        {
+            /*
+             * if connected to server (message 001 received), consider
+             * it's low priority (otherwise send immediately)
+             */
+            queue_msg = (server->is_connected) ? 2 : 0;
+        }
+
+        tags_to_send = irc_server_get_tags_to_send (tags);
+
+        ptr_redirect = irc_redirect_search_available (server);
+
+        /* queue message (do not send anything now) */
+        irc_server_outqueue_add (server,
+                                 queue_msg,
+                                 command,
+                                 (new_msg && first_message) ? message : NULL,
+                                 buffer,
+                                 (new_msg) ? 1 : 0,
+                                 tags_to_send,
+                                 ptr_redirect);
+
+        /* mark redirect as "used" */
+        if (ptr_redirect)
+            ptr_redirect->assigned_to_command = 1;
+
+        free (tags_to_send);
+
+        if (pos)
+        {
+            pos[0] = '\n';
+            ptr_msg = pos + 1;
+        }
+        else
+            ptr_msg = NULL;
+
+        first_message = 0;
+    }
+    free (msg_encoded);
 
     free (new_msg);
 }
@@ -3450,7 +3446,7 @@ irc_server_msgq_add_unterminated (struct t_irc_server *server,
  */
 
 void
-irc_server_msgq_add_buffer (struct t_irc_server *server, const char *buffer)
+irc_server_msgq_add_buffer (struct t_irc_server *server, char *buffer)
 {
     char *pos_cr, *pos_lf;
 

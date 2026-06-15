@@ -470,7 +470,7 @@ irc_completion_modelist_masks_cb (const void *pointer, void *data,
                                   struct t_gui_buffer *buffer,
                                   struct t_gui_completion *completion)
 {
-    char *pos;
+    const char *pos;
     struct t_irc_modelist *ptr_modelist;
     struct t_irc_modelist_item *ptr_item;
 
@@ -512,7 +512,8 @@ irc_completion_modelist_numbers_cb (const void *pointer, void *data,
                                     struct t_gui_buffer *buffer,
                                     struct t_gui_completion *completion)
 {
-    char *pos, str_number[32];
+    const char *pos;
+    char str_number[32];
     struct t_irc_modelist *ptr_modelist;
     struct t_irc_modelist_item *ptr_item;
 

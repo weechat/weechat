@@ -67,8 +67,8 @@ irc_info_info_irc_is_channel_cb (const void *pointer, void *data,
                                  const char *info_name,
                                  const char *arguments)
 {
-    char *pos_comma, *server;
-    const char *pos_channel;
+    char *server;
+    const char *pos_channel, *pos_comma;
     struct t_irc_server *ptr_server;
 
     /* make C compiler happy */
@@ -106,8 +106,8 @@ irc_info_info_irc_is_nick_cb (const void *pointer, void *data,
                               const char *info_name,
                               const char *arguments)
 {
-    char *pos_comma, *server;
-    const char *pos_nick;
+    char *server;
+    const char *pos_nick, *pos_comma;
     struct t_irc_server *ptr_server;
 
     /* make C compiler happy */
@@ -233,8 +233,8 @@ irc_info_info_irc_buffer_cb (const void *pointer, void *data,
                              const char *info_name,
                              const char *arguments)
 {
-    char *pos_comma, *pos_comma2, *server, *channel, *host;
-    const char *nick;
+    char *server, *channel, *host;
+    const char *nick, *pos_comma, *pos_comma2;
     struct t_irc_server *ptr_server;
     struct t_irc_channel *ptr_channel;
 
@@ -332,8 +332,8 @@ irc_info_info_irc_server_isupport_cb (const void *pointer, void *data,
                                       const char *info_name,
                                       const char *arguments)
 {
-    char *pos_comma, *server;
-    const char *isupport_value;
+    char *server;
+    const char *isupport_value, *pos_comma;
     struct t_irc_server *ptr_server;
 
     /* make C compiler happy */
@@ -373,8 +373,8 @@ irc_info_info_irc_server_isupport_value_cb (const void *pointer, void *data,
                                             const char *info_name,
                                             const char *arguments)
 {
-    char *pos_comma, *server;
-    const char *isupport_value;
+    char *server;
+    const char *isupport_value, *pos_comma;
     struct t_irc_server *ptr_server;
 
     /* make C compiler happy */
@@ -414,7 +414,8 @@ irc_info_info_irc_server_cap_cb (const void *pointer, void *data,
                                  const char *info_name,
                                  const char *arguments)
 {
-    char *pos_comma, *server;
+    char *server;
+    const char *pos_comma;
     int has_cap;
     struct t_irc_server *ptr_server;
 
@@ -455,8 +456,8 @@ irc_info_info_irc_server_cap_value_cb (const void *pointer, void *data,
                                        const char *info_name,
                                        const char *arguments)
 {
-    char *pos_comma, *server;
-    const char *cap_value;
+    char *server;
+    const char *cap_value, *pos_comma;
     struct t_irc_server *ptr_server;
 
     /* make C compiler happy */
@@ -496,8 +497,8 @@ irc_info_info_irc_is_message_ignored_cb (const void *pointer, void *data,
                                          const char *info_name,
                                          const char *arguments)
 {
-    char *pos_comma, *server;
-    const char *pos_message;
+    char *server;
+    const char *pos_message, *pos_comma;
     struct t_irc_server *ptr_server;
 
     /* make C compiler happy */

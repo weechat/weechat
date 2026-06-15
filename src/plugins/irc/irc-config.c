@@ -201,7 +201,8 @@ struct t_irc_server *
 irc_config_get_server_from_option_name (const char *name)
 {
     struct t_irc_server *ptr_server;
-    char *pos_option, *server_name;
+    const char *pos_option;
+    char *server_name;
 
     ptr_server = NULL;
 
@@ -274,7 +275,7 @@ irc_config_compute_nick_colors (void)
 int
 irc_config_display_channel_modes_arguments (const char *modes)
 {
-    char *pos_space, *pos;
+    const char *pos_space, *pos;
     const char *ptr_mode;
 
     pos_space = strchr (modes, ' ');
@@ -2811,7 +2812,8 @@ irc_config_server_read_cb (const void *pointer, void *data,
 {
     struct t_irc_server *ptr_server;
     int index_option, rc, i;
-    char *pos_option, *server_name;
+    const char *pos_option;
+    char *server_name;
 
     /* make C compiler happy */
     (void) pointer;
@@ -2940,9 +2942,9 @@ irc_config_update_cb (const void *pointer, void *data,
                       int version_read,
                       struct t_hashtable *data_read)
 {
-    const char *ptr_config, *ptr_section, *ptr_option, *ptr_value;
+    const char *ptr_config, *ptr_section, *ptr_option, *ptr_value, *pos_option;
     const char *option_autojoin_delay = "autojoin_delay";
-    char *new_option, *pos_option, *new_value;
+    char *new_option, *pos_new_option, *new_value;
     int changes, length;
 
     /* make C compiler happy */
@@ -2997,11 +2999,11 @@ irc_config_update_cb (const void *pointer, void *data,
                 new_option = strdup (ptr_option);
                 if (new_option)
                 {
-                    pos_option = strrchr (new_option, '.');
-                    if (pos_option)
+                    pos_new_option = strrchr (new_option, '.');
+                    if (pos_new_option)
                     {
-                        pos_option++;
-                        memcpy (pos_option, "tls", 3);
+                        pos_new_option++;
+                        memcpy (pos_new_option, "tls", 3);
                         weechat_printf (
                             NULL,
                             _("IRC option renamed: \"irc.%s.%s\" => \"irc.%s.%s\""),

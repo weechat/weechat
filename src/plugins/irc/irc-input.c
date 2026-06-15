@@ -457,7 +457,7 @@ irc_input_send_cb (const void *pointer, void *data,
                    const char *type_data, void *signal_data)
 {
     const char *ptr_string, *ptr_message;
-    char *pos_semicol1, *pos_semicol2, *pos_semicol3, *pos_semicol4;
+    const char *pos_semicol1, *pos_semicol2, *pos_semicol3, *pos_semicol4;
     char *server, *channel, *options, *tags, *data_with_colors, **list_options;
     int i, num_options, flags, force_user_message;
     struct t_irc_server *ptr_server;

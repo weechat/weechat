@@ -427,7 +427,7 @@ extern struct t_arraylist *irc_server_sendf (struct t_irc_server *server,
                                              const char *tags,
                                              const char *format, ...);
 extern void irc_server_msgq_add_buffer (struct t_irc_server *server,
-                                        const char *buffer);
+                                        char *buffer);
 extern void irc_server_msgq_flush (void);
 extern void irc_server_set_buffer_title (struct t_irc_server *server);
 extern struct t_gui_buffer *irc_server_create_buffer (struct t_irc_server *server);

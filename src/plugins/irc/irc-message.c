@@ -707,8 +707,8 @@ const char *
 irc_message_get_nick_from_host (const char *host)
 {
     static char nick[128];
-    char host2[128], *pos_space, *pos;
-    const char *ptr_host;
+    char host2[128];
+    const char *ptr_host, *pos_space, *pos;
 
     if (!host)
         return NULL;
@@ -756,8 +756,8 @@ const char *
 irc_message_get_address_from_host (const char *host)
 {
     static char address[256];
-    char host2[256], *pos_space, *pos;
-    const char *ptr_host;
+    char host2[256];
+    const char *ptr_host, *pos_space, *pos;
 
     if (!host)
         return NULL;
@@ -1182,8 +1182,9 @@ irc_message_split_join (struct t_irc_message_split_context *context,
 {
     int channels_count, keys_count, length, length_no_channel;
     int length_to_add, index_channel;
-    char **channels, **keys, *pos, *str;
+    char **channels, **keys, *str;
     char msg_to_send[16384], keys_to_add[16384];
+    const char *pos;
 
     max_length -= 2;  /* by default: 512 - 2 = 510 bytes */
 
@@ -1510,7 +1511,7 @@ irc_message_split_privmsg_notice (struct t_irc_message_split_context *context,
 int
 irc_message_split_005 (struct t_irc_message_split_context *context,
                        const char *tags, const char *host, const char *command,
-                       const char *target, const char *arguments,
+                       const char *target, char *arguments,
                        int max_length)
 {
     char *pos, suffix[4096];
@@ -1570,7 +1571,8 @@ irc_message_split (struct t_irc_server *server, const char *message)
 {
     struct t_irc_message_split_context split_context;
     char **argv, **argv_eol, *tags, *host, *command, *arguments, target[4096];
-    char *pos, monitor_action[3];
+    char monitor_action[3];
+    const char *pos;
     int split_ok, split_privmsg, argc, index_args, max_length_nick;
     int max_length_user, max_length_host, max_length_nick_user_host;
     int split_msg_max_length, multiline, multiline_max_bytes;
