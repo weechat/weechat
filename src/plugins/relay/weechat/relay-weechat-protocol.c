@@ -1740,8 +1740,8 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(quit)
 void
 relay_weechat_protocol_recv (struct t_relay_client *client, const char *data)
 {
-    const char *ptr_data;
-    char *data_unescaped, *pos, *id, *command, **argv, **argv_eol;
+    const char *ptr_data, *pos;
+    char *data_unescaped, *id, *command, **argv, **argv_eol;
     int i, argc, return_code;
     struct t_relay_weechat_protocol_cb protocol_cb[] =
         { { "handshake", &relay_weechat_protocol_cb_handshake },

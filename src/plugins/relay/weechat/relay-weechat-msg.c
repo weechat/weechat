@@ -586,9 +586,9 @@ relay_weechat_msg_add_hdata (struct t_relay_weechat_msg *msg,
                              const char *path, const char *keys)
 {
     struct t_hdata *ptr_hdata_head, *ptr_hdata;
-    char *hdata_head, *pos, **list_keys, *keys_types, **list_path;
-    char *path_returned;
-    const char *hdata_name, *array_size;
+    char *hdata_head, **list_keys, *keys_types, **list_path;
+    char *path_returned, *pos_paren;
+    const char *hdata_name, *array_size, *pos;
     void *pointer, **path_pointers;
     unsigned long value;
     int rc, num_keys, num_path, i, type, pos_count, count, rc_sscanf;
@@ -626,9 +626,9 @@ relay_weechat_msg_add_hdata (struct t_relay_weechat_msg *msg,
 
     /* extract pointer from first path (direct pointer or list name) */
     pointer = NULL;
-    pos = strchr (list_path[0], '(');
-    if (pos)
-        pos[0] = '\0';
+    pos_paren = strchr (list_path[0], '(');
+    if (pos_paren)
+        pos_paren[0] = '\0';
     if (strncmp (list_path[0], "0x", 2) == 0)
     {
         rc_sscanf = sscanf (list_path[0], "%lx", &value);
@@ -651,8 +651,8 @@ relay_weechat_msg_add_hdata (struct t_relay_weechat_msg *msg,
     }
     else
         pointer = weechat_hdata_get_list (ptr_hdata_head, list_path[0]);
-    if (pos)
-        pos[0] = '(';
+    if (pos_paren)
+        pos_paren[0] = '(';
     if (!pointer)
         goto end;
 
@@ -668,9 +668,9 @@ relay_weechat_msg_add_hdata (struct t_relay_weechat_msg *msg,
     strcpy (path_returned, hdata_head);
     for (i = 1; i < num_path; i++)
     {
-        pos = strchr (list_path[i], '(');
-        if (pos)
-            pos[0] = '\0';
+        pos_paren = strchr (list_path[i], '(');
+        if (pos_paren)
+            pos_paren[0] = '\0';
         hdata_name = weechat_hdata_get_var_hdata (ptr_hdata, list_path[i]);
         if (!hdata_name)
             goto end;
@@ -679,8 +679,8 @@ relay_weechat_msg_add_hdata (struct t_relay_weechat_msg *msg,
             goto end;
         strcat (path_returned, "/");
         strcat (path_returned, hdata_name);
-        if (pos)
-            pos[0] = '(';
+        if (pos_paren)
+            pos_paren[0] = '(';
     }
 
     /* split keys */

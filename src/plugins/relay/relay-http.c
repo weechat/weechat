@@ -244,7 +244,8 @@ relay_http_parse_path (const char *path,
                        char ***paths, int *num_paths,
                        struct t_hashtable *params)
 {
-    char *pos, *str_path, *str_params, **items_path, **items2_path;
+    const char *pos;
+    char *str_path, *str_params, **items_path, **items2_path;
     char **items_params, *name, *value;
     int i, num_items_path, num_items_params;
 
@@ -410,8 +411,8 @@ relay_http_parse_header (struct t_relay_http_request *request,
                          const char *header,
                          int ws_deflate_allowed)
 {
-    char *pos, *name, *name_lower, *error, **items;
-    const char *existing_value, *ptr_value;
+    char *name, *name_lower, *error, **items;
+    const char *pos, *existing_value, *ptr_value;
     int i, num_items;
     long number;
 
@@ -999,7 +1000,8 @@ relay_http_process_request (struct t_relay_client *client)
 void
 relay_http_recv (struct t_relay_client *client, const char *data, int size)
 {
-    char *new_partial, *pos, **null_char;
+    const void *null_char;
+    char *new_partial, *pos;
     int length, ws_deflate_allowed;
 
     null_char = memchr (data, 0, size);
@@ -1564,8 +1566,8 @@ int
 relay_http_parse_response_header (struct t_relay_http_response *response,
                                   const char *header)
 {
-    char *pos, *name, *name_lower, *error;
-    const char *ptr_value;
+    char *name, *name_lower, *error;
+    const char *pos, *ptr_value;
     long number;
 
     /* empty line => end of headers */

@@ -999,7 +999,8 @@ struct t_relay_remote *
 relay_config_get_remote_from_option_name (const char *name)
 {
     struct t_relay_remote *ptr_remote;
-    char *pos_option, *remote_name;
+    const char *pos_option;
+    char *remote_name;
 
     ptr_remote = NULL;
 
@@ -1244,7 +1245,8 @@ relay_config_remote_read_cb (const void *pointer, void *data,
                              struct t_config_section *section,
                              const char *option_name, const char *value)
 {
-    char *pos_option, *remote_name;
+    const char *pos_option;
+    char *remote_name;
     struct t_relay_remote *ptr_temp_remote;
     int index_option;
 

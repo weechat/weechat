@@ -202,8 +202,8 @@ int
 relay_remote_parse_url (const char *url,
                         int *tls, char **address, int *port)
 {
-    const char *ptr_url;
-    char *pos, *str_port, *error;
+    const char *ptr_url, *pos;
+    char *str_port, *error;
     long number;
 
     if (tls)

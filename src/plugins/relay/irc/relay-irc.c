@@ -202,9 +202,9 @@ void
 relay_irc_sendf (struct t_relay_client *client, const char *format, ...)
 {
     int number;
-    char *pos, hash_key[32], *message, *new_msg1, *new_msg2;
+    char *pos, hash_key[32], *message, *new_msg1, *new_msg2, *ptr_msg1, *ptr_msg2;
     char modifier_data[128];
-    const char *str_message, *ptr_msg1, *ptr_msg2;
+    const char *str_message;
     struct t_hashtable *hashtable_in, *hashtable_out;
 
     if (!client || !format)
@@ -234,7 +234,12 @@ relay_irc_sendf (struct t_relay_client *client, const char *format, ...)
     if (new_msg1 && !new_msg1[0])
         goto end;
 
-    ptr_msg1 = (new_msg1) ? new_msg1 : vbuffer;
+    if (!new_msg1)
+        new_msg1 = strdup (vbuffer);
+    if (!new_msg1)
+        goto end;
+
+    ptr_msg1 = new_msg1;
 
     pos = strchr (ptr_msg1, '\r');
     if (pos)
@@ -275,7 +280,11 @@ relay_irc_sendf (struct t_relay_client *client, const char *format, ...)
         /* message not dropped? */
         if (!new_msg2 || new_msg2[0])
         {
-            ptr_msg2 = (new_msg2) ? new_msg2 : str_message;
+            if (!new_msg2)
+                new_msg2 = strdup (str_message);
+            if (!new_msg2)
+                break;
+            ptr_msg2 = new_msg2;
             if (weechat_asprintf (&message, "%s\r\n", ptr_msg2) >= 0)
             {
                 relay_client_send (client, RELAY_MSG_STANDARD,
@@ -470,10 +479,9 @@ relay_irc_signal_irc_outtags_cb (const void *pointer, void *data,
 {
     struct t_relay_client *client;
     struct t_hashtable *hash_parsed;
-    const char *irc_command, *irc_args, *host, *ptr_message;
-    char *pos, *tags, *irc_channel, *message;
+    const char *irc_command, *irc_args, *host, *ptr_message, *pos;
+    char *pos_cr, *tags, *irc_channel, *message, str_infolist_args[256];
     struct t_infolist *infolist_nick;
-    char str_infolist_args[256];
 
     /* make C compiler happy */
     (void) data;
@@ -487,9 +495,9 @@ relay_irc_signal_irc_outtags_cb (const void *pointer, void *data,
     message = strdup ((char *)signal_data);
     if (!message)
         goto end;
-    pos = strchr (message, '\r');
-    if (pos)
-        pos[0] = '\0';
+    pos_cr = strchr (message, '\r');
+    if (pos_cr)
+        pos_cr[0] = '\0';
 
     ptr_message = message;
 
@@ -1595,10 +1603,10 @@ relay_irc_recv (struct t_relay_client *client, const char *data)
     struct t_hashtable *hash_parsed, *hash_redirect;
     struct t_infolist *infolist_server;
     const char *irc_command, *str_num_params, *isupport, *pos_password;
-    const char *ptr_data, *ptr_nick_modes;
+    const char *ptr_data, *ptr_nick_modes, *pos;
     char str_time[128], str_signal[128], str_server_channel[256], *nick;
     char str_param[128], *str_args, *version, str_command[128], **params;
-    char *pos, *password, *irc_is_channel, *info, *error, *str_cmd_lower;
+    char *password, *irc_is_channel, *info, *error, *str_cmd_lower;
     char modifier_data[128], *new_data, *ctcp_type, *ctcp_params, *nick_modes;
     long num_params;
     int i, redirect_msg;

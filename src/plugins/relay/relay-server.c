@@ -79,7 +79,7 @@ relay_server_get_protocol_args (const char *protocol_and_args,
                                 char **protocol, char **protocol_args)
 {
     int opt_ipv4, opt_ipv6, opt_tls, opt_unix_socket;
-    char *pos;
+    const char *pos;
 
     opt_ipv4 = -1;
     opt_ipv6 = -1;
