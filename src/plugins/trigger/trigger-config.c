@@ -550,7 +550,8 @@ trigger_config_trigger_read_cb (const void *pointer, void *data,
                                 struct t_config_section *section,
                                 const char *option_name, const char *value)
 {
-    char *pos_option, *trigger_name;
+    const char *pos_option;
+    char *trigger_name;
     struct t_trigger *ptr_temp_trigger;
     int index_option;
 

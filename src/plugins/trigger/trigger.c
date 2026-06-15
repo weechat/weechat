@@ -239,8 +239,7 @@ trigger_search (const char *name)
 struct t_trigger *
 trigger_search_with_option (struct t_config_option *option)
 {
-    const char *ptr_name;
-    char *pos_option;
+    const char *ptr_name, *pos_option;
     struct t_trigger *ptr_trigger;
     int num_chars;
 

@@ -810,8 +810,8 @@ trigger_callback_modifier_cb (const void *pointer, void *data,
                               const char *modifier, const char *modifier_data,
                               const char *string)
 {
-    const char *ptr_string;
-    char *string_modified, *pos, *buffer_pointer;
+    const char *ptr_string, *pos;
+    char *string_modified, *buffer_pointer;
     char *str_tags, **tags, *prefix, *string_no_color;
     unsigned long value;
     int num_tags, rc;
