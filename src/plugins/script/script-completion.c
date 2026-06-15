@@ -156,8 +156,8 @@ void
 script_completion_exec_file_cb (void *data, const char *filename)
 {
     struct t_gui_completion *completion;
-    const char *extension;
-    char *pos, *filename2, *ptr_base_name;
+    const char *extension, *pos;
+    char *filename2, *ptr_base_name;
 
     completion = (struct t_gui_completion *)(((void **)data)[0]);
     extension = (const char *)(((void **)data)[1]);

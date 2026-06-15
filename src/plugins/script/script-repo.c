@@ -714,8 +714,7 @@ script_repo_remove_all (void)
 int
 script_repo_script_is_held (struct t_script_repo *script)
 {
-    const char *hold;
-    char *pos;
+    const char *hold, *pos;
     int length;
 
     hold = weechat_config_string (script_config_scripts_hold);

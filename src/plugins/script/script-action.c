@@ -184,7 +184,8 @@ script_action_run_list_input (struct t_gui_buffer *buffer,
 void
 script_action_run_load (const char *name, int quiet)
 {
-    char *pos, str_command[1024];
+    const char *pos;
+    char str_command[1024];
     int language;
 
     language = -1;
@@ -227,8 +228,8 @@ script_action_run_load (const char *name, int quiet)
 void
 script_action_run_unload (const char *name, int quiet)
 {
-    char *pos, hdata_name[128], *filename, *ptr_base_name, str_command[1024];
-    const char *ptr_filename, *ptr_registered_name;
+    char hdata_name[128], *filename, *ptr_base_name, str_command[1024];
+    const char *pos, *ptr_filename, *ptr_registered_name;
     int language, found, i;
     struct t_hdata *hdata;
     void *ptr_script;
@@ -332,8 +333,8 @@ script_action_run_unload (const char *name, int quiet)
 void
 script_action_run_reload (const char *name, int quiet)
 {
-    char *pos, hdata_name[128], *filename, *ptr_base_name, str_command[1024];
-    const char *ptr_filename, *ptr_registered_name;
+    char hdata_name[128], *filename, *ptr_base_name, str_command[1024];
+    const char *pos, *ptr_filename, *ptr_registered_name;
     int language, found, i;
     struct t_hdata *hdata;
     void *ptr_script;
@@ -443,7 +444,8 @@ void
 script_action_run_autoload (const char *name, int quiet, int autoload)
 {
     struct t_script_repo *ptr_script;
-    char *pos, str_signal[256], *weechat_data_dir, *filename;
+    char str_signal[256], *weechat_data_dir, *filename;
+    const char *pos;
     int language, script_found, script_autoloaded;
     struct stat st;
 
