@@ -402,7 +402,10 @@ RELAY_API_PROTOCOL_CALLBACK(handshake)
     if (json_body)
     {
         if (!cJSON_IsObject (json_body))
+        {
+            cJSON_Delete (json_body);
             return RELAY_API_PROTOCOL_RC_BAD_REQUEST;
+        }
         json_algos = cJSON_GetObjectItem (json_body, "password_hash_algo");
         if (json_algos)
         {
@@ -839,8 +842,13 @@ RELAY_API_PROTOCOL_CALLBACK(input)
     char str_delay[32];
 
     json_body = cJSON_Parse (client->http_req->body);
-    if (!json_body || !cJSON_IsObject (json_body))
+    if (!json_body)
         return RELAY_API_PROTOCOL_RC_BAD_REQUEST;
+    if (!cJSON_IsObject (json_body))
+    {
+        cJSON_Delete (json_body);
+        return RELAY_API_PROTOCOL_RC_BAD_REQUEST;
+    }
 
     /* get buffer either by name or by id */
     ptr_buffer = NULL;
@@ -966,8 +974,13 @@ RELAY_API_PROTOCOL_CALLBACK(completion)
     struct t_gui_buffer *ptr_buffer;
 
     json_body = cJSON_Parse (client->http_req->body);
-    if (!json_body || !cJSON_IsObject(json_body))
+    if (!json_body)
         return RELAY_API_PROTOCOL_RC_BAD_REQUEST;
+    if (!cJSON_IsObject(json_body))
+    {
+        cJSON_Delete (json_body);
+        return RELAY_API_PROTOCOL_RC_BAD_REQUEST;
+    }
 
     /* get buffer either by name or by id */
     ptr_buffer = NULL;
