@@ -38,6 +38,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 - api, relay: fix timing attack on TOTP validation ([GHSA-vhv8-g2r9-cwcc](https://github.com/weechat/weechat/security/advisories/GHSA-vhv8-g2r9-cwcc), [CVE-2026-53525](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-53525))
 - xfer: replace directory separator in remote nick by underscore in download filename to prevent writing the file outside the download directory ([#2321](https://github.com/weechat/weechat/issues/2321))
 - xfer: fix out-of-bounds read when receiving empty line in DCC chat ([#2323](https://github.com/weechat/weechat/issues/2323))
+- xfer: fix out-of-bounds write in xfer file transfer resume ([#2326](https://github.com/weechat/weechat/issues/2326))
 
 ## Version 4.9.2 (2026-06-07)
 
