@@ -40,11 +40,10 @@ script_mouse_focus_chat_cb (const void *pointer, void *data,
                             struct t_hashtable *info)
 {
     const char *buffer;
-    int rc;
+    int rc, y;
     unsigned long value;
     struct t_gui_buffer *ptr_buffer;
-    long x;
-    char *error, str_date[64];
+    char str_date[64];
     struct t_script_repo *ptr_script;
     struct tm *tm;
 
@@ -72,15 +71,13 @@ script_mouse_focus_chat_cb (const void *pointer, void *data,
         ptr_script = script_buffer_detail_script;
     else
     {
-        error = NULL;
-        x = strtol (weechat_hashtable_get (info, "_chat_line_y"), &error, 10);
-        if (!error || error[0])
+        if (!weechat_util_parse_int (weechat_hashtable_get (info, "_chat_line_y"), 10, &y)
+            || (y < 0))
+        {
             return info;
+        }
 
-        if (x < 0)
-            return info;
-
-        ptr_script = script_repo_search_displayed_by_number (x);
+        ptr_script = script_repo_search_displayed_by_number (y);
         if (!ptr_script)
             return info;
     }
