@@ -59,15 +59,14 @@
 char *
 xfer_network_convert_integer_to_ipv4 (const char *str_address)
 {
-    char *error, result[128];
+    char result[128];
     long long number;
 
     if (!str_address || !str_address[0])
         return NULL;
 
-    error = NULL;
-    number = strtoll (str_address, &error, 10);
-    if (!error || error[0] || (number <= 0) || (number > UINT32_MAX))
+    if (!weechat_util_parse_longlong (str_address, 10, &number)
+        || (number <= 0) || (number > UINT32_MAX))
         return NULL;
 
     snprintf (result, sizeof (result),
