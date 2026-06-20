@@ -2982,7 +2982,6 @@ API_FUNC(hook_signal)
 
 API_FUNC(hook_signal_send)
 {
-    char *error;
     int number, rc;
 
     API_INIT_FUNC(1, "hook_signal_send", "sss", API_RETURN_INT(WEECHAT_RC_ERROR));
@@ -2998,9 +2997,7 @@ API_FUNC(hook_signal_send)
     }
     else if (strcmp (*type_data, WEECHAT_HOOK_SIGNAL_INT) == 0)
     {
-        error = NULL;
-        number = (int)strtol (*signal_data, &error, 10);
-        if (error && !error[0])
+        if (weechat_util_parse_int (*signal_data, 10, &number))
             rc = weechat_hook_signal_send (*signal, *type_data, &number);
         else
             rc = WEECHAT_RC_ERROR;
