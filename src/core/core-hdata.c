@@ -1313,9 +1313,9 @@ hdata_set (struct t_hdata *hdata, void *pointer, const char *name,
             }
             break;
         case WEECHAT_HDATA_TIME:
-            if (util_parse_long (value, 10, &number_long) && (number_long >= 0))
+            if (util_parse_longlong (value, 10, &number_longlong) && (number_longlong >= 0))
             {
-                *((time_t *)(pointer + var->offset)) = (time_t)number_long;
+                *((time_t *)(pointer + var->offset)) = (time_t)number_longlong;
                 return 1;
             }
             break;
