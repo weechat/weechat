@@ -303,10 +303,9 @@ void
 trigger_hook (struct t_trigger *trigger)
 {
     char **argv, **argv_eol, *buffer_type, *buffer_name, *tags, *message;
-    char *error1, *error2, *error3;
     char *eval_desc, *eval_args, *eval_desc_args, *eval_completion;
-    int i, argc, strip_colors;
-    long interval, align_second, max_calls;
+    int i, argc, align_second, max_calls, strip_colors;
+    long interval;
     struct t_hashtable *extra_vars;
 
     if (!weechat_config_boolean (trigger->options[TRIGGER_OPTION_ENABLED]))
@@ -488,17 +487,11 @@ trigger_hook (struct t_trigger *trigger)
         case TRIGGER_HOOK_TIMER:
             if (argv && (argc >= 1))
             {
-                error1 = NULL;
-                error2 = NULL;
-                error3 = NULL;
-                interval = strtol (argv[0], &error1, 10);
-                align_second = strtol ((argc >= 2) ? argv[1] : "0", &error2, 10);
-                max_calls = strtol ((argc >= 3) ? argv[2] : "0", &error3, 10);
-                if (error1 && !error1[0]
-                    && error2 && !error2[0]
-                    && error3 && !error3[0]
+                if (weechat_util_parse_long (argv[0], 10, &interval)
                     && (interval > 0)
+                    && weechat_util_parse_int ((argc >= 2) ? argv[1] : "0", 10, &align_second)
                     && (align_second >= 0)
+                    && weechat_util_parse_int ((argc >= 3) ? argv[2] : "0", 10, &max_calls)
                     && (max_calls >= 0))
                 {
                     trigger->hooks = malloc (sizeof (trigger->hooks[0]));
@@ -507,8 +500,8 @@ trigger_hook (struct t_trigger *trigger)
                         trigger->hooks_count = 1;
                         trigger->hooks[0] = weechat_hook_timer (
                             interval,
-                            (int)align_second,
-                            (int)max_calls,
+                            align_second,
+                            max_calls,
                             &trigger_callback_timer_cb,
                             trigger, NULL);
                     }
