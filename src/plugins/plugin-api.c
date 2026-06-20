@@ -38,6 +38,7 @@
 #include "../core/core-input.h"
 #include "../core/core-proxy.h"
 #include "../core/core-string.h"
+#include "../core/core-util.h"
 #include "../gui/gui-bar.h"
 #include "../gui/gui-bar-item.h"
 #include "../gui/gui-bar-window.h"
@@ -394,7 +395,7 @@ plugin_api_command_options (struct t_weechat_plugin *plugin,
                             struct t_gui_buffer *buffer, const char *command,
                             struct t_hashtable *options)
 {
-    char *command2, *error;
+    char *command2;
     const char *ptr_commands_allowed, *ptr_delay, *ptr_split_newline;
     long delay;
     int rc, split_newline;
@@ -412,9 +413,7 @@ plugin_api_command_options (struct t_weechat_plugin *plugin,
         ptr_delay = hashtable_get (options, "delay");
         if (ptr_delay)
         {
-            error = NULL;
-            delay = strtol (ptr_delay, &error, 10);
-            if (!error || error[0])
+            if (!util_parse_long (ptr_delay, 10, &delay))
                 delay = 0;
         }
         ptr_split_newline = hashtable_get (options, "split_newline");
