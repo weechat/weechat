@@ -1008,7 +1008,7 @@ TEST(GuiBuffer, Set)
     LONGS_EQUAL(0, buffer->hidden);
     gui_buffer_set (buffer, "hidden", "2");
     LONGS_EQUAL(1, buffer->hidden);
-    gui_buffer_set (buffer, "hidden", "");
+    gui_buffer_set (buffer, "hidden", "0");
     LONGS_EQUAL(0, buffer->hidden);
 
     /* print_hooks_enabled */
@@ -1017,7 +1017,7 @@ TEST(GuiBuffer, Set)
     LONGS_EQUAL(0, buffer->print_hooks_enabled);
     gui_buffer_set (buffer, "print_hooks_enabled", "1");
     LONGS_EQUAL(1, buffer->print_hooks_enabled);
-    gui_buffer_set (buffer, "print_hooks_enabled", "");
+    gui_buffer_set (buffer, "print_hooks_enabled", "0");
     LONGS_EQUAL(0, buffer->print_hooks_enabled);
     gui_buffer_set (buffer, "print_hooks_enabled", "2");
     LONGS_EQUAL(1, buffer->print_hooks_enabled);
@@ -1028,7 +1028,7 @@ TEST(GuiBuffer, Set)
     LONGS_EQUAL(0, buffer->day_change);
     gui_buffer_set (buffer, "day_change", "1");
     LONGS_EQUAL(1, buffer->day_change);
-    gui_buffer_set (buffer, "day_change", "");
+    gui_buffer_set (buffer, "day_change", "0");
     LONGS_EQUAL(0, buffer->day_change);
     gui_buffer_set (buffer, "day_change", "2");
     LONGS_EQUAL(1, buffer->day_change);
@@ -1039,14 +1039,14 @@ TEST(GuiBuffer, Set)
     LONGS_EQUAL(0, buffer->clear);
     gui_buffer_set (buffer, "clear", "1");
     LONGS_EQUAL(1, buffer->clear);
-    gui_buffer_set (buffer, "clear", "");
+    gui_buffer_set (buffer, "clear", "0");
     LONGS_EQUAL(0, buffer->clear);
     gui_buffer_set (buffer, "clear", "2");
     LONGS_EQUAL(1, buffer->clear);
 
     /* filter */
     LONGS_EQUAL(1, buffer->filter);
-    gui_buffer_set (buffer, "filter", "");
+    gui_buffer_set (buffer, "filter", "0");
     LONGS_EQUAL(0, buffer->filter);
     gui_buffer_set (buffer, "filter", "1");
     LONGS_EQUAL(1, buffer->filter);
@@ -1292,7 +1292,7 @@ TEST(GuiBuffer, Set)
     LONGS_EQUAL(0, buffer->input_buffer_pos);
     gui_buffer_set (buffer, "input_pos", "2");
     LONGS_EQUAL(2, buffer->input_buffer_pos);
-    gui_buffer_set (buffer, "input_pos", "");
+    gui_buffer_set (buffer, "input_pos", "0");
     LONGS_EQUAL(0, buffer->input_buffer_pos);
     gui_buffer_set (buffer, "input", "");
     STRCMP_EQUAL("", buffer->input_buffer);

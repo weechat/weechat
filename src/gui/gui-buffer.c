@@ -1764,17 +1764,13 @@ void
 gui_buffer_set_notify (struct t_gui_buffer *buffer, const char *notify)
 {
     const char *ptr_notify;
-    char *error;
-    long number;
-    int mute_old;
+    int mute_old, number;
 
     if (!buffer)
         return;
 
     ptr_notify = NULL;
-    error = NULL;
-    number = strtol (notify, &error, 10);
-    if (error && !error[0])
+    if (util_parse_int (notify, 10, &number))
     {
         if (number < GUI_BUFFER_NUM_NOTIFY)
         {
@@ -2232,9 +2228,8 @@ void
 gui_buffer_set_hotlist_max_level_nicks (struct t_gui_buffer *buffer,
                                         const char *new_hotlist_max_level_nicks)
 {
-    char **nicks, *pos, *error;
-    int nicks_count, value, i;
-    long number;
+    char **nicks, *pos;
+    int nicks_count, number, value, i;
 
     if (!buffer)
         return;
@@ -2260,13 +2255,10 @@ gui_buffer_set_hotlist_max_level_nicks (struct t_gui_buffer *buffer,
         {
             pos[0] = '\0';
             pos++;
-            error = NULL;
-            number = strtol (pos, &error, 10);
-            if (error && !error[0])
-                value = (int)number;
+            if (util_parse_int (pos, 10, &number))
+                value = number;
         }
-        hashtable_set (buffer->hotlist_max_level_nicks, nicks[i],
-                       &value);
+        hashtable_set (buffer->hotlist_max_level_nicks, nicks[i], &value);
     }
     string_free_split (nicks);
 }
@@ -2279,9 +2271,8 @@ void
 gui_buffer_add_hotlist_max_level_nicks (struct t_gui_buffer *buffer,
                                         const char *nicks_to_add)
 {
-    char **nicks, *pos, *error;
-    int nicks_count, value, i;
-    long number;
+    char **nicks, *pos;
+    int nicks_count, number, value, i;
 
     if (!buffer || !nicks_to_add)
         return;
@@ -2302,13 +2293,10 @@ gui_buffer_add_hotlist_max_level_nicks (struct t_gui_buffer *buffer,
         {
             pos[0] = '\0';
             pos++;
-            error = NULL;
-            number = strtol (pos, &error, 10);
-            if (error && !error[0])
-                value = (int)number;
+            if (util_parse_int (pos, 10, &number))
+                value = number;
         }
-        hashtable_set (buffer->hotlist_max_level_nicks, nicks[i],
-                       &value);
+        hashtable_set (buffer->hotlist_max_level_nicks, nicks[i], &value);
     }
     string_free_split (nicks);
 }
@@ -2454,9 +2442,7 @@ void
 gui_buffer_set_unread (struct t_gui_buffer *buffer, const char *argument)
 {
     struct t_gui_line *old_last_read_line;
-    int i, old_first_line_not_read;
-    long number;
-    char *error;
+    int i, number, old_first_line_not_read;
 
     if (!buffer || (buffer->type != GUI_BUFFER_TYPE_FORMATTED))
         return;
@@ -2479,9 +2465,7 @@ gui_buffer_set_unread (struct t_gui_buffer *buffer, const char *argument)
     else if (argument[0] == '-')
     {
         /* move the unread marker N lines towards the first line */
-        error = NULL;
-        number = strtol (argument, &error, 10);
-        if (error && !error[0] && (number < 0))
+        if (util_parse_int (argument, 10, &number) && (number < 0))
         {
             for (i = 0; i > number; i--)
             {
@@ -2507,9 +2491,7 @@ gui_buffer_set_unread (struct t_gui_buffer *buffer, const char *argument)
     else if (argument[0] == '+')
     {
         /* move the unread marker N lines towards the last line */
-        error = NULL;
-        number = strtol (argument, &error, 10);
-        if (error && !error[0] && (number > 0))
+        if (util_parse_int (argument, 10, &number) && (number > 0))
         {
             for (i = 0; i < number; i++)
             {
@@ -2533,9 +2515,7 @@ gui_buffer_set_unread (struct t_gui_buffer *buffer, const char *argument)
     else
     {
         /* move the unread marker N lines from the end towards the first line */
-        error = NULL;
-        number = strtol (argument, &error, 10);
-        if (error && !error[0] && (number > 0))
+        if (util_parse_int (argument, 10, &number) && (number > 0))
         {
             buffer->lines->last_read_line = buffer->lines->last_line;
             buffer->lines->first_line_not_read = 0;
@@ -2569,8 +2549,7 @@ void
 gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
                 const char *value)
 {
-    long number;
-    char *error;
+    int number;
 
     if (!property || !value)
         return;
@@ -2584,9 +2563,7 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
             gui_add_hotlist = 1;
         else if (buffer)
         {
-            error = NULL;
-            number = strtol (value, &error, 10);
-            if (error && !error[0])
+            if (util_parse_int (value, 10, &number))
             {
                 if (number < 0)
                 {
@@ -2614,9 +2591,7 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
     /* properties that need a buffer */
     if (strcmp (property, "hotlist_conditions") == 0)
     {
-        error = NULL;
-        number = strtol (value, &error, 10);
-        if (error && !error[0])
+        if (util_parse_int (value, 10, &number))
         {
             if (number < 0)
             {
@@ -2650,9 +2625,7 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
     }
     else if (strcmp (property, "hidden") == 0)
     {
-        error = NULL;
-        number = strtol (value, &error, 10);
-        if (error && !error[0])
+        if (util_parse_int (value, 10, &number))
         {
             if (number)
                 gui_buffer_hide (buffer);
@@ -2662,37 +2635,27 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
     }
     else if (strcmp (property, "print_hooks_enabled") == 0)
     {
-        error = NULL;
-        number = strtol (value, &error, 10);
-        if (error && !error[0])
+        if (util_parse_int (value, 10, &number))
             buffer->print_hooks_enabled = (number) ? 1 : 0;
     }
     else if (strcmp (property, "day_change") == 0)
     {
-        error = NULL;
-        number = strtol (value, &error, 10);
-        if (error && !error[0])
+        if (util_parse_int (value, 10, &number))
             gui_buffer_set_day_change (buffer, number);
     }
     else if (strcmp (property, "clear") == 0)
     {
-        error = NULL;
-        number = strtol (value, &error, 10);
-        if (error && !error[0])
+        if (util_parse_int (value, 10, &number))
             buffer->clear = (number) ? 1 : 0;
     }
     else if (strcmp (property, "filter") == 0)
     {
-        error = NULL;
-        number = strtol (value, &error, 10);
-        if (error && !error[0])
+        if (util_parse_int (value, 10, &number))
             gui_buffer_set_filter (buffer, number);
     }
     else if (strcmp (property, "number") == 0)
     {
-        error = NULL;
-        number = strtol (value, &error, 10);
-        if (error && !error[0] && (number >= 1))
+        if (util_parse_int (value, 10, &number) && (number >= 1))
             gui_buffer_move_to_number (buffer, number);
     }
     else if (strcmp (property, "name") == 0)
@@ -2724,30 +2687,22 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
     }
     else if (strcmp (property, "time_for_each_line") == 0)
     {
-        error = NULL;
-        number = strtol (value, &error, 10);
-        if (error && !error[0])
+        if (util_parse_int (value, 10, &number))
             gui_buffer_set_time_for_each_line (buffer, number);
     }
     else if (strcmp (property, "nicklist") == 0)
     {
-        error = NULL;
-        number = strtol (value, &error, 10);
-        if (error && !error[0])
+        if (util_parse_int (value, 10, &number))
             gui_buffer_set_nicklist (buffer, number);
     }
     else if (strcmp (property, "nicklist_case_sensitive") == 0)
     {
-        error = NULL;
-        number = strtol (value, &error, 10);
-        if (error && !error[0])
+        if (util_parse_int (value, 10, &number))
             gui_buffer_set_nicklist_case_sensitive (buffer, number);
     }
     else if (strcmp (property, "nicklist_display_groups") == 0)
     {
-        error = NULL;
-        number = strtol (value, &error, 10);
-        if (error && !error[0])
+        if (util_parse_int (value, 10, &number))
             gui_buffer_set_nicklist_display_groups (buffer, number);
     }
     else if (strcmp (property, "highlight_words") == 0)
@@ -2816,37 +2771,27 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
     }
     else if (strcmp (property, "input_pos") == 0)
     {
-        error = NULL;
-        number = strtol (value, &error, 10);
-        if (error && !error[0])
+        if (util_parse_int (value, 10, &number))
             gui_input_set_pos (buffer, number);
     }
     else if (strcmp (property, "input_get_any_user_data") == 0)
     {
-        error = NULL;
-        number = strtol (value, &error, 10);
-        if (error && !error[0])
+        if (util_parse_int (value, 10, &number))
             gui_buffer_set_input_get_any_user_data (buffer, number);
     }
     else if (strcmp (property, "input_get_unknown_commands") == 0)
     {
-        error = NULL;
-        number = strtol (value, &error, 10);
-        if (error && !error[0])
+        if (util_parse_int (value, 10, &number))
             gui_buffer_set_input_get_unknown_commands (buffer, number);
     }
     else if (strcmp (property, "input_get_empty") == 0)
     {
-        error = NULL;
-        number = strtol (value, &error, 10);
-        if (error && !error[0])
+        if (util_parse_int (value, 10, &number))
             gui_buffer_set_input_get_empty (buffer, number);
     }
     else if (strcmp (property, "input_multiline") == 0)
     {
-        error = NULL;
-        number = strtol (value, &error, 10);
-        if (error && !error[0])
+        if (util_parse_int (value, 10, &number))
             gui_buffer_set_input_multiline (buffer, number);
     }
     else if (strncmp (property, "localvar_set_", 13) == 0)
@@ -3076,7 +3021,6 @@ gui_buffer_search (const char *plugin, const char *name)
     struct t_gui_buffer *ptr_buffer;
     int plugin_match, plugin_case_sensitive, name_case_sensitive;
     long long id;
-    char *error;
 
     if (!name || !name[0])
         return gui_current_window->buffer;
@@ -3086,9 +3030,9 @@ gui_buffer_search (const char *plugin, const char *name)
 
     if (plugin && (strcmp (plugin, "==id") == 0))
     {
-        error = NULL;
-        id = strtoll (name, &error, 10);
-        return (error && !error[0]) ? gui_buffer_search_by_id (id) : NULL;
+        if (util_parse_longlong (name, 10, &id))
+            return gui_buffer_search_by_id (id);
+        return NULL;
     }
 
     plugin_case_sensitive = 1;
@@ -3317,16 +3261,13 @@ gui_buffer_search_by_id_number_name (const char *string)
 {
     struct t_gui_buffer *ptr_buffer;
     long long number;
-    char *error;
 
-    if (!string)
+    if (!string || !string[0])
         return NULL;
 
     ptr_buffer = NULL;
 
-    error = NULL;
-    number = strtoll (string, &error, 10);
-    if (error && !error[0])
+    if (util_parse_longlong (string, 10, &number))
     {
         ptr_buffer = gui_buffer_search_by_id (number);
         if (!ptr_buffer)
