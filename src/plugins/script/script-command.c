@@ -45,9 +45,7 @@ script_command_action (struct t_gui_buffer *buffer,
 {
     struct t_script_repo *ptr_script;
     char str_action[4096];
-    long value;
-    char *error;
-    int quiet;
+    int quiet, value;
 
     if (arguments)
     {
@@ -62,9 +60,7 @@ script_command_action (struct t_gui_buffer *buffer,
                 arguments++;
             }
         }
-        error = NULL;
-        value = strtol (arguments, &error, 10);
-        if (error && !error[0])
+        if (weechat_util_parse_int (arguments, 10, &value))
         {
             ptr_script = script_repo_search_displayed_by_number (value);
             if (ptr_script)
@@ -132,9 +128,8 @@ script_command_script (const void *pointer, void *data,
                        struct t_gui_buffer *buffer, int argc,
                        char **argv, char **argv_eol)
 {
-    char *error, command[128];
-    long value;
-    int line;
+    char command[128];
+    int line, value;
 
     /* make C compiler happy */
     (void) pointer;
@@ -227,9 +222,7 @@ script_command_script (const void *pointer, void *data,
             }
             else
             {
-                error = NULL;
-                value = strtol (argv[2], &error, 10);
-                if (error && !error[0])
+                if (weechat_util_parse_int (argv[2], 10, &value))
                     line = value;
             }
             if (line >= 0)
@@ -248,9 +241,7 @@ script_command_script (const void *pointer, void *data,
             value = 1;
             if (argc > 2)
             {
-                error = NULL;
-                value = strtol (argv[2], &error, 10);
-                if (!error || error[0])
+                if (!weechat_util_parse_int (argv[2], 10, &value))
                     value = 1;
             }
             if (script_buffer_detail_script)
@@ -282,9 +273,7 @@ script_command_script (const void *pointer, void *data,
             value = 1;
             if (argc > 2)
             {
-                error = NULL;
-                value = strtol (argv[2], &error, 10);
-                if (!error || error[0])
+                if (!weechat_util_parse_int (argv[2], 10, &value))
                     value = 1;
             }
             if (script_buffer_detail_script)

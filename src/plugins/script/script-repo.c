@@ -1312,11 +1312,7 @@ script_repo_file_read (int quiet)
                                     script->url = strdup (value);
                                 else if (strcmp (name, "popularity") == 0)
                                 {
-                                    error = NULL;
-                                    script->popularity = (int)strtol (value,
-                                                                      &error,
-                                                                      10);
-                                    if (!error || error[0])
+                                    if (!weechat_util_parse_int (value, 10, &(script->popularity)))
                                         script->popularity = 0;
                                 }
                                 else if (strcmp (name, "added") == 0)
