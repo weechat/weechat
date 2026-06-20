@@ -7401,7 +7401,7 @@ command_upgrade_display (struct t_gui_buffer *buffer,
     str_first_start[0] = '\0';
     str_last_start[0] = '\0';
 
-    weechat_last_start_time = (time_t)weechat_current_start_timeval.tv_sec;
+    weechat_last_start_time = weechat_current_start_timeval.tv_sec;
 
     if (translated_string)
     {

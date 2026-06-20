@@ -1042,7 +1042,7 @@ plugin_api_info_uptime_current_cb (const void *pointer, void *data,
     (void) info_name;
 
     return plugin_api_info_build_uptime (
-        (time_t)weechat_current_start_timeval.tv_sec,
+        weechat_current_start_timeval.tv_sec,
         arguments);
 }
 
