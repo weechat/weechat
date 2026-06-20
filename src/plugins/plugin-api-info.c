@@ -904,9 +904,8 @@ plugin_api_info_nick_color_ignore_case_cb (const void *pointer, void *data,
                                            const char *info_name,
                                            const char *arguments)
 {
-    char **items, *result, *error;
-    int num_items, case_range;
-    long number;
+    char **items, *result;
+    int num_items, case_range, number;
 
     /* make C compiler happy */
     (void) pointer;
@@ -918,10 +917,8 @@ plugin_api_info_nick_color_ignore_case_cb (const void *pointer, void *data,
     case_range = -1;
     if (num_items >= 2)
     {
-        error = NULL;
-        number = strtol (items[1], &error, 10);
-        if (error && !error[0])
-            case_range = (int)number;
+        if (util_parse_int (items[1], 10, &number))
+            case_range = number;
     }
 
     result = gui_nick_find_color (
@@ -943,9 +940,8 @@ plugin_api_info_nick_color_name_ignore_case_cb (const void *pointer, void *data,
                                                 const char *info_name,
                                                 const char *arguments)
 {
-    char **items, *result, *error;
-    int num_items, case_range;
-    long number;
+    char **items, *result;
+    int num_items, case_range, number;
 
     /* make C compiler happy */
     (void) pointer;
@@ -957,10 +953,8 @@ plugin_api_info_nick_color_name_ignore_case_cb (const void *pointer, void *data,
     case_range = -1;
     if (num_items >= 2)
     {
-        error = NULL;
-        number = strtol (items[1], &error, 10);
-        if (error && !error[0])
-            case_range = (int)number;
+        if (util_parse_int (items[1], 10, &number))
+            case_range = number;
     }
 
     result = gui_nick_find_color_name (
@@ -1064,9 +1058,9 @@ plugin_api_info_totp_generate_cb (const void *pointer, void *data,
                                   const char *info_name,
                                   const char *arguments)
 {
-    char **argv, *ptr_secret, *error, *totp;
-    int argc, digits;
-    long number;
+    char **argv, *ptr_secret, *totp;
+    int argc, digits, number_int;
+    long long number_longlong;
     time_t totp_time;
 
     /* make C compiler happy */
@@ -1094,19 +1088,15 @@ plugin_api_info_totp_generate_cb (const void *pointer, void *data,
 
     if (argc > 1)
     {
-        error = NULL;
-        number = (int)strtol (argv[1], &error, 10);
-        if (!error || error[0] || (number < 0))
+        if (!util_parse_longlong (argv[1], 10, &number_longlong) || (number_longlong < 0))
             goto error;
-        totp_time = (time_t)number;
+        totp_time = (time_t)number_longlong;
     }
     if (argc > 2)
     {
-        error = NULL;
-        number = (int)strtol (argv[2], &error, 10);
-        if (!error || error[0] || (number < 0))
+        if (!util_parse_int (argv[2], 10, &number_int) || (number_int < 0))
             goto error;
-        digits = number;
+        digits = number_int;
     }
 
     totp = weecrypto_totp_generate (ptr_secret, totp_time, digits);
@@ -1135,9 +1125,9 @@ plugin_api_info_totp_validate_cb (const void *pointer, void *data,
                                   const char *info_name,
                                   const char *arguments)
 {
-    char value[16], **argv, *ptr_secret, *ptr_otp, *error;
-    int argc, window, rc;
-    long number;
+    char value[16], **argv, *ptr_secret, *ptr_otp;
+    int argc, window, rc, number_int;
+    long long number_longlong;
     time_t totp_time;
 
     /* make C compiler happy */
@@ -1165,19 +1155,15 @@ plugin_api_info_totp_validate_cb (const void *pointer, void *data,
 
     if (argc > 2)
     {
-        error = NULL;
-        number = (int)strtol (argv[2], &error, 10);
-        if (!error || error[0] || (number < 0))
+        if (!util_parse_longlong (argv[2], 10, &number_longlong) || (number_longlong < 0))
             goto error;
-        totp_time = (time_t)number;
+        totp_time = (time_t)number_longlong;
     }
     if (argc > 3)
     {
-        error = NULL;
-        number = (int)strtol (argv[3], &error, 10);
-        if (!error || error[0] || (number < 0))
+        if (!util_parse_int (argv[3], 10, &number_int) || (number_int < 0))
             goto error;
-        window = number;
+        window = number_int;
     }
 
     rc = weecrypto_totp_validate (ptr_secret, totp_time, window, ptr_otp);
@@ -1236,8 +1222,8 @@ plugin_api_info_window_cb (const void *pointer, void *data,
                            const char *arguments)
 {
     struct t_gui_window *ptr_window;
-    long number;
-    char *error, value[64];
+    int number;
+    char value[64];
 
     /* make C compiler happy */
     (void) pointer;
@@ -1247,9 +1233,7 @@ plugin_api_info_window_cb (const void *pointer, void *data,
     if (!arguments || !arguments[0])
         return NULL;
 
-    error = NULL;
-    number = (int)strtol (arguments, &error, 10);
-    if (!error || error[0])
+    if (!util_parse_int (arguments, 10, &number))
         return NULL;
 
     ptr_window = gui_window_search_by_number (number);
@@ -2041,7 +2025,6 @@ plugin_api_infolist_window_cb (const void *pointer, void *data,
     struct t_infolist *ptr_infolist;
     struct t_gui_window *ptr_window;
     int number;
-    char *error;
 
     /* make C compiler happy */
     (void) pointer;
@@ -2085,9 +2068,7 @@ plugin_api_infolist_window_cb (const void *pointer, void *data,
                 return NULL;
             }
             /* check if argument is a window number */
-            error = NULL;
-            number = (int)strtol (arguments, &error, 10);
-            if (error && !error[0])
+            if (util_parse_int (arguments, 10, &number))
             {
                 ptr_window = gui_window_search_by_number (number);
                 if (ptr_window)
