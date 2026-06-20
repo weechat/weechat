@@ -5536,7 +5536,7 @@ COMMAND_CALLBACK(print)
     struct timeval tv_date;
     char *tags, *pos, *text, *text2, empty_string[1] = { '\0' };
     const char *prefix, *ptr_text;
-    long value;
+    long long value;
 
     /* make C compiler happy */
     (void) pointer;
@@ -5609,7 +5609,7 @@ COMMAND_CALLBACK(print)
             i++;
             if ((argv[i][0] == '-') || (argv[i][0] == '+'))
             {
-                if (!util_parse_long (argv[i] + 1, 10, &value))
+                if (!util_parse_longlong (argv[i] + 1, 10, &value))
                     COMMAND_ERROR;
                 gettimeofday (&tv_date, NULL);
                 tv_date.tv_sec += (argv[i][0] == '+') ? value : value * -1;
