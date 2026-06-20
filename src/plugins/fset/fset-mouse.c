@@ -42,11 +42,10 @@ struct t_hashtable *
 fset_mouse_focus_cb (const void *pointer, void *data, struct t_hashtable *info)
 {
     const char *buffer;
-    int rc, format_number;
+    int rc, format_number, y, option_index;
     unsigned long value;
     struct t_gui_buffer *ptr_buffer;
-    long y, option_index;
-    char *error, str_value[128];
+    char str_value[128];
     struct t_fset_option *ptr_fset_option;
 
     /* make C compiler happy */
@@ -69,13 +68,11 @@ fset_mouse_focus_cb (const void *pointer, void *data, struct t_hashtable *info)
     if (!ptr_buffer || (ptr_buffer != fset_buffer))
         return info;
 
-    error = NULL;
-    y = strtol (weechat_hashtable_get (info, "_chat_line_y"), &error, 10);
-    if (!error || error[0])
+    if (!weechat_util_parse_int (weechat_hashtable_get (info, "_chat_line_y"), 10, &y)
+        || (y < 0))
+    {
         return info;
-
-    if (y < 0)
-        return info;
+    }
 
     format_number = weechat_config_integer (fset_config_look_format_number);
     option_index = y / fset_config_format_option_num_lines[format_number - 1];
@@ -87,7 +84,7 @@ fset_mouse_focus_cb (const void *pointer, void *data, struct t_hashtable *info)
     snprintf (str_value, sizeof (str_value),
               "0x%lx", (unsigned long)ptr_fset_option);
     weechat_hashtable_set (info, "fset_option", str_value);
-    snprintf (str_value, sizeof (str_value), "%ld", option_index);
+    snprintf (str_value, sizeof (str_value), "%d", option_index);
     weechat_hashtable_set (info, "fset_option_index", str_value);
     weechat_hashtable_set (info, "fset_option_name", ptr_fset_option->name);
     weechat_hashtable_set (info, "fset_option_parent_name", ptr_fset_option->parent_name);
@@ -137,15 +134,12 @@ fset_mouse_get_hashtable_int (struct t_hashtable *hashtable,
                               int default_value)
 {
     const char *ptr_value;
-    char *error;
     int value;
 
     ptr_value = weechat_hashtable_get (hashtable, variable);
     if (!ptr_value)
         return default_value;
-    error = NULL;
-    value = (int)strtol (ptr_value, &error, 10);
-    if (!error || error[0])
+    if (!weechat_util_parse_int (ptr_value, 10, &value))
         return default_value;
 
     return value;

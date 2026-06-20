@@ -60,15 +60,12 @@ int
 fset_command_get_int_arg (int argc, char **argv, int arg_number,
                           int default_value)
 {
-    long value;
-    char *error;
+    int value;
 
     value = default_value;
     if (argc > arg_number)
     {
-        error = NULL;
-        value = strtol (argv[arg_number], &error, 10);
-        if (!error || error[0])
+        if (!weechat_util_parse_int (argv[arg_number], 10, &value))
             value = default_value;
     }
     return (int)value;
