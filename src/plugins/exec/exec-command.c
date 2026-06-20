@@ -185,8 +185,7 @@ exec_command_parse_options (struct t_exec_cmd_options *cmd_options,
                             int argc, char **argv, int start_arg,
                             int set_command_index)
 {
-    int i, j, end, length, length_total;
-    char *error;
+    int i, j, end, length, length_total, timeout;
 
     for (i = start_arg; i < argc; i++)
     {
@@ -318,10 +317,9 @@ exec_command_parse_options (struct t_exec_cmd_options *cmd_options,
             if (i + 1 >= argc)
                 return 0;
             i++;
-            error = NULL;
-            cmd_options->timeout = strtol (argv[i], &error, 10);
-            if (!error || error[0])
+            if (!weechat_util_parse_int (argv[i], 10, &timeout))
                 return 0;
+            cmd_options->timeout = timeout;
         }
         else if (weechat_strcmp (argv[i], "-name") == 0)
         {
