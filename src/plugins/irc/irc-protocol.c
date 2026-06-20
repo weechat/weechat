@@ -4061,9 +4061,8 @@ IRC_PROTOCOL_CALLBACK(001)
 
 IRC_PROTOCOL_CALLBACK(005)
 {
-    char *str_info, *error, *isupport2;
-    int i, arg_last, length_isupport, length, casemapping, utf8mapping;
-    long value;
+    char *str_info, *isupport2;
+    int i, arg_last, length_isupport, length, casemapping, utf8mapping, value;
 
     IRC_PROTOCOL_MIN_PARAMS(2);
 
@@ -4081,34 +4080,26 @@ IRC_PROTOCOL_CALLBACK(005)
         else if (strncmp (ctxt->params[i], "LINELEN=", 8) == 0)
         {
             /* save max message length */
-            error = NULL;
-            value = strtol (ctxt->params[i] + 8, &error, 10);
-            if (error && !error[0] && (value > 0))
-                ctxt->server->msg_max_length = (int)value;
+            if (weechat_util_parse_int (ctxt->params[i] + 8, 10, &value) && (value > 0))
+                ctxt->server->msg_max_length = value;
         }
         else if (strncmp (ctxt->params[i], "NICKLEN=", 8) == 0)
         {
             /* save max nick length */
-            error = NULL;
-            value = strtol (ctxt->params[i] + 8, &error, 10);
-            if (error && !error[0] && (value > 0))
-                ctxt->server->nick_max_length = (int)value;
+            if (weechat_util_parse_int (ctxt->params[i] + 8, 10, &value) && (value > 0))
+                ctxt->server->nick_max_length = value;
         }
         else if (strncmp (ctxt->params[i], "USERLEN=", 8) == 0)
         {
             /* save max user length */
-            error = NULL;
-            value = strtol (ctxt->params[i] + 8, &error, 10);
-            if (error && !error[0] && (value > 0))
-                ctxt->server->user_max_length = (int)value;
+            if (weechat_util_parse_int (ctxt->params[i] + 8, 10, &value) && (value > 0))
+                ctxt->server->user_max_length = value;
         }
         else if (strncmp (ctxt->params[i], "HOSTLEN=", 8) == 0)
         {
             /* save max host length */
-            error = NULL;
-            value = strtol (ctxt->params[i] + 8, &error, 10);
-            if (error && !error[0] && (value > 0))
-                ctxt->server->host_max_length = (int)value;
+            if (weechat_util_parse_int (ctxt->params[i] + 8, 10, &value) && (value > 0))
+                ctxt->server->host_max_length = value;
         }
         else if (strncmp (ctxt->params[i], "CASEMAPPING=", 12) == 0)
         {
@@ -4144,10 +4135,8 @@ IRC_PROTOCOL_CALLBACK(005)
         else if (strncmp (ctxt->params[i], "MONITOR=", 8) == 0)
         {
             /* save monitor (limit) */
-            error = NULL;
-            value = strtol (ctxt->params[i] + 8, &error, 10);
-            if (error && !error[0] && (value > 0))
-                ctxt->server->monitor = (int)value;
+            if (weechat_util_parse_int (ctxt->params[i] + 8, 10, &value) && (value > 0))
+                ctxt->server->monitor = value;
         }
         else if (strncmp (ctxt->params[i], "CLIENTTAGDENY=", 14) == 0)
         {

@@ -985,9 +985,8 @@ irc_info_infolist_irc_modelist_item_cb (const void *pointer, void *data,
     struct t_irc_channel *ptr_channel;
     struct t_irc_modelist *ptr_modelist;
     struct t_irc_modelist_item *ptr_item;
-    char **argv, *error;
-    int argc;
-    long number;
+    char **argv;
+    int argc, number;
 
     /* make C compiler happy */
     (void) pointer;
@@ -1029,15 +1028,12 @@ irc_info_infolist_irc_modelist_item_cb (const void *pointer, void *data,
         }
         if (!obj_pointer && (argc >= 4))
         {
-            error = NULL;
-            number = strtol (argv[3], &error, 10);
-            if (!error || error[0] || (number < 0))
+            if (!weechat_util_parse_int (argv[3], 10, &number) || (number < 0))
             {
                 weechat_string_free_split (argv);
                 return NULL;
             }
-            obj_pointer = irc_modelist_item_search_number (ptr_modelist,
-                                                           (int)number);
+            obj_pointer = irc_modelist_item_search_number (ptr_modelist, number);
             if (!obj_pointer)
             {
                 weechat_string_free_split (argv);

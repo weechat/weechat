@@ -404,9 +404,8 @@ irc_redirect_new_with_commands (struct t_irc_server *server,
                                 const char *cmd_filter)
 {
     struct t_irc_redirect *new_redirect;
-    char **items[4], *item_upper, *pos, *error;
-    int i, j, num_items[4];
-    long value;
+    char **items[4], *item_upper, *pos;
+    int i, j, num_items[4], value;
     struct t_hashtable *hash_cmd[4];
 
     new_redirect = malloc (sizeof (*new_redirect));
@@ -460,9 +459,7 @@ irc_redirect_new_with_commands (struct t_irc_server *server,
                     if (pos)
                     {
                         pos[0] = '\0';
-                        error = NULL;
-                        value = strtol (pos + 1, &error, 10);
-                        if (!error || error[0])
+                        if (!weechat_util_parse_int (pos + 1, 10, &value))
                             value = -1;
                     }
                     item_upper = weechat_string_toupper (items[i][j]);
@@ -1257,7 +1254,6 @@ irc_redirect_pattern_hsignal_cb (const void *pointer, void *data,
                                  struct t_hashtable *hashtable)
 {
     const char *pattern, *str_timeout, *cmd_start, *cmd_stop, *cmd_extra;
-    char *error;
     int number, timeout;
 
     /* make C compiler happy */
@@ -1295,9 +1291,7 @@ irc_redirect_pattern_hsignal_cb (const void *pointer, void *data,
     timeout = 0;
     if (str_timeout && str_timeout[0])
     {
-        error = NULL;
-        number = (int)strtol (str_timeout, &error, 10);
-        if (error && !error[0])
+        if (weechat_util_parse_int (str_timeout, 10, &number))
             timeout = number;
     }
 
@@ -1325,7 +1319,6 @@ irc_redirect_command_hsignal_cb (const void *pointer, void *data,
 {
     const char *server, *pattern, *redirect_signal, *str_count, *string;
     const char *str_timeout, *cmd_filter;
-    char *error;
     struct t_irc_server *ptr_server;
     int number, count, timeout;
 
@@ -1366,18 +1359,14 @@ irc_redirect_command_hsignal_cb (const void *pointer, void *data,
     count = 1;
     if (str_count && str_count[0])
     {
-        error = NULL;
-        number = (int)strtol (str_count, &error, 10);
-        if (error && !error[0])
+        if (weechat_util_parse_int (str_count, 10, &number))
             count = number;
     }
 
     timeout = 0;
     if (str_timeout && str_timeout[0])
     {
-        error = NULL;
-        number = (int)strtol (str_timeout, &error, 10);
-        if (error && !error[0])
+        if (weechat_util_parse_int (str_timeout, 10, &number))
             timeout = number;
     }
 

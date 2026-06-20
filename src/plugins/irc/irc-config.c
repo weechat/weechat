@@ -1288,10 +1288,8 @@ irc_config_server_check_value_cb (const void *pointer, void *data,
                                   struct t_config_option *option,
                                   const char *value)
 {
-    int index_option, proxy_found;
+    int index_option, number, proxy_found;
     const char *pos_error, *proxy_name;
-    char *error;
-    long number;
     struct t_infolist *infolist;
 
     /* make C compiler happy */
@@ -1364,9 +1362,7 @@ irc_config_server_check_value_cb (const void *pointer, void *data,
             case IRC_SERVER_OPTION_SPLIT_MSG_MAX_LENGTH:
                 if (!value || !value[0])
                     break;
-                error = NULL;
-                number = strtol (value, &error, 10);
-                if (!error || error[0])
+                if (!weechat_util_parse_int (value, 10, &number))
                 {
                     /*
                      * not a valid number, but we return 1 (OK) to let WeeChat
