@@ -203,7 +203,7 @@ relay_remote_parse_url (const char *url,
                         int *tls, char **address, int *port)
 {
     const char *ptr_url, *pos;
-    char *str_port, *error;
+    char *str_port;
     long number;
 
     if (tls)
@@ -270,12 +270,11 @@ relay_remote_parse_url (const char *url,
             weechat_strndup (ptr_url, pos - ptr_url) : strdup (ptr_url);
         if (!str_port)
             return 0;
-        error = NULL;
-        number = strtol (str_port, &error, 10);
-        if (error && !error[0] && (number >= 0) && (number <= 65535))
+        if (weechat_util_parse_long (str_port, 10, &number)
+            && (number >= 0) && (number <= 65535))
         {
             if (port)
-                *port = number;
+                *port = (int)number;
             free (str_port);
         }
         else

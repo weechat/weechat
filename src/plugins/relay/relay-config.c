@@ -652,23 +652,46 @@ relay_config_check_port_cb (const void *pointer, void *data,
                             struct t_config_option *option,
                             const char *value)
 {
-    char *error;
-    long port;
     struct t_relay_server *ptr_server;
+    int number, port;
+    long long new_port;
 
     /* make C compiler happy */
     (void) pointer;
     (void) data;
-    (void) option;
 
-    error = NULL;
-    port = strtol (value, &error, 10);
-    ptr_server = relay_server_search_port ((int)port);
+    if (strncmp (value, "++", 2) == 0)
+    {
+        /* relative value: add to the current port */
+        if (!weechat_util_parse_int (value + 2, 10, &number))
+            return 1;
+        new_port = (long long)weechat_config_integer (option) + number;
+    }
+    else if (strncmp (value, "--", 2) == 0)
+    {
+        /* relative value: subtract from the current port */
+        if (!weechat_util_parse_int (value + 2, 10, &number))
+            return 1;
+        new_port = (long long)weechat_config_integer (option) - number;
+    }
+    else
+    {
+        /* let WeeChat display the error if value is not a valid integer */
+        if (!weechat_util_parse_int (value, 10, &port))
+            return 1;
+        new_port = port;
+    }
+
+    /* if port is out of range, let WeeChat validate and display the error */
+    if ((new_port < 0) || (new_port > 65535))
+        return 1;
+
+    ptr_server = relay_server_search_port ((int)new_port);
     if (ptr_server)
     {
         weechat_printf (NULL, _("%s%s: error: port \"%d\" is already used"),
                         weechat_prefix ("error"),
-                        RELAY_PLUGIN_NAME, (int)port);
+                        RELAY_PLUGIN_NAME, (int)new_port);
         return 0;
     }
 
@@ -866,9 +889,8 @@ relay_config_create_option_port_path (const void *pointer, void *data,
                                       const char *option_name,
                                       const char *value)
 {
-    int rc, protocol_number, ipv4, ipv6, tls, unix_socket;
-    char *error, *protocol, *protocol_args;
-    long port;
+    int rc, protocol_number, ipv4, ipv6, tls, unix_socket, port;
+    char *protocol, *protocol_args;
     struct t_relay_server *ptr_server;
 
     /* make C compiler happy */
@@ -925,9 +947,10 @@ relay_config_create_option_port_path (const void *pointer, void *data,
         }
         else
         {
-            error = NULL;
-            port = strtol (value, &error, 10);
-            ptr_server = relay_server_search_port ((int)port);
+            if (weechat_util_parse_int (value, 10, &port))
+                ptr_server = relay_server_search_port (port);
+            else
+                ptr_server = NULL;
         }
         if (ptr_server)
         {

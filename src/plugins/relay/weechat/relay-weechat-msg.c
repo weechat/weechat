@@ -362,7 +362,7 @@ relay_weechat_msg_add_hdata_path (struct t_relay_weechat_msg *msg,
 {
     int num_added, i, j, count, count_all, var_type, array_size, max_array_size;
     int length;
-    char *pos, *pos2, *str_count, *error, *name;
+    char *pos, *pos2, *str_count, *name;
     void *sub_pointer;
     struct t_hdata *sub_hdata;
     const char *sub_hdata_name;
@@ -384,9 +384,7 @@ relay_weechat_msg_add_hdata_path (struct t_relay_weechat_msg *msg,
                     count_all = 1;
                 else
                 {
-                    error = NULL;
-                    count = (int)strtol (str_count, &error, 10);
-                    if (error && !error[0])
+                    if (weechat_util_parse_int (str_count, 10, &count))
                     {
                         if (count > 0)
                             count--;
