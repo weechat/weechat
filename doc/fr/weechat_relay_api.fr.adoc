@@ -1040,6 +1040,14 @@ Paramètres de chemin :
   confondre avec le numéro du tampon, qui est différent)
 * `buffer_name` (chaîne, **obligatoire**) : nom du tampon
 
+Paramètres de requête :
+
+* `colors` (chaîne, facultatif, par défaut : `ansi`) : comment les chaînes avec
+  des couleurs sont retournées :
+** `ansi` : retourner les codes couleur ANSI
+** `weechat` : retourner les codes couleur internes WeeChat
+** `strip` : supprimer les couleurs
+
 Exemple de requête : obtenir les pseudos d'un tampon :
 
 [source,shell]
