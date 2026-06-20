@@ -4710,7 +4710,7 @@ IRC_PROTOCOL_CALLBACK(317)
     min = ((idle_time % (60 * 60 * 24)) % (60 * 60)) / 60;
     sec = ((idle_time % (60 * 60 * 24)) % (60 * 60)) % 60;
 
-    datetime = (time_t)(atol (ctxt->params[3]));
+    datetime = (time_t)(atoll (ctxt->params[3]));
 
     ptr_buffer = irc_msgbuffer_get_target_buffer (ctxt->server, ctxt->params[1],
                                                   ctxt->command, "whois", NULL);
@@ -5066,7 +5066,7 @@ IRC_PROTOCOL_CALLBACK(329)
 
     ptr_channel = irc_channel_search (ctxt->server, ctxt->params[1]);
 
-    datetime = (time_t)(atol (ctxt->params[2]));
+    datetime = (time_t)(atoll (ctxt->params[2]));
 
     if (ptr_channel)
     {
@@ -5290,8 +5290,7 @@ IRC_PROTOCOL_CALLBACK(333)
     ptr_channel = irc_channel_search (ctxt->server, ctxt->params[1]);
     ptr_nick = (ptr_channel) ?
         irc_nick_search (ctxt->server, ptr_channel, topic_nick) : NULL;
-    datetime = (ctxt->num_params > 3) ?
-        (time_t)(atol (ctxt->params[3])) : (time_t)(atol (ctxt->params[2]));
+    datetime = (time_t)(atoll ((ctxt->num_params > 3) ? ctxt->params[3] : ctxt->params[2]));
 
     if (!topic_nick && (datetime == 0))
         return WEECHAT_RC_OK;
@@ -5598,7 +5597,7 @@ IRC_PROTOCOL_CALLBACK(346)
             irc_message_get_address_from_host (ctxt->params[3]));
         if (ctxt->num_params >= 5)
         {
-            datetime = (time_t)(atol (ctxt->params[4]));
+            datetime = (time_t)(atoll (ctxt->params[4]));
             if (ptr_modelist)
                 irc_modelist_item_new (ptr_modelist, ctxt->params[2], ctxt->params[3], datetime);
             weechat_printf_datetime_tags (
@@ -5777,7 +5776,7 @@ IRC_PROTOCOL_CALLBACK(348)
             irc_message_get_address_from_host (ctxt->params[3]));
         if (ctxt->num_params >= 5)
         {
-            datetime = (time_t)(atol (ctxt->params[4]));
+            datetime = (time_t)(atoll (ctxt->params[4]));
             if (ptr_modelist)
                 irc_modelist_item_new (ptr_modelist, ctxt->params[2], ctxt->params[3], datetime);
             weechat_printf_datetime_tags (
@@ -6807,7 +6806,7 @@ IRC_PROTOCOL_CALLBACK(367)
             irc_message_get_address_from_host (ctxt->params[3]));
         if (ctxt->num_params >= 5)
         {
-            datetime = (time_t)(atol (ctxt->params[4]));
+            datetime = (time_t)(atoll (ctxt->params[4]));
             if (ptr_modelist)
             {
                 irc_modelist_item_new (ptr_modelist, ctxt->params[2], ctxt->params[3],
@@ -7382,7 +7381,7 @@ IRC_PROTOCOL_CALLBACK(728)
             irc_message_get_address_from_host (ctxt->params[4]));
         if (ctxt->num_params >= 6)
         {
-            datetime = (time_t)(atol (ctxt->params[5]));
+            datetime = (time_t)(atoll (ctxt->params[5]));
             if (ptr_modelist)
             {
                 irc_modelist_item_new (ptr_modelist, ctxt->params[3], ctxt->params[4],

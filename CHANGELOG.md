@@ -31,6 +31,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 - guile, lua, perl, python, ruby, tcl: fix conversion of dates in the API functions
 - irc: limit size of data received from the server to prevent memory exhaustion
 - irc: fix out-of-bounds read on incoming DCC command with a quoted filename ending the message ([#2322](https://github.com/weechat/weechat/issues/2322))
+- irc: fix conversion of dates in received messages
 - relay: limit size of decompressed websocket frame with permessage-deflate to prevent memory exhaustion ([GHSA-v2v4-45wm-5cr3](https://github.com/weechat/weechat/security/advisories/GHSA-v2v4-45wm-5cr3), [CVE-2026-53524](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-53524))
 - relay: limit size of received websocket frame and HTTP body to prevent memory exhaustion
 - relay: limit size of partial message received while reading an HTTP request to prevent memory exhaustion
