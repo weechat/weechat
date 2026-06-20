@@ -1034,6 +1034,13 @@ Path parameters:
   confused with the buffer number, which is different)
 * `buffer_name` (string, **required**): buffer name
 
+Query parameters:
+
+* `colors` (string, optional, default: `ansi`): how to return strings with color codes:
+** `ansi`: return ANSI color codes
+** `weechat`: return WeeChat internal color codes
+** `strip`: strip colors
+
 Request example: get nicks of a buffer:
 
 [source,shell]
