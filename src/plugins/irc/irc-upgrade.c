@@ -356,11 +356,10 @@ irc_upgrade_read_cb (const void *pointer, void *data,
                      int object_id,
                      struct t_infolist *infolist)
 {
-    int flags, sock, size, i, index, nicks_count, num_items, utf8mapping;
-    long number;
+    int flags, sock, size, i, index, nicks_count, num_items, number, utf8mapping;
+    long long number_longlong;
     time_t join_time;
-    char *buf, option_name[64], **nicks, *nick_join, *pos, *error;
-    char **items;
+    char *buf, option_name[64], **nicks, *nick_join, *pos, **items;
     const char *buffer_name, *str, *nick;
     struct t_irc_server *ptr_server;
     struct t_irc_nick *ptr_nick;
@@ -521,10 +520,8 @@ irc_upgrade_read_cb (const void *pointer, void *data,
                                                              "LINELEN");
                         if (str)
                         {
-                            error = NULL;
-                            number = strtol (str, &error, 10);
-                            if (error && !error[0])
-                                irc_upgrade_current_server->msg_max_length = (int)number;
+                            if (weechat_util_parse_int (str, 10, &number))
+                                irc_upgrade_current_server->msg_max_length = number;
                         }
                     }
                     irc_upgrade_current_server->nick_max_length = weechat_infolist_integer (infolist, "nick_max_length");
@@ -540,10 +537,8 @@ irc_upgrade_read_cb (const void *pointer, void *data,
                                                              "USERLEN");
                         if (str)
                         {
-                            error = NULL;
-                            number = strtol (str, &error, 10);
-                            if (error && !error[0])
-                                irc_upgrade_current_server->user_max_length = (int)number;
+                            if (weechat_util_parse_int (str, 10, &number))
+                                irc_upgrade_current_server->user_max_length = number;
                         }
                     }
                     /* "host_max_length" is new in WeeChat 2.6 */
@@ -558,10 +553,8 @@ irc_upgrade_read_cb (const void *pointer, void *data,
                                                              "HOSTLEN");
                         if (str)
                         {
-                            error = NULL;
-                            number = strtol (str, &error, 10);
-                            if (error && !error[0])
-                                irc_upgrade_current_server->host_max_length = (int)number;
+                            if (weechat_util_parse_int (str, 10, &number))
+                                irc_upgrade_current_server->host_max_length = number;
                         }
                     }
                     irc_upgrade_current_server->casemapping = weechat_infolist_integer (infolist, "casemapping");
@@ -621,10 +614,8 @@ irc_upgrade_read_cb (const void *pointer, void *data,
                                                              "MONITOR");
                         if (str)
                         {
-                            error = NULL;
-                            number = strtol (str, &error, 10);
-                            if (error && !error[0])
-                                irc_upgrade_current_server->monitor = (int)number;
+                            if (weechat_util_parse_int (str, 10, &number))
+                                irc_upgrade_current_server->monitor = number;
                         }
                     }
                     /* "clienttagdeny" is new in WeeChat 3.3 */
@@ -771,11 +762,9 @@ irc_upgrade_read_cb (const void *pointer, void *data,
                                                                      pos - nicks[i]);
                                         if (nick_join)
                                         {
-                                            error = NULL;
-                                            number = strtol (pos + 1, &error, 10);
-                                            if (error && !error[0])
+                                            if (weechat_util_parse_longlong (pos + 1, 10, &number_longlong))
                                             {
-                                                join_time = (time_t)number;
+                                                join_time = (time_t)number_longlong;
                                                 irc_channel_join_smart_filtered_add (irc_upgrade_current_channel,
                                                                                      nick_join,
                                                                                      join_time);

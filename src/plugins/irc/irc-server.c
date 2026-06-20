@@ -676,10 +676,9 @@ int
 irc_server_set_addresses (struct t_irc_server *server, const char *addresses,
                           int tls)
 {
-    int rc, i, default_port;
-    char *pos, *error, *addresses_eval;
+    int rc, i, default_port, number;
+    char *pos, *addresses_eval;
     const char *ptr_addresses;
-    long number;
 
     if (!server)
         return 0;
@@ -753,19 +752,14 @@ irc_server_set_addresses (struct t_irc_server *server, const char *addresses,
         server->addresses_count * sizeof (server->retry_array[0]));
     for (i = 0; i < server->addresses_count; i++)
     {
+        server->ports_array[i] = default_port;
         pos = strchr (server->addresses_array[i], '/');
         if (pos)
         {
             pos[0] = 0;
             pos++;
-            error = NULL;
-            number = strtol (pos, &error, 10);
-            server->ports_array[i] = (error && !error[0]) ?
-                number : default_port;
-        }
-        else
-        {
-            server->ports_array[i] = default_port;
+            if (weechat_util_parse_int (pos, 10, &number))
+                server->ports_array[i] = number;
         }
         server->retry_array[i] = 0;
     }
@@ -1518,18 +1512,14 @@ int
 irc_server_get_max_modes (struct t_irc_server *server)
 {
     const char *support_modes;
-    char *error;
-    long number;
-    int max_modes;
+    int max_modes, number;
 
     max_modes = 4;
 
     support_modes = irc_server_get_isupport_value (server, "MODES");
     if (support_modes)
     {
-        error = NULL;
-        number = strtol (support_modes, &error, 10);
-        if (error && !error[0])
+        if (weechat_util_parse_int (support_modes, 10, &number))
         {
             max_modes = number;
             if (max_modes < 1)

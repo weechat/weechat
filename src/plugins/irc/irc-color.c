@@ -96,8 +96,8 @@ char *irc_color_string_decoded[32];
 int
 irc_color_convert_rgb2term (long rgb)
 {
-    char str_color[64], *info_color, *error;
-    long number;
+    char str_color[64], *info_color;
+    int number;
 
     if (rgb < 0)
         return -1;
@@ -111,9 +111,7 @@ irc_color_convert_rgb2term (long rgb)
         return -1;
     }
 
-    error = NULL;
-    number = strtol (info_color, &error, 10);
-    if (!error || error[0])
+    if (!weechat_util_parse_int (info_color, 10, &number))
     {
         free (info_color);
         return -1;
@@ -121,7 +119,7 @@ irc_color_convert_rgb2term (long rgb)
 
     free (info_color);
 
-    return (int)number;
+    return number;
 }
 
 /*
@@ -133,8 +131,8 @@ irc_color_convert_rgb2term (long rgb)
 int
 irc_color_convert_rgb2irc (long rgb)
 {
-    char str_color[64], *error, *info_color;
-    long number;
+    char str_color[64], *info_color;
+    int number;
 
     if (rgb < 0)
         return -1;
@@ -151,9 +149,7 @@ irc_color_convert_rgb2irc (long rgb)
         return -1;
     }
 
-    error = NULL;
-    number = strtol (info_color, &error, 10);
-    if (!error || error[0]
+    if (!weechat_util_parse_int (info_color, 10, &number)
         || (number < 0) || (number >= IRC_COLOR_TERM2IRC_NUM_COLORS))
     {
         free (info_color);
@@ -174,7 +170,7 @@ irc_color_convert_rgb2irc (long rgb)
 int
 irc_color_convert_term2irc (int color)
 {
-    char str_color[64], *error, *info_color;
+    char str_color[64], *info_color;
     long number;
 
     snprintf (str_color, sizeof (str_color), "%d", color);
@@ -186,9 +182,8 @@ irc_color_convert_term2irc (int color)
         return -1;
     }
 
-    error = NULL;
-    number = strtol (info_color, &error, 10);
-    if (!error || error[0] || (number < 0) || (number > 0xFFFFFF))
+    if (!weechat_util_parse_long (info_color, 10, &number)
+        || (number < 0) || (number > 0xFFFFFF))
     {
         free (info_color);
         return -1;
@@ -211,7 +206,7 @@ irc_color_convert_term2irc (int color)
 char *
 irc_color_decode (const char *string, int keep_colors)
 {
-    char **out, *error;
+    char **out;
     char str_fg[16], str_bg[16], str_color[128], str_key[128], str_to_add[128];
     const char *remapped_color;
     unsigned char *ptr_string;
@@ -337,18 +332,14 @@ irc_color_decode (const char *string, int keep_colors)
                         bg = -1;
                         if (str_fg[0])
                         {
-                            error = NULL;
-                            fg = (int)strtol (str_fg, &error, 10);
-                            if (error && !error[0])
+                            if (weechat_util_parse_int (str_fg, 10, &fg))
                                 fg %= IRC_NUM_COLORS;
                             else
                                 fg = -1;
                         }
                         if (str_bg[0])
                         {
-                            error = NULL;
-                            bg = (int)strtol (str_bg, &error, 10);
-                            if (error && !error[0])
+                            if (weechat_util_parse_int (str_bg, 10, &bg))
                                 bg %= IRC_NUM_COLORS;
                             else
                                 bg = -1;
@@ -422,16 +413,12 @@ irc_color_decode (const char *string, int keep_colors)
                         bg_rgb = -1;
                         if (str_fg[0])
                         {
-                            error = NULL;
-                            fg_rgb = strtol (str_fg, &error, 16);
-                            if (!error || error[0])
+                            if (!weechat_util_parse_long (str_fg, 16, &fg_rgb))
                                 fg_rgb = -1;
                         }
                         if (str_bg[0])
                         {
-                            error = NULL;
-                            bg_rgb = strtol (str_bg, &error, 16);
-                            if (!error || error[0])
+                            if (!weechat_util_parse_long (str_bg, 16, &bg_rgb))
                                 bg_rgb = -1;
                         }
                         str_fg[0] = '\0';

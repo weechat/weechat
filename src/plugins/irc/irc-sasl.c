@@ -109,7 +109,7 @@ irc_sasl_mechanism_scram (struct t_irc_server *server,
                           const char *sasl_password,
                           char **sasl_error)
 {
-    char *answer_base64, *string, *username, *username2, *data, **attrs, *error;
+    char *answer_base64, *string, *username, *username2, *data, **attrs;
     char nonce_client[18], nonce_client_base64[24 + 1], *nonce_server;
     char *salt_base64, *salt, *verifier_base64, *verifier, *attr_error;
     char *auth_no_proof, *auth_message;
@@ -117,10 +117,10 @@ irc_sasl_mechanism_scram (struct t_irc_server *server,
     char client_signature[512 / 8], client_proof[512 / 8];
     char client_proof_base64[((512 / 8) * 4) + 1], server_key[512 / 8];
     char server_signature[512 / 8];
-    int i, rc, length, num_attrs, iterations, salt_size, salted_password_size;
+    int i, rc, length, num_attrs, iterations, number;
+    int salt_size, salted_password_size;
     int client_key_size, stored_key_size, client_signature_size;
     int server_key_size, server_signature_size, verifier_size;
-    long number;
 
     if (!server || !hash_algo || !data_base64 || !sasl_username
         || !sasl_password)
@@ -202,10 +202,8 @@ irc_sasl_mechanism_scram (struct t_irc_server *server,
             }
             else if (strncmp (attrs[i], "i=", 2) == 0)
             {
-                error = NULL;
-                number = strtol (attrs[i] + 2, &error, 10);
-                if (error && !error[0])
-                    iterations = (int)number;
+                if (weechat_util_parse_int (attrs[i] + 2, 10, &number))
+                    iterations = number;
             }
             else if (strncmp (attrs[i], "v=", 2) == 0)
             {

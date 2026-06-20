@@ -232,9 +232,8 @@ irc_command_mode_nicks (struct t_irc_server *server,
 char **
 irc_command_mode_masks_convert_ranges (char **argv, int arg_start)
 {
-    char **str_masks, **masks, *error1, *error2, *pos, str_number[32];
-    int i, length, added;
-    long j, number1, number2;
+    char **str_masks, **masks, *pos, str_number[32];
+    int i, j, length, added, number1, number2;
 
     if (!argv || (arg_start < 0))
         return NULL;
@@ -255,12 +254,8 @@ irc_command_mode_masks_convert_ranges (char **argv, int arg_start)
             && (argv[i][length - 1] != '-'))
         {
             pos[0] = '\0';
-            error1 = NULL;
-            number1 = strtol (argv[i], &error1, 10);
-            error2 = NULL;
-            number2 = strtol (pos + 1, &error2, 10);
-            if (error1 && !error1[0]
-                && error2 && !error2[0]
+            if (weechat_util_parse_int (argv[i], 10, &number1)
+                && weechat_util_parse_int (pos + 1, 10, &number2)
                 && (number1 > 0) && (number1 < 128)
                 && (number2 > 0) && (number2 < 128)
                 && (number1 < number2))
@@ -269,8 +264,7 @@ irc_command_mode_masks_convert_ranges (char **argv, int arg_start)
                 {
                     if ((*str_masks)[0])
                         weechat_string_dyn_concat (str_masks, " ", -1);
-                    snprintf (str_number, sizeof (str_number),
-                              "%ld", j);
+                    snprintf (str_number, sizeof (str_number), "%d", j);
                     weechat_string_dyn_concat (str_masks, str_number, -1);
                 }
                 added = 1;
@@ -312,14 +306,12 @@ irc_command_mode_masks (struct t_irc_server *server,
                         const char *set, const char *mode,
                         char **argv, int pos_masks)
 {
-    int max_modes, modes_added, msg_priority;
+    int max_modes, modes_added, msg_priority, number;
     char **modes, **masks, *mask;
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
     struct t_irc_modelist *ptr_modelist;
     struct t_irc_modelist_item *ptr_item;
-    long number;
-    char *error;
 
     if (irc_mode_get_chanmode_type (server, mode[0]) != 'A')
     {
@@ -367,9 +359,7 @@ irc_command_mode_masks (struct t_irc_server *server,
             /* use modelist item for number arguments */
             if (ptr_modelist && (set[0] == '-'))
             {
-                error = NULL;
-                number = strtol (argv[pos_masks], &error, 10);
-                if (error && !error[0])
+                if (weechat_util_parse_int (argv[pos_masks], 10, &number))
                 {
                     ptr_item = irc_modelist_item_search_number (ptr_modelist,
                                                                 number - 1);
@@ -2622,9 +2612,8 @@ irc_command_ignore_display (struct t_irc_ignore *ignore)
 IRC_COMMAND_CALLBACK(ignore)
 {
     struct t_irc_ignore *ptr_ignore;
-    char *mask, *regex, *regex2, *ptr_regex, *pos, *server, *channel, *error;
-    int length, update;
-    long number;
+    char *mask, *regex, *regex2, *ptr_regex, *pos, *server, *channel;
+    int length, number, update;
 
     /* make C compiler happy */
     (void) pointer;
@@ -2767,9 +2756,7 @@ IRC_COMMAND_CALLBACK(ignore)
         }
         else
         {
-            error = NULL;
-            number = strtol (argv[2], &error, 10);
-            if (error && !error[0])
+            if (weechat_util_parse_int (argv[2], 10, &number))
             {
                 ptr_ignore = irc_ignore_search_by_number (number);
                 if (ptr_ignore)
@@ -3430,18 +3417,15 @@ int
 irc_command_list_get_int_arg (int argc, char **argv, int arg_number,
                               int default_value)
 {
-    long value;
-    char *error;
+    int value;
 
     value = default_value;
     if (argc > arg_number)
     {
-        error = NULL;
-        value = strtol (argv[arg_number], &error, 10);
-        if (!error || error[0])
+        if (!weechat_util_parse_int (argv[arg_number], 10, &value))
             value = default_value;
     }
-    return (int)value;
+    return value;
 }
 
 /*

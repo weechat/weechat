@@ -234,9 +234,8 @@ int
 irc_list_channel_match_filter (struct t_irc_server *server,
                                struct t_irc_list_channel *channel)
 {
-    char *error, *result;
-    long number;
-    int match;
+    char *result;
+    int match, number;
 
     /* no filter? then any channel is matching */
     if (!server->list->filter)
@@ -280,25 +279,22 @@ irc_list_channel_match_filter (struct t_irc_server *server,
     else if (strncmp (server->list->filter, "u:>", 3) == 0)
     {
         /* filter by users (> N)*/
-        error = NULL;
-        number = strtol (server->list->filter + 3, &error, 10);
-        if (error && !error[0] && channel->users > (int)number)
+        if (weechat_util_parse_int (server->list->filter + 3, 10, &number)
+            && (channel->users > number))
             return 1;
     }
     else if (strncmp (server->list->filter, "u:<", 3) == 0)
     {
         /* filter by users (< N)*/
-        error = NULL;
-        number = strtol (server->list->filter + 3, &error, 10);
-        if (error && !error[0] && channel->users < (int)number)
+        if (weechat_util_parse_int (server->list->filter + 3, 10, &number)
+            && (channel->users < number))
             return 1;
     }
     else if (strncmp (server->list->filter, "u:", 2) == 0)
     {
         /* filter by users */
-        error = NULL;
-        number = strtol (server->list->filter + 2, &error, 10);
-        if (error && !error[0] && channel->users >= (int)number)
+        if (weechat_util_parse_int (server->list->filter + 2, 10, &number)
+            && (channel->users >= number))
             return 1;
     }
     else
@@ -375,10 +371,9 @@ int
 irc_list_parse_messages (struct t_irc_server *server, const char *output)
 {
     struct t_irc_list_channel *channel;
-    char **irc_msgs, *command, **params, *error;
+    char **irc_msgs, *command, **params;
     const char *ptr_name;
-    int i, count_irc_msgs, num_params, length, keep_colors;
-    long number;
+    int i, count_irc_msgs, num_params, length, keep_colors, number;
 
     if (server->list->channels)
     {
@@ -439,9 +434,9 @@ irc_list_parse_messages (struct t_irc_server *server, const char *output)
                     ptr_name++;
                 }
                 channel->name2 = strdup (ptr_name);
-                error = NULL;
-                number = strtol (params[2], &error, 10);
-                channel->users = (error && !error[0]) ? number : 0;
+                if (!weechat_util_parse_int (params[2], 10, &number))
+                    number = 0;
+                channel->users = number;
                 channel->topic = (num_params > 3) ?
                     irc_color_decode (params[3], keep_colors) : NULL;
                 length = weechat_utf8_strlen_screen (channel->name);

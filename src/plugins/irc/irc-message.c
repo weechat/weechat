@@ -598,8 +598,7 @@ irc_message_parse_cap_multiline_value (struct t_irc_server *server,
 {
     struct t_hashtable *values;
     const char *ptr_value;
-    char *error;
-    long number;
+    int number;
 
     if (!server)
         return;
@@ -617,18 +616,14 @@ irc_message_parse_cap_multiline_value (struct t_irc_server *server,
     ptr_value = (const char *)weechat_hashtable_get (values, "max-bytes");
     if (ptr_value)
     {
-        error = NULL;
-        number = strtol (ptr_value, &error, 10);
-        if (error && !error[0])
+        if (weechat_util_parse_int (ptr_value, 10, &number))
             server->multiline_max_bytes = number;
     }
 
     ptr_value = (const char *)weechat_hashtable_get (values, "max-lines");
     if (ptr_value)
     {
-        error = NULL;
-        number = strtol (ptr_value, &error, 10);
-        if (error && !error[0])
+        if (weechat_util_parse_int (ptr_value, 10, &number))
             server->multiline_max_lines = number;
     }
 
