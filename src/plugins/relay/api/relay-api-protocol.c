@@ -77,7 +77,6 @@ relay_api_protocol_signal_buffer_cb (const void *pointer, void *data,
     long long buffer_id;
     int nicks;
     const char *ptr_id;
-    char *error;
 
     /* make C compiler happy */
     (void) data;
@@ -119,9 +118,7 @@ relay_api_protocol_signal_buffer_cb (const void *pointer, void *data,
                 ptr_buffer);
             if (ptr_id)
             {
-                error = NULL;
-                buffer_id = strtoll (ptr_id, &error, 10);
-                if (!error || error[0])
+                if (!weechat_util_parse_longlong (ptr_id, 10, &buffer_id))
                     buffer_id = -1;
                 weechat_hashtable_remove (
                     RELAY_API_DATA(ptr_client, buffers_closing),
@@ -499,7 +496,7 @@ invalid_hash_algo:
 RELAY_API_PROTOCOL_CALLBACK(version)
 {
     cJSON *json;
-    char *version, *error;
+    char *version;
     long number;
 
     json = cJSON_CreateObject ();
@@ -517,9 +514,7 @@ RELAY_API_PROTOCOL_CALLBACK(version)
     free (version);
 
     version = weechat_info_get ("version_number", NULL);
-    error = NULL;
-    number = strtol (version, &error, 10);
-    if (error && !error[0])
+    if (weechat_util_parse_long (version, 10, &number))
     {
         cJSON_AddItemToObject (json,
                                "weechat_version_number",
@@ -561,10 +556,9 @@ RELAY_API_PROTOCOL_CALLBACK(buffers)
     struct t_gui_buffer *ptr_buffer;
     struct t_gui_line *ptr_line;
     struct t_gui_line_data *ptr_line_data;
-    long lines, lines_free, line_id;
-    int colors, nicks;
+    long lines, lines_free;
+    int colors, nicks, line_id;
     const char *ptr_colors;
-    char *error;
 
     json = NULL;
 
@@ -610,9 +604,10 @@ RELAY_API_PROTOCOL_CALLBACK(buffers)
         {
             if (client->http_req->num_path_items > 4)
             {
-                line_id = strtol (client->http_req->path_items[4], &error, 10);
-                ptr_line = (error && !error[0]) ?
-                    weechat_line_search_by_id (ptr_buffer, line_id) : NULL;
+                if (weechat_util_parse_int (client->http_req->path_items[4], 10, &line_id))
+                    ptr_line = weechat_line_search_by_id (ptr_buffer, line_id);
+                else
+                    ptr_line = NULL;
                 ptr_line_data = (ptr_line) ?
                     weechat_hdata_pointer (relay_hdata_line, ptr_line, "data") : NULL;
                 if (!ptr_line_data)

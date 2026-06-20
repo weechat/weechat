@@ -283,7 +283,7 @@ relay_auth_parse_pbkdf2 (const char *parameters,
                          char **salt_hexa, char **salt, int *salt_size,
                          int *iterations, char **hash)
 {
-    char **argv, *error;
+    char **argv;
     int argc;
 
     if (salt_hexa)
@@ -329,9 +329,7 @@ relay_auth_parse_pbkdf2 (const char *parameters,
     }
 
     /* parameter 2: iterations */
-    error = NULL;
-    *iterations = (int)strtol (argv[1], &error, 10);
-    if (!error || error[0])
+    if (!weechat_util_parse_int (argv[1], 10, iterations))
         *iterations = 0;
 
     /* parameter 3: the PBKDF2 hash */
@@ -362,9 +360,7 @@ int
 relay_auth_check_salt (struct t_relay_client *client,
                        const char *salt_hexa, const char *salt, int salt_size)
 {
-    long number;
-    int time_window;
-    char *error;
+    long long number, time_window;
     time_t time_now;
 
     if (!client)
@@ -374,12 +370,10 @@ relay_auth_check_salt (struct t_relay_client *client,
     {
         if (!salt || (salt_size < 1))
             return 0;
-        error = NULL;
-        number = strtol (salt, &error, 10);
-        if (!error || error[0])
+        if (!weechat_util_parse_longlong (salt, 10, &number))
             return 0;
         time_now = time (NULL);
-        time_window = weechat_config_integer (relay_config_network_time_window);
+        time_window = (long long)weechat_config_integer (relay_config_network_time_window);
         return ((number >= time_now - time_window)
                 && (number <= time_now + time_window)) ? 1 : 0;
     }

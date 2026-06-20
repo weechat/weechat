@@ -306,9 +306,8 @@ relay_websocket_parse_extensions (const char *extensions,
                                   struct t_relay_websocket_deflate *ws_deflate,
                                   int ws_deflate_allowed)
 {
-    char **exts, **params, **items, *error;
-    int i, j, num_exts, num_params, num_items;
-    long number;
+    char **exts, **params, **items;
+    int i, j, number, num_exts, num_params, num_items;
 
     if (!extensions || !ws_deflate)
         return;
@@ -351,9 +350,7 @@ relay_websocket_parse_extensions (const char *extensions,
                         number = 15;
                         if (num_items >= 2)
                         {
-                            error = NULL;
-                            number = strtol (items[1], &error, 10);
-                            if (error && !error[0])
+                            if (weechat_util_parse_int (items[1], 10, &number))
                             {
                                 if (number < 8)
                                     number = 8;
@@ -368,12 +365,12 @@ relay_websocket_parse_extensions (const char *extensions,
                         if (strcmp (items[0], "server_max_window_bits") == 0)
                         {
                             ws_deflate->server_max_window_bits_recv = 1;
-                            ws_deflate->window_bits_deflate = (int)number;
+                            ws_deflate->window_bits_deflate = number;
                         }
                         else
                         {
                             ws_deflate->client_max_window_bits_recv = 1;
-                            ws_deflate->window_bits_inflate = (int)number;
+                            ws_deflate->window_bits_inflate = number;
                         }
                     }
                 }

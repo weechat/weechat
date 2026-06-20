@@ -212,7 +212,6 @@ relay_http_get_param_long (struct t_relay_http_request *request,
                            long *value)
 {
     const char *ptr_value;
-    char *error;
     long number;
 
     if (!value)
@@ -223,8 +222,7 @@ relay_http_get_param_long (struct t_relay_http_request *request,
         return 0;
     if (ptr_value)
     {
-        number = strtol (ptr_value, &error, 10);
-        if (!error || error[0])
+        if (!weechat_util_parse_long (ptr_value, 10, &number))
             return 0;
         *value = number;
     }
@@ -411,10 +409,9 @@ relay_http_parse_header (struct t_relay_http_request *request,
                          const char *header,
                          int ws_deflate_allowed)
 {
-    char *name, *name_lower, *error, **items;
+    char *name, *name_lower, **items;
     const char *pos, *existing_value, *ptr_value;
-    int i, num_items;
-    long number;
+    int i, number, num_items;
 
     weechat_string_dyn_concat (request->raw, header, -1);
     weechat_string_dyn_concat (request->raw, "\n", -1);
@@ -475,10 +472,8 @@ relay_http_parse_header (struct t_relay_http_request *request,
     /* if header is "Content-Length", save the length */
     if (strcmp (name_lower, "content-length") == 0)
     {
-        error = NULL;
-        number = strtol (ptr_value, &error, 10);
-        if (error && !error[0])
-            request->content_length = (int)number;
+        if (weechat_util_parse_int (ptr_value, 10, &number))
+            request->content_length = number;
     }
 
     /*
@@ -606,7 +601,7 @@ relay_http_get_auth_status (struct t_relay_client *client)
 {
     const char *auth, *sec_websocket_protocol, *client_totp, *pos;
     char *relay_password, *totp_secret, *info_totp_args, *info_totp;
-    char *user_pass, **protocol_array, *error;
+    char *user_pass, **protocol_array;
     int rc, i, length, protocol_count, use_base64url, totp_ok;
     long number;
 
@@ -626,8 +621,8 @@ relay_http_get_auth_status (struct t_relay_client *client)
             rc = -4;
             goto end;
         }
-        number = strtol (client_totp, &error, 10);
-        if (!error || error[0] || (number < 0) || (number > 999999))
+        if (!weechat_util_parse_long (client_totp, 10, &number)
+            || (number < 0) || (number > 999999))
         {
             rc = -4;
             goto end;
@@ -1496,8 +1491,8 @@ relay_http_parse_response_code (struct t_relay_http_response *response,
                                 const char *response_code)
 {
     const char *pos, *pos2;
-    char *error, *return_code;
-    long value;
+    char *return_code;
+    int value;
 
     if (!response)
         return 0;
@@ -1528,10 +1523,8 @@ relay_http_parse_response_code (struct t_relay_http_response *response,
     if (!return_code)
         goto error;
 
-    error = NULL;
-    value = strtol (return_code, &error, 10);
-    if (error && !error[0])
-        response->return_code = (int)value;
+    if (weechat_util_parse_int (return_code, 10, &value))
+        response->return_code = value;
 
     free (return_code);
 
@@ -1566,9 +1559,9 @@ int
 relay_http_parse_response_header (struct t_relay_http_response *response,
                                   const char *header)
 {
-    char *name, *name_lower, *error;
+    char *name, *name_lower;
     const char *pos, *ptr_value;
-    long number;
+    int number;
 
     /* empty line => end of headers */
     if (!header || !header[0])
@@ -1608,10 +1601,8 @@ relay_http_parse_response_header (struct t_relay_http_response *response,
     /* if header is "Content-Length", save the length */
     if (strcmp (name_lower, "content-length") == 0)
     {
-        error = NULL;
-        number = strtol (ptr_value, &error, 10);
-        if (error && !error[0])
-            response->content_length = (int)number;
+        if (weechat_util_parse_int (ptr_value, 10, &number))
+            response->content_length = number;
     }
 
     free (name);

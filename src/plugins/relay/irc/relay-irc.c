@@ -429,9 +429,8 @@ relay_irc_signal_irc_in2_cb (const void *pointer, void *data,
 int
 relay_irc_tag_relay_client_id (const char *tags)
 {
-    char **argv, *error;
-    int result, argc, i;
-    long number;
+    char **argv;
+    int number, result, argc, i;
 
     result = -1;
 
@@ -449,9 +448,7 @@ relay_irc_tag_relay_client_id (const char *tags)
         {
             if (strncmp (argv[i], "relay_client_", 13) == 0)
             {
-                error = NULL;
-                number = strtol (argv[i] + 13, &error, 10);
-                if (error && !error[0])
+                if (weechat_util_parse_int (argv[i] + 13, 10, &number))
                 {
                     result = number;
                     break;
@@ -1606,10 +1603,9 @@ relay_irc_recv (struct t_relay_client *client, const char *data)
     const char *ptr_data, *ptr_nick_modes, *pos;
     char str_time[128], str_signal[128], str_server_channel[256], *nick;
     char str_param[128], *str_args, *version, str_command[128], **params;
-    char *password, *irc_is_channel, *info, *error, *str_cmd_lower;
+    char *password, *irc_is_channel, *info, *str_cmd_lower;
     char modifier_data[128], *new_data, *ctcp_type, *ctcp_params, *nick_modes;
-    long num_params;
-    int i, redirect_msg;
+    int i, num_params, redirect_msg;
 
     new_data = NULL;
     hash_parsed = NULL;
@@ -1650,9 +1646,7 @@ relay_irc_recv (struct t_relay_client *client, const char *data)
         goto end;
     irc_command = weechat_hashtable_get (hash_parsed, "command");
     str_num_params = weechat_hashtable_get (hash_parsed, "num_params");
-    error = NULL;
-    num_params = strtol (str_num_params, &error, 10);
-    if (!error || error[0])
+    if (!weechat_util_parse_int (str_num_params, 10, &num_params))
         num_params = 0;
     if (num_params > 0)
     {

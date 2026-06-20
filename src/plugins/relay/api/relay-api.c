@@ -51,7 +51,6 @@ long long
 relay_api_get_buffer_id (struct t_gui_buffer *buffer)
 {
     const char *ptr_id;
-    char *error;
     long long id;
 
     if (!buffer)
@@ -61,9 +60,7 @@ relay_api_get_buffer_id (struct t_gui_buffer *buffer)
     if (!ptr_id)
         return -1;
 
-    error = NULL;
-    id = strtoll (ptr_id, &error, 10);
-    if (!error || error[0])
+    if (!weechat_util_parse_longlong (ptr_id, 10, &id))
         return -1;
 
     return id;

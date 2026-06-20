@@ -684,7 +684,7 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(completion)
     struct t_gui_completion_word *word;
     struct t_arraylist *ptr_list;
     struct t_relay_weechat_msg *msg;
-    char *error, *pos_data;
+    char *pos_data;
     int i, position, length_data, context, pos_start, size;
 
     RELAY_WEECHAT_PROTOCOL_MIN_ARGS(0);
@@ -709,9 +709,7 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(completion)
         goto error;
     }
 
-    error = NULL;
-    position = (int)strtol (argv[1], &error, 10);
-    if (!error || error[0])
+    if (!weechat_util_parse_int (argv[1], 10, &position))
         goto error;
 
     pos_data = strchr (argv_eol[1], ' ');

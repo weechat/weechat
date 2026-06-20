@@ -113,7 +113,6 @@ long long
 relay_remote_event_get_buffer_id (struct t_gui_buffer *buffer)
 {
     const char *ptr_id;
-    char *error;
     long long buffer_id;
 
     if (!buffer)
@@ -123,9 +122,7 @@ relay_remote_event_get_buffer_id (struct t_gui_buffer *buffer)
     if (!ptr_id)
         return -1;
 
-    error = NULL;
-    buffer_id = strtoll (ptr_id, &error, 10);
-    if (!error || error[0])
+    if (!weechat_util_parse_longlong (ptr_id, 10, &buffer_id))
         return -1;
 
     return buffer_id;
