@@ -85,15 +85,12 @@ struct t_exec_cmd *
 exec_search_by_id (const char *id)
 {
     struct t_exec_cmd* ptr_exec_cmd;
-    char *error;
     long number;
 
     if (!id)
         return NULL;
 
-    error = NULL;
-    number = strtol (id, &error, 10);
-    if (!error || error[0])
+    if (!weechat_util_parse_long (id, 10, &number))
         number = -1;
 
     for (ptr_exec_cmd = exec_cmds; ptr_exec_cmd;
