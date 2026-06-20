@@ -936,6 +936,11 @@ Paramètres de chemin :
   confondre avec le numéro du tampon, qui est différent)
 * `buffer_name` (chaîne, **obligatoire**) : nom du tampon
 * `line_id` (entier, facultatif) : retourner une seule ligne avec cet identifiant
+* `colors` (chaîne, facultatif, par défaut : `ansi`) : comment les chaînes avec
+  des couleurs sont retournées :
+** `ansi` : retourner les codes couleur ANSI
+** `weechat` : retourner les codes couleur internes WeeChat
+** `strip` : supprimer les couleurs
 
 Paramètres de requête :
 
