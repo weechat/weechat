@@ -40,9 +40,8 @@ struct t_hashtable *
 buflist_focus_cb (const void *pointer, void *data, struct t_hashtable *info)
 {
     const char *ptr_bar_item_name, *ptr_bar_item_line, *keys, *ptr_value;
-    long item_line;
-    char *error, str_value[128], **list_keys;
-    int i, item_index, num_keys, type;
+    char str_value[128], **list_keys;
+    int i, item_index, item_line, num_keys, type;
     struct t_gui_buffer *ptr_buffer;
 
     /* make C compiler happy */
@@ -64,15 +63,10 @@ buflist_focus_cb (const void *pointer, void *data, struct t_hashtable *info)
     ptr_bar_item_line = weechat_hashtable_get (info, "_bar_item_line");
     if (!ptr_bar_item_line)
         goto end;
-    error = NULL;
-    item_line = strtol (ptr_bar_item_line, &error, 10);
-    if (!error || error[0])
-        goto end;
-    if ((item_line < 0)
+    if (!weechat_util_parse_int (ptr_bar_item_line, 10, &item_line)
+        || (item_line < 0)
         || (item_line >= weechat_arraylist_size (buflist_list_buffers[item_index])))
-    {
         goto end;
-    }
 
     /* check if buffer pointer is still valid */
     ptr_buffer = weechat_arraylist_get (buflist_list_buffers[item_index],
@@ -333,10 +327,9 @@ buflist_hsignal_cb (const void *pointer, void *data, const char *signal,
     const char *ptr_key, *ptr_pointer, *ptr_number, *ptr_number2;
     const char *ptr_full_name;
     struct t_gui_buffer *ptr_buffer;
-    char *error, str_command[1024];
-    long number, number2;
+    char str_command[1024];
     unsigned long value;
-    int rc, current_buffer_number;
+    int rc, current_buffer_number, number, number2;
 
     /* make C compiler happy */
     (void) pointer;
@@ -360,13 +353,9 @@ buflist_hsignal_cb (const void *pointer, void *data, const char *signal,
         return WEECHAT_RC_OK;
     ptr_buffer = (struct t_gui_buffer *)value;
 
-    error = NULL;
-    number = strtol (ptr_number, &error, 10);
-    if (!error || error[0])
+    if (!weechat_util_parse_int (ptr_number, 10, &number))
         return WEECHAT_RC_OK;
-    error = NULL;
-    number2 = strtol (ptr_number2, &error, 10);
-    if (!error || error[0])
+    if (!weechat_util_parse_int (ptr_number2, 10, &number2))
         return WEECHAT_RC_OK;
 
     current_buffer_number = weechat_buffer_get_integer (
