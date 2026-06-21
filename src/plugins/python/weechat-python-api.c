@@ -2093,14 +2093,14 @@ API_FUNC(prnt)
 API_FUNC(prnt_date_tags)
 {
     char *buffer, *tags, *message;
-    long date;
+    long long date;
 
     API_INIT_FUNC(1, "prnt_date_tags", API_RETURN_ERROR);
     buffer = NULL;
     date = 0;
     tags = NULL;
     message = NULL;
-    if (!PyArg_ParseTuple (args, "slss", &buffer, &date, &tags, &message))
+    if (!PyArg_ParseTuple (args, "sLss", &buffer, &date, &tags, &message))
         API_WRONG_ARGS(API_RETURN_ERROR);
 
     plugin_script_api_printf_date_tags (weechat_python_plugin,
@@ -2116,7 +2116,7 @@ API_FUNC(prnt_date_tags)
 API_FUNC(prnt_datetime_tags)
 {
     char *buffer, *tags, *message;
-    long date;
+    long long date;
     int date_usec;
 
     API_INIT_FUNC(1, "prnt_datetime_tags", API_RETURN_ERROR);
@@ -2125,7 +2125,7 @@ API_FUNC(prnt_datetime_tags)
     date_usec = 0;
     tags = NULL;
     message = NULL;
-    if (!PyArg_ParseTuple (args, "sliss", &buffer, &date, &date_usec, &tags,
+    if (!PyArg_ParseTuple (args, "sLiss", &buffer, &date, &date_usec, &tags,
                            &message))
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -2165,7 +2165,7 @@ API_FUNC(prnt_y_date_tags)
 {
     char *buffer, *tags, *message;
     int y;
-    long date;
+    long long date;
 
     API_INIT_FUNC(1, "prnt_y_date_tags", API_RETURN_ERROR);
     buffer = NULL;
@@ -2173,7 +2173,7 @@ API_FUNC(prnt_y_date_tags)
     date = 0;
     tags = NULL;
     message = NULL;
-    if (!PyArg_ParseTuple (args, "silss", &buffer, &y, &date, &tags, &message))
+    if (!PyArg_ParseTuple (args, "siLss", &buffer, &y, &date, &tags, &message))
         API_WRONG_ARGS(API_RETURN_ERROR);
 
     plugin_script_api_printf_y_date_tags (weechat_python_plugin,
@@ -2191,7 +2191,7 @@ API_FUNC(prnt_y_datetime_tags)
 {
     char *buffer, *tags, *message;
     int y;
-    long date;
+    long long date;
     int date_usec;
 
     API_INIT_FUNC(1, "prnt_y_datetime_tags", API_RETURN_ERROR);
@@ -2201,7 +2201,7 @@ API_FUNC(prnt_y_datetime_tags)
     date_usec = 0;
     tags = NULL;
     message = NULL;
-    if (!PyArg_ParseTuple (args, "siliss", &buffer, &y, &date, &date_usec,
+    if (!PyArg_ParseTuple (args, "siLiss", &buffer, &y, &date, &date_usec,
                            &tags, &message))
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -4904,13 +4904,13 @@ API_FUNC(infolist_new_var_time)
 {
     char *item, *name;
     const char *result;
-    long value;
+    long long value;
 
     API_INIT_FUNC(1, "infolist_new_var_time", API_RETURN_EMPTY);
     item = NULL;
     name = NULL;
     value = 0;
-    if (!PyArg_ParseTuple (args, "ssl", &item, &name, &value))
+    if (!PyArg_ParseTuple (args, "ssL", &item, &name, &value))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     result = API_PTR2STR(weechat_infolist_new_var_time (API_STR2PTR(item),
