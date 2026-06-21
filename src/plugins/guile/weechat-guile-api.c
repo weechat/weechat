@@ -2096,7 +2096,7 @@ weechat_guile_api_print_date_tags (SCM buffer, SCM date, SCM tags, SCM message)
     plugin_script_api_printf_date_tags (weechat_guile_plugin,
                                         guile_current_script,
                                         API_STR2PTR(API_SCM_TO_STRING(buffer)),
-                                        (time_t)scm_to_long (date),
+                                        (time_t)scm_to_long_long (date),
                                         API_SCM_TO_STRING(tags),
                                         "%s", API_SCM_TO_STRING(message));
 
@@ -2117,7 +2117,7 @@ weechat_guile_api_print_datetime_tags (SCM buffer, SCM date, SCM date_usec,
         weechat_guile_plugin,
         guile_current_script,
         API_STR2PTR(API_SCM_TO_STRING(buffer)),
-        (time_t)scm_to_long (date),
+        (time_t)scm_to_long_long (date),
         scm_to_int (date_usec),
         API_SCM_TO_STRING(tags),
         "%s", API_SCM_TO_STRING(message));
@@ -2156,7 +2156,7 @@ weechat_guile_api_print_y_date_tags (SCM buffer, SCM y, SCM date, SCM tags,
                                           guile_current_script,
                                           API_STR2PTR(API_SCM_TO_STRING(buffer)),
                                           scm_to_int (y),
-                                          (time_t)scm_to_long (date),
+                                          (time_t)scm_to_long_long (date),
                                           API_SCM_TO_STRING(tags),
                                           "%s", API_SCM_TO_STRING(message));
 
@@ -2178,7 +2178,7 @@ weechat_guile_api_print_y_datetime_tags (SCM buffer, SCM y, SCM date,
         guile_current_script,
         API_STR2PTR(API_SCM_TO_STRING(buffer)),
         scm_to_int (y),
-        (time_t)scm_to_long (date),
+        (time_t)scm_to_long_long (date),
         scm_to_int (date_usec),
         API_SCM_TO_STRING(tags),
         "%s", API_SCM_TO_STRING(message));
@@ -4748,7 +4748,7 @@ weechat_guile_api_infolist_new_var_time (SCM item, SCM name, SCM value)
 
     result = API_PTR2STR(weechat_infolist_new_var_time (API_STR2PTR(API_SCM_TO_STRING(item)),
                                                         API_SCM_TO_STRING(name),
-                                                        (time_t)scm_to_long (value)));
+                                                        (time_t)scm_to_long_long (value)));
 
     API_RETURN_STRING(result);
 }
