@@ -2123,13 +2123,13 @@ API_FUNC(print)
 API_FUNC(print_date_tags)
 {
     char *buffer, *tags, *message;
-    long date;
+    Tcl_WideInt date;
 
     API_INIT_FUNC(1, "print_date_tags", API_RETURN_ERROR);
     if (objc < 5)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
-    if (Tcl_GetLongFromObj (interp, objv[2], &date) != TCL_OK)
+    if (Tcl_GetWideIntFromObj (interp, objv[2], &date) != TCL_OK)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
     buffer = Tcl_GetString (objv[1]);
@@ -2150,13 +2150,13 @@ API_FUNC(print_datetime_tags)
 {
     char *buffer, *tags, *message;
     int date_usec;
-    long date;
+    Tcl_WideInt date;
 
     API_INIT_FUNC(1, "print_datetime_tags", API_RETURN_ERROR);
     if (objc < 6)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
-    if (Tcl_GetLongFromObj (interp, objv[2], &date) != TCL_OK)
+    if (Tcl_GetWideIntFromObj (interp, objv[2], &date) != TCL_OK)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
     if (Tcl_GetIntFromObj (interp, objv[3], &date_usec) != TCL_OK)
@@ -2205,7 +2205,7 @@ API_FUNC(print_y_date_tags)
 {
     char *buffer, *tags, *message;
     int y;
-    long date;
+    Tcl_WideInt date;
 
     API_INIT_FUNC(1, "print_y_date_tags", API_RETURN_ERROR);
     if (objc < 6)
@@ -2214,7 +2214,7 @@ API_FUNC(print_y_date_tags)
     if (Tcl_GetIntFromObj (interp, objv[2], &y) != TCL_OK)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
-    if (Tcl_GetLongFromObj (interp, objv[3], &date) != TCL_OK)
+    if (Tcl_GetWideIntFromObj (interp, objv[3], &date) != TCL_OK)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
     buffer = Tcl_GetString (objv[1]);
@@ -2236,7 +2236,7 @@ API_FUNC(print_y_datetime_tags)
 {
     char *buffer, *tags, *message;
     int y, date_usec;
-    long date;
+    Tcl_WideInt date;
 
     API_INIT_FUNC(1, "print_y_datetime_tags", API_RETURN_ERROR);
     if (objc < 7)
@@ -2245,7 +2245,7 @@ API_FUNC(print_y_datetime_tags)
     if (Tcl_GetIntFromObj (interp, objv[2], &y) != TCL_OK)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
-    if (Tcl_GetLongFromObj (interp, objv[3], &date) != TCL_OK)
+    if (Tcl_GetWideIntFromObj (interp, objv[3], &date) != TCL_OK)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
     if (Tcl_GetIntFromObj (interp, objv[4], &date_usec) != TCL_OK)
@@ -4942,13 +4942,13 @@ API_FUNC(infolist_new_var_pointer)
 API_FUNC(infolist_new_var_time)
 {
     const char *result;
-    long value;
+    Tcl_WideInt value;
 
     API_INIT_FUNC(1, "infolist_new_var_time", API_RETURN_EMPTY);
     if (objc < 4)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
-    if (Tcl_GetLongFromObj (interp, objv[3], &value) != TCL_OK)
+    if (Tcl_GetWideIntFromObj (interp, objv[3], &value) != TCL_OK)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     result = API_PTR2STR(weechat_infolist_new_var_time (API_STR2PTR(Tcl_GetString (objv[1])), /* item */
