@@ -28,7 +28,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 - api: fix infinite loop in function string_replace when the search string is empty
 - irc: fix tag in message with list of names when joining a channel
 - fset: remove error displayed in core buffer when clicking with the mouse below the last option displayed
-- guile, lua: fix conversion of dates in the API functions
+- guile, lua, perl: fix conversion of dates in the API functions
 - irc: limit size of data received from the server to prevent memory exhaustion
 - irc: fix out-of-bounds read on incoming DCC command with a quoted filename ending the message ([#2322](https://github.com/weechat/weechat/issues/2322))
 - relay: limit size of decompressed websocket frame with permessage-deflate to prevent memory exhaustion ([GHSA-v2v4-45wm-5cr3](https://github.com/weechat/weechat/security/advisories/GHSA-v2v4-45wm-5cr3), [CVE-2026-53524](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-53524))

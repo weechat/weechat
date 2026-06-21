@@ -2106,7 +2106,7 @@ API_FUNC(print_date_tags)
     plugin_script_api_printf_date_tags (weechat_perl_plugin,
                                         perl_current_script,
                                         API_STR2PTR(buffer),
-                                        (time_t)(SvIV (ST (1))), /* date */
+                                        (time_t)(SvNV (ST (1))), /* date */
                                         tags,
                                         "%s", message);
 
@@ -2129,7 +2129,7 @@ API_FUNC(print_datetime_tags)
     plugin_script_api_printf_datetime_tags (weechat_perl_plugin,
                                             perl_current_script,
                                             API_STR2PTR(buffer),
-                                            (time_t)(SvIV (ST (1))), /* date */
+                                            (time_t)(SvNV (ST (1))), /* date */
                                             SvIV (ST (2)), /* date_usec */
                                             tags,
                                             "%s", message);
@@ -2175,7 +2175,7 @@ API_FUNC(print_y_date_tags)
                                           perl_current_script,
                                           API_STR2PTR(buffer),
                                           SvIV (ST (1)), /* y */
-                                          (time_t)(SvIV (ST (2))), /* date */
+                                          (time_t)(SvNV (ST (2))), /* date */
                                           tags,
                                           "%s", message);
 
@@ -2199,7 +2199,7 @@ API_FUNC(print_y_datetime_tags)
                                               perl_current_script,
                                               API_STR2PTR(buffer),
                                               SvIV (ST (1)), /* y */
-                                              (time_t)(SvIV (ST (2))), /* date */
+                                              (time_t)(SvNV (ST (2))), /* date */
                                               SvIV (ST (3)), /* date_usec */
                                               tags,
                                               "%s", message);
@@ -4940,7 +4940,7 @@ API_FUNC(infolist_new_var_time)
 
     result = API_PTR2STR(weechat_infolist_new_var_time (API_STR2PTR(item),
                                                         name,
-                                                        (time_t)(SvIV (ST (2))))); /* value */
+                                                        (time_t)(SvNV (ST (2))))); /* value */
 
     API_RETURN_STRING(result);
 }
