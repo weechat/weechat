@@ -2173,7 +2173,7 @@ API_FUNC(print)
 API_FUNC(print_date_tags)
 {
     const char *buffer, *tags, *message;
-    long date;
+    long long date;
 
     API_INIT_FUNC(1, "print_date_tags", API_RETURN_ERROR);
     if (lua_gettop (L) < 4)
@@ -2197,7 +2197,7 @@ API_FUNC(print_date_tags)
 API_FUNC(print_datetime_tags)
 {
     const char *buffer, *tags, *message;
-    long date;
+    long long date;
     int date_usec;
 
     API_INIT_FUNC(1, "print_datetime_tags", API_RETURN_ERROR);
@@ -2247,7 +2247,7 @@ API_FUNC(print_y_date_tags)
 {
     const char *buffer, *tags, *message;
     int y;
-    long date;
+    long long date;
 
     API_INIT_FUNC(1, "print_y_date_tags", API_RETURN_ERROR);
     if (lua_gettop (L) < 5)
@@ -2274,7 +2274,7 @@ API_FUNC(print_y_datetime_tags)
 {
     const char *buffer, *tags, *message;
     int y, date_usec;
-    long date;
+    long long date;
 
     API_INIT_FUNC(1, "print_y_datetime_tags", API_RETURN_ERROR);
     if (lua_gettop (L) < 6)
@@ -5008,7 +5008,7 @@ API_FUNC(infolist_new_var_time)
 {
     const char *item, *name;
     const char *result;
-    long value;
+    long long value;
 
     API_INIT_FUNC(1, "infolist_new_var_time", API_RETURN_EMPTY);
     if (lua_gettop (L) < 3)
