@@ -2604,7 +2604,7 @@ weechat_ruby_api_print_date_tags (VALUE class, VALUE buffer, VALUE date,
     Check_Type (message, T_STRING);
 
     c_buffer = StringValuePtr (buffer);
-    c_date = NUM2ULONG (date);
+    c_date = NUM2ULL (date);
     c_tags = StringValuePtr (tags);
     c_message = StringValuePtr (message);
 
@@ -2639,7 +2639,7 @@ weechat_ruby_api_print_datetime_tags (VALUE class, VALUE buffer, VALUE date,
     Check_Type (message, T_STRING);
 
     c_buffer = StringValuePtr (buffer);
-    c_date = NUM2ULONG (date);
+    c_date = NUM2ULL (date);
     c_date_usec = NUM2INT (date_usec);
     c_tags = StringValuePtr (tags);
     c_message = StringValuePtr (message);
@@ -2703,7 +2703,7 @@ weechat_ruby_api_print_y_date_tags (VALUE class, VALUE buffer, VALUE y,
 
     c_buffer = StringValuePtr (buffer);
     c_y = NUM2INT (y);
-    c_date = NUM2ULONG (date);
+    c_date = NUM2ULL (date);
     c_tags = StringValuePtr (tags);
     c_message = StringValuePtr (message);
 
@@ -2741,7 +2741,7 @@ weechat_ruby_api_print_y_datetime_tags (VALUE class, VALUE buffer, VALUE y,
 
     c_buffer = StringValuePtr (buffer);
     c_y = NUM2INT (y);
-    c_date = NUM2ULONG (date);
+    c_date = NUM2ULL (date);
     c_date_usec = NUM2INT (date_usec);
     c_tags = StringValuePtr (tags);
     c_message = StringValuePtr (message);
@@ -6040,7 +6040,7 @@ weechat_ruby_api_infolist_new_var_time (VALUE class, VALUE item,
 
     c_item = StringValuePtr (item);
     c_name = StringValuePtr (name);
-    c_value = NUM2ULONG (value);
+    c_value = NUM2ULL (value);
 
     result = API_PTR2STR(weechat_infolist_new_var_time (API_STR2PTR(c_item),
                                                         c_name,
