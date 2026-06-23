@@ -1305,7 +1305,8 @@ trigger_command_init (void)
                "are evaluated, \"${tg_trigger_name}\" is replaced by the trigger "
                "name, see /help eval)"),
             N_("> type `command_run`: command(s) (required)"),
-            N_("> type `timer`: interval (required), align on second, max calls"),
+            N_("> type `timer`: interval (required, in milliseconds), "
+               "align on second, max calls"),
             N_("> type `config`: name(s) of option (required)"),
             N_("> type `focus`: name(s) of area (required)"),
             N_("> type `info`: name(s) of info (required)"),
