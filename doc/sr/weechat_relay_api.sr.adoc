@@ -1188,12 +1188,10 @@ HTTP/1.1 200 OK
 ]
 ----
 
-// TRANSLATION MISSING
 [[resource_scripts]]
-=== Scripts
+=== Скрипте
 
-// TRANSLATION MISSING
-Return loaded scripts (all languages).
+Враћа учитане скрипте (на свим језицима).
 
 Крајња тачка:
 
