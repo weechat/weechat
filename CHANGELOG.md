@@ -12,6 +12,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 - core: fix buffer overflow in connection to SOCKS5 proxy ([#2325](https://github.com/weechat/weechat/issues/2325))
 - relay/api: fix memory leak in resources "handshake", "input" and "completion"
+- relay: fix read of uncompressed websocket frame ([#2331](https://github.com/weechat/weechat/issues/2331))
 - xfer: fix out-of-bounds write in xfer file transfer resume ([#2326](https://github.com/weechat/weechat/issues/2326))
 
 ## Version 4.9.2 (2026-06-07)

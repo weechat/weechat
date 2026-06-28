@@ -653,7 +653,7 @@ relay_websocket_decode_frame (const unsigned char *buffer,
     size_t size_decompressed;
     char *payload_decompressed;
     struct t_relay_websocket_frame *frames2, *ptr_frame;
-    int size, masked_frame, mask[4];
+    int size, compressed, masked_frame, mask[4];
 
     if (!buffer || !frames || !num_frames)
         return 0;
@@ -673,6 +673,9 @@ relay_websocket_decode_frame (const unsigned char *buffer,
             goto missing_data;
 
         opcode = buffer[index_buffer] & 15;
+
+        /* RSV1 indicates whether this message is compressed */
+        compressed = (buffer[index_buffer] & 64) ? 1 : 0;
 
         /* check if frame is masked */
         masked_frame = (buffer[index_buffer + 1] & 128) ? 1 : 0;
@@ -780,9 +783,9 @@ relay_websocket_decode_frame (const unsigned char *buffer,
 
         /*
          * decompress data if frame is not empty and if "permessage-deflate"
-         * is enabled
+         * is enabled and the message is compressed
          */
-        if ((length_frame > 0) && ws_deflate && ws_deflate->enabled)
+        if ((length_frame > 0) && ws_deflate && ws_deflate->enabled && compressed)
         {
             if (!ws_deflate->strm_inflate)
             {
