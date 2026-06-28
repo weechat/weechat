@@ -1,5 +1,5 @@
 #
-# SPDX-FileCopyrightText: 2009-2016 Krzysztof Koroscik <soltys1@gmail.com>
+# SPDX-FileCopyrightText: 2009-2026 Krzysztof Koroscik <soltys@soltys.info>
 # SPDX-FileCopyrightText: 2010 B.J. Stobiecki <bartek@stobiecki.eu>
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
@@ -19,21 +19,19 @@
 # You should have received a copy of the GNU General Public License
 # along with WeeChat.  If not, see <https://www.gnu.org/licenses/>.
 #
-# Krzysztof Korościk <soltys@soltys.info>, 2018, 2019, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
-"Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
+"Report-Msgid-Bugs-To: soltys@soltys.info\n"
 "POT-Creation-Date: 2026-06-23 12:14+0200\n"
-"PO-Revision-Date: 2026-05-30 14:02+0200\n"
+"PO-Revision-Date: 2026-06-28 08:55+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
-"Language-Team: Polish <weechat-dev@nongnu.org>\n"
+"Language-Team: Polish <soltys@soltys.info>\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
-"|| n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Poedit 3.8\n"
 
 #. TRANSLATORS: command line option "-a", "--no-connect"

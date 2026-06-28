@@ -1,7 +1,8 @@
 #
 # SPDX-FileCopyrightText: 2005 Rudolf Polzer <weechat-te@durchnull.de>
 # SPDX-FileCopyrightText: 2006-2007 Thomas Schuetz <i18n@internet-villa.de>
-# SPDX-FileCopyrightText: 2009-2019, 2023, 2024, 2025 Nils Görs <weechatter@arcor.de>
+# SPDX-FileCopyrightText: 2009-2026 Nils Görs <weechatter@arcor.de>
+# SPDX-FileCopyrightText: 2018 w8rabbit <w8rabbit@mail.i2p>
 # SPDX-FileCopyrightText: 2015 Sven Knurr <zeug@tuxproject.de>
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
@@ -21,18 +22,14 @@
 # You should have received a copy of the GNU General Public License
 # along with WeeChat.  If not, see <https://www.gnu.org/licenses/>.
 #
-#
-# w8rabbit <w8rabbit@mail.i2p>, 2018.
-# Nils Görs <>, 2022-2026.
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
-"Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
+"Report-Msgid-Bugs-To: weechatter@arcor.de\n"
 "POT-Creation-Date: 2026-06-23 12:14+0200\n"
-"PO-Revision-Date: 2026-06-23 13:29+0200\n"
+"PO-Revision-Date: 2026-06-28 08:28+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
-"Language-Team: German - Germany <weechat-dev@nongnu.org>\n"
+"Language-Team: German <weechatter@arcor.de>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
