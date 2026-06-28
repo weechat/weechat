@@ -8,6 +8,7 @@
 
 ### Fixed
 
+- core: fix possible buffer overflow in command /color alias ([#2330](https://github.com/weechat/weechat/issues/2330))
 - core: fix buffer overflow in connection to SOCKS5 proxy ([#2325](https://github.com/weechat/weechat/issues/2325))
 - api: fix infinite loop in function string_replace when the search string is empty
 - irc: limit size of data received from the server to prevent memory exhaustion
