@@ -115,6 +115,9 @@ jobs:
 
   checks:
 
+    env:
+      POEXAM_VERSION: "0.0.12"
+
     strategy:
       matrix:
         os:
@@ -131,7 +134,17 @@ jobs:
         sudo apt-get update -qq
         sudo apt-get --yes --no-install-recommends install ${{ env.CHECK_DEPS_UBUNTU }}
         pipx install msgcheck ruff
-        cargo install --version 0.0.12 poexam
+
+    - name: Cache poexam
+      id: cache-poexam
+      uses: actions/cache@v6
+      with:
+        path: ~/.cargo/bin/poexam
+        key: poexam-${{ env.POEXAM_VERSION }}-${{ runner.os }}
+
+    - name: Install poexam
+      if: steps.cache-poexam.outputs.cache-hit != 'true'
+      run: cargo install --version "$POEXAM_VERSION" poexam
 
     - name: Check gettext files (msgcheck)
       run: msgcheck po/*.po
