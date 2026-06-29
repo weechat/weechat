@@ -1699,17 +1699,9 @@ COMMAND_CALLBACK(color)
             else
                 str_alias = argv[i];
         }
-        str_color[0] = '\0';
-        if (str_alias)
-        {
-            strcat (str_color, ";");
-            strcat (str_color, str_alias);
-        }
-        if (str_rgb)
-        {
-            strcat (str_color, ";");
-            strcat (str_color, str_rgb);
-        }
+        snprintf (str_color, sizeof (str_color), "%s%s%s%s",
+                  str_alias ? ";" : "", str_alias ? str_alias : "",
+                  str_rgb ? ";" : "", str_rgb ? str_rgb : "");
 
         /* add color alias */
         snprintf (str_command, sizeof (str_command),
@@ -3065,7 +3057,7 @@ command_help_list_plugin_commands (struct t_weechat_plugin *plugin,
                             {
                                 snprintf (str_command, sizeof (str_command),
                                           str_format, weelist_string (item));
-                                strcat (str_line, str_command);
+                                snprintf (str_line + strlen (str_line), sizeof (str_line) - strlen (str_line), "%s", str_command);
                             }
                         }
                     }
