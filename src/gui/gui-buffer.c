@@ -3804,6 +3804,7 @@ gui_buffer_close (struct t_gui_buffer *buffer)
 
     gui_hotlist_remove_buffer (buffer, 1);
     free (buffer->hotlist_removed);
+    buffer->hotlist_removed = NULL;
     if (gui_hotlist_initial_buffer == buffer)
         gui_hotlist_initial_buffer = NULL;
 
@@ -3822,55 +3823,85 @@ gui_buffer_close (struct t_gui_buffer *buffer)
     /* free all lines */
     gui_line_free_all (buffer);
     free (buffer->own_lines);
+    buffer->own_lines = NULL;
     free (buffer->mixed_lines);
+    buffer->mixed_lines = NULL;
 
     /* free some data */
     gui_buffer_undo_free_all (buffer);
     gui_history_buffer_free (buffer);
     gui_completion_free (buffer->completion);
+    buffer->completion = NULL;
     gui_nicklist_remove_all (buffer);
     gui_nicklist_remove_group (buffer, buffer->nicklist_root);
+    buffer->nicklist_root = NULL;
     hashtable_free (buffer->hotlist_max_level_nicks);
+    buffer->hotlist_max_level_nicks = NULL;
     gui_key_free_all (-1, &buffer->keys, &buffer->last_key,
                       &buffer->keys_count, 0);
     gui_buffer_local_var_remove_all (buffer);
     hashtable_free (buffer->local_variables);
+    buffer->local_variables = NULL;
     free (buffer->plugin_name_for_upgrade);
+    buffer->plugin_name_for_upgrade = NULL;
     free (buffer->name);
+    buffer->name = NULL;
     free (buffer->full_name);
+    buffer->full_name = NULL;
     free (buffer->old_full_name);
+    buffer->old_full_name = NULL;
     free (buffer->short_name);
+    buffer->short_name = NULL;
     free (buffer->title);
+    buffer->title = NULL;
     free (buffer->modes);
+    buffer->modes = NULL;
     free (buffer->input_prompt);
+    buffer->input_prompt = NULL;
     free (buffer->input_buffer);
+    buffer->input_buffer = NULL;
     free (buffer->input_undo_snap);
+    buffer->input_undo_snap = NULL;
     free (buffer->text_search_input);
+    buffer->text_search_input = NULL;
     if (buffer->text_search_regex_compiled)
     {
         regfree (buffer->text_search_regex_compiled);
         free (buffer->text_search_regex_compiled);
+        buffer->text_search_regex_compiled = NULL;
     }
     free (buffer->highlight_words);
+    buffer->highlight_words = NULL;
     free (buffer->highlight_disable_regex);
+    buffer->highlight_disable_regex = NULL;
     if (buffer->highlight_disable_regex_compiled)
     {
         regfree (buffer->highlight_disable_regex_compiled);
         free (buffer->highlight_disable_regex_compiled);
+        buffer->highlight_disable_regex_compiled = NULL;
     }
     free (buffer->highlight_regex);
+    buffer->highlight_regex = NULL;
     if (buffer->highlight_regex_compiled)
     {
         regfree (buffer->highlight_regex_compiled);
         free (buffer->highlight_regex_compiled);
+        buffer->highlight_regex_compiled = NULL;
     }
     free (buffer->highlight_tags_restrict);
+    buffer->highlight_tags_restrict = NULL;
     string_free_split_tags (buffer->highlight_tags_restrict_array);
+    buffer->highlight_tags_restrict_array = NULL;
     free (buffer->highlight_tags);
+    buffer->highlight_tags = NULL;
     string_free_split_tags (buffer->highlight_tags_array);
+    buffer->highlight_tags_array = NULL;
     free (buffer->input_callback_data);
+    buffer->input_callback_data = NULL;
     free (buffer->close_callback_data);
+    buffer->close_callback_data = NULL;
     free (buffer->nickcmp_callback_data);
+    buffer->nickcmp_callback_data = NULL;
 
     /* remove buffer from buffers list */
     if (buffer->prev_buffer)
