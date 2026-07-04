@@ -29,15 +29,25 @@
 extern "C"
 {
 #include <ctype.h>
+#include <stdio.h>
 #include <string.h>
+#include <sys/stat.h>
+#include <unistd.h>
 #include "src/core/core-arraylist.h"
+#include "src/core/core-config.h"
+#include "src/core/core-config-file.h"
 #include "src/core/core-hashtable.h"
+#include "src/core/core-string.h"
 #include "src/core/core-theme.h"
+#include "src/core/weechat.h"
 #include "src/plugins/plugin.h"
 
 extern char *theme_format_now (void);
 extern struct t_theme *theme_alloc (const char *name);
 extern void theme_free (struct t_theme *theme);
+extern char *theme_user_file_path (const char *name);
+extern char *theme_make_backup_name (void);
+extern int theme_write_file_full (const char *name, const char *description);
 }
 
 TEST_GROUP(CoreTheme)
@@ -259,6 +269,221 @@ TEST(CoreTheme, List)
                  ((struct t_theme *)arraylist_get (list, 2))->name);
 
     arraylist_free (list);
+}
+
+/*
+ * Test functions:
+ *   theme_user_file_path
+ */
+
+TEST(CoreTheme, UserFilePath)
+{
+    char *path, *expected;
+
+    /* NULL / empty => NULL */
+    POINTERS_EQUAL(NULL, theme_user_file_path (NULL));
+    POINTERS_EQUAL(NULL, theme_user_file_path (""));
+
+    /* "name" => "<weechat_config_dir>/themes/name.theme" */
+    expected = NULL;
+    string_asprintf (&expected, "%s/themes/dark.theme", weechat_config_dir);
+    path = theme_user_file_path ("dark");
+    CHECK(path != NULL);
+    STRCMP_EQUAL(expected, path);
+    free (path);
+    free (expected);
+}
+
+/*
+ * Test functions:
+ *   theme_make_backup_name
+ */
+
+TEST(CoreTheme, MakeBackupName)
+{
+    char *name;
+    int i;
+
+    name = theme_make_backup_name ();
+    CHECK(name != NULL);
+
+    /* format: "backup-YYYYMMDD-HHMMSS-uuuuuu" (29 chars) */
+    LONGS_EQUAL(29, (long)strlen (name));
+    STRNCMP_EQUAL("backup-", name, 7);
+
+    /* 8 digits for date */
+    for (i = 7; i < 15; i++)
+        CHECK(isdigit ((unsigned char)name[i]));
+    CHECK(name[15] == '-');
+    /* 6 digits for time */
+    for (i = 16; i < 22; i++)
+        CHECK(isdigit ((unsigned char)name[i]));
+    CHECK(name[22] == '-');
+    /* 6 digits for microseconds */
+    for (i = 23; i < 29; i++)
+        CHECK(isdigit ((unsigned char)name[i]));
+
+    free (name);
+}
+
+/*
+ * Test functions:
+ *   theme_write_file_full
+ */
+
+TEST(CoreTheme, WriteFileFull)
+{
+    char *path, line[8192];
+    FILE *file;
+    int saw_info, saw_name, saw_description, saw_date, saw_weechat;
+    int saw_options_section, saw_an_option;
+    int saw_color_code, saw_string_option, string_option_quoted;
+
+    /* refuse empty/NULL */
+    LONGS_EQUAL(0, theme_write_file_full (NULL, NULL));
+    LONGS_EQUAL(0, theme_write_file_full ("", NULL));
+
+    /* write a valid file */
+    LONGS_EQUAL(1, theme_write_file_full ("test_wrt", "a description"));
+
+    path = theme_user_file_path ("test_wrt");
+    CHECK(path != NULL);
+
+    file = fopen (path, "r");
+    CHECK(file != NULL);
+
+    saw_info = saw_name = saw_description = saw_date = saw_weechat = 0;
+    saw_options_section = saw_an_option = 0;
+    saw_color_code = saw_string_option = string_option_quoted = 0;
+    while (fgets (line, sizeof (line) - 1, file))
+    {
+        if (strncmp (line, "[info]", 6) == 0)
+            saw_info = 1;
+        else if (strncmp (line, "[options]", 9) == 0)
+            saw_options_section = 1;
+        else if (strncmp (line, "name = \"test_wrt\"", 17) == 0)
+            saw_name = 1;
+        else if (strncmp (line, "description = \"a description\"", 29) == 0)
+            saw_description = 1;
+        else if (strncmp (line, "date = \"", 8) == 0)
+            saw_date = 1;
+        else if (strncmp (line, "weechat = \"", 11) == 0)
+            saw_weechat = 1;
+        else if (saw_options_section
+                 && (strchr (line, '=') != NULL)
+                 && (strchr (line, '.') != NULL))
+        {
+            saw_an_option = 1;
+            /*
+             * values must be stored verbatim: no WeeChat color code
+             * (byte 0x19) may leak into the file
+             */
+            if (strchr (line, 0x19) != NULL)
+                saw_color_code = 1;
+            /* a string option value must be wrapped in double quotes */
+            if (strncmp (line, "weechat.look.prefix_error = ", 28) == 0)
+            {
+                saw_string_option = 1;
+                string_option_quoted = (line[28] == '"') ? 1 : 0;
+            }
+        }
+    }
+    fclose (file);
+
+    LONGS_EQUAL(1, saw_info);
+    LONGS_EQUAL(1, saw_name);
+    LONGS_EQUAL(1, saw_description);
+    LONGS_EQUAL(1, saw_date);
+    LONGS_EQUAL(1, saw_weechat);
+    LONGS_EQUAL(1, saw_options_section);
+    LONGS_EQUAL(1, saw_an_option);
+    /* no color codes leaked into option values */
+    LONGS_EQUAL(0, saw_color_code);
+    /* the string option was found and its value is quoted */
+    LONGS_EQUAL(1, saw_string_option);
+    LONGS_EQUAL(1, string_option_quoted);
+
+    unlink (path);
+    free (path);
+}
+
+/*
+ * Test functions:
+ *   theme_make_backup
+ */
+
+TEST(CoreTheme, MakeBackup)
+{
+    char *name, *path;
+    struct stat st;
+
+    name = theme_make_backup ();
+    CHECK(name != NULL);
+    STRNCMP_EQUAL("backup-", name, 7);
+    LONGS_EQUAL(29, (long)strlen (name));
+
+    /* the backup file must exist on disk */
+    path = theme_user_file_path (name);
+    CHECK(path != NULL);
+    LONGS_EQUAL(0, stat (path, &st));
+    CHECK(st.st_size > 0);
+
+    unlink (path);
+    free (path);
+    free (name);
+}
+
+/*
+ * Test functions:
+ *   theme_apply_set_option_cb
+ *   theme_apply
+ */
+
+TEST(CoreTheme, Apply)
+{
+    struct t_hashtable *overrides;
+    struct t_config_option *opt_prefix_error;
+    char *saved_prefix_error, *saved_theme_label;
+    int saved_backup;
+
+    /* NULL / empty / missing name => error */
+    LONGS_EQUAL(WEECHAT_RC_ERROR, theme_apply (NULL));
+    LONGS_EQUAL(WEECHAT_RC_ERROR, theme_apply (""));
+    LONGS_EQUAL(WEECHAT_RC_ERROR, theme_apply ("does_not_exist"));
+
+    /* snapshot the option we will mutate + supporting state */
+    opt_prefix_error = NULL;
+    config_file_search_with_string ("weechat.look.prefix_error",
+                                    NULL, NULL, &opt_prefix_error, NULL);
+    CHECK(opt_prefix_error != NULL);
+    saved_prefix_error = strdup (CONFIG_STRING(opt_prefix_error));
+    saved_theme_label = strdup (CONFIG_STRING(config_look_theme));
+    saved_backup = CONFIG_BOOLEAN(config_look_theme_backup);
+
+    /* disable backup so the test does not touch the filesystem */
+    config_file_option_set (config_look_theme_backup, "off", 1);
+
+    /* register a theme that flips one themable option, then apply */
+    overrides = make_overrides ("weechat.look.prefix_error", "TEST!",
+                                NULL, NULL);
+    theme_register ("apply_test", overrides);
+    hashtable_free (overrides);
+
+    LONGS_EQUAL(WEECHAT_RC_OK, theme_apply ("apply_test"));
+
+    /* override took effect */
+    STRCMP_EQUAL("TEST!", CONFIG_STRING(opt_prefix_error));
+    /* active label persisted */
+    STRCMP_EQUAL("apply_test", CONFIG_STRING(config_look_theme));
+
+    /* restore previous state */
+    config_file_option_set (opt_prefix_error, saved_prefix_error, 1);
+    config_file_option_set (config_look_theme, saved_theme_label, 1);
+    config_file_option_set (config_look_theme_backup,
+                            (saved_backup) ? "on" : "off", 1);
+
+    free (saved_prefix_error);
+    free (saved_theme_label);
 }
 
 /*

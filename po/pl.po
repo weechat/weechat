@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-07-04 14:09+0200\n"
+"POT-Creation-Date: 2026-07-04 15:44+0200\n"
 "PO-Revision-Date: 2026-06-28 08:55+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: Polish <soltys@soltys.info>\n"
@@ -3917,7 +3917,7 @@ msgid "manage color themes"
 msgstr "zarządza niestandardowymi elementami pasków"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
-msgid "[list] || info <name>"
+msgid "[list] || apply <name> || info <name>"
 msgstr ""
 
 #, fuzzy
@@ -3930,6 +3930,11 @@ msgid ""
 msgstr ""
 "raw[list]: wyświetl pośredników (bez podania argumentu wyświetlana jest ta "
 "lista)"
+
+msgid ""
+"raw[apply]: apply a theme (set every themable option to the value from the "
+"theme)"
+msgstr ""
 
 msgid ""
 "raw[info]: display details on a theme (name, description, creation date, "
@@ -3945,6 +3950,14 @@ msgid ""
 "Themes are named bundles of option overrides. Built-in themes are registered "
 "in memory by core/plugins/scripts; user themes are read from files in "
 "directory \"themes\" inside the WeeChat configuration directory."
+msgstr ""
+
+msgid ""
+"By default, `/theme apply` command creates a backup of current themable "
+"values in directory \"themes\" before applying (file name: \"backup-"
+"<timestamp>.theme\"); the previous state can be restored with: `/theme apply "
+"backup-<timestamp>`. This is controlled by the option "
+"weechat.look.theme_backup."
 msgstr ""
 
 msgid "toggle value of a config option"
@@ -5709,6 +5722,14 @@ msgid ""
 msgstr ""
 
 msgid ""
+"create a backup theme file with the current themable options before applying "
+"a theme with command /theme; if the backup file cannot be written, the apply "
+"is aborted (no option is changed); the backup file is written to directory "
+"\"themes\" inside the WeeChat configuration directory and can be restored "
+"with the command: `/theme apply backup-<timestamp>`"
+msgstr ""
+
+msgid ""
 "time format for dates converted to strings and displayed in messages (see "
 "man strftime for date/time specifiers)"
 msgstr ""
@@ -6755,6 +6776,29 @@ msgstr "Funkcja systemowa \"%s\" nie jest dostępna"
 
 msgid "Resource usage (see \"man getrusage\" for help):"
 msgstr "Zużycie zasobów (zobacz \"man getrusage\"):"
+
+msgid "Automatic backup written before /theme apply"
+msgstr ""
+
+#, fuzzy, c-format
+#| msgid "%sKey \"%s\" not found"
+msgid "%sTheme: option \"%s\" not found, skipped"
+msgstr "%sKlawisz \"%s\" nie znaleziony"
+
+#, fuzzy, c-format
+#| msgid "%s: script \"%s\" is not installed"
+msgid "%sTheme: option \"%s\" is not themable, skipped"
+msgstr "%s: skrypt \"%s\" nie zainstalowany"
+
+#, c-format
+msgid ""
+"%sUnable to create theme backup; aborting apply (disable option "
+"weechat.look.theme_backup to force)"
+msgstr ""
+
+#, c-format
+msgid "Previous state saved as theme \"%s\"; to restore: /theme apply %s"
+msgstr ""
 
 #, c-format
 msgid "%sError upgrading WeeChat with file \"%s\":"

@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-07-04 14:09+0200\n"
-"PO-Revision-Date: 2026-07-04 14:11+0200\n"
+"POT-Creation-Date: 2026-07-04 15:44+0200\n"
+"PO-Revision-Date: 2026-07-04 15:46+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: French <flashcode@flashtux.org>\n"
 "Language: fr\n"
@@ -4019,8 +4019,8 @@ msgid "manage color themes"
 msgstr "gestion des thèmes de couleurs"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
-msgid "[list] || info <name>"
-msgstr "[list] || info <nom>"
+msgid "[list] || apply <name> || info <name>"
+msgstr "[list] || apply <nom> || info <nom>"
 
 msgid ""
 "raw[list]: list registered themes (default action with no argument); active "
@@ -4028,6 +4028,13 @@ msgid ""
 msgstr ""
 "raw[list] : afficher les thèmes enregistrés (sans paramètre, cette liste est "
 "affichée), le thème actif est marqué avec \"->\""
+
+msgid ""
+"raw[apply]: apply a theme (set every themable option to the value from the "
+"theme)"
+msgstr ""
+"raw[apply] : appliquer un thème (définir chaque option personnalisable par "
+"thème à la valeur du thème)"
 
 msgid ""
 "raw[info]: display details on a theme (name, description, creation date, "
@@ -4048,6 +4055,19 @@ msgstr ""
 "intégrés sont enregistrés en mémoire par le cœur, les plugins ou les "
 "scripts ; les thèmes utilisateur sont lus à partir de fichiers situés dans "
 "le répertoire \"themes\" du répertoire de configuration de WeeChat."
+
+msgid ""
+"By default, `/theme apply` command creates a backup of current themable "
+"values in directory \"themes\" before applying (file name: \"backup-"
+"<timestamp>.theme\"); the previous state can be restored with: `/theme apply "
+"backup-<timestamp>`. This is controlled by the option "
+"weechat.look.theme_backup."
+msgstr ""
+"Par défaut, la commande `/theme apply` crée une sauvegarde des valeurs du "
+"thème actuel dans le répertoire \"themes\" avant de les appliquer (nom de "
+"fichier : \"backup-<horodatage>.theme\") ; l'état précédent peut être "
+"restauré à l'aide de la commande `/theme apply backup-<horodatage>`. Ce "
+"comportement est régi par l'option weechat.look.theme_backup."
 
 msgid "toggle value of a config option"
 msgstr "basculer la valeur d'une option de configuration"
@@ -5874,6 +5894,20 @@ msgstr ""
 "seulement, le thème n'est pas réappliqué au démarrage"
 
 msgid ""
+"create a backup theme file with the current themable options before applying "
+"a theme with command /theme; if the backup file cannot be written, the apply "
+"is aborted (no option is changed); the backup file is written to directory "
+"\"themes\" inside the WeeChat configuration directory and can be restored "
+"with the command: `/theme apply backup-<timestamp>`"
+msgstr ""
+"créer un fichier de sauvegarde des options de thème actuelles avant "
+"d'appliquer un thème avec la commande `/theme` ; si le fichier de sauvegarde "
+"ne peut pas être écrit, l'application est annulée (aucune option n'est "
+"modifiée) ; le fichier de sauvegarde est enregistré dans le répertoire "
+"\"themes\" situé dans le répertoire de configuration de WeeChat et peut être "
+"restauré à l'aide de la commande : `/theme apply backup-<horodatage>`"
+
+msgid ""
 "time format for dates converted to strings and displayed in messages (see "
 "man strftime for date/time specifiers)"
 msgstr ""
@@ -6966,6 +7000,30 @@ msgstr "La fonction système \"%s\" n'est pas disponible"
 
 msgid "Resource usage (see \"man getrusage\" for help):"
 msgstr "Utilisation des ressources (voir \"man getrusage\" pour de l'aide) :"
+
+msgid "Automatic backup written before /theme apply"
+msgstr "Sauvegarde automatique écrite avant /theme apply"
+
+#, c-format
+msgid "%sTheme: option \"%s\" not found, skipped"
+msgstr "%sThème : option \"%s\" non trouvée, ignorée"
+
+#, c-format
+msgid "%sTheme: option \"%s\" is not themable, skipped"
+msgstr "%sThème : l'option \"%s\" n'est pas personnalisable par thème, ignorée"
+
+#, c-format
+msgid ""
+"%sUnable to create theme backup; aborting apply (disable option "
+"weechat.look.theme_backup to force)"
+msgstr ""
+"%sImpossible de créer une sauvegarde du thème ; abandon de l'application "
+"(désactivez l'option weechat.look.theme_backup pour forcer)"
+
+#, c-format
+msgid "Previous state saved as theme \"%s\"; to restore: /theme apply %s"
+msgstr ""
+"État précédent sauvé sous le thème \"%s\" ; pour restaurer : /theme apply %s"
 
 #, c-format
 msgid "%sError upgrading WeeChat with file \"%s\":"

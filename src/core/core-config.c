@@ -224,6 +224,7 @@ struct t_config_option *config_look_separator_vertical = NULL;
 struct t_config_option *config_look_tab_whitespace_char = NULL;
 struct t_config_option *config_look_tab_width = NULL;
 struct t_config_option *config_look_theme = NULL;
+struct t_config_option *config_look_theme_backup = NULL;
 struct t_config_option *config_look_time_format = NULL;
 struct t_config_option *config_look_whitespace_char = NULL;
 struct t_config_option *config_look_window_auto_zoom = NULL;
@@ -4436,6 +4437,18 @@ config_weechat_init_options (void)
                "(set automatically, do not change manually); informational "
                "only, the theme is not re-applied at startup"),
             NULL, 0, 0, "", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        config_look_theme_backup = config_file_new_option (
+            weechat_config_file, weechat_config_section_look,
+            "theme_backup", "boolean",
+            N_("create a backup theme file with the current themable "
+               "options before applying a theme with command /theme; if "
+               "the backup file cannot be written, the apply is aborted "
+               "(no option is changed); the backup file is written to "
+               "directory \"themes\" inside the WeeChat configuration "
+               "directory and can be restored with the command: `/theme apply "
+               "backup-<timestamp>`"),
+            NULL, 0, 0, "on", NULL, 0,
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
         config_look_time_format = config_file_new_option (
             weechat_config_file, weechat_config_section_look,
