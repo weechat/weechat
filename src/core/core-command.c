@@ -7355,6 +7355,13 @@ COMMAND_CALLBACK(theme)
                            ? 1 : 0);
     }
 
+    /* "/theme rename <old> <new>": rename a user theme file */
+    if (string_strcmp (argv[1], "rename") == 0)
+    {
+        COMMAND_MIN_ARGS(4, "rename");
+        return theme_rename (argv[2], argv[3]);
+    }
+
     /* "/theme del <name>": remove a user theme file */
     if (string_strcmp (argv[1], "del") == 0)
     {
@@ -10087,6 +10094,7 @@ command_init (void)
            " || apply <name>"
            " || reset"
            " || save <name> [-full]"
+           " || rename <old> <new>"
            " || del <name>"
            " || info <name>"),
         CMD_ARGS_DESC(
@@ -10106,6 +10114,7 @@ command_init (void)
                "written, use \"-full\" to write every themable option; "
                "the name must not match a built-in theme or start with "
                "\"backup-\""),
+            N_("raw[rename]: rename a user theme file"),
             N_("raw[del]: delete a user theme file"),
             N_("raw[info]: display details on a theme (name, description, "
                "creation date, WeeChat version, number of option overrides)"),
@@ -10125,6 +10134,7 @@ command_init (void)
         " || apply %(theme_themes_all)"
         " || reset"
         " || save %(theme_themes_user) -full"
+        " || rename %(theme_themes_files)"
         " || del %(theme_themes_user)"
         " || info %(theme_themes_all)",
         &command_theme, NULL, NULL);

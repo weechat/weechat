@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-07-04 21:01+0200\n"
+"POT-Creation-Date: 2026-07-04 21:31+0200\n"
 "PO-Revision-Date: 2026-03-08 08:59+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: Russian <weechat-dev@nongnu.org>\n"
@@ -3583,8 +3583,8 @@ msgstr "Список сокращений:\n"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid ""
-"[list [-backups]] || apply <name> || reset || save <name> [-full] || del "
-"<name> || info <name>"
+"[list [-backups]] || apply <name> || reset || save <name> [-full] || rename "
+"<old> <new> || del <name> || info <name>"
 msgstr ""
 
 #, fuzzy
@@ -3614,6 +3614,10 @@ msgid ""
 "are written, use \"-full\" to write every themable option; the name must not "
 "match a built-in theme or start with \"backup-\""
 msgstr ""
+
+#, fuzzy
+msgid "raw[rename]: rename a user theme file"
+msgstr "Список сокращений:\n"
 
 #, fuzzy
 #| msgid "get/set channel topic"
@@ -4203,6 +4207,9 @@ msgid "names of themes (built-ins + user files + backups)"
 msgstr ""
 
 msgid "names of user theme files (without built-ins and backups)"
+msgstr ""
+
+msgid "names of theme files on disk (user files + backups, no built-ins)"
 msgstr ""
 
 msgid "names of secured data (file sec.conf, section data)"
@@ -6093,6 +6100,26 @@ msgstr "Не могу записать лог-файл \"%s\"\n"
 #, fuzzy, c-format
 msgid "Theme saved to: %s"
 msgstr "Ники %s%s%s: %s["
+
+#, fuzzy, c-format
+msgid "%sCannot rename built-in theme \"%s\""
+msgstr "%s не могу создать файл \"%s\"\n"
+
+#, c-format
+msgid "%sNew name is the same as old name"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%sTheme \"%s\" already exists"
+msgstr "%s игнорирование уже существует\n"
+
+#, fuzzy, c-format
+msgid "%sFailed to rename theme \"%s\" to \"%s\""
+msgstr "%s неизвестный параметр для команды \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "Theme \"%s\" renamed to \"%s\""
+msgstr "команда users отключена"
 
 #, fuzzy, c-format
 msgid "%sCannot delete built-in theme \"%s\""

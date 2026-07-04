@@ -26,7 +26,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-07-04 21:01+0200\n"
+"POT-Creation-Date: 2026-07-04 21:31+0200\n"
 "PO-Revision-Date: 2026-06-28 08:28+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
@@ -4106,8 +4106,8 @@ msgstr "Verwalten von benutzerdefinierten Bar-Items"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid ""
-"[list [-backups]] || apply <name> || reset || save <name> [-full] || del "
-"<name> || info <name>"
+"[list [-backups]] || apply <name> || reset || save <name> [-full] || rename "
+"<old> <new> || del <name> || info <name>"
 msgstr ""
 
 #, fuzzy
@@ -4145,6 +4145,11 @@ msgid ""
 "are written, use \"-full\" to write every themable option; the name must not "
 "match a built-in theme or start with \"backup-\""
 msgstr ""
+
+#, fuzzy
+#| msgid "raw[rename]: rename a filter"
+msgid "raw[rename]: rename a user theme file"
+msgstr "raw[rename]: benennt einen Filter um"
 
 #, fuzzy
 #| msgid "raw[del]: delete a server"
@@ -4836,6 +4841,9 @@ msgid "names of themes (built-ins + user files + backups)"
 msgstr ""
 
 msgid "names of user theme files (without built-ins and backups)"
+msgstr ""
+
+msgid "names of theme files on disk (user files + backups, no built-ins)"
 msgstr ""
 
 msgid "names of secured data (file sec.conf, section data)"
@@ -7236,6 +7244,30 @@ msgstr "%s%s: Datei \"%s\" Analyse nicht möglich"
 #| msgid "Option \"%s%s%s\":"
 msgid "Theme saved to: %s"
 msgstr "Einstellung \"%s%s%s\":"
+
+#, fuzzy, c-format
+#| msgid "%sCannot create file \"%s\""
+msgid "%sCannot rename built-in theme \"%s\""
+msgstr "%sDie Datei \"%s\" kann nicht erstellt werden"
+
+#, c-format
+msgid "%sNew name is the same as old name"
+msgstr ""
+
+#, fuzzy, c-format
+#| msgid "%sBar \"%s\" already exists"
+msgid "%sTheme \"%s\" already exists"
+msgstr "%sBar \"%s\" existiert bereits"
+
+#, fuzzy, c-format
+#| msgid "%sUnable to rename filter \"%s\" to \"%s\""
+msgid "%sFailed to rename theme \"%s\" to \"%s\""
+msgstr "%sUmbenennung des Filters von \"%s\" in \"%s\" nicht möglich"
+
+#, fuzzy, c-format
+#| msgid "Trigger \"%s\" renamed to \"%s\""
+msgid "Theme \"%s\" renamed to \"%s\""
+msgstr "Trigger \"%s\" wurde umbenannt. Der neue Name lautet \"%s\""
 
 #, fuzzy, c-format
 #| msgid "%sCannot create file \"%s\""

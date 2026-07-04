@@ -2525,6 +2525,19 @@ Reserved names (built-in theme names like `+light+` and any name
 starting with `+backup-+`) are refused. Files live at
 `+${weechat_config_dir}/themes/<name>.theme+`.
 
+Rename a user theme (typical use: keep a useful automatic backup
+under a meaningful name):
+
+----
+/theme rename backup-20260525-094210-123456 mybackup
+----
+
+Built-in themes have no file and cannot be renamed; the target name
+cannot match a built-in name or start with `+backup-+`, and the
+target file must not already exist. The `+[info]+` `+name+` field
+inside the file is rewritten so `/theme info` reports the new name
+consistently.
+
 Delete a user theme:
 
 ----

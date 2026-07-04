@@ -2319,6 +2319,20 @@ Les noms réservés (noms de thèmes intégrés comme `+light+` et tout nom
 commençant par `+backup-+`) sont refusés. Les fichiers sont placés
 dans `+${weechat_config_dir}/themes/<nom>.theme+`.
 
+Renommer un thème utilisateur (usage typique : conserver une
+sauvegarde automatique utile sous un nom plus parlant) :
+
+----
+/theme rename backup-20260525-094210-123456 maSauvegarde
+----
+
+Les thèmes intégrés n'ont pas de fichier et ne peuvent pas être
+renommés ; le nom cible ne peut pas correspondre à un nom intégré ni
+commencer par `+backup-+`, et le fichier cible ne doit pas déjà
+exister. Le champ `+name+` de la section `+[info]+` à l'intérieur du
+fichier est réécrit afin que `/theme info` affiche le nouveau nom de
+manière cohérente.
+
 Supprimer un thème utilisateur :
 
 ----

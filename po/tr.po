@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-07-04 21:01+0200\n"
+"POT-Creation-Date: 2026-07-04 21:31+0200\n"
 "PO-Revision-Date: 2026-06-28 08:53+0200\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <emir_sari@icloud.com>\n"
@@ -3768,8 +3768,8 @@ msgstr "özel çubuk ögelerini yönet"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid ""
-"[list [-backups]] || apply <name> || reset || save <name> [-full] || del "
-"<name> || info <name>"
+"[list [-backups]] || apply <name> || reset || save <name> [-full] || rename "
+"<old> <new> || del <name> || info <name>"
 msgstr ""
 
 #, fuzzy
@@ -3802,6 +3802,11 @@ msgid ""
 "are written, use \"-full\" to write every themable option; the name must not "
 "match a built-in theme or start with \"backup-\""
 msgstr ""
+
+#, fuzzy
+#| msgid "raw[rename]: rename a filter"
+msgid "raw[rename]: rename a user theme file"
+msgstr "raw[rename]: Bir süzgeci yeniden adlandır"
 
 #, fuzzy
 #| msgid "get/set channel topic"
@@ -4428,6 +4433,9 @@ msgid "names of themes (built-ins + user files + backups)"
 msgstr ""
 
 msgid "names of user theme files (without built-ins and backups)"
+msgstr ""
+
+msgid "names of theme files on disk (user files + backups, no built-ins)"
 msgstr ""
 
 msgid "names of secured data (file sec.conf, section data)"
@@ -6676,6 +6684,30 @@ msgstr "%s%s: \"%s\" dosyası ayrıştırılamıyor"
 #| msgid "Option \"%s%s%s\":"
 msgid "Theme saved to: %s"
 msgstr "\"%s%s%s\" seçeneği:"
+
+#, fuzzy, c-format
+#| msgid "%sCannot create file \"%s\""
+msgid "%sCannot rename built-in theme \"%s\""
+msgstr "%s\"%s\" dosyası oluşturulamıyor"
+
+#, c-format
+msgid "%sNew name is the same as old name"
+msgstr ""
+
+#, fuzzy, c-format
+#| msgid "%sBar \"%s\" already exists"
+msgid "%sTheme \"%s\" already exists"
+msgstr "%s\"%s\" çubuğu halihazırda var"
+
+#, fuzzy, c-format
+#| msgid "%sUnable to rename filter \"%s\" to \"%s\""
+msgid "%sFailed to rename theme \"%s\" to \"%s\""
+msgstr "%s\"%s\" süzgeci \"%s\" olarak yeniden adlandırılamıyor"
+
+#, fuzzy, c-format
+#| msgid "Trigger \"%s\" renamed to \"%s\""
+msgid "Theme \"%s\" renamed to \"%s\""
+msgstr "\"%s\" tetiği \"%s\" olarak yeniden adlandırıldı"
 
 #, fuzzy, c-format
 #| msgid "%sCannot create file \"%s\""

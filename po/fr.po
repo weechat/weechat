@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-07-04 21:01+0200\n"
-"PO-Revision-Date: 2026-07-04 21:08+0200\n"
+"POT-Creation-Date: 2026-07-04 21:31+0200\n"
+"PO-Revision-Date: 2026-07-04 21:34+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: French <flashcode@flashtux.org>\n"
 "Language: fr\n"
@@ -4031,11 +4031,11 @@ msgstr "gestion des thèmes de couleurs"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid ""
-"[list [-backups]] || apply <name> || reset || save <name> [-full] || del "
-"<name> || info <name>"
+"[list [-backups]] || apply <name> || reset || save <name> [-full] || rename "
+"<old> <new> || del <name> || info <name>"
 msgstr ""
-"[list [-backups]] || apply <nom> || reset || save <nom> [-full] || del <nom> "
-"|| info <nom>"
+"[list [-backups]] || apply <nom> || reset || save <nom> [-full] || rename "
+"<ancien> <nouveau> || del <nom> || info <nom>"
 
 msgid ""
 "raw[list]: list registered themes and any *.theme files in the WeeChat "
@@ -4076,6 +4076,9 @@ msgstr ""
 "valeur diffère de leur valeur par défaut sont écrites, utilisez \"-full\" "
 "pour écrire toutes les options ; le nom ne doit pas correspondre à un thème "
 "intégré ou démarrer par \"backup-\""
+
+msgid "raw[rename]: rename a user theme file"
+msgstr "raw[rename] : renommer un fichier de thème utilisateur"
 
 msgid "raw[del]: delete a user theme file"
 msgstr "raw[del] : supprimer un fichier de thème utilisateur"
@@ -4760,6 +4763,11 @@ msgstr "noms des thèmes (intégrés + fichiers utilisateur + sauvegardes)"
 
 msgid "names of user theme files (without built-ins and backups)"
 msgstr "noms des thèmes utilisateur (sans les intégrés et sauvegardes)"
+
+msgid "names of theme files on disk (user files + backups, no built-ins)"
+msgstr ""
+"noms des fichiers de thèmes sur le disque (fichiers utilisateur + "
+"sauvegardes, pas les intégrés)"
 
 msgid "names of secured data (file sec.conf, section data)"
 msgstr "noms de données sécurisées (fichier sec.conf, section data)"
@@ -7118,6 +7126,26 @@ msgstr "%sÉchec de sauvegarde du thème \"%s\""
 #, c-format
 msgid "Theme saved to: %s"
 msgstr "Thème sauvegardé vers : %s"
+
+#, c-format
+msgid "%sCannot rename built-in theme \"%s\""
+msgstr "%sImpossible de renommer le thème intégré \"%s\""
+
+#, c-format
+msgid "%sNew name is the same as old name"
+msgstr "%sLe nouveau nom est le même que l'ancien"
+
+#, c-format
+msgid "%sTheme \"%s\" already exists"
+msgstr "%sLe thème \"%s\" existe déjà"
+
+#, c-format
+msgid "%sFailed to rename theme \"%s\" to \"%s\""
+msgstr "%sImpossible de renommer le thème \"%s\" en \"%s\""
+
+#, c-format
+msgid "Theme \"%s\" renamed to \"%s\""
+msgstr "Thème \"%s\" renommé en \"%s\""
 
 #, c-format
 msgid "%sCannot delete built-in theme \"%s\""

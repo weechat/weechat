@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-07-04 21:01+0200\n"
+"POT-Creation-Date: 2026-07-04 21:31+0200\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3351,8 +3351,8 @@ msgstr ""
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid ""
-"[list [-backups]] || apply <name> || reset || save <name> [-full] || del "
-"<name> || info <name>"
+"[list [-backups]] || apply <name> || reset || save <name> [-full] || rename "
+"<old> <new> || del <name> || info <name>"
 msgstr ""
 
 msgid ""
@@ -3380,6 +3380,9 @@ msgid ""
 "\"themes\"; by default only options whose value differs from their default "
 "are written, use \"-full\" to write every themable option; the name must not "
 "match a built-in theme or start with \"backup-\""
+msgstr ""
+
+msgid "raw[rename]: rename a user theme file"
 msgstr ""
 
 msgid "raw[del]: delete a user theme file"
@@ -3923,6 +3926,9 @@ msgid "names of themes (built-ins + user files + backups)"
 msgstr ""
 
 msgid "names of user theme files (without built-ins and backups)"
+msgstr ""
+
+msgid "names of theme files on disk (user files + backups, no built-ins)"
 msgstr ""
 
 msgid "names of secured data (file sec.conf, section data)"
@@ -5650,6 +5656,26 @@ msgstr ""
 
 #, c-format
 msgid "Theme saved to: %s"
+msgstr ""
+
+#, c-format
+msgid "%sCannot rename built-in theme \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%sNew name is the same as old name"
+msgstr ""
+
+#, c-format
+msgid "%sTheme \"%s\" already exists"
+msgstr ""
+
+#, c-format
+msgid "%sFailed to rename theme \"%s\" to \"%s\""
+msgstr ""
+
+#, c-format
+msgid "Theme \"%s\" renamed to \"%s\""
 msgstr ""
 
 #, c-format

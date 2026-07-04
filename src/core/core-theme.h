@@ -71,6 +71,7 @@ extern struct t_arraylist *theme_list (void);
 extern int theme_apply (const char *name);
 extern int theme_reset (void);
 extern int theme_save (const char *name, int full);
+extern int theme_rename (const char *old_name, const char *new_name);
 extern int theme_delete (const char *name);
 extern char *theme_make_backup (void);
 extern char *theme_user_file_path (const char *name);

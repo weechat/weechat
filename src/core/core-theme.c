@@ -1174,6 +1174,160 @@ theme_save (const char *name, int full)
 }
 
 /*
+ * Rename a user theme file.
+ *
+ * Refuse to rename a built-in (no file) or to a name reserved for
+ * built-ins or automatic backups. The target name must not already
+ * exist on disk. The file content is copied with the [info] name
+ * field rewritten so the parsed theme name stays consistent with the
+ * new filename. If "weechat.look.theme" was pointing at the old name,
+ * it is updated to the new name.
+ *
+ * Return WEECHAT_RC_OK on success, WEECHAT_RC_ERROR on validation or
+ * I/O failure (in which case no file is created or removed).
+ */
+
+int
+theme_rename (const char *old_name, const char *new_name)
+{
+    char *old_path, *new_path, line[2048];
+    FILE *fin, *fout;
+    const char *trimmed;
+    int in_info, name_done;
+
+    if (!old_name || !old_name[0] || !new_name || !new_name[0])
+        return WEECHAT_RC_ERROR;
+
+    if (theme_search (old_name))
+    {
+        gui_chat_printf (NULL,
+                         _("%sCannot rename built-in theme \"%s\""),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                         old_name);
+        return WEECHAT_RC_ERROR;
+    }
+
+    if (strcmp (old_name, new_name) == 0)
+    {
+        gui_chat_printf (NULL,
+                         _("%sNew name is the same as old name"),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+        return WEECHAT_RC_ERROR;
+    }
+
+    if (strncmp (new_name, "backup-", 7) == 0)
+    {
+        gui_chat_printf (NULL,
+                         _("%sName \"%s\" is reserved for automatic backups"),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                         new_name);
+        return WEECHAT_RC_ERROR;
+    }
+
+    if (theme_search (new_name))
+    {
+        gui_chat_printf (NULL,
+                         _("%sName \"%s\" is reserved for a built-in theme"),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                         new_name);
+        return WEECHAT_RC_ERROR;
+    }
+
+    old_path = theme_user_file_path (old_name);
+    if (!old_path)
+        return WEECHAT_RC_ERROR;
+    if (access (old_path, R_OK) != 0)
+    {
+        gui_chat_printf (NULL,
+                         _("%sTheme \"%s\" not found"),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                         old_name);
+        free (old_path);
+        return WEECHAT_RC_ERROR;
+    }
+
+    new_path = theme_user_file_path (new_name);
+    if (!new_path)
+    {
+        free (old_path);
+        return WEECHAT_RC_ERROR;
+    }
+    if (access (new_path, F_OK) == 0)
+    {
+        gui_chat_printf (NULL,
+                         _("%sTheme \"%s\" already exists"),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                         new_name);
+        free (old_path);
+        free (new_path);
+        return WEECHAT_RC_ERROR;
+    }
+
+    fin = fopen (old_path, "r");
+    fout = (fin) ? fopen (new_path, "w") : NULL;
+    if (!fin || !fout)
+    {
+        if (fin)
+            fclose (fin);
+        gui_chat_printf (NULL,
+                         _("%sFailed to rename theme \"%s\" to \"%s\""),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                         old_name, new_name);
+        free (old_path);
+        free (new_path);
+        return WEECHAT_RC_ERROR;
+    }
+
+    in_info = 0;
+    name_done = 0;
+    while (fgets (line, sizeof (line), fin))
+    {
+        trimmed = line;
+        while (*trimmed == ' ' || *trimmed == '\t')
+            trimmed++;
+        if (*trimmed == '[')
+        {
+            in_info = (strncmp (trimmed, "[info]", 6) == 0);
+            fputs (line, fout);
+            continue;
+        }
+        if (in_info && !name_done
+            && trimmed[0] == 'n' && trimmed[1] == 'a'
+            && trimmed[2] == 'm' && trimmed[3] == 'e'
+            && (trimmed[4] == ' ' || trimmed[4] == '\t' || trimmed[4] == '='))
+        {
+            fprintf (fout, "name = \"%s\"\n", new_name);
+            name_done = 1;
+            continue;
+        }
+        fputs (line, fout);
+    }
+    fclose (fin);
+    if (fclose (fout) != 0 || unlink (old_path) != 0)
+    {
+        unlink (new_path);
+        gui_chat_printf (NULL,
+                         _("%sFailed to rename theme \"%s\" to \"%s\""),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                         old_name, new_name);
+        free (old_path);
+        free (new_path);
+        return WEECHAT_RC_ERROR;
+    }
+
+    if (strcmp (CONFIG_STRING(config_look_theme), old_name) == 0)
+        config_file_option_set (config_look_theme, new_name, 1);
+
+    gui_chat_printf (NULL,
+                     _("Theme \"%s\" renamed to \"%s\""),
+                     old_name, new_name);
+
+    free (old_path);
+    free (new_path);
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Delete a user theme file.
  *
  * Refuse names registered as built-in themes (they have no file).

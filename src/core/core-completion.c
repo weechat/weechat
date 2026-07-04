@@ -2087,6 +2087,40 @@ completion_list_add_theme_themes_user_cb (const void *pointer, void *data,
 }
 
 /*
+ * Add every on-disk theme file (user files + backups, no built-ins)
+ * to the completion list; suitable for /theme rename which can take a
+ * backup as its source.
+ */
+
+int
+completion_list_add_theme_themes_files_cb (const void *pointer, void *data,
+                                           const char *completion_item,
+                                           struct t_gui_buffer *buffer,
+                                           struct t_gui_completion *completion)
+{
+    struct t_completion_theme_dir ctx;
+    char *dir;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) completion_item;
+    (void) buffer;
+
+    dir = NULL;
+    string_asprintf (&dir, "%s/themes", weechat_config_dir);
+    if (dir)
+    {
+        ctx.completion = completion;
+        ctx.show_backups = 1;
+        dir_exec_on_files (dir, 0, 0, &completion_theme_add_file_cb, &ctx);
+        free (dir);
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Add a secured data to completion list.
  */
 
@@ -2483,6 +2517,10 @@ completion_init (void)
     hook_completion (NULL, "theme_themes_user",
                      N_("names of user theme files (without built-ins and backups)"),
                      &completion_list_add_theme_themes_user_cb, NULL, NULL);
+    hook_completion (NULL, "theme_themes_files",
+                     N_("names of theme files on disk (user files + backups, "
+                        "no built-ins)"),
+                     &completion_list_add_theme_themes_files_cb, NULL, NULL);
     hook_completion (NULL, "secured_data",
                      N_("names of secured data (file sec.conf, section data)"),
                      &completion_list_add_secured_data_cb, NULL, NULL);

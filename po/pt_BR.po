@@ -46,7 +46,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-07-04 21:01+0200\n"
+"POT-Creation-Date: 2026-07-04 21:31+0200\n"
 "PO-Revision-Date: 2026-06-28 08:49+0200\n"
 "Last-Translator: Érico Nogueira <ericonr@disroot.org>\n"
 "Language-Team: Portuguese (Brazil) <weechat-dev@nongnu.org>\n"
@@ -3751,8 +3751,8 @@ msgstr "lista de itens da barra"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid ""
-"[list [-backups]] || apply <name> || reset || save <name> [-full] || del "
-"<name> || info <name>"
+"[list [-backups]] || apply <name> || reset || save <name> [-full] || rename "
+"<old> <new> || del <name> || info <name>"
 msgstr ""
 
 #, fuzzy
@@ -3783,6 +3783,11 @@ msgid ""
 "are written, use \"-full\" to write every themable option; the name must not "
 "match a built-in theme or start with \"backup-\""
 msgstr ""
+
+#, fuzzy
+#| msgid "names of filters"
+msgid "raw[rename]: rename a user theme file"
+msgstr "nomes dos filtros"
 
 #, fuzzy
 msgid "raw[del]: delete a user theme file"
@@ -4417,6 +4422,9 @@ msgid "names of themes (built-ins + user files + backups)"
 msgstr ""
 
 msgid "names of user theme files (without built-ins and backups)"
+msgstr ""
+
+msgid "names of theme files on disk (user files + backups, no built-ins)"
 msgstr ""
 
 msgid "names of secured data (file sec.conf, section data)"
@@ -6436,6 +6444,26 @@ msgstr "%s%s: não foi possível interpretar arquivo \"%s\""
 #| msgid "Option \"%s%s%s\":"
 msgid "Theme saved to: %s"
 msgstr "Opção \"%s%s%s\":"
+
+#, fuzzy, c-format
+msgid "%sCannot rename built-in theme \"%s\""
+msgstr "%sErro: não foi possível criar arquivo \"%s\""
+
+#, c-format
+msgid "%sNew name is the same as old name"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%sTheme \"%s\" already exists"
+msgstr "%sErro: filtro \"%s\" já existe"
+
+#, fuzzy, c-format
+msgid "%sFailed to rename theme \"%s\" to \"%s\""
+msgstr "%sErro: não foi possível renomear filtro \"%s\" para \"%s\""
+
+#, fuzzy, c-format
+msgid "Theme \"%s\" renamed to \"%s\""
+msgstr "Filtro \"%s\" renomeado para \"%s\""
 
 #, fuzzy, c-format
 msgid "%sCannot delete built-in theme \"%s\""

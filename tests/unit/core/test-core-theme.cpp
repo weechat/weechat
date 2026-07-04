@@ -977,6 +977,82 @@ TEST(CoreTheme, Delete)
 
 /*
  * Test functions:
+ *   theme_rename
+ */
+
+TEST(CoreTheme, Rename)
+{
+    char *src_path, *dst_path;
+    struct stat st;
+    FILE *file;
+    char buf[2048];
+    size_t len;
+
+    /* NULL / empty arguments => error */
+    LONGS_EQUAL(WEECHAT_RC_ERROR, theme_rename (NULL, "dst"));
+    LONGS_EQUAL(WEECHAT_RC_ERROR, theme_rename ("src", NULL));
+    LONGS_EQUAL(WEECHAT_RC_ERROR, theme_rename ("", "dst"));
+    LONGS_EQUAL(WEECHAT_RC_ERROR, theme_rename ("src", ""));
+
+    /* refuses to rename a built-in (no file to rename) */
+    theme_register (NULL, NULL, "dark", NULL);
+    LONGS_EQUAL(WEECHAT_RC_ERROR, theme_rename ("dark", "renamed"));
+
+    /* refuses target == reserved "backup-" prefix */
+    LONGS_EQUAL(WEECHAT_RC_OK, theme_save ("rn_src", 0));
+    LONGS_EQUAL(WEECHAT_RC_ERROR, theme_rename ("rn_src", "backup-foo"));
+
+    /* refuses target == built-in name */
+    LONGS_EQUAL(WEECHAT_RC_ERROR, theme_rename ("rn_src", "dark"));
+
+    /* refuses same name */
+    LONGS_EQUAL(WEECHAT_RC_ERROR, theme_rename ("rn_src", "rn_src"));
+
+    /* source missing => error */
+    LONGS_EQUAL(WEECHAT_RC_ERROR, theme_rename ("does_not_exist", "rn_dst"));
+
+    /* refuses target that already exists */
+    LONGS_EQUAL(WEECHAT_RC_OK, theme_save ("rn_dst", 0));
+    LONGS_EQUAL(WEECHAT_RC_ERROR, theme_rename ("rn_src", "rn_dst"));
+    LONGS_EQUAL(WEECHAT_RC_OK, theme_delete ("rn_dst"));
+
+    /* happy path: rename moves the file and rewrites the [info] name */
+    src_path = theme_user_file_path ("rn_src");
+    dst_path = theme_user_file_path ("rn_dst");
+    CHECK(src_path != NULL);
+    CHECK(dst_path != NULL);
+
+    LONGS_EQUAL(WEECHAT_RC_OK, theme_rename ("rn_src", "rn_dst"));
+
+    /* old file gone, new file exists */
+    LONGS_EQUAL(-1, stat (src_path, &st));
+    LONGS_EQUAL(0, stat (dst_path, &st));
+
+    /* [info] name field inside the renamed file is updated */
+    file = fopen (dst_path, "r");
+    CHECK(file != NULL);
+    len = fread (buf, 1, sizeof (buf) - 1, file);
+    buf[len] = '\0';
+    fclose (file);
+    CHECK(strstr (buf, "name = \"rn_dst\"") != NULL);
+    CHECK(strstr (buf, "name = \"rn_src\"") == NULL);
+
+    /* if weechat.look.theme pointed at the old name, the label moves too */
+    LONGS_EQUAL(WEECHAT_RC_OK, theme_save ("rn_active", 0));
+    config_file_option_set (config_look_theme, "rn_active", 1);
+    LONGS_EQUAL(WEECHAT_RC_OK, theme_rename ("rn_active", "rn_moved"));
+    STRCMP_EQUAL("rn_moved", CONFIG_STRING(config_look_theme));
+
+    /* cleanup */
+    config_file_option_reset (config_look_theme, 1);
+    theme_delete ("rn_dst");
+    theme_delete ("rn_moved");
+    free (src_path);
+    free (dst_path);
+}
+
+/*
+ * Test functions:
  *   theme_init
  */
 
