@@ -190,6 +190,7 @@ const zend_function_entry weechat_functions[] = {
     PHP_FE(weechat_config_set_plugin, arginfo_weechat_config_set_plugin)
     PHP_FE(weechat_config_set_desc_plugin, arginfo_weechat_config_set_desc_plugin)
     PHP_FE(weechat_config_unset_plugin, arginfo_weechat_config_unset_plugin)
+    PHP_FE(weechat_theme_register, arginfo_weechat_theme_register)
     PHP_FE(weechat_key_bind, arginfo_weechat_key_bind)
     PHP_FE(weechat_key_unbind, arginfo_weechat_key_unbind)
     PHP_FE(weechat_prefix, arginfo_weechat_prefix)

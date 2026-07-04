@@ -2000,6 +2000,30 @@ API_FUNC(config_unset_plugin)
     API_RETURN_INT(rc);
 }
 
+API_FUNC(theme_register)
+{
+    char *name;
+    struct t_hashtable *hashtable;
+    const char *result;
+    dXSARGS;
+
+    API_INIT_FUNC(1, "theme_register", API_RETURN_EMPTY);
+    if (items < 2)
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    name = SvPV_nolen (ST (0));
+    hashtable = weechat_perl_hash_to_hashtable (ST (1),
+                                                WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                                WEECHAT_HASHTABLE_STRING,
+                                                WEECHAT_HASHTABLE_STRING);
+
+    result = API_PTR2STR(weechat_theme_register (name, hashtable));
+
+    weechat_hashtable_free (hashtable);
+
+    API_RETURN_STRING(result);
+}
+
 API_FUNC(key_bind)
 {
     char *context;
@@ -5801,6 +5825,7 @@ weechat_perl_api_init (pTHX)
     API_DEF_FUNC(config_set_plugin);
     API_DEF_FUNC(config_set_desc_plugin);
     API_DEF_FUNC(config_unset_plugin);
+    API_DEF_FUNC(theme_register);
     API_DEF_FUNC(key_bind);
     API_DEF_FUNC(key_unbind);
     API_DEF_FUNC(prefix);

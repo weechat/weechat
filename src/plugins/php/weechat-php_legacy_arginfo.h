@@ -194,6 +194,8 @@ ZEND_END_ARG_INFO()
 
 #define arginfo_weechat_config_unset_plugin arginfo_weechat_plugin_get_name
 
+#define arginfo_weechat_theme_register arginfo_weechat_iconv_to_internal
+
 #define arginfo_weechat_key_bind arginfo_weechat_iconv_to_internal
 
 #define arginfo_weechat_key_unbind arginfo_weechat_iconv_to_internal

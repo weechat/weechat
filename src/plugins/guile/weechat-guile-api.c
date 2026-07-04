@@ -2004,6 +2004,30 @@ weechat_guile_api_config_unset_plugin (SCM option)
 }
 
 SCM
+weechat_guile_api_theme_register (SCM name, SCM overrides)
+{
+    struct t_hashtable *c_overrides;
+    const char *result;
+    SCM return_value;
+
+    API_INIT_FUNC(1, "theme_register", API_RETURN_EMPTY);
+    if (!scm_is_string (name) || !scm_list_p (overrides))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    c_overrides = weechat_guile_alist_to_hashtable (overrides,
+                                                    WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                                    WEECHAT_HASHTABLE_STRING,
+                                                    WEECHAT_HASHTABLE_STRING);
+
+    result = API_PTR2STR(weechat_theme_register (API_SCM_TO_STRING(name),
+                                                 c_overrides));
+
+    weechat_hashtable_free (c_overrides);
+
+    API_RETURN_STRING(result);
+}
+
+SCM
 weechat_guile_api_key_bind (SCM context, SCM keys)
 {
     struct t_hashtable *c_keys;
@@ -5537,6 +5561,7 @@ weechat_guile_api_module_init (void *data)
     API_DEF_FUNC(config_set_plugin, 2);
     API_DEF_FUNC(config_set_desc_plugin, 2);
     API_DEF_FUNC(config_unset_plugin, 1);
+    API_DEF_FUNC(theme_register, 2);
     API_DEF_FUNC(key_bind, 2);
     API_DEF_FUNC(key_unbind, 2);
     API_DEF_FUNC(prefix, 1);

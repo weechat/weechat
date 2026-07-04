@@ -233,6 +233,11 @@ ZEND_END_ARG_INFO()
 
 #define arginfo_weechat_config_unset_plugin arginfo_weechat_charset_set
 
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_weechat_theme_register, 0, 2, IS_STRING, 0)
+	ZEND_ARG_TYPE_INFO(0, p0, IS_STRING, 0)
+	ZEND_ARG_TYPE_INFO(0, p1, IS_ARRAY, 0)
+ZEND_END_ARG_INFO()
+
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_weechat_key_bind, 0, 2, IS_LONG, 0)
 	ZEND_ARG_TYPE_INFO(0, p0, IS_STRING, 0)
 	ZEND_ARG_TYPE_INFO(0, p1, IS_ARRAY, 0)

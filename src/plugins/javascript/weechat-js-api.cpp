@@ -1898,6 +1898,28 @@ API_FUNC(config_unset_plugin)
     API_RETURN_INT(rc);
 }
 
+API_FUNC(theme_register)
+{
+    struct t_hashtable *hashtable;
+    const char *result;
+
+    API_INIT_FUNC(1, "theme_register", "sh", API_RETURN_EMPTY);
+
+    v8::String::Utf8Value name(args[0]);
+    hashtable = weechat_js_object_to_hashtable (
+        args[1]->ToObject(),
+        WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_STRING);
+
+    result = API_PTR2STR(weechat_theme_register (*name, hashtable));
+
+    if (hashtable)
+        weechat_hashtable_free (hashtable);
+
+    API_RETURN_STRING(result);
+}
+
 API_FUNC(key_bind)
 {
     struct t_hashtable *hashtable;
@@ -5465,6 +5487,7 @@ WeechatJsV8::loadLibs()
     API_DEF_FUNC(config_set_plugin);
     API_DEF_FUNC(config_set_desc_plugin);
     API_DEF_FUNC(config_unset_plugin);
+    API_DEF_FUNC(theme_register);
     API_DEF_FUNC(key_bind);
     API_DEF_FUNC(key_unbind);
     API_DEF_FUNC(prefix);
