@@ -2191,6 +2191,129 @@ Przykład pogrubienia z domyślnym kolorem terminala:
 /set weechat.color.status_time *99999
 ----
 
+// TRANSLATION MISSING
+[[themes]]
+=== Motywy
+
+A theme is a named bundle of option overrides that can be applied with
+the <<command_weechat_theme,/theme>> command. WeeChat ships a built-in
+`"light"` theme tuned for light-background terminals and supports
+user-defined themes loaded transiently from files.
+
+[[themes_themable_options]]
+==== Themable options
+
+Themes can only set options marked as _themable_. All `*.color.*`
+options are themable by default; a few string options that hold format
+expressions with `+${color:...}+` references (such as
+`+weechat.color.chat_nick_colors+`, `+weechat.look.prefix_error+` or the
+`+buflist.format.*+` formats) are explicitly opted in.
+
+You can list the full themable surface area from the
+<<command_fset_fset,/fset>> buffer with the `+t:themable+` filter.
+
+[[themes_apply]]
+==== Applying a theme
+
+To switch to the built-in light-background theme:
+
+----
+/theme apply light
+----
+
+The current state of every themable option is saved beforehand to a
+backup theme file named like `+backup-YYYYMMDD-HHMMSS-uuuuuu+` in
+directory `+themes+` inside the WeeChat configuration directory, so the
+previous look can be restored at any time with:
+
+----
+/theme apply backup-YYYYMMDD-HHMMSS-uuuuuu
+----
+
+Backup creation can be disabled (not recommended):
+
+----
+/set weechat.look.theme_backup off
+----
+
+If backup is enabled and the backup file cannot be written, the apply
+is aborted before any option is changed.
+
+The name of the last applied theme is stored in
+`+weechat.look.theme+` (informational only; not re-applied at startup).
+
+[[themes_save_delete]]
+==== Saving and deleting user themes
+
+Save the current themable options as a new user theme file:
+
+----
+/theme save mytheme
+----
+
+By default only options whose value differs from their hardcoded
+default are written, keeping the file small and focused. To capture
+every themable option:
+
+----
+/theme save mytheme -full
+----
+
+Reserved names (built-in theme names like `+light+` and any name
+starting with `+backup-+`) are refused. Files live at
+`+${weechat_config_dir}/themes/<name>.theme+`.
+
+Delete a user theme:
+
+----
+/theme del mytheme
+----
+
+This removes the file on disk; built-in themes cannot be deleted.
+
+[[themes_file_format]]
+==== Theme file format
+
+A theme file is INI-like with two sections:
+
+----
+[info]
+name = "solarized_light"
+description = "Light-background theme inspired by Solarized"
+date = "2026-05-25 09:42:10"
+weechat = "4.10.0-dev"
+
+[options]
+weechat.color.chat = "darkgray"
+weechat.color.separator = "blue"
+irc.color.input_nick = "magenta"
+buflist.format.number = "${color:28}${number}${if:${number_displayed}?.: }"
+----
+
+`+[info]+` is informational metadata shown by `/theme info`. `+[options]+`
+holds the actual overrides; keys are the full option names that would
+appear in `/set`. String values can be enclosed in double or single
+quotes; quotes are stripped at parse time. Non-themable options listed
+in a theme file are refused at apply time and logged to the core
+buffer (so a `.theme` file imported from an untrusted source cannot
+overwrite passwords, autoload lists, or startup commands).
+
+User theme files are never cached: on every `/theme apply <name>` the
+file is parsed, applied, and freed.
+
+[[themes_resolution]]
+==== Resolution order
+
+When `+/theme apply <name>+` is run:
+
+* If `+${weechat_config_dir}/themes/<name>.theme+` exists, the file
+  is parsed and used (it shadows any built-in with the same name).
+* Otherwise the built-in theme registry is consulted; built-ins are
+  registered programmatically by core, plugins and scripts (see the
+  plugin and scripting documentation for `+weechat_theme_register+`).
+
+If neither source provides the name, the apply is refused.
+
 [[charset]]
 === Charset
 

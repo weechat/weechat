@@ -9749,6 +9749,90 @@ elif rc == weechat.WEECHAT_CONFIG_OPTION_UNSET_ERROR:
     # ...
 ----
 
+// TRANSLATION MISSING
+[[themes]]
+=== Themes
+
+Functions to contribute color (and other themable option) overrides to
+built-in themes. See the
+link:weechat_user.ja.html#themes[user's guide / Themes] section for the
+end-user side and the `+/theme+` command.
+
+==== theme_register
+
+_WeeChat ≥ 4.10.0._
+
+Register a contribution of option overrides under a named theme. The
+caller's plugin is the owner of the contribution; subsequent calls
+with the same theme name from the same plugin merge into the existing
+contribution (later keys win for duplicates).
+
+When the calling plugin is unloaded, all its contributions are
+automatically dropped from every theme.
+
+Prototype:
+
+[source,c]
+----
+struct t_theme *weechat_theme_register (const char *name,
+                                        struct t_hashtable *overrides);
+----
+
+Arguments:
+
+* _name_: theme name (for example `+light+` or a custom name)
+* _overrides_: hashtable mapping full option names
+  (e.g. `+irc.color.input_nick+`) to their string values; the caller
+  retains ownership and may free the hashtable right after the call
+
+Return value:
+
+* pointer to the registered theme (existing or newly created), NULL on
+  error
+
+C example:
+
+[source,c]
+----
+struct t_hashtable *overrides = weechat_hashtable_new (
+    8,
+    WEECHAT_HASHTABLE_STRING,
+    WEECHAT_HASHTABLE_STRING,
+    NULL, NULL);
+if (overrides)
+{
+    weechat_hashtable_set (overrides, "irc.color.input_nick", "cyan");
+    weechat_hashtable_set (overrides, "irc.color.topic_old",  "darkgray");
+    weechat_theme_register ("light", overrides);
+    weechat_hashtable_free (overrides);
+}
+----
+
+Script (Python):
+
+[source,python]
+----
+# prototype
+def theme_register(name: str, overrides: Dict[str, str]) -> str: ...
+
+# example
+weechat.theme_register("light", {
+    "irc.color.input_nick": "cyan",
+    "irc.color.topic_old": "darkgray",
+})
+----
+
+[NOTE]
+Only options that have the _themable_ flag will be set by `/theme apply`.
+All `*.color.*` options are themable by default; string options that
+hold `+${color:...}+` references are explicitly opted in. Entries
+targeting non-themable options are silently skipped at apply-time with
+a warning logged to the _core_ buffer.
+
+[NOTE]
+When called from a script, the contribution is automatically dropped
+when the script unloads (no manual cleanup is needed).
+
 [[key_bindings]]
 === キー割り当て
 
