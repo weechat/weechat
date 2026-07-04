@@ -43,6 +43,7 @@
 #include "spell-config.h"
 #include "spell-info.h"
 #include "spell-speller.h"
+#include "spell-theme.h"
 
 
 WEECHAT_PLUGIN_NAME(SPELL_PLUGIN_NAME);
@@ -1195,6 +1196,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
         return WEECHAT_RC_ERROR;
 
     spell_config_read ();
+
+    spell_theme_init ();
 
     spell_command_init ();
 
