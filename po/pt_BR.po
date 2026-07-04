@@ -46,7 +46,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-07-04 21:42+0200\n"
+"POT-Creation-Date: 2026-07-04 21:47+0200\n"
 "PO-Revision-Date: 2026-06-28 08:49+0200\n"
 "Last-Translator: Érico Nogueira <ericonr@disroot.org>\n"
 "Language-Team: Portuguese (Brazil) <weechat-dev@nongnu.org>\n"
@@ -3751,8 +3751,8 @@ msgstr "lista de itens da barra"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid ""
-"[list [-backups]] || apply <name> || reset || save <name> [-full] || rename "
-"<old> <new> || del <name> || info <name>"
+"[list [-backups]] || apply <name> || reset || save <name> || rename <old> "
+"<new> || del <name> || info <name>"
 msgstr ""
 
 #, fuzzy
@@ -3779,9 +3779,8 @@ msgstr ""
 
 msgid ""
 "raw[save]: save current themable options to a file <name>.theme in directory "
-"\"themes\"; by default only options whose value differs from their default "
-"are written, use \"-full\" to write every themable option; the name must not "
-"match a built-in theme or start with \"backup-\""
+"\"themes\"; every themable option is written, so the file is self-contained; "
+"the name must not match a built-in theme or start with \"backup-\""
 msgstr ""
 
 #, fuzzy

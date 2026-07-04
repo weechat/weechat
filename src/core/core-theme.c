@@ -543,13 +543,12 @@ theme_make_backup_name (void)
  * Write a snapshot of themable options to a .theme file at
  * "<weechat_config_dir>/themes/<name>.theme".
  *
- * The themes directory is created if missing. The file contains an
- * [info] section (name, description, date, weechat version) followed by
- * an [options] section.
+ * The themes directory is created if missing.
  *
- * If "diff_only" is non-zero, only options whose value differs from
- * their default (config_file_option_has_changed) are written. If zero,
- * every themable option is written (full snapshot).
+ * The file contains an [info] section (name, description, date, weechat version)
+ * followed by an [options] section. Every themable option is always
+ * written (full snapshot), so a theme file is self-contained and round-trips
+ * exactly, regardless of the current configuration.
  *
  * Return path to saved file on success, NULL on error.
  *
@@ -557,7 +556,7 @@ theme_make_backup_name (void)
  */
 
 char *
-theme_write_file (const char *name, const char *description, int diff_only)
+theme_write_file (const char *name, const char *description)
 {
     char *path, *dir, *value, *now;
     FILE *file;
@@ -608,8 +607,6 @@ theme_write_file (const char *name, const char *description, int diff_only)
             {
                 if (!ptr_option->themable)
                     continue;
-                if (diff_only && !config_file_option_has_changed (ptr_option))
-                    continue;
                 value = config_file_option_value_to_string (
                     ptr_option, 0, 0, 1);
                 fprintf (file, "%s.%s.%s = %s\n",
@@ -641,10 +638,7 @@ theme_make_backup (void)
     name = theme_make_backup_name ();
     if (!name)
         return NULL;
-    path = theme_write_file (
-        name,
-        _("Automatic backup"),
-        0);  /* full snapshot: backups must round-trip exactly */
+    path = theme_write_file (name, _("Automatic backup"));
     if (!path)
     {
         free (name);
@@ -1122,16 +1116,16 @@ theme_reset (void)
  * Save the current themable options to a user theme file.
  *
  * Refuse names that match a built-in theme (registered via API) or
- * that start with "backup-" (reserved for automatic backups). If
- * "full" is non-zero, every themable option is written; otherwise
- * only options whose value differs from their default are written.
+ * that start with "backup-" (reserved for automatic backups). Every
+ * themable option is written (full snapshot), so the file is
+ * self-contained and round-trips exactly.
  *
  * Return WEECHAT_RC_OK on success, WEECHAT_RC_ERROR on validation or
  * I/O failure.
  */
 
 int
-theme_save (const char *name, int full)
+theme_save (const char *name)
 {
     char *path;
 
@@ -1158,7 +1152,7 @@ theme_save (const char *name, int full)
         return WEECHAT_RC_ERROR;
     }
 
-    path = theme_write_file (name, NULL, (full) ? 0 : 1);
+    path = theme_write_file (name, NULL);
     if (!path)
     {
         gui_chat_printf (NULL,
