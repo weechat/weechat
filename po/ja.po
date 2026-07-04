@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-07-04 20:47+0200\n"
+"POT-Creation-Date: 2026-07-04 20:55+0200\n"
 "PO-Revision-Date: 2026-05-30 14:02+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <weechat-dev@nongnu.org>\n"
@@ -6712,7 +6712,7 @@ msgstr "%s%s: ファイル \"%s\" を解析できません"
 
 #, fuzzy, c-format
 #| msgid "Option \"%s%s%s\":"
-msgid "Theme saved: %s"
+msgid "Theme saved to: %s"
 msgstr "オプション \"%s%s%s\":"
 
 #, fuzzy, c-format

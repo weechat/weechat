@@ -48,8 +48,8 @@ extern struct t_theme *theme_alloc (const char *name);
 extern void theme_free (struct t_theme *theme);
 extern char *theme_user_file_path (const char *name);
 extern char *theme_make_backup_name (void);
-extern int theme_write_file (const char *name, const char *description,
-                             int diff_only);
+extern char *theme_write_file (const char *name, const char *description,
+                               int diff_only);
 extern char *theme_file_strip_quotes (char *value);
 extern struct t_theme *theme_file_parse (const char *path);
 }
@@ -338,7 +338,7 @@ TEST(CoreTheme, MakeBackupName)
 
 TEST(CoreTheme, WriteFile)
 {
-    char *path, line[8192];
+    char *path, *expected_path, line[8192];
     FILE *file;
     int saw_info, saw_name, saw_description, saw_date, saw_weechat;
     int saw_options_section, saw_an_option;
@@ -346,14 +346,20 @@ TEST(CoreTheme, WriteFile)
     int full_options, diff_options;
 
     /* refuse empty/NULL */
-    LONGS_EQUAL(0, theme_write_file (NULL, NULL, 0));
-    LONGS_EQUAL(0, theme_write_file ("", NULL, 0));
+    POINTERS_EQUAL(NULL, theme_write_file (NULL, NULL, 0));
+    POINTERS_EQUAL(NULL, theme_write_file ("", NULL, 0));
 
-    /* full snapshot: every themable option is written */
-    LONGS_EQUAL(1, theme_write_file ("test_wrt", "a description", 0));
+    /* full snapshot: every themable option is written; the returned
+       path matches the expected theme file path */
+    expected_path = theme_user_file_path ("test_wrt");
+    CHECK(expected_path != NULL);
 
-    path = theme_user_file_path ("test_wrt");
+    path = theme_write_file ("test_wrt", "a description", 0);
     CHECK(path != NULL);
+    STRCMP_EQUAL(expected_path, path);
+    free (path);
+
+    path = expected_path;
 
     file = fopen (path, "r");
     CHECK(file != NULL);
@@ -417,7 +423,12 @@ TEST(CoreTheme, WriteFile)
     /* diff-only snapshot in a freshly initialized config writes very
        few (typically zero) [options] entries — never more than the
        full snapshot */
-    LONGS_EQUAL(1, theme_write_file ("test_wrt", NULL, 1));
+    path = theme_write_file ("test_wrt", NULL, 1);
+    CHECK(path != NULL);
+    STRCMP_EQUAL(expected_path, path);
+    free (path);
+
+    path = expected_path;
 
     file = fopen (path, "r");
     CHECK(file != NULL);

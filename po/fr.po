@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-07-04 20:47+0200\n"
-"PO-Revision-Date: 2026-07-04 20:49+0200\n"
+"POT-Creation-Date: 2026-07-04 20:55+0200\n"
+"PO-Revision-Date: 2026-07-04 20:56+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: French <flashcode@flashtux.org>\n"
 "Language: fr\n"
@@ -7116,8 +7116,8 @@ msgid "%sFailed to save theme \"%s\""
 msgstr "%sÉchec de sauvegarde du thème \"%s\""
 
 #, c-format
-msgid "Theme saved: %s"
-msgstr "Thème sauvegardé : %s"
+msgid "Theme saved to: %s"
+msgstr "Thème sauvegardé vers : %s"
 
 #, c-format
 msgid "%sCannot delete built-in theme \"%s\""
