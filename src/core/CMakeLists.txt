@@ -52,6 +52,7 @@ set(LIB_CORE_SRC
   core-string.c core-string.h
   core-sys.c core-sys.h
   core-theme.c core-theme.h
+  core-theme-builtin.c
   core-upgrade.c core-upgrade.h
   core-upgrade-file.c core-upgrade-file.h
   core-url.c core-url.h

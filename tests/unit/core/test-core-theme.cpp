@@ -767,3 +767,45 @@ TEST(CoreTheme, End)
     POINTERS_EQUAL(NULL, themes);
     POINTERS_EQUAL(NULL, last_theme);
 }
+
+/*
+ * Test functions:
+ *   theme_builtin_init
+ *   theme_builtin_register_entries
+ */
+
+TEST(CoreTheme, BuiltinInit)
+{
+    struct t_theme *theme;
+
+    /* registry is empty after setup() */
+    POINTERS_EQUAL(NULL, theme_search ("light"));
+
+    theme_builtin_init ();
+
+    /* the "light" theme is registered */
+    theme = theme_search ("light");
+    CHECK(theme != NULL);
+
+    /* sanity check: many core color overrides (>= 30) */
+    CHECK(theme->overrides->items_count >= 30);
+
+    /* spot-check a few known entries from the core light table */
+    STRCMP_EQUAL("cyan",
+                 (const char *)hashtable_get (theme->overrides,
+                                              "weechat.color.chat_nick"));
+    STRCMP_EQUAL("251",
+                 (const char *)hashtable_get (theme->overrides,
+                                              "weechat.color.separator"));
+    STRCMP_EQUAL("254",
+                 (const char *)hashtable_get (theme->overrides,
+                                              "weechat.bar.status.color_bg"));
+
+    /* idempotency: a second call merges (no duplicate themes, count
+       stays the same because the same keys are re-inserted) */
+    int count_before = theme->overrides->items_count;
+    theme_builtin_init ();
+    theme = theme_search ("light");
+    CHECK(theme != NULL);
+    LONGS_EQUAL(count_before, theme->overrides->items_count);
+}
