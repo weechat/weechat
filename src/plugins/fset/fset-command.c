@@ -699,7 +699,9 @@ fset_command_init (void)
             N_("> `xxx`: show only options with \"xxx\" in name"),
             N_("> `f:xxx`: show only configuration file \"xxx\""),
             N_("> `t:xxx`: show only type \"xxx\" (bool/int/str/col/enum "
-               "or boolean/integer/string/color/enum)"),
+               "or boolean/integer/string/color/enum); the special value "
+               "\"themable\" can be used to show all options that can be "
+               "used in themes, regardless of type"),
             N_("> `d`: show only changed options"),
             N_("> `d:xxx`: show only changed options with \"xxx\" in "
                "name"),

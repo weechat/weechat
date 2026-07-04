@@ -529,6 +529,7 @@ tcl
 term
 text
 tg
+themable
 time
 timeout
 timer
