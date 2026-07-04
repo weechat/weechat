@@ -46,6 +46,9 @@ extern struct t_theme *theme_register (const char *name,
 extern struct t_arraylist *theme_list (void);
 extern int theme_apply (const char *name);
 extern char *theme_make_backup (void);
+extern char *theme_user_file_path (const char *name);
+extern struct t_theme *theme_file_parse (const char *path);
+extern void theme_free (struct t_theme *theme);
 
 extern void theme_init (void);
 extern void theme_end (void);

@@ -7182,15 +7182,70 @@ COMMAND_CALLBACK(sys)
 }
 
 /*
+ * Callback for "dir_exec_on_files": collects names of files matching
+ * "*.theme" into an arraylist passed as data; "backup-*.theme" is
+ * excluded when *(int *)data->show_backups is zero.
+ *
+ * The arraylist is iterated outside this callback so all dirent
+ * processing can happen in one place.
+ */
+
+struct t_command_theme_dir_collect
+{
+    struct t_arraylist *names;            /* arraylist of char * (owned)     */
+    int show_backups;                     /* include backup-*.theme ?        */
+};
+
+void
+command_theme_collect_file_cb (void *data, const char *filename)
+{
+    struct t_command_theme_dir_collect *ctx;
+    const char *base;
+    char *name;
+    size_t len;
+
+    ctx = (struct t_command_theme_dir_collect *)data;
+    base = strrchr (filename, '/');
+    base = (base) ? base + 1 : filename;
+    len = strlen (base);
+    if ((len < 7) || (strcmp (base + len - 6, ".theme") != 0))
+        return;
+    if (!ctx->show_backups && (strncmp (base, "backup-", 7) == 0))
+        return;
+    name = string_strndup (base, len - 6);
+    if (name)
+        arraylist_add (ctx->names, name);
+}
+
+/*
+ * Compare two theme file names (callback used by arraylist sort).
+ *
+ * Return negative, zero, or positive value (like strcmp).
+ */
+
+int
+command_theme_strcmp_cb (void *data, struct t_arraylist *arraylist,
+                         void *pointer1, void *pointer2)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) arraylist;
+
+    return strcmp ((const char *)pointer1, (const char *)pointer2);
+}
+
+/*
  * Callback for command "/theme": list or display details on themes.
  */
 
 COMMAND_CALLBACK(theme)
 {
-    struct t_arraylist *list;
-    struct t_theme *ptr_theme;
-    const char *ptr_active;
-    int i, size;
+    struct t_arraylist *list, *file_names;
+    struct t_command_theme_dir_collect collect;
+    struct t_theme *ptr_theme, *file_theme;
+    const char *ptr_active, *ptr_name;
+    char *path, *dir;
+    int i, size, show_backups;
 
     /* make C compiler happy */
     (void) pointer;
@@ -7198,20 +7253,46 @@ COMMAND_CALLBACK(theme)
     (void) buffer;
     (void) argv_eol;
 
-    /* "/theme" or "/theme list": list themes */
+    /* "/theme" or "/theme list [-backups]": list themes */
     if ((argc == 1) || (string_strcmp (argv[1], "list") == 0))
     {
+        show_backups = ((argc >= 3)
+                        && (string_strcmp (argv[2], "-backups") == 0));
+        ptr_active = CONFIG_STRING(config_look_theme);
+
         list = theme_list ();
-        if (!list || (arraylist_size (list) == 0))
+
+        /* scan ${weechat_config_dir}/themes/ for *.theme files */
+        file_names = arraylist_new (8, 1, 0,
+                                    &command_theme_strcmp_cb, NULL,
+                                    NULL, NULL);
+        if (file_names)
         {
-            gui_chat_printf (NULL, _("No theme registered"));
+            dir = NULL;
+            string_asprintf (&dir, "%s/themes", weechat_config_dir);
+            if (dir)
+            {
+                collect.names = file_names;
+                collect.show_backups = show_backups;
+                dir_exec_on_files (dir, 0, 0,
+                                   &command_theme_collect_file_cb,
+                                   &collect);
+                free (dir);
+            }
+        }
+
+        if ((!list || (arraylist_size (list) == 0))
+            && (!file_names || (arraylist_size (file_names) == 0)))
+        {
+            gui_chat_printf (NULL, _("No theme available"));
             arraylist_free (list);
+            arraylist_free (file_names);
             return WEECHAT_RC_OK;
         }
-        ptr_active = CONFIG_STRING(config_look_theme);
+
         gui_chat_printf (NULL, "");
         gui_chat_printf (NULL, _("Themes:"));
-        size = arraylist_size (list);
+        size = (list) ? arraylist_size (list) : 0;
         for (i = 0; i < size; i++)
         {
             ptr_theme = (struct t_theme *)arraylist_get (list, i);
@@ -7226,6 +7307,26 @@ COMMAND_CALLBACK(theme)
                 (ptr_theme->description && ptr_theme->description[0])
                     ? ": " : "",
                 (ptr_theme->description) ? ptr_theme->description : "");
+        }
+        size = (file_names) ? arraylist_size (file_names) : 0;
+        for (i = 0; i < size; i++)
+        {
+            ptr_name = (const char *)arraylist_get (file_names, i);
+            gui_chat_printf (
+                NULL,
+                "  %s %s%s%s (file)",
+                (ptr_active && (strcmp (ptr_active, ptr_name) == 0))
+                    ? "->" : "  ",
+                GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
+                ptr_name,
+                GUI_COLOR(GUI_COLOR_CHAT));
+        }
+        if (file_names)
+        {
+            size = arraylist_size (file_names);
+            for (i = 0; i < size; i++)
+                free (arraylist_get (file_names, i));
+            arraylist_free (file_names);
         }
         arraylist_free (list);
         return WEECHAT_RC_OK;
@@ -7242,21 +7343,46 @@ COMMAND_CALLBACK(theme)
     if (string_strcmp (argv[1], "info") == 0)
     {
         COMMAND_MIN_ARGS(3, "info");
-        ptr_theme = theme_search (argv[2]);
-        if (!ptr_theme)
+        /* file shadows registry: try user file first */
+        path = theme_user_file_path (argv[2]);
+        file_theme = NULL;
+        if (path && (access (path, R_OK) == 0))
+            file_theme = theme_file_parse (path);
+        if (!file_theme)
         {
-            gui_chat_printf (NULL,
-                             _("%sTheme \"%s\" not found"),
-                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                             argv[2]);
-            return WEECHAT_RC_ERROR;
+            free (path);
+            path = NULL;
+            ptr_theme = theme_search (argv[2]);
+            if (!ptr_theme)
+            {
+                gui_chat_printf (NULL,
+                                 _("%sTheme \"%s\" not found"),
+                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                 argv[2]);
+                return WEECHAT_RC_ERROR;
+            }
+        }
+        else
+        {
+            ptr_theme = file_theme;
         }
         gui_chat_printf (NULL, "");
         gui_chat_printf (NULL,
                          _("Theme \"%s%s%s\":"),
                          GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
-                         ptr_theme->name,
+                         (ptr_theme->name && ptr_theme->name[0])
+                             ? ptr_theme->name : argv[2],
                          GUI_COLOR(GUI_COLOR_CHAT));
+        if (path)
+        {
+            gui_chat_printf (NULL,
+                             _("  source: %s"), path);
+        }
+        else
+        {
+            gui_chat_printf (NULL,
+                             _("  source: built-in (in-memory)"));
+        }
         gui_chat_printf (NULL,
                          _("  description: %s"),
                          (ptr_theme->description) ? ptr_theme->description : "");
@@ -7271,6 +7397,8 @@ COMMAND_CALLBACK(theme)
                          _("  overrides: %d"),
                          (ptr_theme->overrides)
                              ? ptr_theme->overrides->items_count : 0);
+        free (path);
+        theme_free (file_theme);
         return WEECHAT_RC_OK;
     }
 
@@ -9933,14 +10061,18 @@ command_init (void)
         NULL, "theme",
         N_("manage color themes"),
         /* TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated */
-        N_("[list]"
+        N_("[list [-backups]]"
            " || apply <name>"
            " || info <name>"),
         CMD_ARGS_DESC(
-            N_("raw[list]: list registered themes (default action with no "
-               "argument); active theme is marked with \"->\""),
+            N_("raw[list]: list registered themes and any *.theme files in "
+               "the WeeChat configuration directory; the active theme "
+               "(matching weechat.look.theme) is marked with \"->\""),
+            N_("raw[-backups]: display backup theme files"),
             N_("raw[apply]: apply a theme (set every themable option to the "
-               "value from the theme)"),
+               "value from the theme); if a file named <name>.theme "
+               "exists in directory \"themes\" it shadows any built-in "
+               "theme of the same name"),
             N_("raw[info]: display details on a theme (name, description, "
                "creation date, WeeChat version, number of option overrides)"),
             N_("name: name of a theme"),
@@ -9955,7 +10087,7 @@ command_init (void)
                "(file name: \"backup-<timestamp>.theme\"); the previous "
                "state can be restored with: `/theme apply backup-<timestamp>`. "
                "This is controlled by the option weechat.look.theme_backup.")),
-        "list"
+        "list -backups"
         " || apply"
         " || info",
         &command_theme, NULL, NULL);

@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-07-04 15:44+0200\n"
+"POT-Creation-Date: 2026-07-04 16:03+0200\n"
 "PO-Revision-Date: 2026-05-30 14:01+0200\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: Czech <weechat-dev@nongnu.org>\n"
@@ -1005,8 +1005,10 @@ msgstr "Volba vytvořena: "
 msgid "%sFunction \"%s\" is not available on this system"
 msgstr "%s: upozornění: slovník \"%s\" není dostupný ve vašem systému"
 
-msgid "No theme registered"
-msgstr ""
+#, fuzzy
+#| msgid "no variable"
+msgid "No theme available"
+msgstr "není proměnná"
 
 msgid "Themes:"
 msgstr ""
@@ -1020,6 +1022,14 @@ msgstr "%sKlávesa \"%s\" nenalezena"
 #| msgid "Option \"%s%s%s\":"
 msgid "Theme \"%s%s%s\":"
 msgstr "Volba \"%s%s%s\":"
+
+#, fuzzy, c-format
+#| msgid "    file: %s"
+msgid "  source: %s"
+msgstr "    soubor: %s"
+
+msgid "  source: built-in (in-memory)"
+msgstr ""
 
 #, fuzzy, c-format
 #| msgid "description"
@@ -3699,19 +3709,24 @@ msgid "manage color themes"
 msgstr "seznam položek polí"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
-msgid "[list] || apply <name> || info <name>"
+msgid "[list [-backups]] || apply <name> || info <name>"
 msgstr ""
 
 #, fuzzy
 #| msgid "list of filters"
 msgid ""
-"raw[list]: list registered themes (default action with no argument); active "
-"theme is marked with \"->\""
+"raw[list]: list registered themes and any *.theme files in the WeeChat "
+"configuration directory; the active theme (matching weechat.look.theme) is "
+"marked with \"->\""
 msgstr "seznam filtrů"
+
+msgid "raw[-backups]: display backup theme files"
+msgstr ""
 
 msgid ""
 "raw[apply]: apply a theme (set every themable option to the value from the "
-"theme)"
+"theme); if a file named <name>.theme exists in directory \"themes\" it "
+"shadows any built-in theme of the same name"
 msgstr ""
 
 msgid ""
@@ -6292,6 +6307,28 @@ msgstr "%sKlávesa \"%s\" nenalezena"
 #| msgid "%s: script \"%s\" is not installed"
 msgid "%sTheme: option \"%s\" is not themable, skipped"
 msgstr "%s: skript \"%s\" není nainstalován"
+
+#, c-format
+msgid "%s%s: line %d: malformed section header"
+msgstr ""
+
+#, fuzzy, c-format
+#| msgid "%sWarning: %s, line %d: unknown section identifier (\"%s\")"
+msgid "%s%s: line %d: ignoring unknown section \"%s\""
+msgstr "%sUpozornění: %s, řádek %d: neznámý identifikátor sekce (\"%s\")"
+
+#, c-format
+msgid "%s%s: line %d: missing '=' separator"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: line %d: ignoring unknown [info] key \"%s\""
+msgstr "%sUpozornění: %s, řádek %d: neznámý identifikátor sekce (\"%s\")"
+
+#, fuzzy, c-format
+#| msgid "%s%s: unable to parse file \"%s\""
+msgid "%sFailed to parse theme file \"%s\""
+msgstr "%s%s: nemůžu parsovat soubor \"%s\""
 
 #, c-format
 msgid ""

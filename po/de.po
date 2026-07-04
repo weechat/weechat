@@ -26,7 +26,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-07-04 15:44+0200\n"
+"POT-Creation-Date: 2026-07-04 16:03+0200\n"
 "PO-Revision-Date: 2026-06-28 08:28+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
@@ -1003,8 +1003,10 @@ msgstr "Einstellung erstellt: "
 msgid "%sFunction \"%s\" is not available on this system"
 msgstr "%sFunktion \"%s\" ist auf dem Rechner nicht verfügbar"
 
-msgid "No theme registered"
-msgstr ""
+#, fuzzy
+#| msgid "not available"
+msgid "No theme available"
+msgstr "nicht verfügbar"
 
 msgid "Themes:"
 msgstr ""
@@ -1018,6 +1020,14 @@ msgstr "%sTastenbelegung \"%s\" nicht gefunden"
 #| msgid "Option \"%s%s%s\":"
 msgid "Theme \"%s%s%s\":"
 msgstr "Einstellung \"%s%s%s\":"
+
+#, fuzzy, c-format
+#| msgid "    file: %s"
+msgid "  source: %s"
+msgstr "    Datei: %s"
+
+msgid "  source: built-in (in-memory)"
+msgstr ""
 
 #, fuzzy, c-format
 #| msgid "description"
@@ -4091,7 +4101,7 @@ msgid "manage color themes"
 msgstr "Verwalten von benutzerdefinierten Bar-Items"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
-msgid "[list] || apply <name> || info <name>"
+msgid "[list [-backups]] || apply <name> || info <name>"
 msgstr ""
 
 #, fuzzy
@@ -4099,15 +4109,23 @@ msgstr ""
 #| "raw[list]: list remote relay servers (without argument, this list is "
 #| "displayed)"
 msgid ""
-"raw[list]: list registered themes (default action with no argument); active "
-"theme is marked with \"->\""
+"raw[list]: list registered themes and any *.theme files in the WeeChat "
+"configuration directory; the active theme (matching weechat.look.theme) is "
+"marked with \"->\""
 msgstr ""
 "raw[list]: listet relay-Server auf (ohne Angabe von Argumente wird diese "
 "Liste standardmäßig ausgegeben)"
 
+#, fuzzy
+#| msgid "raw[tags]: display tags for lines"
+msgid "raw[-backups]: display backup theme files"
+msgstr ""
+"raw[tags]: schaltet für jede Zeile die dazugehörigen Schlagwörter an / aus"
+
 msgid ""
 "raw[apply]: apply a theme (set every themable option to the value from the "
-"theme)"
+"theme); if a file named <name>.theme exists in directory \"themes\" it "
+"shadows any built-in theme of the same name"
 msgstr ""
 
 msgid ""
@@ -7127,6 +7145,32 @@ msgstr "%sTastenbelegung \"%s\" nicht gefunden"
 #| msgid "%s: script \"%s\" is not installed"
 msgid "%sTheme: option \"%s\" is not themable, skipped"
 msgstr "%s: Skript \"%s\" ist nicht installiert"
+
+#, c-format
+msgid "%s%s: line %d: malformed section header"
+msgstr ""
+
+#, fuzzy, c-format
+#| msgid "%sWarning: %s, line %d: ignoring unknown section identifier (\"%s\")"
+msgid "%s%s: line %d: ignoring unknown section \"%s\""
+msgstr "%sWarnung: %s, Zeile %d: unbekannte Sektion wird ignoriert (\"%s\")"
+
+#, c-format
+msgid "%s%s: line %d: missing '=' separator"
+msgstr ""
+
+#, fuzzy, c-format
+#| msgid ""
+#| "%sWarning: %s, line %d: ignoring unknown option for section \"%s\": %s"
+msgid "%s%s: line %d: ignoring unknown [info] key \"%s\""
+msgstr ""
+"%sWarnung: %s, Zeile %d: ignoriert unbekannte Einstellung für Sektion "
+"\"%s\": %s"
+
+#, fuzzy, c-format
+#| msgid "%s%s: unable to parse file \"%s\""
+msgid "%sFailed to parse theme file \"%s\""
+msgstr "%s%s: Datei \"%s\" Analyse nicht möglich"
 
 #, c-format
 msgid ""

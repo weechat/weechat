@@ -48,6 +48,8 @@ extern void theme_free (struct t_theme *theme);
 extern char *theme_user_file_path (const char *name);
 extern char *theme_make_backup_name (void);
 extern int theme_write_file_full (const char *name, const char *description);
+extern char *theme_file_strip_quotes (char *value);
+extern struct t_theme *theme_file_parse (const char *path);
 }
 
 TEST_GROUP(CoreTheme)
@@ -484,6 +486,158 @@ TEST(CoreTheme, Apply)
 
     free (saved_prefix_error);
     free (saved_theme_label);
+}
+
+/*
+ * Test functions:
+ *   theme_file_strip_quotes
+ */
+
+TEST(CoreTheme, FileStripQuotes)
+{
+    char buf[64];
+
+    /* NULL passes through */
+    POINTERS_EQUAL(NULL, theme_file_strip_quotes (NULL));
+
+    /* len < 2: too short to be a matched quote pair */
+    strcpy (buf, "");
+    STRCMP_EQUAL("", theme_file_strip_quotes (buf));
+    strcpy (buf, "a");
+    STRCMP_EQUAL("a", theme_file_strip_quotes (buf));
+    strcpy (buf, "\"");
+    STRCMP_EQUAL("\"", theme_file_strip_quotes (buf));
+
+    /* no quotes: returned as-is */
+    strcpy (buf, "hello");
+    STRCMP_EQUAL("hello", theme_file_strip_quotes (buf));
+
+    /* matched double quotes are stripped */
+    strcpy (buf, "\"hello\"");
+    STRCMP_EQUAL("hello", theme_file_strip_quotes (buf));
+
+    /* matched single quotes are stripped */
+    strcpy (buf, "'world'");
+    STRCMP_EQUAL("world", theme_file_strip_quotes (buf));
+
+    /* mismatched: unchanged */
+    strcpy (buf, "\"unmatched'");
+    STRCMP_EQUAL("\"unmatched'", theme_file_strip_quotes (buf));
+    strcpy (buf, "'unmatched\"");
+    STRCMP_EQUAL("'unmatched\"", theme_file_strip_quotes (buf));
+
+    /* exactly two quotes => empty string after stripping */
+    strcpy (buf, "\"\"");
+    STRCMP_EQUAL("", theme_file_strip_quotes (buf));
+
+    /* internal quotes only on one side: unchanged */
+    strcpy (buf, "no\"quote");
+    STRCMP_EQUAL("no\"quote", theme_file_strip_quotes (buf));
+}
+
+/*
+ * Test functions:
+ *   theme_file_parse
+ */
+
+TEST(CoreTheme, FileParse)
+{
+    const char *path = "/tmp/weechat_test_theme_parse.theme";
+    FILE *file;
+    struct t_theme *theme;
+
+    /* NULL and missing file => NULL */
+    POINTERS_EQUAL(NULL, theme_file_parse (NULL));
+    unlink (path);  /* belt-and-suspenders */
+    POINTERS_EQUAL(NULL, theme_file_parse (path));
+
+    /* write a well-formed file: [info] + [options], mixed quoting,
+       blanks and comments scattered around */
+    file = fopen (path, "w");
+    CHECK(file != NULL);
+    fprintf (file, "# leading comment\n");
+    fprintf (file, "\n");
+    fprintf (file, "[info]\n");
+    fprintf (file, "name = \"solarized_light\"\n");
+    fprintf (file, "description = \"Light-bg theme\"\n");
+    fprintf (file, "date = \"2026-05-26 09:42:10\"\n");
+    fprintf (file, "weechat = \"4.10.0-dev\"\n");
+    fprintf (file, "unknown_info_key = \"ignored\"\n");
+    fprintf (file, "\n");
+    fprintf (file, "[options]\n");
+    fprintf (file, "weechat.color.chat = default\n");                 /* unquoted */
+    fprintf (file, "  weechat.color.separator   =   \"blue\"\n");     /* whitespace + quotes */
+    fprintf (file, "irc.color.input_nick = 'lightcyan'\n");           /* single quotes */
+    fclose (file);
+
+    theme = theme_file_parse (path);
+    CHECK(theme != NULL);
+
+    /* [info] fields populated */
+    STRCMP_EQUAL("solarized_light", theme->name);
+    STRCMP_EQUAL("Light-bg theme", theme->description);
+    STRCMP_EQUAL("2026-05-26 09:42:10", theme->date);
+    STRCMP_EQUAL("4.10.0-dev", theme->weechat_version);
+
+    /* [options] entries: three known keys, "unknown_info_key" must NOT
+       leak in (it lives under [info]) */
+    LONGS_EQUAL(3, theme->overrides->items_count);
+    STRCMP_EQUAL("default",
+                 (const char *)hashtable_get (theme->overrides,
+                                              "weechat.color.chat"));
+    STRCMP_EQUAL("blue",
+                 (const char *)hashtable_get (theme->overrides,
+                                              "weechat.color.separator"));
+    STRCMP_EQUAL("lightcyan",
+                 (const char *)hashtable_get (theme->overrides,
+                                              "irc.color.input_nick"));
+    POINTERS_EQUAL(NULL, hashtable_get (theme->overrides,
+                                        "unknown_info_key"));
+
+    theme_free (theme);
+    unlink (path);
+
+    /* parse a file that has only [info]: overrides hashtable empty,
+       missing [info] keys default to empty string */
+    file = fopen (path, "w");
+    CHECK(file != NULL);
+    fprintf (file, "[info]\n");
+    fprintf (file, "name = \"only_info\"\n");
+    fclose (file);
+
+    theme = theme_file_parse (path);
+    CHECK(theme != NULL);
+    STRCMP_EQUAL("only_info", theme->name);
+    STRCMP_EQUAL("", theme->description);
+    STRCMP_EQUAL("", theme->date);
+    STRCMP_EQUAL("", theme->weechat_version);
+    LONGS_EQUAL(0, theme->overrides->items_count);
+    theme_free (theme);
+    unlink (path);
+
+    /* malformed lines must not crash; a missing-'=' line and a stray
+       section header are tolerated, the rest of the file still parses */
+    file = fopen (path, "w");
+    CHECK(file != NULL);
+    fprintf (file, "[info]\n");
+    fprintf (file, "name = \"robust\"\n");
+    fprintf (file, "broken line without equals\n");
+    fprintf (file, "[unknown_section]\n");
+    fprintf (file, "ignored = value\n");
+    fprintf (file, "[options]\n");
+    fprintf (file, "weechat.color.chat = red\n");
+    fclose (file);
+
+    theme = theme_file_parse (path);
+    CHECK(theme != NULL);
+    STRCMP_EQUAL("robust", theme->name);
+    LONGS_EQUAL(1, theme->overrides->items_count);
+    STRCMP_EQUAL("red",
+                 (const char *)hashtable_get (theme->overrides,
+                                              "weechat.color.chat"));
+    POINTERS_EQUAL(NULL, hashtable_get (theme->overrides, "ignored"));
+    theme_free (theme);
+    unlink (path);
 }
 
 /*
