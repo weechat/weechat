@@ -7171,7 +7171,7 @@ section = weechat.config_search_section(config_file, "section")
 
 ==== config_new_option
 
-_Ажурирано у верзији 1.5, 4.1.0._
+_Ажурирано у верзији 1.5, 4.1.0, 4.10.0._
 
 Креира нову опцију у одељку конфигурационог фајла.
 
@@ -7214,7 +7214,10 @@ struct t_config_option *weechat_config_new_option (
 * _config_file_: показивач на конфигурациони фајл
 * _section_: показивач на одељак
 * _name_: име опције; у програм у WeeChat верзије ≥ 1.4, име може да укључи и име родитељске опције (у случају да је ова опција „null”, вредност родитељске опције ће се приказати у излазу команде `/set`), тада је синтакса: „име << фајл.одељак.опција”
-* _type_: тип опције:
+// TRANSLATION MISSING
+* _type_: type of option; any type can be suffixed with `+|themable+` to mark
+  the option as themable, so that it can be set by the `/theme` command
+  (options of type _color_ are always themable) _(WeeChat ≥ 4.10.0)_:
 ** _boolean_: логичка вредност (on/off)
 ** _integer_: целобројна вредност
 ** _string_: стринг вредност
@@ -7287,7 +7290,7 @@ struct t_config_option *option_int =
 
 /* стринг */
 struct t_config_option *option_str =
-    weechat_config_new_option (config_file, section, "option_str", "string",
+    weechat_config_new_option (config_file, section, "option_str", "string|themable",
                                "My option, type string",
                                NULL,
                                0, 0,
@@ -7363,7 +7366,7 @@ option_int = weechat.config_new_option(config_file, section, "option_int", "inte
     "", "",
     "", "")
 
-option_str = weechat.config_new_option(config_file, section, "option_str", "string",
+option_str = weechat.config_new_option(config_file, section, "option_str", "string|themable",
     "My option, type string",
     "", 0, 0, "test", "test", 1,
     "option_str_check_value_cb", "",

@@ -395,13 +395,106 @@ TEST(CoreConfigFile, OptionMalloc)
 }
 
 /*
+ * Create an option with the given type, read its "themable" flag, then free
+ * it.
+ *
+ * Return the value of the "themable" flag (0 or 1), or -1 if the option could
+ * not be created (invalid type).
+ */
+
+int
+test_new_option_themable (struct t_config_section *section,
+                          const char *name, const char *type,
+                          const char *string_values,
+                          const char *default_value)
+{
+    struct t_config_option *option;
+    int themable;
+
+    option = config_file_new_option (
+        weechat_config_file, section,
+        name, type, "", string_values, 0, 123456, default_value, NULL, 0,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL);
+    if (!option)
+        return -1;
+    themable = option->themable;
+    config_file_option_free (option, 0);
+    return themable;
+}
+
+/*
  * Test functions:
  *   config_file_new_option
  */
 
 TEST(CoreConfigFile, NewOption)
 {
-    /* TODO: write tests */
+    struct t_config_option *ptr_option;
+    int *ptr_themable;
+
+    /* plain types are not themable */
+    LONGS_EQUAL(0, test_new_option_themable (
+                    weechat_config_section_look,
+                    "test_themable", "boolean", NULL, "off"));
+    LONGS_EQUAL(0, test_new_option_themable (
+                    weechat_config_section_look,
+                    "test_themable", "integer", NULL, "100"));
+    LONGS_EQUAL(0, test_new_option_themable (
+                    weechat_config_section_look,
+                    "test_themable", "string", NULL, "value"));
+    LONGS_EQUAL(0, test_new_option_themable (
+                    weechat_config_section_look,
+                    "test_themable", "enum", "v1|v2|v3", "v2"));
+
+    /* color options are always themable, even without the suffix */
+    LONGS_EQUAL(1, test_new_option_themable (
+                    weechat_config_section_color,
+                    "test_themable", "color", NULL, "blue"));
+
+    /* the "|themable" suffix marks an option of any type as themable */
+    LONGS_EQUAL(1, test_new_option_themable (
+                    weechat_config_section_look,
+                    "test_themable", "boolean|themable", NULL, "off"));
+    LONGS_EQUAL(1, test_new_option_themable (
+                    weechat_config_section_look,
+                    "test_themable", "integer|themable", NULL, "100"));
+    LONGS_EQUAL(1, test_new_option_themable (
+                    weechat_config_section_look,
+                    "test_themable", "string|themable", NULL, "value"));
+    LONGS_EQUAL(1, test_new_option_themable (
+                    weechat_config_section_look,
+                    "test_themable", "enum|themable", "v1|v2|v3", "v2"));
+    LONGS_EQUAL(1, test_new_option_themable (
+                    weechat_config_section_color,
+                    "test_themable", "color|themable", NULL, "blue"));
+
+    /* an invalid type or unknown suffix is refused (option not created) */
+    LONGS_EQUAL(-1, test_new_option_themable (
+                    weechat_config_section_look,
+                    "test_themable", "string|xxx", NULL, "value"));
+    LONGS_EQUAL(-1, test_new_option_themable (
+                    weechat_config_section_look,
+                    "test_themable", "string|", NULL, "value"));
+    LONGS_EQUAL(-1, test_new_option_themable (
+                    weechat_config_section_look,
+                    "test_themable", "xxx", NULL, "value"));
+
+    /* the flag is reachable via config_file_option_get_pointer */
+    ptr_option = config_file_new_option (
+        weechat_config_file, weechat_config_section_look,
+        "test_themable", "string|themable", "", NULL, 0, 0, "value", NULL, 0,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL);
+    CHECK(ptr_option);
+    ptr_themable = (int *)config_file_option_get_pointer (ptr_option,
+                                                          "themable");
+    CHECK(ptr_themable);
+    POINTERS_EQUAL(&ptr_option->themable, ptr_themable);
+    LONGS_EQUAL(1, *ptr_themable);
+    config_file_option_free (ptr_option, 0);
 }
 
 /*

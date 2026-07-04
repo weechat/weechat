@@ -635,7 +635,7 @@ def config_new_option(config_file: str, section: str, name: str, type: str, desc
             "", "",
             "", "")
 
-        option_str = weechat.config_new_option(config_file, section, "option_str", "string",
+        option_str = weechat.config_new_option(config_file, section, "option_str", "string|themable",
             "My option, type string",
             "", 0, 0, "test", "test", 1,
             "option_str_check_value_cb", "",

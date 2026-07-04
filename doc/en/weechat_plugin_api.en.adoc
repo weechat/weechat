@@ -7367,7 +7367,7 @@ section = weechat.config_search_section(config_file, "section")
 
 ==== config_new_option
 
-_Updated in 1.5, 4.1.0._
+_Updated in 1.5, 4.1.0, 4.10.0._
 
 Create a new option in a section of a configuration file.
 
@@ -7413,7 +7413,9 @@ Arguments:
   option name (the value of parent option will be displayed in `/set` command
   output if this option is "null"), the syntax is then:
   "name << file.section.option"
-* _type_: type of option:
+* _type_: type of option; any type can be suffixed with `+|themable+` to mark
+  the option as themable, so that it can be set by the `/theme` command
+  (options of type _color_ are always themable) _(WeeChat ≥ 4.10.0)_:
 ** _boolean_: boolean value (on/off)
 ** _integer_: integer value
 ** _string_: string value
@@ -7499,7 +7501,7 @@ struct t_config_option *option_int =
 
 /* string */
 struct t_config_option *option_str =
-    weechat_config_new_option (config_file, section, "option_str", "string",
+    weechat_config_new_option (config_file, section, "option_str", "string|themable",
                                "My option, type string",
                                NULL,
                                0, 0,
@@ -7575,7 +7577,7 @@ option_int = weechat.config_new_option(config_file, section, "option_int", "inte
     "", "",
     "", "")
 
-option_str = weechat.config_new_option(config_file, section, "option_str", "string",
+option_str = weechat.config_new_option(config_file, section, "option_str", "string|themable",
     "My option, type string",
     "", 0, 0, "test", "test", 1,
     "option_str_check_value_cb", "",

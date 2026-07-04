@@ -645,7 +645,7 @@ buflist_config_init (void)
     {
         buflist_config_format_buffer = weechat_config_new_option (
             buflist_config_file, buflist_config_section_format,
-            "buffer", "string",
+            "buffer", "string|themable",
             N_("format of each line with a buffer "
                "(note: content is evaluated, see /help buflist); "
                "example: standard format for bar item \"buflist\" and only the "
@@ -663,7 +663,7 @@ buflist_config_init (void)
             NULL, NULL, NULL);
         buflist_config_format_buffer_current = weechat_config_new_option (
             buflist_config_file, buflist_config_section_format,
-            "buffer_current", "string",
+            "buffer_current", "string|themable",
             N_("format for the line with current buffer "
                "(note: content is evaluated, see /help buflist)"),
             NULL, 0, 0, "${color:,17}${format_buffer}", NULL, 0,
@@ -672,7 +672,7 @@ buflist_config_init (void)
             NULL, NULL, NULL);
         buflist_config_format_hotlist = weechat_config_new_option (
             buflist_config_file, buflist_config_section_format,
-            "hotlist", "string",
+            "hotlist", "string|themable",
             N_("format for hotlist "
                "(note: content is evaluated, see /help buflist)"),
             NULL, 0, 0,
@@ -683,7 +683,7 @@ buflist_config_init (void)
             NULL, NULL, NULL);
         buflist_config_format_hotlist_level[3] = weechat_config_new_option (
             buflist_config_file, buflist_config_section_format,
-            "hotlist_highlight", "string",
+            "hotlist_highlight", "string|themable",
             N_("format for a buffer with hotlist level \"highlight\" "
                "(note: content is evaluated, see /help buflist)"),
             NULL, 0, 0, "${color:magenta}", NULL, 0,
@@ -692,7 +692,7 @@ buflist_config_init (void)
             NULL, NULL, NULL);
         buflist_config_format_hotlist_level[0] = weechat_config_new_option (
             buflist_config_file, buflist_config_section_format,
-            "hotlist_low", "string",
+            "hotlist_low", "string|themable",
             N_("format for a buffer with hotlist level \"low\" "
                "(note: content is evaluated, see /help buflist)"),
             NULL, 0, 0, "${color:white}", NULL, 0,
@@ -701,7 +701,7 @@ buflist_config_init (void)
             NULL, NULL, NULL);
         buflist_config_format_hotlist_level[1] = weechat_config_new_option (
             buflist_config_file, buflist_config_section_format,
-            "hotlist_message", "string",
+            "hotlist_message", "string|themable",
             N_("format for a buffer with hotlist level \"message\" "
                "(note: content is evaluated, see /help buflist)"),
             NULL, 0, 0, "${color:brown}", NULL, 0,
@@ -710,7 +710,7 @@ buflist_config_init (void)
             NULL, NULL, NULL);
         buflist_config_format_hotlist_level_none = weechat_config_new_option (
             buflist_config_file, buflist_config_section_format,
-            "hotlist_none", "string",
+            "hotlist_none", "string|themable",
             N_("format for a buffer not in hotlist "
                "(note: content is evaluated, see /help buflist)"),
             NULL, 0, 0, "${color:default}", NULL, 0,
@@ -719,7 +719,7 @@ buflist_config_init (void)
             NULL, NULL, NULL);
         buflist_config_format_hotlist_level[2] = weechat_config_new_option (
             buflist_config_file, buflist_config_section_format,
-            "hotlist_private", "string",
+            "hotlist_private", "string|themable",
             N_("format for a buffer with hotlist level \"private\" "
                "(note: content is evaluated, see /help buflist)"),
             NULL, 0, 0, "${color:green}", NULL, 0,
@@ -728,7 +728,7 @@ buflist_config_init (void)
             NULL, NULL, NULL);
         buflist_config_format_hotlist_separator = weechat_config_new_option (
             buflist_config_file, buflist_config_section_format,
-            "hotlist_separator", "string",
+            "hotlist_separator", "string|themable",
             N_("separator for counts in hotlist "
                "(note: content is evaluated, see /help buflist)"),
             NULL, 0, 0, "${color:default},", NULL, 0,
@@ -737,7 +737,7 @@ buflist_config_init (void)
             NULL, NULL, NULL);
         buflist_config_format_indent = weechat_config_new_option (
             buflist_config_file, buflist_config_section_format,
-            "indent", "string",
+            "indent", "string|themable",
             N_("string displayed to indent channel, private and list buffers "
                "(note: content is evaluated, see /help buflist)"),
             NULL, 0, 0, "  ", NULL, 0,
@@ -746,7 +746,7 @@ buflist_config_init (void)
             NULL, NULL, NULL);
         buflist_config_format_lag = weechat_config_new_option (
             buflist_config_file, buflist_config_section_format,
-            "lag", "string",
+            "lag", "string|themable",
             N_("format for lag on an IRC server buffer "
                "(note: content is evaluated, see /help buflist)"),
             NULL, 0, 0,
@@ -757,7 +757,7 @@ buflist_config_init (void)
             NULL, NULL, NULL);
         buflist_config_format_name = weechat_config_new_option (
             buflist_config_file, buflist_config_section_format,
-            "name", "string",
+            "name", "string|themable",
             N_("format for buffer name "
                "(note: content is evaluated, see /help buflist)"),
             NULL, 0, 0, "${name}", NULL, 0,
@@ -766,7 +766,7 @@ buflist_config_init (void)
             NULL, NULL, NULL);
         buflist_config_format_nick_prefix = weechat_config_new_option (
             buflist_config_file, buflist_config_section_format,
-            "nick_prefix", "string",
+            "nick_prefix", "string|themable",
             N_("format for nick prefix on a channel "
                "(note: content is evaluated, see /help buflist)"),
             NULL, 0, 0, "${color_nick_prefix}${nick_prefix}", NULL, 0,
@@ -775,7 +775,7 @@ buflist_config_init (void)
             NULL, NULL, NULL);
         buflist_config_format_number = weechat_config_new_option (
             buflist_config_file, buflist_config_section_format,
-            "number", "string",
+            "number", "string|themable",
             N_("format for buffer number, ${number} is the indented number "
                "(note: content is evaluated, see /help buflist)"),
             NULL, 0, 0,
@@ -786,7 +786,7 @@ buflist_config_init (void)
             NULL, NULL, NULL);
         buflist_config_format_tls_version = weechat_config_new_option (
             buflist_config_file, buflist_config_section_format,
-            "tls_version", "string",
+            "tls_version", "string|themable",
             N_("format for TLS version on an IRC server buffer "
                "(note: content is evaluated, see /help buflist)"),
             NULL, 0, 0,
