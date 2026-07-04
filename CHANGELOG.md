@@ -17,6 +17,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 ### Added
 
+- core: add command `/theme`
 - core: add `themable` flag on configuration options
 - core: add option weechat.look.theme
 - fset: add filter `t:themable`

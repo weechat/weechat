@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-07-04 13:59+0200\n"
+"POT-Creation-Date: 2026-07-04 14:09+0200\n"
 "PO-Revision-Date: 2026-03-08 08:59+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: Russian <weechat-dev@nongnu.org>\n"
@@ -1011,6 +1011,36 @@ msgstr "не на канале"
 #, fuzzy, c-format
 msgid "%sFunction \"%s\" is not available on this system"
 msgstr "%s plugin \"%s\" не найден\n"
+
+msgid "No theme registered"
+msgstr ""
+
+msgid "Themes:"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%sTheme \"%s\" not found"
+msgstr "%s сервер \"%s\" не найден\n"
+
+#, fuzzy, c-format
+msgid "Theme \"%s%s%s\":"
+msgstr "Ники %s%s%s: %s["
+
+#, fuzzy, c-format
+msgid "  description: %s"
+msgstr "  . описание: %s\n"
+
+#, fuzzy, c-format
+msgid "  date: %s"
+msgstr "       IRC(%s)\n"
+
+#, fuzzy, c-format
+msgid "  WeeChat version: %s"
+msgstr "слоган WeeChat"
+
+#, c-format
+msgid "  overrides: %d"
+msgstr ""
 
 #, fuzzy, c-format
 msgid "%sFailed to unset option \"%s\""
@@ -3533,6 +3563,35 @@ msgid ""
 msgstr ""
 
 msgid "number: number of processes to clean"
+msgstr ""
+
+#, fuzzy
+msgid "manage color themes"
+msgstr "Список сокращений:\n"
+
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+msgid "[list] || info <name>"
+msgstr ""
+
+#, fuzzy
+msgid ""
+"raw[list]: list registered themes (default action with no argument); active "
+"theme is marked with \"->\""
+msgstr "Список сокращений:\n"
+
+msgid ""
+"raw[info]: display details on a theme (name, description, creation date, "
+"WeeChat version, number of option overrides)"
+msgstr ""
+
+#, fuzzy
+msgid "name: name of a theme"
+msgstr "Список сокращений:\n"
+
+msgid ""
+"Themes are named bundles of option overrides. Built-in themes are registered "
+"in memory by core/plugins/scripts; user themes are read from files in "
+"directory \"themes\" inside the WeeChat configuration directory."
 msgstr ""
 
 #, fuzzy

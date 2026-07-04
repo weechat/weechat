@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-07-04 13:59+0200\n"
+"POT-Creation-Date: 2026-07-04 14:09+0200\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -924,6 +924,36 @@ msgstr ""
 
 #, c-format
 msgid "%sFunction \"%s\" is not available on this system"
+msgstr ""
+
+msgid "No theme registered"
+msgstr ""
+
+msgid "Themes:"
+msgstr ""
+
+#, c-format
+msgid "%sTheme \"%s\" not found"
+msgstr ""
+
+#, c-format
+msgid "Theme \"%s%s%s\":"
+msgstr ""
+
+#, c-format
+msgid "  description: %s"
+msgstr ""
+
+#, c-format
+msgid "  date: %s"
+msgstr ""
+
+#, c-format
+msgid "  WeeChat version: %s"
+msgstr ""
+
+#, c-format
+msgid "  overrides: %d"
 msgstr ""
 
 #, c-format
@@ -3303,6 +3333,32 @@ msgid ""
 msgstr ""
 
 msgid "number: number of processes to clean"
+msgstr ""
+
+msgid "manage color themes"
+msgstr ""
+
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+msgid "[list] || info <name>"
+msgstr ""
+
+msgid ""
+"raw[list]: list registered themes (default action with no argument); active "
+"theme is marked with \"->\""
+msgstr ""
+
+msgid ""
+"raw[info]: display details on a theme (name, description, creation date, "
+"WeeChat version, number of option overrides)"
+msgstr ""
+
+msgid "name: name of a theme"
+msgstr ""
+
+msgid ""
+"Themes are named bundles of option overrides. Built-in themes are registered "
+"in memory by core/plugins/scripts; user themes are read from files in "
+"directory \"themes\" inside the WeeChat configuration directory."
 msgstr ""
 
 msgid "toggle value of a config option"

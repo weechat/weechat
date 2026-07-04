@@ -24,7 +24,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-07-04 13:59+0200\n"
+"POT-Creation-Date: 2026-07-04 14:09+0200\n"
 "PO-Revision-Date: 2026-06-28 08:46+0200\n"
 "Last-Translator: Santiago Forero <santiago@forero.xyz>\n"
 "Language-Team: Spanish <weechat-dev@nongnu.org>\n"
@@ -1033,6 +1033,41 @@ msgstr "Opción creada: "
 #| msgid "%s: warning: dictionary \"%s\" is not available on your system"
 msgid "%sFunction \"%s\" is not available on this system"
 msgstr "%s: atención: diccionario \"%s\" no está disponible en su sistema"
+
+msgid "No theme registered"
+msgstr ""
+
+msgid "Themes:"
+msgstr ""
+
+#, fuzzy, c-format
+#| msgid "%sKey \"%s\" not found"
+msgid "%sTheme \"%s\" not found"
+msgstr "%sTecla \"%s\" no encontrada"
+
+#, fuzzy, c-format
+#| msgid "Option \"%s%s%s\":"
+msgid "Theme \"%s%s%s\":"
+msgstr "Opción \"%s%s%s\":"
+
+#, fuzzy, c-format
+#| msgid "description"
+msgid "  description: %s"
+msgstr "descripción"
+
+#, fuzzy, c-format
+#| msgid "    file: %s"
+msgid "  date: %s"
+msgstr "    archivo: %s"
+
+#, fuzzy, c-format
+#| msgid "WeeChat version"
+msgid "  WeeChat version: %s"
+msgstr "versión de WeeChat"
+
+#, c-format
+msgid "  overrides: %d"
+msgstr ""
 
 #, c-format
 msgid "%sFailed to unset option \"%s\""
@@ -3749,6 +3784,37 @@ msgid ""
 msgstr ""
 
 msgid "number: number of processes to clean"
+msgstr ""
+
+#, fuzzy
+#| msgid "list of bar items"
+msgid "manage color themes"
+msgstr "lista de elementos de barra"
+
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+msgid "[list] || info <name>"
+msgstr ""
+
+#, fuzzy
+#| msgid "list of filters"
+msgid ""
+"raw[list]: list registered themes (default action with no argument); active "
+"theme is marked with \"->\""
+msgstr "lista de filtros"
+
+msgid ""
+"raw[info]: display details on a theme (name, description, creation date, "
+"WeeChat version, number of option overrides)"
+msgstr ""
+
+#, fuzzy
+msgid "name: name of a theme"
+msgstr "habilitar soporte para ratón"
+
+msgid ""
+"Themes are named bundles of option overrides. Built-in themes are registered "
+"in memory by core/plugins/scripts; user themes are read from files in "
+"directory \"themes\" inside the WeeChat configuration directory."
 msgstr ""
 
 #, fuzzy

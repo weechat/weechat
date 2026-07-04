@@ -26,7 +26,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-07-04 13:59+0200\n"
+"POT-Creation-Date: 2026-07-04 14:09+0200\n"
 "PO-Revision-Date: 2026-06-28 08:28+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
@@ -1002,6 +1002,41 @@ msgstr "Einstellung erstellt: "
 #, c-format
 msgid "%sFunction \"%s\" is not available on this system"
 msgstr "%sFunktion \"%s\" ist auf dem Rechner nicht verfügbar"
+
+msgid "No theme registered"
+msgstr ""
+
+msgid "Themes:"
+msgstr ""
+
+#, fuzzy, c-format
+#| msgid "%sKey \"%s\" not found"
+msgid "%sTheme \"%s\" not found"
+msgstr "%sTastenbelegung \"%s\" nicht gefunden"
+
+#, fuzzy, c-format
+#| msgid "Option \"%s%s%s\":"
+msgid "Theme \"%s%s%s\":"
+msgstr "Einstellung \"%s%s%s\":"
+
+#, fuzzy, c-format
+#| msgid "description"
+msgid "  description: %s"
+msgstr "Beschreibung"
+
+#, fuzzy, c-format
+#| msgid "    file: %s"
+msgid "  date: %s"
+msgstr "    Datei: %s"
+
+#, fuzzy, c-format
+#| msgid "WeeChat version"
+msgid "  WeeChat version: %s"
+msgstr "WeeChat-Version"
+
+#, c-format
+msgid "  overrides: %d"
+msgstr ""
 
 #, c-format
 msgid "%sFailed to unset option \"%s\""
@@ -4049,6 +4084,42 @@ msgstr ""
 
 msgid "number: number of processes to clean"
 msgstr "Anzahl: Anzahl der zu bereinigenden Prozesse"
+
+#, fuzzy
+#| msgid "manage custom bar items"
+msgid "manage color themes"
+msgstr "Verwalten von benutzerdefinierten Bar-Items"
+
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+msgid "[list] || info <name>"
+msgstr ""
+
+#, fuzzy
+#| msgid ""
+#| "raw[list]: list remote relay servers (without argument, this list is "
+#| "displayed)"
+msgid ""
+"raw[list]: list registered themes (default action with no argument); active "
+"theme is marked with \"->\""
+msgstr ""
+"raw[list]: listet relay-Server auf (ohne Angabe von Argumente wird diese "
+"Liste standardmäßig ausgegeben)"
+
+msgid ""
+"raw[info]: display details on a theme (name, description, creation date, "
+"WeeChat version, number of option overrides)"
+msgstr ""
+
+#, fuzzy
+#| msgid "name: name of trigger"
+msgid "name: name of a theme"
+msgstr "name: Name des Triggers"
+
+msgid ""
+"Themes are named bundles of option overrides. Built-in themes are registered "
+"in memory by core/plugins/scripts; user themes are read from files in "
+"directory \"themes\" inside the WeeChat configuration directory."
+msgstr ""
 
 msgid "toggle value of a config option"
 msgstr "den Wert einer Konfigurationsoption umschalten"

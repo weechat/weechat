@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-07-04 13:59+0200\n"
+"POT-Creation-Date: 2026-07-04 14:09+0200\n"
 "PO-Revision-Date: 2026-06-28 08:53+0200\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <emir_sari@icloud.com>\n"
@@ -970,6 +970,41 @@ msgstr "Seçenek oluşturuldu: "
 #, c-format
 msgid "%sFunction \"%s\" is not available on this system"
 msgstr "%s\"%s\" işlevi sisteminizde kullanılabilir değil"
+
+msgid "No theme registered"
+msgstr ""
+
+msgid "Themes:"
+msgstr ""
+
+#, fuzzy, c-format
+#| msgid "%sKey \"%s\" not found"
+msgid "%sTheme \"%s\" not found"
+msgstr "%s\"%s\" düğmesi bulunamadı"
+
+#, fuzzy, c-format
+#| msgid "Option \"%s%s%s\":"
+msgid "Theme \"%s%s%s\":"
+msgstr "\"%s%s%s\" seçeneği:"
+
+#, fuzzy, c-format
+#| msgid "description"
+msgid "  description: %s"
+msgstr "açıklama"
+
+#, fuzzy, c-format
+#| msgid "    file: %s"
+msgid "  date: %s"
+msgstr "    dosya: %s"
+
+#, fuzzy, c-format
+#| msgid "WeeChat version"
+msgid "  WeeChat version: %s"
+msgstr "WeeChat sürümü"
+
+#, c-format
+msgid "  overrides: %d"
+msgstr ""
 
 #, c-format
 msgid "%sFailed to unset option \"%s\""
@@ -3710,6 +3745,38 @@ msgid ""
 msgstr ""
 
 msgid "number: number of processes to clean"
+msgstr ""
+
+#, fuzzy
+#| msgid "manage custom bar items"
+msgid "manage color themes"
+msgstr "özel çubuk ögelerini yönet"
+
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+msgid "[list] || info <name>"
+msgstr ""
+
+#, fuzzy
+#| msgid "list of filters"
+msgid ""
+"raw[list]: list registered themes (default action with no argument); active "
+"theme is marked with \"->\""
+msgstr "süzgeçlerin listesi"
+
+msgid ""
+"raw[info]: display details on a theme (name, description, creation date, "
+"WeeChat version, number of option overrides)"
+msgstr ""
+
+#, fuzzy
+#| msgid "name: name of trigger"
+msgid "name: name of a theme"
+msgstr "ad: Tetiğin adı"
+
+msgid ""
+"Themes are named bundles of option overrides. Built-in themes are registered "
+"in memory by core/plugins/scripts; user themes are read from files in "
+"directory \"themes\" inside the WeeChat configuration directory."
 msgstr ""
 
 msgid "toggle value of a config option"

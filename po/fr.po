@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-07-04 13:59+0200\n"
-"PO-Revision-Date: 2026-07-04 14:01+0200\n"
+"POT-Creation-Date: 2026-07-04 14:09+0200\n"
+"PO-Revision-Date: 2026-07-04 14:11+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: French <flashcode@flashtux.org>\n"
 "Language: fr\n"
@@ -988,6 +988,36 @@ msgstr "Option créée : "
 #, c-format
 msgid "%sFunction \"%s\" is not available on this system"
 msgstr "%sLa fonction \"%s\" n'est pas disponible sur ce système"
+
+msgid "No theme registered"
+msgstr "Aucun thème enregistré"
+
+msgid "Themes:"
+msgstr "Thèmes :"
+
+#, c-format
+msgid "%sTheme \"%s\" not found"
+msgstr "%sThème \"%s\" non trouvé"
+
+#, c-format
+msgid "Theme \"%s%s%s\":"
+msgstr "Thème \"%s%s%s\" :"
+
+#, c-format
+msgid "  description: %s"
+msgstr "  description : %s"
+
+#, c-format
+msgid "  date: %s"
+msgstr "  date : %s"
+
+#, c-format
+msgid "  WeeChat version: %s"
+msgstr "  version de WeeChat : %s"
+
+#, c-format
+msgid "  overrides: %d"
+msgstr "  remplace : %d"
 
 #, c-format
 msgid "%sFailed to unset option \"%s\""
@@ -3984,6 +4014,40 @@ msgstr ""
 
 msgid "number: number of processes to clean"
 msgstr "nombre : nombre de processus à nettoyer"
+
+msgid "manage color themes"
+msgstr "gestion des thèmes de couleurs"
+
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+msgid "[list] || info <name>"
+msgstr "[list] || info <nom>"
+
+msgid ""
+"raw[list]: list registered themes (default action with no argument); active "
+"theme is marked with \"->\""
+msgstr ""
+"raw[list] : afficher les thèmes enregistrés (sans paramètre, cette liste est "
+"affichée), le thème actif est marqué avec \"->\""
+
+msgid ""
+"raw[info]: display details on a theme (name, description, creation date, "
+"WeeChat version, number of option overrides)"
+msgstr ""
+"raw[info] : afficher les détails sur un thème (nom, description, date de "
+"création, version de WeeChat, nombre d'options remplacées)"
+
+msgid "name: name of a theme"
+msgstr "nom : nom du thème"
+
+msgid ""
+"Themes are named bundles of option overrides. Built-in themes are registered "
+"in memory by core/plugins/scripts; user themes are read from files in "
+"directory \"themes\" inside the WeeChat configuration directory."
+msgstr ""
+"Les thèmes sont des ensembles nommés de redéfinitions d'options. Les thèmes "
+"intégrés sont enregistrés en mémoire par le cœur, les plugins ou les "
+"scripts ; les thèmes utilisateur sont lus à partir de fichiers situés dans "
+"le répertoire \"themes\" du répertoire de configuration de WeeChat."
 
 msgid "toggle value of a config option"
 msgstr "basculer la valeur d'une option de configuration"

@@ -68,6 +68,7 @@
 #include "core-signal.h"
 #include "core-string.h"
 #include "core-sys.h"
+#include "core-theme.h"
 #include "core-upgrade.h"
 #include "core-url.h"
 #include "core-utf8.h"
@@ -7181,6 +7182,95 @@ COMMAND_CALLBACK(sys)
 }
 
 /*
+ * Callback for command "/theme": list or display details on themes.
+ */
+
+COMMAND_CALLBACK(theme)
+{
+    struct t_arraylist *list;
+    struct t_theme *ptr_theme;
+    const char *ptr_active;
+    int i, size;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) buffer;
+    (void) argv_eol;
+
+    /* "/theme" or "/theme list": list themes */
+    if ((argc == 1) || (string_strcmp (argv[1], "list") == 0))
+    {
+        list = theme_list ();
+        if (!list || (arraylist_size (list) == 0))
+        {
+            gui_chat_printf (NULL, _("No theme registered"));
+            arraylist_free (list);
+            return WEECHAT_RC_OK;
+        }
+        ptr_active = CONFIG_STRING(config_look_theme);
+        gui_chat_printf (NULL, "");
+        gui_chat_printf (NULL, _("Themes:"));
+        size = arraylist_size (list);
+        for (i = 0; i < size; i++)
+        {
+            ptr_theme = (struct t_theme *)arraylist_get (list, i);
+            gui_chat_printf (
+                NULL,
+                "  %s %s%s%s%s%s",
+                (ptr_active && (strcmp (ptr_active, ptr_theme->name) == 0))
+                    ? "->" : "  ",
+                GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
+                ptr_theme->name,
+                GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                (ptr_theme->description && ptr_theme->description[0])
+                    ? ": " : "",
+                (ptr_theme->description) ? ptr_theme->description : "");
+        }
+        arraylist_free (list);
+        return WEECHAT_RC_OK;
+    }
+
+    /* "/theme info <name>": show details about a theme */
+    if (string_strcmp (argv[1], "info") == 0)
+    {
+        COMMAND_MIN_ARGS(3, "info");
+        ptr_theme = theme_search (argv[2]);
+        if (!ptr_theme)
+        {
+            gui_chat_printf (NULL,
+                             _("%sTheme \"%s\" not found"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             argv[2]);
+            return WEECHAT_RC_ERROR;
+        }
+        gui_chat_printf (NULL, "");
+        gui_chat_printf (NULL,
+                         _("Theme \"%s%s%s\":"),
+                         GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
+                         ptr_theme->name,
+                         GUI_COLOR(GUI_COLOR_CHAT));
+        gui_chat_printf (NULL,
+                         _("  description: %s"),
+                         (ptr_theme->description) ? ptr_theme->description : "");
+        gui_chat_printf (NULL,
+                         _("  date: %s"),
+                         (ptr_theme->date) ? ptr_theme->date : "");
+        gui_chat_printf (NULL,
+                         _("  WeeChat version: %s"),
+                         (ptr_theme->weechat_version)
+                             ? ptr_theme->weechat_version : "");
+        gui_chat_printf (NULL,
+                         _("  overrides: %d"),
+                         (ptr_theme->overrides)
+                             ? ptr_theme->overrides->items_count : 0);
+        return WEECHAT_RC_OK;
+    }
+
+    COMMAND_ERROR;
+}
+
+/*
  * Callback for command "/toggle": toggle value of configuration option.
  */
 
@@ -9832,6 +9922,26 @@ command_init (void)
         " || suspend"
         " || waitpid 1|10|100|1000",
         &command_sys, NULL, NULL);
+    hook_command (
+        NULL, "theme",
+        N_("manage color themes"),
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated */
+        N_("[list]"
+           " || info <name>"),
+        CMD_ARGS_DESC(
+            N_("raw[list]: list registered themes (default action with no "
+               "argument); active theme is marked with \"->\""),
+            N_("raw[info]: display details on a theme (name, description, "
+               "creation date, WeeChat version, number of option overrides)"),
+            N_("name: name of a theme"),
+            "",
+            N_("Themes are named bundles of option overrides. Built-in themes "
+               "are registered in memory by core/plugins/scripts; user themes "
+               "are read from files in directory \"themes\" inside the WeeChat "
+               "configuration directory.")),
+        "list"
+        " || info",
+        &command_theme, NULL, NULL);
     hook_command (
         NULL, "toggle",
         N_("toggle value of a config option"),
