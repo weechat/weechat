@@ -7397,25 +7397,25 @@ COMMAND_CALLBACK(theme)
         if (path)
         {
             gui_chat_printf (NULL,
-                             _("  source         : %s"), path);
+                             _("  source: %s"), path);
         }
         else
         {
             gui_chat_printf (NULL,
-                             _("  source         : built-in (in-memory)"));
+                             _("  source: built-in (in-memory)"));
         }
         gui_chat_printf (NULL,
-                         _("  description    : %s"),
+                         _("  description: %s"),
                          (ptr_theme->description) ? ptr_theme->description : "");
         gui_chat_printf (NULL,
-                         _("  date           : %s"),
+                         _("  date: %s"),
                          (ptr_theme->date) ? ptr_theme->date : "");
         gui_chat_printf (NULL,
                          _("  WeeChat version: %s"),
                          (ptr_theme->weechat_version)
                              ? ptr_theme->weechat_version : "");
         gui_chat_printf (NULL,
-                         _("  overrides      : %d"),
+                         _("  overrides: %d"),
                          theme_overrides_count (ptr_theme));
         free (path);
         theme_free (file_theme);
