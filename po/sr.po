@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-07-04 21:47+0200\n"
+"POT-Creation-Date: 2026-07-04 22:01+0200\n"
 "PO-Revision-Date: 2026-06-28 08:52+0200\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: Serbian <ivan.pesic@gmail.com>\n"
@@ -6811,6 +6811,9 @@ msgstr "Системска функција „%s” није доступна"
 
 msgid "Resource usage (see \"man getrusage\" for help):"
 msgstr "Употреба ресурса (за помоћ погледајте „man getrusage”):"
+
+msgid "WeeChat default theme for light-background terminals"
+msgstr ""
 
 msgid "Automatic backup"
 msgstr ""

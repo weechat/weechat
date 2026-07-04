@@ -26,6 +26,8 @@
 #endif
 
 #include <stddef.h>
+#include <stdlib.h>
+#include <string.h>
 
 #include "weechat.h"
 #include "core-hashtable.h"
@@ -88,14 +90,16 @@ struct t_theme_builtin_entry theme_builtin_light_core[] =
 
 /*
  * Build a hashtable of overrides from a NULL-terminated table and
- * register it under the given theme name.
+ * register it under the given theme name, with an optional description.
  */
 
 void
 theme_builtin_register_entries (const char *name,
+                                const char *description,
                                 const struct t_theme_builtin_entry *entries)
 {
     struct t_hashtable *overrides;
+    struct t_theme *theme;
     int i;
 
     if (!name || !entries)
@@ -111,7 +115,12 @@ theme_builtin_register_entries (const char *name,
     for (i = 0; entries[i].option; i++)
         hashtable_set (overrides, entries[i].option, entries[i].value);
 
-    theme_register (NULL, NULL, name, overrides);
+    theme = theme_register (NULL, NULL, name, overrides);
+    if (theme && description)
+    {
+        free (theme->description);
+        theme->description = strdup (description);
+    }
 
     hashtable_free (overrides);
 }
@@ -125,5 +134,8 @@ theme_builtin_register_entries (const char *name,
 void
 theme_builtin_init (void)
 {
-    theme_builtin_register_entries ("light", theme_builtin_light_core);
+    theme_builtin_register_entries (
+        "light",
+        _("WeeChat default theme for light-background terminals"),
+        theme_builtin_light_core);
 }

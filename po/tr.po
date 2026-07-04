@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-07-04 21:47+0200\n"
+"POT-Creation-Date: 2026-07-04 22:01+0200\n"
 "PO-Revision-Date: 2026-06-28 08:53+0200\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <emir_sari@icloud.com>\n"
@@ -6611,6 +6611,9 @@ msgstr "Sistem işlevi \"%s\" kullanılabilir değil"
 
 msgid "Resource usage (see \"man getrusage\" for help):"
 msgstr "Özkaynak kullanımı (yardım için bkz. \"man getrusage\"):"
+
+msgid "WeeChat default theme for light-background terminals"
+msgstr ""
 
 msgid "Automatic backup"
 msgstr ""

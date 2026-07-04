@@ -1143,6 +1143,10 @@ TEST(CoreTheme, BuiltinInit)
     theme = theme_search ("light");
     CHECK(theme != NULL);
 
+    /* the built-in "light" theme carries a description */
+    CHECK(theme->description != NULL);
+    CHECK(theme->description[0] != '\0');
+
     /* sanity check: many core color overrides (>= 30) */
     CHECK(theme_overrides_count (theme) >= 30);
 

@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-07-04 21:47+0200\n"
+"POT-Creation-Date: 2026-07-04 22:01+0200\n"
 "PO-Revision-Date: 2026-03-08 08:59+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: Russian <weechat-dev@nongnu.org>\n"
@@ -6035,6 +6035,9 @@ msgid "System function \"%s\" is not available"
 msgstr "%s plugin \"%s\" не найден\n"
 
 msgid "Resource usage (see \"man getrusage\" for help):"
+msgstr ""
+
+msgid "WeeChat default theme for light-background terminals"
 msgstr ""
 
 msgid "Automatic backup"
