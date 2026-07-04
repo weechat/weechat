@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-07-04 17:00+0200\n"
+"POT-Creation-Date: 2026-07-04 17:14+0200\n"
 "PO-Revision-Date: 2026-06-28 08:53+0200\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <emir_sari@icloud.com>\n"
@@ -4414,6 +4414,12 @@ msgstr "serbest imleç hareketi için alanlar (\"chat\" veya çubuk adı)"
 
 msgid "names of layouts"
 msgstr "dizilim adları"
+
+msgid "names of themes (built-ins + user files + backups)"
+msgstr ""
+
+msgid "names of user theme files (without built-ins and backups)"
+msgstr ""
 
 msgid "names of secured data (file sec.conf, section data)"
 msgstr "güvenli veri adları (sec.conf dosyası, bölüm verisi)"

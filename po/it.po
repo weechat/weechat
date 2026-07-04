@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-07-04 17:00+0200\n"
+"POT-Creation-Date: 2026-07-04 17:14+0200\n"
 "PO-Revision-Date: 2026-05-30 14:02+0200\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: Italian <weechat-dev@nongnu.org>\n"
@@ -4378,6 +4378,12 @@ msgstr "aree (\"chat\" o nome barra) per il movimento libero del cursore"
 
 msgid "names of layouts"
 msgstr "nomi dei layout"
+
+msgid "names of themes (built-ins + user files + backups)"
+msgstr ""
+
+msgid "names of user theme files (without built-ins and backups)"
+msgstr ""
 
 #, fuzzy
 msgid "names of secured data (file sec.conf, section data)"

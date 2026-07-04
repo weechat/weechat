@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-07-04 17:00+0200\n"
+"POT-Creation-Date: 2026-07-04 17:14+0200\n"
 "PO-Revision-Date: 2026-06-28 08:52+0200\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: Serbian <ivan.pesic@gmail.com>\n"
@@ -4588,6 +4588,12 @@ msgstr "површине („chat” или име траке) за слобод
 
 msgid "names of layouts"
 msgstr "имена распореда"
+
+msgid "names of themes (built-ins + user files + backups)"
+msgstr ""
+
+msgid "names of user theme files (without built-ins and backups)"
+msgstr ""
 
 msgid "names of secured data (file sec.conf, section data)"
 msgstr "имена обезбеђених података (фајл sec.conf, одељак data)"

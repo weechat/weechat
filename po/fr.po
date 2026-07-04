@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-07-04 17:00+0200\n"
-"PO-Revision-Date: 2026-07-04 17:00+0200\n"
+"POT-Creation-Date: 2026-07-04 17:14+0200\n"
+"PO-Revision-Date: 2026-07-04 17:15+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: French <flashcode@flashtux.org>\n"
 "Language: fr\n"
@@ -4743,6 +4743,12 @@ msgstr "zones (\"chat\" ou un nom de barre) pour le mouvement libre du curseur"
 
 msgid "names of layouts"
 msgstr "noms des dispositions"
+
+msgid "names of themes (built-ins + user files + backups)"
+msgstr "noms des thèmes (intégrés + fichiers utilisateur + sauvegardes)"
+
+msgid "names of user theme files (without built-ins and backups)"
+msgstr "noms des thèmes utilisateur (sans les intégrés et sauvegardes)"
 
 msgid "names of secured data (file sec.conf, section data)"
 msgstr "noms de données sécurisées (fichier sec.conf, section data)"

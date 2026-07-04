@@ -10114,10 +10114,10 @@ command_init (void)
                "state can be restored with: `/theme apply backup-<timestamp>`. "
                "This is controlled by the option weechat.look.theme_backup.")),
         "list -backups"
-        " || apply"
-        " || save -full"
-        " || del"
-        " || info",
+        " || apply %(theme_themes_all)"
+        " || save %(theme_themes_user) -full"
+        " || del %(theme_themes_user)"
+        " || info %(theme_themes_all)",
         &command_theme, NULL, NULL);
     hook_command (
         NULL, "toggle",
