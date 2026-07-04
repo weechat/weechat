@@ -34,6 +34,7 @@
 #include "trigger-command.h"
 #include "trigger-completion.h"
 #include "trigger-config.h"
+#include "trigger-theme.h"
 
 
 WEECHAT_PLUGIN_NAME(TRIGGER_PLUGIN_NAME);
@@ -1376,6 +1377,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
         return WEECHAT_RC_ERROR;
 
     trigger_config_read ();
+
+    trigger_theme_init ();
 
     /* hook some signals */
     weechat_hook_signal ("debug_dump", &trigger_debug_dump_cb, NULL, NULL);
