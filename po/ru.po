@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-07-04 12:53+0200\n"
+"POT-Creation-Date: 2026-07-04 13:59+0200\n"
 "PO-Revision-Date: 2026-03-08 08:59+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: Russian <weechat-dev@nongnu.org>\n"
@@ -4939,6 +4939,12 @@ msgstr ""
 #, fuzzy
 msgid "number of spaces used to display tabs in messages"
 msgstr "ответить на ping"
+
+msgid ""
+"name of the last theme applied with command /theme (set automatically, do "
+"not change manually); informational only, the theme is not re-applied at "
+"startup"
+msgstr ""
 
 #, fuzzy
 msgid ""
