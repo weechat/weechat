@@ -18,7 +18,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 ### Added
 
 - core: add command `/theme`
-- core: add built-in "light" theme
+- core: add built-in "light" theme, applied automatically on first start on light-background terminals
 - core: add `themable` flag on configuration options
 - core: add options weechat.look.theme and weechat.look.theme_backup
 - api: add function theme_register
