@@ -111,7 +111,7 @@ theme_builtin_register_entries (const char *name,
     for (i = 0; entries[i].option; i++)
         hashtable_set (overrides, entries[i].option, entries[i].value);
 
-    theme_register (name, overrides);
+    theme_register (NULL, NULL, name, overrides);
 
     hashtable_free (overrides);
 }

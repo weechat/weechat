@@ -99,7 +99,7 @@ TEST(CoreTheme, Search)
     POINTERS_EQUAL(NULL, theme_search (NULL));
 
     overrides = make_overrides ("weechat.color.chat", "default", NULL, NULL);
-    theme_register ("dark", overrides);
+    theme_register (NULL, NULL, "dark", overrides);
     hashtable_free (overrides);
 
     /* registered name found */
@@ -165,8 +165,9 @@ TEST(CoreTheme, Alloc)
     LONGS_EQUAL(19, (long)strlen (theme->date));
     CHECK(theme->weechat_version != NULL);
     CHECK(theme->weechat_version[0] != '\0');
-    CHECK(theme->overrides != NULL);
-    LONGS_EQUAL(0, theme->overrides->items_count);
+    POINTERS_EQUAL(NULL, theme->contributions);
+    POINTERS_EQUAL(NULL, theme->last_contribution);
+    LONGS_EQUAL(0, theme_overrides_count (theme));
     POINTERS_EQUAL(NULL, theme->prev_theme);
     POINTERS_EQUAL(NULL, theme->next_theme);
 
@@ -202,40 +203,40 @@ TEST(CoreTheme, Register)
     struct t_theme *t1, *t2;
 
     /* NULL / empty name => NULL */
-    POINTERS_EQUAL(NULL, theme_register (NULL, NULL));
-    POINTERS_EQUAL(NULL, theme_register ("", NULL));
+    POINTERS_EQUAL(NULL, theme_register (NULL, NULL, NULL, NULL));
+    POINTERS_EQUAL(NULL, theme_register (NULL, NULL, "", NULL));
 
     /* register a new theme */
     o1 = make_overrides ("weechat.color.chat", "default",
                          "weechat.color.separator", "blue");
-    t1 = theme_register ("dark", o1);
+    t1 = theme_register (NULL, NULL, "dark", o1);
     hashtable_free (o1);
     CHECK(t1 != NULL);
     STRCMP_EQUAL("dark", t1->name);
-    LONGS_EQUAL(2, t1->overrides->items_count);
-    STRCMP_EQUAL("default", (const char *)hashtable_get (t1->overrides,
+    LONGS_EQUAL(2, theme_overrides_count (t1));
+    STRCMP_EQUAL("default", theme_get_override (t1,
                                                          "weechat.color.chat"));
-    STRCMP_EQUAL("blue", (const char *)hashtable_get (t1->overrides,
+    STRCMP_EQUAL("blue", theme_get_override (t1,
                                                       "weechat.color.separator"));
 
     /* second call with same name merges into the existing theme */
     o2 = make_overrides ("irc.color.input_nick", "lightcyan",
                          "weechat.color.separator", "darkgray");
-    t2 = theme_register ("dark", o2);
+    t2 = theme_register (NULL, NULL, "dark", o2);
     hashtable_free (o2);
     POINTERS_EQUAL(t1, t2);  /* same struct, merged into */
-    LONGS_EQUAL(3, t1->overrides->items_count);
+    LONGS_EQUAL(3, theme_overrides_count (t1));
     /* new key added */
-    STRCMP_EQUAL("lightcyan", (const char *)hashtable_get (t1->overrides,
+    STRCMP_EQUAL("lightcyan", theme_get_override (t1,
                                                            "irc.color.input_nick"));
     /* duplicate key overridden */
-    STRCMP_EQUAL("darkgray", (const char *)hashtable_get (t1->overrides,
+    STRCMP_EQUAL("darkgray", theme_get_override (t1,
                                                           "weechat.color.separator"));
 
     /* registering with NULL overrides only creates the theme */
-    t2 = theme_register ("empty", NULL);
+    t2 = theme_register (NULL, NULL, "empty", NULL);
     CHECK(t2 != NULL);
-    LONGS_EQUAL(0, t2->overrides->items_count);
+    LONGS_EQUAL(0, theme_overrides_count (t2));
 }
 
 /*
@@ -255,9 +256,9 @@ TEST(CoreTheme, List)
     arraylist_free (list);
 
     /* register three themes in non-alphabetical order */
-    theme_register ("solarized", NULL);
-    theme_register ("dark", NULL);
-    theme_register ("nord", NULL);
+    theme_register (NULL, NULL, "solarized", NULL);
+    theme_register (NULL, NULL, "dark", NULL);
+    theme_register (NULL, NULL, "nord", NULL);
 
     list = theme_list ();
     CHECK(list != NULL);
@@ -496,7 +497,7 @@ TEST(CoreTheme, Apply)
     /* register a theme that flips one themable option, then apply */
     overrides = make_overrides ("weechat.look.prefix_error", "TEST!",
                                 NULL, NULL);
-    theme_register ("apply_test", overrides);
+    theme_register (NULL, NULL, "apply_test", overrides);
     hashtable_free (overrides);
 
     LONGS_EQUAL(WEECHAT_RC_OK, theme_apply ("apply_test"));
@@ -609,18 +610,17 @@ TEST(CoreTheme, FileParse)
 
     /* [options] entries: three known keys, "unknown_info_key" must NOT
        leak in (it lives under [info]) */
-    LONGS_EQUAL(3, theme->overrides->items_count);
+    LONGS_EQUAL(3, theme_overrides_count (theme));
     STRCMP_EQUAL("default",
-                 (const char *)hashtable_get (theme->overrides,
+                 theme_get_override (theme,
                                               "weechat.color.chat"));
     STRCMP_EQUAL("blue",
-                 (const char *)hashtable_get (theme->overrides,
+                 theme_get_override (theme,
                                               "weechat.color.separator"));
     STRCMP_EQUAL("lightcyan",
-                 (const char *)hashtable_get (theme->overrides,
+                 theme_get_override (theme,
                                               "irc.color.input_nick"));
-    POINTERS_EQUAL(NULL, hashtable_get (theme->overrides,
-                                        "unknown_info_key"));
+    POINTERS_EQUAL(NULL, theme_get_override (theme, "unknown_info_key"));
 
     theme_free (theme);
     unlink (path);
@@ -639,7 +639,7 @@ TEST(CoreTheme, FileParse)
     STRCMP_EQUAL("", theme->description);
     STRCMP_EQUAL("", theme->date);
     STRCMP_EQUAL("", theme->weechat_version);
-    LONGS_EQUAL(0, theme->overrides->items_count);
+    LONGS_EQUAL(0, theme_overrides_count (theme));
     theme_free (theme);
     unlink (path);
 
@@ -659,11 +659,11 @@ TEST(CoreTheme, FileParse)
     theme = theme_file_parse (path);
     CHECK(theme != NULL);
     STRCMP_EQUAL("robust", theme->name);
-    LONGS_EQUAL(1, theme->overrides->items_count);
+    LONGS_EQUAL(1, theme_overrides_count (theme));
     STRCMP_EQUAL("red",
-                 (const char *)hashtable_get (theme->overrides,
+                 theme_get_override (theme,
                                               "weechat.color.chat"));
-    POINTERS_EQUAL(NULL, hashtable_get (theme->overrides, "ignored"));
+    POINTERS_EQUAL(NULL, theme_get_override (theme, "ignored"));
     theme_free (theme);
     unlink (path);
 }
@@ -687,7 +687,7 @@ TEST(CoreTheme, Save)
     LONGS_EQUAL(WEECHAT_RC_ERROR, theme_save ("backup-anything", 1));
 
     /* name colliding with a built-in is refused */
-    theme_register ("dark", NULL);
+    theme_register (NULL, NULL, "dark", NULL);
     LONGS_EQUAL(WEECHAT_RC_ERROR, theme_save ("dark", 0));
     LONGS_EQUAL(WEECHAT_RC_ERROR, theme_save ("dark", 1));
 
@@ -724,7 +724,7 @@ TEST(CoreTheme, Delete)
     LONGS_EQUAL(WEECHAT_RC_ERROR, theme_delete (""));
 
     /* refuses to delete a built-in (no file to delete) */
-    theme_register ("dark", NULL);
+    theme_register (NULL, NULL, "dark", NULL);
     LONGS_EQUAL(WEECHAT_RC_ERROR, theme_delete ("dark"));
 
     /* missing file => error */
@@ -759,13 +759,100 @@ TEST(CoreTheme, Init)
 
 TEST(CoreTheme, End)
 {
-    theme_register ("dark", NULL);
-    theme_register ("light", NULL);
+    theme_register (NULL, NULL, "dark", NULL);
+    theme_register (NULL, NULL, "light", NULL);
     CHECK(themes != NULL);
 
     theme_end ();
     POINTERS_EQUAL(NULL, themes);
     POINTERS_EQUAL(NULL, last_theme);
+}
+
+/*
+ * Test functions:
+ *   theme_unregister_plugin
+ *   theme_unregister_script
+ *   theme_register (per-contributor identity)
+ */
+
+TEST(CoreTheme, UnregisterByOwner)
+{
+    struct t_weechat_plugin fake_plugin_a, fake_plugin_b;
+    int script_a = 0, script_b = 0;
+    struct t_hashtable *o1, *o2, *o3, *o4;
+    struct t_theme *theme;
+
+    /* four contributors register against the same theme:
+       core (NULL, NULL), plugin_a (no script), plugin_b (no script),
+       and an individual script under plugin_a */
+    o1 = make_overrides ("weechat.color.chat",      "default", NULL, NULL);
+    o2 = make_overrides ("irc.color.input_nick",    "cyan",    NULL, NULL);
+    o3 = make_overrides ("fset.color.title_filter", "18",      NULL, NULL);
+    o4 = make_overrides ("weechat.color.separator", "251",     NULL, NULL);
+
+    theme_register (NULL,           NULL,       "light", o1);
+    theme_register (&fake_plugin_a, NULL,       "light", o2);
+    theme_register (&fake_plugin_b, NULL,       "light", o3);
+    theme_register (&fake_plugin_a, &script_a,  "light", o4);
+
+    hashtable_free (o1);
+    hashtable_free (o2);
+    hashtable_free (o3);
+    hashtable_free (o4);
+
+    theme = theme_search ("light");
+    CHECK(theme != NULL);
+    LONGS_EQUAL(4, theme_overrides_count (theme));
+
+    /* dropping plugin_a's plugin-level contribution leaves core,
+       plugin_b, and plugin_a's script contributions intact */
+    theme_unregister_plugin (&fake_plugin_a);
+    LONGS_EQUAL(3, theme_overrides_count (theme));
+    STRCMP_EQUAL("default",
+                 theme_get_override (theme, "weechat.color.chat"));
+    POINTERS_EQUAL(NULL,
+                   theme_get_override (theme, "irc.color.input_nick"));
+    STRCMP_EQUAL("18",
+                 theme_get_override (theme, "fset.color.title_filter"));
+    STRCMP_EQUAL("251",
+                 theme_get_override (theme, "weechat.color.separator"));
+
+    /* dropping the script contribution leaves only core and plugin_b */
+    theme_unregister_script (&fake_plugin_a, &script_a);
+    LONGS_EQUAL(2, theme_overrides_count (theme));
+    POINTERS_EQUAL(NULL,
+                   theme_get_override (theme, "weechat.color.separator"));
+
+    /* unrelated owners are no-ops */
+    theme_unregister_plugin (&fake_plugin_a);   /* already gone */
+    theme_unregister_script (&fake_plugin_b, &script_b);  /* never registered */
+    LONGS_EQUAL(2, theme_overrides_count (theme));
+}
+
+TEST(CoreTheme, RegisterMergesPerContributor)
+{
+    struct t_weechat_plugin fake_plugin;
+    struct t_hashtable *a, *b;
+    struct t_theme *theme;
+
+    /* two successive registrations from the same (plugin, script)
+       merge into a single contribution */
+    a = make_overrides ("k1", "v1", "k2", "v2");
+    b = make_overrides ("k2", "newv2", "k3", "v3");
+
+    theme_register (&fake_plugin, NULL, "X", a);
+    theme = theme_register (&fake_plugin, NULL, "X", b);
+    hashtable_free (a);
+    hashtable_free (b);
+
+    CHECK(theme != NULL);
+    /* one contribution, 3 keys (k1, k2, k3) */
+    CHECK(theme->contributions != NULL);
+    POINTERS_EQUAL(NULL, theme->contributions->next_contribution);
+    LONGS_EQUAL(3, theme->contributions->overrides->items_count);
+    STRCMP_EQUAL("v1",    theme_get_override (theme, "k1"));
+    STRCMP_EQUAL("newv2", theme_get_override (theme, "k2"));
+    STRCMP_EQUAL("v3",    theme_get_override (theme, "k3"));
 }
 
 /*
@@ -788,24 +875,24 @@ TEST(CoreTheme, BuiltinInit)
     CHECK(theme != NULL);
 
     /* sanity check: many core color overrides (>= 30) */
-    CHECK(theme->overrides->items_count >= 30);
+    CHECK(theme_overrides_count (theme) >= 30);
 
     /* spot-check a few known entries from the core light table */
     STRCMP_EQUAL("cyan",
-                 (const char *)hashtable_get (theme->overrides,
+                 theme_get_override (theme,
                                               "weechat.color.chat_nick"));
     STRCMP_EQUAL("251",
-                 (const char *)hashtable_get (theme->overrides,
+                 theme_get_override (theme,
                                               "weechat.color.separator"));
     STRCMP_EQUAL("254",
-                 (const char *)hashtable_get (theme->overrides,
+                 theme_get_override (theme,
                                               "weechat.bar.status.color_bg"));
 
     /* idempotency: a second call merges (no duplicate themes, count
        stays the same because the same keys are re-inserted) */
-    int count_before = theme->overrides->items_count;
+    int count_before = theme_overrides_count (theme);
     theme_builtin_init ();
     theme = theme_search ("light");
     CHECK(theme != NULL);
-    LONGS_EQUAL(count_before, theme->overrides->items_count);
+    LONGS_EQUAL(count_before, theme_overrides_count (theme));
 }

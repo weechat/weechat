@@ -116,23 +116,30 @@ theme_alloc (const char *name)
     new_theme->description = strdup ("");
     new_theme->date = theme_format_now ();
     new_theme->weechat_version = strdup (version_get_version ());
-    new_theme->overrides = hashtable_new (32,
-                                          WEECHAT_HASHTABLE_STRING,
-                                          WEECHAT_HASHTABLE_STRING,
-                                          NULL, NULL);
     if (!new_theme->name || !new_theme->description
-        || !new_theme->date || !new_theme->weechat_version
-        || !new_theme->overrides)
+        || !new_theme->date || !new_theme->weechat_version)
     {
         free (new_theme->name);
         free (new_theme->description);
         free (new_theme->date);
         free (new_theme->weechat_version);
-        hashtable_free (new_theme->overrides);
         free (new_theme);
         return NULL;
     }
     return new_theme;
+}
+
+/*
+ * Free one contribution (do not unlink from the parent theme list).
+ */
+
+void
+theme_contribution_free (struct t_theme_contribution *contribution)
+{
+    if (!contribution)
+        return;
+    hashtable_free (contribution->overrides);
+    free (contribution);
 }
 
 /*
@@ -142,13 +149,21 @@ theme_alloc (const char *name)
 void
 theme_free (struct t_theme *theme)
 {
+    struct t_theme_contribution *ptr_contribution, *next_contribution;
+
     if (!theme)
         return;
+    ptr_contribution = theme->contributions;
+    while (ptr_contribution)
+    {
+        next_contribution = ptr_contribution->next_contribution;
+        theme_contribution_free (ptr_contribution);
+        ptr_contribution = next_contribution;
+    }
     free (theme->name);
     free (theme->description);
     free (theme->date);
     free (theme->weechat_version);
-    hashtable_free (theme->overrides);
     free (theme);
 }
 
@@ -171,23 +186,92 @@ theme_merge_overrides_cb (void *data,
 }
 
 /*
- * Register a theme by name with a set of option overrides.
+ * Search the contribution belonging to the given (plugin, script) pair
+ * in a theme's contribution list. Return NULL if not found.
+ */
+
+struct t_theme_contribution *
+theme_search_contribution (struct t_theme *theme,
+                           struct t_weechat_plugin *plugin,
+                           const void *script)
+{
+    struct t_theme_contribution *ptr;
+
+    if (!theme)
+        return NULL;
+    for (ptr = theme->contributions; ptr; ptr = ptr->next_contribution)
+    {
+        if ((ptr->plugin == plugin) && (ptr->script == script))
+            return ptr;
+    }
+    return NULL;
+}
+
+/*
+ * Allocate a new contribution and append it to a theme's list.
  *
- * If a theme with the given name already exists, the provided overrides
- * are merged into the existing theme's hashtable (later registrations
- * override earlier ones for duplicate keys). This lets plugins/scripts
- * register their per-theme contributions without coordinating with core.
+ * Return the new contribution, NULL on error.
+ */
+
+struct t_theme_contribution *
+theme_contribution_new (struct t_theme *theme,
+                        struct t_weechat_plugin *plugin,
+                        const void *script)
+{
+    struct t_theme_contribution *new_contribution;
+
+    new_contribution = calloc (1, sizeof (*new_contribution));
+    if (!new_contribution)
+        return NULL;
+    new_contribution->plugin = plugin;
+    new_contribution->script = script;
+    new_contribution->overrides = hashtable_new (32,
+                                                 WEECHAT_HASHTABLE_STRING,
+                                                 WEECHAT_HASHTABLE_STRING,
+                                                 NULL, NULL);
+    if (!new_contribution->overrides)
+    {
+        free (new_contribution);
+        return NULL;
+    }
+    new_contribution->prev_contribution = theme->last_contribution;
+    new_contribution->next_contribution = NULL;
+    if (theme->last_contribution)
+        theme->last_contribution->next_contribution = new_contribution;
+    else
+        theme->contributions = new_contribution;
+    theme->last_contribution = new_contribution;
+    return new_contribution;
+}
+
+/*
+ * Register a contribution to a theme.
  *
- * The "overrides" hashtable passed in is read-only from this function's
- * perspective; the caller retains ownership and may free it.
+ * Identity is the (plugin, script) pair:
+ *   - plugin == NULL && script == NULL  => core
+ *   - plugin != NULL && script == NULL  => plugin-level
+ *   - plugin != NULL && script != NULL  => individual script
  *
- * Return pointer to theme (existing or newly created), NULL on error.
+ * If a contribution for the same (plugin, script) already exists under
+ * the named theme, the new overrides are merged into it (later keys
+ * win). Otherwise a new contribution is appended. Across distinct
+ * contributors, contributions are applied in list order at apply-time
+ * (later contributions override earlier ones for duplicate keys).
+ *
+ * The "overrides" hashtable passed in is read-only here; the caller
+ * retains ownership and may free it after the call.
+ *
+ * Return pointer to the theme (existing or newly created), NULL on error.
  */
 
 struct t_theme *
-theme_register (const char *name, struct t_hashtable *overrides)
+theme_register (struct t_weechat_plugin *plugin,
+                const void *script,
+                const char *name,
+                struct t_hashtable *overrides)
 {
     struct t_theme *theme;
+    struct t_theme_contribution *contribution;
 
     if (!name || !name[0])
         return NULL;
@@ -209,12 +293,156 @@ theme_register (const char *name, struct t_hashtable *overrides)
 
     if (overrides)
     {
+        contribution = theme_search_contribution (theme, plugin, script);
+        if (!contribution)
+        {
+            contribution = theme_contribution_new (theme, plugin, script);
+            if (!contribution)
+                return theme;  /* theme exists but contribution failed */
+        }
         hashtable_map (overrides,
                        &theme_merge_overrides_cb,
-                       theme->overrides);
+                       contribution->overrides);
     }
 
     return theme;
+}
+
+/*
+ * Drop one contribution from a theme (unlink and free it).
+ */
+
+void
+theme_drop_contribution (struct t_theme *theme,
+                         struct t_theme_contribution *contribution)
+{
+    if (!theme || !contribution)
+        return;
+    if (contribution->prev_contribution)
+    {
+        contribution->prev_contribution->next_contribution =
+            contribution->next_contribution;
+    }
+    else
+    {
+        theme->contributions = contribution->next_contribution;
+    }
+    if (contribution->next_contribution)
+    {
+        contribution->next_contribution->prev_contribution =
+            contribution->prev_contribution;
+    }
+    else
+    {
+        theme->last_contribution = contribution->prev_contribution;
+    }
+    theme_contribution_free (contribution);
+}
+
+/*
+ * Drop all contributions owned by a given plugin (across every theme).
+ * Called from the plugin-unload lifecycle.
+ *
+ * Contributions whose script is non-NULL are kept (they belong to
+ * individual scripts and are cleaned up separately on script unload).
+ */
+
+void
+theme_unregister_plugin (struct t_weechat_plugin *plugin)
+{
+    struct t_theme *ptr_theme;
+    struct t_theme_contribution *ptr_contribution, *next_contribution;
+
+    if (!plugin)
+        return;
+    for (ptr_theme = themes; ptr_theme; ptr_theme = ptr_theme->next_theme)
+    {
+        ptr_contribution = ptr_theme->contributions;
+        while (ptr_contribution)
+        {
+            next_contribution = ptr_contribution->next_contribution;
+            if ((ptr_contribution->plugin == plugin)
+                && (ptr_contribution->script == NULL))
+            {
+                theme_drop_contribution (ptr_theme, ptr_contribution);
+            }
+            ptr_contribution = next_contribution;
+        }
+    }
+}
+
+/*
+ * Drop all contributions owned by a given script (across every theme).
+ * Called from the script-unload lifecycle.
+ */
+
+void
+theme_unregister_script (struct t_weechat_plugin *plugin,
+                         const void *script)
+{
+    struct t_theme *ptr_theme;
+    struct t_theme_contribution *ptr_contribution, *next_contribution;
+
+    if (!plugin || !script)
+        return;
+    for (ptr_theme = themes; ptr_theme; ptr_theme = ptr_theme->next_theme)
+    {
+        ptr_contribution = ptr_theme->contributions;
+        while (ptr_contribution)
+        {
+            next_contribution = ptr_contribution->next_contribution;
+            if ((ptr_contribution->plugin == plugin)
+                && (ptr_contribution->script == script))
+            {
+                theme_drop_contribution (ptr_theme, ptr_contribution);
+            }
+            ptr_contribution = next_contribution;
+        }
+    }
+}
+
+/*
+ * Return the total number of overrides across all contributions of a
+ * theme. Duplicate keys (across contributions) are counted multiple
+ * times; the actual merged-unique count is at most this number.
+ */
+
+int
+theme_overrides_count (struct t_theme *theme)
+{
+    struct t_theme_contribution *ptr;
+    int n;
+
+    if (!theme)
+        return 0;
+    n = 0;
+    for (ptr = theme->contributions; ptr; ptr = ptr->next_contribution)
+        n += ptr->overrides->items_count;
+    return n;
+}
+
+/*
+ * Return the effective value of an option override across the theme's
+ * contributions (later contributions win). Returns NULL if no
+ * contribution provides the key.
+ */
+
+const char *
+theme_get_override (struct t_theme *theme, const char *option_name)
+{
+    struct t_theme_contribution *ptr;
+    const char *value, *latest;
+
+    if (!theme || !option_name)
+        return NULL;
+    latest = NULL;
+    for (ptr = theme->contributions; ptr; ptr = ptr->next_contribution)
+    {
+        value = (const char *)hashtable_get (ptr->overrides, option_name);
+        if (value)
+            latest = value;
+    }
+    return latest;
 }
 
 /*
@@ -509,6 +737,7 @@ theme_file_parse (const char *path)
     char line[8192], *ptr, *end, *eq, *key, *value;
     int line_number, in_options;
     struct t_theme *theme;
+    struct t_theme_contribution *contribution;
 
     if (!path)
         return NULL;
@@ -520,6 +749,15 @@ theme_file_parse (const char *path)
     theme = theme_alloc ("");
     if (!theme)
     {
+        fclose (file);
+        return NULL;
+    }
+    /* file themes carry a single anonymous (plugin=NULL, script=NULL)
+       contribution holding everything in the [options] section */
+    contribution = theme_contribution_new (theme, NULL, NULL);
+    if (!contribution)
+    {
+        theme_free (theme);
         fclose (file);
         return NULL;
     }
@@ -626,7 +864,7 @@ theme_file_parse (const char *path)
 
         if (in_options)
         {
-            hashtable_set (theme->overrides, key, value);
+            hashtable_set (contribution->overrides, key, value);
         }
         else
         {
@@ -695,8 +933,8 @@ int
 theme_apply (const char *name)
 {
     struct t_theme *file_theme = NULL;
-    struct t_theme *registry_theme = NULL;
-    struct t_hashtable *overrides = NULL;
+    struct t_theme *theme = NULL;
+    struct t_theme_contribution *ptr_contribution;
     char *path = NULL;
     char *backup_name = NULL;
 
@@ -721,12 +959,12 @@ theme_apply (const char *name)
             free (path);
             return WEECHAT_RC_ERROR;
         }
-        overrides = file_theme->overrides;
+        theme = file_theme;
     }
     else
     {
-        registry_theme = theme_search (name);
-        if (!registry_theme)
+        theme = theme_search (name);
+        if (!theme)
         {
             gui_chat_printf (NULL,
                              _("%sTheme \"%s\" not found"),
@@ -735,7 +973,6 @@ theme_apply (const char *name)
             free (path);
             return WEECHAT_RC_ERROR;
         }
-        overrides = registry_theme->overrides;
     }
     free (path);
 
@@ -756,10 +993,17 @@ theme_apply (const char *name)
         }
     }
 
-    /* apply each override; per-option refreshes are suppressed via the
-       theme_applying flag (see config_change_color) */
+    /* Apply each contribution in order; per-option refreshes are
+       suppressed via the theme_applying flag (see config_change_color).
+       Later contributions naturally win for duplicate keys because
+       config_file_option_set is called for each in sequence. */
     theme_applying = 1;
-    hashtable_map (overrides, &theme_apply_set_option_cb, NULL);
+    for (ptr_contribution = theme->contributions; ptr_contribution;
+         ptr_contribution = ptr_contribution->next_contribution)
+    {
+        hashtable_map (ptr_contribution->overrides,
+                       &theme_apply_set_option_cb, NULL);
+    }
     theme_applying = 0;
 
     /* file_theme (if any) is transient: discard now */
