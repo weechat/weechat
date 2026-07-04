@@ -46,7 +46,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-07-04 21:31+0200\n"
+"POT-Creation-Date: 2026-07-04 21:42+0200\n"
 "PO-Revision-Date: 2026-06-28 08:49+0200\n"
 "Last-Translator: Érico Nogueira <ericonr@disroot.org>\n"
 "Language-Team: Portuguese (Brazil) <weechat-dev@nongnu.org>\n"
@@ -6376,7 +6376,7 @@ msgstr "%s: erro: dicionário \"%s\" não está disponível em seu sistema"
 msgid "Resource usage (see \"man getrusage\" for help):"
 msgstr "Uso de memória (veja \"man mallinfo\" para ajuda):"
 
-msgid "Automatic backup written before /theme apply"
+msgid "Automatic backup"
 msgstr ""
 
 #, fuzzy, c-format
