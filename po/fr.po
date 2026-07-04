@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-07-04 16:03+0200\n"
-"PO-Revision-Date: 2026-07-04 16:05+0200\n"
+"POT-Creation-Date: 2026-07-04 17:00+0200\n"
+"PO-Revision-Date: 2026-07-04 17:00+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: French <flashcode@flashtux.org>\n"
 "Language: fr\n"
@@ -4026,8 +4026,12 @@ msgid "manage color themes"
 msgstr "gestion des thèmes de couleurs"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
-msgid "[list [-backups]] || apply <name> || info <name>"
-msgstr "[list [-backups]] || apply <nom> || info <nom>"
+msgid ""
+"[list [-backups]] || apply <name> || save <name> [-full] || del <name> || "
+"info <name>"
+msgstr ""
+"[list [-backups]] || apply <nom> || save <nom> [-full] || del <nom> || info "
+"<nom>"
 
 msgid ""
 "raw[list]: list registered themes and any *.theme files in the WeeChat "
@@ -4049,6 +4053,21 @@ msgstr ""
 "raw[apply] : appliquer un thème (définir chaque option personnalisable par "
 "thème à la valeur du thème) ; si un fichier nommé <nom>.theme existe dans le "
 "répertoire \"themes\", il masque tout thème intégré du même nom"
+
+msgid ""
+"raw[save]: save current themable options to a file <name>.theme in directory "
+"\"themes\"; by default only options whose value differs from their default "
+"are written, use \"-full\" to write every themable option; the name must not "
+"match a built-in theme or start with \"backup-\""
+msgstr ""
+"raw[save] : sauvegarder les options de thème dans un fichier <nom>.theme "
+"dans le répertoire \"themes\" ; par défaut seulement les options dont la "
+"valeur diffère de leur valeur par défaut sont écrites, utilisez \"-full\" "
+"pour écrire toutes les options ; le nom ne doit pas correspondre à un thème "
+"intégré ou démarrer par \"backup-\""
+
+msgid "raw[del]: delete a user theme file"
+msgstr "raw[del] : supprimer un fichier de thème utilisateur"
 
 msgid ""
 "raw[info]: display details on a theme (name, description, creation date, "
@@ -7058,6 +7077,34 @@ msgstr ""
 msgid "Previous state saved as theme \"%s\"; to restore: /theme apply %s"
 msgstr ""
 "État précédent sauvé sous le thème \"%s\" ; pour restaurer : /theme apply %s"
+
+#, c-format
+msgid "%sName \"%s\" is reserved for automatic backups"
+msgstr "%sLe nom \"%s\" est réservé pour les sauvegardes automatiques"
+
+#, c-format
+msgid "%sName \"%s\" is reserved for a built-in theme"
+msgstr "%sLe nom \"%s\" est réservé pour un thème intégré"
+
+#, c-format
+msgid "%sFailed to save theme \"%s\""
+msgstr "%sÉchec de sauvegarde du thème \"%s\""
+
+#, c-format
+msgid "Theme saved: %s"
+msgstr "Thème sauvegardé : %s"
+
+#, c-format
+msgid "%sCannot delete built-in theme \"%s\""
+msgstr "%sImpossible de supprimer le thème intégré \"%s\""
+
+#, c-format
+msgid "%sFailed to delete theme \"%s\""
+msgstr "%sImpossible de supprimer le thème \"%s\""
+
+#, c-format
+msgid "Theme deleted: %s"
+msgstr "Thème supprimé : %s"
 
 #, c-format
 msgid "%sError upgrading WeeChat with file \"%s\":"
@@ -18932,6 +18979,11 @@ msgid ""
 msgstr ""
 "%s%s : impossible d'accepter de continuer le fichier \"%s\" (port : %d, "
 "position de départ : %llu) : xfer non trouvé ou non prêt pour le transfert"
+
+#~ msgid ""
+#~ "raw[delete]: delete a user theme file (refuses to delete built-in themes, "
+#~ "which have no file)"
+#~ msgstr "raw[delete] : supprimer un fichier thème de l'utilisateur"
 
 #~ msgid "No theme registered"
 #~ msgstr "Aucun thème enregistré"

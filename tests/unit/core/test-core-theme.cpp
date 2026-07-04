@@ -47,7 +47,8 @@ extern struct t_theme *theme_alloc (const char *name);
 extern void theme_free (struct t_theme *theme);
 extern char *theme_user_file_path (const char *name);
 extern char *theme_make_backup_name (void);
-extern int theme_write_file_full (const char *name, const char *description);
+extern int theme_write_file (const char *name, const char *description,
+                             int diff_only);
 extern char *theme_file_strip_quotes (char *value);
 extern struct t_theme *theme_file_parse (const char *path);
 }
@@ -330,23 +331,24 @@ TEST(CoreTheme, MakeBackupName)
 
 /*
  * Test functions:
- *   theme_write_file_full
+ *   theme_write_file
  */
 
-TEST(CoreTheme, WriteFileFull)
+TEST(CoreTheme, WriteFile)
 {
     char *path, line[8192];
     FILE *file;
     int saw_info, saw_name, saw_description, saw_date, saw_weechat;
     int saw_options_section, saw_an_option;
     int saw_color_code, saw_string_option, string_option_quoted;
+    int full_options, diff_options;
 
     /* refuse empty/NULL */
-    LONGS_EQUAL(0, theme_write_file_full (NULL, NULL));
-    LONGS_EQUAL(0, theme_write_file_full ("", NULL));
+    LONGS_EQUAL(0, theme_write_file (NULL, NULL, 0));
+    LONGS_EQUAL(0, theme_write_file ("", NULL, 0));
 
-    /* write a valid file */
-    LONGS_EQUAL(1, theme_write_file_full ("test_wrt", "a description"));
+    /* full snapshot: every themable option is written */
+    LONGS_EQUAL(1, theme_write_file ("test_wrt", "a description", 0));
 
     path = theme_user_file_path ("test_wrt");
     CHECK(path != NULL);
@@ -357,6 +359,7 @@ TEST(CoreTheme, WriteFileFull)
     saw_info = saw_name = saw_description = saw_date = saw_weechat = 0;
     saw_options_section = saw_an_option = 0;
     saw_color_code = saw_string_option = string_option_quoted = 0;
+    full_options = 0;
     while (fgets (line, sizeof (line) - 1, file))
     {
         if (strncmp (line, "[info]", 6) == 0)
@@ -376,6 +379,7 @@ TEST(CoreTheme, WriteFileFull)
                  && (strchr (line, '.') != NULL))
         {
             saw_an_option = 1;
+            full_options++;
             /*
              * values must be stored verbatim: no WeeChat color code
              * (byte 0x19) may leak into the file
@@ -404,6 +408,30 @@ TEST(CoreTheme, WriteFileFull)
     /* the string option was found and its value is quoted */
     LONGS_EQUAL(1, saw_string_option);
     LONGS_EQUAL(1, string_option_quoted);
+    CHECK(full_options > 10);  /* core has many themable options */
+
+    unlink (path);
+
+    /* diff-only snapshot in a freshly initialized config writes very
+       few (typically zero) [options] entries — never more than the
+       full snapshot */
+    LONGS_EQUAL(1, theme_write_file ("test_wrt", NULL, 1));
+
+    file = fopen (path, "r");
+    CHECK(file != NULL);
+    diff_options = 0;
+    saw_options_section = 0;
+    while (fgets (line, sizeof (line) - 1, file))
+    {
+        if (strncmp (line, "[options]", 9) == 0)
+            saw_options_section = 1;
+        else if (saw_options_section
+                 && (strchr (line, '=') != NULL)
+                 && (strchr (line, '.') != NULL))
+            diff_options++;
+    }
+    fclose (file);
+    CHECK(diff_options < full_options);
 
     unlink (path);
     free (path);
@@ -638,6 +666,80 @@ TEST(CoreTheme, FileParse)
     POINTERS_EQUAL(NULL, hashtable_get (theme->overrides, "ignored"));
     theme_free (theme);
     unlink (path);
+}
+
+/*
+ * Test functions:
+ *   theme_save
+ */
+
+TEST(CoreTheme, Save)
+{
+    char *path;
+    struct stat st;
+
+    /* NULL / empty => error, no file */
+    LONGS_EQUAL(WEECHAT_RC_ERROR, theme_save (NULL, 0));
+    LONGS_EQUAL(WEECHAT_RC_ERROR, theme_save ("", 0));
+
+    /* reserved "backup-" prefix => error */
+    LONGS_EQUAL(WEECHAT_RC_ERROR, theme_save ("backup-anything", 0));
+    LONGS_EQUAL(WEECHAT_RC_ERROR, theme_save ("backup-anything", 1));
+
+    /* name colliding with a built-in is refused */
+    theme_register ("dark", NULL);
+    LONGS_EQUAL(WEECHAT_RC_ERROR, theme_save ("dark", 0));
+    LONGS_EQUAL(WEECHAT_RC_ERROR, theme_save ("dark", 1));
+
+    /* happy path: sparse save => file exists */
+    LONGS_EQUAL(WEECHAT_RC_OK, theme_save ("save_test", 0));
+    path = theme_user_file_path ("save_test");
+    CHECK(path != NULL);
+    LONGS_EQUAL(0, stat (path, &st));
+    unlink (path);
+    free (path);
+
+    /* happy path: full snapshot => file exists, bigger than sparse */
+    LONGS_EQUAL(WEECHAT_RC_OK, theme_save ("save_test", 1));
+    path = theme_user_file_path ("save_test");
+    CHECK(path != NULL);
+    LONGS_EQUAL(0, stat (path, &st));
+    CHECK(st.st_size > 0);
+    unlink (path);
+    free (path);
+}
+
+/*
+ * Test functions:
+ *   theme_delete
+ */
+
+TEST(CoreTheme, Delete)
+{
+    char *path;
+    struct stat st;
+
+    /* NULL / empty => error */
+    LONGS_EQUAL(WEECHAT_RC_ERROR, theme_delete (NULL));
+    LONGS_EQUAL(WEECHAT_RC_ERROR, theme_delete (""));
+
+    /* refuses to delete a built-in (no file to delete) */
+    theme_register ("dark", NULL);
+    LONGS_EQUAL(WEECHAT_RC_ERROR, theme_delete ("dark"));
+
+    /* missing file => error */
+    LONGS_EQUAL(WEECHAT_RC_ERROR, theme_delete ("does_not_exist"));
+
+    /* happy path: write a file via theme_save (also ensures the themes
+       directory exists), delete it, confirm it is gone */
+    LONGS_EQUAL(WEECHAT_RC_OK, theme_save ("del_test", 0));
+    path = theme_user_file_path ("del_test");
+    CHECK(path != NULL);
+    LONGS_EQUAL(0, stat (path, &st));
+
+    LONGS_EQUAL(WEECHAT_RC_OK, theme_delete ("del_test"));
+    LONGS_EQUAL(-1, stat (path, &st));
+    free (path);
 }
 
 /*

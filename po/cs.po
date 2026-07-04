@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-07-04 16:03+0200\n"
+"POT-Creation-Date: 2026-07-04 17:00+0200\n"
 "PO-Revision-Date: 2026-05-30 14:01+0200\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: Czech <weechat-dev@nongnu.org>\n"
@@ -3709,7 +3709,9 @@ msgid "manage color themes"
 msgstr "seznam položek polí"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
-msgid "[list [-backups]] || apply <name> || info <name>"
+msgid ""
+"[list [-backups]] || apply <name> || save <name> [-full] || del <name> || "
+"info <name>"
 msgstr ""
 
 #, fuzzy
@@ -3728,6 +3730,18 @@ msgid ""
 "theme); if a file named <name>.theme exists in directory \"themes\" it "
 "shadows any built-in theme of the same name"
 msgstr ""
+
+msgid ""
+"raw[save]: save current themable options to a file <name>.theme in directory "
+"\"themes\"; by default only options whose value differs from their default "
+"are written, use \"-full\" to write every themable option; the name must not "
+"match a built-in theme or start with \"backup-\""
+msgstr ""
+
+#, fuzzy
+#| msgid "get/set channel topic"
+msgid "raw[del]: delete a user theme file"
+msgstr "získat/nastavit téma kanálu"
 
 msgid ""
 "raw[info]: display details on a theme (name, description, creation date, "
@@ -6338,6 +6352,37 @@ msgstr ""
 
 #, c-format
 msgid "Previous state saved as theme \"%s\"; to restore: /theme apply %s"
+msgstr ""
+
+#, c-format
+msgid "%sName \"%s\" is reserved for automatic backups"
+msgstr ""
+
+#, c-format
+msgid "%sName \"%s\" is reserved for a built-in theme"
+msgstr ""
+
+#, fuzzy, c-format
+#| msgid "%s%s: unable to parse file \"%s\""
+msgid "%sFailed to save theme \"%s\""
+msgstr "%s%s: nemůžu parsovat soubor \"%s\""
+
+#, fuzzy, c-format
+#| msgid "Option \"%s%s%s\":"
+msgid "Theme saved: %s"
+msgstr "Volba \"%s%s%s\":"
+
+#, fuzzy, c-format
+msgid "%sCannot delete built-in theme \"%s\""
+msgstr "%sChyba: nemohu vytvořit soubor \"%s\""
+
+#, fuzzy, c-format
+#| msgid "%s%s: unable to parse file \"%s\""
+msgid "%sFailed to delete theme \"%s\""
+msgstr "%s%s: nemůžu parsovat soubor \"%s\""
+
+#, c-format
+msgid "Theme deleted: %s"
 msgstr ""
 
 #, c-format
