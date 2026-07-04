@@ -69,6 +69,7 @@ extern const char *theme_get_override (struct t_theme *theme,
                                        const char *option_name);
 extern struct t_arraylist *theme_list (void);
 extern int theme_apply (const char *name);
+extern int theme_reset (void);
 extern int theme_save (const char *name, int full);
 extern int theme_delete (const char *name);
 extern char *theme_make_backup (void);

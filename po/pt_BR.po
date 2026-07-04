@@ -46,7 +46,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-07-04 20:23+0200\n"
+"POT-Creation-Date: 2026-07-04 20:47+0200\n"
 "PO-Revision-Date: 2026-06-28 08:49+0200\n"
 "Last-Translator: Érico Nogueira <ericonr@disroot.org>\n"
 "Language-Team: Portuguese (Brazil) <weechat-dev@nongnu.org>\n"
@@ -3751,8 +3751,8 @@ msgstr "lista de itens da barra"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid ""
-"[list [-backups]] || apply <name> || save <name> [-full] || del <name> || "
-"info <name>"
+"[list [-backups]] || apply <name> || reset || save <name> [-full] || del "
+"<name> || info <name>"
 msgstr ""
 
 #, fuzzy
@@ -3770,6 +3770,11 @@ msgid ""
 "raw[apply]: apply a theme (set every themable option to the value from the "
 "theme); if a file named <name>.theme exists in directory \"themes\" it "
 "shadows any built-in theme of the same name"
+msgstr ""
+
+msgid ""
+"raw[reset]: reset every themable option to its default value (restores the "
+"original look shipped with WeeChat)"
 msgstr ""
 
 msgid ""
@@ -6406,6 +6411,12 @@ msgstr ""
 
 #, c-format
 msgid "Previous state saved as theme \"%s\"; to restore: /theme apply %s"
+msgstr ""
+
+#, c-format
+msgid ""
+"%sUnable to create theme backup; aborting reset (disable option "
+"weechat.look.theme_backup to force)"
 msgstr ""
 
 #, c-format

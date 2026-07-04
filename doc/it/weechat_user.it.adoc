@@ -2490,6 +2490,20 @@ is aborted before any option is changed.
 The name of the last applied theme is stored in
 `+weechat.look.theme+` (informational only; not re-applied at startup).
 
+[[themes_reset]]
+==== Resetting to defaults
+
+To restore the look shipped with WeeChat, reset every themable option
+to its default value:
+
+----
+/theme reset
+----
+
+A backup is written first (same gate as `+/theme apply+`); on backup
+failure the reset is aborted before any option is changed.
+`+weechat.look.theme+` is cleared too.
+
 [[themes_save_delete]]
 ==== Saving and deleting user themes
 

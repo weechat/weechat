@@ -2282,6 +2282,21 @@ Le nom du dernier thème appliqué est conservé dans
 `+weechat.look.theme+` (à titre informatif uniquement ; il n'est pas
 ré-appliqué au démarrage).
 
+[[themes_reset]]
+==== Réinitialiser aux valeurs par défaut
+
+Pour rétablir l'apparence d'origine livrée avec WeeChat, réinitialiser
+toutes les options modifiables à leur valeur par défaut :
+
+----
+/theme reset
+----
+
+Une sauvegarde est écrite au préalable (même garde-fou que
+`+/theme apply+`) ; si la sauvegarde échoue, la réinitialisation est
+annulée avant qu'aucune option ne soit modifiée. L'option
+`+weechat.look.theme+` est également remise à vide.
+
 [[themes_save_delete]]
 ==== Sauvegarder et supprimer des thèmes utilisateur
 

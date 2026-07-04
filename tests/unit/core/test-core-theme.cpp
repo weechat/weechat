@@ -691,6 +691,56 @@ TEST(CoreTheme, ApplyMergeAcrossContributions)
 
 /*
  * Test functions:
+ *   theme_reset
+ */
+
+TEST(CoreTheme, Reset)
+{
+    struct t_hashtable *overrides;
+    struct t_config_option *opt_prefix_error;
+    char *saved_prefix_error, *saved_theme_label, *default_prefix_error;
+    int saved_backup;
+
+    opt_prefix_error = NULL;
+    config_file_search_with_string ("weechat.look.prefix_error",
+                                    NULL, NULL, &opt_prefix_error, NULL);
+    CHECK(opt_prefix_error != NULL);
+    saved_prefix_error = strdup (CONFIG_STRING(opt_prefix_error));
+    saved_theme_label = strdup (CONFIG_STRING(config_look_theme));
+    saved_backup = CONFIG_BOOLEAN(config_look_theme_backup);
+    default_prefix_error = strdup (CONFIG_STRING_DEFAULT(opt_prefix_error));
+
+    config_file_option_set (config_look_theme_backup, "off", 1);
+
+    /* set up a non-default state: apply a theme that flips one option
+       and sets weechat.look.theme as a side effect */
+    overrides = make_overrides ("weechat.look.prefix_error", "RESET_ME!",
+                                NULL, NULL);
+    theme_register (NULL, NULL, "reset_test", overrides);
+    hashtable_free (overrides);
+    LONGS_EQUAL(WEECHAT_RC_OK, theme_apply ("reset_test"));
+    STRCMP_EQUAL("RESET_ME!", CONFIG_STRING(opt_prefix_error));
+    STRCMP_EQUAL("reset_test", CONFIG_STRING(config_look_theme));
+
+    /* reset: themable option goes back to its default, label is cleared */
+    LONGS_EQUAL(WEECHAT_RC_OK, theme_reset ());
+    STRCMP_EQUAL(default_prefix_error, CONFIG_STRING(opt_prefix_error));
+    STRCMP_EQUAL(CONFIG_STRING_DEFAULT(config_look_theme),
+                 CONFIG_STRING(config_look_theme));
+
+    /* restore */
+    config_file_option_set (opt_prefix_error, saved_prefix_error, 1);
+    config_file_option_set (config_look_theme, saved_theme_label, 1);
+    config_file_option_set (config_look_theme_backup,
+                            (saved_backup) ? "on" : "off", 1);
+
+    free (saved_prefix_error);
+    free (saved_theme_label);
+    free (default_prefix_error);
+}
+
+/*
+ * Test functions:
  *   theme_file_strip_quotes
  */
 
