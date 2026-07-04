@@ -438,6 +438,10 @@ extern void plugin_script_api_config_set_desc_plugin (struct t_weechat_plugin *w
 extern int plugin_script_api_config_unset_plugin (struct t_weechat_plugin *weechat_plugin,
                                                   struct t_plugin_script *script,
                                                   const char *option);
+extern struct t_theme *plugin_script_api_theme_register (struct t_weechat_plugin *weechat_plugin,
+                                                         struct t_plugin_script *script,
+                                                         const char *name,
+                                                         struct t_hashtable *overrides);
 extern struct t_upgrade_file *plugin_script_api_upgrade_new (struct t_weechat_plugin *weechat_plugin,
                                                              struct t_plugin_script *script,
                                                              const char *filename,

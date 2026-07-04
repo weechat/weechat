@@ -801,6 +801,7 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
         new_plugin->config_unset_plugin = &plugin_api_config_unset_plugin;
 
         new_plugin->theme_register = &theme_register;
+        new_plugin->theme_unregister_script = &theme_unregister_script;
 
         new_plugin->key_bind = &gui_key_bind_plugin;
         new_plugin->key_unbind = &gui_key_unbind_plugin;

@@ -1081,6 +1081,18 @@ plugin_script_free (struct t_plugin_script *script)
 }
 
 /*
+ * Remove all theme contributions registered by this script.
+ */
+
+void
+plugin_script_remove_themes (struct t_weechat_plugin *weechat_plugin,
+                             struct t_plugin_script *script)
+{
+    weechat_theme_unregister_script (script);
+    (void) weechat_plugin;  /* used implicitly via the macro */
+}
+
+/*
  * Remove a script from list of scripts.
  */
 
@@ -1100,6 +1112,8 @@ plugin_script_remove (struct t_weechat_plugin *weechat_plugin,
     plugin_script_remove_bar_items (weechat_plugin, script);
 
     plugin_script_remove_configs (weechat_plugin, script);
+
+    plugin_script_remove_themes (weechat_plugin, script);
 
     /*
      * remove again all hooks created by this script (just in case new hooks
