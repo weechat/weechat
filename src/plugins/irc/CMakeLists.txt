@@ -48,6 +48,7 @@ add_library(irc MODULE
   irc-sasl.c irc-sasl.h
   irc-server.c irc-server.h
   irc-tag.c irc-tag.h
+  irc-theme.c irc-theme.h
   irc-typing.c irc-typing.h
   irc-upgrade.c irc-upgrade.h
 )
