@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-07-04 17:14+0200\n"
+"POT-Creation-Date: 2026-07-04 20:23+0200\n"
 "PO-Revision-Date: 2026-03-08 08:59+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: Russian <weechat-dev@nongnu.org>\n"
@@ -1017,6 +1017,10 @@ msgid "No theme available"
 msgstr "  . тип: целочисленный\n"
 
 msgid "Themes:"
+msgstr ""
+
+#, c-format
+msgid "  %s %s%s%s (file)"
 msgstr ""
 
 #, fuzzy, c-format

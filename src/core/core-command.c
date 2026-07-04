@@ -7314,7 +7314,7 @@ COMMAND_CALLBACK(theme)
             ptr_name = (const char *)arraylist_get (file_names, i);
             gui_chat_printf (
                 NULL,
-                "  %s %s%s%s (file)",
+                _("  %s %s%s%s (file)"),
                 (ptr_active && (strcmp (ptr_active, ptr_name) == 0))
                     ? "->" : "  ",
                 GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
