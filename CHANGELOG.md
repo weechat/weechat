@@ -12,6 +12,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 - core: fix buffer overflow in connection to SOCKS5 proxy ([#2325](https://github.com/weechat/weechat/issues/2325))
 - core: fix possible buffer overflow in command /color alias ([#2330](https://github.com/weechat/weechat/issues/2330))
+- core: fix possible buffer overflow in list of commands displayed by /help ([#2330](https://github.com/weechat/weechat/issues/2330))
 - relay/api: fix memory leak in resources "handshake", "input" and "completion" ([GHSA-wmpc-m6g9-fwj8](https://github.com/weechat/weechat/security/advisories/GHSA-wmpc-m6g9-fwj8))
 - relay: fix read of uncompressed websocket frame ([#2331](https://github.com/weechat/weechat/issues/2331))
 - xfer: fix out-of-bounds write in xfer file transfer resume ([#2326](https://github.com/weechat/weechat/issues/2326))
