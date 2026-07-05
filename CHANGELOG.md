@@ -17,12 +17,12 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 ### Added
 
-- core: add command `/theme`
-- core: add built-in "light" theme, applied automatically on first start on light-background terminals
-- core: add `themable` flag on configuration options
-- core: add options weechat.look.theme and weechat.look.theme_backup
-- api: add function theme_register
-- fset: add filter `t:themable`
+- core: add command `/theme` ([#1338](https://github.com/weechat/weechat/issues/1338))
+- core: add built-in "light" theme, applied automatically on first start on light-background terminals ([#1338](https://github.com/weechat/weechat/issues/1338))
+- core: add `themable` flag on configuration options ([#1338](https://github.com/weechat/weechat/issues/1338))
+- core: add options weechat.look.theme and weechat.look.theme_backup ([#1338](https://github.com/weechat/weechat/issues/1338))
+- api: add function theme_register ([#1338](https://github.com/weechat/weechat/issues/1338))
+- fset: add filter `t:themable` ([#1338](https://github.com/weechat/weechat/issues/1338))
 - relay/api: add resource `GET /api/scripts`
 - relay: add option relay.network.unix_socket_permissions ([#2317](https://github.com/weechat/weechat/issues/2317))
 - script: add info "script_languages"
