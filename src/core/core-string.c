@@ -4759,6 +4759,8 @@ string_dyn_copy (char **string, const char *new_string)
  * if the string had to be extended, or the same pointer if there was enough
  * size to concatenate the new string.
  *
+ * In case of error, the dynamic string is left unchanged.
+ *
  * Returns:
  *   1: OK
  *   0: error
@@ -4794,11 +4796,7 @@ string_dyn_concat (char **string, const char *add, int bytes)
             new_size_alloc = new_size;
         string_realloc = realloc (ptr_string_dyn->string, new_size_alloc);
         if (!string_realloc)
-        {
-            free (ptr_string_dyn->string);
-            free (ptr_string_dyn);
             return 0;
-        }
         ptr_string_dyn->string = string_realloc;
         ptr_string_dyn->size_alloc = new_size_alloc;
     }

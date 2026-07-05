@@ -3528,6 +3528,8 @@ Concaténer une chaîne dans une chaîne dynamique.
 Le pointeur _*string_ peut changer si la chaîne est réallouée (s'il n'y a pas
 assez de place pour concaténer la chaîne).
 
+En cas d'erreur, la chaîne dynamique reste inchangée.
+
 Prototype :
 
 [source,c]
