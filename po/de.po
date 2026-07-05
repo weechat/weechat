@@ -27,7 +27,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2026-07-05 12:20+0200\n"
-"PO-Revision-Date: 2026-07-05 19:00+0200\n"
+"PO-Revision-Date: 2026-07-05 19:16+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
 "Language: de\n"
@@ -4150,7 +4150,7 @@ msgstr ""
 "namens <name>.theme im Verzeichnis \"themes\"; dabei werden alle anpassbaren "
 "Optionen geschrieben, sodass die Datei in sich abgeschlossen ist; der Name "
 "darf nicht mit dem eines integrierten Design übereinstimmen und nicht mit "
-"\"backup-\" beginnen."
+"\"backup-\" beginnen"
 
 #| msgid "raw[rename]: rename a filter"
 msgid "raw[rename]: rename a user theme file"
@@ -7295,9 +7295,8 @@ msgid "%sFailed to rename theme \"%s\" to \"%s\""
 msgstr "%sUmbenennung des Design \"%s\" zu \"%s\" fehlgeschlagen"
 
 #, c-format
-#| msgid "Trigger \"%s\" renamed to \"%s\""
 msgid "Theme \"%s\" renamed to \"%s\""
-msgstr "Design \"%s\" umbenannt zu  \"%s\""
+msgstr "Design \"%s\" umbenannt zu \"%s\""
 
 #, c-format
 #| msgid "%sCannot create file \"%s\""
