@@ -46,7 +46,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 - relay: limit size of partial message received while reading an HTTP request to prevent memory exhaustion
 - relay: fix timing attack on password authentication ([GHSA-vhv8-g2r9-cwcc](https://github.com/weechat/weechat/security/advisories/GHSA-vhv8-g2r9-cwcc), [CVE-2026-53525](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-53525))
 - relay: fix out-of-bounds read in dump of data ([#2324](https://github.com/weechat/weechat/issues/2324))
-- relay/api: fix memory leak in resources "handshake", "input" and "completion"
+- relay/api: fix memory leak in resources "handshake", "input" and "completion" ([GHSA-wmpc-m6g9-fwj8](https://github.com/weechat/weechat/security/advisories/GHSA-wmpc-m6g9-fwj8))
 - relay: fix read of uncompressed websocket frame ([#2331](https://github.com/weechat/weechat/issues/2331))
 - api, relay: fix timing attack on TOTP validation ([GHSA-vhv8-g2r9-cwcc](https://github.com/weechat/weechat/security/advisories/GHSA-vhv8-g2r9-cwcc), [CVE-2026-53525](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-53525))
 - xfer: replace directory separator in remote nick by underscore in download filename to prevent writing the file outside the download directory ([#2321](https://github.com/weechat/weechat/issues/2321))
