@@ -32,6 +32,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 - core: fix option weechat.look.color_real_white not applied when color is "white" on 16+ colors terminals ([#1742](https://github.com/weechat/weechat/issues/1742))
 - core: fix buffer overflow in connection to SOCKS5 proxy ([#2325](https://github.com/weechat/weechat/issues/2325))
 - core: fix possible buffer overflow in command /color alias ([#2330](https://github.com/weechat/weechat/issues/2330))
+- core: fix possible buffer overflow in list of commands displayed by /help ([#2330](https://github.com/weechat/weechat/issues/2330))
 - api: fix infinite loop in function string_replace when the search string is empty
 - irc: fix tag in message with list of names when joining a channel
 - fset: remove error displayed in core buffer when clicking with the mouse below the last option displayed

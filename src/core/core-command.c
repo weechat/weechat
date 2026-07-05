@@ -2943,7 +2943,7 @@ command_help_list_plugin_commands (struct t_weechat_plugin *plugin,
     struct t_gui_buffer *ptr_buffer;
     int command_found, length, max_length, list_size;
     int cols, lines, col, line, index;
-    char str_format[64], str_command[256], str_line[2048];
+    char str_format[64], str_command[256], **str_line;
 
     if (verbose)
     {
@@ -3046,27 +3046,29 @@ command_help_list_plugin_commands (struct t_weechat_plugin *plugin,
             }
 
             /* display lines with commands, in columns */
-            for (line = 0; line < lines; line++)
+            str_line = string_dyn_alloc (256);
+            if (str_line)
             {
-                str_line[0] = '\0';
-                for (col = 0; col < cols; col++)
+                for (line = 0; line < lines; line++)
                 {
-                    index = (col * lines) + line;
-                    if (index < list_size)
+                    string_dyn_copy (str_line, NULL);
+                    for (col = 0; col < cols; col++)
                     {
-                        item = weelist_get (list, index);
-                        if (item)
+                        index = (col * lines) + line;
+                        if (index < list_size)
                         {
-                            if (strlen (str_line) + strlen (weelist_string (item)) + 1 < (int)sizeof (str_line))
+                            item = weelist_get (list, index);
+                            if (item)
                             {
                                 snprintf (str_command, sizeof (str_command),
                                           str_format, weelist_string (item));
-                                strcat (str_line, str_command);
+                                string_dyn_concat (str_line, str_command, -1);
                             }
                         }
                     }
+                    gui_chat_printf (NULL, "%s", *str_line);
                 }
-                gui_chat_printf (NULL, "%s", str_line);
+                string_dyn_free (str_line, 1);
             }
         }
 
