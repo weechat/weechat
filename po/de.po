@@ -27,7 +27,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2026-07-05 12:20+0200\n"
-"PO-Revision-Date: 2026-07-05 12:29+0200\n"
+"PO-Revision-Date: 2026-07-05 19:00+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
 "Language: de\n"
@@ -41,16 +41,15 @@ msgstr ""
 
 #. TRANSLATORS: command line option "-a", "--no-connect"
 msgid "disable auto-connect to servers at startup"
-msgstr ""
-"deaktiviert das automatische Verbinden mit den Servern beim Start von WeeChat"
+msgstr "deaktiviert das automatische Verbinden mit den Servern beim Start"
 
 #. TRANSLATORS: command line option "-c", "--colors"
 msgid "display default colors in terminal and exit"
-msgstr "zeigt die Standardfarben des Terminals an"
+msgstr "Standardfarben im Terminal anzeigen und beenden"
 
 #. TRANSLATORS: only "<path>" may be translated
 msgid "-d, --dir <path>"
-msgstr "-d, --dir <Pfad>"
+msgstr "-d, --dir <path>"
 
 #. TRANSLATORS: command line option "-d", "--dir <path>"
 msgid ""
@@ -1003,54 +1002,52 @@ msgstr "Einstellung erstellt: "
 msgid "%sFunction \"%s\" is not available on this system"
 msgstr "%sFunktion \"%s\" ist auf dem Rechner nicht verfügbar"
 
-#, fuzzy
-#| msgid "not available"
 msgid "No theme available"
-msgstr "nicht verfügbar"
+msgstr "Kein Design verfügbar"
 
 msgid "Themes:"
-msgstr ""
+msgstr "Design:"
 
 #, c-format
 msgid "  %s %s%s%s (file)"
-msgstr ""
+msgstr "  %s %s%s%s (Datei)"
 
-#, fuzzy, c-format
+#, c-format
 #| msgid "%sKey \"%s\" not found"
 msgid "%sTheme \"%s\" not found"
-msgstr "%sTastenbelegung \"%s\" nicht gefunden"
+msgstr "%sDesign \"%s\" nicht gefunden"
 
-#, fuzzy, c-format
+#, c-format
 #| msgid "Option \"%s%s%s\":"
 msgid "Theme \"%s%s%s\":"
-msgstr "Einstellung \"%s%s%s\":"
+msgstr "Design \"%s%s%s\":"
 
-#, fuzzy, c-format
+#, c-format
 #| msgid "    file: %s"
 msgid "  source: %s"
-msgstr "    Datei: %s"
+msgstr "  Quelle: %s"
 
 msgid "  source: built-in (in-memory)"
-msgstr ""
+msgstr "  Quelle: integriert (im Arbeitsspeicher)"
 
-#, fuzzy, c-format
+#, c-format
 #| msgid "description"
 msgid "  description: %s"
-msgstr "Beschreibung"
+msgstr "  Beschreibung: %s"
 
-#, fuzzy, c-format
+#, c-format
 #| msgid "    file: %s"
 msgid "  date: %s"
-msgstr "    Datei: %s"
+msgstr "  Datum: %s"
 
-#, fuzzy, c-format
+#, c-format
 #| msgid "WeeChat version"
 msgid "  WeeChat version: %s"
-msgstr "WeeChat-Version"
+msgstr "  WeeChat Version: %s"
 
 #, c-format
 msgid "  overrides: %d"
-msgstr ""
+msgstr "  überschreibt: %d"
 
 #, c-format
 msgid "%sFailed to unset option \"%s\""
@@ -4099,18 +4096,18 @@ msgstr ""
 msgid "number: number of processes to clean"
 msgstr "Anzahl: Anzahl der zu bereinigenden Prozesse"
 
-#, fuzzy
 #| msgid "manage custom bar items"
 msgid "manage color themes"
-msgstr "Verwalten von benutzerdefinierten Bar-Items"
+msgstr "Farbdesigns verwalten"
 
 #. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
 msgid ""
 "[list [-backups]] || apply <name> || reset || save <name> || rename <old> "
 "<new> || del <name> || info <name>"
 msgstr ""
+"[list [-backups]] || apply <name> || reset || save <name> || rename <old> "
+"<new> || del <name> || info <name>"
 
-#, fuzzy
 #| msgid ""
 #| "raw[list]: list remote relay servers (without argument, this list is "
 #| "displayed)"
@@ -4119,57 +4116,70 @@ msgid ""
 "configuration directory; the active theme (matching weechat.look.theme) is "
 "marked with \"->\""
 msgstr ""
-"raw[list]: listet relay-Server auf (ohne Angabe von Argumente wird diese "
-"Liste standardmäßig ausgegeben)"
+"raw[list]: Listet registrierte Themes sowie alle *.theme-Dateien im WeeChat-"
+"Konfigurationsverzeichnis auf; das aktive Design (entsprechend "
+"weechat.look.theme) ist mit \"->\" gekennzeichnet"
 
-#, fuzzy
 #| msgid "raw[tags]: display tags for lines"
 msgid "raw[-backups]: display backup theme files"
-msgstr ""
-"raw[tags]: schaltet für jede Zeile die dazugehörigen Schlagwörter an / aus"
+msgstr "raw[-backups]: Backup-Design-Dateien anzeigen"
 
 msgid ""
 "raw[apply]: apply a theme (set every themable option to the value from the "
 "theme); if a file named <name>.theme exists in directory \"themes\" it "
 "shadows any built-in theme of the same name"
 msgstr ""
+"raw[apply]: ein Design anwenden (jede anpassbare Option auf den Wert aus dem "
+"Theme setzen); existiert eine Datei namens <name>.theme im Verzeichnis "
+"\"themes\", so überlagert sie ein etwaiges eingebautes Theme gleichen Namens"
 
 msgid ""
 "raw[reset]: reset every themable option to its default value (restores the "
 "original look shipped with WeeChat)"
 msgstr ""
+"raw[reset]: Setzt alle anpassbaren Optionen auf ihren Standardwert zurück "
+"(stellt das ursprüngliche, mit WeeChat ausgelieferte Erscheinungsbild wieder "
+"her)"
 
 msgid ""
 "raw[save]: save current themable options to a file <name>.theme in directory "
 "\"themes\"; every themable option is written, so the file is self-contained; "
 "the name must not match a built-in theme or start with \"backup-\""
 msgstr ""
+"raw[save]: Speichert die aktuellen anpassbaren Optionen in einer Datei "
+"namens <name>.theme im Verzeichnis \"themes\"; dabei werden alle anpassbaren "
+"Optionen geschrieben, sodass die Datei in sich abgeschlossen ist; der Name "
+"darf nicht mit dem eines integrierten Design übereinstimmen und nicht mit "
+"\"backup-\" beginnen."
 
-#, fuzzy
 #| msgid "raw[rename]: rename a filter"
 msgid "raw[rename]: rename a user theme file"
-msgstr "raw[rename]: benennt einen Filter um"
+msgstr "raw[rename]: Umbenennen einer Benutzer-Design-Datei"
 
-#, fuzzy
 #| msgid "raw[del]: delete a server"
 msgid "raw[del]: delete a user theme file"
-msgstr "raw[del]: entfernt einen Server"
+msgstr "raw[del]: löschen einer Benutzer-Design-Datei"
 
 msgid ""
 "raw[info]: display details on a theme (name, description, creation date, "
 "WeeChat version, number of option overrides)"
 msgstr ""
+"raw[info]: Details zu einem Theme anzeigen (Name, Beschreibung, "
+"Erstellungsdatum, WeeChat-Version, Anzahl der überschriebenen Optionen)"
 
-#, fuzzy
 #| msgid "name: name of trigger"
 msgid "name: name of a theme"
-msgstr "name: Name des Triggers"
+msgstr "name: Name eines Themes/Designs"
 
 msgid ""
 "Themes are named bundles of option overrides. Built-in themes are registered "
 "in memory by core/plugins/scripts; user themes are read from files in "
 "directory \"themes\" inside the WeeChat configuration directory."
 msgstr ""
+"Themes sind Pakete von Options-Überschreibungen. Integrierte Themes werden "
+"von core/Erweiterungen/Skripts im Arbeitsspeicher registriert; "
+"benutzerdefinierte Themes werden aus Dateien im Unterverzeichnis \"themes\" "
+"des WeeChat-Konfigurationsverzeichnisses geladen."
 
 msgid ""
 "By default, `/theme apply` command creates a backup of current themable "
@@ -4178,6 +4188,11 @@ msgid ""
 "backup-<timestamp>`. This is controlled by the option "
 "weechat.look.theme_backup."
 msgstr ""
+"Standardmäßig erstellt der Befehl `/theme apply` vor der Anwendung ein "
+"Backup der aktuellen, anpassbaren Werte im Verzeichnis \"themes\" "
+"(Dateiname: \"backup-<Zeitstempel>.theme\"); der vorherige Zustand lässt "
+"sich mit `/theme apply backup-<Zeitstempel>` wiederherstellen. Dies wird "
+"über die Option weechat.look.theme_backup gesteuert."
 
 msgid "toggle value of a config option"
 msgstr "den Wert einer Konfigurationsoption umschalten"
@@ -4837,13 +4852,17 @@ msgid "names of layouts"
 msgstr "Namen der Layouts"
 
 msgid "names of themes (built-ins + user files + backups)"
-msgstr ""
+msgstr "Namen der Themes (integrierte Themes + Benutzerdateien + Backups)"
 
 msgid "names of user theme files (without built-ins and backups)"
 msgstr ""
+"Namen der benutzerdefinierten Themendateien (ohne integrierte Dateien und "
+"Backups)"
 
 msgid "names of theme files on disk (user files + backups, no built-ins)"
 msgstr ""
+"Namen der Theme-Dateien auf dem Datenträger (Benutzerdateien + Backups, "
+"keine integrierten Dateien)"
 
 msgid "names of secured data (file sec.conf, section data)"
 msgstr "Namen der geschützten Daten (Datei sec.conf, section data)"
@@ -6062,6 +6081,9 @@ msgid ""
 "not change manually); informational only, the theme is not re-applied at "
 "startup"
 msgstr ""
+"Name des zuletzt mit dem Befehl /theme angewendeten Design (wird automatisch "
+"gesetzt, nicht manuell ändern); dient nur zur Information, das Design wird "
+"beim Start nicht erneut angewendet"
 
 msgid ""
 "create a backup theme file with the current themable options before applying "
@@ -6070,6 +6092,13 @@ msgid ""
 "\"themes\" inside the WeeChat configuration directory and can be restored "
 "with the command: `/theme apply backup-<timestamp>`"
 msgstr ""
+"Erstellen Sie eine Backup-Datei des Themes mit den aktuellen anpassbaren "
+"Optionen, bevor Sie ein Theme mit dem Befehl /theme anwenden; falls die "
+"Backup-Datei nicht geschrieben werden kann, wird der Vorgang abgebrochen (es "
+"werden keine Optionen geändert). Die Backup-Datei wird im Verzeichnis "
+"\"themes\" innerhalb des WeeChat-Konfigurationsverzeichnisses gespeichert "
+"und kann mit dem Befehl `/theme apply backup-<Zeitstempel>` "
+"wiederhergestellt werden"
 
 msgid ""
 "time format for dates converted to strings and displayed in messages (see "
@@ -7170,115 +7199,119 @@ msgid "Resource usage (see \"man getrusage\" for help):"
 msgstr "Ressourcennutzung (siehe „man getrusage“ für Hilfe):"
 
 msgid "WeeChat default theme for light-background terminals"
-msgstr ""
+msgstr "WeeChat-Standarddesign für Terminals mit hellem Hintergrund"
 
 msgid "Automatic backup"
-msgstr ""
+msgstr "Automatische Datensicherung"
 
-#, fuzzy, c-format
+#, c-format
 #| msgid "%sKey \"%s\" not found"
 msgid "%sTheme: option \"%s\" not found, skipped"
-msgstr "%sTastenbelegung \"%s\" nicht gefunden"
+msgstr "%sTheme: Option \"%s\" nicht gefunden, übersprungen"
 
-#, fuzzy, c-format
+#, c-format
 #| msgid "%s: script \"%s\" is not installed"
 msgid "%sTheme: option \"%s\" is not themable, skipped"
-msgstr "%s: Skript \"%s\" ist nicht installiert"
+msgstr "%sTheme: Option \"%s\" ist nicht anpassbar, übersprungen"
 
 #, c-format
 msgid "%s%s: line %d: malformed section header"
-msgstr ""
+msgstr "%s%s: Zeile %d: fehlerhafter Kopf der Sektion"
 
-#, fuzzy, c-format
-#| msgid "%sWarning: %s, line %d: ignoring unknown section identifier (\"%s\")"
+#, c-format
 msgid "%s%s: line %d: ignoring unknown section \"%s\""
-msgstr "%sWarnung: %s, Zeile %d: unbekannte Sektion wird ignoriert (\"%s\")"
+msgstr "%s%s: Zeile %d: unbekannte Sektion \"%s\" wird ignoriert"
 
 #, c-format
 msgid "%s%s: line %d: missing '=' separator"
-msgstr ""
+msgstr "%s%s: Zeile %d: fehlendes '=' Trennzeichen"
 
-#, fuzzy, c-format
+#, c-format
 #| msgid ""
 #| "%sWarning: %s, line %d: ignoring unknown option for section \"%s\": %s"
 msgid "%s%s: line %d: ignoring unknown [info] key \"%s\""
-msgstr ""
-"%sWarnung: %s, Zeile %d: ignoriert unbekannte Einstellung für Sektion "
-"\"%s\": %s"
+msgstr "%s%s: Zeile %d: unbekannter [info] Schlüssel \"%s\" wird ignoriert"
 
 #, c-format
 msgid ""
 "%sUnable to create theme backup; aborting apply (disable option "
 "weechat.look.theme_backup to force)"
 msgstr ""
+"%sSicherung des Design konnte nicht erstellt werden; Anwenden abgebrochen "
+"(Option wechat.look.theme_backup deaktivieren, um den Vorgang zu erzwingen)"
 
 #, c-format
 msgid "Previous state saved as theme \"%s\"; to restore: /theme apply %s"
 msgstr ""
+"Vorheriger Zustand als Design \"%s\" gespeichert; zum Wiederherstellen: /"
+"theme apply %s"
 
 #, c-format
 msgid ""
 "%sUnable to create theme backup; aborting reset (disable option "
 "weechat.look.theme_backup to force)"
 msgstr ""
+"%sTheme-Sicherung konnte nicht erstellt werden; Zurücksetzen wird "
+"abgebrochen (Option wechat.look.theme_backup deaktivieren, um den Vorgang zu "
+"erzwingen)"
 
-#, fuzzy, c-format
+#, c-format
 #| msgid "%sBuffer name \"%s\" is reserved for WeeChat"
 msgid "%sName \"%s\" is reserved for automatic backups"
-msgstr "%sDer Buffer-Name \"%s\" ist für WeeChat reserviert"
+msgstr "%sName \"%s\" ist für automatische Sicherungen reserviert"
 
-#, fuzzy, c-format
+#, c-format
 #| msgid "%sBuffer name \"%s\" is reserved for WeeChat"
 msgid "%sName \"%s\" is reserved for a built-in theme"
-msgstr "%sDer Buffer-Name \"%s\" ist für WeeChat reserviert"
+msgstr "%sName \"%s\" ist reserviert für ein integriertes Design"
 
-#, fuzzy, c-format
+#, c-format
 #| msgid "%s%s: unable to parse file \"%s\""
 msgid "%sFailed to save theme \"%s\""
-msgstr "%s%s: Datei \"%s\" Analyse nicht möglich"
+msgstr "%sSpeichern des Designs \"%s\" fehlgeschlagen"
 
-#, fuzzy, c-format
+#, c-format
 #| msgid "Option \"%s%s%s\":"
 msgid "Theme saved to: %s"
-msgstr "Einstellung \"%s%s%s\":"
+msgstr "Design gespeichert unter: %s"
 
-#, fuzzy, c-format
+#, c-format
 #| msgid "%sCannot create file \"%s\""
 msgid "%sCannot rename built-in theme \"%s\""
-msgstr "%sDie Datei \"%s\" kann nicht erstellt werden"
+msgstr "%sIntegriertes Design \"%s\" kann nicht umbenannt werden"
 
 #, c-format
 msgid "%sNew name is the same as old name"
-msgstr ""
+msgstr "%sDer neue Name ist derselbe wie der alte Name"
 
-#, fuzzy, c-format
+#, c-format
 #| msgid "%sBar \"%s\" already exists"
 msgid "%sTheme \"%s\" already exists"
-msgstr "%sBar \"%s\" existiert bereits"
+msgstr "%sDesign \"%s\" existiert schon"
 
-#, fuzzy, c-format
+#, c-format
 #| msgid "%sUnable to rename filter \"%s\" to \"%s\""
 msgid "%sFailed to rename theme \"%s\" to \"%s\""
-msgstr "%sUmbenennung des Filters von \"%s\" in \"%s\" nicht möglich"
+msgstr "%sUmbenennung des Design \"%s\" zu \"%s\" fehlgeschlagen"
 
-#, fuzzy, c-format
+#, c-format
 #| msgid "Trigger \"%s\" renamed to \"%s\""
 msgid "Theme \"%s\" renamed to \"%s\""
-msgstr "Trigger \"%s\" wurde umbenannt. Der neue Name lautet \"%s\""
+msgstr "Design \"%s\" umbenannt zu  \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 #| msgid "%sCannot create file \"%s\""
 msgid "%sCannot delete built-in theme \"%s\""
-msgstr "%sDie Datei \"%s\" kann nicht erstellt werden"
+msgstr "%sIntegriertes Design \"%s\" kann nicht gelöscht werden"
 
-#, fuzzy, c-format
+#, c-format
 #| msgid "%s%s: unable to parse file \"%s\""
 msgid "%sFailed to delete theme \"%s\""
-msgstr "%s%s: Datei \"%s\" Analyse nicht möglich"
+msgstr "%sDas Design \"%s\" konnte nicht gelöscht werden"
 
 #, c-format
 msgid "Theme deleted: %s"
-msgstr ""
+msgstr "Design gelöscht: %s"
 
 #, c-format
 msgid "%sError upgrading WeeChat with file \"%s\":"
@@ -7443,35 +7476,46 @@ msgid "WeeChat is running in headless mode (ctrl-c to quit)."
 msgstr "WeeChat läuft im Hintergrundmodus (ctrl-c zum Beenden)."
 
 msgid "Welcome to WeeChat!"
-msgstr ""
+msgstr "Willkommen bei WeeChat!"
 
 msgid ""
 "If you are discovering WeeChat, it is recommended to read at least the "
 "quickstart guide, and the user's guide if you have some time; they explain "
 "main WeeChat concepts."
 msgstr ""
+"Wenn Sie WeeChat gerade erst kennenlernen, empfiehlt es sich, zumindest die "
+"Schnellstartanleitung zu lesen – und bei Gelegenheit auch das "
+"Benutzerhandbuch –, da darin die grundlegenden Konzepte von WeeChat "
+"erläutert werden."
 
 #, c-format
 msgid "All WeeChat docs are available at: %s"
-msgstr ""
+msgstr "Alle WeeChat-Dokumente sind verfügbar unter: %s"
 
 msgid ""
 "Moreover, there is inline help with /help on all commands and options (use "
 "Tab key to complete the name)."
 msgstr ""
+"Darüber hinaus steht für alle Befehle und Optionen eine integrierte Hilfe "
+"mittels /help zur Verfügung (verwenden Sie die Tab-Taste, um den Namen zu "
+"vervollständigen)."
 
 msgid "The command /fset can help to customize WeeChat."
-msgstr ""
+msgstr "Der Befehl /fset kann dabei helfen, WeeChat anzupassen."
 
 msgid ""
 "You can add and connect to an IRC server with /server and /connect commands "
 "(see /help server)."
 msgstr ""
+"Sie können einen IRC-Server hinzufügen und sich mit ihm verbinden, indem Sie "
+"die Befehle /server und /connect verwenden (siehe /help server)."
 
 msgid ""
 "The \"light\" theme will be automatically applied. Use /theme reset to "
 "switch back to the default dark theme."
 msgstr ""
+"Ein \"helles\" Design wird automatisch angewendet. Verwende /theme reset, um "
+"zum standardmäßigen dunklen Design zurückzukehren."
 
 #. TRANSLATORS: the "under %s" can be "under screen" or "under tmux"
 #, c-format
@@ -9298,17 +9342,15 @@ msgstr "> `xxx`: zeigt nur Optionen mit \"xxx\" im Namen"
 msgid "> `f:xxx`: show only configuration file \"xxx\""
 msgstr "> `f:xxx`: zeigt nur Konfigurationsdatei \"xxx\" an"
 
-#, fuzzy
-#| msgid ""
-#| "> `t:xxx`: show only type \"xxx\" (bool/int/str/col/enum or boolean/"
-#| "integer/string/color/enum)"
 msgid ""
 "> `t:xxx`: show only type \"xxx\" (bool/int/str/col/enum or boolean/integer/"
 "string/color/enum); the special value \"themable\" can be used to show all "
 "options that can be used in themes, regardless of type"
 msgstr ""
 "> `t:xxx`: zeigt nur Optionen des entsprechenden Typs, \"xxx\" (bool/int/str/"
-"col/enum oder boolean/Ganzzahl/Zeichenkette/Farbe/Aufzählung)"
+"col/enum oder boolean/Ganzzahl/Zeichenkette/Farbe/Aufzählung); Der spezielle "
+"Wert \"themable\" kann verwendet werden, um alle Optionen anzuzeigen, die in "
+"Themes genutzt werden können – unabhängig vom Typ"
 
 msgid "> `d`: show only changed options"
 msgstr "> `d`: zeigt nur Optionen, die verändert wurden"
