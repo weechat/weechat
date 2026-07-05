@@ -7118,7 +7118,9 @@ COMMAND_CALLBACK(set)
 
 COMMAND_CALLBACK(sys)
 {
+#ifdef HAVE_MALLOC_TRIM
     long size;
+#endif
     int num_processes;
 
     /* make C compiler happy */
