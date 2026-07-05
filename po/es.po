@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-07-04 22:01+0200\n"
-"PO-Revision-Date: 2026-06-28 08:46+0200\n"
+"POT-Creation-Date: 2026-07-05 12:20+0200\n"
+"PO-Revision-Date: 2026-07-05 12:29+0200\n"
 "Last-Translator: Santiago Forero <santiago@forero.xyz>\n"
 "Language-Team: Spanish <weechat-dev@nongnu.org>\n"
 "Language: es\n"
@@ -6521,11 +6521,6 @@ msgstr ""
 msgid "%s%s: line %d: ignoring unknown [info] key \"%s\""
 msgstr ""
 "%sAtención: %s, línea %d: opción desconocida para la sección \"%s\": %s"
-
-#, fuzzy, c-format
-#| msgid "%s%s: unable to parse file \"%s\""
-msgid "%sFailed to parse theme file \"%s\""
-msgstr "%s%s: no es posible analizar el archivo \"%s\""
 
 #, c-format
 msgid ""

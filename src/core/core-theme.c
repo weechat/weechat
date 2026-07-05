@@ -25,6 +25,8 @@
 #include "config.h"
 #endif
 
+#include <errno.h>
+#include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -945,18 +947,11 @@ theme_apply (const char *name)
      * so user themes have no steady-state memory footprint.
      */
     path = theme_user_file_path (name);
-    if (path && (access (path, R_OK) == 0))
-    {
+    if (path)
         file_theme = theme_file_parse (path);
-        if (!file_theme)
-        {
-            gui_chat_printf (NULL,
-                             _("%sFailed to parse theme file \"%s\""),
-                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                             path);
-            free (path);
-            return WEECHAT_RC_ERROR;
-        }
+    free (path);
+    if (file_theme)
+    {
         theme = file_theme;
     }
     else
@@ -968,11 +963,9 @@ theme_apply (const char *name)
                              _("%sTheme \"%s\" not found"),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                              name);
-            free (path);
             return WEECHAT_RC_ERROR;
         }
     }
-    free (path);
 
     /* create a backup of current themable state, if enabled */
     if (CONFIG_BOOLEAN(config_look_theme_backup)
@@ -1187,7 +1180,7 @@ theme_rename (const char *old_name, const char *new_name)
     char *old_path, *new_path, line[2048];
     FILE *fin, *fout;
     const char *trimmed;
-    int in_info, name_done;
+    int in_info, name_done, fd;
 
     if (!old_name || !old_name[0] || !new_name || !new_name[0])
         return WEECHAT_RC_ERROR;
@@ -1230,39 +1223,53 @@ theme_rename (const char *old_name, const char *new_name)
     old_path = theme_user_file_path (old_name);
     if (!old_path)
         return WEECHAT_RC_ERROR;
-    if (access (old_path, R_OK) != 0)
-    {
-        gui_chat_printf (NULL,
-                         _("%sTheme \"%s\" not found"),
-                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                         old_name);
-        free (old_path);
-        return WEECHAT_RC_ERROR;
-    }
-
     new_path = theme_user_file_path (new_name);
     if (!new_path)
     {
         free (old_path);
         return WEECHAT_RC_ERROR;
     }
-    if (access (new_path, F_OK) == 0)
+
+    fin = fopen (old_path, "r");
+    if (!fin)
     {
         gui_chat_printf (NULL,
-                         _("%sTheme \"%s\" already exists"),
+                         _("%sTheme \"%s\" not found"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                         new_name);
+                         old_name);
         free (old_path);
         free (new_path);
         return WEECHAT_RC_ERROR;
     }
 
-    fin = fopen (old_path, "r");
-    fout = (fin) ? fopen (new_path, "w") : NULL;
-    if (!fin || !fout)
+    fd = open (new_path, O_WRONLY | O_CREAT | O_EXCL, 0666);
+    if (fd < 0)
     {
-        if (fin)
-            fclose (fin);
+        if (errno == EEXIST)
+        {
+            gui_chat_printf (NULL,
+                             _("%sTheme \"%s\" already exists"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             new_name);
+        }
+        else
+        {
+            gui_chat_printf (NULL,
+                             _("%sFailed to rename theme \"%s\" to \"%s\""),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             old_name, new_name);
+        }
+        fclose (fin);
+        free (old_path);
+        free (new_path);
+        return WEECHAT_RC_ERROR;
+    }
+    fout = fdopen (fd, "w");
+    if (!fout)
+    {
+        close (fd);
+        unlink (new_path);
+        fclose (fin);
         gui_chat_printf (NULL,
                          _("%sFailed to rename theme \"%s\" to \"%s\""),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],

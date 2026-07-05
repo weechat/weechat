@@ -942,7 +942,7 @@ TEST(CoreTheme, Delete)
 
 TEST(CoreTheme, Rename)
 {
-    char *src_path, *dst_path;
+    char *src_path = NULL, *dst_path = NULL;
     struct stat st;
     FILE *file;
     char buf[2048];
@@ -974,6 +974,17 @@ TEST(CoreTheme, Rename)
     /* refuses target that already exists */
     LONGS_EQUAL(WEECHAT_RC_OK, theme_save ("rn_dst"));
     LONGS_EQUAL(WEECHAT_RC_ERROR, theme_rename ("rn_src", "rn_dst"));
+    /* the refused rename must not have clobbered the existing target */
+    dst_path = theme_user_file_path ("rn_dst");
+    CHECK(dst_path != NULL);
+    file = fopen (dst_path, "r");
+    CHECK(file != NULL);
+    len = fread (buf, 1, sizeof (buf) - 1, file);
+    buf[len] = '\0';
+    fclose (file);
+    CHECK(strstr (buf, "name = \"rn_dst\"") != NULL);
+    free (dst_path);
+    dst_path = NULL;
     LONGS_EQUAL(WEECHAT_RC_OK, theme_delete ("rn_dst"));
 
     /* happy path: rename moves the file and rewrites the [info] name */

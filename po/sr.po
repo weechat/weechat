@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-07-04 22:01+0200\n"
-"PO-Revision-Date: 2026-06-28 08:52+0200\n"
+"POT-Creation-Date: 2026-07-05 12:20+0200\n"
+"PO-Revision-Date: 2026-07-05 12:29+0200\n"
 "Last-Translator: Ivan Pešić <ivan.pesic@gmail.com>\n"
 "Language-Team: Serbian <ivan.pesic@gmail.com>\n"
 "Language: sr\n"
@@ -6848,11 +6848,6 @@ msgstr ""
 msgid "%s%s: line %d: ignoring unknown [info] key \"%s\""
 msgstr ""
 "%sУпозорење: %s, линија %d: игнорише се непозната опција за одељак „%s”: %s"
-
-#, fuzzy, c-format
-#| msgid "%s%s: unable to parse file \"%s\""
-msgid "%sFailed to parse theme file \"%s\""
-msgstr "%s%s: није успело парсирање фајла „%s”"
 
 #, c-format
 msgid ""

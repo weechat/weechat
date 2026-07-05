@@ -7369,9 +7369,7 @@ COMMAND_CALLBACK(theme)
         COMMAND_MIN_ARGS(3, "info");
         /* file shadows registry: try user file first */
         path = theme_user_file_path (argv[2]);
-        file_theme = NULL;
-        if (path && (access (path, R_OK) == 0))
-            file_theme = theme_file_parse (path);
+        file_theme = (path) ? theme_file_parse (path) : NULL;
         if (!file_theme)
         {
             free (path);
