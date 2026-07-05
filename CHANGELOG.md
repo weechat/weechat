@@ -34,6 +34,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 - core: fix possible buffer overflow in command /color alias ([#2330](https://github.com/weechat/weechat/issues/2330))
 - core: fix possible buffer overflow in list of commands displayed by /help ([#2330](https://github.com/weechat/weechat/issues/2330))
 - api: fix infinite loop in function string_replace when the search string is empty
+- api: do not free dynamic string on error in function string_dyn_concat
 - irc: fix tag in message with list of names when joining a channel
 - fset: remove error displayed in core buffer when clicking with the mouse below the last option displayed
 - guile, lua, perl, python, ruby, tcl: fix conversion of dates in the API functions

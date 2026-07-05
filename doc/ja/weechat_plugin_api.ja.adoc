@@ -3586,6 +3586,9 @@ _WeeChat バージョン 1.8 以上で利用可, updated in 3.0_
 文字列が再確保された場合 (文字列を連結するのに十分なサイズが確保されていなかった場合)
 にはポインタ _*string_ が変わる可能性があります。
 
+// TRANSLATION MISSING
+In case of error, the dynamic string is left unchanged.
+
 プロトタイプ:
 
 [source,c]

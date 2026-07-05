@@ -3356,6 +3356,9 @@ _WeeChat ≥ 1.8, ажурирано у верзији 3.0._
 
 Показивач на стринг _*string_ може да се промени ако се стринг реалоцира (у случају да нема довољно простора за надовезивање стринга).
 
+// TRANSLATION MISSING
+In case of error, the dynamic string is left unchanged.
+
 Прототип:
 
 [source,c]

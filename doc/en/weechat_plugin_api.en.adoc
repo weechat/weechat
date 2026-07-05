@@ -3474,6 +3474,8 @@ Concatenate a string to a dynamic string.
 The pointer _*string_ can change if the string is reallocated (if there is
 not enough space to concatenate the string).
 
+In case of error, the dynamic string is left unchanged.
+
 Prototype:
 
 [source,c]
