@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #
 # SPDX-FileCopyrightText: 2023-2026 Sébastien Helleu <flashcode@flashtux.org>
 #
@@ -28,7 +28,7 @@
 #   4. test package: unpack, compile, run, test
 #
 
-set -o errexit
+set -euo pipefail
 
 release_error ()
 {
@@ -38,19 +38,39 @@ release_error ()
 
 release_start ()
 {
+    date=$(date +"%Y-%m-%d")
+
+    # Check that working directory is clean.
     root_dir="$(git rev-parse --show-toplevel)"
     if [ -n "$(git status --porcelain)" ]; then
         release_error "working directory not clean"
     fi
+
+    # Sanity check: the changelog must have an [Unreleased] section to release.
+    if ! grep -q '^## \[Unreleased\]$' "${root_dir}/CHANGELOG.md"; then
+        release_error "no [Unreleased] section found in CHANGELOG.md"
+    fi
+    # Sanity check: the [Unreleased] compare link is required to build the release links.
+    if ! grep -q '^\[Unreleased\]: .*/compare/.*\.\.\.HEAD$' "${root_dir}/CHANGELOG.md"; then
+        release_error "no valid [Unreleased] link found in CHANGELOG.md"
+    fi
+
+    # Check REUSE/licensing compliance.
+    reuse lint
+
+    # Get next version.
     version=$("${root_dir}/version.sh" devel)
     if git rev-parse "v${version}" 2>/dev/null; then
         release_error "tag v${version} already exists"
     fi
+
+    # Check if commit for the version already exists.
     msg=$(git log -1 --pretty=%B | tr -d "\n")
     if [ "${msg}" = "Version ${version}" ]; then
         release_error "commit for version already exists"
     fi
-    date=$(date +"%Y-%m-%d")
+
+    # Create build directory.
     build_dir="${root_dir}/release/${version}"
     if [ -d "${build_dir}" ]; then
         release_error "directory ${build_dir} already exists"
@@ -61,16 +81,34 @@ release_start ()
 
 release_bump_version ()
 {
+    # Bump version in script version.sh.
     "${root_dir}/tools/bump_version.sh" stable
+
+    # Derive the compare-URL base and the previous tag from the [Unreleased] link.
+    # e.g. [Unreleased]: https://github.com/weechat/weechat/compare/v4.9.0...HEAD
+    unreleased_link=$(grep -m1 '^\[Unreleased\]: ' "${root_dir}/CHANGELOG.md" | sed -E 's/^\[Unreleased\]: //')
+    base_url=${unreleased_link%%/compare/*}
+    prev_tag=${unreleased_link##*/compare/}
+    prev_tag=${prev_tag%%...HEAD}
+
+    # Update the changelog:
+    #   - turn the [Unreleased] heading into the released version and date
+    #   - point the [Unreleased] link at the new version
+    #   - add the new version link (kept in descending order, after [Unreleased])
     sed -i \
-        -e "s/^\(## Version ${version}\) (under dev)$/\1 (${date})/" \
+        -e "s|^## \[Unreleased\]$|## [${version}] - ${date}|" \
+        -e "s|^\[Unreleased\]: .*|[Unreleased]: ${base_url}/compare/v${version}...HEAD|" \
+        -e "/^\[Unreleased\]: /a [${version}]: ${base_url}/compare/${prev_tag}...v${version}" \
         "${root_dir}/CHANGELOG.md"
+
+    # Update the upgrading notes: turn the "Unreleased" heading into the released version.
+    sed -i "s|^## Unreleased$|## Version ${version}|" "${root_dir}/UPGRADING.md"
 }
 
 release_commit_tag ()
 {
     cd "${root_dir}"
-    git commit -m "Version ${version}" version.sh CHANGELOG.md || release_error "git commit error, release already done?"
+    git commit -m "Version ${version}" version.sh CHANGELOG.md UPGRADING.md || release_error "git commit error, release already done?"
     git tag -a "v${version}" -m "WeeChat ${version}"
 }
 
@@ -125,7 +163,7 @@ release_test_pkg ()
 
 release_end ()
 {
-    # display a report about the release made
+    # Display a report about the release made.
     echo
     echo "========================= WeeChat release status ========================="
     echo "  version  : ${version}"

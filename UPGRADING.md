@@ -13,7 +13,7 @@ When upgrading from version X to Y, please read and apply all instructions from 
 
 For a list of all changes in each version, please see [CHANGELOG.md](CHANGELOG.md).
 
-## Version 4.10.0
+## Unreleased
 
 ### Command on mouse click in fset buffer
 

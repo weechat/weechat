@@ -4,16 +4,11 @@ SPDX-FileCopyrightText: 2003-2026 Sébastien Helleu <flashcode@flashtux.org>
 SPDX-License-Identifier: GPL-3.0-or-later
 -->
 
-# WeeChat ChangeLog
+# Changelog
 
-## Version 4.10.0 (under dev)
+## [Unreleased]
 
-### Changed
-
-- core: add condition on connected relay api clients in default value of option weechat.look.hotlist_add_conditions
-- core: add `/mute` in default command for key `Alt`+`=` (toggle filters)
-- api: change type of parameter "pos_option_name" to "const char **" in function config_search_with_string
-- relay/api: add field "last_read_line_id" in GET /api/buffers
+_If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### Added
 
@@ -27,20 +22,30 @@ SPDX-License-Identifier: GPL-3.0-or-later
 - relay: add option relay.network.unix_socket_permissions ([#2317](https://github.com/weechat/weechat/issues/2317))
 - script: add info "script_languages"
 
+### Changed
+
+- core: add condition on connected relay api clients in default value of option weechat.look.hotlist_add_conditions
+- core: add `/mute` in default command for key `Alt`+`=` (toggle filters)
+- api: change type of parameter "pos_option_name" to "const char **" in function config_search_with_string
+- relay/api: add field "last_read_line_id" in GET /api/buffers
+
 ### Fixed
 
 - core: fix option weechat.look.color_real_white not applied when color is "white" on 16+ colors terminals ([#1742](https://github.com/weechat/weechat/issues/1742))
 - core: fix buffer overflow in connection to SOCKS5 proxy ([#2325](https://github.com/weechat/weechat/issues/2325))
-- core: fix possible buffer overflow in command /color alias ([#2330](https://github.com/weechat/weechat/issues/2330))
-- core: fix possible buffer overflow in list of commands displayed by /help ([#2330](https://github.com/weechat/weechat/issues/2330))
 - api: fix infinite loop in function string_replace when the search string is empty
 - api: do not free dynamic string on error in function string_dyn_concat
 - irc: fix tag in message with list of names when joining a channel
 - fset: remove error displayed in core buffer when clicking with the mouse below the last option displayed
 - guile, lua, perl, python, ruby, tcl: fix conversion of dates in the API functions
+- irc: fix conversion of dates in received messages
+
+### Security
+
+- core: fix possible buffer overflow in command /color alias ([#2330](https://github.com/weechat/weechat/issues/2330))
+- core: fix possible buffer overflow in list of commands displayed by /help ([#2330](https://github.com/weechat/weechat/issues/2330))
 - irc: limit size of data received from the server to prevent memory exhaustion
 - irc: fix out-of-bounds read on incoming DCC command with a quoted filename ending the message ([#2322](https://github.com/weechat/weechat/issues/2322))
-- irc: fix conversion of dates in received messages
 - relay: limit size of decompressed websocket frame with permessage-deflate to prevent memory exhaustion ([GHSA-v2v4-45wm-5cr3](https://github.com/weechat/weechat/security/advisories/GHSA-v2v4-45wm-5cr3), [CVE-2026-53524](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-53524))
 - relay: limit size of received websocket frame and HTTP body to prevent memory exhaustion
 - relay: limit size of partial message received while reading an HTTP request to prevent memory exhaustion
@@ -53,23 +58,29 @@ SPDX-License-Identifier: GPL-3.0-or-later
 - xfer: fix out-of-bounds read when receiving empty line in DCC chat ([#2323](https://github.com/weechat/weechat/issues/2323))
 - xfer: fix out-of-bounds write in xfer file transfer resume ([#2326](https://github.com/weechat/weechat/issues/2326))
 
-## Version 4.9.3 (2026-07-05)
+## [4.9.3] - 2026-07-05
 
 ### Fixed
+
+- api: do not free dynamic string on error in function string_dyn_concat
+
+### Security
 
 - core: fix buffer overflow in connection to SOCKS5 proxy ([#2325](https://github.com/weechat/weechat/issues/2325))
 - core: fix possible buffer overflow in command /color alias ([#2330](https://github.com/weechat/weechat/issues/2330))
 - core: fix possible buffer overflow in list of commands displayed by /help ([#2330](https://github.com/weechat/weechat/issues/2330))
-- api: do not free dynamic string on error in function string_dyn_concat
 - relay/api: fix memory leak in resources "handshake", "input" and "completion" ([GHSA-wmpc-m6g9-fwj8](https://github.com/weechat/weechat/security/advisories/GHSA-wmpc-m6g9-fwj8))
 - relay: fix read of uncompressed websocket frame ([#2331](https://github.com/weechat/weechat/issues/2331))
 - xfer: fix out-of-bounds write in xfer file transfer resume ([#2326](https://github.com/weechat/weechat/issues/2326))
 
-## Version 4.9.2 (2026-06-07)
+## [4.9.2] - 2026-06-07
 
 ### Fixed
 
 - api: fix infinite loop in function string_replace when the search string is empty
+
+### Security
+
 - irc: limit size of data received from the server to prevent memory exhaustion
 - irc: fix out-of-bounds read on incoming DCC command with a quoted filename ending the message ([#2322](https://github.com/weechat/weechat/issues/2322))
 - relay: limit size of received websocket frame and HTTP body to prevent memory exhaustion
@@ -78,26 +89,29 @@ SPDX-License-Identifier: GPL-3.0-or-later
 - xfer: replace directory separator in remote nick by underscore in download filename to prevent writing the file outside the download directory ([#2321](https://github.com/weechat/weechat/issues/2321))
 - xfer: fix out-of-bounds read when receiving empty line in DCC chat ([#2323](https://github.com/weechat/weechat/issues/2323))
 
-## Version 4.9.1 (2026-05-31)
+## [4.9.1] - 2026-05-31
 
 ### Fixed
 
 - core: fix option weechat.look.color_real_white not applied when color is "white" on 16+ colors terminals ([#1742](https://github.com/weechat/weechat/issues/1742))
 - irc: fix tag in message with list of names when joining a channel
+
+### Security
+
 - relay: limit size of decompressed websocket frame with permessage-deflate to prevent memory exhaustion ([GHSA-v2v4-45wm-5cr3](https://github.com/weechat/weechat/security/advisories/GHSA-v2v4-45wm-5cr3), [CVE-2026-53524](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-53524))
 - relay: fix timing attack on password authentication ([GHSA-vhv8-g2r9-cwcc](https://github.com/weechat/weechat/security/advisories/GHSA-vhv8-g2r9-cwcc), [CVE-2026-53525](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-53525))
 - api, relay: fix timing attack on TOTP validation ([GHSA-vhv8-g2r9-cwcc](https://github.com/weechat/weechat/security/advisories/GHSA-vhv8-g2r9-cwcc), [CVE-2026-53525](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-53525))
 
-## Version 4.9.0 (2026-03-29)
+## [4.9.0] - 2026-03-29
+
+### Added
+
+- typing: add option typing.look.item_text ([#2305](https://github.com/weechat/weechat/issues/2305))
 
 ### Changed
 
 - core: add option `-e` to evaluate all commands before executing them in command `/eval`
 - xfer: evaluate option xfer.network.own_ip
-
-### Added
-
-- typing: add option typing.look.item_text ([#2305](https://github.com/weechat/weechat/issues/2305))
 
 ### Fixed
 
@@ -110,7 +124,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 - relay/api: fix memory leaks in resources "ping" and "sync"
 - relay/api: fix memory leak in receive of message from remote WeeChat
 
-## Version 4.8.2 (2026-03-06)
+## [4.8.2] - 2026-03-06
 
 ### Fixed
 
@@ -118,20 +132,23 @@ SPDX-License-Identifier: GPL-3.0-or-later
 - relay/api: fix memory leaks in resources "ping" and "sync"
 - relay/api: fix memory leak in receive of message from remote WeeChat
 
-## Version 4.8.1 (2025-12-01)
+## [4.8.1] - 2025-12-01
 
 ### Fixed
 
 - core: fix buffer size in function util_parse_time, causing buffer overflow error in unit tests
 - irc: fix creation of irc.msgbuffer option without a server name
 
-## Version 4.8.0 (2025-11-30)
+## [4.8.0] - 2025-11-30
 
 _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
-### Removed
+### Added
 
-- irc: remove temporary servers and option irc.look.temporary_servers
+- core: add option weechat.completion.cycle
+- core: add hdata for hooks
+- api: add functions util_parse_int, util_parse_long and util_parse_longlong
+- buflist: add variable `${index_displayed}`
 
 ### Changed
 
@@ -151,12 +168,9 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - build: require Enchant v2 ([#2268](https://github.com/weechat/weechat/issues/2268))
 - build: require Lua ≥ 5.3 ([#2268](https://github.com/weechat/weechat/issues/2268))
 
-### Added
+### Removed
 
-- core: add option weechat.completion.cycle
-- core: add hdata for hooks
-- api: add functions util_parse_int, util_parse_long and util_parse_longlong
-- buflist: add variable `${index_displayed}`
+- irc: remove temporary servers and option irc.look.temporary_servers
 
 ### Fixed
 
@@ -167,11 +181,14 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - irc: display a warning for each unknown or invalid server option in commands `/connect` and `/server`
 - irc: fix colors in messages 367 (ban mask), 728 (quiet mask) and MODE ([#2286](https://github.com/weechat/weechat/issues/2286))
 - irc: fix reset of color when multiple modes are set with command `/mode`
-- relay/api: fix crash when an invalid HTTP request is received from a client
 - relay/api: return HTTP error 404 instead of 400 when the buffer is not found in resources completion and input
 - relay/api: return HTTP error 400 in case of invalid body in resource ping
 
-## Version 4.7.2 (2025-11-23)
+### Security
+
+- relay/api: fix crash when an invalid HTTP request is received from a client
+
+## [4.7.2] - 2025-11-23
 
 ### Fixed
 
@@ -179,24 +196,15 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - irc: fix colors in messages 367 (ban mask), 728 (quiet mask) and MODE ([#2286](https://github.com/weechat/weechat/issues/2286))
 - irc: fix reset of color when multiple modes are set with command `/mode`
 
-## Version 4.7.1 (2025-08-16)
+## [4.7.1] - 2025-08-16
 
-### Fixed
+### Security
 
 - relay/api: fix crash when an invalid HTTP request is received from a client
 
-## Version 4.7.0 (2025-07-19)
+## [4.7.0] - 2025-07-19
 
 _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
-
-### Changed
-
-- **breaking:** core: fix buffer overflow in function utf8_next_char and return NULL for empty string
-- **breaking:** core: fix integer overflow and return "unsigned long" in function util_version_number
-- core: write configuration files on disk only if there are changes ([#2250](https://github.com/weechat/weechat/issues/2250))
-- core: always enable partial completion for templates in option weechat.completion.partial_completion_templates, add option weechat.completion.partial_completion_auto_expand to expand word on new completion ([#2253](https://github.com/weechat/weechat/issues/2253))
-- core: add script name in output of `/debug hooks <plugin>`
-- relay/api: return HTTP error 405 (Method Not Allowed) when the method received is not allowed
 
 ### Added
 
@@ -206,16 +214,18 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - buflist: add variables `${number_zero}` and `${number_zero2}` (zero-padded buffer number)
 - tests: add fuzz testing ([#1462](https://github.com/weechat/weechat/issues/1462))
 
+### Changed
+
+- core: write configuration files on disk only if there are changes ([#2250](https://github.com/weechat/weechat/issues/2250))
+- core: always enable partial completion for templates in option weechat.completion.partial_completion_templates, add option weechat.completion.partial_completion_auto_expand to expand word on new completion ([#2253](https://github.com/weechat/weechat/issues/2253))
+- core: add script name in output of `/debug hooks <plugin>`
+- relay/api: return HTTP error 405 (Method Not Allowed) when the method received is not allowed
+
 ### Fixed
 
 - core: fix write of weechat.log to stdout with `weechat-headless --stdout` ([#2247](https://github.com/weechat/weechat/issues/2247))
 - core: add refresh of window title on buffer switch, when option weechat.look.window_title is set
 - core: consider all keys are safe in cursor context ([#2244](https://github.com/weechat/weechat/issues/2244))
-- core: fix integer overflow with decimal numbers in calculation of expression
-- core: fix integer overflow in base32 encoding/decoding
-- core: fix buffer overflow in function util_parse_time
-- core: fix buffer overflow in function eval_syntax_highlight_colorize
-- core: fix buffer overflow in function eval_string_base_encode
 - core: fix memory leak in function util_parse_delay
 - irc: display nick changes and quit messages when option irc.look.ignore_tag_messages is enabled ([#2241](https://github.com/weechat/weechat/issues/2241))
 - perl: fix build when multiplicity is not available ([#2243](https://github.com/weechat/weechat/issues/2243))
@@ -224,11 +234,21 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - relay/weechat: fix empty buffers in client when WeeChat is running on Solaris/illumos
 - build: fix build on Solaris/illumos ([#2251](https://github.com/weechat/weechat/issues/2251))
 
-## Version 4.6.3 (2025-05-11)
+### Security
+
+- **breaking:** core: fix buffer overflow in function utf8_next_char and return NULL for empty string
+- **breaking:** core: fix integer overflow and return "unsigned long" in function util_version_number
+- core: fix integer overflow with decimal numbers in calculation of expression
+- core: fix integer overflow in base32 encoding/decoding
+- core: fix buffer overflow in function util_parse_time
+- core: fix buffer overflow in function eval_syntax_highlight_colorize
+- core: fix buffer overflow in function eval_string_base_encode
+
+## [4.6.3] - 2025-05-11
 
 _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
-### Fixed
+### Security
 
 - core: fix integer overflow with decimal numbers in calculation of expression
 - core: fix integer overflow in base32 encoding/decoding
@@ -239,14 +259,14 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - core: fix buffer overflow in function eval_string_range_chars
 - core: fix memory leak in function util_parse_delay
 
-## Version 4.6.2 (2025-04-18)
+## [4.6.2] - 2025-04-18
 
 ### Fixed
 
 - core: fix write of weechat.log to stdout with `weechat-headless --stdout` ([#2247](https://github.com/weechat/weechat/issues/2247))
 - core: add refresh of window title on buffer switch, when option weechat.look.window_title is set
 
-## Version 4.6.1 (2025-04-09)
+## [4.6.1] - 2025-04-09
 
 ### Fixed
 
@@ -254,18 +274,9 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - irc: display nick changes and quit messages when option irc.look.ignore_tag_messages is enabled ([#2241](https://github.com/weechat/weechat/issues/2241))
 - perl: fix build when multiplicity is not available ([#2243](https://github.com/weechat/weechat/issues/2243))
 
-## Version 4.6.0 (2025-03-23)
+## [4.6.0] - 2025-03-23
 
 _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
-
-### Changed
-
-- core: add option `-v` to display upgrades in command `/version`
-- api: add property `keep_spaces_right` in function hook_set to keep trailing spaces in command arguments
-- core, irc, alias, xfer: keep spaces at the end of some commands, where trailing spaces are important
-- irc: add option `-connected` in command `/server list|listfull`
-- buflist: apply option buflist.look.nick_prefix_empty also on private and list buffers
-- xfer: compute speed and ETA with microsecond precision ([#665](https://github.com/weechat/weechat/issues/665))
 
 ### Added
 
@@ -276,6 +287,15 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - api: add function completion_set
 - relay/api: add resource `POST /api/completion` ([#2207](https://github.com/weechat/weechat/issues/2207))
 - relay/api: add default key `Alt`+`Ctrl`+`l` (L) to toggle between remote and local commands on remote buffers, add option `togglecmd` in command `/remote`, add options relay.api.remote_input_cmd_local and relay.api.remote_input_cmd_remote ([#2148](https://github.com/weechat/weechat/issues/2148))
+
+### Changed
+
+- core: add option `-v` to display upgrades in command `/version`
+- api: add property `keep_spaces_right` in function hook_set to keep trailing spaces in command arguments
+- core, irc, alias, xfer: keep spaces at the end of some commands, where trailing spaces are important
+- irc: add option `-connected` in command `/server list|listfull`
+- buflist: apply option buflist.look.nick_prefix_empty also on private and list buffers
+- xfer: compute speed and ETA with microsecond precision ([#665](https://github.com/weechat/weechat/issues/665))
 
 ### Fixed
 
@@ -288,13 +308,13 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - perl: fix build with Perl < 5.7.29 ([#2219](https://github.com/weechat/weechat/issues/2219), [#2220](https://github.com/weechat/weechat/issues/2220))
 - python: enable subinterpreters ([#2222](https://github.com/weechat/weechat/issues/2222))
 
-## Version 4.5.2 (2025-02-20)
+## [4.5.2] - 2025-02-20
 
 ### Fixed
 
 - core: fix build with gcc 15 ([#2229](https://github.com/weechat/weechat/issues/2229), [#2230](https://github.com/weechat/weechat/issues/2230))
 
-## Version 4.5.1 (2024-12-23)
+## [4.5.1] - 2024-12-23
 
 ### Fixed
 
@@ -304,7 +324,13 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - logger: fix path displayed when the logs directory can not be created
 - perl: fix build with Perl < 5.7.29 ([#2219](https://github.com/weechat/weechat/issues/2219), [#2220](https://github.com/weechat/weechat/issues/2220))
 
-## Version 4.5.0 (2024-12-15)
+## [4.5.0] - 2024-12-15
+
+### Added
+
+- relay: display connection status in input prompt of remote buffers, if not connected or if fetching data from remote
+- irc: add option irc.look.notice_nicks_disable_notify
+- irc: add infos "irc_ptr_server", "irc_ptr_channel" and "irc_ptr_nick"
 
 ### Changed
 
@@ -322,15 +348,8 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - build: require Curl ≥ 7.47.0 ([#2195](https://github.com/weechat/weechat/issues/2195))
 - build: require GnuTLS ≥ 3.3.0 ([#2193](https://github.com/weechat/weechat/issues/2193))
 
-### Added
-
-- relay: display connection status in input prompt of remote buffers, if not connected or if fetching data from remote
-- irc: add option irc.look.notice_nicks_disable_notify
-- irc: add infos "irc_ptr_server", "irc_ptr_channel" and "irc_ptr_nick"
-
 ### Fixed
 
-- core, plugins: fix integer overflow in loops ([#2178](https://github.com/weechat/weechat/issues/2178), [CVE-2024-46613](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2024-46613))
 - irc: decode IRC colors only when displaying messages in buffer, store nick info with IRC colors (host, account, real name)
 - irc: do not strip trailing spaces from incoming IRC messages
 - irc: fix crash on /list buffer when a filter is set ([#2197](https://github.com/weechat/weechat/issues/2197))
@@ -348,7 +367,11 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - core: fix build on Darwin ([#2216](https://github.com/weechat/weechat/issues/2216))
 - core: fix build on Android ([#2180](https://github.com/weechat/weechat/issues/2180))
 
-## Version 4.4.4 (2024-11-30)
+### Security
+
+- core, plugins: fix integer overflow in loops ([#2178](https://github.com/weechat/weechat/issues/2178), [CVE-2024-46613](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2024-46613))
+
+## [4.4.4] - 2024-11-30
 
 ### Fixed
 
@@ -358,7 +381,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - build: fix detection of Ruby on macOS 14, require CMake ≥ 3.18 ([#1156](https://github.com/weechat/weechat/issues/1156))
 - perl: fix crash when unloading Perl scripts with Perl 5.38 ([#2209](https://github.com/weechat/weechat/issues/2209), [#2213](https://github.com/weechat/weechat/issues/2213))
 
-## Version 4.4.3 (2024-10-30)
+## [4.4.3] - 2024-10-30
 
 ### Fixed
 
@@ -366,19 +389,38 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - core: always send the signal "buffer_switch", even when the buffer is opening ([#2198](https://github.com/weechat/weechat/issues/2198))
 - core: fix build on Android ([#2180](https://github.com/weechat/weechat/issues/2180))
 
-## Version 4.4.2 (2024-09-08)
+## [4.4.2] - 2024-09-08
 
-### Fixed
+### Security
 
 - core, plugins: fix integer overflow in loops ([#2178](https://github.com/weechat/weechat/issues/2178), [CVE-2024-46613](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2024-46613))
 
-## Version 4.4.1 (2024-08-19)
+## [4.4.1] - 2024-08-19
 
 ### Fixed
 
 - lua: fix compilation on Fedora with Lua < 5.2.0 ([#2173](https://github.com/weechat/weechat/issues/2173), [#2174](https://github.com/weechat/weechat/issues/2174))
 
-## Version 4.4.0 (2024-08-17)
+## [4.4.0] - 2024-08-17
+
+### Added
+
+- core: add command line option `--build-info` / `-i` to display information about build options ([#449](https://github.com/weechat/weechat/issues/449))
+- irc: add option `-export` in command `/list`, add option irc.look.list_buffer_format_export
+- relay: add option relay.network.websocket_permessage_deflate ([#1549](https://github.com/weechat/weechat/issues/1549))
+- relay: add option relay.look.raw_messages_max_length ([#2122](https://github.com/weechat/weechat/issues/2122))
+- relay: add infos "relay_api_version" and "relay_api_version_number"
+- relay/api: add event "quit", sent to clients when WeeChat is quitting ([#2168](https://github.com/weechat/weechat/issues/2168))
+- script: add info "script_info"
+- core: add hdata count in evaluation of expressions with `hdata_count:name[list]` or `hdata_count:name[pointer]`
+- core: add info "window" ([#2141](https://github.com/weechat/weechat/issues/2141))
+- core: add completion "bars_items"
+- core: add signals "layout_buffers_applied" and "layout_windows_applied" ([#2167](https://github.com/weechat/weechat/issues/2167))
+- core: add signal "buffer_time_for_each_line_changed"
+- api, relay: send new signal "buffer_line_data_changed" when a line is updated in a buffer via hdata, send event "buffer_line_data_changed" to clients of "api" and "weechat" protocols
+- api: add hashtable type "longlong"
+- api: add function line_search_by_id
+- doc: add doc on "api" relay
 
 ### Changed
 
@@ -405,25 +447,6 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - irc: add support of message 569 (whois, connecting from) ([#2162](https://github.com/weechat/weechat/issues/2162))
 - api: allow NULL value for key in hashtable
 - doc: rename doc "weechat_relay_protocol" to "weechat_relay_weechat"
-
-### Added
-
-- core: add command line option `--build-info` / `-i` to display information about build options ([#449](https://github.com/weechat/weechat/issues/449))
-- irc: add option `-export` in command `/list`, add option irc.look.list_buffer_format_export
-- relay: add option relay.network.websocket_permessage_deflate ([#1549](https://github.com/weechat/weechat/issues/1549))
-- relay: add option relay.look.raw_messages_max_length ([#2122](https://github.com/weechat/weechat/issues/2122))
-- relay: add infos "relay_api_version" and "relay_api_version_number"
-- relay/api: add event "quit", sent to clients when WeeChat is quitting ([#2168](https://github.com/weechat/weechat/issues/2168))
-- script: add info "script_info"
-- core: add hdata count in evaluation of expressions with `hdata_count:name[list]` or `hdata_count:name[pointer]`
-- core: add info "window" ([#2141](https://github.com/weechat/weechat/issues/2141))
-- core: add completion "bars_items"
-- core: add signals "layout_buffers_applied" and "layout_windows_applied" ([#2167](https://github.com/weechat/weechat/issues/2167))
-- core: add signal "buffer_time_for_each_line_changed"
-- api, relay: send new signal "buffer_line_data_changed" when a line is updated in a buffer via hdata, send event "buffer_line_data_changed" to clients of "api" and "weechat" protocols
-- api: add hashtable type "longlong"
-- api: add function line_search_by_id
-- doc: add doc on "api" relay
 
 ### Fixed
 
@@ -471,7 +494,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - tests: fix compilation of tests on Fedora 40 ([#2116](https://github.com/weechat/weechat/issues/2116))
 - tests: fix compilation of tests on Rocky 9.4
 
-## Version 4.3.6 (2024-08-15)
+## [4.3.6] - 2024-08-15
 
 ### Fixed
 
@@ -479,13 +502,13 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - relay/api: fix crash when sending data to a remote buffer when the remote has been deleted ([#2157](https://github.com/weechat/weechat/issues/2157))
 - relay/api: fix timezone of dates sent to clients ([#2151](https://github.com/weechat/weechat/issues/2151))
 
-## Version 4.3.5 (2024-07-16)
+## [4.3.5] - 2024-07-16
 
 ### Fixed
 
 - ruby: fix crash in plugin initialization ([#2163](https://github.com/weechat/weechat/issues/2163))
 
-## Version 4.3.4 (2024-07-03)
+## [4.3.4] - 2024-07-03
 
 ### Fixed
 
@@ -494,21 +517,21 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - ruby: fix builtin functions not available ([#2109](https://github.com/weechat/weechat/issues/2109))
 - relay/api: fix "body_type" returned when lines or nicks of a buffer are requested
 
-## Version 4.3.3 (2024-06-22)
+## [4.3.3] - 2024-06-22
 
 ### Fixed
 
 - core, plugins: return "0x0" instead of "(nil)" for pointers formatted in strings
 
-## Version 4.3.2 (2024-06-06)
-
-### Changed
-
-- relay: enable websocket extension "permessage-deflate" with "api" relay only ([#1549](https://github.com/weechat/weechat/issues/1549))
+## [4.3.2] - 2024-06-06
 
 ### Added
 
 - relay: add option relay.look.raw_messages_max_length ([#2122](https://github.com/weechat/weechat/issues/2122))
+
+### Changed
+
+- relay: enable websocket extension "permessage-deflate" with "api" relay only ([#1549](https://github.com/weechat/weechat/issues/1549))
 
 ### Fixed
 
@@ -517,7 +540,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - relay: fix websocket permessage-deflate extension when the client doesn't send the max window bits parameters ([#1549](https://github.com/weechat/weechat/issues/1549))
 - relay: fix allocation and reinit of field "client_context_takeover" in websocket deflate structure ([#1549](https://github.com/weechat/weechat/issues/1549))
 
-## Version 4.3.1 (2024-05-31)
+## [4.3.1] - 2024-05-31
 
 _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
@@ -535,9 +558,31 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - tests: fix compilation of tests on Fedora 40 ([#2116](https://github.com/weechat/weechat/issues/2116))
 - tests: fix compilation of tests on Rocky 9.4
 
-## Version 4.3.0 (2024-05-26)
+## [4.3.0] - 2024-05-26
 
 _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
+
+### Added
+
+- relay: add "api" protocol (HTTP REST API), add options relay.look.display_clients, relay.api.remote_get_lines and relay.network.time_window ([#2066](https://github.com/weechat/weechat/issues/2066))
+- relay: add command `/remote` to connect to remote WeeChat relay servers ([#2066](https://github.com/weechat/weechat/issues/2066))
+- relay: add support of websocket extension "permessage-deflate" ([#1549](https://github.com/weechat/weechat/issues/1549))
+- core, api: add unique identifier "id" in buffer and nicklist (group and nick), add function "hdata_longlong", allow search by buffer id in function buffer_search, allow search by group and nick id in functions nicklist_search_group and nicklist_search_nick ([#2081](https://github.com/weechat/weechat/issues/2081))
+- core: add support of XDG "state" directory ([#2106](https://github.com/weechat/weechat/issues/2106), [#1747](https://github.com/weechat/weechat/issues/1747))
+- core: add support of SGR mouse events ([#2082](https://github.com/weechat/weechat/issues/2082))
+- fset: add option `-import` in command `/fset`
+- core: add option `-s` in command `/command` to execute multiple commands separated by semicolons
+- core: add option `malloc_trim` in command `/sys`
+- core: add option weechat.look.config_permissions ([#2057](https://github.com/weechat/weechat/issues/2057))
+- core: add option weechat.look.highlight_prefix ([#2079](https://github.com/weechat/weechat/issues/2079))
+- core: add option weechat.completion.case_sensitive
+- api: add functions config_option_get_{string|pointer} and config_{boolean|integer|string|color|enum}_inherited in scripting API
+- api: add modifier "color_decode" to decode WeeChat colors with a replacement string
+- api: add support of base64url in encode/decode functions
+- api: add support of specifier `%!` for timestamp in function util_strftimeval
+- api: add info "plugin_loaded"
+- script: add option `enable` in command `/script`
+- script: add info "script_loaded"
 
 ### Changed
 
@@ -563,28 +608,6 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - irc: store lag in channel and private buffers (local variable "lag"), in addition to the server buffer
 - irc: allow range in commands `/unban` and `/unquiet` ([#2113](https://github.com/weechat/weechat/issues/2113))
 - tcl: add support of Tcl 9.0 ([#2075](https://github.com/weechat/weechat/issues/2075))
-
-### Added
-
-- relay: add "api" protocol (HTTP REST API), add options relay.look.display_clients, relay.api.remote_get_lines and relay.network.time_window ([#2066](https://github.com/weechat/weechat/issues/2066))
-- relay: add command `/remote` to connect to remote WeeChat relay servers ([#2066](https://github.com/weechat/weechat/issues/2066))
-- relay: add support of websocket extension "permessage-deflate" ([#1549](https://github.com/weechat/weechat/issues/1549))
-- core, api: add unique identifier "id" in buffer and nicklist (group and nick), add function "hdata_longlong", allow search by buffer id in function buffer_search, allow search by group and nick id in functions nicklist_search_group and nicklist_search_nick ([#2081](https://github.com/weechat/weechat/issues/2081))
-- core: add support of XDG "state" directory ([#2106](https://github.com/weechat/weechat/issues/2106), [#1747](https://github.com/weechat/weechat/issues/1747))
-- core: add support of SGR mouse events ([#2082](https://github.com/weechat/weechat/issues/2082))
-- fset: add option `-import` in command `/fset`
-- core: add option `-s` in command `/command` to execute multiple commands separated by semicolons
-- core: add option `malloc_trim` in command `/sys`
-- core: add option weechat.look.config_permissions ([#2057](https://github.com/weechat/weechat/issues/2057))
-- core: add option weechat.look.highlight_prefix ([#2079](https://github.com/weechat/weechat/issues/2079))
-- core: add option weechat.completion.case_sensitive
-- api: add functions config_option_get_{string|pointer} and config_{boolean|integer|string|color|enum}_inherited in scripting API
-- api: add modifier "color_decode" to decode WeeChat colors with a replacement string
-- api: add support of base64url in encode/decode functions
-- api: add support of specifier `%!` for timestamp in function util_strftimeval
-- api: add info "plugin_loaded"
-- script: add option `enable` in command `/script`
-- script: add info "script_loaded"
 
 ### Fixed
 
@@ -612,7 +635,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - tcl: fix truncation of long integer returned by function hdata_long
 - trigger: fix memory leak when adding a new trigger with `/trigger` command
 
-## Version 4.2.3 (2024-05-31)
+## [4.2.3] - 2024-05-31
 
 ### Fixed
 
@@ -620,7 +643,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - irc: fix crash in split of IRC message containing a newline if the server is not given
 - core, relay: fix include directory of libzstd
 
-## Version 4.2.2 (2024-04-07)
+## [4.2.2] - 2024-04-07
 
 _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
@@ -643,13 +666,13 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 - core: fix tests on function strftimeval on Alpine
 
-## Version 4.2.1 (2024-01-22)
+## [4.2.1] - 2024-01-22
 
 ### Bug fixes
 
 - irc: fix random date displayed when a received message contains tags but no "time" ([#2064](https://github.com/weechat/weechat/issues/2064))
 
-## Version 4.2.0 (2024-01-21)
+## [4.2.0] - 2024-01-21
 
 _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
@@ -720,7 +743,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - core: make libintl.h required if CMake option ENABLE_NLS is enabled ([#2031](https://github.com/weechat/weechat/issues/2031))
 - ruby: add detection of Ruby 3.3
 
-## Version 4.1.3 (2024-01-20)
+## [4.1.3] - 2024-01-20
 
 ### Bug fixes
 
@@ -730,7 +753,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - irc: fix info "irc_is_message_ignored" ([#2059](https://github.com/weechat/weechat/issues/2059))
 - irc: fix display of self messages when the message split fails due to inconsistent max lengths sent by the server in message 005
 
-## Version 4.1.2 (2023-12-03)
+## [4.1.2] - 2023-12-03
 
 ### Bug fixes
 
@@ -744,7 +767,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - relay: close properly connection with the IRC client in case of server disconnection ([#2038](https://github.com/weechat/weechat/issues/2038))
 - ruby: fix use of NULL variable when displaying exception
 
-## Version 4.1.1 (2023-10-26)
+## [4.1.1] - 2023-10-26
 
 _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
@@ -758,7 +781,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 - core: make libintl.h required if CMake option ENABLE_NLS is enabled ([#2031](https://github.com/weechat/weechat/issues/2031))
 
-## Version 4.1.0 (2023-10-15)
+## [4.1.0] - 2023-10-15
 
 _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
@@ -830,7 +853,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - core: fix build error if CMake option ENABLE_NLS is turned to off or if required dependencies are not found ([#2026](https://github.com/weechat/weechat/issues/2026))
 - core, logger, relay: make zstd dependency optional ([#2024](https://github.com/weechat/weechat/issues/2024))
 
-## Version 4.0.8 (2024-01-20)
+## [4.0.8] - 2024-01-20
 
 ### Bug fixes
 
@@ -840,7 +863,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - irc: fix info "irc_is_message_ignored" ([#2059](https://github.com/weechat/weechat/issues/2059))
 - irc: fix display of self messages when the message split fails due to inconsistent max lengths sent by the server in message 005
 
-## Version 4.0.7 (2023-12-03)
+## [4.0.7] - 2023-12-03
 
 ### Bug fixes
 
@@ -854,7 +877,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - relay: close properly connection with the IRC client in case of server disconnection ([#2038](https://github.com/weechat/weechat/issues/2038))
 - ruby: fix use of NULL variable when displaying exception
 
-## Version 4.0.6 (2023-10-26)
+## [4.0.6] - 2023-10-26
 
 _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
@@ -869,7 +892,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 - core: fix build error if CMake option ENABLE_NLS is turned to off or if required dependencies are not found ([#2026](https://github.com/weechat/weechat/issues/2026), [#2031](https://github.com/weechat/weechat/issues/2031))
 
-## Version 4.0.5 (2023-09-24)
+## [4.0.5] - 2023-09-24
 
 ### New features
 
@@ -892,7 +915,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 - irc: add tests on server functions
 
-## Version 4.0.4 (2023-08-22)
+## [4.0.4] - 2023-08-22
 
 ### Bug fixes
 
@@ -912,7 +935,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - irc: fix tests on function irc_join_compare_join_channel ([#1997](https://github.com/weechat/weechat/issues/1997))
 - scripts: fix tests of functions print_date_tag, print_y_date_tags and hook_timer on 32-bit systems ([#1999](https://github.com/weechat/weechat/issues/1999))
 
-## Version 4.0.3 (2023-08-08)
+## [4.0.3] - 2023-08-08
 
 ### Bug fixes
 
@@ -927,7 +950,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 - doc: display a warning if a locale is missing with fallback to English for auto-generated content ([#1985](https://github.com/weechat/weechat/issues/1985))
 
-## Version 4.0.2 (2023-07-12)
+## [4.0.2] - 2023-07-12
 
 ### Bug fixes
 
@@ -946,7 +969,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 - php: fix detection of PHP 8.2 on Alpine 3.18
 
-## Version 4.0.1 (2023-06-30)
+## [4.0.1] - 2023-06-30
 
 _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
@@ -960,7 +983,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - irc: reply to a CTCP request sent to self nick ([#1966](https://github.com/weechat/weechat/issues/1966))
 - irc: sent "QUIT" message to servers connected with TLS on `/upgrade`
 
-## Version 4.0.0 (2023-06-24)
+## [4.0.0] - 2023-06-24
 
 _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
@@ -1094,7 +1117,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - core: add quotes around paths in CMake files ([#29](https://github.com/weechat/weechat/issues/29))
 - doc: convert docgen.py to C, remove autogen files from repository, add parameter `--doc-gen` to `weechat-headless` binary, add CMake option "ENABLE_DOC_INCOMPLETE"
 
-## Version 3.8 (2023-01-08)
+## [3.8] - 2023-01-08
 
 _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
@@ -1153,13 +1176,13 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - ruby: add detection of Ruby 3.2
 - spell: add detection of enchant-2 ([#1859](https://github.com/weechat/weechat/issues/1859))
 
-## Version 3.7.1 (2022-10-21)
+## [3.7.1] - 2022-10-21
 
 ### Bug fixes
 
 - trigger: execute trigger command on appropriate buffer for hooks command, command_run, line, modifier and print ([#1841](https://github.com/weechat/weechat/issues/1841))
 
-## Version 3.7 (2022-10-09)
+## [3.7] - 2022-10-09
 
 _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
@@ -1225,7 +1248,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - scripts: fix run of Guile test script
 - xfer: add tests on file functions
 
-## Version 3.6 (2022-07-10)
+## [3.6] - 2022-07-10
 
 _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
@@ -1253,7 +1276,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - trigger: fix completion of command `/trigger add` when there are spaces in the following arguments
 - trigger: fix memory leak in command `/trigger addinput`
 
-## Version 3.5 (2022-03-27)
+## [3.5] - 2022-03-27
 
 _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
@@ -1299,13 +1322,13 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - debian: change dependency libargon2-0-dev to libargon2-dev ([debian #1005703](https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1005703))
 - ruby: add detection of Ruby 3.1
 
-## Version 3.4.1 (2022-03-13)
+## [3.4.1] - 2022-03-13
 
 ### Bug fixes
 
 - core: set again TLS verification functions after options weechat.network.gnutls_ca_system and weechat.network.gnutls_ca_user are changed ([#1763](https://github.com/weechat/weechat/issues/1763), [CVE-2022-28352](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-28352))
 
-## Version 3.4 (2021-12-18)
+## [3.4] - 2021-12-18
 
 _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
@@ -1349,7 +1372,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - ruby: add detection of Ruby 3.0 ([#1721](https://github.com/weechat/weechat/issues/1721), [#1605](https://github.com/weechat/weechat/issues/1605))
 - core: add targets "changelog" and "rn" to build HTML version of ChangeLog and release notes (CMake build only)
 
-## Version 3.3 (2021-09-19)
+## [3.3] - 2021-09-19
 
 _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
@@ -1405,13 +1428,13 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - lua: add detection of Lua 5.4
 - php: add support of PHP 8.0 and 8.1 ([#1599](https://github.com/weechat/weechat/issues/1599), [#1668](https://github.com/weechat/weechat/issues/1668))
 
-## Version 3.2.1 (2021-09-04)
+## [3.2.1] - 2021-09-04
 
 ### Bug fixes
 
 - relay: fix crash when decoding a malformed websocket frame ([CVE-2021-40516](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-40516))
 
-## Version 3.2 (2021-06-13)
+## [3.2] - 2021-06-13
 
 _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
@@ -1467,7 +1490,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - core: remove build option CA_FILE
 - core: set WeeChat home to empty string by default in CMake and autotools
 
-## Version 3.1 (2021-03-07)
+## [3.1] - 2021-03-07
 
 _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
@@ -1501,7 +1524,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 - do not build weechat-headless man page if headless binary is disabled ([#1607](https://github.com/weechat/weechat/issues/1607))
 
-## Version 3.0.1 (2021-01-31)
+## [3.0.1] - 2021-01-31
 
 ### Bug fixes
 
@@ -1509,7 +1532,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - spell: fix refresh of bar item "spell_suggest" when the input becomes empty ([#1586](https://github.com/weechat/weechat/issues/1586))
 - spell: fix crash with IRC color codes in command line ([#1589](https://github.com/weechat/weechat/issues/1589))
 
-## Version 3.0 (2020-11-11)
+## [3.0] - 2020-11-11
 
 _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
@@ -1547,7 +1570,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - core: disable debug by default in autotools build
 - tests: fix compilation with CppUTest ≥ 4.0
 
-## Version 2.9 (2020-07-18)
+## [2.9] - 2020-07-18
 
 _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
@@ -1634,7 +1657,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - core: fix build with CMake 3.17.0
 - core: fix build with cygport on Cygwin
 
-## Version 2.8 (2020-03-29)
+## [2.8] - 2020-03-29
 
 _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
@@ -1682,7 +1705,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - php: add detection of PHP 7.4
 - ruby: add detection of Ruby 2.7 ([#1455](https://github.com/weechat/weechat/issues/1455))
 
-## Version 2.7.1 (2020-02-20)
+## [2.7.1] - 2020-02-20
 
 ### Bug fixes
 
@@ -1690,7 +1713,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - irc: fix crash when receiving a malformed message 352 (who) ([CVE-2020-9759](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-9759))
 - irc: fix crash when receiving a malformed message 324 (channel mode) ([CVE-2020-8955](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-8955))
 
-## Version 2.7 (2019-12-08)
+## [2.7] - 2019-12-08
 
 _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
@@ -1748,7 +1771,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - guile: add support of Guile 2.2, disable `/guile eval` ([#1098](https://github.com/weechat/weechat/issues/1098))
 - python: add detection of Python 3.8
 
-## Version 2.6 (2019-09-08)
+## [2.6] - 2019-09-08
 
 _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
@@ -1797,7 +1820,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - python: compile with Python 3 by default
 - python: use pkg-config to detect Python ([#1382](https://github.com/weechat/weechat/issues/1382))
 
-## Version 2.5 (2019-06-06)
+## [2.5] - 2019-06-06
 
 _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
@@ -1853,7 +1876,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - ruby: add detection of Ruby 2.6 ([#1346](https://github.com/weechat/weechat/issues/1346))
 - tests: fix compilation of tests on FreeBSD
 
-## Version 2.4 (2019-02-17)
+## [2.4] - 2019-02-17
 
 _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
@@ -1894,7 +1917,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 - core: add C compiler flag "-fsigned--char" to force "char" data type to be always signed ([#1277](https://github.com/weechat/weechat/issues/1277))
 
-## Version 2.3 (2018-10-21)
+## [2.3] - 2018-10-21
 
 ### New features
 
@@ -1930,7 +1953,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 - php: add detection of PHP 7.3
 
-## Version 2.2 (2018-07-14)
+## [2.2] - 2018-07-14
 
 _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
@@ -1999,7 +2022,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - javascript: fix compilation of javascript plugin with autotools on some Linux distributions ([#1208](https://github.com/weechat/weechat/issues/1208))
 - python: add detection of Python 3.7
 
-## Version 2.1 (2018-03-18)
+## [2.1] - 2018-03-18
 
 _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
@@ -2031,14 +2054,14 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 - ruby: add detection of Ruby 2.5 ([#1122](https://github.com/weechat/weechat/issues/1122))
 
-## Version 2.0.1 (2017-12-20)
+## [2.0.1] - 2017-12-20
 
 ### Bug fixes
 
 - python: fix arguments status/gnutls_rc/sock in hook_connect callback
 - python: fix argument fd in hook_fd callback
 
-## Version 2.0 (2017-12-03)
+## [2.0] - 2017-12-03
 
 _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
@@ -2086,7 +2109,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - core: fix build with ncurses and separate tinfo ([bug #41245](https://savannah.nongnu.org/bugs/?41245), [#1090](https://github.com/weechat/weechat/issues/1090))
 - javascript: fix detection of libv8 with autotools on Ubuntu Trusty
 
-## Version 1.9.1 (2017-09-23)
+## [1.9.1] - 2017-09-23
 
 ### Bug fixes
 
@@ -2094,7 +2117,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - logger: call strftime before replacing buffer local variables ([CVE-2017-14727](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-14727))
 - relay: fix send of "PART" command in backlog (irc protocol)
 
-## Version 1.9 (2017-06-25)
+## [1.9] - 2017-06-25
 
 ### New features
 
@@ -2124,7 +2147,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - relay: rebind on address after option relay.network.bind_address is changed
 - relay: fix parsing of CAP command arguments in irc protocol ([#995](https://github.com/weechat/weechat/issues/995))
 
-## Version 1.8 (2017-05-13)
+## [1.8] - 2017-05-13
 
 _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
@@ -2168,13 +2191,13 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - python: add detection of Python 3.6
 - ruby: add detection of Ruby 2.4 ([#895](https://github.com/weechat/weechat/issues/895))
 
-## Version 1.7.1 (2017-04-22)
+## [1.7.1] - 2017-04-22
 
 ### Bug fixes
 
 - irc: fix parsing of DCC filename ([CVE-2017-8073](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-8073))
 
-## Version 1.7 (2017-01-15)
+## [1.7] - 2017-01-15
 
 _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
@@ -2219,7 +2242,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - core: add build of xz package with make dist (CMake)
 - tests: fix compilation of tests on FreeBSD 11.0
 
-## Version 1.6 (2016-10-02)
+## [1.6] - 2016-10-02
 
 _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
@@ -2256,7 +2279,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 - python: add detection of Python 3.5
 
-## Version 1.5 (2016-05-01)
+## [1.5] - 2016-05-01
 
 _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
@@ -2299,7 +2322,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - python: fix detection of Python shared libraries ([#676](https://github.com/weechat/weechat/issues/676))
 - ruby: add detection of Ruby 2.3 ([#698](https://github.com/weechat/weechat/issues/698))
 
-## Version 1.4 (2016-01-10)
+## [1.4] - 2016-01-10
 
 _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
@@ -2357,7 +2380,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - core: add scripts version.sh and build-debian.sh, separate stable from devel Debian packaging
 - ruby: fix Ruby detection when pkg-config is not installed
 
-## Version 1.3 (2015-08-16)
+## [1.3] - 2015-08-16
 
 _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
@@ -2413,7 +2436,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - lua: add detection of Lua 5.3
 - ruby: add detection of Ruby 2.2
 
-## Version 1.2 (2015-05-10)
+## [1.2] - 2015-05-10
 
 _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
@@ -2472,7 +2495,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 - add Russian man page
 
-## Version 1.1.1 (2015-01-25)
+## [1.1.1] - 2015-01-25
 
 ### Bug fixes
 
@@ -2487,7 +2510,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 - core: fix random error when creating symbolic link weechat-curses on make install with CMake ([bug #40313](https://savannah.nongnu.org/bugs/?40313))
 
-## Version 1.1 (2015-01-11)
+## [1.1] - 2015-01-11
 
 _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
@@ -2555,7 +2578,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - python: fix Python detection with Homebrew ([#217](https://github.com/weechat/weechat/issues/217))
 - tests: fix compilation of tests with clang ([#275](https://github.com/weechat/weechat/issues/275))
 
-## Version 1.0.1 (2014-09-28)
+## [1.0.1] - 2014-09-28
 
 ### Bug fixes
 
@@ -2584,7 +2607,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - perl: fix detection of Perl ≥ 5.20 with autotools
 - tests: fix build of tests when the build directory is outside source tree ([#178](https://github.com/weechat/weechat/issues/178))
 
-## Version 1.0 (2014-08-15)
+## [1.0] - 2014-08-15
 
 _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
@@ -2746,7 +2769,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 - core: add unit tests using CppUTest ([#104](https://github.com/weechat/weechat/issues/104))
 
-## Version 0.4.3 (2014-02-09)
+## [0.4.3] - 2014-02-09
 
 _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
@@ -2850,7 +2873,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - lua: fix detection of Lua 5.2 in autotools ([patch #8270](https://savannah.nongnu.org/patch/?8270))
 - ruby: add detection and fix compilation with Ruby 2.0 ([patch #8209](https://savannah.nongnu.org/patch/?8209))
 
-## Version 0.4.2 (2013-10-06)
+## [0.4.2] - 2013-10-06
 
 _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
@@ -2933,7 +2956,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - core: disable build of doc by default, add CMake option "ENABLE_MAN" to compile man page (off by default)
 - xfer: fix compilation on OpenBSD ([bug #39071](https://savannah.nongnu.org/bugs/?39071))
 
-## Version 0.4.1 (2013-05-20)
+## [0.4.1] - 2013-05-20
 
 _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
@@ -3018,7 +3041,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - python: fix detection of Python on Ubuntu Raring
 - script: fix compilation on GNU/Hurd ([patch #7977](https://savannah.nongnu.org/patch/?7977))
 
-## Version 0.4.0 (2013-01-20)
+## [0.4.0] - 2013-01-20
 
 _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
@@ -3106,19 +3129,19 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - guile: fix detection of Guile in configure
 - script: fix compilation on macOS
 
-## Version 0.3.9.2 (2012-11-18)
+## [0.3.9.2] - 2012-11-18
 
 ### Bug fixes
 
 - core: do not call shell to execute command in hook_process (fix security problem when a plugin/script gives untrusted command) ([bug #37764](https://savannah.nongnu.org/bugs/?37764), [CVE-2012-5534](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2012-5534))
 
-## Version 0.3.9.1 (2012-11-09)
+## [0.3.9.1] - 2012-11-09
 
 ### Bug fixes
 
 - irc: fix crash when decoding IRC colors in strings ([bug #37704](https://savannah.nongnu.org/bugs/?37704), [CVE-2012-5854](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2012-5854))
 
-## Version 0.3.9 (2012-09-29)
+## [0.3.9] - 2012-09-29
 
 _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
@@ -3207,7 +3230,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - python: fix detection of Python (first try "python2.x" and then "python") ([bug #36835](https://savannah.nongnu.org/bugs/?36835))
 - ruby: add detection of Ruby 1.9.3
 
-## Version 0.3.8 (2012-06-03)
+## [0.3.8] - 2012-06-03
 
 _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
@@ -3275,7 +3298,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 - perl: fix compilation on macOS ([bug #30701](https://savannah.nongnu.org/bugs/?30701))
 
-## Version 0.3.7 (2012-02-26)
+## [0.3.7] - 2012-02-26
 
 _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
@@ -3360,7 +3383,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - core: fix compilation under OpenBSD 5.0 (lib utf8 not needed anymore) ([bug #34727](https://savannah.nongnu.org/bugs/?34727))
 - core: fix compilation error with "pid_t" on macOS ([bug #34639](https://savannah.nongnu.org/bugs/?34639))
 
-## Version 0.3.6 (2011-10-22)
+## [0.3.6] - 2011-10-22
 
 _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
@@ -3453,7 +3476,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 - core: fix compilation error (INSTALLPREFIX undeclared) on macOS and when compiling with included gettext ([bug #26690](https://savannah.nongnu.org/bugs/?26690))
 
-## Version 0.3.5 (2011-05-15)
+## [0.3.5] - 2011-05-15
 
 _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
@@ -3532,7 +3555,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 - tcl: fix Tcl detection on some 64-bits systems ([bug #32915](https://savannah.nongnu.org/bugs/?32915))
 
-## Version 0.3.4 (2011-01-16)
+## [0.3.4] - 2011-01-16
 
 _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
@@ -3601,7 +3624,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - core: add support of Python 2.7 in CMake and configure ([debian #606989](https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=606989))
 - ruby: fix compilation with Ruby 1.9.2 ([patch #7316](https://savannah.nongnu.org/patch/?7316))
 
-## Version 0.3.3 (2010-08-07)
+## [0.3.3] - 2010-08-07
 
 _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
@@ -3645,7 +3668,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - fifo: fix bug with fifo pipe when setting fifo option to "on"
 - xfer: fix bug with double quotes in DCC filenames ([bug #30471](https://savannah.nongnu.org/bugs/?30471))
 
-## Version 0.3.2 (2010-04-18)
+## [0.3.2] - 2010-04-18
 
 _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
@@ -3713,7 +3736,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 - irc: fix compilation with old GnuTLS versions ([bug #28723](https://savannah.nongnu.org/bugs/?28723))
 
-## Version 0.3.1.1 (2010-01-31)
+## [0.3.1.1] - 2010-01-31
 
 _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
@@ -3727,7 +3750,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 - irc: fix compilation with old GnuTLS versions ([bug #28723](https://savannah.nongnu.org/bugs/?28723))
 
-## Version 0.3.1 (2010-01-23)
+## [0.3.1] - 2010-01-23
 
 _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
@@ -3784,7 +3807,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - core: fix CMake directories: let user customize lib, share, locale and include directories ([patch #6922](https://savannah.nongnu.org/patch/?6922))
 - ruby: add support of Ruby ≥ 1.9.1 ([patch #6989](https://savannah.nongnu.org/patch/?6989))
 
-## Version 0.3.0 (2009-09-06)
+## [0.3.0] - 2009-09-06
 
 _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
@@ -3848,25 +3871,25 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - irc: fix mode parsing when receiving modes with arguments ([bug #26793](https://savannah.nongnu.org/bugs/?26793))
 - scripts: do not auto-load hidden files ([bug #21390](https://savannah.nongnu.org/bugs/?21390))
 
-## Version 0.2.6.3 (2009-06-13)
+## [0.2.6.3] - 2009-06-13
 
 ### Bug fixes
 
 - fix GnuTLS detection (use pkg-config instead of libgnutls-config) ([bug #26790](https://savannah.nongnu.org/bugs/?26790))
 
-## Version 0.2.6.2 (2009-04-18)
+## [0.2.6.2] - 2009-04-18
 
 ### Bug fixes
 
 - fix bug with charset decoding (for example with iso2022jp) ([bug #26228](https://savannah.nongnu.org/bugs/?26228))
 
-## Version 0.2.6.1 (2009-03-14)
+## [0.2.6.1] - 2009-03-14
 
 ### Bug fixes
 
 - fix crash with some special chars in IRC messages ([bug #25862](https://savannah.nongnu.org/bugs/?25862), [CVE-2009-0661](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-0661))
 
-## Version 0.2.6 (2007-09-06)
+## [0.2.6] - 2007-09-06
 
 ### New features
 
@@ -3915,7 +3938,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 - add Swedish quickstart guide
 
-## Version 0.2.5 (2007-06-07)
+## [0.2.5] - 2007-06-07
 
 ### New features
 
@@ -3956,7 +3979,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 - add CMake for weechat compilation ([patch #5943](https://savannah.nongnu.org/patch/?5943))
 
-## Version 0.2.4 (2007-03-29)
+## [0.2.4] - 2007-03-29
 
 ### New features
 
@@ -3991,7 +4014,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 - add Scots quickstart guide
 
-## Version 0.2.3 (2007-01-10)
+## [0.2.3] - 2007-01-10
 
 ### Bug fixes
 
@@ -4004,7 +4027,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 - fix compilation problem with iconv under FreeBSD
 
-## Version 0.2.2 (2007-01-06)
+## [0.2.2] - 2007-01-06
 
 _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
@@ -4050,7 +4073,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - fix iconv detection for BSD ([patch #5456](https://savannah.nongnu.org/patch/?5456))
 - fix typo in configure.in (bash specific test) ([patch #5450](https://savannah.nongnu.org/patch/?5450))
 
-## Version 0.2.1 (2006-10-01)
+## [0.2.1] - 2006-10-01
 
 ### New features
 
@@ -4080,7 +4103,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - fix crashes with `/buffer` and `/charset` commands when not connected to any server ([bug #17525](https://savannah.nongnu.org/bugs/?17525))
 - fix nick refresh problem with unrealircd specific modes: chan owner (~) and chan admin (&) ([bug #17340](https://savannah.nongnu.org/bugs/?17340))
 
-## Version 0.2.0 (2006-08-19)
+## [0.2.0] - 2006-08-19
 
 _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
@@ -4136,7 +4159,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 - add configure option for doc XSL prefix ([bug #16991](https://savannah.nongnu.org/bugs/?16991))
 
-## Version 0.1.9 (2006-05-25)
+## [0.1.9] - 2006-05-25
 
 _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
@@ -4194,7 +4217,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - fix --disable-plugins option in configure script
 - improve Lua detection ([bug #16574](https://savannah.nongnu.org/bugs/?16574))
 
-## Version 0.1.8 (2006-03-18)
+## [0.1.8] - 2006-03-18
 
 _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
@@ -4242,7 +4265,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - fix bug with buffer detection in plugins/scripts commands
 - fix bug with `/history` command
 
-## Version 0.1.7 (2006-01-14)
+## [0.1.7] - 2006-01-14
 
 _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
@@ -4275,7 +4298,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 - replace Texinfo doc by XML Docbook
 
-## Version 0.1.6 (2005-11-11)
+## [0.1.6] - 2005-11-11
 
 _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
@@ -4302,7 +4325,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - fix scroll problem when one line is bigger than screen size
 - fix IRC message parser bug
 
-## Version 0.1.5 (2005-09-24)
+## [0.1.5] - 2005-09-24
 
 ### New features
 
@@ -4328,7 +4351,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - fix look_nicklist_min_size and look_nicklist_max_size options
 - fix refresh bug when changing channel modes
 
-## Version 0.1.4 (2005-07-30)
+## [0.1.4] - 2005-07-30
 
 ### New features
 
@@ -4353,7 +4376,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - fix bug with IRC URL on command line (irc://)
 - fix some curses refreshes
 
-## Version 0.1.3 (2005-07-02)
+## [0.1.3] - 2005-07-02
 
 ### New features
 
@@ -4380,7 +4403,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 - improve Perl/Python libs detection for ./configure script
 
-## Version 0.1.2 (2005-05-21)
+## [0.1.2] - 2005-05-21
 
 ### New features
 
@@ -4401,7 +4424,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 - WeeChat now OK under *BSD and macOS
 
-## Version 0.1.1 (2005-03-20)
+## [0.1.1] - 2005-03-20
 
 ### New features
 
@@ -4431,7 +4454,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - fix `/buffer close` command (now OK when disconnected from server)
 - fix display bugs when many windows are opened
 
-## Version 0.1.0 (2005-02-12)
+## [0.1.0] - 2005-02-12
 
 ### New features
 
@@ -4459,7 +4482,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - fix `/away` command (now OK if not away)
 - logs are now disabled by default (server/channel/private)
 
-## Version 0.0.9 (2005-01-01)
+## [0.0.9] - 2005-01-01
 
 ### New features
 
@@ -4475,7 +4498,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - fix display of nick mode changes
 - fix `/notice` command (and display when received from server)
 
-## Version 0.0.8 (2004-10-30)
+## [0.0.8] - 2004-10-30
 
 ### New features
 
@@ -4497,7 +4520,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - "-MORE-" message is now erased when switching to another buffer
 - `/query` command now reopens private buffer if already opened
 
-## Version 0.0.7 (2004-08-08)
+## [0.0.7] - 2004-08-08
 
 ### New features
 
@@ -4516,7 +4539,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 - replace --enable-debug with --with-debug option for ./configure
 
-## Version 0.0.6 (2004-06-05)
+## [0.0.6] - 2004-06-05
 
 ### New features
 
@@ -4531,7 +4554,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - fix display bug (text was blinking when scrolling)
 - CTCP Version reply is now in English only and doesn't show host (security reason)
 
-## Version 0.0.5 (2004-02-07)
+## [0.0.5] - 2004-02-07
 
 ### New features
 
@@ -4553,7 +4576,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - fix crash when config file cannot be written
 - add highlight on action messages
 
-## Version 0.0.4 (2004-01-01)
+## [0.0.4] - 2004-01-01
 
 ### New features
 
@@ -4569,7 +4592,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 - debug messages can be enabled via ./configure --enable-debug option
 
-## Version 0.0.3 (2003-11-03)
+## [0.0.3] - 2003-11-03
 
 ### New features
 
@@ -4593,7 +4616,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 - add ./configure script to build WeeChat
 
-## Version 0.0.2 (2003-10-05)
+## [0.0.2] - 2003-10-05
 
 ### New features
 
@@ -4612,7 +4635,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - fix nicklist display bug
 - fix crash when sending command which can only be received
 
-## Version 0.0.1 (2003-09-27)
+## [0.0.1] - 2003-09-27
 
 ### New features
 
@@ -4625,3 +4648,136 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - many config options
 - log file (~/.weechat/weechat.log)
 - nicklist can be moved on top, bottom, left or right of window
+
+[Unreleased]: https://github.com/weechat/weechat/compare/v4.9.0...HEAD
+[4.9.3]: https://github.com/weechat/weechat/compare/v4.9.2...v4.9.3
+[4.9.2]: https://github.com/weechat/weechat/compare/v4.9.1...v4.9.2
+[4.9.1]: https://github.com/weechat/weechat/compare/v4.9.0...v4.9.1
+[4.9.0]: https://github.com/weechat/weechat/compare/v4.8.0...v4.9.0
+[4.8.2]: https://github.com/weechat/weechat/compare/v4.8.1...v4.8.2
+[4.8.1]: https://github.com/weechat/weechat/compare/v4.8.0...v4.8.1
+[4.8.0]: https://github.com/weechat/weechat/compare/v4.7.0...v4.8.0
+[4.7.2]: https://github.com/weechat/weechat/compare/v4.7.1...v4.7.2
+[4.7.1]: https://github.com/weechat/weechat/compare/v4.7.0...v4.7.1
+[4.7.0]: https://github.com/weechat/weechat/compare/v4.6.0...v4.7.0
+[4.6.3]: https://github.com/weechat/weechat/compare/v4.6.2...v4.6.3
+[4.6.2]: https://github.com/weechat/weechat/compare/v4.6.1...v4.6.2
+[4.6.1]: https://github.com/weechat/weechat/compare/v4.6.0...v4.6.1
+[4.6.0]: https://github.com/weechat/weechat/compare/v4.5.0...v4.6.0
+[4.5.2]: https://github.com/weechat/weechat/compare/v4.5.1...v4.5.2
+[4.5.1]: https://github.com/weechat/weechat/compare/v4.5.0...v4.5.1
+[4.5.0]: https://github.com/weechat/weechat/compare/v4.4.0...v4.5.0
+[4.4.4]: https://github.com/weechat/weechat/compare/v4.4.3...v4.4.4
+[4.4.3]: https://github.com/weechat/weechat/compare/v4.4.2...v4.4.3
+[4.4.2]: https://github.com/weechat/weechat/compare/v4.4.1...v4.4.2
+[4.4.1]: https://github.com/weechat/weechat/compare/v4.4.0...v4.4.1
+[4.4.0]: https://github.com/weechat/weechat/compare/v4.3.0...v4.4.0
+[4.3.6]: https://github.com/weechat/weechat/compare/v4.3.5...v4.3.6
+[4.3.5]: https://github.com/weechat/weechat/compare/v4.3.4...v4.3.5
+[4.3.4]: https://github.com/weechat/weechat/compare/v4.3.3...v4.3.4
+[4.3.3]: https://github.com/weechat/weechat/compare/v4.3.2...v4.3.3
+[4.3.2]: https://github.com/weechat/weechat/compare/v4.3.1...v4.3.2
+[4.3.1]: https://github.com/weechat/weechat/compare/v4.3.0...v4.3.1
+[4.3.0]: https://github.com/weechat/weechat/compare/v4.2.0...v4.3.0
+[4.2.3]: https://github.com/weechat/weechat/compare/v4.2.2...v4.2.3
+[4.2.2]: https://github.com/weechat/weechat/compare/v4.2.1...v4.2.2
+[4.2.1]: https://github.com/weechat/weechat/compare/v4.2.0...v4.2.1
+[4.2.0]: https://github.com/weechat/weechat/compare/v4.1.0...v4.2.0
+[4.1.3]: https://github.com/weechat/weechat/compare/v4.1.2...v4.1.3
+[4.1.2]: https://github.com/weechat/weechat/compare/v4.1.1...v4.1.2
+[4.1.1]: https://github.com/weechat/weechat/compare/v4.1.0...v4.1.1
+[4.1.0]: https://github.com/weechat/weechat/compare/v4.0.0...v4.1.0
+[4.0.8]: https://github.com/weechat/weechat/compare/v4.0.7...v4.0.8
+[4.0.7]: https://github.com/weechat/weechat/compare/v4.0.6...v4.0.7
+[4.0.6]: https://github.com/weechat/weechat/compare/v4.0.5...v4.0.6
+[4.0.5]: https://github.com/weechat/weechat/compare/v4.0.4...v4.0.5
+[4.0.4]: https://github.com/weechat/weechat/compare/v4.0.3...v4.0.4
+[4.0.3]: https://github.com/weechat/weechat/compare/v4.0.2...v4.0.3
+[4.0.2]: https://github.com/weechat/weechat/compare/v4.0.1...v4.0.2
+[4.0.1]: https://github.com/weechat/weechat/compare/v4.0.0...v4.0.1
+[4.0.0]: https://github.com/weechat/weechat/compare/v3.8...v4.0.0
+[3.8]: https://github.com/weechat/weechat/compare/v3.7...v3.8
+[3.7.1]: https://github.com/weechat/weechat/compare/v3.7...v3.7.1
+[3.7]: https://github.com/weechat/weechat/compare/v3.6...v3.7
+[3.6]: https://github.com/weechat/weechat/compare/v3.5...v3.6
+[3.5]: https://github.com/weechat/weechat/compare/v3.4...v3.5
+[3.4.1]: https://github.com/weechat/weechat/compare/v3.4...v3.4.1
+[3.4]: https://github.com/weechat/weechat/compare/v3.3...v3.4
+[3.3]: https://github.com/weechat/weechat/compare/v3.2...v3.3
+[3.2.1]: https://github.com/weechat/weechat/compare/v3.2...v3.2.1
+[3.2]: https://github.com/weechat/weechat/compare/v3.1...v3.2
+[3.1]: https://github.com/weechat/weechat/compare/v3.0...v3.1
+[3.0.1]: https://github.com/weechat/weechat/compare/v3.0...v3.0.1
+[3.0]: https://github.com/weechat/weechat/compare/v2.9...v3.0
+[2.9]: https://github.com/weechat/weechat/compare/v2.8...v2.9
+[2.8]: https://github.com/weechat/weechat/compare/v2.7...v2.8
+[2.7.1]: https://github.com/weechat/weechat/compare/v2.7...v2.7.1
+[2.7]: https://github.com/weechat/weechat/compare/v2.6...v2.7
+[2.6]: https://github.com/weechat/weechat/compare/v2.5...v2.6
+[2.5]: https://github.com/weechat/weechat/compare/v2.4...v2.5
+[2.4]: https://github.com/weechat/weechat/compare/v2.3...v2.4
+[2.3]: https://github.com/weechat/weechat/compare/v2.2...v2.3
+[2.2]: https://github.com/weechat/weechat/compare/v2.1...v2.2
+[2.1]: https://github.com/weechat/weechat/compare/v2.0...v2.1
+[2.0.1]: https://github.com/weechat/weechat/compare/v2.0...v2.0.1
+[2.0]: https://github.com/weechat/weechat/compare/v1.9...v2.0
+[1.9.1]: https://github.com/weechat/weechat/compare/v1.9...v1.9.1
+[1.9]: https://github.com/weechat/weechat/compare/v1.8...v1.9
+[1.8]: https://github.com/weechat/weechat/compare/v1.7...v1.8
+[1.7.1]: https://github.com/weechat/weechat/compare/v1.7...v1.7.1
+[1.7]: https://github.com/weechat/weechat/compare/v1.6...v1.7
+[1.6]: https://github.com/weechat/weechat/compare/v1.5...v1.6
+[1.5]: https://github.com/weechat/weechat/compare/v1.4...v1.5
+[1.4]: https://github.com/weechat/weechat/compare/v1.3...v1.4
+[1.3]: https://github.com/weechat/weechat/compare/v1.2...v1.3
+[1.2]: https://github.com/weechat/weechat/compare/v1.1...v1.2
+[1.1.1]: https://github.com/weechat/weechat/compare/v1.1...v1.1.1
+[1.1]: https://github.com/weechat/weechat/compare/v1.0...v1.1
+[1.0.1]: https://github.com/weechat/weechat/compare/v1.0...v1.0.1
+[1.0]: https://github.com/weechat/weechat/compare/v0.4.3...v1.0
+[0.4.3]: https://github.com/weechat/weechat/compare/v0.4.2...v0.4.3
+[0.4.2]: https://github.com/weechat/weechat/compare/v0.4.1...v0.4.2
+[0.4.1]: https://github.com/weechat/weechat/compare/v0.4.0...v0.4.1
+[0.4.0]: https://github.com/weechat/weechat/compare/v0.3.9...v0.4.0
+[0.3.9.2]: https://github.com/weechat/weechat/compare/v0.3.9.1...v0.3.9.2
+[0.3.9.1]: https://github.com/weechat/weechat/compare/v0.3.9...v0.3.9.1
+[0.3.9]: https://github.com/weechat/weechat/compare/v0.3.8...v0.3.9
+[0.3.8]: https://github.com/weechat/weechat/compare/v0.3.7...v0.3.8
+[0.3.7]: https://github.com/weechat/weechat/compare/v0.3.6...v0.3.7
+[0.3.6]: https://github.com/weechat/weechat/compare/v0.3.5...v0.3.6
+[0.3.5]: https://github.com/weechat/weechat/compare/v0.3.4...v0.3.5
+[0.3.4]: https://github.com/weechat/weechat/compare/v0.3.3...v0.3.4
+[0.3.3]: https://github.com/weechat/weechat/compare/v0.3.2...v0.3.3
+[0.3.2]: https://github.com/weechat/weechat/compare/v0.3.1...v0.3.2
+[0.3.1.1]: https://github.com/weechat/weechat/compare/v0.3.1...v0.3.1.1
+[0.3.1]: https://github.com/weechat/weechat/compare/v0.3.0...v0.3.1
+[0.3.0]: https://github.com/weechat/weechat/compare/v0.2.6...v0.3.0
+[0.2.6.3]: https://github.com/weechat/weechat/compare/v0.2.6.2...v0.2.6.3
+[0.2.6.2]: https://github.com/weechat/weechat/compare/v0.2.6.1...v0.2.6.2
+[0.2.6.1]: https://github.com/weechat/weechat/compare/v0.2.6...v0.2.6.1
+[0.2.6]: https://github.com/weechat/weechat/compare/v0.2.5...v0.2.6
+[0.2.5]: https://github.com/weechat/weechat/compare/v0.2.4...v0.2.5
+[0.2.4]: https://github.com/weechat/weechat/compare/v0.2.3...v0.2.4
+[0.2.3]: https://github.com/weechat/weechat/compare/v0.2.2...v0.2.3
+[0.2.2]: https://github.com/weechat/weechat/compare/v0.2.1...v0.2.2
+[0.2.1]: https://github.com/weechat/weechat/compare/v0.2.0...v0.2.1
+[0.2.0]: https://github.com/weechat/weechat/compare/v0.1.9...v0.2.0
+[0.1.9]: https://github.com/weechat/weechat/compare/v0.1.8...v0.1.9
+[0.1.8]: https://github.com/weechat/weechat/compare/v0.1.7...v0.1.8
+[0.1.7]: https://github.com/weechat/weechat/compare/v0.1.6...v0.1.7
+[0.1.6]: https://github.com/weechat/weechat/compare/v0.1.5...v0.1.6
+[0.1.5]: https://github.com/weechat/weechat/compare/v0.1.4...v0.1.5
+[0.1.4]: https://github.com/weechat/weechat/compare/v0.1.3...v0.1.4
+[0.1.3]: https://github.com/weechat/weechat/compare/v0.1.2...v0.1.3
+[0.1.2]: https://github.com/weechat/weechat/compare/v0.1.1...v0.1.2
+[0.1.1]: https://github.com/weechat/weechat/compare/v0.1.0...v0.1.1
+[0.1.0]: https://github.com/weechat/weechat/compare/v0.0.9...v0.1.0
+[0.0.9]: https://github.com/weechat/weechat/compare/v0.0.8...v0.0.9
+[0.0.8]: https://github.com/weechat/weechat/compare/v0.0.7...v0.0.8
+[0.0.7]: https://github.com/weechat/weechat/compare/v0.0.6...v0.0.7
+[0.0.6]: https://github.com/weechat/weechat/compare/v0.0.5...v0.0.6
+[0.0.5]: https://github.com/weechat/weechat/compare/v0.0.4...v0.0.5
+[0.0.4]: https://github.com/weechat/weechat/compare/v0.0.3...v0.0.4
+[0.0.3]: https://github.com/weechat/weechat/compare/v0.0.2...v0.0.3
+[0.0.2]: https://github.com/weechat/weechat/compare/v0.0.1...v0.0.2
+[0.0.1]: https://weechat.org/files/doc/weechat/ChangeLog-0.0.1.html
