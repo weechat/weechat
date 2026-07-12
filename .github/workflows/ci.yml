@@ -127,7 +127,7 @@ jobs:
 
     steps:
 
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v7
 
     - name: Install dependencies
       run: |
@@ -209,7 +209,7 @@ jobs:
 
     steps:
 
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v7
 
     - name: Install dependencies
       run: |
@@ -287,7 +287,7 @@ jobs:
 
     steps:
 
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v7
 
     - name: Install dependencies
       run: dnf install -y ${{ env.WEECHAT_DEPS_REDHAT }}
@@ -333,7 +333,7 @@ jobs:
 
     steps:
 
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v7
 
     - name: Install dependencies
       run: |
@@ -382,7 +382,7 @@ jobs:
 
     steps:
 
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v7
 
     - name: Install dependencies, build and run tests, run WeeChat
       uses: vmactions/freebsd-vm@v1
@@ -434,7 +434,7 @@ jobs:
         brew update
         brew install ${{ env.WEECHAT_DEPS_MACOS }}
 
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v7
 
     - name: Build
       env:
@@ -467,7 +467,7 @@ jobs:
 
     steps:
 
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v7
 
     - name: Install dependencies
       run: |
@@ -510,7 +510,7 @@ jobs:
     steps:
 
     - name: Checkout repository
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
 
     - name: Install dependencies
       run: |
