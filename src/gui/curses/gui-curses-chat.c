@@ -213,6 +213,11 @@ gui_chat_display_horizontal_line (struct t_gui_window *window, int simulate)
         if (!read_marker_string || !read_marker_string[0])
             read_marker_string = default_string;
         size_on_screen = utf8_strlen_screen (read_marker_string);
+        if (size_on_screen <= 0)
+        {
+            read_marker_string = default_string;
+            size_on_screen = utf8_strlen_screen (read_marker_string);
+        }
         gui_window_set_weechat_color (GUI_WINDOW_OBJECTS(window)->win_chat,
                                       GUI_COLOR_CHAT_READ_MARKER);
         gui_chat_clrtoeol (window);
