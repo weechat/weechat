@@ -6,6 +6,12 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 # WeeChat ChangeLog
 
+## Version 4.9.4 (under dev)
+
+### Fixed
+
+- core: fix integer overflow in size calculation when evaluating "${hide:...}" and "${base_encode:...}" ([#2335](https://github.com/weechat/weechat/issues/2335))
+
 ## Version 4.9.3 (2026-07-05)
 
 ### Fixed
