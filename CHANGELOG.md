@@ -42,6 +42,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### Security
 
+- core: fix integer overflow in size calculation when evaluating "${hide:...}" and "${base_encode:...}" ([#2335](https://github.com/weechat/weechat/issues/2335))
 - core: fix possible buffer overflow in command /color alias ([#2330](https://github.com/weechat/weechat/issues/2330))
 - core: fix possible buffer overflow in list of commands displayed by /help ([#2330](https://github.com/weechat/weechat/issues/2330))
 - irc: limit size of data received from the server to prevent memory exhaustion
