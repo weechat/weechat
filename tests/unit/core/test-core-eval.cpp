@@ -633,6 +633,29 @@ TEST(CoreEval, EvalExpression)
     WEE_CHECK_EVAL("********", "${hide:*,password}");
     WEE_CHECK_EVAL("\u2603\u2603\u2603", "${hide:${esc:\u2603},abc}");
 
+    /*
+     * hidden chars: the product (hide char length * number of chars) must not
+     * overflow the size of the allocated output (would corrupt the heap)
+     */
+    {
+        int big = 65536;
+        char *expr = (char *)malloc ((big * 2) + 16);
+        char *pos = expr;
+        memcpy (pos, "${hide:", 7);
+        pos += 7;
+        memset (pos, 'x', big);
+        pos += big;
+        *pos++ = ',';
+        memset (pos, 'y', big);
+        pos += big;
+        *pos++ = '}';
+        *pos = '\0';
+        value = eval_expression (expr, pointers, extra_vars, options);
+        STRCMP_EQUAL("", value);
+        free (value);
+        free (expr);
+    }
+
     /* test cut of chars (invalid values) */
     WEE_CHECK_EVAL("", "${cut:}");
     WEE_CHECK_EVAL("", "${cut:0,}");
