@@ -591,6 +591,7 @@ gui_chat_display_word (struct t_gui_window *window,
 {
     char *data, *ptr_data, *end_line, saved_char;
     int chars_displayed, pos_saved_char, chars_to_display, num_displayed;
+    int chars_remaining;
 
     chars_displayed = 0;
 
@@ -613,6 +614,7 @@ gui_chat_display_word (struct t_gui_window *window,
         word_end = NULL;
 
     ptr_data = data;
+    chars_remaining = gui_chat_strlen_screen (ptr_data);
     while (ptr_data && ptr_data[0])
     {
         chars_displayed += gui_chat_display_prefix_suffix (
@@ -626,7 +628,7 @@ gui_chat_display_word (struct t_gui_window *window,
             apply_style_inactive,
             nick_offline);
 
-        chars_to_display = gui_chat_strlen_screen (ptr_data);
+        chars_to_display = chars_remaining;
 
         /* too long for current line */
         if (window->win_chat_cursor_x + chars_to_display > gui_chat_get_real_width (window))
@@ -652,6 +654,7 @@ gui_chat_display_word (struct t_gui_window *window,
                                                               apply_style_inactive,
                                                               nick_offline);
             }
+            chars_remaining -= gui_chat_strlen_screen (ptr_data);
             ptr_data[pos_saved_char] = saved_char;
             if (pos_saved_char == 0)
                 break;
@@ -678,6 +681,7 @@ gui_chat_display_word (struct t_gui_window *window,
             }
             if (!ptr_data[0])
                 break;
+            chars_remaining = 0;
             ptr_data += strlen (ptr_data);
         }
 
