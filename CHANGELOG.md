@@ -8,6 +8,10 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 ## Version 4.9.4 (under dev)
 
+### Changed
+
+- core: improve speed of display of long words in chat area ([#2336](https://github.com/weechat/weechat/issues/2336))
+
 ### Fixed
 
 - core: fix integer overflow in size calculation when evaluating "${hide:...}" and "${base_encode:...}" ([#2335](https://github.com/weechat/weechat/issues/2335))
