@@ -228,6 +228,15 @@ upgrade_file_new (const char *filename,
             return NULL;
         }
 
+        /*
+         * use a bigger stdio buffer than the default: upgrade files are
+         * read/written as a huge number of small (per-field) fread/fwrite
+         * calls, so a small buffer means many more underlying syscalls
+         * than necessary; failure to set it is not fatal, default
+         * buffering is still correct, just slower
+         */
+        setvbuf (new_upgrade_file->file, NULL, _IOFBF, UPGRADE_FILE_BUFFER_SIZE);
+
         /* change permissions if write mode */
         if (!callback_read)
         {
