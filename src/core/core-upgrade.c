@@ -682,7 +682,7 @@ upgrade_weechat_read_buffer_line (struct t_infolist *infolist)
             if (new_line)
             {
                 new_line->data->id = infolist_integer (infolist, "id");
-                gui_line_add (new_line);
+                gui_line_add (new_line, 0);
                 if (infolist_integer (infolist, "last_read_line"))
                     upgrade_current_buffer->lines->last_read_line = new_line;
             }

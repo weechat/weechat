@@ -1079,7 +1079,7 @@ gui_chat_printf_datetime_tags_internal (struct t_gui_buffer *buffer,
     }
 
     /* add line in the buffer */
-    gui_line_add (new_line);
+    gui_line_add (new_line, 1);
 
     /* run hook_print for the new line */
     if (new_line->data->buffer && new_line->data->buffer->print_hooks_enabled)
