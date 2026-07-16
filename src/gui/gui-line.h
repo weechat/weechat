@@ -138,7 +138,8 @@ extern struct t_gui_line *gui_line_new (struct t_gui_buffer *buffer,
                                         const char *tags,
                                         const char *prefix,
                                         const char *message,
-                                        int known_highlight);
+                                        int known_highlight,
+                                        const char *known_str_time);
 extern void gui_line_hook_update (struct t_gui_line *line,
                                   struct t_hashtable *hashtable,
                                   struct t_hashtable *hashtable2);
