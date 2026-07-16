@@ -659,6 +659,32 @@ upgrade_weechat_read_buffer_line (struct t_infolist *infolist)
     switch (upgrade_current_buffer->type)
     {
         case GUI_BUFFER_TYPE_FORMATTED:
+        {
+            int id, date_usec, date_usec_printed, highlight, last_read_line;
+            time_t date, date_printed;
+            const char *tags, *prefix, *message, *str_time;
+
+            /*
+             * read the fields in the same order they were written by
+             * gui_line_add_to_infolist(), so that the infolist lookup
+             * cursor (see infolist_item_search_var() in core-infolist.c)
+             * can advance forward through the item's variables instead of
+             * wrapping around to search backwards for every other field;
+             * this also makes the read order deterministic, since C does
+             * not guarantee the evaluation order of function arguments
+             */
+            id = infolist_integer (infolist, "id");
+            date = infolist_time (infolist, "date");
+            date_usec = infolist_integer (infolist, "date_usec");
+            date_printed = infolist_time (infolist, "date_printed");
+            date_usec_printed = infolist_integer (infolist, "date_usec_printed");
+            str_time = infolist_string (infolist, "str_time");
+            tags = infolist_string (infolist, "tags");
+            highlight = infolist_integer (infolist, "highlight");
+            prefix = infolist_string (infolist, "prefix");
+            message = infolist_string (infolist, "message");
+            last_read_line = infolist_integer (infolist, "last_read_line");
+
             /*
              * pass the saved highlight state directly (known_highlight)
              * instead of letting gui_line_new() run its regex-based
@@ -673,23 +699,18 @@ upgrade_weechat_read_buffer_line (struct t_infolist *infolist)
             new_line = gui_line_new (
                 upgrade_current_buffer,
                 -1,
-                infolist_time (infolist, "date"),
-                infolist_integer (infolist, "date_usec"),
-                infolist_time (infolist, "date_printed"),
-                infolist_integer (infolist, "date_usec_printed"),
-                infolist_string (infolist, "tags"),
-                infolist_string (infolist, "prefix"),
-                infolist_string (infolist, "message"),
-                infolist_integer (infolist, "highlight"),
-                infolist_string (infolist, "str_time"));
+                date, date_usec, date_printed, date_usec_printed,
+                tags, prefix, message,
+                highlight, str_time);
             if (new_line)
             {
-                new_line->data->id = infolist_integer (infolist, "id");
+                new_line->data->id = id;
                 gui_line_add (new_line, 0);
-                if (infolist_integer (infolist, "last_read_line"))
+                if (last_read_line)
                     upgrade_current_buffer->lines->last_read_line = new_line;
             }
             break;
+        }
         case GUI_BUFFER_TYPE_FREE:
             new_line = gui_line_new (
                 upgrade_current_buffer,
