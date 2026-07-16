@@ -1578,6 +1578,11 @@ gui_line_set_highlight (struct t_gui_line *line, int max_notify_level)
  * knows the highlight state (e.g. when restoring a line from an upgrade
  * file, where the value was saved) and the regex-based detection in
  * gui_line_set_highlight() must be skipped.
+ *
+ * "known_str_time" is NULL if the time string is not known yet and must be
+ * computed (the normal case), or a previously computed string (e.g. when
+ * restoring a line from an upgrade file, where the value was saved) so that
+ * gui_chat_get_time_string() does not have to recompute/recolorize it.
  */
 
 struct t_gui_line *
@@ -1586,7 +1591,7 @@ gui_line_new (struct t_gui_buffer *buffer, int y,
               time_t date_printed, int date_usec_printed,
               const char *tags,
               const char *prefix, const char *message,
-              int known_highlight)
+              int known_highlight, const char *known_str_time)
 {
     struct t_gui_line *new_line;
     struct t_gui_line_data *new_line_data;
@@ -1644,8 +1649,10 @@ gui_line_new (struct t_gui_buffer *buffer, int y,
             gui_line_set_highlight (new_line, max_notify_level);
         if (new_line->data->highlight && (new_line->data->notify_level >= 0))
             new_line->data->notify_level = GUI_HOTLIST_HIGHLIGHT;
-        new_line->data->str_time = gui_chat_get_time_string (
-            date, date_usec, new_line->data->highlight);
+        new_line->data->str_time = (known_str_time) ?
+            strdup (known_str_time) :
+            gui_chat_get_time_string (date, date_usec,
+                                      new_line->data->highlight);
     }
     else
     {

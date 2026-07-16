@@ -42,7 +42,7 @@ extern "C"
 
 #define WEE_BUILD_STR_PREFIX_MSG(__result, __prefix, __message)         \
     line = gui_line_new (gui_buffers, -1, 0, 0, 0, 0, "tag1,tag2",      \
-                         __prefix, __message, -1);                      \
+                         __prefix, __message, -1, NULL);                \
     str = gui_line_build_string_prefix_message (line->data->prefix,     \
                                                 line->data->message);   \
     STRCMP_EQUAL(__result, str);                                        \
@@ -52,7 +52,7 @@ extern "C"
 
 #define WEE_BUILD_STR_MSG_TAGS(__tags, __message, __colors)             \
     line = gui_line_new (gui_buffers, -1, 0, 0, 0, 0, __tags,           \
-                         NULL, __message, -1);                          \
+                         NULL, __message, -1, NULL);                    \
     str = gui_line_build_string_message_tags (line->data->message,      \
                                               line->data->tags_count,   \
                                               line->data->tags_array,   \
@@ -247,7 +247,7 @@ TEST(GuiLine, BuildStringMessageTags)
     struct t_gui_line *line;
     char *str, str_message[256], str_result[256];
 
-    line = gui_line_new (gui_buffers, -1, 0, 0, 0, 0, "tag1,tag2", NULL, "test", -1);
+    line = gui_line_new (gui_buffers, -1, 0, 0, 0, 0, "tag1,tag2", NULL, "test", -1, NULL);
     STRCMP_EQUAL(NULL,
                  gui_line_build_string_message_tags (line->data->message,
                                                      -1,
@@ -914,7 +914,7 @@ TEST(GuiLine, New)
                        NULL, 0,
                        date.tv_sec, date.tv_usec,
                        date_printed.tv_sec, date_printed.tv_usec,
-                       NULL, NULL, NULL, -1));
+                       NULL, NULL, NULL, -1, NULL));
 
     /* create a new test buffer (formatted content) */
     buffer = gui_buffer_new_user ("test", GUI_BUFFER_TYPE_FORMATTED);
@@ -924,7 +924,7 @@ TEST(GuiLine, New)
                           0,
                           date.tv_sec, date.tv_usec,
                           date_printed.tv_sec, date_printed.tv_usec,
-                          NULL, NULL, NULL, -1);
+                          NULL, NULL, NULL, -1, NULL);
     CHECK(line1);
     CHECK(line1->data);
     POINTERS_EQUAL(NULL, line1->prev_line);
@@ -955,7 +955,7 @@ TEST(GuiLine, New)
                           date.tv_sec, date.tv_usec,
                           date_printed.tv_sec, date_printed.tv_usec,
                           "tag1,tag2,tag3",
-                          "prefix", "message", -1);
+                          "prefix", "message", -1, NULL);
     CHECK(line2);
     CHECK(line2->data);
     POINTERS_EQUAL(NULL, line2->prev_line);
@@ -990,14 +990,14 @@ TEST(GuiLine, New)
                           0,
                           date.tv_sec, date.tv_usec,
                           date_printed.tv_sec, date_printed.tv_usec,
-                          NULL, NULL, "test", -1);
+                          NULL, NULL, "test", -1, NULL);
     CHECK(line3);
     LONGS_EQUAL(INT_MAX, line3->data->id);
     line4 = gui_line_new (buffer,
                           0,
                           date.tv_sec, date.tv_usec,
                           date_printed.tv_sec, date_printed.tv_usec,
-                          NULL, NULL, "test", -1);
+                          NULL, NULL, "test", -1, NULL);
     CHECK(line4);
     LONGS_EQUAL(0, line4->data->id);
 
@@ -1011,7 +1011,7 @@ TEST(GuiLine, New)
                           0,
                           date.tv_sec, date.tv_usec,
                           date_printed.tv_sec, date_printed.tv_usec,
-                          NULL, NULL, NULL, -1);
+                          NULL, NULL, NULL, -1, NULL);
     CHECK(line1);
     CHECK(line1->data);
     POINTERS_EQUAL(NULL, line1->prev_line);
@@ -1042,7 +1042,7 @@ TEST(GuiLine, New)
                           date.tv_sec, date.tv_usec,
                           date_printed.tv_sec, date_printed.tv_usec,
                           "tag1,tag2,tag3",
-                          NULL, "message", -1);
+                          NULL, "message", -1, NULL);
     CHECK(line2);
     CHECK(line2->data);
     POINTERS_EQUAL(NULL, line2->prev_line);

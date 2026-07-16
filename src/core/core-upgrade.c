@@ -666,7 +666,9 @@ upgrade_weechat_read_buffer_line (struct t_infolist *infolist)
              * saved value right below anyway, so computing it would be
              * wasted work (and, before this fix, left str_time colorized
              * for the wrong highlight state, since it was never
-             * recomputed after the overwrite)
+             * recomputed after the overwrite); for the same reason, pass
+             * the saved time string directly (known_str_time) instead of
+             * letting gui_line_new() recompute/recolorize it
              */
             new_line = gui_line_new (
                 upgrade_current_buffer,
@@ -678,7 +680,8 @@ upgrade_weechat_read_buffer_line (struct t_infolist *infolist)
                 infolist_string (infolist, "tags"),
                 infolist_string (infolist, "prefix"),
                 infolist_string (infolist, "message"),
-                infolist_integer (infolist, "highlight"));
+                infolist_integer (infolist, "highlight"),
+                infolist_string (infolist, "str_time"));
             if (new_line)
             {
                 new_line->data->id = infolist_integer (infolist, "id");
@@ -698,7 +701,7 @@ upgrade_weechat_read_buffer_line (struct t_infolist *infolist)
                 infolist_string (infolist, "tags"),
                 NULL,
                 infolist_string (infolist, "message"),
-                -1);
+                -1, NULL);
             if (new_line)
             {
                 new_line->data->id = infolist_integer (infolist, "id");
