@@ -31,6 +31,7 @@ extern "C"
 #include <time.h>
 #include <sys/time.h>
 #include "src/core/core-config.h"
+#include "src/core/core-config-file.h"
 #include "src/core/core-string.h"
 #include "src/gui/gui-buffer.h"
 #include "src/gui/gui-chat.h"
@@ -946,7 +947,7 @@ TEST(GuiLine, New)
     STRCMP_EQUAL("", line1->data->prefix);
     LONGS_EQUAL(0, line1->data->prefix_length);
     STRCMP_EQUAL("", line1->data->message);
-    gui_line_add (line1);
+    gui_line_add (line1, 1);
     POINTERS_EQUAL(NULL, line1->prev_line);
     POINTERS_EQUAL(NULL, line1->next_line);
 
@@ -980,7 +981,7 @@ TEST(GuiLine, New)
     STRCMP_EQUAL("prefix", line2->data->prefix);
     LONGS_EQUAL(6, line2->data->prefix_length);
     STRCMP_EQUAL("message", line2->data->message);
-    gui_line_add (line2);
+    gui_line_add (line2, 1);
     POINTERS_EQUAL(line1, line2->prev_line);
     POINTERS_EQUAL(NULL, line2->next_line);
 
@@ -1033,7 +1034,7 @@ TEST(GuiLine, New)
     STRCMP_EQUAL(NULL, line1->data->prefix);
     LONGS_EQUAL(0, line1->data->prefix_length);
     STRCMP_EQUAL("", line1->data->message);
-    gui_line_add (line1);
+    gui_line_add (line1, 1);
     POINTERS_EQUAL(NULL, line1->prev_line);
     POINTERS_EQUAL(NULL, line1->next_line);
 
@@ -1067,7 +1068,7 @@ TEST(GuiLine, New)
     STRCMP_EQUAL(NULL, line2->data->prefix);
     LONGS_EQUAL(0, line2->data->prefix_length);
     STRCMP_EQUAL("message", line2->data->message);
-    gui_line_add (line2);
+    gui_line_add (line2, 1);
     CHECK(line2->prev_line);
     POINTERS_EQUAL(NULL, line2->next_line);
 
@@ -1093,7 +1094,199 @@ TEST(GuiLine, HookUpdate)
 
 TEST(GuiLine, Add)
 {
-    /* TODO: write tests */
+    struct t_gui_buffer *buffer;
+    struct t_gui_line *line1, *line2, *line3;
+    struct timeval date_printed, date;
+
+    gettimeofday (&date_printed, NULL);
+    date.tv_sec = date_printed.tv_sec;
+    date.tv_usec = date_printed.tv_usec;
+
+    /* make the hotlist "add conditions" always true for this test */
+    config_file_option_set (config_look_hotlist_add_conditions, "1", 1);
+
+    buffer = gui_buffer_new_user ("test_add", GUI_BUFFER_TYPE_FORMATTED);
+    CHECK(buffer);
+
+    gui_hotlist_clear (GUI_HOTLIST_MASK_MAX);
+    POINTERS_EQUAL(NULL, gui_hotlist);
+
+    /* the buffer has no line yet */
+    POINTERS_EQUAL(NULL, buffer->own_lines->first_line);
+    POINTERS_EQUAL(NULL, buffer->own_lines->last_line);
+    LONGS_EQUAL(0, buffer->own_lines->lines_count);
+
+    /*
+     * add a first line with notify level "none" (not added to the hotlist):
+     * it becomes both the first and the last line of the buffer
+     */
+    line1 = gui_line_new (buffer, -1,
+                          date.tv_sec, date.tv_usec,
+                          date_printed.tv_sec, date_printed.tv_usec,
+                          "notify_none", "prefix", "message1", 0);
+    CHECK(line1);
+    LONGS_EQUAL(-1, line1->data->notify_level);
+    gui_line_add (line1, 1);
+    POINTERS_EQUAL(line1, buffer->own_lines->first_line);
+    POINTERS_EQUAL(line1, buffer->own_lines->last_line);
+    LONGS_EQUAL(1, buffer->own_lines->lines_count);
+    POINTERS_EQUAL(NULL, line1->prev_line);
+    POINTERS_EQUAL(NULL, line1->next_line);
+    POINTERS_EQUAL(NULL, gui_hotlist);
+
+    /* add a second line: it is appended after the first one */
+    line2 = gui_line_new (buffer, -1,
+                          date.tv_sec, date.tv_usec,
+                          date_printed.tv_sec, date_printed.tv_usec,
+                          "notify_none", "prefix", "message2", 0);
+    CHECK(line2);
+    gui_line_add (line2, 1);
+    POINTERS_EQUAL(line1, buffer->own_lines->first_line);
+    POINTERS_EQUAL(line2, buffer->own_lines->last_line);
+    LONGS_EQUAL(2, buffer->own_lines->lines_count);
+    POINTERS_EQUAL(line2, line1->next_line);
+    POINTERS_EQUAL(line1, line2->prev_line);
+    POINTERS_EQUAL(NULL, line2->next_line);
+    POINTERS_EQUAL(NULL, gui_hotlist);
+
+    /*
+     * a line with notify level "message" is added to the hotlist with
+     * priority "message" (add_to_hotlist == 1)
+     */
+    gui_hotlist_clear (GUI_HOTLIST_MASK_MAX);
+    line3 = gui_line_new (buffer, -1,
+                          date.tv_sec, date.tv_usec,
+                          date_printed.tv_sec, date_printed.tv_usec,
+                          "notify_message", "prefix", "message3", 0);
+    CHECK(line3);
+    LONGS_EQUAL(0, line3->data->highlight);
+    LONGS_EQUAL(GUI_HOTLIST_MESSAGE, line3->data->notify_level);
+    gui_line_add (line3, 1);
+    CHECK(gui_hotlist);
+    LONGS_EQUAL(GUI_HOTLIST_MESSAGE, gui_hotlist->priority);
+    POINTERS_EQUAL(buffer, gui_hotlist->buffer);
+
+    /*
+     * the same "message" line added with add_to_hotlist == 0 must NOT be
+     * added to the hotlist (non-highlighted counterpart of the highlight
+     * check below)
+     */
+    gui_hotlist_clear (GUI_HOTLIST_MASK_MAX);
+    POINTERS_EQUAL(NULL, gui_hotlist);
+    line3 = gui_line_new (buffer, -1,
+                          date.tv_sec, date.tv_usec,
+                          date_printed.tv_sec, date_printed.tv_usec,
+                          "notify_message", "prefix", "message4", 0);
+    CHECK(line3);
+    gui_line_add (line3, 0);
+    POINTERS_EQUAL(NULL, gui_hotlist);
+
+    /*
+     * a line with notify level "private" is added to the hotlist with
+     * priority "private"
+     */
+    gui_hotlist_clear (GUI_HOTLIST_MASK_MAX);
+    line3 = gui_line_new (buffer, -1,
+                          date.tv_sec, date.tv_usec,
+                          date_printed.tv_sec, date_printed.tv_usec,
+                          "notify_private", "prefix", "message5", 0);
+    CHECK(line3);
+    LONGS_EQUAL(GUI_HOTLIST_PRIVATE, line3->data->notify_level);
+    gui_line_add (line3, 1);
+    CHECK(gui_hotlist);
+    LONGS_EQUAL(GUI_HOTLIST_PRIVATE, gui_hotlist->priority);
+    POINTERS_EQUAL(buffer, gui_hotlist->buffer);
+
+    /*
+     * a highlighted line added normally (add_to_hotlist == 1) is added to the
+     * hotlist with priority "highlight"
+     */
+    gui_hotlist_clear (GUI_HOTLIST_MASK_MAX);
+    line3 = gui_line_new (buffer, -1,
+                          date.tv_sec, date.tv_usec,
+                          date_printed.tv_sec, date_printed.tv_usec,
+                          "tag1,tag2", "prefix", "message6",
+                          1);  /* known_highlight */
+    CHECK(line3);
+    LONGS_EQUAL(1, line3->data->highlight);
+    LONGS_EQUAL(GUI_HOTLIST_HIGHLIGHT, line3->data->notify_level);
+    gui_line_add (line3, 1);
+    CHECK(gui_hotlist);
+    LONGS_EQUAL(GUI_HOTLIST_HIGHLIGHT, gui_hotlist->priority);
+    POINTERS_EQUAL(buffer, gui_hotlist->buffer);
+
+    /*
+     * a highlighted line replayed from an upgrade file (add_to_hotlist == 0)
+     * must NOT be added to the hotlist (it is restored separately, see
+     * upgrade_weechat_read_buffer_line())
+     */
+    gui_hotlist_clear (GUI_HOTLIST_MASK_MAX);
+    POINTERS_EQUAL(NULL, gui_hotlist);
+    line3 = gui_line_new (buffer, -1,
+                          date.tv_sec, date.tv_usec,
+                          date_printed.tv_sec, date_printed.tv_usec,
+                          "tag1,tag2", "prefix", "message7",
+                          1);  /* known_highlight */
+    CHECK(line3);
+    LONGS_EQUAL(1, line3->data->highlight);
+    LONGS_EQUAL(GUI_HOTLIST_HIGHLIGHT, line3->data->notify_level);
+    gui_line_add (line3, 0);  /* do not add to hotlist */
+    POINTERS_EQUAL(NULL, gui_hotlist);
+
+    /*
+     * a line that is not displayed must NOT be added to the hotlist, even
+     * when it is a highlight
+     */
+    gui_hotlist_clear (GUI_HOTLIST_MASK_MAX);
+    line3 = gui_line_new (buffer, -1,
+                          date.tv_sec, date.tv_usec,
+                          date_printed.tv_sec, date_printed.tv_usec,
+                          "notify_highlight", "prefix", "message8", 1);
+    CHECK(line3);
+    LONGS_EQUAL(1, line3->data->highlight);
+    line3->data->displayed = 0;
+    gui_line_add (line3, 1);
+    POINTERS_EQUAL(NULL, gui_hotlist);
+
+    gui_hotlist_clear (GUI_HOTLIST_MASK_MAX);
+    config_file_option_reset (config_look_hotlist_add_conditions, 1);
+    gui_buffer_close (buffer);
+
+    /*
+     * check that the oldest lines are removed when the max number of lines in
+     * buffer is reached (option weechat.history.max_buffer_lines_number)
+     */
+    config_file_option_set (config_history_max_buffer_lines_number, "2", 1);
+    buffer = gui_buffer_new_user ("test_add_max_lines",
+                                  GUI_BUFFER_TYPE_FORMATTED);
+    CHECK(buffer);
+
+    line1 = gui_line_new (buffer, -1,
+                          date.tv_sec, date.tv_usec,
+                          date_printed.tv_sec, date_printed.tv_usec,
+                          "notify_none", NULL, "line1", 0);
+    gui_line_add (line1, 1);
+    LONGS_EQUAL(1, buffer->own_lines->lines_count);
+
+    line2 = gui_line_new (buffer, -1,
+                          date.tv_sec, date.tv_usec,
+                          date_printed.tv_sec, date_printed.tv_usec,
+                          "notify_none", NULL, "line2", 0);
+    gui_line_add (line2, 1);
+    LONGS_EQUAL(2, buffer->own_lines->lines_count);
+
+    /* adding a third line removes the oldest one (line1) */
+    line3 = gui_line_new (buffer, -1,
+                          date.tv_sec, date.tv_usec,
+                          date_printed.tv_sec, date_printed.tv_usec,
+                          "notify_none", NULL, "line3", 0);
+    gui_line_add (line3, 1);
+    LONGS_EQUAL(2, buffer->own_lines->lines_count);
+    POINTERS_EQUAL(line2, buffer->own_lines->first_line);
+    POINTERS_EQUAL(line3, buffer->own_lines->last_line);
+
+    config_file_option_reset (config_history_max_buffer_lines_number, 1);
+    gui_buffer_close (buffer);
 }
 
 /*

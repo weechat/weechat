@@ -1891,10 +1891,15 @@ gui_line_hook_update (struct t_gui_line *line,
 
 /*
  * Add a new line in a buffer with formatted content.
+ *
+ * "add_to_hotlist" must be non-zero in the common case, when a line is added
+ * normally; it must be zero only when the line is being replayed from an
+ * upgrade file (see upgrade_weechat_read_buffer_line()), to skip hotlist
+ * recomputation for it (see comment below).
  */
 
 void
-gui_line_add (struct t_gui_line *line)
+gui_line_add (struct t_gui_line *line, int add_to_hotlist)
 {
     struct t_gui_window *ptr_win;
     char *message_for_signal;
@@ -1930,11 +1935,28 @@ gui_line_add (struct t_gui_line *line)
         if ((line->data->notify_level >= GUI_HOTLIST_MIN)
             && line->data->highlight)
         {
-            (void) gui_hotlist_add (
-                line->data->buffer,
-                GUI_HOTLIST_HIGHLIGHT,
-                NULL,  /* creation_time */
-                1);  /* check_conditions */
+            /*
+             * skip hotlist recomputation while replaying a line from an
+             * upgrade file: the hotlist is restored separately from its
+             * own saved state (see upgrade_weechat_read_hotlist()), which
+             * always clears the hotlist before rebuilding it, so anything
+             * added here during line replay is guaranteed to be thrown
+             * away right after - and gui_hotlist_add()'s condition check
+             * involves a real eval_expression() call, not worth doing per
+             * line; this must be scoped to the replay itself (add_to_hotlist)
+             * and not to the whole "weechat_upgrading" window, which stays
+             * set well after replay ends (through plugin init/reconnect),
+             * or real messages arriving in that window would silently
+             * never reach the hotlist
+             */
+            if (add_to_hotlist)
+            {
+                (void) gui_hotlist_add (
+                    line->data->buffer,
+                    GUI_HOTLIST_HIGHLIGHT,
+                    NULL,  /* creation_time */
+                    1);  /* check_conditions */
+            }
             if (!weechat_upgrading)
             {
                 message_for_signal = gui_line_build_string_prefix_message (
@@ -1963,7 +1985,9 @@ gui_line_add (struct t_gui_line *line)
                     free (message_for_signal);
                 }
             }
-            if (line->data->notify_level >= GUI_HOTLIST_MIN)
+            /* see comment above about skipping this while replaying */
+            if (add_to_hotlist
+                && (line->data->notify_level >= GUI_HOTLIST_MIN))
             {
                 (void) gui_hotlist_add (
                     line->data->buffer,
