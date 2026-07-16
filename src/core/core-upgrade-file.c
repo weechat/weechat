@@ -661,6 +661,19 @@ upgrade_file_read_object (struct t_upgrade_file *upgrade_file)
                 goto end;
             }
 
+            /*
+             * for every variable type below, "name" (and, for string/buffer,
+             * the value too) is transferred to the infolist via a
+             * "take ownership" constructor instead of being copied again:
+             * "name" was just freshly allocated by upgrade_file_read_string()
+             * above and is not used afterwards, so re-strdup'ing it inside
+             * the infolist would be a wasted allocation+copy on every single
+             * field of every restored object; the constructor takes over the
+             * pointer(s) in all cases, freeing them itself on error, so we
+             * just reset the local pointer(s) afterwards to prevent the
+             * cleanup below and the next loop iteration from freeing memory
+             * that is no longer ours
+             */
             switch (type_var)
             {
                 case INFOLIST_INTEGER:
@@ -669,7 +682,9 @@ upgrade_file_read_object (struct t_upgrade_file *upgrade_file)
                         UPGRADE_ERROR(_("read - variable"), "integer");
                         goto end;
                     }
-                    infolist_new_var_integer (item, name, value);
+                    infolist_new_var_integer_take_name_ownership (
+                        item, name, value);
+                    name = NULL;
                     break;
                 case INFOLIST_STRING:
                     if (!upgrade_file_read_string (upgrade_file, &value_str))
@@ -677,17 +692,9 @@ upgrade_file_read_object (struct t_upgrade_file *upgrade_file)
                         UPGRADE_ERROR(_("read - variable"), "string");
                         goto end;
                     }
-                    /*
-                     * transfer ownership of value_str to the infolist var
-                     * instead of copying it again (values can be large,
-                     * e.g. pasted multi-line text); the function frees the
-                     * value itself on error, so in all cases clear the local
-                     * pointer to prevent the cleanup at the end and the next
-                     * loop iteration from freeing memory that is no longer
-                     * ours
-                     */
                     infolist_new_var_string_take_ownership (item, name,
                                                             value_str);
+                    name = NULL;
                     value_str = NULL;
                     break;
                 case INFOLIST_POINTER:
@@ -698,9 +705,9 @@ upgrade_file_read_object (struct t_upgrade_file *upgrade_file)
                         UPGRADE_ERROR(_("read - variable"), "buffer");
                         goto end;
                     }
-                    /* transfer ownership, see comment above for strings */
                     infolist_new_var_buffer_take_ownership (item, name,
                                                             buffer, size);
+                    name = NULL;
                     buffer = NULL;
                     break;
                 case INFOLIST_TIME:
@@ -709,7 +716,9 @@ upgrade_file_read_object (struct t_upgrade_file *upgrade_file)
                         UPGRADE_ERROR(_("read - variable"), "time");
                         goto end;
                     }
-                    infolist_new_var_time (item, name, time);
+                    infolist_new_var_time_take_name_ownership (
+                        item, name, time);
+                    name = NULL;
                     break;
             }
         }
