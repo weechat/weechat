@@ -131,6 +131,22 @@ infolist_new_item (struct t_infolist *infolist)
 }
 
 /*
+ * Add a variable at the end of the variables list of an item.
+ */
+
+void
+infolist_var_link (struct t_infolist_item *item, struct t_infolist_var *new_var)
+{
+    new_var->prev_var = item->last_var;
+    new_var->next_var = NULL;
+    if (item->last_var)
+        item->last_var->next_var = new_var;
+    else
+        item->vars = new_var;
+    item->last_var = new_var;
+}
+
+/*
  * Create a new integer variable in an item.
  *
  * Return pointer to new variable, NULL if error.
@@ -155,13 +171,7 @@ infolist_new_var_integer (struct t_infolist_item *item,
             *((int *)new_var->value) = value;
         new_var->size = 0;  /* not used for an integer */
 
-        new_var->prev_var = item->last_var;
-        new_var->next_var = NULL;
-        if (item->last_var)
-            item->last_var->next_var = new_var;
-        else
-            item->vars = new_var;
-        item->last_var = new_var;
+        infolist_var_link (item, new_var);
     }
 
     return new_var;
@@ -190,13 +200,7 @@ infolist_new_var_string (struct t_infolist_item *item,
         new_var->value = (value) ? strdup (value) : NULL;
         new_var->size = 0;  /* not used for a string */
 
-        new_var->prev_var = item->last_var;
-        new_var->next_var = NULL;
-        if (item->last_var)
-            item->last_var->next_var = new_var;
-        else
-            item->vars = new_var;
-        item->last_var = new_var;
+        infolist_var_link (item, new_var);
     }
 
     return new_var;
@@ -225,13 +229,7 @@ infolist_new_var_pointer (struct t_infolist_item *item,
         new_var->value = pointer;
         new_var->size = 0;  /* not used for a pointer */
 
-        new_var->prev_var = item->last_var;
-        new_var->next_var = NULL;
-        if (item->last_var)
-            item->last_var->next_var = new_var;
-        else
-            item->vars = new_var;
-        item->last_var = new_var;
+        infolist_var_link (item, new_var);
     }
 
     return new_var;
@@ -272,13 +270,7 @@ infolist_new_var_buffer (struct t_infolist_item *item,
         }
         new_var->size = size;
 
-        new_var->prev_var = item->last_var;
-        new_var->next_var = NULL;
-        if (item->last_var)
-            item->last_var->next_var = new_var;
-        else
-            item->vars = new_var;
-        item->last_var = new_var;
+        infolist_var_link (item, new_var);
     }
 
     return new_var;
@@ -309,13 +301,7 @@ infolist_new_var_time (struct t_infolist_item *item,
             *((time_t *)new_var->value) = time;
         new_var->size = 0;  /* not used for a time */
 
-        new_var->prev_var = item->last_var;
-        new_var->next_var = NULL;
-        if (item->last_var)
-            item->last_var->next_var = new_var;
-        else
-            item->vars = new_var;
-        item->last_var = new_var;
+        infolist_var_link (item, new_var);
     }
 
     return new_var;
