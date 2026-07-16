@@ -2049,12 +2049,27 @@ gui_line_add_y (struct t_gui_line *line)
     struct t_gui_window *ptr_win;
     int old_line_displayed;
 
-    /* search if line exists for "y" */
-    for (ptr_line = line->data->buffer->own_lines->first_line; ptr_line;
-         ptr_line = ptr_line->next_line)
+    /*
+     * search if line exists for "y": fast path for the common append case
+     * (lines added in increasing "y" order, e.g. when restoring a buffer
+     * from an upgrade file) to avoid an O(n) scan from the first line on
+     * every call; since the list is ordered by "y", if the last line's "y"
+     * is already lower than the new one, no earlier line can match either,
+     * so the scan below would have reached the end (ptr_line = NULL) anyway
+     */
+    if (line->data->buffer->own_lines->last_line
+        && (line->data->buffer->own_lines->last_line->data->y < line->data->y))
     {
-        if (ptr_line->data->y >= line->data->y)
-            break;
+        ptr_line = NULL;
+    }
+    else
+    {
+        for (ptr_line = line->data->buffer->own_lines->first_line; ptr_line;
+             ptr_line = ptr_line->next_line)
+        {
+            if (ptr_line->data->y >= line->data->y)
+                break;
+        }
     }
 
     if (ptr_line && (ptr_line->data->y == line->data->y))
