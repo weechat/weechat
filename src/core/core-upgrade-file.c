@@ -677,7 +677,18 @@ upgrade_file_read_object (struct t_upgrade_file *upgrade_file)
                         UPGRADE_ERROR(_("read - variable"), "string");
                         goto end;
                     }
-                    infolist_new_var_string (item, name, value_str);
+                    /*
+                     * transfer ownership of value_str to the infolist var
+                     * instead of copying it again (values can be large,
+                     * e.g. pasted multi-line text); the function frees the
+                     * value itself on error, so in all cases clear the local
+                     * pointer to prevent the cleanup at the end and the next
+                     * loop iteration from freeing memory that is no longer
+                     * ours
+                     */
+                    infolist_new_var_string_take_ownership (item, name,
+                                                            value_str);
+                    value_str = NULL;
                     break;
                 case INFOLIST_POINTER:
                     break;
@@ -687,7 +698,10 @@ upgrade_file_read_object (struct t_upgrade_file *upgrade_file)
                         UPGRADE_ERROR(_("read - variable"), "buffer");
                         goto end;
                     }
-                    infolist_new_var_buffer (item, name, buffer, size);
+                    /* transfer ownership, see comment above for strings */
+                    infolist_new_var_buffer_take_ownership (item, name,
+                                                            buffer, size);
+                    buffer = NULL;
                     break;
                 case INFOLIST_TIME:
                     if (!upgrade_file_read_time (upgrade_file, &time))
