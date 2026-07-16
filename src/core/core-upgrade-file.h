@@ -26,6 +26,11 @@
 
 #define UPGRADE_SIGNATURE "===== WeeChat Upgrade file v2.2 - binary, do not edit! ====="
 
+/* stdio buffer size used for upgrade files (much bigger than the libc
+ * default, since upgrade files are read/written as many small per-field
+ * fread/fwrite calls) */
+#define UPGRADE_FILE_BUFFER_SIZE (256 * 1024)
+
 #define UPGRADE_ERROR(msg1, msg2)                                       \
     upgrade_file_error(upgrade_file, msg1, msg2, __FILE__, __LINE__)
 
