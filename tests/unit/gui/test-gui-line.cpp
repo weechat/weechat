@@ -43,7 +43,7 @@ extern "C"
 
 #define WEE_BUILD_STR_PREFIX_MSG(__result, __prefix, __message)         \
     line = gui_line_new (gui_buffers, -1, 0, 0, 0, 0, "tag1,tag2",      \
-                         __prefix, __message, -1);                      \
+                         __prefix, __message, -1, NULL);                \
     str = gui_line_build_string_prefix_message (line->data->prefix,     \
                                                 line->data->message);   \
     STRCMP_EQUAL(__result, str);                                        \
@@ -53,7 +53,7 @@ extern "C"
 
 #define WEE_BUILD_STR_MSG_TAGS(__tags, __message, __colors)             \
     line = gui_line_new (gui_buffers, -1, 0, 0, 0, 0, __tags,           \
-                         NULL, __message, -1);                          \
+                         NULL, __message, -1, NULL);                    \
     str = gui_line_build_string_message_tags (line->data->message,      \
                                               line->data->tags_count,   \
                                               line->data->tags_array,   \
@@ -73,7 +73,7 @@ extern "C"
 
 #define WEE_LINE_ADD_Y(__y, __msg)                                      \
     gui_line_add_y (gui_line_new (buffer, (__y), 0, 0, 0, 0,            \
-                                  NULL, NULL, (__msg), -1))
+                                  NULL, NULL, (__msg), -1, NULL))
 
 TEST_GROUP(GuiLine)
 {
@@ -252,7 +252,7 @@ TEST(GuiLine, BuildStringMessageTags)
     struct t_gui_line *line;
     char *str, str_message[256], str_result[256];
 
-    line = gui_line_new (gui_buffers, -1, 0, 0, 0, 0, "tag1,tag2", NULL, "test", -1);
+    line = gui_line_new (gui_buffers, -1, 0, 0, 0, 0, "tag1,tag2", NULL, "test", -1, NULL);
     STRCMP_EQUAL(NULL,
                  gui_line_build_string_message_tags (line->data->message,
                                                      -1,
@@ -919,7 +919,7 @@ TEST(GuiLine, New)
                        NULL, 0,
                        date.tv_sec, date.tv_usec,
                        date_printed.tv_sec, date_printed.tv_usec,
-                       NULL, NULL, NULL, -1));
+                       NULL, NULL, NULL, -1, NULL));
 
     /* create a new test buffer (formatted content) */
     buffer = gui_buffer_new_user ("test", GUI_BUFFER_TYPE_FORMATTED);
@@ -929,7 +929,7 @@ TEST(GuiLine, New)
                           0,
                           date.tv_sec, date.tv_usec,
                           date_printed.tv_sec, date_printed.tv_usec,
-                          NULL, NULL, NULL, -1);
+                          NULL, NULL, NULL, -1, NULL);
     CHECK(line1);
     CHECK(line1->data);
     POINTERS_EQUAL(NULL, line1->prev_line);
@@ -960,7 +960,7 @@ TEST(GuiLine, New)
                           date.tv_sec, date.tv_usec,
                           date_printed.tv_sec, date_printed.tv_usec,
                           "tag1,tag2,tag3",
-                          "prefix", "message", -1);
+                          "prefix", "message", -1, NULL);
     CHECK(line2);
     CHECK(line2->data);
     POINTERS_EQUAL(NULL, line2->prev_line);
@@ -995,14 +995,14 @@ TEST(GuiLine, New)
                           0,
                           date.tv_sec, date.tv_usec,
                           date_printed.tv_sec, date_printed.tv_usec,
-                          NULL, NULL, "test", -1);
+                          NULL, NULL, "test", -1, NULL);
     CHECK(line3);
     LONGS_EQUAL(INT_MAX, line3->data->id);
     line4 = gui_line_new (buffer,
                           0,
                           date.tv_sec, date.tv_usec,
                           date_printed.tv_sec, date_printed.tv_usec,
-                          NULL, NULL, "test", -1);
+                          NULL, NULL, "test", -1, NULL);
     CHECK(line4);
     LONGS_EQUAL(0, line4->data->id);
 
@@ -1016,7 +1016,7 @@ TEST(GuiLine, New)
                           0,
                           date.tv_sec, date.tv_usec,
                           date_printed.tv_sec, date_printed.tv_usec,
-                          NULL, NULL, NULL, -1);
+                          NULL, NULL, NULL, -1, NULL);
     CHECK(line1);
     CHECK(line1->data);
     POINTERS_EQUAL(NULL, line1->prev_line);
@@ -1047,7 +1047,7 @@ TEST(GuiLine, New)
                           date.tv_sec, date.tv_usec,
                           date_printed.tv_sec, date_printed.tv_usec,
                           "tag1,tag2,tag3",
-                          NULL, "message", -1);
+                          NULL, "message", -1, NULL);
     CHECK(line2);
     CHECK(line2->data);
     POINTERS_EQUAL(NULL, line2->prev_line);
@@ -1127,7 +1127,7 @@ TEST(GuiLine, Add)
     line1 = gui_line_new (buffer, -1,
                           date.tv_sec, date.tv_usec,
                           date_printed.tv_sec, date_printed.tv_usec,
-                          "notify_none", "prefix", "message1", 0);
+                          "notify_none", "prefix", "message1", 0, NULL);
     CHECK(line1);
     LONGS_EQUAL(-1, line1->data->notify_level);
     gui_line_add (line1, 1);
@@ -1142,7 +1142,7 @@ TEST(GuiLine, Add)
     line2 = gui_line_new (buffer, -1,
                           date.tv_sec, date.tv_usec,
                           date_printed.tv_sec, date_printed.tv_usec,
-                          "notify_none", "prefix", "message2", 0);
+                          "notify_none", "prefix", "message2", 0, NULL);
     CHECK(line2);
     gui_line_add (line2, 1);
     POINTERS_EQUAL(line1, buffer->own_lines->first_line);
@@ -1161,7 +1161,7 @@ TEST(GuiLine, Add)
     line3 = gui_line_new (buffer, -1,
                           date.tv_sec, date.tv_usec,
                           date_printed.tv_sec, date_printed.tv_usec,
-                          "notify_message", "prefix", "message3", 0);
+                          "notify_message", "prefix", "message3", 0, NULL);
     CHECK(line3);
     LONGS_EQUAL(0, line3->data->highlight);
     LONGS_EQUAL(GUI_HOTLIST_MESSAGE, line3->data->notify_level);
@@ -1180,7 +1180,7 @@ TEST(GuiLine, Add)
     line3 = gui_line_new (buffer, -1,
                           date.tv_sec, date.tv_usec,
                           date_printed.tv_sec, date_printed.tv_usec,
-                          "notify_message", "prefix", "message4", 0);
+                          "notify_message", "prefix", "message4", 0, NULL);
     CHECK(line3);
     gui_line_add (line3, 0);
     POINTERS_EQUAL(NULL, gui_hotlist);
@@ -1193,7 +1193,7 @@ TEST(GuiLine, Add)
     line3 = gui_line_new (buffer, -1,
                           date.tv_sec, date.tv_usec,
                           date_printed.tv_sec, date_printed.tv_usec,
-                          "notify_private", "prefix", "message5", 0);
+                          "notify_private", "prefix", "message5", 0, NULL);
     CHECK(line3);
     LONGS_EQUAL(GUI_HOTLIST_PRIVATE, line3->data->notify_level);
     gui_line_add (line3, 1);
@@ -1210,7 +1210,7 @@ TEST(GuiLine, Add)
                           date.tv_sec, date.tv_usec,
                           date_printed.tv_sec, date_printed.tv_usec,
                           "tag1,tag2", "prefix", "message6",
-                          1);  /* known_highlight */
+                          1, NULL);  /* known_highlight */
     CHECK(line3);
     LONGS_EQUAL(1, line3->data->highlight);
     LONGS_EQUAL(GUI_HOTLIST_HIGHLIGHT, line3->data->notify_level);
@@ -1222,7 +1222,10 @@ TEST(GuiLine, Add)
     /*
      * a highlighted line replayed from an upgrade file (add_to_hotlist == 0)
      * must NOT be added to the hotlist (it is restored separately, see
-     * upgrade_weechat_read_buffer_line())
+     * upgrade_weechat_read_buffer_line()); the saved time string, passed as
+     * known_str_time, is reused verbatim instead of being recomputed: here
+     * "12:34" (hours and minutes only), which the default time format
+     * "%H:%M:%S" would never produce, so it can only come from known_str_time
      */
     gui_hotlist_clear (GUI_HOTLIST_MASK_MAX);
     POINTERS_EQUAL(NULL, gui_hotlist);
@@ -1230,10 +1233,12 @@ TEST(GuiLine, Add)
                           date.tv_sec, date.tv_usec,
                           date_printed.tv_sec, date_printed.tv_usec,
                           "tag1,tag2", "prefix", "message7",
-                          1);  /* known_highlight */
+                          1,          /* known_highlight */
+                          "12:34");   /* known_str_time */
     CHECK(line3);
     LONGS_EQUAL(1, line3->data->highlight);
     LONGS_EQUAL(GUI_HOTLIST_HIGHLIGHT, line3->data->notify_level);
+    STRCMP_EQUAL("12:34", line3->data->str_time);
     gui_line_add (line3, 0);  /* do not add to hotlist */
     POINTERS_EQUAL(NULL, gui_hotlist);
 
@@ -1245,7 +1250,7 @@ TEST(GuiLine, Add)
     line3 = gui_line_new (buffer, -1,
                           date.tv_sec, date.tv_usec,
                           date_printed.tv_sec, date_printed.tv_usec,
-                          "notify_highlight", "prefix", "message8", 1);
+                          "notify_highlight", "prefix", "message8", 1, NULL);
     CHECK(line3);
     LONGS_EQUAL(1, line3->data->highlight);
     line3->data->displayed = 0;
@@ -1268,14 +1273,14 @@ TEST(GuiLine, Add)
     line1 = gui_line_new (buffer, -1,
                           date.tv_sec, date.tv_usec,
                           date_printed.tv_sec, date_printed.tv_usec,
-                          "notify_none", NULL, "line1", 0);
+                          "notify_none", NULL, "line1", 0, NULL);
     gui_line_add (line1, 1);
     LONGS_EQUAL(1, buffer->own_lines->lines_count);
 
     line2 = gui_line_new (buffer, -1,
                           date.tv_sec, date.tv_usec,
                           date_printed.tv_sec, date_printed.tv_usec,
-                          "notify_none", NULL, "line2", 0);
+                          "notify_none", NULL, "line2", 0, NULL);
     gui_line_add (line2, 1);
     LONGS_EQUAL(2, buffer->own_lines->lines_count);
 
@@ -1283,7 +1288,7 @@ TEST(GuiLine, Add)
     line3 = gui_line_new (buffer, -1,
                           date.tv_sec, date.tv_usec,
                           date_printed.tv_sec, date_printed.tv_usec,
-                          "notify_none", NULL, "line3", 0);
+                          "notify_none", NULL, "line3", 0, NULL);
     gui_line_add (line3, 1);
     LONGS_EQUAL(2, buffer->own_lines->lines_count);
     POINTERS_EQUAL(line2, buffer->own_lines->first_line);
