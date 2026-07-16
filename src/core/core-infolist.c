@@ -116,6 +116,7 @@ infolist_new_item (struct t_infolist *infolist)
     {
         new_item->vars = NULL;
         new_item->last_var = NULL;
+        new_item->cursor_var = NULL;
         new_item->fields = NULL;
 
         new_item->prev_item = infolist->last_item;
@@ -496,26 +497,63 @@ infolist_reset_item_cursor (struct t_infolist *infolist)
 }
 
 /*
+ * Search for a variable by name in an infolist item.
+ *
+ * Callers typically read fields in roughly the order they were added to the
+ * item (e.g. when restoring an object from an upgrade file), so the search
+ * starts right after the last variable found instead of always from the
+ * head: this turns an O(vars) scan on every single lookup (O(vars²) for a
+ * caller reading most fields of an item) into an amortized O(1)/O(vars)
+ * lookup for the common forward-order case, while still falling back to a
+ * full scan (by wrapping around) for out-of-order lookups, exactly as
+ * before.
+ */
+
+static struct t_infolist_var *
+infolist_item_search_var (struct t_infolist_item *item, const char *name)
+{
+    struct t_infolist_var *ptr_var, *start;
+
+    if (!item || !name || !name[0])
+        return NULL;
+
+    start = (item->cursor_var) ? item->cursor_var->next_var : item->vars;
+
+    for (ptr_var = start; ptr_var; ptr_var = ptr_var->next_var)
+    {
+        if (strcmp (ptr_var->name, name) == 0)
+        {
+            item->cursor_var = ptr_var;
+            return ptr_var;
+        }
+    }
+
+    /* not found after the cursor: wrap around and search from the start */
+    for (ptr_var = item->vars; ptr_var && (ptr_var != start);
+         ptr_var = ptr_var->next_var)
+    {
+        if (strcmp (ptr_var->name, name) == 0)
+        {
+            item->cursor_var = ptr_var;
+            return ptr_var;
+        }
+    }
+
+    /* variable not found */
+    return NULL;
+}
+
+/*
  * Search for a variable in current infolist item.
  */
 
 struct t_infolist_var *
 infolist_search_var (struct t_infolist *infolist, const char *name)
 {
-    struct t_infolist_var *ptr_var;
-
-    if (!infolist || !infolist->ptr_item || !name || !name[0])
+    if (!infolist || !infolist->ptr_item)
         return NULL;
 
-    for (ptr_var = infolist->ptr_item->vars; ptr_var;
-         ptr_var = ptr_var->next_var)
-    {
-        if (strcmp (ptr_var->name, name) == 0)
-            return ptr_var;
-    }
-
-    /* variable not found */
-    return NULL;
+    return infolist_item_search_var (infolist->ptr_item, name);
 }
 
 /*
@@ -561,23 +599,14 @@ infolist_integer (struct t_infolist *infolist, const char *var)
 {
     struct t_infolist_var *ptr_var;
 
-    if (!infolist || !infolist->ptr_item || !var || !var[0])
+    if (!infolist || !infolist->ptr_item)
         return 0;
 
-    for (ptr_var = infolist->ptr_item->vars; ptr_var;
-         ptr_var = ptr_var->next_var)
-    {
-        if (strcmp (ptr_var->name, var) == 0)
-        {
-            if (ptr_var->type == INFOLIST_INTEGER)
-                return *((int *)ptr_var->value);
-            else
-                return 0;
-        }
-    }
+    ptr_var = infolist_item_search_var (infolist->ptr_item, var);
+    if (!ptr_var || (ptr_var->type != INFOLIST_INTEGER))
+        return 0;
 
-    /* variable not found */
-    return 0;
+    return *((int *)ptr_var->value);
 }
 
 /*
@@ -589,23 +618,14 @@ infolist_string (struct t_infolist *infolist, const char *var)
 {
     struct t_infolist_var *ptr_var;
 
-    if (!infolist || !infolist->ptr_item || !var || !var[0])
+    if (!infolist || !infolist->ptr_item)
         return NULL;
 
-    for (ptr_var = infolist->ptr_item->vars; ptr_var;
-         ptr_var = ptr_var->next_var)
-    {
-        if (strcmp (ptr_var->name, var) == 0)
-        {
-            if (ptr_var->type == INFOLIST_STRING)
-                return (char *)ptr_var->value;
-            else
-                return NULL;
-        }
-    }
+    ptr_var = infolist_item_search_var (infolist->ptr_item, var);
+    if (!ptr_var || (ptr_var->type != INFOLIST_STRING))
+        return NULL;
 
-    /* variable not found */
-    return NULL;
+    return (char *)ptr_var->value;
 }
 
 /*
@@ -617,23 +637,14 @@ infolist_pointer (struct t_infolist *infolist, const char *var)
 {
     struct t_infolist_var *ptr_var;
 
-    if (!infolist || !infolist->ptr_item || !var || !var[0])
+    if (!infolist || !infolist->ptr_item)
         return NULL;
 
-    for (ptr_var = infolist->ptr_item->vars; ptr_var;
-         ptr_var = ptr_var->next_var)
-    {
-        if (strcmp (ptr_var->name, var) == 0)
-        {
-            if (ptr_var->type == INFOLIST_POINTER)
-                return ptr_var->value;
-            else
-                return NULL;
-        }
-    }
+    ptr_var = infolist_item_search_var (infolist->ptr_item, var);
+    if (!ptr_var || (ptr_var->type != INFOLIST_POINTER))
+        return NULL;
 
-    /* variable not found */
-    return NULL;
+    return ptr_var->value;
 }
 
 /*
@@ -648,26 +659,15 @@ infolist_buffer (struct t_infolist *infolist, const char *var,
 {
     struct t_infolist_var *ptr_var;
 
-    if (!infolist || !infolist->ptr_item || !var || !var[0])
+    if (!infolist || !infolist->ptr_item)
         return NULL;
 
-    for (ptr_var = infolist->ptr_item->vars; ptr_var;
-         ptr_var = ptr_var->next_var)
-    {
-        if (strcmp (ptr_var->name, var) == 0)
-        {
-            if (ptr_var->type == INFOLIST_BUFFER)
-            {
-                *size = ptr_var->size;
-                return ptr_var->value;
-            }
-            else
-                return NULL;
-        }
-    }
+    ptr_var = infolist_item_search_var (infolist->ptr_item, var);
+    if (!ptr_var || (ptr_var->type != INFOLIST_BUFFER))
+        return NULL;
 
-    /* variable not found */
-    return NULL;
+    *size = ptr_var->size;
+    return ptr_var->value;
 }
 
 /*
@@ -679,23 +679,14 @@ infolist_time (struct t_infolist *infolist, const char *var)
 {
     struct t_infolist_var *ptr_var;
 
-    if (!infolist || !infolist->ptr_item || !var || !var[0])
+    if (!infolist || !infolist->ptr_item)
         return 0;
 
-    for (ptr_var = infolist->ptr_item->vars; ptr_var;
-         ptr_var = ptr_var->next_var)
-    {
-        if (strcmp (ptr_var->name, var) == 0)
-        {
-            if (ptr_var->type == INFOLIST_TIME)
-                return *((time_t *)ptr_var->value);
-            else
-                return 0;
-        }
-    }
+    ptr_var = infolist_item_search_var (infolist->ptr_item, var);
+    if (!ptr_var || (ptr_var->type != INFOLIST_TIME))
+        return 0;
 
-    /* variable not found */
-    return 0;
+    return *((time_t *)ptr_var->value);
 }
 
 /*
