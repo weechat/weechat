@@ -71,6 +71,10 @@ extern "C"
     gui_line_tags_free (&line_data);                                    \
     string_free_split_tags (tags_array);
 
+#define WEE_LINE_ADD_Y(__y, __msg)                                      \
+    gui_line_add_y (gui_line_new (buffer, (__y), 0, 0, 0, 0,            \
+                                  NULL, NULL, (__msg), -1))
+
 TEST_GROUP(GuiLine)
 {
 };
@@ -1296,7 +1300,95 @@ TEST(GuiLine, Add)
 
 TEST(GuiLine, AddY)
 {
-    /* TODO: write tests */
+    struct t_gui_buffer *buffer;
+    struct t_gui_line *ptr_line;
+
+    buffer = gui_buffer_new_user ("test_add_y", GUI_BUFFER_TYPE_FREE);
+    CHECK(buffer);
+
+    /* a free-content buffer starts with no line */
+    POINTERS_EQUAL(NULL, buffer->own_lines->first_line);
+    POINTERS_EQUAL(NULL, buffer->own_lines->last_line);
+    LONGS_EQUAL(0, buffer->own_lines->lines_count);
+
+    /*
+     * first line at y == 0: the buffer is empty (last_line == NULL), so the
+     * fast path is not taken and the (empty) scan appends the line
+     */
+    WEE_LINE_ADD_Y(0, "line0");
+    LONGS_EQUAL(1, buffer->own_lines->lines_count);
+    ptr_line = buffer->own_lines->first_line;
+    CHECK(ptr_line);
+    POINTERS_EQUAL(ptr_line, buffer->own_lines->last_line);
+    LONGS_EQUAL(0, ptr_line->data->y);
+    STRCMP_EQUAL("line0", ptr_line->data->message);
+
+    /*
+     * append y == 2 leaving a gap: last_line->y (0) < 2, so the fast path
+     * appends directly (gui_line_add_y does not fill gaps by itself)
+     */
+    WEE_LINE_ADD_Y(2, "line2");
+    LONGS_EQUAL(2, buffer->own_lines->lines_count);
+    LONGS_EQUAL(2, buffer->own_lines->last_line->data->y);
+    STRCMP_EQUAL("line2", buffer->own_lines->last_line->data->message);
+
+    /*
+     * insert y == 1 in the middle: last_line->y (2) is not < 1, so the full
+     * scan runs and inserts the line before y == 2
+     */
+    WEE_LINE_ADD_Y(1, "line1");
+    LONGS_EQUAL(3, buffer->own_lines->lines_count);
+    ptr_line = buffer->own_lines->first_line;
+    LONGS_EQUAL(0, ptr_line->data->y);
+    STRCMP_EQUAL("line0", ptr_line->data->message);
+    ptr_line = ptr_line->next_line;
+    LONGS_EQUAL(1, ptr_line->data->y);
+    STRCMP_EQUAL("line1", ptr_line->data->message);
+    ptr_line = ptr_line->next_line;
+    LONGS_EQUAL(2, ptr_line->data->y);
+    STRCMP_EQUAL("line2", ptr_line->data->message);
+    POINTERS_EQUAL(NULL, ptr_line->next_line);
+    POINTERS_EQUAL(ptr_line, buffer->own_lines->last_line);
+
+    /*
+     * replace a middle line (y == 1): the scan finds the existing line and
+     * replaces its data, the line count is unchanged
+     */
+    WEE_LINE_ADD_Y(1, "line1-new");
+    LONGS_EQUAL(3, buffer->own_lines->lines_count);
+    ptr_line = buffer->own_lines->first_line->next_line;
+    LONGS_EQUAL(1, ptr_line->data->y);
+    STRCMP_EQUAL("line1-new", ptr_line->data->message);
+
+    /*
+     * replace the LAST line (y == 2): the fast path must NOT trigger here
+     * (last_line->y (2) is not < 2); if it used "<=" the line would be
+     * wrongly appended as a duplicate instead of replaced
+     */
+    WEE_LINE_ADD_Y(2, "line2-new");
+    LONGS_EQUAL(3, buffer->own_lines->lines_count);
+    LONGS_EQUAL(2, buffer->own_lines->last_line->data->y);
+    STRCMP_EQUAL("line2-new", buffer->own_lines->last_line->data->message);
+
+    /* append y == 10 far past the end: fast path (last_line->y (2) < 10) */
+    WEE_LINE_ADD_Y(10, "line10");
+    LONGS_EQUAL(4, buffer->own_lines->lines_count);
+    LONGS_EQUAL(10, buffer->own_lines->last_line->data->y);
+    STRCMP_EQUAL("line10", buffer->own_lines->last_line->data->message);
+
+    /* final list must stay ordered by y: 0, 1, 2, 10 */
+    ptr_line = buffer->own_lines->first_line;
+    LONGS_EQUAL(0, ptr_line->data->y);
+    ptr_line = ptr_line->next_line;
+    LONGS_EQUAL(1, ptr_line->data->y);
+    ptr_line = ptr_line->next_line;
+    LONGS_EQUAL(2, ptr_line->data->y);
+    ptr_line = ptr_line->next_line;
+    LONGS_EQUAL(10, ptr_line->data->y);
+    POINTERS_EQUAL(NULL, ptr_line->next_line);
+    POINTERS_EQUAL(ptr_line, buffer->own_lines->last_line);
+
+    gui_buffer_close (buffer);
 }
 
 /*
