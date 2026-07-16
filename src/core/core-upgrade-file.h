@@ -47,6 +47,9 @@ struct t_upgrade_file
 {
     char *filename;                        /* filename with path            */
     FILE *file;                            /* file pointer                  */
+    long read_offset;                      /* current read offset in file,  */
+                                            /* tracked manually to avoid an  */
+                                            /* ftell() call on every field   */
     long last_read_pos;                    /* last read position            */
     int last_read_length;                  /* last read length              */
     int (*callback_read)                   /* callback called when reading  */

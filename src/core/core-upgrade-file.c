@@ -247,6 +247,7 @@ upgrade_file_new (const char *filename,
         }
 
         /* init positions */
+        new_upgrade_file->read_offset = 0;
         new_upgrade_file->last_read_pos = 0;
         new_upgrade_file->last_read_length = 0;
 
@@ -433,7 +434,7 @@ upgrade_file_write_object (struct t_upgrade_file *upgrade_file, int object_id,
 int
 upgrade_file_read_integer (struct t_upgrade_file *upgrade_file, int *value)
 {
-    upgrade_file->last_read_pos = ftell (upgrade_file->file);
+    upgrade_file->last_read_pos = upgrade_file->read_offset;
     upgrade_file->last_read_length = sizeof (*value);
 
     if (value)
@@ -446,6 +447,7 @@ upgrade_file_read_integer (struct t_upgrade_file *upgrade_file, int *value)
         if (fseek (upgrade_file->file, sizeof (*value), SEEK_CUR) < 0)
             return 0;
     }
+    upgrade_file->read_offset += sizeof (*value);
     return 1;
 }
 
@@ -471,7 +473,7 @@ upgrade_file_read_string (struct t_upgrade_file *upgrade_file, char **string)
     if (!upgrade_file_read_integer (upgrade_file, &length))
         return 0;
 
-    upgrade_file->last_read_pos = ftell (upgrade_file->file);
+    upgrade_file->last_read_pos = upgrade_file->read_offset;
     upgrade_file->last_read_length = length;
 
     if (string)
@@ -496,6 +498,7 @@ upgrade_file_read_string (struct t_upgrade_file *upgrade_file, char **string)
         if (fseek (upgrade_file->file, length, SEEK_CUR) < 0)
             return 0;
     }
+    upgrade_file->read_offset += length;
     return 1;
 }
 
@@ -525,7 +528,7 @@ upgrade_file_read_buffer (struct t_upgrade_file *upgrade_file,
 
     if (*size > 0)
     {
-        upgrade_file->last_read_pos = ftell (upgrade_file->file);
+        upgrade_file->last_read_pos = upgrade_file->read_offset;
         upgrade_file->last_read_length = *size;
 
         *buffer = malloc (*size);
@@ -540,6 +543,7 @@ upgrade_file_read_buffer (struct t_upgrade_file *upgrade_file,
             if (fseek (upgrade_file->file, *size, SEEK_CUR) < 0)
                 return 0;
         }
+        upgrade_file->read_offset += *size;
     }
 
     return 1;
@@ -556,7 +560,7 @@ upgrade_file_read_buffer (struct t_upgrade_file *upgrade_file,
 int
 upgrade_file_read_time (struct t_upgrade_file *upgrade_file, time_t *time)
 {
-    upgrade_file->last_read_pos = ftell (upgrade_file->file);
+    upgrade_file->last_read_pos = upgrade_file->read_offset;
     upgrade_file->last_read_length = sizeof (*time);
 
     if (time)
@@ -570,6 +574,7 @@ upgrade_file_read_time (struct t_upgrade_file *upgrade_file, time_t *time)
             return 0;
     }
 
+    upgrade_file->read_offset += sizeof (*time);
     return 1;
 }
 
