@@ -53,6 +53,10 @@ struct t_infolist_item
 {
     struct t_infolist_var *vars;       /* item variables                    */
     struct t_infolist_var *last_var;   /* last variable                     */
+    struct t_infolist_var *cursor_var; /* last variable found by name, used */
+                                       /* as a search starting point        */
+                                       /* (callers usually read fields in   */
+                                       /* roughly the order they were added)*/
     char *fields;                      /* fields list (NULL if never asked) */
     struct t_infolist_item *prev_item; /* link to previous item             */
     struct t_infolist_item *next_item; /* link to next item                 */
