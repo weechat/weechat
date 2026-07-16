@@ -424,32 +424,32 @@ TEST(GuiChat, PipeBuildMessage)
 
     WEE_TEST_STR(NULL, gui_chat_pipe_build_message (NULL));
 
-    line = gui_line_new (gui_buffers, -1, 0, 0, 0, 0, NULL, NULL, NULL);
+    line = gui_line_new (gui_buffers, -1, 0, 0, 0, 0, NULL, NULL, NULL, -1);
     WEE_TEST_STR("", gui_chat_pipe_build_message (line));
     gui_line_free_data (line);
     free (line);
 
-    line = gui_line_new (gui_buffers, -1, 0, 0, 0, 0, NULL, "nick", NULL);
+    line = gui_line_new (gui_buffers, -1, 0, 0, 0, 0, NULL, "nick", NULL, -1);
     WEE_TEST_STR("nick", gui_chat_pipe_build_message (line));
     gui_line_free_data (line);
     free (line);
 
-    line = gui_line_new (gui_buffers, -1, 0, 0, 0, 0, NULL, NULL, "the message");
+    line = gui_line_new (gui_buffers, -1, 0, 0, 0, 0, NULL, NULL, "the message", -1);
     WEE_TEST_STR("the message", gui_chat_pipe_build_message (line));
     gui_line_free_data (line);
     free (line);
 
-    line = gui_line_new (gui_buffers, -1, 0, 0, 0, 0, NULL, "prefix", "");
+    line = gui_line_new (gui_buffers, -1, 0, 0, 0, 0, NULL, "prefix", "", -1);
     WEE_TEST_STR("prefix", gui_chat_pipe_build_message (line));
     gui_line_free_data (line);
     free (line);
 
-    line = gui_line_new (gui_buffers, -1, 0, 0, 0, 0, NULL, "", "the message");
+    line = gui_line_new (gui_buffers, -1, 0, 0, 0, 0, NULL, "", "the message", -1);
     WEE_TEST_STR("the message", gui_chat_pipe_build_message (line));
     gui_line_free_data (line);
     free (line);
 
-    line = gui_line_new (gui_buffers, -1, 0, 0, 0, 0, NULL, "prefix", "the message");
+    line = gui_line_new (gui_buffers, -1, 0, 0, 0, 0, NULL, "prefix", "the message", -1);
     WEE_TEST_STR("prefix the message", gui_chat_pipe_build_message (line));
     gui_line_free_data (line);
     free (line);
