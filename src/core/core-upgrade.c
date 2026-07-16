@@ -659,6 +659,15 @@ upgrade_weechat_read_buffer_line (struct t_infolist *infolist)
     switch (upgrade_current_buffer->type)
     {
         case GUI_BUFFER_TYPE_FORMATTED:
+            /*
+             * pass the saved highlight state directly (known_highlight)
+             * instead of letting gui_line_new() run its regex-based
+             * highlight detection: the result would be overwritten by the
+             * saved value right below anyway, so computing it would be
+             * wasted work (and, before this fix, left str_time colorized
+             * for the wrong highlight state, since it was never
+             * recomputed after the overwrite)
+             */
             new_line = gui_line_new (
                 upgrade_current_buffer,
                 -1,
@@ -668,13 +677,12 @@ upgrade_weechat_read_buffer_line (struct t_infolist *infolist)
                 infolist_integer (infolist, "date_usec_printed"),
                 infolist_string (infolist, "tags"),
                 infolist_string (infolist, "prefix"),
-                infolist_string (infolist, "message"));
+                infolist_string (infolist, "message"),
+                infolist_integer (infolist, "highlight"));
             if (new_line)
             {
                 new_line->data->id = infolist_integer (infolist, "id");
                 gui_line_add (new_line);
-                new_line->data->highlight = infolist_integer (infolist,
-                                                              "highlight");
                 if (infolist_integer (infolist, "last_read_line"))
                     upgrade_current_buffer->lines->last_read_line = new_line;
             }
@@ -689,7 +697,8 @@ upgrade_weechat_read_buffer_line (struct t_infolist *infolist)
                 infolist_integer (infolist, "date_usec_printed"),
                 infolist_string (infolist, "tags"),
                 NULL,
-                infolist_string (infolist, "message"));
+                infolist_string (infolist, "message"),
+                -1);
             if (new_line)
             {
                 new_line->data->id = infolist_integer (infolist, "id");
