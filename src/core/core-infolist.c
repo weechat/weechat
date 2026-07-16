@@ -277,6 +277,71 @@ infolist_new_var_buffer (struct t_infolist_item *item,
 }
 
 /*
+ * Creates a new string variable in an item, taking ownership of "value"
+ * instead of copying it (the infolist will free it later).
+ *
+ * INTERNAL USE ONLY, see comment in core-infolist.h.
+ *
+ * Returns pointer to new variable, NULL if error.
+ */
+
+struct t_infolist_var *
+infolist_new_var_string_take_ownership (struct t_infolist_item *item,
+                                        const char *name, char *value)
+{
+    struct t_infolist_var *new_var;
+
+    if (!item || !name || !name[0])
+        return NULL;
+
+    new_var = malloc (sizeof (*new_var));
+    if (new_var)
+    {
+        new_var->name = strdup (name);
+        new_var->type = INFOLIST_STRING;
+        new_var->value = value;
+        new_var->size = 0;  /* not used for a string */
+
+        infolist_var_link (item, new_var);
+    }
+
+    return new_var;
+}
+
+/*
+ * Creates a new buffer variable in an item, taking ownership of "pointer"
+ * instead of copying it (the infolist will free it later).
+ *
+ * INTERNAL USE ONLY, see comment in core-infolist.h.
+ *
+ * Returns pointer to new variable, NULL if error.
+ */
+
+struct t_infolist_var *
+infolist_new_var_buffer_take_ownership (struct t_infolist_item *item,
+                                        const char *name, void *pointer,
+                                        int size)
+{
+    struct t_infolist_var *new_var;
+
+    if (!item || !name || !name[0] || (size <= 0))
+        return NULL;
+
+    new_var = malloc (sizeof (*new_var));
+    if (new_var)
+    {
+        new_var->name = strdup (name);
+        new_var->type = INFOLIST_BUFFER;
+        new_var->value = pointer;
+        new_var->size = size;
+
+        infolist_var_link (item, new_var);
+    }
+
+    return new_var;
+}
+
+/*
  * Create a new time variable in an item.
  *
  * Return pointer to new variable, NULL if error.
