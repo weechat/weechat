@@ -1571,7 +1571,13 @@ gui_line_set_highlight (struct t_gui_line *line, int max_notify_level)
 }
 
 /*
- * Create a new line for a buffer.
+ * Creates a new line for a buffer.
+ *
+ * "known_highlight" is -1 if the highlight state of the line is not known
+ * yet and must be computed (the normal case), or 0/1 if the caller already
+ * knows the highlight state (e.g. when restoring a line from an upgrade
+ * file, where the value was saved) and the regex-based detection in
+ * gui_line_set_highlight() must be skipped.
  */
 
 struct t_gui_line *
@@ -1579,7 +1585,8 @@ gui_line_new (struct t_gui_buffer *buffer, int y,
               time_t date, int date_usec,
               time_t date_printed, int date_usec_printed,
               const char *tags,
-              const char *prefix, const char *message)
+              const char *prefix, const char *message,
+              int known_highlight)
 {
     struct t_gui_line *new_line;
     struct t_gui_line_data *new_line_data;
@@ -1631,7 +1638,10 @@ gui_line_new (struct t_gui_buffer *buffer, int y,
             gui_chat_strlen_screen (prefix) : 0;
         max_notify_level = gui_line_get_max_notify_level (new_line);
         gui_line_set_notify_level (new_line, max_notify_level);
-        gui_line_set_highlight (new_line, max_notify_level);
+        if (known_highlight >= 0)
+            new_line->data->highlight = known_highlight;
+        else
+            gui_line_set_highlight (new_line, max_notify_level);
         if (new_line->data->highlight && (new_line->data->notify_level >= 0))
             new_line->data->notify_level = GUI_HOTLIST_HIGHLIGHT;
         new_line->data->str_time = gui_chat_get_time_string (

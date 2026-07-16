@@ -952,7 +952,8 @@ gui_chat_printf_datetime_tags_internal (struct t_gui_buffer *buffer,
                              date_usec_printed,
                              tags,
                              pos_prefix,
-                             ptr_msg);
+                             ptr_msg,
+                             -1);
     if (!new_line)
         goto no_print;
 
@@ -1300,7 +1301,8 @@ gui_chat_printf_y_datetime_tags (struct t_gui_buffer *buffer, int y,
                              tv_date_printed.tv_usec,
                              tags,
                              NULL,
-                             vbuffer);
+                             vbuffer,
+                             -1);
     if (!new_line)
         goto end;
 
@@ -1338,7 +1340,7 @@ gui_chat_printf_y_datetime_tags (struct t_gui_buffer *buffer, int y,
                 {
                     new_line_empty = gui_line_new (new_line->data->buffer,
                                                    i, 0, 0, 0, 0, NULL, NULL,
-                                                   "");
+                                                   "", -1);
                     if (new_line_empty)
                         gui_line_add_y (new_line_empty);
                 }
