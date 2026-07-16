@@ -946,7 +946,7 @@ TEST(GuiLine, New)
     STRCMP_EQUAL("", line1->data->prefix);
     LONGS_EQUAL(0, line1->data->prefix_length);
     STRCMP_EQUAL("", line1->data->message);
-    gui_line_add (line1);
+    gui_line_add (line1, 0);
     POINTERS_EQUAL(NULL, line1->prev_line);
     POINTERS_EQUAL(NULL, line1->next_line);
 
@@ -980,7 +980,7 @@ TEST(GuiLine, New)
     STRCMP_EQUAL("prefix", line2->data->prefix);
     LONGS_EQUAL(6, line2->data->prefix_length);
     STRCMP_EQUAL("message", line2->data->message);
-    gui_line_add (line2);
+    gui_line_add (line2, 0);
     POINTERS_EQUAL(line1, line2->prev_line);
     POINTERS_EQUAL(NULL, line2->next_line);
 
@@ -1033,7 +1033,7 @@ TEST(GuiLine, New)
     STRCMP_EQUAL(NULL, line1->data->prefix);
     LONGS_EQUAL(0, line1->data->prefix_length);
     STRCMP_EQUAL("", line1->data->message);
-    gui_line_add (line1);
+    gui_line_add (line1, 0);
     POINTERS_EQUAL(NULL, line1->prev_line);
     POINTERS_EQUAL(NULL, line1->next_line);
 
@@ -1067,7 +1067,7 @@ TEST(GuiLine, New)
     STRCMP_EQUAL(NULL, line2->data->prefix);
     LONGS_EQUAL(0, line2->data->prefix_length);
     STRCMP_EQUAL("message", line2->data->message);
-    gui_line_add (line2);
+    gui_line_add (line2, 0);
     CHECK(line2->prev_line);
     POINTERS_EQUAL(NULL, line2->next_line);
 
