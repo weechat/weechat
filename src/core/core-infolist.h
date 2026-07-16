@@ -94,20 +94,28 @@ extern struct t_infolist_var *infolist_new_var_buffer (struct t_infolist_item *i
                                                        int size);
 /*
  * INTERNAL USE ONLY (core-upgrade-file.c): unlike infolist_new_var_string()/
- * infolist_new_var_buffer() above, these two do NOT copy "value"/"pointer";
- * the infolist takes ownership of the pointer (it will be freed by
- * infolist_var_free()) and the caller must not use or free it afterwards.
+ * infolist_new_var_buffer()/infolist_new_var_integer()/infolist_new_var_time()
+ * above, these four do NOT copy "name" (and, for the string/buffer variants,
+ * "value"/"pointer" either); the infolist takes ownership of the pointer(s)
+ * (they will be freed by infolist_var_free()) and the caller must not use or
+ * free them afterwards.
  * Do not expose these via struct t_weechat_plugin / weechat-plugin.h: the
- * plugin API contract is that infolist_new_var_string/_buffer copy the
- * value, and callers rely on that.
+ * plugin API contract is that infolist_new_var_* copy the name/value, and
+ * callers rely on that.
  */
+extern struct t_infolist_var *infolist_new_var_integer_take_name_ownership (struct t_infolist_item *item,
+                                                                            char *name,
+                                                                            int value);
 extern struct t_infolist_var *infolist_new_var_string_take_ownership (struct t_infolist_item *item,
-                                                                      const char *name,
+                                                                      char *name,
                                                                       char *value);
 extern struct t_infolist_var *infolist_new_var_buffer_take_ownership (struct t_infolist_item *item,
-                                                                      const char *name,
+                                                                      char *name,
                                                                       void *pointer,
                                                                       int size);
+extern struct t_infolist_var *infolist_new_var_time_take_name_ownership (struct t_infolist_item *item,
+                                                                         char *name,
+                                                                         time_t time);
 extern struct t_infolist_var *infolist_new_var_time (struct t_infolist_item *item,
                                                      const char *name,
                                                      time_t time);

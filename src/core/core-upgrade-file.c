@@ -661,6 +661,21 @@ upgrade_file_read_object (struct t_upgrade_file *upgrade_file)
                 goto end;
             }
 
+            /*
+             * for every variable type below, "name" (and, for string/buffer,
+             * the value too) is transferred to the infolist via a
+             * "take ownership" constructor instead of being copied again:
+             * "name" was just freshly allocated by upgrade_file_read_string()
+             * above and is not used afterwards, so re-strdup'ing it inside
+             * the infolist would be a wasted allocation+copy on every single
+             * field of every restored object; on success, the local pointer
+             * is reset so the cleanup below and the next loop iteration
+             * don't free memory now owned by the infolist; on failure (e.g.
+             * empty variable name), free it here instead of leaving it for
+             * the cleanup below, since the next loop iteration would
+             * otherwise overwrite it (via upgrade_file_read_string) before
+             * it is ever freed
+             */
             switch (type_var)
             {
                 case INFOLIST_INTEGER:
@@ -669,7 +684,14 @@ upgrade_file_read_object (struct t_upgrade_file *upgrade_file)
                         UPGRADE_ERROR(_("read - variable"), "integer");
                         goto end;
                     }
-                    infolist_new_var_integer (item, name, value);
+                    if (infolist_new_var_integer_take_name_ownership (
+                            item, name, value))
+                        name = NULL;
+                    else
+                    {
+                        free (name);
+                        name = NULL;
+                    }
                     break;
                 case INFOLIST_STRING:
                     if (!upgrade_file_read_string (upgrade_file, &value_str))
@@ -677,23 +699,16 @@ upgrade_file_read_object (struct t_upgrade_file *upgrade_file)
                         UPGRADE_ERROR(_("read - variable"), "string");
                         goto end;
                     }
-                    /*
-                     * transfer ownership of value_str to the infolist var
-                     * instead of copying it again (values can be large,
-                     * e.g. pasted multi-line text); on success, reset the
-                     * local pointer so the cleanup below and the next loop
-                     * iteration don't free memory now owned by the
-                     * infolist; on failure (e.g. empty variable name),
-                     * free it here instead of leaving it for the cleanup
-                     * below, since the next loop iteration would otherwise
-                     * overwrite value_str (via upgrade_file_read_string)
-                     * before it is ever freed
-                     */
                     if (infolist_new_var_string_take_ownership (item, name,
                                                                 value_str))
+                    {
+                        name = NULL;
                         value_str = NULL;
+                    }
                     else
                     {
+                        free (name);
+                        name = NULL;
                         free (value_str);
                         value_str = NULL;
                     }
@@ -706,12 +721,16 @@ upgrade_file_read_object (struct t_upgrade_file *upgrade_file)
                         UPGRADE_ERROR(_("read - variable"), "buffer");
                         goto end;
                     }
-                    /* transfer ownership, see comment above for strings */
                     if (infolist_new_var_buffer_take_ownership (item, name,
                                                                 buffer, size))
+                    {
+                        name = NULL;
                         buffer = NULL;
+                    }
                     else
                     {
+                        free (name);
+                        name = NULL;
                         free (buffer);
                         buffer = NULL;
                     }
@@ -722,7 +741,14 @@ upgrade_file_read_object (struct t_upgrade_file *upgrade_file)
                         UPGRADE_ERROR(_("read - variable"), "time");
                         goto end;
                     }
-                    infolist_new_var_time (item, name, time);
+                    if (infolist_new_var_time_take_name_ownership (
+                            item, name, time))
+                        name = NULL;
+                    else
+                    {
+                        free (name);
+                        name = NULL;
+                    }
                     break;
             }
         }
