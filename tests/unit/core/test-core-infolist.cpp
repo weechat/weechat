@@ -26,6 +26,7 @@
 
 extern "C"
 {
+#include <stdlib.h>
 #include "src/core/core-hook.h"
 #include "src/core/core-infolist.h"
 }
@@ -233,6 +234,91 @@ TEST(CoreInfolist, New)
     POINTERS_EQUAL(var_int, item->vars);
     POINTERS_EQUAL(var_time, item->last_var);
 
+    infolist_free (infolist);
+}
+
+/*
+ * Test functions:
+ *   infolist_new_var_string_take_ownership
+ *   infolist_new_var_buffer_take_ownership
+ */
+
+TEST(CoreInfolist, NewVarTakeOwnership)
+{
+    struct t_infolist *infolist;
+    struct t_infolist_item *item;
+    struct t_infolist_var *var_str, *var_buf;
+    char *str_value, *buf_value;
+
+    infolist = infolist_new (NULL);
+    CHECK(infolist);
+    item = infolist_new_item (infolist);
+    CHECK(item);
+
+    /*
+     * error cases: with invalid arguments the functions must return NULL and
+     * free the value/pointer they were given (checked by ASAN/valgrind); a
+     * heap-allocated value is passed on purpose to exercise that free
+     */
+    POINTERS_EQUAL(NULL, infolist_new_var_string_take_ownership (NULL, "test",
+                                                                 strdup ("abc")));
+    POINTERS_EQUAL(NULL, infolist_new_var_string_take_ownership (item, NULL,
+                                                                 strdup ("abc")));
+    POINTERS_EQUAL(NULL, infolist_new_var_string_take_ownership (item, "",
+                                                                 strdup ("abc")));
+    POINTERS_EQUAL(NULL, infolist_new_var_buffer_take_ownership (NULL, "test",
+                                                                 malloc (3), 3));
+    POINTERS_EQUAL(NULL, infolist_new_var_buffer_take_ownership (item, NULL,
+                                                                 malloc (3), 3));
+    POINTERS_EQUAL(NULL, infolist_new_var_buffer_take_ownership (item, "",
+                                                                 malloc (3), 3));
+    POINTERS_EQUAL(NULL, infolist_new_var_buffer_take_ownership (item, "test",
+                                                                 malloc (3), 0));
+    POINTERS_EQUAL(NULL, infolist_new_var_buffer_take_ownership (item, "test",
+                                                                 malloc (3), -1));
+
+    /* add a string variable, taking ownership of the value */
+    str_value = strdup ("test ownership");
+    var_str = infolist_new_var_string_take_ownership (item, "test_string",
+                                                      str_value);
+    CHECK(var_str);
+
+    /* check content of variable */
+    STRCMP_EQUAL("test_string", var_str->name);
+    LONGS_EQUAL(INFOLIST_STRING, var_str->type);
+    /* the value pointer is stored as-is, not copied */
+    POINTERS_EQUAL(str_value, var_str->value);
+    STRCMP_EQUAL("test ownership", (const char *)var_str->value);
+    LONGS_EQUAL(0, var_str->size);
+
+    /* check that variable is in item */
+    POINTERS_EQUAL(var_str, item->vars);
+    POINTERS_EQUAL(var_str, item->last_var);
+
+    /* add a buffer variable, taking ownership of the pointer */
+    buf_value = (char *)malloc (3);
+    buf_value[0] = 12;
+    buf_value[1] = 34;
+    buf_value[2] = 56;
+    var_buf = infolist_new_var_buffer_take_ownership (item, "test_buffer",
+                                                      buf_value, 3);
+    CHECK(var_buf);
+
+    /* check content of variable */
+    STRCMP_EQUAL("test_buffer", var_buf->name);
+    LONGS_EQUAL(INFOLIST_BUFFER, var_buf->type);
+    /* the pointer is stored as-is, not copied */
+    POINTERS_EQUAL(buf_value, var_buf->value);
+    LONGS_EQUAL(12, ((char *)var_buf->value)[0]);
+    LONGS_EQUAL(34, ((char *)var_buf->value)[1]);
+    LONGS_EQUAL(56, ((char *)var_buf->value)[2]);
+    LONGS_EQUAL(3, var_buf->size);
+
+    /* check that variable is in item */
+    POINTERS_EQUAL(var_str, item->vars);
+    POINTERS_EQUAL(var_buf, item->last_var);
+
+    /* infolist_free frees the owned string and buffer values */
     infolist_free (infolist);
 }
 
