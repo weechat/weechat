@@ -353,8 +353,10 @@ logger_get_mask_for_buffer (struct t_gui_buffer *buffer)
 char *
 logger_get_mask_expanded (struct t_gui_buffer *buffer, const char *mask)
 {
-    char *mask2, *mask3, *mask4, *mask5, *mask6, *mask7, *mask8, *dir_separator;
-    int length;
+    char *mask2, *mask3, *mask4, *mask5, *dir_separator;
+    char *expanded, *replaced, **items;
+    const char *ptr_replacement_char;
+    int length, i, num_items;
     time_t seconds;
     struct tm *date_tmp;
 
@@ -362,9 +364,8 @@ logger_get_mask_expanded (struct t_gui_buffer *buffer, const char *mask)
     mask3 = NULL;
     mask4 = NULL;
     mask5 = NULL;
-    mask6 = NULL;
-    mask7 = NULL;
-    mask8 = NULL;
+    items = NULL;
+    num_items = 0;
 
     dir_separator = weechat_info_get ("dir_separator", "");
     if (!dir_separator)
@@ -381,45 +382,56 @@ logger_get_mask_expanded (struct t_gui_buffer *buffer, const char *mask)
     if (strftime (mask2, length, mask, date_tmp) == 0)
         mask2[0] = '\0';
 
+    ptr_replacement_char = weechat_config_string (logger_config_file_replacement_char);
+
     /*
-     * we first replace directory separator (commonly '/') by \001 because
-     * buffer mask can contain this char, and will be replaced by replacement
-     * char ('_' by default)
+     * local variables are replaced in each directory level of the mask
+     * separately: their values are not trusted (for example a channel name is
+     * chosen by the IRC server), so any directory separator they contain is
+     * replaced, and only the separators coming from the mask itself are kept
+     * when the levels are joined again; this way a buffer name cannot add a
+     * directory level to the path of the log file
      */
-    mask3 = weechat_string_replace (mask2, dir_separator, "\001");
+    items = weechat_string_split (mask2, dir_separator, NULL, 0, 0, &num_items);
+    if (items)
+    {
+        for (i = 0; i < num_items; i++)
+        {
+            expanded = weechat_buffer_string_replace_local_var (buffer, items[i]);
+            if (!expanded)
+                goto end;
+            replaced = weechat_string_replace (expanded, dir_separator,
+                                               ptr_replacement_char);
+            free (expanded);
+            if (!replaced)
+                goto end;
+            free (items[i]);
+            items[i] = replaced;
+        }
+        mask3 = weechat_string_rebuild_split_string ((const char **)items,
+                                                     dir_separator, 0, -1);
+    }
+    else
+    {
+        /* empty mask */
+        mask3 = strdup (mask2);
+    }
     if (!mask3)
         goto end;
 
-    mask4 = weechat_buffer_string_replace_local_var (buffer, mask3);
-    if (!mask4)
-        goto end;
-
-    mask5 = weechat_string_replace (mask4,
-                                    dir_separator,
-                                    weechat_config_string (logger_config_file_replacement_char));
-    if (!mask5)
-        goto end;
-
 #ifdef __CYGWIN__
-    mask6 = weechat_string_replace (mask5, "\\",
-                                    weechat_config_string (logger_config_file_replacement_char));
+    mask4 = weechat_string_replace (mask3, "\\", ptr_replacement_char);
 #else
-    mask6 = strdup (mask5);
+    mask4 = strdup (mask3);
 #endif /* __CYGWIN__ */
-    if (!mask6)
-        goto end;
-
-    /* restore directory separator */
-    mask7 = weechat_string_replace (mask6,
-                                    "\001", dir_separator);
-    if (!mask7)
+    if (!mask4)
         goto end;
 
     /* convert to lower case? */
     if (weechat_config_boolean (logger_config_file_name_lower_case))
-        mask8 = weechat_string_tolower (mask7);
+        mask5 = weechat_string_tolower (mask4);
     else
-        mask8 = strdup (mask7);
+        mask5 = strdup (mask4);
 
     if (weechat_logger_plugin->debug)
     {
@@ -428,19 +440,17 @@ logger_get_mask_expanded (struct t_gui_buffer *buffer, const char *mask)
                                   "decoded mask = \"%s\"",
                                   LOGGER_PLUGIN_NAME,
                                   weechat_buffer_get_string (buffer, "name"),
-                                  mask, mask8);
+                                  mask, mask5);
     }
 
 end:
     free (dir_separator);
     free (mask2);
+    weechat_string_free_split (items);
     free (mask3);
     free (mask4);
-    free (mask5);
-    free (mask6);
-    free (mask7);
 
-    return mask8;
+    return mask5;
 }
 
 /*
