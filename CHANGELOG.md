@@ -32,6 +32,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### Fixed
 
+- core: fix infinite loop when option weechat.look.read_marker_string is set to a string with a width of zero ([#2337](https://github.com/weechat/weechat/issues/2337))
 - core: fix option weechat.look.color_real_white not applied when color is "white" on 16+ colors terminals ([#1742](https://github.com/weechat/weechat/issues/1742))
 - core: fix buffer overflow in connection to SOCKS5 proxy ([#2325](https://github.com/weechat/weechat/issues/2325))
 - api: fix infinite loop in function string_replace when the search string is empty
