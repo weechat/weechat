@@ -27,6 +27,9 @@ extern "C"
 {
 #include "src/gui/gui-buffer.h"
 #include "src/plugins/logger/logger.h"
+
+extern char *logger_get_mask_expanded (struct t_gui_buffer *buffer,
+                                       const char *mask);
 }
 
 TEST_GROUP(Logger)
@@ -110,7 +113,46 @@ TEST(Logger, GetMaskForBuffer)
 
 TEST(Logger, GetMaskExpanded)
 {
-    /* TODO: write tests */
+    char *str;
+
+    /* empty mask */
+    WEE_TEST_STR("", logger_get_mask_expanded (gui_buffers, ""));
+
+    /* mask without any special char */
+    WEE_TEST_STR("test.weechatlog",
+                 logger_get_mask_expanded (gui_buffers, "test.weechatlog"));
+
+    /* local variable of buffer is expanded (buffer "name" == "weechat") */
+    WEE_TEST_STR("weechat.weechatlog",
+                 logger_get_mask_expanded (gui_buffers, "$name.weechatlog"));
+
+    /* directory separators of the mask itself are kept as directory levels */
+    WEE_TEST_STR("dir1/dir2/weechat.weechatlog",
+                 logger_get_mask_expanded (gui_buffers,
+                                           "dir1/dir2/$name.weechatlog"));
+
+    gui_buffer_set (gui_buffers, "localvar_set_testmask", "aaa/bbb");
+
+    /*
+     * a directory separator inside a local variable value is replaced and can
+     * not add a directory level to the path
+     */
+    WEE_TEST_STR("aaa_bbb.weechatlog",
+                 logger_get_mask_expanded (gui_buffers,
+                                           "$testmask.weechatlog"));
+
+    /*
+     * path traversal: the char used internally to protect directory separators
+     * (0x01) must not be turned into a directory separator when it comes from a
+     * local variable value (it is kept as-is in the file name)
+     */
+    gui_buffer_set (gui_buffers, "localvar_set_testmask",
+                    "aaa\001..\001..\001bbb");
+    WEE_TEST_STR("aaa\001..\001..\001bbb.weechatlog",
+                 logger_get_mask_expanded (gui_buffers,
+                                           "$testmask.weechatlog"));
+
+    gui_buffer_set (gui_buffers, "localvar_del_testmask", "");
 }
 
 /*
