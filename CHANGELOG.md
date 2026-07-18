@@ -16,6 +16,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 - core: fix infinite loop when option weechat.look.read_marker_string is set to a string with a width of zero ([#2337](https://github.com/weechat/weechat/issues/2337))
 - core: fix integer overflow in size calculation when evaluating "${hide:...}" and "${base_encode:...}" ([#2335](https://github.com/weechat/weechat/issues/2335))
+- logger: fix path traversal in log file name when a buffer local variable contains the char used internally to protect directory separators ([#2340](https://github.com/weechat/weechat/issues/2340))
 
 ## Version 4.9.3 (2026-07-05)
 
