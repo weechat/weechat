@@ -16,6 +16,7 @@
 - api: fix infinite loop in function string_replace when the search string is empty
 - irc: limit size of data received from the server to prevent memory exhaustion
 - irc: fix out-of-bounds read on incoming DCC command with a quoted filename ending the message ([#2322](https://github.com/weechat/weechat/issues/2322))
+- logger: fix path traversal in log file name when a buffer local variable contains the char used internally to protect directory separators ([#2340](https://github.com/weechat/weechat/issues/2340))
 - relay: fix read of uncompressed websocket frame ([#2331](https://github.com/weechat/weechat/issues/2331))
 - relay: limit size of received websocket frame and HTTP body to prevent memory exhaustion
 - relay: fix timing attack on password authentication ([GHSA-vhv8-g2r9-cwcc](https://github.com/weechat/weechat/security/advisories/GHSA-vhv8-g2r9-cwcc), [CVE-2026-53525](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-53525))
