@@ -597,7 +597,7 @@ relay_auth_password_hash (struct t_relay_client *client,
             else if (!relay_auth_check_hash_sha (str_hash_algo, salt, salt_size,
                                                  hash_sha, relay_password))
             {
-                rc = -4;;
+                rc = -4;
             }
             free (salt_hexa);
             free (salt);
