@@ -582,6 +582,15 @@ relay_auth_password_hash (struct t_relay_client *client,
 
     switch (hash_algo)
     {
+        case RELAY_AUTH_PASSWORD_HASH_PLAIN:
+            /*
+             * plain password is not handled here: it is checked by the
+             * function relay_auth_check_password_plain; receiving the "plain"
+             * algo in a hashed password means the client is trying to
+             * authenticate with the wrong form, so it is rejected
+             */
+            rc = -1;
+            break;
         case RELAY_AUTH_PASSWORD_HASH_SHA256:
         case RELAY_AUTH_PASSWORD_HASH_SHA512:
             relay_auth_parse_sha (
@@ -634,6 +643,9 @@ relay_auth_password_hash (struct t_relay_client *client,
             break;
         case RELAY_NUM_PASSWORD_HASH_ALGOS:
             rc = -4;
+            break;
+        default:
+            rc = -1;
             break;
     }
 
