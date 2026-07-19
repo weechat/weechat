@@ -509,5 +509,46 @@ TEST(RelayAuth, CheckHashPbkdf2)
 
 TEST(RelayAuth, PasswordHash)
 {
-    /* TODO: write tests */
+    struct t_relay_client *client;
+
+    client = (struct t_relay_client *)calloc (1, sizeof (*client));
+    CHECK(client);
+    client->protocol = RELAY_PROTOCOL_API;
+
+    /* invalid arguments */
+    LONGS_EQUAL(-4, relay_auth_password_hash (client, NULL, NULL));
+    LONGS_EQUAL(-4, relay_auth_password_hash (client, "sha256:abcd", NULL));
+    LONGS_EQUAL(-4, relay_auth_password_hash (client, NULL, "password"));
+
+    /* missing separator between algo and hash */
+    LONGS_EQUAL(-4, relay_auth_password_hash (client, "", "password"));
+    LONGS_EQUAL(-4, relay_auth_password_hash (client, "sha256", "password"));
+
+    /* unknown hash algorithm */
+    LONGS_EQUAL(-1, relay_auth_password_hash (client, ":abcd", "password"));
+    LONGS_EQUAL(-1, relay_auth_password_hash (client, "zzz:abcd", "password"));
+
+    /*
+     * algo "plain" must always be rejected in a hashed password: it is
+     * checked by relay_auth_check_password_plain, and accepting it here
+     * would authenticate the client without any password check
+     */
+    LONGS_EQUAL(-1, relay_auth_password_hash (client, "plain:", "password"));
+    LONGS_EQUAL(-1, relay_auth_password_hash (client, "plain:test", "password"));
+    LONGS_EQUAL(-1, relay_auth_password_hash (client, "plain:password",
+                                              "password"));
+
+    /* same test with protocol "weechat", after "plain" was negotiated */
+    client->protocol = RELAY_PROTOCOL_WEECHAT;
+    client->password_hash_algo = RELAY_AUTH_PASSWORD_HASH_PLAIN;
+    LONGS_EQUAL(-1, relay_auth_password_hash (client, "plain:", "password"));
+    LONGS_EQUAL(-1, relay_auth_password_hash (client, "plain:password",
+                                              "password"));
+
+    /* no authentication supported with protocol "weechat" */
+    client->password_hash_algo = -1;
+    LONGS_EQUAL(-1, relay_auth_password_hash (client, "sha256:abcd",
+                                              "password"));
+
+    free (client);
 }
