@@ -63,6 +63,22 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - xfer: fix out-of-bounds read when receiving empty line in DCC chat ([#2323](https://github.com/weechat/weechat/issues/2323))
 - xfer: fix out-of-bounds write in xfer file transfer resume ([#2326](https://github.com/weechat/weechat/issues/2326))
 
+## [4.9.4] - 2026-07-19
+
+### Changed
+
+- core: improve speed of display of long words in chat area ([#2336](https://github.com/weechat/weechat/issues/2336))
+
+### Fixed
+
+- core: fix infinite loop when option weechat.look.read_marker_string is set to a string with a width of zero ([#2337](https://github.com/weechat/weechat/issues/2337))
+
+### Security
+
+- core: fix integer overflow in size calculation when evaluating "${hide:...}" and "${base_encode:...}" ([#2335](https://github.com/weechat/weechat/issues/2335))
+- logger: fix path traversal in log file name when a buffer local variable contains the char used internally to protect directory separators ([#2340](https://github.com/weechat/weechat/issues/2340))
+- relay: fix authentication bypass with the "plain" password hash algorithm ([GHSA-68ff-gq39-pqjm](https://github.com/weechat/weechat/security/advisories/GHSA-68ff-gq39-pqjm))
+
 ## [4.9.3] - 2026-07-05
 
 ### Fixed
@@ -4576,6 +4592,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - nicklist can be moved on top, bottom, left or right of window
 
 [Unreleased]: https://github.com/weechat/weechat/compare/v4.9.0...HEAD
+[4.9.4]: https://github.com/weechat/weechat/compare/v4.9.3...v4.9.4
 [4.9.3]: https://github.com/weechat/weechat/compare/v4.9.2...v4.9.3
 [4.9.2]: https://github.com/weechat/weechat/compare/v4.9.1...v4.9.2
 [4.9.1]: https://github.com/weechat/weechat/compare/v4.9.0...v4.9.1
