@@ -393,6 +393,7 @@ jobs:
       with:
         envs: "CC CXX TERM"
         usesh: true
+        cache-after-prepare: true
         prepare: pkg install -y ${{ env.WEECHAT_DEPS_FREEBSD }}
         run: |
           ./tools/build_test.sh ${{ matrix.config.buildargs }}
