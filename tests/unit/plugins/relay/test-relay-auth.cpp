@@ -27,7 +27,10 @@ extern "C"
 #include <string.h>
 #include <ctype.h>
 #include <time.h>
+#include <gcrypt.h>
 #include "src/core/core-config-file.h"
+#include "src/core/core-crypto.h"
+#include "src/core/core-string.h"
 #include "src/plugins/relay/relay.h"
 #include "src/plugins/relay/relay-auth.h"
 #include "src/plugins/relay/relay-client.h"
@@ -508,6 +511,11 @@ TEST(RelayAuth, CheckHashPbkdf2)
 TEST(RelayAuth, PasswordHash)
 {
     struct t_relay_client *client;
+    const char *password = "password";
+    char salt[1024], salt_pass[1024], hash[1024], hash_hexa[2048];
+    char hashed_password[4096];
+    time_t time_now;
+    int hash_size, salt_size;
 
     client = (struct t_relay_client *)calloc (1, sizeof (*client));
     CHECK(client);
@@ -548,5 +556,65 @@ TEST(RelayAuth, PasswordHash)
     LONGS_EQUAL(-1, relay_auth_password_hash (client, "sha256:abcd",
                                               "password"));
 
+    /*
+     * nominal case: authentication OK with protocol "api", where the salt is
+     * the current time (as unix timestamp)
+     */
+    client->protocol = RELAY_PROTOCOL_API;
+
+    /* SHA256 */
+    time_now = time (NULL);
+    snprintf (salt_pass, sizeof (salt_pass), "%ld%s", time_now, password);
+    LONGS_EQUAL(1, weecrypto_hash (salt_pass, strlen (salt_pass),
+                                   GCRY_MD_SHA256, hash, &hash_size));
+    string_base_encode ("16", hash, hash_size, hash_hexa);
+    snprintf (hashed_password, sizeof (hashed_password),
+              "sha256:%ld:%s", time_now, hash_hexa);
+    LONGS_EQUAL(0, relay_auth_password_hash (client, hashed_password, password));
+    /* wrong password with the same (valid) form: invalid password (hash) */
+    LONGS_EQUAL(-4, relay_auth_password_hash (client, hashed_password, "wrong"));
+
+    /* SHA512 */
+    time_now = time (NULL);
+    snprintf (salt_pass, sizeof (salt_pass), "%ld%s", time_now, password);
+    LONGS_EQUAL(1, weecrypto_hash (salt_pass, strlen (salt_pass),
+                                   GCRY_MD_SHA512, hash, &hash_size));
+    string_base_encode ("16", hash, hash_size, hash_hexa);
+    snprintf (hashed_password, sizeof (hashed_password),
+              "sha512:%ld:%s", time_now, hash_hexa);
+    LONGS_EQUAL(0, relay_auth_password_hash (client, hashed_password, password));
+
+    /* PBKDF2 (SHA256), with the default number of iterations (100000) */
+    time_now = time (NULL);
+    snprintf (salt, sizeof (salt), "%ld", time_now);
+    LONGS_EQUAL(1, weecrypto_hash_pbkdf2 (password, strlen (password),
+                                          GCRY_MD_SHA256,
+                                          salt, strlen (salt),
+                                          100000, hash, &hash_size));
+    string_base_encode ("16", hash, hash_size, hash_hexa);
+    snprintf (hashed_password, sizeof (hashed_password),
+              "pbkdf2+sha256:%ld:100000:%s", time_now, hash_hexa);
+    LONGS_EQUAL(0, relay_auth_password_hash (client, hashed_password, password));
+
+    /*
+     * nominal case: authentication OK with protocol "weechat", where the salt
+     * is the server nonce followed by a client nonce, both in hexadecimal
+     */
+    client->protocol = RELAY_PROTOCOL_WEECHAT;
+    client->password_hash_algo = RELAY_AUTH_PASSWORD_HASH_SHA256;
+    client->nonce = strdup ("abcd");
+
+    /* salt = server nonce ("abcd") + client nonce ("1234") */
+    salt_size = string_base_decode ("16", "abcd1234", salt);
+    memcpy (salt_pass, salt, salt_size);
+    memcpy (salt_pass + salt_size, password, strlen (password));
+    LONGS_EQUAL(1, weecrypto_hash (salt_pass, salt_size + strlen (password),
+                                   GCRY_MD_SHA256, hash, &hash_size));
+    string_base_encode ("16", hash, hash_size, hash_hexa);
+    snprintf (hashed_password, sizeof (hashed_password),
+              "sha256:abcd1234:%s", hash_hexa);
+    LONGS_EQUAL(0, relay_auth_password_hash (client, hashed_password, password));
+
+    free (client->nonce);
     free (client);
 }
