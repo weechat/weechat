@@ -24,6 +24,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### Changed
 
+- core: improve speed of display of long words in chat area ([#2336](https://github.com/weechat/weechat/issues/2336))
 - core: add condition on connected relay api clients in default value of option weechat.look.hotlist_add_conditions
 - core: add `/mute` in default command for key `Alt`+`=` (toggle filters)
 - api: change type of parameter "pos_option_name" to "const char **" in function config_search_with_string
@@ -31,6 +32,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### Fixed
 
+- core: fix infinite loop when option weechat.look.read_marker_string is set to a string with a width of zero ([#2337](https://github.com/weechat/weechat/issues/2337))
 - core: fix option weechat.look.color_real_white not applied when color is "white" on 16+ colors terminals ([#1742](https://github.com/weechat/weechat/issues/1742))
 - core: fix buffer overflow in connection to SOCKS5 proxy ([#2325](https://github.com/weechat/weechat/issues/2325))
 - api: fix infinite loop in function string_replace when the search string is empty
@@ -42,10 +44,13 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### Security
 
+- core: fix integer overflow in size calculation when evaluating "${hide:...}" and "${base_encode:...}" ([#2335](https://github.com/weechat/weechat/issues/2335))
 - core: fix possible buffer overflow in command /color alias ([#2330](https://github.com/weechat/weechat/issues/2330))
 - core: fix possible buffer overflow in list of commands displayed by /help ([#2330](https://github.com/weechat/weechat/issues/2330))
 - irc: limit size of data received from the server to prevent memory exhaustion
 - irc: fix out-of-bounds read on incoming DCC command with a quoted filename ending the message ([#2322](https://github.com/weechat/weechat/issues/2322))
+- logger: fix path traversal in log file name when a buffer local variable contains the char used internally to protect directory separators ([#2340](https://github.com/weechat/weechat/issues/2340))
+- relay: fix authentication bypass with the "plain" password hash algorithm ([GHSA-68ff-gq39-pqjm](https://github.com/weechat/weechat/security/advisories/GHSA-68ff-gq39-pqjm))
 - relay: limit size of decompressed websocket frame with permessage-deflate to prevent memory exhaustion ([GHSA-v2v4-45wm-5cr3](https://github.com/weechat/weechat/security/advisories/GHSA-v2v4-45wm-5cr3), [CVE-2026-53524](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-53524))
 - relay: limit size of received websocket frame and HTTP body to prevent memory exhaustion
 - relay: limit size of partial message received while reading an HTTP request to prevent memory exhaustion
@@ -57,6 +62,22 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - xfer: replace directory separator in remote nick by underscore in download filename to prevent writing the file outside the download directory ([#2321](https://github.com/weechat/weechat/issues/2321))
 - xfer: fix out-of-bounds read when receiving empty line in DCC chat ([#2323](https://github.com/weechat/weechat/issues/2323))
 - xfer: fix out-of-bounds write in xfer file transfer resume ([#2326](https://github.com/weechat/weechat/issues/2326))
+
+## [4.9.4] - 2026-07-19
+
+### Changed
+
+- core: improve speed of display of long words in chat area ([#2336](https://github.com/weechat/weechat/issues/2336))
+
+### Fixed
+
+- core: fix infinite loop when option weechat.look.read_marker_string is set to a string with a width of zero ([#2337](https://github.com/weechat/weechat/issues/2337))
+
+### Security
+
+- core: fix integer overflow in size calculation when evaluating "${hide:...}" and "${base_encode:...}" ([#2335](https://github.com/weechat/weechat/issues/2335))
+- logger: fix path traversal in log file name when a buffer local variable contains the char used internally to protect directory separators ([#2340](https://github.com/weechat/weechat/issues/2340))
+- relay: fix authentication bypass with the "plain" password hash algorithm ([GHSA-68ff-gq39-pqjm](https://github.com/weechat/weechat/security/advisories/GHSA-68ff-gq39-pqjm))
 
 ## [4.9.3] - 2026-07-05
 
@@ -4571,6 +4592,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - nicklist can be moved on top, bottom, left or right of window
 
 [Unreleased]: https://github.com/weechat/weechat/compare/v4.9.0...HEAD
+[4.9.4]: https://github.com/weechat/weechat/compare/v4.9.3...v4.9.4
 [4.9.3]: https://github.com/weechat/weechat/compare/v4.9.2...v4.9.3
 [4.9.2]: https://github.com/weechat/weechat/compare/v4.9.1...v4.9.2
 [4.9.1]: https://github.com/weechat/weechat/compare/v4.9.0...v4.9.1
