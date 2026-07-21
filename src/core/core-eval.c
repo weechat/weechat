@@ -29,6 +29,7 @@
 #include <string.h>
 #include <stdarg.h>
 #include <errno.h>
+#include <limits.h>
 #include <regex.h>
 #include <time.h>
 #include <sys/time.h>
@@ -372,6 +373,11 @@ eval_string_hide (const char *text)
     {
         length_hide_char = strlen (hide_char);
         length = utf8_strlen (ptr_string + 1);
+        if ((length_hide_char > 0) && (length >= INT_MAX / length_hide_char))
+        {
+            free (hide_char);
+            return strdup ("");
+        }
         hidden_string = malloc ((length * length_hide_char) + 1);
         if (hidden_string)
         {
@@ -893,6 +899,8 @@ eval_string_base_encode (const char *text)
 
     ptr_string++;
     length = strlen (ptr_string);
+    if (length >= (INT_MAX - 9) / 4)
+        goto end;
     result = malloc ((length * 4) + 8 + 1);
     if (!result)
         goto end;

@@ -54,7 +54,7 @@
  * used as an upper bound when inflating, to prevent a small compressed frame
  * from decompressing to an unbounded amount of data ("deflate bomb")
  */
-#define WEBSOCKET_INFLATE_MAX_SIZE (8 * 1024 * 1024)
+#define WEBSOCKET_INFLATE_MAX_SIZE (64 * 1024 * 1024)
 
 struct t_relay_client;
 struct t_relay_http_request;

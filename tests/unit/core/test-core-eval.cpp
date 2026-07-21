@@ -457,8 +457,9 @@ TEST(CoreEval, EvalExpression)
     struct t_hashtable *pointers, *extra_vars, *options;
     struct t_config_option *ptr_option;
     struct t_gui_buffer *test_buffer;
-    char *value, str_value[256], str_expr[256], *error;
+    char *value, str_value[256], str_expr[256], *error, *big_expr, *pos;
     const char *ptr_debug_output;
+    int big_size;
     long number;
     time_t time_now;
 
@@ -632,6 +633,25 @@ TEST(CoreEval, EvalExpression)
     WEE_CHECK_EVAL("", "${hide:invalid}");
     WEE_CHECK_EVAL("********", "${hide:*,password}");
     WEE_CHECK_EVAL("\u2603\u2603\u2603", "${hide:${esc:\u2603},abc}");
+
+    /*
+     * hidden chars: the product (hide char length * number of chars) must not
+     * overflow the size of the allocated output (would corrupt the heap)
+     */
+    big_size = 65536;
+    big_expr = (char *)malloc ((big_size * 2) + 16);
+    pos = big_expr;
+    memcpy (pos, "${hide:", 7);
+    pos += 7;
+    memset (pos, 'x', big_size);
+    pos += big_size;
+    *pos++ = ',';
+    memset (pos, 'y', big_size);
+    pos += big_size;
+    *pos++ = '}';
+    *pos = '\0';
+    WEE_CHECK_EVAL("", big_expr);
+    free (big_expr);
 
     /* test cut of chars (invalid values) */
     WEE_CHECK_EVAL("", "${cut:}");
