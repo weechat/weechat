@@ -1181,9 +1181,10 @@ irc_message_split_join (struct t_irc_message_split_context *context,
                         int max_length)
 {
     int channels_count, keys_count, length, length_no_channel;
-    int length_to_add, index_channel;
-    char **channels, **keys, *pos, *str;
-    char msg_to_send[16384], keys_to_add[16384];
+    int length_to_add, index_channel, rc;
+    char **channels, **keys, *pos, *str, *str_prefix, **msg_to_send, **keys_to_add;
+
+    rc = 0;
 
     max_length -= 2;  /* by default: 512 - 2 = 510 bytes */
 
@@ -1191,13 +1192,16 @@ irc_message_split_join (struct t_irc_message_split_context *context,
     channels_count = 0;
     keys = NULL;
     keys_count = 0;
+    str_prefix = NULL;
+    msg_to_send = NULL;
+    keys_to_add = NULL;
 
     pos = strchr (arguments, ' ');
     if (pos)
     {
         str = weechat_strndup (arguments, pos - arguments);
         if (!str)
-            return 0;
+            goto end;
         channels = weechat_string_split (str, ",", NULL,
                                          WEECHAT_STRING_SPLIT_STRIP_LEFT
                                          | WEECHAT_STRING_SPLIT_STRIP_RIGHT
@@ -1224,12 +1228,22 @@ irc_message_split_join (struct t_irc_message_split_context *context,
                                          0, &channels_count);
     }
 
-    snprintf (msg_to_send, sizeof (msg_to_send), "%s%sJOIN",
-              (host) ? host : "",
-              (host) ? " " : "");
-    length = strlen (msg_to_send);
+    msg_to_send = weechat_string_dyn_alloc (1024);
+    keys_to_add = weechat_string_dyn_alloc (1024);
+    if (!msg_to_send || !keys_to_add)
+        goto end;
+
+    if (weechat_asprintf (&str_prefix, "%s%sJOIN",
+                          (host) ? host : "",
+                          (host) ? " " : "") < 0)
+    {
+        goto end;
+    }
+
+    if (!weechat_string_dyn_copy (msg_to_send, str_prefix))
+        goto end;
+    length = strlen (str_prefix);
     length_no_channel = length;
-    keys_to_add[0] = '\0';
     index_channel = 0;
     while (index_channel < channels_count)
     {
@@ -1239,18 +1253,23 @@ irc_message_split_join (struct t_irc_message_split_context *context,
         if ((length + length_to_add < max_length)
             || (length == length_no_channel))
         {
-            if (length + length_to_add < (int)sizeof (msg_to_send))
+            if (!weechat_string_dyn_concat (msg_to_send,
+                                            (length == length_no_channel) ? " " : ",",
+                                            -1)
+                || !weechat_string_dyn_concat (msg_to_send,
+                                               channels[index_channel], -1))
             {
-                strcat (msg_to_send, (length == length_no_channel) ? " " : ",");
-                strcat (msg_to_send, channels[index_channel]);
+                goto end;
             }
             if (index_channel < keys_count)
             {
-                if (strlen (keys_to_add) + 1 +
-                    strlen (keys[index_channel]) < (int)sizeof (keys_to_add))
+                if (!weechat_string_dyn_concat (keys_to_add,
+                                                ((*keys_to_add)[0]) ? "," : " ",
+                                                -1)
+                    || !weechat_string_dyn_concat (keys_to_add,
+                                                   keys[index_channel], -1))
                 {
-                    strcat (keys_to_add, (keys_to_add[0]) ? "," : " ");
-                    strcat (keys_to_add, keys[index_channel]);
+                    goto end;
                 }
             }
             length += length_to_add;
@@ -1258,33 +1277,44 @@ irc_message_split_join (struct t_irc_message_split_context *context,
         }
         else
         {
-            strcat (msg_to_send, keys_to_add);
+            if (!weechat_string_dyn_concat (msg_to_send, *keys_to_add, -1))
+                goto end;
             irc_message_split_add (context,
                                    tags,
-                                   msg_to_send,
-                                   msg_to_send + length_no_channel + 1);
+                                   *msg_to_send,
+                                   *msg_to_send + length_no_channel + 1);
             (context->number)++;
-            snprintf (msg_to_send, sizeof (msg_to_send), "%s%sJOIN",
-                      (host) ? host : "",
-                      (host) ? " " : "");
-            length = strlen (msg_to_send);
-            keys_to_add[0] = '\0';
+            if (!weechat_string_dyn_copy (msg_to_send, str_prefix)
+                || !weechat_string_dyn_copy (keys_to_add, NULL))
+            {
+                goto end;
+            }
+            length = length_no_channel;
         }
     }
 
     if (length > length_no_channel)
     {
-        strcat (msg_to_send, keys_to_add);
+        if (!weechat_string_dyn_concat (msg_to_send, *keys_to_add, -1))
+            goto end;
         irc_message_split_add (context,
                                tags,
-                               msg_to_send,
-                               msg_to_send + length_no_channel + 1);
+                               *msg_to_send,
+                               *msg_to_send + length_no_channel + 1);
     }
 
+    rc = 1;
+
+end:
+    free (str_prefix);
+    if (msg_to_send)
+        weechat_string_dyn_free (msg_to_send, 1);
+    if (keys_to_add)
+        weechat_string_dyn_free (keys_to_add, 1);
     weechat_string_free_split (channels);
     weechat_string_free_split (keys);
 
-    return 1;
+    return rc;
 }
 
 /*

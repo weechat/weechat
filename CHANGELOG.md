@@ -10,6 +10,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 ### Fixed
 
+- irc: fix stack buffer overflow when splitting a JOIN message with a large list of channels and keys ([GHSA-q2xg-9ggx-77mr](https://github.com/weechat/weechat/security/advisories/GHSA-q2xg-9ggx-77mr))
 - relay: increase max size for decompressed websocket frame
 
 ## Version 4.9.4 (2026-07-19)
