@@ -1388,6 +1388,83 @@ TEST(IrcMessage, Split)
                  (const char *)hashtable_get (hashtable, "args2"));
     hashtable_free (hashtable);
 
+    /*
+     * JOIN with a list of channels and keys larger than 16384 bytes: the
+     * message is split into multiple parts; this used to trigger a stack
+     * buffer overflow when concatenating the keys to the message, due to
+     * the use of fixed-size internal buffers (regression test)
+     */
+    {
+        char **input, **exp_channels, **exp_keys, **got_channels, **got_keys;
+        char channel[64], key[64], str_key[32];
+        const char *ptr_args, *pos_space;
+        int i, old_msg_max_length;
+
+        input = string_dyn_alloc (65536);
+        exp_channels = string_dyn_alloc (65536);
+        exp_keys = string_dyn_alloc (65536);
+        got_channels = string_dyn_alloc (65536);
+        got_keys = string_dyn_alloc (65536);
+        CHECK(input);
+        CHECK(exp_channels);
+        CHECK(exp_keys);
+        CHECK(got_channels);
+        CHECK(got_keys);
+        string_dyn_copy (input, "JOIN ");
+        for (i = 0; i < 3000; i++)
+        {
+            snprintf (channel, sizeof (channel), "#channel%05d", i);
+            string_dyn_concat (input, (i == 0) ? "" : ",", -1);
+            string_dyn_concat (input, channel, -1);
+            string_dyn_concat (exp_channels, (i == 0) ? "" : ",", -1);
+            string_dyn_concat (exp_channels, channel, -1);
+        }
+        for (i = 0; i < 3000; i++)
+        {
+            snprintf (key, sizeof (key), "key%05d", i);
+            string_dyn_concat (input, (i == 0) ? " " : ",", -1);
+            string_dyn_concat (input, key, -1);
+            string_dyn_concat (exp_keys, (i == 0) ? "" : ",", -1);
+            string_dyn_concat (exp_keys, key, -1);
+        }
+        /* force a max length greater than the old 16384 bytes buffers */
+        old_msg_max_length = server->msg_max_length;
+        server->msg_max_length = 20000;
+        hashtable = irc_message_split (server, *input);
+        server->msg_max_length = old_msg_max_length;
+        CHECK(hashtable);
+        /* rebuild the channels and keys from all the split messages */
+        i = 1;
+        while (1)
+        {
+            snprintf (str_key, sizeof (str_key), "args%d", i);
+            ptr_args = (const char *)hashtable_get (hashtable, str_key);
+            if (!ptr_args)
+                break;
+            pos_space = strchr (ptr_args, ' ');
+            CHECK(pos_space);
+            if (i > 1)
+            {
+                string_dyn_concat (got_channels, ",", -1);
+                string_dyn_concat (got_keys, ",", -1);
+            }
+            string_dyn_concat (got_channels, ptr_args,
+                               (int)(pos_space - ptr_args));
+            string_dyn_concat (got_keys, pos_space + 1, -1);
+            i++;
+        }
+        /* the message must have been split into at least two parts */
+        CHECK(i > 2);
+        STRCMP_EQUAL(*exp_channels, *got_channels);
+        STRCMP_EQUAL(*exp_keys, *got_keys);
+        hashtable_free (hashtable);
+        string_dyn_free (input, 1);
+        string_dyn_free (exp_channels, 1);
+        string_dyn_free (exp_keys, 1);
+        string_dyn_free (got_channels, 1);
+        string_dyn_free (got_keys, 1);
+    }
+
     /* MONITOR with small content: no split */
     hashtable = irc_message_split (server, "MONITOR + nick1,nick2");
     CHECK(hashtable);
