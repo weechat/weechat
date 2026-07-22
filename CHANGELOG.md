@@ -48,6 +48,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - core: fix integer overflow in size calculation when evaluating "${hide:...}" and "${base_encode:...}" ([#2335](https://github.com/weechat/weechat/issues/2335))
 - core: fix possible buffer overflow in command /color alias ([#2330](https://github.com/weechat/weechat/issues/2330))
 - core: fix possible buffer overflow in list of commands displayed by /help ([#2330](https://github.com/weechat/weechat/issues/2330))
+- irc: fix stack buffer overflow when splitting a JOIN message with a large list of channels and keys ([GHSA-q2xg-9ggx-77mr](https://github.com/weechat/weechat/security/advisories/GHSA-q2xg-9ggx-77mr))
 - irc: limit size of data received from the server to prevent memory exhaustion
 - irc: fix out-of-bounds read on incoming DCC command with a quoted filename ending the message ([#2322](https://github.com/weechat/weechat/issues/2322))
 - logger: fix path traversal in log file name when a buffer local variable contains the char used internally to protect directory separators ([#2340](https://github.com/weechat/weechat/issues/2340))
