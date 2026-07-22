@@ -128,7 +128,8 @@ struct t_hashtable_item
 
 struct t_hashtable
 {
-    int size;                          /* hashtable size                    */
+    int size;                          /* hashtable size (grows/shrinks     */
+                                       /* automatically)                    */
     struct t_hashtable_item **htable;  /* table to map hashes with linked   */
                                        /* lists                             */
     int items_count;                   /* number of items in hashtable      */
