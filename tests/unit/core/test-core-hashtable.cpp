@@ -559,6 +559,351 @@ TEST(CoreHashtable, SetGetRemove)
     hashtable_free (hashtable);
 }
 
+/*
+ * Test functions:
+ *   hashtable_rehash (via hashtable_set_with_size, growing on high load factor)
+ */
+
+TEST(CoreHashtable, Rehash)
+{
+    struct t_hashtable *hashtable;
+    struct t_hashtable_item *ptr_item;
+    char key[32], value[32];
+    int i;
+
+    hashtable = hashtable_new (4,
+                               WEECHAT_HASHTABLE_STRING,
+                               WEECHAT_HASHTABLE_STRING,
+                               NULL,
+                               NULL);
+    LONGS_EQUAL(4, hashtable->size);
+
+    /* fill up to the load factor limit: no rehash must happen yet */
+    for (i = 0; i < 8; i++)
+    {
+        snprintf (key, sizeof (key), "key%d", i);
+        snprintf (value, sizeof (value), "value%d", i);
+        hashtable_set (hashtable, key, value);
+    }
+    LONGS_EQUAL(8, hashtable->items_count);
+    LONGS_EQUAL(4, hashtable->size);
+
+    /* one more item pushes items_count above size * load factor: size doubles */
+    hashtable_set (hashtable, "key8", "value8");
+    LONGS_EQUAL(9, hashtable->items_count);
+    LONGS_EQUAL(8, hashtable->size);
+
+    /* all items must still be reachable with their original value after the rehash */
+    for (i = 0; i < 9; i++)
+    {
+        snprintf (key, sizeof (key), "key%d", i);
+        snprintf (value, sizeof (value), "value%d", i);
+        STRCMP_EQUAL(value, (const char *)hashtable_get (hashtable, key));
+    }
+
+    /* each bucket must keep its items sorted by key after the rehash */
+    for (i = 0; i < hashtable->size; i++)
+    {
+        for (ptr_item = hashtable->htable[i];
+             ptr_item && ptr_item->next_item;
+             ptr_item = ptr_item->next_item)
+        {
+            CHECK(strcmp ((const char *)ptr_item->key,
+                          (const char *)ptr_item->next_item->key) < 0);
+        }
+    }
+
+    /* fill up to the next load factor limit to trigger a second rehash */
+    for (i = 9; i < 17; i++)
+    {
+        snprintf (key, sizeof (key), "key%d", i);
+        snprintf (value, sizeof (value), "value%d", i);
+        hashtable_set (hashtable, key, value);
+    }
+    LONGS_EQUAL(17, hashtable->items_count);
+    LONGS_EQUAL(16, hashtable->size);
+
+    for (i = 0; i < 17; i++)
+    {
+        snprintf (key, sizeof (key), "key%d", i);
+        snprintf (value, sizeof (value), "value%d", i);
+        STRCMP_EQUAL(value, (const char *)hashtable_get (hashtable, key));
+    }
+
+    for (i = 0; i < hashtable->size; i++)
+    {
+        for (ptr_item = hashtable->htable[i];
+             ptr_item && ptr_item->next_item;
+             ptr_item = ptr_item->next_item)
+        {
+            CHECK(strcmp ((const char *)ptr_item->key,
+                          (const char *)ptr_item->next_item->key) < 0);
+        }
+    }
+
+    hashtable_free (hashtable);
+}
+
+/*
+ * Test functions:
+ *   hashtable_remove (shrink)
+ */
+
+TEST(CoreHashtable, ShrinkBasic)
+{
+    struct t_hashtable *hashtable;
+    struct t_hashtable_item *ptr_item;
+    char key[32], value[32];
+    int i;
+
+    hashtable = hashtable_new (32,
+                               WEECHAT_HASHTABLE_STRING,
+                               WEECHAT_HASHTABLE_STRING,
+                               NULL,
+                               NULL);
+
+    /* fill with enough items to stay below the grow threshold */
+    for (i = 0; i < 20; i++)
+    {
+        snprintf (key, sizeof (key), "key%d", i);
+        snprintf (value, sizeof (value), "value%d", i);
+        hashtable_set (hashtable, key, value);
+    }
+    LONGS_EQUAL(20, hashtable->items_count);
+    LONGS_EQUAL(32, hashtable->size);
+
+    /* remove down to 8 items: still above the shrink threshold */
+    for (i = 19; i >= 8; i--)
+    {
+        snprintf (key, sizeof (key), "key%d", i);
+        hashtable_remove (hashtable, key);
+    }
+    LONGS_EQUAL(8, hashtable->items_count);
+    LONGS_EQUAL(32, hashtable->size);
+
+    /* one more removal pushes items_count below size / load factor: size halves */
+    hashtable_remove (hashtable, "key7");
+    LONGS_EQUAL(7, hashtable->items_count);
+    LONGS_EQUAL(16, hashtable->size);
+
+    /* all remaining items must still be reachable with their original value */
+    for (i = 0; i < 7; i++)
+    {
+        snprintf (key, sizeof (key), "key%d", i);
+        snprintf (value, sizeof (value), "value%d", i);
+        STRCMP_EQUAL(value, (const char *)hashtable_get (hashtable, key));
+    }
+
+    /* each bucket must keep its items sorted by key after the shrink */
+    for (i = 0; i < hashtable->size; i++)
+    {
+        for (ptr_item = hashtable->htable[i];
+             ptr_item && ptr_item->next_item;
+             ptr_item = ptr_item->next_item)
+        {
+            CHECK(strcmp ((const char *)ptr_item->key,
+                          (const char *)ptr_item->next_item->key) < 0);
+        }
+    }
+
+    hashtable_free (hashtable);
+}
+
+TEST(CoreHashtable, ShrinkNoneAboveThreshold)
+{
+    struct t_hashtable *hashtable;
+    char key[32], value[32];
+    int i;
+
+    hashtable = hashtable_new (32,
+                               WEECHAT_HASHTABLE_STRING,
+                               WEECHAT_HASHTABLE_STRING,
+                               NULL,
+                               NULL);
+
+    for (i = 0; i < 10; i++)
+    {
+        snprintf (key, sizeof (key), "key%d", i);
+        snprintf (value, sizeof (value), "value%d", i);
+        hashtable_set (hashtable, key, value);
+    }
+    LONGS_EQUAL(10, hashtable->items_count);
+    LONGS_EQUAL(32, hashtable->size);
+
+    /* removing one item stays above the shrink threshold: no rehash */
+    hashtable_remove (hashtable, "key9");
+    LONGS_EQUAL(9, hashtable->items_count);
+    LONGS_EQUAL(32, hashtable->size);
+
+    hashtable_free (hashtable);
+}
+
+TEST(CoreHashtable, ShrinkNoThrashNearBoundary)
+{
+    struct t_hashtable *hashtable;
+    char key[32], value[32];
+    int i;
+
+    hashtable = hashtable_new (32,
+                               WEECHAT_HASHTABLE_STRING,
+                               WEECHAT_HASHTABLE_STRING,
+                               NULL,
+                               NULL);
+
+    /* fill to exactly half load: the boundary a naive design would react to */
+    for (i = 0; i < 16; i++)
+    {
+        snprintf (key, sizeof (key), "key%d", i);
+        snprintf (value, sizeof (value), "value%d", i);
+        hashtable_set (hashtable, key, value);
+    }
+    LONGS_EQUAL(16, hashtable->items_count);
+    LONGS_EQUAL(32, hashtable->size);
+
+    /* toggling a single extra item near that boundary must never resize */
+    for (i = 0; i < 3; i++)
+    {
+        hashtable_set (hashtable, "extra", "extra_value");
+        LONGS_EQUAL(17, hashtable->items_count);
+        LONGS_EQUAL(32, hashtable->size);
+
+        hashtable_remove (hashtable, "extra");
+        LONGS_EQUAL(16, hashtable->items_count);
+        LONGS_EQUAL(32, hashtable->size);
+    }
+
+    /* remove real items down past the actual shrink threshold */
+    for (i = 15; i >= 7; i--)
+    {
+        snprintf (key, sizeof (key), "key%d", i);
+        hashtable_remove (hashtable, key);
+    }
+    LONGS_EQUAL(7, hashtable->items_count);
+    LONGS_EQUAL(16, hashtable->size);
+
+    /* the same toggle test must also be stable at the new (halved) size */
+    for (i = 0; i < 3; i++)
+    {
+        hashtable_set (hashtable, "extra2", "extra_value2");
+        LONGS_EQUAL(8, hashtable->items_count);
+        LONGS_EQUAL(16, hashtable->size);
+
+        hashtable_remove (hashtable, "extra2");
+        LONGS_EQUAL(7, hashtable->items_count);
+        LONGS_EQUAL(16, hashtable->size);
+    }
+
+    hashtable_free (hashtable);
+}
+
+TEST(CoreHashtable, ShrinkMinSize)
+{
+    struct t_hashtable *hashtable;
+    char key[32], value[32];
+    int i;
+
+    hashtable = hashtable_new (32,
+                               WEECHAT_HASHTABLE_STRING,
+                               WEECHAT_HASHTABLE_STRING,
+                               NULL,
+                               NULL);
+
+    for (i = 0; i < 5; i++)
+    {
+        snprintf (key, sizeof (key), "key%d", i);
+        snprintf (value, sizeof (value), "value%d", i);
+        hashtable_set (hashtable, key, value);
+    }
+    LONGS_EQUAL(5, hashtable->items_count);
+    LONGS_EQUAL(32, hashtable->size);
+
+    /* first removal: size halves once (32 -> 16) */
+    hashtable_remove (hashtable, "key0");
+    LONGS_EQUAL(4, hashtable->items_count);
+    LONGS_EQUAL(16, hashtable->size);
+
+    /* second removal: size halves again (16 -> 8, the minimum size) */
+    hashtable_remove (hashtable, "key1");
+    LONGS_EQUAL(3, hashtable->items_count);
+    LONGS_EQUAL(8, hashtable->size);
+
+    /* further removals down to zero items must never shrink below the minimum */
+    hashtable_remove (hashtable, "key2");
+    LONGS_EQUAL(2, hashtable->items_count);
+    LONGS_EQUAL(8, hashtable->size);
+
+    hashtable_remove (hashtable, "key3");
+    LONGS_EQUAL(1, hashtable->items_count);
+    LONGS_EQUAL(8, hashtable->size);
+
+    hashtable_remove (hashtable, "key4");
+    LONGS_EQUAL(0, hashtable->items_count);
+    LONGS_EQUAL(8, hashtable->size);
+
+    hashtable_free (hashtable);
+
+    /* a hashtable created at the minimum size must never attempt to shrink */
+    hashtable = hashtable_new (8,
+                               WEECHAT_HASHTABLE_STRING,
+                               WEECHAT_HASHTABLE_STRING,
+                               NULL,
+                               NULL);
+    hashtable_set (hashtable, "key0", "value0");
+    hashtable_set (hashtable, "key1", "value1");
+    hashtable_set (hashtable, "key2", "value2");
+    LONGS_EQUAL(3, hashtable->items_count);
+    LONGS_EQUAL(8, hashtable->size);
+
+    hashtable_remove (hashtable, "key0");
+    hashtable_remove (hashtable, "key1");
+    hashtable_remove (hashtable, "key2");
+    LONGS_EQUAL(0, hashtable->items_count);
+    LONGS_EQUAL(8, hashtable->size);
+
+    hashtable_free (hashtable);
+}
+
+TEST(CoreHashtable, ShrinkRemoveAllKeepsSize)
+{
+    struct t_hashtable *hashtable;
+    char key[32], value[32];
+    int i, grown_size;
+
+    hashtable = hashtable_new (8,
+                               WEECHAT_HASHTABLE_STRING,
+                               WEECHAT_HASHTABLE_STRING,
+                               NULL,
+                               NULL);
+
+    /* fill enough to force at least one grow */
+    for (i = 0; i < 20; i++)
+    {
+        snprintf (key, sizeof (key), "key%d", i);
+        snprintf (value, sizeof (value), "value%d", i);
+        hashtable_set (hashtable, key, value);
+    }
+    LONGS_EQUAL(20, hashtable->items_count);
+    CHECK(hashtable->size > 8);
+    grown_size = hashtable->size;
+
+    /* removing everything at once must not shrink the table */
+    hashtable_remove_all (hashtable);
+    LONGS_EQUAL(0, hashtable->items_count);
+    POINTERS_EQUAL(NULL, hashtable->oldest_item);
+    POINTERS_EQUAL(NULL, hashtable->newest_item);
+    LONGS_EQUAL(grown_size, hashtable->size);
+
+    /* the hashtable must still work correctly at the retained size */
+    hashtable_set (hashtable, "foo", "bar");
+    hashtable_set (hashtable, "baz", "qux");
+    LONGS_EQUAL(2, hashtable->items_count);
+    LONGS_EQUAL(grown_size, hashtable->size);
+    STRCMP_EQUAL("bar", (const char *)hashtable_get (hashtable, "foo"));
+    STRCMP_EQUAL("qux", (const char *)hashtable_get (hashtable, "baz"));
+
+    hashtable_free (hashtable);
+}
+
 void
 test_hashtable_map_string_cb (void *data,
                               struct t_hashtable *hashtable,

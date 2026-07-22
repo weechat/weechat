@@ -40,6 +40,30 @@
 #include "../plugins/plugin.h"
 
 
+/*
+ * Grow (double) the internal array when the average chain length
+ * (items_count / size) exceeds this value.
+ */
+#define HASHTABLE_LOAD_FACTOR_MAX 2
+
+/*
+ * Shrink (halve) the internal array when the average chain length
+ * (items_count / size) falls below 1 / HASHTABLE_LOAD_FACTOR_MIN.
+ *
+ * Kept well below 1 / HASHTABLE_LOAD_FACTOR_MAX (ie 1/2) on purpose: this
+ * leaves a hysteresis gap around the grow threshold so that adding/removing
+ * a single item near any boundary can never flip the table back and forth
+ * between growing and shrinking.
+ */
+#define HASHTABLE_LOAD_FACTOR_MIN 4
+
+/*
+ * Never shrink the internal array below this many buckets: avoids
+ * repeatedly rehashing an already-small table for a negligible memory gain.
+ */
+#define HASHTABLE_MIN_SIZE 8
+
+
 char *hashtable_type_string[HASHTABLE_NUM_TYPES] =
 { WEECHAT_HASHTABLE_INTEGER,
   WEECHAT_HASHTABLE_STRING,
@@ -202,10 +226,12 @@ hashtable_keycmp_default_cb (struct t_hashtable *hashtable,
 /*
  * Create a new hashtable.
  *
- * The size is NOT a limit for number of items in hashtable. It is the size of
- * internal array to store hashed keys: a high value uses more memory, but has
- * better performance because this reduces the collisions of hashed keys and
- * then reduce length of linked lists.
+ * The size is NOT a limit for number of items in hashtable, and it is only
+ * an *initial* size: it is the size of the internal array used to store
+ * hashed keys, and the array is grown or shrunk automatically (see
+ * hashtable_rehash) as items are added or removed, to keep the average
+ * length of the linked lists low regardless of how many items end up in
+ * the hashtable, down to a minimum of HASHTABLE_MIN_SIZE buckets.
  *
  * Return pointer to new hashtable, NULL if error.
  */
@@ -399,6 +425,74 @@ hashtable_free_value (struct t_hashtable *hashtable,
 }
 
 /*
+ * Rehash a hashtable: allocate a new internal array of "new_size" buckets
+ * and move all existing items into it.
+ *
+ * This keeps the average linked-list length in each bucket low as items are
+ * added or removed, instead of it growing linearly with items_count for a
+ * fixed-size array.
+ *
+ * Each item is reinserted at its sorted position in its new bucket (not
+ * simply appended), to preserve the per-bucket sorted-by-key invariant that
+ * hashtable_get_item and hashtable_set_with_size rely on for their
+ * early-exit comparison.
+ */
+
+void
+hashtable_rehash (struct t_hashtable *hashtable, int new_size)
+{
+    struct t_hashtable_item **new_htable, *ptr_item, *ptr_next_item;
+    struct t_hashtable_item *ptr_bucket_item, *pos_item;
+    unsigned long long hash;
+    int i;
+
+    new_htable = malloc (new_size * sizeof (*new_htable));
+    if (!new_htable)
+        return;
+
+    for (i = 0; i < new_size; i++)
+    {
+        new_htable[i] = NULL;
+    }
+
+    for (i = 0; i < hashtable->size; i++)
+    {
+        ptr_item = hashtable->htable[i];
+        while (ptr_item)
+        {
+            ptr_next_item = ptr_item->next_item;
+
+            hash = hashtable->callback_hash_key (hashtable, ptr_item->key) % new_size;
+
+            /* find sorted position for item in its new bucket */
+            pos_item = NULL;
+            for (ptr_bucket_item = new_htable[hash];
+                 ptr_bucket_item
+                     && ((int)(hashtable->callback_keycmp) (hashtable, ptr_item->key, ptr_bucket_item->key) > 0);
+                 ptr_bucket_item = ptr_bucket_item->next_item)
+            {
+                pos_item = ptr_bucket_item;
+            }
+
+            ptr_item->prev_item = pos_item;
+            ptr_item->next_item = (pos_item) ? pos_item->next_item : new_htable[hash];
+            if (ptr_item->next_item)
+                (ptr_item->next_item)->prev_item = ptr_item;
+            if (pos_item)
+                pos_item->next_item = ptr_item;
+            else
+                new_htable[hash] = ptr_item;
+
+            ptr_item = ptr_next_item;
+        }
+    }
+
+    free (hashtable->htable);
+    hashtable->htable = new_htable;
+    hashtable->size = new_size;
+}
+
+/*
  * Set value for a key in hashtable.
  *
  * The size arguments are used only for type "buffer".
@@ -485,6 +579,10 @@ hashtable_set_with_size (struct t_hashtable *hashtable,
     hashtable->newest_item = new_item;
 
     hashtable->items_count++;
+
+    /* grow the table if the average chain length is too high */
+    if (hashtable->items_count > hashtable->size * HASHTABLE_LOAD_FACTOR_MAX)
+        hashtable_rehash (hashtable, hashtable->size * 2);
 
     return new_item;
 }
@@ -1239,6 +1337,10 @@ hashtable_add_from_infolist (struct t_hashtable *hashtable,
 
 /*
  * Remove an item from hashtable.
+ *
+ * Does not check/adjust the load factor: this is also called in a loop by
+ * hashtable_remove_all, where shrinking mid-loop would invalidate the
+ * loop's bucket indices (see hashtable_remove for the load factor check).
  */
 
 void
@@ -1278,6 +1380,9 @@ hashtable_remove_item (struct t_hashtable *hashtable,
 
 /*
  * Remove an item from hashtable (searches it with key).
+ *
+ * Also shrinks the internal array (see hashtable_rehash) if the average
+ * chain length drops too low after the removal.
  */
 
 void
@@ -1285,17 +1390,34 @@ hashtable_remove (struct t_hashtable *hashtable, const void *key)
 {
     struct t_hashtable_item *ptr_item;
     unsigned long long hash;
+    int new_size;
 
     if (!hashtable || !key)
         return;
 
     ptr_item = hashtable_get_item (hashtable, key, &hash);
     if (ptr_item)
+    {
         hashtable_remove_item (hashtable, ptr_item, hash);
+
+        /* shrink the table if the average chain length is too low */
+        if ((hashtable->size > HASHTABLE_MIN_SIZE)
+            && (hashtable->items_count * HASHTABLE_LOAD_FACTOR_MIN < hashtable->size))
+        {
+            new_size = hashtable->size / 2;
+            if (new_size < HASHTABLE_MIN_SIZE)
+                new_size = HASHTABLE_MIN_SIZE;
+            hashtable_rehash (hashtable, new_size);
+        }
+    }
 }
 
 /*
  * Remove all items from hashtable.
+ *
+ * Does not shrink the internal array: callers typically clear a hashtable
+ * only to immediately refill it, so keeping the existing capacity avoids
+ * forcing an unnecessary re-grow rehash right afterwards.
  */
 
 void

@@ -4590,6 +4590,11 @@ string_shared_get (const char *string)
         /*
          * use large htable inside hashtable to prevent too many collisions,
          * which would slow down search of a string in the hashtable
+         * this is only an initial size: hashtable_new()/hashtable_set()
+         * grow the internal array automatically as items are added, so a
+         * modest starting size is enough even for buffers with a large
+         * number of unique shared strings (eg: many distinct tag
+         * combinations restored from an upgrade file)
          */
         string_hashtable_shared = hashtable_new (1024,
                                                  WEECHAT_HASHTABLE_POINTER,
