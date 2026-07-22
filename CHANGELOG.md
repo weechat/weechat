@@ -24,6 +24,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 
 ### Changed
 
+- core: improve speed of `/upgrade` with a lot of buffers and lines ([#2338](https://github.com/weechat/weechat/issues/2338), [#2339](https://github.com/weechat/weechat/issues/2339))
 - core: improve speed of display of long words in chat area ([#2336](https://github.com/weechat/weechat/issues/2336))
 - core: add condition on connected relay api clients in default value of option weechat.look.hotlist_add_conditions
 - core: add `/mute` in default command for key `Alt`+`=` (toggle filters)
