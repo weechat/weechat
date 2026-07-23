@@ -425,8 +425,8 @@ theme_overrides_count (struct t_theme *theme)
 
 /*
  * Return the effective value of an option override across the theme's
- * contributions (later contributions win). Returns NULL if no
- * contribution provides the key.
+ * contributions (later contributions win), NULL if no contribution provides
+ * the key.
  */
 
 const char *

@@ -68,7 +68,7 @@ gui_term_set_eat_newline_glitch (int value)
 }
 
 /*
- * Auto-detects the terminal background as "light" or "dark".
+ * Auto-detect the terminal background as "light" or "dark".
  *
  * Best-effort, in order:
  *
@@ -94,7 +94,7 @@ gui_term_set_eat_newline_glitch (int value)
  * MUST be called before curses init: it briefly puts the tty in raw
  * mode and reads/writes escape sequences directly.
  *
- * Returns 1 if a light background is detected, otherwise 0 (0 is the
+ * Return 1 if a light background is detected, otherwise 0 (0 is the
  * preferred value when detection is unsure).
  */
 
