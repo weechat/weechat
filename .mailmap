@@ -9,17 +9,19 @@
 #   git shortlog -nse
 #   git shortlog -se | cut -f2 | sort
 
-Sébastien Helleu <flashcode@flashtux.org>
-Sébastien Helleu <flashcode@flashtux.org> <flashcode@krypton>
-Sébastien Helleu <flashcode@flashtux.org> <flashcode>
-Sébastien Helleu <flashcode@flashtux.org> <uid67137>
-Nils Görs <weechatter@arcor.de>
-Ryuunosuke Ayanokouzi <i38w7i3@yahoo.co.jp>
+<marcopaolone@gmail.com> <marco@DrB4tch.sitecomwl601>
+<mikaela.suomalainen@outlook.com> <mkaysi@outlook.com>
+<Simon.Kuhnle@cs.fau.de> <simon@blarzwurst.de>
+<simon@arlott.org> <sa.me.uk>
+Ivan Pešić <27575106+eevan78@users.noreply.github.com>
 Krzysztof Korościk <soltys@soltys.info>
 Krzysztof Korościk <soltys@soltys.info> <soltys1@gmail.com>
 Krzysztof Korościk <soltys@soltys.info> <soltys@szluug.org>
 Marco Paolone <marcopaolone@gmail.com>
-<marcopaolone@gmail.com> <marco@DrB4tch.sitecomwl601>
-<mikaela.suomalainen@outlook.com> <mkaysi@outlook.com>
-<simon@arlott.org> <sa.me.uk>
-<Simon.Kuhnle@cs.fau.de> <simon@blarzwurst.de>
+Nils Görs <weechatter@arcor.de>
+Ryuunosuke Ayanokouzi <i38w7i3@yahoo.co.jp>
+Sébastien Helleu <flashcode@flashtux.org>
+Sébastien Helleu <flashcode@flashtux.org> <flashcode>
+Sébastien Helleu <flashcode@flashtux.org> <flashcode@krypton>
+Sébastien Helleu <flashcode@flashtux.org> <uid67137>
+Tomoe Mami <rumia.youkai.of.dusk@gmail.com>
