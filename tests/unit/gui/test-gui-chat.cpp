@@ -28,6 +28,8 @@
 extern "C"
 {
 #include <string.h>
+#include "src/core/core-config.h"
+#include "src/core/core-config-file.h"
 #include "src/gui/gui-buffer.h"
 #include "src/gui/gui-chat.h"
 #include "src/gui/gui-color.h"
@@ -379,7 +381,38 @@ TEST(GuiChat, GetWordInfo)
 
 TEST(GuiChat, GetTimeString)
 {
-    /* TODO: write tests */
+    char *saved_format, *str, format_alt[128];
+    int i;
+
+    saved_format = strdup (CONFIG_STRING(config_look_buffer_time_format));
+
+    /* empty format => NULL */
+    config_file_option_set (config_look_buffer_time_format, "", 1);
+    POINTERS_EQUAL(NULL, gui_chat_get_time_string (1645288340, 0, 0));
+
+    /* date == 0 => NULL */
+    config_file_option_set (config_look_buffer_time_format, "%H:%M:%S", 1);
+    POINTERS_EQUAL(NULL, gui_chat_get_time_string (0, 0, 0));
+
+    str = gui_chat_get_time_string (1645288340, 0, 0);
+    CHECK(str != NULL);
+    free (str);
+
+    /*
+     * a format alternating digits and non-digits makes the color switch on
+     * every char, so each char emits a color code (3 bytes) plus itself; with
+     * a near-full text_time buffer this overflows an undersized text_time2
+     */
+    for (i = 0; i < 126; i++)
+        format_alt[i] = (i % 2 == 0) ? '1' : 'a';
+    format_alt[126] = '\0';
+    config_file_option_set (config_look_buffer_time_format, format_alt, 1);
+    str = gui_chat_get_time_string (1645288340, 0, 0);
+    CHECK(str != NULL);
+    free (str);
+
+    config_file_option_set (config_look_buffer_time_format, saved_format, 1);
+    free (saved_format);
 }
 
 /*
