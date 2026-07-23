@@ -10,6 +10,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 ### Fixed
 
+- core: fix buffer overflow in display of time in chat area with a custom time format ([#2342](https://github.com/weechat/weechat/issues/2342))
 - irc: fix stack buffer overflow when splitting a JOIN message with a large list of channels and keys ([GHSA-q2xg-9ggx-77mr](https://github.com/weechat/weechat/security/advisories/GHSA-q2xg-9ggx-77mr))
 - relay: increase max size for decompressed websocket frame
 
