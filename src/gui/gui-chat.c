@@ -411,7 +411,11 @@ gui_chat_get_word_info (struct t_gui_window *window,
 char *
 gui_chat_get_time_string (time_t date, int date_usec, int highlight)
 {
-    char text_time[128], text_time2[(128*3)+16], text_time_char[2];
+    /*
+     * text_time2 receives, for each of the (max 127) chars in text_time, up to
+     * one color code (3 bytes) plus the char itself, so 4 bytes per char
+     */
+    char text_time[128], text_time2[(128*4)+16], text_time_char[2];
     char *text_with_color;
     int i, time_first_digit, time_last_digit, last_color;
     struct timeval tv;
