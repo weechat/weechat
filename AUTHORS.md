@@ -17,27 +17,41 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 Alphabetically:
 
+- a1346054
+- Aaron Jones
 - Adam Saponara (adsr)
 - Adrian Bjugård
 - Ailin Nemui (Nei)
+- aizu-m
+- Albert Lee
 - Aleksey V Zapparov
 - Alex Tarkovsky
+- Alfredo Ramos
+- Alvar Penning
 - Anders Bergh
 - Andrew Potter (talisein)
 - Antoine Pietri (seirl)
+- Artiom Di
+- arza
 - Arvydas Sidorenko
 - Asakura
 - Bazerka
 - Benoit Papillault (benoit)
+- Brad Smith
 - Caleb Josue Ruiz Torres
 - Chris Hills
 - Christian Duerr
 - Christian Heinz
+- Christian Hofstaedtler
+- Christine Dodrill
 - Christopher O'Neill (deltafire)
 - coypoop
 - Daniel Lublin
 - Danilo Spinella
+- Darafei Praliaskouski
+- DasBrain
 - David Flatz
+- Dawid Dziurla
 - Dmitry Kobylin
 - Dominik Honnef
 - Dominique Martinet
@@ -46,42 +60,59 @@ Alphabetically:
 - Eli Schwartz
 - Elizabeth Myers (Elizacat)
 - Elián Hanisch (m4v)
+- elKaZe
 - Emanuele Giaquinta
 - Emil Velikov
 - Emir Sarı
 - emk
+- Eric Lalonde
 - Érico Nogueira
+- Érico Rolim
 - Esteban I. Ruiz Moreno (Exio)
+- evalle
 - Evgeny Shmarnev
+- Faisal N Jawdat
 - Felix Eckhofer
+- Filip H.F. Slagter (FiXato)
 - Frank Zacharias
 - Fredrik Fornwall
+- Giuseppe Bilotta
+- Grady Martin
 - Grant Wu
 - Gu1ll4um3r0m41n
 - Guido Berhoerster
 - Gwenn
 - Hasan Kiran (turgay)
+- Håvard Pettersson
+- Ingolf Ankert
 - Ivan Pešić
 - Ivan Sichmann Freitas
+- iwalkalone
+- J0WI
 - Jakub Jirutka
 - James C. Morey
 - Jan Palus
 - Jason A. Donenfeld (zx2c4)
 - JD Horelick (jdhore)
+- Jerome Duval
 - jesopo
 - Jim Ramsay (lack)
+- Jinkyu Yi
 - Jiri Golembiovsky (GolemJ)
 - Joe Hermaszewski
 - Joey Pabalinas (alyptik)
 - Johan Rylander
 - Johannes Kuhn
+- Jonathan Herlin
 - Joram Schrijver
 - Jos Ahrens
 - Joseph Kichline
 - Josh Soref
 - Juan Francisco Cantero Hurtado
 - Julien Louis (ptitlouis)
+- Kamran Mackey
 - Karthik K
+- Kevin Pulo
 - Koka El Kiwi (KiwiDash)
 - Krzysztof Koroscik (soltys)
 - Kyle Fuller (kylef)
@@ -89,31 +120,47 @@ Alphabetically:
 - Latchezar Tzvetkoff
 - Lázaro A.
 - Leonid Evdokimov
+- Lieuwe Rooijakkers
 - Linus Heckemann
+- Luc Schrijvers
+- Lucas Hoffmann
+- Lucas Kanashiro
+- Luis Colorado
 - LuK1337
 - Maarten de Vries
+- Maciek Gajewski
 - Mantas Mikulėnas (grawity)
 - Marco Paolone
 - Marco Sirabella
 - Mario Campos
+- Mateusz Piotrowski
+- Mattia
 - Mateusz Poszwa
 - Matt Robinson
 - Matthew Horan
 - Matthew Martin
 - Matti Virkkunen
-- Max Anton Teufel
+- Max Teufel
 - Maxim Baz
 - Michael Siegel
+- Mikaela Suomalainen
 - Miko
 - Miroslav Koskar
+- Mohammed Arib
+- mumixam
 - Murilo Opsfelder Araujo
+- Nathaniel Evan
+- NetSysFire
 - Neui
+- neutric
 - Nick (SolitaryCipher)
 - Nicolas Cavigneaux
 - Nils Görs (nils_2)
 - nyuszika7h
 - Odin
 - Ondřej Súkup
+- orbea
+- orbisai0security
 - Patrick Steinhardt
 - Patrik Janoušek
 - Paul Komkoff
@@ -128,16 +175,23 @@ Alphabetically:
 - Quico Noizeux
 - rafasc
 - Raghavendra Prabhu
+- Raphael Kubo da Costa
 - raspbeguy
 - Rettub
+- rj1
 - Rob Campbell
+- Robin Jarry
+- rofl0r
 - Romero B. de S. Malaquias
 - Rudolf Polzer (divVerent)
 - Ruslan Bekenev
 - Ryan Farley
 - Ryan Qian
 - Ryuunosuke Ayanokouzi
+- Santiago Forero
 - scumjr
+- Sekulum Forka
+- Sergey Fedorov
 - Sergio Durigan Junior
 - Shane McCarron
 - Shawn Smith
@@ -148,15 +202,22 @@ Alphabetically:
 - Simon Ser
 - Stefano Pigozzi
 - Stfn
+- sunder67
+- Sunpoet Po-Chuan Hsieh
 - Sven Knurr (Cthulhux)
+- Thomas Faughnan
+- Thomas Schneider
 - Tim D. Smith
+- Tim Gates
 - Tim Harder
+- Tobias Rehbein
 - Tobias Stoeckmann
 - Tom Alsberg
 - Tom Fitzhenry
 - Tomoe Mami
 - Tor Hveem (xt)
 - Trevor Bergeron
+- Trygve Aaberge
 - Valentin Lorentz (progval)
 - Vasco Almeida
 - Victorhck
@@ -166,6 +227,8 @@ Alphabetically:
 - W. Trevor King
 - Yannick Palanque
 - Yiheng Cao
+- Zero King
+- zeromind
 - ZethJack
 - Ørjan Malde
 
