@@ -1131,7 +1131,7 @@ irc_message_split_authenticate (struct t_irc_message_split_context *context,
                                 const char *command, const char *arguments)
 {
     int length;
-    char message[8192], *args;
+    char *message, *args;
     const char *ptr_args;
 
     length = 0;
@@ -1146,25 +1146,31 @@ irc_message_split_authenticate (struct t_irc_message_split_context *context,
         args = weechat_strndup (ptr_args, length);
         if (!args)
             return 0;
-        snprintf (message, sizeof (message), "%s%s%s %s",
-                  (host) ? host : "",
-                  (host) ? " " : "",
-                  command,
-                  args);
-        irc_message_split_add (context, tags, message, args);
+        if (weechat_asprintf (&message, "%s%s%s %s",
+                              (host) ? host : "",
+                              (host) ? " " : "",
+                              command,
+                              args) >= 0)
+        {
+            irc_message_split_add (context, tags, message, args);
+            (context->number)++;
+            free (message);
+        }
         free (args);
-        (context->number)++;
         ptr_args += length;
     }
 
     if ((length == 0) || (length == 400))
     {
-        snprintf (message, sizeof (message), "%s%s%s +",
-                  (host) ? host : "",
-                  (host) ? " " : "",
-                  command);
-        irc_message_split_add (context, tags, message, "+");
-        (context->number)++;
+        if (weechat_asprintf (&message, "%s%s%s +",
+                              (host) ? host : "",
+                              (host) ? " " : "",
+                              command) >= 0)
+        {
+            irc_message_split_add (context, tags, message, "+");
+            (context->number)++;
+            free (message);
+        }
     }
 
     return 1;
