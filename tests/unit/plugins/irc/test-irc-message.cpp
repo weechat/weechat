@@ -1811,6 +1811,57 @@ TEST(IrcMessage, Split)
     hashtable_remove (server->cap_list, "batch");
     hashtable_remove (server->cap_list, "draft/multiline");
 
+    /* PRIVMSG with tags and multiline: BATCH is used, tags kept on each line */
+    hashtable_set (server->cap_list, "batch", NULL);
+    hashtable_set (server->cap_list, "draft/multiline", NULL);
+    hashtable = irc_message_split (
+        server,
+        "@tag1=value1;tag2=value2 PRIVMSG #channel :test\n\nline 3");
+    CHECK(hashtable);
+    LONGS_EQUAL(12, hashtable->items_count);
+    STRCMP_EQUAL("5",
+                 (const char *)hashtable_get (hashtable, "count"));
+    ptr_msg = (const char *)hashtable_get (hashtable, "msg1");
+    CHECK(ptr_msg);
+    STRNCMP_EQUAL("BATCH +", ptr_msg, 7);
+    pos1 = ptr_msg + 7;
+    pos2 = strchr (pos1, ' ');
+    CHECK(pos2);
+    memcpy (batch_ref, pos1, pos2 - pos1);
+    batch_ref[pos2 - pos1] = '\0';
+    snprintf (msg, sizeof (msg),
+              "BATCH +%s draft/multiline #channel", batch_ref);
+    STRCMP_EQUAL(msg, (const char *)hashtable_get (hashtable, "msg1"));
+    snprintf (msg, sizeof (msg),
+              "+%s draft/multiline #channel", batch_ref);
+    STRCMP_EQUAL(msg, (const char *)hashtable_get (hashtable, "args1"));
+    snprintf (msg, sizeof (msg),
+              "@batch=%s;tag1=value1;tag2=value2 PRIVMSG #channel :test",
+              batch_ref);
+    STRCMP_EQUAL(msg, (const char *)hashtable_get (hashtable, "msg2"));
+    STRCMP_EQUAL("test", (const char *)hashtable_get (hashtable, "args2"));
+    snprintf (msg, sizeof (msg),
+              "@batch=%s;tag1=value1;tag2=value2 PRIVMSG #channel :",
+              batch_ref);
+    STRCMP_EQUAL(msg, (const char *)hashtable_get (hashtable, "msg3"));
+    STRCMP_EQUAL("", (const char *)hashtable_get (hashtable, "args3"));
+    snprintf (msg, sizeof (msg),
+              "@batch=%s;tag1=value1;tag2=value2 PRIVMSG #channel :line 3",
+              batch_ref);
+    STRCMP_EQUAL(msg, (const char *)hashtable_get (hashtable, "msg4"));
+    STRCMP_EQUAL("line 3", (const char *)hashtable_get (hashtable, "args4"));
+    snprintf (msg, sizeof (msg),
+              "BATCH -%s", batch_ref);
+    STRCMP_EQUAL(msg, (const char *)hashtable_get (hashtable, "msg5"));
+    snprintf (msg, sizeof (msg),
+              "-%s", batch_ref);
+    STRCMP_EQUAL(msg, (const char *)hashtable_get (hashtable, "args5"));
+    STRCMP_EQUAL("test\n\nline 3",
+                 (const char *)hashtable_get (hashtable, "multiline_args1"));
+    hashtable_free (hashtable);
+    hashtable_remove (server->cap_list, "batch");
+    hashtable_remove (server->cap_list, "draft/multiline");
+
     /* NOTICE with multiline: BATCH is used */
     hashtable_set (server->cap_list, "batch", NULL);
     hashtable_set (server->cap_list, "draft/multiline", NULL);

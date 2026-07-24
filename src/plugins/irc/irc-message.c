@@ -1396,7 +1396,7 @@ irc_message_split_privmsg_notice (struct t_irc_message_split_context *context,
                                   int multiline_max_lines)
 {
     char prefix[4096], suffix[2], *pos, saved_char, name[256];
-    char tags_multiline[4096], **list_lines, batch_ref[16 + 1];
+    char *tags_multiline, **list_lines, batch_ref[16 + 1];
     char  **multiline_args;
     const char *ptr_args;
     int i, length, length_tags, rc, count_lines, batch_lines;
@@ -1436,24 +1436,26 @@ irc_message_split_privmsg_notice (struct t_irc_message_split_context *context,
             batch_lines = 0;
             for (i = 0; i < count_lines; i++)
             {
+                tags_multiline = NULL;
                 if (tags && tags[0])
                 {
-                    snprintf (tags_multiline, sizeof (tags_multiline),
-                              "@batch=%s;%s",
-                              batch_ref,
-                              tags + 1);
+                    weechat_asprintf (&tags_multiline,
+                                      "@batch=%s;%s",
+                                      batch_ref,
+                                      tags + 1);
                 }
                 else
                 {
-                    snprintf (tags_multiline, sizeof (tags_multiline),
-                              "@batch=%s ",
-                              batch_ref);
+                    weechat_asprintf (&tags_multiline,
+                                      "@batch=%s ",
+                                      batch_ref);
                 }
-                length_tags = strlen (tags_multiline);
+                length_tags = (tags_multiline) ? strlen (tags_multiline) : 0;
                 rc &= irc_message_split_string (
                     context, tags_multiline, host, command, target, ":",
                     list_lines[i], "", ' ', max_length_nick_user_host,
                     max_length);
+                free (tags_multiline);
                 if (batch_lines > 0)
                     weechat_string_dyn_concat (multiline_args, "\n", -1);
                 weechat_string_dyn_concat (multiline_args,
