@@ -10,6 +10,7 @@ ignore = [
     "D203", # incorrect-blank-line-before-class
     "D213", # multi-line-summary-second-line
 ]
+flake8-copyright.notice-rgx = "(?i)# SPDX-FileCopyrightText:\\s\\d{4}(-(\\d{4}|present))*"
 
 [lint.pylint]
 max-args = 10
