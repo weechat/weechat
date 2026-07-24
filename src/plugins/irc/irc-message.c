@@ -1019,7 +1019,7 @@ irc_message_split_string (struct t_irc_message_split_context *context,
                           int max_length)
 {
     const char *pos, *pos_max, *pos_next, *pos_last_delim;
-    char message[8192], *dup_arguments;
+    char *message, *dup_arguments;
 
     if (!context)
         return 0;
@@ -1055,17 +1055,22 @@ irc_message_split_string (struct t_irc_message_split_context *context,
          * consistent), or no arguments => in this case, we just return message
          * as-is (no split)
          */
-        snprintf (message, sizeof (message), "%s%s%s %s%s%s%s%s",
-                  (host) ? host : "",
-                  (host) ? " " : "",
-                  command,
-                  (target) ? target : "",
-                  (target && target[0]) ? " " : "",
-                  (prefix) ? prefix : "",
-                  (arguments) ? arguments : "",
-                  (suffix) ? suffix : "");
-        irc_message_split_add (context, tags, message, (arguments) ? arguments : "");
-        (context->number)++;
+        if (weechat_asprintf (&message,
+                              "%s%s%s %s%s%s%s%s",
+                              (host) ? host : "",
+                              (host) ? " " : "",
+                              command,
+                              (target) ? target : "",
+                              (target && target[0]) ? " " : "",
+                              (prefix) ? prefix : "",
+                              (arguments) ? arguments : "",
+                              (suffix) ? suffix : "") >= 0)
+        {
+            irc_message_split_add (context, tags, message,
+                                   (arguments) ? arguments : "");
+            (context->number)++;
+            free (message);
+        }
         return 1;
     }
 
@@ -1088,17 +1093,21 @@ irc_message_split_string (struct t_irc_message_split_context *context,
         dup_arguments = weechat_strndup (arguments, pos - arguments);
         if (dup_arguments)
         {
-            snprintf (message, sizeof (message), "%s%s%s %s%s%s%s%s",
-                      (host) ? host : "",
-                      (host) ? " " : "",
-                      command,
-                      (target) ? target : "",
-                      (target && target[0]) ? " " : "",
-                      (prefix) ? prefix : "",
-                      dup_arguments,
-                      (suffix) ? suffix : "");
-            irc_message_split_add (context, tags, message, dup_arguments);
-            (context->number)++;
+            if (weechat_asprintf (&message,
+                                  "%s%s%s %s%s%s%s%s",
+                                  (host) ? host : "",
+                                  (host) ? " " : "",
+                                  command,
+                                  (target) ? target : "",
+                                  (target && target[0]) ? " " : "",
+                                  (prefix) ? prefix : "",
+                                  dup_arguments,
+                                  (suffix) ? suffix : "") >= 0)
+            {
+                irc_message_split_add (context, tags, message, dup_arguments);
+                (context->number)++;
+                free (message);
+            }
             free (dup_arguments);
         }
         arguments = (pos == pos_last_delim) ? pos + 1 : pos;
