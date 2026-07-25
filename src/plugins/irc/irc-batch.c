@@ -224,6 +224,7 @@ irc_batch_process_messages (struct t_irc_server *server,
 {
     char **list_messages, *command, *channel, modifier_data[1024], *new_messages;
     char *message, *message2;
+    struct t_hashtable *tags;
     int i, count_messages;
 
     if (!batch || !batch->messages)
@@ -252,14 +253,19 @@ irc_batch_process_messages (struct t_irc_server *server,
             "\n", NULL, 0, 0, &count_messages);
         if (list_messages)
         {
+            /*
+             * the batch can be freed while its messages are sent to the
+             * callbacks (for example a message disconnecting the server),
+             * so the tags are copied before
+             */
+            tags = (batch->tags) ? weechat_hashtable_dup (batch->tags) : NULL;
             for (i = 0; i < count_messages; i++)
             {
                 message = weechat_string_replace (list_messages[i], "\r", "\n");
                 if (!message)
                     continue;
 
-                message2 = irc_tag_add_tags_to_message (message,
-                                                        batch->tags);
+                message2 = irc_tag_add_tags_to_message (message, tags);
                 if (!message2)
                     continue;
 
@@ -292,6 +298,7 @@ irc_batch_process_messages (struct t_irc_server *server,
                 free (command);
                 free (channel);
             }
+            weechat_hashtable_free (tags);
             weechat_string_free_split (list_messages);
         }
     }
@@ -334,9 +341,16 @@ irc_batch_end_batch (struct t_irc_server *server, const char *reference)
             ptr_parent_batch = irc_batch_search (server, ptr_batch->parent_ref);
             if (!ptr_parent_batch || ptr_parent_batch->messages_processed)
             {
-                irc_batch_process_messages (server, ptr_batch);
+                /*
+                 * the batched messages can free all batches (for example a
+                 * message disconnecting the server), so the batch is flagged
+                 * before it is processed and the list is scanned again from
+                 * the beginning
+                 */
                 ptr_batch->messages_processed = 1;
                 num_processed++;
+                irc_batch_process_messages (server, ptr_batch);
+                break;
             }
         }
         if (num_processed == 0)

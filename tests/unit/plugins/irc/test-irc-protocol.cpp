@@ -1785,6 +1785,51 @@ TEST(IrcProtocolWithServer, batch_with_batch_cap)
 
 /*
  * Tests functions:
+ *   irc_protocol_cb_batch (with batch cap, server disconnected while the
+ *   batched messages are processed)
+ */
+
+TEST(IrcProtocolWithServer, batch_with_batch_cap_disconnect)
+{
+    /* assume "batch" capability is enabled in server */
+    hashtable_set (ptr_server->cap_list, "batch", NULL);
+
+    SRV_INIT_JOIN2;
+
+    LONGS_EQUAL(1, ptr_server->is_connected);
+
+    /*
+     * a batched message can disconnect the server, which frees all batches
+     * (including the one being processed) while the remaining messages are
+     * still being dispatched; this must not lead to any use-after-free:
+     *   - read of batch->tags for each remaining message
+     *   - write of batch->messages_processed after processing
+     *   - scan of the batches list (batch->next_batch) after processing
+     * the "@time" tag on the BATCH command gives the batch a non-empty tags
+     * hashtable, so the copy made before dispatching is actually exercised;
+     * this test is meant to be run with an address sanitizer, which catches
+     * the use-after-free (on a plain build the freed memory usually still
+     * holds its old contents, so the bug goes unnoticed)
+     */
+    RECV("@time=2023-08-09T07:43:01.830Z :server BATCH +ref example");
+    CHECK_NO_MSG;
+    CHECK(irc_batch_search (ptr_server, "ref"));
+    RECV("@batch=ref ERROR :Closing Link: irc.example.org (Bad Password)");
+    CHECK_NO_MSG;
+    RECV("@batch=ref :bob!user_b@host_b PRIVMSG #test :test 1");
+    CHECK_NO_MSG;
+    RECV("@batch=ref :bob!user_b@host_b PRIVMSG #test :test 2");
+    CHECK_NO_MSG;
+    RECV(":server BATCH -ref");
+    POINTERS_EQUAL(NULL, ptr_server->batches);
+    POINTERS_EQUAL(NULL, ptr_server->last_batch);
+    LONGS_EQUAL(0, ptr_server->is_connected);
+
+    hashtable_remove (ptr_server->cap_list, "batch");
+}
+
+/*
+ * Test functions:
  *   irc_protocol_cap_to_enable
  */
 

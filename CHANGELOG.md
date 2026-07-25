@@ -15,6 +15,7 @@
 - core: fix buffer overflow in connection to SOCKS5 proxy ([#2325](https://github.com/weechat/weechat/issues/2325))
 - api: do not free dynamic string on error in function string_dyn_concat
 - api: fix infinite loop in function string_replace when the search string is empty
+- irc: fix heap use-after-free when a batched message causes a disconnection from the server ([GHSA-rfmh-3r7f-jpx5](https://github.com/weechat/weechat/security/advisories/GHSA-rfmh-3r7f-jpx5))
 - irc: fix stack buffer overflow when splitting a JOIN message with a large list of channels and keys ([GHSA-q2xg-9ggx-77mr](https://github.com/weechat/weechat/security/advisories/GHSA-q2xg-9ggx-77mr))
 - irc: limit size of data received from the server to prevent memory exhaustion
 - irc: fix out-of-bounds read on incoming DCC command with a quoted filename ending the message ([#2322](https://github.com/weechat/weechat/issues/2322))
