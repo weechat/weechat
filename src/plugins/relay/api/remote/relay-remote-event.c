@@ -1309,7 +1309,6 @@ relay_remote_event_recv (struct t_relay_remote *remote, const char *data)
     JSON_GET_STR(json, event_name);
     event.name = event_name;
     JSON_GET_NUM(json, buffer_id, -1);
-    event.buffer = relay_remote_event_search_buffer (remote, buffer_id);
 
     callback = NULL;
 
@@ -1347,16 +1346,25 @@ relay_remote_event_recv (struct t_relay_remote *remote, const char *data)
         if ((weechat_strcmp (body_type, "buffers") == 0) && initial_sync)
             relay_remote_event_initial_sync_buffers (&event);
         rc = WEECHAT_RC_OK;
+        /*
+         * the buffer is searched again before each call to the callback:
+         * the initial sync and the callback for event "buffer_closed" close
+         * buffers, so a pointer searched once and reused for the next calls
+         * could point to a freed buffer
+         */
         if (cJSON_IsArray (json_body))
         {
             cJSON_ArrayForEach (json_obj, json_body)
             {
                 event.json = json_obj;
+                event.buffer = relay_remote_event_search_buffer (remote,
+                                                                 buffer_id);
                 rc = (callback) (&event);
             }
         }
         else
         {
+            event.buffer = relay_remote_event_search_buffer (remote, buffer_id);
             rc = (callback) (&event);
         }
         if (rc == WEECHAT_RC_ERROR)

@@ -13,6 +13,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 - core: fix buffer overflow in display of time in chat area with a custom time format ([#2342](https://github.com/weechat/weechat/issues/2342))
 - irc: fix heap use-after-free when a batched message causes a disconnection from the server ([GHSA-rfmh-3r7f-jpx5](https://github.com/weechat/weechat/security/advisories/GHSA-rfmh-3r7f-jpx5))
 - irc: fix stack buffer overflow when splitting a JOIN message with a large list of channels and keys ([GHSA-q2xg-9ggx-77mr](https://github.com/weechat/weechat/security/advisories/GHSA-q2xg-9ggx-77mr))
+- relay: fix use-after-free and double free on remote buffer ([GHSA-hx59-4hq9-6vmw](https://github.com/weechat/weechat/security/advisories/GHSA-hx59-4hq9-6vmw))
 - relay: increase max size for decompressed websocket frame
 
 ## Version 4.9.4 (2026-07-19)

@@ -30,7 +30,11 @@ extern "C"
 #include <cjson/cJSON.h>
 #include "src/core/core-config-file.h"
 #include "src/plugins/relay/relay.h"
+#include "src/plugins/relay/relay-remote.h"
 #include "src/plugins/relay/api/remote/relay-remote-event.h"
+
+extern struct t_gui_buffer *relay_remote_event_search_buffer (struct t_relay_remote *remote,
+                                                              long long id);
 }
 
 TEST_GROUP(RelayRemoteEvent)
@@ -295,4 +299,41 @@ TEST(RelayRemoteEvent, CbQuit)
 TEST(RelayRemoteEvent, Recv)
 {
     /* TODO: write tests */
+}
+
+/*
+ * Test functions:
+ *   relay_remote_event_recv
+ *
+ * Non-regression test: an event received with an array as body calls the
+ * callback once per array item, and the callback for event "buffer_closed"
+ * closes the buffer, so the buffer must be searched again before each call
+ * (otherwise the pointer is used after the buffer has been freed).
+ */
+
+TEST(RelayRemoteEvent, RecvBufferClosedArray)
+{
+    struct t_relay_remote *remote;
+
+    remote = relay_remote_new ("testbufclosed",
+                               "https://localhost:9000",
+                               NULL, NULL, NULL, NULL, NULL, NULL);
+    CHECK(remote);
+
+    relay_remote_event_recv (
+        remote,
+        "{\"code\": 200, "
+        "\"body_type\": \"buffer\", "
+        "\"body\": {\"id\": 123, \"name\": \"core.weechat\"}}");
+    CHECK(relay_remote_event_search_buffer (remote, 123));
+
+    relay_remote_event_recv (
+        remote,
+        "{\"event_name\": \"buffer_closed\", "
+        "\"buffer_id\": 123, "
+        "\"body_type\": \"buffer\", "
+        "\"body\": [{}, {}]}");
+    POINTERS_EQUAL(NULL, relay_remote_event_search_buffer (remote, 123));
+
+    relay_remote_free (remote);
 }
