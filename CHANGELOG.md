@@ -68,6 +68,19 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - xfer: fix out-of-bounds read when receiving empty line in DCC chat ([#2323](https://github.com/weechat/weechat/issues/2323))
 - xfer: fix out-of-bounds write in xfer file transfer resume ([#2326](https://github.com/weechat/weechat/issues/2326))
 
+## [4.9.5] - 2026-07-26
+
+### Fixed
+
+- relay: increase max size for decompressed websocket frame
+
+### Security
+
+- core: fix buffer overflow in display of time in chat area with a custom time format ([#2342](https://github.com/weechat/weechat/issues/2342))
+- irc: fix heap use-after-free when a batched message causes a disconnection from the server ([GHSA-rfmh-3r7f-jpx5](https://github.com/weechat/weechat/security/advisories/GHSA-rfmh-3r7f-jpx5))
+- irc: fix stack buffer overflow when splitting a JOIN message with a large list of channels and keys ([GHSA-q2xg-9ggx-77mr](https://github.com/weechat/weechat/security/advisories/GHSA-q2xg-9ggx-77mr))
+- relay: fix use-after-free and double free on remote buffer ([GHSA-hx59-4hq9-6vmw](https://github.com/weechat/weechat/security/advisories/GHSA-hx59-4hq9-6vmw))
+
 ## [4.9.4] - 2026-07-19
 
 ### Changed
@@ -4597,6 +4610,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - nicklist can be moved on top, bottom, left or right of window
 
 [Unreleased]: https://github.com/weechat/weechat/compare/v4.9.0...HEAD
+[4.9.5]: https://github.com/weechat/weechat/compare/v4.9.4...v4.9.5
 [4.9.4]: https://github.com/weechat/weechat/compare/v4.9.3...v4.9.4
 [4.9.3]: https://github.com/weechat/weechat/compare/v4.9.2...v4.9.3
 [4.9.2]: https://github.com/weechat/weechat/compare/v4.9.1...v4.9.2
