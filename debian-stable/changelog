@@ -1,3 +1,19 @@
+weechat (4.9.3-1) unstable; urgency=medium
+
+  * New upstream release (Closes: #1142064)
+  * Switch debhelper compatibility to 14
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Fri, 17 Jul 2026 14:10:55 +0000
+
+weechat (4.9.0-1) unstable; urgency=medium
+
+  * New upstream release
+  * Bump Standards-Version to 4.7.4
+  * Fix Changelog and Donation fields in upstream/metadata (Closes: #1129600)
+  * Build Lua plugin against Lua 5.4 (Closes: #1135236)
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Wed, 06 May 2026 05:52:59 +0000
+
 weechat (4.8.1-1) unstable; urgency=medium
 
   * New upstream release
