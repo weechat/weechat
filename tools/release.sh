@@ -46,13 +46,22 @@ release_start ()
         release_error "working directory not clean"
     fi
 
+    # Get the target used in the changelog compare links: "HEAD" on the main
+    # branch, the branch itself on a maintenance branch (for example "4.10").
+    branch=$(git rev-parse --abbrev-ref HEAD)
+    case "${branch}" in
+        main ) compare_target="HEAD" ;;
+        [0-9]*.[0-9]* ) compare_target="${branch}" ;;
+        * ) release_error "branch \"${branch}\" is neither the main branch nor a maintenance branch" ;;
+    esac
+
     # Sanity check: the changelog must have an [Unreleased] section to release.
     if ! grep -q '^## \[Unreleased\]$' "${root_dir}/CHANGELOG.md"; then
         release_error "no [Unreleased] section found in CHANGELOG.md"
     fi
     # Sanity check: the [Unreleased] compare link is required to build the release links.
-    if ! grep -q '^\[Unreleased\]: .*/compare/.*\.\.\.HEAD$' "${root_dir}/CHANGELOG.md"; then
-        release_error "no valid [Unreleased] link found in CHANGELOG.md"
+    if ! grep -q "^\[Unreleased\]: .*/compare/.*\.\.\.${compare_target}\$" "${root_dir}/CHANGELOG.md"; then
+        release_error "no valid [Unreleased] link ending with \"...${compare_target}\" found in CHANGELOG.md"
     fi
 
     # Check REUSE/licensing compliance.
@@ -84,12 +93,15 @@ release_bump_version ()
     # Bump version in script version.sh.
     "${root_dir}/tools/bump_version.sh" stable
 
-    # Derive the compare-URL base and the previous tag from the [Unreleased] link.
-    # e.g. [Unreleased]: https://github.com/weechat/weechat/compare/v4.9.0...HEAD
+    # Derive the compare-URL base and the previous tag from the [Unreleased] link,
+    # e.g. on the main branch:
+    #   [Unreleased]: https://github.com/weechat/weechat/compare/v4.9.0...HEAD
+    # and on the maintenance branch 4.10:
+    #   [Unreleased]: https://github.com/weechat/weechat/compare/v4.10.0...4.10
     unreleased_link=$(grep -m1 '^\[Unreleased\]: ' "${root_dir}/CHANGELOG.md" | sed -E 's/^\[Unreleased\]: //')
     base_url=${unreleased_link%%/compare/*}
     prev_tag=${unreleased_link##*/compare/}
-    prev_tag=${prev_tag%%...HEAD}
+    prev_tag=${prev_tag%"...${compare_target}"}
 
     # Update the changelog:
     #   - turn the [Unreleased] heading into the released version and date
@@ -97,7 +109,7 @@ release_bump_version ()
     #   - add the new version link (kept in descending order, after [Unreleased])
     sed -i \
         -e "s|^## \[Unreleased\]$|## [${version}] - ${date}|" \
-        -e "s|^\[Unreleased\]: .*|[Unreleased]: ${base_url}/compare/v${version}...HEAD|" \
+        -e "s|^\[Unreleased\]: .*|[Unreleased]: ${base_url}/compare/v${version}...${compare_target}|" \
         -e "/^\[Unreleased\]: /a [${version}]: ${base_url}/compare/${prev_tag}...v${version}" \
         "${root_dir}/CHANGELOG.md"
 
