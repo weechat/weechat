@@ -91,7 +91,7 @@ body:
     attributes:
       label: What OS/distribution are you using?
       description: Name of the operating system and its version.
-      placeholder: Debian 12, Ubuntu 24.04, macOS 14, ...
+      placeholder: Debian 13, Ubuntu 26.04, macOS 26, ...
     validations:
       required: true
 
