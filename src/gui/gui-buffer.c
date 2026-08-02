@@ -139,6 +139,21 @@ char *gui_buffer_properties_set[] =
   NULL
 };
 
+/* possible partial buffer match types in the order of priority (preferred first) */
+enum t_gui_buffer_match_type
+{
+    GUI_BUFFER_MATCH_NAME_EXACT,
+    GUI_BUFFER_MATCH_SHORT_EXACT,
+    GUI_BUFFER_MATCH_NAME_BEGIN,
+    GUI_BUFFER_MATCH_SHORT_BEGIN,
+    GUI_BUFFER_MATCH_NAME_MIDDLE,
+    GUI_BUFFER_MATCH_SHORT_MIDDLE,
+    GUI_BUFFER_MATCH_NAME_END,
+    GUI_BUFFER_MATCH_SHORT_END,
+    /* number of match types */
+    GUI_BUFFER_NUM_MATCH_TYPE,
+};
+
 
 /*
  * Search for buffer type.
@@ -3093,22 +3108,8 @@ gui_buffer_search (const char *plugin, const char *name)
 struct t_gui_buffer *
 gui_buffer_search_by_partial_name (const char *plugin, const char *name)
 {
-    /* Possible partial match types in the order of priority (preferred first) */
-    enum t_match_type
-    {
-        MATCH_NAME_EXACT,
-        MATCH_SHORT_EXACT,
-        MATCH_NAME_BEGIN,
-        MATCH_SHORT_BEGIN,
-        MATCH_NAME_MIDDLE,
-        MATCH_SHORT_MIDDLE,
-        MATCH_NAME_END,
-        MATCH_SHORT_END,
-        /* number of match types */
-        NUM_MATCH_TYPE,
-    };
-
-    struct t_gui_buffer *ptr_start_buffer, *ptr_buffer, *buffer_partial_match[NUM_MATCH_TYPE];
+    struct t_gui_buffer *ptr_start_buffer, *ptr_buffer;
+    struct t_gui_buffer *buffer_match[GUI_BUFFER_NUM_MATCH_TYPE];
     int plugin_case_sensitive, name_case_sensitive, plugin_match, length_name, i;
     const char *pos;
 
@@ -3132,8 +3133,8 @@ gui_buffer_search_by_partial_name (const char *plugin, const char *name)
     if (!name[0])
         return gui_current_window->buffer;
 
-    for (i = 0; i < NUM_MATCH_TYPE; i++)
-        buffer_partial_match[i] = NULL;
+    for (i = 0; i < GUI_BUFFER_NUM_MATCH_TYPE; i++)
+        buffer_match[i] = NULL;
 
     length_name = strlen (name);
 
@@ -3150,9 +3151,11 @@ gui_buffer_search_by_partial_name (const char *plugin, const char *name)
             if (plugin && plugin[0])
             {
                 if ((plugin_case_sensitive
-                     && (strcmp (plugin, gui_buffer_get_plugin_name (ptr_buffer)) != 0))
+                     && (strcmp (
+                             plugin, gui_buffer_get_plugin_name (ptr_buffer)) != 0))
                     || (!plugin_case_sensitive
-                        && (string_strcasecmp (plugin, gui_buffer_get_plugin_name (ptr_buffer)) != 0)))
+                        && (string_strcasecmp (
+                                plugin, gui_buffer_get_plugin_name (ptr_buffer)) != 0)))
                 {
                     plugin_match = 0;
                 }
@@ -3170,14 +3173,14 @@ gui_buffer_search_by_partial_name (const char *plugin, const char *name)
                         if (!pos[length_name])
                         {
                             /* matches full name */
-                            if (!buffer_partial_match[MATCH_NAME_EXACT])
-                                buffer_partial_match[MATCH_NAME_EXACT] = ptr_buffer;
+                            if (!buffer_match[GUI_BUFFER_MATCH_NAME_EXACT])
+                                buffer_match[GUI_BUFFER_MATCH_NAME_EXACT] = ptr_buffer;
                         }
                         else
                         {
                             /* matches beginning of name */
-                            if (!buffer_partial_match[MATCH_NAME_BEGIN])
-                                buffer_partial_match[MATCH_NAME_BEGIN] = ptr_buffer;
+                            if (!buffer_match[GUI_BUFFER_MATCH_NAME_BEGIN])
+                                buffer_match[GUI_BUFFER_MATCH_NAME_BEGIN] = ptr_buffer;
                         }
                     }
                     else
@@ -3185,14 +3188,14 @@ gui_buffer_search_by_partial_name (const char *plugin, const char *name)
                         if (pos[length_name])
                         {
                             /* matches middle of buffer name */
-                            if (!buffer_partial_match[MATCH_NAME_MIDDLE])
-                                buffer_partial_match[MATCH_NAME_MIDDLE] = ptr_buffer;
+                            if (!buffer_match[GUI_BUFFER_MATCH_NAME_MIDDLE])
+                                buffer_match[GUI_BUFFER_MATCH_NAME_MIDDLE] = ptr_buffer;
                         }
                         else
                         {
                             /* matches end of buffer name */
-                            if (!buffer_partial_match[MATCH_NAME_END])
-                                buffer_partial_match[MATCH_NAME_END] = ptr_buffer;
+                            if (!buffer_match[GUI_BUFFER_MATCH_NAME_END])
+                                buffer_match[GUI_BUFFER_MATCH_NAME_END] = ptr_buffer;
                         }
                     }
                 }
@@ -3210,14 +3213,14 @@ gui_buffer_search_by_partial_name (const char *plugin, const char *name)
                             if (!pos[length_name])
                             {
                                 /* matches full short name */
-                                if (!buffer_partial_match[MATCH_SHORT_EXACT])
-                                    buffer_partial_match[MATCH_SHORT_EXACT] = ptr_buffer;
+                                if (!buffer_match[GUI_BUFFER_MATCH_SHORT_EXACT])
+                                    buffer_match[GUI_BUFFER_MATCH_SHORT_EXACT] = ptr_buffer;
                             }
                             else
                             {
                                 /* matches beginning of short name */
-                                if (!buffer_partial_match[MATCH_SHORT_BEGIN])
-                                    buffer_partial_match[MATCH_SHORT_BEGIN] = ptr_buffer;
+                                if (!buffer_match[GUI_BUFFER_MATCH_SHORT_BEGIN])
+                                    buffer_match[GUI_BUFFER_MATCH_SHORT_BEGIN] = ptr_buffer;
                             }
                         }
                         else
@@ -3225,14 +3228,14 @@ gui_buffer_search_by_partial_name (const char *plugin, const char *name)
                             if (pos[length_name])
                             {
                                 /* matches middle of buffer short name */
-                                if (!buffer_partial_match[MATCH_SHORT_MIDDLE])
-                                    buffer_partial_match[MATCH_SHORT_MIDDLE] = ptr_buffer;
+                                if (!buffer_match[GUI_BUFFER_MATCH_SHORT_MIDDLE])
+                                    buffer_match[GUI_BUFFER_MATCH_SHORT_MIDDLE] = ptr_buffer;
                             }
                             else
                             {
                                 /* matches end of buffer short name */
-                                if (!buffer_partial_match[MATCH_SHORT_END])
-                                    buffer_partial_match[MATCH_SHORT_END] = ptr_buffer;
+                                if (!buffer_match[GUI_BUFFER_MATCH_SHORT_END])
+                                    buffer_match[GUI_BUFFER_MATCH_SHORT_END] = ptr_buffer;
                             }
                         }
                     }
@@ -3247,10 +3250,10 @@ gui_buffer_search_by_partial_name (const char *plugin, const char *name)
     }
 
     /* return most preferred match type available */
-    for (i = 0; i < NUM_MATCH_TYPE; i++)
+    for (i = 0; i < GUI_BUFFER_NUM_MATCH_TYPE; i++)
     {
-        if (buffer_partial_match[i])
-            return buffer_partial_match[i];
+        if (buffer_match[i])
+            return buffer_match[i];
     }
 
     /* no partial match of any type */
