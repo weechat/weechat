@@ -4609,7 +4609,7 @@ _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
 - log file (~/.weechat/weechat.log)
 - nicklist can be moved on top, bottom, left or right of window
 
-[Unreleased]: https://github.com/weechat/weechat/compare/v4.10.0...HEAD
+[Unreleased]: https://github.com/weechat/weechat/compare/v4.10.0...4.10
 [4.10.0]: https://github.com/weechat/weechat/compare/v4.9.0...v4.10.0
 [4.9.5]: https://github.com/weechat/weechat/compare/v4.9.4...v4.9.5
 [4.9.4]: https://github.com/weechat/weechat/compare/v4.9.3...v4.9.4
