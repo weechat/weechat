@@ -479,7 +479,7 @@ jobs:
       run: ./tools/build_debian.sh test-patches
 
     - name: Build Debian packages
-      run: ./tools/build_debian.sh devel ubuntu/noble
+      run: ./tools/build_debian.sh devel ubuntu/resolute
 
     - name: Install Debian packages
       run: sudo dpkg -i ../weechat-devel*.deb
