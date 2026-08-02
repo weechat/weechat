@@ -138,7 +138,7 @@ Le tableau suivant liste les paquets *requis* pour construire WeeChat :
 |===
 
 [NOTE]
-^(1)^ Le nom provient de la distribution GNU/Linux Debian Bookworm, la version
+^(1)^ Le nom provient de la distribution GNU/Linux Debian Trixie, la version
 et le nom peuvent être différents dans les autres distributions. +
 ^(2)^ GnuTLS ≥ 3.0.21 est requis pour l'authentification SASL avec le mécanisme
 ECDSA-NIST256P-CHALLENGE.
@@ -175,7 +175,7 @@ Le tableau suivant liste les paquets optionnels pour compiler WeeChat :
 | libperl-dev |
 | Extension perl.
 
-| ruby3.1, ruby3.1-dev | ≥ 1.9.1
+| ruby3.3, ruby3.3-dev | ≥ 1.9.1
 | Extension ruby.
 
 | liblua5.4-dev |
@@ -216,7 +216,7 @@ Le tableau suivant liste les paquets optionnels pour compiler WeeChat :
 |===
 
 [NOTE]
-^(1)^ Le nom provient de la distribution GNU/Linux Debian Bookworm, la version
+^(1)^ Le nom provient de la distribution GNU/Linux Debian Trixie, la version
 et le nom peuvent être différents dans les autres distributions.
 
 Si vous utilisez une distribution basée sur Debian ou Ubuntu, et si vous avez

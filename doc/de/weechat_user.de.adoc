@@ -140,7 +140,7 @@ Die folgende Tabelle zeigt eine Auflistung der Pakete, die zum Erstellen von Wee
 |===
 
 [NOTE]
-^(1)^ Der Name stammt von der Debian GNU/Linux Bookworm-Distribution,
+^(1)^ Der Name stammt von der Debian GNU/Linux Trixie-Distribution,
 Version und Name können in anderen Distributionen anders lauten. +
 ^(2)^ GnuTLS ≥ 3.0.21 wird benötigt um eine IRC SASL Authentifizierung mittels
 ECDSA-NIST256P-CHALLENGE durchzuführen.
@@ -179,7 +179,7 @@ WeeChat optional sind:
 | libperl-dev |
 | Perl Erweiterung.
 
-| ruby3.1, ruby3.1-dev | ≥ 1.9.1
+| ruby3.3, ruby3.3-dev | ≥ 1.9.1
 | Ruby Erweiterung.
 
 | liblua5.4-dev |
@@ -220,7 +220,7 @@ WeeChat optional sind:
 |===
 
 [NOTE]
-^(1)^ Der Name stammt von der Debian GNU/Linux Bookworm-Distribution,
+^(1)^ Der Name stammt von der Debian GNU/Linux Trixie-Distribution,
 Version und Name können in anderen Distributionen anders lauten.
 
 Falls eine Debian/Ubuntu basierte Distribution genutzt wird und man einen

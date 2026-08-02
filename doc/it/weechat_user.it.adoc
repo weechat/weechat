@@ -164,7 +164,7 @@ WeeChat:
 
 [NOTE]
 // TRANSLATION MISSING
-^(1)^ Name comes from the Debian GNU/Linux Bookworm distribution, version and
+^(1)^ Name comes from the Debian GNU/Linux Trixie distribution, version and
 name can be different in other distributions. +
 // TRANSLATION MISSING
 ^(2)^ GnuTLS ≥ 3.0.21 is required for IRC SASL authentication with mechanism
@@ -208,7 +208,7 @@ WeeChat:
 | libperl-dev |
 | Plugin perl.
 
-| ruby3.1, ruby3.1-dev | ≥ 1.9.1
+| ruby3.3, ruby3.3-dev | ≥ 1.9.1
 | Plugin ruby.
 
 | liblua5.4-dev |
@@ -255,7 +255,7 @@ WeeChat:
 
 [NOTE]
 // TRANSLATION MISSING
-^(1)^ Name comes from the Debian GNU/Linux Bookworm distribution, version and
+^(1)^ Name comes from the Debian GNU/Linux Trixie distribution, version and
 name can be different in other distributions.
 
 // TRANSLATION MISSING

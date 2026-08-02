@@ -153,7 +153,7 @@ WeeChat:
 
 [NOTE]
 // TRANSLATION MISSING
-^(1)^ Name comes from the Debian GNU/Linux Bookworm distribution, version and
+^(1)^ Name comes from the Debian GNU/Linux Trixie distribution, version and
 name can be different in other distributions. +
 ^(2)^ IRC SASL 認証で ECDSA-NIST256P-CHALLENGE を使うには、GnuTLS
 バージョン 3.0.21 以上が必要です。
@@ -195,7 +195,7 @@ WeeChat:
 | libperl-dev |
 | perl プラグイン
 
-| ruby3.1, ruby3.1-dev | 1.9.1 以上
+| ruby3.3, ruby3.3-dev | 1.9.1 以上
 | ruby プラグイン
 
 | liblua5.4-dev |
@@ -238,7 +238,7 @@ WeeChat:
 
 [NOTE]
 // TRANSLATION MISSING
-^(1)^ Name comes from the Debian GNU/Linux Bookworm distribution, version and
+^(1)^ Name comes from the Debian GNU/Linux Trixie distribution, version and
 name can be different in other distributions.
 
 Debian および Ubuntu

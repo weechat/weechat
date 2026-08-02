@@ -139,7 +139,7 @@ WeeChat:
 |===
 
 [NOTE]
-^(1)^ Nazwa pochodzi z repozytorium dystrybucji Debian GNU/Linux Bookworm distribution,
+^(1)^ Nazwa pochodzi z repozytorium dystrybucji Debian GNU/Linux Trixie distribution,
 wersja i nazwa mogą się różnić dla innych dystrybucji. +
 ^(2)^ GnuTLS ≥ 3.0.21 jest wymagany dla uwierzytelnienia IRC SASL za pomocą
 mechanizmu ECDSA-NIST256P-CHALLENGE.
@@ -177,7 +177,7 @@ WeeChat:
 | libperl-dev |
 | Wtyczka perl.
 
-| ruby3.1, ruby3.1-dev | ≥ 1.9.1
+| ruby3.3, ruby3.3-dev | ≥ 1.9.1
 | Wtyczka ruby.
 
 | liblua5.4-dev |
@@ -218,7 +218,7 @@ WeeChat:
 |===
 
 [NOTE]
-^(1)^ Nazwa pochodzi z repozytorium dystrybucji Debian GNU/Linux Bookworm distribution,
+^(1)^ Nazwa pochodzi z repozytorium dystrybucji Debian GNU/Linux Trixie distribution,
 wersja i nazwa mogą się różnić dla innych dystrybucji. +
 
 Jeśli używasz dystrybujci bazującej na Debianie/Ubuntu, oraz jeśli posiadasz wpisy
