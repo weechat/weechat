@@ -27,11 +27,11 @@ When reporting [issues](https://github.com/weechat/weechat/issues) on GitHub,
 please include:
 
 - Your **WeeChat version**: the output of `/v` in WeeChat, for example:
-  `WeeChat 1.7-dev (git: v1.6-6-g997f47f)`.\
+  `WeeChat 4.10.0-dev (git: v4.10.0-2-g60a360559)`.\
   If WeeChat does not start at all, please include the version displayed by
   `weechat --help` (or the version installed with your package manager).
-- Your **operating system**: its name and version (examples: Linux Debian Bookworm,
-  FreeBSD 13.0, Windows/Cygwin 64-bit, Windows/Ubuntu 64-bit…).
+- Your **operating system**: its name and version (examples: Linux Debian Trixie,
+  FreeBSD 15.0, Windows/Cygwin 64-bit, Windows/Ubuntu 64-bit…).
 - The **steps to reproduce**: if possible, please include a reproducible example:
   explain the steps which led you to the problem.\
   It's even better if you can reproduce the problem with a new config (and no
