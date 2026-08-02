@@ -37,6 +37,7 @@ extern "C"
 #include "src/gui/gui-key.h"
 #include "src/gui/gui-line.h"
 #include "src/gui/gui-nicklist.h"
+#include "src/gui/gui-window.h"
 #include "src/plugins/plugin.h"
 
 extern void gui_buffer_local_var_remove_all (struct t_gui_buffer *buffer);
@@ -1544,18 +1545,26 @@ TEST(GuiBuffer, Search)
 
 TEST(GuiBuffer, SearchByPartialName)
 {
-    struct t_gui_buffer *buffer;
+    struct t_gui_buffer *buffer, *buffer1, *buffer2;
+    struct t_gui_buffer *name_exact, *name_end, *name_begin, *name_middle;
+    struct t_gui_buffer *short_exact, *short_end, *short_begin, *short_middle;
 
     buffer = gui_buffer_new (NULL, TEST_BUFFER_NAME,
                              NULL, NULL, NULL,
                              NULL, NULL, NULL);
     CHECK(buffer);
 
+    /* no name: the current buffer is returned */
     POINTERS_EQUAL(gui_buffers, gui_buffer_search_by_partial_name (NULL, NULL));
     POINTERS_EQUAL(gui_buffers, gui_buffer_search_by_partial_name (NULL, ""));
     POINTERS_EQUAL(gui_buffers, gui_buffer_search_by_partial_name ("", NULL));
     POINTERS_EQUAL(gui_buffers, gui_buffer_search_by_partial_name ("", ""));
     POINTERS_EQUAL(gui_buffers, gui_buffer_search_by_partial_name ("", "(?i)"));
+    POINTERS_EQUAL(gui_buffers, gui_buffer_search_by_partial_name ("core", "(?i)"));
+
+    /* no buffer found */
+    POINTERS_EQUAL(NULL, gui_buffer_search_by_partial_name (NULL, "zzz"));
+    POINTERS_EQUAL(NULL, gui_buffer_search_by_partial_name ("zzz", "weechat"));
 
     POINTERS_EQUAL(gui_buffers, gui_buffer_search_by_partial_name ("core", "weechat"));
     POINTERS_EQUAL(buffer, gui_buffer_search_by_partial_name ("core", TEST_BUFFER_NAME));
@@ -1571,6 +1580,129 @@ TEST(GuiBuffer, SearchByPartialName)
 
     POINTERS_EQUAL(NULL, gui_buffer_search_by_partial_name ("CORE", TEST_BUFFER_NAME));
     POINTERS_EQUAL(buffer, gui_buffer_search_by_partial_name ("(?i)CORE", TEST_BUFFER_NAME));
+
+    /*
+     * create one buffer for each possible match type on "abc", from the
+     * lowest priority to the highest one: the expected buffer is always the
+     * last one added in the list of buffers
+     */
+    short_middle = gui_buffer_new (NULL, "buffer_short_middle",
+                                   NULL, NULL, NULL, NULL, NULL, NULL);
+    CHECK(short_middle);
+    gui_buffer_set (short_middle, "short_name", "xxabcxx");
+    name_middle = gui_buffer_new (NULL, "xxabcxx",
+                                  NULL, NULL, NULL, NULL, NULL, NULL);
+    CHECK(name_middle);
+    short_begin = gui_buffer_new (NULL, "buffer_short_begin",
+                                  NULL, NULL, NULL, NULL, NULL, NULL);
+    CHECK(short_begin);
+    gui_buffer_set (short_begin, "short_name", "abcxx");
+    name_begin = gui_buffer_new (NULL, "abcxx",
+                                 NULL, NULL, NULL, NULL, NULL, NULL);
+    CHECK(name_begin);
+    short_end = gui_buffer_new (NULL, "buffer_short_end",
+                                NULL, NULL, NULL, NULL, NULL, NULL);
+    CHECK(short_end);
+    gui_buffer_set (short_end, "short_name", "xxabc");
+    name_end = gui_buffer_new (NULL, "xxabc",
+                               NULL, NULL, NULL, NULL, NULL, NULL);
+    CHECK(name_end);
+    short_exact = gui_buffer_new (NULL, "buffer_short_exact",
+                                  NULL, NULL, NULL, NULL, NULL, NULL);
+    CHECK(short_exact);
+    gui_buffer_set (short_exact, "short_name", "abc");
+    name_exact = gui_buffer_new (NULL, "abc",
+                                 NULL, NULL, NULL, NULL, NULL, NULL);
+    CHECK(name_exact);
+
+    /* exact match on name */
+    POINTERS_EQUAL(name_exact, gui_buffer_search_by_partial_name (NULL, "abc"));
+    POINTERS_EQUAL(name_exact, gui_buffer_search_by_partial_name (NULL, "(?i)ABC"));
+    POINTERS_EQUAL(NULL, gui_buffer_search_by_partial_name (NULL, "ABC"));
+    gui_buffer_close (name_exact);
+
+    /* exact match on short name */
+    POINTERS_EQUAL(short_exact, gui_buffer_search_by_partial_name (NULL, "abc"));
+    gui_buffer_close (short_exact);
+
+    /* match at the end of name */
+    POINTERS_EQUAL(name_end, gui_buffer_search_by_partial_name (NULL, "abc"));
+    gui_buffer_close (name_end);
+
+    /* match at the end of short name */
+    POINTERS_EQUAL(short_end, gui_buffer_search_by_partial_name (NULL, "abc"));
+    gui_buffer_close (short_end);
+
+    /* match at the beginning of name */
+    POINTERS_EQUAL(name_begin, gui_buffer_search_by_partial_name (NULL, "abc"));
+    gui_buffer_close (name_begin);
+
+    /* match at the beginning of short name */
+    POINTERS_EQUAL(short_begin, gui_buffer_search_by_partial_name (NULL, "abc"));
+    gui_buffer_close (short_begin);
+
+    /* match in the middle of name */
+    POINTERS_EQUAL(name_middle, gui_buffer_search_by_partial_name (NULL, "abc"));
+    gui_buffer_close (name_middle);
+
+    /* match in the middle of short name */
+    POINTERS_EQUAL(short_middle, gui_buffer_search_by_partial_name (NULL, "abc"));
+    gui_buffer_close (short_middle);
+
+    POINTERS_EQUAL(NULL, gui_buffer_search_by_partial_name (NULL, "abc"));
+
+    /*
+     * with a private buffer "abcbot" and a channel "#abc": the match at the
+     * end of the channel name has priority over the match at the beginning
+     * of the private buffer short name
+     */
+    buffer1 = gui_buffer_new (NULL, "libera.abcbot",
+                              NULL, NULL, NULL, NULL, NULL, NULL);
+    CHECK(buffer1);
+    gui_buffer_set (buffer1, "short_name", "abcbot");
+    buffer2 = gui_buffer_new (NULL, "libera.#abc",
+                              NULL, NULL, NULL, NULL, NULL, NULL);
+    CHECK(buffer2);
+    gui_buffer_set (buffer2, "short_name", "#abc");
+    POINTERS_EQUAL(buffer2, gui_buffer_search_by_partial_name (NULL, "abc"));
+    gui_buffer_close (buffer1);
+    gui_buffer_close (buffer2);
+
+    /*
+     * with two channels "##abc" and "#abc": the exact match on the short name
+     * "#abc" has priority over the match at the end of the short name "##abc"
+     */
+    buffer1 = gui_buffer_new (NULL, "libera.##abc",
+                              NULL, NULL, NULL, NULL, NULL, NULL);
+    CHECK(buffer1);
+    gui_buffer_set (buffer1, "short_name", "##abc");
+    buffer2 = gui_buffer_new (NULL, "libera.#abc",
+                              NULL, NULL, NULL, NULL, NULL, NULL);
+    CHECK(buffer2);
+    gui_buffer_set (buffer2, "short_name", "#abc");
+    POINTERS_EQUAL(buffer2, gui_buffer_search_by_partial_name (NULL, "#abc"));
+    POINTERS_EQUAL(buffer1, gui_buffer_search_by_partial_name (NULL, "##abc"));
+    gui_buffer_close (buffer1);
+    gui_buffer_close (buffer2);
+
+    /*
+     * with two buffers matching with the same type, the search starts at the
+     * buffer following the current one and wraps to the beginning of list
+     */
+    buffer1 = gui_buffer_new (NULL, "abc1",
+                              NULL, NULL, NULL, NULL, NULL, NULL);
+    CHECK(buffer1);
+    buffer2 = gui_buffer_new (NULL, "abc2",
+                              NULL, NULL, NULL, NULL, NULL, NULL);
+    CHECK(buffer2);
+    POINTERS_EQUAL(buffer1, gui_buffer_search_by_partial_name (NULL, "abc"));
+    gui_window_switch_to_buffer (gui_current_window, buffer1, 1);
+    POINTERS_EQUAL(buffer2, gui_buffer_search_by_partial_name (NULL, "abc"));
+    gui_window_switch_to_buffer (gui_current_window, buffer2, 1);
+    POINTERS_EQUAL(buffer1, gui_buffer_search_by_partial_name (NULL, "abc"));
+    gui_window_switch_to_buffer (gui_current_window, gui_buffers, 1);
+    gui_buffer_close (buffer1);
+    gui_buffer_close (buffer2);
 
     gui_buffer_close (buffer);
 
