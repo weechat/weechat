@@ -6,6 +6,12 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 # Changelog
 
+## [Unreleased]
+
+### Fixed
+
+- core: fix buffer selected when searching by partial name and another buffer has a similar name ([#700](https://github.com/weechat/weechat/issues/700))
+
 ## [4.10.0] - 2026-08-02
 
 _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
