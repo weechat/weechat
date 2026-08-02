@@ -411,6 +411,7 @@ jobs:
       matrix:
         os:
           - macos-15
+          - macos-26
         config:
           - name: "gcc"
             cc: "gcc"
