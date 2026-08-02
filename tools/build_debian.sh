@@ -33,7 +33,7 @@
 # Script arguments:          Examples:
 #
 #   1. version               devel, devel-2, stable, stable-2, 1.9, 1.9-2
-#   2. distro type/name      debian/sid, ubuntu/noble, raspbian/bookworm
+#   2. distro type/name      debian/sid, ubuntu/resolute, raspbian/trixie
 #
 # The script can also just check that all Debian/Ubuntu patches apply fine
 # with a single argument: "test-patches".
@@ -41,9 +41,9 @@
 # Examples:
 #
 #   …/build_debian.sh devel debian/sid
-#   …/build_debian.sh stable debian/bookworm
-#   …/build_debian.sh 4.3.0 ubuntu/noble
-#   …/build_debian.sh 4.3.0-2 ubuntu/noble
+#   …/build_debian.sh stable debian/trixie
+#   …/build_debian.sh 4.3.0 ubuntu/resolute
+#   …/build_debian.sh 4.3.0-2 ubuntu/resolute
 #
 #   …/build_debian.sh test-patches
 #
@@ -78,7 +78,7 @@ Syntax: $0 devel|stable|<version> distro
        version  version to build: stable, devel or specific version
                 (debian package revision is allowed after name (default is 1),
                 for example: devel-2, stable-2, 1.9-2)
-        distro  the distro type/name (debian/sid, ubuntu/noble, raspbian/bookworm, ...)
+        distro  the distro type/name (debian/sid, ubuntu/resolute, raspbian/trixie, ...)
 
   test-patches  test that all Debian/Ubuntu patches apply fine (with git apply --check)
 
@@ -89,9 +89,9 @@ IMPORTANT: the current OS must match the distro, and the WeeChat sources
 Examples:
 
   $0 devel debian/sid
-  $0 stable debian/bookworm
-  $0 4.3.0 ubuntu/noble
-  $0 4.3.0-2 ubuntu/noble
+  $0 stable debian/trixie
+  $0 4.3.0 ubuntu/resolute
+  $0 4.3.0-2 ubuntu/resolute
   $0 test-patches
 
 EOF
