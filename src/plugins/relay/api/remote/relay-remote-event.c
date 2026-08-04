@@ -65,6 +65,26 @@
 
 
 /*
+ * Check if a line in a buffer has been marked read on the remote.
+ */
+static int
+relay_remote_line_is_already_read (struct t_gui_buffer *ptr_buffer, int line_id)
+{
+    const char *ptr_val;
+    long long last_read;
+
+    if (!ptr_buffer || line_id < 0)
+        return 0;
+
+    ptr_val = weechat_buffer_get_string (ptr_buffer, "localvar_relay_remote_last_read_line_id");
+    if (!ptr_val || !weechat_util_parse_longlong (ptr_val, 10, &last_read))
+        return 0;
+
+    return line_id <= last_read;
+}
+
+
+/*
  * Search a buffer used for a remote.
  *
  * Return pointer to buffer, NULL if not found.
@@ -135,16 +155,18 @@ relay_remote_event_get_buffer_id (struct t_gui_buffer *buffer)
  */
 
 char **
-relay_remote_build_string_tags (cJSON *json_tags, int line_id, int highlight)
+relay_remote_build_string_tags (cJSON *json_tags, int line_id, int highlight, struct t_gui_buffer *ptr_buffer)
 {
     cJSON *json_tag;
     const char *ptr_tag;
     char **tags, str_tag_id[512];
-    int tag_notify_highlight;
+    int tag_notify_highlight, line_already_read;
 
     tags = weechat_string_dyn_alloc (256);
     if (!tags)
         return NULL;
+
+    line_already_read = relay_remote_line_is_already_read (ptr_buffer, line_id);
 
     tag_notify_highlight = 0;
 
@@ -157,7 +179,11 @@ relay_remote_build_string_tags (cJSON *json_tags, int line_id, int highlight)
             {
                 if ((*tags)[0])
                     weechat_string_dyn_concat (tags, ",", -1);
-                if (highlight && (strncmp (ptr_tag, "notify_", 7) == 0))
+                if (line_already_read && (strncmp (ptr_tag, "notify_", 7) == 0))
+                {
+                    weechat_string_dyn_concat (tags, "notify_none", -1);
+                }
+                else if (highlight && (strncmp (ptr_tag, "notify_", 7) == 0))
                 {
                     weechat_string_dyn_concat (tags, "notify_highlight", -1);
                     tag_notify_highlight = 1;
@@ -172,9 +198,9 @@ relay_remote_build_string_tags (cJSON *json_tags, int line_id, int highlight)
 
     /*
      * add "notify_highlight" if line has highlight but no highlight tag
-     * was present
+     * was present, unless already read
      */
-    if (highlight && !tag_notify_highlight)
+    if (highlight && !tag_notify_highlight && !line_already_read)
     {
         if ((*tags)[0])
             weechat_string_dyn_concat (tags, ",", -1);
@@ -220,7 +246,7 @@ relay_remote_event_line_add (struct t_relay_remote_event *event)
     }
 
     tags = relay_remote_build_string_tags (
-        cJSON_GetObjectItem (event->json, "tags"), id, highlight);
+        cJSON_GetObjectItem (event->json, "tags"), id, highlight, event->buffer);
 
     if (y >= 0)
     {
@@ -369,7 +395,7 @@ relay_remote_event_line_update (struct t_relay_remote_event *event)
     weechat_hashtable_set (hashtable, "date_usec_printed", str_value);
 
     tags = relay_remote_build_string_tags (
-        cJSON_GetObjectItem (event->json, "tags"), id, highlight);
+        cJSON_GetObjectItem (event->json, "tags"), id, highlight, event->buffer);
     if (tags)
     {
         weechat_hashtable_set (hashtable, "tags_array", *tags);
@@ -838,7 +864,7 @@ RELAY_REMOTE_EVENT_CALLBACK(buffer)
     const char *name, *short_name, *type, *title, *modes, *input_prompt, *input;
     const char *ptr_key, *ptr_command;
     char *full_name, str_number[64], str_local_var[1024], *property;
-    long long id;
+    long long id, last_read_line_id;
     int number, hidden, nicklist, nicklist_case_sensitive;
     int nicklist_display_groups, time_displayed;
     int apply_props, input_position, input_multiline;
@@ -862,6 +888,7 @@ RELAY_REMOTE_EVENT_CALLBACK(buffer)
     JSON_GET_BOOL(event->json, nicklist_case_sensitive);
     JSON_GET_BOOL(event->json, nicklist_display_groups);
     JSON_GET_BOOL(event->json, time_displayed);
+    JSON_GET_NUM(event->json, last_read_line_id, -1);
 
     buffer_props = weechat_hashtable_new (32,
                                           WEECHAT_HASHTABLE_STRING,
@@ -898,6 +925,9 @@ RELAY_REMOTE_EVENT_CALLBACK(buffer)
     weechat_hashtable_set (buffer_props,
                            "localvar_set_relay_remote_number", str_number);
     weechat_hashtable_set (buffer_props, "input_get_any_user_data", "1");
+    snprintf (str_number, sizeof (str_number), "%lld", last_read_line_id);
+    weechat_hashtable_set (buffer_props,
+                           "localvar_set_relay_remote_last_read_line_id", str_number);
 
     /* if buffer exists, set properties, otherwise create buffer */
     apply_props = 1;
