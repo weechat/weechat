@@ -181,7 +181,7 @@ relay_remote_build_string_tags (cJSON *json_tags, int line_id, int highlight, st
                     weechat_string_dyn_concat (tags, ",", -1);
                 if (line_already_read && (strncmp (ptr_tag, "notify_", 7) == 0))
                 {
-                    weechat_string_dyn_concat (tags, "notify_none", -1);
+                    continue;
                 }
                 else if (highlight && (strncmp (ptr_tag, "notify_", 7) == 0))
                 {
@@ -205,6 +205,14 @@ relay_remote_build_string_tags (cJSON *json_tags, int line_id, int highlight, st
         if ((*tags)[0])
             weechat_string_dyn_concat (tags, ",", -1);
         weechat_string_dyn_concat (tags, "notify_highlight", -1);
+    }
+
+    /* add "notify_none" if the line has been marked read remotely */
+    if (line_already_read)
+    {
+        if ((*tags)[0])
+            weechat_string_dyn_concat (tags, ",", -1);
+        weechat_string_dyn_concat (tags, "notify_none", -1);
     }
 
     /* add tag with remote line id */
