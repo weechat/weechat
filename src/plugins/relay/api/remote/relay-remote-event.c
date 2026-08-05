@@ -929,6 +929,8 @@ RELAY_REMOTE_EVENT_CALLBACK(buffer)
     snprintf (str_number, sizeof (str_number), "%lld", id);
     weechat_hashtable_set (buffer_props,
                            "localvar_set_relay_remote_id", str_number);
+    weechat_hashtable_set (buffer_props,
+                           "localvar_set_relay_remote_name", name);
     snprintf (str_number, sizeof (str_number), "%d", number);
     weechat_hashtable_set (buffer_props,
                            "localvar_set_relay_remote_number", str_number);
