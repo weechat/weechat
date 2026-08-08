@@ -4,24 +4,8 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 #
-# This file is part of WeeChat, the extensible chat client.
-#
-# WeeChat is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 3 of the License, or
-# (at your option) any later version.
-#
-# WeeChat is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with WeeChat.  If not, see <https://www.gnu.org/licenses/>.
-#
 
-#
-# Returns current stable or devel version of WeeChat.
+# Return current stable or devel version of WeeChat.
 #
 # Syntax:
 #   version.sh <name>
@@ -39,7 +23,6 @@
 #     devel-minor    the minor version of devel ("1" for "4.1.0-dev")
 #     devel-patch    the patch version of devel ("0-dev" for "4.1.0-dev")
 #     devel-number   the devel version as hex number ("0x04010000" for "4.1.0-dev")
-#
 
 weechat_stable="4.10.0"
 weechat_devel="4.11.0-dev"

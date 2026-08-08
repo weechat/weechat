@@ -2,7 +2,7 @@
 // SPDX-FileCopyrightText: 2017-2020 Alexander Zobkov <alexander.zobkov@gmail.com>
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
-//
+
 // Russian translation, courtesy of Alexander Zobkov <alexander.zobkov@gmail.com>
 :appendix-caption: Приложение
 :appendix-refsig: {appendix-caption}
