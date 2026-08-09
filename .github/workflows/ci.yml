@@ -116,7 +116,7 @@ jobs:
   checks:
 
     env:
-      POEXAM_VERSION: "0.0.12"
+      POEXAM_VERSION: "0.1.0"
 
     strategy:
       matrix:

@@ -18,7 +18,7 @@ ignore = [
     "urls",
 ]
 path_words = "."
-langs = [
+spelling_langs = [
     "en_US",
     "fr",
 ]
