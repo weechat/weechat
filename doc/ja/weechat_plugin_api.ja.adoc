@@ -2529,9 +2529,13 @@ length = weechat_string_base_encode ("64", string, strlen (string), result);
 ==== string_base_decode
 
 // TRANSLATION MISSING
-_WeeChat ≥ 2.4, updated in 4.3.0._
+_WeeChat ≥ 2.4, updated in 4.3.0, 4.11.0._
 
 base 16、32、64 でエンコードされた文字列をデコード。
+
+// TRANSLATION MISSING
+If an invalid char is found in the string to decode, an empty string is stored
+in _*to_ and -1 is returned.
 
 プロトタイプ:
 

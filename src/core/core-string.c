@@ -3520,6 +3520,9 @@ string_base16_encode (const char *from, int length, char *to)
 /*
  * Decode a base16 string (hexadecimal).
  *
+ * If an invalid char is found in the string, "*to" is set to an empty string
+ * and -1 is returned.
+ *
  * Return length of string in "*to" (it does not count final \0),
  * -1 if error.
  */
@@ -3548,6 +3551,12 @@ string_base16_decode (const char *from, char *to)
             value |= (from[pos] - 'a' + 10) << 4;
         else if ((from[pos] >= 'A') && (from[pos] <= 'F'))
             value |= (from[pos] - 'A' + 10) << 4;
+        else
+        {
+            /* invalid base16 char */
+            to[0] = '\0';
+            return -1;
+        }
         /* 4 bits on the right */
         pos++;
         if ((from[pos] >= '0') && (from[pos] <= '9'))
@@ -3556,6 +3565,12 @@ string_base16_decode (const char *from, char *to)
             value |= from[pos] - 'a' + 10;
         else if ((from[pos] >= 'A') && (from[pos] <= 'F'))
             value |= from[pos] - 'A' + 10;
+        else
+        {
+            /* invalid base16 char */
+            to[0] = '\0';
+            return -1;
+        }
 
         to[count++] = value;
     }
@@ -3669,6 +3684,9 @@ string_base32_encode (const char *from, int length, char *to)
  *   limitations under the License.
  *
  *
+ * If an invalid char is found in the string, "*to" is set to an empty string
+ * and -1 is returned.
+ *
  * Return length of string in "*to" (it does not count final \0),
  * -1 if error.
  */
@@ -3709,6 +3727,7 @@ string_base32_decode (const char *from, char *to)
         else
         {
             /* invalid base32 char */
+            to[0] = '\0';
             return -1;
         }
         value |= c;
@@ -3845,6 +3864,9 @@ string_convbase64_6x4_to_8x3 (const unsigned char *from, unsigned char *to)
  *   "/" --> “_” (underline)
  *   no padding char ("=")
  *
+ * If an invalid char is found in the string, "*to" is set to an empty string
+ * and -1 is returned.
+ *
  * Return length of string in "*to" (it does not count final \0),
  * -1 if error.
  */
@@ -3880,21 +3902,25 @@ string_base64_decode (int url, const char *from, char *to)
             if (!ptr_from[0])
                 break;
             c = (unsigned char) ptr_from[0];
+            ptr_from++;
+            if (c == '=')
+            {
+                /* padding */
+                break;
+            }
             if (url && (c == '-'))
                 c = '+';
             else if (url && (c == '_'))
                 c = '/';
-            ptr_from++;
             c = ((c < 43) || (c > 122)) ? 0 : base64_table[c - 43];
-            if (c)
-                c = (c == '$') ? 0 : c - 61;
-            if (c)
+            if (!c || (c == '$'))
             {
-                length++;
-                in[i] = c - 1;
+                /* invalid base64 char */
+                to[0] = '\0';
+                return -1;
             }
-            else
-                break;
+            length++;
+            in[i] = c - 62;
         }
         if (length > 0)
         {

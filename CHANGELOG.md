@@ -8,6 +8,10 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 ## [Unreleased]
 
+### Changed
+
+- api: return an error and an empty string in function string_base_decode when an invalid char is found in the string to decode
+
 ### Fixed
 
 - core: fix buffer selected when searching by partial name and another buffer has a similar name ([#700](https://github.com/weechat/weechat/issues/700))

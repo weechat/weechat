@@ -2498,9 +2498,12 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== string_base_decode
 
-_WeeChat ≥ 2.4, mis à jour dans la 4.3.0._
+_WeeChat ≥ 2.4, mis à jour dans la 4.3.0, 4.11.0._
 
 Décoder une chaîne encodée en base 16, 32 ou 64.
+
+Si un caractère invalide est trouvé dans la chaîne à décoder, une chaîne vide
+est stockée dans _*to_ et -1 est retourné.
 
 Prototype :
 

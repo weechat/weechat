@@ -2596,10 +2596,14 @@ Questa funzione non è disponibile nelle API per lo scripting.
 
 ==== string_base_decode
 
-_WeeChat ≥ 2.4, updated in 4.3.0._
+_WeeChat ≥ 2.4, updated in 4.3.0, 4.11.0._
 
 // TRANSLATION MISSING
 Decode a string encoded in base 16, 32, or 64.
+
+// TRANSLATION MISSING
+If an invalid char is found in the string to decode, an empty string is stored
+in _*to_ and -1 is returned.
 
 Prototipo:
 

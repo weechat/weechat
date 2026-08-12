@@ -2491,6 +2491,20 @@ TEST(CoreString, Base16)
         LONGS_EQUAL(length, string_base16_decode (str_base16[i][1], str));
         STRCMP_EQUAL(str_base16[i][0], str);
     }
+
+    /* invalid chars in base16 string */
+    str[0] = 0xAA;
+    LONGS_EQUAL(-1, string_base16_decode ("zz", str));
+    STRCMP_EQUAL("", str);
+    str[0] = 0xAA;
+    LONGS_EQUAL(-1, string_base16_decode ("6z", str));
+    STRCMP_EQUAL("", str);
+    str[0] = 0xAA;
+    LONGS_EQUAL(-1, string_base16_decode ("6162zz6768", str));
+    STRCMP_EQUAL("", str);
+    str[0] = 0xAA;
+    LONGS_EQUAL(-1, string_base16_decode ("61 62", str));
+    STRCMP_EQUAL("", str);
 }
 
 /*
@@ -2549,6 +2563,17 @@ TEST(CoreString, Base32)
         LONGS_EQUAL(length, string_base32_decode (str_base32[i][1], str));
         STRCMP_EQUAL(str_base32[i][0], str);
     }
+
+    /* invalid chars in base32 string */
+    str[0] = 0xAA;
+    LONGS_EQUAL(-1, string_base32_decode ("0", str));
+    STRCMP_EQUAL("", str);
+    str[0] = 0xAA;
+    LONGS_EQUAL(-1, string_base32_decode ("MFRGG*DFMZTWQ===", str));
+    STRCMP_EQUAL("", str);
+    str[0] = 0xAA;
+    LONGS_EQUAL(-1, string_base32_decode ("MFRGGZDFMZTWQ\n===", str));
+    STRCMP_EQUAL("", str);
 }
 
 /*
@@ -2643,6 +2668,28 @@ TEST(CoreString, Base64)
     /* invalid base64 string, missing two "=" at the end */
     LONGS_EQUAL(4, string_base64_decode (0, "dGVzdA", str));
     STRCMP_EQUAL("test", str);
+
+    /* invalid chars in base64 string */
+    str[0] = 0xAA;
+    LONGS_EQUAL(-1, string_base64_decode (0, "*", str));
+    STRCMP_EQUAL("", str);
+    str[0] = 0xAA;
+    LONGS_EQUAL(-1, string_base64_decode (0, "dGVz*A==", str));
+    STRCMP_EQUAL("", str);
+    str[0] = 0xAA;
+    LONGS_EQUAL(-1, string_base64_decode (0, "dGVz dA==", str));
+    STRCMP_EQUAL("", str);
+    str[0] = 0xAA;
+    LONGS_EQUAL(-1, string_base64_decode (0, "dGVzdA==\n", str));
+    STRCMP_EQUAL("", str);
+    str[0] = 0xAA;
+    LONGS_EQUAL(-1, string_base64_decode (0, "VGhpcyBpcyBhIHRlc3Qu*", str));
+    STRCMP_EQUAL("", str);
+
+    /* base64url chars are invalid in standard base64 */
+    str[0] = 0xAA;
+    LONGS_EQUAL(-1, string_base64_decode (0, "PDw_ISE-Pg", str));
+    STRCMP_EQUAL("", str);
 }
 
 /*
