@@ -225,11 +225,14 @@ relay_auth_parse_sha (const char *parameters,
         {
             *salt_size = weechat_string_base_decode ("16", argv[0], *salt);
             if (*salt_size > 0)
+            {
                 *salt_hexa = strdup (argv[0]);
+            }
             else
             {
                 free (*salt);
                 *salt = NULL;
+                *salt_size = 0;
             }
         }
     }
@@ -298,11 +301,14 @@ relay_auth_parse_pbkdf2 (const char *parameters,
         {
             *salt_size = weechat_string_base_decode ("16", argv[0], *salt);
             if (*salt_size > 0)
+            {
                 *salt_hexa = strdup (argv[0]);
+            }
             else
             {
                 free (*salt);
                 *salt = NULL;
+                *salt_size = 0;
             }
         }
     }
