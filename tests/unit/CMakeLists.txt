@@ -161,6 +161,7 @@ if (ENABLE_RELAY)
       plugins/relay/api/test-relay-api.cpp
       plugins/relay/api/test-relay-api-msg.cpp
       plugins/relay/api/test-relay-api-protocol.cpp
+      plugins/relay/api/remote/test-relay-remote-event.cpp
       plugins/relay/api/remote/test-relay-remote-network.cpp
     )
   endif()
