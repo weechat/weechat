@@ -2533,10 +2533,6 @@ _WeeChat ≥ 2.4, updated in 4.3.0, 4.11.0._
 
 base 16、32、64 でエンコードされた文字列をデコード。
 
-// TRANSLATION MISSING
-If an invalid char is found in the string to decode, an empty string is stored
-in _*to_ and -1 is returned.
-
 プロトタイプ:
 
 [source,c]
@@ -2555,6 +2551,13 @@ int weechat_string_base_decode (const char *base, const char *from, char *to);
 戻り値:
 
 * _*to_ に保存された文字列の長さ (最後の `\0` は数えません)、エラー発生時は -1
+
+// TRANSLATION MISSING
+If the string to decode is invalid (invalid char, truncated string or invalid
+padding), an empty string is stored in _*to_ and -1 is returned.
+
+// TRANSLATION MISSING
+Missing padding chars (`=`) at the end of string are accepted.
 
 C 言語での使用例:
 

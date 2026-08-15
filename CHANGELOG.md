@@ -10,7 +10,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 ### Changed
 
-- api: return an error and an empty string in function string_base_decode when an invalid char is found in the string to decode
+- api: return an error and an empty string in function string_base_decode when the string to decode is invalid (invalid char, truncated string or invalid padding)
 
 ### Fixed
 

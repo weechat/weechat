@@ -2505,6 +2505,17 @@ TEST(CoreString, Base16)
     str[0] = 0xAA;
     LONGS_EQUAL(-1, string_base16_decode ("61 62", str));
     STRCMP_EQUAL("", str);
+
+    /* truncated base16 string: odd number of chars */
+    str[0] = 0xAA;
+    LONGS_EQUAL(-1, string_base16_decode ("6", str));
+    STRCMP_EQUAL("", str);
+    str[0] = 0xAA;
+    LONGS_EQUAL(-1, string_base16_decode ("616", str));
+    STRCMP_EQUAL("", str);
+    str[0] = 0xAA;
+    LONGS_EQUAL(-1, string_base16_decode ("616263646566676", str));
+    STRCMP_EQUAL("", str);
 }
 
 /*
@@ -2574,6 +2585,26 @@ TEST(CoreString, Base32)
     str[0] = 0xAA;
     LONGS_EQUAL(-1, string_base32_decode ("MFRGGZDFMZTWQ\n===", str));
     STRCMP_EQUAL("", str);
+
+    /* truncated base32 string: at least one char is missing */
+    str[0] = 0xAA;
+    LONGS_EQUAL(-1, string_base32_decode ("A", str));
+    STRCMP_EQUAL("", str);
+    str[0] = 0xAA;
+    LONGS_EQUAL(-1, string_base32_decode ("A=======", str));
+    STRCMP_EQUAL("", str);
+    str[0] = 0xAA;
+    LONGS_EQUAL(-1, string_base32_decode ("MFR", str));
+    STRCMP_EQUAL("", str);
+    str[0] = 0xAA;
+    LONGS_EQUAL(-1, string_base32_decode ("MFRGGZ", str));
+    STRCMP_EQUAL("", str);
+
+    /* base32 string with missing padding is accepted */
+    LONGS_EQUAL(1, string_base32_decode ("IE", str));
+    STRCMP_EQUAL("A", str);
+    LONGS_EQUAL(8, string_base32_decode ("MFRGGZDFMZTWQ", str));
+    STRCMP_EQUAL("abcdefgh", str);
 }
 
 /*
@@ -2665,9 +2696,13 @@ TEST(CoreString, Base64)
     LONGS_EQUAL(15, string_base64_decode (0, "VGhpcyBpcwBhIHRlc3Qu", str));
     MEMCMP_EQUAL("This is\0a test.", str, 15);
 
-    /* invalid base64 string, missing two "=" at the end */
+    /* base64 string with missing padding is accepted */
     LONGS_EQUAL(4, string_base64_decode (0, "dGVzdA", str));
     STRCMP_EQUAL("test", str);
+    LONGS_EQUAL(7, string_base64_decode (0, "dGVzdGluZw", str));
+    STRCMP_EQUAL("testing", str);
+    LONGS_EQUAL(2, string_base64_decode (0, "dGU", str));
+    STRCMP_EQUAL("te", str);
 
     /* invalid chars in base64 string */
     str[0] = 0xAA;
@@ -2689,6 +2724,54 @@ TEST(CoreString, Base64)
     /* base64url chars are invalid in standard base64 */
     str[0] = 0xAA;
     LONGS_EQUAL(-1, string_base64_decode (0, "PDw_ISE-Pg", str));
+    STRCMP_EQUAL("", str);
+
+    /* truncated base64 string: group of chars with only 6 bits */
+    str[0] = 0xAA;
+    LONGS_EQUAL(-1, string_base64_decode (0, "d", str));
+    STRCMP_EQUAL("", str);
+    str[0] = 0xAA;
+    LONGS_EQUAL(-1, string_base64_decode (1, "d", str));
+    STRCMP_EQUAL("", str);
+    str[0] = 0xAA;
+    LONGS_EQUAL(-1, string_base64_decode (0, "dGVzd", str));
+    STRCMP_EQUAL("", str);
+    str[0] = 0xAA;
+    LONGS_EQUAL(-1, string_base64_decode (0, "dGVzdGVzd", str));
+    STRCMP_EQUAL("", str);
+
+    /* invalid padding in base64 string */
+    str[0] = 0xAA;
+    LONGS_EQUAL(-1, string_base64_decode (0, "=", str));
+    STRCMP_EQUAL("", str);
+    str[0] = 0xAA;
+    LONGS_EQUAL(-1, string_base64_decode (0, "====", str));
+    STRCMP_EQUAL("", str);
+    str[0] = 0xAA;
+    LONGS_EQUAL(-1, string_base64_decode (0, "=dGVzdA==", str));
+    STRCMP_EQUAL("", str);
+    str[0] = 0xAA;
+    LONGS_EQUAL(-1, string_base64_decode (0, "dGVz=", str));
+    STRCMP_EQUAL("", str);
+    str[0] = 0xAA;
+    LONGS_EQUAL(-1, string_base64_decode (0, "dGVzdA=", str));
+    STRCMP_EQUAL("", str);
+    str[0] = 0xAA;
+    LONGS_EQUAL(-1, string_base64_decode (0, "dGU==", str));
+    STRCMP_EQUAL("", str);
+    str[0] = 0xAA;
+    LONGS_EQUAL(-1, string_base64_decode (0, "dG=z", str));
+    STRCMP_EQUAL("", str);
+
+    /* data after padding in base64 string */
+    str[0] = 0xAA;
+    LONGS_EQUAL(-1, string_base64_decode (0, "dGVzdA==dGVzdA==", str));
+    STRCMP_EQUAL("", str);
+    str[0] = 0xAA;
+    LONGS_EQUAL(-1, string_base64_decode (0, "dGVzdA==zzzz", str));
+    STRCMP_EQUAL("", str);
+    str[0] = 0xAA;
+    LONGS_EQUAL(-1, string_base64_decode (0, "dGVz=dA==", str));
     STRCMP_EQUAL("", str);
 }
 

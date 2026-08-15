@@ -3520,8 +3520,8 @@ string_base16_encode (const char *from, int length, char *to)
 /*
  * Decode a base16 string (hexadecimal).
  *
- * If an invalid char is found in the string, "*to" is set to an empty string
- * and -1 is returned.
+ * If the string to decode is invalid (invalid char or odd number of chars),
+ * "*to" is set to an empty string and -1 is returned.
  *
  * Return length of string in "*to" (it does not count final \0),
  * -1 if error.
@@ -3538,7 +3538,14 @@ string_base16_decode (const char *from, char *to)
 
     count = 0;
 
-    length = strlen (from) / 2;
+    length = strlen (from);
+    if (length % 2 != 0)
+    {
+        /* truncated base16 string: a char is missing at the end */
+        to[0] = '\0';
+        return -1;
+    }
+    length /= 2;
 
     for (i = 0; i < length; i++)
     {
@@ -3683,9 +3690,10 @@ string_base32_encode (const char *from, int length, char *to)
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  *
+ * If the string to decode is invalid (invalid char or truncated group of
+ * chars), "*to" is set to an empty string and -1 is returned.
  *
- * If an invalid char is found in the string, "*to" is set to an empty string
- * and -1 is returned.
+ * Missing padding at the end of string is accepted.
  *
  * Return length of string in "*to" (it does not count final \0),
  * -1 if error.
@@ -3739,6 +3747,14 @@ string_base32_decode (const char *from, char *to)
         }
         ptr_from++;
     }
+
+    if (bits_left >= 5)
+    {
+        /* truncated base32 string: at least one char is missing */
+        to[0] = '\0';
+        return -1;
+    }
+
     to[count] = '\0';
 
     return count;
@@ -3864,8 +3880,10 @@ string_convbase64_6x4_to_8x3 (const unsigned char *from, unsigned char *to)
  *   "/" --> “_” (underline)
  *   no padding char ("=")
  *
- * If an invalid char is found in the string, "*to" is set to an empty string
- * and -1 is returned.
+ * If the string to decode is invalid (invalid char, truncated group of chars
+ * or invalid padding), "*to" is set to an empty string and -1 is returned.
+ *
+ * Missing padding at the end of string is accepted.
  *
  * Return length of string in "*to" (it does not count final \0),
  * -1 if error.
@@ -3899,15 +3917,10 @@ string_base64_decode (int url, const char *from, char *to)
         in[3] = 0;
         for (i = 0; i < 4; i++)
         {
-            if (!ptr_from[0])
+            if (!ptr_from[0] || (ptr_from[0] == '='))
                 break;
             c = (unsigned char) ptr_from[0];
             ptr_from++;
-            if (c == '=')
-            {
-                /* padding */
-                break;
-            }
             if (url && (c == '-'))
                 c = '+';
             else if (url && (c == '_'))
@@ -3916,11 +3929,15 @@ string_base64_decode (int url, const char *from, char *to)
             if (!c || (c == '$'))
             {
                 /* invalid base64 char */
-                to[0] = '\0';
-                return -1;
+                goto error;
             }
             length++;
             in[i] = c - 62;
+        }
+        if (length == 1)
+        {
+            /* truncated group of chars: only 6 bits */
+            goto error;
         }
         if (length > 0)
         {
@@ -3932,11 +3949,33 @@ string_base64_decode (int url, const char *from, char *to)
                 to_length++;
             }
         }
+        if (ptr_from[0] == '=')
+        {
+            /*
+             * padding: it must complete the group of 4 chars and be at the
+             * end of string
+             */
+            if ((length < 2) || (length > 3))
+                goto error;
+            for (i = length; i < 4; i++)
+            {
+                if (ptr_from[0] != '=')
+                    goto error;
+                ptr_from++;
+            }
+            if (ptr_from[0])
+                goto error;
+            break;
+        }
     }
 
     ptr_to[0] = '\0';
 
     return to_length;
+
+error:
+    to[0] = '\0';
+    return -1;
 }
 
 /*

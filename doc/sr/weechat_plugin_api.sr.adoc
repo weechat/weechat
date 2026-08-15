@@ -2372,10 +2372,6 @@ _WeeChat ≥ 2.4, ажурирано у 4.3.0, 4.11.0._
 
 Декодира стринг кодиран у base 16, 32, или 64.
 
-// TRANSLATION MISSING
-If an invalid char is found in the string to decode, an empty string is stored
-in _*to_ and -1 is returned.
-
 Прототип:
 
 [source,c]
@@ -2392,6 +2388,13 @@ int weechat_string_base_decode (const char *base, const char *from, char *to);
 Повратна вредност:
 
 * дужина стринга смештеног у _*to_ (не рачунајући завршно `\0`), -1 у случају грешке
+
+// TRANSLATION MISSING
+If the string to decode is invalid (invalid char, truncated string or invalid
+padding), an empty string is stored in _*to_ and -1 is returned.
+
+// TRANSLATION MISSING
+Missing padding chars (`=`) at the end of string are accepted.
 
 C пример:
 

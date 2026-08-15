@@ -2502,9 +2502,6 @@ _WeeChat ≥ 2.4, mis à jour dans la 4.3.0, 4.11.0._
 
 Décoder une chaîne encodée en base 16, 32 ou 64.
 
-Si un caractère invalide est trouvé dans la chaîne à décoder, une chaîne vide
-est stockée dans _*to_ et -1 est retourné.
-
 Prototype :
 
 [source,c]
@@ -2523,6 +2520,13 @@ Valeur de retour :
 
 * longueur de la chaîne stockée dans _*to_ (ne compte pas le `\0` final),
   -1 en cas d'erreur
+
+Si la chaîne à décoder est invalide (caractère invalide, chaîne tronquée ou
+remplissage invalide), une chaîne vide est stockée dans _*to_ et -1 est
+retourné.
+
+Les caractères de remplissage (`=`) manquants à la fin de la chaîne sont
+acceptés.
 
 Exemple en C :
 

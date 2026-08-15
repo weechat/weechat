@@ -2459,9 +2459,6 @@ _WeeChat ≥ 2.4, updated in 4.3.0, 4.11.0._
 
 Decode a string encoded in base 16, 32, or 64.
 
-If an invalid char is found in the string to decode, an empty string is stored
-in _*to_ and -1 is returned.
-
 Prototype:
 
 [source,c]
@@ -2479,6 +2476,11 @@ Arguments:
 Return value:
 
 * length of string stored in _*to_ (does not count final `\0`), -1 if error
+
+If the string to decode is invalid (invalid char, truncated string or invalid
+padding), an empty string is stored in _*to_ and -1 is returned.
+
+Missing padding chars (`=`) at the end of string are accepted.
 
 C example:
 
