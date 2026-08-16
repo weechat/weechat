@@ -59,9 +59,8 @@ relay_api_protocol_signal_buffer_cb (const void *pointer, void *data,
     struct t_gui_line_data *ptr_line_data;
     cJSON *json;
     long lines, lines_free;
-    long long buffer_id;
+    long long buffer_id, *ptr_buffer_id;
     int nicks;
-    const char *ptr_id;
 
     /* make C compiler happy */
     (void) data;
@@ -98,13 +97,12 @@ relay_api_protocol_signal_buffer_cb (const void *pointer, void *data,
              * with body type "buffer" and empty body
              */
             buffer_id = -1;
-            ptr_id = weechat_hashtable_get (
+            ptr_buffer_id = weechat_hashtable_get (
                 RELAY_API_DATA(ptr_client, buffers_closing),
                 ptr_buffer);
-            if (ptr_id)
+            if (ptr_buffer_id)
             {
-                if (!weechat_util_parse_longlong (ptr_id, 10, &buffer_id))
-                    buffer_id = -1;
+                buffer_id = *ptr_buffer_id;
                 weechat_hashtable_remove (
                     RELAY_API_DATA(ptr_client, buffers_closing),
                     ptr_buffer);
@@ -120,9 +118,10 @@ relay_api_protocol_signal_buffer_cb (const void *pointer, void *data,
              * "buffers_closing", it will be used when sending the event
              * "buffer_closed"
              */
+            buffer_id = weechat_buffer_get_longlong (ptr_buffer, "id");
             weechat_hashtable_set (RELAY_API_DATA(ptr_client, buffers_closing),
                                    ptr_buffer,
-                                   weechat_buffer_get_string (ptr_buffer, "id"));
+                                   &buffer_id);
         }
 
         /* we get all lines and nicks when a buffer is opened, otherwise none */
@@ -147,8 +146,12 @@ relay_api_protocol_signal_buffer_cb (const void *pointer, void *data,
         /* send to client */
         if (json)
         {
-            buffer_id = relay_api_get_buffer_id (ptr_buffer);
-            relay_api_msg_send_event (ptr_client, signal, buffer_id, "buffer", json);
+            relay_api_msg_send_event (
+                ptr_client,
+                signal,
+                weechat_buffer_get_longlong (ptr_buffer, "id"),
+                "buffer",
+                json);
             cJSON_Delete (json);
         }
     }
@@ -172,9 +175,12 @@ relay_api_protocol_signal_buffer_cb (const void *pointer, void *data,
             ptr_line_data, RELAY_API_DATA(ptr_client, sync_colors));
         if (json)
         {
-            buffer_id = relay_api_get_buffer_id (ptr_buffer);
-            relay_api_msg_send_event (ptr_client, signal, buffer_id,
-                                      "line", json);
+            relay_api_msg_send_event (
+                ptr_client,
+                signal,
+                weechat_buffer_get_longlong (ptr_buffer, "id"),
+                "line",
+                json);
             cJSON_Delete (json);
         }
     }
@@ -193,9 +199,12 @@ relay_api_protocol_signal_buffer_cb (const void *pointer, void *data,
             ptr_line_data, RELAY_API_DATA(ptr_client, sync_colors));
         if (json)
         {
-            buffer_id = relay_api_get_buffer_id (ptr_buffer);
-            relay_api_msg_send_event (ptr_client, signal, buffer_id,
-                                      "line", json);
+            relay_api_msg_send_event (
+                ptr_client,
+                signal,
+                weechat_buffer_get_longlong (ptr_buffer, "id"),
+                "line",
+                json);
             cJSON_Delete (json);
         }
     }
@@ -238,7 +247,7 @@ relay_api_protocol_hsignal_nicklist_cb (const void *pointer, void *data,
     if (!ptr_buffer || relay_buffer_is_relay (ptr_buffer))
         return WEECHAT_RC_OK;
 
-    buffer_id = relay_api_get_buffer_id (ptr_buffer);
+    buffer_id = weechat_buffer_get_longlong (ptr_buffer, "id");
 
     if ((strcmp (signal, "nicklist_group_added") == 0)
         || (strcmp (signal, "nicklist_group_changed") == 0)
@@ -285,7 +294,6 @@ relay_api_protocol_signal_input_cb (const void *pointer, void *data,
     struct t_relay_client *ptr_client;
     struct t_gui_buffer *ptr_buffer;
     cJSON *json;
-    long long buffer_id;
 
     /* make C compiler happy */
     (void) data;
@@ -305,8 +313,12 @@ relay_api_protocol_signal_input_cb (const void *pointer, void *data,
 
     if (json)
     {
-        buffer_id = relay_api_get_buffer_id (ptr_buffer);
-        relay_api_msg_send_event (ptr_client, signal, buffer_id, "buffer", json);
+        relay_api_msg_send_event (
+            ptr_client,
+            signal,
+            weechat_buffer_get_longlong (ptr_buffer, "id"),
+            "buffer",
+            json);
         cJSON_Delete (json);
     }
 

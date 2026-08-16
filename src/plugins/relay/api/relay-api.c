@@ -29,29 +29,6 @@
 
 
 /*
- * Return buffer id.
- */
-
-long long
-relay_api_get_buffer_id (struct t_gui_buffer *buffer)
-{
-    const char *ptr_id;
-    long long id;
-
-    if (!buffer)
-        return -1;
-
-    ptr_id = weechat_buffer_get_string (buffer, "id");
-    if (!ptr_id)
-        return -1;
-
-    if (!weechat_util_parse_longlong (ptr_id, 10, &id))
-        return -1;
-
-    return id;
-}
-
-/*
  * Return value of "colors" URL parameter, an enum with one of these values:
  *   - RELAY_API_COLORS_ANSI (default)
  *   - RELAY_API_COLORS_WEECHAT
@@ -219,7 +196,7 @@ relay_api_alloc (struct t_relay_client *client)
     RELAY_API_DATA(client, buffers_closing) = weechat_hashtable_new (
         32,
         WEECHAT_HASHTABLE_POINTER,
-        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_LONGLONG,
         NULL,
         NULL);
     RELAY_API_DATA(client, sync_enabled) = 0;
@@ -249,7 +226,7 @@ relay_api_alloc_with_infolist (struct t_relay_client *client,
     RELAY_API_DATA(client, buffers_closing) = weechat_hashtable_new (
         32,
         WEECHAT_HASHTABLE_POINTER,
-        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_LONGLONG,
         NULL,
         NULL);
     RELAY_API_DATA(client, sync_enabled) = weechat_infolist_integer (
