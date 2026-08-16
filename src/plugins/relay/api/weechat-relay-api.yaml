@@ -1136,11 +1136,6 @@ components:
           format: date-time
           description: date and time of line
           example: '2023-12-05T19:46:03.847625Z'
-        date_printed:
-          type: string
-          format: date-time
-          description: date and time when the line was printed
-          example: '2023-12-05T19:46:03.847625Z'
         highlight:
           type: boolean
           description: line has a highlight
@@ -1179,7 +1174,6 @@ components:
         - id
         - y
         - date
-        - date_printed
         - highlight
         - notify_level
         - prefix

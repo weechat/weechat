@@ -300,11 +300,11 @@ relay_remote_event_line_update (struct t_relay_remote_event *event)
     cJSON *json_obj;
     struct t_gui_line *ptr_line;
     struct t_gui_line_data *ptr_line_data;
-    const char *date, *date_printed, *prefix, *message;
+    const char *date, *prefix, *message;
     char **tags, str_value[1024];
     long long id;
     int highlight;
-    struct timeval tv_date, tv_date_printed;
+    struct timeval tv_date;
     struct t_hashtable *hashtable;
 
     if (!event || !event->buffer)
@@ -321,7 +321,6 @@ relay_remote_event_line_update (struct t_relay_remote_event *event)
         return;
 
     JSON_GET_STR(event->json, date);
-    JSON_GET_STR(event->json, date_printed);
     JSON_GET_BOOL(event->json, highlight);
     JSON_GET_STR(event->json, prefix);
     JSON_GET_STR(event->json, message);
@@ -330,12 +329,6 @@ relay_remote_event_line_update (struct t_relay_remote_event *event)
     {
         tv_date.tv_sec = 0;
         tv_date.tv_usec = 0;
-    }
-
-    if (!weechat_util_parse_time (date_printed, &tv_date_printed))
-    {
-        tv_date_printed.tv_sec = 0;
-        tv_date_printed.tv_usec = 0;
     }
 
     hashtable = weechat_hashtable_new (32,
@@ -350,11 +343,6 @@ relay_remote_event_line_update (struct t_relay_remote_event *event)
     weechat_hashtable_set (hashtable, "date", str_value);
     snprintf (str_value, sizeof (str_value), "%ld", (long)tv_date.tv_usec);
     weechat_hashtable_set (hashtable, "date_usec", str_value);
-
-    snprintf (str_value, sizeof (str_value), "%lld", (long long)tv_date_printed.tv_sec);
-    weechat_hashtable_set (hashtable, "date_printed", str_value);
-    snprintf (str_value, sizeof (str_value), "%ld", (long)tv_date_printed.tv_usec);
-    weechat_hashtable_set (hashtable, "date_usec_printed", str_value);
 
     tags = relay_remote_build_string_tags (
         cJSON_GetObjectItem (event->json, "tags"), id, highlight);

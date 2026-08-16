@@ -11955,6 +11955,12 @@ struct t_hook *weechat_hook_line (const char *buffer_type,
 | `+formatted+` +
   `+free+`
 
+// TRANSLATION MISSING
+| id
+| Line identifier: date and time of print with microseconds precision.
+| Line number ("y").
+| `+1786886000000000+`
+
 | y
 | 利用不可 ("-1")
 | 行番号 (≥ "0")
@@ -11971,17 +11977,6 @@ struct t_hook *weechat_hook_line (const char *buffer_type,
 | Microseconds of line date (between 0 and 999999).
 | N/A ("0").
 | `+123456+`
-
-| date_printed
-| 行が表示された日付 (タイムスタンプ)
-| 利用不可 ("0")
-| `+1533792012+`
-
-// TRANSLATION MISSING
-| date_usec_printed
-| Microseconds of date when line was displayed (between 0 and 999999).
-| N/A ("0").
-| `+654321+`
 
 | str_time
 | 行に追加される日付 (色コードを入れてもよい)
@@ -12076,17 +12071,6 @@ WeeChat はそれらを無視します。
 | 利用不可
 | The microseconds of line date is set to this value. +
   これに対応して `+str_time+` も更新されます
-
-| date_printed
-| タイムスタンプ
-| 利用不可
-| 表示される日付はこのタイムスタンプを使います。The printed date is set to this timestamp (not displayed).
-
-// TRANSLATION MISSING
-| date_usec_printed
-| Integer ("0" to "999999").
-| 利用不可
-| The microseconds of printed date is set to this value.
 
 | str_time
 | 文字列
@@ -14459,6 +14443,10 @@ info を使う前にエリアが一致していることを確認して下さい
 | _chat_line | 行へのポインタ _(WeeChat バージョン 1.2 以上で利用可)_
 | "0x1234abcd" | ""
 
+// TRANSLATION MISSING
+| _chat_line_id | Line identifier ^(4)^ _(WeeChat ≥ 4.11.0)_.
+| "1786886000000000" | "-1"
+
 | _chat_line_x | 行中の列番号 ^(3)^
 | "0" ... "n" | "-1"
 
@@ -14472,11 +14460,10 @@ info を使う前にエリアが一致していることを確認して下さい
 | _chat_line_date_usec | Microseconds of line date/time.
 | "123456" | "0"
 
-| _chat_line_date_printed | 日付/時間の行 ^(4)^
+| _chat_line_date_printed | 日付/時間の行 ^(5)^
 | "1313237175" | "0"
 
-// TRANSLATION MISSING
-| _chat_line_date_usec_printed | Microseconds of line printed date/time ^(4)^.
+| _chat_line_date_usec_printed | Microseconds of line printed date/time ^(5)^.
 | "123456" | "0"
 
 | _chat_line_time | 表示された時間
@@ -14537,14 +14524,20 @@ info を使う前にエリアが一致していることを確認して下さい
 | "0x1234abcd" | ""
 |===
 
+// TRANSLATION MISSING
 [NOTE]
 ^(1)^ "2" を後ろにつけたキー (例: "_x2"、"_y2"、"_window2"、...)
 には 2 番目の位置に関する情報が収められています
 (この値に意味があるマウスジェスチャの時だけで、マウスボタンの離された位置に関する情報が収められています)。 +
 ^(2)^ `XXX` はバッファのローカル変数の名前です。 +
 ^(3)^ これは自由内容のバッファで定義されています。 +
-^(4)^ WeeChat がバッファに行を追加した日付です
-("_chat_line_date" よりも大きいか同じ)。
+^(4)^ On buffers with formatted content, this is the date when WeeChat added
+the line in the buffer, with microseconds precision (greater or equal to
+"_chat_line_date"); on buffers with free content, this is the line number
+("_chat_line_y"). +
+^(5)^ Deprecated since WeeChat 4.11.0 (still there for compatibility): it is
+derived from the line identifier ("_chat_line_id") and is "0" on buffers with
+free content.
 
 バー要素 "buffer_nicklist" の追加情報:
 

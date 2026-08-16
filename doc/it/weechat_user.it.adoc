@@ -5848,7 +5848,7 @@ type:
 | signal         | tg_signal_data     |
 | hsignal        |                    |
 | modifier       | tg_string          | tg_string
-| line           | message            | buffer, buffer_name, y, date, date_usec, date_printed, date_usec_printed, str_time, tags, notify_level, highlight, prefix, message
+| line           | message            | buffer, buffer_name, id, y, date, date_usec, str_time, tags, notify_level, highlight, prefix, message
 | print          | tg_message         |
 | command        | tg_argv_eol1       |
 | command_run    | tg_command         |
@@ -6010,11 +6010,11 @@ The "line" callback sets following variables in hashtable:
 | buffer             | pointer | Buffer.
 | buffer_name        | string  | Buffer name.
 | buffer_type        | string  | Buffer type ("formatted" or "free").
+// TRANSLATION MISSING
+| id                 | string  | Line identifier: date and time of print with microseconds precision (line number for a buffer with free content).
 | y                  | string  | Line number for a buffer with free content (≥ 0), -1 for a buffer with formatted content.
 | date               | string  | Line date (timestamp).
 | date_usec          | string  | Microseconds of line date.
-| date_printed       | string  | Date when line was displayed (timestamp).
-| date_usec_printed  | string  | Microseconds of date when line was displayed.
 | str_time           | string  | Date for display. It may contain color codes.
 | tags               | string  | Tags of message (with comma added at beginning/end of string).
 | displayed          | string  | "1" if displayed, "0" if line filtered.

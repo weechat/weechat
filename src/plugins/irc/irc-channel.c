@@ -1280,6 +1280,7 @@ irc_channel_join_smart_filtered_unmask (struct t_irc_channel *channel,
     int unmask_delay, length_tags, nick_found, join, account;
     int chghost, setname, nick_changed, smart_filtered, remove_smart_filter;
     time_t *ptr_time, date_min;
+    long long id_min;
     struct t_hdata *hdata_line, *hdata_line_data;
     struct t_gui_line *own_lines;
     struct t_gui_line *line;
@@ -1331,6 +1332,12 @@ irc_channel_join_smart_filtered_unmask (struct t_irc_channel *channel,
     hdata_line = weechat_hdata_get ("line");
     hdata_line_data = weechat_hdata_get ("line_data");
 
+    /*
+     * on buffers with formatted content, the identifier of a line is its date
+     * of print, with microseconds precision
+     */
+    id_min = (long long)date_min * 1000000LL;
+
     /* the nick to search in messages (track nick changes) */
     nick_to_search = strdup (nick);
     if (!nick_to_search)
@@ -1344,7 +1351,7 @@ irc_channel_join_smart_filtered_unmask (struct t_irc_channel *channel,
             break;
 
         /* exit loop if we reach the unmask delay */
-        if (weechat_hdata_time (hdata_line_data, line_data, "date_printed") < date_min)
+        if (weechat_hdata_longlong (hdata_line_data, line_data, "id") < id_min)
             break;
 
         /* check tags in line */

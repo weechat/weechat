@@ -12228,6 +12228,11 @@ Line data sent to the callback is a hashtable, with following values
 | `+formatted+` +
   `+free+`
 
+| id
+| Line identifier: date and time of print with microseconds precision.
+| Line number ("y").
+| `+1786886000000000+`
+
 | y
 | N/A ("-1").
 | Line number (≥ "0").
@@ -12243,16 +12248,6 @@ Line data sent to the callback is a hashtable, with following values
 | Microseconds of line date (between 0 and 999999).
 | N/A ("0").
 | `+123456+`
-
-| date_printed
-| Date when line was displayed (timestamp).
-| N/A ("0").
-| `+1533792012+`
-
-| date_usec_printed
-| Microseconds of date when line was displayed (between 0 and 999999).
-| N/A ("0").
-| `+654321+`
 
 | str_time
 | Date for display (possible color codes inside).
@@ -12345,16 +12340,6 @@ in this hashtable):
 | N/A.
 | The microseconds of line date is set to this value. +
   The value of `+str_time+` is updated accordingly.
-
-| date_printed
-| Timestamp.
-| N/A.
-| The printed date is set to this timestamp (not displayed).
-
-| date_usec_printed
-| Integer ("0" to "999999").
-| N/A.
-| The microseconds of printed date is set to this value.
 
 | str_time
 | String.
@@ -14885,6 +14870,10 @@ Contenuto della tabella hash inviata alla callback (tasti e valori sono di tipo
 | _chat_line | Pointer to line _(WeeChat ≥ 1.2)_.
 | "0x1234abcd" | ""
 
+// TRANSLATION MISSING
+| _chat_line_id | Line identifier ^(4)^ _(WeeChat ≥ 4.11.0)_.
+| "1786886000000000" | "-1"
+
 | _chat_line_x | Colonna nella riga ^(3)^.
 | "0" ... "n" | "-1"
 
@@ -14898,11 +14887,10 @@ Contenuto della tabella hash inviata alla callback (tasti e valori sono di tipo
 | _chat_line_date_usec | Microseconds of line date/time.
 | "123456" | "0"
 
-| _chat_line_date_printed | Riga con data/ora ^(4)^.
+| _chat_line_date_printed | Riga con data/ora ^(5)^.
 | "1313237175" | "0"
 
-// TRANSLATION MISSING
-| _chat_line_date_usec_printed | Microseconds of line printed date/time ^(4)^.
+| _chat_line_date_usec_printed | Microseconds of line printed date/time ^(5)^.
 | "123456" | "0"
 
 | _chat_line_time | Ora visualizzata.
@@ -14963,14 +14951,20 @@ Contenuto della tabella hash inviata alla callback (tasti e valori sono di tipo
 | "0x1234abcd" | ""
 |===
 
+// TRANSLATION MISSING
 [NOTE]
 ^(1)^ Ci sono alcune chiavi con il suffisso "2" (es: "_x2", "_y2", "_window2",
 ...) con informazioni sul secondo punto (utile solo per le azioni del mouse,
 per sapere dove il pulsante del mouse è stato rilasciato). +
 ^(2)^ `XXX` è il nome della variabile locale nel buffer. +
 ^(3)^ È impostato solo per l buffer con contenuto libero. +
-^(4)^ Data/ora in cui WeeChat aggiunge una riga nel buffer (maggiore o uguale a
-"chat_line_date").
+^(4)^ On buffers with formatted content, this is the date when WeeChat added
+the line in the buffer, with microseconds precision (greater or equal to
+"_chat_line_date"); on buffers with free content, this is the line number
+("_chat_line_y"). +
+^(5)^ Deprecated since WeeChat 4.11.0 (still there for compatibility): it is
+derived from the line identifier ("_chat_line_id") and is "0" on buffers with
+free content.
 
 Informazioni aggiuntive per l'elemento barra "buffer_nicklist":
 

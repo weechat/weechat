@@ -423,11 +423,10 @@ id: 'hdata_lines'
 hda:
     keys: {
         'buffer': 'ptr',
+        'id': 'lon',
         'y': 'int',
         'date': 'tim',
         'date_usec': 'int',
-        'date_printed': 'tim',
-        'date_usec_printed': 'int',
         'str_time': 'str',
         'tags_count': 'int',
         'tags_array': 'arr',
@@ -443,11 +442,10 @@ hda:
     item 1:
         __path: ['0x558d61ea3e60', '0x558d61ea40e0', '0x558d62920d80', '0x558d62abf040']
         buffer: '0x558d61ea3e60'
+        id: 1588404926118712
         y: -1
         date: 1588404926
         date_usec: 118712
-        date_printed: 1588404926
-        date_usec_printed: 118712
         str_time: 'F@0025209F@0024535F@0024026'
         tags_count: 0
         tags_array: []
@@ -461,11 +459,10 @@ hda:
     item 2:
         __path: ['0x558d61ea3e60', '0x558d61ea40e0', '0x558d626779f0', '0x558d62af9700']
         buffer: '0x558d61ea3e60'
+        id: 1588404930000025
         y: -1
         date: 1588404930
         date_usec: 25
-        date_printed: 1588404930
-        date_usec_printed: 25
         str_time: 'F@0025209F@0024535F@0024030'
         tags_count: 0
         tags_array: []
@@ -1947,8 +1944,6 @@ hda:
 | id                | дугачак          | Идентификатор линије.
 | date              | време            | Датум поруке.
 | date_usec         | цео број         | Микросекунде датума.
-| date_printed      | време            | Датум када је програм WeeChat приказао поруку.
-| date_usec_printed | цео број         | Микросекунде датума када је WeeChat приказао поруку.
 | displayed         | карактер         | 1 ако је порука приказана, 0 ако је порука филтрирана (скривена).
 | notify_level      | карактер         | Ниво обавештења: -1 = обавештење искључено, 0 = ниски, 1 = порука, 2 = приватно, 3 = истицање.
 | highlight         | карактер         | 1 ако се у линији налази истицање, у супротном 0.
@@ -1968,8 +1963,6 @@ hda:
         'id': 'lon',
         'date': 'tim',
         'date_usec': 'int',
-        'date_printed': 'tim',
-        'date_usec_printed': 'int',
         'displayed': 'chr',
         'notify_level': 'chr',
         'highlight': 'chr',
@@ -1984,8 +1977,6 @@ hda:
         id: 1362728993902765
         date: 1362728993
         date_usec: 902765
-        date_printed: 1362728993
-        date_usec_printed: 902765
         displayed: 1
         notify_level: 1
         highlight: 0
@@ -2018,8 +2009,6 @@ hda:
         'id': 'lon',
         'date': 'tim',
         'date_usec': 'int',
-        'date_printed': 'tim',
-        'date_usec_printed': 'int',
         'displayed': 'chr',
         'notify_level': 'chr',
         'highlight': 'chr',
@@ -2034,8 +2023,6 @@ hda:
         id: 1362728993902765
         date: 1362728993
         date_usec: 902765
-        date_printed: 1362728993
-        date_usec_printed: 902765
         displayed: 1
         notify_level: 1
         highlight: 0

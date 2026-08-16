@@ -27,7 +27,7 @@ extern "C"
 }
 
 #define WEE_BUILD_STR_PREFIX_MSG(__result, __prefix, __message)         \
-    line = gui_line_new (gui_buffers, -1, 0, 0, 0, 0, "tag1,tag2",      \
+    line = gui_line_new (gui_buffers, -1, 0, 0, "tag1,tag2",            \
                          __prefix, __message, -1, NULL);                \
     str = gui_line_build_string_prefix_message (line->data->prefix,     \
                                                 line->data->message);   \
@@ -37,7 +37,7 @@ extern "C"
     free (line);
 
 #define WEE_BUILD_STR_MSG_TAGS(__tags, __message, __colors)             \
-    line = gui_line_new (gui_buffers, -1, 0, 0, 0, 0, __tags,           \
+    line = gui_line_new (gui_buffers, -1, 0, 0, __tags,                 \
                          NULL, __message, -1, NULL);                    \
     str = gui_line_build_string_message_tags (line->data->message,      \
                                               line->data->tags_count,   \
@@ -57,7 +57,7 @@ extern "C"
     string_free_split_tags (tags_array);
 
 #define WEE_LINE_ADD_Y(__y, __msg)                                      \
-    gui_line_add_y (gui_line_new (buffer, (__y), 0, 0, 0, 0,            \
+    gui_line_add_y (gui_line_new (buffer, (__y), 0, 0,                  \
                                   NULL, NULL, (__msg), -1, NULL))
 
 TEST_GROUP(GuiLine)
@@ -237,7 +237,7 @@ TEST(GuiLine, BuildStringMessageTags)
     struct t_gui_line *line;
     char *str, str_message[256], str_result[256];
 
-    line = gui_line_new (gui_buffers, -1, 0, 0, 0, 0, "tag1,tag2", NULL, "test", -1, NULL);
+    line = gui_line_new (gui_buffers, -1, 0, 0, "tag1,tag2", NULL, "test", -1, NULL);
     STRCMP_EQUAL(NULL,
                  gui_line_build_string_message_tags (line->data->message,
                                                      -1,
@@ -914,6 +914,60 @@ TEST(GuiLine, GenerateId)
 
 /*
  * Test functions:
+ *   gui_line_get_date_printed
+ */
+
+TEST(GuiLine, GetDatePrinted)
+{
+    struct t_gui_buffer *buffer;
+    struct t_gui_line *line;
+    time_t date_printed;
+    int date_usec_printed;
+
+    /* no line data: both values are set to 0 */
+    date_printed = 123;
+    date_usec_printed = 456;
+    gui_line_get_date_printed (NULL, &date_printed, &date_usec_printed);
+    LONGS_EQUAL(0, date_printed);
+    LONGS_EQUAL(0, date_usec_printed);
+
+    /* buffer with formatted content: the date of print is the identifier */
+    buffer = gui_buffer_new_user ("test", GUI_BUFFER_TYPE_FORMATTED);
+    CHECK(buffer);
+
+    line = gui_line_new_with_id (buffer, 1786886000123456LL, -1, 0, 0,
+                                 NULL, NULL, "message", -1, NULL);
+    CHECK(line);
+    gui_line_add (line, 0);
+
+    /* NULL pointers are allowed */
+    gui_line_get_date_printed (line->data, NULL, NULL);
+
+    gui_line_get_date_printed (line->data, &date_printed, &date_usec_printed);
+    LONGS_EQUAL(1786886000, date_printed);
+    LONGS_EQUAL(123456, date_usec_printed);
+
+    gui_buffer_close (buffer);
+
+    /* buffer with free content: there is no date of print */
+    buffer = gui_buffer_new_user ("test", GUI_BUFFER_TYPE_FREE);
+    CHECK(buffer);
+
+    line = gui_line_new (buffer, 5, 0, 0, NULL, NULL, "message", -1, NULL);
+    CHECK(line);
+    gui_line_add_y (line);
+
+    date_printed = 123;
+    date_usec_printed = 456;
+    gui_line_get_date_printed (line->data, &date_printed, &date_usec_printed);
+    LONGS_EQUAL(0, date_printed);
+    LONGS_EQUAL(0, date_usec_printed);
+
+    gui_buffer_close (buffer);
+}
+
+/*
+ * Test functions:
  *   gui_line_new_with_id
  */
 
@@ -923,14 +977,14 @@ TEST(GuiLine, NewWithId)
     struct t_gui_line *line;
 
     POINTERS_EQUAL(NULL,
-                   gui_line_new_with_id (NULL, 123, 0, 0, 0, 0, 0,
+                   gui_line_new_with_id (NULL, 123, 0, 0, 0,
                                          NULL, NULL, NULL, -1, NULL));
 
     /* buffer with formatted content: the id received is used */
     buffer = gui_buffer_new_user ("test", GUI_BUFFER_TYPE_FORMATTED);
     CHECK(buffer);
 
-    line = gui_line_new_with_id (buffer, 123, -1, 0, 0, 0, 0,
+    line = gui_line_new_with_id (buffer, 123, -1, 0, 0,
                                  NULL, NULL, "message", -1, NULL);
     CHECK(line);
     CHECK(line->data->id == 123);
@@ -938,7 +992,7 @@ TEST(GuiLine, NewWithId)
     gui_line_add (line, 0);
 
     /* an id lower than the last one assigned is used as-is, without lowering it */
-    line = gui_line_new_with_id (buffer, 12, -1, 0, 0, 0, 0,
+    line = gui_line_new_with_id (buffer, 12, -1, 0, 0,
                                  NULL, NULL, "message", -1, NULL);
     CHECK(line);
     CHECK(line->data->id == 12);
@@ -951,7 +1005,7 @@ TEST(GuiLine, NewWithId)
     buffer = gui_buffer_new_user ("test", GUI_BUFFER_TYPE_FREE);
     CHECK(buffer);
 
-    line = gui_line_new_with_id (buffer, 123, 5, 0, 0, 0, 0,
+    line = gui_line_new_with_id (buffer, 123, 5, 0, 0,
                                  NULL, NULL, "message", -1, NULL);
     CHECK(line);
     CHECK(line->data->id == 5);
@@ -984,7 +1038,6 @@ TEST(GuiLine, New)
                    gui_line_new (
                        NULL, 0,
                        date.tv_sec, date.tv_usec,
-                       date_printed.tv_sec, date_printed.tv_usec,
                        NULL, NULL, NULL, -1, NULL));
 
     /* create a new test buffer (formatted content) */
@@ -994,7 +1047,6 @@ TEST(GuiLine, New)
     line1 = gui_line_new (buffer,
                           0,
                           date.tv_sec, date.tv_usec,
-                          date_printed.tv_sec, date_printed.tv_usec,
                           NULL, NULL, NULL, -1, NULL);
     CHECK(line1);
     CHECK(line1->data);
@@ -1006,8 +1058,6 @@ TEST(GuiLine, New)
     LONGS_EQUAL(-1, line1->data->y);
     LONGS_EQUAL(date.tv_sec, line1->data->date);
     LONGS_EQUAL(date.tv_usec, line1->data->date_usec);
-    LONGS_EQUAL(date_printed.tv_sec, line1->data->date_printed);
-    LONGS_EQUAL(date_printed.tv_usec, line1->data->date_usec_printed);
     STRCMP_EQUAL(str_time, line1->data->str_time);
     LONGS_EQUAL(0, line1->data->tags_count);
     POINTERS_EQUAL(NULL, line1->data->tags_array);
@@ -1025,7 +1075,6 @@ TEST(GuiLine, New)
     line2 = gui_line_new (buffer,
                           0,
                           date.tv_sec, date.tv_usec,
-                          date_printed.tv_sec, date_printed.tv_usec,
                           "tag1,tag2,tag3",
                           "prefix", "message", -1, NULL);
     CHECK(line2);
@@ -1038,8 +1087,6 @@ TEST(GuiLine, New)
     LONGS_EQUAL(-1, line2->data->y);
     LONGS_EQUAL(date.tv_sec, line2->data->date);
     LONGS_EQUAL(date.tv_usec, line2->data->date_usec);
-    LONGS_EQUAL(date_printed.tv_sec, line2->data->date_printed);
-    LONGS_EQUAL(date_printed.tv_usec, line2->data->date_usec_printed);
     STRCMP_EQUAL(str_time, line2->data->str_time);
     LONGS_EQUAL(3, line2->data->tags_count);
     CHECK(line2->data->tags_array);
@@ -1067,14 +1114,12 @@ TEST(GuiLine, New)
     line3 = gui_line_new (buffer,
                           0,
                           date.tv_sec, date.tv_usec,
-                          date_printed.tv_sec, date_printed.tv_usec,
                           NULL, NULL, "test", -1, NULL);
     CHECK(line3);
     CHECK(line3->data->id == last_id + 1);
     line4 = gui_line_new (buffer,
                           0,
                           date.tv_sec, date.tv_usec,
-                          date_printed.tv_sec, date_printed.tv_usec,
                           NULL, NULL, "test", -1, NULL);
     CHECK(line4);
     CHECK(line4->data->id == last_id + 2);
@@ -1089,7 +1134,6 @@ TEST(GuiLine, New)
     line1 = gui_line_new (buffer,
                           0,
                           date.tv_sec, date.tv_usec,
-                          date_printed.tv_sec, date_printed.tv_usec,
                           NULL, NULL, NULL, -1, NULL);
     CHECK(line1);
     CHECK(line1->data);
@@ -1102,8 +1146,6 @@ TEST(GuiLine, New)
     LONGS_EQUAL(-1, buffer->lines_last_id_assigned);
     LONGS_EQUAL(date.tv_sec, line1->data->date);
     LONGS_EQUAL(date.tv_usec, line1->data->date_usec);
-    LONGS_EQUAL(date_printed.tv_sec, line1->data->date_printed);
-    LONGS_EQUAL(date_printed.tv_usec, line1->data->date_usec_printed);
     STRCMP_EQUAL(NULL, line1->data->str_time);
     LONGS_EQUAL(0, line1->data->tags_count);
     POINTERS_EQUAL(NULL, line1->data->tags_array);
@@ -1121,7 +1163,6 @@ TEST(GuiLine, New)
     line2 = gui_line_new (buffer,
                           3,
                           date.tv_sec, date.tv_usec,
-                          date_printed.tv_sec, date_printed.tv_usec,
                           "tag1,tag2,tag3",
                           NULL, "message", -1, NULL);
     CHECK(line2);
@@ -1134,8 +1175,6 @@ TEST(GuiLine, New)
     LONGS_EQUAL(-1, buffer->lines_last_id_assigned);
     LONGS_EQUAL(date.tv_sec, line2->data->date);
     LONGS_EQUAL(date.tv_usec, line2->data->date_usec);
-    LONGS_EQUAL(date_printed.tv_sec, line2->data->date_printed);
-    LONGS_EQUAL(date_printed.tv_usec, line2->data->date_usec_printed);
     STRCMP_EQUAL(NULL, line2->data->str_time);
     LONGS_EQUAL(3, line2->data->tags_count);
     CHECK(line2->data->tags_array);
@@ -1203,7 +1242,6 @@ TEST(GuiLine, Add)
      */
     line1 = gui_line_new (buffer, -1,
                           date.tv_sec, date.tv_usec,
-                          date_printed.tv_sec, date_printed.tv_usec,
                           "notify_none", "prefix", "message1", 0, NULL);
     CHECK(line1);
     LONGS_EQUAL(-1, line1->data->notify_level);
@@ -1218,7 +1256,6 @@ TEST(GuiLine, Add)
     /* add a second line: it is appended after the first one */
     line2 = gui_line_new (buffer, -1,
                           date.tv_sec, date.tv_usec,
-                          date_printed.tv_sec, date_printed.tv_usec,
                           "notify_none", "prefix", "message2", 0, NULL);
     CHECK(line2);
     gui_line_add (line2, 1);
@@ -1237,7 +1274,6 @@ TEST(GuiLine, Add)
     gui_hotlist_clear (GUI_HOTLIST_MASK_MAX);
     line3 = gui_line_new (buffer, -1,
                           date.tv_sec, date.tv_usec,
-                          date_printed.tv_sec, date_printed.tv_usec,
                           "notify_message", "prefix", "message3", 0, NULL);
     CHECK(line3);
     LONGS_EQUAL(0, line3->data->highlight);
@@ -1256,7 +1292,6 @@ TEST(GuiLine, Add)
     POINTERS_EQUAL(NULL, gui_hotlist);
     line3 = gui_line_new (buffer, -1,
                           date.tv_sec, date.tv_usec,
-                          date_printed.tv_sec, date_printed.tv_usec,
                           "notify_message", "prefix", "message4", 0, NULL);
     CHECK(line3);
     gui_line_add (line3, 0);
@@ -1269,7 +1304,6 @@ TEST(GuiLine, Add)
     gui_hotlist_clear (GUI_HOTLIST_MASK_MAX);
     line3 = gui_line_new (buffer, -1,
                           date.tv_sec, date.tv_usec,
-                          date_printed.tv_sec, date_printed.tv_usec,
                           "notify_private", "prefix", "message5", 0, NULL);
     CHECK(line3);
     LONGS_EQUAL(GUI_HOTLIST_PRIVATE, line3->data->notify_level);
@@ -1285,7 +1319,6 @@ TEST(GuiLine, Add)
     gui_hotlist_clear (GUI_HOTLIST_MASK_MAX);
     line3 = gui_line_new (buffer, -1,
                           date.tv_sec, date.tv_usec,
-                          date_printed.tv_sec, date_printed.tv_usec,
                           "tag1,tag2", "prefix", "message6",
                           1, NULL);  /* known_highlight */
     CHECK(line3);
@@ -1308,7 +1341,6 @@ TEST(GuiLine, Add)
     POINTERS_EQUAL(NULL, gui_hotlist);
     line3 = gui_line_new (buffer, -1,
                           date.tv_sec, date.tv_usec,
-                          date_printed.tv_sec, date_printed.tv_usec,
                           "tag1,tag2", "prefix", "message7",
                           1,          /* known_highlight */
                           "12:34");   /* known_str_time */
@@ -1326,7 +1358,6 @@ TEST(GuiLine, Add)
     gui_hotlist_clear (GUI_HOTLIST_MASK_MAX);
     line3 = gui_line_new (buffer, -1,
                           date.tv_sec, date.tv_usec,
-                          date_printed.tv_sec, date_printed.tv_usec,
                           "notify_highlight", "prefix", "message8", 1, NULL);
     CHECK(line3);
     LONGS_EQUAL(1, line3->data->highlight);
@@ -1349,14 +1380,12 @@ TEST(GuiLine, Add)
 
     line1 = gui_line_new (buffer, -1,
                           date.tv_sec, date.tv_usec,
-                          date_printed.tv_sec, date_printed.tv_usec,
                           "notify_none", NULL, "line1", 0, NULL);
     gui_line_add (line1, 1);
     LONGS_EQUAL(1, buffer->own_lines->lines_count);
 
     line2 = gui_line_new (buffer, -1,
                           date.tv_sec, date.tv_usec,
-                          date_printed.tv_sec, date_printed.tv_usec,
                           "notify_none", NULL, "line2", 0, NULL);
     gui_line_add (line2, 1);
     LONGS_EQUAL(2, buffer->own_lines->lines_count);
@@ -1364,7 +1393,6 @@ TEST(GuiLine, Add)
     /* adding a third line removes the oldest one (line1) */
     line3 = gui_line_new (buffer, -1,
                           date.tv_sec, date.tv_usec,
-                          date_printed.tv_sec, date_printed.tv_usec,
                           "notify_none", NULL, "line3", 0, NULL);
     gui_line_add (line3, 1);
     LONGS_EQUAL(2, buffer->own_lines->lines_count);
@@ -1372,6 +1400,50 @@ TEST(GuiLine, Add)
     POINTERS_EQUAL(line3, buffer->own_lines->last_line);
 
     config_file_option_reset (config_history_max_buffer_lines_number, 1);
+    gui_buffer_close (buffer);
+
+    /*
+     * check that the lines older than the max number of minutes are removed
+     * (option weechat.history.max_buffer_lines_minutes); the age of a line is
+     * given by its identifier, which is the date of print
+     */
+    config_file_option_set (config_history_max_buffer_lines_minutes, "1", 1);
+    buffer = gui_buffer_new_user ("test_add_max_minutes",
+                                  GUI_BUFFER_TYPE_FORMATTED);
+    CHECK(buffer);
+
+    /* line displayed one hour ago */
+    line1 = gui_line_new_with_id (buffer,
+                                  ((long long)(time (NULL) - 3600)) * 1000000LL,
+                                  -1,
+                                  date.tv_sec, date.tv_usec,
+                                  "notify_none", NULL, "line1", 0, NULL);
+    gui_line_add (line1, 1);
+    LONGS_EQUAL(1, buffer->own_lines->lines_count);
+
+    /* line displayed 10 seconds ago */
+    line2 = gui_line_new_with_id (buffer,
+                                  ((long long)(time (NULL) - 10)) * 1000000LL,
+                                  -1,
+                                  date.tv_sec, date.tv_usec,
+                                  "notify_none", NULL, "line2", 0, NULL);
+    gui_line_add (line2, 1);
+
+    /* the line displayed one hour ago has been removed */
+    LONGS_EQUAL(1, buffer->own_lines->lines_count);
+    POINTERS_EQUAL(line2, buffer->own_lines->first_line);
+    POINTERS_EQUAL(line2, buffer->own_lines->last_line);
+
+    /* line displayed now: the line displayed 10 seconds ago is kept */
+    line3 = gui_line_new (buffer, -1,
+                          date.tv_sec, date.tv_usec,
+                          "notify_none", NULL, "line3", 0, NULL);
+    gui_line_add (line3, 1);
+    LONGS_EQUAL(2, buffer->own_lines->lines_count);
+    POINTERS_EQUAL(line2, buffer->own_lines->first_line);
+    POINTERS_EQUAL(line3, buffer->own_lines->last_line);
+
+    config_file_option_reset (config_history_max_buffer_lines_minutes, 1);
     gui_buffer_close (buffer);
 }
 

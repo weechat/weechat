@@ -10,13 +10,16 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 ### Added
 
+- api: add focus key "_chat_line_id", deprecate keys "_chat_line_date_printed" and "_chat_line_date_usec_printed"
 - api: add function "buffer_get_longlong"
 - api: add functions "infolist_new_var_long", "infolist_new_var_longlong", "infolist_long", "infolist_longlong"
 
 ### Changed
 
 - **breaking:** core: use the current date/time with microseconds as line identifier, replace buffer property "next_line_id" by "lines_last_id_assigned"
+- **breaking:** core: remove fields "date_printed" and "date_usec_printed" in lines, replaced by the line identifier
 - **breaking:** api: change type of parameter "id" from int to long long in function line_search_by_id
+- **breaking:** api: remove keys "date_printed" and "date_usec_printed", add key "id" in hashtable sent to hook_line callback
 - **breaking:** api: convert variable "id" from integer to long long in infolist "buffer_lines"
 - **breaking:** api: convert variable "id" (group and nick) from string to long long in infolist "nicklist"
 - **breaking:** api: convert variable "nicklist_last_id_assigned" from string to long long in infolist "buffer"
@@ -25,7 +28,9 @@ SPDX-License-Identifier: GPL-3.0-or-later
 - **breaking:** api: convert variable "timeout" from int to long in infolist "hook" (hook process)
 - **breaking:** api: convert variable "interval" from string to long in infolist "hook" (hook timer)
 - api: return an error and an empty string in function string_base_decode when the string to decode is invalid (invalid char, truncated string or invalid padding)
+- **breaking:** relay: remove "date_printed" and "date_usec_printed" of lines in weechat protocol
 - **breaking:** relay: change type of line identifier from "int" to "lon" in weechat protocol
+- **breaking:** relay/api: remove field "date_printed" in lines
 - **breaking:** relay/api: bump API version to 0.7.0
 
 ### Fixed

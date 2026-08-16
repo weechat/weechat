@@ -35,6 +35,27 @@ Consequences for scripts and plugins:
   which is read with `buffer_get_longlong` instead of `buffer_get_integer`
   (its value is `-1` when no line has been displayed yet in the buffer).
 
+### Date of print in lines
+
+Since the identifier of a line is now its date of print, the redundant fields `date_printed` and
+`date_usec_printed` have been removed from lines: the date of print is `id / 1000000` and its
+microseconds are `id % 1000000` (both are 0 on buffers with free content, where the identifier is
+the line number).
+
+They are removed everywhere they were exposed:
+
+- hdata `line_data`: variables `date_printed` and `date_usec_printed` (they could be updated with
+  `hdata_update`, the identifier can **not** be updated);
+- infolist `buffer_lines`: variables `date_printed` and `date_usec_printed`;
+- hashtable sent to `hook_line` callback: keys `date_printed` and `date_usec_printed` are replaced
+  by the new read-only key `id`.
+
+In the focus hashtable (used in mouse/cursor keys and bar item `buffer_nicklist`), the keys
+`_chat_line_date_printed` and `_chat_line_date_usec_printed` are deprecated but still there for
+compatibility: they are derived from the new key `_chat_line_id`.
+
+In triggers, `${date_printed}` becomes `${calc:${id}/1000000}`.
+
 ### Relay
 
 In the "api" protocol, the API version has been bumped to 0.7.0: the line identifier can now be

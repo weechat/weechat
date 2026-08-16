@@ -24,6 +24,10 @@ struct t_infolist_item;
 #define HASHTABLE_SET_INT(__name, __int)                                 \
     snprintf (str_value, sizeof (str_value), "%d", __int);               \
     hashtable_set (hashtable, __name, str_value);
+#define HASHTABLE_SET_LONGLONG(__name, __longlong)                       \
+    snprintf (str_value, sizeof (str_value), "%lld",                     \
+              (long long)__longlong);                                    \
+    hashtable_set (hashtable, __name, str_value);
 #define HASHTABLE_SET_TIME(__name, __time)                               \
     snprintf (str_value, sizeof (str_value), "%lld", (long long)__time); \
     hashtable_set (hashtable, __name, str_value);

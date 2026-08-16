@@ -1586,6 +1586,36 @@ gui_line_generate_id (struct t_gui_buffer *buffer)
 }
 
 /*
+ * Get the date/time when the line was displayed by WeeChat.
+ *
+ * On buffers with formatted content, this is the identifier of the line, which
+ * is the date of print with microseconds precision.
+ * On buffers with free content, the identifier of a line is its number ("y"),
+ * so there is no date of print: 0 is returned in both values.
+ */
+
+void
+gui_line_get_date_printed (struct t_gui_line_data *line_data,
+                           time_t *date_printed, int *date_usec_printed)
+{
+    if (date_printed)
+        *date_printed = 0;
+    if (date_usec_printed)
+        *date_usec_printed = 0;
+
+    if (!line_data || !line_data->buffer
+        || (line_data->buffer->type != GUI_BUFFER_TYPE_FORMATTED))
+    {
+        return;
+    }
+
+    if (date_printed)
+        *date_printed = (time_t)(line_data->id / 1000000LL);
+    if (date_usec_printed)
+        *date_usec_printed = (int)(line_data->id % 1000000LL);
+}
+
+/*
  * Create a new line for a buffer, with a given id.
  *
  * On buffers with formatted content, "id" is the identifier to set in the
@@ -1610,7 +1640,6 @@ gui_line_generate_id (struct t_gui_buffer *buffer)
 struct t_gui_line *
 gui_line_new_with_id (struct t_gui_buffer *buffer, long long id, int y,
                       time_t date, int date_usec,
-                      time_t date_printed, int date_usec_printed,
                       const char *tags,
                       const char *prefix, const char *message,
                       int known_highlight, const char *known_str_time)
@@ -1648,8 +1677,6 @@ gui_line_new_with_id (struct t_gui_buffer *buffer, long long id, int y,
         new_line->data->y = -1;
         new_line->data->date = date;
         new_line->data->date_usec = date_usec;
-        new_line->data->date_printed = date_printed;
-        new_line->data->date_usec_printed = date_usec_printed;
         gui_line_tags_alloc (new_line->data, tags);
         new_line->data->refresh_needed = 0;
         new_line->data->prefix = (prefix) ?
@@ -1675,8 +1702,6 @@ gui_line_new_with_id (struct t_gui_buffer *buffer, long long id, int y,
         new_line->data->y = y;
         new_line->data->date = date;
         new_line->data->date_usec = date_usec;
-        new_line->data->date_printed = date_printed;
-        new_line->data->date_usec_printed = date_usec_printed;
         new_line->data->str_time = NULL;
         gui_line_tags_alloc (new_line->data, tags);
         new_line->data->refresh_needed = 1;
@@ -1705,7 +1730,6 @@ gui_line_new_with_id (struct t_gui_buffer *buffer, long long id, int y,
 struct t_gui_line *
 gui_line_new (struct t_gui_buffer *buffer, int y,
               time_t date, int date_usec,
-              time_t date_printed, int date_usec_printed,
               const char *tags,
               const char *prefix, const char *message,
               int known_highlight, const char *known_str_time)
@@ -1719,7 +1743,6 @@ gui_line_new (struct t_gui_buffer *buffer, int y,
         gui_line_generate_id (buffer) : y,
         y,
         date, date_usec,
-        date_printed, date_usec_printed,
         tags,
         prefix, message,
         known_highlight, known_str_time);
@@ -1849,26 +1872,6 @@ gui_line_hook_update (struct t_gui_line *line,
         }
     }
 
-    ptr_value2 = hashtable_get (hashtable2, "date_printed");
-    if (ptr_value2)
-    {
-        if (util_parse_longlong (ptr_value2, 10, &value_longlong)
-            && (value_longlong >= 0))
-        {
-            line->data->date_printed = (time_t)value_longlong;
-        }
-    }
-
-    ptr_value2 = hashtable_get (hashtable2, "date_usec_printed");
-    if (ptr_value2)
-    {
-        if (util_parse_int (ptr_value2, 10, &value)
-            && (value >= 0) && (value <= 999999))
-        {
-            line->data->date_usec_printed = value;
-        }
-    }
-
     ptr_value = hashtable_get (hashtable, "str_time");
     ptr_value2 = hashtable_get (hashtable2, "str_time");
     if (ptr_value2 && (!ptr_value || (strcmp (ptr_value, ptr_value2) != 0)))
@@ -1956,22 +1959,28 @@ gui_line_add (struct t_gui_line *line, int add_to_hotlist)
     struct t_gui_window *ptr_win;
     char *message_for_signal;
     int lines_removed;
-    time_t current_time;
+    long long id_min;
 
     /*
      * remove line(s) if necessary, according to history options:
      *   max_lines:   if > 0, keep only N lines in buffer
      *   max_minutes: if > 0, keep only lines from last N minutes
+     *
+     * this function is called only on buffers with formatted content, so the
+     * identifier of a line is its date of print, with microseconds precision:
+     * comparing it with the oldest date allowed is the same as comparing the
+     * dates of print themselves
      */
     lines_removed = 0;
-    current_time = time (NULL);
+    id_min = ((long long)time (NULL)
+              - ((long long)CONFIG_INTEGER(config_history_max_buffer_lines_minutes) * 60))
+        * 1000000LL;
     while (line->data->buffer->own_lines->first_line
            && (((CONFIG_INTEGER(config_history_max_buffer_lines_number) > 0)
                 && (line->data->buffer->own_lines->lines_count + 1 >
                     CONFIG_INTEGER(config_history_max_buffer_lines_number)))
                || ((CONFIG_INTEGER(config_history_max_buffer_lines_minutes) > 0)
-                   && (current_time - line->data->buffer->own_lines->first_line->data->date_printed >
-                       CONFIG_INTEGER(config_history_max_buffer_lines_minutes) * 60))))
+                   && (line->data->buffer->own_lines->first_line->data->id < id_min))))
     {
         gui_line_free (line->data->buffer,
                        line->data->buffer->own_lines->first_line);
@@ -2206,8 +2215,6 @@ gui_line_clear (struct t_gui_line *line)
 {
     line->data->date = 0;
     line->data->date_usec = 0;
-    line->data->date_printed = 0;
-    line->data->date_usec_printed = 0;
     if (line->data->str_time)
     {
         free (line->data->str_time);
@@ -2431,26 +2438,6 @@ gui_line_hdata_line_data_update_cb (void *data,
         }
     }
 
-    if (hashtable_has_key (hashtable, "date_printed"))
-    {
-        value = hashtable_get (hashtable, "date_printed");
-        if (value)
-        {
-            hdata_set (hdata, pointer, "date_printed", value);
-            rc++;
-        }
-    }
-
-    if (hashtable_has_key (hashtable, "date_usec_printed"))
-    {
-        value = hashtable_get (hashtable, "date_usec_printed");
-        if (value)
-        {
-            hdata_set (hdata, pointer, "date_usec_printed", value);
-            rc++;
-        }
-    }
-
     if (hashtable_has_key (hashtable, "tags_array"))
     {
         value = hashtable_get (hashtable, "tags_array");
@@ -2529,8 +2516,6 @@ gui_line_hdata_line_data_cb (const void *pointer, void *data,
         HDATA_VAR(struct t_gui_line_data, y, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_line_data, date, TIME, 1, NULL, NULL);
         HDATA_VAR(struct t_gui_line_data, date_usec, INTEGER, 1, NULL, NULL);
-        HDATA_VAR(struct t_gui_line_data, date_printed, TIME, 1, NULL, NULL);
-        HDATA_VAR(struct t_gui_line_data, date_usec_printed, INTEGER, 1, NULL, NULL);
         HDATA_VAR(struct t_gui_line_data, str_time, STRING, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_line_data, tags_count, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_line_data, tags_array, SHARED_STRING, 1, "*,tags_count", NULL);
@@ -2576,10 +2561,6 @@ gui_line_add_to_infolist (struct t_infolist *infolist,
     if (!infolist_new_var_time (ptr_item, "date", line->data->date))
         return 0;
     if (!infolist_new_var_integer (ptr_item, "date_usec", line->data->date_usec))
-        return 0;
-    if (!infolist_new_var_time (ptr_item, "date_printed", line->data->date_printed))
-        return 0;
-    if (!infolist_new_var_integer (ptr_item, "date_usec_printed", line->data->date_usec_printed))
         return 0;
     if (!infolist_new_var_string (ptr_item, "str_time", line->data->str_time))
         return 0;

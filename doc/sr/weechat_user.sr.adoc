@@ -5174,7 +5174,7 @@ y/${chars:a-z}${chars:A-Z}/${chars:b-z}a${chars:B-Z}A/
 | signal         | tg_signal_data     |
 | hsignal        |                    |
 | modifier       | tg_string          | tg_string
-| line           | message            | buffer, buffer_name, y, date, date_usec, date_printed, date_usec_printed, str_time, tags, notify_level, highlight, prefix, message
+| line           | message            | buffer, buffer_name, id, y, date, date_usec, str_time, tags, notify_level, highlight, prefix, message
 | print          | tg_message         |
 | command        | tg_argv_eol1       |
 | command_run    | tg_command         |
@@ -5325,11 +5325,11 @@ ${buffer[${tg_signal_data}].full_name}
 | buffer             | показивач | Бафер.
 | buffer_name        | стринг    | Име бафера.
 | buffer_type        | стринг    | Тип бафера („formatted” или „free”).
+// TRANSLATION MISSING
+| id                 | стринг    | Line identifier: date and time of print with microseconds precision (line number for a buffer with free content).
 | y                  | стринг    | Број линије за бафер са слободним садржајем (≥ 0), -1 за бафер са форматираним садржајем.
 | date               | стринг    | Датум линије (временска ознака).
 | date_usec          | стринг    | Microseconds датума линије.
-| date_printed       | стринг    | Датум када је линија била приказана (временска ознака).
-| date_usec_printed  | стринг    | Microseconds датума када је линија била приказана.
 | str_time           | стринг    | Датум за приказ. Може да садржи кодове боја.
 | tags               | стринг    | Ознаке поруке (са запетом додатом на почетак/крај стринга).
 | displayed          | стринг    | „1” ако се приказује, „0” ако је линија филтрирана.

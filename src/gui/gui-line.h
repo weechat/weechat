@@ -24,8 +24,6 @@ struct t_gui_line_data
     int y;                             /* line position (for free buffer)   */
     time_t date;                       /* date/time of line (may be past)   */
     int date_usec;                     /* microseconds for date             */
-    time_t date_printed;               /* date/time when weechat print it   */
-    int date_usec_printed;             /* microseconds for date printed     */
     char *str_time;                    /* time string (for display)         */
     int tags_count;                    /* number of tags for line           */
     char **tags_array;                 /* tags for line                     */
@@ -116,13 +114,14 @@ extern void gui_line_set_notify_level (struct t_gui_line *line,
 extern void gui_line_set_highlight (struct t_gui_line *line,
                                     int max_notify_level);
 extern long long gui_line_generate_id (struct t_gui_buffer *buffer);
+extern void gui_line_get_date_printed (struct t_gui_line_data *line_data,
+                                       time_t *date_printed,
+                                       int *date_usec_printed);
 extern struct t_gui_line *gui_line_new_with_id (struct t_gui_buffer *buffer,
                                                 long long id,
                                                 int y,
                                                 time_t date,
                                                 int date_usec,
-                                                time_t date_printed,
-                                                int date_usec_printed,
                                                 const char *tags,
                                                 const char *prefix,
                                                 const char *message,
@@ -132,8 +131,6 @@ extern struct t_gui_line *gui_line_new (struct t_gui_buffer *buffer,
                                         int y,
                                         time_t date,
                                         int date_usec,
-                                        time_t date_printed,
-                                        int date_usec_printed,
                                         const char *tags,
                                         const char *prefix,
                                         const char *message,

@@ -507,7 +507,7 @@ TEST(RelayApiProtocolWithClient, CbBuffers)
     WEE_CHECK_OBJ_NUM(gui_buffers->own_lines->last_line->prev_line->data->id, json, "id");
     WEE_CHECK_OBJ_NUM(-1, json, "y");
     CHECK(cJSON_IsString (cJSON_GetObjectItem (json, "date")));
-    CHECK(cJSON_IsString (cJSON_GetObjectItem (json, "date_printed")));
+    CHECK(!cJSON_GetObjectItem (json, "date_printed"));
     WEE_CHECK_OBJ_BOOL(0, json, "highlight");
     WEE_CHECK_OBJ_STR("", json, "prefix");
     WEE_CHECK_OBJ_STR("test line 1", json, "message");
@@ -517,7 +517,7 @@ TEST(RelayApiProtocolWithClient, CbBuffers)
     WEE_CHECK_OBJ_NUM(gui_buffers->own_lines->last_line->data->id, json, "id");
     WEE_CHECK_OBJ_NUM(-1, json, "y");
     CHECK(cJSON_IsString (cJSON_GetObjectItem (json, "date")));
-    CHECK(cJSON_IsString (cJSON_GetObjectItem (json, "date_printed")));
+    CHECK(!cJSON_GetObjectItem (json, "date_printed"));
     WEE_CHECK_OBJ_BOOL(0, json, "highlight");
     WEE_CHECK_OBJ_STR("", json, "prefix");
     WEE_CHECK_OBJ_STR("test line 2", json, "message");

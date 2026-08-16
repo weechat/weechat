@@ -41,6 +41,17 @@ extern char *gui_chat_pipe_build_message (struct t_gui_line *line);
                 word_length_with_spaces);                               \
     LONGS_EQUAL(__result_word_length, word_length);
 
+/*
+ * On buffers with formatted content, the identifier of a line is its date of
+ * print, with microseconds precision: it is set a few microseconds after the
+ * date of the line itself, when the line has no explicit date.
+ */
+#define WEE_CHECK_ID_IS_DATE_PRINTED(__data)                            \
+    CHECK(__data->id >= (((long long)__data->date * 1000000LL)          \
+                         + __data->date_usec));                         \
+    CHECK(__data->id - (((long long)__data->date * 1000000LL)           \
+                        + __data->date_usec) < 1000000LL);
+
 TEST_GROUP(GuiChat)
 {
 };
@@ -439,32 +450,32 @@ TEST(GuiChat, PipeBuildMessage)
 
     WEE_TEST_STR(NULL, gui_chat_pipe_build_message (NULL));
 
-    line = gui_line_new (gui_buffers, -1, 0, 0, 0, 0, NULL, NULL, NULL, -1, NULL);
+    line = gui_line_new (gui_buffers, -1, 0, 0, NULL, NULL, NULL, -1, NULL);
     WEE_TEST_STR("", gui_chat_pipe_build_message (line));
     gui_line_free_data (line);
     free (line);
 
-    line = gui_line_new (gui_buffers, -1, 0, 0, 0, 0, NULL, "nick", NULL, -1, NULL);
+    line = gui_line_new (gui_buffers, -1, 0, 0, NULL, "nick", NULL, -1, NULL);
     WEE_TEST_STR("nick", gui_chat_pipe_build_message (line));
     gui_line_free_data (line);
     free (line);
 
-    line = gui_line_new (gui_buffers, -1, 0, 0, 0, 0, NULL, NULL, "the message", -1, NULL);
+    line = gui_line_new (gui_buffers, -1, 0, 0, NULL, NULL, "the message", -1, NULL);
     WEE_TEST_STR("the message", gui_chat_pipe_build_message (line));
     gui_line_free_data (line);
     free (line);
 
-    line = gui_line_new (gui_buffers, -1, 0, 0, 0, 0, NULL, "prefix", "", -1, NULL);
+    line = gui_line_new (gui_buffers, -1, 0, 0, NULL, "prefix", "", -1, NULL);
     WEE_TEST_STR("prefix", gui_chat_pipe_build_message (line));
     gui_line_free_data (line);
     free (line);
 
-    line = gui_line_new (gui_buffers, -1, 0, 0, 0, 0, NULL, "", "the message", -1, NULL);
+    line = gui_line_new (gui_buffers, -1, 0, 0, NULL, "", "the message", -1, NULL);
     WEE_TEST_STR("the message", gui_chat_pipe_build_message (line));
     gui_line_free_data (line);
     free (line);
 
-    line = gui_line_new (gui_buffers, -1, 0, 0, 0, 0, NULL, "prefix", "the message", -1, NULL);
+    line = gui_line_new (gui_buffers, -1, 0, 0, NULL, "prefix", "the message", -1, NULL);
     WEE_TEST_STR("prefix the message", gui_chat_pipe_build_message (line));
     gui_line_free_data (line);
     free (line);
@@ -551,8 +562,7 @@ TEST(GuiChat, PrintDatetimeTags)
     LONGS_EQUAL(-1, ptr_data->y);
     CHECK(ptr_data->date > 0);
     CHECK((ptr_data->date_usec >= 0) && (ptr_data->date_usec <= 999999));
-    CHECK(ptr_data->date == ptr_data->date_printed);
-    CHECK(ptr_data->date_usec == ptr_data->date_usec_printed);
+    WEE_CHECK_ID_IS_DATE_PRINTED(ptr_data);
     CHECK(ptr_data->str_time && ptr_data->str_time[0]);
     LONGS_EQUAL(0, ptr_data->tags_count);
     POINTERS_EQUAL(NULL, ptr_data->tags_array);
@@ -574,8 +584,7 @@ TEST(GuiChat, PrintDatetimeTags)
     LONGS_EQUAL(-1, ptr_data->y);
     CHECK(ptr_data->date > 0);
     CHECK((ptr_data->date_usec >= 0) && (ptr_data->date_usec <= 999999));
-    CHECK(ptr_data->date == ptr_data->date_printed);
-    CHECK(ptr_data->date_usec == ptr_data->date_usec_printed);
+    WEE_CHECK_ID_IS_DATE_PRINTED(ptr_data);
     CHECK(ptr_data->str_time && ptr_data->str_time[0]);
     LONGS_EQUAL(0, ptr_data->tags_count);
     POINTERS_EQUAL(NULL, ptr_data->tags_array);
@@ -597,8 +606,7 @@ TEST(GuiChat, PrintDatetimeTags)
     LONGS_EQUAL(-1, ptr_data->y);
     CHECK(ptr_data->date > 0);
     CHECK((ptr_data->date_usec >= 0) && (ptr_data->date_usec <= 999999));
-    CHECK(ptr_data->date == ptr_data->date_printed);
-    CHECK(ptr_data->date_usec == ptr_data->date_usec_printed);
+    WEE_CHECK_ID_IS_DATE_PRINTED(ptr_data);
     CHECK(ptr_data->str_time && ptr_data->str_time[0]);
     LONGS_EQUAL(0, ptr_data->tags_count);
     POINTERS_EQUAL(NULL, ptr_data->tags_array);
@@ -620,8 +628,7 @@ TEST(GuiChat, PrintDatetimeTags)
     LONGS_EQUAL(-1, ptr_data->y);
     CHECK(ptr_data->date > 0);
     CHECK((ptr_data->date_usec >= 0) && (ptr_data->date_usec <= 999999));
-    CHECK(ptr_data->date == ptr_data->date_printed);
-    CHECK(ptr_data->date_usec == ptr_data->date_usec_printed);
+    WEE_CHECK_ID_IS_DATE_PRINTED(ptr_data);
     CHECK(ptr_data->str_time && ptr_data->str_time[0]);
     LONGS_EQUAL(0, ptr_data->tags_count);
     POINTERS_EQUAL(NULL, ptr_data->tags_array);
@@ -643,8 +650,7 @@ TEST(GuiChat, PrintDatetimeTags)
     LONGS_EQUAL(-1, ptr_data->y);
     CHECK(ptr_data->date > 0);
     CHECK((ptr_data->date_usec >= 0) && (ptr_data->date_usec <= 999999));
-    CHECK(ptr_data->date == ptr_data->date_printed);
-    CHECK(ptr_data->date_usec == ptr_data->date_usec_printed);
+    WEE_CHECK_ID_IS_DATE_PRINTED(ptr_data);
     CHECK(ptr_data->str_time && ptr_data->str_time[0]);
     LONGS_EQUAL(0, ptr_data->tags_count);
     POINTERS_EQUAL(NULL, ptr_data->tags_array);
@@ -666,8 +672,7 @@ TEST(GuiChat, PrintDatetimeTags)
     LONGS_EQUAL(-1, ptr_data->y);
     LONGS_EQUAL(0, ptr_data->date);
     LONGS_EQUAL(0, ptr_data->date_usec);
-    CHECK(ptr_data->date_printed > 0);
-    CHECK((ptr_data->date_usec_printed >= 0) && (ptr_data->date_usec_printed <= 999999));
+    CHECK(ptr_data->id > 0);
     STRCMP_EQUAL(NULL, ptr_data->str_time);
     LONGS_EQUAL(0, ptr_data->tags_count);
     POINTERS_EQUAL(NULL, ptr_data->tags_array);
@@ -690,7 +695,7 @@ TEST(GuiChat, PrintDatetimeTags)
     LONGS_EQUAL(-1, ptr_data->y);
     LONGS_EQUAL(946681200, ptr_data->date);
     LONGS_EQUAL(123456, ptr_data->date_usec);
-    CHECK(ptr_data->date < ptr_data->date_printed);
+    CHECK(((long long)ptr_data->date * 1000000LL) < ptr_data->id);
     CHECK(ptr_data->str_time && ptr_data->str_time[0]);
     LONGS_EQUAL(0, ptr_data->tags_count);
     POINTERS_EQUAL(NULL, ptr_data->tags_array);
@@ -713,8 +718,7 @@ TEST(GuiChat, PrintDatetimeTags)
     LONGS_EQUAL(-1, ptr_data->y);
     CHECK(ptr_data->date > 0);
     CHECK((ptr_data->date_usec >= 0) && (ptr_data->date_usec <= 999999));
-    CHECK(ptr_data->date == ptr_data->date_printed);
-    CHECK(ptr_data->date_usec == ptr_data->date_usec_printed);
+    WEE_CHECK_ID_IS_DATE_PRINTED(ptr_data);
     CHECK(ptr_data->str_time && ptr_data->str_time[0]);
     LONGS_EQUAL(0, ptr_data->tags_count);
     POINTERS_EQUAL(NULL, ptr_data->tags_array);
@@ -737,8 +741,7 @@ TEST(GuiChat, PrintDatetimeTags)
     LONGS_EQUAL(-1, ptr_data->y);
     CHECK(ptr_data->date > 0);
     CHECK((ptr_data->date_usec >= 0) && (ptr_data->date_usec <= 999999));
-    CHECK(ptr_data->date == ptr_data->date_printed);
-    CHECK(ptr_data->date_usec == ptr_data->date_usec_printed);
+    WEE_CHECK_ID_IS_DATE_PRINTED(ptr_data);
     CHECK(ptr_data->str_time && ptr_data->str_time[0]);
     LONGS_EQUAL(3, ptr_data->tags_count);
     CHECK(ptr_data->tags_array);
@@ -795,8 +798,7 @@ TEST(GuiChat, PrintYDatetimeTags)
     LONGS_EQUAL(0, ptr_data->y);
     CHECK(ptr_data->date > 0);
     CHECK((ptr_data->date_usec >= 0) && (ptr_data->date_usec <= 999999));
-    CHECK(ptr_data->date == ptr_data->date_printed);
-    CHECK(ptr_data->date_usec == ptr_data->date_usec_printed);
+    LONGS_EQUAL(ptr_data->y, ptr_data->id);
     STRCMP_EQUAL(NULL, ptr_data->str_time);
     LONGS_EQUAL(0, ptr_data->tags_count);
     POINTERS_EQUAL(NULL, ptr_data->tags_array);
@@ -818,8 +820,7 @@ TEST(GuiChat, PrintYDatetimeTags)
     LONGS_EQUAL(0, ptr_data->y);
     LONGS_EQUAL(946681200, ptr_data->date);
     LONGS_EQUAL(123456, ptr_data->date_usec);
-    CHECK(ptr_data->date < ptr_data->date_printed);
-    CHECK((ptr_data->date_usec_printed >= 0) && (ptr_data->date_usec_printed <= 999999));
+    LONGS_EQUAL(ptr_data->y, ptr_data->id);
     STRCMP_EQUAL(NULL, ptr_data->str_time);
     LONGS_EQUAL(0, ptr_data->tags_count);
     POINTERS_EQUAL(NULL, ptr_data->tags_array);
@@ -841,8 +842,7 @@ TEST(GuiChat, PrintYDatetimeTags)
     LONGS_EQUAL(0, ptr_data->y);
     CHECK(ptr_data->date > 0);
     CHECK((ptr_data->date_usec >= 0) && (ptr_data->date_usec <= 999999));
-    CHECK(ptr_data->date == ptr_data->date_printed);
-    CHECK(ptr_data->date_usec == ptr_data->date_usec_printed);
+    LONGS_EQUAL(ptr_data->y, ptr_data->id);
     STRCMP_EQUAL(NULL, ptr_data->str_time);
     LONGS_EQUAL(0, ptr_data->tags_count);
     POINTERS_EQUAL(NULL, ptr_data->tags_array);
@@ -864,8 +864,7 @@ TEST(GuiChat, PrintYDatetimeTags)
     LONGS_EQUAL(0, ptr_data->y);
     CHECK(ptr_data->date > 0);
     CHECK((ptr_data->date_usec >= 0) && (ptr_data->date_usec <= 999999));
-    CHECK(ptr_data->date == ptr_data->date_printed);
-    CHECK(ptr_data->date_usec == ptr_data->date_usec_printed);
+    LONGS_EQUAL(ptr_data->y, ptr_data->id);
     STRCMP_EQUAL(NULL, ptr_data->str_time);
     LONGS_EQUAL(3, ptr_data->tags_count);
     CHECK(ptr_data->tags_array);
@@ -890,8 +889,7 @@ TEST(GuiChat, PrintYDatetimeTags)
     LONGS_EQUAL(2, ptr_data->y);
     CHECK(ptr_data->date > 0);
     CHECK((ptr_data->date_usec >= 0) && (ptr_data->date_usec <= 999999));
-    CHECK(ptr_data->date == ptr_data->date_printed);
-    CHECK(ptr_data->date_usec == ptr_data->date_usec_printed);
+    LONGS_EQUAL(ptr_data->y, ptr_data->id);
     STRCMP_EQUAL(NULL, ptr_data->str_time);
     LONGS_EQUAL(0, ptr_data->tags_count);
     POINTERS_EQUAL(NULL, ptr_data->tags_array);
@@ -911,8 +909,7 @@ TEST(GuiChat, PrintYDatetimeTags)
     LONGS_EQUAL(0, ptr_data->y);
     LONGS_EQUAL(0, ptr_data->date);
     LONGS_EQUAL(0, ptr_data->date_usec);
-    LONGS_EQUAL(0, ptr_data->date_printed);
-    LONGS_EQUAL(0, ptr_data->date_usec_printed);
+    LONGS_EQUAL(ptr_data->y, ptr_data->id);
     STRCMP_EQUAL(NULL, ptr_data->str_time);
     LONGS_EQUAL(0, ptr_data->tags_count);
     POINTERS_EQUAL(NULL, ptr_data->tags_array);

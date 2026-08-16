@@ -49,7 +49,7 @@ TEST(LoggerBacklog, DisplayLine)
     logger_backlog_display_line (gui_buffers, "");
     ptr_data = gui_buffers->own_lines->last_line->data;
     CHECK(ptr_data->date != 1645288340);
-    CHECK(ptr_data->date == ptr_data->date_printed);
+    CHECK(ptr_data->id / 1000000LL == ptr_data->date);
     LONGS_EQUAL(3, ptr_data->tags_count);
     STRCMP_EQUAL("no_highlight", ptr_data->tags_array[0]);
     STRCMP_EQUAL("notify_none", ptr_data->tags_array[1]);
@@ -68,7 +68,7 @@ TEST(LoggerBacklog, DisplayLine)
     logger_backlog_display_line (gui_buffers, str_line);
     ptr_data = gui_buffers->own_lines->last_line->data;
     CHECK(ptr_data->date != 1645288340);
-    CHECK(ptr_data->date == ptr_data->date_printed);
+    CHECK(ptr_data->id / 1000000LL == ptr_data->date);
     LONGS_EQUAL(3, ptr_data->tags_count);
     STRCMP_EQUAL("no_highlight", ptr_data->tags_array[0]);
     STRCMP_EQUAL("notify_none", ptr_data->tags_array[1]);
@@ -92,7 +92,7 @@ TEST(LoggerBacklog, DisplayLine)
     logger_backlog_display_line (gui_buffers, str_line);
     ptr_data = gui_buffers->own_lines->last_line->data;
     LONGS_EQUAL(1645288340, ptr_data->date);
-    CHECK(ptr_data->date_printed > 1645288340);
+    CHECK(ptr_data->id > 1645288340000000LL);
     LONGS_EQUAL(3, ptr_data->tags_count);
     STRCMP_EQUAL("no_highlight", ptr_data->tags_array[0]);
     STRCMP_EQUAL("notify_none", ptr_data->tags_array[1]);
@@ -116,7 +116,7 @@ TEST(LoggerBacklog, DisplayLine)
     logger_backlog_display_line (gui_buffers, str_line);
     ptr_data = gui_buffers->own_lines->last_line->data;
     LONGS_EQUAL(1645288341, ptr_data->date);
-    CHECK(ptr_data->date_printed > 1645288341);
+    CHECK(ptr_data->id > 1645288341000000LL);
     LONGS_EQUAL(3, ptr_data->tags_count);
     STRCMP_EQUAL("no_highlight", ptr_data->tags_array[0]);
     STRCMP_EQUAL("notify_none", ptr_data->tags_array[1]);

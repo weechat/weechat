@@ -883,8 +883,6 @@ void
 gui_chat_printf_datetime_tags_internal (struct t_gui_buffer *buffer,
                                         time_t date,
                                         int date_usec,
-                                        time_t date_printed,
-                                        int date_usec_printed,
                                         const char *tags,
                                         char *message)
 {
@@ -937,8 +935,6 @@ gui_chat_printf_datetime_tags_internal (struct t_gui_buffer *buffer,
                              -1,
                              (display_time) ? date : 0,
                              (display_time) ? date_usec : 0,
-                             date_printed,
-                             date_usec_printed,
                              tags,
                              pos_prefix,
                              ptr_msg,
@@ -1028,8 +1024,9 @@ gui_chat_printf_datetime_tags_internal (struct t_gui_buffer *buffer,
             }
             if ((new_line->data->date == 0) && display_time)
             {
-                new_line->data->date = new_line->data->date_printed;
-                new_line->data->date_usec = new_line->data->date_usec_printed;
+                gui_line_get_date_printed (new_line->data,
+                                           &(new_line->data->date),
+                                           &(new_line->data->date_usec));
             }
             string_shared_free (new_line->data->prefix);
             if (pos_prefix)
@@ -1169,7 +1166,7 @@ gui_chat_printf_datetime_tags (struct t_gui_buffer *buffer,
                                time_t date, int date_usec,
                                const char *tags, const char *message, ...)
 {
-    struct timeval tv_date_printed;
+    struct timeval tv_now;
     char *pos, *pos_end;
     int one_line;
 
@@ -1192,11 +1189,11 @@ gui_chat_printf_datetime_tags (struct t_gui_buffer *buffer,
 
     utf8_normalize (vbuffer, '?');
 
-    gettimeofday (&tv_date_printed, NULL);
+    gettimeofday (&tv_now, NULL);
     if (date <= 0)
     {
-        date = tv_date_printed.tv_sec;
-        date_usec = tv_date_printed.tv_usec;
+        date = tv_now.tv_sec;
+        date_usec = tv_now.tv_usec;
     }
 
     one_line = 0;
@@ -1221,8 +1218,6 @@ gui_chat_printf_datetime_tags (struct t_gui_buffer *buffer,
             gui_chat_printf_datetime_tags_internal (buffer,
                                                     date,
                                                     date_usec,
-                                                    tv_date_printed.tv_sec,
-                                                    tv_date_printed.tv_usec,
                                                     tags,
                                                     pos);
         }
@@ -1253,7 +1248,7 @@ gui_chat_printf_y_datetime_tags (struct t_gui_buffer *buffer, int y,
                                  const char *tags, const char *message, ...)
 {
     struct t_gui_line *ptr_line, *new_line, *new_line_empty;
-    struct timeval tv_date_printed;
+    struct timeval tv_now;
     int i, last_y, num_lines_to_add;
 
     if (!message)
@@ -1275,19 +1270,17 @@ gui_chat_printf_y_datetime_tags (struct t_gui_buffer *buffer, int y,
 
     utf8_normalize (vbuffer, '?');
 
-    gettimeofday (&tv_date_printed, NULL);
+    gettimeofday (&tv_now, NULL);
     if (date <= 0)
     {
-        date = tv_date_printed.tv_sec;
-        date_usec = tv_date_printed.tv_usec;
+        date = tv_now.tv_sec;
+        date_usec = tv_now.tv_usec;
     }
 
     new_line = gui_line_new (buffer,
                              y,
                              date,
                              date_usec,
-                             tv_date_printed.tv_sec,
-                             tv_date_printed.tv_usec,
                              tags,
                              NULL,
                              vbuffer,
@@ -1328,7 +1321,7 @@ gui_chat_printf_y_datetime_tags (struct t_gui_buffer *buffer, int y,
                 for (i = y - num_lines_to_add; i < y; i++)
                 {
                     new_line_empty = gui_line_new (new_line->data->buffer,
-                                                   i, 0, 0, 0, 0, NULL, NULL,
+                                                   i, 0, 0, NULL, NULL,
                                                    "", -1, NULL);
                     if (new_line_empty)
                         gui_line_add_y (new_line_empty);

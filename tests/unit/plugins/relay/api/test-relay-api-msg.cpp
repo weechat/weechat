@@ -415,11 +415,7 @@ TEST(RelayApiMsg, LinesToJson)
     tv.tv_usec = gui_buffers->own_lines->last_line->prev_line->data->date_usec;
     util_strftimeval (str_date, sizeof (str_date), "%@%FT%T.%fZ", &tv);
     WEE_CHECK_OBJ_STR(str_date, json_line, "date");
-    gmtime_r (&(gui_buffers->own_lines->last_line->prev_line->data->date_printed), &gm_time);
-    tv.tv_sec = mktime (&gm_time);
-    tv.tv_usec = gui_buffers->own_lines->last_line->prev_line->data->date_usec_printed;
-    util_strftimeval (str_date, sizeof (str_date), "%@%FT%T.%fZ", &tv);
-    WEE_CHECK_OBJ_STR(str_date, json_line, "date_printed");
+    CHECK(!cJSON_GetObjectItem (json_line, "date_printed"));
     WEE_CHECK_OBJ_BOOL(0, json_line, "highlight");
     WEE_CHECK_OBJ_STR("nick1", json_line, "prefix");
     WEE_CHECK_OBJ_STR(str_msg1, json_line, "message");
@@ -451,11 +447,7 @@ TEST(RelayApiMsg, LinesToJson)
     tv.tv_usec = gui_buffers->own_lines->last_line->data->date_usec;
     util_strftimeval (str_date, sizeof (str_date), "%@%FT%T.%fZ", &tv);
     WEE_CHECK_OBJ_STR(str_date, json_line, "date");
-    gmtime_r (&(gui_buffers->own_lines->last_line->data->date_printed), &gm_time);
-    tv.tv_sec = mktime (&gm_time);
-    tv.tv_usec = gui_buffers->own_lines->last_line->data->date_usec_printed;
-    util_strftimeval (str_date, sizeof (str_date), "%@%FT%T.%fZ", &tv);
-    WEE_CHECK_OBJ_STR(str_date, json_line, "date_printed");
+    CHECK(!cJSON_GetObjectItem (json_line, "date_printed"));
     WEE_CHECK_OBJ_BOOL(0, json_line, "highlight");
     WEE_CHECK_OBJ_STR("", json_line, "prefix");
         str_msg_ansi = gui_color_encode_ansi (str_msg2);

@@ -5692,7 +5692,7 @@ type:
 | signal         | tg_signal_data     |
 | hsignal        |                    |
 | modifier       | tg_string          | tg_string
-| line           | message            | buffer、buffer_name、y、date、date_usec、date_printed、date_usec_printed、str_time、tags、notify_level、highlight、prefix、message
+| line           | message            | buffer、buffer_name、id、y、date、date_usec、str_time、tags、notify_level、highlight、prefix、message
 | print          | tg_message         |
 | command        | tg_argv_eol1       |
 | command_run    | tg_command         |
@@ -5855,13 +5855,12 @@ _weechat_print_ 修飾子では、メッセージタグを使う変数 (下の
 | buffer             | pointer | バッファ
 | buffer_name        | string  | バッファ名
 | buffer_type        | string  | バッファ型 ("formatted" または "free")
+// TRANSLATION MISSING
+| id                 | string  | Line identifier: date and time of print with microseconds precision (line number for a buffer with free content).
 | y                  | string  | 自由内容バッファの行番号 (≥ 0)、-1 はフォーマット済みバッファ用
 | date               | string  | 行の日付 (タイムスタンプ)
 // TRANSLATION MISSING
 | date_usec          | string  | Microseconds of line date.
-| date_printed       | string  | 行が表示される日付 (タイムスタンプ).
-// TRANSLATION MISSING
-| date_usec_printed  | string  | Microseconds of date when line was displayed.
 | str_time           | string  | 表示に使う日付、色コードを含めることも可能
 | tags               | string  | メッセージのタグ (文字列の最初と最後にコンマが追加されます)
 | displayed          | string  | "1" の場合は表示、"0" の場合は非表示

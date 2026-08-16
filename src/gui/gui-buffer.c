@@ -5717,7 +5717,8 @@ void
 gui_buffer_dump_hexa (struct t_gui_buffer *buffer)
 {
     struct t_gui_line *ptr_line;
-    int num_line;
+    int num_line, date_usec_printed;
+    time_t date_printed;
     char *prefix_without_colors, *message_without_colors, *tags;
     char buf[256];
 
@@ -5751,11 +5752,13 @@ gui_buffer_dump_hexa (struct t_gui_buffer *buffer)
         log_printf ("  date: %lld = %s",
                     (long long)(ptr_line->data->date), buf);
         log_printf ("  date_usec: %d", ptr_line->data->date_usec);
-        snprintf (buf, sizeof (buf), "%s", ctime (&ptr_line->data->date_printed));
+        gui_line_get_date_printed (ptr_line->data,
+                                   &date_printed, &date_usec_printed);
+        snprintf (buf, sizeof (buf), "%s", ctime (&date_printed));
         buf[strlen (buf) - 1] = '\0';
-        log_printf ("  date_printed: %lld = %s",
-                    (long long)ptr_line->data->date_printed, buf);
-        log_printf ("  date_usec_printed: %d", ptr_line->data->date_usec_printed);
+        log_printf ("  id (date printed): %lld = %s",
+                    ptr_line->data->id, buf);
+        log_printf ("  usec of date printed: %d", date_usec_printed);
 
         /* display raw message for line */
         if (ptr_line->data->message)

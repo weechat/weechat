@@ -11491,6 +11491,12 @@ struct t_hook *weechat_hook_line (const char *buffer_type,
 | `+formatted+` +
   `+free+`
 
+// TRANSLATION MISSING
+| id
+| Line identifier: date and time of print with microseconds precision.
+| Line number ("y").
+| `+1786886000000000+`
+
 | y
 | Нема ("-1").
 | Број линије (≥ "0").
@@ -11506,16 +11512,6 @@ struct t_hook *weechat_hook_line (const char *buffer_type,
 | Микросекунде датума линије (између 0 и 999999).
 | N/A ("0").
 | `+123456+`
-
-| date_printed
-| Датум када је линија била приказана (временска ознака).
-| Нема ("0").
-| `+1533792012+`
-
-| date_usec_printed
-| Микросекунде датума када је линија била приказана (између 0 и 999999).
-| N/A ("0").
-| `+654321+`
 
 | str_time
 | Датум за приказ (са могућим кодовима боја у себи).
@@ -11606,16 +11602,6 @@ struct t_hook *weechat_hook_line (const char *buffer_type,
 | Нема.
 | Микросекунде датума линије се постављају на ову вредност. +
   Сагласно овоме се поставља и вредност `+str_time+`.
-
-| date_printed
-| Временска ознака.
-| Нема.
-| Датум се поставља на ову временску ознаку (не приказује се).
-
-| date_usec_printed
-| Цео број ("0" до "999999").
-| Нема.
-| Микросекунде исписаног датума се постављају на ову вредност.
 
 | str_time
 | Стринг.
@@ -13849,6 +13835,10 @@ struct t_hook *weechat_hook_focus (const char *area,
 | _chat_line | Показивач на линију _(WeeChat ≥ 1.2)_.
 | "0x1234abcd" | ""
 
+// TRANSLATION MISSING
+| _chat_line_id | Line identifier ^(4)^ _(WeeChat ≥ 4.11.0)_.
+| "1786886000000000" | "-1"
+
 | _chat_line_x | Колона у линији ^(3)^.
 | "0" ... "n" | "-1"
 
@@ -13861,10 +13851,10 @@ struct t_hook *weechat_hook_focus (const char *area,
 | _chat_line_date_usec | Микросекунде датума/времена линије.
 | "123456" | "0"
 
-| _chat_line_date_printed | Датум/време линије ^(4)^.
+| _chat_line_date_printed | Датум/време линије ^(5)^.
 | "1313237175" | "0"
 
-| _chat_line_date_usec_printed | Микросекунде датума/времемна приказа линије ^(4)^.
+| _chat_line_date_usec_printed | Микросекунде датума/времемна приказа линије ^(5)^.
 | "123456" | "0"
 
 | _chat_line_time | Приказано време.
@@ -13919,11 +13909,18 @@ struct t_hook *weechat_hook_focus (const char *area,
 | "0x1234abcd" | ""
 |===
 
+// TRANSLATION MISSING
 [NOTE]
 ^(1)^ Постоје исти кључеви са суфиксом „2” (тј: „_x2”, „_y2”, „_window2”, ...) са инфо о другој тачки (корисно је само за гестикулације мишем, како бисте знали где је отпуштен тастер миша). +
 ^(2)^ `XXX` је име локалне променљиве у баферу. +
 ^(3)^ Поставља се само за бафере са слободним садржајем. +
-^(4)^ То је датум када је програм WeeChat додао линију у бафер (веће или једнако од „_chat_line_date”).
+^(4)^ On buffers with formatted content, this is the date when WeeChat added
+the line in the buffer, with microseconds precision (greater or equal to
+"_chat_line_date"); on buffers with free content, this is the line number
+("_chat_line_y"). +
+^(5)^ Deprecated since WeeChat 4.11.0 (still there for compatibility): it is
+derived from the line identifier ("_chat_line_id") and is "0" on buffers with
+free content.
 
 Додатне инфо за ставку траке „buffer_nicklist”:
 

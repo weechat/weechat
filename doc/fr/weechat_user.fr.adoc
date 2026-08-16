@@ -5606,7 +5606,7 @@ du type de hook :
 | signal         | tg_signal_data      |
 | hsignal        |                     |
 | modifier       | tg_string           | tg_string
-| line           | message             | buffer, buffer_name, y, date, date_usec, date_printed, date_usec_printed, str_time, tags, notify_level, highlight, prefix, message
+| line           | message             | buffer, buffer_name, id, y, date, date_usec, str_time, tags, notify_level, highlight, prefix, message
 | print          | tg_message          |
 | command        | tg_argv_eol1        |
 | command_run    | tg_command          |
@@ -5779,11 +5779,10 @@ de hachage :
 | buffer             | pointeur | Tampon.
 | buffer_name        | chaîne   | Nom du tampon.
 | buffer_type        | chaîne   | Type de tampon ("formatted" ou "free").
+| id                 | chaîne   | Identifiant de la ligne : date et heure d'affichage avec une précision à la microseconde (numéro de la ligne pour un tampon avec contenu libre).
 | y                  | chaîne   | Numéro de ligne pour un tampon avec contenu libre (≥ 0), -1 pour un tampon avec contenu formaté.
 | date               | chaîne   | Date de la ligne (horodatage).
 | date_usec          | chaîne   | Microsecondes de la date de la ligne.
-| date_printed       | chaîne   | Date d'affichage de la ligne (horodatage).
-| date_usec_printed  | chaîne   | Microsecondes de la date d'affichage de la ligne.
 | str_time           | chaîne   | Date pour l'affichage. Elle peut contenir des codes couleur.
 | tags               | chaîne   | Étiquettes du message (avec une virgule en début/fin de chaîne).
 | displayed          | chaîne   | "1" si affichée, "0" si la ligne est filtrée.

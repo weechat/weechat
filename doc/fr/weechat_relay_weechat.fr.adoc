@@ -488,11 +488,10 @@ id: 'hdata_lines'
 hda:
     keys: {
         'buffer': 'ptr',
+        'id': 'lon',
         'y': 'int',
         'date': 'tim',
         'date_usec': 'int',
-        'date_printed': 'tim',
-        'date_usec_printed': 'int',
         'str_time': 'str',
         'tags_count': 'int',
         'tags_array': 'arr',
@@ -508,11 +507,10 @@ hda:
     item 1:
         __path: ['0x558d61ea3e60', '0x558d61ea40e0', '0x558d62920d80', '0x558d62abf040']
         buffer: '0x558d61ea3e60'
+        id: 1588404926118712
         y: -1
         date: 1588404926
         date_usec: 118712
-        date_printed: 1588404926
-        date_usec_printed: 118712
         str_time: 'F@0025209F@0024535F@0024026'
         tags_count: 0
         tags_array: []
@@ -526,11 +524,10 @@ hda:
     item 2:
         __path: ['0x558d61ea3e60', '0x558d61ea40e0', '0x558d626779f0', '0x558d62af9700']
         buffer: '0x558d61ea3e60'
+        id: 1588404930000025
         y: -1
         date: 1588404930
         date_usec: 25
-        date_printed: 1588404930
-        date_usec_printed: 25
         str_time: 'F@0025209F@0024535F@0024030'
         tags_count: 0
         tags_array: []
@@ -2080,8 +2077,6 @@ Données envoyées dans le hdata :
 | id                | long               | Identifiant de ligne.
 | date              | date/heure         | Date du message.
 | date_usec         | entier             | Microsecondes de la date.
-| date_printed      | date/heure         | Date d'affichage du message.
-| date_usec_printed | entier             | Microsecondes de la date d'affichage du message.
 | displayed         | caractère          | 1 si le message est affiché, 0 si le message est filtré (caché).
 | notify_level      | caractère          | Niveau de notification : -1 = notification désactivée, 0 = bas, 1 = message, 2 = privé, 3 = highlight.
 | highlight         | caractère          | 1 si la ligne a un highlight, sinon 0.
@@ -2102,8 +2097,6 @@ hda:
         'id': 'lon',
         'date': 'tim',
         'date_usec': 'int',
-        'date_printed': 'tim',
-        'date_usec_printed': 'int',
         'displayed': 'chr',
         'notify_level': 'chr',
         'highlight': 'chr',
@@ -2118,8 +2111,6 @@ hda:
         id: 1362728993902765
         date: 1362728993
         date_usec: 902765
-        date_printed: 1362728993
-        date_usec_printed: 902765
         displayed: 1
         notify_level: 1
         highlight: 0
@@ -2154,8 +2145,6 @@ hda:
         'id': 'lon',
         'date': 'tim',
         'date_usec': 'int',
-        'date_printed': 'tim',
-        'date_usec_printed': 'int',
         'displayed': 'chr',
         'notify_level': 'chr',
         'highlight': 'chr',
@@ -2170,8 +2159,6 @@ hda:
         id: 1362728993902765
         date: 1362728993
         date_usec: 902765
-        date_printed: 1362728993
-        date_usec_printed: 902765
         displayed: 1
         notify_level: 1
         highlight: 0

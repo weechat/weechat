@@ -91,6 +91,7 @@ set(LIB_WEECHAT_UNIT_TESTS_CORE_SRC
   gui/test-gui-chat.cpp
   gui/test-gui-color.cpp
   gui/test-gui-filter.cpp
+  gui/test-gui-focus.cpp
   gui/test-gui-hotlist.cpp
   gui/test-gui-input.cpp
   gui/test-gui-key.cpp

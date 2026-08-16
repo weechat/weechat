@@ -490,11 +490,10 @@ id: 'hdata_lines'
 hda:
     keys: {
         'buffer': 'ptr',
+        'id': 'lon',
         'y': 'int',
         'date': 'tim',
         'date_usec': 'int',
-        'date_printed': 'tim',
-        'date_usec_printed', 'int',
         'str_time': 'str',
         'tags_count': 'int',
         'tags_array': 'arr',
@@ -510,11 +509,10 @@ hda:
     item 1:
         __path: ['0x558d61ea3e60', '0x558d61ea40e0', '0x558d62920d80', '0x558d62abf040']
         buffer: '0x558d61ea3e60'
+        id: 1588404926118712
         y: -1
         date: 1588404926
         date_usec: 118712
-        date_printed: 1588404926
-        date_usec_printed: 118712
         str_time: 'F@0025209F@0024535F@0024026'
         tags_count: 0
         tags_array: []
@@ -528,11 +526,10 @@ hda:
     item 2:
         __path: ['0x558d61ea3e60', '0x558d61ea40e0', '0x558d626779f0', '0x558d62af9700']
         buffer: '0x558d61ea3e60'
+        id: 1588404930000025
         y: -1
         date: 1588404930
         date_usec: 25
-        date_printed: 1588404930
-        date_usec_printed: 25
         str_time: 'F@0025209F@0024535F@0024030'
         tags_count: 0
         tags_array: []
@@ -2088,9 +2085,6 @@ hdata として送られるデータ:
 | date              | time          | メッセージの日付
 // TRANSLATION MISSING
 | date_usec         | integer       | Microseconds of date.
-| date_printed      | time          | WeeChat メッセージを表示した日付
-// TRANSLATION MISSING
-| date_usec_printed | integer       | Microseconds of date when WeeChat displayed message.
 | displayed         | char          | メッセージが表示される場合は 1、メッセージがフィルタされる (隠される) 場合は 0
 // TRANSLATION MISSING
 | notify_level      | char          | Notify level: -1 = notify disabled, 0 = low, 1 = message, 2 = private, 3 = highlight.
@@ -2111,8 +2105,6 @@ hda:
         'id': 'lon',
         'date': 'tim',
         'date_used': 'int',
-        'date_printed': 'tim',
-        'date_usec_printed': 'int',
         'displayed': 'chr',
         'notify_level': 'chr',
         'highlight': 'chr',
@@ -2127,8 +2119,6 @@ hda:
         id: 1362728993902765
         date: 1362728993
         date_usec: 902765
-        date_printed: 1362728993
-        date_usec_printed: 902765
         displayed: 1
         notify_level: 1
         highlight: 0
@@ -2165,8 +2155,6 @@ hda:
         'id': 'lon',
         'date': 'tim',
         'date_used': 'int',
-        'date_printed': 'tim',
-        'date_usec_printed': 'int',
         'displayed': 'chr',
         'notify_level': 'chr',
         'highlight': 'chr',
@@ -2181,8 +2169,6 @@ hda:
         id: 1362728993902765
         date: 1362728993
         date_usec: 902765
-        date_printed: 1362728993
-        date_usec_printed: 902765
         displayed: 1
         notify_level: 1
         highlight: 0

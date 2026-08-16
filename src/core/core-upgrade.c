@@ -728,7 +728,7 @@ upgrade_weechat_read_buffer_line (struct t_infolist *infolist)
                 upgrade_current_buffer,
                 id,
                 -1,
-                date, date_usec, date_printed, date_usec_printed,
+                date, date_usec,
                 tags, prefix, message,
                 highlight, str_time);
             if (new_line)
@@ -741,16 +741,14 @@ upgrade_weechat_read_buffer_line (struct t_infolist *infolist)
         }
         case GUI_BUFFER_TYPE_FREE:
         {
-            int y, date_usec, date_usec_printed;
-            time_t date, date_printed;
+            int y, date_usec;
+            time_t date;
             const char *tags, *message;
 
             /* read the fields in written order (see comment above) */
             y = infolist_integer (infolist, "y");
             date = infolist_time (infolist, "date");
             date_usec = infolist_integer (infolist, "date_usec");
-            date_printed = infolist_time (infolist, "date_printed");
-            date_usec_printed = infolist_integer (infolist, "date_usec_printed");
             tags = infolist_string (infolist, "tags");
             message = infolist_string (infolist, "message");
 
@@ -758,7 +756,7 @@ upgrade_weechat_read_buffer_line (struct t_infolist *infolist)
             new_line = gui_line_new (
                 upgrade_current_buffer,
                 y,
-                date, date_usec, date_printed, date_usec_printed,
+                date, date_usec,
                 tags,
                 NULL,
                 message,

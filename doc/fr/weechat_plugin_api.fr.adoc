@@ -12032,6 +12032,11 @@ de hachage, avec les valeurs suivantes (les clés et valeurs sont des chaînes)�
 | `+formatted+` +
   `+free+`
 
+| id
+| Identifiant de la ligne : date et heure d'affichage avec une précision à la microseconde.
+| Numéro de la ligne (« y »).
+| `+1786886000000000+`
+
 | y
 | N/A ("-1").
 | Numéro de ligne (≥ "0").
@@ -12047,16 +12052,6 @@ de hachage, avec les valeurs suivantes (les clés et valeurs sont des chaînes)�
 | Microsecondes de la date de la ligne (entre 0 et 999999).
 | N/A ("0").
 | `+123456+`
-
-| date_printed
-| Date d'affichage de la ligne (horodatage).
-| N/A ("0").
-| `+1533792012+`
-
-| date_usec_printed
-| Microsecondes de la date d'affichage de la ligne (entre 0 et 999999).
-| N/A ("0").
-| `+654321+`
 
 | str_time
 | Date pour l'affichage (elle peut contenir des codes couleur).
@@ -12151,16 +12146,6 @@ valeurs sont des chaînes dans cette table de hachage) :
 | N/A.
 | Les microsecondes de la date sont positionnées à cette valeur. +
   La valeur de `+str_time+` est mise à jour en conséquence.
-
-| date_printed
-| Horodatage.
-| N/A.
-| La date d'affichage est positionnée à cet horodatage (non affichée).
-
-| date_usec_printed
-| Entier ("0" à "999999").
-| N/A.
-| Les microsecondes de la date d'affichage sont positionnées à cette valeur.
 
 | str_time
 | Chaîne.
@@ -14561,6 +14546,9 @@ valeurs sont de type "string") :
 | _chat_line | Pointeur vers la ligne _(WeeChat ≥ 1.2)_.
 | "0x1234abcd" | ""
 
+| _chat_line_id | Identifiant de la ligne ^(4)^ _(WeeChat ≥ 4.11.0)_.
+| "1786886000000000" | "-1"
+
 | _chat_line_x | Colonne de la ligne ^(3)^.
 | "0" ... "n" | "-1"
 
@@ -14573,10 +14561,10 @@ valeurs sont de type "string") :
 | _chat_line_date_usec | Microsecondes de la date/heure de la ligne.
 | "123456" | "0"
 
-| _chat_line_date_printed | Date/heure de la ligne ^(4)^.
+| _chat_line_date_printed | Date/heure de la ligne ^(5)^.
 | "1313237175" | "0"
 
-| _chat_line_date_usec_printed | Microsecondes de la date/heure de la ligne ^(4)^.
+| _chat_line_date_usec_printed | Microsecondes de la date/heure de la ligne ^(5)^.
 | "123456" | "0"
 
 | _chat_line_time | Heure affichée.
@@ -14638,8 +14626,13 @@ pour les gestes de souris, pour savoir où le bouton de la souris a été
 relâché). +
 ^(2)^ `XXX` est le nom d'une variable locale du tampon. +
 ^(3)^ Renseigné seulement pour les tampons avec contenu libre. +
-^(4)^ Il s'agit de la date lorsque WeeChat ajoute la ligne dans le tampon
-(supérieure ou égale à "_chat_line_date").
+^(4)^ Sur un tampon avec contenu formaté, il s'agit de la date à laquelle
+WeeChat a ajouté la ligne dans le tampon, avec une précision à la microseconde
+(supérieure ou égale à "_chat_line_date") ; sur un tampon avec contenu libre,
+il s'agit du numéro de la ligne ("_chat_line_y"). +
+^(5)^ Obsolète depuis WeeChat 4.11.0 (toujours présent pour la compatibilité) :
+il est déduit de l'identifiant de la ligne ("_chat_line_id") et vaut "0" sur
+les tampons avec contenu libre.
 
 Informations additionnelles pour l'objet de barre "buffer_nicklist" :
 

@@ -62,7 +62,7 @@ struct t_weelist_item;
  * please change the date with current one; for a second change at same
  * date, increment the 01, otherwise please keep 01.
  */
-#define WEECHAT_PLUGIN_API_VERSION "20260816-03"
+#define WEECHAT_PLUGIN_API_VERSION "20260816-04"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
