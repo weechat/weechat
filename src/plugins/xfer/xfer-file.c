@@ -237,6 +237,7 @@ void
 xfer_file_find_filename (struct t_xfer *xfer)
 {
     char *dir_separator, *path, *nick;
+    const char *filename, *separator;
     struct t_hashtable *options;
 
     if (!XFER_IS_FILE(xfer->type))
@@ -256,9 +257,22 @@ xfer_file_find_filename (struct t_xfer *xfer)
     if (!path)
         return;
 
+    /*
+     * Keep only the filename component: a received filename can contain
+     * either slash, and both forms can be interpreted as directory
+     * separators by file APIs on some platforms.
+     */
+    filename = xfer->filename;
+    separator = strrchr (filename, '/');
+    if (separator)
+        filename = separator + 1;
+    separator = strrchr (filename, '\\');
+    if (separator)
+        filename = separator + 1;
+
     xfer->local_filename = malloc (strlen (path) +
                                    strlen (xfer->remote_nick) +
-                                   strlen (xfer->filename) + 4);
+                                   strlen (filename) + 4);
     if (!xfer->local_filename)
     {
         free (path);
@@ -286,7 +300,7 @@ xfer_file_find_filename (struct t_xfer *xfer)
         strcat (xfer->local_filename, ".");
     }
     free (dir_separator);
-    strcat (xfer->local_filename, xfer->filename);
+    strcat (xfer->local_filename, filename);
 
     free (path);
 
