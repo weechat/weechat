@@ -15,6 +15,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 ### Changed
 
+- **breaking:** api: convert variable "id" from string to long long in infolist "buffer"
 - **breaking:** api: convert variable "timeout" from int to long in infolist "hook" (hook url)
 - **breaking:** api: convert variable "timeout" from int to long in infolist "hook" (hook process)
 - **breaking:** api: convert variable "interval" from string to long in infolist "hook" (hook timer)

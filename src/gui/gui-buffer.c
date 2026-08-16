@@ -5547,8 +5547,7 @@ gui_buffer_add_to_infolist (struct t_infolist *infolist,
     if (!infolist_new_var_integer (ptr_item, "current_buffer",
                                    (gui_current_window->buffer == buffer) ? 1 : 0))
         return 0;
-    snprintf (str_value, sizeof (str_value), "%lld", buffer->id);
-    if (!infolist_new_var_string (ptr_item, "id", str_value))
+    if (!infolist_new_var_longlong (ptr_item, "id", buffer->id))
         return 0;
     if (!infolist_new_var_integer (ptr_item, "opening", buffer->opening))
         return 0;

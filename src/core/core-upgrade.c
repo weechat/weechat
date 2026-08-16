@@ -393,6 +393,7 @@ void
 upgrade_weechat_read_buffer (struct t_infolist *infolist)
 {
     struct t_gui_buffer *ptr_buffer;
+    struct t_infolist_var *ptr_var_id;
     const char *key, *var_name, *name, *plugin_name, *ptr_id;
     const char *str;
     char option_name[64], *option_key, *option_var;
@@ -401,13 +402,24 @@ upgrade_weechat_read_buffer (struct t_infolist *infolist)
 
     /* "id" is new in WeeChat 4.3.0 */
     id = -1;
-    if (infolist_search_var (infolist, "id"))
+    ptr_var_id = infolist_search_var (infolist, "id");
+    if (ptr_var_id)
     {
-        ptr_id = infolist_string (infolist, "id");
-        if (ptr_id)
+        switch (ptr_var_id->type)
         {
-            if (!util_parse_longlong (ptr_id, 10, &id))
-                id = -1;
+            case INFOLIST_LONGLONG: /* WeeChat ≥ 4.11.0 */
+                id = infolist_longlong (infolist, "id");
+                break;
+            case INFOLIST_STRING: /* WeeChat < 4.11.0 */
+                ptr_id = infolist_string (infolist, "id");
+                if (ptr_id)
+                {
+                    if (!util_parse_longlong (ptr_id, 10, &id))
+                        id = -1;
+                }
+                break;
+            default:
+                break;
         }
     }
     if (id < 0)
