@@ -5532,7 +5532,7 @@ gui_buffer_add_to_infolist (struct t_infolist *infolist,
 {
     struct t_infolist_item *ptr_item;
     struct t_gui_key *ptr_key;
-    char option_name[64], str_value[64];
+    char option_name[64];
     int i;
 
     if (!infolist || !buffer)
@@ -5622,8 +5622,7 @@ gui_buffer_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!infolist_new_var_integer (ptr_item, "nicklist_nicks_visible_count", buffer->nicklist_nicks_visible_count))
         return 0;
-    snprintf (str_value, sizeof (str_value), "%lld", buffer->nicklist_last_id_assigned);
-    if (!infolist_new_var_string (ptr_item, "nicklist_last_id_assigned", str_value))
+    if (!infolist_new_var_longlong (ptr_item, "nicklist_last_id_assigned", buffer->nicklist_last_id_assigned))
         return 0;
     if (!infolist_new_var_string (ptr_item, "title", buffer->title))
         return 0;
