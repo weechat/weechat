@@ -612,7 +612,7 @@ TEST(RelayApiMsg, HotlistToJson)
     json = relay_api_msg_hotlist_to_json (gui_hotlist);
     CHECK(json);
     CHECK(cJSON_IsObject (json));
-    WEE_CHECK_OBJ_NUM(GUI_HOTLIST_HIGHLIGHT, json, "priority");
+    WEE_CHECK_OBJ_NUM(int(GUI_HOTLIST_HIGHLIGHT), json, "priority");
     time_value = hdata_time (relay_hdata_hotlist, gui_hotlist, "time");
     gmtime_r (&time_value, &gm_time);
     tv.tv_sec = mktime (&gm_time);

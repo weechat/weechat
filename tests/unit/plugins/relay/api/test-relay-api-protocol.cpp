@@ -572,7 +572,7 @@ TEST(RelayApiProtocolWithClient, CbHotlist)
     json = cJSON_GetArrayItem (json_body_sent[0], 0);
     CHECK(json);
     CHECK(cJSON_IsObject (json));
-    WEE_CHECK_OBJ_NUM(GUI_HOTLIST_HIGHLIGHT, json, "priority");
+    WEE_CHECK_OBJ_NUM(int(GUI_HOTLIST_HIGHLIGHT), json, "priority");
     CHECK(cJSON_IsString (cJSON_GetObjectItem (json, "date")));
     WEE_CHECK_OBJ_NUM(gui_buffers->id, json, "buffer_id");
     json_count = cJSON_GetObjectItem (json, "count");
