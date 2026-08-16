@@ -957,7 +957,7 @@ hook_process_add_to_infolist (struct t_infolist_item *item,
         return 0;
     if (!infolist_new_var_integer (item, "detached", HOOK_PROCESS(hook, detached)))
         return 0;
-    if (!infolist_new_var_integer (item, "timeout", (int)(HOOK_PROCESS(hook, timeout))))
+    if (!infolist_new_var_long (item, "timeout", HOOK_PROCESS(hook, timeout)))
         return 0;
     if (!infolist_new_var_integer (item, "child_read_stdin", HOOK_PROCESS(hook, child_read[HOOK_PROCESS_STDIN])))
         return 0;
