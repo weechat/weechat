@@ -6,6 +6,12 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 # Changelog
 
+## [Unreleased]
+
+### Security
+
+- relay: limit size of partial message received from a client to prevent memory exhaustion ([#2347](https://github.com/weechat/weechat/issues/2347))
+
 ## [4.10.0] - 2026-08-02
 
 _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._

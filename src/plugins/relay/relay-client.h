@@ -29,6 +29,13 @@
 struct t_relay_server;
 struct t_relay_http_request;
 
+/*
+ * maximum length of the partial text message accumulated while reading from
+ * a client: extra data is ignored once this limit is reached, to protect
+ * against a client sending a huge amount of data without an end-of-line
+ */
+#define RELAY_CLIENT_PARTIAL_MESSAGE_MAX_LENGTH (8 * 1024 * 1024)
+
 /* type of data exchanged with client */
 
 enum t_relay_client_data_type
