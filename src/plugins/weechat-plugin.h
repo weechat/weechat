@@ -62,7 +62,7 @@ struct t_weelist_item;
  * please change the date with current one; for a second change at same
  * date, increment the 01, otherwise please keep 01.
  */
-#define WEECHAT_PLUGIN_API_VERSION "20260816-02"
+#define WEECHAT_PLUGIN_API_VERSION "20260816-03"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -1023,7 +1023,8 @@ struct t_weechat_plugin
     int (*buffer_match_list) (struct t_gui_buffer *buffer, const char *string);
 
     /* buffer lines */
-    struct t_gui_line *(*line_search_by_id) (struct t_gui_buffer *buffer, int id);
+    struct t_gui_line *(*line_search_by_id) (struct t_gui_buffer *buffer,
+                                             long long id);
 
     /* windows */
     struct t_gui_window *(*window_search_with_buffer) (struct t_gui_buffer *buffer);

@@ -341,7 +341,7 @@ relay_api_msg_buffer_to_json (struct t_gui_buffer *buffer,
     cJSON *json, *json_local_vars, *json_lines, *json_nicklist_root;
     const char *ptr_string;
     char *string;
-    int last_read_line_id;
+    long long last_read_line_id;
 
     hdata = relay_hdata_buffer;
     pointer = buffer;
@@ -404,8 +404,8 @@ relay_api_msg_buffer_to_json (struct t_gui_buffer *buffer,
             ptr_line_data = weechat_hdata_pointer (relay_hdata_line, ptr_line, "data");
             if (ptr_line_data)
             {
-                last_read_line_id = weechat_hdata_integer (relay_hdata_line_data,
-                                                           ptr_line_data, "id");
+                last_read_line_id = weechat_hdata_longlong (relay_hdata_line_data,
+                                                            ptr_line_data, "id");
             }
         }
     }
@@ -504,7 +504,7 @@ relay_api_msg_line_data_to_json (struct t_gui_line_data *line_data,
     if (!line_data)
         return json;
 
-    MSG_ADD_HDATA_VAR(Number, "id", integer, "id");
+    MSG_ADD_HDATA_VAR(Number, "id", longlong, "id");
     MSG_ADD_HDATA_VAR(Number, "y", integer, "y");
     MSG_ADD_HDATA_TIME_USEC("date", "date", "date_usec");
     MSG_ADD_HDATA_TIME_USEC("date_printed", "date_printed", "date_usec_printed");

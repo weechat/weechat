@@ -15764,7 +15764,6 @@ Argomenti:
 ** _lines_hidden_: 1 se almeno una riga è nascosta sul buffer (filtrata), oppure 0 se vengono visualizzate tutte le righe
 ** _prefix_max_length_: lunghezza massima del prefisso in questo buffer
 // TRANSLATION MISSING
-** _next_line_id_: next line id in buffer _(WeeChat ≥ 3.8)_
 ** _time_for_each_line_: 1 se l'ora è visualizzata per ogni riga nel buffer (predefinito), altrimenti 0
 ** _nicklist_: 1 se la lista nick è abilitata, altrimenti 0
 ** _nicklist_case_sensitive_: 1 se i nick sono sensibili alle maiuscole, altrimenti 0
@@ -15870,6 +15869,7 @@ Argomenti:
 // TRANSLATION MISSING
 ** _id_: unique identifier
 // TRANSLATION MISSING
+** _lines_last_id_assigned_: last unique identifier used in this buffer for a line _(WeeChat ≥ 4.11.0)_
 ** _nicklist_last_id_assigned_: last unique identifier used in this buffer for a group or nick
 
 Valore restituito:
@@ -16469,7 +16469,7 @@ Functions for buffer lines.
 
 ==== line_search_by_id
 
-_WeeChat ≥ 4.4.0._
+_WeeChat ≥ 4.4.0, updated in 4.11.0._
 
 // TRANSLATION MISSING
 Search line in buffer by identifier.
@@ -16478,8 +16478,17 @@ Prototipo:
 
 [source,c]
 ----
-struct t_gui_line *weechat_line_search_by_id (struct t_gui_buffer *buffer, int id);
+struct t_gui_line *weechat_line_search_by_id (struct t_gui_buffer *buffer,
+                                              long long id);
 ----
+
+Argomenti:
+
+* _buffer_: puntatore al buffer
+// TRANSLATION MISSING
+* _id_: line identifier: on buffer with formatted content, this is the date
+  and time of print with microseconds precision (number of microseconds
+  since the Epoch); on buffer with free content, this is the line number ("y")
 
 Valore restituito:
 
@@ -16490,7 +16499,7 @@ Esempio in C:
 
 [source,c]
 ----
-struct t_gui_line *line = weechat_line_search_by_id (buffer, 123);
+struct t_gui_line *line = weechat_line_search_by_id (buffer, 1786886000000000);
 ----
 
 Script (Python):
@@ -16501,7 +16510,7 @@ Script (Python):
 def line_search_by_id(buffer: str, line_id: int) -> str: ...
 
 # esempio
-line = weechat.line_search_by_id(buffer, 123)
+line = weechat.line_search_by_id(buffer, 1786886000000000)
 ----
 
 [[windows]]

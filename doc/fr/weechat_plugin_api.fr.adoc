@@ -15395,7 +15395,6 @@ Paramètres :
 ** _closing_ : 1 si le tampon est en cours de fermeture, sinon 0 _(WeeChat ≥ 1.0)_
 ** _lines_hidden_ : 1 si au moins une ligne est cachée dans le tampon (filtrée), ou 0 si toutes les lignes sont affichées
 ** _prefix_max_length_ : longueur maximale du préfixe dans ce tampon
-** _next_line_id_ : prochain identifiant de ligne dans le tampon _(WeeChat ≥ 3.8)_
 ** _time_for_each_line_ : 1 si l'heure est affichée pour chaque ligne du tampon (par défaut), sinon 0
 ** _nicklist_ : 1 si la liste de pseudos est activée, sinon 0
 ** _nicklist_case_sensitive_ : 1 si les pseudos sont sensibles à la casse, sinon 0
@@ -15479,6 +15478,7 @@ Paramètres :
 * _buffer_ : pointeur vers le tampon
 * _property_ : nom de la propriété :
 ** _id_ : identifiant unique
+** _lines_last_id_assigned_ : dernier identifiant unique utilisé dans ce tampon pour une ligne _(WeeChat ≥ 4.11.0)_
 ** _nicklist_last_id_assigned_ : dernier identifiant unique utilisé dans ce tampon pour un groupe ou un pseudo
 
 Valeur de retour :
@@ -16036,7 +16036,7 @@ Fonctions pour les lignes de tampons.
 
 ==== line_search_by_id
 
-_WeeChat ≥ 4.4.0._
+_WeeChat ≥ 4.4.0, mis à jour dans la 4.11.0._
 
 Rechercher une ligne du tampon par son identifiant.
 
@@ -16044,8 +16044,17 @@ Prototype :
 
 [source,c]
 ----
-struct t_gui_line *weechat_line_search_by_id (struct t_gui_buffer *buffer, int id);
+struct t_gui_line *weechat_line_search_by_id (struct t_gui_buffer *buffer,
+                                              long long id);
 ----
+
+Paramètres :
+
+* _buffer_ : pointeur vers le tampon
+* _id_ : identifiant de la ligne : sur un tampon avec contenu formaté,
+  c'est la date et l'heure d'affichage avec une précision à la microseconde
+  (nombre de microsecondes depuis l'Epoch) ; sur un tampon avec contenu
+  libre, c'est le numéro de la ligne (« y »)
 
 Valeur de retour :
 
@@ -16055,7 +16064,7 @@ Exemple en C :
 
 [source,c]
 ----
-struct t_gui_line *line = weechat_line_search_by_id (buffer, 123);
+struct t_gui_line *line = weechat_line_search_by_id (buffer, 1786886000000000);
 ----
 
 Script (Python) :
@@ -16066,7 +16075,7 @@ Script (Python) :
 def line_search_by_id(buffer: str, line_id: int) -> str: ...
 
 # exemple
-line = weechat.line_search_by_id(buffer, 123)
+line = weechat.line_search_by_id(buffer, 1786886000000000)
 ----
 
 [[windows]]

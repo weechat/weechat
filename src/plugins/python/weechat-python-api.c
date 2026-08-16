@@ -4022,13 +4022,13 @@ API_FUNC(buffer_match_list)
 API_FUNC(line_search_by_id)
 {
     char *buffer;
-    int id;
+    long long id;
     const char *result;
 
     API_INIT_FUNC(1, "line_search_by_id", API_RETURN_EMPTY);
     buffer = NULL;
     id = 0;
-    if (!PyArg_ParseTuple (args, "si", &buffer, &id))
+    if (!PyArg_ParseTuple (args, "sL", &buffer, &id))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     result = API_PTR2STR(weechat_line_search_by_id (API_STR2PTR(buffer), id));

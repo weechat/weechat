@@ -4109,14 +4109,14 @@ API_FUNC(buffer_match_list)
 API_FUNC(line_search_by_id)
 {
     const char *buffer, *result;
-    int id;
+    long long id;
 
     API_INIT_FUNC(1, "line_search_by_id", API_RETURN_EMPTY);
     if (lua_gettop (L) < 2)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     buffer = lua_tostring (L, -2);
-    id = lua_tonumber (L, -1);
+    id = lua_tointeger (L, -1);
 
     result = API_PTR2STR(weechat_line_search_by_id (API_STR2PTR(buffer), id));
 

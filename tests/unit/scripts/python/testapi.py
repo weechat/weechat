@@ -811,9 +811,9 @@ def test_buffers():
     check(buffer2 != "")
     check(weechat.buffer_get_integer(buffer2, "number") == 3)
     check(weechat.buffer_get_string(buffer2, "short_name") == "t2")
-    check(weechat.buffer_get_integer(buffer2, "next_line_id") == 0)
+    check(weechat.buffer_get_longlong(buffer2, "lines_last_id_assigned") == -1)
     weechat.prnt(buffer2, "## test line 1")
-    check(weechat.buffer_get_integer(buffer2, "next_line_id") == 1)
+    check(weechat.buffer_get_longlong(buffer2, "lines_last_id_assigned") > 0)
     weechat.buffer_clear(buffer2)
     weechat.buffer_merge(buffer2, buffer1)
     check(weechat.buffer_get_integer(buffer1, "number") == 2)
@@ -850,7 +850,12 @@ def test_lines():
     buffer = weechat.buffer_search_main()
     check(weechat.line_search_by_id(buffer, -1) == "")
     check(weechat.line_search_by_id(buffer, 1234567) == "")
-    check(weechat.line_search_by_id(buffer, 0) != "")
+    lines = weechat.hdata_pointer(weechat.hdata_get("buffer"), buffer, "own_lines")
+    line = weechat.hdata_pointer(weechat.hdata_get("lines"), lines, "last_line")
+    line_data = weechat.hdata_pointer(weechat.hdata_get("line"), line, "data")
+    line_id = weechat.hdata_longlong(weechat.hdata_get("line_data"), line_data, "id")
+    check(line_id > 0)
+    check(weechat.line_search_by_id(buffer, line_id) == line)
 
 
 def test_windows():

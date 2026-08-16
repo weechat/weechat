@@ -3838,9 +3838,9 @@ API_FUNC(buffer_match_list)
 API_FUNC(line_search_by_id)
 {
     const char *result;
-    int id;
+    long long id;
 
-    API_INIT_FUNC(1, "line_search_by_id", "si", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "line_search_by_id", "sn", API_RETURN_EMPTY);
 
     v8::String::Utf8Value buffer(args[0]);
     id = args[1]->IntegerValue();

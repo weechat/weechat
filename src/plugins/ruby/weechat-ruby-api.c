@@ -4865,7 +4865,7 @@ static VALUE
 weechat_ruby_api_line_search_by_id (VALUE class, VALUE buffer, VALUE id)
 {
     char *c_buffer;
-    int c_id;
+    long long c_id;
     const char *result;
 
     API_INIT_FUNC(1, "line_search_by_id", API_RETURN_EMPTY);
@@ -4876,7 +4876,7 @@ weechat_ruby_api_line_search_by_id (VALUE class, VALUE buffer, VALUE id)
     CHECK_INTEGER(id);
 
     c_buffer = StringValuePtr (buffer);
-    c_id = NUM2INT (id);
+    c_id = NUM2LL (id);
 
     result = API_PTR2STR(weechat_line_search_by_id (API_STR2PTR(c_buffer),
                                                     c_id));

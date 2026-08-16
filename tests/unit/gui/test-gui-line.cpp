@@ -383,6 +383,7 @@ TEST(GuiLine, SearchById)
 {
     POINTERS_EQUAL(NULL, gui_line_search_by_id (NULL, -1));
     POINTERS_EQUAL(NULL, gui_line_search_by_id (gui_buffers, -1));
+    POINTERS_EQUAL(NULL, gui_line_search_by_id (gui_buffers, LLONG_MAX));
 
     POINTERS_EQUAL(
         gui_buffers->own_lines->last_line,
@@ -884,6 +885,85 @@ TEST(GuiLine, SetHighlight)
 
 /*
  * Test functions:
+ *   gui_line_generate_id
+ */
+
+TEST(GuiLine, GenerateId)
+{
+    struct t_gui_buffer *buffer;
+    long long id;
+
+    buffer = gui_buffer_new_user ("test", GUI_BUFFER_TYPE_FORMATTED);
+    CHECK(buffer);
+
+    CHECK(buffer->lines_last_id_assigned == -1);
+
+    /* the id is the current date/time, with microseconds precision */
+    id = gui_line_generate_id (buffer);
+    CHECK(id > ((long long)(time (NULL) - 1) * 1000000LL));
+
+    /* the generated id does not change the last id assigned in the buffer */
+    CHECK(buffer->lines_last_id_assigned == -1);
+
+    /* the id is forced when the last id assigned is in the future */
+    buffer->lines_last_id_assigned = id + 1000000;
+    CHECK(gui_line_generate_id (buffer) == id + 1000001);
+
+    gui_buffer_close (buffer);
+}
+
+/*
+ * Test functions:
+ *   gui_line_new_with_id
+ */
+
+TEST(GuiLine, NewWithId)
+{
+    struct t_gui_buffer *buffer;
+    struct t_gui_line *line;
+
+    POINTERS_EQUAL(NULL,
+                   gui_line_new_with_id (NULL, 123, 0, 0, 0, 0, 0,
+                                         NULL, NULL, NULL, -1, NULL));
+
+    /* buffer with formatted content: the id received is used */
+    buffer = gui_buffer_new_user ("test", GUI_BUFFER_TYPE_FORMATTED);
+    CHECK(buffer);
+
+    line = gui_line_new_with_id (buffer, 123, -1, 0, 0, 0, 0,
+                                 NULL, NULL, "message", -1, NULL);
+    CHECK(line);
+    CHECK(line->data->id == 123);
+    CHECK(buffer->lines_last_id_assigned == 123);
+    gui_line_add (line, 0);
+
+    /* an id lower than the last one assigned is used as-is, without lowering it */
+    line = gui_line_new_with_id (buffer, 12, -1, 0, 0, 0, 0,
+                                 NULL, NULL, "message", -1, NULL);
+    CHECK(line);
+    CHECK(line->data->id == 12);
+    CHECK(buffer->lines_last_id_assigned == 123);
+    gui_line_add (line, 0);
+
+    gui_buffer_close (buffer);
+
+    /* buffer with free content: the id received is ignored, "y" is used */
+    buffer = gui_buffer_new_user ("test", GUI_BUFFER_TYPE_FREE);
+    CHECK(buffer);
+
+    line = gui_line_new_with_id (buffer, 123, 5, 0, 0, 0, 0,
+                                 NULL, NULL, "message", -1, NULL);
+    CHECK(line);
+    CHECK(line->data->id == 5);
+    CHECK(line->data->y == 5);
+    CHECK(buffer->lines_last_id_assigned == -1);
+    gui_line_add_y (line);
+
+    gui_buffer_close (buffer);
+}
+
+/*
+ * Test functions:
  *   gui_line_new
  */
 
@@ -892,6 +972,7 @@ TEST(GuiLine, New)
     struct t_gui_buffer *buffer;
     struct t_gui_line *line1, *line2, *line3, *line4;
     struct timeval date_printed, date;
+    long long last_id;
     char *str_time;
 
     gettimeofday (&date_printed, NULL);
@@ -920,7 +1001,8 @@ TEST(GuiLine, New)
     POINTERS_EQUAL(NULL, line1->prev_line);
     POINTERS_EQUAL(NULL, line1->next_line);
     POINTERS_EQUAL(buffer, line1->data->buffer);
-    LONGS_EQUAL(0, line1->data->id);
+    CHECK(line1->data->id > 0);
+    CHECK(line1->data->id == buffer->lines_last_id_assigned);
     LONGS_EQUAL(-1, line1->data->y);
     LONGS_EQUAL(date.tv_sec, line1->data->date);
     LONGS_EQUAL(date.tv_usec, line1->data->date_usec);
@@ -951,7 +1033,8 @@ TEST(GuiLine, New)
     POINTERS_EQUAL(NULL, line2->prev_line);
     POINTERS_EQUAL(NULL, line2->next_line);
     POINTERS_EQUAL(buffer, line2->data->buffer);
-    LONGS_EQUAL(1, line2->data->id);
+    CHECK(line2->data->id > line1->data->id);
+    CHECK(line2->data->id == buffer->lines_last_id_assigned);
     LONGS_EQUAL(-1, line2->data->y);
     LONGS_EQUAL(date.tv_sec, line2->data->date);
     LONGS_EQUAL(date.tv_usec, line2->data->date_usec);
@@ -974,22 +1057,28 @@ TEST(GuiLine, New)
     POINTERS_EQUAL(line1, line2->prev_line);
     POINTERS_EQUAL(NULL, line2->next_line);
 
-    /* simulate next_line_id == INT_MAX and display 2 lines */
-    buffer->next_line_id = INT_MAX;
+    /*
+     * simulate a last assigned id in the future and display 2 lines: the ids
+     * must be forced to the next values, so that they stay unique and
+     * strictly increasing in the buffer
+     */
+    last_id = buffer->lines_last_id_assigned + 1000000;
+    buffer->lines_last_id_assigned = last_id;
     line3 = gui_line_new (buffer,
                           0,
                           date.tv_sec, date.tv_usec,
                           date_printed.tv_sec, date_printed.tv_usec,
                           NULL, NULL, "test", -1, NULL);
     CHECK(line3);
-    LONGS_EQUAL(INT_MAX, line3->data->id);
+    CHECK(line3->data->id == last_id + 1);
     line4 = gui_line_new (buffer,
                           0,
                           date.tv_sec, date.tv_usec,
                           date_printed.tv_sec, date_printed.tv_usec,
                           NULL, NULL, "test", -1, NULL);
     CHECK(line4);
-    LONGS_EQUAL(0, line4->data->id);
+    CHECK(line4->data->id == last_id + 2);
+    CHECK(buffer->lines_last_id_assigned == last_id + 2);
 
     gui_buffer_close (buffer);
 
@@ -1007,8 +1096,10 @@ TEST(GuiLine, New)
     POINTERS_EQUAL(NULL, line1->prev_line);
     POINTERS_EQUAL(NULL, line1->next_line);
     POINTERS_EQUAL(buffer, line1->data->buffer);
+    /* on buffers with free content, the id of a line is its number ("y") */
     LONGS_EQUAL(0, line1->data->id);
     LONGS_EQUAL(0, line1->data->y);
+    LONGS_EQUAL(-1, buffer->lines_last_id_assigned);
     LONGS_EQUAL(date.tv_sec, line1->data->date);
     LONGS_EQUAL(date.tv_usec, line1->data->date_usec);
     LONGS_EQUAL(date_printed.tv_sec, line1->data->date_printed);
@@ -1040,6 +1131,7 @@ TEST(GuiLine, New)
     POINTERS_EQUAL(buffer, line2->data->buffer);
     LONGS_EQUAL(3, line2->data->id);
     LONGS_EQUAL(3, line2->data->y);
+    LONGS_EQUAL(-1, buffer->lines_last_id_assigned);
     LONGS_EQUAL(date.tv_sec, line2->data->date);
     LONGS_EQUAL(date.tv_usec, line2->data->date_usec);
     LONGS_EQUAL(date_printed.tv_sec, line2->data->date_printed);

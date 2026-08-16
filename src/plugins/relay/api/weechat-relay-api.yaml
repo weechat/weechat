@@ -17,7 +17,7 @@ info:
   license:
     name: CC BY-NC-SA 4.0
     url: https://creativecommons.org/licenses/by-nc-sa/4.0/
-  version: 0.6.0
+  version: 0.7.0
 
 externalDocs:
   url: https://weechat.org/doc/
@@ -1121,8 +1121,11 @@ components:
         id:
           type: integer
           format: int64
-          description: line identifier (≥ 0, unique in buffer)
-          example: 0
+          description: >-
+            line identifier, unique in buffer: date and time of print with
+            microseconds precision (number of microseconds since the Epoch);
+            on buffer with free content, this is the line index ("y")
+          example: 1701805563847625
         y:
           type: integer
           format: int64

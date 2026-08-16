@@ -15,6 +15,9 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 ### Changed
 
+- **breaking:** core: use the current date/time with microseconds as line identifier, replace buffer property "next_line_id" by "lines_last_id_assigned"
+- **breaking:** api: change type of parameter "id" from int to long long in function line_search_by_id
+- **breaking:** api: convert variable "id" from integer to long long in infolist "buffer_lines"
 - **breaking:** api: convert variable "id" (group and nick) from string to long long in infolist "nicklist"
 - **breaking:** api: convert variable "nicklist_last_id_assigned" from string to long long in infolist "buffer"
 - **breaking:** api: convert variable "id" from string to long long in infolist "buffer"
@@ -22,6 +25,8 @@ SPDX-License-Identifier: GPL-3.0-or-later
 - **breaking:** api: convert variable "timeout" from int to long in infolist "hook" (hook process)
 - **breaking:** api: convert variable "interval" from string to long in infolist "hook" (hook timer)
 - api: return an error and an empty string in function string_base_decode when the string to decode is invalid (invalid char, truncated string or invalid padding)
+- **breaking:** relay: change type of line identifier from "int" to "lon" in weechat protocol
+- **breaking:** relay/api: bump API version to 0.7.0
 
 ### Fixed
 

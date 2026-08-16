@@ -15,6 +15,34 @@ For a list of all changes in each version, please see [CHANGELOG.md](CHANGELOG.m
 
 ## Unreleased
 
+### Line identifiers
+
+The identifier of a line (`id` in hdata `line_data`) is now a `long long` instead of an `int`,
+and its value is the date and time of print, with microseconds precision (number of microseconds
+since the Epoch). On buffers with free content, it is still the line number (`y`).
+
+The identifier is guaranteed to be unique in the buffer and strictly increasing, so it does not
+wrap any more. On `/upgrade` from an older version, the identifier of each restored line is
+rebuilt from its date of print.
+
+Consequences for scripts and plugins:
+
+- `hdata_integer(line_data, "id")` must be replaced by `hdata_longlong(line_data, "id")`;
+- in infolist `buffer_lines`, `infolist_integer(infolist, "id")` must be replaced by
+  `infolist_longlong(infolist, "id")`;
+- function `line_search_by_id` now takes a `long long` identifier;
+- buffer property `next_line_id` has been removed and replaced by `lines_last_id_assigned`,
+  which is read with `buffer_get_longlong` instead of `buffer_get_integer`
+  (its value is `-1` when no line has been displayed yet in the buffer).
+
+### Relay
+
+In the "api" protocol, the API version has been bumped to 0.7.0: the line identifier can now be
+a large number (a remote must run the same WeeChat version as the server).
+
+In the "weechat" protocol, the type of the line identifier sent in messages `_buffer_line_added`
+and `_buffer_line_data_changed` changed from `int` to `lon`.
+
 ### Types of variables in infolists
 
 Some variables in infolists are no longer strings or integers, so they must be read with the

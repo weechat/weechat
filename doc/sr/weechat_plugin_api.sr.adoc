@@ -14645,7 +14645,6 @@ int weechat_buffer_get_integer (struct t_gui_buffer *buffer,
 ** _closing_: 1 ако се бафер затвара, у супротном 0 _(WeeChat ≥ 1.0)_
 ** _lines_hidden_: 1 ако је у баферу скривена бар једна линија (филтрирана), или 0 ако се приказују све линије
 ** _prefix_max_length_: максимална дужина префикса у овом баферу
-** _next_line_id_: id следеће линије у баферу _(WeeChat ≥ 3.8)_
 ** _time_for_each_line_: 1 ако се време приказује са сваку линију у баферу (подразумевано), у супротном 0
 ** _nicklist_: 1 ако је укључена листа надимака, у супротном 0
 ** _nicklist_case_sensitive_: 1 ако се у надимцима прави разлика у величини слова, у супротном 0
@@ -14732,6 +14731,7 @@ long long weechat_buffer_get_longlong (struct t_gui_buffer *buffer,
 // TRANSLATION MISSING
 ** _id_: unique identifier
 // TRANSLATION MISSING
+** _lines_last_id_assigned_: last unique identifier used in this buffer for a line _(WeeChat ≥ 4.11.0)_
 ** _nicklist_last_id_assigned_: last unique identifier used in this buffer for a group or nick
 
 Повратна вредност:
@@ -15274,7 +15274,7 @@ if buffer:
 
 ==== line_search_by_id
 
-_WeeChat ≥ 4.4.0._
+_WeeChat ≥ 4.4.0, updated in 4.11.0._
 
 Претрага линије у баферу по идентификатору.
 
@@ -15282,8 +15282,17 @@ _WeeChat ≥ 4.4.0._
 
 [source,c]
 ----
-struct t_gui_line *weechat_line_search_by_id (struct t_gui_buffer *buffer, int id);
+struct t_gui_line *weechat_line_search_by_id (struct t_gui_buffer *buffer,
+                                              long long id);
 ----
+
+Аргументи:
+
+* _buffer_: показивач на бафер
+// TRANSLATION MISSING
+* _id_: line identifier: on buffer with formatted content, this is the date
+  and time of print with microseconds precision (number of microseconds
+  since the Epoch); on buffer with free content, this is the line number ("y")
 
 Повратна вредност:
 
@@ -15293,7 +15302,7 @@ C пример:
 
 [source,c]
 ----
-struct t_gui_line *line = weechat_line_search_by_id (buffer, 123);
+struct t_gui_line *line = weechat_line_search_by_id (buffer, 1786886000000000);
 ----
 
 Скрипта (Python):
@@ -15304,7 +15313,7 @@ struct t_gui_line *line = weechat_line_search_by_id (buffer, 123);
 def line_search_by_id(buffer: str, line_id: int) -> str: ...
 
 # пример
-line = weechat.line_search_by_id(buffer, 123)
+line = weechat.line_search_by_id(buffer, 1786886000000000)
 ----
 
 [[windows]]

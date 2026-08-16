@@ -17,8 +17,9 @@ struct t_infolist;
 struct t_gui_line_data
 {
     struct t_gui_buffer *buffer;       /* pointer to buffer                 */
-    int id;                            /* formatted buffer: (almost) unique */
-                                       /* line id in buffer                 */
+    long long id;                      /* formatted buffer: unique id in    */
+                                       /* buffer: date/time of print with   */
+                                       /* microseconds precision            */
                                        /* free buffer: equals to "y"        */
     int y;                             /* line position (for free buffer)   */
     time_t date;                       /* date/time of line (may be past)   */
@@ -85,7 +86,7 @@ extern struct t_gui_line *gui_line_get_last_displayed (struct t_gui_buffer *buff
 extern struct t_gui_line *gui_line_get_prev_displayed (struct t_gui_line *line);
 extern struct t_gui_line *gui_line_get_next_displayed (struct t_gui_line *line);
 extern struct t_gui_line *gui_line_search_by_id (struct t_gui_buffer *buffer,
-                                                 int id);
+                                                 long long id);
 extern int gui_line_search_text (struct t_gui_buffer *buffer,
                                  struct t_gui_line *line);
 extern int gui_line_match_regex (struct t_gui_line_data *line_data,
@@ -114,6 +115,19 @@ extern void gui_line_set_notify_level (struct t_gui_line *line,
                                        int max_notify_level);
 extern void gui_line_set_highlight (struct t_gui_line *line,
                                     int max_notify_level);
+extern long long gui_line_generate_id (struct t_gui_buffer *buffer);
+extern struct t_gui_line *gui_line_new_with_id (struct t_gui_buffer *buffer,
+                                                long long id,
+                                                int y,
+                                                time_t date,
+                                                int date_usec,
+                                                time_t date_printed,
+                                                int date_usec_printed,
+                                                const char *tags,
+                                                const char *prefix,
+                                                const char *message,
+                                                int known_highlight,
+                                                const char *known_str_time);
 extern struct t_gui_line *gui_line_new (struct t_gui_buffer *buffer,
                                         int y,
                                         time_t date,

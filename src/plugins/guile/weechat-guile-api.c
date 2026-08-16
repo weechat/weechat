@@ -3914,7 +3914,7 @@ weechat_guile_api_line_search_by_id (SCM buffer, SCM id)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     result = API_PTR2STR(weechat_line_search_by_id (API_STR2PTR(API_SCM_TO_STRING(buffer)),
-                                                    scm_to_int (id)));
+                                                    scm_to_long_long (id)));
 
     API_RETURN_STRING(result);
 }

@@ -1966,7 +1966,7 @@ def line_search_by_id(buffer: str, line_id: int) -> str:
     ::
 
         # example
-        line = weechat.line_search_by_id(buffer, 123)
+        line = weechat.line_search_by_id(buffer, 1786886000000000)
     """
     ...
 

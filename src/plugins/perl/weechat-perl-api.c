@@ -4023,7 +4023,7 @@ API_FUNC(line_search_by_id)
     result = API_PTR2STR(
         weechat_line_search_by_id (
             API_STR2PTR(SvPV_nolen (ST (0))), /* buffer */
-            SvIV (ST (1)))); /* id */
+            (long long)(SvIV (ST (1))))); /* id */
 
     API_RETURN_STRING(result);
 }

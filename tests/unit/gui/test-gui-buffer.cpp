@@ -487,7 +487,7 @@ TEST(GuiBuffer, NewProps)
     POINTERS_EQUAL(NULL, buffer->own_lines->first_line);
     POINTERS_EQUAL(NULL, buffer->own_lines->last_line);
     POINTERS_EQUAL(NULL, buffer->own_lines->last_read_line);
-    LONGS_EQUAL(0, buffer->next_line_id);
+    LONGS_EQUAL(-1, buffer->lines_last_id_assigned);
     LONGS_EQUAL(0, buffer->time_for_each_line);
     LONGS_EQUAL(2, buffer->chat_refresh_needed);
     LONGS_EQUAL(0, buffer->nicklist);
@@ -818,7 +818,6 @@ TEST(GuiBuffer, GetInteger)
     LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "closing"));
     LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "lines_hidden"));
     LONGS_EQUAL(12, gui_buffer_get_integer (gui_buffers, "prefix_max_length"));
-    CHECK(gui_buffer_get_integer (gui_buffers, "next_line_id") > 0);
     LONGS_EQUAL(1, gui_buffer_get_integer (gui_buffers, "time_for_each_line"));
     LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "nicklist"));
     LONGS_EQUAL(0, gui_buffer_get_integer (gui_buffers, "nicklist_case_sensitive"));
@@ -860,6 +859,8 @@ TEST(GuiBuffer, GetLonglong)
     CHECK(gui_buffer_get_longlong (gui_buffers, "zzz") == 0LL);
 
     CHECK(gui_buffer_get_longlong (gui_buffers, "id") == gui_buffers->id);
+    CHECK(gui_buffer_get_longlong (gui_buffers, "lines_last_id_assigned") ==
+          gui_buffers->lines_last_id_assigned);
     CHECK(gui_buffer_get_longlong (gui_buffers, "nicklist_last_id_assigned") ==
           gui_buffers->nicklist_last_id_assigned);
 }

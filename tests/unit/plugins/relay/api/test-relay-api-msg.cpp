@@ -404,6 +404,9 @@ TEST(RelayApiMsg, LinesToJson)
     json_line = cJSON_GetArrayItem (json, 0);
     CHECK(json_line);
     CHECK(cJSON_IsObject (json_line));
+    /* the line id is the date of print, with microseconds precision */
+    CHECK(gui_buffers->own_lines->last_line->prev_line->data->id
+          > 1000000000000000LL);
     WEE_CHECK_OBJ_NUM(gui_buffers->own_lines->last_line->prev_line->data->id,
                       json_line, "id");
     WEE_CHECK_OBJ_NUM(-1, json_line, "y");

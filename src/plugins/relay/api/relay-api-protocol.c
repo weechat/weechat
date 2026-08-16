@@ -554,7 +554,8 @@ RELAY_API_PROTOCOL_CALLBACK(buffers)
     struct t_gui_line *ptr_line;
     struct t_gui_line_data *ptr_line_data;
     long lines, lines_free;
-    int colors, nicks, line_id;
+    long long line_id;
+    int colors, nicks;
     const char *ptr_colors;
 
     json = NULL;
@@ -601,7 +602,7 @@ RELAY_API_PROTOCOL_CALLBACK(buffers)
         {
             if (client->http_req->num_path_items > 4)
             {
-                if (weechat_util_parse_int (client->http_req->path_items[4], 10, &line_id))
+                if (weechat_util_parse_longlong (client->http_req->path_items[4], 10, &line_id))
                     ptr_line = weechat_line_search_by_id (ptr_buffer, line_id);
                 else
                     ptr_line = NULL;

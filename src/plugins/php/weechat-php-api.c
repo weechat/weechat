@@ -4017,7 +4017,7 @@ API_FUNC(line_search_by_id)
     zend_string *z_buffer;
     zend_long z_id;
     struct t_gui_buffer *buffer;
-    int id;
+    long long id;
     const char *result;
 
     API_INIT_FUNC(1, "line_search_by_id", API_RETURN_EMPTY);
@@ -4026,7 +4026,7 @@ API_FUNC(line_search_by_id)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     buffer = (struct t_gui_buffer *)API_STR2PTR(ZSTR_VAL(z_buffer));
-    id = (int)z_id;
+    id = z_id;
 
     result = API_PTR2STR(weechat_line_search_by_id (buffer, id));
 

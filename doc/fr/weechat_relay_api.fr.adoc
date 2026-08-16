@@ -655,7 +655,7 @@ HTTP/1.1 200 OK
     "keys": [],
     "lines": [
         {
-            "id": 10,
+            "id": 1703405840786538,
             "y": -1,
             "date": "2023-12-24T08:17:20.786538Z",
             "date_printed": "2023-12-24T08:17:20.786538Z",
@@ -936,6 +936,7 @@ Paramètres de chemin :
   confondre avec le numéro du tampon, qui est différent)
 * `buffer_name` (chaîne, **obligatoire**) : nom du tampon
 * `line_id` (entier, facultatif) : retourner une seule ligne avec cet identifiant
+  (date et heure d'affichage avec une précision à la microseconde)
 
 Paramètres de requête :
 
@@ -972,7 +973,7 @@ HTTP/1.1 200 OK
 ----
 [
     {
-        "id": 0,
+        "id": 1701805563847625,
         "y": -1,
         "date": "2023-12-05T19:46:03.847625Z",
         "date_printed": "2023-12-05T19:46:03.847625Z",
@@ -991,7 +992,7 @@ HTTP/1.1 200 OK
         ]
     },
     {
-        "id": 1,
+        "id": 1701805563986543,
         "y": -1,
         "date": "2023-12-05T19:46:03.986543Z",
         "date_printed": "2023-12-05T19:46:03.986543Z",
@@ -1008,7 +1009,7 @@ HTTP/1.1 200 OK
         ]
     },
     {
-        "id": 2,
+        "id": 1701805564287546,
         "y": -1,
         "date": "2023-12-05T19:46:04.287546Z",
         "date_printed": "2023-12-05T19:46:04.287546Z",
@@ -1820,7 +1821,7 @@ Exemple : nouvelle ligne affichée sur le canal `#weechat` :
     "buffer_id": 1709932823649069,
     "body_type": "line",
     "body": {
-        "id": 5,
+        "id": 1704617640179483,
         "index": -1,
         "date": "2024-01-07T08:54:00.179483Z",
         "date_printed": "2024-01-07T08:54:00.179483Z",

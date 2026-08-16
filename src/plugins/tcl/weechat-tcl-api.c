@@ -4076,7 +4076,7 @@ API_FUNC(buffer_match_list)
 API_FUNC(line_search_by_id)
 {
     char *buffer;
-    int id;
+    long long id;
     const char *result;
 
     API_INIT_FUNC(1, "line_search_by_id", API_RETURN_EMPTY);
@@ -4084,7 +4084,7 @@ API_FUNC(line_search_by_id)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     buffer = Tcl_GetString (objv[1]);
-    if (Tcl_GetIntFromObj (interp, objv[2], &id) != TCL_OK)
+    if (Tcl_GetWideIntFromObj (interp, objv[2], &id) != TCL_OK)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
     result = API_PTR2STR(weechat_line_search_by_id (API_STR2PTR(buffer), id));

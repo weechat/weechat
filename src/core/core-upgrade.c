@@ -530,8 +530,10 @@ upgrade_weechat_read_buffer (struct t_infolist *infolist)
     ptr_buffer->lines->first_line_not_read =
         infolist_integer (infolist, "first_line_not_read");
 
-    /* next line id */
-    ptr_buffer->next_line_id = infolist_integer (infolist, "next_line_id");
+    /*
+     * note: "lines_last_id_assigned" is not read: it is rebuilt as each line
+     * of the buffer is restored (see upgrade_weechat_read_buffer_line)
+     */
 
     /* time for each line */
     ptr_buffer->time_for_each_line =
@@ -657,7 +659,10 @@ upgrade_weechat_read_buffer_line (struct t_infolist *infolist)
     {
         case GUI_BUFFER_TYPE_FORMATTED:
         {
-            int id, date_usec, date_usec_printed, highlight, last_read_line;
+            struct t_infolist_var *ptr_var_id;
+            int date_usec, date_usec_printed, highlight, last_read_line;
+            int old_format;
+            long long id;
             time_t date, date_printed;
             const char *tags, *prefix, *message, *str_time;
 
@@ -670,11 +675,27 @@ upgrade_weechat_read_buffer_line (struct t_infolist *infolist)
              * this also makes the read order deterministic, since C does
              * not guarantee the evaluation order of function arguments
              */
-            id = infolist_integer (infolist, "id");
+
+            /*
+             * "id" is a "long long" since WeeChat 4.11.0 (it is the date of
+             * print, with microseconds precision); before it was an integer
+             * (a counter in the buffer) and the date of print was saved in
+             * "date_printed"/"date_usec_printed": in this case the id is
+             * rebuilt from these two variables
+             */
+            ptr_var_id = infolist_search_var (infolist, "id");
+            old_format = (!ptr_var_id
+                          || (ptr_var_id->type != INFOLIST_LONGLONG));
+            id = (old_format) ? -1 : infolist_longlong (infolist, "id");
             date = infolist_time (infolist, "date");
             date_usec = infolist_integer (infolist, "date_usec");
             date_printed = infolist_time (infolist, "date_printed");
             date_usec_printed = infolist_integer (infolist, "date_usec_printed");
+            if (old_format)
+            {
+                id = ((long long)date_printed * 1000000LL)
+                    + (long long)date_usec_printed;
+            }
             str_time = infolist_string (infolist, "str_time");
             tags = infolist_string (infolist, "tags");
             highlight = infolist_integer (infolist, "highlight");
@@ -683,25 +704,35 @@ upgrade_weechat_read_buffer_line (struct t_infolist *infolist)
             last_read_line = infolist_integer (infolist, "last_read_line");
 
             /*
+             * ensure ids stay strictly increasing in the buffer: with old
+             * upgrade files, all the lines displayed by a single call to
+             * gui_chat_printf_datetime_tags() share the same date of print,
+             * so the conversion above can return the same id for several
+             * lines
+             */
+            if (id <= upgrade_current_buffer->lines_last_id_assigned)
+                id = upgrade_current_buffer->lines_last_id_assigned + 1;
+
+            /*
              * pass the saved highlight state directly (known_highlight)
-             * instead of letting gui_line_new() run its regex-based
+             * instead of letting gui_line_new_with_id() run its regex-based
              * highlight detection: the result would be overwritten by the
              * saved value right below anyway, so computing it would be
              * wasted work (and, before this fix, left str_time colorized
              * for the wrong highlight state, since it was never
              * recomputed after the overwrite); for the same reason, pass
              * the saved time string directly (known_str_time) instead of
-             * letting gui_line_new() recompute/recolorize it
+             * letting gui_line_new_with_id() recompute/recolorize it
              */
-            new_line = gui_line_new (
+            new_line = gui_line_new_with_id (
                 upgrade_current_buffer,
+                id,
                 -1,
                 date, date_usec, date_printed, date_usec_printed,
                 tags, prefix, message,
                 highlight, str_time);
             if (new_line)
             {
-                new_line->data->id = id;
                 gui_line_add (new_line, 0);
                 if (last_read_line)
                     upgrade_current_buffer->lines->last_read_line = new_line;
@@ -709,23 +740,33 @@ upgrade_weechat_read_buffer_line (struct t_infolist *infolist)
             break;
         }
         case GUI_BUFFER_TYPE_FREE:
+        {
+            int y, date_usec, date_usec_printed;
+            time_t date, date_printed;
+            const char *tags, *message;
+
+            /* read the fields in written order (see comment above) */
+            y = infolist_integer (infolist, "y");
+            date = infolist_time (infolist, "date");
+            date_usec = infolist_integer (infolist, "date_usec");
+            date_printed = infolist_time (infolist, "date_printed");
+            date_usec_printed = infolist_integer (infolist, "date_usec_printed");
+            tags = infolist_string (infolist, "tags");
+            message = infolist_string (infolist, "message");
+
+            /* the id of a line is its number ("y") on buffers with free content */
             new_line = gui_line_new (
                 upgrade_current_buffer,
-                infolist_integer (infolist, "y"),
-                infolist_time (infolist, "date"),
-                infolist_integer (infolist, "date_usec"),
-                infolist_time (infolist, "date_printed"),
-                infolist_integer (infolist, "date_usec_printed"),
-                infolist_string (infolist, "tags"),
+                y,
+                date, date_usec, date_printed, date_usec_printed,
+                tags,
                 NULL,
-                infolist_string (infolist, "message"),
+                message,
                 -1, NULL);
             if (new_line)
-            {
-                new_line->data->id = infolist_integer (infolist, "id");
                 gui_line_add_y (new_line);
-            }
             break;
+        }
         case GUI_BUFFER_NUM_TYPES:
             break;
     }

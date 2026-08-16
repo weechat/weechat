@@ -120,7 +120,8 @@ relay_remote_event_get_buffer_id (struct t_gui_buffer *buffer)
  */
 
 char **
-relay_remote_build_string_tags (cJSON *json_tags, int line_id, int highlight)
+relay_remote_build_string_tags (cJSON *json_tags, long long line_id,
+                                int highlight)
 {
     cJSON *json_tag;
     const char *ptr_tag;
@@ -167,7 +168,7 @@ relay_remote_build_string_tags (cJSON *json_tags, int line_id, int highlight)
     }
 
     /* add tag with remote line id */
-    snprintf (str_tag_id, sizeof (str_tag_id), "relay_remote_line_id_%d", line_id);
+    snprintf (str_tag_id, sizeof (str_tag_id), "relay_remote_line_id_%lld", line_id);
     if ((*tags)[0])
         weechat_string_dyn_concat (tags, ",", -1);
     weechat_string_dyn_concat (tags, str_tag_id, -1);
@@ -185,7 +186,8 @@ relay_remote_event_line_add (struct t_relay_remote_event *event)
     cJSON *json_obj;
     const char *date, *prefix, *message;
     char **tags;
-    int id, y, highlight;
+    long long id;
+    int y, highlight;
     struct timeval tv_date;
 
     if (!event || !event->buffer)
@@ -246,7 +248,7 @@ relay_remote_event_line_add (struct t_relay_remote_event *event)
  */
 
 struct t_gui_line *
-relay_remote_event_search_line_by_id (struct t_gui_buffer *buffer, int id)
+relay_remote_event_search_line_by_id (struct t_gui_buffer *buffer, long long id)
 {
     struct t_gui_lines *ptr_lines;
     struct t_gui_line *ptr_line;
@@ -265,7 +267,7 @@ relay_remote_event_search_line_by_id (struct t_gui_buffer *buffer, int id)
     if (!ptr_line)
         return NULL;
 
-    snprintf (str_tag_id, sizeof (str_tag_id), "relay_remote_line_id_%d", id);
+    snprintf (str_tag_id, sizeof (str_tag_id), "relay_remote_line_id_%lld", id);
 
     while (ptr_line)
     {
@@ -300,7 +302,8 @@ relay_remote_event_line_update (struct t_relay_remote_event *event)
     struct t_gui_line_data *ptr_line_data;
     const char *date, *date_printed, *prefix, *message;
     char **tags, str_value[1024];
-    int id, highlight;
+    long long id;
+    int highlight;
     struct timeval tv_date, tv_date_printed;
     struct t_hashtable *hashtable;
 

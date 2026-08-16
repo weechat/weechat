@@ -14,6 +14,7 @@
 #include <stddef.h>
 #include <string.h>
 #include <time.h>
+#include <sys/time.h>
 #include <regex.h>
 
 #include "../core/weechat.h"
@@ -597,7 +598,7 @@ gui_line_get_next_displayed (struct t_gui_line *line)
  */
 
 struct t_gui_line *
-gui_line_search_by_id (struct t_gui_buffer *buffer, int id)
+gui_line_search_by_id (struct t_gui_buffer *buffer, long long id)
 {
     struct t_gui_line *ptr_line;
 
@@ -1556,7 +1557,43 @@ gui_line_set_highlight (struct t_gui_line *line, int max_notify_level)
 }
 
 /*
- * Create a new line for a buffer.
+ * Return a new unique id for a line in a buffer.
+ *
+ * The id is the current time with microseconds precision.
+ * The same time (including microseconds) can be used only one time in the
+ * buffer, so that all line ids are guaranteed to be unique in the buffer.
+ */
+
+long long
+gui_line_generate_id (struct t_gui_buffer *buffer)
+{
+    struct timeval tv;
+    long long id;
+
+    gettimeofday (&tv, NULL);
+
+    id = ((long long)tv.tv_sec * 1000000LL) + (long long)(tv.tv_usec);
+
+    /*
+     * ensure we never use the same id for two lines in the buffer and that
+     * the returned id is strictly greater than the last assigned one in the
+     * buffer
+     */
+    if (id <= buffer->lines_last_id_assigned)
+        id = buffer->lines_last_id_assigned + 1;
+
+    return id;
+}
+
+/*
+ * Create a new line for a buffer, with a given id.
+ *
+ * On buffers with formatted content, "id" is the identifier to set in the
+ * line: it is normally the value returned by gui_line_generate_id(), but a
+ * specific value can be forced (e.g. when restoring a line from an upgrade
+ * file, where the value was saved).
+ * On buffers with free content, "id" is ignored: the identifier of a line is
+ * its number ("y").
  *
  * "known_highlight" is -1 if the highlight state of the line is not known
  * yet and must be computed (the normal case), or 0/1 if the caller already
@@ -1571,12 +1608,12 @@ gui_line_set_highlight (struct t_gui_line *line, int max_notify_level)
  */
 
 struct t_gui_line *
-gui_line_new (struct t_gui_buffer *buffer, int y,
-              time_t date, int date_usec,
-              time_t date_printed, int date_usec_printed,
-              const char *tags,
-              const char *prefix, const char *message,
-              int known_highlight, const char *known_str_time)
+gui_line_new_with_id (struct t_gui_buffer *buffer, long long id, int y,
+                      time_t date, int date_usec,
+                      time_t date_printed, int date_usec_printed,
+                      const char *tags,
+                      const char *prefix, const char *message,
+                      int known_highlight, const char *known_str_time)
 {
     struct t_gui_line *new_line;
     struct t_gui_line_data *new_line_data;
@@ -1605,16 +1642,9 @@ gui_line_new (struct t_gui_buffer *buffer, int y,
 
     if (buffer->type == GUI_BUFFER_TYPE_FORMATTED)
     {
-        /*
-         * the line identifier is almost unique: when reaching INT_MAX, it is
-         * reset to 0; it is extremely unlikely all integer are used in the
-         * same buffer, that would mean the buffer has a huge number of lines;
-         * when searching a line id in a buffer, it is recommended to start
-         * from the last line and loop to the first
-         */
-        new_line->data->id = buffer->next_line_id;
-        buffer->next_line_id = (buffer->next_line_id == INT_MAX) ?
-            0 : buffer->next_line_id + 1;
+        new_line->data->id = id;
+        if (id > buffer->lines_last_id_assigned)
+            buffer->lines_last_id_assigned = id;
         new_line->data->y = -1;
         new_line->data->date = date;
         new_line->data->date_usec = date_usec;
@@ -1663,6 +1693,36 @@ gui_line_new (struct t_gui_buffer *buffer, int y,
     new_line->next_line = NULL;
 
     return new_line;
+}
+
+/*
+ * Create a new line for a buffer, with an automatically generated id.
+ *
+ * See gui_line_new_with_id() for the meaning of "known_highlight" and
+ * "known_str_time".
+ */
+
+struct t_gui_line *
+gui_line_new (struct t_gui_buffer *buffer, int y,
+              time_t date, int date_usec,
+              time_t date_printed, int date_usec_printed,
+              const char *tags,
+              const char *prefix, const char *message,
+              int known_highlight, const char *known_str_time)
+{
+    if (!buffer)
+        return NULL;
+
+    return gui_line_new_with_id (
+        buffer,
+        (buffer->type == GUI_BUFFER_TYPE_FORMATTED) ?
+        gui_line_generate_id (buffer) : y,
+        y,
+        date, date_usec,
+        date_printed, date_usec_printed,
+        tags,
+        prefix, message,
+        known_highlight, known_str_time);
 }
 
 /*
@@ -2465,7 +2525,7 @@ gui_line_hdata_line_data_cb (const void *pointer, void *data,
     if (hdata)
     {
         HDATA_VAR(struct t_gui_line_data, buffer, POINTER, 0, NULL, "buffer");
-        HDATA_VAR(struct t_gui_line_data, id, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_line_data, id, LONGLONG, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_line_data, y, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_line_data, date, TIME, 1, NULL, NULL);
         HDATA_VAR(struct t_gui_line_data, date_usec, INTEGER, 1, NULL, NULL);
@@ -2509,7 +2569,7 @@ gui_line_add_to_infolist (struct t_infolist *infolist,
     if (!ptr_item)
         return 0;
 
-    if (!infolist_new_var_integer (ptr_item, "id", line->data->id))
+    if (!infolist_new_var_longlong (ptr_item, "id", line->data->id))
         return 0;
     if (!infolist_new_var_integer (ptr_item, "y", line->data->y))
         return 0;
