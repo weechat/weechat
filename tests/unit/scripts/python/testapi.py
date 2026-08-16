@@ -793,7 +793,7 @@ def test_hooks():
     ptr_infolist = weechat.infolist_get("hook", hook_timer, "")
     check(ptr_infolist != "")
     check(weechat.infolist_next(ptr_infolist) == 1)
-    check(weechat.infolist_string(ptr_infolist, "interval") == "2000111000")
+    check(weechat.infolist_long(ptr_infolist, "interval") == 2000111000)
     weechat.infolist_free(ptr_infolist)
     weechat.unhook(hook_timer)
 

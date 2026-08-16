@@ -15,6 +15,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 ### Changed
 
+- **breaking:** api: convert variable "interval" from string to long in infolist "hook" (hook timer)
 - api: return an error and an empty string in function string_base_decode when the string to decode is invalid (invalid char, truncated string or invalid padding)
 
 ### Fixed

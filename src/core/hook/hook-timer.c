@@ -400,15 +400,12 @@ int
 hook_timer_add_to_infolist (struct t_infolist_item *item,
                             struct t_hook *hook)
 {
-    char value[64];
-
     if (!item || !hook || !hook->hook_data)
         return 0;
 
     if (!infolist_new_var_pointer (item, "callback", HOOK_TIMER(hook, callback)))
         return 0;
-    snprintf (value, sizeof (value), "%ld", HOOK_TIMER(hook, interval));
-    if (!infolist_new_var_string (item, "interval", value))
+    if (!infolist_new_var_long (item, "interval", HOOK_TIMER(hook, interval)))
         return 0;
     if (!infolist_new_var_integer (item, "align_second", HOOK_TIMER(hook, align_second)))
         return 0;
