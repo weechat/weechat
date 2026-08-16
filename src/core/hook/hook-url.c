@@ -457,7 +457,7 @@ hook_url_add_to_infolist (struct t_infolist_item *item,
         return 0;
     if (!infolist_new_var_string (item, "options", hashtable_get_string (HOOK_URL(hook, options), "keys_values")))
         return 0;
-    if (!infolist_new_var_integer (item, "timeout", (int)(HOOK_URL(hook, timeout))))
+    if (!infolist_new_var_long (item, "timeout", HOOK_URL(hook, timeout)))
         return 0;
     if (!infolist_new_var_integer (item, "stop_transfer", HOOK_URL(hook, stop_transfer)))
         return 0;
