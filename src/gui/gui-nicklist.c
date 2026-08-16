@@ -1263,7 +1263,6 @@ gui_nicklist_add_group_to_infolist (struct t_infolist *infolist,
                                     struct t_gui_nick_group *group)
 {
     struct t_infolist_item *ptr_item;
-    char str_value[64];
 
     if (!infolist || !group)
         return 0;
@@ -1272,8 +1271,7 @@ gui_nicklist_add_group_to_infolist (struct t_infolist *infolist,
     if (!ptr_item)
         return 0;
 
-    snprintf (str_value, sizeof (str_value), "%lld", group->id);
-    if (!infolist_new_var_string (ptr_item, "id", str_value))
+    if (!infolist_new_var_longlong (ptr_item, "id", group->id))
         return 0;
     if (!infolist_new_var_string (ptr_item, "type", "group"))
         return 0;
@@ -1307,7 +1305,6 @@ gui_nicklist_add_nick_to_infolist (struct t_infolist *infolist,
                                    struct t_gui_nick *nick)
 {
     struct t_infolist_item *ptr_item;
-    char str_value[64];
 
     if (!infolist || !nick)
         return 0;
@@ -1316,8 +1313,7 @@ gui_nicklist_add_nick_to_infolist (struct t_infolist *infolist,
     if (!ptr_item)
         return 0;
 
-    snprintf (str_value, sizeof (str_value), "%lld", nick->id);
-    if (!infolist_new_var_string (ptr_item, "id", str_value))
+    if (!infolist_new_var_longlong (ptr_item, "id", nick->id))
         return 0;
     if (!infolist_new_var_string (ptr_item, "type", "nick"))
         return 0;
