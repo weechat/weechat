@@ -402,12 +402,26 @@ void
 relay_client_recv_text (struct t_relay_client *client, const char *data)
 {
     char *new_partial;
+    size_t length_partial, length_data;
+
+    length_partial = (client->partial_message) ?
+        strlen (client->partial_message) : 0;
+    length_data = strlen (data);
+
+    /*
+     * limit the size of the partial message: ignore extra data (protection
+     * against a client sending a huge amount of data without any end-of-line
+     * and dribbling it, which would consume all the memory)
+     */
+    if ((length_partial >= RELAY_CLIENT_PARTIAL_MESSAGE_MAX_LENGTH)
+        || (length_data > (RELAY_CLIENT_PARTIAL_MESSAGE_MAX_LENGTH
+                           - length_partial)))
+        return;
 
     if (client->partial_message)
     {
         new_partial = realloc (client->partial_message,
-                               strlen (client->partial_message) +
-                               strlen (data) + 1);
+                               length_partial + length_data + 1);
         if (!new_partial)
             return;
         client->partial_message = new_partial;

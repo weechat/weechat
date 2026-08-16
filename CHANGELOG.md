@@ -16,6 +16,10 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 - core: fix buffer selected when searching by partial name and another buffer has a similar name ([#700](https://github.com/weechat/weechat/issues/700))
 
+### Security
+
+- relay: limit size of partial message received from a client to prevent memory exhaustion ([#2347](https://github.com/weechat/weechat/issues/2347))
+
 ## [4.10.0] - 2026-08-02
 
 _If you are upgrading: please see [UPGRADING.md](UPGRADING.md)._
