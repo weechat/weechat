@@ -224,6 +224,7 @@ const zend_function_entry weechat_functions[] = {
     PHP_FE(weechat_buffer_merge, arginfo_weechat_buffer_merge)
     PHP_FE(weechat_buffer_unmerge, arginfo_weechat_buffer_unmerge)
     PHP_FE(weechat_buffer_get_integer, arginfo_weechat_buffer_get_integer)
+    PHP_FE(weechat_buffer_get_longlong, arginfo_weechat_buffer_get_longlong)
     PHP_FE(weechat_buffer_get_string, arginfo_weechat_buffer_get_string)
     PHP_FE(weechat_buffer_get_pointer, arginfo_weechat_buffer_get_pointer)
     PHP_FE(weechat_buffer_set, arginfo_weechat_buffer_set)

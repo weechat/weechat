@@ -97,6 +97,10 @@ char *gui_buffer_properties_get_integer[] =
   "text_search_where", "text_search_history", "text_search_found",
   NULL
 };
+char *gui_buffer_properties_get_longlong[] =
+{ "id", "nicklist_last_id_assigned",
+  NULL
+};
 char *gui_buffer_properties_get_string[] =
 { "id", "plugin", "name", "full_name", "old_full_name", "short_name", "title",
   "modes", "nicklist_last_id_assigned", "input_prompt", "input",
@@ -1516,6 +1520,24 @@ gui_buffer_get_integer (struct t_gui_buffer *buffer, const char *property)
         return buffer->text_search_history;
     else if (strcmp (property, "text_search_found") == 0)
         return buffer->text_search_found;
+
+    return 0;
+}
+
+/*
+ * Get a buffer property as long long.
+ */
+
+long long
+gui_buffer_get_longlong (struct t_gui_buffer *buffer, const char *property)
+{
+    if (!buffer || !property)
+        return 0;
+
+    if (strcmp (property, "id") == 0)
+        return buffer->id;
+    else if (strcmp (property, "nicklist_last_id_assigned") == 0)
+        return buffer->nicklist_last_id_assigned;
 
     return 0;
 }

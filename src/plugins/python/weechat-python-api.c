@@ -3920,6 +3920,22 @@ API_FUNC(buffer_get_integer)
     API_RETURN_INT(value);
 }
 
+API_FUNC(buffer_get_longlong)
+{
+    char *buffer, *property;
+    long long value;
+
+    API_INIT_FUNC(1, "buffer_get_longlong", API_RETURN_LONGLONG(-1));
+    buffer = NULL;
+    property = NULL;
+    if (!PyArg_ParseTuple (args, "ss", &buffer, &property))
+        API_WRONG_ARGS(API_RETURN_LONGLONG(-1));
+
+    value = weechat_buffer_get_longlong (API_STR2PTR(buffer), property);
+
+    API_RETURN_LONGLONG(value);
+}
+
 API_FUNC(buffer_get_string)
 {
     char *buffer, *property;
@@ -5861,6 +5877,7 @@ PyMethodDef weechat_python_funcs[] =
     API_DEF_FUNC(buffer_merge),
     API_DEF_FUNC(buffer_unmerge),
     API_DEF_FUNC(buffer_get_integer),
+    API_DEF_FUNC(buffer_get_longlong),
     API_DEF_FUNC(buffer_get_string),
     API_DEF_FUNC(buffer_get_pointer),
     API_DEF_FUNC(buffer_set),

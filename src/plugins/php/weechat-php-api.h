@@ -166,6 +166,7 @@ PHP_FUNCTION(weechat_buffer_close);
 PHP_FUNCTION(weechat_buffer_merge);
 PHP_FUNCTION(weechat_buffer_unmerge);
 PHP_FUNCTION(weechat_buffer_get_integer);
+PHP_FUNCTION(weechat_buffer_get_longlong);
 PHP_FUNCTION(weechat_buffer_get_string);
 PHP_FUNCTION(weechat_buffer_get_pointer);
 PHP_FUNCTION(weechat_buffer_set);

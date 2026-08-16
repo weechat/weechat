@@ -4728,6 +4728,28 @@ weechat_ruby_api_buffer_get_integer (VALUE class, VALUE buffer, VALUE property)
 }
 
 static VALUE
+weechat_ruby_api_buffer_get_longlong (VALUE class, VALUE buffer, VALUE property)
+{
+    char *c_buffer, *c_property;
+    long long value;
+
+    API_INIT_FUNC(1, "buffer_get_longlong", API_RETURN_LONGLONG(-1));
+    if (NIL_P (buffer) || NIL_P (property))
+        API_WRONG_ARGS(API_RETURN_LONGLONG(-1));
+
+    Check_Type (buffer, T_STRING);
+    Check_Type (property, T_STRING);
+
+    c_buffer = StringValuePtr (buffer);
+    c_property = StringValuePtr (property);
+
+    value = weechat_buffer_get_longlong (API_STR2PTR(c_buffer),
+                                         c_property);
+
+    API_RETURN_LONGLONG(value);
+}
+
+static VALUE
 weechat_ruby_api_buffer_get_string (VALUE class, VALUE buffer, VALUE property)
 {
     char *c_buffer, *c_property;
@@ -7238,6 +7260,7 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     API_DEF_FUNC(buffer_merge, 2);
     API_DEF_FUNC(buffer_unmerge, 2);
     API_DEF_FUNC(buffer_get_integer, 2);
+    API_DEF_FUNC(buffer_get_longlong, 2);
     API_DEF_FUNC(buffer_get_string, 2);
     API_DEF_FUNC(buffer_get_pointer, 2);
     API_DEF_FUNC(buffer_set, 3);

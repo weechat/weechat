@@ -14710,6 +14710,54 @@ def buffer_get_integer(buffer: str, property: str) -> int: ...
 weechat.prnt("", "број мог бафера је: %d" % weechat.buffer_get_integer(my_buffer, "number"))
 ----
 
+==== buffer_get_longlong
+
+_WeeChat ≥ 4.11.0._
+
+// TRANSLATION MISSING
+Return value of a "long long" buffer property.
+
+Прототип:
+
+[source,c]
+----
+long long weechat_buffer_get_longlong (struct t_gui_buffer *buffer,
+                                       const char *property);
+----
+
+Аргументи:
+
+* _buffer_: показивач на бафер
+* _property_: име особине:
+// TRANSLATION MISSING
+** _id_: unique identifier
+// TRANSLATION MISSING
+** _nicklist_last_id_assigned_: last unique identifier used in this buffer for a group or nick
+
+Повратна вредност:
+
+// TRANSLATION MISSING
+* "long long" value of property
+
+C пример:
+
+[source,c]
+----
+weechat_printf (NULL, "my buffer id is: %lld",
+                weechat_buffer_get_longlong (my_buffer, "id"));
+----
+
+Скрипта (Python):
+
+[source,python]
+----
+# прототип
+def buffer_get_longlong(buffer: str, property: str) -> int: ...
+
+# пример
+weechat.prnt("", "my buffer id is: %d" % weechat.buffer_get_longlong(my_buffer, "id"))
+----
+
 ==== buffer_get_string
 
 Враћа стринг вредност особине бафера.

@@ -15386,6 +15386,54 @@ def buffer_get_integer(buffer: str, property: str) -> int: ...
 weechat.prnt("", "my buffer number is: %d" % weechat.buffer_get_integer(my_buffer, "number"))
 ----
 
+==== buffer_get_longlong
+
+_WeeChat ≥ 4.11.0._
+
+// TRANSLATION MISSING
+Return value of a "long long" buffer property.
+
+プロトタイプ:
+
+[source,c]
+----
+long long weechat_buffer_get_longlong (struct t_gui_buffer *buffer,
+                                       const char *property);
+----
+
+引数:
+
+* _buffer_: バッファへのポインタ
+* _property_: プロパティ名:
+// TRANSLATION MISSING
+** _id_: unique identifier
+// TRANSLATION MISSING
+** _nicklist_last_id_assigned_: last unique identifier used in this buffer for a group or nick
+
+戻り値:
+
+// TRANSLATION MISSING
+* "long long" value of property
+
+C 言語での使用例:
+
+[source,c]
+----
+weechat_printf (NULL, "my buffer id is: %lld",
+                weechat_buffer_get_longlong (my_buffer, "id"));
+----
+
+スクリプト (Python) での使用例:
+
+[source,python]
+----
+# プロトタイプ
+def buffer_get_longlong(buffer: str, property: str) -> int: ...
+
+# 例
+weechat.prnt("", "my buffer id is: %d" % weechat.buffer_get_longlong(my_buffer, "id"))
+----
+
 ==== buffer_get_string
 
 バッファプロパティの文字列値を返す。

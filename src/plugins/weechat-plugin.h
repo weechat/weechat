@@ -62,7 +62,7 @@ struct t_weelist_item;
  * please change the date with current one; for a second change at same
  * date, increment the 01, otherwise please keep 01.
  */
-#define WEECHAT_PLUGIN_API_VERSION "20260816-01"
+#define WEECHAT_PLUGIN_API_VERSION "20260816-02"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -1008,6 +1008,8 @@ struct t_weechat_plugin
     void (*buffer_unmerge) (struct t_gui_buffer *buffer, int number);
     int (*buffer_get_integer) (struct t_gui_buffer *buffer,
                                const char *property);
+    long long (*buffer_get_longlong) (struct t_gui_buffer *buffer,
+                                      const char *property);
     const char *(*buffer_get_string) (struct t_gui_buffer *buffer,
                                       const char *property);
     void *(*buffer_get_pointer) (struct t_gui_buffer *buffer,
@@ -2095,6 +2097,8 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     (weechat_plugin->buffer_unmerge)(__buffer, __number)
 #define weechat_buffer_get_integer(__buffer, __property)                \
     (weechat_plugin->buffer_get_integer)(__buffer, __property)
+#define weechat_buffer_get_longlong(__buffer, __property)               \
+    (weechat_plugin->buffer_get_longlong)(__buffer, __property)
 #define weechat_buffer_get_string(__buffer, __property)                 \
     (weechat_plugin->buffer_get_string)(__buffer, __property)
 #define weechat_buffer_get_pointer(__buffer, __property)                \

@@ -15131,6 +15131,50 @@ def buffer_get_integer(buffer: str, property: str) -> int: ...
 weechat.prnt("", "my buffer number is: %d" % weechat.buffer_get_integer(my_buffer, "number"))
 ----
 
+==== buffer_get_longlong
+
+_WeeChat ≥ 4.11.0._
+
+Return value of a "long long" buffer property.
+
+Prototype:
+
+[source,c]
+----
+long long weechat_buffer_get_longlong (struct t_gui_buffer *buffer,
+                                       const char *property);
+----
+
+Arguments:
+
+* _buffer_: buffer pointer
+* _property_: property name:
+** _id_: unique identifier
+** _nicklist_last_id_assigned_: last unique identifier used in this buffer for a group or nick
+
+Return value:
+
+* "long long" value of property
+
+C example:
+
+[source,c]
+----
+weechat_printf (NULL, "my buffer id is: %lld",
+                weechat_buffer_get_longlong (my_buffer, "id"));
+----
+
+Script (Python):
+
+[source,python]
+----
+# prototype
+def buffer_get_longlong(buffer: str, property: str) -> int: ...
+
+# example
+weechat.prnt("", "my buffer id is: %d" % weechat.buffer_get_longlong(my_buffer, "id"))
+----
+
 ==== buffer_get_string
 
 Return string value of a buffer property.

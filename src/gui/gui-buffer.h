@@ -278,6 +278,7 @@ extern char *gui_buffer_reserved_names[];
 extern char *gui_buffer_type_string[];
 extern char *gui_buffer_notify_string[];
 extern char *gui_buffer_properties_get_integer[];
+extern char *gui_buffer_properties_get_longlong[];
 extern char *gui_buffer_properties_get_string[];
 extern char *gui_buffer_properties_get_pointer[];
 extern char *gui_buffer_properties_set[];
@@ -356,6 +357,8 @@ extern void gui_buffer_set_plugin_for_upgrade (char *name,
 extern int gui_buffer_property_in_list (char *properties[], char *property);
 extern int gui_buffer_get_integer (struct t_gui_buffer *buffer,
                                    const char *property);
+extern long long gui_buffer_get_longlong (struct t_gui_buffer *buffer,
+                                          const char *property);
 extern const char *gui_buffer_get_string (struct t_gui_buffer *buffer,
                                           const char *property);
 extern void *gui_buffer_get_pointer (struct t_gui_buffer *buffer,

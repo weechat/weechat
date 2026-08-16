@@ -850,15 +850,35 @@ TEST(GuiBuffer, GetInteger)
 
 /*
  * Test functions:
+ *   gui_buffer_get_longlong
+ */
+
+TEST(GuiBuffer, GetLonglong)
+{
+    CHECK(gui_buffer_get_longlong (gui_buffers, NULL) == 0LL);
+    CHECK(gui_buffer_get_longlong (gui_buffers, "") == 0LL);
+    CHECK(gui_buffer_get_longlong (gui_buffers, "zzz") == 0LL);
+
+    CHECK(gui_buffer_get_longlong (gui_buffers, "id") == gui_buffers->id);
+    CHECK(gui_buffer_get_longlong (gui_buffers, "nicklist_last_id_assigned") ==
+          gui_buffers->nicklist_last_id_assigned);
+}
+
+/*
+ * Test functions:
  *   gui_buffer_get_string
  */
 
 TEST(GuiBuffer, GetString)
 {
+    char str_value[64];
+
     STRCMP_EQUAL(NULL, gui_buffer_get_string (gui_buffers, NULL));
     STRCMP_EQUAL(NULL, gui_buffer_get_string (gui_buffers, ""));
     STRCMP_EQUAL(NULL, gui_buffer_get_string (gui_buffers, "zzz"));
 
+    snprintf (str_value, sizeof (str_value), "%lld", gui_buffers->id);
+    STRCMP_EQUAL(str_value, gui_buffer_get_string (gui_buffers, "id"));
     STRCMP_EQUAL("core", gui_buffer_get_string (gui_buffers, "plugin"));
     STRCMP_EQUAL("weechat", gui_buffer_get_string (gui_buffers, "name"));
     STRCMP_EQUAL("core.weechat", gui_buffer_get_string (gui_buffers, "full_name"));

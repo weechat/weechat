@@ -3738,6 +3738,22 @@ API_FUNC(buffer_get_integer)
     API_RETURN_INT(value);
 }
 
+API_FUNC(buffer_get_longlong)
+{
+    long long value;
+
+    API_INIT_FUNC(1, "buffer_get_longlong", "ss", API_RETURN_LONGLONG(-1));
+
+    v8::String::Utf8Value buffer(args[0]);
+    v8::String::Utf8Value property(args[1]);
+
+    value = weechat_buffer_get_longlong (
+        (struct t_gui_buffer *)API_STR2PTR(*buffer),
+        *property);
+
+    API_RETURN_LONGLONG(value);
+}
+
 API_FUNC(buffer_get_string)
 {
     const char *result;
@@ -5598,6 +5614,7 @@ WeechatJsV8::loadLibs()
     API_DEF_FUNC(buffer_merge);
     API_DEF_FUNC(buffer_unmerge);
     API_DEF_FUNC(buffer_get_integer);
+    API_DEF_FUNC(buffer_get_longlong);
     API_DEF_FUNC(buffer_get_string);
     API_DEF_FUNC(buffer_get_pointer);
     API_DEF_FUNC(buffer_set);

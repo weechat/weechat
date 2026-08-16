@@ -1878,6 +1878,16 @@ def buffer_get_integer(buffer: str, property: str) -> int:
     ...
 
 
+def buffer_get_longlong(buffer: str, property: str) -> int:
+    """`buffer_get_longlong in WeeChat plugin API reference <https://weechat.org/doc/weechat/api/#_buffer_get_longlong>`_
+    ::
+
+        # example
+        weechat.prnt("", "my buffer id is: %d" % weechat.buffer_get_longlong(my_buffer, "id"))
+    """
+    ...
+
+
 def buffer_get_string(buffer: str, property: str) -> str:
     """`buffer_get_string in WeeChat plugin API reference <https://weechat.org/doc/weechat/api/#_buffer_get_string>`_
     ::

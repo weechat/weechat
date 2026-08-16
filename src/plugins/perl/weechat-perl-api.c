@@ -3903,6 +3903,24 @@ API_FUNC(buffer_get_integer)
     API_RETURN_INT(value);
 }
 
+API_FUNC(buffer_get_longlong)
+{
+    char *buffer, *property;
+    long long value;
+    dXSARGS;
+
+    API_INIT_FUNC(1, "buffer_get_longlong", API_RETURN_LONGLONG(-1));
+    if (items < 2)
+        API_WRONG_ARGS(API_RETURN_LONGLONG(-1));
+
+    buffer = SvPV_nolen (ST (0));
+    property = SvPV_nolen (ST (1));
+
+    value = weechat_buffer_get_longlong (API_STR2PTR(buffer), property);
+
+    API_RETURN_LONGLONG(value);
+}
+
 API_FUNC(buffer_get_string)
 {
     char *buffer, *property;
@@ -5941,6 +5959,7 @@ weechat_perl_api_init (pTHX)
     API_DEF_FUNC(buffer_merge);
     API_DEF_FUNC(buffer_unmerge);
     API_DEF_FUNC(buffer_get_integer);
+    API_DEF_FUNC(buffer_get_longlong);
     API_DEF_FUNC(buffer_get_string);
     API_DEF_FUNC(buffer_get_pointer);
     API_DEF_FUNC(buffer_set);

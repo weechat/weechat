@@ -149,6 +149,7 @@ function weechat_buffer_close(string $p0): int {}
 function weechat_buffer_merge(string $p0, string $p1): int {}
 function weechat_buffer_unmerge(string $p0, int $p1): int {}
 function weechat_buffer_get_integer(string $p0, string $p1): int {}
+function weechat_buffer_get_longlong(string $p0, string $p1): int {}
 function weechat_buffer_get_string(string $p0, string $p1): string {}
 function weechat_buffer_get_pointer(string $p0, string $p1): string {}
 function weechat_buffer_set(string $p0, string $p1, string $p2): int {}

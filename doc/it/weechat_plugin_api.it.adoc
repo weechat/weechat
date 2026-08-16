@@ -15724,8 +15724,7 @@ weechat.buffer_unmerge(weechat.current_buffer(), 1)
 
 ==== buffer_get_integer
 
-Restituisce il valore intero della proprietà di
-un buffer.
+Restituisce il valore intero della proprietà di un buffer.
 
 Prototipo:
 
@@ -15847,6 +15846,54 @@ def buffer_get_integer(buffer: str, property: str) -> int: ...
 
 # esempio
 weechat.prnt("", "my buffer number is: %d" % weechat.buffer_get_integer(my_buffer, "number"))
+----
+
+==== buffer_get_longlong
+
+_WeeChat ≥ 4.11.0._
+
+// TRANSLATION MISSING
+Return value of a "long long" buffer property.
+
+Prototipo:
+
+[source,c]
+----
+long long weechat_buffer_get_longlong (struct t_gui_buffer *buffer,
+                                       const char *property);
+----
+
+Argomenti:
+
+* _buffer_: puntatore al buffer
+* _property_: nome della proprietà:
+// TRANSLATION MISSING
+** _id_: unique identifier
+// TRANSLATION MISSING
+** _nicklist_last_id_assigned_: last unique identifier used in this buffer for a group or nick
+
+Valore restituito:
+
+// TRANSLATION MISSING
+* "long long" value of property
+
+Esempio in C:
+
+[source,c]
+----
+weechat_printf (NULL, "my buffer id is: %lld",
+                weechat_buffer_get_longlong (my_buffer, "id"));
+----
+
+Script (Python):
+
+[source,python]
+----
+# prototipo
+def buffer_get_longlong(buffer: str, property: str) -> int: ...
+
+# esempio
+weechat.prnt("", "my buffer id is: %d" % weechat.buffer_get_longlong(my_buffer, "id"))
 ----
 
 ==== buffer_get_string

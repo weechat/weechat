@@ -3891,6 +3891,26 @@ API_FUNC(buffer_get_integer)
     API_RETURN_INT(result);
 }
 
+API_FUNC(buffer_get_longlong)
+{
+    zend_string *z_buffer, *z_property;
+    struct t_gui_buffer *buffer;
+    char *property;
+    long long result;
+
+    API_INIT_FUNC(1, "buffer_get_longlong", API_RETURN_LONGLONG(-1));
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SS", &z_buffer,
+                               &z_property) == FAILURE)
+        API_WRONG_ARGS(API_RETURN_LONGLONG(-1));
+
+    buffer = (struct t_gui_buffer *)API_STR2PTR(ZSTR_VAL(z_buffer));
+    property = ZSTR_VAL(z_property);
+
+    result = weechat_buffer_get_longlong (buffer, (const char *)property);
+
+    API_RETURN_LONGLONG(result);
+}
+
 API_FUNC(buffer_get_string)
 {
     zend_string *z_buffer, *z_property;

@@ -10,6 +10,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 ### Added
 
+- api: add function "buffer_get_longlong"
 - api: add functions "infolist_new_var_long", "infolist_new_var_longlong", "infolist_long", "infolist_longlong"
 
 ### Changed

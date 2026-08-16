@@ -1384,6 +1384,16 @@ COMMAND_CALLBACK(buffer)
                              argv[2],
                              gui_buffer_get_integer (buffer, argv[2]));
         }
+        if (gui_buffer_property_in_list (gui_buffer_properties_get_longlong,
+                                         argv[2]))
+        {
+            gui_chat_printf (NULL, "%s%s%s: (long long) %s = %lld",
+                             GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
+                             buffer->full_name,
+                             GUI_COLOR(GUI_COLOR_CHAT),
+                             argv[2],
+                             gui_buffer_get_longlong (buffer, argv[2]));
+        }
         if (gui_buffer_property_in_list (gui_buffer_properties_get_string,
                                          argv[2])
             || (string_strncmp (argv[2], "localvar_", 9) == 0))

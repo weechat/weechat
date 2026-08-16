@@ -15457,7 +15457,51 @@ Script (Python) :
 def buffer_get_integer(buffer: str, property: str) -> int: ...
 
 # exemple
-weechat.prnt("", "mon numéro de tampon est : %d" % weechat.buffer_get_integer(my_buffer, "number"))
+weechat.prnt("", "mon numéro de tampon est : %d" % weechat.buffer_get_integer(mon_tampon, "number"))
+----
+
+==== buffer_get_longlong
+
+_WeeChat ≥ 4.11.0._
+
+Retourner une valeur entière de type "long long" pour une propriété du tampon.
+
+Prototype :
+
+[source,c]
+----
+long long weechat_buffer_get_longlong (struct t_gui_buffer *buffer,
+                                       const char *property);
+----
+
+Paramètres :
+
+* _buffer_ : pointeur vers le tampon
+* _property_ : nom de la propriété :
+** _id_ : identifiant unique
+** _nicklist_last_id_assigned_ : dernier identifiant unique utilisé dans ce tampon pour un groupe ou un pseudo
+
+Valeur de retour :
+
+* valeur entière de la propriété sous forme de "long long"
+
+Exemple en C :
+
+[source,c]
+----
+weechat_printf (NULL, "mon id de tampon est : %lld",
+                weechat_buffer_get_longlong (mon_tampon, "id"));
+----
+
+Script (Python) :
+
+[source,python]
+----
+# prototype
+def buffer_get_longlong(buffer: str, property: str) -> int: ...
+
+# exemple
+weechat.prnt("", "mon id de tampon est : %d" % weechat.buffer_get_longlong(mon_tampon, "id"))
 ----
 
 ==== buffer_get_string
@@ -15519,8 +15563,8 @@ def buffer_get_string(buffer: str, property: str) -> str: ...
 
 # exemple
 weechat.prnt("", "nom / nom court du tampon sont : %s / %s"
-    % (weechat.buffer_get_string(my_buffer, "name"),
-    weechat.buffer_get_string(my_buffer, "short_name")))
+    % (weechat.buffer_get_string(mon_tampon, "name"),
+    weechat.buffer_get_string(mon_tampon, "short_name")))
 ----
 
 ==== buffer_get_pointer

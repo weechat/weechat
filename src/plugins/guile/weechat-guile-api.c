@@ -3811,6 +3811,21 @@ weechat_guile_api_buffer_get_integer (SCM buffer, SCM property)
 }
 
 SCM
+weechat_guile_api_buffer_get_longlong (SCM buffer, SCM property)
+{
+    long long value;
+
+    API_INIT_FUNC(1, "buffer_get_longlong", API_RETURN_LONGLONG(-1));
+    if (!scm_is_string (buffer) || !scm_is_string (property))
+        API_WRONG_ARGS(API_RETURN_LONGLONG(-1));
+
+    value = weechat_buffer_get_longlong (API_STR2PTR(API_SCM_TO_STRING(buffer)),
+                                         API_SCM_TO_STRING(property));
+
+    API_RETURN_LONGLONG(value);
+}
+
+SCM
 weechat_guile_api_buffer_get_string (SCM buffer, SCM property)
 {
     const char *result;
@@ -5663,6 +5678,7 @@ weechat_guile_api_module_init (void *data)
     API_DEF_FUNC(buffer_merge, 2);
     API_DEF_FUNC(buffer_unmerge, 2);
     API_DEF_FUNC(buffer_get_integer, 2);
+    API_DEF_FUNC(buffer_get_longlong, 2);
     API_DEF_FUNC(buffer_get_string, 2);
     API_DEF_FUNC(buffer_get_pointer, 2);
     API_DEF_FUNC(buffer_set, 3);

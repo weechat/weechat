@@ -835,6 +835,7 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
         new_plugin->buffer_merge = &gui_buffer_merge;
         new_plugin->buffer_unmerge = &gui_buffer_unmerge;
         new_plugin->buffer_get_integer = &gui_buffer_get_integer;
+        new_plugin->buffer_get_longlong = &gui_buffer_get_longlong;
         new_plugin->buffer_get_string = &gui_buffer_get_string;
         new_plugin->buffer_get_pointer = &gui_buffer_get_pointer;
         new_plugin->buffer_set = &gui_buffer_set;

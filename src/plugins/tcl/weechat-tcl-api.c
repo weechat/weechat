@@ -3971,6 +3971,23 @@ API_FUNC(buffer_get_integer)
     API_RETURN_INT(result);
 }
 
+API_FUNC(buffer_get_longlong)
+{
+    char *buffer, *property;
+    long long result;
+
+    API_INIT_FUNC(1, "buffer_get_longlong", API_RETURN_LONGLONG(-1));
+    if (objc < 3)
+        API_WRONG_ARGS(API_RETURN_LONGLONG(-1));
+
+    buffer = Tcl_GetString (objv[1]);
+    property = Tcl_GetString (objv[2]);
+
+    result = weechat_buffer_get_longlong (API_STR2PTR(buffer), property);
+
+    API_RETURN_LONGLONG(result);
+}
+
 API_FUNC(buffer_get_string)
 {
     char *buffer, *property;
@@ -5938,6 +5955,7 @@ void weechat_tcl_api_init (Tcl_Interp *interp)
     API_DEF_FUNC(buffer_merge);
     API_DEF_FUNC(buffer_unmerge);
     API_DEF_FUNC(buffer_get_integer);
+    API_DEF_FUNC(buffer_get_longlong);
     API_DEF_FUNC(buffer_get_string);
     API_DEF_FUNC(buffer_get_pointer);
     API_DEF_FUNC(buffer_set);
