@@ -393,10 +393,13 @@ TEST(GuiLine, SearchById)
         gui_line_search_by_id (gui_buffers,
                                gui_buffers->own_lines->last_line->data->id));
 
-    /* buffer with two lines, with a gap between the two identifiers */
+    /* buffer without any line */
     buffer = gui_buffer_new_user ("test", GUI_BUFFER_TYPE_FORMATTED);
     CHECK(buffer);
+    POINTERS_EQUAL(NULL, gui_line_search_by_id (buffer, 0));
+    POINTERS_EQUAL(NULL, gui_line_search_by_id (buffer, 100));
 
+    /* buffer with two lines, with a gap between the two identifiers */
     line1 = gui_line_new_with_id (buffer, 100, -1, 0, 0,
                                   NULL, NULL, "line1", -1, NULL);
     CHECK(line1);

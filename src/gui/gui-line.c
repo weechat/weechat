@@ -594,10 +594,11 @@ gui_line_get_next_displayed (struct t_gui_line *line)
 /*
  * Search a line by id.
  *
- * The search is made from the last line to the first one: identifiers are
- * sorted in the buffer (see gui_line_new_with_id() for buffers with formatted
- * content, gui_line_add_y() for buffers with free content), so the search is
- * stopped as soon as an identifier lower than the one searched is found.
+ * Identifiers are sorted in the buffer (see gui_line_new_with_id() for buffers
+ * with formatted content, gui_line_add_y() for buffers with free content), so:
+ *   - nothing is searched if the id is outside the range of ids in the buffer
+ *   - the search, made from the last line to the first one, is stopped as soon
+ *     as an identifier lower than the one searched is found.
  *
  * Return pointer to line found, NULL if not found.
  */
@@ -610,8 +611,21 @@ gui_line_search_by_id (struct t_gui_buffer *buffer, long long id)
     if (!buffer || !buffer->own_lines)
         return NULL;
 
-    for (ptr_line = buffer->own_lines->last_line; ptr_line;
-         ptr_line = ptr_line->prev_line)
+    /* no line in buffer */
+    ptr_line = buffer->own_lines->first_line;
+    if (!ptr_line)
+        return NULL;
+
+    /* the id searched is lower than the first one in the buffer */
+    if (ptr_line->data && (ptr_line->data->id > id))
+        return NULL;
+
+    /* the id searched is greater than the last one in the buffer */
+    ptr_line = buffer->own_lines->last_line;
+    if (ptr_line && ptr_line->data && (ptr_line->data->id < id))
+        return NULL;
+
+    for (; ptr_line; ptr_line = ptr_line->prev_line)
     {
         if (ptr_line->data)
         {
