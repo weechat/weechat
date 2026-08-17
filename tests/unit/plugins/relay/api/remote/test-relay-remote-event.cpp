@@ -97,6 +97,22 @@ TEST(RelayRemoteEvent, LineIsAlreadyRead)
     LONGS_EQUAL(0, relay_remote_event_line_is_already_read (buffer, INT_MAX));
 
     gui_buffer_close (buffer);
+
+    /*
+     * buffer with free content: the identifier of a line is its number ("y"),
+     * so a line is never considered as read
+     */
+    buffer = gui_buffer_new_user ("test_line_is_already_read_free",
+                                  GUI_BUFFER_TYPE_FREE);
+    CHECK(buffer);
+
+    gui_buffer_set (buffer,
+                    "localvar_set_relay_remote_last_read_line_id", "123");
+    LONGS_EQUAL(0, relay_remote_event_line_is_already_read (buffer, 0));
+    LONGS_EQUAL(0, relay_remote_event_line_is_already_read (buffer, 122));
+    LONGS_EQUAL(0, relay_remote_event_line_is_already_read (buffer, 123));
+
+    gui_buffer_close (buffer);
 }
 
 /*
@@ -208,6 +224,23 @@ TEST(RelayRemoteEvent, BuildStringTags)
     WEE_CHECK_TAGS("irc_privmsg,notify_none,relay_remote_line_id_42",
                    "[\"notify_message\", \"irc_privmsg\", \"notify_private\"]",
                    buffer, 42, 0);
+
+    gui_buffer_close (buffer);
+
+    /*
+     * buffer with free content: the identifier of a line is its number ("y"),
+     * so the tags are never changed, even with a local variable set
+     */
+    buffer = gui_buffer_new_user ("test_build_string_tags_free",
+                                  GUI_BUFFER_TYPE_FREE);
+    CHECK(buffer);
+    gui_buffer_set (buffer,
+                    "localvar_set_relay_remote_last_read_line_id", "100");
+
+    WEE_CHECK_TAGS("irc_privmsg,notify_message,relay_remote_line_id_42",
+                   "[\"irc_privmsg\", \"notify_message\"]", buffer, 42, 0);
+    WEE_CHECK_TAGS("irc_privmsg,notify_highlight,relay_remote_line_id_42",
+                   "[\"irc_privmsg\", \"notify_message\"]", buffer, 42, 1);
 
     gui_buffer_close (buffer);
 }

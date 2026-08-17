@@ -52,6 +52,10 @@
 /*
  * Check if a line in a buffer has been marked read on the remote.
  *
+ * This is never the case on buffers with free content, where the identifier of
+ * a line is its number ("y") and not the date of print: it can not be compared
+ * with the identifier of the last read line.
+ *
  * Return:
  *   1: line has been read on the remote
  *   0: line has not been read on the remote
@@ -66,6 +70,12 @@ relay_remote_event_line_is_already_read (struct t_gui_buffer *buffer,
 
     if (!buffer || (line_id < 0))
         return 0;
+
+    if (weechat_strcmp (weechat_buffer_get_string (buffer, "type"),
+                        "free") == 0)
+    {
+        return 0;
+    }
 
     ptr_last_read_line_id = weechat_buffer_get_string (
         buffer, "localvar_relay_remote_last_read_line_id");
