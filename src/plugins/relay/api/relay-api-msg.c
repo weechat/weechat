@@ -342,6 +342,7 @@ relay_api_msg_buffer_to_json (struct t_gui_buffer *buffer,
     const char *ptr_string;
     char *string;
     long long last_read_line_id;
+    int first_line_not_read;
 
     hdata = relay_hdata_buffer;
     pointer = buffer;
@@ -394,10 +395,20 @@ relay_api_msg_buffer_to_json (struct t_gui_buffer *buffer,
         if (json_lines)
             cJSON_AddItemToObject (json, "lines", json_lines);
     }
+    /*
+     * "last_read_line_id" is the id of the last line read, or -1 if there is no
+     * read marker in the buffer; in this case, "first_line_not_read" tells if
+     * the marker is before the first line (nothing read) or if it has been
+     * removed because all the lines have been read
+     */
     last_read_line_id = -1;
+    first_line_not_read = 0;
     ptr_lines = weechat_hdata_pointer (relay_hdata_buffer, buffer, "own_lines");
     if (ptr_lines)
     {
+        first_line_not_read = weechat_hdata_integer (relay_hdata_lines,
+                                                     ptr_lines,
+                                                     "first_line_not_read");
         ptr_line = weechat_hdata_pointer (relay_hdata_lines, ptr_lines, "last_read_line");
         if (ptr_line)
         {
@@ -412,6 +423,9 @@ relay_api_msg_buffer_to_json (struct t_gui_buffer *buffer,
     cJSON_AddItemToObject (
         json, "last_read_line_id",
         cJSON_CreateNumber (last_read_line_id));
+    cJSON_AddItemToObject (
+        json, "first_line_not_read",
+        cJSON_CreateBool (first_line_not_read));
 
     /* nicks */
     if (nicks)

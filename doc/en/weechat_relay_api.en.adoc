@@ -542,7 +542,8 @@ HTTP/1.1 200 OK
             "name": "weechat"
         },
         "keys": [],
-        "last_read_line_id": -1
+        "last_read_line_id": -1,
+        "first_line_not_read": false
     },
     {
         "id": 1709932823423765,
@@ -573,7 +574,8 @@ HTTP/1.1 200 OK
             "host": "~alice@example.com"
         },
         "keys": [],
-        "last_read_line_id": -1
+        "last_read_line_id": -1,
+        "first_line_not_read": false
     },
     {
         "id": 1709932823649069,
@@ -602,7 +604,8 @@ HTTP/1.1 200 OK
             "host": "~alice@example.com"
         },
         "keys": [],
-        "last_read_line_id": -1
+        "last_read_line_id": -1,
+        "first_line_not_read": false
     }
 ]
 ----
@@ -658,7 +661,8 @@ HTTP/1.1 200 OK
             "tags": []
         }
     ],
-    "last_read_line_id": -1
+    "last_read_line_id": -1,
+    "first_line_not_read": false
 }
 ----
 
@@ -706,6 +710,7 @@ HTTP/1.1 200 OK
     },
     "keys": [],
     "last_read_line_id": -1,
+    "first_line_not_read": false,
     "nicklist_root": {
         "id": 0,
         "parent_group_id": -1,
@@ -905,7 +910,8 @@ HTTP/1.1 200 OK
             "command": "/fset -up"
         }
     ],
-    "last_read_line_id": -1
+    "last_read_line_id": -1,
+    "first_line_not_read": false
 }
 ----
 

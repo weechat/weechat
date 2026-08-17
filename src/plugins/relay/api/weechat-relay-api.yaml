@@ -1080,6 +1080,13 @@ components:
           format: int64
           description: identifier of the last line read in the buffer (-1 if read marker is not displayed)
           example: -1
+        first_line_not_read:
+          type: boolean
+          description: >-
+            read marker is before the first line of the buffer (nothing read);
+            when "last_read_line_id" is -1 and this field is false, the read
+            marker has been removed because all the lines have been read
+          example: false
         nicklist_root:
           $ref: '#/components/schemas/NickGroup'
       required:

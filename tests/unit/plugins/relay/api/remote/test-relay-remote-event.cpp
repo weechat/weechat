@@ -66,9 +66,17 @@ TEST(RelayRemoteEvent, LineIsAlreadyRead)
     LONGS_EQUAL(0, relay_remote_event_line_is_already_read (NULL, 123));
     LONGS_EQUAL(0, relay_remote_event_line_is_already_read (buffer, -1));
 
-    /* local variable not set on buffer */
+    /* local variables not set on buffer */
     LONGS_EQUAL(0, relay_remote_event_line_is_already_read (buffer, 0));
     LONGS_EQUAL(0, relay_remote_event_line_is_already_read (buffer, 123));
+
+    /* only "last_read_line_id" set on buffer */
+    gui_buffer_set (buffer,
+                    "localvar_set_relay_remote_last_read_line_id", "123");
+    LONGS_EQUAL(0, relay_remote_event_line_is_already_read (buffer, 123));
+
+    gui_buffer_set (buffer,
+                    "localvar_set_relay_remote_first_line_not_read", "0");
 
     /* invalid local variable */
     gui_buffer_set (buffer,
@@ -81,11 +89,21 @@ TEST(RelayRemoteEvent, LineIsAlreadyRead)
                     "localvar_set_relay_remote_last_read_line_id", "123abc");
     LONGS_EQUAL(0, relay_remote_event_line_is_already_read (buffer, 123));
 
-    /* nothing read on the remote */
+    /* read marker before the first line: nothing read on the remote */
     gui_buffer_set (buffer,
                     "localvar_set_relay_remote_last_read_line_id", "-1");
+    gui_buffer_set (buffer,
+                    "localvar_set_relay_remote_first_line_not_read", "1");
     LONGS_EQUAL(0, relay_remote_event_line_is_already_read (buffer, 0));
     LONGS_EQUAL(0, relay_remote_event_line_is_already_read (buffer, 123));
+    LONGS_EQUAL(0, relay_remote_event_line_is_already_read (buffer, INT_MAX));
+
+    /* no read marker: all the lines have been read on the remote */
+    gui_buffer_set (buffer,
+                    "localvar_set_relay_remote_first_line_not_read", "0");
+    LONGS_EQUAL(1, relay_remote_event_line_is_already_read (buffer, 0));
+    LONGS_EQUAL(1, relay_remote_event_line_is_already_read (buffer, 123));
+    LONGS_EQUAL(1, relay_remote_event_line_is_already_read (buffer, INT_MAX));
 
     /* lines up to id 123 read on the remote */
     gui_buffer_set (buffer,
@@ -108,6 +126,8 @@ TEST(RelayRemoteEvent, LineIsAlreadyRead)
 
     gui_buffer_set (buffer,
                     "localvar_set_relay_remote_last_read_line_id", "123");
+    gui_buffer_set (buffer,
+                    "localvar_set_relay_remote_first_line_not_read", "0");
     LONGS_EQUAL(0, relay_remote_event_line_is_already_read (buffer, 0));
     LONGS_EQUAL(0, relay_remote_event_line_is_already_read (buffer, 122));
     LONGS_EQUAL(0, relay_remote_event_line_is_already_read (buffer, 123));
@@ -175,6 +195,8 @@ TEST(RelayRemoteEvent, BuildStringTags)
 
     gui_buffer_set (buffer,
                     "localvar_set_relay_remote_last_read_line_id", "100");
+    gui_buffer_set (buffer,
+                    "localvar_set_relay_remote_first_line_not_read", "0");
 
     /* line not read yet on the remote (id greater than last read line id) */
     WEE_CHECK_TAGS("irc_privmsg,notify_message,relay_remote_line_id_101",
@@ -225,6 +247,21 @@ TEST(RelayRemoteEvent, BuildStringTags)
                    "[\"notify_message\", \"irc_privmsg\", \"notify_private\"]",
                    buffer, 42, 0);
 
+    /*
+     * no read marker on the remote and it is not before the first line: all
+     * the lines have been read
+     */
+    gui_buffer_set (buffer,
+                    "localvar_set_relay_remote_last_read_line_id", "-1");
+    WEE_CHECK_TAGS("irc_privmsg,notify_none,relay_remote_line_id_42",
+                   "[\"irc_privmsg\", \"notify_message\"]", buffer, 42, 0);
+
+    /* read marker before the first line on the remote: nothing has been read */
+    gui_buffer_set (buffer,
+                    "localvar_set_relay_remote_first_line_not_read", "1");
+    WEE_CHECK_TAGS("irc_privmsg,notify_message,relay_remote_line_id_42",
+                   "[\"irc_privmsg\", \"notify_message\"]", buffer, 42, 0);
+
     gui_buffer_close (buffer);
 
     /*
@@ -236,6 +273,8 @@ TEST(RelayRemoteEvent, BuildStringTags)
     CHECK(buffer);
     gui_buffer_set (buffer,
                     "localvar_set_relay_remote_last_read_line_id", "100");
+    gui_buffer_set (buffer,
+                    "localvar_set_relay_remote_first_line_not_read", "0");
 
     WEE_CHECK_TAGS("irc_privmsg,notify_message,relay_remote_line_id_42",
                    "[\"irc_privmsg\", \"notify_message\"]", buffer, 42, 0);
@@ -574,6 +613,96 @@ TEST(RelayRemoteEvent, RecvBufferLinesAlreadyRead)
     STRCMP_EQUAL("irc_privmsg", line->data->tags_array[0]);
     STRCMP_EQUAL("notify_message", line->data->tags_array[1]);
     STRCMP_EQUAL("relay_remote_line_id_6", line->data->tags_array[2]);
+    LONGS_EQUAL(GUI_HOTLIST_MESSAGE, line->data->notify_level);
+
+    gui_buffer_close (buffer);
+    relay_remote_free (remote);
+}
+
+/*
+ * Test functions:
+ *   relay_remote_event_cb_buffer
+ *   relay_remote_event_cb_line
+ *   relay_remote_event_line_add
+ *   relay_remote_event_recv
+ *
+ * Test that all the lines of a buffer without read marker are received with the
+ * tag "notify_none", unless the marker is before the first line: the remote
+ * sends "last_read_line_id" == -1 in both cases, so the field
+ * "first_line_not_read" is used to distinguish them.
+ */
+
+TEST(RelayRemoteEvent, RecvBufferNoReadMarker)
+{
+    struct t_relay_remote *remote;
+    struct t_gui_buffer *buffer;
+    struct t_gui_line *line;
+
+    /* no read marker: all the lines have been read on the remote */
+    remote = relay_remote_new ("testnomarker",
+                               "https://localhost:9000",
+                               NULL, NULL, NULL, NULL, NULL, NULL);
+    CHECK(remote);
+
+    relay_remote_event_recv (
+        remote,
+        "{\"code\": 200, "
+        "\"body_type\": \"buffer\", "
+        "\"body\": {\"id\": 123, \"name\": \"irc.libera.#test\", "
+        "\"last_read_line_id\": -1, "
+        "\"first_line_not_read\": false, "
+        "\"lines\": ["
+        "{\"id\": 4, \"message\": \"line read\", "
+        "\"tags\": [\"irc_privmsg\", \"notify_message\"]}]}}");
+
+    buffer = relay_remote_event_search_buffer (remote, 123);
+    CHECK(buffer);
+    STRCMP_EQUAL(
+        "0",
+        gui_buffer_get_string (buffer,
+                               "localvar_relay_remote_first_line_not_read"));
+
+    line = relay_remote_event_search_line_by_id (buffer, 4);
+    CHECK(line);
+    LONGS_EQUAL(3, line->data->tags_count);
+    STRCMP_EQUAL("irc_privmsg", line->data->tags_array[0]);
+    STRCMP_EQUAL("notify_none", line->data->tags_array[1]);
+    STRCMP_EQUAL("relay_remote_line_id_4", line->data->tags_array[2]);
+    LONGS_EQUAL(-1, line->data->notify_level);
+
+    gui_buffer_close (buffer);
+    relay_remote_free (remote);
+
+    /* read marker before the first line: nothing has been read on the remote */
+    remote = relay_remote_new ("testfirstnotread",
+                               "https://localhost:9000",
+                               NULL, NULL, NULL, NULL, NULL, NULL);
+    CHECK(remote);
+
+    relay_remote_event_recv (
+        remote,
+        "{\"code\": 200, "
+        "\"body_type\": \"buffer\", "
+        "\"body\": {\"id\": 456, \"name\": \"irc.libera.#test2\", "
+        "\"last_read_line_id\": -1, "
+        "\"first_line_not_read\": true, "
+        "\"lines\": ["
+        "{\"id\": 4, \"message\": \"line not read\", "
+        "\"tags\": [\"irc_privmsg\", \"notify_message\"]}]}}");
+
+    buffer = relay_remote_event_search_buffer (remote, 456);
+    CHECK(buffer);
+    STRCMP_EQUAL(
+        "1",
+        gui_buffer_get_string (buffer,
+                               "localvar_relay_remote_first_line_not_read"));
+
+    line = relay_remote_event_search_line_by_id (buffer, 4);
+    CHECK(line);
+    LONGS_EQUAL(3, line->data->tags_count);
+    STRCMP_EQUAL("irc_privmsg", line->data->tags_array[0]);
+    STRCMP_EQUAL("notify_message", line->data->tags_array[1]);
+    STRCMP_EQUAL("relay_remote_line_id_4", line->data->tags_array[2]);
     LONGS_EQUAL(GUI_HOTLIST_MESSAGE, line->data->notify_level);
 
     gui_buffer_close (buffer);

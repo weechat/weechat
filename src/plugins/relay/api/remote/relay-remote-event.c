@@ -52,6 +52,16 @@
 /*
  * Check if a line in a buffer has been marked read on the remote.
  *
+ * The read status is given by two local variables set with the buffer received
+ * from the remote:
+ *   - "relay_remote_last_read_line_id": identifier of the last line read, or -1
+ *     if there is no read marker in the buffer
+ *   - "relay_remote_first_line_not_read": "1" if the read marker is before the
+ *     first line
+ *
+ * So when there is no read marker, all the lines received have been read on the
+ * remote, unless the marker is before the first line (nothing read).
+ *
  * This is never the case on buffers with free content, where the identifier of
  * a line is its number ("y") and not the date of print: it can not be compared
  * with the identifier of the last read line.
@@ -65,7 +75,7 @@ int
 relay_remote_event_line_is_already_read (struct t_gui_buffer *buffer,
                                          long long line_id)
 {
-    const char *ptr_last_read_line_id;
+    const char *ptr_last_read_line_id, *ptr_first_line_not_read;
     long long last_read_line_id;
 
     if (!buffer || (line_id < 0))
@@ -79,12 +89,23 @@ relay_remote_event_line_is_already_read (struct t_gui_buffer *buffer,
 
     ptr_last_read_line_id = weechat_buffer_get_string (
         buffer, "localvar_relay_remote_last_read_line_id");
+    ptr_first_line_not_read = weechat_buffer_get_string (
+        buffer, "localvar_relay_remote_first_line_not_read");
     if (!ptr_last_read_line_id
+        || !ptr_first_line_not_read
         || !weechat_util_parse_longlong (ptr_last_read_line_id, 10,
                                          &last_read_line_id))
     {
         return 0;
     }
+
+    /* the read marker is before the first line: nothing has been read */
+    if (strcmp (ptr_first_line_not_read, "1") == 0)
+        return 0;
+
+    /* no read marker: all the lines received have been read */
+    if (last_read_line_id < 0)
+        return 1;
 
     return (line_id <= last_read_line_id) ? 1 : 0;
 }
@@ -877,7 +898,7 @@ RELAY_REMOTE_EVENT_CALLBACK(buffer)
     char *full_name, str_number[64], str_local_var[1024], *property;
     long long id, last_read_line_id;
     int number, hidden, nicklist, nicklist_case_sensitive;
-    int nicklist_display_groups, time_displayed;
+    int nicklist_display_groups, time_displayed, first_line_not_read;
     int apply_props, input_position, input_multiline;
 
     if (!event || !event->json)
@@ -900,6 +921,7 @@ RELAY_REMOTE_EVENT_CALLBACK(buffer)
     JSON_GET_BOOL(event->json, nicklist_display_groups);
     JSON_GET_BOOL(event->json, time_displayed);
     JSON_GET_NUM(event->json, last_read_line_id, -1);
+    JSON_GET_BOOL(event->json, first_line_not_read);
 
     buffer_props = weechat_hashtable_new (32,
                                           WEECHAT_HASHTABLE_STRING,
@@ -940,6 +962,9 @@ RELAY_REMOTE_EVENT_CALLBACK(buffer)
     weechat_hashtable_set (buffer_props,
                            "localvar_set_relay_remote_last_read_line_id",
                            str_number);
+    weechat_hashtable_set (buffer_props,
+                           "localvar_set_relay_remote_first_line_not_read",
+                           (first_line_not_read) ? "1" : "0");
 
     /* if buffer exists, set properties, otherwise create buffer */
     apply_props = 1;
