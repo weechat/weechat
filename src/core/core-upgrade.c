@@ -682,6 +682,12 @@ upgrade_weechat_read_buffer_line (struct t_infolist *infolist)
              * (a counter in the buffer) and the date of print was saved in
              * "date_printed"/"date_usec_printed": in this case the id is
              * rebuilt from these two variables
+             *
+             * note: with old upgrade files, all the lines displayed by a
+             * single call to gui_chat_printf_datetime_tags() share the same
+             * date of print, so the conversion below can return the same id
+             * for several lines; gui_line_new_with_id() increases the id when
+             * needed, to keep the ids unique and sorted in the buffer
              */
             ptr_var_id = infolist_search_var (infolist, "id");
             old_format = (!ptr_var_id
@@ -702,16 +708,6 @@ upgrade_weechat_read_buffer_line (struct t_infolist *infolist)
             prefix = infolist_string (infolist, "prefix");
             message = infolist_string (infolist, "message");
             last_read_line = infolist_integer (infolist, "last_read_line");
-
-            /*
-             * ensure ids stay strictly increasing in the buffer: with old
-             * upgrade files, all the lines displayed by a single call to
-             * gui_chat_printf_datetime_tags() share the same date of print,
-             * so the conversion above can return the same id for several
-             * lines
-             */
-            if (id <= upgrade_current_buffer->lines_last_id_assigned)
-                id = upgrade_current_buffer->lines_last_id_assigned + 1;
 
             /*
              * pass the saved highlight state directly (known_highlight)

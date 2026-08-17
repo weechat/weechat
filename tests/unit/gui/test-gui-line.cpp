@@ -381,6 +381,9 @@ TEST(GuiLine, GetNextDisplayed)
 
 TEST(GuiLine, SearchById)
 {
+    struct t_gui_buffer *buffer;
+    struct t_gui_line *line1, *line2;
+
     POINTERS_EQUAL(NULL, gui_line_search_by_id (NULL, -1));
     POINTERS_EQUAL(NULL, gui_line_search_by_id (gui_buffers, -1));
     POINTERS_EQUAL(NULL, gui_line_search_by_id (gui_buffers, LLONG_MAX));
@@ -389,6 +392,29 @@ TEST(GuiLine, SearchById)
         gui_buffers->own_lines->last_line,
         gui_line_search_by_id (gui_buffers,
                                gui_buffers->own_lines->last_line->data->id));
+
+    /* buffer with two lines, with a gap between the two identifiers */
+    buffer = gui_buffer_new_user ("test", GUI_BUFFER_TYPE_FORMATTED);
+    CHECK(buffer);
+
+    line1 = gui_line_new_with_id (buffer, 100, -1, 0, 0,
+                                  NULL, NULL, "line1", -1, NULL);
+    CHECK(line1);
+    gui_line_add (line1, 0);
+    line2 = gui_line_new_with_id (buffer, 200, -1, 0, 0,
+                                  NULL, NULL, "line2", -1, NULL);
+    CHECK(line2);
+    gui_line_add (line2, 0);
+
+    POINTERS_EQUAL(line1, gui_line_search_by_id (buffer, 100));
+    POINTERS_EQUAL(line2, gui_line_search_by_id (buffer, 200));
+
+    /* the search is stopped as soon as a lower identifier is found */
+    POINTERS_EQUAL(NULL, gui_line_search_by_id (buffer, 150));
+    POINTERS_EQUAL(NULL, gui_line_search_by_id (buffer, 50));
+    POINTERS_EQUAL(NULL, gui_line_search_by_id (buffer, 300));
+
+    gui_buffer_close (buffer);
 }
 
 /*
@@ -991,12 +1017,22 @@ TEST(GuiLine, NewWithId)
     CHECK(buffer->lines_last_id_assigned == 123);
     gui_line_add (line, 0);
 
-    /* an id lower than the last one assigned is used as-is, without lowering it */
+    /*
+     * an id lower than or equal to the last one assigned is increased, so that
+     * the ids stay unique and sorted in the buffer
+     */
     line = gui_line_new_with_id (buffer, 12, -1, 0, 0,
                                  NULL, NULL, "message", -1, NULL);
     CHECK(line);
-    CHECK(line->data->id == 12);
-    CHECK(buffer->lines_last_id_assigned == 123);
+    CHECK(line->data->id == 124);
+    CHECK(buffer->lines_last_id_assigned == 124);
+    gui_line_add (line, 0);
+
+    line = gui_line_new_with_id (buffer, 124, -1, 0, 0,
+                                 NULL, NULL, "message", -1, NULL);
+    CHECK(line);
+    CHECK(line->data->id == 125);
+    CHECK(buffer->lines_last_id_assigned == 125);
     gui_line_add (line, 0);
 
     gui_buffer_close (buffer);

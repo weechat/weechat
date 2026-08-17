@@ -594,6 +594,11 @@ gui_line_get_next_displayed (struct t_gui_line *line)
 /*
  * Search a line by id.
  *
+ * The search is made from the last line to the first one: identifiers are
+ * sorted in the buffer (see gui_line_new_with_id() for buffers with formatted
+ * content, gui_line_add_y() for buffers with free content), so the search is
+ * stopped as soon as an identifier lower than the one searched is found.
+ *
  * Return pointer to line found, NULL if not found.
  */
 
@@ -608,8 +613,13 @@ gui_line_search_by_id (struct t_gui_buffer *buffer, long long id)
     for (ptr_line = buffer->own_lines->last_line; ptr_line;
          ptr_line = ptr_line->prev_line)
     {
-        if (ptr_line->data && (ptr_line->data->id == id))
-            return ptr_line;
+        if (ptr_line->data)
+        {
+            if (ptr_line->data->id == id)
+                return ptr_line;
+            if (ptr_line->data->id < id)
+                break;
+        }
     }
 
     /* line not found */
@@ -1621,7 +1631,11 @@ gui_line_get_date_printed (struct t_gui_line_data *line_data,
  * On buffers with formatted content, "id" is the identifier to set in the
  * line: it is normally the value returned by gui_line_generate_id(), but a
  * specific value can be forced (e.g. when restoring a line from an upgrade
- * file, where the value was saved).
+ * file, where the value was saved); it is increased if needed, so that it stays
+ * unique and strictly greater than the last identifier assigned in the buffer:
+ * as lines are only added at the end of the list, the identifiers are then
+ * guaranteed to be sorted in the buffer (this is used to stop the search of a
+ * line by identifier as soon as possible).
  * On buffers with free content, "id" is ignored: the identifier of a line is
  * its number ("y").
  *
@@ -1671,9 +1685,10 @@ gui_line_new_with_id (struct t_gui_buffer *buffer, long long id, int y,
 
     if (buffer->type == GUI_BUFFER_TYPE_FORMATTED)
     {
+        if (id <= buffer->lines_last_id_assigned)
+            id = buffer->lines_last_id_assigned + 1;
         new_line->data->id = id;
-        if (id > buffer->lines_last_id_assigned)
-            buffer->lines_last_id_assigned = id;
+        buffer->lines_last_id_assigned = id;
         new_line->data->y = -1;
         new_line->data->date = date;
         new_line->data->date_usec = date_usec;
