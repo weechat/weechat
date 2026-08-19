@@ -23,12 +23,53 @@
 
 extern "C"
 {
+#include <stdlib.h>
+#include <string.h>
+#include "src/core/core-config-file.h"
+#include "src/plugins/xfer/xfer.h"
+#include "src/plugins/xfer/xfer-config.h"
 #include "src/plugins/xfer/xfer-file.h"
 }
 
 TEST_GROUP(XferFile)
 {
 };
+
+/*
+ * Build a "file recv" xfer with the given remote nick and filename, call
+ * xfer_file_find_filename and return a copy of the basename of the local
+ * filename (the part after the last directory separator).
+ *
+ * Note: result must be freed after use.
+ */
+
+static char *
+test_find_filename_basename (const char *remote_nick, const char *filename)
+{
+    struct t_xfer xfer;
+    char *pos, *result;
+
+    memset (&xfer, 0, sizeof (xfer));
+    xfer.type = XFER_TYPE_FILE_RECV_ACTIVE;
+    xfer.remote_nick = strdup (remote_nick);
+    xfer.filename = strdup (filename);
+
+    xfer_file_find_filename (&xfer);
+
+    result = NULL;
+    if (xfer.local_filename)
+    {
+        pos = strrchr (xfer.local_filename, DIR_SEPARATOR_CHAR);
+        result = strdup ((pos) ? pos + 1 : xfer.local_filename);
+    }
+
+    free (xfer.remote_nick);
+    free (xfer.filename);
+    free (xfer.local_filename);
+    free (xfer.temp_local_filename);
+
+    return result;
+}
 
 /*
  * Tests functions:
@@ -89,7 +130,61 @@ TEST(XferFile, FindSuffix)
 
 TEST(XferFile, FindFilename)
 {
-    /* TODO: write tests */
+    char *basename;
+
+    config_file_option_set (xfer_config_file_download_path, "/tmp/weechat_test_xfer", 1);
+
+    /* remote nick without directory separator: used as-is */
+    basename = test_find_filename_basename ("alice", "test.txt");
+    STRCMP_EQUAL("alice.test.txt", basename);
+    free (basename);
+
+    /*
+     * remote nick with a directory separator: the separator is replaced by
+     * "_" so the nick cannot make the file be written outside the download
+     * directory
+     */
+    basename = test_find_filename_basename ("../foo", "test.txt");
+    STRCMP_EQUAL(".._foo.test.txt", basename);
+    free (basename);
+
+    /* all directory separators in the nick are replaced */
+    basename = test_find_filename_basename ("a/b/c", "test.txt");
+    STRCMP_EQUAL("a_b_c.test.txt", basename);
+    free (basename);
+
+    /*
+     * the filename comes from the remote peer: only the filename component is
+     * kept, so the filename cannot make the file be written outside the
+     * download directory
+     */
+    basename = test_find_filename_basename ("alice", "dir/test.txt");
+    STRCMP_EQUAL("alice.test.txt", basename);
+    free (basename);
+
+    basename = test_find_filename_basename ("alice", "../../etc/passwd");
+    STRCMP_EQUAL("alice.passwd", basename);
+    free (basename);
+
+    /* both directory separators are removed, on any platform */
+    basename = test_find_filename_basename ("alice", "dir\\test.txt");
+    STRCMP_EQUAL("alice.test.txt", basename);
+    free (basename);
+
+    basename = test_find_filename_basename ("alice", "..\\..\\etc\\passwd");
+    STRCMP_EQUAL("alice.passwd", basename);
+    free (basename);
+
+    /* filename with a mix of both directory separators */
+    basename = test_find_filename_basename ("alice", "a\\b/c\\test.txt");
+    STRCMP_EQUAL("alice.test.txt", basename);
+    free (basename);
+
+    basename = test_find_filename_basename ("alice", "a/b\\c/test.txt");
+    STRCMP_EQUAL("alice.test.txt", basename);
+    free (basename);
+
+    config_file_option_unset (xfer_config_file_download_path);
 }
 
 /*
