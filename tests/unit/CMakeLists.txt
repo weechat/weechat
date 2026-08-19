@@ -167,6 +167,7 @@ if (ENABLE_RELAY)
   list(APPEND LIB_WEECHAT_UNIT_TESTS_PLUGINS_SRC
     plugins/relay/test-relay-auth.cpp
     plugins/relay/test-relay-bar-item.cpp
+    plugins/relay/test-relay-client.cpp
     plugins/relay/test-relay-http.cpp
     plugins/relay/test-relay-raw.cpp
     plugins/relay/test-relay-remote.cpp
