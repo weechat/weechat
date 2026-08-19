@@ -505,6 +505,7 @@ WeeChat „језгро” се налази у следећим директо�
 |             test-typing-status.cpp         | Тестови: typing статус.
 |          relay/                            | Корен unit тестова за Релеј додатак.
 |             test-relay-auth.cpp            | Тестови: аутентификација клијената.
+|             test-relay-client.cpp          | Тестови: клијенти релеја.
 |             test-relay-http.cpp            | Тестови: HTTP функције за Релеј додатак.
 |             test-relay-raw.cpp             | Тестови: функције сирових порука за Релеј додатак.
 |             test-relay-remote.cpp          | Тестови: удаљене функције за Релеј додатак.

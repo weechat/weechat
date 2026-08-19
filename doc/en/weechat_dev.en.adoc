@@ -504,6 +504,7 @@ WeeChat "core" is located in following directories:
 |             test-typing-status.cpp         | Tests: typing status.
 |          relay/                            | Root of unit tests for Relay plugin.
 |             test-relay-auth.cpp            | Tests: clients authentication.
+|             test-relay-client.cpp          | Tests: clients of relay.
 |             test-relay-http.cpp            | Tests: HTTP functions for Relay plugin.
 |             test-relay-raw.cpp             | Tests: raw messages functions for Relay plugin.
 |             test-relay-remote.cpp          | Tests: remote functions for Relay plugin.
