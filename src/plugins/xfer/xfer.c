@@ -273,7 +273,7 @@ xfer_search (const char *plugin_name, const char *plugin_id,
         if ((strcmp (ptr_xfer->plugin_name, plugin_name) == 0)
             && (strcmp (ptr_xfer->plugin_id, plugin_id) == 0)
             && (ptr_xfer->type == type)
-            && (ptr_xfer->status = status)
+            && (ptr_xfer->status == status)
             && (ptr_xfer->port == port))
             return ptr_xfer;
     }
