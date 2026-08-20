@@ -31,6 +31,7 @@
 - relay/weechat: fix empty buffers in client when WeeChat is running on Solaris/illumos
 - relay: limit size of partial message received while reading an HTTP request to prevent memory exhaustion
 - relay: fix out-of-bounds read in dump of data ([#2324](https://github.com/weechat/weechat/issues/2324))
+- xfer: limit size of partial message received in DCC chat to prevent memory exhaustion ([#2349](https://github.com/weechat/weechat/issues/2349))
 - xfer: remove path from filename received in DCC file transfer to prevent writing the file outside the download directory ([#2348](https://github.com/weechat/weechat/issues/2348))
 - xfer: replace directory separator in remote nick by underscore in download filename to prevent writing the file outside the download directory ([#2321](https://github.com/weechat/weechat/issues/2321))
 - xfer: fix out-of-bounds read when receiving empty line in DCC chat ([#2323](https://github.com/weechat/weechat/issues/2323))
