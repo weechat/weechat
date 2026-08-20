@@ -532,6 +532,13 @@ irc_sasl_mechanism_ecdsa_nist256p_challenge (struct t_irc_server *server,
         if (!data)
             return NULL;
         length_data = weechat_string_base_decode ("64", data_base64, data);
+        if (length_data <= 0)
+        {
+            if (sasl_error)
+                *sasl_error = strdup (_("base64 decode error"));
+            free (data);
+            return NULL;
+        }
 
         /* read file with private key */
         str_privkey = irc_sasl_get_key_content (sasl_key, sasl_error);
