@@ -41,6 +41,32 @@ char *script_repo_filter = NULL;
 
 
 /*
+ * Check if a script name can safely be used as a filename.
+ *
+ * Script names come from the repository file and are later appended to the
+ * local script cache path.  Reject path separators and drive separators so
+ * the name remains a single path component on all supported platforms.
+ */
+
+static int
+script_repo_script_name_valid (const char *name)
+{
+    const char *ptr;
+
+    if (!name || !name[0])
+        return 0;
+
+    for (ptr = name; ptr[0]; ptr++)
+    {
+        if (strchr ("/\\:", ptr[0]))
+            return 0;
+    }
+
+    return 1;
+}
+
+
+/*
  * Check if a script pointer is valid.
  *
  * Return:
@@ -1187,7 +1213,8 @@ script_repo_file_read (int quiet)
                 if (script)
                 {
                     script_ok = 0;
-                    if (script->name && (script->language >= 0))
+                    if (script_repo_script_name_valid (script->name)
+                        && (script->language >= 0))
                     {
                         version_ok = 1;
                         if (script->min_weechat)
