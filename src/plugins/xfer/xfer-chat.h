@@ -7,6 +7,8 @@
 #ifndef WEECHAT_PLUGIN_XFER_CHAT_H
 #define WEECHAT_PLUGIN_XFER_CHAT_H
 
+#define XFER_CHAT_RECV_MSG_MAX_LENGTH (64 * 1024)
+
 extern void xfer_chat_sendf (struct t_xfer *xfer, const char *format, ...);
 extern int xfer_chat_recv_cb (const void *pointer, void *data, int fd);
 extern int xfer_chat_buffer_input_cb (const void *pointer, void *data,

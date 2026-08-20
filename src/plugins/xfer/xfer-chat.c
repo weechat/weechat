@@ -115,6 +115,13 @@ xfer_chat_recv_cb (const void *pointer, void *data, int fd)
         ptr_buf = buffer;
         if (xfer->unterminated_message)
         {
+            if ((strlen (xfer->unterminated_message) + strlen (buffer) + 1)
+                > XFER_CHAT_RECV_MSG_MAX_LENGTH)
+            {
+                xfer_close (xfer, XFER_STATUS_FAILED);
+                xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
+                return WEECHAT_RC_OK;
+            }
             buf2 = malloc (strlen (xfer->unterminated_message) +
                                    strlen (buffer) + 1);
             if (buf2)
