@@ -98,6 +98,8 @@ extern "C"
     return v8::Integer::New(__int)
 #define API_RETURN_LONG(__int)                                          \
     return v8::Number::New(__int)
+#define API_RETURN_LONGLONG(__int)                                      \
+    return v8::Number::New(__int)
 
 
 /*
@@ -5106,7 +5108,7 @@ API_FUNC(hdata_longlong)
 {
     long long value;
 
-    API_INIT_FUNC(1, "hdata_longlong", "sss", API_RETURN_LONG(0));
+    API_INIT_FUNC(1, "hdata_longlong", "sss", API_RETURN_LONGLONG(0));
 
     v8::String::Utf8Value hdata(args[0]);
     v8::String::Utf8Value pointer(args[1]);
@@ -5117,7 +5119,7 @@ API_FUNC(hdata_longlong)
         API_STR2PTR(*pointer),
         *name);
 
-    API_RETURN_LONG(value);
+    API_RETURN_LONGLONG(value);
 }
 
 API_FUNC(hdata_string)
