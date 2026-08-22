@@ -6641,7 +6641,7 @@ weechat_ruby_api_hdata_longlong (VALUE class, VALUE hdata, VALUE pointer,
     char *c_hdata, *c_pointer, *c_name;
     long long value;
 
-    API_INIT_FUNC(1, "hdata_longlong", API_RETURN_LONG(0));
+    API_INIT_FUNC(1, "hdata_longlong", API_RETURN_LONGLONG(0));
     if (NIL_P (hdata) || NIL_P (pointer) || NIL_P (name))
         API_WRONG_ARGS(API_RETURN_LONGLONG(0));
 
