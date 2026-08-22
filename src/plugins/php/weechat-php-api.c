@@ -5592,10 +5592,10 @@ API_FUNC(hdata_longlong)
     char *name;
     long long result;
 
-    API_INIT_FUNC(1, "hdata_longlong", API_RETURN_LONG(0));
+    API_INIT_FUNC(1, "hdata_longlong", API_RETURN_LONGLONG(0));
     if (zend_parse_parameters (ZEND_NUM_ARGS(), "SSS", &z_hdata, &z_pointer,
                                &z_name) == FAILURE)
-        API_WRONG_ARGS(API_RETURN_LONG(0));
+        API_WRONG_ARGS(API_RETURN_LONGLONG(0));
 
     hdata = (struct t_hdata *)API_STR2PTR(ZSTR_VAL(z_hdata));
     pointer = (void *)API_STR2PTR(ZSTR_VAL(z_pointer));
