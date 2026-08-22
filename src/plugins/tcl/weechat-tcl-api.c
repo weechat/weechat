@@ -5410,9 +5410,9 @@ API_FUNC(hdata_longlong)
     char *hdata, *pointer, *name;
     long long result;
 
-    API_INIT_FUNC(1, "hdata_longlong", API_RETURN_LONG(0));
+    API_INIT_FUNC(1, "hdata_longlong", API_RETURN_LONGLONG(0));
     if (objc < 4)
-        API_WRONG_ARGS(API_RETURN_LONG(0));
+        API_WRONG_ARGS(API_RETURN_LONGLONG(0));
 
     hdata = Tcl_GetString (objv[1]);
     pointer = Tcl_GetString (objv[2]);
