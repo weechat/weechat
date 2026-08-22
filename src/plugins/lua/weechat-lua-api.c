@@ -89,6 +89,11 @@
         lua_pushinteger (L, __long);                                    \
         return 1;                                                       \
     }
+#define API_RETURN_LONGLONG(__longlong)                                 \
+    {                                                                   \
+        lua_pushinteger (L, __longlong);                                \
+        return 1;                                                       \
+    }
 
 
 /*
@@ -5492,9 +5497,9 @@ API_FUNC(hdata_longlong)
     const char *hdata, *pointer, *name;
     long long value;
 
-    API_INIT_FUNC(1, "hdata_longlong", API_RETURN_LONG(0));
+    API_INIT_FUNC(1, "hdata_longlong", API_RETURN_LONGLONG(0));
     if (lua_gettop (L) < 3)
-        API_WRONG_ARGS(API_RETURN_LONG(0));
+        API_WRONG_ARGS(API_RETURN_LONGLONG(0));
 
     hdata = lua_tostring (L, -3);
     pointer = lua_tostring (L, -2);
@@ -5504,7 +5509,7 @@ API_FUNC(hdata_longlong)
                                     API_STR2PTR(pointer),
                                     name);
 
-    API_RETURN_LONG(value);
+    API_RETURN_LONGLONG(value);
 }
 
 API_FUNC(hdata_string)
