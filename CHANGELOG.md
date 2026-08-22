@@ -15,7 +15,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 ### Fixed
 
 - core: fix buffer selected when searching by partial name and another buffer has a similar name ([#700](https://github.com/weechat/weechat/issues/700))
-- javascript, lua: fix return value of function hdata_longlong
+- javascript, lua, perl: fix return value of function hdata_longlong
 
 ### Security
 

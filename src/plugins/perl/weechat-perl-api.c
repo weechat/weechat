@@ -73,6 +73,9 @@
 #define API_RETURN_LONG(__long)                                         \
     XST_mIV (0, __long);                                                \
     XSRETURN (1)
+#define API_RETURN_LONGLONG(__longlong)                                 \
+    XST_mIV (0, __longlong);                                            \
+    XSRETURN (1)
 #define API_RETURN_OBJ(__obj)                                           \
     ST (0) = newRV_inc((SV *)__obj);                                    \
     if (SvREFCNT(ST(0))) sv_2mortal(ST(0));                             \
@@ -5425,9 +5428,9 @@ API_FUNC(hdata_longlong)
     long long value;
     dXSARGS;
 
-    API_INIT_FUNC(1, "hdata_longlong", API_RETURN_LONG(0));
+    API_INIT_FUNC(1, "hdata_longlong", API_RETURN_LONGLONG(0));
     if (items < 3)
-        API_WRONG_ARGS(API_RETURN_LONG(0));
+        API_WRONG_ARGS(API_RETURN_LONGLONG(0));
 
     hdata = SvPV_nolen (ST (0));
     pointer = SvPV_nolen (ST (1));
@@ -5437,7 +5440,7 @@ API_FUNC(hdata_longlong)
                                     API_STR2PTR(pointer),
                                     name);
 
-    API_RETURN_LONG(value);
+    API_RETURN_LONGLONG(value);
 }
 
 API_FUNC(hdata_string)
