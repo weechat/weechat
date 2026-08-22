@@ -13,6 +13,23 @@ When upgrading from version X to Y, please read and apply all instructions from 
 
 For a list of all changes in each version, please see [CHANGELOG.md](CHANGELOG.md).
 
+## Unreleased
+
+### Types of variables in infolists
+
+Some variables in infolists are no longer strings or integers, so they must be read with the
+functions `infolist_long` and `infolist_longlong` (both added in this version) instead of
+`infolist_string` and `infolist_integer`:
+
+- infolist `buffer`: variables `id` and `nicklist_last_id_assigned` are now `long long`
+  (they were strings), read with `infolist_longlong`;
+- infolist `nicklist`: variable `id` (for both groups and nicks) is now `long long`
+  (it was a string), read with `infolist_longlong`;
+- infolist `hook` (hook timer): variable `interval` is now `long` (it was a string),
+  read with `infolist_long`;
+- infolist `hook` (hook process and hook url): variable `timeout` is now `long`
+  (it was an integer), read with `infolist_long`.
+
 ## Version 4.10.0
 
 ### Command on mouse click in fset buffer
