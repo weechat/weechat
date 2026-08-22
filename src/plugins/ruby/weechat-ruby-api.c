@@ -6065,6 +6065,60 @@ weechat_ruby_api_infolist_new_var_time (VALUE class, VALUE item,
 }
 
 static VALUE
+weechat_ruby_api_infolist_new_var_long (VALUE class, VALUE item,
+                                        VALUE name, VALUE value)
+{
+    char *c_item, *c_name;
+    const char *result;
+    long c_value;
+
+    API_INIT_FUNC(1, "infolist_new_var_long", API_RETURN_EMPTY);
+    if (NIL_P (item) || NIL_P (name) || NIL_P (value))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    Check_Type (item, T_STRING);
+    Check_Type (name, T_STRING);
+    CHECK_INTEGER(value);
+
+    c_item = StringValuePtr (item);
+    c_name = StringValuePtr (name);
+    c_value = NUM2LONG (value);
+
+    result = API_PTR2STR(weechat_infolist_new_var_long (API_STR2PTR(c_item),
+                                                        c_name,
+                                                        c_value));
+
+    API_RETURN_STRING(result);
+}
+
+static VALUE
+weechat_ruby_api_infolist_new_var_longlong (VALUE class, VALUE item,
+                                            VALUE name, VALUE value)
+{
+    char *c_item, *c_name;
+    const char *result;
+    long long c_value;
+
+    API_INIT_FUNC(1, "infolist_new_var_long", API_RETURN_EMPTY);
+    if (NIL_P (item) || NIL_P (name) || NIL_P (value))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    Check_Type (item, T_STRING);
+    Check_Type (name, T_STRING);
+    CHECK_INTEGER(value);
+
+    c_item = StringValuePtr (item);
+    c_name = StringValuePtr (name);
+    c_value = NUM2LL (value);
+
+    result = API_PTR2STR(weechat_infolist_new_var_longlong (API_STR2PTR(c_item),
+                                                            c_name,
+                                                            c_value));
+
+    API_RETURN_STRING(result);
+}
+
+static VALUE
 weechat_ruby_api_infolist_search_var (VALUE class, VALUE infolist, VALUE name)
 {
     char *c_infolist, *c_name;
@@ -6269,6 +6323,48 @@ weechat_ruby_api_infolist_time (VALUE class, VALUE infolist, VALUE variable)
     time = weechat_infolist_time (API_STR2PTR(c_infolist), c_variable);
 
     API_RETURN_LONG(time);
+}
+
+static VALUE
+weechat_ruby_api_infolist_long (VALUE class, VALUE infolist, VALUE variable)
+{
+    char *c_infolist, *c_variable;
+    long value;
+
+    API_INIT_FUNC(1, "infolist_long", API_RETURN_LONG(0));
+    if (NIL_P (infolist) || NIL_P (variable))
+        API_WRONG_ARGS(API_RETURN_LONG(0));
+
+    Check_Type (infolist, T_STRING);
+    Check_Type (variable, T_STRING);
+
+    c_infolist = StringValuePtr (infolist);
+    c_variable = StringValuePtr (variable);
+
+    value = weechat_infolist_long (API_STR2PTR(c_infolist), c_variable);
+
+    API_RETURN_LONG(value);
+}
+
+static VALUE
+weechat_ruby_api_infolist_longlong (VALUE class, VALUE infolist, VALUE variable)
+{
+    char *c_infolist, *c_variable;
+    long long value;
+
+    API_INIT_FUNC(1, "infolist_longlong", API_RETURN_LONGLONG(0));
+    if (NIL_P (infolist) || NIL_P (variable))
+        API_WRONG_ARGS(API_RETURN_LONGLONG(0));
+
+    Check_Type (infolist, T_STRING);
+    Check_Type (variable, T_STRING);
+
+    c_infolist = StringValuePtr (infolist);
+    c_variable = StringValuePtr (variable);
+
+    value = weechat_infolist_longlong (API_STR2PTR(c_infolist), c_variable);
+
+    API_RETURN_LONGLONG(value);
 }
 
 static VALUE
@@ -7194,6 +7290,8 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     API_DEF_FUNC(infolist_new_var_string, 3);
     API_DEF_FUNC(infolist_new_var_pointer, 3);
     API_DEF_FUNC(infolist_new_var_time, 3);
+    API_DEF_FUNC(infolist_new_var_long, 3);
+    API_DEF_FUNC(infolist_new_var_longlong, 3);
     API_DEF_FUNC(infolist_search_var, 2);
     API_DEF_FUNC(infolist_get, 3);
     API_DEF_FUNC(infolist_next, 1);
@@ -7204,6 +7302,8 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     API_DEF_FUNC(infolist_string, 2);
     API_DEF_FUNC(infolist_pointer, 2);
     API_DEF_FUNC(infolist_time, 2);
+    API_DEF_FUNC(infolist_long, 2);
+    API_DEF_FUNC(infolist_longlong, 2);
     API_DEF_FUNC(infolist_free, 1);
     API_DEF_FUNC(hdata_get, 1);
     API_DEF_FUNC(hdata_get_var_offset, 2);

@@ -59,6 +59,10 @@ TEST_GROUP(CoreInfolist)
             goto error;
         if (!infolist_new_var_time (ptr_item, "time", 1234567890))
             goto error;
+        if (!infolist_new_var_long (ptr_item, "long", 2123456789))
+            goto error;
+        if (!infolist_new_var_longlong (ptr_item, "longlong", 9123456789123456789))
+            goto error;
 
         if (arguments && (strcmp (arguments, "test2") == 0))
         {
@@ -106,6 +110,7 @@ TEST(CoreInfolist, New)
     struct t_infolist *infolist;
     struct t_infolist_item *item;
     struct t_infolist_var *var_int, *var_str, *var_ptr, *var_buf, *var_time;
+    struct t_infolist_var *var_long, *var_longlong;
     const char buffer[3] = { 12, 34, 56 };
 
     /* create a new infolist */
@@ -136,60 +141,46 @@ TEST(CoreInfolist, New)
     POINTERS_EQUAL(item, infolist->items);
     POINTERS_EQUAL(item, infolist->last_item);
 
-    /* add an integer variable */
+    /* test integer variable */
     var_int = infolist_new_var_integer (item, "test_integer", 123456);
     CHECK(var_int);
-
-    /* check content of variable */
     STRCMP_EQUAL("test_integer", var_int->name);
     LONGS_EQUAL(INFOLIST_INTEGER, var_int->type);
     LONGS_EQUAL(123456, *((int *)var_int->value));
     LONGS_EQUAL(0, var_int->size);
     POINTERS_EQUAL(NULL, var_int->prev_var);
     POINTERS_EQUAL(NULL, var_int->next_var);
-
-    /* check that variable is in item */
     POINTERS_EQUAL(var_int, item->vars);
     POINTERS_EQUAL(var_int, item->last_var);
 
-    /* add a string variable */
+    /* test string variable */
     var_str = infolist_new_var_string (item, "test_string", "abc");
     CHECK(var_str);
-
-    /* check content of variable */
     STRCMP_EQUAL("test_string", var_str->name);
     LONGS_EQUAL(INFOLIST_STRING, var_str->type);
     STRCMP_EQUAL("abc", (const char *)var_str->value);
     LONGS_EQUAL(0, var_str->size);
     POINTERS_EQUAL(var_int, var_str->prev_var);
     POINTERS_EQUAL(NULL, var_str->next_var);
-
-    /* check that variable is in item */
     POINTERS_EQUAL(var_int, item->vars);
     POINTERS_EQUAL(var_str, item->last_var);
 
-    /* add a pointer variable */
+    /* test pointer variable */
     var_ptr = infolist_new_var_pointer (item, "test_pointer",
                                         (void *)0x123abc);
     CHECK(var_ptr);
-
-    /* check content of variable */
     STRCMP_EQUAL("test_pointer", var_ptr->name);
     LONGS_EQUAL(INFOLIST_POINTER, var_ptr->type);
     POINTERS_EQUAL(0x123abc, var_ptr->value);
     LONGS_EQUAL(0, var_ptr->size);
     POINTERS_EQUAL(var_str, var_ptr->prev_var);
     POINTERS_EQUAL(NULL, var_ptr->next_var);
-
-    /* check that variable is in item */
     POINTERS_EQUAL(var_int, item->vars);
     POINTERS_EQUAL(var_ptr, item->last_var);
 
-    /* add a buffer variable */
+    /* test buffer variable */
     var_buf = infolist_new_var_buffer (item, "test_buffer", (void *)buffer, 3);
     CHECK(var_buf);
-
-    /* check content of variable */
     STRCMP_EQUAL("test_buffer", var_buf->name);
     LONGS_EQUAL(INFOLIST_BUFFER, var_buf->type);
     LONGS_EQUAL(12, ((char *)var_buf->value)[0]);
@@ -198,26 +189,44 @@ TEST(CoreInfolist, New)
     LONGS_EQUAL(3, var_buf->size);
     POINTERS_EQUAL(var_ptr, var_buf->prev_var);
     POINTERS_EQUAL(NULL, var_buf->next_var);
-
-    /* check that variable is in item */
     POINTERS_EQUAL(var_int, item->vars);
     POINTERS_EQUAL(var_buf, item->last_var);
 
-    /* add a buffer variable */
+    /* test time variable */
     var_time = infolist_new_var_time (item, "test_time", 1234567890);
     CHECK(var_time);
-
-    /* check content of variable */
     STRCMP_EQUAL("test_time", var_time->name);
     LONGS_EQUAL(INFOLIST_TIME, var_time->type);
     LONGS_EQUAL(1234567890, *((time_t *)var_time->value));
     LONGS_EQUAL(0, var_time->size);
     POINTERS_EQUAL(var_buf, var_time->prev_var);
     POINTERS_EQUAL(NULL, var_time->next_var);
-
-    /* check that variable is in item */
     POINTERS_EQUAL(var_int, item->vars);
     POINTERS_EQUAL(var_time, item->last_var);
+
+    /* test long variable */
+    var_long = infolist_new_var_long (item, "test_long", 2123456789);
+    CHECK(var_long);
+    STRCMP_EQUAL("test_long", var_long->name);
+    LONGS_EQUAL(INFOLIST_LONG, var_long->type);
+    LONGS_EQUAL(2123456789, *((long *)var_long->value));
+    LONGS_EQUAL(0, var_long->size);
+    POINTERS_EQUAL(var_time, var_long->prev_var);
+    POINTERS_EQUAL(NULL, var_long->next_var);
+    POINTERS_EQUAL(var_int, item->vars);
+    POINTERS_EQUAL(var_long, item->last_var);
+
+    /* test long long variable */
+    var_longlong = infolist_new_var_longlong (item, "test_longlong", 9123456789123456789);
+    CHECK(var_longlong);
+    STRCMP_EQUAL("test_longlong", var_longlong->name);
+    LONGS_EQUAL(INFOLIST_LONGLONG, var_longlong->type);
+    CHECK(9123456789123456789 == *((long long *)var_longlong->value));
+    LONGS_EQUAL(0, var_longlong->size);
+    POINTERS_EQUAL(var_long, var_longlong->prev_var);
+    POINTERS_EQUAL(NULL, var_longlong->next_var);
+    POINTERS_EQUAL(var_int, item->vars);
+    POINTERS_EQUAL(var_longlong, item->last_var);
 
     infolist_free (infolist);
 }
@@ -494,6 +503,10 @@ TEST(CoreInfolist, Get)
     STRCMP_EQUAL("buffer", ptr_var->name);
     ptr_var = ptr_var->next_var;
     STRCMP_EQUAL("time", ptr_var->name);
+    ptr_var = ptr_var->next_var;
+    STRCMP_EQUAL("long", ptr_var->name);
+    ptr_var = ptr_var->next_var;
+    STRCMP_EQUAL("longlong", ptr_var->name);
     LONGS_EQUAL(NULL, ptr_var->next_var);
 
     /* check variables in second item */
@@ -546,7 +559,7 @@ TEST(CoreInfolist, GetValues)
 TEST(CoreInfolist, Fields)
 {
     struct t_infolist *infolist;
-    const char *fields1 = "i:integer,s:string,p:pointer,b:buffer,t:time";
+    const char *fields1 = "i:integer,s:string,p:pointer,b:buffer,t:time,l:long,L:longlong";
     const char *fields2 = "s:string2";
 
     infolist = hook_infolist_get (NULL, "infolist_test", NULL, "test2");

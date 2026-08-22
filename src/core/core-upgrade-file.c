@@ -104,6 +104,40 @@ upgrade_file_write_time (struct t_upgrade_file *upgrade_file, time_t date)
 }
 
 /*
+ * Write a long integer value in upgrade file.
+ *
+ * Return:
+ *   1: OK
+ *   0: error
+ */
+
+int
+upgrade_file_write_long (struct t_upgrade_file *upgrade_file, long value)
+{
+    if (fwrite ((void *)(&value), sizeof (value), 1, upgrade_file->file) <= 0)
+        return 0;
+
+    return 1;
+}
+
+/*
+ * Write a long long integer value in upgrade file.
+ *
+ * Return:
+ *   1: OK
+ *   0: error
+ */
+
+int
+upgrade_file_write_longlong (struct t_upgrade_file *upgrade_file, long long value)
+{
+    if (fwrite ((void *)(&value), sizeof (value), 1, upgrade_file->file) <= 0)
+        return 0;
+
+    return 1;
+}
+
+/*
  * Write a string in upgrade file.
  *
  * Return:
@@ -394,6 +428,52 @@ upgrade_file_write_object (struct t_upgrade_file *upgrade_file, int object_id,
                                 return 0;
                             }
                             break;
+                        case 'l': /* long */
+                            if (!upgrade_file_write_integer (upgrade_file, UPGRADE_TYPE_OBJECT_VAR))
+                            {
+                                UPGRADE_ERROR(_("write - object type"), "object var");
+                                return 0;
+                            }
+                            if (!upgrade_file_write_string (upgrade_file, argv[i] + 2))
+                            {
+                                UPGRADE_ERROR(_("write - variable name"), "");
+                                return 0;
+                            }
+                            if (!upgrade_file_write_integer (upgrade_file, INFOLIST_LONG))
+                            {
+                                UPGRADE_ERROR(_("write - infolist type"), "long");
+                                return 0;
+                            }
+                            if (!upgrade_file_write_long (upgrade_file,
+                                                          infolist_long (infolist, argv[i] + 2)))
+                            {
+                                UPGRADE_ERROR(_("write - variable"), "long");
+                                return 0;
+                            }
+                            break;
+                        case 'L': /* long long */
+                            if (!upgrade_file_write_integer (upgrade_file, UPGRADE_TYPE_OBJECT_VAR))
+                            {
+                                UPGRADE_ERROR(_("write - object type"), "object var");
+                                return 0;
+                            }
+                            if (!upgrade_file_write_string (upgrade_file, argv[i] + 2))
+                            {
+                                UPGRADE_ERROR(_("write - variable name"), "");
+                                return 0;
+                            }
+                            if (!upgrade_file_write_integer (upgrade_file, INFOLIST_LONGLONG))
+                            {
+                                UPGRADE_ERROR(_("write - infolist type"), "longlong");
+                                return 0;
+                            }
+                            if (!upgrade_file_write_longlong (upgrade_file,
+                                                              infolist_longlong (infolist, argv[i] + 2)))
+                            {
+                                UPGRADE_ERROR(_("write - variable"), "longlong");
+                                return 0;
+                            }
+                            break;
                     }
                 }
             }
@@ -564,6 +644,60 @@ upgrade_file_read_time (struct t_upgrade_file *upgrade_file, time_t *time)
 }
 
 /*
+ * Read a long integer in upgrade file.
+ *
+ * Return:
+ *   1: OK
+ *   0: error
+ */
+
+int
+upgrade_file_read_long (struct t_upgrade_file *upgrade_file, long *value)
+{
+    upgrade_file->last_read_pos = ftell (upgrade_file->file);
+    upgrade_file->last_read_length = sizeof (*value);
+
+    if (value)
+    {
+        if (fread ((void *)value, sizeof (*value), 1, upgrade_file->file) <= 0)
+            return 0;
+    }
+    else
+    {
+        if (fseek (upgrade_file->file, sizeof (*value), SEEK_CUR) < 0)
+            return 0;
+    }
+    return 1;
+}
+
+/*
+ * Read a long long integer in upgrade file.
+ *
+ * Return:
+ *   1: OK
+ *   0: error
+ */
+
+int
+upgrade_file_read_longlong (struct t_upgrade_file *upgrade_file, long long *value)
+{
+    upgrade_file->last_read_pos = ftell (upgrade_file->file);
+    upgrade_file->last_read_length = sizeof (*value);
+
+    if (value)
+    {
+        if (fread ((void *)value, sizeof (*value), 1, upgrade_file->file) <= 0)
+            return 0;
+    }
+    else
+    {
+        if (fseek (upgrade_file->file, sizeof (*value), SEEK_CUR) < 0)
+            return 0;
+    }
+    return 1;
+}
+
+/*
  * Read an object in upgrade file and calls read callback.
  *
  * Return:
@@ -576,7 +710,9 @@ upgrade_file_read_object (struct t_upgrade_file *upgrade_file)
 {
     struct t_infolist *infolist;
     struct t_infolist_item *item;
-    int rc, object_id, type, type_var, value, size;
+    int rc, object_id, type, type_var, value_int, size;
+    long value_long;
+    long long value_longlong;
     char *name, *value_str;
     void *buffer;
     time_t time;
@@ -667,13 +803,13 @@ upgrade_file_read_object (struct t_upgrade_file *upgrade_file)
             switch (type_var)
             {
                 case INFOLIST_INTEGER:
-                    if (!upgrade_file_read_integer (upgrade_file, &value))
+                    if (!upgrade_file_read_integer (upgrade_file, &value_int))
                     {
                         UPGRADE_ERROR(_("read - variable"), "integer");
                         goto end;
                     }
                     infolist_new_var_integer_take_name_ownership (
-                        item, name, value);
+                        item, name, value_int);
                     name = NULL;
                     break;
                 case INFOLIST_STRING:
@@ -709,6 +845,28 @@ upgrade_file_read_object (struct t_upgrade_file *upgrade_file)
                     infolist_new_var_time_take_name_ownership (
                         item, name, time);
                     name = NULL;
+                    break;
+                case INFOLIST_LONG:
+                    if (!upgrade_file_read_long (upgrade_file, &value_long))
+                    {
+                        UPGRADE_ERROR(_("read - variable"), "long");
+                        goto end;
+                    }
+                    infolist_new_var_long_take_name_ownership (
+                        item, name, value_long);
+                    name = NULL;
+                    break;
+                case INFOLIST_LONGLONG:
+                    if (!upgrade_file_read_longlong (upgrade_file, &value_longlong))
+                    {
+                        UPGRADE_ERROR(_("read - variable"), "longlong");
+                        goto end;
+                    }
+                    infolist_new_var_longlong_take_name_ownership (
+                        item, name, value_longlong);
+                    name = NULL;
+                    break;
+                case INFOLIST_NUM_TYPES:
                     break;
             }
         }

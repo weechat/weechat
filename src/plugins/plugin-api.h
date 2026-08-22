@@ -77,6 +77,10 @@ extern void *plugin_api_infolist_buffer (struct t_infolist *infolist,
                                          const char *var, int *size);
 extern time_t plugin_api_infolist_time (struct t_infolist *infolist,
                                         const char *var);
+extern long plugin_api_infolist_long (struct t_infolist *infolist,
+                                      const char *var);
+extern long long plugin_api_infolist_longlong (struct t_infolist *infolist,
+                                               const char *var);
 extern void plugin_api_infolist_free (struct t_infolist *infolist);
 
 extern void plugin_api_init (void);

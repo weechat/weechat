@@ -4933,6 +4933,46 @@ API_FUNC(infolist_new_var_time)
     API_RETURN_STRING(result);
 }
 
+API_FUNC(infolist_new_var_long)
+{
+    char *item, *name;
+    const char *result;
+    long value;
+
+    API_INIT_FUNC(1, "infolist_new_var_long", API_RETURN_EMPTY);
+    item = NULL;
+    name = NULL;
+    value = 0;
+    if (!PyArg_ParseTuple (args, "ssl", &item, &name, &value))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    result = API_PTR2STR(weechat_infolist_new_var_long (API_STR2PTR(item),
+                                                        name,
+                                                        value));
+
+    API_RETURN_STRING(result);
+}
+
+API_FUNC(infolist_new_var_longlong)
+{
+    char *item, *name;
+    const char *result;
+    long long value;
+
+    API_INIT_FUNC(1, "infolist_new_var_longlong", API_RETURN_EMPTY);
+    item = NULL;
+    name = NULL;
+    value = 0;
+    if (!PyArg_ParseTuple (args, "ssL", &item, &name, &value))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    result = API_PTR2STR(weechat_infolist_new_var_longlong (API_STR2PTR(item),
+                                                            name,
+                                                            value));
+
+    API_RETURN_STRING(result);
+}
+
 API_FUNC(infolist_search_var)
 {
     char *infolist, *name;
@@ -5093,6 +5133,38 @@ API_FUNC(infolist_time)
     time = weechat_infolist_time (API_STR2PTR(infolist), variable);
 
     API_RETURN_LONG(time);
+}
+
+API_FUNC(infolist_long)
+{
+    char *infolist, *variable;
+    long value;
+
+    API_INIT_FUNC(1, "infolist_long", API_RETURN_LONG(0));
+    infolist = NULL;
+    variable = NULL;
+    if (!PyArg_ParseTuple (args, "ss", &infolist, &variable))
+        API_WRONG_ARGS(API_RETURN_LONG(0));
+
+    value = weechat_infolist_long (API_STR2PTR(infolist), variable);
+
+    API_RETURN_LONG(value);
+}
+
+API_FUNC(infolist_longlong)
+{
+    char *infolist, *variable;
+    long long value;
+
+    API_INIT_FUNC(1, "infolist_longlong", API_RETURN_LONGLONG(0));
+    infolist = NULL;
+    variable = NULL;
+    if (!PyArg_ParseTuple (args, "ss", &infolist, &variable))
+        API_WRONG_ARGS(API_RETURN_LONG(0));
+
+    value = weechat_infolist_longlong (API_STR2PTR(infolist), variable);
+
+    API_RETURN_LONGLONG(value);
 }
 
 API_FUNC(infolist_free)
@@ -5841,6 +5913,8 @@ PyMethodDef weechat_python_funcs[] =
     API_DEF_FUNC(infolist_new_var_string),
     API_DEF_FUNC(infolist_new_var_pointer),
     API_DEF_FUNC(infolist_new_var_time),
+    API_DEF_FUNC(infolist_new_var_long),
+    API_DEF_FUNC(infolist_new_var_longlong),
     API_DEF_FUNC(infolist_search_var),
     API_DEF_FUNC(infolist_get),
     API_DEF_FUNC(infolist_next),
@@ -5851,6 +5925,8 @@ PyMethodDef weechat_python_funcs[] =
     API_DEF_FUNC(infolist_string),
     API_DEF_FUNC(infolist_pointer),
     API_DEF_FUNC(infolist_time),
+    API_DEF_FUNC(infolist_long),
+    API_DEF_FUNC(infolist_longlong),
     API_DEF_FUNC(infolist_free),
     API_DEF_FUNC(hdata_get),
     API_DEF_FUNC(hdata_get_var_offset),

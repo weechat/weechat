@@ -20,6 +20,8 @@ enum t_infolist_type
     INFOLIST_POINTER,
     INFOLIST_BUFFER,
     INFOLIST_TIME,
+    INFOLIST_LONG,
+    INFOLIST_LONGLONG,
     /* number of infolist types */
     INFOLIST_NUM_TYPES,
 };
@@ -62,6 +64,7 @@ struct t_infolist
 
 extern struct t_infolist *weechat_infolists;
 extern struct t_infolist *last_weechat_infolist;
+extern char infolist_type_char_string[];
 
 /* list functions */
 
@@ -81,6 +84,15 @@ extern struct t_infolist_var *infolist_new_var_buffer (struct t_infolist_item *i
                                                        const char *name,
                                                        void *pointer,
                                                        int size);
+extern struct t_infolist_var *infolist_new_var_time (struct t_infolist_item *item,
+                                                     const char *name,
+                                                     time_t time);
+extern struct t_infolist_var *infolist_new_var_long (struct t_infolist_item *item,
+                                                     const char *name,
+                                                     long value);
+extern struct t_infolist_var *infolist_new_var_longlong (struct t_infolist_item *item,
+                                                         const char *name,
+                                                         long long value);
 /*
  * INTERNAL USE ONLY (core-upgrade-file.c): unlike infolist_new_var_string()/
  * infolist_new_var_buffer()/infolist_new_var_integer()/infolist_new_var_time()
@@ -106,25 +118,23 @@ extern struct t_infolist_var *infolist_new_var_buffer_take_ownership (struct t_i
 extern struct t_infolist_var *infolist_new_var_time_take_name_ownership (struct t_infolist_item *item,
                                                                          char *name,
                                                                          time_t time);
-extern struct t_infolist_var *infolist_new_var_time (struct t_infolist_item *item,
-                                                     const char *name,
-                                                     time_t time);
+extern struct t_infolist_var *infolist_new_var_long_take_name_ownership (struct t_infolist_item *item,
+                                                                         char *name, long value);
+extern struct t_infolist_var *infolist_new_var_longlong_take_name_ownership (struct t_infolist_item *item,
+                                                                             char *name, long long value);
 extern struct t_infolist_var *infolist_search_var (struct t_infolist *infolist,
                                                    const char *name);
 extern struct t_infolist_item *infolist_next (struct t_infolist *infolist);
 extern struct t_infolist_item *infolist_prev (struct t_infolist *infolist);
 extern void infolist_reset_item_cursor (struct t_infolist *infolist);
 extern const char *infolist_fields (struct t_infolist *infolist);
-extern int infolist_integer (struct t_infolist *infolist,
-                             const char *var);
-extern const char *infolist_string (struct t_infolist *infolist,
-                              const char *var);
-extern void *infolist_pointer (struct t_infolist *infolist,
-                               const char *var);
-extern void *infolist_buffer (struct t_infolist *infolist,
-                              const char *var, int *size);
-extern time_t infolist_time (struct t_infolist *infolist,
-                             const char *var);
+extern int infolist_integer (struct t_infolist *infolist, const char *var);
+extern const char *infolist_string (struct t_infolist *infolist, const char *var);
+extern void *infolist_pointer (struct t_infolist *infolist, const char *var);
+extern void *infolist_buffer (struct t_infolist *infolist, const char *var, int *size);
+extern time_t infolist_time (struct t_infolist *infolist, const char *var);
+extern long infolist_long (struct t_infolist *infolist, const char *var);
+extern long long infolist_longlong (struct t_infolist *infolist, const char *var);
 extern void infolist_free (struct t_infolist *infolist);
 extern void infolist_free_all_plugin (struct t_weechat_plugin *plugin);
 extern void infolist_print_log (void);

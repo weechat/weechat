@@ -201,6 +201,8 @@ function weechat_infolist_new_var_integer(string $p0, string $p1, int $p2): stri
 function weechat_infolist_new_var_string(string $p0, string $p1, string $p2): string {}
 function weechat_infolist_new_var_pointer(string $p0, string $p1, string $p2): string {}
 function weechat_infolist_new_var_time(string $p0, string $p1, int $p2): string {}
+function weechat_infolist_new_var_long(string $p0, string $p1, int $p2): string {}
+function weechat_infolist_new_var_longlong(string $p0, string $p1, int $p2): string {}
 function weechat_infolist_search_var(string $p0, string $p1): string {}
 function weechat_infolist_get(string $p0, string $p1, string $p2): string {}
 function weechat_infolist_next(string $p0): int {}
@@ -211,6 +213,8 @@ function weechat_infolist_integer(string $p0, string $p1): int {}
 function weechat_infolist_string(string $p0, string $p1): string {}
 function weechat_infolist_pointer(string $p0, string $p1): string {}
 function weechat_infolist_time(string $p0, string $p1): int {}
+function weechat_infolist_long(string $p0, string $p1): int {}
+function weechat_infolist_longlong(string $p0, string $p1): int {}
 function weechat_infolist_free(string $p0): int {}
 function weechat_hdata_get(string $p0): string {}
 function weechat_hdata_get_var_offset(string $p0, string $p1): int {}

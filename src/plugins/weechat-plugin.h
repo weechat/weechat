@@ -62,7 +62,7 @@ struct t_weelist_item;
  * please change the date with current one; for a second change at same
  * date, increment the 01, otherwise please keep 01.
  */
-#define WEECHAT_PLUGIN_API_VERSION "20260704-03"
+#define WEECHAT_PLUGIN_API_VERSION "20260816-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -1176,6 +1176,12 @@ struct t_weechat_plugin
     struct t_infolist_var *(*infolist_new_var_time) (struct t_infolist_item *item,
                                                      const char *name,
                                                      time_t time);
+    struct t_infolist_var *(*infolist_new_var_long) (struct t_infolist_item *item,
+                                                     const char *name,
+                                                     long value);
+    struct t_infolist_var *(*infolist_new_var_longlong) (struct t_infolist_item *item,
+                                                         const char *name,
+                                                         long long value);
     struct t_infolist_var *(*infolist_search_var) (struct t_infolist *infolist,
                                                    const char *name);
     struct t_infolist *(*infolist_get) (struct t_weechat_plugin *plugin,
@@ -1192,6 +1198,8 @@ struct t_weechat_plugin
     void *(*infolist_buffer) (struct t_infolist *infolist, const char *var,
                               int *size);
     time_t (*infolist_time) (struct t_infolist *infolist, const char *var);
+    long (*infolist_long) (struct t_infolist *infolist, const char *var);
+    long long (*infolist_longlong) (struct t_infolist *infolist, const char *var);
     void (*infolist_free) (struct t_infolist *infolist);
 
     /* hdata */
@@ -2270,6 +2278,10 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
                                               __size)
 #define weechat_infolist_new_var_time(__item, __name, __time)           \
     (weechat_plugin->infolist_new_var_time)(__item, __name, __time)
+#define weechat_infolist_new_var_long(__item, __name, __value)          \
+    (weechat_plugin->infolist_new_var_long)(__item, __name, __value)
+#define weechat_infolist_new_var_longlong(__item, __name, __value)      \
+    (weechat_plugin->infolist_new_var_longlong)(__item, __name, __value)
 #define weechat_infolist_search_var(__list, __name)                     \
     (weechat_plugin->infolist_search_var)(__list, __name)
 #define weechat_infolist_get(__infolist_name, __pointer, __arguments)   \
@@ -2293,6 +2305,10 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     (weechat_plugin->infolist_buffer)(__item, __var, __size)
 #define weechat_infolist_time(__item, __var)                            \
     (weechat_plugin->infolist_time)(__item, __var)
+#define weechat_infolist_long(__item, __var)                            \
+    (weechat_plugin->infolist_long)(__item, __var)
+#define weechat_infolist_longlong(__item, __var)                        \
+    (weechat_plugin->infolist_longlong)(__item, __var)
 #define weechat_infolist_free(__list)                                   \
     (weechat_plugin->infolist_free)(__list)
 

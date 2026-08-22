@@ -5065,6 +5065,54 @@ API_FUNC(infolist_new_var_time)
     API_RETURN_STRING(result);
 }
 
+API_FUNC(infolist_new_var_long)
+{
+    zend_string *z_item, *z_name;
+    zend_long z_value;
+    struct t_infolist_item *item;
+    char *name;
+    long value;
+    const char *result;
+
+    API_INIT_FUNC(1, "infolist_new_var_long", API_RETURN_EMPTY);
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SSl", &z_item, &z_name,
+                               &z_value) == FAILURE)
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    item = (struct t_infolist_item *)API_STR2PTR(ZSTR_VAL(z_item));
+    name = ZSTR_VAL(z_name);
+    value = z_value;
+
+    result = API_PTR2STR(
+        weechat_infolist_new_var_long (item, (const char *)name, value));
+
+    API_RETURN_STRING(result);
+}
+
+API_FUNC(infolist_new_var_longlong)
+{
+    zend_string *z_item, *z_name;
+    zend_long z_value;
+    struct t_infolist_item *item;
+    char *name;
+    long long value;
+    const char *result;
+
+    API_INIT_FUNC(1, "infolist_new_var_longlong", API_RETURN_EMPTY);
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SSl", &z_item, &z_name,
+                               &z_value) == FAILURE)
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    item = (struct t_infolist_item *)API_STR2PTR(ZSTR_VAL(z_item));
+    name = ZSTR_VAL(z_name);
+    value = z_value;
+
+    result = API_PTR2STR(
+        weechat_infolist_new_var_longlong (item, (const char *)name, value));
+
+    API_RETURN_STRING(result);
+}
+
 API_FUNC(infolist_search_var)
 {
     zend_string *z_infolist, *z_name;
@@ -5256,6 +5304,46 @@ API_FUNC(infolist_time)
     time = weechat_infolist_time (infolist, (const char *)var);
 
     API_RETURN_LONG(time);
+}
+
+API_FUNC(infolist_long)
+{
+    zend_string *z_infolist, *z_var;
+    struct t_infolist *infolist;
+    char *var;
+    long result;
+
+    API_INIT_FUNC(1, "infolist_long", API_RETURN_LONG(0));
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SS", &z_infolist,
+                               &z_var) == FAILURE)
+        API_WRONG_ARGS(API_RETURN_LONG(0));
+
+    infolist = (struct t_infolist *)API_STR2PTR(ZSTR_VAL(z_infolist));
+    var = ZSTR_VAL(z_var);
+
+    result = weechat_infolist_long (infolist, (const char *)var);
+
+    API_RETURN_LONG(result);
+}
+
+API_FUNC(infolist_longlong)
+{
+    zend_string *z_infolist, *z_var;
+    struct t_infolist *infolist;
+    char *var;
+    long long result;
+
+    API_INIT_FUNC(1, "infolist_longlong", API_RETURN_LONGLONG(0));
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SS", &z_infolist,
+                               &z_var) == FAILURE)
+        API_WRONG_ARGS(API_RETURN_LONG(0));
+
+    infolist = (struct t_infolist *)API_STR2PTR(ZSTR_VAL(z_infolist));
+    var = ZSTR_VAL(z_var);
+
+    result = weechat_infolist_longlong (infolist, (const char *)var);
+
+    API_RETURN_LONGLONG(result);
 }
 
 API_FUNC(infolist_free)

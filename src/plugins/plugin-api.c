@@ -664,6 +664,32 @@ plugin_api_infolist_time (struct t_infolist *infolist, const char *var)
 }
 
 /*
+ * Get long integer value for a variable in current infolist item.
+ */
+
+long
+plugin_api_infolist_long (struct t_infolist *infolist, const char *var)
+{
+    if (!infolist || !infolist_valid (infolist) || !infolist->ptr_item)
+        return 0;
+
+    return infolist_long (infolist, var);
+}
+
+/*
+ * Get long long integer value for a variable in current infolist item.
+ */
+
+long long
+plugin_api_infolist_longlong (struct t_infolist *infolist, const char *var)
+{
+    if (!infolist || !infolist_valid (infolist) || !infolist->ptr_item)
+        return 0;
+
+    return infolist_longlong (infolist, var);
+}
+
+/*
  * Free an infolist.
  */
 

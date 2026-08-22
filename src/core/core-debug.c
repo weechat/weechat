@@ -712,6 +712,12 @@ debug_infolists (void)
                             case INFOLIST_TIME:
                                 size_data += sizeof (time_t);
                                 break;
+                            case INFOLIST_LONG:
+                                size_data += sizeof (long);
+                                break;
+                            case INFOLIST_LONGLONG:
+                                size_data += sizeof (long long);
+                                break;
                             case INFOLIST_NUM_TYPES:
                                 break;
                         }

@@ -2473,6 +2473,26 @@ def infolist_new_var_time(item: str, name: str, time: int) -> str:
     ...
 
 
+def infolist_new_var_long(item: str, name: str, value: int) -> str:
+    """`infolist_new_var_long in WeeChat plugin API reference <https://weechat.org/doc/weechat/api/#_infolist_new_var_long>`_
+    ::
+
+        # example
+        var = weechat.infolist_new_var_long(item, "my_long", 2123456789)
+    """
+    ...
+
+
+def infolist_new_var_longlong(item: str, name: str, value: int) -> str:
+    """`infolist_new_var_longlong in WeeChat plugin API reference <https://weechat.org/doc/weechat/api/#_infolist_new_var_longlong>`_
+    ::
+
+        # example
+        var = weechat.infolist_new_var_longlong(item, "my_longlong", 9123456789123456789)
+    """
+    ...
+
+
 def infolist_get(infolist_name: str, pointer: str, arguments: str) -> str:
     """`infolist_get in WeeChat plugin API reference <https://weechat.org/doc/weechat/api/#_infolist_get>`_
     ::
@@ -2581,6 +2601,26 @@ def infolist_time(infolist: str, var: str) -> int:
 
         # example
         weechat.prnt("", "time = %d" % weechat.infolist_time(infolist, "my_time"))
+    """
+    ...
+
+
+def infolist_long(infolist: str, var: str) -> int:
+    """`infolist_long in WeeChat plugin API reference <https://weechat.org/doc/weechat/api/#_infolist_long>`_
+    ::
+
+        # example
+        weechat.prnt("", "value = %d" % weechat.infolist_long(infolist, "my_long"))
+    """
+    ...
+
+
+def infolist_longlong(infolist: str, var: str) -> int:
+    """`infolist_longlong in WeeChat plugin API reference <https://weechat.org/doc/weechat/api/#_infolist_longlong>`_
+    ::
+
+        # example
+        weechat.prnt("", "value = %d" % weechat.infolist_longlong(infolist, "my_longlong"))
     """
     ...
 

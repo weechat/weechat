@@ -22,8 +22,8 @@
 struct t_infolist *weechat_infolists = NULL;
 struct t_infolist *last_weechat_infolist = NULL;
 
-char *infolist_type_char_string[INFOLIST_NUM_TYPES] = {
-    "i", "s", "p", "b", "t",
+char infolist_type_char_string[INFOLIST_NUM_TYPES] = {
+    'i', 's', 'p', 'b', 't', 'l', 'L',
 };
 
 
@@ -263,6 +263,111 @@ infolist_new_var_buffer (struct t_infolist_item *item,
 }
 
 /*
+ * Create a new time variable in an item.
+ *
+ * Return pointer to new variable, NULL if error.
+ */
+
+struct t_infolist_var *
+infolist_new_var_time (struct t_infolist_item *item,
+                       const char *name, time_t time)
+{
+    struct t_infolist_var *new_var;
+
+    if (!item || !name || !name[0])
+        return NULL;
+
+    new_var = malloc (sizeof (*new_var));
+    if (new_var)
+    {
+        new_var->name = strdup (name);
+        new_var->type = INFOLIST_TIME;
+        new_var->value = malloc (sizeof (time_t));
+        if (new_var->value)
+            *((time_t *)new_var->value) = time;
+        new_var->size = 0;  /* not used for a time */
+
+        infolist_var_link (item, new_var);
+    }
+
+    return new_var;
+}
+
+/*
+ * Create a new long variable in an item.
+ *
+ * Return pointer to new variable, NULL if error.
+ */
+
+struct t_infolist_var *
+infolist_new_var_long (struct t_infolist_item *item,
+                       const char *name, long value)
+{
+    struct t_infolist_var *new_var;
+
+    if (!item || !name || !name[0])
+        return NULL;
+
+    new_var = malloc (sizeof (*new_var));
+    if (new_var)
+    {
+        new_var->name = strdup (name);
+        new_var->type = INFOLIST_LONG;
+        new_var->value = malloc (sizeof (long));
+        if (new_var->value)
+            *((long *)new_var->value) = value;
+        new_var->size = 0;  /* not used for a long */
+
+        new_var->prev_var = item->last_var;
+        new_var->next_var = NULL;
+        if (item->last_var)
+            item->last_var->next_var = new_var;
+        else
+            item->vars = new_var;
+        item->last_var = new_var;
+    }
+
+    return new_var;
+}
+
+/*
+ * Create a new long long variable in an item.
+ *
+ * Return pointer to new variable, NULL if error.
+ */
+
+struct t_infolist_var *
+infolist_new_var_longlong (struct t_infolist_item *item,
+                           const char *name, long long value)
+{
+    struct t_infolist_var *new_var;
+
+    if (!item || !name || !name[0])
+        return NULL;
+
+    new_var = malloc (sizeof (*new_var));
+    if (new_var)
+    {
+        new_var->name = strdup (name);
+        new_var->type = INFOLIST_LONGLONG;
+        new_var->value = malloc (sizeof (long long));
+        if (new_var->value)
+            *((long long *)new_var->value) = value;
+        new_var->size = 0;  /* not used for a long long */
+
+        new_var->prev_var = item->last_var;
+        new_var->next_var = NULL;
+        if (item->last_var)
+            item->last_var->next_var = new_var;
+        else
+            item->vars = new_var;
+        item->last_var = new_var;
+    }
+
+    return new_var;
+}
+
+/*
  * Create a new integer variable in an item, taking ownership of "name"
  * instead of copying it (the infolist will free it later).
  *
@@ -440,31 +545,88 @@ infolist_new_var_time_take_name_ownership (struct t_infolist_item *item,
 }
 
 /*
- * Create a new time variable in an item.
+ * Create a new long integer variable in an item, taking ownership of "name"
+ * instead of copying it (the infolist will free it later).
+ *
+ * INTERNAL USE ONLY, see comment in core-infolist.h.
+ *
+ * Note: "name" is freed if the variable cannot be created (error return),
+ * so the caller never has to free it.
  *
  * Return pointer to new variable, NULL if error.
  */
 
 struct t_infolist_var *
-infolist_new_var_time (struct t_infolist_item *item,
-                       const char *name, time_t time)
+infolist_new_var_long_take_name_ownership (struct t_infolist_item *item,
+                                           char *name, long value)
 {
     struct t_infolist_var *new_var;
 
     if (!item || !name || !name[0])
+    {
+        free (name);
         return NULL;
+    }
 
     new_var = malloc (sizeof (*new_var));
     if (new_var)
     {
-        new_var->name = strdup (name);
-        new_var->type = INFOLIST_TIME;
-        new_var->value = malloc (sizeof (time_t));
+        new_var->name = name;
+        new_var->type = INFOLIST_LONG;
+        new_var->value = malloc (sizeof (long));
         if (new_var->value)
-            *((time_t *)new_var->value) = time;
-        new_var->size = 0;  /* not used for a time */
+            *((long *)new_var->value) = value;
+        new_var->size = 0;  /* not used for a long */
 
         infolist_var_link (item, new_var);
+    }
+    else
+    {
+        free (name);
+    }
+
+    return new_var;
+}
+
+/*
+ * Create a new long long integer variable in an item, taking ownership of "name"
+ * instead of copying it (the infolist will free it later).
+ *
+ * INTERNAL USE ONLY, see comment in core-infolist.h.
+ *
+ * Note: "name" is freed if the variable cannot be created (error return),
+ * so the caller never has to free it.
+ *
+ * Return pointer to new variable, NULL if error.
+ */
+
+struct t_infolist_var *
+infolist_new_var_longlong_take_name_ownership (struct t_infolist_item *item,
+                                               char *name, long long value)
+{
+    struct t_infolist_var *new_var;
+
+    if (!item || !name || !name[0])
+    {
+        free (name);
+        return NULL;
+    }
+
+    new_var = malloc (sizeof (*new_var));
+    if (new_var)
+    {
+        new_var->name = name;
+        new_var->type = INFOLIST_LONGLONG;
+        new_var->value = malloc (sizeof (long long));
+        if (new_var->value)
+            *((long long *)new_var->value) = value;
+        new_var->size = 0;  /* not used for a long long */
+
+        infolist_var_link (item, new_var);
+    }
+    else
+    {
+        free (name);
     }
 
     return new_var;
@@ -593,7 +755,7 @@ const char *
 infolist_fields (struct t_infolist *infolist)
 {
     struct t_infolist_var *ptr_var;
-    char **fields;
+    char **fields, str_type[2];
 
     if (!infolist || !infolist->ptr_item)
         return NULL;
@@ -610,7 +772,9 @@ infolist_fields (struct t_infolist *infolist)
     {
         if ((*fields)[0])
             string_dyn_concat (fields, ",", -1);
-        string_dyn_concat (fields, infolist_type_char_string[ptr_var->type], -1);
+        str_type[0] = infolist_type_char_string[ptr_var->type];
+        str_type[1] = '\0';
+        string_dyn_concat (fields, str_type, -1);
         string_dyn_concat (fields, ":", -1);
         string_dyn_concat (fields, ptr_var->name, -1);
     }
@@ -719,6 +883,62 @@ infolist_time (struct t_infolist *infolist, const char *var)
 }
 
 /*
+ * Get long value for a variable in current infolist item.
+ */
+
+long
+infolist_long (struct t_infolist *infolist, const char *var)
+{
+    struct t_infolist_var *ptr_var;
+
+    if (!infolist || !infolist->ptr_item || !var || !var[0])
+        return 0;
+
+    for (ptr_var = infolist->ptr_item->vars; ptr_var;
+         ptr_var = ptr_var->next_var)
+    {
+        if (strcmp (ptr_var->name, var) == 0)
+        {
+            if (ptr_var->type == INFOLIST_LONG)
+                return *((long *)ptr_var->value);
+            else
+                return 0;
+        }
+    }
+
+    /* variable not found */
+    return 0;
+}
+
+/*
+ * Get long long value for a variable in current infolist item.
+ */
+
+long long
+infolist_longlong (struct t_infolist *infolist, const char *var)
+{
+    struct t_infolist_var *ptr_var;
+
+    if (!infolist || !infolist->ptr_item || !var || !var[0])
+        return 0;
+
+    for (ptr_var = infolist->ptr_item->vars; ptr_var;
+         ptr_var = ptr_var->next_var)
+    {
+        if (strcmp (ptr_var->name, var) == 0)
+        {
+            if (ptr_var->type == INFOLIST_LONGLONG)
+                return *((long long *)ptr_var->value);
+            else
+                return 0;
+        }
+    }
+
+    /* variable not found */
+    return 0;
+}
+
+/*
  * Free a variable in item.
  */
 
@@ -750,7 +970,9 @@ infolist_var_free (struct t_infolist_item *item,
     if (((var->type == INFOLIST_INTEGER)
          || (var->type == INFOLIST_STRING)
          || (var->type == INFOLIST_BUFFER)
-         || (var->type == INFOLIST_TIME))
+         || (var->type == INFOLIST_TIME)
+         || (var->type == INFOLIST_LONG)
+         || (var->type == INFOLIST_LONGLONG))
         && var->value)
     {
         free (var->value);
@@ -913,6 +1135,12 @@ infolist_print_log (void)
                         break;
                     case INFOLIST_TIME:
                         log_printf ("        value (time) . . . . : %lld", (long long)(*((time_t *)ptr_var->value)));
+                        break;
+                    case INFOLIST_LONG:
+                        log_printf ("        value (long) . . . . : %ld", *((long *)ptr_var->value));
+                        break;
+                    case INFOLIST_LONGLONG:
+                        log_printf ("        value (longlong) . . : %lld", *((long long *)ptr_var->value));
                         break;
                     case INFOLIST_NUM_TYPES:
                         break;

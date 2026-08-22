@@ -900,6 +900,8 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
         new_plugin->infolist_new_var_pointer = &infolist_new_var_pointer;
         new_plugin->infolist_new_var_buffer = &infolist_new_var_buffer;
         new_plugin->infolist_new_var_time = &infolist_new_var_time;
+        new_plugin->infolist_new_var_long = &infolist_new_var_long;
+        new_plugin->infolist_new_var_longlong = &infolist_new_var_longlong;
         new_plugin->infolist_search_var = &infolist_search_var;
         new_plugin->infolist_get = &hook_infolist_get;
         new_plugin->infolist_next = &plugin_api_infolist_next;
@@ -911,6 +913,8 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
         new_plugin->infolist_pointer = &plugin_api_infolist_pointer;
         new_plugin->infolist_buffer = &plugin_api_infolist_buffer;
         new_plugin->infolist_time = &plugin_api_infolist_time;
+        new_plugin->infolist_long = &plugin_api_infolist_long;
+        new_plugin->infolist_longlong = &plugin_api_infolist_longlong;
         new_plugin->infolist_free = &plugin_api_infolist_free;
 
         new_plugin->hdata_new = &hdata_new;

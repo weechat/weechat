@@ -4765,6 +4765,42 @@ weechat_guile_api_infolist_new_var_time (SCM item, SCM name, SCM value)
 }
 
 SCM
+weechat_guile_api_infolist_new_var_long (SCM item, SCM name, SCM value)
+{
+    const char *result;
+    SCM return_value;
+
+    API_INIT_FUNC(1, "infolist_new_var_long", API_RETURN_EMPTY);
+    if (!scm_is_string (item) || !scm_is_string (name)
+        || !scm_is_integer (value))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    result = API_PTR2STR(weechat_infolist_new_var_long (API_STR2PTR(API_SCM_TO_STRING(item)),
+                                                        API_SCM_TO_STRING(name),
+                                                        scm_to_long (value)));
+
+    API_RETURN_STRING(result);
+}
+
+SCM
+weechat_guile_api_infolist_new_var_longlong (SCM item, SCM name, SCM value)
+{
+    const char *result;
+    SCM return_value;
+
+    API_INIT_FUNC(1, "infolist_new_var_longlong", API_RETURN_EMPTY);
+    if (!scm_is_string (item) || !scm_is_string (name)
+        || !scm_is_integer (value))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    result = API_PTR2STR(weechat_infolist_new_var_longlong (API_STR2PTR(API_SCM_TO_STRING(item)),
+                                                            API_SCM_TO_STRING(name),
+                                                            scm_to_long_long (value)));
+
+    API_RETURN_STRING(result);
+}
+
+SCM
 weechat_guile_api_infolist_search_var (SCM infolist, SCM name)
 {
     const char *result;
@@ -4913,6 +4949,36 @@ weechat_guile_api_infolist_time (SCM infolist, SCM variable)
                                   API_SCM_TO_STRING(variable));
 
     API_RETURN_LONG(time);
+}
+
+SCM
+weechat_guile_api_infolist_long (SCM infolist, SCM variable)
+{
+    long value;
+
+    API_INIT_FUNC(1, "infolist_long", API_RETURN_LONG(0));
+    if (!scm_is_string (infolist) || !scm_is_string (variable))
+        API_WRONG_ARGS(API_RETURN_LONG(0));
+
+    value = weechat_infolist_long (API_STR2PTR(API_SCM_TO_STRING(infolist)),
+                                   API_SCM_TO_STRING(variable));
+
+    API_RETURN_LONG(value);
+}
+
+SCM
+weechat_guile_api_infolist_longlong (SCM infolist, SCM variable)
+{
+    long long value;
+
+    API_INIT_FUNC(1, "infolist_longlong", API_RETURN_LONGLONG(0));
+    if (!scm_is_string (infolist) || !scm_is_string (variable))
+        API_WRONG_ARGS(API_RETURN_LONGLONG(0));
+
+    value = weechat_infolist_longlong (API_STR2PTR(API_SCM_TO_STRING(infolist)),
+                                       API_SCM_TO_STRING(variable));
+
+    API_RETURN_LONGLONG(value);
 }
 
 SCM
@@ -5649,6 +5715,8 @@ weechat_guile_api_module_init (void *data)
     API_DEF_FUNC(infolist_new_var_string, 3);
     API_DEF_FUNC(infolist_new_var_pointer, 3);
     API_DEF_FUNC(infolist_new_var_time, 3);
+    API_DEF_FUNC(infolist_new_var_long, 3);
+    API_DEF_FUNC(infolist_new_var_longlong, 3);
     API_DEF_FUNC(infolist_search_var, 2);
     API_DEF_FUNC(infolist_get, 3);
     API_DEF_FUNC(infolist_next, 1);
@@ -5659,6 +5727,8 @@ weechat_guile_api_module_init (void *data)
     API_DEF_FUNC(infolist_string, 2);
     API_DEF_FUNC(infolist_pointer, 2);
     API_DEF_FUNC(infolist_time, 2);
+    API_DEF_FUNC(infolist_long, 2);
+    API_DEF_FUNC(infolist_longlong, 2);
     API_DEF_FUNC(infolist_free, 1);
     API_DEF_FUNC(hdata_get, 1);
     API_DEF_FUNC(hdata_get_var_offset, 2);

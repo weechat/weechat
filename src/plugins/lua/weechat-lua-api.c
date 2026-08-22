@@ -5041,6 +5041,48 @@ API_FUNC(infolist_new_var_time)
     API_RETURN_STRING(result);
 }
 
+API_FUNC(infolist_new_var_long)
+{
+    const char *item, *name;
+    const char *result;
+    long value;
+
+    API_INIT_FUNC(1, "infolist_new_var_long", API_RETURN_EMPTY);
+    if (lua_gettop (L) < 3)
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    item = lua_tostring (L, -3);
+    name = lua_tostring (L, -2);
+    value = lua_tonumber (L, -1);
+
+    result = API_PTR2STR(weechat_infolist_new_var_long (API_STR2PTR(item),
+                                                        name,
+                                                        value));
+
+    API_RETURN_STRING(result);
+}
+
+API_FUNC(infolist_new_var_longlong)
+{
+    const char *item, *name;
+    const char *result;
+    long long value;
+
+    API_INIT_FUNC(1, "infolist_new_var_longlong", API_RETURN_EMPTY);
+    if (lua_gettop (L) < 3)
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    item = lua_tostring (L, -3);
+    name = lua_tostring (L, -2);
+    value = lua_tointeger (L, -1);
+
+    result = API_PTR2STR(weechat_infolist_new_var_longlong (API_STR2PTR(item),
+                                                            name,
+                                                            value));
+
+    API_RETURN_STRING(result);
+}
+
 API_FUNC(infolist_search_var)
 {
     const char *infolist, *name;
@@ -5209,6 +5251,40 @@ API_FUNC(infolist_time)
     time = weechat_infolist_time (API_STR2PTR(infolist), variable);
 
     API_RETURN_LONG(time);
+}
+
+API_FUNC(infolist_long)
+{
+    const char *infolist, *variable;
+    long value;
+
+    API_INIT_FUNC(1, "infolist_long", API_RETURN_LONG(0));
+    if (lua_gettop (L) < 2)
+        API_WRONG_ARGS(API_RETURN_LONG(0));
+
+    infolist = lua_tostring (L, -2);
+    variable = lua_tostring (L, -1);
+
+    value = weechat_infolist_long (API_STR2PTR(infolist), variable);
+
+    API_RETURN_LONG(value);
+}
+
+API_FUNC(infolist_longlong)
+{
+    const char *infolist, *variable;
+    long long value;
+
+    API_INIT_FUNC(1, "infolist_longlong", API_RETURN_LONGLONG(0));
+    if (lua_gettop (L) < 2)
+        API_WRONG_ARGS(API_RETURN_LONG(0));
+
+    infolist = lua_tostring (L, -2);
+    variable = lua_tostring (L, -1);
+
+    value = weechat_infolist_longlong (API_STR2PTR(infolist), variable);
+
+    API_RETURN_LONGLONG(value);
 }
 
 API_FUNC(infolist_free)
@@ -5966,6 +6042,8 @@ const struct luaL_Reg weechat_lua_api_funcs[] = {
     API_DEF_FUNC(infolist_new_var_string),
     API_DEF_FUNC(infolist_new_var_pointer),
     API_DEF_FUNC(infolist_new_var_time),
+    API_DEF_FUNC(infolist_new_var_long),
+    API_DEF_FUNC(infolist_new_var_longlong),
     API_DEF_FUNC(infolist_search_var),
     API_DEF_FUNC(infolist_get),
     API_DEF_FUNC(infolist_next),
@@ -5976,6 +6054,8 @@ const struct luaL_Reg weechat_lua_api_funcs[] = {
     API_DEF_FUNC(infolist_string),
     API_DEF_FUNC(infolist_pointer),
     API_DEF_FUNC(infolist_time),
+    API_DEF_FUNC(infolist_long),
+    API_DEF_FUNC(infolist_longlong),
     API_DEF_FUNC(infolist_free),
     API_DEF_FUNC(hdata_get),
     API_DEF_FUNC(hdata_get_var_offset),

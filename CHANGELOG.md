@@ -8,6 +8,10 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 ## [Unreleased]
 
+### Added
+
+- api: add functions "infolist_new_var_long", "infolist_new_var_longlong", "infolist_long", "infolist_longlong"
+
 ### Changed
 
 - api: return an error and an empty string in function string_base_decode when the string to decode is invalid (invalid char, truncated string or invalid padding)

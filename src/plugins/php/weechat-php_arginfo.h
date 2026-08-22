@@ -1,5 +1,5 @@
-/* This is a generated file, edit the .stub.php file instead.
- * Stub hash: b20e387bfdf7c5496a25b4a07f5d3eed456f7992 */
+/* This is a generated file, edit weechat-php.stub.php instead.
+ * Stub hash: 77ccd929a546ea5cebfdc39c333995e5b3fe3640 */
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_weechat_register, 0, 7, IS_LONG, 0)
 	ZEND_ARG_TYPE_INFO(0, p0, IS_STRING, 0)
@@ -569,6 +569,10 @@ ZEND_END_ARG_INFO()
 
 #define arginfo_weechat_infolist_new_var_time arginfo_weechat_ngettext
 
+#define arginfo_weechat_infolist_new_var_long arginfo_weechat_ngettext
+
+#define arginfo_weechat_infolist_new_var_longlong arginfo_weechat_ngettext
+
 #define arginfo_weechat_infolist_search_var arginfo_weechat_iconv_to_internal
 
 #define arginfo_weechat_infolist_get arginfo_weechat_config_search_option
@@ -588,6 +592,10 @@ ZEND_END_ARG_INFO()
 #define arginfo_weechat_infolist_pointer arginfo_weechat_iconv_to_internal
 
 #define arginfo_weechat_infolist_time arginfo_weechat_string_has_highlight
+
+#define arginfo_weechat_infolist_long arginfo_weechat_string_has_highlight
+
+#define arginfo_weechat_infolist_longlong arginfo_weechat_string_has_highlight
 
 #define arginfo_weechat_infolist_free arginfo_weechat_charset_set
 

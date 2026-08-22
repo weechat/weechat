@@ -18556,6 +18556,96 @@ def infolist_new_var_time(item: str, name: str, time: int) -> str: ...
 var = weechat.infolist_new_var_time(item, "mon_time", int(time.time()))
 ----
 
+==== infolist_new_var_long
+
+_WeeChat ≥ 4.11.0._
+
+Ajouter une variable de type "long" dans l'objet de l'infolist.
+
+Prototype :
+
+[source,c]
+----
+struct t_infolist_var *weechat_infolist_new_var_long (struct t_infolist_item *item,
+                                                      const char *name,
+                                                      long value);
+----
+
+Paramètres :
+
+* _item_ : pointeur vers l'objet de l'infolist
+* _name_ : nom de la variable
+* _value_ : valeur de type "long"
+
+Valeur de retour :
+
+* pointeur vers la nouvelle variable
+
+Exemple en C :
+
+[source,c]
+----
+struct t_infolist_var *var = weechat_infolist_new_var_long (item,
+                                                            "mon_long",
+                                                            2123456789);
+----
+
+Script (Python) :
+
+[source,python]
+----
+# prototype
+def infolist_new_var_long(item: str, name: str, value: int) -> str: ...
+
+# exemple
+var = weechat.infolist_new_var_long(item, "mon_long", 2123456789)
+----
+
+==== infolist_new_var_longlong
+
+_WeeChat ≥ 4.11.0._
+
+Ajouter une variable de type "long lon" dans l'objet de l'infolist.
+
+Prototype :
+
+[source,c]
+----
+struct t_infolist_var *weechat_infolist_new_var_longlong (struct t_infolist_item *item,
+                                                          const char *name,
+                                                          long long value);
+----
+
+Paramètres :
+
+* _item_ : pointeur vers l'objet de l'infolist
+* _name_ : nom de la variable
+* _value_ : valeur de type "long long"
+
+Valeur de retour :
+
+* pointeur vers la nouvelle variable
+
+Exemple en C :
+
+[source,c]
+----
+struct t_infolist_var *var = weechat_infolist_new_var_longlong (item,
+                                                                "mon_longlong",
+                                                                9123456789123456789);
+----
+
+Script (Python) :
+
+[source,python]
+----
+# prototype
+def infolist_new_var_longlong(item: str, name: str, value: int) -> str: ...
+
+# exemple
+var = weechat.infolist_new_var_longlong(item, "mon_longlong", 9123456789123456789)
+----
+
 ==== infolist_get
 
 Retourner une "infolist" de WeeChat ou d'une extension.
@@ -19031,6 +19121,90 @@ def infolist_time(infolist: str, var: str) -> int: ...
 
 # exemple
 weechat.prnt("", "date/heure = %d" % weechat.infolist_time(infolist, "mon_time"))
+----
+
+==== infolist_long
+
+_WeeChat ≥ 4.11.0._
+
+Retourner la valeur de la variable de l'objet courant de l'infolist, sous forme
+de "long".
+
+Prototype :
+
+[source,c]
+----
+long weechat_infolist_long (struct t_infolist *infolist, const char *var);
+----
+
+Paramètres :
+
+* _infolist_ : pointeur vers l'infolist
+* _var_ : nom de la variable (doit être de type "long")
+
+Valeur de retour :
+
+* valeur de la variable sous forme de "long"
+
+Exemple en C :
+
+[source,c]
+----
+weechat_printf (NULL, "value = %ld",
+                weechat_infolist_long (infolist, "mon_long"));
+----
+
+Script (Python) :
+
+[source,python]
+----
+# prototype
+def infolist_long(infolist: str, var: str) -> int: ...
+
+# exemple
+weechat.prnt("", "value = %d" % weechat.infolist_long(infolist, "mon_long"))
+----
+
+==== infolist_longlong
+
+_WeeChat ≥ 4.11.0._
+
+Retourner la valeur de la variable de l'objet courant de l'infolist, sous forme
+de "long long".
+
+Prototype :
+
+[source,c]
+----
+long long weechat_infolist_longlong (struct t_infolist *infolist, const char *var);
+----
+
+Paramètres :
+
+* _infolist_ : pointeur vers l'infolist
+* _var_ : nom de la variable (doit être de type "long long")
+
+Valeur de retour :
+
+* valeur de la variable sour forme de "long long"
+
+Exemple en C :
+
+[source,c]
+----
+weechat_printf (NULL, "value = %lld",
+                weechat_infolist_longlong (infolist, "mon_longlong"));
+----
+
+Script (Python) :
+
+[source,python]
+----
+# prototype
+def infolist_longlong(infolist: str, var: str) -> int: ...
+
+# exemple
+weechat.prnt("", "value = %d" % weechat.infolist_longlong(infolist, "mon_longlong"))
 ----
 
 ==== infolist_free

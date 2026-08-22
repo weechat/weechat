@@ -887,6 +887,8 @@ def infolist_cb(data, infolist_name, pointer, arguments):
     check(weechat.infolist_new_var_time(item, "time1", 1231231230) != "")
     # Wed Jan 06 2038 09:40:00 GMT+0000
     check(weechat.infolist_new_var_time(item, "time2", 2146383600) != "")
+    check(weechat.infolist_new_var_long(item, "long", 2123456789) != "")
+    check(weechat.infolist_new_var_longlong(item, "longlong", 9123456789123456789) != "")
     return infolist
 
 
@@ -902,7 +904,9 @@ def test_infolist():
     check(weechat.infolist_pointer(ptr_infolist, "pointer") == "0xabcdef")
     check(weechat.infolist_time(ptr_infolist, "time1") == 1231231230)
     check(weechat.infolist_time(ptr_infolist, "time2") == 2146383600)
-    check(weechat.infolist_fields(ptr_infolist) == "i:integer,s:string,p:pointer,t:time1,t:time2")
+    check(weechat.infolist_long(ptr_infolist, "long") == 2123456789)
+    check(weechat.infolist_longlong(ptr_infolist, "longlong") == 9123456789123456789)
+    check(weechat.infolist_fields(ptr_infolist) == "i:integer,s:string,p:pointer,t:time1,t:time2,l:long,L:longlong")
     check(weechat.infolist_next(ptr_infolist) == 0)
     weechat.infolist_free(ptr_infolist)
     weechat.unhook(hook_infolist)
