@@ -672,7 +672,7 @@ TEST(GuiChat, PrintDatetimeTags)
     LONGS_EQUAL(-1, ptr_data->y);
     LONGS_EQUAL(0, ptr_data->date);
     LONGS_EQUAL(0, ptr_data->date_usec);
-    CHECK(ptr_data->id > 0);
+    CHECK(ptr_data->id > 0LL);
     STRCMP_EQUAL(NULL, ptr_data->str_time);
     LONGS_EQUAL(0, ptr_data->tags_count);
     POINTERS_EQUAL(NULL, ptr_data->tags_array);

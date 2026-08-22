@@ -487,7 +487,7 @@ TEST(GuiBuffer, NewProps)
     POINTERS_EQUAL(NULL, buffer->own_lines->first_line);
     POINTERS_EQUAL(NULL, buffer->own_lines->last_line);
     POINTERS_EQUAL(NULL, buffer->own_lines->last_read_line);
-    LONGS_EQUAL(-1, buffer->lines_last_id_assigned);
+    CHECK(buffer->lines_last_id_assigned == -1LL);
     LONGS_EQUAL(0, buffer->time_for_each_line);
     LONGS_EQUAL(2, buffer->chat_refresh_needed);
     LONGS_EQUAL(0, buffer->nicklist);

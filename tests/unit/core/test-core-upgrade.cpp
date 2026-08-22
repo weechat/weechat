@@ -284,8 +284,8 @@ TEST(CoreUpgrade, ReadBufferLineFreeContent)
     ptr_line = buffer->own_lines->last_line;
     CHECK(ptr_line);
     LONGS_EQUAL(2, ptr_line->data->y);
-    CHECK(ptr_line->data->id == 2);
-    CHECK(buffer->lines_last_id_assigned == -1);
+    CHECK(ptr_line->data->id == 2LL);
+    CHECK(buffer->lines_last_id_assigned == -1LL);
     STRCMP_EQUAL("line 1", ptr_line->data->message);
 
     gui_buffer_close (buffer);

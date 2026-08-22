@@ -925,14 +925,14 @@ TEST(GuiLine, GenerateId)
     buffer = gui_buffer_new_user ("test", GUI_BUFFER_TYPE_FORMATTED);
     CHECK(buffer);
 
-    CHECK(buffer->lines_last_id_assigned == -1);
+    CHECK(buffer->lines_last_id_assigned == -1LL);
 
     /* the id is the current date/time, with microseconds precision */
     id = gui_line_generate_id (buffer);
     CHECK(id > ((long long)(time (NULL) - 1) * 1000000LL));
 
     /* the generated id does not change the last id assigned in the buffer */
-    CHECK(buffer->lines_last_id_assigned == -1);
+    CHECK(buffer->lines_last_id_assigned == -1LL);
 
     /* the id is forced when the last id assigned is in the future */
     buffer->lines_last_id_assigned = id + 1000000;
@@ -1016,8 +1016,8 @@ TEST(GuiLine, NewWithId)
     line = gui_line_new_with_id (buffer, 123, -1, 0, 0,
                                  NULL, NULL, "message", -1, NULL);
     CHECK(line);
-    CHECK(line->data->id == 123);
-    CHECK(buffer->lines_last_id_assigned == 123);
+    CHECK(line->data->id == 123LL);
+    CHECK(buffer->lines_last_id_assigned == 123LL);
     gui_line_add (line, 0);
 
     /*
@@ -1027,15 +1027,15 @@ TEST(GuiLine, NewWithId)
     line = gui_line_new_with_id (buffer, 12, -1, 0, 0,
                                  NULL, NULL, "message", -1, NULL);
     CHECK(line);
-    CHECK(line->data->id == 124);
-    CHECK(buffer->lines_last_id_assigned == 124);
+    CHECK(line->data->id == 124LL);
+    CHECK(buffer->lines_last_id_assigned == 124LL);
     gui_line_add (line, 0);
 
     line = gui_line_new_with_id (buffer, 124, -1, 0, 0,
                                  NULL, NULL, "message", -1, NULL);
     CHECK(line);
-    CHECK(line->data->id == 125);
-    CHECK(buffer->lines_last_id_assigned == 125);
+    CHECK(line->data->id == 125LL);
+    CHECK(buffer->lines_last_id_assigned == 125LL);
     gui_line_add (line, 0);
 
     gui_buffer_close (buffer);
@@ -1047,9 +1047,9 @@ TEST(GuiLine, NewWithId)
     line = gui_line_new_with_id (buffer, 123, 5, 0, 0,
                                  NULL, NULL, "message", -1, NULL);
     CHECK(line);
-    CHECK(line->data->id == 5);
+    CHECK(line->data->id == 5LL);
     CHECK(line->data->y == 5);
-    CHECK(buffer->lines_last_id_assigned == -1);
+    CHECK(buffer->lines_last_id_assigned == -1LL);
     gui_line_add_y (line);
 
     gui_buffer_close (buffer);
@@ -1092,7 +1092,7 @@ TEST(GuiLine, New)
     POINTERS_EQUAL(NULL, line1->prev_line);
     POINTERS_EQUAL(NULL, line1->next_line);
     POINTERS_EQUAL(buffer, line1->data->buffer);
-    CHECK(line1->data->id > 0);
+    CHECK(line1->data->id > 0LL);
     CHECK(line1->data->id == buffer->lines_last_id_assigned);
     LONGS_EQUAL(-1, line1->data->y);
     LONGS_EQUAL(date.tv_sec, line1->data->date);
@@ -1182,7 +1182,7 @@ TEST(GuiLine, New)
     /* on buffers with free content, the id of a line is its number ("y") */
     LONGS_EQUAL(0, line1->data->id);
     LONGS_EQUAL(0, line1->data->y);
-    LONGS_EQUAL(-1, buffer->lines_last_id_assigned);
+    CHECK(buffer->lines_last_id_assigned == -1LL);
     LONGS_EQUAL(date.tv_sec, line1->data->date);
     LONGS_EQUAL(date.tv_usec, line1->data->date_usec);
     STRCMP_EQUAL(NULL, line1->data->str_time);
@@ -1211,7 +1211,7 @@ TEST(GuiLine, New)
     POINTERS_EQUAL(buffer, line2->data->buffer);
     LONGS_EQUAL(3, line2->data->id);
     LONGS_EQUAL(3, line2->data->y);
-    LONGS_EQUAL(-1, buffer->lines_last_id_assigned);
+    CHECK(buffer->lines_last_id_assigned == -1LL);
     LONGS_EQUAL(date.tv_sec, line2->data->date);
     LONGS_EQUAL(date.tv_usec, line2->data->date_usec);
     STRCMP_EQUAL(NULL, line2->data->str_time);

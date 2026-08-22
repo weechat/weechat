@@ -56,7 +56,7 @@ TEST(GuiNicklist, GenerateId)
                              NULL, NULL, NULL);
     CHECK(buffer);
 
-    CHECK(buffer->nicklist_last_id_assigned == 0);
+    CHECK(buffer->nicklist_last_id_assigned == 0LL);
 
     id = gui_nicklist_generate_id (buffer);
     CHECK(id > buffer->nicklist_last_id_assigned);
@@ -97,7 +97,7 @@ TEST(GuiNicklist, AddGroup)
 
     group1 = gui_nicklist_add_group (buffer, NULL, "group1", "blue", 1);
     CHECK(group1);
-    CHECK(group1->id > 0);
+    CHECK(group1->id > 0LL);
     STRCMP_EQUAL("group1", group1->name);
     STRCMP_EQUAL("blue", group1->color);
     LONGS_EQUAL(1, group1->visible);
@@ -285,7 +285,7 @@ TEST(GuiNicklist, AddNick)
                                        "nick_root", "green",
                                        "@", "lightgreen", 1);
     CHECK(nick_root);
-    CHECK(nick_root->id > 0);
+    CHECK(nick_root->id > 0LL);
     POINTERS_EQUAL(buffer->nicklist_root, nick_root->group);
     STRCMP_EQUAL("nick_root", nick_root->name);
     STRCMP_EQUAL("green", nick_root->color);
@@ -711,11 +711,11 @@ TEST(GuiNicklist, GroupSet)
     gui_nicklist_group_set (buffer, group1, "zzz", "test");
 
     gui_nicklist_group_set (buffer, group1, "id", "123");
-    CHECK(group1->id == 123);
+    CHECK(group1->id == 123LL);
     gui_nicklist_group_set (buffer, group2, "id", "123");
-    CHECK(group2->id != 123);
+    CHECK(group2->id != 123LL);
     gui_nicklist_group_set (buffer, group2, "id", "456");
-    CHECK(group2->id == 456);
+    CHECK(group2->id == 456LL);
     gui_nicklist_group_set (buffer, group1, "color", "green");
     STRCMP_EQUAL("green", group1->color);
     gui_nicklist_group_set (buffer, group1, "color", "");
@@ -841,11 +841,11 @@ TEST(GuiNicklist, NickSet)
     gui_nicklist_nick_set (buffer, nick1, "zzz", "test");
 
     gui_nicklist_nick_set (buffer, nick1, "id", "123");
-    CHECK(nick1->id == 123);
+    CHECK(nick1->id == 123LL);
     gui_nicklist_nick_set (buffer, nick2, "id", "123");
-    CHECK(nick2->id != 123);
+    CHECK(nick2->id != 123LL);
     gui_nicklist_nick_set (buffer, nick2, "id", "456");
-    CHECK(nick2->id == 456);
+    CHECK(nick2->id == 456LL);
     gui_nicklist_nick_set (buffer, nick1, "color", "red");
     STRCMP_EQUAL("red", nick1->color);
     gui_nicklist_nick_set (buffer, nick1, "color", "");
