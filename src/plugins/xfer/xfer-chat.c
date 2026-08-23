@@ -99,6 +99,7 @@ xfer_chat_recv_cb (const void *pointer, void *data, int fd)
     char str_tags[256], *str_color;
     const char *pv_tags;
     int num_read, length, ctcp_action;
+    size_t length_partial, length_buffer;
 
     /* make C compiler happy */
     (void) data;
@@ -115,15 +116,23 @@ xfer_chat_recv_cb (const void *pointer, void *data, int fd)
         ptr_buf = buffer;
         if (xfer->unterminated_message)
         {
-            if ((strlen (xfer->unterminated_message) + strlen (buffer) + 1)
-                > XFER_CHAT_RECV_MSG_MAX_LENGTH)
+            length_partial = strlen (xfer->unterminated_message);
+            length_buffer = strlen (buffer);
+            /*
+             * limit the size of the unterminated message: discard it as well
+             * as the data received (protection against a remote host sending
+             * a huge amount of data without any end-of-line and dribbling it,
+             * which would consume all the memory)
+             */
+            if ((length_partial >= XFER_CHAT_RECV_MSG_MAX_LENGTH)
+                || (length_buffer > (XFER_CHAT_RECV_MSG_MAX_LENGTH
+                                     - length_partial)))
             {
-                xfer_close (xfer, XFER_STATUS_FAILED);
-                xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
+                free (xfer->unterminated_message);
+                xfer->unterminated_message = NULL;
                 return WEECHAT_RC_OK;
             }
-            buf2 = malloc (strlen (xfer->unterminated_message) +
-                                   strlen (buffer) + 1);
+            buf2 = malloc (length_partial + length_buffer + 1);
             if (buf2)
             {
                 strcpy (buf2, xfer->unterminated_message);
