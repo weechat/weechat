@@ -517,6 +517,7 @@ WeeChat „језгро” се налази у следећим директо�
 |             irc/                           | Корен unit тестова за Релеј „irc” протокол.
 |                test-relay-irc.cpp          | Тестови: Релеј „irc” протокол.
 |          xfer/                             | Корен unit тестова за Xfer додатак.
+|             test-xfer-chat.cpp             | Тестови: DCC чет.
 |             test-xfer-file.cpp             | Тестови: фајл функције.
 |             test-xfer-network.cpp          | Тестови: мрежне функције.
 |===

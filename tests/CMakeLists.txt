@@ -193,6 +193,7 @@ endif()
 
 if(ENABLE_XFER)
   list(APPEND LIB_WEECHAT_UNIT_TESTS_PLUGINS_SRC
+    unit/plugins/xfer/test-xfer-chat.cpp
     unit/plugins/xfer/test-xfer-file.cpp
     unit/plugins/xfer/test-xfer-network.cpp
   )
