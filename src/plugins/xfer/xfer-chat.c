@@ -134,13 +134,13 @@ xfer_chat_recv_cb (const void *pointer, void *data, int fd)
             length_partial = strlen (xfer->unterminated_message);
             length_buffer = strlen (buffer);
             /*
-             * limit the size of the unterminated message: discard it as well
+             * limit the size of the partial message: discard it as well
              * as the data received (protection against a remote host sending
              * a huge amount of data without any end-of-line and dribbling it,
              * which would consume all the memory)
              */
-            if ((length_partial >= XFER_CHAT_RECV_MSG_MAX_LENGTH)
-                || (length_buffer > (XFER_CHAT_RECV_MSG_MAX_LENGTH
+            if ((length_partial >= XFER_CHAT_PARTIAL_MESSAGE_MAX_LENGTH)
+                || (length_buffer > (XFER_CHAT_PARTIAL_MESSAGE_MAX_LENGTH
                                      - length_partial)))
             {
                 free (xfer->unterminated_message);
