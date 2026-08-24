@@ -10,6 +10,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 ### Fixed
 
+- irc: fix memory leak in SASL authentication with mechanism "ecdsa-nist256p-challenge"
 - irc: reject an empty SASL challenge received with mechanism "ecdsa-nist256p-challenge"
 
 ### Security
