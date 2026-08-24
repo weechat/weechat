@@ -511,16 +511,12 @@ irc_sasl_mechanism_ecdsa_nist256p_challenge (struct t_irc_server *server,
         /* send "username" + '\0' + "username" */
         length_username = strlen (sasl_username);
         length = length_username + 1 + length_username;
-        string = malloc (length + 1);
-        if (string)
+        if (weechat_asprintf (&string,
+                              "%s|%s",
+                              sasl_username,
+                              sasl_username) >= 0)
         {
-            if (weechat_asprintf (&string,
-                                  "%s|%s",
-                                  sasl_username,
-                                  sasl_username) >= 0)
-            {
-                string[length_username] = '\0';
-            }
+            string[length_username] = '\0';
         }
     }
     else
