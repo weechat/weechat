@@ -8,6 +8,10 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 ## [Unreleased]
 
+### Fixed
+
+- irc: reject an empty SASL challenge received with mechanism "ecdsa-nist256p-challenge"
+
 ### Security
 
 - relay: limit size of partial message received from a client to prevent memory exhaustion ([#2347](https://github.com/weechat/weechat/issues/2347))
