@@ -12,11 +12,16 @@
 
 extern "C"
 {
+#include <stdio.h>
 #include <string.h>
+#include <unistd.h>
 #include "src/core/core-string.h"
 #include "src/plugins/plugin.h"
 #include "src/plugins/irc/irc-sasl.h"
 #include "src/plugins/irc/irc-server.h"
+
+extern char *irc_sasl_get_key_content (const char *sasl_key,
+                                       char **sasl_error);
 }
 
 TEST_GROUP(IrcSasl)
@@ -87,7 +92,64 @@ TEST(IrcSasl, MechanismScram)
 
 TEST(IrcSasl, GetKeyContent)
 {
-    /* TODO: write tests */
+    const char *key = "-----BEGIN EC PRIVATE KEY-----\n"
+        "not a real key\n"
+        "-----END EC PRIVATE KEY-----\n";
+    const char *sasl_key = "${weechat_config_dir}/test_sasl_key.pem";
+    char *path, *content, *error, str_error[4096];
+    FILE *file;
+
+    /* no key: no content and no error */
+    error = NULL;
+    POINTERS_EQUAL(NULL, irc_sasl_get_key_content (NULL, &error));
+    STRCMP_EQUAL(NULL, error);
+    POINTERS_EQUAL(NULL, irc_sasl_get_key_content (NULL, NULL));
+
+    path = string_eval_path_home (sasl_key, NULL, NULL, NULL);
+    CHECK(path);
+    unlink (path);
+
+    snprintf (str_error, sizeof (str_error),
+              "unable to read private key in file \"%s\"", path);
+
+    /* missing file: the error mentions the evaluated path */
+    error = NULL;
+    POINTERS_EQUAL(NULL, irc_sasl_get_key_content (sasl_key, &error));
+    STRCMP_EQUAL(str_error, error);
+    free (error);
+
+    /* no crash if sasl_error is NULL */
+    POINTERS_EQUAL(NULL, irc_sasl_get_key_content (sasl_key, NULL));
+
+    /* empty file: read as an error */
+    file = fopen (path, "w");
+    CHECK(file);
+    fclose (file);
+    error = NULL;
+    POINTERS_EQUAL(NULL, irc_sasl_get_key_content (sasl_key, &error));
+    STRCMP_EQUAL(str_error, error);
+    free (error);
+
+    /* existing file: content is returned and no error is set */
+    file = fopen (path, "w");
+    CHECK(file);
+    fwrite (key, 1, strlen (key), file);
+    fclose (file);
+    error = NULL;
+    content = irc_sasl_get_key_content (sasl_key, &error);
+    STRCMP_EQUAL(NULL, error);
+    STRCMP_EQUAL(key, content);
+    free (content);
+
+    /* same file, reached with the deprecated "%h" prefix */
+    error = NULL;
+    content = irc_sasl_get_key_content ("%h/test_sasl_key.pem", &error);
+    STRCMP_EQUAL(NULL, error);
+    STRCMP_EQUAL(key, content);
+    free (content);
+
+    unlink (path);
+    free (path);
 }
 
 /*
