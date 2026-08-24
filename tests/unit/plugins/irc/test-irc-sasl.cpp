@@ -112,7 +112,41 @@ TEST(IrcSasl, GetKeyContent)
 
 TEST(IrcSasl, MechanismEcdsaNist256pChallenge)
 {
-    /* TODO: write tests */
+    struct t_irc_server *server;
+    char *str, *error;
+
+    server = irc_server_alloc ("test_ecdsa");
+
+    /* first answer: "alice\0alice" */
+    error = NULL;
+    str = irc_sasl_mechanism_ecdsa_nist256p_challenge (
+        server, "+", "alice", "/does/not/exist.pem", &error);
+    STRCMP_EQUAL(NULL, error);
+    STRCMP_EQUAL("YWxpY2UAYWxpY2U=", str);
+    free (str);
+
+    /*
+     * empty challenge: the base64 decoder in this branch is lenient and
+     * silently skips invalid chars, so an empty result is the only decode
+     * failure that can be detected here
+     */
+    error = NULL;
+    str = irc_sasl_mechanism_ecdsa_nist256p_challenge (
+        server, "", "alice", "/does/not/exist.pem", &error);
+    STRCMP_EQUAL(NULL, str);
+    STRCMP_EQUAL("base64 decode error", error);
+    free (error);
+
+    /* valid challenge, but the private key can not be read */
+    error = NULL;
+    str = irc_sasl_mechanism_ecdsa_nist256p_challenge (
+        server, "YWJjZA==", "alice", "/does/not/exist.pem", &error);
+    STRCMP_EQUAL(NULL, str);
+    STRCMP_EQUAL("unable to read private key in file \"/does/not/exist.pem\"",
+                 error);
+    free (error);
+
+    irc_server_free (server);
 }
 
 /*
