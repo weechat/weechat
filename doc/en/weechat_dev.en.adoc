@@ -567,6 +567,7 @@ WeeChat "core" is located in following directories:
 |             test-typing.cpp                     | Tests: typing.
 |             test-typing-status.cpp              | Tests: typing status.
 |          xfer/                                  | Root of unit tests for Xfer plugin.
+|             test-xfer.cpp                       | Tests: xfer functions.
 |             test-xfer-chat.cpp                  | Tests: DCC chat.
 |             test-xfer-file.cpp                  | Tests: file functions.
 |             test-xfer-network.cpp               | Tests: network functions.
