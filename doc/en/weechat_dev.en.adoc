@@ -515,6 +515,8 @@ WeeChat "core" is located in following directories:
 |                test-relay-api-protocol.cpp | Tests: Relay "api" protocol: protocol.
 |             irc/                           | Root of unit tests for Relay "irc" protocol.
 |                test-relay-irc.cpp          | Tests: Relay "irc" protocol.
+|          script/                           | Root of unit tests for script plugin.
+|             test-script-repo.cpp           | Tests: script repository.
 |          xfer/                             | Root of unit tests for Xfer plugin.
 |             test-xfer-chat.cpp             | Tests: DCC chat.
 |             test-xfer-file.cpp             | Tests: file functions.

@@ -636,6 +636,10 @@ WeeChat "core" は以下のディレクトリに配置されています:
 // TRANSLATION MISSING
 |                test-relay-irc.cpp          | Tests: Relay "irc" protocol.
 // TRANSLATION MISSING
+|          script/                           | Root of unit tests for script plugin.
+// TRANSLATION MISSING
+|             test-script-repo.cpp           | Tests: script repository.
+// TRANSLATION MISSING
 |          xfer/                             | Root of unit tests for Xfer plugin.
 // TRANSLATION MISSING
 |             test-xfer-chat.cpp             | Tests: DCC chat.

@@ -177,6 +177,12 @@ if (ENABLE_RELAY)
   endif()
 endif()
 
+if(ENABLE_SCRIPT)
+  list(APPEND LIB_WEECHAT_UNIT_TESTS_PLUGINS_SRC
+    unit/plugins/script/test-script-repo.cpp
+  )
+endif()
+
 if(ENABLE_TRIGGER)
   list(APPEND LIB_WEECHAT_UNIT_TESTS_PLUGINS_SRC
     unit/plugins/trigger/test-trigger.cpp
