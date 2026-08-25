@@ -105,6 +105,8 @@ qweechat::
 |          irc/      | Unit тестови за IRC додатак.
 |          logger/   | Unit тестови за logger додатак.
 |          relay/    | Unit тестови за relay додатак.
+// TRANSLATION MISSING
+|          script/   | Unit tests for script plugin.
 |          trigger/  | Unit тестови за trigger додатак.
 |          typing/   | Unit тестови за typing додатак.
 |          xfer/     | Unit тестови за xfer додатак.
@@ -153,8 +155,14 @@ WeeChat „језгро” се налази у следећим директо�
 |    core-secure.c              | Функције обезбеђених података.
 |    core-secure-buffer.c       | Бафер обезбеђених података.
 |    core-secure-config.c       | Опције обезбеђених података (фајл sec.conf).
+// TRANSLATION MISSING
+|    core-signal.c              | Signal functions.
 |    core-string.c              | Функције над стринговима.
 |    core-sys.c                 | Системске функције.
+// TRANSLATION MISSING
+|    core-theme.c               | Themes (bundles of option overrides).
+// TRANSLATION MISSING
+|    core-theme-builtin.c       | Built-in themes: core options.
 |    core-upgrade-file.c        | Интерни систем ажурирања.
 |    core-upgrade.c             | Ажурирање за WeeChat језгро (бафери, линије, историја, ...).
 |    core-url.c                 | URL трансфер (помоћу libcurl).
@@ -183,6 +191,8 @@ WeeChat „језгро” се налази у следећим директо�
 |       hook-timer.c            | Кука "timer".
 |       hook-url.c              | Кука "url".
 | gui/                          | Функције за бафере, прозоре, ... (користе их сви интерфејси).
+// TRANSLATION MISSING
+|    gui-bar-item-custom.c      | Custom bar items.
 |    gui-bar-item.c             | Ставке трака.
 |    gui-bar-window.c           | Прозори трака.
 |    gui-bar.c                  | Траке.
@@ -248,6 +258,8 @@ WeeChat „језгро” се налази у следећим директо�
 |       spell-config.c               | Провера правописа опције конфиг (фајл spell.conf).
 |       spell-info.c                 | Провера правописа info/infolists/hdata.
 |       spell-speller.c              | Управљање библиотекама за проверу правописа.
+// TRANSLATION MISSING
+|       spell-theme.c                | Spell checker contribution to built-in themes.
 |    buflist/                        | Buflist додатак.
 |       buflist.c                    | Главне buflist функције.
 |       buflist-bar-item.c           | Buflist ставке траке.
@@ -256,6 +268,8 @@ WeeChat „језгро” се налази у следећим директо�
 |       buflist-config.c             | Buflist опције конфиг (фајл buflist.conf).
 |       buflist-info.c               | Buflist info/infolists/hdata.
 |       buflist-mouse.c              | Buflist акције мишем.
+// TRANSLATION MISSING
+|       buflist-theme.c              | Buflist contribution to built-in themes.
 |    charset/                        | Charset додатак.
 |       charset.c                    | Charset функције.
 |    exec/                           | Exec додатак.
@@ -264,6 +278,8 @@ WeeChat „језгро” се налази у следећим директо�
 |       exec-command.c               | Exec команде.
 |       exec-completion.c            | Exec довршавања.
 |       exec-config.c                | Exec опције конфиг (фајл exec.conf).
+// TRANSLATION MISSING
+|       exec-theme.c                 | Exec contribution to built-in themes.
 |    fifo/                           | Fifo додатак.
 |       fifo.c                       | Главне fifo функције.
 |       fifo-command.c               | Fifo команде.
@@ -279,6 +295,8 @@ WeeChat „језгро” се налази у следећим директо�
 |       fset-info.c                  | Fset info/infolists/hdata.
 |       fset-mouse.c                 | Fset акције мишем.
 |       fset-option.c                | Fset управљање опцијама.
+// TRANSLATION MISSING
+|       fset-theme.c                 | Fset contribution to built-in themes.
 |    guile/                          | Guile (scheme) додатак.
 |       weechat-guile.c              | Главне guile функције (учитавање/уклањање скрипти, извршавање guile кода).
 |       weechat-guile-api.c          | API функције guile скриптовања.
@@ -311,6 +329,8 @@ WeeChat „језгро” се налази у следећим директо�
 |       irc-sasl.c                   | SASL аутентификација са IRC сервером.
 |       irc-server.c                 | У/И комуникација са IRC сервером.
 |       irc-tag.c                    | Функције за манипулацију ознакама IRC порука.
+// TRANSLATION MISSING
+|       irc-theme.c                  | IRC contribution to built-in themes.
 |       irc-typing.c                 | Статус куцања.
 |       irc-upgrade.c                | Чување/обнављање IRC података када се ажурира програм WeeChat.
 |    javascript/                     | JavaScript додатак.
@@ -325,6 +345,8 @@ WeeChat „језгро” се налази у следећим директо�
 |       logger-config.c              | Logger опције конфиг (фајл logger.conf).
 |       logger-info.c                | Logger info/infolists/hdata.
 |       logger-tail.c                | Функције за враћање последњих линија фајла.
+// TRANSLATION MISSING
+|       logger-theme.c               | Logger contribution to built-in themes.
 |    lua/                            | Lua додатак.
 |       weechat-lua.c                | Главне lua функције (учитавање/уклањање скрипти, извршавање lua кода).
 |       weechat-lua-api.c            | API функције Lua скриптовања.
@@ -352,6 +374,8 @@ WeeChat „језгро” се налази у следећим директо�
 |       relay-raw.c                  | Релеј сирови бафер.
 |       relay-remote.c               | Релеј удаљених.
 |       relay-server.c               | Релеј сервер.
+// TRANSLATION MISSING
+|       relay-theme.c                | Relay contribution to built-in themes.
 |       relay-upgrade.c              | Чување/обнављање података релеја када се ажурира WeeChat.
 |       relay-websocket.c            | WebSocket сервер функције (RFC 6455).
 |       api/                         | Релеј за удаљене интерфејсе (користећи HTTP REST API).
@@ -381,6 +405,8 @@ WeeChat „језгро” се налази у следећим директо�
 |       script-info.c                | Управљач скриптама info/infolists/hdata.
 |       script-mouse.c               | Скрипт акције мишем.
 |       script-repo.c                | Преузимање и читање фајла репозиторијума.
+// TRANSLATION MISSING
+|       script-theme.c               | Script manager contribution to built-in themes.
 |    tcl/                            | Tcl додатак.
 |       weechat-tcl.c                | Главне tcl функције (учитавање/уклањање скрипти, извршавање tcl кода).
 |       weechat-tcl-api.c            | API функције Tcl скриптовања.
@@ -391,6 +417,8 @@ WeeChat „језгро” се налази у следећим директо�
 |       trigger-command.c            | Окидач команде.
 |       trigger-completion.c         | Окидач довршавања.
 |       trigger-config.c             | Окидач опције конфиг (фајл trigger.conf).
+// TRANSLATION MISSING
+|       trigger-theme.c              | Trigger contribution to built-in themes.
 |    typing/                         | Typing додатак.
 |       typing.c                     | Главне typing функције.
 |       typing-bar-item.c            | Typing ставке траке.
@@ -407,6 +435,8 @@ WeeChat „језгро” се налази у следећим директо�
 |       xfer-file.c                  | Фајл функције за xfer.
 |       xfer-info.c                  | Xfer info/infolists/hdata.
 |       xfer-network.c               | Мрежне функције за xfer.
+// TRANSLATION MISSING
+|       xfer-theme.c                 | Xfer contribution to built-in themes.
 |       xfer-upgrade.c               | Чување/обнављање xfer података када се програм WeeChat ажурира.
 |===
 
@@ -420,12 +450,14 @@ WeeChat „језгро” се налази у следећим директо�
 |    fuzz/                                        | Корен fuzz тестирања.
 |       ossfuzz.sh                                | Скрипта изградње за https://github.com/google/oss-fuzz[OSS-Fuzz ^↗^^].
 |       core/                                     | Корен fuzz тестирања за језгро.
-|          calc-fuzzer.c                          | Fuzz тестирање: калкулација израза.
-|          crypto-fuzzer.c                        | Fuzz тестирање: криптографске функције.
-|          secure-fuzzer.c                        | Fuzz тестирање: обезбеђени подаци.
-|          string-fuzzer.c                        | Fuzz тестирање: стрингови.
-|          utf8-fuzzer.c                          | Fuzz тестирање: UTF-8.
-|          util-fuzzer.c                          | Fuzz тестирање: услужне функције.
+|          calc-fuzzer.cc                         | Fuzz тестирање: калкулација израза.
+|          crypto-fuzzer.cc                       | Fuzz тестирање: криптографске функције.
+// TRANSLATION MISSING
+|          eval-fuzzer.cc                         | Fuzz testing: evaluation of expressions.
+|          secure-fuzzer.cc                       | Fuzz тестирање: обезбеђени подаци.
+|          string-fuzzer.cc                       | Fuzz тестирање: стрингови.
+|          utf8-fuzzer.cc                         | Fuzz тестирање: UTF-8.
+|          util-fuzzer.cc                         | Fuzz тестирање: услужне функције.
 |    unit/                                        | Корен unit тестова.
 |       tests.cpp                                 | Програм који се користи за извршавање свих тестова.
 |       tests-record.cpp                          | Бележење и претрага у приказаним порукама.
@@ -448,6 +480,8 @@ WeeChat „језгро” се налази у следећим директо�
 |          test-core-signal.cpp                   | Тестови: сигнали.
 |          test-core-string.cpp                   | Тестови: стрингови.
 |          test-core-sys.cpp                      | Тестови: системске функције.
+// TRANSLATION MISSING
+|          test-core-theme.cpp                    | Tests: themes.
 |          test-core-url.cpp                      | Тестови: URL адресе.
 |          test-core-utf8.cpp                     | Тестови: UTF-8.
 |          test-core-util.cpp                     | Тестови: помоћне функције.
@@ -488,6 +522,8 @@ WeeChat „језгро” се налази у следећим директо�
 |          test-gui-nicklist.cpp                  | Тестови: функције листе надимака.
 |          curses/                                | Корен unit тестова за Curses интерфејс.
 |             test-gui-curses-mouse.cpp           | Тестови: миш (Curses интерфејс).
+// TRANSLATION MISSING
+|             test-gui-curses-term.cpp            | Tests: terminal functions (Curses interface).
 |       scripts/                                  | Корен тестова за API скриптовања.
 |          test-scripts.cpp                       | Програм који се користи за извршавање тестова API скриптовања.
 |          python/                                | Python скрипте које генеришу и покрећу тестове API скриптовања.
@@ -525,6 +561,10 @@ WeeChat „језгро” се налази у следећим директо�
 |             test-logger-tail.cpp                | Тестови: logger tail функције.
 |          relay/                                 | Корен unit тестова за Релеј додатак.
 |             test-relay-auth.cpp                 | Тестови: аутентификација клијената.
+// TRANSLATION MISSING
+|             test-relay-bar-item.cpp             | Tests: bar items for Relay plugin.
+// TRANSLATION MISSING
+|             test-relay-client.cpp               | Tests: clients of relay.
 |             test-relay-http.cpp                 | Тестови: HTTP функције за Релеј додатак.
 |             test-relay-raw.cpp                  | Тестови: функције сирових порука за Релеј додатак.
 |             test-relay-remote.cpp               | Тестови: удаљене функције за Релеј додатак.
@@ -538,6 +578,10 @@ WeeChat „језгро” се налази у следећим директо�
 |                   test-relay-remote-network.cpp | Тестови: Релеј „api” протокол: удаљена мрежа.
 |             irc/                                | Корен unit тестова за Релеј „irc” протокол.
 |                test-relay-irc.cpp               | Тестови: Релеј „irc” протокол.
+// TRANSLATION MISSING
+|          script/                                | Root of unit tests for script plugin.
+// TRANSLATION MISSING
+|             test-script-repo.cpp                | Tests: script repository.
 |          trigger/                               | Корен unit тестова за окидач додатак.
 |             test-trigger.cpp                    | Тестови: окидачи.
 |             test-trigger-config.cpp             | Тестови: конфигурација окидача.
@@ -545,6 +589,8 @@ WeeChat „језгро” се налази у следећим директо�
 |             test-typing.cpp                     | Тестови: typing.
 |             test-typing-status.cpp              | Тестови: typing статус.
 |          xfer/                                  | Корен unit тестова за Xfer додатак.
+// TRANSLATION MISSING
+|             test-xfer-chat.cpp                  | Tests: DCC chat.
 |             test-xfer-file.cpp                  | Тестови: фајл функције.
 |             test-xfer-network.cpp               | Тестови: мрежне функције.
 |===

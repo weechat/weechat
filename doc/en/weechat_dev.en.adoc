@@ -105,6 +105,7 @@ The main WeeChat directories are:
 |          irc/      | Unit tests for IRC plugin.
 |          logger/   | Unit tests for logger plugin.
 |          relay/    | Unit tests for relay plugin.
+|          script/   | Unit tests for script plugin.
 |          trigger/  | Unit tests for trigger plugin.
 |          typing/   | Unit tests for typing plugin.
 |          xfer/     | Unit tests for xfer plugin.
@@ -156,6 +157,8 @@ WeeChat "core" is located in following directories:
 |    core-signal.c              | Signal functions.
 |    core-string.c              | Functions on strings.
 |    core-sys.c                 | System functions.
+|    core-theme.c               | Themes (bundles of option overrides).
+|    core-theme-builtin.c       | Built-in themes: core options.
 |    core-upgrade-file.c        | Internal upgrade system.
 |    core-upgrade.c             | Upgrade for WeeChat core (buffers, lines, history, ...).
 |    core-url.c                 | URL transfer (using libcurl).
@@ -184,6 +187,7 @@ WeeChat "core" is located in following directories:
 |       hook-timer.c            | Hook "timer".
 |       hook-url.c              | Hook "url".
 | gui/                          | Functions for buffers, windows, ... (used by all interfaces).
+|    gui-bar-item-custom.c      | Custom bar items.
 |    gui-bar-item.c             | Bar items.
 |    gui-bar-window.c           | Bar windows.
 |    gui-bar.c                  | Bars.
@@ -249,6 +253,7 @@ WeeChat "core" is located in following directories:
 |       spell-config.c               | Spell checker config options (file spell.conf).
 |       spell-info.c                 | Spell checker info/infolists/hdata.
 |       spell-speller.c              | Spellers management.
+|       spell-theme.c                | Spell checker contribution to built-in themes.
 |    buflist/                        | Buflist plugin.
 |       buflist.c                    | Main buflist functions.
 |       buflist-bar-item.c           | Buflist bar items.
@@ -257,6 +262,7 @@ WeeChat "core" is located in following directories:
 |       buflist-config.c             | Buflist config options (file buflist.conf).
 |       buflist-info.c               | Buflist info/infolists/hdata.
 |       buflist-mouse.c              | Buflist mouse actions.
+|       buflist-theme.c              | Buflist contribution to built-in themes.
 |    charset/                        | Charset plugin.
 |       charset.c                    | Charset functions.
 |    exec/                           | Exec plugin.
@@ -265,6 +271,7 @@ WeeChat "core" is located in following directories:
 |       exec-command.c               | Exec commands.
 |       exec-completion.c            | Exec completions.
 |       exec-config.c                | Exec config options (file exec.conf).
+|       exec-theme.c                 | Exec contribution to built-in themes.
 |    fifo/                           | Fifo plugin.
 |       fifo.c                       | Main fifo functions.
 |       fifo-command.c               | Fifo commands.
@@ -280,6 +287,7 @@ WeeChat "core" is located in following directories:
 |       fset-info.c                  | Fset info/infolists/hdata.
 |       fset-mouse.c                 | Fset mouse actions.
 |       fset-option.c                | Fset options management.
+|       fset-theme.c                 | Fset contribution to built-in themes.
 |    guile/                          | Guile (scheme) plugin.
 |       weechat-guile.c              | Main guile functions (load/unload scripts, execute guile code).
 |       weechat-guile-api.c          | Guile scripting API functions.
@@ -312,6 +320,7 @@ WeeChat "core" is located in following directories:
 |       irc-sasl.c                   | SASL authentication with IRC server.
 |       irc-server.c                 | I/O communication with IRC server.
 |       irc-tag.c                    | Functions to manipulate IRC message tags.
+|       irc-theme.c                  | IRC contribution to built-in themes.
 |       irc-typing.c                 | Typing status.
 |       irc-upgrade.c                | Save/restore of IRC data when upgrading WeeChat.
 |    javascript/                     | JavaScript plugin.
@@ -326,6 +335,7 @@ WeeChat "core" is located in following directories:
 |       logger-config.c              | Logger config options (file logger.conf).
 |       logger-info.c                | Logger info/infolists/hdata.
 |       logger-tail.c                | Functions to get last lines of a file.
+|       logger-theme.c               | Logger contribution to built-in themes.
 |    lua/                            | Lua plugin.
 |       weechat-lua.c                | Main lua functions (load/unload scripts, execute lua code).
 |       weechat-lua-api.c            | Lua scripting API functions.
@@ -353,6 +363,7 @@ WeeChat "core" is located in following directories:
 |       relay-raw.c                  | Relay raw buffer.
 |       relay-remote.c               | Relay remote.
 |       relay-server.c               | Relay server.
+|       relay-theme.c                | Relay contribution to built-in themes.
 |       relay-upgrade.c              | Save/restore of relay data when upgrading WeeChat.
 |       relay-websocket.c            | WebSocket server functions (RFC 6455).
 |       api/                         | Relay for remote interfaces (using HTTP REST API).
@@ -382,6 +393,7 @@ WeeChat "core" is located in following directories:
 |       script-info.c                | Script manager info/infolists/hdata.
 |       script-mouse.c               | Script mouse actions.
 |       script-repo.c                | Download and read repository file.
+|       script-theme.c               | Script manager contribution to built-in themes.
 |    tcl/                            | Tcl plugin.
 |       weechat-tcl.c                | Main tcl functions (load/unload scripts, execute tcl code).
 |       weechat-tcl-api.c            | Tcl scripting API functions.
@@ -392,6 +404,7 @@ WeeChat "core" is located in following directories:
 |       trigger-command.c            | Trigger commands.
 |       trigger-completion.c         | Trigger completions.
 |       trigger-config.c             | Trigger config options (file trigger.conf).
+|       trigger-theme.c              | Trigger contribution to built-in themes.
 |    typing/                         | Typing plugin.
 |       typing.c                     | Main typing functions.
 |       typing-bar-item.c            | Typing bar items.
@@ -408,6 +421,7 @@ WeeChat "core" is located in following directories:
 |       xfer-file.c                  | File functions for xfer.
 |       xfer-info.c                  | Xfer info/infolists/hdata.
 |       xfer-network.c               | Network functions for xfer.
+|       xfer-theme.c                 | Xfer contribution to built-in themes.
 |       xfer-upgrade.c               | Save/restore of xfer data when upgrading WeeChat.
 |===
 
@@ -421,12 +435,13 @@ WeeChat "core" is located in following directories:
 |    fuzz/                                        | Root of fuzz testing.
 |       ossfuzz.sh                                | Build script for https://github.com/google/oss-fuzz[OSS-Fuzz ^↗^^].
 |       core/                                     | Root of fuzz testing for core.
-|          calc-fuzzer.c                          | Fuzz testing: calculation of expressions.
-|          crypto-fuzzer.c                        | Fuzz testing: cryptographic functions.
-|          secure-fuzzer.c                        | Fuzz testing: secured data.
-|          string-fuzzer.c                        | Fuzz testing: strings.
-|          utf8-fuzzer.c                          | Fuzz testing: UTF-8.
-|          util-fuzzer.c                          | Fuzz testing: utility functions.
+|          calc-fuzzer.cc                         | Fuzz testing: calculation of expressions.
+|          crypto-fuzzer.cc                       | Fuzz testing: cryptographic functions.
+|          eval-fuzzer.cc                         | Fuzz testing: evaluation of expressions.
+|          secure-fuzzer.cc                       | Fuzz testing: secured data.
+|          string-fuzzer.cc                       | Fuzz testing: strings.
+|          utf8-fuzzer.cc                         | Fuzz testing: UTF-8.
+|          util-fuzzer.cc                         | Fuzz testing: utility functions.
 |    unit/                                        | Root of unit tests.
 |       tests.cpp                                 | Program used to run all tests.
 |       tests-record.cpp                          | Record and search in messages displayed.
@@ -449,6 +464,7 @@ WeeChat "core" is located in following directories:
 |          test-core-signal.cpp                   | Tests: signals.
 |          test-core-string.cpp                   | Tests: strings.
 |          test-core-sys.cpp                      | Tests: system functions.
+|          test-core-theme.cpp                    | Tests: themes.
 |          test-core-url.cpp                      | Tests: URLs.
 |          test-core-utf8.cpp                     | Tests: UTF-8.
 |          test-core-util.cpp                     | Tests: utility functions.
@@ -489,6 +505,7 @@ WeeChat "core" is located in following directories:
 |          test-gui-nicklist.cpp                  | Tests: nicklist functions.
 |          curses/                                | Root of unit tests for Curses interface.
 |             test-gui-curses-mouse.cpp           | Tests: mouse (Curses interface).
+|             test-gui-curses-term.cpp            | Tests: terminal functions (Curses interface).
 |       scripts/                                  | Root of scripting API tests.
 |          test-scripts.cpp                       | Program used to run the scripting API tests.
 |          python/                                | Python scripts to generate and run the scripting API tests.
@@ -527,6 +544,7 @@ WeeChat "core" is located in following directories:
 |          relay/                                 | Root of unit tests for Relay plugin.
 |             test-relay-auth.cpp                 | Tests: clients authentication.
 |             test-relay-bar-item.cpp             | Tests: bar items for Relay plugin.
+|             test-relay-client.cpp               | Tests: clients of relay.
 |             test-relay-http.cpp                 | Tests: HTTP functions for Relay plugin.
 |             test-relay-raw.cpp                  | Tests: raw messages functions for Relay plugin.
 |             test-relay-remote.cpp               | Tests: remote functions for Relay plugin.
@@ -540,6 +558,8 @@ WeeChat "core" is located in following directories:
 |                   test-relay-remote-network.cpp | Tests: Relay "api" protocol: remote network.
 |             irc/                                | Root of unit tests for Relay "irc" protocol.
 |                test-relay-irc.cpp               | Tests: Relay "irc" protocol.
+|          script/                                | Root of unit tests for script plugin.
+|             test-script-repo.cpp                | Tests: script repository.
 |          trigger/                               | Root of unit tests for trigger plugin.
 |             test-trigger.cpp                    | Tests: triggers.
 |             test-trigger-config.cpp             | Tests: trigger configuration.
@@ -547,6 +567,7 @@ WeeChat "core" is located in following directories:
 |             test-typing.cpp                     | Tests: typing.
 |             test-typing-status.cpp              | Tests: typing status.
 |          xfer/                                  | Root of unit tests for Xfer plugin.
+|             test-xfer-chat.cpp                  | Tests: DCC chat.
 |             test-xfer-file.cpp                  | Tests: file functions.
 |             test-xfer-network.cpp               | Tests: network functions.
 |===

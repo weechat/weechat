@@ -106,6 +106,7 @@ Les répertoires principaux de WeeChat sont :
 |          irc/      | Tests unitaires pour l'extension IRC.
 |          logger/   | Tests unitaires pour l'extension logger.
 |          relay/    | Tests unitaires pour l'extension relay.
+|          script/   | Tests unitaires pour l'extension script.
 |          trigger/  | Tests unitaires pour l'extension trigger.
 |          typing/   | Tests unitaires pour l'extension typing.
 |          xfer/     | Tests unitaires pour l'extension xfer.
@@ -157,6 +158,8 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |    core-signal.c              | Fonctions sur les signaux.
 |    core-string.c              | Fonctions sur les chaînes de caractères.
 |    core-sys.c                 | Fonctions système.
+|    core-theme.c               | Thèmes (ensembles de surcharges d'options).
+|    core-theme-builtin.c       | Thèmes intégrés : options du cœur.
 |    core-upgrade-file.c        | Système de mise à jour interne.
 |    core-upgrade.c             | Mise à jour du cœur de WeeChat (tampons, lignes, historique, ...).
 |    core-url.c                 | Transfert d'URL (en utilisant libcurl).
@@ -185,6 +188,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |       hook-timer.c            | Hook "timer".
 |       hook-url.c              | Hook "url".
 | gui/                          | Fonctions pour les tampons, fenêtres, ... (utilisées par toutes les interfaces).
+|    gui-bar-item-custom.c      | Objets de barre personnalisés.
 |    gui-bar-item.c             | Objets de barre.
 |    gui-bar-window.c           | Fenêtres de barre.
 |    gui-bar.c                  | Barres.
@@ -250,6 +254,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |       spell-config.c               | Options de configuration pour Spell (fichier spell.conf).
 |       spell-info.c                 | Info/infolists/hdata pour Spell.
 |       spell-speller.c              | Gestion des correcteurs orthographiques.
+|       spell-theme.c                | Contribution de Spell aux thèmes intégrés.
 |    buflist/                        | Extension Buflist.
 |       buflist.c                    | Fonctions principales de Buflist.
 |       buflist-bar-item.c           | Objets de barre Buflist.
@@ -258,6 +263,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |       buflist-config.c             | Options de configuration pour Buflist (fichier buflist.conf).
 |       buflist-info.c               | Info/infolists/hdata pour Buflist.
 |       buflist-mouse.c              | Actions souris pour Buflist.
+|       buflist-theme.c              | Contribution de Buflist aux thèmes intégrés.
 |    charset/                        | Extension Charset.
 |       charset.c                    | Fonctions pour Charset.
 |    exec/                           | Extension Exec.
@@ -266,6 +272,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |       exec-command.c               | Commandes pour Exec.
 |       exec-completion.c            | Complétions pour Exec.
 |       exec-config.c                | Options de configuration pour Exec (fichier exec.conf).
+|       exec-theme.c                 | Contribution de Exec aux thèmes intégrés.
 |    fifo/                           | Extension Fifo.
 |       fifo.c                       | Fonctions principales de Fifo.
 |       fifo-command.c               | Commandes pour Fifo.
@@ -281,6 +288,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |       fset-info.c                  | Info/infolists/hdata pour Fset.
 |       fset-mouse.c                 | Actions souris pour Fset.
 |       fset-option.c                | Gestion des options Fset.
+|       fset-theme.c                 | Contribution de Fset aux thèmes intégrés.
 |    guile/                          | Extension Guile (scheme).
 |       weechat-guile.c              | Fonctions principales pour Guile (chargement/déchargement des scripts, exécution de code Guile).
 |       weechat-guile-api.c          | Fonctions de l'API script Guile.
@@ -313,6 +321,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |       irc-sasl.c                   | Authentification SASL avec le serveur IRC.
 |       irc-server.c                 | Communication avec le serveur IRC.
 |       irc-tag.c                    | Fonctions pour manipuler les étiquettes de message IRC.
+|       irc-theme.c                  | Contribution d'IRC aux thèmes intégrés.
 |       irc-typing.c                 | Statut d'écriture.
 |       irc-upgrade.c                | Sauvegarde/restauration des données IRC lors de la mise à jour de WeeChat.
 |    javascript/                     | Extension JavaScript.
@@ -327,6 +336,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |       logger-config.c              | Options de configuration pour Logger (fichier logger.conf).
 |       logger-info.c                | Info/infolists/hdata pour Logger.
 |       logger-tail.c                | Fonctions pour obtenir les dernières lignes d'un fichier.
+|       logger-theme.c               | Contribution de Logger aux thèmes intégrés.
 |    lua/                            | Extension Lua.
 |       weechat-lua.c                | Fonctions principales pour Lua (chargement/déchargement des scripts, exécution de code Lua).
 |       weechat-lua-api.c            | Fonctions de l'API script Lua.
@@ -354,6 +364,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |       relay-raw.c                  | Tampon des données brutes de Relay.
 |       relay-remote.c               | Relai distant.
 |       relay-server.c               | Serveur Relay.
+|       relay-theme.c                | Contribution de Relay aux thèmes intégrés.
 |       relay-upgrade.c              | Sauvegarde/restauration des données Relay lors de la mise à jour de WeeChat.
 |       relay-websocket.c            | Fonctions pour le serveur WebSocket (RFC 6455).
 |       api/                         | Relai pour les interfaces distantes (en utilisant une API REST HTTP).
@@ -383,6 +394,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |       script-info.c                | Info/infolists/hdata pour le gestionnaire de scripts.
 |       script-mouse.c               | Actions souris pour le gestionnaire de scripts.
 |       script-repo.c                | Téléchargement et lecture du dépôt de scripts.
+|       script-theme.c               | Contribution du gestionnaire de scripts aux thèmes intégrés.
 |    tcl/                            | Extension Tcl.
 |       weechat-tcl.c                | Fonctions principales pour Tcl (chargement/déchargement des scripts, exécution de code Tcl).
 |       weechat-tcl-api.c            | Fonctions de l'API script Tcl.
@@ -393,6 +405,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |       trigger-command.c            | Commandes pour Trigger.
 |       trigger-completion.c         | Complétions pour Trigger.
 |       trigger-config.c             | Options de configuration pour Trigger (fichier trigger.conf).
+|       trigger-theme.c              | Contribution de Trigger aux thèmes intégrés.
 |    typing/                         | Extension Typing.
 |       typing.c                     | Fonctions principales de Typing.
 |       typing-bar-item.c            | Objets de barre Typing.
@@ -409,6 +422,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |       xfer-file.c                  | Fonctions pour les fichiers dans Xfer.
 |       xfer-info.c                  | Info/infolists/hdata pour Xfer.
 |       xfer-network.c               | Fonctions réseau pour Xfer.
+|       xfer-theme.c                 | Contribution de Xfer aux thèmes intégrés.
 |       xfer-upgrade.c               | Sauvegarde/restauration des données Xfer lors de la mise à jour de WeeChat.
 |===
 
@@ -422,12 +436,13 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |    fuzz/                                        | Racine du fuzzing (tests à données aléatoires).
 |       ossfuzz.sh                                | Script de construction pour https://github.com/google/oss-fuzz[OSS-Fuzz ^↗^^].
 |       core/                                     | Racine du fuzzing pour le cœur.
-|          calc-fuzzer.c                          | Fuzzing : calcul d'expressions.
-|          crypto-fuzzer.c                        | Fuzzing : fonctions cryptographiques.
-|          secure-fuzzer.c                        | Fuzzing : données sécurisées.
-|          string-fuzzer.c                        | Fuzzing : chaînes.
-|          utf8-fuzzer.c                          | Fuzzing : UTF-8.
-|          util-fuzzer.c                          | Fuzzing : fonctions utiles.
+|          calc-fuzzer.cc                         | Fuzzing : calcul d'expressions.
+|          crypto-fuzzer.cc                       | Fuzzing : fonctions cryptographiques.
+|          eval-fuzzer.cc                         | Fuzzing : évaluation d'expressions.
+|          secure-fuzzer.cc                       | Fuzzing : données sécurisées.
+|          string-fuzzer.cc                       | Fuzzing : chaînes.
+|          utf8-fuzzer.cc                         | Fuzzing : UTF-8.
+|          util-fuzzer.cc                         | Fuzzing : fonctions utiles.
 |    unit/                                        | Racine des tests unitaires.
 |       tests.cpp                                 | Programme utilisé pour lancer tous les tests.
 |       tests-record.cpp                          | Enregistrement et recherche dans les messages affichés.
@@ -450,6 +465,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |          test-core-signal.cpp                   | Tests : signaux.
 |          test-core-string.cpp                   | Tests : chaînes.
 |          test-core-sys.cpp                      | Tests : fonctions système.
+|          test-core-theme.cpp                    | Tests : thèmes.
 |          test-core-url.cpp                      | Tests : URLs.
 |          test-core-utf8.cpp                     | Tests : UTF-8.
 |          test-core-util.cpp                     | Tests : fonctions utiles.
@@ -490,6 +506,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |          test-gui-nicklist.cpp                  | Tests : fonctions de liste de pseudos.
 |          curses/                                | Racine des tests unitaires pour l'interface Curses.
 |             test-gui-curses-mouse.cpp           | Tests : souris (interface Curses).
+|             test-gui-curses-term.cpp            | Tests : fonctions pour le terminal (interface Curses).
 |       scripts/                                  | Racine des tests de l'API script.
 |          test-scripts.cpp                       | Programme utilisé pour lancer les tests de l'API script.
 |          python/                                | Scripts Python pour générer et lancer les tests de l'API script.
@@ -528,6 +545,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |          relay/                                 | Racine des tests unitaires pour l'extension Relay.
 |             test-relay-auth.cpp                 | Tests : authentification des clients.
 |             test-relay-bar-item.cpp             | Tests : objets de barre pour l'extension Relay.
+|             test-relay-client.cpp               | Tests : clients du relai.
 |             test-relay-http.cpp                 | Tests : fonctions HTTP pour l'extension Relay.
 |             test-relay-raw.cpp                  | Tests : fonctions sur les messages bruts pour l'extension Relay.
 |             test-relay-remote.cpp               | Tests : fonctions remote pour l'extension Relay.
@@ -541,6 +559,8 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |                   test-relay-remote-network.cpp | Tests: Relay "api" protocol: remote network.
 |             irc/                                | Racine des tests unitaires pour le protocole relay "irc".
 |                test-relay-irc.cpp               | Tests : protocole relay "irc".
+|          script/                                | Racine des tests unitaires pour l'extension script.
+|             test-script-repo.cpp                | Tests : dépôt de scripts.
 |          trigger/                               | Racine des tests unitaires pour l'extension trigger.
 |             test-trigger.cpp                    | Tests : triggers.
 |             test-trigger-config.cpp             | Tests : configuration trigger.
@@ -548,6 +568,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |             test-typing.cpp                     | Tests : typing.
 |             test-typing-status.cpp              | Tests : statut d'écriture.
 |          xfer/                                  | Racine des tests unitaires pour l'extension Xfer.
+|             test-xfer-chat.cpp                  | Tests : discussion DCC.
 |             test-xfer-file.cpp                  | Tests : fonctions sur les fichiers.
 |             test-xfer-network.cpp               | Tests : fonctions réseau.
 |===

@@ -115,6 +115,8 @@ qweechat::
 // TRANSLATION MISSING
 |          relay/    | Unit tests for relay plugin.
 // TRANSLATION MISSING
+|          script/   | Unit tests for script plugin.
+// TRANSLATION MISSING
 |          trigger/  | Unit tests for trigger plugin.
 // TRANSLATION MISSING
 |          typing/   | Unit tests for typing plugin.
@@ -175,6 +177,10 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |    core-string.c              | 文字列関数
 // TRANSLATION MISSING
 |    core-sys.c                 | System functions.
+// TRANSLATION MISSING
+|    core-theme.c               | Themes (bundles of option overrides).
+// TRANSLATION MISSING
+|    core-theme-builtin.c       | Built-in themes: core options.
 |    core-upgrade-file.c        | 内部アップグレードシステム
 |    core-upgrade.c             | WeeChat コアのアップグレード (バッファ、行、履歴、...)
 |    core-url.c                 | URL 転送 (libcurl を使う)
@@ -203,6 +209,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |       hook-timer.c            | "timer" フック
 |       hook-url.c              | "url" フック
 | gui/                          | バッファ、ウィンドウなどの関数 (全てのインターフェースで利用)
+// TRANSLATION MISSING
+|    gui-bar-item-custom.c      | Custom bar items.
 |    gui-bar-item.c             | バー要素
 |    gui-bar-window.c           | バーウィンドウ
 |    gui-bar.c                  | バー
@@ -268,6 +276,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |       spell-config.c               | spell 設定オプション (spell.conf ファイル)
 |       spell-info.c                 | spell の情報/インフォリスト/hdata
 |       spell-speller.c              | spell のスペラー管理
+// TRANSLATION MISSING
+|       spell-theme.c                | Spell checker contribution to built-in themes.
 |    buflist/                        | buflist プラグイン
 |       buflist.c                    | buflist の主要関数
 |       buflist-bar-item.c           | buflist バー要素
@@ -277,6 +287,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |       buflist-config.c             | buflist 設定オプション (buflist.conf ファイル)
 |       buflist-info.c               | buflist の情報/インフォリスト/hdata
 |       buflist-mouse.c              | buflist マウス動作
+// TRANSLATION MISSING
+|       buflist-theme.c              | Buflist contribution to built-in themes.
 |    charset/                        | charset プラグイン
 |       charset.c                    | charset 関数
 |    exec/                           | exec プラグイン
@@ -285,6 +297,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |       exec-command.c               | exec コマンド
 |       exec-completion.c            | exec 補完
 |       exec-config.c                | exec 設定オプション (exec.conf ファイル)
+// TRANSLATION MISSING
+|       exec-theme.c                 | Exec contribution to built-in themes.
 |    fifo/                           | fifo プラグイン
 |       fifo.c                       | fifo の主要関数
 |       fifo-command.c               | fifo コマンド
@@ -300,6 +314,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |       fset-info.c                  | fset の情報/インフォリスト/hdata
 |       fset-mouse.c                 | fset マウス動作
 |       fset-option.c                | fset オプション管理
+// TRANSLATION MISSING
+|       fset-theme.c                 | Fset contribution to built-in themes.
 |    guile/                          | guile (scheme) プラグイン
 |       weechat-guile.c              | guile の主要関数 (スクリプトのロード/アンロード、guile コードの実行)
 |       weechat-guile-api.c          | guile スクリプト作成 API 関数
@@ -337,6 +353,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 // TRANSLATION MISSING
 |       irc-tag.c                    | Functions to manipulate IRC message tags.
 // TRANSLATION MISSING
+|       irc-theme.c                  | IRC contribution to built-in themes.
+// TRANSLATION MISSING
 |       irc-typing.c                 | Typing status.
 |       irc-upgrade.c                | WeeChat をアップグレードする際の IRC データの保存およびロード
 |    javascript/                     | JavaScript プラグイン
@@ -352,6 +370,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |       logger-config.c              | logger 設定オプション (logger.conf ファイル)
 |       logger-info.c                | logger の情報/インフォリスト/hdata
 |       logger-tail.c                | ファイル末尾の行を返す
+// TRANSLATION MISSING
+|       logger-theme.c               | Logger contribution to built-in themes.
 |    lua/                            | lua プラグイン
 |       weechat-lua.c                | lua の主要関数 (スクリプトのロード/アンロード、lua コードの実行)
 |       weechat-lua-api.c            | lua スクリプト作成 API 関数
@@ -383,6 +403,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 // TRANSLATION MISSING
 |       relay-remote.c               | Relay remote.
 |       relay-server.c               | relay サーバ
+// TRANSLATION MISSING
+|       relay-theme.c                | Relay contribution to built-in themes.
 |       relay-upgrade.c              | WeeChat をアップグレードする際にデータを保存/回復
 |       relay-websocket.c            | リレー用の websocket サーバ関数 (RFC 6455)
 // TRANSLATION MISSING
@@ -421,6 +443,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |       script-info.c                | スクリプトマネージャの情報/インフォリスト/hdata
 |       script-mouse.c               | スクリプトマネージャのマウス動作
 |       script-repo.c                | リポジトリファイルのダウンロードとロード
+// TRANSLATION MISSING
+|       script-theme.c               | Script manager contribution to built-in themes.
 |    tcl/                            | tcl プラグイン
 |       weechat-tcl.c                | tcl の主要関数 (スクリプトのロード/アンロード、tcl コードの実行)
 |       weechat-tcl-api.c            | tcl スクリプト作成 API 関数
@@ -431,6 +455,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |       trigger-command.c            | trigger コマンド
 |       trigger-completion.c         | trigger 補完
 |       trigger-config.c             | trigger 設定オプション (trigger.conf ファイル)
+// TRANSLATION MISSING
+|       trigger-theme.c              | Trigger contribution to built-in themes.
 // TRANSLATION MISSING
 |    typing/                         | Typing plugin.
 // TRANSLATION MISSING
@@ -452,6 +478,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |       xfer-file.c                  | xfer のファイル関数
 |       xfer-info.c                  | xfer の情報/インフォリスト/hdata
 |       xfer-network.c               | xfer のネットワーク関数
+// TRANSLATION MISSING
+|       xfer-theme.c                 | Xfer contribution to built-in themes.
 |       xfer-upgrade.c               | WeeChat をアップグレードする際の xfer データの保存および回復
 |===
 
@@ -469,17 +497,19 @@ WeeChat "core" は以下のディレクトリに配置されています:
 // TRANSLATION MISSING
 |       core/                                     | Root of fuzz testing for core.
 // TRANSLATION MISSING
-|          calc-fuzzer.c                          | Fuzz testing: calculation of expressions.
+|          calc-fuzzer.cc                         | Fuzz testing: calculation of expressions.
 // TRANSLATION MISSING
-|          crypto-fuzzer.c                        | Fuzz testing: cryptographic functions.
+|          crypto-fuzzer.cc                       | Fuzz testing: cryptographic functions.
 // TRANSLATION MISSING
-|          secure-fuzzer.c                        | Fuzz testing: secured data.
+|          eval-fuzzer.cc                         | Fuzz testing: evaluation of expressions.
 // TRANSLATION MISSING
-|          string-fuzzer.c                        | Fuzz testing: 文字列
+|          secure-fuzzer.cc                       | Fuzz testing: secured data.
 // TRANSLATION MISSING
-|          utf8-fuzzer.c                          | Fuzz testing: UTF-8.
+|          string-fuzzer.cc                       | Fuzz testing: 文字列
 // TRANSLATION MISSING
-|          util-fuzzer.c                          | Fuzz testing: utility functions.
+|          utf8-fuzzer.cc                         | Fuzz testing: UTF-8.
+// TRANSLATION MISSING
+|          util-fuzzer.cc                         | Fuzz testing: utility functions.
 |    unit/                                        | 単体テスト用のルートディレクトリ
 |       tests.cpp                                 | 全テストの実行時に使われるプログラム
 // TRANSLATION MISSING
@@ -512,6 +542,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |          test-core-string.cpp                   | テスト: 文字列
 // TRANSLATION MISSING
 |          test-core-sys.cpp                      | Tests: system functions.
+// TRANSLATION MISSING
+|          test-core-theme.cpp                    | Tests: themes.
 |          test-core-url.cpp                      | テスト: URL
 |          test-core-utf8.cpp                     | テスト: UTF-8
 |          test-core-util.cpp                     | テスト: ユーティリティ関数
@@ -588,6 +620,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |          curses/                                | Root of unit tests for Curses interface.
 // TRANSLATION MISSING
 |             test-gui-curses-mouse.cpp           | Tests: mouse (Curses interface).
+// TRANSLATION MISSING
+|             test-gui-curses-term.cpp            | Tests: terminal functions (Curses interface).
 |       scripts/                                  | スクリプト API テスト用のルートディレクトリ
 |          test-scripts.cpp                       | スクリプト API テストの実行時に使われるプログラム
 |          python/                                | スクリプト API テストを生成、実行する Python スクリプト
@@ -651,6 +685,10 @@ WeeChat "core" は以下のディレクトリに配置されています:
 // TRANSLATION MISSING
 |             test-relay-auth.cpp                 | Tests: clients authentication.
 // TRANSLATION MISSING
+|             test-relay-bar-item.cpp             | Tests: bar items for Relay plugin.
+// TRANSLATION MISSING
+|             test-relay-client.cpp               | Tests: clients of relay.
+// TRANSLATION MISSING
 |             test-relay-http.cpp                 | Tests: HTTP functions for Relay plugin.
 // TRANSLATION MISSING
 |             test-relay-raw.cpp                  | Tests: raw messages functions for Relay plugin.
@@ -677,6 +715,10 @@ WeeChat "core" は以下のディレクトリに配置されています:
 // TRANSLATION MISSING
 |                test-relay-irc.cpp               | Tests: Relay "irc" protocol.
 // TRANSLATION MISSING
+|          script/                                | Root of unit tests for script plugin.
+// TRANSLATION MISSING
+|             test-script-repo.cpp                | Tests: script repository.
+// TRANSLATION MISSING
 |          trigger/                               | Root of unit tests for trigger plugin.
 // TRANSLATION MISSING
 |             test-trigger.cpp                    | Tests: triggers.
@@ -690,6 +732,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |             test-typing-status.cpp              | Tests: typing status.
 // TRANSLATION MISSING
 |          xfer/                                  | Root of unit tests for Xfer plugin.
+// TRANSLATION MISSING
+|             test-xfer-chat.cpp                  | Tests: DCC chat.
 // TRANSLATION MISSING
 |             test-xfer-file.cpp                  | Tests: file functions.
 // TRANSLATION MISSING
