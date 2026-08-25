@@ -59,25 +59,22 @@ char *script_repo_filter = NULL;
  * Check if a script name can safely be used as a filename.
  *
  * Script names come from the repository file and are later appended to the
- * local script cache path.  Reject path separators and drive separators so
- * the name remains a single path component on all supported platforms.
+ * local script cache path, so path separators and drive separators are
+ * rejected: the name must remain a single path component on all supported
+ * platforms.
+ *
+ * Return:
+ *   1: script name is valid
+ *   0: script name is not valid
  */
 
 int
 script_repo_script_name_valid (const char *name)
 {
-    const char *ptr;
-
     if (!name || !name[0])
         return 0;
 
-    for (ptr = name; ptr[0]; ptr++)
-    {
-        if (strchr ("/\\:", ptr[0]))
-            return 0;
-    }
-
-    return 1;
+    return (strpbrk (name, "/\\:")) ? 0 : 1;
 }
 
 
