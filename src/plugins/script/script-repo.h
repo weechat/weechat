@@ -64,6 +64,7 @@ extern int script_repo_count, script_repo_count_displayed;
 extern struct t_hashtable *script_repo_max_length_field;
 extern char *script_repo_filter;
 
+extern int script_repo_script_name_valid (const char *name);
 extern int script_repo_script_valid (struct t_script_repo *script);
 extern struct t_script_repo *script_repo_search_displayed_by_number (int number);
 extern struct t_script_repo *script_repo_search_by_name (const char *name);
