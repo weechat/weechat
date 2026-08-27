@@ -39,7 +39,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 - core: fix buffer selected when searching by partial name and another buffer has a similar name ([#700](https://github.com/weechat/weechat/issues/700))
 - irc: fix memory leak in SASL authentication with mechanism "ecdsa-nist256p-challenge"
 - javascript, lua, perl, php, ruby, tcl: fix return value of function hdata_longlong
-- relay/api: fix notify tag in line when already read on remote
+- relay/api: fix notify tag in line when already read on remote ([#2343](https://github.com/weechat/weechat/issues/2343))
 
 ### Security
 
