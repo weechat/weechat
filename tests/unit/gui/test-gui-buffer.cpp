@@ -2022,7 +2022,64 @@ TEST(GuiBuffer, Swap)
 
 TEST(GuiBuffer, Merge)
 {
-    /* TODO: write tests */
+    struct t_gui_buffer *buffer1, *buffer2;
+
+    buffer1 = gui_buffer_new (NULL, TEST_BUFFER_NAME,
+                              NULL, NULL, NULL,
+                              NULL, NULL, NULL);
+    CHECK(buffer1);
+    buffer2 = gui_buffer_new (NULL, TEST_BUFFER_NAME2,
+                              NULL, NULL, NULL,
+                              NULL, NULL, NULL);
+    CHECK(buffer2);
+    LONGS_EQUAL(2, buffer1->number);
+    LONGS_EQUAL(3, buffer2->number);
+
+    /* invalid arguments: nothing is merged */
+    gui_buffer_merge (NULL, NULL);
+    gui_buffer_merge (buffer2, NULL);
+    gui_buffer_merge (NULL, buffer1);
+    LONGS_EQUAL(2, buffer1->number);
+    LONGS_EQUAL(3, buffer2->number);
+
+    /*
+     * no window is displaying the target buffer: the merged buffer becomes
+     * the active one in the group
+     */
+    gui_window_switch_to_buffer (gui_current_window, gui_buffers, 1);
+    gui_buffer_merge (buffer2, buffer1);
+    LONGS_EQUAL(2, buffer1->number);
+    LONGS_EQUAL(2, buffer2->number);
+    LONGS_EQUAL(0, buffer1->active);
+    LONGS_EQUAL(1, buffer2->active);
+    gui_buffer_unmerge (buffer2, -1);
+
+    /*
+     * a window is displaying the buffer that is merged: it stays the active
+     * one in the group
+     */
+    gui_window_switch_to_buffer (gui_current_window, buffer2, 1);
+    gui_buffer_merge (buffer2, buffer1);
+    LONGS_EQUAL(0, buffer1->active);
+    LONGS_EQUAL(1, buffer2->active);
+    POINTERS_EQUAL(buffer2, gui_current_window->buffer);
+    gui_buffer_unmerge (buffer2, -1);
+
+    /*
+     * a window is displaying the target buffer: it must stay the active one
+     * in the group, otherwise the window would display a buffer that is not
+     * the active one
+     */
+    gui_window_switch_to_buffer (gui_current_window, buffer1, 1);
+    gui_buffer_merge (buffer2, buffer1);
+    LONGS_EQUAL(1, buffer1->active);
+    LONGS_EQUAL(0, buffer2->active);
+    POINTERS_EQUAL(buffer1, gui_current_window->buffer);
+    gui_buffer_unmerge (buffer2, -1);
+
+    gui_window_switch_to_buffer (gui_current_window, gui_buffers, 1);
+    gui_buffer_close (buffer1);
+    gui_buffer_close (buffer2);
 }
 
 /*

@@ -37,6 +37,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 ### Fixed
 
+- core: fix active buffer in group of merged buffers when the merged buffer is not displayed in a window
 - core: fix buffer selected when searching by partial name and another buffer has a similar name ([#700](https://github.com/weechat/weechat/issues/700))
 - irc: fix memory leak in SASL authentication with mechanism "ecdsa-nist256p-challenge"
 - javascript, lua, perl, php, ruby, tcl: fix return value of function hdata_longlong

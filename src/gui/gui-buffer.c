@@ -4528,6 +4528,8 @@ gui_buffer_merge (struct t_gui_buffer *buffer,
                   struct t_gui_buffer *target_buffer)
 {
     struct t_gui_buffer *ptr_buffer, *ptr_first_buffer[2], *ptr_last_buffer[2];
+    struct t_gui_buffer *ptr_buffer_active;
+    struct t_gui_window *ptr_window;
 
     if (!buffer || !target_buffer)
         return;
@@ -4623,8 +4625,25 @@ gui_buffer_merge (struct t_gui_buffer *buffer,
     /* mix lines */
     gui_line_mix_buffers (buffer);
 
-    /* set buffer as active in merged buffers group */
-    gui_buffer_set_active_buffer (buffer);
+    /*
+     * set buffer as active in merged buffers group, unless a window is
+     * already displaying another buffer of the group: in this case the
+     * displayed buffer must remain the active one, otherwise the window
+     * would display a buffer that is not the active one in the group
+     */
+    ptr_buffer_active = buffer;
+    for (ptr_window = gui_windows; ptr_window;
+         ptr_window = ptr_window->next_window)
+    {
+        if (ptr_window->buffer
+            && (ptr_window->buffer->number == buffer->number))
+        {
+            ptr_buffer_active = ptr_window->buffer;
+            if (ptr_window == gui_current_window)
+                break;
+        }
+    }
+    gui_buffer_set_active_buffer (ptr_buffer_active);
 
     gui_buffer_compute_num_displayed ();
 
