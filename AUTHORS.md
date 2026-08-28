@@ -188,6 +188,7 @@ Alphabetically:
 - Ruslan Bekenev
 - Ryan Farley
 - Ryan Qian
+- RyanSquared
 - Ryuunosuke Ayanokouzi
 - Santiago Forero
 - scumjr
