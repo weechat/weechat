@@ -77,6 +77,7 @@ Alphabetically:
 - Filip H.F. Slagter (FiXato)
 - Frank Zacharias
 - Fredrik Fornwall
+- Giorgio Marinelli
 - Giuseppe Bilotta
 - Grady Martin
 - Grant Wu
