@@ -48,6 +48,7 @@ int irc_config_loading = 0;
 struct t_config_option *irc_config_look_buffer_open_before_autojoin = NULL;
 struct t_config_option *irc_config_look_buffer_open_before_join = NULL;
 struct t_config_option *irc_config_look_buffer_switch_autojoin = NULL;
+struct t_config_option *irc_config_look_buffer_switch_connect = NULL;
 struct t_config_option *irc_config_look_buffer_switch_join = NULL;
 struct t_config_option *irc_config_look_color_nicks_in_names = NULL;
 struct t_config_option *irc_config_look_color_nicks_in_nicklist = NULL;
@@ -3233,6 +3234,12 @@ irc_config_init (void)
             "buffer_switch_autojoin", "boolean",
             N_("auto switch to channel buffer when it is auto joined (with "
                "server option \"autojoin\")"),
+            NULL, 0, 0, "on", NULL, 0,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        irc_config_look_buffer_switch_connect = weechat_config_new_option (
+            irc_config_file, irc_config_section_look,
+            "buffer_switch_connect", "boolean",
+            N_("auto switch to server buffer when connecting to the server"),
             NULL, 0, 0, "on", NULL, 0,
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
         irc_config_look_buffer_switch_join = weechat_config_new_option (

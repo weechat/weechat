@@ -13,6 +13,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 - api: add focus key "_chat_line_id", deprecate keys "_chat_line_date_printed" and "_chat_line_date_usec_printed"
 - api: add function "buffer_get_longlong"
 - api: add functions "infolist_new_var_long", "infolist_new_var_longlong", "infolist_long", "infolist_longlong"
+- irc: add option irc.look.buffer_switch_connect to disable the auto switch to server buffer when connecting to the server
 
 ### Changed
 

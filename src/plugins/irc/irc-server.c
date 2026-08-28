@@ -5372,7 +5372,8 @@ irc_server_connect (struct t_irc_server *server)
     {
         if (!irc_server_create_buffer (server))
             return 0;
-        weechat_buffer_set (server->buffer, "display", "auto");
+        if (weechat_config_boolean (irc_config_look_buffer_switch_connect))
+            weechat_buffer_set (server->buffer, "display", "auto");
     }
 
     irc_bar_item_update_channel ();
