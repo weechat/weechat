@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-07-05 12:20+0200\n"
+"POT-Creation-Date: 2026-08-28 18:28+0200\n"
 "PO-Revision-Date: 2026-07-05 19:16+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <weechatter@arcor.de>\n"
@@ -996,17 +996,14 @@ msgid "  %s %s%s%s (file)"
 msgstr "  %s %s%s%s (Datei)"
 
 #, c-format
-#| msgid "%sKey \"%s\" not found"
 msgid "%sTheme \"%s\" not found"
 msgstr "%sDesign \"%s\" nicht gefunden"
 
 #, c-format
-#| msgid "Option \"%s%s%s\":"
 msgid "Theme \"%s%s%s\":"
 msgstr "Design \"%s%s%s\":"
 
 #, c-format
-#| msgid "    file: %s"
 msgid "  source: %s"
 msgstr "  Quelle: %s"
 
@@ -1014,17 +1011,14 @@ msgid "  source: built-in (in-memory)"
 msgstr "  Quelle: integriert (im Arbeitsspeicher)"
 
 #, c-format
-#| msgid "description"
 msgid "  description: %s"
 msgstr "  Beschreibung: %s"
 
 #, c-format
-#| msgid "    file: %s"
 msgid "  date: %s"
 msgstr "  Datum: %s"
 
 #, c-format
-#| msgid "WeeChat version"
 msgid "  WeeChat version: %s"
 msgstr "  WeeChat Version: %s"
 
@@ -4079,7 +4073,6 @@ msgstr ""
 msgid "number: number of processes to clean"
 msgstr "Anzahl: Anzahl der zu bereinigenden Prozesse"
 
-#| msgid "manage custom bar items"
 msgid "manage color themes"
 msgstr "Farbdesigns verwalten"
 
@@ -4091,9 +4084,6 @@ msgstr ""
 "[list [-backups]] || apply <name> || reset || save <name> || rename <old> "
 "<new> || del <name> || info <name>"
 
-#| msgid ""
-#| "raw[list]: list remote relay servers (without argument, this list is "
-#| "displayed)"
 msgid ""
 "raw[list]: list registered themes and any *.theme files in the WeeChat "
 "configuration directory; the active theme (matching weechat.look.theme) is "
@@ -4103,7 +4093,6 @@ msgstr ""
 "Konfigurationsverzeichnis auf; das aktive Design (entsprechend "
 "weechat.look.theme) ist mit \"->\" gekennzeichnet"
 
-#| msgid "raw[tags]: display tags for lines"
 msgid "raw[-backups]: display backup theme files"
 msgstr "raw[-backups]: Backup-Design-Dateien anzeigen"
 
@@ -4135,11 +4124,9 @@ msgstr ""
 "darf nicht mit dem eines integrierten Design übereinstimmen und nicht mit "
 "\"backup-\" beginnen"
 
-#| msgid "raw[rename]: rename a filter"
 msgid "raw[rename]: rename a user theme file"
 msgstr "raw[rename]: Umbenennen einer Benutzer-Design-Datei"
 
-#| msgid "raw[del]: delete a server"
 msgid "raw[del]: delete a user theme file"
 msgstr "raw[del]: löschen einer Benutzer-Design-Datei"
 
@@ -4150,7 +4137,6 @@ msgstr ""
 "raw[info]: Details zu einem Theme anzeigen (Name, Beschreibung, "
 "Erstellungsdatum, WeeChat-Version, Anzahl der überschriebenen Optionen)"
 
-#| msgid "name: name of trigger"
 msgid "name: name of a theme"
 msgstr "name: Name eines Themes/Designs"
 
@@ -7188,12 +7174,10 @@ msgid "Automatic backup"
 msgstr "Automatische Datensicherung"
 
 #, c-format
-#| msgid "%sKey \"%s\" not found"
 msgid "%sTheme: option \"%s\" not found, skipped"
 msgstr "%sTheme: Option \"%s\" nicht gefunden, übersprungen"
 
 #, c-format
-#| msgid "%s: script \"%s\" is not installed"
 msgid "%sTheme: option \"%s\" is not themable, skipped"
 msgstr "%sTheme: Option \"%s\" ist nicht anpassbar, übersprungen"
 
@@ -7210,8 +7194,6 @@ msgid "%s%s: line %d: missing '=' separator"
 msgstr "%s%s: Zeile %d: fehlendes '=' Trennzeichen"
 
 #, c-format
-#| msgid ""
-#| "%sWarning: %s, line %d: ignoring unknown option for section \"%s\": %s"
 msgid "%s%s: line %d: ignoring unknown [info] key \"%s\""
 msgstr "%s%s: Zeile %d: unbekannter [info] Schlüssel \"%s\" wird ignoriert"
 
@@ -7239,27 +7221,22 @@ msgstr ""
 "erzwingen)"
 
 #, c-format
-#| msgid "%sBuffer name \"%s\" is reserved for WeeChat"
 msgid "%sName \"%s\" is reserved for automatic backups"
 msgstr "%sName \"%s\" ist für automatische Sicherungen reserviert"
 
 #, c-format
-#| msgid "%sBuffer name \"%s\" is reserved for WeeChat"
 msgid "%sName \"%s\" is reserved for a built-in theme"
 msgstr "%sName \"%s\" ist reserviert für ein integriertes Design"
 
 #, c-format
-#| msgid "%s%s: unable to parse file \"%s\""
 msgid "%sFailed to save theme \"%s\""
 msgstr "%sSpeichern des Designs \"%s\" fehlgeschlagen"
 
 #, c-format
-#| msgid "Option \"%s%s%s\":"
 msgid "Theme saved to: %s"
 msgstr "Design gespeichert unter: %s"
 
 #, c-format
-#| msgid "%sCannot create file \"%s\""
 msgid "%sCannot rename built-in theme \"%s\""
 msgstr "%sIntegriertes Design \"%s\" kann nicht umbenannt werden"
 
@@ -7268,12 +7245,10 @@ msgid "%sNew name is the same as old name"
 msgstr "%sDer neue Name ist derselbe wie der alte Name"
 
 #, c-format
-#| msgid "%sBar \"%s\" already exists"
 msgid "%sTheme \"%s\" already exists"
 msgstr "%sDesign \"%s\" existiert schon"
 
 #, c-format
-#| msgid "%sUnable to rename filter \"%s\" to \"%s\""
 msgid "%sFailed to rename theme \"%s\" to \"%s\""
 msgstr "%sUmbenennung des Design \"%s\" zu \"%s\" fehlgeschlagen"
 
@@ -7282,12 +7257,10 @@ msgid "Theme \"%s\" renamed to \"%s\""
 msgstr "Design \"%s\" umbenannt zu \"%s\""
 
 #, c-format
-#| msgid "%sCannot create file \"%s\""
 msgid "%sCannot delete built-in theme \"%s\""
 msgstr "%sIntegriertes Design \"%s\" kann nicht gelöscht werden"
 
 #, c-format
-#| msgid "%s%s: unable to parse file \"%s\""
 msgid "%sFailed to delete theme \"%s\""
 msgstr "%sDas Design \"%s\" konnte nicht gelöscht werden"
 
@@ -12569,6 +12542,16 @@ msgstr ""
 msgid ""
 "auto switch to channel buffer when it is auto joined (with server option "
 "\"autojoin\")"
+msgstr ""
+"wechselt automatisch zum Kanal-Buffer falls dieser automatisch betreten "
+"wurde (mittels der Serveroption \"autojoin\")"
+
+#, fuzzy
+#| msgid ""
+#| "auto switch to channel buffer when it is auto joined (with server option "
+#| "\"autojoin\")"
+msgid ""
+"auto switch to server buffer when it is opened on connection to the server"
 msgstr ""
 "wechselt automatisch zum Kanal-Buffer falls dieser automatisch betreten "
 "wurde (mittels der Serveroption \"autojoin\")"
