@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-08-28 18:28+0200\n"
+"POT-Creation-Date: 2026-08-29 22:00+0200\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -15,119 +15,119 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#. TRANSLATORS: command line option "-a", "--no-connect"
+#. TRANSLATORS: command line option "-a", "--no-connect".
 msgid "disable auto-connect to servers at startup"
 msgstr ""
 
-#. TRANSLATORS: command line option "-c", "--colors"
+#. TRANSLATORS: command line option "-c", "--colors".
 msgid "display default colors in terminal and exit"
 msgstr ""
 
-#. TRANSLATORS: only "<path>" may be translated
+#. TRANSLATORS: only "<path>" may be translated.
 msgid "-d, --dir <path>"
 msgstr ""
 
-#. TRANSLATORS: command line option "-d", "--dir <path>"
+#. TRANSLATORS: command line option "-d", "--dir <path>".
 msgid ""
 "force a single WeeChat home directory or 5 different directories separated "
 "by colons (in this order: config, data, state, cache, runtime) (environment "
 "variable WEECHAT_HOME is read if this option is not given)"
 msgstr ""
 
-#. TRANSLATORS: command line option "-t", "--temp-dir"
+#. TRANSLATORS: command line option "-t", "--temp-dir".
 msgid ""
 "create a temporary WeeChat home directory and delete it on exit "
 "(incompatible with option \"-d\")"
 msgstr ""
 
-#. TRANSLATORS: command line option "-h", "--help"
+#. TRANSLATORS: command line option "-h", "--help".
 msgid "display this help and exit"
 msgstr ""
 
-#. TRANSLATORS: command line option "-i", "--build-info"
+#. TRANSLATORS: command line option "-i", "--build-info".
 msgid "display build information and exit"
 msgstr ""
 
-#. TRANSLATORS: command line option "-l", "--license"
+#. TRANSLATORS: command line option "-l", "--license".
 msgid "display WeeChat license and exit"
 msgstr ""
 
-#. TRANSLATORS: command line option "-p", "--no-plugin"
+#. TRANSLATORS: command line option "-p", "--no-plugin".
 msgid "don't load any plugin at startup"
 msgstr ""
 
-#. TRANSLATORS: only "<plugins>" may be translated
+#. TRANSLATORS: only "<plugins>" may be translated.
 msgid "-P, --plugins <plugins>"
 msgstr ""
 
-#. TRANSLATORS: command line option "-P", "--plugins <plugins>"
+#. TRANSLATORS: command line option "-P", "--plugins <plugins>".
 msgid "load only these plugins at startup (see /help weechat.plugin.autoload)"
 msgstr ""
 
-#. TRANSLATORS: only "<cmd>" may be translated (please keep it short)
+#. TRANSLATORS: only "<cmd>" may be translated (please keep it short).
 msgid "-r, --run-command <cmd>"
 msgstr ""
 
-#. TRANSLATORS: command line option "-r", "--run-command <cmd>"
+#. TRANSLATORS: command line option "-r", "--run-command <cmd>".
 msgid ""
 "run command(s) after startup; many commands can be separated by semicolons "
 "and are evaluated, this option can be given multiple times"
 msgstr ""
 
-#. TRANSLATORS: command line option "-s", "--no-script"
+#. TRANSLATORS: command line option "-s", "--no-script".
 msgid "don't load any script at startup"
 msgstr ""
 
-#. TRANSLATORS: command line option "--upgrade"
+#. TRANSLATORS: command line option "--upgrade".
 msgid "upgrade WeeChat using session files (see /help upgrade in WeeChat)"
 msgstr ""
 
-#. TRANSLATORS: command line option "-v", "--version"
+#. TRANSLATORS: command line option "-v", "--version".
 msgid "display WeeChat version and exit"
 msgstr ""
 
-#. TRANSLATORS: command line option: "plugin" and "option" may be translated
+#. TRANSLATORS: command line option: "plugin" and "option" may be translated.
 msgid "plugin:option"
 msgstr ""
 
-#. TRANSLATORS: command line option "plugin:option"
+#. TRANSLATORS: command line option "plugin:option".
 msgid "option for plugin (see man weechat)"
 msgstr ""
 
-#. TRANSLATORS: only "<path>" may be translated
+#. TRANSLATORS: only "<path>" may be translated.
 msgid "--doc-gen <path>"
 msgstr ""
 
-#. TRANSLATORS: command line option "--doc-gen <path>"
+#. TRANSLATORS: command line option "--doc-gen <path>".
 msgid "generate files to build documentation and exit"
 msgstr ""
 
-#. TRANSLATORS: command line option "--daemon"
+#. TRANSLATORS: command line option "--daemon".
 msgid ""
 "run WeeChat as a daemon (fork, new process group, file descriptors closed); "
 "by default in headless mode WeeChat is blocking and does not run in "
 "background"
 msgstr ""
 
-#. TRANSLATORS: command line option "--stdout"
+#. TRANSLATORS: command line option "--stdout".
 msgid ""
 "display log messages on standard output instead of writing them in log file "
 "(option ignored if option \"--daemon\" is given)"
 msgstr ""
 
-#. TRANSLATORS: command line option "--no-dlclose"
+#. TRANSLATORS: command line option "--no-dlclose".
 msgid "do not call function dlclose after plugins are unloaded"
 msgstr ""
 
-#. TRANSLATORS: command line option "--no-gnutls"
+#. TRANSLATORS: command line option "--no-gnutls".
 msgid "disable init/deinit of gnutls"
 msgstr ""
 
-#. TRANSLATORS: command line option "--no-gcrypt"
+#. TRANSLATORS: command line option "--no-gcrypt".
 msgid "disable init/deinit of gcrypt"
 msgstr ""
 
-#. TRANSLATORS: "%s %s" after "compiled on" is date and time
+#. TRANSLATORS: "%s %s" after "compiled on" is date and time.
 #, c-format
 msgid ""
 "WeeChat %s Copyright %s, compiled on %s %s\n"
@@ -153,14 +153,14 @@ msgstr ""
 msgid "List of bars:"
 msgstr ""
 
-#. TRANSLATORS: the last thing displayed is "width:" or "height:" with its value
+#. TRANSLATORS: the last thing displayed is "width:" or "height:" with its value.
 #, c-format
 msgid ""
 "  %s%s%s: %s%s%s (conditions: %s), %s, filling: %s(top/bottom)/%s(left/"
 "right), %s: %s"
 msgstr ""
 
-#. TRANSLATORS: "hidden" is displayed in list of buffers
+#. TRANSLATORS: "hidden" is displayed in list of buffers.
 msgid "(hidden)"
 msgstr ""
 
@@ -342,11 +342,11 @@ msgstr ""
 msgid "Debug hook_url: %s"
 msgstr ""
 
-#. TRANSLATORS: "TLS: enabled"
+#. TRANSLATORS: "TLS: enabled".
 msgid "enabled"
 msgstr ""
 
-#. TRANSLATORS: "TLS: disabled"
+#. TRANSLATORS: "TLS: disabled".
 msgid "disabled"
 msgstr ""
 
@@ -464,7 +464,7 @@ msgstr ""
 msgid "enum"
 msgstr ""
 
-#. TRANSLATORS: please do not translate "(null)"
+#. TRANSLATORS: please do not translate "(null)".
 msgid "undefined value allowed (null)"
 msgstr ""
 
@@ -520,12 +520,12 @@ msgstr ""
 msgid "default command:"
 msgstr ""
 
-#. TRANSLATORS: first "%d" is number of keys
+#. TRANSLATORS: first "%d" is number of keys.
 #, c-format
 msgid "%d key bindings added or redefined for context \"%s\":"
 msgstr ""
 
-#. TRANSLATORS: first "%d" is number of keys
+#. TRANSLATORS: first "%d" is number of keys.
 #, c-format
 msgid "%d key bindings deleted for context \"%s\":"
 msgstr ""
@@ -550,7 +550,7 @@ msgstr ""
 msgid "No key binding defined for context \"%s\""
 msgstr ""
 
-#. TRANSLATORS: first "%d" is number of keys
+#. TRANSLATORS: first "%d" is number of keys.
 #, c-format
 msgid "%d key bindings for context \"%s\":"
 msgstr ""
@@ -559,7 +559,7 @@ msgstr ""
 msgid "No default key binding for context \"%s\""
 msgstr ""
 
-#. TRANSLATORS: first "%d" is number of keys
+#. TRANSLATORS: first "%d" is number of keys.
 #, c-format
 msgid "%d default key bindings for context \"%s\":"
 msgstr ""
@@ -597,7 +597,7 @@ msgstr ""
 msgid "No stored layouts"
 msgstr ""
 
-#. TRANSLATORS: %s%s%s is "buffers" or "windows" or "buffers+windows"
+#. TRANSLATORS: %s%s%s is "buffers" or "windows" or "buffers+windows".
 #, c-format
 msgid "Layout of %s%s%s stored in \"%s\" (current layout: %s)"
 msgstr ""
@@ -615,7 +615,7 @@ msgstr ""
 msgid "Layout \"%s\" deleted (current layout: %s)"
 msgstr ""
 
-#. TRANSLATORS: %s%s%s is "buffers" or "windows" or "buffers+windows"
+#. TRANSLATORS: %s%s%s is "buffers" or "windows" or "buffers+windows".
 #, c-format
 msgid "Layout of %s%s%s reset in \"%s\""
 msgstr ""
@@ -962,12 +962,12 @@ msgstr ""
 msgid "%d option(s) reset, %d option(s) removed"
 msgstr ""
 
-#. TRANSLATORS: "%d %s" is number of times, eg: "2 times"
+#. TRANSLATORS: "%d %s" is number of times, eg: "2 times".
 #, c-format
 msgid "WeeChat upgrades: %d %s, first start: %s, last start: %s"
 msgstr ""
 
-#. TRANSLATORS: text is: "upgraded xx times"
+#. TRANSLATORS: text is: "upgraded xx times".
 msgid "time"
 msgid_plural "times"
 msgstr[0] ""
@@ -1023,7 +1023,7 @@ msgstr ""
 msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
 msgstr ""
 
-#. TRANSLATORS: "%s" after "started on" is a date
+#. TRANSLATORS: "%s" after "started on" is a date.
 #, c-format
 msgid "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"
 msgstr ""
@@ -1033,7 +1033,7 @@ msgid_plural "days"
 msgstr[0] ""
 msgstr[1] ""
 
-#. TRANSLATORS: "%s%s" after "started on" is a date
+#. TRANSLATORS: "%s%s" after "started on" is a date.
 #, c-format
 msgid "WeeChat uptime: %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, started on %s%s"
 msgstr ""
@@ -1067,7 +1067,7 @@ msgstr ""
 msgid "execute a command on all buffers"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "<command>"
 msgstr ""
 
@@ -1085,7 +1085,7 @@ msgstr ""
 msgid "set or remove away status"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "[-all] [<message>]"
 msgstr ""
 
@@ -1109,7 +1109,7 @@ msgstr ""
 msgid "manage bars"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid ""
 "list|listfull|listitems || add|addreplace <name> <type>[,<conditions>] "
 "<position> <size> <separator> <item1>[,<item2>...] || default [input|title|"
@@ -1237,7 +1237,7 @@ msgstr ""
 msgid "manage buffers"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid ""
 "list || add [-free] [-switch] <name> || clear [<id>|<number>|<name>|-merged|-"
 "all [<id>|<number>|<name>...]] || move <number>|-|+ || swap <id1>|<number1>|"
@@ -1397,7 +1397,7 @@ msgstr ""
 msgid "define color aliases and display palette of colors"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid ""
 "alias <color> <name> || unalias <color> || reset || term2rgb <color> || "
 "rgb2term <rgb> [<limit>] || -o"
@@ -1443,7 +1443,7 @@ msgstr ""
 msgid "launch explicit WeeChat or plugin command"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "[-buffer <name>] <plugin> <command> || -s <command>[;<command>...]"
 msgstr ""
 
@@ -1471,7 +1471,7 @@ msgid ""
 "screen"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid ""
 "go chat|<bar> [top_left|top_right|bottom_left|bottom_right] || go <x>,<y> || "
 "move up|down|left|right|top_left|top_right|bottom_left|bottom_right|edge_top|"
@@ -1506,7 +1506,7 @@ msgstr ""
 msgid "debug functions"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid ""
 "list || set <plugin> <level> || dump [<plugin>] || hooks [<plugin_mask> "
 "[<hook_type>...]] || buffer|certs|color|dirs|infolists|key|libs|memory|tags|"
@@ -1631,7 +1631,7 @@ msgstr ""
 msgid "evaluate expression"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid ""
 "[-n|-s] [-e] [-d] <expression> || [-n] [-d [-d]] -c <expression1> <operator> "
 "<expression2>"
@@ -1998,7 +1998,7 @@ msgid ""
 "filter messages in buffers, to hide/show them according to tags or regex"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid ""
 "list || enable|disable|toggle [<name>|<mask>|@...] || add|addreplace <name> "
 "<buffer>[,<buffer>...] <tags> <regex> || rename <name> <new_name> || "
@@ -2139,7 +2139,7 @@ msgstr ""
 msgid "display help about commands and options"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "-list|-listfull [<plugin>...] || <command> || <option>"
 msgstr ""
 
@@ -2163,7 +2163,7 @@ msgstr ""
 msgid "show buffer command history"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "clear || <value>"
 msgstr ""
 
@@ -2176,7 +2176,7 @@ msgstr ""
 msgid "manage hotlist"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid ""
 "add [low|message|private|highlight] || clear [<level>] || remove || restore "
 "[-all]"
@@ -2207,7 +2207,7 @@ msgstr ""
 msgid "functions for command line"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "<action> [<arguments>]"
 msgstr ""
 
@@ -2391,7 +2391,7 @@ msgstr ""
 msgid "manage custom bar items"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid ""
 "list || add|addreplace <name> \"<conditions>\" \"<content>\" || rename "
 "<name> <new_name> || refresh <name>|<mask>... || recreate <name> || del "
@@ -2462,7 +2462,7 @@ msgstr ""
 msgid "bind/unbind keys"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid ""
 "[list|listdefault|listdiff] [<context>] || bind <key> [<command> [<args>]] "
 "|| bindctxt <context> <key> [<command> [<args>]] || unbind <key> || "
@@ -2601,7 +2601,7 @@ msgstr ""
 msgid "manage buffers/windows layouts"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid ""
 "store [<name>] [buffers|windows] || apply [<name>] [buffers|windows] || "
 "leave || del [<name>] [buffers|windows] || rename <name> <new_name>"
@@ -2652,7 +2652,7 @@ msgstr ""
 msgid "mouse control"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "enable|disable|toggle [<delay>]"
 msgstr ""
 
@@ -2676,7 +2676,7 @@ msgstr ""
 msgid "execute a command silently"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "[-core|-current|-buffer <name>] <command>"
 msgstr ""
 
@@ -2707,7 +2707,7 @@ msgstr ""
 msgid "redirect command output to a buffer, a file or a hsignal"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid ""
 "[-buffer <name>|-file <filename>|-hsignal <name>] [-color strip|keep|ansi] [-"
 "concat <separator>] [-strip <chars>] [-skipempty] [-c] [-o] [-g] [-nl] "
@@ -2790,7 +2790,7 @@ msgstr ""
 msgid "list/load/unload plugins"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid ""
 "list [-o|-ol|-i|-il|<name>] || listfull [<name>] || load <filename> "
 "[<arguments>] || autoload [<arguments>] || reload [<name>|* [<arguments>]] "
@@ -2848,7 +2848,7 @@ msgstr ""
 msgid "display text on a buffer"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid ""
 "[-buffer <id>|<number>|<name>] [-newbuffer <name>] [-free] [-switch] [-core|-"
 "current] [-y <line>] [-escape] [-date <date>] [-tags <tags>] [-action|-"
@@ -2964,7 +2964,7 @@ msgstr ""
 msgid "manage proxies"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid ""
 "list || add|addreplace <name> <type> <address> <port> [<username> "
 "[<password>]] || del <name>|<mask>... || set <name> <option> <value>"
@@ -3023,7 +3023,7 @@ msgstr ""
 msgid "quit WeeChat"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "[-yes] [<arguments>]"
 msgstr ""
 
@@ -3044,7 +3044,7 @@ msgstr ""
 msgid "reload configuration files from disk"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "[<file>...]"
 msgstr ""
 
@@ -3057,7 +3057,7 @@ msgstr ""
 msgid "execute a command several times"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "[-interval <delay>[<unit>]] <count> <command>"
 msgstr ""
 
@@ -3121,7 +3121,7 @@ msgstr ""
 msgid "reset config options"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "<option> || -mask <option>"
 msgstr ""
 
@@ -3151,7 +3151,7 @@ msgid ""
 "manage secured data (passwords or private data encrypted in file sec.conf)"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid ""
 "passphrase <passphrase>|-delete || decrypt <passphrase>|-discard || set "
 "<name> <value> || del <name>"
@@ -3251,7 +3251,7 @@ msgstr ""
 msgid "set config options and environment variables"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid ""
 "[<option> [<value>]] || diff [<option>...] || env [<variable> [<value>]]"
 msgstr ""
@@ -3332,7 +3332,7 @@ msgstr ""
 msgid "manage color themes"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid ""
 "[list [-backups]] || apply <name> || reset || save <name> || rename <old> "
 "<new> || del <name> || info <name>"
@@ -3395,7 +3395,7 @@ msgstr ""
 msgid "toggle value of a config option"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "<option> [<value>...]"
 msgstr ""
 
@@ -3462,7 +3462,7 @@ msgid ""
 "from servers"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "[-yes] [<path_to_binary>|-save|-quit] || -o|-ol"
 msgstr ""
 
@@ -3608,7 +3608,7 @@ msgstr ""
 msgid "schedule a command execution in future"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "<number>[<unit>] <command>"
 msgstr ""
 
@@ -3638,7 +3638,7 @@ msgstr ""
 msgid "manage windows"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 #, no-c-format
 msgid ""
 "list || -1|+1|b#|up|down|left|right [-window <number>] || <number> || splith|"
@@ -3886,15 +3886,15 @@ msgstr ""
 msgid "options for bars"
 msgstr ""
 
-#. TRANSLATORS: "key" means "key on the keyboard"
+#. TRANSLATORS: "key" means "key on the keyboard".
 msgid "key contexts"
 msgstr ""
 
-#. TRANSLATORS: "key" means "key on the keyboard"
+#. TRANSLATORS: "key" means "key on the keyboard".
 msgid "key codes"
 msgstr ""
 
-#. TRANSLATORS: "key" means "key on the keyboard"
+#. TRANSLATORS: "key" means "key on the keyboard".
 msgid "key codes that can be reset (keys added, redefined or removed)"
 msgstr ""
 
@@ -4181,7 +4181,7 @@ msgstr ""
 msgid "default text search in buffer: in message, prefix, prefix and message"
 msgstr ""
 
-#. TRANSLATORS: string "${color:xxx}" must NOT be translated
+#. TRANSLATORS: string "${color:xxx}" must NOT be translated.
 msgid ""
 "time format for each line displayed in buffers (see man strftime for date/"
 "time specifiers, extra specifiers are supported, see function "
@@ -4197,7 +4197,7 @@ msgid ""
 "{color:181}%S.%.3:${color:252}%H${color:243}%M${color:237}%S.%.3}"
 msgstr ""
 
-#. TRANSLATORS: string "${color:xxx}" must NOT be translated
+#. TRANSLATORS: string "${color:xxx}" must NOT be translated.
 msgid ""
 "time displayed for a message with same time as previous message: use a space "
 "\" \" to hide time, another string to display this string instead of time, "
@@ -4296,7 +4296,7 @@ msgstr ""
 msgid "display special message when day changes"
 msgstr ""
 
-#. TRANSLATORS: string "${color:xxx}" must NOT be translated
+#. TRANSLATORS: string "${color:xxx}" must NOT be translated.
 msgid ""
 "message displayed when the day has changed, with one date displayed (for "
 "example at beginning of buffer) (see man strftime for date/time specifiers) "
@@ -4304,7 +4304,7 @@ msgid ""
 "\", see /help eval)"
 msgstr ""
 
-#. TRANSLATORS: string "${color:xxx}" must NOT be translated
+#. TRANSLATORS: string "${color:xxx}" must NOT be translated.
 msgid ""
 "message displayed when the day has changed, with two dates displayed "
 "(between two messages); the second date specifiers must start with two \"%\" "
@@ -4558,31 +4558,31 @@ msgid ""
 "in at least one bar (by default it is used in \"input\" bar)"
 msgstr ""
 
-#. TRANSLATORS: string "${color:xxx}" must NOT be translated
+#. TRANSLATORS: string "${color:xxx}" must NOT be translated.
 msgid ""
 "prefix for error messages (note: content is evaluated, so you can use colors "
 "with format \"${color:xxx}\", see /help eval)"
 msgstr ""
 
-#. TRANSLATORS: string "${color:xxx}" must NOT be translated
+#. TRANSLATORS: string "${color:xxx}" must NOT be translated.
 msgid ""
 "prefix for network messages (note: content is evaluated, so you can use "
 "colors with format \"${color:xxx}\", see /help eval)"
 msgstr ""
 
-#. TRANSLATORS: string "${color:xxx}" must NOT be translated
+#. TRANSLATORS: string "${color:xxx}" must NOT be translated.
 msgid ""
 "prefix for action messages (note: content is evaluated, so you can use "
 "colors with format \"${color:xxx}\", see /help eval)"
 msgstr ""
 
-#. TRANSLATORS: string "${color:xxx}" must NOT be translated
+#. TRANSLATORS: string "${color:xxx}" must NOT be translated.
 msgid ""
 "prefix for join messages (note: content is evaluated, so you can use colors "
 "with format \"${color:xxx}\", see /help eval)"
 msgstr ""
 
-#. TRANSLATORS: string "${color:xxx}" must NOT be translated
+#. TRANSLATORS: string "${color:xxx}" must NOT be translated.
 msgid ""
 "prefix for quit messages (note: content is evaluated, so you can use colors "
 "with format \"${color:xxx}\", see /help eval)"
@@ -4820,7 +4820,7 @@ msgid ""
 "option weechat.color.chat_nick_colors"
 msgstr ""
 
-#. TRANSLATORS: please do not translate "lightred:blue"
+#. TRANSLATORS: please do not translate "lightred:blue".
 msgid ""
 "text color for nicks (comma separated list of colors, background is allowed "
 "with format: \"fg:bg\", for example: \"lightred:blue\")"
@@ -4932,7 +4932,7 @@ msgid ""
 "(default value)"
 msgstr ""
 
-#. TRANSLATORS: please do not translate "lightred:blue"
+#. TRANSLATORS: please do not translate "lightred:blue".
 msgid ""
 "text color for syntax highlighting in evaluated strings, with \"${raw_hl:...}"
 "\" and \"${hl:...}\" (comma separated list of colors, background is allowed "
@@ -5175,7 +5175,7 @@ msgstr ""
 msgid "FATAL: error initializing configuration options"
 msgstr ""
 
-#. TRANSLATORS: "%s %s" after "compiled on" is date and time
+#. TRANSLATORS: "%s %s" after "compiled on" is date and time.
 #, c-format
 msgid "WeeChat %s, compiled on %s %s\n"
 msgstr ""
@@ -5410,7 +5410,7 @@ msgstr ""
 msgid "WeeChat secured data (sec.conf) | Keys: [alt-v] Toggle values"
 msgstr ""
 
-#. TRANSLATORS: "hash algorithm not supported"
+#. TRANSLATORS: "hash algorithm not supported".
 msgid "not supported"
 msgstr ""
 
@@ -5526,19 +5526,19 @@ msgid ""
 "same content in file"
 msgstr ""
 
-#. TRANSLATORS: file size unit "kilobyte"
+#. TRANSLATORS: file size unit "kilobyte".
 msgid "KB"
 msgstr ""
 
-#. TRANSLATORS: file size unit "megabyte"
+#. TRANSLATORS: file size unit "megabyte".
 msgid "MB"
 msgstr ""
 
-#. TRANSLATORS: file size unit "gigabyte"
+#. TRANSLATORS: file size unit "gigabyte".
 msgid "GB"
 msgstr ""
 
-#. TRANSLATORS: file size unit "terabyte"
+#. TRANSLATORS: file size unit "terabyte".
 msgid "TB"
 msgstr ""
 
@@ -5742,7 +5742,7 @@ msgstr ""
 msgid "debug: removing file: %s"
 msgstr ""
 
-#. TRANSLATORS: %.02fs is a float number + "s" ("seconds")
+#. TRANSLATORS: %.02fs is a float number + "s" ("seconds").
 #, c-format
 msgid "Upgrade done (%.02fs)"
 msgstr ""
@@ -5854,7 +5854,7 @@ msgid ""
 "switch back to the default dark theme."
 msgstr ""
 
-#. TRANSLATORS: the "under %s" can be "under screen" or "under tmux"
+#. TRANSLATORS: the "under %s" can be "under screen" or "under tmux".
 #, c-format
 msgid ""
 "%sWarning: WeeChat is running under %s and $TERM is \"%s\", which can cause "
@@ -5962,11 +5962,11 @@ msgid_plural "%sPaste %d lines? [ctrl-y] Yes [ctrl-n] No"
 msgstr[0] ""
 msgstr[1] ""
 
-#. TRANSLATORS: search in "local" history
+#. TRANSLATORS: search in "local" history.
 msgid "local"
 msgstr ""
 
-#. TRANSLATORS: search in "global" history
+#. TRANSLATORS: search in "global" history.
 msgid "global"
 msgstr ""
 
@@ -6099,7 +6099,7 @@ msgid ""
 "\"addreplace\" to overwrite it)"
 msgstr ""
 
-#. TRANSLATORS: %s is the error returned by regerror
+#. TRANSLATORS: %s is the error returned by regerror.
 #, c-format
 msgid "invalid regular expression (%s)"
 msgstr ""
@@ -6214,7 +6214,7 @@ msgstr ""
 msgid "list, add or remove command aliases"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid ""
 "list [<name>] || add|addreplace <name> [<command>[;<command>...]] || "
 "addcompletion|addreplacecompletion <completion> <name> [<command>[;"
@@ -6727,7 +6727,7 @@ msgstr ""
 msgid "change charset for current buffer"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "decode|encode <charset> || reset"
 msgstr ""
 
@@ -6752,22 +6752,22 @@ msgstr ""
 msgid "Commands:"
 msgstr ""
 
-#. TRANSLATORS: format: hours + minutes, for example: 3h59
+#. TRANSLATORS: format: hours + minutes, for example: 3h59.
 #, c-format
 msgid "%dh%02d"
 msgstr ""
 
-#. TRANSLATORS: format: minutes + seconds, for example: 3m59
+#. TRANSLATORS: format: minutes + seconds, for example: 3m59.
 #, c-format
 msgid "%dm%02d"
 msgstr ""
 
-#. TRANSLATORS: format: seconds, for example: 59s
+#. TRANSLATORS: format: seconds, for example: 59s.
 #, c-format
 msgid "%ds"
 msgstr ""
 
-#. TRANSLATORS: %s before "ago" is elapsed time, for example: "3m59"
+#. TRANSLATORS: %s before "ago" is elapsed time, for example: "3m59".
 #, c-format
 msgid "  %s%s%s %ld%s%s%s: %s\"%s%s%s\"%s (pid: %d, started %s ago)"
 msgstr ""
@@ -6803,7 +6803,7 @@ msgstr ""
 msgid "execute external commands"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid ""
 "-list || [-sh|-nosh] [-bg|-nobg] [-stdin|-nostdin] [-buffer <name>] [-l|-o|-"
 "oc|-n|-nf] [-oerr] [-cl|-nocl] [-sw|-nosw] [-ln|-noln] [-flush|-noflush] [-"
@@ -7125,7 +7125,7 @@ msgstr ""
 msgid "values:"
 msgstr ""
 
-#. TRANSLATORS: "%s%s%s:" at beginning of string it the name of option
+#. TRANSLATORS: "%s%s%s:" at beginning of string it the name of option.
 #, c-format
 msgid "%s%s%s: %s%s%s %s[%s%s]%s"
 msgstr ""
@@ -7166,7 +7166,7 @@ msgstr[1] ""
 msgid "fast set WeeChat and plugins options"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid ""
 "-bar || -refresh || -up|-down [<number>] || -left|-right [<percent>] || -go "
 "<line>|end || -toggle || -add [<value>] || -reset || -unset || -set || "
@@ -7828,7 +7828,7 @@ msgstr ""
 msgid "server"
 msgstr ""
 
-#. TRANSLATORS: this is displayed in a bar item and must be as short as possible
+#. TRANSLATORS: this is displayed in a bar item and must be as short as possible.
 msgid "cleartext"
 msgstr ""
 
@@ -8083,7 +8083,7 @@ msgstr ""
 msgid "not connected"
 msgstr ""
 
-#. TRANSLATORS: "fake IRC server"
+#. TRANSLATORS: "fake IRC server".
 msgid " (fake)"
 msgstr ""
 
@@ -8193,14 +8193,14 @@ msgstr ""
 msgid "%s%s: you are not on channel \"%s\""
 msgstr ""
 
-#. TRANSLATORS: "Notice" is command name in IRC protocol (translation is frequently the same word)
+#. TRANSLATORS: "Notice" is command name in IRC protocol (translation is frequently the same word).
 msgid "Notice"
 msgstr ""
 
 msgid "send a CTCP action to a nick or channel"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "[-server <server>] <target>[,<target>...] <text>"
 msgstr ""
 
@@ -8216,7 +8216,7 @@ msgstr ""
 msgid "find information about the administrator of the server"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "[<target>]"
 msgstr ""
 
@@ -8226,7 +8226,7 @@ msgstr ""
 msgid "execute a command on all channels of all connected servers"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid ""
 "[-current] [-parted|-all] [-exclude=<channel>[,<channel>...]] <command> || [-"
 "current] [-parted|-all] [-include=<channel>[,<channel>...]] <command>"
@@ -8301,7 +8301,7 @@ msgstr ""
 msgid "execute a command on all private buffers of all connected servers"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid ""
 "[-current] [-exclude=<nick>[,<nick>...]] <command> || [-current] [-"
 "include=<nick>[,<nick>...]] <command>"
@@ -8348,7 +8348,7 @@ msgstr ""
 msgid "execute a command on all connected servers"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid ""
 "[-exclude=<server>[,<server>...]] <command> || [-include=<server>[,"
 "<server>...]] <command>"
@@ -8369,7 +8369,7 @@ msgstr ""
 msgid "authenticate with SASL"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "[<username> <password>]"
 msgstr ""
 
@@ -8403,7 +8403,7 @@ msgstr ""
 msgid "configure the \"autojoin\" server option"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid ""
 "add [<channel>...] || addraw <channel1>[,<channel2>...] [<key1>[,<key2>...]] "
 "|| del [<channel>...] || apply || join || sort [buffer]"
@@ -8445,7 +8445,7 @@ msgstr ""
 msgid "ban nicks or hosts"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "[<channel>] [<nick>...]"
 msgstr ""
 
@@ -8459,7 +8459,7 @@ msgstr ""
 msgid "client capability negotiation"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "ls || list || req|ack [<capability>...] || end"
 msgstr ""
 
@@ -8512,7 +8512,7 @@ msgstr ""
 msgid "connect to IRC server(s)"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid ""
 "[<server>...] [-<option>[=<value>]] [-no<option>] [-nojoin] [-switch] || "
 "-all|-auto|-open [-nojoin] [-switch]"
@@ -8565,7 +8565,7 @@ msgstr ""
 msgid "send a CTCP message (Client-To-Client Protocol)"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "[-server <server>] <target>[,<target>...] <type> [<arguments>]"
 msgstr ""
 
@@ -8581,7 +8581,7 @@ msgstr ""
 msgid "leave and rejoin a channel"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "[<channel>[,<channel>...]] [<message>]"
 msgstr ""
 
@@ -8591,7 +8591,7 @@ msgstr ""
 msgid "start a DCC (passive file transfer or direct chat)"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "chat <nick> || send <nick> <file>"
 msgstr ""
 
@@ -8604,7 +8604,7 @@ msgstr ""
 msgid "remove channel half-operator status from nick(s)"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "<nick>... || * -yes"
 msgstr ""
 
@@ -8635,7 +8635,7 @@ msgstr ""
 msgid "disconnect from one or all IRC servers"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "[<server>|-all|-pending [<reason>]]"
 msgstr ""
 
@@ -8661,7 +8661,7 @@ msgstr ""
 msgid "ignore nicks/hosts from servers or channels"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid ""
 "list || add|addreplace [re:]<nick> [<server> [<channel>]] || del <number>|-"
 "all"
@@ -8709,21 +8709,21 @@ msgstr ""
 msgid "invite a nick on a channel"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "<nick>... [<channel>]"
 msgstr ""
 
 msgid "check if a nick is currently on IRC"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "<nick>..."
 msgstr ""
 
 msgid "join a channel"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid ""
 "[-noswitch] [-server <server>] [<channel1>[,<channel2>...]] [<key1>[,"
 "<key2>...]]"
@@ -8739,7 +8739,7 @@ msgstr ""
 msgid "kick a user out of a channel"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "[<channel>] <nick> [<reason>]"
 msgstr ""
 
@@ -8760,7 +8760,7 @@ msgstr ""
 msgid "close client-server connection"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "<nick> [<reason>]"
 msgstr ""
 
@@ -8770,7 +8770,7 @@ msgstr ""
 msgid "send a notice to an invitation-only channel, requesting an invite"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "<channel> [<message>]"
 msgstr ""
 
@@ -8780,7 +8780,7 @@ msgstr ""
 msgid "list all server names which are known by the server answering the query"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "[[<target>] <server_mask>]"
 msgstr ""
 
@@ -8793,7 +8793,7 @@ msgstr ""
 msgid "list channels and their topics"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid ""
 "[-server <server>] [<channel>[,<channel>...]] [<target>] || [-server "
 "<server>] [-raw *|<regex>] || -up|-down [<number>] || -left|-right "
@@ -8870,7 +8870,7 @@ msgstr ""
 msgid "get statistics about the size of the IRC network"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "[<mask> [<target>]]"
 msgstr ""
 
@@ -8886,14 +8886,14 @@ msgstr ""
 msgid "send a CTCP action to the current channel"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "<message>"
 msgstr ""
 
 msgid "change channel or user mode"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid ""
 "[<channel>] [+|-]o|p|s|i|t|n|m|l|b|e|v|k [<arguments>] || <nick> [+|-]i|s|w|o"
 msgstr ""
@@ -8972,7 +8972,7 @@ msgstr ""
 msgid "list nicks on channels"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "[-count | -x] [<channel>[,<channel>...]]"
 msgstr ""
 
@@ -8987,7 +8987,7 @@ msgstr ""
 msgid "change current nick"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "[-all] <nick>"
 msgstr ""
 
@@ -9000,7 +9000,7 @@ msgstr ""
 msgid "send notice message to user"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "[-server <server>] <target> <text>"
 msgstr ""
 
@@ -9010,7 +9010,7 @@ msgstr ""
 msgid "add a notification for presence or away status of nicks on servers"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "add|addreplace <nick> [<server> [-away]] || del <nick>|-all [<server>]"
 msgstr ""
 
@@ -9047,7 +9047,7 @@ msgstr ""
 msgid "get operator privileges"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "<user> <password>"
 msgstr ""
 
@@ -9063,7 +9063,7 @@ msgstr ""
 msgid "send a ping to server"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "<target1> [<target2>]"
 msgstr ""
 
@@ -9076,7 +9076,7 @@ msgstr ""
 msgid "answer to a ping message"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "<daemon> [<daemon2>]"
 msgstr ""
 
@@ -9089,7 +9089,7 @@ msgstr ""
 msgid "send a private message to a nick"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "[-noswitch] [-server <server>] <nick>[,<nick>...] [<text>]"
 msgstr ""
 
@@ -9103,7 +9103,7 @@ msgstr ""
 msgid "send raw data to server without parsing"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "[-server <server>] <data>"
 msgstr ""
 
@@ -9113,7 +9113,7 @@ msgstr ""
 msgid "reconnect to server(s)"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "<server>... [-nojoin] [-switch] || -all [-nojoin] [-switch]"
 msgstr ""
 
@@ -9123,7 +9123,7 @@ msgstr ""
 msgid "tell the server to reload its config file"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "[<option>]"
 msgstr ""
 
@@ -9147,14 +9147,14 @@ msgstr ""
 msgid "force a user to join channel(s)"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "<nick> <channel>[,<channel>...]"
 msgstr ""
 
 msgid "change mode on channel, without having operator status"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "[<channel>] <mode>"
 msgstr ""
 
@@ -9164,7 +9164,7 @@ msgstr ""
 msgid "force a user to use another nick"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "<nick> <new_nick>"
 msgstr ""
 
@@ -9177,14 +9177,14 @@ msgstr ""
 msgid "force a user to quit server with a reason"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "<nick> <reason>"
 msgstr ""
 
 msgid "register a new service"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "<nick> <reserved> <distribution> <type> <reserved> <info>"
 msgstr ""
 
@@ -9197,7 +9197,7 @@ msgstr ""
 msgid "list, add or remove IRC servers"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid ""
 "list|listfull [-connected] [<name>] || add|addreplace <name> <hostname>[/"
 "<port>] [-<option>[=<value>]] [-no<option>] || copy|rename <name> <new_name> "
@@ -9292,7 +9292,7 @@ msgstr ""
 msgid "list services currently connected to the network"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "[<mask> [<type>]]"
 msgstr ""
 
@@ -9305,7 +9305,7 @@ msgstr ""
 msgid "deliver a message to a service"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "<service> <text>"
 msgstr ""
 
@@ -9315,7 +9315,7 @@ msgstr ""
 msgid "set real name"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "<realname>"
 msgstr ""
 
@@ -9325,7 +9325,7 @@ msgstr ""
 msgid "disconnect server links"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "<target> <comment>"
 msgstr ""
 
@@ -9335,7 +9335,7 @@ msgstr ""
 msgid "query statistics about server"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "[<query> [<target>]]"
 msgstr ""
 
@@ -9347,7 +9347,7 @@ msgid ""
 "please join IRC"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "<user> [<target> [<channel>]]"
 msgstr ""
 
@@ -9363,7 +9363,7 @@ msgstr ""
 msgid "get/set channel topic"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "[<channel>] [<topic>|-delete]"
 msgstr ""
 
@@ -9379,7 +9379,7 @@ msgstr ""
 msgid "unban nicks or hosts"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "[<channel>] <nick>|<number>|<n1>-<n2>..."
 msgstr ""
 
@@ -9407,7 +9407,7 @@ msgstr ""
 msgid "give the version info of nick or server (current or specified)"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "[<target>|<nick>]"
 msgstr ""
 
@@ -9420,7 +9420,7 @@ msgstr ""
 msgid "send a notice to channel ops"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "[<channel>] <text>"
 msgstr ""
 
@@ -9429,14 +9429,14 @@ msgid ""
 "mode for themselves"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "<text>"
 msgstr ""
 
 msgid "generate a query which returns a list of information"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "[<mask> [o]]"
 msgstr ""
 
@@ -9449,7 +9449,7 @@ msgstr ""
 msgid "query information about user(s)"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "[<target>] [<nick>[,<nick>...]]"
 msgstr ""
 
@@ -9473,7 +9473,7 @@ msgstr ""
 msgid "ask for information about a nick which no longer exists"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "<nick>[,<nick>...] [<count> [<target>]]"
 msgstr ""
 
@@ -9684,7 +9684,7 @@ msgid ""
 "the server name)"
 msgstr ""
 
-#. TRANSLATORS: please keep words "client capabilities" between brackets if translation is different (see fr.po)
+#. TRANSLATORS: please keep words "client capabilities" between brackets if translation is different (see fr.po).
 msgid ""
 "comma-separated list of client capabilities to enable for server if they are "
 "available (see /help cap for a list of capabilities supported by WeeChat); "
@@ -10223,11 +10223,11 @@ msgid ""
 "see /help filter)"
 msgstr ""
 
-#. TRANSLATORS: please do not translate "account"
+#. TRANSLATORS: please do not translate "account".
 msgid "enable smart filter for \"account\" messages"
 msgstr ""
 
-#. TRANSLATORS: please do not translate "chghost"
+#. TRANSLATORS: please do not translate "chghost".
 msgid "enable smart filter for \"chghost\" messages"
 msgstr ""
 
@@ -10236,7 +10236,7 @@ msgid ""
 "not speak during the last N minutes, the join/part/quit is filtered"
 msgstr ""
 
-#. TRANSLATORS: please do not translate "join"
+#. TRANSLATORS: please do not translate "join".
 msgid "enable smart filter for \"join\" messages"
 msgstr ""
 
@@ -10248,7 +10248,7 @@ msgid ""
 "never unmask a join)"
 msgstr ""
 
-#. TRANSLATORS: please do not translate "mode"
+#. TRANSLATORS: please do not translate "mode".
 msgid ""
 "enable smart filter for \"mode\" messages: \"*\" to filter all modes, \"+\" "
 "to filter all modes in server prefixes (for example \"ovh\"), \"xyz\" to "
@@ -10257,15 +10257,15 @@ msgid ""
 "k/l"
 msgstr ""
 
-#. TRANSLATORS: please do not translate "nick"
+#. TRANSLATORS: please do not translate "nick".
 msgid "enable smart filter for \"nick\" messages (nick changes)"
 msgstr ""
 
-#. TRANSLATORS: please do not translate "part" and "quit"
+#. TRANSLATORS: please do not translate "part" and "quit".
 msgid "enable smart filter for \"part\" and \"quit\" messages"
 msgstr ""
 
-#. TRANSLATORS: please do not translate "setname"
+#. TRANSLATORS: please do not translate "setname".
 msgid "enable smart filter for \"setname\" messages"
 msgstr ""
 
@@ -10304,7 +10304,7 @@ msgstr ""
 msgid "color for text in account messages"
 msgstr ""
 
-#. TRANSLATORS: please do not translate "chghost"
+#. TRANSLATORS: please do not translate "chghost".
 msgid "color for text in \"chghost\" messages"
 msgstr ""
 
@@ -10317,11 +10317,11 @@ msgstr ""
 msgid "color for text in part/quit messages"
 msgstr ""
 
-#. TRANSLATORS: please do not translate "setname"
+#. TRANSLATORS: please do not translate "setname".
 msgid "color for text in \"setname\" messages"
 msgstr ""
 
-#. TRANSLATORS: please do not translate the list of WeeChat color names at the end of string
+#. TRANSLATORS: please do not translate the list of WeeChat color names at the end of string.
 msgid ""
 "remap mirc colors in messages using a hashtable (used only for standard "
 "colors, not RGB colors): keys are \"fg,bg\" as integers between -1 (not "
@@ -10446,7 +10446,7 @@ msgstr ""
 msgid " (blocked)"
 msgstr ""
 
-#. TRANSLATORS: %.3fs is a float number + "s" ("seconds")
+#. TRANSLATORS: %.3fs is a float number + "s" ("seconds").
 #, c-format
 msgid "%sCTCP reply from %s%s%s: %s%s%s %.3fs"
 msgstr ""
@@ -10471,8 +10471,8 @@ msgstr ""
 msgid "%s%s: unknown DCC CHAT type received from %s%s%s: \"%s\""
 msgstr ""
 
-#. TRANSLATORS: "Action" is an IRC CTCP "ACTION" sent with /me
-#. TRANSLATORS: "Action" is an IRC CTCP "ACTION" sent with /me or /action
+#. TRANSLATORS: "Action" is an IRC CTCP "ACTION" sent with /me.
+#. TRANSLATORS: "Action" is an IRC CTCP "ACTION" sent with /me or /action.
 msgid "Action"
 msgstr ""
 
@@ -10568,7 +10568,7 @@ msgstr ""
 msgid "\"message\": IRC message, \"server\": server name (optional)"
 msgstr ""
 
-#. TRANSLATORS: please do not translate key names (enclosed by quotes)
+#. TRANSLATORS: please do not translate key names (enclosed by quotes).
 msgid ""
 "\"tags\": tags, \"tag_xxx\": unescaped value of tag \"xxx\" (one key per "
 "tag), \"message_without_tags\": message without the tags, \"nick\": nick, "
@@ -10586,7 +10586,7 @@ msgstr ""
 msgid "split an IRC message (to fit in 512 bytes by default)"
 msgstr ""
 
-#. TRANSLATORS: please do not translate key names (enclosed by quotes)
+#. TRANSLATORS: please do not translate key names (enclosed by quotes).
 msgid ""
 "\"msg1\" ... \"msgN\": messages to send (without final \"\\r\\n\"), "
 "\"args1\" ... \"argsN\": arguments of messages, \"count\": number of messages"
@@ -10724,7 +10724,7 @@ msgstr ""
 msgid "%s%s: cannot allocate new modelist item"
 msgstr ""
 
-#. TRANSLATORS: "unknown" is the status for /notify when ison answer has not been received (check pending)
+#. TRANSLATORS: "unknown" is the status for /notify when ison answer has not been received (check pending).
 msgid "unknown"
 msgstr ""
 
@@ -10983,12 +10983,12 @@ msgstr ""
 msgid "%sURL for %s%s%s: %s"
 msgstr ""
 
-#. TRANSLATORS: "%s" after "created on" is a date
+#. TRANSLATORS: "%s" after "created on" is a date.
 #, c-format
 msgid "%sChannel created on %s"
 msgstr ""
 
-#. TRANSLATORS: "%s" after "created on" is a date
+#. TRANSLATORS: "%s" after "created on" is a date.
 #, c-format
 msgid "%sChannel %s%s%s created on %s"
 msgstr ""
@@ -11001,22 +11001,22 @@ msgstr ""
 msgid "%sTopic for %s%s%s is \"%s%s%s\""
 msgstr ""
 
-#. TRANSLATORS: "%s" after "on" is a date
+#. TRANSLATORS: "%s" after "on" is a date.
 #, c-format
 msgid "%sTopic set by %s%s%s%s%s%s%s%s%s on %s"
 msgstr ""
 
-#. TRANSLATORS: "%s" after "on" is a date
+#. TRANSLATORS: "%s" after "on" is a date.
 #, c-format
 msgid "%sTopic set on %s"
 msgstr ""
 
-#. TRANSLATORS: "%s" after "on" is a date
+#. TRANSLATORS: "%s" after "on" is a date.
 #, c-format
 msgid "%sTopic for %s%s%s set by %s%s%s%s%s%s%s%s%s on %s"
 msgstr ""
 
-#. TRANSLATORS: "%s" after "on" is a date
+#. TRANSLATORS: "%s" after "on" is a date.
 #, c-format
 msgid "%sTopic for %s%s%s set on %s"
 msgstr ""
@@ -11025,7 +11025,7 @@ msgstr ""
 msgid "%sChannel reop %s%s%s: %s%s"
 msgstr ""
 
-#. TRANSLATORS: "%s" after "on" is a date
+#. TRANSLATORS: "%s" after "on" is a date.
 #, c-format
 msgid "%s%s[%s%s%s] %s%s%s%s invited by %s on %s"
 msgstr ""
@@ -11038,7 +11038,7 @@ msgstr ""
 msgid "%s%s[%s%s%s] %s%s%s%s invited"
 msgstr ""
 
-#. TRANSLATORS: "%s" after "on" is a date
+#. TRANSLATORS: "%s" after "on" is a date.
 #, c-format
 msgid "%s%s[%s%s%s]%s%s exception %s%s%s by %s on %s"
 msgstr ""
@@ -11059,7 +11059,7 @@ msgstr ""
 msgid "%sNicks %s%s%s: %s[%s%s%s]"
 msgstr ""
 
-#. TRANSLATORS: number of "regular" nicks on a channel (ie not op/halfop/voiced), for example: "56 regular"
+#. TRANSLATORS: number of "regular" nicks on a channel (ie not op/halfop/voiced), for example: "56 regular".
 msgid "regular"
 msgid_plural "regular"
 msgstr[0] ""
@@ -11106,7 +11106,7 @@ msgid_plural "nicks"
 msgstr[0] ""
 msgstr[1] ""
 
-#. TRANSLATORS: "%s" after "on" is a date
+#. TRANSLATORS: "%s" after "on" is a date.
 #, c-format
 msgid "%s%s[%s%s%s] %s%s%s%s banned by %s on %s"
 msgstr ""
@@ -11146,7 +11146,7 @@ msgstr ""
 msgid "has asked for an invite"
 msgstr ""
 
-#. TRANSLATORS: "%s" after "on" is a date
+#. TRANSLATORS: "%s" after "on" is a date.
 #, c-format
 msgid "%s%s[%s%s%s] %s%s%s%s quieted by %s on %s"
 msgstr ""
@@ -11266,7 +11266,7 @@ msgid ""
 "hexadecimal digits (0-9, a-f)"
 msgstr ""
 
-#. TRANSLATORS: "fake IRC server"
+#. TRANSLATORS: "fake IRC server".
 msgid "fake"
 msgstr ""
 
@@ -11624,7 +11624,7 @@ msgstr ""
 msgid "logger plugin configuration"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "list || set <level> || flush || disable"
 msgstr ""
 
@@ -12075,7 +12075,7 @@ msgstr ""
 msgid "get focus info"
 msgstr ""
 
-#. TRANSLATORS: please do not translate key names (enclosed by quotes)
+#. TRANSLATORS: please do not translate key names (enclosed by quotes).
 msgid ""
 "\"x\": x coordinate (string with integer >= 0), \"y\": y coordinate (string "
 "with integer >= 0)"
@@ -12365,7 +12365,7 @@ msgstr ""
 msgid "list/load/unload scripts"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid ""
 "list|listfull [<name>] || load [-q] <filename> || autoload || reload|unload "
 "[-q] [<name>] || eval [-o|-oc] <code> || version"
@@ -12475,7 +12475,7 @@ msgstr ""
 msgid "%s%s: failed to move script %s to %s (%s)"
 msgstr ""
 
-#. TRANSLATORS: "%s" is language (for example "perl")
+#. TRANSLATORS: "%s" is language (for example "perl").
 #, c-format
 msgid "%s scripts loaded:"
 msgstr ""
@@ -13035,7 +13035,7 @@ msgstr ""
 msgid "relay control"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid ""
 "list|listfull|listrelay || add|addreplace <name> <port>|<path> || del|start|"
 "restart|stop <name> || raw || tlscertkey"
@@ -13146,7 +13146,7 @@ msgstr ""
 msgid "control of remote relay servers"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid ""
 "list|listfull [<name>] || add|addreplace <name> <url> [-<option>[=<value>]] "
 "|| connect|reconnect|disconnect|del <name> || send <name> <json> || rename "
@@ -13535,7 +13535,7 @@ msgstr ""
 msgid "number of clients for relay"
 msgstr ""
 
-#. TRANSLATORS: please do not translate the status names, they must be used in English
+#. TRANSLATORS: please do not translate the status names, they must be used in English.
 msgid ""
 "protocol,status (both are optional, for each argument \"*\" means all; "
 "protocols: api, irc, weechat; statuses: connecting, waiting_auth, connected, "
@@ -13628,7 +13628,7 @@ msgstr ""
 msgid "%s%s: cannot set socket option \"%s\" to %d: error %d %s"
 msgstr ""
 
-#. TRANSLATORS: second "%s" is "IPv4" or "IPv6"
+#. TRANSLATORS: second "%s" is "IPv4" or "IPv6".
 #, c-format
 msgid "%s%s: invalid bind address \"%s\" for %s"
 msgstr ""
@@ -13718,7 +13718,7 @@ msgid ""
 "clients connected via TLS"
 msgstr ""
 
-#. TRANSLATORS: "%s" after "%d" is "client" or "clients"
+#. TRANSLATORS: "%s" after "%d" is "client" or "clients".
 #, c-format
 msgid ""
 "%s%s: disconnected from %d %s (TLS connection not supported with upgrade)"
@@ -13938,7 +13938,7 @@ msgstr ""
 msgid "WeeChat script manager"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid ""
 "enable || list [-o|-ol|-i|-il] || search <text> || show <script> || load|"
 "unload|reload <script>... || autoload|noautoload|toggleautoload <script>... "
@@ -14251,27 +14251,27 @@ msgstr ""
 msgid "scripts from repository"
 msgstr ""
 
-#. TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed)
+#. TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed).
 msgid "popular"
 msgstr ""
 
-#. TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed)
+#. TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed).
 msgid "installed"
 msgstr ""
 
-#. TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed)
+#. TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed).
 msgid "autoloaded"
 msgstr ""
 
-#. TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed)
+#. TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed).
 msgid "held"
 msgstr ""
 
-#. TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed)
+#. TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed).
 msgid "running"
 msgstr ""
 
-#. TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed)
+#. TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed).
 msgid "obsolete"
 msgstr ""
 
@@ -14306,7 +14306,7 @@ msgid ""
 "enable"
 msgstr ""
 
-#. TRANSLATORS: "%s" is "spell" (name of plugin)
+#. TRANSLATORS: "%s" is "spell" (name of plugin).
 #, c-format
 msgid "%s dictionaries list:"
 msgstr ""
@@ -14348,7 +14348,7 @@ msgstr ""
 msgid "%s%s: failed to add word to personal dictionary: %s"
 msgstr ""
 
-#. TRANSLATORS: second "%s" is "aspell" or "enchant"
+#. TRANSLATORS: second "%s" is "aspell" or "enchant".
 #, c-format
 msgid "%s (using %s)"
 msgstr ""
@@ -14378,7 +14378,7 @@ msgstr ""
 msgid "spell plugin configuration"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid ""
 "enable|disable|toggle || listdict || setdict -|<dict>[,<dict>...] || deldict "
 "|| addword [<dict>] <word>"
@@ -14719,7 +14719,7 @@ msgstr ""
 msgid "manage triggers, the Swiss Army knife for WeeChat"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid ""
 "list [-o|-ol|-i|-il] || listfull || listdefault || add|addoff|addreplace "
 "<name> <hook> [\"<arguments>\" [\"<conditions>\" [\"<regex>\" [\"<command>\" "
@@ -15095,7 +15095,7 @@ msgstr ""
 msgid "%s%s: invalid regular expression in trigger: \"%s\""
 msgstr ""
 
-#. TRANSLATORS: this text is displayed before the list of nicks typing in the bar item "typing", it must be as short as possible
+#. TRANSLATORS: this text is displayed before the list of nicks typing in the bar item "typing", it must be as short as possible.
 msgid "Typing: "
 msgstr ""
 
@@ -15182,7 +15182,7 @@ msgstr ""
 msgid "received from"
 msgstr ""
 
-#. TRANSLATORS: "%s" after "started on" is a date
+#. TRANSLATORS: "%s" after "started on" is a date.
 #, c-format
 msgid "%3d. %s, chat with %s (local nick: %s), started on %s, status: %s%s"
 msgstr ""
@@ -15193,7 +15193,7 @@ msgid ""
 "(port %d)"
 msgstr ""
 
-#. TRANSLATORS: "%s" after "started on" is a date
+#. TRANSLATORS: "%s" after "started on" is a date.
 #, c-format
 msgid "     fast_send: %s, blocksize: %d, started on %s"
 msgstr ""

@@ -504,7 +504,7 @@ relay_server_create_socket (struct t_relay_server *server)
             if (inet_pton (domain, bind_address, &server_addr6.sin6_addr) != 1)
             {
                 weechat_printf (NULL,
-                                /* TRANSLATORS: second "%s" is "IPv4" or "IPv6" */
+                                /* TRANSLATORS: second "%s" is "IPv4" or "IPv6". */
                                 _("%s%s: invalid bind address \"%s\" for %s"),
                                 weechat_prefix ("error"), RELAY_PLUGIN_NAME,
                                 bind_address, "IPv6");
@@ -526,7 +526,7 @@ relay_server_create_socket (struct t_relay_server *server)
             if (inet_pton (domain, bind_address, &server_addr.sin_addr) != 1)
             {
                 weechat_printf (NULL,
-                                /* TRANSLATORS: second "%s" is "IPv4" or "IPv6" */
+                                /* TRANSLATORS: second "%s" is "IPv4" or "IPv6". */
                                 _("%s%s: invalid bind address \"%s\" for %s"),
                                 weechat_prefix ("error"), RELAY_PLUGIN_NAME,
                                 bind_address, "IPv4");

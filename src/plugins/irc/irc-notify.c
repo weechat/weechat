@@ -500,7 +500,7 @@ irc_notify_display (struct t_irc_server *server, struct t_gui_buffer *buffer,
             IRC_COLOR_RESET,
             (notify->is_on_server < 0) ? "" : IRC_COLOR_MESSAGE_QUIT,
             (notify->is_on_server < 0) ?
-            /* TRANSLATORS: "unknown" is the status for /notify when ison answer has not been received (check pending) */
+            /* TRANSLATORS: "unknown" is the status for /notify when ison answer has not been received (check pending). */
             _("unknown") :
             _("offline"));
     }

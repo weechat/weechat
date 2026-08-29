@@ -229,7 +229,7 @@ plugin_script_init (struct t_weechat_plugin *weechat_plugin,
     weechat_hook_command (
         weechat_plugin->name,
         N_("list/load/unload scripts"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated. */
         N_("list|listfull [<name>]"
            " || load [-q] <filename>"
            " || autoload"
@@ -1582,7 +1582,7 @@ plugin_script_display_list (struct t_weechat_plugin *weechat_plugin,
 
     weechat_printf (NULL, "");
     weechat_printf (NULL,
-                    /* TRANSLATORS: "%s" is language (for example "perl") */
+                    /* TRANSLATORS: "%s" is language (for example "perl"). */
                     _("%s scripts loaded:"),
                     weechat_plugin->name);
     if (scripts)
@@ -1635,7 +1635,7 @@ plugin_script_display_short_list (struct t_weechat_plugin *weechat_plugin,
         return;
 
     snprintf (scripts_loaded, sizeof (scripts_loaded),
-              /* TRANSLATORS: "%s" is language (for example "perl") */
+              /* TRANSLATORS: "%s" is language (for example "perl"). */
               _("%s scripts loaded:"),
               weechat_plugin->name);
 

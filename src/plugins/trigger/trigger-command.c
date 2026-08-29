@@ -1243,7 +1243,7 @@ trigger_command_init (void)
     weechat_hook_command (
         "trigger",
         N_("manage triggers, the Swiss Army knife for WeeChat"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated. */
         N_("list [-o|-ol|-i|-il]"
            " || listfull"
            " || listdefault"

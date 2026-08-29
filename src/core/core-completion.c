@@ -2477,15 +2477,15 @@ completion_init (void)
                      N_("options for bars"),
                      &completion_list_add_bars_options_cb, NULL, NULL);
     hook_completion (NULL, "keys_contexts",
-                     /* TRANSLATORS: "key" means "key on the keyboard" */
+                     /* TRANSLATORS: "key" means "key on the keyboard". */
                      N_("key contexts"),
                      &completion_list_add_keys_contexts_cb, NULL, NULL);
     hook_completion (NULL, "keys_codes",
-                     /* TRANSLATORS: "key" means "key on the keyboard" */
+                     /* TRANSLATORS: "key" means "key on the keyboard". */
                      N_("key codes"),
                      &completion_list_add_keys_codes_cb, NULL, NULL);
     hook_completion (NULL, "keys_codes_for_reset",
-                     /* TRANSLATORS: "key" means "key on the keyboard" */
+                     /* TRANSLATORS: "key" means "key on the keyboard". */
                      N_("key codes that can be reset (keys added, redefined "
                         "or removed)"),
                      &completion_list_add_keys_codes_for_reset_cb, NULL, NULL);

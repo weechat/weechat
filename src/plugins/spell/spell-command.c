@@ -136,7 +136,7 @@ spell_command_speller_list_dicts (void)
 
     weechat_printf (NULL, "");
     weechat_printf (NULL,
-                    /* TRANSLATORS: "%s" is "spell" (name of plugin) */
+                    /* TRANSLATORS: "%s" is "spell" (name of plugin). */
                     _( "%s dictionaries list:"),
                     SPELL_PLUGIN_NAME);
 
@@ -356,7 +356,7 @@ spell_command_cb (const void *pointer, void *data,
         /* display spell status */
         weechat_printf (NULL, "");
         weechat_printf (NULL,
-                        /* TRANSLATORS: second "%s" is "aspell" or "enchant" */
+                        /* TRANSLATORS: second "%s" is "aspell" or "enchant". */
                         _("%s (using %s)"),
                         (spell_enabled) ? _("Spell checking is enabled") : _("Spell checking is disabled"),
 #ifdef USE_ENCHANT
@@ -475,7 +475,7 @@ spell_command_init (void)
     weechat_hook_command (
         "spell",
         N_("spell plugin configuration"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated. */
         N_("enable|disable|toggle"
            " || listdict"
            " || setdict -|<dict>[,<dict>...]"

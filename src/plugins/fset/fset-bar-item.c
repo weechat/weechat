@@ -190,7 +190,7 @@ fset_bar_item_fset_cb (const void *pointer, void *data,
     }
 
     snprintf (str_help, sizeof (str_help),
-              /* TRANSLATORS: "%s%s%s:" at beginning of string it the name of option */
+              /* TRANSLATORS: "%s%s%s:" at beginning of string it the name of option. */
               _("%s%s%s: %s%s%s %s[%s%s]%s"),
               weechat_color (weechat_config_string (fset_config_color_help_name)),
               ptr_fset_option->name,

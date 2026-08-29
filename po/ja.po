@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2026-08-28 18:28+0200\n"
+"POT-Creation-Date: 2026-08-29 22:00+0200\n"
 "PO-Revision-Date: 2026-07-05 12:28+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <weechat-dev@nongnu.org>\n"
@@ -15,68 +15,68 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#. TRANSLATORS: command line option "-a", "--no-connect"
+#. TRANSLATORS: command line option "-a", "--no-connect".
 #, fuzzy
 #| msgid "%s%s: unable to connect to sender"
 msgid "disable auto-connect to servers at startup"
 msgstr "%s%s: 送信者に接続できません"
 
-#. TRANSLATORS: command line option "-c", "--colors"
+#. TRANSLATORS: command line option "-c", "--colors".
 msgid "display default colors in terminal and exit"
 msgstr ""
 
-#. TRANSLATORS: only "<path>" may be translated
+#. TRANSLATORS: only "<path>" may be translated.
 msgid "-d, --dir <path>"
 msgstr ""
 
-#. TRANSLATORS: command line option "-d", "--dir <path>"
+#. TRANSLATORS: command line option "-d", "--dir <path>".
 msgid ""
 "force a single WeeChat home directory or 5 different directories separated "
 "by colons (in this order: config, data, state, cache, runtime) (environment "
 "variable WEECHAT_HOME is read if this option is not given)"
 msgstr ""
 
-#. TRANSLATORS: command line option "-t", "--temp-dir"
+#. TRANSLATORS: command line option "-t", "--temp-dir".
 msgid ""
 "create a temporary WeeChat home directory and delete it on exit "
 "(incompatible with option \"-d\")"
 msgstr ""
 
-#. TRANSLATORS: command line option "-h", "--help"
+#. TRANSLATORS: command line option "-h", "--help".
 #, fuzzy
 #| msgid "use same nick color for channel and private"
 msgid "display this help and exit"
 msgstr "チャンネルとプライベートバッファで同じニックネーム色を利用"
 
-#. TRANSLATORS: command line option "-i", "--build-info"
+#. TRANSLATORS: command line option "-i", "--build-info".
 msgid "display build information and exit"
 msgstr ""
 
-#. TRANSLATORS: command line option "-l", "--license"
+#. TRANSLATORS: command line option "-l", "--license".
 #, fuzzy
 #| msgid "display WeeChat logo at startup"
 msgid "display WeeChat license and exit"
 msgstr "WeeChat ロゴを開始時に表示"
 
-#. TRANSLATORS: command line option "-p", "--no-plugin"
+#. TRANSLATORS: command line option "-p", "--no-plugin".
 #, fuzzy
 #| msgid "display WeeChat logo at startup"
 msgid "don't load any plugin at startup"
 msgstr "WeeChat ロゴを開始時に表示"
 
-#. TRANSLATORS: only "<plugins>" may be translated
+#. TRANSLATORS: only "<plugins>" may be translated.
 msgid "-P, --plugins <plugins>"
 msgstr ""
 
-#. TRANSLATORS: command line option "-P", "--plugins <plugins>"
+#. TRANSLATORS: command line option "-P", "--plugins <plugins>".
 msgid "load only these plugins at startup (see /help weechat.plugin.autoload)"
 msgstr ""
 
-#. TRANSLATORS: only "<cmd>" may be translated (please keep it short)
+#. TRANSLATORS: only "<cmd>" may be translated (please keep it short).
 msgid "-r, --run-command <cmd>"
 msgstr ""
 
-#. TRANSLATORS: command line option "-r", "--run-command <cmd>"
+#. TRANSLATORS: command line option "-r", "--run-command <cmd>".
 #, fuzzy
 msgid ""
 "run command(s) after startup; many commands can be separated by semicolons "
@@ -85,40 +85,40 @@ msgstr ""
 "WeeChat が実行され、プラグインのロード後に実行されるコマンド (注意: 値は評価"
 "されます、/help eval を参照してください)"
 
-#. TRANSLATORS: command line option "-s", "--no-script"
+#. TRANSLATORS: command line option "-s", "--no-script".
 msgid "don't load any script at startup"
 msgstr ""
 
-#. TRANSLATORS: command line option "--upgrade"
+#. TRANSLATORS: command line option "--upgrade".
 #, fuzzy
 msgid "upgrade WeeChat using session files (see /help upgrade in WeeChat)"
 msgstr "%sエラー: ファイルにセッションを保存できません"
 
-#. TRANSLATORS: command line option "-v", "--version"
+#. TRANSLATORS: command line option "-v", "--version".
 #, fuzzy
 #| msgid "display WeeChat version at startup"
 msgid "display WeeChat version and exit"
 msgstr "WeeChat バージョンを開始時に表示"
 
-#. TRANSLATORS: command line option: "plugin" and "option" may be translated
+#. TRANSLATORS: command line option: "plugin" and "option" may be translated.
 #, fuzzy
 #| msgid "plugin pointer (optional)"
 msgid "plugin:option"
 msgstr "プラグインポインタ (任意)"
 
-#. TRANSLATORS: command line option "plugin:option"
+#. TRANSLATORS: command line option "plugin:option".
 msgid "option for plugin (see man weechat)"
 msgstr ""
 
-#. TRANSLATORS: only "<path>" may be translated
+#. TRANSLATORS: only "<path>" may be translated.
 msgid "--doc-gen <path>"
 msgstr ""
 
-#. TRANSLATORS: command line option "--doc-gen <path>"
+#. TRANSLATORS: command line option "--doc-gen <path>".
 msgid "generate files to build documentation and exit"
 msgstr ""
 
-#. TRANSLATORS: command line option "--daemon"
+#. TRANSLATORS: command line option "--daemon".
 msgid ""
 "run WeeChat as a daemon (fork, new process group, file descriptors closed); "
 "by default in headless mode WeeChat is blocking and does not run in "
@@ -128,25 +128,25 @@ msgstr ""
 "スクリプタを閉じる); ヘッドレスモードのデフォルトでは WeeChat はプロセスをブ"
 "ロックし、バックグラウンド動作しません"
 
-#. TRANSLATORS: command line option "--stdout"
+#. TRANSLATORS: command line option "--stdout".
 msgid ""
 "display log messages on standard output instead of writing them in log file "
 "(option ignored if option \"--daemon\" is given)"
 msgstr ""
 
-#. TRANSLATORS: command line option "--no-dlclose"
+#. TRANSLATORS: command line option "--no-dlclose".
 msgid "do not call function dlclose after plugins are unloaded"
 msgstr "プラグインがアンロードされた後に、dlclose 関数を呼び出さない"
 
-#. TRANSLATORS: command line option "--no-gnutls"
+#. TRANSLATORS: command line option "--no-gnutls".
 msgid "disable init/deinit of gnutls"
 msgstr "gnutls の init/deinit を無効化"
 
-#. TRANSLATORS: command line option "--no-gcrypt"
+#. TRANSLATORS: command line option "--no-gcrypt".
 msgid "disable init/deinit of gcrypt"
 msgstr "gcrypt の init/deinit を無効化"
 
-#. TRANSLATORS: "%s %s" after "compiled on" is date and time
+#. TRANSLATORS: "%s %s" after "compiled on" is date and time.
 #, c-format
 msgid ""
 "WeeChat %s Copyright %s, compiled on %s %s\n"
@@ -176,7 +176,7 @@ msgstr "エラー: \"%s\" オプションの引数がありません\n"
 msgid "List of bars:"
 msgstr "バーのリスト:"
 
-#. TRANSLATORS: the last thing displayed is "width:" or "height:" with its value
+#. TRANSLATORS: the last thing displayed is "width:" or "height:" with its value.
 #, c-format
 msgid ""
 "  %s%s%s: %s%s%s (conditions: %s), %s, filling: %s(top/bottom)/%s(left/"
@@ -184,7 +184,7 @@ msgid ""
 msgstr ""
 "  %s%s%s: %s%s%s (状態: %s)、%s、フィリング: %s(上/下)/%s(左/右)、%s: %s"
 
-#. TRANSLATORS: "hidden" is displayed in list of buffers
+#. TRANSLATORS: "hidden" is displayed in list of buffers.
 msgid "(hidden)"
 msgstr "(非表示)"
 
@@ -374,13 +374,13 @@ msgstr "\"%s\" に対するデバッグが無効になりました"
 msgid "Debug hook_url: %s"
 msgstr ""
 
-#. TRANSLATORS: "TLS: enabled"
+#. TRANSLATORS: "TLS: enabled".
 #, fuzzy
 #| msgid "Mouse enabled"
 msgid "enabled"
 msgstr "マウスを有効化しました"
 
-#. TRANSLATORS: "TLS: disabled"
+#. TRANSLATORS: "TLS: disabled".
 #, fuzzy
 #| msgid "(disabled)"
 msgid "disabled"
@@ -512,7 +512,7 @@ msgstr "色"
 msgid "enum"
 msgstr ""
 
-#. TRANSLATORS: please do not translate "(null)"
+#. TRANSLATORS: please do not translate "(null)".
 msgid "undefined value allowed (null)"
 msgstr "(null) は設定できません"
 
@@ -579,13 +579,13 @@ msgstr "バー \"%s\" を削除しました"
 msgid "default command:"
 msgstr "デフォルトコマンド:"
 
-#. TRANSLATORS: first "%d" is number of keys
+#. TRANSLATORS: first "%d" is number of keys.
 #, c-format
 msgid "%d key bindings added or redefined for context \"%s\":"
 msgstr ""
 "コンテキスト \"%2$s\" に対する %1$d 個のキーバインドを追加または変更しました:"
 
-#. TRANSLATORS: first "%d" is number of keys
+#. TRANSLATORS: first "%d" is number of keys.
 #, c-format
 msgid "%d key bindings deleted for context \"%s\":"
 msgstr "コンテキスト \"%2$s\" に対する %1$d 個のキーバインドを削除しました:"
@@ -612,7 +612,7 @@ msgstr "%sキー \"%s\" が見つかりません"
 msgid "No key binding defined for context \"%s\""
 msgstr "コンテキスト \"%s\" に対するキーバインドはありません"
 
-#. TRANSLATORS: first "%d" is number of keys
+#. TRANSLATORS: first "%d" is number of keys.
 #, c-format
 msgid "%d key bindings for context \"%s\":"
 msgstr "コンテキスト \"%2$s\" に対する %1$d 個のキーバインド:"
@@ -621,7 +621,7 @@ msgstr "コンテキスト \"%2$s\" に対する %1$d 個のキーバインド:"
 msgid "No default key binding for context \"%s\""
 msgstr "コンテキスト \"%s\" に対するデフォルトのキーバインドはありません"
 
-#. TRANSLATORS: first "%d" is number of keys
+#. TRANSLATORS: first "%d" is number of keys.
 #, c-format
 msgid "%d default key bindings for context \"%s\":"
 msgstr "コンテキスト \"%2$s\" に対する %1$d 個のデフォルトキーバインド:"
@@ -660,7 +660,7 @@ msgstr " (現在のレイアウト)"
 msgid "No stored layouts"
 msgstr "保存されたレイアウトがありません"
 
-#. TRANSLATORS: %s%s%s is "buffers" or "windows" or "buffers+windows"
+#. TRANSLATORS: %s%s%s is "buffers" or "windows" or "buffers+windows".
 #, c-format
 msgid "Layout of %s%s%s stored in \"%s\" (current layout: %s)"
 msgstr "%s%s%s のレイアウトを \"%s\" に保存しました (現在のレイアウト: %s)"
@@ -679,7 +679,7 @@ msgstr ""
 msgid "Layout \"%s\" deleted (current layout: %s)"
 msgstr "レイアウト \"%s\" を削除しました (現在のレイアウト: %s)"
 
-#. TRANSLATORS: %s%s%s is "buffers" or "windows" or "buffers+windows"
+#. TRANSLATORS: %s%s%s is "buffers" or "windows" or "buffers+windows".
 #, c-format
 msgid "Layout of %s%s%s reset in \"%s\""
 msgstr "%s%s%s のレイアウトを \"%s\" でリセットしました"
@@ -1048,13 +1048,13 @@ msgstr "削除されたオプション: %s"
 msgid "%d option(s) reset, %d option(s) removed"
 msgstr "%d 個のオプションがリセットされ、%d 個のオプションが削除されました"
 
-#. TRANSLATORS: "%d %s" is number of times, eg: "2 times"
+#. TRANSLATORS: "%d %s" is number of times, eg: "2 times".
 #, fuzzy, c-format
 #| msgid "Upgraded %d %s, first start: %s, last start: %s"
 msgid "WeeChat upgrades: %d %s, first start: %s, last start: %s"
 msgstr "アップグレード回数 %d %s、初回起動日時: %s、最終起動日時: %s"
 
-#. TRANSLATORS: text is: "upgraded xx times"
+#. TRANSLATORS: text is: "upgraded xx times".
 msgid "time"
 msgid_plural "times"
 msgstr[0] "回"
@@ -1117,7 +1117,7 @@ msgstr ""
 msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
 msgstr "***** エラー: 実行失敗 (プログラム: \"%s\")、WeeChat を終了しています"
 
-#. TRANSLATORS: "%s" after "started on" is a date
+#. TRANSLATORS: "%s" after "started on" is a date.
 #, c-format
 msgid "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"
 msgstr "WeeChat 連続稼働時間: %d %s %02d:%02d:%02d、%s に開始"
@@ -1126,7 +1126,7 @@ msgid "day"
 msgid_plural "days"
 msgstr[0] "日間"
 
-#. TRANSLATORS: "%s%s" after "started on" is a date
+#. TRANSLATORS: "%s%s" after "started on" is a date.
 #, c-format
 msgid "WeeChat uptime: %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, started on %s%s"
 msgstr ""
@@ -1168,7 +1168,7 @@ msgstr ""
 msgid "execute a command on all buffers"
 msgstr "全ての接続済みサーバでコマンドを実行"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 #, fuzzy
 #| msgid "Command"
 msgid "<command>"
@@ -1196,7 +1196,7 @@ msgstr "全ての接続済みサーバでコマンドを実行"
 msgid "set or remove away status"
 msgstr "離席状態の切り替え"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "[-all] [<message>]"
 msgstr "[-all] [<message>]"
 
@@ -1228,7 +1228,7 @@ msgstr ""
 msgid "manage bars"
 msgstr "バーの管理"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 #, fuzzy
 #| msgid ""
 #| "list|listfull|listitems || add <name> <type>[,<conditions>] <position> "
@@ -1376,7 +1376,7 @@ msgstr "現在のバッファのニックネームリストに含まれるニッ
 msgid "manage buffers"
 msgstr "バッファの管理"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 #, fuzzy
 msgid ""
 "list || add [-free] [-switch] <name> || clear [<id>|<number>|<name>|-merged|-"
@@ -1554,7 +1554,7 @@ msgstr ""
 msgid "define color aliases and display palette of colors"
 msgstr "色の別名の定義と、色パレットの表示"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid ""
 "alias <color> <name> || unalias <color> || reset || term2rgb <color> || "
 "rgb2term <rgb> [<limit>] || -o"
@@ -1606,7 +1606,7 @@ msgstr ""
 msgid "launch explicit WeeChat or plugin command"
 msgstr "WeeChat かプラグインのコマンドを起動"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 #, fuzzy
 #| msgid "[-buffer <name>] <plugin> <command>"
 msgid "[-buffer <name>] <plugin> <command> || -s <command>[;<command>...]"
@@ -1657,7 +1657,7 @@ msgid ""
 "screen"
 msgstr "カーソルを移動してアクションを実行するエリアを指定"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 #, fuzzy
 #| msgid ""
 #| "go chat|<bar>|<x>,<y> || move up|down|left|right|area_up|area_down|"
@@ -1698,7 +1698,7 @@ msgstr ""
 msgid "debug functions"
 msgstr "デバッグ関数"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 #, fuzzy
 #| msgid ""
 #| "list || set <plugin> <level> || dump [<plugin>] || buffer|color|infolists|"
@@ -1841,7 +1841,7 @@ msgstr ""
 msgid "evaluate expression"
 msgstr "式を評価"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 #, fuzzy
 msgid ""
 "[-n|-s] [-e] [-d] <expression> || [-n] [-d [-d]] -c <expression1> <operator> "
@@ -2241,7 +2241,7 @@ msgid ""
 "filter messages in buffers, to hide/show them according to tags or regex"
 msgstr "タグか正規表現に基づくバッファメッセージの非表示/表示"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 #, fuzzy
 msgid ""
 "list || enable|disable|toggle [<name>|<mask>|@...] || add|addreplace <name> "
@@ -2403,7 +2403,7 @@ msgstr ""
 msgid "display help about commands and options"
 msgstr "コマンドとオプションに関するヘルプを表示"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 #, fuzzy
 #| msgid "-list|-listfull [<plugin> [<plugin>...]] || <command> || <option>"
 msgid "-list|-listfull [<plugin>...] || <command> || <option>"
@@ -2433,7 +2433,7 @@ msgstr "option: 追加オプション、いくつかのサーバ用"
 msgid "show buffer command history"
 msgstr "バッファコマンド履歴を表示"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "clear || <value>"
 msgstr "clear || <value>"
 
@@ -2454,7 +2454,7 @@ msgstr ""
 msgid "manage hotlist"
 msgstr "プロキシの管理"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid ""
 "add [low|message|private|highlight] || clear [<level>] || remove || restore "
 "[-all]"
@@ -2485,7 +2485,7 @@ msgstr ""
 msgid "functions for command line"
 msgstr "コマンドライン関数"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "<action> [<arguments>]"
 msgstr "<action> [<arguments>]"
 
@@ -2675,7 +2675,7 @@ msgstr ""
 msgid "manage custom bar items"
 msgstr "バー要素のリスト"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 #, fuzzy
 msgid ""
 "list || add|addreplace <name> \"<conditions>\" \"<content>\" || rename "
@@ -2764,7 +2764,7 @@ msgstr ""
 msgid "bind/unbind keys"
 msgstr "キーの割り当てと割り当て解除"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 #, fuzzy
 #| msgid ""
 #| "list|listdefault|listdiff [<context>] || bind <key> [<command> [<args>]] "
@@ -2917,7 +2917,7 @@ msgstr ""
 msgid "manage buffers/windows layouts"
 msgstr "バッファ/ウィンドウレイアウトの管理"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid ""
 "store [<name>] [buffers|windows] || apply [<name>] [buffers|windows] || "
 "leave || del [<name>] [buffers|windows] || rename <name> <new_name>"
@@ -2972,7 +2972,7 @@ msgstr ""
 msgid "mouse control"
 msgstr "マウス操作"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "enable|disable|toggle [<delay>]"
 msgstr "enable|disable|toggle [<delay>]"
 
@@ -2996,7 +2996,7 @@ msgstr ""
 msgid "execute a command silently"
 msgstr "静かにコマンドを実行"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 #, fuzzy
 #| msgid "[-core | -current | -buffer <name>] <command>"
 msgid "[-core|-current|-buffer <name>] <command>"
@@ -3029,7 +3029,7 @@ msgstr ""
 msgid "redirect command output to a buffer, a file or a hsignal"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid ""
 "[-buffer <name>|-file <filename>|-hsignal <name>] [-color strip|keep|ansi] [-"
 "concat <separator>] [-strip <chars>] [-skipempty] [-c] [-o] [-g] [-nl] "
@@ -3122,7 +3122,7 @@ msgstr "チャンネルモードリスト内の要素のリスト"
 msgid "list/load/unload plugins"
 msgstr "プラグインの表示/ロード/アンロード"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 #, fuzzy
 #| msgid ""
 #| "list|listfull [<name>] || load <filename> [<arguments>] || autoload "
@@ -3192,7 +3192,7 @@ msgstr ""
 msgid "display text on a buffer"
 msgstr "バッファ内にテキストを表示"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 #, fuzzy
 #| msgid ""
 #| "[-buffer <number>|<name>] [-newbuffer <name>] [-free] [-switch] [-core|-"
@@ -3322,7 +3322,7 @@ msgstr ""
 msgid "manage proxies"
 msgstr "プロキシの管理"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 #, fuzzy
 #| msgid ""
 #| "list || add <name> <type> <address> <port> [<username> [<password>]] || "
@@ -3398,7 +3398,7 @@ msgstr ""
 msgid "quit WeeChat"
 msgstr "WeeChat の終了"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "[-yes] [<arguments>]"
 msgstr "[-yes] [<arguments>]"
 
@@ -3438,7 +3438,7 @@ msgstr ""
 msgid "reload configuration files from disk"
 msgstr "ディスクから設定ファイルをリロード"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 #, fuzzy
 #| msgid "[<file> [<file>...]]"
 msgid "[<file>...]"
@@ -3469,7 +3469,7 @@ msgstr ""
 msgid "execute a command several times"
 msgstr "複数回コマンドを実行"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "[-interval <delay>[<unit>]] <count> <command>"
 msgstr "[-interval <delay>[<unit>]] <count> <command>"
 
@@ -3539,7 +3539,7 @@ msgstr ""
 msgid "reset config options"
 msgstr "オプションのアンセット/リセット"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "<option> || -mask <option>"
 msgstr "<option> || -mask <option>"
 
@@ -3597,7 +3597,7 @@ msgstr ""
 "保護データを管理します (パスワードやプライベートデータは暗号化されて "
 "sec.conf ファイルに保存)"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid ""
 "passphrase <passphrase>|-delete || decrypt <passphrase>|-discard || set "
 "<name> <value> || del <name>"
@@ -3703,7 +3703,7 @@ msgstr ""
 msgid "set config options and environment variables"
 msgstr "設定オプションと環境変数を設定"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 #, fuzzy
 #| msgid ""
 #| "[<option> [<value>]] || diff [<option> [<option>...]] || env [<variable> "
@@ -3803,7 +3803,7 @@ msgstr ""
 msgid "manage color themes"
 msgstr "バー要素のリスト"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid ""
 "[list [-backups]] || apply <name> || reset || save <name> || rename <old> "
 "<new> || del <name> || info <name>"
@@ -3876,7 +3876,7 @@ msgstr ""
 msgid "toggle value of a config option"
 msgstr "設定オプションの値"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 #, fuzzy
 #| msgid "[<file> [<file>...]]"
 msgid "<option> [<value>...]"
@@ -3947,7 +3947,7 @@ msgid ""
 "from servers"
 msgstr "サーバとの接続を維持して WeeChat 実行バイナリを再読込"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 #, fuzzy
 #| msgid "[-yes] [<path_to_binary>|-quit]"
 msgid "[-yes] [<path_to_binary>|-save|-quit] || -o|-ol"
@@ -4146,7 +4146,7 @@ msgstr ""
 msgid "schedule a command execution in future"
 msgstr "コマンドの実行を予約"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "<number>[<unit>] <command>"
 msgstr "<number>[<unit>] <command>"
 
@@ -4176,7 +4176,7 @@ msgstr ""
 msgid "manage windows"
 msgstr "ウィンドウの操作"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 #, fuzzy, no-c-format
 msgid ""
 "list || -1|+1|b#|up|down|left|right [-window <number>] || <number> || splith|"
@@ -4459,15 +4459,15 @@ msgstr "プロキシのオプション"
 msgid "options for bars"
 msgstr "バーのオプション"
 
-#. TRANSLATORS: "key" means "key on the keyboard"
+#. TRANSLATORS: "key" means "key on the keyboard".
 msgid "key contexts"
 msgstr "キーコンテキスト"
 
-#. TRANSLATORS: "key" means "key on the keyboard"
+#. TRANSLATORS: "key" means "key on the keyboard".
 msgid "key codes"
 msgstr "キーコード"
 
-#. TRANSLATORS: "key" means "key on the keyboard"
+#. TRANSLATORS: "key" means "key on the keyboard".
 msgid "key codes that can be reset (keys added, redefined or removed)"
 msgstr "リセットできるキーコード (追加、再定義、削除されたキー)"
 
@@ -4821,7 +4821,7 @@ msgstr ""
 "デフォルトのバッファテキスト検索: メッセージ中、プレフィックス中、プレフィッ"
 "クスとメッセージ中"
 
-#. TRANSLATORS: string "${color:xxx}" must NOT be translated
+#. TRANSLATORS: string "${color:xxx}" must NOT be translated.
 #, fuzzy
 #| msgid ""
 #| "time format for each line displayed in buffers (see man strftime for date/"
@@ -4848,7 +4848,7 @@ msgstr ""
 "来ます、/help eval を参照してください); 例えばグレースケールを使う時間の例 "
 "(256 色のサポートが必要): \"${color:252}%H${color:245}%M${color:240}%S\""
 
-#. TRANSLATORS: string "${color:xxx}" must NOT be translated
+#. TRANSLATORS: string "${color:xxx}" must NOT be translated.
 msgid ""
 "time displayed for a message with same time as previous message: use a space "
 "\" \" to hide time, another string to display this string instead of time, "
@@ -4984,7 +4984,7 @@ msgstr ""
 msgid "display special message when day changes"
 msgstr "日付が変わった際に特殊メッセージを表示"
 
-#. TRANSLATORS: string "${color:xxx}" must NOT be translated
+#. TRANSLATORS: string "${color:xxx}" must NOT be translated.
 msgid ""
 "message displayed when the day has changed, with one date displayed (for "
 "example at beginning of buffer) (see man strftime for date/time specifiers) "
@@ -4996,7 +4996,7 @@ msgstr ""
 "されるため \"${color:xxx}\" 書式で色を指定出来ます、/help eval を参照してくだ"
 "さい)"
 
-#. TRANSLATORS: string "${color:xxx}" must NOT be translated
+#. TRANSLATORS: string "${color:xxx}" must NOT be translated.
 msgid ""
 "message displayed when the day has changed, with two dates displayed "
 "(between two messages); the second date specifiers must start with two \"%\" "
@@ -5393,7 +5393,7 @@ msgstr ""
 "場合のみ使われます (デフォルト状態では \"input\" バーでバー要素 "
 "\"input_paste\" が使われています)"
 
-#. TRANSLATORS: string "${color:xxx}" must NOT be translated
+#. TRANSLATORS: string "${color:xxx}" must NOT be translated.
 msgid ""
 "prefix for error messages (note: content is evaluated, so you can use colors "
 "with format \"${color:xxx}\", see /help eval)"
@@ -5401,7 +5401,7 @@ msgstr ""
 "エラーメッセージのプレフィックス (注意: 値は評価されるため、\"${color:xxx}\" "
 "書式を使えば色を指定することも出来ます、/help eval を参照してください)"
 
-#. TRANSLATORS: string "${color:xxx}" must NOT be translated
+#. TRANSLATORS: string "${color:xxx}" must NOT be translated.
 msgid ""
 "prefix for network messages (note: content is evaluated, so you can use "
 "colors with format \"${color:xxx}\", see /help eval)"
@@ -5410,7 +5410,7 @@ msgstr ""
 "{color:xxx}\" 書式を使えば色を指定することも出来ます、/help eval を参照してく"
 "ださい)"
 
-#. TRANSLATORS: string "${color:xxx}" must NOT be translated
+#. TRANSLATORS: string "${color:xxx}" must NOT be translated.
 msgid ""
 "prefix for action messages (note: content is evaluated, so you can use "
 "colors with format \"${color:xxx}\", see /help eval)"
@@ -5419,7 +5419,7 @@ msgstr ""
 "{color:xxx}\" 書式を使えば色を指定することも出来ます、/help eval を参照してく"
 "ださい)"
 
-#. TRANSLATORS: string "${color:xxx}" must NOT be translated
+#. TRANSLATORS: string "${color:xxx}" must NOT be translated.
 msgid ""
 "prefix for join messages (note: content is evaluated, so you can use colors "
 "with format \"${color:xxx}\", see /help eval)"
@@ -5427,7 +5427,7 @@ msgstr ""
 "参加メッセージのプレフィックス (注意: 値は評価されるため、\"${color:xxx}\" 書"
 "式を使えば色を指定することも出来ます、/help eval を参照してください)"
 
-#. TRANSLATORS: string "${color:xxx}" must NOT be translated
+#. TRANSLATORS: string "${color:xxx}" must NOT be translated.
 msgid ""
 "prefix for quit messages (note: content is evaluated, so you can use colors "
 "with format \"${color:xxx}\", see /help eval)"
@@ -5729,7 +5729,7 @@ msgstr ""
 "ネーム色を指定するには weechat.color.chat_nick_colors オプションを使うと良い"
 "でしょう"
 
-#. TRANSLATORS: please do not translate "lightred:blue"
+#. TRANSLATORS: please do not translate "lightred:blue".
 msgid ""
 "text color for nicks (comma separated list of colors, background is allowed "
 "with format: \"fg:bg\", for example: \"lightred:blue\")"
@@ -5872,7 +5872,7 @@ msgstr ""
 "weechat.look.emphasized_attributes オプションが空文字列 (デフォルト値) の場合"
 "のみ使われます"
 
-#. TRANSLATORS: please do not translate "lightred:blue"
+#. TRANSLATORS: please do not translate "lightred:blue".
 #, fuzzy
 #| msgid ""
 #| "text color for nicks (comma separated list of colors, background is "
@@ -6178,7 +6178,7 @@ msgstr ""
 msgid "FATAL: error initializing configuration options"
 msgstr "致命的: 設定オプションの初期化中にエラー"
 
-#. TRANSLATORS: "%s %s" after "compiled on" is date and time
+#. TRANSLATORS: "%s %s" after "compiled on" is date and time.
 #, c-format
 msgid "WeeChat %s, compiled on %s %s\n"
 msgstr ""
@@ -6440,7 +6440,7 @@ msgstr ""
 msgid "WeeChat secured data (sec.conf) | Keys: [alt-v] Toggle values"
 msgstr "WeeChat の保護データ (sec.conf) | キー: [alt-v] 値のトグル"
 
-#. TRANSLATORS: "hash algorithm not supported"
+#. TRANSLATORS: "hash algorithm not supported".
 #, fuzzy
 #| msgid "log not started"
 msgid "not supported"
@@ -6576,19 +6576,19 @@ msgstr ""
 "理システムで管理している場合、常に同じ内容が書き込まれるようにこのオプション"
 "を無効化してください"
 
-#. TRANSLATORS: file size unit "kilobyte"
+#. TRANSLATORS: file size unit "kilobyte".
 msgid "KB"
 msgstr "キロバイト"
 
-#. TRANSLATORS: file size unit "megabyte"
+#. TRANSLATORS: file size unit "megabyte".
 msgid "MB"
 msgstr "メガバイト"
 
-#. TRANSLATORS: file size unit "gigabyte"
+#. TRANSLATORS: file size unit "gigabyte".
 msgid "GB"
 msgstr "ギガバイト"
 
-#. TRANSLATORS: file size unit "terabyte"
+#. TRANSLATORS: file size unit "terabyte".
 msgid "TB"
 msgstr "テラバイト"
 
@@ -6811,7 +6811,7 @@ msgstr ""
 msgid "debug: removing file: %s"
 msgstr "デバッグ: ファイル削除中: %s"
 
-#. TRANSLATORS: %.02fs is a float number + "s" ("seconds")
+#. TRANSLATORS: %.02fs is a float number + "s" ("seconds").
 #, c-format
 msgid "Upgrade done (%.02fs)"
 msgstr "アップグレード完了 (%.02f 秒)"
@@ -6937,7 +6937,7 @@ msgid ""
 "switch back to the default dark theme."
 msgstr ""
 
-#. TRANSLATORS: the "under %s" can be "under screen" or "under tmux"
+#. TRANSLATORS: the "under %s" can be "under screen" or "under tmux".
 #, c-format
 msgid ""
 "%sWarning: WeeChat is running under %s and $TERM is \"%s\", which can cause "
@@ -7061,11 +7061,11 @@ msgid "%sPaste %d line? [ctrl-y] Yes [ctrl-n] No"
 msgid_plural "%sPaste %d lines? [ctrl-y] Yes [ctrl-n] No"
 msgstr[0] "%s %d 行をペーストしますか? [ctrl-Y] はい [ctrl-N] いいえ"
 
-#. TRANSLATORS: search in "local" history
+#. TRANSLATORS: search in "local" history.
 msgid "local"
 msgstr ""
 
-#. TRANSLATORS: search in "global" history
+#. TRANSLATORS: search in "global" history.
 msgid "global"
 msgstr ""
 
@@ -7219,7 +7219,7 @@ msgstr ""
 "同名のフィルタが存在します (名前を変えるか、\"addreplace\" オプションで既存の"
 "フィルタを上書きしてください)"
 
-#. TRANSLATORS: %s is the error returned by regerror
+#. TRANSLATORS: %s is the error returned by regerror.
 #, c-format
 msgid "invalid regular expression (%s)"
 msgstr "不正な正規表現 (%s)"
@@ -7344,7 +7344,7 @@ msgstr "レイアウト \"%s\" を \"%s\" にリネームしました"
 msgid "list, add or remove command aliases"
 msgstr "別名コマンドのリストアップ、追加、削除"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 #, fuzzy
 #| msgid ""
 #| "list [<alias>] || add <alias> [<command>[;<command>...]] || addcompletion "
@@ -7986,7 +7986,7 @@ msgstr "%s%s: 不正な文字セット: \"%s\""
 msgid "change charset for current buffer"
 msgstr "現在のバッファの文字セットを変更"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "decode|encode <charset> || reset"
 msgstr "decode|encode <charset> || reset"
 
@@ -8015,22 +8015,22 @@ msgstr "実行中のコマンドはありません"
 msgid "Commands:"
 msgstr "コマンド:"
 
-#. TRANSLATORS: format: hours + minutes, for example: 3h59
+#. TRANSLATORS: format: hours + minutes, for example: 3h59.
 #, c-format
 msgid "%dh%02d"
 msgstr "%d 時間 %02d 分"
 
-#. TRANSLATORS: format: minutes + seconds, for example: 3m59
+#. TRANSLATORS: format: minutes + seconds, for example: 3m59.
 #, c-format
 msgid "%dm%02d"
 msgstr "%d 分 %02d 秒"
 
-#. TRANSLATORS: format: seconds, for example: 59s
+#. TRANSLATORS: format: seconds, for example: 59s.
 #, c-format
 msgid "%ds"
 msgstr "%d 秒"
 
-#. TRANSLATORS: %s before "ago" is elapsed time, for example: "3m59"
+#. TRANSLATORS: %s before "ago" is elapsed time, for example: "3m59".
 #, fuzzy, c-format
 msgid "  %s%s%s %ld%s%s%s: %s\"%s%s%s\"%s (pid: %d, started %s ago)"
 msgstr "  %s%s%s %d%s%s%s: %s\"%s%s%s\"%s (pid: %d、%s 前に開始)"
@@ -8067,7 +8067,7 @@ msgstr "コマンド \"%s\" を削除"
 msgid "execute external commands"
 msgstr "外部コマンドを実行"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 #, fuzzy
 msgid ""
 "-list || [-sh|-nosh] [-bg|-nobg] [-stdin|-nostdin] [-buffer <name>] [-l|-o|-"
@@ -8414,7 +8414,7 @@ msgstr "%s%s: パイプ読み取り中にエラー (%d %s)、パイプを閉じ�
 msgid "values:"
 msgstr "値:"
 
-#. TRANSLATORS: "%s%s%s:" at beginning of string it the name of option
+#. TRANSLATORS: "%s%s%s:" at beginning of string it the name of option.
 #, c-format
 msgid "%s%s%s: %s%s%s %s[%s%s]%s"
 msgstr "%s%s%s: %s%s%s %s[%s%s]%s"
@@ -8473,7 +8473,7 @@ msgstr[0] "%s%s: ファイル \"%s\" を実行できません"
 msgid "fast set WeeChat and plugins options"
 msgstr "WeeChat とプラグインのオプションを高速設定"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 #, fuzzy
 #| msgid ""
 #| "-bar || -refresh || -up|-down [<number>] || -left|-right [<percent>] || "
@@ -9228,7 +9228,7 @@ msgstr "%s%s: スクリプト \"%s\" はロードされていません"
 msgid "server"
 msgstr "サーバ"
 
-#. TRANSLATORS: this is displayed in a bar item and must be as short as possible
+#. TRANSLATORS: this is displayed in a bar item and must be as short as possible.
 msgid "cleartext"
 msgstr ""
 
@@ -9509,7 +9509,7 @@ msgstr "接続済み"
 msgid "not connected"
 msgstr "未接続"
 
-#. TRANSLATORS: "fake IRC server"
+#. TRANSLATORS: "fake IRC server".
 msgid " (fake)"
 msgstr ""
 
@@ -9631,7 +9631,7 @@ msgstr ""
 msgid "%s%s: you are not on channel \"%s\""
 msgstr "%s%s: あなたはチャンネル \"%s\" にいません"
 
-#. TRANSLATORS: "Notice" is command name in IRC protocol (translation is frequently the same word)
+#. TRANSLATORS: "Notice" is command name in IRC protocol (translation is frequently the same word).
 msgid "Notice"
 msgstr "Notice"
 
@@ -9640,7 +9640,7 @@ msgstr "Notice"
 msgid "send a CTCP action to a nick or channel"
 msgstr "現在のチャンネルに CTCP action を送信"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "[-server <server>] <target>[,<target>...] <text>"
 msgstr "[-server <server>] <target>[,<target>...] <text>"
 
@@ -9671,7 +9671,7 @@ msgstr "text: 送信テキスト"
 msgid "find information about the administrator of the server"
 msgstr "サーバ管理者に関する情報を探す"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "[<target>]"
 msgstr "[<target>]"
 
@@ -9681,7 +9681,7 @@ msgstr "target: サーバ名"
 msgid "execute a command on all channels of all connected servers"
 msgstr "全てのサーバ、全てのチャンネルに対してコマンドを実行"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 #, fuzzy
 msgid ""
 "[-current] [-parted|-all] [-exclude=<channel>[,<channel>...]] <command> || [-"
@@ -9785,7 +9785,7 @@ msgstr "/part を実行した場合にバッファを閉じる"
 msgid "execute a command on all private buffers of all connected servers"
 msgstr "全ての接続済みサーバの全てのプライベートバッファに対してコマンドを実行"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 #, fuzzy
 msgid ""
 "[-current] [-exclude=<nick>[,<nick>...]] <command> || [-current] [-"
@@ -9843,7 +9843,7 @@ msgstr "プライベートバッファをマージ"
 msgid "execute a command on all connected servers"
 msgstr "全ての接続済みサーバでコマンドを実行"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 #, fuzzy
 msgid ""
 "[-exclude=<server>[,<server>...]] <command> || [-include=<server>[,"
@@ -9871,7 +9871,7 @@ msgstr "全てのサーバの通知リストは空です"
 msgid "authenticate with SASL"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 #, fuzzy
 #| msgid "<user> <password>"
 msgid "[<username> <password>]"
@@ -9924,7 +9924,7 @@ msgstr ""
 msgid "configure the \"autojoin\" server option"
 msgstr "設定オプション"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid ""
 "add [<channel>...] || addraw <channel1>[,<channel2>...] [<key1>[,<key2>...]] "
 "|| del [<channel>...] || apply || join || sort [buffer]"
@@ -9978,7 +9978,7 @@ msgstr ""
 msgid "ban nicks or hosts"
 msgstr "ニックネームかホスト名を指定してバン"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 #, fuzzy
 #| msgid "[<channel>] [<nick> [<nick>...]]"
 msgid "[<channel>] [<nick>...]"
@@ -10006,7 +10006,7 @@ msgstr ""
 msgid "client capability negotiation"
 msgstr "クライアント機能情報の交換"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 #, fuzzy
 #| msgid "ls || list || req|ack [<capability> [<capability>...]] || end"
 msgid "ls || list || req|ack [<capability>...] || end"
@@ -10067,7 +10067,7 @@ msgstr ""
 msgid "connect to IRC server(s)"
 msgstr "IRC サーバに接続"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 #, fuzzy
 #| msgid ""
 #| "[<server> [<server>...]] [-<option>[=<value>]] [-no<option>] [-nojoin] [-"
@@ -10134,7 +10134,7 @@ msgstr ""
 msgid "send a CTCP message (Client-To-Client Protocol)"
 msgstr "CTCP メッセージの送信 (Client-To-Client Protocol)"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "[-server <server>] <target>[,<target>...] <type> [<arguments>]"
 msgstr "[-server <server>] <target>[,<target>...] <type> [<arguments>]"
 
@@ -10161,7 +10161,7 @@ msgstr "フックに対するデフォルト引数"
 msgid "leave and rejoin a channel"
 msgstr "チャンネルから退出し再参加"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "[<channel>[,<channel>...]] [<message>]"
 msgstr "[<channel>[,<channel>...]] [<message>]"
 
@@ -10179,7 +10179,7 @@ msgstr ""
 msgid "start a DCC (passive file transfer or direct chat)"
 msgstr "DCC の開始 (ファイル転送かダイレクトチャット)"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "chat <nick> || send <nick> <file>"
 msgstr "chat <nick> || send <nick> <file>"
 
@@ -10192,7 +10192,7 @@ msgstr ""
 msgid "remove channel half-operator status from nick(s)"
 msgstr "ニックネームから half-operator 権を剥奪"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 #, fuzzy
 #| msgid "<nick> [<nick>...] || * -yes"
 msgid "<nick>... || * -yes"
@@ -10251,7 +10251,7 @@ msgstr "サーバのシャットダウン"
 msgid "disconnect from one or all IRC servers"
 msgstr "特定のまたは全ての IRC サーバとの接続を切断"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "[<server>|-all|-pending [<reason>]]"
 msgstr "[<server>|-all|-pending [<reason>]]"
 
@@ -10283,7 +10283,7 @@ msgstr "指定したニックネームに half-operator 権を付与"
 msgid "ignore nicks/hosts from servers or channels"
 msgstr "あるサーバかチャンネルで、指定したニックネーム/ホスト名を無視"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 #, fuzzy
 #| msgid "list || add [re:]<nick> [<server> [<channel>]] || del <number>|-all"
 msgid ""
@@ -10341,7 +10341,7 @@ msgstr "サーバに関する情報を入手"
 msgid "invite a nick on a channel"
 msgstr "チャンネルにニックネームを招待"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 #, fuzzy
 #| msgid "<nick> [<nick>...] [<channel>]"
 msgid "<nick>... [<channel>]"
@@ -10350,7 +10350,7 @@ msgstr "<nick> [<nick>...] [<channel>]"
 msgid "check if a nick is currently on IRC"
 msgstr "ニックネームが IRC 上にいるか確認"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 #, fuzzy
 #| msgid "<nick> [<nick>...]"
 msgid "<nick>..."
@@ -10359,7 +10359,7 @@ msgstr "<nick> [<nick>...]"
 msgid "join a channel"
 msgstr "チャンネルに参加"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid ""
 "[-noswitch] [-server <server>] [<channel1>[,<channel2>...]] [<key1>[,"
 "<key2>...]]"
@@ -10377,7 +10377,7 @@ msgstr ""
 msgid "kick a user out of a channel"
 msgstr "チャンネルからユーザをキック"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "[<channel>] <nick> [<reason>]"
 msgstr "[<channel>] <nick> [<reason>]"
 
@@ -10403,7 +10403,7 @@ msgstr ""
 msgid "close client-server connection"
 msgstr "クライアント - サーバの接続を閉じる"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "<nick> [<reason>]"
 msgstr "<nick> [<reason>]"
 
@@ -10419,7 +10419,7 @@ msgstr ""
 msgid "send a notice to an invitation-only channel, requesting an invite"
 msgstr ""
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 #, fuzzy
 #| msgid "[-all] [<message>]"
 msgid "<channel> [<message>]"
@@ -10432,7 +10432,7 @@ msgstr "message: 送信メッセージ"
 msgid "list all server names which are known by the server answering the query"
 msgstr "このクエリに応答するサーバが知っている全てのサーバ名をリストアップ"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "[[<target>] <server_mask>]"
 msgstr "[[<target>] <server_mask>]"
 
@@ -10458,7 +10458,7 @@ msgstr ""
 msgid "list channels and their topics"
 msgstr "チャンネルとトピックをリストアップ"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 #, fuzzy
 #| msgid ""
 #| "[-server <server>] [-re <regex>] [<channel>[,<channel>...]] [<target>]"
@@ -10556,7 +10556,7 @@ msgstr ""
 msgid "get statistics about the size of the IRC network"
 msgstr "IRC ネットワークのサイズに関する統計を入手"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "[<mask> [<target>]]"
 msgstr "[<mask> [<target>]]"
 
@@ -10584,14 +10584,14 @@ msgstr "IRC ネットワークのグラフィカルマップを表示"
 msgid "send a CTCP action to the current channel"
 msgstr "現在のチャンネルに CTCP action を送信"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "<message>"
 msgstr "<message>"
 
 msgid "change channel or user mode"
 msgstr "チャンネルかユーザのモードを変更"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid ""
 "[<channel>] [+|-]o|p|s|i|t|n|m|l|b|e|v|k [<arguments>] || <nick> [+|-]i|s|w|o"
 msgstr ""
@@ -10697,7 +10697,7 @@ msgstr "ニックネームかチャンネルにメッセージを送る"
 msgid "list nicks on channels"
 msgstr "チャンネルに参加しているニックネームをリストアップ"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 #, fuzzy
 #| msgid "[<channel>[,<channel>...]]"
 msgid "[-count | -x] [<channel>[,<channel>...]]"
@@ -10714,7 +10714,7 @@ msgstr ""
 msgid "change current nick"
 msgstr "現在のニックネームを変更"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "[-all] <nick>"
 msgstr "[-all] <nick>"
 
@@ -10735,7 +10735,7 @@ msgstr "nick: ニックネーム"
 msgid "send notice message to user"
 msgstr "ユーザに notice メッセージを送信"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "[-server <server>] <target> <text>"
 msgstr "[-server <server>] <target> <text>"
 
@@ -10747,7 +10747,7 @@ msgstr "チャンネル名のテキスト色"
 msgid "add a notification for presence or away status of nicks on servers"
 msgstr "サーバ上のニックネームに対して接続か離席状態の通知を追加する"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 #, fuzzy
 #| msgid "add <nick> [<server> [-away]] || del <nick>|-all [<server>]"
 msgid "add|addreplace <nick> [<server> [-away]] || del <nick>|-all [<server>]"
@@ -10792,7 +10792,7 @@ msgstr "ニックネームにオペレータ権を付与"
 msgid "get operator privileges"
 msgstr "オペレータ権を入手"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "<user> <password>"
 msgstr "<user> <password>"
 
@@ -10814,7 +10814,7 @@ msgstr "チャンネルから退出"
 msgid "send a ping to server"
 msgstr "サーバにピンを送信"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "<target1> [<target2>]"
 msgstr "<target1> [<target2>]"
 
@@ -10835,7 +10835,7 @@ msgstr ""
 msgid "answer to a ping message"
 msgstr "ピンメッセージに応答"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "<daemon> [<daemon2>]"
 msgstr "<daemon> [<daemon2>]"
 
@@ -10860,7 +10860,7 @@ msgstr ""
 msgid "send a private message to a nick"
 msgstr "ニックネーム宛にプライベートメッセージを送信"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "[-noswitch] [-server <server>] <nick>[,<nick>...] [<text>]"
 msgstr "[-noswitch] [-server <server>] <nick>[,<nick>...] [<text>]"
 
@@ -10885,7 +10885,7 @@ msgstr ""
 msgid "send raw data to server without parsing"
 msgstr "パースせずにサーバ宛に生データを送信"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "[-server <server>] <data>"
 msgstr "[-server <server>] <data>"
 
@@ -10897,7 +10897,7 @@ msgstr "text: 送信テキスト"
 msgid "reconnect to server(s)"
 msgstr "サーバに再接続"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 #, fuzzy
 #| msgid ""
 #| "<server> [<server>...] [-nojoin] [-switch] || -all [-nojoin] [-switch]"
@@ -10912,7 +10912,7 @@ msgstr "サーバに再接続"
 msgid "tell the server to reload its config file"
 msgstr "サーバに設定ファイルのリロードを指示"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "[<option>]"
 msgstr "[<option>]"
 
@@ -10943,14 +10943,14 @@ msgstr "サーバに再接続"
 msgid "force a user to join channel(s)"
 msgstr "ユーザがチャンネルへ参加することを強制"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "<nick> <channel>[,<channel>...]"
 msgstr "<nick> <channel>[,<channel>...]"
 
 msgid "change mode on channel, without having operator status"
 msgstr "チャンネルモードを変更、オペレータ権無しに"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "[<channel>] <mode>"
 msgstr "[<channel>] <mode>"
 
@@ -10966,7 +10966,7 @@ msgstr ""
 msgid "force a user to use another nick"
 msgstr "強制的にユーザのニックネームを変更"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "<nick> <new_nick>"
 msgstr "<nick> <new_nick>"
 
@@ -10981,14 +10981,14 @@ msgstr "強制的にユーザをチャンネルから退出"
 msgid "force a user to quit server with a reason"
 msgstr "ある理由で強制的にユーザをサーバから切断"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "<nick> <reason>"
 msgstr "<nick> <reason>"
 
 msgid "register a new service"
 msgstr "新しいサービスを登録"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "<nick> <reserved> <distribution> <type> <reserved> <info>"
 msgstr "<nick> <reserved> <distribution> <type> <reserved> <info>"
 
@@ -11007,7 +11007,7 @@ msgstr ""
 msgid "list, add or remove IRC servers"
 msgstr "IRC サーバのリストアップ、追加、削除"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 #, fuzzy
 msgid ""
 "list|listfull [-connected] [<name>] || add|addreplace <name> <hostname>[/"
@@ -11117,7 +11117,7 @@ msgstr ""
 msgid "list services currently connected to the network"
 msgstr "現在ネットワークに接続されたサービスをリストアップ"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "[<mask> [<type>]]"
 msgstr "[<mask> [<type>]]"
 
@@ -11142,7 +11142,7 @@ msgstr ""
 msgid "deliver a message to a service"
 msgstr "サービスにメッセージを配送"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "<service> <text>"
 msgstr "<service> <text>"
 
@@ -11159,7 +11159,7 @@ msgstr ""
 msgid "set real name"
 msgstr "サーバ名"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "<realname>"
 msgstr ""
 
@@ -11170,7 +11170,7 @@ msgstr "読み込み - 変数名"
 msgid "disconnect server links"
 msgstr "サーバリンクを切断"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "<target> <comment>"
 msgstr "<target> <comment>"
 
@@ -11186,7 +11186,7 @@ msgstr ""
 msgid "query statistics about server"
 msgstr "サーバに関するクエリ統計"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "[<query> [<target>]]"
 msgstr "[<query> [<target>]]"
 
@@ -11206,7 +11206,7 @@ msgstr ""
 "IRC サーバを実行中のホストにいるユーザ宛てに、IRC に参加することを要請する"
 "メッセージを送信"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "<user> [<target> [<channel>]]"
 msgstr "<user> [<target> [<channel>]]"
 
@@ -11224,7 +11224,7 @@ msgstr "target: 時間を要求するサーバを指定"
 msgid "get/set channel topic"
 msgstr "チャンネルトピックの取得/設定"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "[<channel>] [<topic>|-delete]"
 msgstr "[<channel>] [<topic>|-delete]"
 
@@ -11242,7 +11242,7 @@ msgstr "指定されたサーバへのルートを探す"
 msgid "unban nicks or hosts"
 msgstr "ニックネームかホストの禁止設定を解除"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 #, fuzzy
 #| msgid "[<channel>] <nick>|<number> [<nick>|<number>...]"
 msgid "[<channel>] <nick>|<number>|<n1>-<n2>..."
@@ -11291,7 +11291,7 @@ msgid "give the version info of nick or server (current or specified)"
 msgstr ""
 "ニックネームかサーバのバージョン情報を取得 (現在のサーバか指定したサーバ)"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "[<target>|<nick>]"
 msgstr "[<target>|<nick>]"
 
@@ -11310,7 +11310,7 @@ msgstr ""
 msgid "send a notice to channel ops"
 msgstr "チャンネルオペレータに notice を送信"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "[<channel>] <text>"
 msgstr "[<channel>] <text>"
 
@@ -11324,14 +11324,14 @@ msgid ""
 msgstr ""
 "ユーザモードに 'w' を設定した全ての接続済みユーザ宛てにメッセージを送信"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "<text>"
 msgstr "<text>"
 
 msgid "generate a query which returns a list of information"
 msgstr "情報のリストを返すクエリを生成"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "[<mask> [o]]"
 msgstr "[<mask> [o]]"
 
@@ -11350,7 +11350,7 @@ msgstr ""
 msgid "query information about user(s)"
 msgstr "ユーザに関する情報を要求"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "[<target>] [<nick>[,<nick>...]]"
 msgstr "[<target>] [<nick>[,<nick>...]]"
 
@@ -11374,7 +11374,7 @@ msgstr ""
 msgid "ask for information about a nick which no longer exists"
 msgstr "既に存在しないニックネームに関する情報を要求"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "<nick>[,<nick>...] [<count> [<target>]]"
 msgstr "<nick>[,<nick>...] [<count> [<target>]]"
 
@@ -11666,7 +11666,7 @@ msgstr ""
 "サーバのパスワード (注意: 値は評価されます、/help eval を参照してください; こ"
 "こで ${irc_server.xxx} はサーバオプション、${server} はサーバ名を意味します)"
 
-#. TRANSLATORS: please keep words "client capabilities" between brackets if translation is different (see fr.po)
+#. TRANSLATORS: please keep words "client capabilities" between brackets if translation is different (see fr.po).
 #, fuzzy
 #| msgid ""
 #| "comma-separated list of client capabilities to enable for server if they "
@@ -12445,12 +12445,12 @@ msgstr ""
 "ジをフィルタする (\"irc_smart_filter\" タグのフィルタを作らなければいけませ"
 "ん)"
 
-#. TRANSLATORS: please do not translate "account"
+#. TRANSLATORS: please do not translate "account".
 #, fuzzy
 msgid "enable smart filter for \"account\" messages"
 msgstr "\"join\" メッセージのスマートフィルタを有効化"
 
-#. TRANSLATORS: please do not translate "chghost"
+#. TRANSLATORS: please do not translate "chghost".
 msgid "enable smart filter for \"chghost\" messages"
 msgstr "\"chghost\" メッセージのスマートフィルタを有効化"
 
@@ -12461,7 +12461,7 @@ msgstr ""
 "参加/退出/終了メッセージをフィルタするまでの遅延時間 (分単位): ニックネーム"
 "が N 分以上発言しなかった場合、参加/退出/終了メッセージをフィルタする"
 
-#. TRANSLATORS: please do not translate "join"
+#. TRANSLATORS: please do not translate "join".
 msgid "enable smart filter for \"join\" messages"
 msgstr "\"join\" メッセージのスマートフィルタを有効化"
 
@@ -12478,7 +12478,7 @@ msgstr ""
 "ニックネームを変更したら、参加メッセージのマスクが外れます (0 = 無効: 参加"
 "メッセージは必ずマスクされます)"
 
-#. TRANSLATORS: please do not translate "mode"
+#. TRANSLATORS: please do not translate "mode".
 msgid ""
 "enable smart filter for \"mode\" messages: \"*\" to filter all modes, \"+\" "
 "to filter all modes in server prefixes (for example \"ovh\"), \"xyz\" to "
@@ -12493,16 +12493,16 @@ msgstr ""
 "するには \"-xyz\"; 例: \"ovh\": o/v/h モードの変更メッセージをフィルタする、"
 "\"-bkl\": b/k/l モード以外のモード変更メッセージをフィルタ"
 
-#. TRANSLATORS: please do not translate "nick"
+#. TRANSLATORS: please do not translate "nick".
 msgid "enable smart filter for \"nick\" messages (nick changes)"
 msgstr ""
 "\"nick\" メッセージに対するスマートフィルタを有効化 (ニックネームの変更通知)"
 
-#. TRANSLATORS: please do not translate "part" and "quit"
+#. TRANSLATORS: please do not translate "part" and "quit".
 msgid "enable smart filter for \"part\" and \"quit\" messages"
 msgstr "\"part\" と \"quit\" メッセージのスマートフィルタを有効化"
 
-#. TRANSLATORS: please do not translate "setname"
+#. TRANSLATORS: please do not translate "setname".
 #, fuzzy
 #| msgid "enable smart filter for \"join\" messages"
 msgid "enable smart filter for \"setname\" messages"
@@ -12554,7 +12554,7 @@ msgstr "スクリプトバッファ内の選択行の背景色"
 msgid "color for text in account messages"
 msgstr "参加メッセージの色"
 
-#. TRANSLATORS: please do not translate "chghost"
+#. TRANSLATORS: please do not translate "chghost".
 #, fuzzy
 #| msgid "color for text in chghost messages"
 msgid "color for text in \"chghost\" messages"
@@ -12570,13 +12570,13 @@ msgstr "参加メッセージの色"
 msgid "color for text in part/quit messages"
 msgstr "退出/終了 メッセージの色"
 
-#. TRANSLATORS: please do not translate "setname"
+#. TRANSLATORS: please do not translate "setname".
 #, fuzzy
 #| msgid "color for text in join messages"
 msgid "color for text in \"setname\" messages"
 msgstr "参加メッセージの色"
 
-#. TRANSLATORS: please do not translate the list of WeeChat color names at the end of string
+#. TRANSLATORS: please do not translate the list of WeeChat color names at the end of string.
 #, fuzzy
 #| msgid ""
 #| "remap mirc colors in messages using a hashtable: keys are \"fg,bg\" as "
@@ -12770,7 +12770,7 @@ msgstr "%s%s%s%s からの CTCP 要求: %s%s%s%s%s%s"
 msgid " (blocked)"
 msgstr " (ブロック)"
 
-#. TRANSLATORS: %.3fs is a float number + "s" ("seconds")
+#. TRANSLATORS: %.3fs is a float number + "s" ("seconds").
 #, c-format
 msgid "%sCTCP reply from %s%s%s: %s%s%s %.3fs"
 msgstr "%s%s%s%s からの CTCP 応答: %s%s%s %.3f 秒"
@@ -12795,8 +12795,8 @@ msgstr "%s%s: \"%s\" コマンドの解析に失敗"
 msgid "%s%s: unknown DCC CHAT type received from %s%s%s: \"%s\""
 msgstr "%s%s: %s%s%s からの未知の DCC CHAT タイプ: \"%s\""
 
-#. TRANSLATORS: "Action" is an IRC CTCP "ACTION" sent with /me
-#. TRANSLATORS: "Action" is an IRC CTCP "ACTION" sent with /me or /action
+#. TRANSLATORS: "Action" is an IRC CTCP "ACTION" sent with /me.
+#. TRANSLATORS: "Action" is an IRC CTCP "ACTION" sent with /me or /action.
 #, fuzzy
 #| msgid "Option"
 msgid "Action"
@@ -12912,7 +12912,7 @@ msgstr "IRC メッセージを解析"
 msgid "\"message\": IRC message, \"server\": server name (optional)"
 msgstr "\"message\": IRC メッセージ、\"server\": サーバ名 (任意)"
 
-#. TRANSLATORS: please do not translate key names (enclosed by quotes)
+#. TRANSLATORS: please do not translate key names (enclosed by quotes).
 #, fuzzy
 msgid ""
 "\"tags\": tags, \"tag_xxx\": unescaped value of tag \"xxx\" (one key per "
@@ -12941,7 +12941,7 @@ msgid "split an IRC message (to fit in 512 bytes by default)"
 msgstr ""
 "IRC メッセージを分割 (デフォルトでは 512 バイト内に収まるように分割します)"
 
-#. TRANSLATORS: please do not translate key names (enclosed by quotes)
+#. TRANSLATORS: please do not translate key names (enclosed by quotes).
 msgid ""
 "\"msg1\" ... \"msgN\": messages to send (without final \"\\r\\n\"), "
 "\"args1\" ... \"argsN\": arguments of messages, \"count\": number of messages"
@@ -13084,7 +13084,7 @@ msgstr "%s%s: 新しいモードリストの割り当てに失敗"
 msgid "%s%s: cannot allocate new modelist item"
 msgstr "%s%s: 新しいモードリスト要素の割り当てに失敗"
 
-#. TRANSLATORS: "unknown" is the status for /notify when ison answer has not been received (check pending)
+#. TRANSLATORS: "unknown" is the status for /notify when ison answer has not been received (check pending).
 msgid "unknown"
 msgstr "不明"
 
@@ -13351,12 +13351,12 @@ msgstr "%sモード %s%s %s[%s%s%s]"
 msgid "%sURL for %s%s%s: %s"
 msgstr "%s%s%s%s の URL: %s"
 
-#. TRANSLATORS: "%s" after "created on" is a date
+#. TRANSLATORS: "%s" after "created on" is a date.
 #, c-format
 msgid "%sChannel created on %s"
 msgstr "%sチャンネルの作成日時 %s"
 
-#. TRANSLATORS: "%s" after "created on" is a date
+#. TRANSLATORS: "%s" after "created on" is a date.
 #, c-format
 msgid "%sChannel %s%s%s created on %s"
 msgstr "%sチャンネル %s%s%s の作成日時 %s"
@@ -13369,22 +13369,22 @@ msgstr "%sチャンネル %s%s にはトピックが設定されていません"
 msgid "%sTopic for %s%s%s is \"%s%s%s\""
 msgstr "%s%s%s%s のトピックは \"%s%s%s\" です"
 
-#. TRANSLATORS: "%s" after "on" is a date
+#. TRANSLATORS: "%s" after "on" is a date.
 #, c-format
 msgid "%sTopic set by %s%s%s%s%s%s%s%s%s on %s"
 msgstr "%sトピックは %s%s%s%s%s%s%s%s%s が %s に設定"
 
-#. TRANSLATORS: "%s" after "on" is a date
+#. TRANSLATORS: "%s" after "on" is a date.
 #, c-format
 msgid "%sTopic set on %s"
 msgstr "%sトピックは %s に設定されました"
 
-#. TRANSLATORS: "%s" after "on" is a date
+#. TRANSLATORS: "%s" after "on" is a date.
 #, c-format
 msgid "%sTopic for %s%s%s set by %s%s%s%s%s%s%s%s%s on %s"
 msgstr "%s%s%s%s のトピックは %s%s%s%s%s%s%s%s%s が %s に設定"
 
-#. TRANSLATORS: "%s" after "on" is a date
+#. TRANSLATORS: "%s" after "on" is a date.
 #, c-format
 msgid "%sTopic for %s%s%s set on %s"
 msgstr "%s%s%s%s のトピックは %s 設定されました"
@@ -13393,7 +13393,7 @@ msgstr "%s%s%s%s のトピックは %s 設定されました"
 msgid "%sChannel reop %s%s%s: %s%s"
 msgstr "%sチャンネルは %s%s%s を reop しました: %s%s"
 
-#. TRANSLATORS: "%s" after "on" is a date
+#. TRANSLATORS: "%s" after "on" is a date.
 #, c-format
 msgid "%s%s[%s%s%s] %s%s%s%s invited by %s on %s"
 msgstr ""
@@ -13407,7 +13407,7 @@ msgstr "%1$s%2$s[%3$s%4$s%5$s] %10$s が %6$s%7$s%8$s%9$s を招待しました"
 msgid "%s%s[%s%s%s] %s%s%s%s invited"
 msgstr "%s%s[%s%s%s] %s%s%s%s を招待しました"
 
-#. TRANSLATORS: "%s" after "on" is a date
+#. TRANSLATORS: "%s" after "on" is a date.
 #, c-format
 msgid "%s%s[%s%s%s]%s%s exception %s%s%s by %s on %s"
 msgstr ""
@@ -13431,7 +13431,7 @@ msgstr "%s%s: ニックネーム \"%s\" をチャンネル \"%s\" に作れま�
 msgid "%sNicks %s%s%s: %s[%s%s%s]"
 msgstr "%sニックネーム %s%s%s: %s[%s%s%s]"
 
-#. TRANSLATORS: number of "regular" nicks on a channel (ie not op/halfop/voiced), for example: "56 regular"
+#. TRANSLATORS: number of "regular" nicks on a channel (ie not op/halfop/voiced), for example: "56 regular".
 msgid "regular"
 msgid_plural "regular"
 msgstr[0] ""
@@ -13477,7 +13477,7 @@ msgid "nick"
 msgid_plural "nicks"
 msgstr[0] "ニックネーム"
 
-#. TRANSLATORS: "%s" after "on" is a date
+#. TRANSLATORS: "%s" after "on" is a date.
 #, c-format
 msgid "%s%s[%s%s%s] %s%s%s%s banned by %s on %s"
 msgstr ""
@@ -13528,7 +13528,7 @@ msgstr ""
 msgid "has asked for an invite"
 msgstr ""
 
-#. TRANSLATORS: "%s" after "on" is a date
+#. TRANSLATORS: "%s" after "on" is a date.
 #, c-format
 msgid "%s%s[%s%s%s] %s%s%s%s quieted by %s on %s"
 msgstr ""
@@ -13668,7 +13668,7 @@ msgstr ""
 "%s%s: サーバ \"%s\" の指紋が間違っています、指紋の各桁は 16 進数で使える文字 "
 "(0-9, a-f) を使ってください"
 
-#. TRANSLATORS: "fake IRC server"
+#. TRANSLATORS: "fake IRC server".
 msgid "fake"
 msgstr ""
 
@@ -14058,7 +14058,7 @@ msgstr "%s: \"%s\" => レベル %d"
 msgid "logger plugin configuration"
 msgstr "logger プラグイン設定"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid "list || set <level> || flush || disable"
 msgstr "list || set <level> || flush || disable"
 
@@ -14609,7 +14609,7 @@ msgstr "ウィンドウ"
 msgid "get focus info"
 msgstr ""
 
-#. TRANSLATORS: please do not translate key names (enclosed by quotes)
+#. TRANSLATORS: please do not translate key names (enclosed by quotes).
 msgid ""
 "\"x\": x coordinate (string with integer >= 0), \"y\": y coordinate (string "
 "with integer >= 0)"
@@ -14921,7 +14921,7 @@ msgstr ""
 msgid "list/load/unload scripts"
 msgstr "スクリプトをリストアップ/ロード/アンロード"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 msgid ""
 "list|listfull [<name>] || load [-q] <filename> || autoload || reload|unload "
 "[-q] [<name>] || eval [-o|-oc] <code> || version"
@@ -15046,7 +15046,7 @@ msgstr "%s: スクリプト \"%s\" が見つかりません、何も削除され
 msgid "%s%s: failed to move script %s to %s (%s)"
 msgstr "%s%s: スクリプト %s を %s に移動することに失敗 (%s)"
 
-#. TRANSLATORS: "%s" is language (for example "perl")
+#. TRANSLATORS: "%s" is language (for example "perl").
 #, c-format
 msgid "%s scripts loaded:"
 msgstr "ロードされた %s スクリプト:"
@@ -15720,7 +15720,7 @@ msgstr "%s: サーバ %s%s%s を削除しました"
 msgid "relay control"
 msgstr "リレー管理"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 #, fuzzy
 #| msgid ""
 #| "list|listfull|listrelay || add <name> <port>|<path> || del|start|restart|"
@@ -15860,7 +15860,7 @@ msgstr ""
 msgid "control of remote relay servers"
 msgstr "特定のまたは全ての IRC サーバとの接続を切断"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 #, fuzzy
 msgid ""
 "list|listfull [<name>] || add|addreplace <name> <url> [-<option>[=<value>]] "
@@ -16404,7 +16404,7 @@ msgstr "WeeChat のバージョン (数字)"
 msgid "number of clients for relay"
 msgstr "中継するクライアントのリスト"
 
-#. TRANSLATORS: please do not translate the status names, they must be used in English
+#. TRANSLATORS: please do not translate the status names, they must be used in English.
 msgid ""
 "protocol,status (both are optional, for each argument \"*\" means all; "
 "protocols: api, irc, weechat; statuses: connecting, waiting_auth, connected, "
@@ -16525,7 +16525,7 @@ msgstr "%s%s: IP アドレス \"%s\" はリレーの許可がありません"
 msgid "%s%s: cannot set socket option \"%s\" to %d: error %d %s"
 msgstr "%s%s: ソケットオプション \"%s\" を %d に設定できません: エラー %d %s"
 
-#. TRANSLATORS: second "%s" is "IPv4" or "IPv6"
+#. TRANSLATORS: second "%s" is "IPv4" or "IPv6".
 #, c-format
 msgid "%s%s: invalid bind address \"%s\" for %s"
 msgstr "%1$s%2$s: %4$s 用に割り当てた不正なアドレス \"%3$s\""
@@ -16623,7 +16623,7 @@ msgstr ""
 "%s%s: SSL 接続中のクライアントに対しては upgrade が利かないため、クライアン"
 "ト %s%s%s との接続を切断中"
 
-#. TRANSLATORS: "%s" after "%d" is "client" or "clients"
+#. TRANSLATORS: "%s" after "%d" is "client" or "clients".
 #, fuzzy, c-format
 #| msgid ""
 #| "%s%s: disconnected from %d %s (SSL connection not supported with upgrade)"
@@ -16868,7 +16868,7 @@ msgstr "%s: スクリプトリストのダウンロード中..."
 msgid "WeeChat script manager"
 msgstr "WeeChat スクリプトマネージャ"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 #, fuzzy
 msgid ""
 "enable || list [-o|-ol|-i|-il] || search <text> || show <script> || load|"
@@ -17252,27 +17252,27 @@ msgstr ""
 msgid "scripts from repository"
 msgstr "リポジトリからのスクリプト"
 
-#. TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed)
+#. TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed).
 msgid "popular"
 msgstr "人気"
 
-#. TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed)
+#. TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed).
 msgid "installed"
 msgstr "インストール済み"
 
-#. TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed)
+#. TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed).
 msgid "autoloaded"
 msgstr "自動ロード有効化"
 
-#. TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed)
+#. TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed).
 msgid "held"
 msgstr "ホールド状態"
 
-#. TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed)
+#. TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed).
 msgid "running"
 msgstr "起動済み"
 
-#. TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed)
+#. TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed).
 msgid "obsolete"
 msgstr "アップデートが必要"
 
@@ -17309,7 +17309,7 @@ msgid ""
 "enable"
 msgstr ""
 
-#. TRANSLATORS: "%s" is "spell" (name of plugin)
+#. TRANSLATORS: "%s" is "spell" (name of plugin).
 #, c-format
 msgid "%s dictionaries list:"
 msgstr "%s プラグインの辞書リスト:"
@@ -17357,7 +17357,7 @@ msgstr "%s: 単語 \"%s\" を個人辞書に追加"
 msgid "%s%s: failed to add word to personal dictionary: %s"
 msgstr "%s%s: 単語の個人辞書への登録に失敗"
 
-#. TRANSLATORS: second "%s" is "aspell" or "enchant"
+#. TRANSLATORS: second "%s" is "aspell" or "enchant".
 #, c-format
 msgid "%s (using %s)"
 msgstr "%s (%s プラグインを使用中)"
@@ -17387,7 +17387,7 @@ msgstr "スペルチェックが無効化されています"
 msgid "spell plugin configuration"
 msgstr "スペルチェックプラグイン設定"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 #, fuzzy
 #| msgid ""
 #| "enable|disable|toggle || listdict || setdict <dict>[,<dict>...] || "
@@ -17782,7 +17782,7 @@ msgstr ""
 msgid "manage triggers, the Swiss Army knife for WeeChat"
 msgstr "トリガ (WeeChat 用のスイスアーミーナイフ) の管理"
 
-#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated
+#. TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated.
 #, fuzzy
 #| msgid ""
 #| "list|listfull|listdefault || add|addoff|addreplace <name> <hook> "
@@ -18228,7 +18228,7 @@ msgstr "%s%s: トリガ \"%s\" のフックを作成できません (無効な�
 msgid "%s%s: invalid regular expression in trigger: \"%s\""
 msgstr "%s%s: トリガの正規表現が間違っています: \"%s\""
 
-#. TRANSLATORS: this text is displayed before the list of nicks typing in the bar item "typing", it must be as short as possible
+#. TRANSLATORS: this text is displayed before the list of nicks typing in the bar item "typing", it must be as short as possible.
 msgid "Typing: "
 msgstr ""
 
@@ -18317,7 +18317,7 @@ msgstr "送信先"
 msgid "received from"
 msgstr "受信元"
 
-#. TRANSLATORS: "%s" after "started on" is a date
+#. TRANSLATORS: "%s" after "started on" is a date.
 #, c-format
 msgid "%3d. %s, chat with %s (local nick: %s), started on %s, status: %s%s"
 msgstr ""
@@ -18331,7 +18331,7 @@ msgstr ""
 "     プラグイン: %s (id: %s)、ファイル: %llu バイト (位置: %llu)、アドレス: "
 "%s (ポート %d)"
 
-#. TRANSLATORS: "%s" after "started on" is a date
+#. TRANSLATORS: "%s" after "started on" is a date.
 #, c-format
 msgid "     fast_send: %s, blocksize: %d, started on %s"
 msgstr "     fast_send: %s、ブロックサイズ: %d、開始日時 %s"

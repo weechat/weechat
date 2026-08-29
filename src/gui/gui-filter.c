@@ -406,7 +406,7 @@ gui_filter_new (int enabled, const char *name, const char *buffer_name,
                 {
                     regerror (rc, regex1, buf, sizeof (buf));
                     snprintf (str_error, sizeof (str_error),
-                              /* TRANSLATORS: %s is the error returned by regerror */
+                              /* TRANSLATORS: %s is the error returned by regerror. */
                               _("invalid regular expression (%s)"),
                               buf);
                     gui_filter_new_error (name, str_error);
@@ -428,7 +428,7 @@ gui_filter_new (int enabled, const char *name, const char *buffer_name,
                 {
                     regerror (rc, regex2, buf, sizeof (buf));
                     snprintf (str_error, sizeof (str_error),
-                              /* TRANSLATORS: %s is the error returned by regerror */
+                              /* TRANSLATORS: %s is the error returned by regerror. */
                               _("invalid regular expression (%s)"),
                               buf);
                     gui_filter_new_error (name, str_error);

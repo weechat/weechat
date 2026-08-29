@@ -323,7 +323,7 @@ script_repo_get_status_desc_for_display (struct t_script_repo *script,
                 {
                     if (str_status[0])
                         strcat (str_status, " ");
-                    /* TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed) */
+                    /* TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed). */
                     strcat (str_status, _("popular"));
                 }
                 break;
@@ -332,7 +332,7 @@ script_repo_get_status_desc_for_display (struct t_script_repo *script,
                 {
                     if (str_status[0])
                         strcat (str_status, " ");
-                    /* TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed) */
+                    /* TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed). */
                     strcat (str_status, _("installed"));
                 }
                 break;
@@ -341,7 +341,7 @@ script_repo_get_status_desc_for_display (struct t_script_repo *script,
                 {
                     if (str_status[0])
                         strcat (str_status, " ");
-                    /* TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed) */
+                    /* TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed). */
                     strcat (str_status, _("autoloaded"));
                 }
                 break;
@@ -350,7 +350,7 @@ script_repo_get_status_desc_for_display (struct t_script_repo *script,
                 {
                     if (str_status[0])
                         strcat (str_status, " ");
-                    /* TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed) */
+                    /* TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed). */
                     strcat (str_status, _("held"));
                 }
                 break;
@@ -359,7 +359,7 @@ script_repo_get_status_desc_for_display (struct t_script_repo *script,
                 {
                     if (str_status[0])
                         strcat (str_status, " ");
-                    /* TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed) */
+                    /* TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed). */
                     strcat (str_status, _("running"));
                 }
                 break;
@@ -368,7 +368,7 @@ script_repo_get_status_desc_for_display (struct t_script_repo *script,
                 {
                     if (str_status[0])
                         strcat (str_status, " ");
-                    /* TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed) */
+                    /* TRANSLATORS: translation must be one short word without spaces (replace spaces by underscores if needed). */
                     strcat (str_status, _("obsolete"));
                 }
                 break;

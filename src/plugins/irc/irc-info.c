@@ -1405,7 +1405,7 @@ irc_info_init (void)
         "irc_message_parse",
         N_("parse an IRC message"),
         N_("\"message\": IRC message, \"server\": server name (optional)"),
-        /* TRANSLATORS: please do not translate key names (enclosed by quotes) */
+        /* TRANSLATORS: please do not translate key names (enclosed by quotes). */
         N_("\"tags\": tags, "
            "\"tag_xxx\": unescaped value of tag \"xxx\" (one key per tag), "
            "\"message_without_tags\": message without the tags, "
@@ -1431,7 +1431,7 @@ irc_info_init (void)
         "irc_message_split",
         N_("split an IRC message (to fit in 512 bytes by default)"),
         N_("\"message\": IRC message, \"server\": server name (optional)"),
-        /* TRANSLATORS: please do not translate key names (enclosed by quotes) */
+        /* TRANSLATORS: please do not translate key names (enclosed by quotes). */
         N_("\"msg1\" ... \"msgN\": messages to send (without final \"\\r\\n\"), "
            "\"args1\" ... \"argsN\": arguments of messages, \"count\": number "
            "of messages"),

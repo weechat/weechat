@@ -3439,7 +3439,7 @@ config_weechat_init_options (void)
         config_look_buffer_time_format = config_file_new_option (
             weechat_config_file, weechat_config_section_look,
             "buffer_time_format", "string|themable",
-            /* TRANSLATORS: string "${color:xxx}" must NOT be translated */
+            /* TRANSLATORS: string "${color:xxx}" must NOT be translated. */
             N_("time format for each line displayed in buffers (see man "
                "strftime for date/time specifiers, extra specifiers are "
                "supported, see function util_strftimeval in Plugin API reference) "
@@ -3463,7 +3463,7 @@ config_weechat_init_options (void)
         config_look_buffer_time_same = config_file_new_option (
             weechat_config_file, weechat_config_section_look,
             "buffer_time_same", "string|themable",
-            /* TRANSLATORS: string "${color:xxx}" must NOT be translated */
+            /* TRANSLATORS: string "${color:xxx}" must NOT be translated. */
             N_("time displayed for a message with same time as previous message: "
                "use a space \" \" to hide time, another string to display this "
                "string instead of time, or an empty string to disable feature "
@@ -3630,7 +3630,7 @@ config_weechat_init_options (void)
         config_look_day_change_message_1date = config_file_new_option (
             weechat_config_file, weechat_config_section_look,
             "day_change_message_1date", "string|themable",
-            /* TRANSLATORS: string "${color:xxx}" must NOT be translated */
+            /* TRANSLATORS: string "${color:xxx}" must NOT be translated. */
             N_("message displayed when the day has changed, with one date "
                "displayed (for example at beginning of buffer) (see man "
                "strftime for date/time specifiers) (note: content is "
@@ -3643,7 +3643,7 @@ config_weechat_init_options (void)
         config_look_day_change_message_2dates = config_file_new_option (
             weechat_config_file, weechat_config_section_look,
             "day_change_message_2dates", "string|themable",
-            /* TRANSLATORS: string "${color:xxx}" must NOT be translated */
+            /* TRANSLATORS: string "${color:xxx}" must NOT be translated. */
             N_("message displayed when the day has changed, with two dates "
                "displayed (between two messages); the second date specifiers "
                "must start with two \"%\" because strftime is called two "
@@ -4107,7 +4107,7 @@ config_weechat_init_options (void)
         config_look_prefix[GUI_CHAT_PREFIX_ERROR] = config_file_new_option (
             weechat_config_file, weechat_config_section_look,
             "prefix_error", "string|themable",
-            /* TRANSLATORS: string "${color:xxx}" must NOT be translated */
+            /* TRANSLATORS: string "${color:xxx}" must NOT be translated. */
             N_("prefix for error messages (note: content is evaluated, so you "
                "can use colors with format \"${color:xxx}\", see /help eval)"),
             NULL, 0, 0, GUI_CHAT_PREFIX_ERROR_DEFAULT, NULL, 0,
@@ -4117,7 +4117,7 @@ config_weechat_init_options (void)
         config_look_prefix[GUI_CHAT_PREFIX_NETWORK] = config_file_new_option (
             weechat_config_file, weechat_config_section_look,
             "prefix_network", "string|themable",
-            /* TRANSLATORS: string "${color:xxx}" must NOT be translated */
+            /* TRANSLATORS: string "${color:xxx}" must NOT be translated. */
             N_("prefix for network messages (note: content is evaluated, so you "
                "can use colors with format \"${color:xxx}\", see /help eval)"),
             NULL, 0, 0, GUI_CHAT_PREFIX_NETWORK_DEFAULT, NULL, 0,
@@ -4127,7 +4127,7 @@ config_weechat_init_options (void)
         config_look_prefix[GUI_CHAT_PREFIX_ACTION] = config_file_new_option (
             weechat_config_file, weechat_config_section_look,
             "prefix_action", "string|themable",
-            /* TRANSLATORS: string "${color:xxx}" must NOT be translated */
+            /* TRANSLATORS: string "${color:xxx}" must NOT be translated. */
             N_("prefix for action messages (note: content is evaluated, so you "
                "can use colors with format \"${color:xxx}\", see /help eval)"),
             NULL, 0, 0, GUI_CHAT_PREFIX_ACTION_DEFAULT, NULL, 0,
@@ -4137,7 +4137,7 @@ config_weechat_init_options (void)
         config_look_prefix[GUI_CHAT_PREFIX_JOIN] = config_file_new_option (
             weechat_config_file, weechat_config_section_look,
             "prefix_join", "string|themable",
-            /* TRANSLATORS: string "${color:xxx}" must NOT be translated */
+            /* TRANSLATORS: string "${color:xxx}" must NOT be translated. */
             N_("prefix for join messages (note: content is evaluated, so you "
                "can use colors with format \"${color:xxx}\", see /help eval)"),
             NULL, 0, 0, GUI_CHAT_PREFIX_JOIN_DEFAULT, NULL, 0,
@@ -4147,7 +4147,7 @@ config_weechat_init_options (void)
         config_look_prefix[GUI_CHAT_PREFIX_QUIT] = config_file_new_option (
             weechat_config_file, weechat_config_section_look,
             "prefix_quit", "string|themable",
-            /* TRANSLATORS: string "${color:xxx}" must NOT be translated */
+            /* TRANSLATORS: string "${color:xxx}" must NOT be translated. */
             N_("prefix for quit messages (note: content is evaluated, so you "
                "can use colors with format \"${color:xxx}\", see /help eval)"),
             NULL, 0, 0, GUI_CHAT_PREFIX_QUIT_DEFAULT, NULL, 0,
@@ -4656,7 +4656,7 @@ config_weechat_init_options (void)
         config_color_chat_nick_colors = config_file_new_option (
             weechat_config_file, weechat_config_section_color,
             "chat_nick_colors", "string|themable",
-            /* TRANSLATORS: please do not translate "lightred:blue" */
+            /* TRANSLATORS: please do not translate "lightred:blue". */
             N_("text color for nicks (comma separated list of colors, "
                "background is allowed with format: \"fg:bg\", for example: "
                "\"lightred:blue\")"),
@@ -4927,7 +4927,7 @@ config_weechat_init_options (void)
         config_color_eval_syntax_colors = config_file_new_option (
             weechat_config_file, weechat_config_section_color,
             "eval_syntax_colors", "string|themable",
-            /* TRANSLATORS: please do not translate "lightred:blue" */
+            /* TRANSLATORS: please do not translate "lightred:blue". */
             N_("text color for syntax highlighting in evaluated strings, "
                "with \"${raw_hl:...}\" and \"${hl:...}\" (comma separated "
                "list of colors, background is allowed with format: \"fg:bg\", "

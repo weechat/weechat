@@ -96,7 +96,7 @@ secure_buffer_display (void)
     {
         snprintf (str_supported, sizeof (str_supported),
                   " (%s)",
-                  /* TRANSLATORS: "hash algorithm not supported" */
+                  /* TRANSLATORS: "hash algorithm not supported". */
                   _("not supported"));
     }
 

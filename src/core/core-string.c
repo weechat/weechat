@@ -3356,13 +3356,13 @@ char *
 string_format_size (unsigned long long size)
 {
     char *unit_name[] = { "",
-                          /* TRANSLATORS: file size unit "kilobyte" */
+                          /* TRANSLATORS: file size unit "kilobyte". */
                           N_("KB"),
-                          /* TRANSLATORS: file size unit "megabyte" */
+                          /* TRANSLATORS: file size unit "megabyte". */
                           N_("MB"),
-                          /* TRANSLATORS: file size unit "gigabyte" */
+                          /* TRANSLATORS: file size unit "gigabyte". */
                           N_("GB"),
-                          /* TRANSLATORS: file size unit "terabyte" */
+                          /* TRANSLATORS: file size unit "terabyte". */
                           N_("TB") };
     char *unit_format[] = { "%.0f", "%.1f", "%.02f", "%.02f", "%.02f" };
     float unit_divide[] = { 1.0,

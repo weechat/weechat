@@ -2298,7 +2298,7 @@ plugin_api_info_init (void)
     hook_info_hashtable (NULL,
         "focus_info",
         N_("get focus info"),
-        /* TRANSLATORS: please do not translate key names (enclosed by quotes) */
+        /* TRANSLATORS: please do not translate key names (enclosed by quotes). */
         N_("\"x\": x coordinate (string with integer >= 0), "
            "\"y\": y coordinate (string with integer >= 0)"),
         N_("see function \"hook_focus\" in Plugin API reference"),

@@ -186,7 +186,7 @@ relay_signal_upgrade_cb (const void *pointer, void *data,
     if (tls_disconnected > 0)
     {
         weechat_printf (NULL,
-                        /* TRANSLATORS: "%s" after "%d" is "client" or "clients" */
+                        /* TRANSLATORS: "%s" after "%d" is "client" or "clients". */
                         _("%s%s: disconnected from %d %s (TLS connection "
                           "not supported with upgrade)"),
                         weechat_prefix ("error"), RELAY_PLUGIN_NAME,

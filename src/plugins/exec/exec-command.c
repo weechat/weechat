@@ -49,7 +49,7 @@ exec_command_list (void)
         if (elapsed_time >= 3600)
         {
             snprintf (str_elapsed, sizeof (str_elapsed),
-                      /* TRANSLATORS: format: hours + minutes, for example: 3h59 */
+                      /* TRANSLATORS: format: hours + minutes, for example: 3h59. */
                       _("%dh%02d"),
                       elapsed_time / 3600,
                       elapsed_time % 3600);
@@ -57,7 +57,7 @@ exec_command_list (void)
         else if (elapsed_time >= 60)
         {
             snprintf (str_elapsed, sizeof (str_elapsed),
-                      /* TRANSLATORS: format: minutes + seconds, for example: 3m59 */
+                      /* TRANSLATORS: format: minutes + seconds, for example: 3m59. */
                       _("%dm%02d"),
                       elapsed_time / 60,
                       elapsed_time % 60);
@@ -65,7 +65,7 @@ exec_command_list (void)
         else
         {
             snprintf (str_elapsed, sizeof (str_elapsed),
-                      /* TRANSLATORS: format: seconds, for example: 59s */
+                      /* TRANSLATORS: format: seconds, for example: 59s. */
                       _("%ds"),
                       elapsed_time);
         }
@@ -73,7 +73,7 @@ exec_command_list (void)
         {
             /* running command */
             weechat_printf (NULL,
-                            /* TRANSLATORS: %s before "ago" is elapsed time, for example: "3m59" */
+                            /* TRANSLATORS: %s before "ago" is elapsed time, for example: "3m59". */
                             _("  %s%s%s %ld%s%s%s: %s\"%s%s%s\"%s (pid: %d, "
                               "started %s ago)"),
                             weechat_color (weechat_config_string (exec_config_color_flag_running)),
@@ -805,7 +805,7 @@ exec_command_init (void)
     weechat_hook_command (
         "exec",
         N_("execute external commands"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated. */
         N_("-list"
            " || [-sh|-nosh] [-bg|-nobg] [-stdin|-nostdin] [-buffer <name>] "
            "[-l|-o|-oc|-n|-nf] [-oerr] [-cl|-nocl] [-sw|-nosw] [-ln|-noln] "

@@ -284,7 +284,7 @@ irc_ctcp_display_reply_from_nick (struct t_irc_protocol_ctxt *ctxt,
                         ctxt->date,
                         ctxt->date_usec,
                         irc_protocol_tags (ctxt, "irc_ctcp"),
-                        /* TRANSLATORS: %.3fs is a float number + "s" ("seconds") */
+                        /* TRANSLATORS: %.3fs is a float number + "s" ("seconds"). */
                         _("%sCTCP reply from %s%s%s: %s%s%s %.3fs"),
                         weechat_prefix ("network"),
                         irc_nick_color_for_msg (ctxt->server, 0, NULL,
@@ -1457,7 +1457,7 @@ irc_ctcp_recv (struct t_irc_protocol_ctxt *ctxt,
                             "irc_action,notify_message"),
                         "%s%s -> %s%s%s: %s%s%s%s%s%s",
                         weechat_prefix ("network"),
-                        /* TRANSLATORS: "Action" is an IRC CTCP "ACTION" sent with /me */
+                        /* TRANSLATORS: "Action" is an IRC CTCP "ACTION" sent with /me. */
                         _("Action"),
                         IRC_COLOR_CHAT_CHANNEL,
                         ctxt->params[0],

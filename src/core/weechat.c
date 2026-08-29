@@ -255,7 +255,7 @@ weechat_term_check (void)
                 NULL,
                 0,
                 "term_warning",
-                /* TRANSLATORS: the "under %s" can be "under screen" or "under tmux" */
+                /* TRANSLATORS: the "under %s" can be "under screen" or "under tmux". */
                 _("%sWarning: WeeChat is running under %s and $TERM is \"%s\", "
                   "which can cause display bugs; $TERM should be set to one "
                   "of these values: %s"),

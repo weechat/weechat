@@ -127,7 +127,7 @@ xfer_command_xfer_list (int full)
                         date[0] = '\0';
                 }
                 weechat_printf (NULL,
-                                /* TRANSLATORS: "%s" after "started on" is a date */
+                                /* TRANSLATORS: "%s" after "started on" is a date. */
                                 _("%3d. %s, chat with %s (local nick: %s), "
                                   "started on %s, status: %s%s"),
                                 i,
@@ -165,7 +165,7 @@ xfer_command_xfer_list (int full)
                             date[0] = '\0';
                     }
                     weechat_printf (NULL,
-                                    /* TRANSLATORS: "%s" after "started on" is a date */
+                                    /* TRANSLATORS: "%s" after "started on" is a date. */
                                     _("     fast_send: %s, blocksize: %d, "
                                       "started on %s"),
                                     (ptr_xfer->fast_send) ? _("yes") : _("no"),
@@ -246,7 +246,7 @@ xfer_command_init (void)
     ptr_hook = weechat_hook_command (
         "me",
         N_("send a CTCP action to remote host"),
-        /* TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated */
+        /* TRANSLATORS: only text between angle brackets (eg: "<name>") may be translated. */
         N_("<message>"),
         WEECHAT_CMD_ARGS_DESC(
             N_("message: message to send")),

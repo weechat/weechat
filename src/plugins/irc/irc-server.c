@@ -625,7 +625,7 @@ irc_server_get_short_description (struct t_irc_server *server)
     weechat_string_dyn_concat (result, " (", -1);
     if (server->fake_server)
     {
-        /* TRANSLATORS: "fake IRC server" */
+        /* TRANSLATORS: "fake IRC server". */
         weechat_string_dyn_concat (result, _("fake"), -1);
         weechat_string_dyn_concat (result, ", ", -1);
     }
@@ -634,9 +634,9 @@ irc_server_get_short_description (struct t_irc_server *server)
     weechat_string_dyn_concat (
         result,
         IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_TLS) ?
-        /* TRANSLATORS: "TLS: enabled" */
+        /* TRANSLATORS: "TLS: enabled". */
         _("enabled") :
-        /* TRANSLATORS: "TLS: disabled" */
+        /* TRANSLATORS: "TLS: disabled". */
         _("disabled"),
         -1);
     weechat_string_dyn_concat (result, ")", -1);

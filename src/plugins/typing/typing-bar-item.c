@@ -92,7 +92,7 @@ typing_bar_item_typing (const void *pointer, void *data,
     ptr_text = weechat_config_string (typing_config_look_item_text);
     if (!ptr_text || !ptr_text[0])
     {
-        /* TRANSLATORS: this text is displayed before the list of nicks typing in the bar item "typing", it must be as short as possible */
+        /* TRANSLATORS: this text is displayed before the list of nicks typing in the bar item "typing", it must be as short as possible. */
         ptr_text = _("Typing: ");
     }
     weechat_string_dyn_concat (str_typing, ptr_text, -1);

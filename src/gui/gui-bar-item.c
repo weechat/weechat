@@ -858,9 +858,9 @@ gui_bar_item_input_search_cb (const void *pointer, void *data,
             snprintf (str_where, sizeof (str_where),
                       "%s",
                       (buffer->text_search_history == GUI_BUFFER_SEARCH_HISTORY_LOCAL) ?
-                      /* TRANSLATORS: search in "local" history */
+                      /* TRANSLATORS: search in "local" history. */
                       _("local") :
-                      /* TRANSLATORS: search in "global" history */
+                      /* TRANSLATORS: search in "global" history. */
                       _("global"));
             break;
         case GUI_BUFFER_NUM_SEARCH:

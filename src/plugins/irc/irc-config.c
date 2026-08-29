@@ -2092,7 +2092,7 @@ irc_config_server_new_option (struct t_config_file *config_file,
             new_option = weechat_config_new_option (
                 config_file, section,
                 option_name, "string",
-                /* TRANSLATORS: please keep words "client capabilities" between brackets if translation is different (see fr.po) */
+                /* TRANSLATORS: please keep words "client capabilities" between brackets if translation is different (see fr.po). */
                 N_("comma-separated list of client capabilities to enable for "
                    "server if they are available (see /help cap for a list of "
                    "capabilities supported by WeeChat); \"*\" enables all "
@@ -3746,14 +3746,14 @@ irc_config_init (void)
         irc_config_look_smart_filter_account = weechat_config_new_option (
             irc_config_file, irc_config_section_look,
             "smart_filter_account", "boolean",
-            /* TRANSLATORS: please do not translate "account" */
+            /* TRANSLATORS: please do not translate "account". */
             N_("enable smart filter for \"account\" messages"),
             NULL, 0, 0, "on", NULL, 0,
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
         irc_config_look_smart_filter_chghost = weechat_config_new_option (
             irc_config_file, irc_config_section_look,
             "smart_filter_chghost", "boolean",
-            /* TRANSLATORS: please do not translate "chghost" */
+            /* TRANSLATORS: please do not translate "chghost". */
             N_("enable smart filter for \"chghost\" messages"),
             NULL, 0, 0, "on", NULL, 0,
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
@@ -3768,7 +3768,7 @@ irc_config_init (void)
         irc_config_look_smart_filter_join = weechat_config_new_option (
             irc_config_file, irc_config_section_look,
             "smart_filter_join", "boolean",
-            /* TRANSLATORS: please do not translate "join" */
+            /* TRANSLATORS: please do not translate "join". */
             N_("enable smart filter for \"join\" messages"),
             NULL, 0, 0, "on", NULL, 0,
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
@@ -3786,7 +3786,7 @@ irc_config_init (void)
         irc_config_look_smart_filter_mode = weechat_config_new_option (
             irc_config_file, irc_config_section_look,
             "smart_filter_mode", "string",
-            /* TRANSLATORS: please do not translate "mode" */
+            /* TRANSLATORS: please do not translate "mode". */
             N_("enable smart filter for \"mode\" messages: \"*\" to filter all "
                "modes, \"+\" to filter all modes in server prefixes (for example "
                "\"ovh\"), \"xyz\" to filter only modes x/y/z, \"-xyz\" to filter "
@@ -3797,21 +3797,21 @@ irc_config_init (void)
         irc_config_look_smart_filter_nick = weechat_config_new_option (
             irc_config_file, irc_config_section_look,
             "smart_filter_nick", "boolean",
-            /* TRANSLATORS: please do not translate "nick" */
+            /* TRANSLATORS: please do not translate "nick". */
             N_("enable smart filter for \"nick\" messages (nick changes)"),
             NULL, 0, 0, "on", NULL, 0,
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
         irc_config_look_smart_filter_quit = weechat_config_new_option (
             irc_config_file, irc_config_section_look,
             "smart_filter_quit", "boolean",
-            /* TRANSLATORS: please do not translate "part" and "quit" */
+            /* TRANSLATORS: please do not translate "part" and "quit". */
             N_("enable smart filter for \"part\" and \"quit\" messages"),
             NULL, 0, 0, "on", NULL, 0,
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
         irc_config_look_smart_filter_setname = weechat_config_new_option (
             irc_config_file, irc_config_section_look,
             "smart_filter_setname", "boolean",
-            /* TRANSLATORS: please do not translate "setname" */
+            /* TRANSLATORS: please do not translate "setname". */
             N_("enable smart filter for \"setname\" messages"),
             NULL, 0, 0, "on", NULL, 0,
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
@@ -3919,7 +3919,7 @@ irc_config_init (void)
         irc_config_color_message_chghost = weechat_config_new_option (
             irc_config_file, irc_config_section_color,
             "message_chghost", "color",
-            /* TRANSLATORS: please do not translate "chghost" */
+            /* TRANSLATORS: please do not translate "chghost". */
             N_("color for text in \"chghost\" messages"),
             NULL, -1, 0, "brown", NULL, 0,
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
@@ -3944,14 +3944,14 @@ irc_config_init (void)
         irc_config_color_message_setname = weechat_config_new_option (
             irc_config_file, irc_config_section_color,
             "message_setname", "color",
-            /* TRANSLATORS: please do not translate "setname" */
+            /* TRANSLATORS: please do not translate "setname". */
             N_("color for text in \"setname\" messages"),
             NULL, -1, 0, "brown", NULL, 0,
             NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
         irc_config_color_mirc_remap = weechat_config_new_option (
             irc_config_file, irc_config_section_color,
             "mirc_remap", "string|themable",
-            /* TRANSLATORS: please do not translate the list of WeeChat color names at the end of string */
+            /* TRANSLATORS: please do not translate the list of WeeChat color names at the end of string. */
             N_("remap mirc colors in messages using a hashtable (used only "
                "for standard colors, not RGB colors): keys are \"fg,bg\" as "
                "integers between -1 (not specified) and 15, values are WeeChat "

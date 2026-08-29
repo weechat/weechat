@@ -169,7 +169,7 @@ irc_input_user_message_display (struct t_irc_server *server,
                 irc_protocol_tags (&ctxt, str_tags),
                 "%s%s -> %s%s%s: %s%s%s%s%s%s",
                 weechat_prefix ("network"),
-                /* TRANSLATORS: "Action" is an IRC CTCP "ACTION" sent with /me or /action */
+                /* TRANSLATORS: "Action" is an IRC CTCP "ACTION" sent with /me or /action. */
                 _("Action"),
                 (is_channel) ?
                 IRC_COLOR_CHAT_CHANNEL : irc_nick_color_for_msg (server, 0, NULL, target),
@@ -229,7 +229,7 @@ irc_input_user_message_display (struct t_irc_server *server,
             weechat_prefix ("network"),
             (is_notice) ? IRC_COLOR_NOTICE : "",
             (is_notice) ?
-            /* TRANSLATORS: "Notice" is command name in IRC protocol (translation is frequently the same word) */
+            /* TRANSLATORS: "Notice" is command name in IRC protocol (translation is frequently the same word). */
             _("Notice") :
             "Msg",
             (is_notice) ? IRC_COLOR_RESET : "",

@@ -2635,7 +2635,7 @@ IRC_PROTOCOL_CALLBACK(notice)
                 weechat_prefix ("network"),
                 IRC_COLOR_NOTICE,
                 (is_channel_orig) ? "" : "Pv",
-                /* TRANSLATORS: "Notice" is command name in IRC protocol (translation is frequently the same word) */
+                /* TRANSLATORS: "Notice" is command name in IRC protocol (translation is frequently the same word). */
                 _("Notice"),
                 IRC_COLOR_CHAT_DELIMITERS,
                 irc_nick_mode_for_display (ctxt->server, ptr_nick, 0),
@@ -2742,7 +2742,7 @@ IRC_PROTOCOL_CALLBACK(notice)
                         "%s%s%s%s -> %s%s%s: %s",
                         weechat_prefix ("network"),
                         IRC_COLOR_NOTICE,
-                        /* TRANSLATORS: "Notice" is command name in IRC protocol (translation is frequently the same word) */
+                        /* TRANSLATORS: "Notice" is command name in IRC protocol (translation is frequently the same word). */
                         _("Notice"),
                         IRC_COLOR_RESET,
                         irc_nick_color_for_msg (ctxt->server, 0, NULL, pos_target),
@@ -5064,7 +5064,7 @@ IRC_PROTOCOL_CALLBACK(329)
                 ctxt->date,
                 ctxt->date_usec,
                 irc_protocol_tags (ctxt, NULL),
-                /* TRANSLATORS: "%s" after "created on" is a date */
+                /* TRANSLATORS: "%s" after "created on" is a date. */
                 _("%sChannel created on %s"),
                 weechat_prefix ("network"),
                 weechat_util_get_time_string (&datetime));
@@ -5077,7 +5077,7 @@ IRC_PROTOCOL_CALLBACK(329)
             ctxt->date,
             ctxt->date_usec,
             irc_protocol_tags (ctxt, NULL),
-            /* TRANSLATORS: "%s" after "created on" is a date */
+            /* TRANSLATORS: "%s" after "created on" is a date. */
             _("%sChannel %s%s%s created on %s"),
             weechat_prefix ("network"),
             IRC_COLOR_CHAT_CHANNEL,
@@ -5293,7 +5293,7 @@ IRC_PROTOCOL_CALLBACK(333)
                     ctxt->date,
                     ctxt->date_usec,
                     irc_protocol_tags (ctxt, NULL),
-                    /* TRANSLATORS: "%s" after "on" is a date */
+                    /* TRANSLATORS: "%s" after "on" is a date. */
                     _("%sTopic set by %s%s%s%s%s%s%s%s%s on %s"),
                     weechat_prefix ("network"),
                     irc_nick_color_for_msg (ctxt->server, 1, ptr_nick, topic_nick),
@@ -5315,7 +5315,7 @@ IRC_PROTOCOL_CALLBACK(333)
                     ctxt->date,
                     ctxt->date_usec,
                     irc_protocol_tags (ctxt, NULL),
-                    /* TRANSLATORS: "%s" after "on" is a date */
+                    /* TRANSLATORS: "%s" after "on" is a date. */
                     _("%sTopic set on %s"),
                     weechat_prefix ("network"),
                     weechat_util_get_time_string (&datetime));
@@ -5332,7 +5332,7 @@ IRC_PROTOCOL_CALLBACK(333)
                 ctxt->date,
                 ctxt->date_usec,
                 irc_protocol_tags (ctxt, NULL),
-                /* TRANSLATORS: "%s" after "on" is a date */
+                /* TRANSLATORS: "%s" after "on" is a date. */
                 _("%sTopic for %s%s%s set by %s%s%s%s%s%s%s%s%s on %s"),
                 weechat_prefix ("network"),
                 IRC_COLOR_CHAT_CHANNEL,
@@ -5357,7 +5357,7 @@ IRC_PROTOCOL_CALLBACK(333)
                 ctxt->date,
                 ctxt->date_usec,
                 irc_protocol_tags (ctxt, NULL),
-                /* TRANSLATORS: "%s" after "on" is a date */
+                /* TRANSLATORS: "%s" after "on" is a date. */
                 _("%sTopic for %s%s%s set on %s"),
                 weechat_prefix ("network"),
                 IRC_COLOR_CHAT_CHANNEL,
@@ -5591,7 +5591,7 @@ IRC_PROTOCOL_CALLBACK(346)
                 ctxt->date,
                 ctxt->date_usec,
                 irc_protocol_tags (ctxt, NULL),
-                /* TRANSLATORS: "%s" after "on" is a date */
+                /* TRANSLATORS: "%s" after "on" is a date. */
                 _("%s%s[%s%s%s] %s%s%s%s invited by %s on %s"),
                 weechat_prefix ("network"),
                 IRC_COLOR_CHAT_DELIMITERS,
@@ -5770,7 +5770,7 @@ IRC_PROTOCOL_CALLBACK(348)
                 ctxt->date,
                 ctxt->date_usec,
                 irc_protocol_tags (ctxt, NULL),
-                /* TRANSLATORS: "%s" after "on" is a date */
+                /* TRANSLATORS: "%s" after "on" is a date. */
                 _("%s%s[%s%s%s]%s%s exception %s%s%s by %s on %s"),
                 weechat_prefix ("network"),
                 IRC_COLOR_CHAT_DELIMITERS,
@@ -6556,7 +6556,7 @@ irc_protocol_get_string_channel_nicks_count (struct t_irc_server *server,
         {
             snprintf (str_mode_name, sizeof (str_mode_name),
                       "%s",
-                      /* TRANSLATORS: number of "regular" nicks on a channel (ie not op/halfop/voiced), for example: "56 regular" */
+                      /* TRANSLATORS: number of "regular" nicks on a channel (ie not op/halfop/voiced), for example: "56 regular". */
                       NG_("regular", "regular", nicks_by_mode[i]));
         }
         else if (ptr_prefix_modes[i] == 'q')
@@ -6803,7 +6803,7 @@ IRC_PROTOCOL_CALLBACK(367)
                 ctxt->date,
                 ctxt->date_usec,
                 irc_protocol_tags (ctxt, NULL),
-                /* TRANSLATORS: "%s" after "on" is a date */
+                /* TRANSLATORS: "%s" after "on" is a date. */
                 _("%s%s[%s%s%s] %s%s%s%s banned by %s on %s"),
                 weechat_prefix ("network"),
                 IRC_COLOR_CHAT_DELIMITERS,
@@ -7378,7 +7378,7 @@ IRC_PROTOCOL_CALLBACK(728)
                 ctxt->date,
                 ctxt->date_usec,
                 irc_protocol_tags (ctxt, NULL),
-                /* TRANSLATORS: "%s" after "on" is a date */
+                /* TRANSLATORS: "%s" after "on" is a date. */
                 _("%s%s[%s%s%s] %s%s%s%s quieted by %s on %s"),
                 weechat_prefix ("network"),
                 IRC_COLOR_CHAT_DELIMITERS,

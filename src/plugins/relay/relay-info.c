@@ -230,7 +230,7 @@ relay_info_init (void)
     weechat_hook_info (
         "relay_client_count",
         N_("number of clients for relay"),
-        /* TRANSLATORS: please do not translate the status names, they must be used in English */
+        /* TRANSLATORS: please do not translate the status names, they must be used in English. */
         N_("protocol,status (both are optional, for each argument \"*\" "
            "means all; protocols: api, irc, weechat; statuses: connecting, "
            "waiting_auth, connected, auth_failed, disconnected)"),

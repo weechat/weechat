@@ -32,100 +32,100 @@
 char *weechat_args_common[][2] = {
     {
         "-a, --no-connect",
-        /* TRANSLATORS: command line option "-a", "--no-connect" */
+        /* TRANSLATORS: command line option "-a", "--no-connect". */
         N_("disable auto-connect to servers at startup"),
     },
     {
         "-c, --colors",
-        /* TRANSLATORS: command line option "-c", "--colors" */
+        /* TRANSLATORS: command line option "-c", "--colors". */
         N_("display default colors in terminal and exit"),
     },
     {
-        /* TRANSLATORS: only "<path>" may be translated */
+        /* TRANSLATORS: only "<path>" may be translated. */
         N_("-d, --dir <path>"),
-        /* TRANSLATORS: command line option "-d", "--dir <path>" */
+        /* TRANSLATORS: command line option "-d", "--dir <path>". */
         N_("force a single WeeChat home directory or 5 different directories "
            "separated by colons (in this order: config, data, state, cache, runtime) "
            "(environment variable WEECHAT_HOME is read if this option is not given)"),
     },
     {
         "-t, --temp-dir",
-        /* TRANSLATORS: command line option "-t", "--temp-dir" */
+        /* TRANSLATORS: command line option "-t", "--temp-dir". */
         N_("create a temporary WeeChat home directory and delete it on exit "
            "(incompatible with option \"-d\")"),
     },
     {
         "-h, --help",
-        /* TRANSLATORS: command line option "-h", "--help" */
+        /* TRANSLATORS: command line option "-h", "--help". */
         N_("display this help and exit"),
     },
     {
         "-i, --build-info",
-        /* TRANSLATORS: command line option "-i", "--build-info" */
+        /* TRANSLATORS: command line option "-i", "--build-info". */
         N_("display build information and exit"),
     },
     {
         "-l, --license",
-        /* TRANSLATORS: command line option "-l", "--license" */
+        /* TRANSLATORS: command line option "-l", "--license". */
         N_("display WeeChat license and exit"),
     },
     {
         "-p, --no-plugin",
-        /* TRANSLATORS: command line option "-p", "--no-plugin" */
+        /* TRANSLATORS: command line option "-p", "--no-plugin". */
         N_("don't load any plugin at startup"),
     },
     {
-        /* TRANSLATORS: only "<plugins>" may be translated */
+        /* TRANSLATORS: only "<plugins>" may be translated. */
         N_("-P, --plugins <plugins>"),
-        /* TRANSLATORS: command line option "-P", "--plugins <plugins>" */
+        /* TRANSLATORS: command line option "-P", "--plugins <plugins>". */
         N_("load only these plugins at startup (see /help weechat.plugin.autoload)"),
     },
     {
-        /* TRANSLATORS: only "<cmd>" may be translated (please keep it short) */
+        /* TRANSLATORS: only "<cmd>" may be translated (please keep it short). */
         N_("-r, --run-command <cmd>"),
-        /* TRANSLATORS: command line option "-r", "--run-command <cmd>" */
+        /* TRANSLATORS: command line option "-r", "--run-command <cmd>". */
         N_("run command(s) after startup; many commands can be separated "
            "by semicolons and are evaluated, this option can be given multiple times"),
     },
     {
         "-s, --no-script",
-        /* TRANSLATORS: command line option "-s", "--no-script" */
+        /* TRANSLATORS: command line option "-s", "--no-script". */
         N_("don't load any script at startup"),
     },
     {
         "--upgrade",
-        /* TRANSLATORS: command line option "--upgrade" */
+        /* TRANSLATORS: command line option "--upgrade". */
         N_("upgrade WeeChat using session files (see /help upgrade in WeeChat)"),
     },
     {
         "-v, --version",
-        /* TRANSLATORS: command line option "-v", "--version" */
+        /* TRANSLATORS: command line option "-v", "--version". */
         N_("display WeeChat version and exit"),
     },
     {
-        /* TRANSLATORS: command line option: "plugin" and "option" may be translated */
+        /* TRANSLATORS: command line option: "plugin" and "option" may be translated. */
         N_("plugin:option"),
-        /* TRANSLATORS: command line option "plugin:option" */
+        /* TRANSLATORS: command line option "plugin:option". */
         N_("option for plugin (see man weechat)"),
     },
     { NULL, NULL },
 };
 char *weechat_args_headless[][2] = {
     {
-        /* TRANSLATORS: only "<path>" may be translated */
+        /* TRANSLATORS: only "<path>" may be translated. */
         N_("--doc-gen <path>"),
-        /* TRANSLATORS: command line option "--doc-gen <path>" */
+        /* TRANSLATORS: command line option "--doc-gen <path>". */
         N_("generate files to build documentation and exit"),
     },
     {
         "--daemon",
-        /* TRANSLATORS: command line option "--daemon" */
+        /* TRANSLATORS: command line option "--daemon". */
         N_("run WeeChat as a daemon (fork, new process group, file descriptors closed); "
            "by default in headless mode WeeChat is blocking and does not run in background"),
     },
     {
         "--stdout",
-        /* TRANSLATORS: command line option "--stdout" */
+        /* TRANSLATORS: command line option "--stdout". */
         N_("display log messages on standard output instead of writing them in log file "
            "(option ignored if option \"--daemon\" is given)"),
     },
@@ -134,17 +134,17 @@ char *weechat_args_headless[][2] = {
 char *weechat_args_debug[][2] = {
     {
         "--no-dlclose",
-        /* TRANSLATORS: command line option "--no-dlclose" */
+        /* TRANSLATORS: command line option "--no-dlclose". */
         N_("do not call function dlclose after plugins are unloaded"),
     },
     {
         "--no-gnutls",
-        /* TRANSLATORS: command line option "--no-gnutls" */
+        /* TRANSLATORS: command line option "--no-gnutls". */
         N_("disable init/deinit of gnutls"),
     },
     {
         "--no-gcrypt",
-        /* TRANSLATORS: command line option "--no-gcrypt" */
+        /* TRANSLATORS: command line option "--no-gcrypt". */
         N_("disable init/deinit of gcrypt"),
     },
     { NULL, NULL },
@@ -161,7 +161,7 @@ args_display_copyright (void)
     string_fprintf (stdout, "\n");
     string_fprintf (
         stdout,
-        /* TRANSLATORS: "%s %s" after "compiled on" is date and time */
+        /* TRANSLATORS: "%s %s" after "compiled on" is date and time. */
         _("WeeChat %s Copyright %s, compiled on %s %s\n"
           "Developed by %s <%s> "
           "- %s"),

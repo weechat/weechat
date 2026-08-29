@@ -85,7 +85,7 @@ debug_build_info (void)
     /* display version and compilation date/time */
     string_fprintf (
         stdout,
-        /* TRANSLATORS: "%s %s" after "compiled on" is date and time */
+        /* TRANSLATORS: "%s %s" after "compiled on" is date and time. */
         _("WeeChat %s, compiled on %s %s\n"),
         version_get_version_with_git (),
         version_get_compilation_date (),
