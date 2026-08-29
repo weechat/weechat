@@ -4716,38 +4716,38 @@ Cette fonction n'est pas disponible dans l'API script.
 
 _WeeChat ≥ 4.7.0._
 
-Compare the content of two files.
+Comparer le contenu de deux fichiers.
 
-Prototype:
+Prototype :
 
 [source,c]
 ----
 int weechat_file_compare (const char *filename1, const char *filename2);
 ----
 
-Arguments:
+Paramètres :
 
-* _filename1_: first file to compare
-* _filename2_: second file to compare
+* _filename1_ : premier fichier à comparer
+* _filename2_ : second fichier à comparer
 
-Return value:
+Valeur de retour :
 
-* 0: both files have same content
-* 1: content is different
-* 2: error (file not found or read error)
+* 0 : les deux fichiers ont le même contenu
+* 1 : le contenu est différent
+* 2 : erreur (fichier non trouvé ou erreur de lecture)
 
-C example:
+Exemple en C :
 
 [source,c]
 ----
 if (weechat_file_compare ("/tmp/test.txt", "/tmp/test2.txt") == 0)
 {
-    /* same content */
+    /* même contenu */
 }
 ----
 
 [NOTE]
-This function is not available in scripting API.
+Cette fonction n'est pas disponible dans l'API script.
 
 [[util]]
 === Util
