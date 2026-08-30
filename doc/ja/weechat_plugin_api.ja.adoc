@@ -4337,7 +4337,7 @@ rc = weechat_crypto_hash (data, strlen (data), "sha256", hash, &hash_size);
 スクリプト API ではこの関数を利用できません。
 
 // TRANSLATION MISSING
-==== crypto_hash_flie
+==== crypto_hash_file
 
 _WeeChat バージョン 3.7 以上で利用可。_
 
