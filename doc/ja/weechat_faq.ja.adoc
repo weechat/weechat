@@ -47,7 +47,7 @@ https://weechat.org/about/interfaces/[remote interfaces page ^↗^^].
 WeeChat must be compiled with CMake.
 
 // TRANSLATION MISSING
-Please follow link:weechat_user.en.html#source_package[build instructions ^↗^^]
+Please follow link:weechat_user.ja.html#source_package[build instructions ^↗^^]
 and ensure all required dependencies are installed.
 
 // TRANSLATION MISSING

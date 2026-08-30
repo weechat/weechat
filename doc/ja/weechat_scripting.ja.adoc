@@ -215,7 +215,7 @@ You can pass this constant when a function accepts null as an argument and you
 will get it as the value of an argument in a callback function if the argument
 value is null. To see which functions accept null values and passes null values
 to callbacks, look at the Python prototypes in the
-link:weechat_plugin_api.en.html[WeeChat plugin API reference ^↗^^].
+link:weechat_plugin_api.ja.html[WeeChat plugin API reference ^↗^^].
 
 [[language_guile]]
 ==== Guile (Scheme)
