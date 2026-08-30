@@ -21,10 +21,12 @@
 #include "../plugin-script-api.h"
 #include "weechat-tcl.h"
 
-/* Magic value to indicate NULL since Tcl only has string types. The value is
+/*
+ * Magic value to indicate NULL since Tcl only has string types. The value is
  * \uFFFF\uFFFF\uFFFFWEECHAT_NULL\uFFFF\uFFFF\uFFFF. \uFFFF is used because
  * it's reserved in Unicode as not a character, so this string is very unlikely
- * to appear unintentionally since it's not valid text. */
+ * to appear unintentionally since it's not valid text.
+ */
 #define WEECHAT_NULL_STRING \
     "\xef\xbf\xbf\xef\xbf\xbf\xef\xbf\xbfWEECHAT_NULL\xef\xbf\xbf\xef\xbf\xbf\xef\xbf\xbf"
 
