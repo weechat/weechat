@@ -404,8 +404,8 @@ for detail about each function in API: prototype, arguments, return values, exam
 
 È importante fare la differenza tra un _plugin_ ed uno _script_:
 un plugin è un file binario compilato e caricato con il comando
-`plugin`, mentre uno _script_ è un file di testo caricato tramite
-un plugin come _python_ con il comando `python`.
+`/plugin`, mentre uno _script_ è un file di testo caricato tramite
+un plugin come _python_ con il comando `/python`.
 
 Quando il proprio script _test.py_ chiama una funzione delle API di
 WeeChat, il path è simile a questo:
