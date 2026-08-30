@@ -251,19 +251,19 @@ Prototyp (Python):
 
 [source,python]
 ----
-def register(nazwa: str, autor: str, wersja: str, licencja: str, opis: str, funkcja_wyłączająca: str, kodowanie: str) -> int: ...
+def register(name: str, author: str, version: str, license: str, description: str, shutdown_function: str, charset: str) -> int: ...
 ----
 
 Argumenty:
 
-* _nazwa_: string, wewnętrzna nazwa skryptu
-* _autor_: string, autor skryptu
-* _wersja_: string, wersja
-* _licencja_: string, licencja
-* _opis_: string, krótki opis skryptu
-* _funkcja_wyłączająca_: string, nazwa funkcji wywoływanej podczas wyładowania skryptu
+* _name_: string, wewnętrzna nazwa skryptu
+* _author_: string, autor skryptu
+* _version_: string, wersja
+* _license_: string, licencja
+* _description_: string, krótki opis skryptu
+* _shutdown_function_: string, nazwa funkcji wywoływanej podczas wyładowania skryptu
   (może być pusty ciąg)
-* _kodowanie_: string, kodowane skryptu (jeśli skrypt jest napisany
+* _charset_: string, kodowane skryptu (jeśli skrypt jest napisany
   w UTF-8 można nie podawać tej wartości - UTF-8 to domyślne kodowanie)
 
 Przykład dla skryptu w każdym z języków:
@@ -961,7 +961,7 @@ xxx,irc_raw_in2_yyy::
 
 [source,python]
 ----
-def join_cb(data, sygnał, signal_data):
+def join_cb(data, signal, signal_data):
     # Sygnał to na przykład: "libera,irc_in2_join".
     # signal_data to wiadomość IRC, na przykład: ":nick!user@host JOIN :#channel"
     server = signal.split(",")[0]
