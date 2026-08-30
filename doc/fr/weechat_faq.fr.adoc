@@ -43,7 +43,7 @@ https://weechat.org/about/interfaces/[page avec les interfaces distantes ^↗^^
 
 WeeChat doit être compilé avec CMake.
 
-Merci de suivre les link:weechat_user.en.html#source_package[instructions de construction ^↗^^]
+Merci de suivre les link:weechat_user.fr.html#source_package[instructions de construction ^↗^^]
 et vous assurer que toutes les dépendances obligatoires sont installées.
 
 Si vous avez toujours des problèmes, merci de les remonter aux développeurs.
