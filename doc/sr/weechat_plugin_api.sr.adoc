@@ -15050,7 +15050,7 @@ weechat_buffer_set (NULL, "hotlist", "-");
 /* Поновно укључивање вруће листе */
 weechat_buffer_set (NULL, "hotlist", "+");
 
-/* Промена имена бафера
+/* Промена имена бафера */
 weechat_buffer_set (my_buffer, "name", "my_new_name");
 
 /* Додавање нове локалне променљиве „toto” са вредности „abc” */
