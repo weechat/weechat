@@ -19823,8 +19823,8 @@ Prototype :
 
 [source,c]
 ----
-const char *weechat_hdata_get_var_count_array_size (struct t_hdata *hdata, void *pointer,
-                                                    const char *name);
+const char *weechat_hdata_get_var_array_size_string (struct t_hdata *hdata, void *pointer,
+                                                     const char *name);
 ----
 
 Paramètres :
