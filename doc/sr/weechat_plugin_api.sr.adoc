@@ -8218,49 +8218,6 @@ autoconnect = weechat.config_boolean_inherited(option)
 
 ==== config_integer
 
-Return integer value of option.
-
-Прототип:
-
-[source,c]
-----
-int weechat_config_integer (struct t_config_option *option);
-----
-
-Аргументи:
-
-* _option_: показивач на опцију
-
-Повратна вредност, у зависности од типа опције:
-
-* _boolean_: логичка вредност опције (0 or 1)
-* _integer_: целобројна вредност опције
-* _string_: 0
-* _color_: индекс боје
-* _enum_: целобројна вредност опције (индекс enum вредности)
-
-C пример:
-
-[source,c]
-----
-struct t_config_option *option = weechat_config_get ("plugin.section.option");
-int value = weechat_config_integer (option);
-----
-
-Скрипта (Python):
-
-[source,python]
-----
-# Прототип
-def config_integer(option: str) -> int: ...
-
-# Пример
-option = weechat.config_get("plugin.section.option")
-value = weechat.config_integer(option)
-----
-
-==== config_integer
-
 Враћа целобројну вредност опције.
 
 Прототип:
